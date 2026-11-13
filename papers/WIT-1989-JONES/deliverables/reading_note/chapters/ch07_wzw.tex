@@ -1,0 +1,472 @@
+% =============================================================================
+%  ch07  WZW 模型与共形场论工具箱
+%  负责人：bibliographer（PLAN_gaps G7.1--G7.5）
+% =============================================================================
+\section{WZW 模型与共形场论工具箱}\label{sec:wzw}
+
+\subsection{这一章要解决什么}
+
+本文的全部策略可以压成一句：把三维 Chern--Simons 理论沿曲面 $\Sigma$ 切开，得到的
+Hilbert 空间 $\cH_\Sigma$ 恰好是二维 Wess--Zumino--Witten（WZW）模型的共形块空间，
+于是“三维量子化”与“二维共形场论”是同一件事 \src{370}。但这句话里的每个二维名词
+——当前代数、共形块、Ward 恒等式、可积表示、KZ 方程——本文都没有定义，也没有写出一个公式：
+p.370 只用一句话说“genus $0$ 时 Ward 恒等式唯一决定关联函数，genus $>1$ 时不行，解空间就叫共形块”，
+然后把细节交给 Belavin--Polyakov--Zamolodchikov 与 Segal 的文献 [32][16][39]。
+
+本章只补本文真正用到的那几件工具，不写 WZW 模型的完整介绍（那是
+[河野 第 1--2 章] 与 [上野 第 2--3 章] 的任务）：
+\begin{enumerate}[leftmargin=2em]
+\item 仿射 Kac--Moody 代数 $\widehat{\mathfrak g}_k$ 与最高权表示——“能级 $k$”从这里进入二维一侧（G7.1）；
+\item Sugawara 构造与中心荷 $c=k\dim G/(k+h^\vee)$——这是三维的 $k$ 与二维的 $c$、$q$ 之间的汇率（G7.1）；
+\item 共形块的定义与三点维数 $N_{ijk}$——它同时是 $S^2$ 上物理 Hilbert 空间的维数与融合系数（G7.2、G7.4）；
+\item KZ 方程的推导与它的系数 $\Omega_{ij}/(z_i-z_j)$——这是本文 \S3.2 那条射影平坦联络的显式矩阵元（G7.3）；
+\item 与本文符号的兑换表（$k$ 与 $k+h^\vee$、$c_2(G)$ 与 $h^\vee$、$q$）（G7.5）。
+\end{enumerate}
+
+读完之后应当能做两件事：给定 $G$ 与 $k$ 写出 $c$、$h_\lambda$、$S_{ij}$；
+以及说清“本文 p.370 的射影平坦联络”与“KZ 方程”哪一个更强（答案：后者是前者在 $g=0$ 的显式坐标表示，
+见 \S\ref{sec:wzw} 的 D7.5 与第 \ref{sec:blocks} 节的讨论）。
+
+\subsection{原文说了什么}
+
+原文在五处碰到这只工具箱，每次都只是点到。
+
+\paragraph{(i) p.366：$\cH_\Sigma$ 有限维，且在共形场论里早已有名。}
+原文写道：“In rational conformal field theories, one encounters the `conformal blocks' of
+Belavin, Polyakov, and Zamolodchikov. Segal has described these in terms of `modular functors'
+that canonically associate a Hilbert space to a Riemann surface, and has described in
+algebra--geometric terms a particular class of modular functors, which arise in current algebra
+of a compact group $G$ at level $k$ [16].” \src{366}
+紧接着是全文的自我定位：“The key observation in the present work was really the observation
+that precisely those functors can be obtained by quantization of a three dimensional quantum
+field theory” \src{366}。也就是说，二维一侧的东西是\textbf{已知的}（引文 [32][16]），
+本文的新意只在三维实现。
+
+\paragraph{(ii) p.370：共形块的定义性描述。}
+原文说：“If one considers current algebra on a Riemann surface, with a symmetry group $G$,
+at `level' $k$, then one finds that in genus zero the Ward identities uniquely determine the
+correlation functions for descendants of the identity operator, but this is not so in genus $>1$.
+On a complex Riemann surface $\Sigma$ of genus $>1$, the space of solutions of the Ward
+identities for descendants of the identity is a vector space $\cH_\Sigma$, which might be called
+the `space of conformal blocks'.” \src{370}
+然后给出本章要引用的最强一句：“the space of conformal blocks in $1+1$ dimensions are the
+quantum Hilbert spaces obtained by quantizing a $2+1$ dimensional theory.” \src{370}
+注意原文用的是 “are”，不是 “are isomorphic to”：他把两边当作同一个对象，而不是碰巧同构
+（这个措辞问题在第 \ref{sec:blocks} 节已展开，本章只关心“另一边到底长什么样”）。
+
+\paragraph{(iii) p.373--374：可积性与大 $k$ 极限。}
+原文限定只允许可积表示：“$\cH$ is zero unless the $R_i$ correspond to integrable
+representations of the loop group; in what follows a restriction to such representations is
+always understood.” \src{373}
+并在大 $k$ 时写出 $\cH_{S^2}=\mathrm{Inv}(R_1\otimes\cdots\otimes R_n)$ \src{374}。
+“可积”是什么意思、为什么它等价于 $2j\le k$，原文没有定义。
+
+\paragraph{(iv) p.361 与 p.384：两个侧面数据。}
+p.361 在讨论标架修正时写出 (2.25)，其中的相位由“二维当前代数的中心荷 $c$”给出，并说
+“It is well known that the large $k$ limit of $c$ is exactly $d$”（$d=\dim G$）\src{361}；
+p.384 说圈群在能级 $k$ 只有有限多个可积最高权表示，个数记作 $t$ \src{384}。
+这两处分别是 $c$ 公式与“有限多个表示”的来源，但公式本身都没有给。
+
+\begin{center}
+\small
+\begin{tabular}{@{}p{3.1cm}p{5.4cm}p{5.2cm}@{}}
+\toprule
+原文提到的二维概念 & 原文给了什么 & 缺什么（本章补） \\
+\midrule
+共形块 $\cH_\Sigma$ & 定义性描述（Ward 解空间）、与 $\cH_\Sigma^{CS}$ 的等同（p.366, 370） & 当前代数的具体形式、共形块的可算定义（G7.1、G7.2）\\
+Ward 恒等式 & 只提名字，说 genus $0$ 唯一确定（p.370） & 恒等式的形式、与 Sugawara 的关系（G7.2）\\
+可积表示 & 只给限制，不给判据（p.373--374） & 判据 $(\lambda,\theta)\le k$、$2j\le k$（G7.1）\\
+$N_{ijk}$ & 定义为 $S^2$ 三点维数（p.373--374） & 三点维数的算法、融合规则（G7.4）\\
+中心荷 $c$ & 只出现在 (2.25) 相位里（p.361） & $c=k\dim G/(k+h^\vee)$ 与推导（G7.1）\\
+“射影平坦联络” & 断言存在、归功于 Segal（p.370） & 联络的显式形式 = KZ 方程（G7.3）\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{原文没说的细节}
+
+\paragraph{G7.1（仿射代数与 Sugawara）}
+原文反复使用“level $k$ 的当前代数”，但从未写出代数本身。缺的是：
+圈代数 $\mathfrak g((t))$ 的中心扩张、模 $J^a_n$ 的交换关系、最高权表示的定义、
+以及 Sugawara 公式 $T=\frac{1}{2(k+h^\vee)}\sum_a{:}J^aJ^a{:}$ 与 $c=k\dim G/(k+h^\vee)$。
+没有这些，“能级 $k$”就只是一个标签：既不能算 $c$（因此 (2.25)、(4.41) 的相位无从计算），
+也不能算 (4.39) 的 $S$ 矩阵。
+
+\paragraph{G7.2（共形块与 Ward 恒等式）}
+原文把共形块说成“Ward 恒等式的解空间”，但没写恒等式。缺的是两点：
+(a) 原初场与电流的 OPE 给出的 Ward 恒等式（D7.5 的第 1--2 步）；
+(b) 共形块作为不变张量的定义（D7.4），以及它与 (a) 的等价性。
+没有 (b)，“解空间”是一个无限维的函数空间；有了 (b) 才知道它是有限维的、而且维数可算。
+
+\paragraph{G7.3（KZ 方程）}
+这是本章最要紧的缺口。本文 \S3.2 只说 $\cH_\Sigma$ 上有射影平坦联络 \src{370}，
+但没给联络的系数。KZ 方程给出 $g=0$、$n$ 个标记点时联络的显式形式
+\[
+\kappa\,\partial_{z_i}\Psi=\sum_{j\ne i}\frac{\Omega_{ij}}{z_i-z_j}\Psi,
+\qquad \kappa=k+h^\vee ,
+\]
+其中 $\Omega_{ij}=\sum_a t^a_i t^a_j$。原文正文里 KZ 零出现（最接近的是 p.370 引 BPZ 的微分方程 [32]）。
+需要提醒：常见说法“null field + Ward $\Rightarrow$ KZ”把两件事混在一句里——
+Ward 恒等式给出联络，null field 给出截断（哪些表示能出现、三点维数何时为零）。
+本章把两者分开推（D7.4 用 null field，D7.5 用 Ward）。
+
+\paragraph{G7.4（融合规则与 Verlinde 代数）}
+原文在 p.373--374 把 $N_{ijk}$ 定义为三点维数，但没有说这些数满足什么代数。
+缺的是：融合代数 $v_iv_j=\sum_k N_{ij}{}^k v_k$ 的定义、它的交换结合性（来自四点块的结合律）、
+以及 Verlinde 公式 $N_{ijk}=\sum_l S_{il}S_{jl}S_{kl}/S_{0l}$
+（证明留给第 \ref{sec:verlinde} 节，本章只交代 $N_{ijk}$ 的二维含义）。
+
+\paragraph{G7.5（符号兑换）}
+本文用 $k$ 表示 CS 作用量 (1.3) 里的系数；WZW 一侧真正进入公式的是 $k+h^\vee$。
+不把这一点说透，就会出现“WZW 能级是 $k+N$”这类口径混乱（本地译本
+\texttt{s06-calculability-a.tex:101} 的批注即是一例）。本章末尾的表与陷阱节专门处理它。
+
+\subsection{补出的推导}
+
+\paragraph{D7.1：中心扩张}
+
+出发点 \src{河野 p.3}：环路代数 $L\mathfrak g=\mathfrak g\otimes\CC((t))$ 的二阶上同调
+$H^2(L\mathfrak g,\CC)$ 分类它的中心扩张。取 $\mathfrak g$ 上的不变双线性型
+$\langle\cdot,\cdot\rangle$（本章统一取长根平方为 $2$，见 \S\ref{sec:wzw} 陷阱 3），
+定义 2-上链
+\[
+\omega(Xf,Yg)=\langle X,Y\rangle\,\mathrm{Res}_{t=0}\,f\,\dd g ,
+\qquad f,g\in\CC((t)),\ X,Y\in\mathfrak g .
+\]
+\ours
+它反对称：$\omega(Xf,Yg)+\omega(Yg,Xf)=\langle X,Y\rangle\mathrm{Res}\,\dd(fg)=0$（全微分留数为零）。
+在基 $f=t^m$、$g=t^n$ 上 $\mathrm{Res}\,t^m\dd(t^n)=n\delta_{m+n,0}$，于是中心扩张
+$\widehat{\mathfrak g}_k=\mathfrak g\otimes\CC[t,t^{-1}]\oplus\CC K$ 的交换关系为
+\begin{equation}
+[J^a_m,J^b_n]=\ii f^{abc}J^c_{m+n}+k\,m\,\delta^{ab}\delta_{m+n,0},
+\qquad [K,J^a_m]=0 ,
+\label{eq:affine}
+\end{equation}
+其中 $J^a_m$ 对应 $X^a\otimes t^m$，$K$ 是中心元，$k$ 是它的特征值，称\textbf{能级}。
+\begin{keypoint}
+式 \eqref{eq:affine} 的符号约定决定了后面每一个因子。本文与河野、上野都取
+$[J^a_m,J^b_n]$ 中 $+k\,m\,\delta^{ab}\delta_{m+n,0}$；若换成 $-k$，则 $S$ 矩阵要取复共轭，
+$q$ 换成 $q^{-1}$。核对办法：对 $SU(2)_1$ 算 $c$ 与 $h_{1/2}$，见 D7.2。
+\end{keypoint}
+
+由 \eqref{eq:affine} 得电流的 OPE（$J^a(z)=\sum_n J^a_n z^{-n-1}$）：
+\begin{equation}
+J^a(z)J^b(w)\sim\frac{k\,\delta^{ab}}{(z-w)^2}+\frac{\ii f^{abc}J^c(w)}{z-w}.
+\label{eq:ope}
+\end{equation}
+
+\paragraph{D7.2：Sugawara 构造与中心荷}
+
+定义 Virasoro 生成元（Sugawara 构造）\src{河野 p.8--12}：
+\begin{equation}
+T(z)=\frac{1}{2\kappa}\sum_a {:}J^aJ^a{:}(z),
+\qquad
+L_n=\frac{1}{2\kappa}\sum_{m\in\ZZ}\sum_a {:}J^a_mJ^a_{n-m}{:},
+\qquad \kappa:=k+h^\vee ,
+\label{eq:sugawara}
+\end{equation}
+其中 $h^\vee$ 由 $\sum_{c,d}f^{acd}f^{bcd}=h^\vee\delta^{ab}$ 定义（对偶 Coxeter 数；
+$SU(N)$ 时 $h^\vee=N$，$\mathfrak{sl}_2$ 时 $h^\vee=2$）。法序去掉的是同一点的自收缩，
+其系数正是 $k$。
+
+\emph{第一步：}由 \eqref{eq:ope} 与 $\sum_{c,d}f^{acd}f^{bcd}=h^\vee\delta^{ab}$ 直接收缩可得
+$[L_n,J^a_m]=-mJ^a_{m+n}$（电流是共形权 $1$ 的原初场）。这一步同时说明
+$T$ 的系数必须取 $1/(2\kappa)$ 而不是 $1/(2k)$：只有 $\kappa=k+h^\vee$ 才能消掉
+单收缩产生的 $f f$ 项。
+
+\emph{第二步：}计算 $\langle T(z)T(0)\rangle$。用 \eqref{eq:ope} 作 Wick 收缩，两项贡献：
+双收缩（两个 $J$ 各自配对）给 $\dfrac{2k^2d}{z^4}$，
+单收缩（结构常数通道，用 $\sum_{c,d}f^{acd}f^{bcd}=h^\vee\delta^{ab}$）给
+$\dfrac{2kh^\vee d}{z^4}$，其中 $d=\dim G$。代入 \eqref{eq:sugawara} 得
+\begin{equation}
+\langle T(z)T(0)\rangle
+=\frac{1}{4\kappa^2}\cdot\frac{2kd\,(k+h^\vee)}{z^4}+\cdots
+=\frac{c/2}{z^4}+\cdots,
+\qquad
+c=\frac{k\,d}{k+h^\vee}=\frac{k\dim G}{k+h^\vee}.
+\label{eq:ccentral}
+\end{equation}
+（上式中间一步用到 $2k^2d+2kh^\vee d=2kd(k+h^\vee)$。完整算符乘积展开还给出 $T$ 的
+$1/z^2$ 项与 Virasoro 交换关系 $[L_m,L_n]=(m-n)L_{m+n}+\frac{c}{12}m(m^2-1)\delta_{m+n,0}$；
+这两步是标准计算，见 [河野 p.12，命题 1.7] 与 [上野 \S2.2.1]；上式是我们按同一约定重算的中间系数 \ours。）
+
+\emph{两个核对：}
+(i) $\mathfrak{sl}_2$、$k=1$：$c=3k/(k+2)=1$。$SU(2)_1$ 等价于一个自由玻色子（自对偶半径），
+其 $c=1$，吻合；这也解释了为什么 $k=1$ 的 Jones 多项式与量子 $SU(2)$ 在 $q=e^{2\pi\ii/3}$ 处的
+基本表示给出同一套数。
+(ii) $k\to\infty$：$c\to d$，即 $d$ 个自由玻色子。这与原文 p.361 的
+“the large $k$ limit of $c$ is exactly $d$” 一致 \src{361}。
+
+\paragraph{D7.3：最高权表示与共形权}
+
+最高权表示 $H_{k,\lambda}$（$\lambda\in P_+$ 支配整权）由
+\[
+J^a_n v=0\ (n>0),\qquad J^a_0v=t^a_\lambda v,\qquad K v=k v
+\]
+生成（Verma 模 $M_{k,\lambda}$ 对零向量取商）。由 \eqref{eq:sugawara}，
+\begin{equation}
+L_0=\frac{1}{2\kappa}\Big(\sum_a t^a_\lambda t^a_\lambda+2\sum_{n>0}\sum_a J^a_{-n}J^a_n\Big)
+\ \Longrightarrow\
+L_0v=\frac{C_2(\lambda)}{2\kappa}v,
+\qquad C_2(\lambda)=(\lambda,\lambda+2\rho),
+\end{equation}
+即在最高权向量上
+\begin{equation}
+h_\lambda=\frac{(\lambda,\lambda+2\rho)}{2(k+h^\vee)} .
+\label{eq:hlambda}
+\end{equation}
+对 $SU(2)$：$\lambda=2j$，$C_2=2j(j+1)$，故 $h_j=\dfrac{j(j+1)}{k+2}$。
+$\mathfrak{sl}_2$ 上 $h_{1/2}=3/[4(k+2)]$；$k=1$ 时 $h_{1/2}=1/4$，与 $SU(2)_1$ 自由玻色子
+的顶点算子权 $1/4$ 一致，可作为 \eqref{eq:hlambda} 的核对。
+\ours
+
+\paragraph{D7.4：共形块与三点维数}
+
+定义（与 [河野 p.19--20] 一致）：对带 $n$ 个标记点 $P_i$、标记表示 $\lambda_i$ 的紧黎曼面 $\Sigma$，
+\begin{equation}
+\cH_\Sigma(\vec\lambda)
+=\Big(\bigotimes_{i=1}^n H_{k,\lambda_i}\Big)^{\mathfrak g(\Sigma)},
+\qquad
+\mathfrak g(\Sigma)=\mathfrak g\otimes\cO\big(\Sigma\setminus\{P_i\}\big),
+\label{eq:blocks}
+\end{equation}
+即：对逐点取值的 $\mathfrak g$ 作用不变的那部分。等价地，
+$\cH_\Sigma(\vec\lambda)=\mathrm{Hom}_{\mathfrak g(\Sigma)}\big(\bigotimes_iH_{k,\lambda_i},\CC\big)$。
+对 $g=0$，$\mathfrak g(\Sigma)=\mathfrak g[t]$（多项式映射），于是“不变”指对
+$\mathfrak g\otimes t^m$（$m\ge0$）与对角 $\mathfrak g$ 都不变。
+式 \eqref{eq:blocks} 与原文“Ward 恒等式的解空间”一致：不变性正是 Ward 恒等式
+（见 D7.5 的推导），而“解空间”是它的对偶 \ours。
+
+三点：$\dim\cH_{S^2}(\lambda_1,\lambda_2,\lambda_3)=N_{\lambda_1\lambda_2\lambda_3}$
+（原文 (4.36) 的同一对象）。$SU(2)$ 的判据是
+\begin{equation}
+N_{j_1j_2j_3}\ne0
+\iff
+|j_1-j_2|\le j_3\le j_1+j_2
+\ \text{且}\
+j_1+j_2+j_3\le k .
+\label{eq:threepoint}
+\end{equation}
+第一组是普通三角不等式，第二组是能级截断。截断的来源是零向量（null vector）：
+$H_{k,\lambda}$ 在层级 $d=k-\lambda+1$ 处有一个零向量，它在不变张量上的作用给出一个
+“不能全为零”的条件；三个零向量同时要求，就得到 $j_1+j_2+j_3\le k$ \ours
+（一般 $G$ 的版本见 [河野 命题 1.15，p.22]）。
+核对：$k=1$ 只有 $j=0,\frac12$，(0,0,0) 与 (0,$\frac12$,$\frac12$) 及其置换给出 1，
+而 $(\frac12,\frac12,\frac12)$ 因 $\frac32>1$ 给 0——这正是第 \ref{sec:verlinde} 节算出的
+$N_{111}=0$；$k=2$ 时 $(\frac12,\frac12,1)$ 给 1，与 $\frac12\otimes\frac12=0\oplus1$ 吻合。
+
+\paragraph{D7.5：KZ 方程}
+
+\emph{第 1 步（原初场 OPE）：}原初场 $\phi_\lambda$ 满足
+\begin{equation}
+J^a(z)\phi_\lambda(w)\sim\frac{t^a_\lambda}{z-w}\phi_\lambda(w),
+\qquad
+T(z)\phi_\lambda(w)\sim\frac{h_\lambda}{(z-w)^2}\phi_\lambda(w)+\frac{1}{z-w}\partial_w\phi_\lambda(w).
+\end{equation}
+
+\emph{第 2 步（Ward 恒等式）：}对上式取关联函数，
+\begin{equation}
+\langle T(z)\prod_i\phi_i(z_i)\rangle
+=\sum_i\Big[\frac{h_i}{(z-z_i)^2}+\frac{1}{z-z_i}\partial_{z_i}\Big]
+\langle\prod_i\phi_i\rangle .
+\label{eq:ward}
+\end{equation}
+
+\emph{第 3 步（用 Sugawara 重算左边）：}把 \eqref{eq:sugawara} 代入左边，
+对每个 $\phi_i$ 收缩一个 $J$，得
+\begin{equation}
+\langle T(z)\prod_i\phi_i\rangle
+=\frac{1}{2\kappa}\Big[\sum_{i\ne j}\frac{\Omega_{ij}}{(z-z_i)(z-z_j)}
++\sum_i\frac{C_2(\lambda_i)}{(z-z_i)^2}\Big]\langle\prod_i\phi_i\rangle ,
+\qquad \Omega_{ij}=\sum_a t^a_it^a_j .
+\label{eq:sugawara-ward}
+\end{equation}
+（双极点项用 $h_i=C_2(\lambda_i)/(2\kappa)$ 与 \eqref{eq:hlambda} 完全吻合；
+这里没有出现 $k$ 的自收缩项，因为它已被 \eqref{eq:sugawara} 的法序减掉 \ours。）
+
+\emph{第 4 步（比较单极点）：}在 $z=z_i$ 处，\eqref{eq:ward} 的单极点系数是 $\partial_{z_i}$，
+而 \eqref{eq:sugawara-ward} 的同一系数是
+$\frac{1}{2\kappa}\cdot2\sum_{j\ne i}\frac{\Omega_{ij}}{z_i-z_j}$（因子 2 因为双重和把 $(i,j)$ 与 $(j,i)$ 各算一次）。
+两者相等给出
+\begin{equation}
+\kappa\,\partial_{z_i}\Psi=\sum_{j\ne i}\frac{\Omega_{ij}}{z_i-z_j}\Psi,
+\qquad \kappa=k+h^\vee .
+\label{eq:kz}
+\end{equation}
+这就是 KZ 方程。原文从未写出它；它在教材里的位置是“共形块丛 $\mathcal{E}_\lambda\to\mathrm{Conf}_n(\mathbb{CP}^1)$
+上的 KZ 联络 $\nabla=\dd-\sum_iL^{(i)}_{-1}\dd z_i$ 的水平截面方程”
+[河野 p.25--29，命题 1.17--1.18]。
+
+\emph{核对（$n=2$）：}对 $SU(2)$ 的 $j\otimes j$ 单态块，$\Omega_{12}$ 的特征值是
+$-C_2(j)=-2j(j+1)$（因为 $C_2(j\otimes j)=2C_2(j)+2\Omega$，而 $C_2(0)=0$），
+代入 \eqref{eq:kz} 得
+\[
+\partial_{z_1}\Psi=-\frac{2j(j+1)}{\kappa}\frac{\Psi}{z_1-z_2}
+\ \Longrightarrow\
+\Psi\propto(z_1-z_2)^{-2j(j+1)/\kappa}=(z_1-z_2)^{-2h_j},
+\]
+这正是二点函数 $\langle\phi_j(z_1)\phi_j(z_2)\rangle=(z_1-z_2)^{-2h_j}$。$\kappa$ 必须是
+$k+h^\vee$ 而不是 $k$，否则这个核对差因子 $(k+2)/k$。\ours
+
+\begin{keypoint}
+\textbf{$\partial_z$ 还是 $\partial_{\bar z}$？} 教材与综述常把 KZ 写成
+$\kappa\,\partial_{\bar z_i}\Psi=\sum_{j\ne i}\Omega_{ij}/(\bar z_i-\bar z_j)\Psi$。
+那不是另一个方程，而是\textbf{反全纯块}的方程（等价地：把 \eqref{eq:kz} 复共轭）。
+本文 \S3.2 的联络是 $\bar\partial$ 型（$\cH_\Sigma(J)$ 随 $J$ 全纯），所以在那边的语言里
+出现 $\partial_{\bar J}$；换到 $g=0$ 的坐标 $z_i$ 上，全纯块满足的正是 \eqref{eq:kz}。
+混用两种写法会在 $\Omega$ 的符号上出错，进而使 $q$ 变成 $q^{-1}$。
+\end{keypoint}
+
+\paragraph{D7.6：融合规则与 Verlinde 代数}
+
+固定能级 $k$，把可积表示作为基 $v_i$，定义乘法
+\begin{equation}
+v_i\,v_j=\sum_k N_{ij}{}^k\,v_k ,
+\qquad N_{ij}{}^k=\dim\cH_{S^2}(R_i,R_j,\bar R_k),
+\label{eq:fusionalgebra}
+\end{equation}
+其中 $N_{ij}{}^k=N_{ijk}$（用对偶度规 $g_{k\bar k}$ 升降指标）。这个乘法交换、结合：
+交换性来自 $S^2$ 的置换对称，结合性来自四点块经两种结合方式（$s$-道与 $t$-道）分解的
+相容性——后者正是 BPZ 方程、也就是 KZ 方程 \eqref{eq:kz} 的平坦性所保证的 \ours。
+$S$ 矩阵把 \eqref{eq:fusionalgebra} 对角化：
+\begin{equation}
+N_{ij}{}^k=\sum_l\frac{S_{il}S_{jl}S_{kl}}{S_{0l}},
+\qquad
+S_{jl}=\sqrt{\frac{2}{k+2}}\,\sin\frac{\pi(2j+1)(2l+1)}{k+2}
+\ \ (SU(2)),
+\label{eq:fusion}
+\end{equation}
+$S$ 的显式形式由模变换 $\tau\to-1/\tau$ 作用在仿射特征标上得到
+[\eqref{eq:smatrix}，上野 \S5.5 p.103--106；河野 (1.42)]；把 \eqref{eq:fusion}
+从“定义”变成“定理”的那一步（为什么这个 $S$ 一定对角化融合规则）就是 Verlinde 公式，
+推导见第 \ref{sec:verlinde} 节。
+
+\paragraph{D7.7：小 $k$ 显式表与三个自洽检验}
+
+把可积判据 $2j\le k$ 与公式 $h_j=\dfrac{j(j+1)}{k+2}$、$c=\dfrac{3k}{k+2}$
+（$SU(2)$，$\mathfrak{sl}_2$ 归一化下 $h_j=C_2(j)/(2\kappa)$、$C_2(j)=2j(j+1)$）列成表：
+
+\begin{center}
+\small
+\begin{tabular}{@{}clcccc@{}}
+\toprule
+$k$ & 可积 $j$ & 表示个数 & $c=3k/(k+2)$ & $h_j$ & $\sum_jS_{0j}^{\,2}$ \\
+\midrule
+1 & $0,\frac12$ & 2 & 1 & $0,\ \frac14$ & 1 \\
+2 & $0,\frac12,1$ & 3 & $\frac32$ & $0,\ \frac{3}{16},\ \frac12$ & 1 \\
+3 & $0,\frac12,1,\frac32$ & 4 & $\frac95$ & $0,\ \frac{3}{20},\ \frac25,\ \frac34$ & 1 \\
+4 & $0,\dots,2$ & 5 & 2 & $0,\ \frac18,\ \frac13,\ \frac58,\ 1$ & 1 \\
+5 & $0,\dots,\frac52$ & 6 & $\frac{15}{7}$ & $0,\ \frac{3}{28},\ \frac27,\ \frac{15}{28},\ \frac67,\ \frac54$ & 1 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+三个检验：
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{大 $k$ 极限。}$c=3k/(k+2)\to3=\dim\mathfrak{su}(2)$，正是本文 p.361 说的
+“大 $k$ 时 $c$ 恰好趋于 $d$”\src{361}。这一步说明 $c$ 的公式与三维一侧的“自由度计数”相容。
+\item \textbf{单位分解。}$\sum_jS_{0j}^{\,2}=1$ 对每个 $k$ 都成立（表末列）；
+因为 $S$ 是酉矩阵的第一行，$\sum_jS_{0j}S_{0j}^*=1$ 而 $S$ 实对称。
+它的物理含义是“单位算符的量子维数之和等于真空的量子维数 $=1$”。
+\item \textbf{能级平移。}把 $k$ 换成 $k+h^\vee=k+2$ 会同时改变 $c$ 与 $h_j$；
+$h_j$ 的分母正是 $k+2$——这不是约定，而是 Sugawara 构造里 $\kappa=k+h^\vee$ 的直接后果
+（见 D7.2、D7.3）。若某人给出的公式用 $k$ 作分母，他把“裸能级”与“有效能级”混了。
+\end{enumerate}
+
+\begin{keypoint}
+\textbf{为什么 $SU(2)_k$ 的可积表示正好是 $k+1$ 个？}
+把 $2j\le k$ 写成 $j=\frac{m}{2}$、$m=0,1,\dots,k$：每个整数 $m$ 对应一个可积表示，
+所以恰好 $k+1$ 个。表里 $k=1$ 有 2 个、$k=5$ 有 6 个，正是 $k+1$。
+这个数在几何上等于 $\cH_{T^2}$ 的维数，也就是第 \ref{sec:surgery} 节里 $S$ 矩阵的大小
+（$k+1$ 阶），还等于 Verlinde 公式里求和项的个数——三个“$k+1$”是同一个数。
+\end{keypoint}
+
+\subsection{与其他来源的对照}
+
+\begin{center}
+\small
+\begin{tabular}{@{}p{2.6cm}p{3.4cm}p{3.6cm}p{3.2cm}@{}}
+\toprule
+对象 & 本文 & 河野 & 上野 \\
+\midrule
+能级记号 & $k$（(1.3)） & $k$ & $\ell$ \\
+中心荷 & 只给 $c$，大 $k$ 极限为 $d$（p.361） & $c=3k/(k+2)$（$\mathfrak{sl}_2$，p.12） & $c_v$（\S2.2）\\
+共形权 & $h_R$（p.380 脚注 11） & 由 $L_0$ 给出（p.12） & $h_\lambda$（\S2.2）\\
+联络 & 射影平坦，无显式式（p.370） & KZ 联络 $\nabla$（p.25--29） & KZ 方程（\S6.3，书 p.129）\\
+共形块 & 空间 $\cH_\Sigma$ & $H(p,\lambda)$ 有限维（p.19--22） & $V^\dagger_\lambda(X)$（\S3.1）\\
+$S$ 矩阵 & (4.39) 只给 $SU(2)$ & (1.42) & (5.29)(5.30)，书 p.103 \\
+$q$ & $e^{2\pi\ii/(N+k)}$（(4.21)） & 未显写 & $e^{2\pi\ii/(\ell+h^\vee)}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Moore 的 TASI 讲义把同一套东西放在“圈群表示”一章（[Moore p.114--129]），
+优点是把 $S$ 矩阵与 Kac--Weyl 特征标公式放在一起；Schottenloher 第 11 章只讲
+Verlinde 公式的几何侧（共形块维数），不讲 KZ 的推导。要复算本章的每一步，
+河野 p.8--29 是最完整的路。
+
+\subsection{陷阱与约定}
+
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{裸能级 $k$ 与有效能级 $k+h^\vee$。} 可积判据 \eqref{eq:threepoint} 用裸 $k$
+（$2j\le k$），而 $c$、$h_\lambda$、$q$ 的公式里出现 $k+h^\vee$。本文 p.359 用另一种写法：
+单圈修正把 $k$ 平移为 $k+c_2(G)/2$，$SU(N)$ 有 $c_2(SU(N))=2N$，故平移量是 $N=h^\vee$
+\src{359}。两种写法是同一件事，但\textbf{不能把 $k+h^\vee$ 代进可积判据}。
+\item \textbf{$c_2(G)$ 与 $h^\vee$ 不是两个不同的数。} 对 $SU(N)$，$c_2=2N$、$h^\vee=N$，
+所以 $c_2/2=h^\vee$；对例外群这个等式仍成立（$c_2(\mathfrak g)=2h^\vee$ 按本章的归一化）。
+若在 $SU(N)$ 的公式里把 $c_2/2$ 写成 $N$、又在别处把 $h^\vee$ 写成 $N$，看似一致；
+换成 $SO(N)$ 就会出错（$h^\vee=N-2$，而 $c_2/2$ 也是 $N-2$，仍一致，但 $SU(N)$ 的 $N$
+与 $SO(N)$ 的 $N$ 含义不同）。
+\item \textbf{不变型的归一化决定 $\Omega$ 的特征值。} 本章取长根平方为 $2$（与 STYLE 一致），
+于是 $\mathfrak{sl}_2$ 基本表示的 Casimir 是 $3/2$、单态上 $\Omega_{12}=-2j(j+1)$，
+KZ 核对才成立。若改用 $\sigma^a/2$（$\Tr(t^at^b)=\frac12\delta^{ab}$）而不改 $\kappa$，
+所有 Casimir 都小一半，$n=2$ 核对会差因子 2——这是本节最容易踩的坑。
+\item \textbf{$\mathrm{Tr}$ 的定义。} 本文的 $\mathrm{Tr}$ 是定义表示（$SU(N)$ 的 $N$ 维）的迹，
+且归一化由 $k\in\ZZ$ 唯一固定（脚注 1，\src{353--354}）。河野的 CS 泛函
+$\mathrm{CS}=\frac{1}{8\pi^2}\int\mathrm{Tr}(A\dd A+\frac23A^3)$ 与本文 $L$ 差 $2\pi k$
+（第 \ref{sec:cs} 节已给换算），不要在 $c$ 的公式里再用河野的 $\mathrm{CS}$。
+\item \textbf{$q$ 的三个写法。} $q=e^{2\pi\ii/(k+h^\vee)}$（本文 $SU(N)$ 即 $e^{2\pi\ii/(N+k)}$）；
+若用 $q=e^{2\pi\ii\tau}$ 并让 $\tau$ 取特殊值得到单位根，注意 $\tau$ 与 $q$ 的对应是
+$q=e^{2\pi\ii\tau}$ 而不是 $e^{\pi\ii\tau}$；量子群文献常用 $q=e^{\pi\ii/(k+h^\vee)}$，
+差一个平方根，会使 $S$ 矩阵差一个相位。
+\item \textbf{$\kappa$ 出现在 KZ 的分母，$k$ 出现在可积判据。} 记法上建议：$k$ 只用于
+CS 作用量与截断，$\kappa=k+h^\vee$ 只用于 Virasoro/KZ。
+\end{enumerate}
+
+\subsection{练习}
+
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{（复算）} 用 \eqref{eq:ccentral} 算 $SU(3)_k$ 的中心荷，并对 $k=1$ 与
+“两个自由玻色子”的 $c=2$ 对照。
+\item \textbf{（复算）} 用 $h_j=j(j+1)/(k+2)$ 写出 $k=2$ 时 $j=0,\frac12,1$ 的共形权，
+再用 (4.39) 算 $S_{0j}$，验证 $\sum_j(S_{0j})^2=1$。
+\item \textbf{（推导）} 由 \eqref{eq:ope} 出发，补出 \eqref{eq:ccentral} 中
+“单收缩给 $2kh^\vee d/z^4$”这一步的指标缩并（提示：用
+$\sum_{c,d}f^{acd}f^{bcd}=h^\vee\delta^{ab}$）。
+\item \textbf{（推导）} 用 \eqref{eq:kz} 的 $n=2$ 情形重推二点函数，并说明为什么
+$\kappa$ 必须是 $k+h^\vee$ 才能得到 $(z_1-z_2)^{-2h_j}$。
+\item \textbf{（推导）} 对 $SU(2)$ 验证 $C_2(j\otimes j)=2C_2(j)+2\Omega$，并由此得出
+单态上 $\Omega=-2j(j+1)$。
+\item \textbf{（判断）} “KZ 方程就是本文 \S3.2 那条射影平坦联络。”——这句话对不对？
+（提示：只对 $g=0$ 且有标记点的情形；$g\ge1$ 无标记点时对应的是 Hitchin 联络。）
+\item \textbf{（判断）} “可积条件 $2j\le k$ 由 Borel--Weil--Bott 定理推出。”——对还是错？
+（提示：BWB 给 $H^0(G/T,\cL_\lambda)=R_\lambda$，与 $k$ 无关；$2j\le k$ 来自仿射代数。）
+\end{enumerate}
+
+\subsection{本章边界}
+
+\begin{boundary}
+\begin{itemize}[leftmargin=1.4em]
+\item \textbf{原文给出}：共形块与 $\cH_\Sigma$ 的等同（p.366, 370）、Ward 恒等式的名字与
+genus $0$ 唯一性（p.370）、可积性限制（p.373）、大 $k$ 极限 $\cH=\mathrm{Inv}(\otimes R_i)$（p.374）、
+$c$ 与有限多个可积表示的存在（p.361, 384）。
+\item \textbf{我们补的}：\eqref{eq:affine}--\eqref{eq:fusion} 的全部公式与推导（D7.1--D7.6）、
+\eqref{eq:ccentral} 的中间系数、\eqref{eq:kz} 的四步推导与 $n=2$ 核对、三点维数判据
+\eqref{eq:threepoint} 的零向量论证、符号兑换表与六条陷阱。
+\item \textbf{未证}：Virasoro 交换关系的完整算符乘积展开（只给两项系数与标准引用）；
+一般 $G$ 的三点维数判据（只对 $SU(2)$ 给出并核对）；null vector 论证的严格版本
+（我们只给“三个零向量不能全满足”的重建，未逐条验证 \src{河野 p.22} 的完整条件）；
+KZ 的平坦性（$g=0$ 的 KZ 联络平坦是经典 Yang--Baxter 方程，本章未证，只引用
+[河野 p.29，命题 1.18]）。
+\end{itemize}
+\end{boundary}

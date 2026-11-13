@@ -1,0 +1,279 @@
+\section{Wilson 线、穿刺点与 Borel--Weil--Bott}
+\label{sec:wilson}
+
+\subsection{这一章要解决什么}
+\label{sec:ch6-intro}
+
+第 5 章处理的是“空”的曲面：量子 Hilbert 空间是 $H^0(\cM_J,\cL^{\otimes k})$，不带任何插入，典范性只到射影。三维图像里还可以有 Wilson 线：沿闭合曲线 $C\subset M$ 取表示 $R$ 的迹，
+\[
+W_R(C)=\Tr_R\,\mathrm P\exp\oint_C A ,
+\]
+这就是原文第 1 章的 (1.5)（p.373 回指为 “the Wilson lines (1.5)” \src{373}）。把 $M=\Sigma\times\mathbb R$ 沿 $\Sigma$ 切开时，一条沿时间方向走的 Wilson 线在 $\Sigma$ 上留下一个点 $P$，并在这个点上带一个表示 $R$ \src{371}。于是问题变成：给定带标记点 $(P_i,R_i)$ 的曲面，量子化给出什么？
+
+原文的回答分四步，本章的任务是把这四步拆开、指出每一步的证据级别。四个问题：
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=2pt]
+\item[(Q1)] \textbf{线为什么变成点？} 原文只给物理图像：Wilson 线是“静态非阿贝尔电荷”，在约束方程里表现为额外源项 \src{371}。这一步没有数学证明，也不需要——它是正则量子化的图像。
+\item[(Q2)] \textbf{约束 (3.4) 为什么不能经典求解？} 原文给了两条理由：右端是非对易算符，以及点源使解在 $P_s$ 处奇异 \src{372}。这是本章最实的部分。
+\item[(Q3)] \textbf{“量子群”是结果还是猜测？} p.372 的整段都带 hedging（“would have to be”“presumably”“it seems likely”），原文没有构造任何量子群 \src{372}。本章逐词标注。
+\item[(Q4)] \textbf{Borel--Weil--Bott 怎样把表示 $R_i$ 换成相空间，可积性 $2j\le k$ 又从哪里来？} 原文用 BWB 把每个 $R_i$ 实现为旗流形 $G/T$ 上的辛流形，再扩大相空间 \src{372}；但 $2j\le k$ 不是 BWB 的推论，而是仿射代数的可积性条件，原文只在括号里点了 “integrable” 一词 \src{372}，具体构造在 [河野 命题 1.5，p.11]。
+\end{enumerate}
+
+结论先给：本章的四个环节里，(Q1) 是物理图像，(Q2) 是本讲义可以完整推导的（D6.1、D6.2），(Q3) 是明确的猜测，(Q4) 的前半是定理（BWB）、后半是补定义（扩大相空间）、再后半是引 Segal（量子化 = 共形块）。可积性 $2j\le k$ 则完全在原文的论证之外，它属于第 7 章的仿射代数。把这几件事分清，是本章的主要目的。
+
+\subsection{原文说了什么：p.371--373 的七段话}
+\label{sec:ch6-quotes}
+
+\paragraph{(a) 声明：线留下点，点带表示。}原文在 \S3.3 开头把几何图像说清楚：
+\begin{quote}\small
+“the Wilson lines [\dots] pierce $\Sigma$ in some points $P_i$; associated with each such point is a representation $R_i$. Quantizing the Chern-Simons theory in the presence of the Wilson lines should give a Hilbert space [\dots] that is canonically associated with the oriented surface $\Sigma$ together with the choice of $P_i$ and $R_i$.” \src{371}
+\end{quote}
+注意两处措辞：“pierce” 是穿透，说的是三维的线穿过二维曲面；“should give” 是应然，不是已然。原文紧接着说共形场论里对应的是“在 $P_i$ 插入 $R_i$ 表示的原初场”，并且 “there is an algebra-geometric description of this space [16]” \src{371}——这已经把 BWB 之后的答案（= 共形块）提前说了，但没有给构造。
+
+\paragraph{(b) 约束变成算符值方程。}为什么线会影响约束？原文的解释只有一句：
+\begin{quote}\small
+“the Wilson lines correspond to static non-abelian charges which show up as extra terms in the constraint equations. So (3.3) is replaced by (3.4).” \src{371}
+\end{quote}
+(3.4) 是
+\begin{equation}
+\frac{k}{8\pi}\,\varepsilon^{ij}F^a_{ij}(x)
+=\sum_{s=1}^{r}\delta^2(x-P_s)\,T^a_{(s)},
+\qquad a=1,\dots,\dim G,
+\label{eq:ch6-gauss}
+\end{equation}
+其中 $P_s$ 是放置静态外电荷的点，$T^a_{(s)}$ 是第 $s$ 个电荷的群生成元 \src{371}。原文随即承认这条路不好走：“a naive attempt to quantize (3.1) with the generalized constraints (3.4) would run into extremely unpleasant difficulties” \src{371}。
+
+\paragraph{(c) 两条不能经典求解的理由。}p.372 开头是本段的核心：
+\begin{quote}\small
+“it is hard to make sense of (3.4) as constraints in the classical theory; the solution [\dots] of (3.4) cannot be an ordinary c-number connection, since non-commuting operators appear on the right-hand side.” \src{372}
+\end{quote}
+这句话里其实有两个独立的困难，原文只用了一个 “since” 把它们并在一起，本章 \S\ref{sec:ch6-gaps} 把它们分开：(i) 右端 $T^a_{(s)}$ 是作用在表示空间上的算符，不是数；(ii) 右端有 $\delta^2$ 源，解 $A$ 在 $P_s$ 处必然奇异，不能是 $\Sigma$ 上的整体联络。两条困难的性质不同：第一条是“算符值”，第二条是“奇异性”；后者在阿贝尔情形也存在。
+
+\paragraph{(d) “量子群”整段都带 hedging。}紧接着是常被引用的一段：
+\begin{quote}\small
+“It is clear that to solve (3.4), [\dots] would have to be some sort of `q-number connection', whose holonomy would presumably be an element of a `quantum group', not an ordinary classical group. Indeed, it seems likely that the theory of quantum groups [35] can be considered to arise in this way.” \src{372}
+\end{quote}
+逐词看：“would have to be” 是必要条件式的猜测，“presumably” 是或然，“it seems likely” 是倾向性判断。原文没有定义 q-number connection，没有写出它的全纯性，也没有证明它的和乐落在某个量子群里。这是本章第三个要避免的误读：把这段话读成“Witten 构造了量子群”或“Chern--Simons 给出了量子群的构造”。文献 [35] 是 Drinfeld 的量子群工作（综述见 \cite{drinfeld1986}）；用量子群构造三维不变量的是后来的 Reshetikhin--Turaev（\cite{rt1991}），那是另一个方向，不是这里的 “q-number connection”。
+
+\paragraph{(e) BWB：把表示变成旗流形上的辛流形。}原文的转折点在这里：
+\begin{quote}\small
+“The Borel-Weil-Bott theorem gives a canonical way to exhibit for every irreducible representation $R$ of a compact group $G$ a problem in classical physics, with $G$ symmetry, such that the quantization of this classical problem gives back $R$ as the quantum Hilbert space. One introduces the `flag manifold' $G/T$, with $T$ being a maximal torus in $G$, and for each representation $R$ one introduces a symplectic structure $\omega_R$ on $G/T$, such that the quantization of the classical phase space $G/T$, with the symplectic structure $\omega_R$, gives back the representation $R$.” \src{372}
+\end{quote}
+这段话包含一个真定理（BWB 给出 $H^0(G/T,L_\lambda)=R_\lambda$）和一个未写的细节（$\omega_R$ 的具体公式、$\lambda$ 与 $\rho$ 的记账）。后者是 \S\ref{sec:ch6-gaps} 的 G6.4。
+
+\paragraph{(f) 扩大相空间。}原文随后给出构造：
+\begin{quote}\small
+“We extend the phase space [\dots] of $G$ connections on $\Sigma$ by including at each marked point $P_i$ a copy of $G/T$, with the symplectic structure appropriate to the $R_i$ representation. The quantum operators $T^{(a)}$ that appear on the right of (3.4) can then be replaced by the classical functions on $G/T$ whose quantization would give back the $T^{(a)}$. The constraints (3.4) then make sense as classical equations [\dots] one gets a finite dimensional phase space $M_{P_i,R_i}$ that incorporates the static charges; a point on this space is a flat $G$ connection on $\Sigma$ with a reduction of structure group to $T$ at the points $P_i$.” \src{372}
+\end{quote}
+这里有两个关键句。“replaced by the classical functions” 是 BWB 的逆用：把算符换成经典函数，再让约束成为经典方程。“reduction of structure group to $T$ at the points $P_i$” 是相空间的几何描述：在 $P_i$ 处丛的 structure group 从 $G$ 约化到 $T$。
+
+\paragraph{(g) 量子化给出共形块，以及可积性括号。}原文接着说：
+\begin{quote}\small
+“Upon picking an arbitrary conformal structure on $\Sigma$, this phase space can be quantized. In this way one gets exactly Segal's description of the space of conformal blocks in current algebra in a general situation with primary fields in the $R_i$ representation inserted at the points $P_i$.” \src{372}
+\end{quote}
+随后是一个长括号，专门讲可积性：
+\begin{quote}\small
+“(In current algebra at level $k$, one only permits certain representations, the `integrable ones'. If one formally tries to include other representations, the Ward identities show that they decouple [36]. According to Segal, the analogous statement in algebraic geometry is that the appropriate line bundle over $M_{P_i,R_i}$ has no non-zero holomorphic sections unless the $R_i$ all correspond to integrable representations. For the Chern-Simons theory, this means that unless the representations $R_i$ are all integrable, the zero vector is the only vector in the physical Hilbert space.)” \src{372}
+\end{quote}
+这段把可积性说成“哪些表示允许”的筛选条件，但\emph{没有}给出判据 $2j\le k$；它只说“integrable”，并把没有截面的情形归给 Segal。具体判据见 \S\ref{sec:ch6-gaps} 的 G6.6。
+
+\paragraph{(h) 纲领：把 BWB 建进三维描述。}p.373 收尾：
+\begin{quote}\small
+“One should use the theorem to replace the Wilson lines (1.5) that appear in (1.6) with a functional integral over maps of the circle $S^1$ into $G/T$ (or actually an integral over sections of a $G/T$ bundle, twisted by the restriction to $S^1$ of the $G$-bundle $E$).” \src{373}
+\end{quote}
+“One should” 表明这是纲领而非已完成的构造；原文没有写这个泛函积分，也没有验证它与 (1.6) 等价。本章把它列为边界，而不是结果。
+
+\subsection{原文没说的细节：G6.1--G6.6}
+\label{sec:ch6-gaps}
+
+\paragraph{G6.1 线为什么变成点。}把 $M=\Sigma\times\mathbb R$ 沿 $\Sigma$ 切开，是在每个固定时刻取一张切片。一条“沿时间方向”的 Wilson 线在切片上只留下一个点 $P$；表示 $R$ 记在这个点上，因为沿线的平行移动算符的迹只在表示空间上有意义。原文说 Wilson 线 “pierce $\Sigma$ in some points $P_i$” \src{371}，正是这个图像。三维里更一般的链环会在切片上留下多个点（每个交点一个），每点带一个表示；原文把这种一般情形也写成 $(P_i,R_i)$，并在 p.373 的 (1.6) 里用它。
+
+原文没有说的细节有三条，本章明确限定：(i) 只考虑“静态直链”，即线沿时间方向、不自己打结、不与切片相切；一般链环的切割需要额外数据（framing、交点次序）。(ii) 切开后的点 $P_i$ 是带表示的标记点，不是带切向的标记点；后者（抛物结构的完整数据）原文没有出现。(iii) 表示 $R_i$ 取对偶与取伴随的差别，在“线有向”时影响 $P_i$ 处是 $R_i$ 还是 $R_i^*$；原文只写 $R_i$，未讨论定向。\ours{} 这三条限定保证本章的陈述与原文一致；超出这个范围的说法需要另行论证。
+
+\paragraph{G6.2 为什么 (3.4) 不能经典求解：两条独立的理由。}原文用一句 “since non-commuting operators appear on the right-hand side” 概括 \src{372}，但实际有两条困难，必须分开。
+
+第一条是\emph{算符值}。$T^a_{(s)}$ 作用在第 $s$ 个表示空间 $V_{R_s}$ 上；$\dim V_{R_s}>1$ 时它不是一个数。因此 \eqref{eq:ch6-gauss} 的右端是 $\bigotimes_s\operatorname{End}(V_{R_s})$ 中的算符，不是 $C^\infty(\Sigma)$ 中的函数。要“解出 $A$”，就得解一个右端为算符的方程；解出来的 $A$ 也只能是算符值对象。这就是原文说 “the solution [\dots] cannot be an ordinary c-number connection” 的意思 \src{372}。特别地，不同 $s$ 的 $T^a_{(s)}$ 作用在不同张量因子上，互相对易；但同一 $s$ 内部的 $a$ 指标不对易，$\sum_a\delta^2(x-P_s)T^a_{(s)}$ 是一个矩阵值分布。
+
+第二条是\emph{点源奇异}。即便把所有表示都取成一维（阿贝尔化），$\delta^2(x-P_s)$ 仍使解在 $P_s$ 奇异：对 $\bar\partial A=\delta_P$ 型方程，解在 $P$ 附近按 $1/(z-z_s)$ 发散。因此 $A$ 不是 $\Sigma$ 上的光滑联络，而是 $\Sigma\setminus\{P_s\}$ 上的平坦联络，在 $P_s$ 有指定留数。原文写 “a point on this space is a flat $G$ connection on $\Sigma$” \src{372}，严格说应是“$\Sigma\setminus\{P_i\}$ 上的平坦联络，且在 $P_i$ 的留数由 $T^a_{(s)}$ 决定”；原文的简写在物理上无害，但做数学时要补上。
+
+两条理由合起来给出正确的量子陈述：约束不是“解出经典 $A$”，而是作用在态上的条件 $\hat G^a(x)|\psi\rangle=0$（Dirac 量子化）。原文说 “a naive attempt to quantize (3.1) with the generalized constraints (3.4) would run into extremely unpleasant difficulties” \src{371}，指的就是直接把 (3.4) 当经典方程处理的困难。
+
+\paragraph{G6.3 “量子群”是猜测，不是结果。}p.372 那段话的三层 hedging 已在 \S\ref{sec:ch6-quotes} 逐词标出。这里补两点原文的背景与边界。第一，原文的 “q-number connection” 没有定义：一个“量子的联络”至少要有全纯性、规范变换、曲率的定义，才能在非交换代数里谈和乐；这些原文都没有 \src{372}。第二，“quantum group” 在 1989 年指的是 Drinfeld--Jimbo 的 Hopf 代数（\cite{drinfeld1986}），其特征是余交换性被破坏；原文猜想和乐是这种代数的元素，但没有说明是哪个量子群、在什么参数下、与 $q=e^{2\pi i/(k+h^\vee)}$ 的关系如何。
+
+需要区分的是：用量子群构造三维流形不变量是 Reshetikhin--Turaev 的框架（\cite{rt1991}），那里的量子群出现在\emph{表示范畴}（ribbon 范畴）里，用来给链环配不变量；原文这里猜的是\emph{联络的和乐}取值在量子群里。两者不是同一件事，不能互相引证。本章的立场是：原文这段话是全文最强的猜测之一，值得记下，但不能当作已建立的构造。
+
+\paragraph{G6.4 BWB 的精确内容：$\lambda$ 不加 $\rho$，$\rho$ 在 $K^{1/2}$ 里。}设 $G$ 紧连通单群，$T$ 极大环面，$B\supset T$ 为 Borel 子群；对支配整权 $\lambda$，令 $L_\lambda=G\times_B\mathbb C_\lambda$，其中 $B$ 通过 $T$ 的特征标 $\lambda$ 作用在纤维上（幂零部分作用平凡，故 $L_\lambda$ 实际上下降到 $G/T$ 上）。\textbf{Borel--Weil--Bott}：$H^0(G/T,L_\lambda)=R_\lambda$，且 $q>0$ 时 $H^q=0$（$w=e$ 的情形）；对其他 Weyl 群元素 $w$，$H^q(G/T,L_{w\cdot\lambda})$ 只在特定次数非零，给出 $R_\lambda$ 或其对偶。关键点是：\textbf{指标里的权就是 $\lambda$ 本身，没有 $\lambda+\rho$}。$\rho$ 出现在别处：$K_{G/T}=\wedge^{\mathrm{top}}T^*$ 满足 $K_{G/T}=L_{-2\rho}$，故半形式丛 $K^{1/2}=L_{-\rho}$；若采用半形式修正的几何量子化，预量子化线丛要取 $L_{\lambda+\rho}$，因为
+\[
+L_{\lambda+\rho}\otimes K^{1/2}=L_{\lambda+\rho}\otimes L_{-\rho}=L_\lambda ,
+\]
+于是量子 Hilbert 空间仍是 $H^0(L_\lambda)=R_\lambda$。换句话说：\emph{最终答案里 $\lambda$ 不加 $\rho$，但预量子化数据里带 $\rho$；$\rho$ 是半形式修正的记账，不是 BWB 的指标。}原文只写 “the symplectic structure $\omega_R$” \src{372}，没有区分这一层；本章把它补全，并在 \S\ref{sec:ch6-traps} 列为约定。
+
+辛形式的具体公式是轨道上的 Kirillov--Kostant--Souriau 形式：把 $G/T$ 与余伴随轨道 $\mathcal O_\lambda=G\cdot\lambda\subset\mathfrak g^*$ 等同（$\lambda$ 正则时 $\mathrm{Stab}(\lambda)=T$），在点 $\lambda$ 处
+\begin{equation}
+\omega_\lambda(X,Y)=\tfrac12\langle\lambda,[X,Y]\rangle,
+\qquad X,Y\in\mathfrak g,
+\label{eq:ch6-kks}
+\end{equation}
+其 de Rham 类 $[\omega_\lambda]=\lambda$（在 $H^2(G/T;\mathbb Z)$ 中，$\lambda$ 通过特征标视为整类）。$\lambda$ 正则时 $\omega_\lambda$ 非退化；$\lambda$ 在壁上（某 $\langle\lambda,\alpha^\vee\rangle=0$）时轨道退化为部分旗流形 $G/P_\lambda$，此时原文的 “$G/T$” 只是简写。\ours{} 这一条是 G6.4 的技术核心：BWB 的指标不带 $\rho$，而辛形式带 $\lambda$；两者不能混。
+
+以 $\operatorname{SU}(2)$ 检验：$\lambda=2j$，$G/T=\mathbb P^1$，$L_{2j}=\mathcal O(2j)$，$H^0$ 的维数 $2j+1=\dim R_j$；$\int_{\mathbb P^1}\omega_{2j}/2\pi=2j$，与 $[\omega_\lambda]=\lambda$ 一致（[Moore p.165，B.34、B.36]）。这一检验同时固定了 \eqref{eq:ch6-kks} 的归一化：$\tfrac12$ 因子不可省，否则面积为 $4j$ 而不是 $2j$。
+
+\paragraph{G6.5 扩大相空间 $M_{P_i,R_i}$ 的两种描述。}原文给的是“平坦 $G$ 联络 + 各 $P_i$ 处结构群约化到 $T$” \src{372}；严格版本有两种等价描述。
+
+其一是\textbf{辛约化}：取 $\mathcal A\times\prod_i\mathcal O_{\lambda_i}$，其中 $\mathcal A$ 是 $\Sigma$ 上 $G$ 联络的空间、$\mathcal O_{\lambda_i}$ 是第 $i$ 个电荷的余伴随轨道；矩映射为
+\[
+\mu(A,\xi_1,\dots,\xi_r)=\Bigl(\frac{k}{8\pi}\varepsilon^{ij}F_{ij}+\sum_s\delta^2(\cdot-P_s)\,\xi_s\Bigr),
+\]
+$\mu^{-1}(0)/\mathcal G$ 就是 $M_{P_i,R_i}$。\eqref{eq:ch6-gauss} 正是 $\mu=0$ 的方程：原文的约束就是辛约化的矩映射方程，这一句把 \S\ref{sec:ch6-quotes} 的 (b) 与辛几何接上（[Moore p.92--93，式 (3.70)--(3.74)]；[河野 p.70--74] 的 Marsden--Weinstein 商是同一构造的无源情形）。
+
+其二是\textbf{抛物丛模空间}：“在 $P_i$ 处约化到 $T$” 在代数几何里的对应物是带抛物结构的稳定丛，其模空间记作 $\mathcal M_{P_i,R_i}$；Kähler 极化下的量子化给出共形块。河野书在讲链环时明确说“与上述路径积分相应的状态空间，由抛物向量丛的模空间理论定式化” [河野 p.74]；上野 \S5.6 系统地构造了抛物丛模空间 [上野 p.107--118]。原文的 “reduction to $T$” 与严格的“抛物结构（约化到 Borel/抛物子群）”之间有细微差别，见 \S\ref{sec:ch6-traps}。
+
+一个可检验的维数核对：$\dim M_{P_i,R_i}=(2g-2)\dim G+\sum_i\dim\mathcal O_{\lambda_i}$，其中 $\dim\mathcal O_\lambda=\dim G-\dim T-2\#\{\alpha>0:\langle\lambda,\alpha^\vee\rangle=0\}$。$g=0$、无源时维数为 $0$（原文 p.373 的球面例子与此一致）；加一个正则 $\operatorname{SU}(2)$ 源（$2j>0$）时维数为 $2$，正是 $G/T=\mathbb P^1$ 的维数。\ours{} 这个核对只用到 $\mu^{-1}(0)/\mathcal G$ 的维数公式，可作为“约化到 $T$”确实给出正确相空间的一个旁证。
+
+\paragraph{G6.6 $2j\le k$ 从哪里来：不是 BWB 的推论。}原文只说 “one only permits certain representations, the `integrable ones'” \src{372}，没有给判据。判据在仿射 Lie 代数里：\textbf{河野命题 1.5（p.11）}说，$k$ 为正整数、$\lambda$ 为满足 $0\le\lambda\le k$ 的整数时，零向量 $\chi=(E\otimes t^{-1})^{k-\lambda+1}v$ 满足 $N_+\chi=0$，$U(N_-)\chi$ 是 Verma 模的极大子模，商模 $H_{k,\lambda}$ 是不可约的 integrable highest weight module [河野 p.10--11]。对 $\operatorname{SU}(2)$，$\lambda=2j$，条件就是 $2j\le k$。
+
+为什么它不是 BWB 的推论：BWB 对\emph{任意}支配整权 $\lambda$ 都成立（$H^0(G/T,L_\lambda)=R_\lambda$），完全不涉及 level；$2j\le k$ 是“level 为 $k$ 的仿射代数有哪些可积最高权模”的条件，属于表示论，不属于 BWB。原文把它放在括号里，用 “integrable” 一词带过，正是因为它来自另一套机器。
+
+一般单群的判据是 $(\lambda,\theta^\vee)\le k$（$\theta^\vee$ 是最高根的对偶），即 $\lambda\in P_k$；上野写作 $P_\ell=\{\lambda\mid(\theta,\lambda)\le\ell\}$（$\ell$ 为 level）[上野 p.39]，Moore 对 $\operatorname{SU}(2)$ 写作 $0\le j\le k/2$ [Moore p.120]。三个来源的写法一致，只是 $\ell$ 与 $k$ 的记号不同。
+
+还要区分两个容易混的条件：三点融合 $\lambda_1+\lambda_2+\lambda_3\le2k$ 是三点函数非零的条件（河野命题 1.15，[河野 p.22--23]），不是单点可积性；后者是 $2j\le k$。前者容许“每个都不超过 $k$、但和超过 $k$”的情形，两者不能互相替代。
+
+\subsection{补出的推导：D6.1--D6.4}
+\label{sec:ch6-deriv}
+
+\paragraph{D6.1 从 Wilson 线到源项 (3.4)。}原文只说 Wilson 线“表现为约束方程的额外项” \src{371}，没有推导。这里补出 Hamiltonian 图像下的推导。
+
+\begin{derivation}[Wilson 线怎样变成 $\delta$ 源]
+把 $M=\Sigma\times\mathbb R$ 上的 Chern--Simons 理论写成 $3+1$ 分解：$A=A_0\,\dd t+A_\Sigma$，$A_0$ 是 Lagrange 乘子。作用量对 $A_0$ 变分给出 Gauss 约束
+\[
+\frac{\delta S}{\delta A_0^a(x)}
+=\frac{k}{8\pi}\varepsilon^{ij}F^a_{ij}(x)=0 ,
+\]
+这是无源情形 (3.3)。现在插入 Wilson 线 $W_R(C)=\Tr_R\,\mathrm P\exp\oint_C A$，$C$ 沿时间方向经过 $P\in\Sigma$。$A_0$ 只通过路径序指数中的 $\dd t\,A_0(P,t)$ 出现；对 $A_0^a(x)$ 变分，等于在路径序指数中插入一个生成元 $T^a$，并把时间积分定域到 $t=t_x$，空间上定域到 $P$：
+\[
+\frac{\delta W_R(C)}{\delta A_0^a(x)}
+=W_R(C)\;T^a\;\delta^2(x-P).
+\]
+把它放进作用量再对 $A_0$ 变分，就得到
+\[
+\frac{k}{8\pi}\varepsilon^{ij}F^a_{ij}(x)
+=\sum_s\delta^2(x-P_s)\,T^a_{(s)},
+\]
+即 (3.4) \src{371}。$\square$
+\end{derivation}
+
+这个推导解释了三件事，都是原文没有明说的。(i) 右端的 $\delta^2$ 来自“线在切片上是一个点”，不是人为加的源。(ii) 右端是算符，因为 $T^a$ 来自 Wilson 线路径序指数中的插入；表示 $R$ 的维数大于 $1$ 时它不可忽略。(iii) 多个电荷的项相加，因为多条线对 $A_0$ 的依赖是相乘的，变分给出求和。原文说 “static non-abelian charges” \src{371}，这里的“静态”正对应 $A_0$ 不含时间导数、线沿时间方向。
+
+\paragraph{D6.2 为什么不存在 c-number 解。}把 \eqref{eq:ch6-gauss} 当经典方程，要解的是 $A$。两条障碍分别检验：
+
+\emph{（一）算符值。}若某个 $R_s$ 的维数 $>1$，$T^a_{(s)}$ 是矩阵。设 $A$ 是 c-number 联络，则 $F(A)$ 是 c-number；方程要求 c-number 等于矩阵，无解。唯一例外是所有 $R_s$ 都一维（阿贝尔电荷），此时 $T^a_{(s)}$ 是数，方程退化为普通的“带点源的平坦性方程”。
+
+\emph{（二）点源奇异。}即使阿贝尔化，$\delta^2(x-P_s)$ 仍使解奇异：在 $P_s$ 附近，$A$ 的行为是 $A\sim c_s\,\dd\arg(z-z_s)$（$c_s$ 由 $T^a_{(s)}$ 与 $k$ 定），绕 $P_s$ 的和乐非平凡。因此 $A$ 不是 $\Sigma$ 上的整体联络，而是 $\Sigma\setminus\{P_s\}$ 上的平坦联络，在 $P_s$ 有指定和乐。原文说 “a point on this space is a flat $G$ connection on $\Sigma$ with a reduction of structure group to $T$ at the points $P_i$” \src{372}，严格的读法是：$\Sigma\setminus\{P_i\}$ 上的平坦联络，加上 $P_i$ 处和乐落在 $T$ 的条件（抛物结构）。
+
+两条障碍合起来的结论：\eqref{eq:ch6-gauss} 只能是算符方程，作用在量子态上；它的“解空间”不是某个 $A$ 的集合，而是“平坦联络 + 表示数据”的模空间 $M_{P_i,R_i}$。这正是原文用 BWB 扩大相空间的原因。
+
+\paragraph{D6.3 半形式修正：为什么最终指标是 $\lambda$ 而不是 $\lambda+\rho$。}这是 G6.4 的推导版，也是本章最容易被 $\rho$ 搞混的地方。
+
+\begin{derivation}[$\rho$ 属于 $K^{1/2}$，不属于 BWB 指标]
+\emph{第一步（$K_{G/T}$）.} $T^*(G/T)\cong G\times_T(\mathfrak g/\mathfrak t)^*$，其最高外幂是 $G\times_T\wedge^{\mathrm{top}}(\mathfrak g/\mathfrak t)^*$；$T$ 在这个一维空间上通过 $2\rho$ 的特征标作用，故
+\[
+K_{G/T}=L_{-2\rho},\qquad K_{G/T}^{1/2}=L_{-\rho}.
+\]
+
+\emph{第二步（半形式量子化）.} 取预量子化线丛 $L_{\lambda+\rho}$ 与半形式丛 $K^{1/2}$，量子 Hilbert 空间是 $H^0\bigl(L_{\lambda+\rho}\otimes K^{1/2}\bigr)$。代入第一步：
+\[
+L_{\lambda+\rho}\otimes K^{1/2}
+=L_{\lambda+\rho}\otimes L_{-\rho}=L_\lambda ,
+\]
+于是量子空间是 $H^0(G/T,L_\lambda)$。由 BWB（$w=e$），这就是 $R_\lambda$。
+
+\emph{第三步（一致性检验）.} 若不取半形式修正，预量子化线丛直接取 $L_\lambda$，量子空间仍是 $H^0(L_\lambda)=R_\lambda$——两种做法给出同一个表示，差别只在预量子化数据是否含 $\rho$。这就是“$\lambda$ 不加 $\rho$”的确切含义：BWB 的指标是 $\lambda$，半形式修正把预量子化的 $\lambda+\rho$ 抵消回 $\lambda$。
+
+\emph{第四步（维数检验）.} Weyl 维数公式
+\[
+\dim R_\lambda=\prod_{\alpha>0}\frac{\langle\lambda+\rho,\alpha\rangle}{\langle\rho,\alpha\rangle},
+\]
+注意分子里的 $\lambda+\rho$：$\rho$ 在这里出现，但它是 Weyl 公式的偏移，不是 BWB 线丛的指标。$\operatorname{SU}(2)$、$\lambda=2j$ 给出 $\dim R_j=2j+1$。$\square$
+\end{derivation}
+
+原文只说 “for each representation $R$ one introduces a symplectic structure $\omega_R$” \src{372}，既不提 $L_\lambda$ 也不提半形式；本章的补全不改变原文的物理结论，但把“表示 $\leftrightarrow$ 相空间”的对应写成了可计算的公式。
+
+\paragraph{D6.4 $G/T$ 上的辛形式与“量子化给出 $R$”。}把 $G/T$ 与余伴随轨道 $\mathcal O_\lambda=G\cdot\lambda$ 等同（$\lambda$ 正则时），辛形式取 Kirillov--Kostant--Souriau 形式 \eqref{eq:ch6-kks}。三条性质可以直接检验：
+
+(i) \emph{非退化性}：$\omega_\lambda(X,Y)=\tfrac12\langle\lambda,[X,Y]\rangle$ 的核是 $\mathfrak t$（$\lambda$ 正则时 $\mathfrak g^\lambda=\mathfrak t$），故在 $\mathfrak g/\mathfrak t\cong T_{[e]}(G/T)$ 上非退化。
+
+(ii) \emph{上同调类}：$[\omega_\lambda]=\lambda$。把 $\lambda$ 视为 $T$ 的特征标，它给出 $G/T$ 上的一个整上同调类；KKS 形式的定义保证两者相等。这一条是“BWB 的 $\lambda$ 与辛形式的 $\lambda$ 是同一个 $\lambda$”的精确表述。
+
+(iii) \emph{矩映射}：$\mu(gT)=g\lambda g^{-1}$，像就是 $\mathcal O_\lambda$。经典函数 $\mu^a(gT)=\langle g\lambda g^{-1},T^a\rangle$ 在量子化后变成作用在 $R_\lambda$ 上的算符 $T^a$——这就是 BWB 的逆命题，也是原文说“把 (3.4) 右端的算符换成 $G/T$ 上的经典函数”的依据 \src{372}。
+
+$\operatorname{SU}(2)$ 检验：$\lambda=2j$，$\omega_{2j}$ 在 $\mathbb P^1$ 上的总面积 $\int\omega/2\pi=2j$，故 $\dim H^0(\mathcal O(2j))=2j+1$，与 $\dim R_j$ 一致（[Moore p.165，B.34]）。$j=0$ 时 $\lambda=0$、轨道退化为一点，$\omega_0=0$、$\dim H^0=1$：BWB 仍然成立，但“$G/T$”应换成一点——这是 \S\ref{sec:ch6-traps} 中“非正则 $\lambda$”陷阱的最简单例子。
+
+\subsection{与其他来源对照}
+\label{sec:ch6-table}
+
+\begin{table}[htbp]
+\centering\small
+\begin{tabular}{@{}p{2.4cm}p{4.0cm}p{5.0cm}p{2.7cm}@{}}
+\toprule
+论题 & 本文 & 教材 / 严格版本 & 证据级别\\
+\midrule
+线 $\to$ 标记点 & “pierce $\Sigma$ in some points $P_i$”，每点带 $R_i$ \src{371} & 河野 p.74（链环 $\to$ 抛物丛）；Moore p.92--93 & 物理图像\\
+约束 (3.4) & Gauss 约束加 $\delta$ 源、右端算符值 \src{371} & Moore (3.70)--(3.74)；河野 p.70--74（辛约化） & 可推导（D6.1）\\
+不能经典求解 & 不对易 + 点源奇异 \src{372} & 教材无逐条对应 & 可推导（D6.2）\\
+量子群 & “would have to be”“presumably”“it seems likely” \src{372} & Drinfeld 量子群 \cite{drinfeld1986}；RT 不变量 \cite{rt1991} 是另一回事 & 猜测\\
+BWB、$G/T$、$\omega_R$ & 对每个 $R$ 给一个经典系统 \src{372} & Moore B.34/B.36 p.165；河野 p.ix 只提名；上野引 Borel--Bott & 定理 + 补记账\\
+扩大相空间 & 平坦联络 + 约化到 $T$ \src{372} & 河野 p.74；上野 \S5.6 p.107--118；Moore p.92 & 定义 + 引 Segal\\
+可积性 & 只提 “integrable” \src{372} & 河野命题 1.5 p.11；Moore p.120；上野 p.39 & 仿射代数定理\\
+$S^1\to G/T$ 泛函积分 & “One should use” \src{373} & 无对应 & 纲领\\
+\bottomrule
+\end{tabular}
+\caption{Wilson 线、穿刺点与 BWB：原文断言与教材严格版本的对照。第三列给出本讲义认为最接近的严格陈述；第四列是证据级别，与 \S\ref{sec:ch6-gaps} 的编号一致。}
+\label{tab:ch6-compare}
+\end{table}
+
+这张表的读法是：\textbf{只有第二行和 BWB 那一行有定理级的严格对应}。第一行是物理图像，第三行可以补出推导，第四行是猜测，第五行的前半是定理、后半（$\omega_R$ 的公式与 $\rho$ 记账）是教材补的，第六行是定义加引证，第七行来自另一套机器，第八行是纲领。把“原文说了”与“数学上成立”分开，是这张表的主要用途。
+
+\subsection{陷阱与约定}
+\label{sec:ch6-traps}
+
+\begin{enumerate}[leftmargin=1.7em,itemsep=3pt]
+\item \textbf{(3.4) 是量子约束，不是经典方程。}不要写“解 (3.4) 得到 $A$”：右端是算符，且点源使 $A$ 奇异；正确的对象是 $M_{P_i,R_i}$ 与作用在态上的 $\hat G^a|\psi\rangle=0$。原文自己说“hard to make sense of (3.4) as constraints in the classical theory” \src{372}。
+\item \textbf{“量子群”是猜测。}原文没有构造 q-number connection，也没有证明和乐在量子群里。可以用 \cite{drinfeld1986} 说明“量子群”指什么，但不能引这段话说 Witten 构造了量子群；RT 不变量（\cite{rt1991}）是另一条路线。
+\item \textbf{BWB 的指标 $\lambda$ 不加 $\rho$。}$H^0(G/T,L_\lambda)=R_\lambda$；$\rho$ 属于半形式丛 $K^{1/2}=L_{-\rho}$，预量子化线丛是 $L_{\lambda+\rho}$。写成 $L_{\lambda+\rho}$ 是常见的错；写成“BWB 给 $R_{\lambda+\rho}$”更是把两个 $\lambda$ 搞混。
+\item \textbf{非正则 $\lambda$ 时 $G/T$ 只是简写。}$\lambda$ 在壁上时辛形式退化，轨道是部分旗流形 $G/P_\lambda$；$j=0$ 时轨道是一点。原文对“每个不可约表示”都写 $G/T$ \src{372}，严格说应换成 $G/P_\lambda$，但 BWB 的结论不变。
+\item \textbf{“约化到 $T$”与“抛物结构”不是一回事。}严格的对象是带抛物结构的丛（约化到抛物子群/Borel），原文写 “reduction of structure group to $T$” \src{372}，没有辨析 $T$ 与 $B$ 的差别。做数学时按抛物丛处理（[河野 p.74]；[上野 \S5.6]），并记住原文的 $T$ 是简写。
+\item \textbf{$2j\le k$ 不是 BWB 的推论。}BWB 对任意支配整权成立；$2j\le k$ 是 level $k$ 仿射代数的可积性条件（河野命题 1.5，p.11）。原文只在括号里写 “integrable” \src{372}，没有给判据。
+\item \textbf{两个 level 不要互代。}可积性用裸 level $k$（$2j\le k$）；KZ 分母与共形权用 $\kappa=k+h^\vee$。同一个字母 $k$ 在两个公式里含义不同，代入前先问“这是可积性还是 KZ”。
+\item \textbf{三点融合条件与单点可积性不同。}$\lambda_1+\lambda_2+\lambda_3\le2k$ 是三点函数非零的条件（河野命题 1.15，p.22--23）；它不能替代 $2j\le k$。例：$k=2$、三个 $j=1$ 的电荷，每个都 integrable（$2\le2$），但 $2+2+2=6>4=2k$，三点函数为零。
+\item \textbf{原文的 “should / deferring” 是纲领。}p.371 说 “I will now briefly sketch how this works out, deferring a fuller treatment for another occasion”；p.373 说 “One should use the theorem”。本章把 BWB 扩大相空间当作“定义 + 引 Segal”，不当作已完成的构造；$S^1\to G/T$ 泛函积分原文没有写出来。
+\end{enumerate}
+
+\subsection{练习}
+\label{sec:ch6-exercises}
+
+\begin{enumerate}[leftmargin=1.8em,itemsep=3pt]
+\item \textbf{（源项）} 按 D6.1 的步骤，从 $A_0$ 变分推出 \eqref{eq:ch6-gauss}，说明为什么右端是 $\bigotimes_s\operatorname{End}(V_{R_s})$ 中的算符；再说明多个电荷为什么是求和而不是乘积。\emph{提示}：$A_0$ 在每个 Wilson 线的路径序指数中只出现一次。
+\item \textbf{（奇异性）} 设 $G=\mathrm U(1)$、一个电荷 $e$ 在 $P$。解 \eqref{eq:ch6-gauss}，求出 $A$ 在 $P$ 附近的奇异行为与绕 $P$ 的和乐。说明：即使阿贝尔化，$A$ 仍不是 $\Sigma$ 上的整体联络。
+\item \textbf{（BWB）} 用 Weyl 维数公式计算 $\operatorname{SU}(2)$ 的 $R_j$ 与 $\operatorname{SU}(3)$ 的基本表示、伴随表示的维数。再验证：$H^0(G/T,L_\lambda)=R_\lambda$ 的 $\lambda$ 不加 $\rho$，而 $L_{\lambda+\rho}\otimes K^{1/2}=L_\lambda$。
+\item \textbf{（半形式）} 证明 $K_{G/T}=L_{-2\rho}$、$K^{1/2}=L_{-\rho}$。\emph{提示}：$T^*(G/T)\cong G\times_T(\mathfrak g/\mathfrak t)^*$，$T$ 在 $\wedge^{\mathrm{top}}$ 上通过 $2\rho$ 作用。
+\item \textbf{（辛形式）} 验证 \eqref{eq:ch6-kks} 的核是 $\mathfrak t$（$\lambda$ 正则时），并计算 $\operatorname{SU}(2)$ 的 $\int_{\mathbb P^1}\omega_{2j}/2\pi$。说明 $[\omega_\lambda]=\lambda$ 与“$\lambda$ 不加 $\rho$”是否矛盾。
+\item \textbf{（可积性）} 写出 $\operatorname{SU}(2)$、level $k$ 的零向量 $\chi=(E\otimes t^{-1})^{k-2j+1}v$，验证 $N_+\chi=0$ 给出的条件正是 $2j\le k$。再用 $k=2$、三个 $j=1$ 的例子说明三点融合条件与单点可积性的区别。
+\item \textbf{（证据级别）} 把 p.372 的括号（可积性那段）拆成句子，逐句标注“定理 / 引用 Segal / 物理断言 / 未给判据”，并与表 \ref{tab:ch6-compare} 对照。
+\item \textbf{（选做）} 在 $g=0$、$n$ 个标记点、大 $k$ 极限下，原文给出 $\cH=\Inv(\otimes_i R_i)$（p.373 式 (3.5)）。用 BWB 解释这个极限为什么是“所有融合通道的直和”的维数；再说明有限 $k$ 时 Verlinde 公式（第 9 章）与它的差别。
+\end{enumerate}
+
+\subsection{本章边界}
+\label{sec:ch6-boundary}
+
+\begin{boundary}
+\textbf{本章确立（有原文或教材锚点）}：(i) Wilson 线在切片上留下标记点 $P_i$ 与表示 $R_i$，量子化应给出 $\cH_{\Sigma,P_i,R_i}$ \src{371}；(ii) 约束由 (3.3) 变为 (3.4)，右端是带 $\delta$ 源的算符 \src{371}；(iii) 不能经典求解的两条理由：不对易与点源奇异 \src{372}；(iv) “q-number connection / 量子群” 是带 hedging 的猜测 \src{372}；(v) BWB 把每个 $R$ 实现为 $G/T$ 上的辛流形 \src{372}；(vi) 扩大相空间 $M_{P_i,R_i}$ = 平坦联络 + 各 $P_i$ 处约化到 $T$，量子化给出共形块（引 Segal）\src{372}；(vii) 可积性判据 $0\le\lambda\le k$（$\operatorname{SU}(2)$ 即 $2j\le k$）来自仿射代数 [河野 命题 1.5，p.11]，一般单群为 $(\lambda,\theta^\vee)\le k$ [上野 p.39]。
+
+\textbf{本章补出（\ours）}：从 $A_0$ 变分推出 (3.4) 的源项（D6.1）；两条不能经典求解理由的分离与检验（D6.2）；半形式修正的 $\rho$ 记账 $K^{1/2}=L_{-\rho}$、$L_{\lambda+\rho}\otimes K^{1/2}=L_\lambda$（D6.3）；KKS 形式 \eqref{eq:ch6-kks} 与非退化性/上同调类的检验（D6.4）；$M_{P_i,R_i}$ 的辛约化描述与维数核对（G6.5）；三点融合条件与单点可积性的区分（G6.6）。
+
+\textbf{未解决 / 未触及}：原文没有定义 q-number connection，也没有构造量子群；$S^1\to G/T$ 的泛函积分只有 “One should”，本章不把它当作结果；“约化到 $T$” 与严格抛物结构的等价性没有在原文中讨论，本章只按教材的抛物丛版本陈述；Wilson 线的 framing、自交、非静态情形原文未处理，本章限定为静态直链。
+
+\textbf{待核}：p.372 括号里 “unless the $R_i$ all correspond to integrable representations” 的“integrable”是否还包括 level 与 $h^\vee$ 的移位（本章按裸 $k$ 处理，与河野命题 1.5、Moore p.120、上野 p.39 一致）；原文的 “$G/T$” 在非正则 $\lambda$ 时是否应读作 $G/P_\lambda$（本章按后者，但原文未辨析）。
+\end{boundary}
+
+
+

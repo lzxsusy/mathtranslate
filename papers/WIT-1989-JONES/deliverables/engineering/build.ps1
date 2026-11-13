@@ -55,10 +55,11 @@ if (-not $SkipPdf) {
     Write-Host "`n[3/5] 编译读书笔记"
     Push-Location $note
     try {
-        xelatex -interaction=nonstopmode main.tex | Out-Null
-        xelatex -interaction=nonstopmode main.tex | Out-Null
-        if (-not (Test-Path 'main.pdf')) { throw '编译失败：没有 main.pdf' }
-        Write-Host "  ok main.pdf ($((Get-Item main.pdf).Length) 字节)"
+        xelatex -interaction=nonstopmode -jobname=lecture main.tex | Out-Null
+        xelatex -interaction=nonstopmode -jobname=lecture main.tex | Out-Null
+        if (-not (Test-Path 'lecture.pdf')) { throw '编译失败：没有 lecture.pdf' }
+        try { Copy-Item lecture.pdf main.pdf -Force -ErrorAction Stop; Write-Host '  ok main.pdf (from lecture.pdf)' }
+        catch { Write-Host '  note: main.pdf 被外部预览占用，最新产物为 lecture.pdf' }
     } finally {
         Pop-Location
     }

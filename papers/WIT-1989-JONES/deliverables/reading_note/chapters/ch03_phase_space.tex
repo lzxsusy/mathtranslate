@@ -1,0 +1,402 @@
+\section{相空间与辛结构：从作用量到有限维态空间}
+\label{sec:canonical}\label{sec:phase}
+
+\subsection{这一章要解决什么}
+
+第 \ref{sec:cs} 节写下了作用量 (1.3)，并说明了 $k$ 为什么必须是整数。但作用量本身还不是量子理论。
+本文 §3 要做的事情是：把三维流形沿一张闭曲面 $\Sigma$ 切开，得到 $M=\Sigma\times\mathbb R$，然后在这个
+“空间 $\times$ 时间”的分解上做正则量子化 \src{366}。这一步之所以可行，只因为 Chern--Simons 作用量是
+\emph{一阶}的：它对时间是线性的，所以没有独立的动量，位形空间自己就是相空间。
+
+于是整条逻辑变成五环，缺任何一环“可精确求解”都不成立：
+
+\begin{enumerate}[label=(\roman*),leftmargin=2.2em]
+\item 把 (1.3) 化成“$p\dot q$”形式，读出辛形式与泊松括号 \src{366}；
+\item 证明这个辛形式在规范变换下只差一个恰当项，从而可以下降到规范轨道空间上 \ours；
+\item 由 $A_0$（拉格朗日乘子）的变分得到高斯约束 $F=0$，并确认它是第一类约束 \src{367}；
+\item 做 Marsden--Weinstein 辛商，得到平坦联络模空间 $\cM$，它是有限维、紧的 \src{367}；
+\item 计算 $\dim\cM=(2g-2)d$，并看清它在可约联络处的奇点 \src{367}。
+\end{enumerate}
+
+本章逐条补出 (i)--(v)。第 \ref{sec:prequant} 节接下去处理“有了有限维紧相空间之后，怎样在它上面造量子态”。
+
+\subsection{原文说了什么}
+
+原文在这一段里给出的陈述很紧凑，几乎每一句都是一整节教材的内容。下表把原文的断言、锚点和它的
+“证明强度”列出来，后面的 G-x 与 D-x 都针对这张表。
+
+\begin{table}[htbp]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}p{0.06\textwidth}p{0.60\textwidth}p{0.13\textwidth}p{0.13\textwidth}@{}}
+\toprule
+编号 & 原文陈述（含锚点） & 锚点 & 强度 \\
+\midrule
+S1 & 取 $A_0=0$ 后作用量对时间一阶，$L=\frac{k}{8\pi}\int\dd t\int_\Sigma\epsilon^{ij}\Tr(A_i\partial_tA_j)$ & (3.1), \src{366} & 陈述 \\
+S2 & 由此读出 $\{A_i^a(x),A_j^b(y)\}=\frac{4\pi}{k}\epsilon_{ij}\delta^{ab}\delta^2(x-y)$ & (3.2), \src{366} & 陈述 \\
+S3 & $A_0$ 的变分给出高斯定律 $\epsilon^{ij}F^a_{ij}=0$，二维上即 $F=0$ & (3.3), \src{367} & 陈述 \\
+S4 & 约束分两步施加：先限制到平坦联络，再按规范变换认同 & \src{367} & 陈述 \\
+S5 & 约束后的相空间即 $\Sigma$ 上平坦联络模规范变换，记 $\cM$；$g>1$ 时 $\dim\cM=(2g-2)d$ & \src{367} & 陈述（维数未推） \\
+S6 & $\cM$ 紧、辛体积有限，因此量子 Hilbert 空间有限维 & \src{367--368} & 论证（非证明） \\
+S7 & $\cM$ 没有自然的复结构；选定 $J$ 后成为复流形，且是稳定全纯丛模空间 & \src{368--369} & 陈述 \\
+\bottomrule
+\end{tabular}
+\caption{本文 §3 开头的七条断言及其证明强度。强度一栏是[我们]的判断：\\
+“陈述”= 原文直接写出，无推导；“论证”= 原文给了理由但未给完整证明。}
+\label{tab:ch3-statements}
+\end{table}
+
+原文的那句关键英文是：
+
+\begin{quote}\small
+``\ldots the first step means that we should consider only `flat connections', that is,
+connections for which $F=0$. The second step means that we identify two flat connections
+that differ by a gauge transformation.'' \src{367}
+\end{quote}
+紧接着原文说，施加 (3.3) 之后的相空间``is none other than the moduli space of flat connections
+on $\Sigma$, modulo gauge transformations'' \src{367}。这句话是本章全部内容的出发点：
+它把“量子化一个场论”换成了“量子化一个有限维空间”。
+
+\subsection{原文没说的细节}
+
+下面六条是本文没有写、但读者要自己补上才可能复算的部分。编号沿用工程清单 G3.x。
+
+
+
+
+\medskip
+\noindent\textbf{G3.1}\quad \textbf{(3.1) 是怎样从 (1.3) 变来的，$4\pi/k$ 从哪来。}
+原文只说“$L$ 对时间一阶” \src{366}，直接写出 (3.1) 与 (3.2)。中间缺：3-形式的分解、
+$A_0$ 作为乘子的地位、以及 $\frac{k}{8\pi}$ 里那个 $8\pi$ 与 (1.3) 里 $4\pi$ 的关系。
+没有这一步，读者会以为 (3.2) 是猜出来的。
+
+
+
+\medskip
+\noindent\textbf{G3.2}\quad \textbf{辛形式在规范变换下的不变性。}
+$\omega$ 定义在联络空间 $\mathcal A$ 上，但物理相空间是 $\mathcal A/\mathcal G$。要让 $\omega$
+下降，必须验证：沿规范方向 $\delta A=D\epsilon$ 的缩并给出恰当项，且 $\Sigma$ 闭时积分为零。
+原文直接使用下降后的 $\omega$ \src{367}，未验证。
+
+
+
+\medskip
+\noindent\textbf{G3.3}\quad \textbf{高斯约束为什么是第一类，以及它生成什么。}
+原文说 (3.3) 是约束，没有算约束代数，也没有给出 $\{A_i,G\}$。这两件事决定“约束后维数”
+与“规范轨道维数”是否匹配，是辛商合法的前提。
+
+
+
+\medskip
+\noindent\textbf{G3.4}\quad \textbf{Marsden--Weinstein 辛商的三步，以及 Atiyah--Bott 的适用条件。}
+原文只说结果 \src{367} 并引 [33]。三步（零点集、群作用、商上的辛形式）与“何时商是流形”
+都没有交代，而这正是可约联络问题的入口。
+
+
+
+\medskip
+\noindent\textbf{G3.5}\quad \textbf{$\dim\cM=(2g-2)d$ 的推导。}
+原文直接给维数 \src{367}，未说口径（实维数还是复维数），也未说 $g=0,1$ 时公式失效。
+读者若直接把 $g=1$ 代入会得到 0，与 §4.3 亏格一有非平凡态空间 \src{384} 表面矛盾
+（解释见 G3.5 的推导与第 \ref{sec:blocks} 节）。
+
+
+
+\medskip
+\noindent\textbf{G3.6}\quad \textbf{奇点与可约联络。}
+$\cM$ 在可约联络处不是流形：平凡联络的稳定化子是整个 $G$。原文用``带奇点''一笔带过
+\src{367--368}，没有说这对量子化意味着什么（哪些截面对应奇点、维数公式在奇点还对不对）。
+
+
+\subsection{补出的推导}
+
+\noindent\textbf{D-3.1（(1.3) $\to$ (3.1) $\to$ (3.2)）}\quad\emph{起点}：(1.3) 的三维作用量与 $A_0=0$；\emph{终点}：(3.1) 的一阶形式与 $\omega=\frac{k}{4\pi}\int_\Sigma\Tr\delta A\wedge\delta A$（$4\pi$、$8\pi$ 因子的出处）。
+写出 $A=A_0\dd t+A_\Sigma$，其中 $A_\Sigma=A_i\dd x^i$ 只含空间分量。三维的
+$\Tr(A\wedge\dd A+\tfrac23A^3)$ 按 $\dd t$ 与空间 2-形式分开。用 $\dd A=\dd t\wedge\partial_tA+\dd_\Sigma A$，
+并注意 $\Sigma$ 是二维，任何三个空间 1-形式的外积为零，于是
+
+\begin{derivation}[D-3.1：(1.3) 的分解与 $8\pi$ 因子]
+记 $b=A_\Sigma$，$a=A_0\dd t$。逐项展开
+\begin{equation}
+\Tr(A\wedge\dd A)=\Tr\bigl(a\wedge\dd b+b\wedge\dd a+b\wedge\dd b\bigr),\qquad
+\tfrac23\Tr A^3=2\,\Tr\bigl(a\wedge b\wedge b\bigr),
+\end{equation}
+其中 $a\wedge\dd a=0$ 与 $b\wedge b\wedge b=0$ 都是二维的维数原因。取出 $\dd t$ 的系数：
+\begin{equation}
+\Tr(a\wedge\dd b+b\wedge\dd a)=\dd t\wedge\Bigl[A_0\,\dd_\Sigma b-\dd_\Sigma A_0\wedge b\Bigr]
+=\dd t\wedge\Bigl[2A_0\,\dd_\Sigma b-\dd(A_0b)\Bigr],
+\end{equation}
+再加 $\dd t\wedge 2A_0\,b\wedge b$，合起来
+\begin{equation}
+\Tr(A\wedge\dd A+\tfrac23A^3)
+=\dd t\wedge\Bigl[2A_0(\dd_\Sigma b+b\wedge b)+b\wedge\partial_tb\Bigr]-\dd t\wedge\dd(A_0b).
+\end{equation}
+因为 $F_\Sigma=\dd_\Sigma b+b\wedge b$，最后一项是恰当形式，$\Sigma$ 闭时积分为零。于是
+\begin{equation}
+L=\frac{k}{4\pi}\int\dd t\int_\Sigma\Tr\Bigl(b\wedge\partial_tb\Bigr)
++\frac{k}{2\pi}\int\dd t\int_\Sigma\Tr\bigl(A_0F_\Sigma\bigr).
+\label{eq:ch3-split}
+\end{equation}
+第一项已是“$p\dot q$”。把 $\Sigma$ 上的辛形式取为
+\begin{equation}
+\omega=\frac{k}{4\pi}\int_\Sigma\Tr\bigl(\delta A\wedge\delta A\bigr),
+\label{eq:ch3-omega}
+\end{equation}
+则 $\omega=\tfrac12\omega_{ij}\delta A^i\wedge\delta A^j$ 且 $L=\tfrac12\omega_{ij}q^i\dot q^j$，
+代入 $\omega_{ij}=\frac{k}{4\pi}\epsilon_{ij}$ 立刻给出
+\begin{equation}
+L=\frac{k}{8\pi}\int\dd t\int_\Sigma\epsilon^{ij}\Tr\bigl(A_i\partial_tA_j\bigr),
+\end{equation}
+这就是 (3.1) \src{366}。$8\pi=2\times4\pi$ 的那个 2 正来自 $\omega=\frac12\omega_{ij}\delta A^i\wedge\delta A^j$
+里的 $\frac12$，不是笔误。
+\end{derivation}
+
+\noindent\textbf{D-3.2（$4\pi/k$ 的来历，D-3.1 续）}\quad\emph{起点}：$\omega$ 的逆矩阵；\emph{终点}：泊松括号 (3.2) 与 $4\pi/k$ 的来历、符号约定。
+辛形式 \eqref{eq:ch3-omega} 的矩阵是 $\omega_{ij}=\frac{k}{4\pi}\epsilon_{ij}$（按分量、按 $\mathfrak g$
+的 Killing 型缩并）。泊松括号是它的逆矩阵：
+\begin{equation}
+\{A_i^a(x),A_j^b(y)\}=\bigl(\omega^{-1}\bigr)_{ij}\delta^{ab}\delta^2(x-y).
+\end{equation}
+二维中 $\epsilon_{ik}\epsilon^{kj}=-\delta_i^{\,j}$（$\epsilon^{12}=+1$ 的约定），故
+$(\omega^{-1})_{ij}=-\frac{4\pi}{k}\epsilon_{ij}$；把 $\Sigma$ 的定向取反（或改用 $\epsilon_{12}=-1$）
+就得到原文的 (3.2) \src{366}：
+\begin{equation}
+\{A_i^a(x),A_j^b(y)\}=\frac{4\pi}{k}\,\epsilon_{ij}\,\delta^{ab}\,\delta^2(x-y).
+\end{equation}
+\textbf{结构的结论}：$\frac{4\pi}{k}$ 里，$4\pi$ 来自 Chern--Simons 作用量 (1.3) 的归一化，
+$k$ 来自拓扑量子化（$k\in\mathbb Z$ \src{354}）。$k\to\infty$ 时括号 $\to0$，即半经典极限；
+这就是本文反复用``大 $k$''的理由 \src{367--368}。
+
+\begin{keypoint}
+\textbf{位形空间就是相空间。} 由 \eqref{eq:ch3-split} 直接读出共轭动量
+\begin{equation}
+p^{a\,i}=\frac{\delta L}{\delta(\partial_tA_i^a)}=\frac{k}{8\pi}\epsilon^{ij}A_j^a ,
+\end{equation}
+即\textbf{动量是联络自身的转动}，不是独立变量。所以 Chern--Simons 的相空间不是
+$T^*\mathcal A$，而是 $\mathcal A$ 自己配上 $\omega$ \src{366}。这一条与“作用量对时间一阶”
+是同一件事的两种说法；若把它误当成二阶系统，就会多出一半的自由度。
+\end{keypoint}
+
+\noindent\textbf{D-3.3（辛形式的规范不变性，G3.2）}\quad\emph{起点}：$A_i\to A_i-D_i\epsilon$ 下 $\omega$ 的变化；\emph{终点}：$\omega$ 只差一个恰当项，故在 $\mathcal{A}/\mathcal{G}$ 上良定义。
+设 $\epsilon\in\Omega^0(\Sigma;\mathfrak g)$，规范变换的切向量是 $\delta_\epsilon A=D\epsilon=\dd\epsilon+[A,\epsilon]$。
+把 $\delta A$,$\delta A'$ 都换成 $\delta A+D\epsilon$，则
+\begin{equation}
+\omega(\delta A+D\epsilon,\delta A')
+=\omega(\delta A,\delta A')+\frac{k}{4\pi}\int_\Sigma\Tr\bigl(D\epsilon\wedge\delta A'\bigr).
+\end{equation}
+用 $\dd\Tr(\epsilon\,\delta A')=\Tr(D\epsilon\wedge\delta A')+\Tr(\epsilon\,\dd\delta A')$
+（第二项为零，因为 $\delta A'$ 与 $\epsilon$ 无关且 $\Tr$ 配对对称），得
+\begin{equation}
+\int_\Sigma\Tr\bigl(D\epsilon\wedge\delta A'\bigr)=\int_\Sigma\dd\Tr\bigl(\epsilon\,\delta A'\bigr)=0
+\qquad(\partial\Sigma=\varnothing).
+\end{equation}
+对两个变元同时做规范变换时，多出的是 $\int_\Sigma\Tr(D\epsilon\wedge D\epsilon')=\int_\Sigma\dd\Tr(\epsilon\,D\epsilon')=0$，
+同样因 $\Sigma$ 闭而消失。于是 $\omega$ 在规范群方向上是退化的，可以把 $\mathcal A/\mathcal G$
+上的辛形式定义为 $\omega$ 在任一横截方向上的取值，且与横截的选取无关 \ours。
+
+\begin{keypoint}
+\textbf{为什么可以只考虑平凡丛。}$G$ 单连通时 $\pi_0G=\pi_1G=0$，故
+$H^1(\Sigma;\pi_0G)=H^2(\Sigma;\pi_1G)=0$，$\Sigma$ 上主 $G$-丛都是平凡丛，$\mathcal A$
+是一个整体仿射空间。这是原文从头到尾不区分丛的拓扑类型的原因 \src{367}（原文对此未作说明，
+此段是[我们]的补充）。对不单连通的 $G$（如 $SO(3)$、$PU(N)$）必须把 $\mathcal A$ 换成各拓扑
+类之并，本文不处理这种情形。
+\end{keypoint}
+
+\noindent\textbf{D-3.4（高斯约束是第一类，并生成规范变换，G3.3）}\quad\emph{起点}：$G(\Lambda)=\int_\Sigma\Tr(\Lambda\epsilon^{ij}F_{ij})$；\emph{终点}：约束代数闭合（第一类），并生成 $A_i\to A_i-D_i\Lambda$。
+$A_0$ 在 \eqref{eq:ch3-split} 中无时间导数，故其共轭动量为零：这是主约束。变分 $A_0$ 给出
+\begin{equation}
+\frac{k}{2\pi}\epsilon^{ij}F^a_{ij}=0\quad\Longleftrightarrow\quad F=0 .
+\label{eq:ch3-gauss}
+\end{equation}
+$\Sigma$ 是二维的，$F$ 的独立分量只有一个，所以方程就是平坦性。把约束写成 smeared 形式
+
+\begin{derivation}[D-3.4：约束代数与生成元]
+取 $G[\Lambda]=\int_\Sigma\Tr(\Lambda F)$，其中 $F$ 视为 $\mathfrak g$-值 2-形式，
+$\Tr(\Lambda F)=\tfrac12\epsilon^{ij}\Tr(\Lambda F_{ij})\,\dd^2x$。用 (3.2) 的括号（下面按
+$\{A_i^a,A_j^b\}=\frac{4\pi}{k}\epsilon_{ij}\delta^{ab}\delta^2$ 记），并注意
+$\delta F/\delta A_i=\epsilon_{ij}D_j$（作用于 0-形式），得到
+\begin{equation}
+\{G[\Lambda_1],G[\Lambda_2]\}=G\bigl([\Lambda_1,\Lambda_2]\bigr),\qquad
+\{A_i,\;G[\Lambda]\}=\frac{4\pi}{k}D_i\Lambda .
+\end{equation}
+第一式说明约束代数闭合、无第二类约束：$G$ 是第一类。第二式说明 $G$ 生成沿 $\Lambda$ 的规范变换，
+只差一个整体归一化：若把生成元取成 $\hat G=\frac{k}{4\pi}G$，则 $\{A_i,\hat G[\Lambda]\}=D_i\Lambda$，
+与 $A_i\to A_i-D_i\epsilon$ 的符号约定（见 第 \ref{sec:cs} 节的 $A_i\to A_i-D_i\epsilon$）一致到整体符号。归一化的选择不影响
+$\mu^{-1}(0)/\mathcal G$，但影响“荷”的定义，第四章讨论整性时要用到。
+\end{derivation}
+
+自由度计数可以对上：每个空间点 $2d$ 个 $A_i$ 分量（$i=1,2$，$\mathfrak g$ 有 $d$ 维）；
+$d$ 个第一类约束各去掉一对共轭变量（$2d$ 个），再按 $d$ 维规范群取商去掉 $d$ 个，
+净剩 $2d-2d=0$ 个每点自由度——这就是“相空间是有限维”的直观来源。
+
+\noindent\textbf{D-3.5（Marsden--Weinstein 辛商三步，G3.4）}\quad\emph{起点}：第一类约束与矩映射 $\mu$；\emph{终点}：Marsden--Weinstein 三步给出 $\cM$ 上的辛形式。
+把上面的约束当作矩映射 $\mu(A)=F\in\Omega^2(\Sigma;\mathfrak g)\cong\Omega^0(\Sigma;\mathfrak g)^*$
+（最后一步用 $\Sigma$ 的辛形式与 $\Tr$ 配对）。三步是：
+
+\begin{enumerate}[leftmargin=2.4em]
+\item \textbf{零点集}：$Z=\mu^{-1}(0)=\{A:F=0\}$，即平坦联络全体。它是 $\mathcal A$ 的闭子集。
+\item \textbf{群作用}：$\mathcal G=\mathrm{Map}(\Sigma,G)$ 作用在 $Z$ 上（规范变换把平坦变成平坦），
+它在 $Z$ 上的轨道就是“相差规范变换的平坦联络”。
+\item \textbf{商}：若作用在 $Z$ 上自由且固有，则 $Z/\mathcal G$ 是光滑流形，且 $\omega|_Z$ 的核恰为
+规范方向 $\Rightarrow$ 存在唯一 $\omega_{\cM}$ 使 $\pi^*\omega_{\cM}=i^*\omega$（$i:Z\hookrightarrow\mathcal A$，
+$\pi:Z\to Z/\mathcal G$），并且 $\omega_{\cM}$ 闭、非退化。
+\end{enumerate}
+第 3 步的非退化性用的是 $\ker\omega|_Z=TZ\cap(TZ)^\omega$，而 $(TZ)^\omega$ 恰是规范方向——这正是
+“第一类约束的辛商”这一说法的一般形式。原文只写结果 \src{367}，引 [33]（Atiyah--Bott 1982）；
+适用条件（自由性）在可约点失效，见 G3.6。
+
+\noindent\textbf{D-3.6（$\dim\cM=(2g-2)d$，G3.5）}\quad\emph{起点}：$\pi_1(\Sigma)$ 的 $2g$ 个生成元与一个关系；\emph{终点}：$\dim\cM=(2g-2)d$（$g\ge2$），并交代口径。
+两种算法给出同一答案，各自的口径不同，必须交代清楚。
+
+\textbf{算法一（表示论计数）}：$\cM=\Hom(\pi_1\Sigma,G)/G$。$\pi_1\Sigma$ 有 $2g$ 个生成元
+$a_1,b_1,\dots,a_g,b_g$ 与一个关系 $\prod_i[a_i,b_i]=1$。$\Hom(\pi_1\Sigma,G)$ 是 $G^{2g}$ 中由该关系
+切出的子集；在光滑点，关系映射 $G^{2g}\to G$ 的微分满射，故
+\begin{equation}
+\dim\Hom(\pi_1\Sigma,G)=2gd-d=(2g-1)d .
+\end{equation}
+再按 $G$ 取商（作用自由时）减 $d$：
+\begin{equation}
+\dim\cM=(2g-1)d-d=(2g-2)d .
+\label{eq:ch3-dim}
+\end{equation}
+口径：$d=\dim_\mathbb R G$，故 \eqref{eq:ch3-dim} 是\textbf{实}维数；复维数是 $(g-1)d$。
+
+\textbf{算法二（代数几何，Riemann--Roch）}：由 Narasimhan--Seshadri（G4.6 详述），
+$\cM$ 等同于 $\Sigma$ 上次数为零的稳定全纯 $G_\mathbb C$-丛模空间。对 $G=SU(N)$，
+用 $H^0-H^1$ 的指标（Atiyah--Bott 的写法）：$\dim\cM=2(N^2-1)(g-1)$，与 \eqref{eq:ch3-dim}
+一致 \ours。
+
+\textbf{适用边界}：$g\ge2$ 时 \eqref{eq:ch3-dim} 成立。$g=1$ 时 $\cM$ 是离散有限集
+（平坦 $U(1)$ 联络的模空间是一个环面，对 $SU(2)$ 则是若干个点），维数公式给出的 0 是“维数”而非
+“空集”；$g=0$ 时 $\pi_1$ 平凡、$\cM$ 是单点。原文只写 $g>1$ \src{367}，这个限制是必要的。
+
+\noindent\textbf{D-3.7（奇点与可约联络，G3.6）}\quad\emph{起点}：稳定化子 $Z(\rho)\neq Z(G)$ 的既约联络；\emph{终点}：$\cM$ 的奇点分层与“辛体积有限”的正确读法。
+设 $A$ 的 holonomy 表示 $\rho:\pi_1\Sigma\to G$ 的稳定化子（在 $G$ 的伴随作用下）为 $Z(\rho)$。
+$Z(\rho)$ 有限（中心子集）时轨道光滑；否则 $Z(\rho)$ 正维，商在该点有奇点。极端情形是平凡联络
+$\rho=1$，$Z(\rho)=G$，整个 $G$ 都固定它。于是
+\begin{equation}
+\cM_{\mathrm{irr}}=\{\text{稳定化子为有限群的轨道}\}\subset\cM
+\end{equation}
+是开稠密的光滑部分，$\cM\setminus\cM_{\mathrm{irr}}$ 是若干低维 strata（Atiyah--Bott 的分层）。
+对量子化的影响：$\cM$ 是\textbf{分层辛空间}（stratified symplectic space），不是流形；
+``$\cM_J$ 上的全纯截面''要在奇点处按 orbifold 或按 $\cM_{\mathrm{irr}}$ 的延拓来理解 \ours。
+原文用``带奇点''一句带过 \src{367--368}，本章把它记为一个未解决的口径问题（见本章边界）。
+
+\noindent\textbf{D-3.8（有限维性到底靠什么，S6）}\quad\emph{起点}：$\cM_J$ 是射影簇、椭圆复形有限维；\emph{终点}：有限维性的真正来源，而非“紧 $+$ 有限体积”。
+原文的论证是：$\cM$ 紧、辛体积有限，相空间每单位体积容一个量子态，所以态空间有限维
+\src{367--368}。这是半经典启发式，不是证明。严格的路线只有一条，就是第四章的：
+$\cM_J$ 是射影簇，$\cL^{\otimes k}$ 是其上的全纯线丛，全局全纯截面空间 $H^0$ 有限维
+（椭圆复形、Serre 有限性）\ours。换句话说，\textbf{有限维性的真正原因是代数性，不是体积}。
+本文这条“体积/$\hbar$”论证只用来给读者直觉；把两者混为一谈会在有奇点或非紧情形出错。
+
+\subsection{与其他来源的对照}
+
+\begin{table}[htbp]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}p{0.16\textwidth}p{0.28\textwidth}p{0.22\textwidth}p{0.24\textwidth}@{}}
+\toprule
+主题 & 本文 & 李思《量子力学与几何》 & 河野 / Moore \\
+\midrule
+一阶作用量与括号 & (3.1)(3.2) 直接写出 \src{366} & 第 5 章不讲 CS，只讲一般预量子化 & 河野把 CS 写成 $\frac{k}{4\pi}\int\Tr(A\dd A+\frac23A^3)$ 并先做 $S^1$ 上的量子化（书 p.$\sim$80 起）\\
+约束与辛商 & 一句话 + 引 [33] \src{367} & 无 & Moore 3.4 用辛约化语言重述：共形块 = $\mu^{-1}(0)/G$ 的量子化\\
+维数公式 & 直接给 $(2g-2)d$ \src{367} & 无 & Moore 用 Riemann--Roch 得同一维数\\
+奇点 & “带奇点” \src{367--368} & 无 & Moore 把可约点作为分层处理\\
+有限维性 & 体积启发式 \src{368} & 例 5.4.10：紧 Kähler 上用 $H^0(M,L)$ 得有限维 [李思 p.307] & 同\\
+\bottomrule
+\end{tabular}
+\caption{相空间与辛结构的三方对照。河野与 Moore 的页码按“PDF=书页+14”“页脚页”两种口径给出，\\
+个别条目只核到章节未核到行（见本章边界）。}
+\label{tab:ch3-sources}
+\end{table}
+
+\subsection{陷阱与约定}
+
+\begin{keypoint}
+\textbf{四个容易翻车的因子与符号。}
+\begin{enumerate}[leftmargin=1.6em]
+\item \textbf{$4\pi$ 与 $8\pi$。} (1.3) 的系数是 $\frac{k}{4\pi}$，(3.1) 的是 $\frac{k}{8\pi}$。
+差一个 $2$，来源是 $\omega=\frac12\omega_{ij}\delta A^i\wedge\delta A^j$ 的 $\frac12$（D-3.1）。
+不要以为原文抄错。
+\item \textbf{$\epsilon^{ij}$ 的求和口径。} 若把 $\epsilon^{ij}$ 理解为对 $i,j$ \emph{双}求和，
+$A_1A_2$ 会重复计两次，得到两倍的 (3.1)；原文的写法等价于只对 $i<j$ 求和再配符号
+（或把 $\frac12$ 吸收进 $\epsilon$）。写代码复算时务必固定一种。
+\item \textbf{括号的正负号。} $\epsilon_{ik}\epsilon^{kj}$ 是 $+\delta$ 还是 $-\delta$ 取决于
+$\epsilon^{12}=\pm1$；再叠上 $\Sigma$ 的定向。本文不在意整体符号（物理上无关），但 (3.2) 的
+$+\frac{4\pi}{k}$ 与常见教材的 $-\frac{4\pi}{k}$ 是同一件事的两种定向约定。
+\item \textbf{$A_i\to A_i-D_i\epsilon$ 而不是 $+$。} 本文的规范变换写成减号（见第 \ref{sec:cs} 节），于是协变导数 $D_i=\partial_i+[A_i,\cdot]$ 里 $A_i$ 带正号。多数教材用
+$A_i\to A_i+\dd_i\epsilon$ 配 $D=\partial-A$。混用会差一个符号，不影响约束 $F=0$，但会影响
+核对 (2.16)--(2.17) 的符号。
+\end{enumerate}
+\end{keypoint}
+
+\begin{keypoint}
+\textbf{“有限维”不是“小”。} $\dim\cM=(2g-2)d$ 随 $g$ 线性增长，但对固定 $\Sigma$ 是常数，
+与 $k$ 无关。$k$ 只进预量子化线丛的次数 $\cL^{\otimes k}$，因此 $k$ 变时态空间的\emph{维数}变、
+\emph{相空间}不变。这与二维共形场论里“中心荷不改变共形块的定义、只改变其维数”是同一件事的两面。
+\end{keypoint}
+
+\subsection{练习}
+
+\begin{enumerate}[leftmargin=2.2em]
+\item \textbf{（复算型）} 从 (1.3) 重新做一遍 D-3.1，把每一步的 3-形式写全，并指出
+$\frac{k}{2\pi}$ 这个系数为什么配 $A_0F$ 而不是 $A_0F/2$。提示：$\dd_\Sigma b+b\wedge b=F_\Sigma$ 是
+2-形式，$\epsilon^{ij}F_{ij}=2F$（按分量）。
+
+\item \textbf{（复算型）} 取 $G=SU(2)$、$d=3$、$g=2$，算出 $\dim\cM$（实、复两种口径），
+并说明为什么 $g=1$ 时公式不能照用。
+
+\item \textbf{（推导型）} 补出 D-3.3 中“两个变元同时规范变换”那一步的细节：证明
+$\int_\Sigma\Tr(D\epsilon\wedge D\epsilon')=0$，并指出用到了 $F=0$ 还是只用到 $\Sigma$ 闭。
+
+\item \textbf{（推导型）} 在 D-3.4 中把归一化取成 $\hat G=\frac{k}{4\pi}G$，验证
+$\{A_i,\hat G[\Lambda]\}=D_i\Lambda$，并与 第 \ref{sec:cs} 节的 $A_i\to A_i-D_i\epsilon$ 的 $A_i\to A_i-D_i\epsilon$ 对齐
+（必要时整体改符号）。
+
+\item \textbf{（推导型）} 数自由度：验证 D-3.4 末尾的“每点 $2d-2d=0$”计数与
+Gauss 约束是一级这一事实如何相容（提示：一级约束去掉 $2$ 个而不是 $1$ 个自由度）。
+
+\item \textbf{（判断题）} 原文说 $\cM$ 紧、辛体积有限故态空间有限维 \src{367--368}。
+这句话是证明、论证还是启发式？给出你判断的依据，并说出严格路线需要什么（提示：D-3.8）。
+
+\item \textbf{（判断题）} 有人说“$g=1$ 时 $\dim\cM=0$，所以亏格一的态空间是 1 维”。这错在哪？
+（提示：$g=1$ 时 $\cM$ 是离散点集，点数与 $k$ 有关；见第 \ref{sec:blocks} 节。）
+\end{enumerate}
+
+\subsection{本章边界}
+
+\begin{boundary}
+\begin{itemize}[leftmargin=1.4em]
+\item \textbf{原文给出的}：(3.1)--(3.3)；辛商的结果；$\cM$ 紧、带奇点、辛体积有限；
+$\dim\cM=(2g-2)d$；$\cM$ 无自然复结构、选定 $J$ 后是稳定全纯丛模空间 \src{366--369}。
+\item \textbf{我们补出的}：D-3.1（$8\pi$ 因子）、D-3.2（$4\pi/k$ 结构）、D-3.3（规范不变性）、
+D-3.4（约束代数）、D-3.5（辛商三步）、D-3.6（两种维数算法与口径）、D-3.7（奇点分层）、
+D-3.8（有限维性的严格来源）。
+\item \textbf{仍是论证/启发式}：S6 的“体积/$\hbar$”论证；原文对可约点的处理。
+\item \textbf{未核}：河野书 p.$\sim$80 起的 CS 量子化与本文的 $2\pi k$ 归一化差（只核到章节，
+未逐行核）；Moore 3.4 的页码按页脚页引用，未逐句核。
+\end{itemize}
+\end{boundary}
+
+\noindent\textbf{G3 覆盖清单}
+\begin{table}[htbp]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lll@{}}
+\toprule
+缺口 & 本章位置 & 状态 \\
+\midrule
+G3.1 (3.1) 的 Legendre 变换、$4\pi/k$ 的来历 & D-3.1, D-3.2 & 已补（[我们]）\\
+G3.2 $\omega$ 的规范不变性与下降 & D-3.3 & 已补（[我们]）\\
+G3.3 高斯约束第一类、生成规范变换 & D-3.4 & 已补（[我们]）\\
+G3.4 Marsden--Weinstein 三步与适用条件 & D-3.5 & 已补（引 [33]）\\
+G3.5 $\dim\cM=(2g-2)d$ 与口径 & D-3.6 & 已补（[我们]）\\
+G3.6 奇点、可约联络 & D-3.7 & 已补；口径问题记入边界\\
+\bottomrule
+\end{tabular}
+\caption{G3.1--G3.6 覆盖清单。}
+\end{table}
+
