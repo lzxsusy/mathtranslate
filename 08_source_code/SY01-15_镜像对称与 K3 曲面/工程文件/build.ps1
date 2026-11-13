@@ -1,4 +1,4 @@
-﻿# build.ps1 —— 编译 JP11 中译工程（xelatex 两遍），并把成品复制到 deliverable/
+# build.ps1 —— 编译 JP11 中译工程（xelatex 两遍），并把成品复制到 deliverable/
 # 用法：powershell -NoProfile -ExecutionPolicy Bypass -File .\build.ps1
 $root = $PSScriptRoot
 $src  = Join-Path $root 'src'

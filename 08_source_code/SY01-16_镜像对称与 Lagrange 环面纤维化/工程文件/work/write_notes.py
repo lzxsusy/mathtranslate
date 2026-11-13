@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import io
 p = "审校批注汇总.md"
 t = io.open(p, encoding="utf-8").read()

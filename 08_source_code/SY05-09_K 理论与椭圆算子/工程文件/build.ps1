@@ -1,4 +1,4 @@
-﻿# EN47 整书编译（Lead 用）
+# EN47 整书编译（Lead 用）
 # 用法：pwsh -File build.ps1        （在工程根执行）
 $ErrorActionPreference = "Continue"
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path

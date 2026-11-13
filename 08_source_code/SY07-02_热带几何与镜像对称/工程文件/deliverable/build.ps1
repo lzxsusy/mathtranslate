@@ -1,4 +1,4 @@
-﻿$ErrorActionPreference = "Continue"
+$ErrorActionPreference = "Continue"
 $here = $PSScriptRoot
 $src = Join-Path $here "src"
 $figs = Join-Path $here "work\figures"

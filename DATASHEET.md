@@ -1,4 +1,4 @@
-﻿# Dataset Card · 数译中文数学译注语料
+# Dataset Card · 数译中文数学译注语料
 
 > 版本 `v1.0.0`（2026-11-13）· 维护者：超对称梦想家（chaoduicheng）
 > 仓库：<https://atomgit.com/lzxSUSUY/mathtranslate> · 镜像：<https://gitee.com/supersymmetry-dream-home/shuyi>

@@ -1,4 +1,4 @@
-﻿# build.ps1 —— JP07 一键编译（整书两遍 xelatex，产物复制到 deliverable/）
+# build.ps1 —— JP07 一键编译（整书两遍 xelatex，产物复制到 deliverable/）
 # 用法：powershell -ExecutionPolicy Bypass -File build.ps1
 $ErrorActionPreference = 'Stop'
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path

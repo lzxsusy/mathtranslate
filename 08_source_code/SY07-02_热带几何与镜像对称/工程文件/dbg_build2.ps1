@@ -1,4 +1,4 @@
-﻿# 缂栬瘧鑴氭湰锛圠ead 鐙崰锛夛細LuaLaTeX 鍦ㄩ潪 ASCII 璺緞涓嬫棤娉曞啓 .log锛屼笖瀛愯繘绋嬩笉鑳藉啓 Desktop锛?# 鍥犳鎶?src/ 涓?figures/ 闀滃儚鍒?default-workspace 涓嬬殑 ASCII 鐩綍鍐嶇紪璇戯紝鎴愬姛鍚庢妸 PDF 鎷峰洖 src\main.pdf銆?$ErrorActionPreference = "Continue"
+# 缂栬瘧鑴氭湰锛圠ead 鐙崰锛夛細LuaLaTeX 鍦ㄩ潪 ASCII 璺緞涓嬫棤娉曞啓 .log锛屼笖瀛愯繘绋嬩笉鑳藉啓 Desktop锛?# 鍥犳鎶?src/ 涓?figures/ 闀滃儚鍒?default-workspace 涓嬬殑 ASCII 鐩綍鍐嶇紪璇戯紝鎴愬姛鍚庢妸 PDF 鎷峰洖 src\main.pdf銆?$ErrorActionPreference = "Continue"
 $here = $PSScriptRoot                      # 椤圭洰鏍癸紙妗岄潰锛屽惈涓枃璺緞锛?$src = Join-Path $here "src"
 $figs = Join-Path $here "work\figures"
 Write-Host "DBG here=[$here] src=[$src] build=[$build]"

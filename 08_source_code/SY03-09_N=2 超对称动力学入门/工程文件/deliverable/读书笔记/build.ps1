@@ -1,4 +1,4 @@
-﻿# 读书笔记编译脚本（LuaLaTeX ×2）
+# 读书笔记编译脚本（LuaLaTeX ×2）
 $ErrorActionPreference = "Continue"
 $bin = "<本地路径>"
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path

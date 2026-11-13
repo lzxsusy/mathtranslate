@@ -1,4 +1,4 @@
-﻿# build.ps1 —— 编译 JP02 中译工程（xelatex 两遍），并把成品复制到 deliverable/
+# build.ps1 —— 编译 JP02 中译工程（xelatex 两遍），并把成品复制到 deliverable/
 # 注意：用 cmd /c 调用 xelatex，避免 PowerShell 把 MiKTeX 的 stderr 提示当异常。
 $root = $PSScriptRoot
 $src  = Join-Path $root 'src'

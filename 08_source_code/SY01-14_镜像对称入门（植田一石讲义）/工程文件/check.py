@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """check.py —— JP02 交付前自检。
 
 检查项：

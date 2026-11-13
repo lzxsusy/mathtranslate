@@ -1,4 +1,4 @@
-﻿@echo off
+@echo off
 rem 一键编译：XeLaTeX ×2（必须先设可写的 TMP，本机曾因 TMP 不可用导致 xdvipdfmx 崩溃）
 chcp 65001 >nul
 setlocal

@@ -1,4 +1,4 @@
-﻿# =====================================================================
+# =====================================================================
 #  build.ps1 —— 一键编译（镜像编译：本机 TeX 不能写中文路径/Desktop）
 #  用法：  powershell -ExecutionPolicy Bypass -File build.ps1
 #          powershell -ExecutionPolicy Bypass -File build.ps1 -Chunk ch02    # 只编译某一块（草稿自检）

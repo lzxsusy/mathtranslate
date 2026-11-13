@@ -1,4 +1,4 @@
-﻿# 校对报告：tr-03 块（原文 pp.38–50；`tr03a.tex` / `tr03b.tex` / `tr03c.tex`）
+# 校对报告：tr-03 块（原文 pp.38–50；`tr03a.tex` / `tr03b.tex` / `tr03c.tex`）
 
 校对人：tr-08　｜　日期：2026-11-03　｜　底本：arXiv:2006.14025v3（`work/pages/p038–p050.png` 200 dpi + 关键公式 700–900 dpi 局部放大）
 核对依据：`work/tags_bypage.txt`、`work/split/p038–p050.txt`、原 PDF 图像、`work/glossary.tsv`。

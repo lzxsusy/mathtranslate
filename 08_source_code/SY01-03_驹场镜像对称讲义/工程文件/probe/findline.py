@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """鎸夊叧閿瓧瀹氫綅琛屽苟瑁佸浘锛堥珮 dpi锛夛紝鐢ㄤ簬澶嶆牳鏄撻敊绗﹀彿銆?""
 import sys, os
 sys.stdout.reconfigure(encoding='utf-8')

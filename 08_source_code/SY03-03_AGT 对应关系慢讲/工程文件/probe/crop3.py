@@ -1,4 +1,4 @@
-﻿import sys, os
+import sys, os
 sys.stdout.reconfigure(encoding="utf-8")
 import pymupdf as fitz
 doc = fitz.open(r"<本地路径>).pdf")

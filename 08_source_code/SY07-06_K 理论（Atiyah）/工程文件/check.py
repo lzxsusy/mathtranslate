@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """Gate 1 静态检查：页标记覆盖 / tag / 陈述编号重复 / 花括号 / 环境配对 / $ 偶偶 / 禁用命令 / 编码"""
 import os, re, sys, glob, collections
 

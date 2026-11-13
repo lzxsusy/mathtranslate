@@ -1,4 +1,4 @@
-﻿# build.ps1 — 编译 SY05-24 中文译注本（Lead 独占，译者不要跑）
+# build.ps1 — 编译 SY05-24 中文译注本（Lead 独占，译者不要跑）
 # 用法： powershell -ExecutionPolicy Bypass -File .\build.ps1
 $ErrorActionPreference = 'Stop'
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path

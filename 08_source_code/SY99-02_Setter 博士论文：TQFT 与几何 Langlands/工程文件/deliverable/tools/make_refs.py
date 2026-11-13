@@ -1,4 +1,4 @@
-﻿import sys, re, io
+import sys, re, io
 sys.stdout.reconfigure(encoding="utf-8")
 import pymupdf
 

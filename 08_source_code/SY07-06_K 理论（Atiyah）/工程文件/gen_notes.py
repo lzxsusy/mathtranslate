@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """从 chunks 提取 % [Tutor Note: ...]（跨文件继承章/节）→ 书末附录 tex + 译注汇总.md"""
 import os, re, collections
 

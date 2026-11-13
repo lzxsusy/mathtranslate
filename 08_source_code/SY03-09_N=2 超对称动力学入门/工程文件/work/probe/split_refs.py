@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """原文分节提取（稳健版：纯字符串扫描，不用正则匹配反斜杠）。"""
 import sys, os, glob
 sys.stdout.reconfigure(encoding="utf-8")

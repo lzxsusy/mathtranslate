@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """collect_notes.py —— 从 src/chunks/*.tex 收集 % [Tutor Note: ...] 批注，生成 审校批注汇总.md。"""
 import io, os, re, sys
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
