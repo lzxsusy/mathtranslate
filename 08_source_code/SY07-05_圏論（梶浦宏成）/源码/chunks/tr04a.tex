@@ -1,0 +1,794 @@
+% ===== 原文 pp.63–81（PDF pp.70–88） =====
+% [原文 p.63]
+\chapter{导出范畴}
+
+本章从范畴的定义开始，直到导出范畴都给出定义。在此过程中，4.7 节将给出环的局部化（2.2.6 节）向范畴论的自然推广。第 3 章所讨论的那种同调代数，也将作为范畴论中的东西被重新组织。
+
+\section{范畴}
+
+\subsection{范畴与函子}
+
+\begin{definition}{4.1}
+\textbf{范畴}（category）$\cC$ 是指满足以下诸项者：
+\begin{itemize}
+  \item 某个数学对象的类\footnote{类（class）是指具有适当性质的数学对象的族；集合是类，而比集合「更大」的东西也可以作为类来处理。在范畴论中也会处理由全体集合构成的范畴 $\Set$ 等，但若把全体集合之族视为集合，就会产生矛盾，这作为 Russell 悖论而著名。本书不深入这种集合论的侧面（cf.\ [39, I.6] 等）。实际上，在本书所处理的具体例子等之中，这样的集合论问题并不产生影响。} $\Ob(\cC)$；
+  \item 对任意两个元素 $X,Y\in\Ob(\cC)$ 均给定集合 $\Hom_{\cC}(X,Y)$，但要求：对 $X,X',Y,Y'\in\Ob(\cC)$，若 $X\neq X'$ 或 $Y\neq Y'$，则
+        \[ \Hom_{\cC}(X,Y)\cap\Hom_{\cC}(X',Y')=\emptyset; \]
+  \item 对任意元素 $X,Y,Z\in\Ob(\cC)$ 均给定映射
+        \begin{equation}
+          \circ\colon\Hom_{\cC}(Y,Z)\times\Hom_{\cC}(X,Y)\longrightarrow\Hom_{\cC}(X,Z) \tag{4.1}
+        \end{equation}
+\end{itemize}
+并且满足以下两个条件。
+\end{definition}
+
+（结合律）：对 $X,Y,Z,W\in\Ob(\cC)$、$f\in\Hom_{\cC}(X,Y)$、$g\in\Hom_{\cC}(Y,Z)$、$h\in\Hom_{\cC}(Z,W)$，有
+\[ h\circ(g\circ f)=(h\circ g)\circ f. \]
+
+（恒等态射的存在）：对任意元素 $X\in\Ob(\cC)$，存在元素 $\id_X\in\Hom_{\cC}(X,X)$，使得对任意 $X,Y\in\Ob(\cC)$ 与 $f\in\Hom_{\cC}(X,Y)$，有
+\[ f\circ\id_X=f=\id_Y\circ f. \]
+% [Tutor Note: 定義4.1 的第三条要求「$X\neq X'$ 或 $Y\neq Y'$ 则 $\Hom_{\cC}(X,Y)\cap\Hom_{\cC}(X',Y')=\emptyset$」，其作用是让每个态射有唯一的定义域与陪域（否则同一个映射可能同时属于两个不同的 $\Hom$ 集，$X,Y$ 就无从区分）；这也是本书此后 $\Hom_{\cC}(X,Y)$ 记号不致歧义的前提。第四条中的 $\id_X$ 与后文的 $1_X$ 是同一对象的两种写法。]
+
+% [原文 p.64]
+$\Ob(\cC)$ 的元素 $X,Y,\dots\in\Ob(\cC)$ 称为范畴 $\cC$ 的\textbf{对象}（object）。在没有混淆之虞的场合，频繁地把 $X\in\Ob(\cC)$ 简单地写作 $X\in\cC$。
+
+对两个对象 $X,Y\in\cC$，$\Hom_{\cC}(X,Y)$ 的元素 $f\in\Hom_{\cC}(X,Y)$ 称为从 $X$ 到 $Y$ 的\textbf{态射}（morphism），有时也写作 $f\colon X\to Y$。特别地，$\id_X\in\Hom_{\cC}(X,X)$ 称为\textbf{恒等态射}（identity morphism）。对 $f\colon X\to Y$、$g\colon Y\to Z$，由式 (4.1) 所得到的态射 $g\circ f\colon X\to Z$ 称为态射 $f$ 与 $g$ 的\textbf{合成}（composition）。
+
+\begin{definition}{4.2}
+特别地，对象之类 $\Ob(\cC)$ 为集合的范畴 $\cC$ 称为\textbf{小范畴}（small category）。
+\end{definition}
+
+\begin{example}{4.3}
+取 $\Ob(\cC)$ 为全体集合，对集合 $A,B\in\Ob(\cC)$ 取 $\Hom_{\cC}(A,B)$ 为从 $A$ 到 $B$ 的映射全体所构成的集合，所得的范畴称为\textbf{集合的范畴}，记作 $\cC=\Set$。（这不是小范畴。）
+\end{example}
+
+\begin{example}{4.4}
+取 $\Ob(\cC)$ 为全体阿贝尔群，对阿贝尔群 $X,Y\in\Ob(\cC)$ 取 $\Hom_{\cC}(X,Y)$ 为从 $X$ 到 $Y$ 的同态映射全体所构成的集合（阿贝尔群），所得的范畴称为\textbf{阿贝尔群的范畴}，记作 $\cC=\Ab$。
+\end{example}
+
+\begin{example}{4.5}
+设 $R$ 为某个环。取 $\Ob(\cC)$ 为全体右 $R$-模，对右 $R$-模 $M,N\in\Ob(\cC)$ 取 $\Hom_{\cC}(M,N)$ 为从 $M$ 到 $N$ 的 $R$ 同态映射全体所构成的集合（阿贝尔群），所得的范畴称为\textbf{右 $R$-模的范畴}，记作 $\cC=\Mod\text{-}R$。另一方面，有限生成右 $R$-模的范畴记作 $\mathrm{mod}\text{-}R$。也就是说，$\mathrm{mod}\text{-}R$ 的对象是有限生成右 $R$-模，态射的定义与上面相同。
+
+类似地，可以定义左 $R$-模的范畴 $R\text{-}\Mod$、有限生成左 $R$-模的范畴 $R\text{-}\mathrm{mod}$。
+\end{example}
+
+\begin{example}{4.6}
+设 $R$ 为某个交换环。$R$-模的范畴记作 $\cC=\Mod(R)$，有限生成 $R$-模的范畴记作 $\cC=\mathrm{mod}(R)$。对 $M,N\in\Ob(\Mod(R))$，$\Hom_{\Mod(R)}(M,N)$ 是从 $M$ 到 $N$ 的 $R$ 同态映射所构成的 $R$-模。
+
+当 $R$ 是某个域 $K$ 时，$\Mod(K)$ 的对象是 $K$ 向量空间，态射是 $K$ 线性映射。写作 $\Mod(K)=\Vect(K)$，称为 $K$ 向量空间的范畴。有限维 $K$ 向量空间的范畴记作 $\mathrm{vect}(K)$。
+
+在这些例子中，态射的合成均由映射的合成来定义。
+\end{example}
+
+\begin{definition}{4.7}
+对范畴 $\cC$ 的对象 $X,Y\in\cC$，若存在态射 $f\colon X\to Y$、$g\colon Y\to X$ 满足
+\[ g\circ f=1_X,\qquad f\circ g=1_Y, \]
+则称对象 $X$ 与 $Y$ 是\textbf{同构的}（isomorphic），并记作 $X\simeq Y$。此时，$f,g$ 称为\textbf{同构态射}（isomorphism）。
+\end{definition}
+% [Tutor Note: 定义 4.7 中的 $1_X$ 即 $\id_X$ 的另一写法（4.2 节起会写作 $0_X,1_X$）。注意「$X\simeq Y$」是等价关系：自反与对称是定义中显然的，传递性由「$g\circ f$ 的同构逆为 $f^{-1}\circ g^{-1}$」可得。可验证的锚点：例 4.3 的 $\Set$、例 4.4 的 $\Ab$ 中，同构态射恰好就是双射；而在例 4.5 的 $\Mod\text{-}R$ 中，同构态射恰为可逆 $R$ 同态（不必是恒等）。]
+
+当 $X\simeq Y$ 时，对任意对象 $Z\in\cC$，同构态射 $f\colon X\to Y$ 给出全单射
+% [原文 p.65]
+\[
+\begin{array}{rclcrcl}
+  \Hom_{\cC}(Z,X) & \longrightarrow & \Hom_{\cC}(Z,Y), & \qquad & \Hom_{\cC}(Y,Z) & \longrightarrow & \Hom_{\cC}(X,Z)\\
+  x & \longmapsto & f\circ x, & & y & \longmapsto & y\circ f
+\end{array}
+\]
+所给出的。类似地，同构态射 $g\colon Y\to X$ 给出上述全单射的逆映射 $\Hom_{\cC}(Z,Y)\to\Hom_{\cC}(Z,X)$、$\Hom_{\cC}(X,Z)\to\Hom_{\cC}(Y,Z)$。
+
+\begin{definition}{4.8}
+范畴 $\cC$ 的\textbf{子范畴}（subcategory）$\cC'\subset\cC$ 是指这样的范畴：$\Ob(\cC')\subset\Ob(\cC)$，且对任意对象 $X,Y\in\cC'$ 有
+\[ \Hom_{\cC'}(X,Y)\subset\Hom_{\cC}(X,Y), \]
+$\id_X\in\Hom_{\cC'}(X,X)\subset\Hom_{\cC}(X,X)$，并具有由 $\cC$ 诱导的合成。当子范畴 $\cC'\subset\cC$ 对任意对象 $X,Y\in\cC'$ 都满足
+\[ \Hom_{\cC'}(X,Y)=\Hom_{\cC}(X,Y) \]
+时，称之为\textbf{全子范畴}（full subcategory）。
+\end{definition}
+
+\begin{example}{4.9}
+对交换环 $R$，有限生成 $R$-模的范畴 $\mathrm{mod}(R)$ 是 $R$-模的范畴 $\Mod(R)$ 的全子范畴。因此，对域 $K$，$\mathrm{vect}(K)$ 是 $\Vect(K)$ 的全子范畴。类似地，对环 $R$，$\mathrm{mod}\text{-}R$、$R\text{-}\mathrm{mod}$ 分别是 $\Mod\text{-}R$、$R\text{-}\Mod$ 的全子范畴。
+\end{example}
+
+\begin{definition}{4.10}[函子]
+设 $\cC,\cC'$ 为范畴。\textbf{共变函子}（covariant functor）$F\colon\cC\to\cC'$ 是指满足以下条件者：
+\begin{itemize}
+  \item 对每个对象 $X\in\cC$ 对应一个对象 $F(X)\in\cC'$，
+  \item 对任意对象 $X,Y\in\cC$ 有映射
+        \begin{equation}
+          F\colon\Hom_{\cC}(X,Y)\longrightarrow\Hom_{\cC'}(F(X),F(Y)) \tag{4.2}
+        \end{equation}
+\end{itemize}
+并且满足以下条件：
+\begin{enumerate}[label=(\alph*)]
+  \item 对 $\id_X\in\Hom_{\cC}(X,X)$，有 $F(\id_X)=\id_{F(X)}\in\Hom_{\cC'}(F(X),F(X))$。
+  \item 对对象 $X,Y,Z\in\cC$、态射 $f\colon X\to Y$、$g\colon Y\to Z$，有
+        \begin{equation}
+          F(g\circ f)=F(g)\circ F(f). \tag{4.3}
+        \end{equation}
+\end{enumerate}
+反之，若 $F\colon\cC\to\cC'$ 在作为共变函子的条件中，以
+\[ F\colon\Hom_{\cC}(X,Y)\longrightarrow\Hom_{\cC'}(F(Y),F(X)) \]
+代替式 (4.2)，并以
+\begin{equation}
+  F(g\circ f)=F(f)\circ F(g) \tag{4.4}
+\end{equation}
+代替式 (4.3)，而满足这些条件，则称 $F$ 为\textbf{反变函子}（contravariant functor）。
+
+以下，单说函子时指的是共变函子。
+\end{definition}
+
+\begin{remark}{4.11}
+共变函子是保持态射方向的，反变函子是把态射方向反转的。直观上，画出如下图也许就容易理解了。
+\end{remark}
+
+% [原文 p.66]
+\[
+\begin{aligned}
+  &\text{共变函子 } F\colon\Bigl(X\xrightarrow{f}Y\xrightarrow{g}Z\Bigr)\longmapsto
+    \Bigl(F(X)\xrightarrow{F(f)}F(Y)\xrightarrow{F(g)}F(Z)\Bigr),\\
+  &\text{反变函子 } F\colon\Bigl(X\xrightarrow{f}Y\xrightarrow{g}Z\Bigr)\longmapsto
+    \Bigl(F(X)\xleftarrow{F(f)}F(Y)\xleftarrow{F(g)}F(Z)\Bigr).
+\end{aligned}
+\]
+
+对范畴 $\cC$，\textbf{逆范畴}（opposite category）$\cC^{\op}$ 由 $\Ob(\cC^{\op}):=\Ob(\cC)$、$\Hom_{\cC^{\op}}(Y,X):=\Hom_{\cC}(X,Y)$，以及态射的合成 $\circ^{\op}$ 通过对 $f\in\Hom_{\cC}(X,Y)=\Hom_{\cC^{\op}}(Y,X)$、$g\in\Hom_{\cC}(Y,Z)=\Hom_{\cC^{\op}}(Z,Y)$ 令 $f\circ^{\op}g:=g\circ f$ 而定义。用这个说法，反变函子 $\cC\to\cC'$ 无非是（共变）函子 $\cC\to(\cC')^{\op}$（或 $\cC^{\op}\to\cC$）。
+% [Tutor Note: 底本 p.66 第 4 行印作「$f\in\Hom_{\cC}(X,Y)=\Hom_{\cC^{\op}}(X,Y)$」；据作者正誤表（2014-05-20 版）p66 条订正为「$f\in\Hom_{\cC}(X,Y)=\Hom_{\cC^{\op}}(Y,X)$」。否则 $\circ^{\op}$ 的合成次序无法与 $\Hom_{\cC^{\op}}(Z,Y)$ 的指标相符。]
+
+对范畴 $\cC,\cC',\cC''$ 与函子 $F\colon\cC\to\cC'$、$G\colon\cC'\to\cC''$，合成 $G\circ F\colon\cC\to\cC''$ 再次构成函子，这一点容易验证。
+% [Tutor Note: 此处「簡単に確認できる」的具体内容：对 $X\in\cC$ 取 $(G\circ F)(X):=G(F(X))$，对 $f\in\Hom_{\cC}(X,Y)$ 取 $(G\circ F)(f):=G(F(f))$；则 $(G\circ F)(\id_X)=G(\id_{F(X)})=\id_{G(F(X))}$，且 $(G\circ F)(g\circ f)=G(F(g)\circ F(f))=G(F(g))\circ G(F(f))$，故满足定义 4.10 的 (a)(b)。]
+
+\begin{definition}{4.12}
+对范畴 $\cC,\cC'$ 与函子 $F\colon\cC\to\cC'$，若对任意对象 $X,Y\in\cC$，映射
+\[ F\colon\Hom_{\cC}(X,Y)\longrightarrow\Hom_{\cC'}(F(X),F(Y)) \]
+都是单射，则称 $F$ 为\textbf{忠实函子}（faithful functor）；若还是全单射，则称 $F$ 为\textbf{全忠实函子}（full faithful functor）。类似地可定义反变忠实函子、反变全忠实函子。
+\end{definition}
+
+例如，若给定 $\cC$ 与它的某个子范畴 $\cC'\subset\cC$，则存在相应的自然的忠实函子 $\iota\colon\cC'\to\cC$；特别地，若 $\cC'\subset\cC$ 是全子范畴，则 $\iota$ 是全忠实函子。
+
+\begin{definition}{4.13}[范畴等价]
+对范畴 $\cC,\cC'$，若存在全忠实函子 $F\colon\cC\to\cC'$，并且对每个对象 $X'\in\cC'$ 都存在对象 $X\in\cC$ 使得 $X'$ 与 $F(X)$ 同构，则称这样的函子为\textbf{范畴等价函子}（equivalence）。特别地，若对每个对象 $X'\in\cC'$ 都存在对象 $X\in\cC$ 使得 $X'=F(X)$，则称 $F$ 为\textbf{同构函子}（isomorphism）。
+\end{definition}
+
+对范畴 $\cC,\cC'$，若存在范畴等价函子 $F\colon\cC\to\cC'$，则称 $\cC$ 与 $\cC'$ 是\textbf{范畴等价的}（equivalent）。特别地，若存在同构函子 $F\colon\cC\to\cC'$，则称范畴 $\cC$ 与 $\cC'$ 是\textbf{同构的}（isomorphic）。
+
+关于同构函子 $F\colon\cC\to\cC'$，存在唯一的同构函子 $G\colon\cC'\to\cC$ 使得 $G\circ F=\id_{\cC}$、$F\circ G=\id_{\cC'}$。作为其推广的范畴等价函子的理解，由下一节的自然同值给出（引理 4.16）。
+% [Tutor Note: 此处「一意的に存在する」的论证：令 $G(X'):=F^{-1}(X')$（$F$ 在对象上双射）、$G(f'):=F^{-1}(f')$；由 $F$ 全忠实且对象上双射，$F$ 在态射集上双射，故 $G$ 是函子且 $G\circ F=\id_{\cC}$、$F\circ G=\id_{\cC'}$ 逐对象、逐态射成立；唯一性由 $G$ 必须满足 $F\circ G=\id$ 与 $G\circ F=\id$ 逼出。]
+
+范畴一般包含无穷多个对象，对用同构来分类范畴感兴趣的情形并不多。通常，在范畴论中范畴等价比范畴同构是更重要的概念。由定义，直观上范畴等价函子 $F\colon\cC\to\cC'$ 是这样的函子：它给出由这些范畴 $\cC,\cC'$ 所得的「对象的同构类」所构成的范畴之间的同构函子。也就是说，我们感兴趣的不是范畴本身，而是其「对象的同构类」的范畴所具有的结构；而代替「考虑对象的同构类」这一（一般说来困难的）操作、以范畴等价函子这一概念来分类范畴，正是范畴论中的手法。
+\subsection{自然变换、自然同值与可表性}
+
+函子之间的映射有自然变换这一概念。本书采取除非必要否则不使用这一概念的方针，所以此处先跳读也无妨；但借助它可以把范畴等价性等概念整理清楚。在 5.7 节中会本质地用到自然变换。
+
+% [原文 p.67]
+\begin{definition}{4.14}
+给定范畴 $\cC,\cC'$ 之间的函子 $F,G\colon\cC\to\cC'$ 时，从 $F$ 到 $G$ 的\textbf{自然变换}（natural transformation）$\theta\colon F\to G$ 是指对各对象 $X\in\cC$ 所确定的 $\cC'$ 的态射 $\theta_X\colon F(X)\to G(X)$ 的族
+\[ \{\theta_X\in\Hom_{\cC'}(F(X),G(X))\}_{X\in\cC} \]
+并且对每个对象 $Y,Z\in\cC$ 与态射 $g\in\Hom_{\cC}(Y,Z)$ 使图表
+\[
+\begin{tikzcd}[row sep=large, column sep=3.2em]
+  \theta_Y\colon & F(Y) \arrow[rr] \arrow[dd,"F(g)"'] & & G(Y) \arrow[dd,"G(g)"] \\
+  & & & \\
+  \theta_Z\colon & F(Z) \arrow[rr] & & G(Z)
+\end{tikzcd}
+\]
+可交换者。
+
+特别地，若对所有对象 $X$，$\theta_X\in\Hom_{\cC'}(F(X),G(X))$ 都是同构态射，则称 $\theta\colon F\to G$ 为\textbf{自然同值}（natural equivalence）、函子的同构（isomorphism of functors）等，此时记作 $F\overset{\mathrm{n.e.}}{\simeq}G$。
+\end{definition}
+
+由定义，自然变换的合成仍是自然变换。反变函子之间的自然变换也类似地定义。
+
+\begin{remark}{4.15}
+对范畴 $\cC,\cC'$，可以构成从 $\cC$ 到 $\cC'$ 的函子的范畴 $\mathit{Funct}(\cC,\cC')$。也就是说，$\mathit{Funct}(\cC,\cC')$ 的对象是从 $\cC$ 到 $\cC'$ 的函子，对 $F,G\in\Ob(\mathit{Funct}(\cC,\cC'))$ 取 $\Hom_{\mathit{Funct}(\cC,\cC')}(F,G)$ 为从 $F$ 到 $G$ 的自然变换所构成的集合，则 $\mathit{Funct}(\cC,\cC')$ 构成范畴。此时，$F$ 与 $G$ 是自然同值一事，无非是 $F$ 与 $G$ 在 $\mathit{Funct}(\cC,\cC')$ 中同构。
+\end{remark}
+
+\begin{lemma}{4.16}
+对函子 $F\colon\cC\to\cC'$，以下等价：
+\begin{itemize}
+  \item $F$ 是范畴等价函子（定义 4.13）。
+  \item 存在函子 $G\colon\cC'\to\cC$ 使得 $G\circ F\overset{\mathrm{n.e.}}{\simeq}\id_{\cC}$、$F\circ G\overset{\mathrm{n.e.}}{\simeq}\id_{\cC'}$。
+\end{itemize}
+\end{lemma}
+
+\begin{proof}
+设存在函子 $F,G$ 使得 $G\circ F\overset{\mathrm{n.e.}}{\simeq}\id_{\cC}$、$F\circ G\overset{\mathrm{n.e.}}{\simeq}\id_{\cC'}$。由自然同值的定义，对任意对象 $X\in\cC$、$X'\in\cC'$ 存在同构
+\[ G\circ F(X)\simeq X,\qquad F\circ G(X')\simeq X'. \]
+特别地，由第 2 式，对任意 $X'\in\cC'$，令 $G(X')=:X$，即得同构 $F(X)\simeq X'$。进而，对 $X,Y\in\cC$，映射的合成
+\[ \Hom_{\cC}(X,Y)\xrightarrow{F}\Hom_{\cC'}(F(X),F(Y))\xrightarrow{G}\Hom_{\cC}(G\circ F(X),G\circ F(Y)) \]
+% [原文 p.68]
+存在，而由 $G\circ F\overset{\mathrm{n.e.}}{\simeq}\id_{\cC}$，这个合成是全单射。也就是说，$F$ 是单射，$G$ 是满射。类似地，对 $X',Y'\in\cC'$，合成映射
+\[ \Hom_{\cC'}(X',Y')\xrightarrow{G}\Hom_{\cC}(G(X'),G(Y'))\xrightarrow{F}\Hom_{\cC}(F\circ G(X'),F\circ G(Y')) \]
+是全单射。也就是说，考虑 $X'=F(X)$、$Y'=G(Y)$ 的情形，便证明了 $F\colon\Hom_{\cC}(X,Y)\to\Hom_{\cC'}(F(X),F(Y))$ 是全单射。
+
+反之，给定范畴等价函子 $F\colon\cC\to\cC'$ 时，可以构造满足题意的函子 $G\colon\cC'\to\cC$（略。cf.\ [17, p71]，[39, p121, 定理 1]）。
+% [Tutor Note: 此处「略」的补法：对每个 $X'\in\cC'$ 取定一个对象 $G(X')\in\cC$ 与同构 $\varepsilon_{X'}\colon F(G(X'))\to X'$（由 $F$ 的本质满性，且在 AC 下可整体选取）。对 $f'\colon X'\to Y'$，令 $G(f'):=\varepsilon_{Y'}^{-1}\circ f'\circ\varepsilon_{X'}$ 在 $F$ 下的原像，即 $\varepsilon_{Y'}\circ F(G(f'))=f'\circ\varepsilon_{X'}$；由 $F$ 全忠实该原像唯一。于是 $G$ 是函子且 $\varepsilon\colon F\circ G\overset{\mathrm{n.e.}}{\simeq}\id_{\cC'}$；再令 $\eta_X\colon X\to G(F(X))$ 为 $F(\eta_X)=\varepsilon_{F(X)}^{-1}$ 所定，可验证 $\eta\colon\id_{\cC}\overset{\mathrm{n.e.}}{\simeq}G\circ F$。这正是「全忠实 + 本质满 $\Leftrightarrow$ 存在拟逆」的标准证明。]
+\end{proof}
+
+对范畴 $\cC$ 与对象 $X\in\cC$，$\Hom_{\cC}(X,\quad)\colon\cC\to\Set$ 是从 $\cC$ 到集合所构成的范畴的（共变）函子，$\Hom_{\cC}(\quad,X)\colon\cC\to\Set$ 是反变函子。例如，$F^X:=\Hom_{\cC}(X,\quad)$ 把对象 $Y\in\cC$ 送到集合 $\Hom_{\cC}(X,Y)$。对态射 $g\in\Hom_{\cC}(Y,Z)$，$F^X(g)\in\Hom_{\Set}(F^X(Y),F^X(Z))$ 定义为把 $f\in F^X(Y)=\Hom_{\cC}(X,Y)$ 送到 $g\circ f\in\Hom_{\cC}(X,Z)=F^X(Z)$ 的对应。
+
+\begin{definition}{4.17}
+函子 $F\colon\cC\to\Set$ 称为\textbf{可表的}（representable），是指存在对象 $X\in\cC$ 使得 $F\overset{\mathrm{n.e.}}{\simeq}\Hom_{\cC}(X,\quad)$。
+
+反变函子 $F\colon\cC\to\Set$ 称为可表的，是指存在对象 $X\in\cC$ 使得 $F\overset{\mathrm{n.e.}}{\simeq}\Hom_{\cC}(\quad,X)$。
+\end{definition}
+
+在这些情形中，称「$X$ 表示 $F$」、「$F$ 由 $X$ 表示」等。
+
+为了讨论某个对象 $X\in\cC$ 是否表示函子 $F\colon\cC\to\Set$，首先想从函子 $F^X=\Hom_{\cC}(X,\quad)\colon\cC\to\Set$ 到 $F$ 构造自然变换 $\theta\colon F^X\to F$。若自然变换 $\theta$ 存在，便可由此定义元素 $\theta(\id_X)\in F(X)$。反之，下述事实成立。
+
+\begin{lemma}{4.18}
+给定函子 $F\colon\cC\to\Set$、对象 $X\in\cC$ 与元素 $t\in F(X)$ 时，存在唯一的自然变换 $\theta\colon F^X\to F$ 使得 $t=\theta(\id_X)$。
+\end{lemma}
+
+\begin{proof}
+对每个 $Y\in\cC$，通过
+\begin{equation}
+  f\longmapsto\theta_Y(f)=F(f)(t)\in F(Y),\qquad f\in F^X(Y)=\Hom_{\cC}(X,Y) \tag{4.5}
+\end{equation}
+来定义 $\theta_Y\colon F^X(Y)\to F(Y)$。这个对应是自然变换一事，可由对态射 $g\in\Hom_{\cC}(Y,Z)$ 图表
+\[
+\begin{tikzcd}[row sep=large, column sep=3.2em]
+  \theta_Y\colon & f \arrow[rr] \arrow[dd,"F^X(g)"'] & & F(f)(t) \arrow[dd,"F(g)"] \\
+  & & & \\
+  \theta_Z\colon & g\circ f \arrow[rr] & & F(g\circ f)(t)
+\end{tikzcd}
+\]
+可交换而得到。（把 $Y,Z,f$ 分别取为 $X,Y,\id_X$ 的情形，即可导出自然变换 (4.5) 的唯一性。）
+% [Tutor Note: 唯一性的具体推导：若 $\theta'\colon F^X\to F$ 满足 $t=\theta'(\id_X)$，则对任意 $f\colon X\to Y$，由 $\theta'$ 的自然性有 $\theta'_Y(f)=\theta'_Y(F^X(f)(\id_X))=F(f)(\theta'(\id_X))=F(f)(t)=\theta_Y(f)$，故 $\theta'=\theta$。此即 Yoneda 引理（本书只给出这段特例）。]
+\end{proof}
+
+类似地，对 $X\in\cC$ 与反变函子 $F'\colon\cC\to\Set$ 取元素 $t\in F'(X)$，
+% [原文 p.69]
+然变换 $\theta\colon F_X\to F'$ 使得 $\theta(\id_X)=t$ 者被唯一确定。
+
+\begin{corollary}{4.19}
+对函子 $F\colon\cC\to\Set$，若存在表示 $F$ 的对象，则它在同构的意义下被唯一确定。
+\end{corollary}
+
+\begin{proof}
+若存在自然同值 $\Hom_{\cC}(X,\quad)\overset{\mathrm{n.e.}}{\simeq}F\overset{\mathrm{n.e.}}{\simeq}\Hom_{\cC}(X',\quad)$，则对自然同值
+\[ \Hom_{\cC}(X,\quad)\overset{\rho}{\underset{\sigma}{\rightleftarrows}}\Hom_{\cC}(X',\quad) \]
+所确定的态射 $s:=\rho(\id_X)$、$t:=\sigma(\id_{X'})$ 相互给出 $X$ 与 $X'$ 之间的同构态射。
+% [Tutor Note: 此处「相互给出同构」的验证：由 $\rho,\sigma$ 互逆及自然性，$\sigma_X\circ\rho_X=\id_{\Hom(X,\_)}$、$\rho_{X'}\circ\sigma_{X'}=\id_{\Hom(X',\_)}$；于是在 $\id_X$ 上取值得 $t\circ s=\sigma_{X'}(s)=\sigma_{X'}(\rho_X(\id_X))=\id_{X'}$，同理 $s\circ t=\id_X$。]
+\end{proof}
+
+\begin{corollary}{4.20}
+对（自）函子 $F\colon\cC\to\cC$ 与对象 $X\in\cC$，两个函子
+\[ \Hom_{\cC}(X,\quad),\ \Hom_{\cC}(F(X),F(\quad))\colon\cC\to\Set \]
+与自然变换
+\[ \theta\colon\Hom_{\cC}(X,\quad)\longrightarrow\Hom_{\cC}(F(X),F(\quad)) \]
+被确定，且满足 $\theta_X(\id_X)=\id_{F(X)}=F(\id_X)\in\Hom_{\cC}(F(X),F(X))$。特别地，若 $F$ 是自等价函子，则 $\theta$ 给出自然同值。
+\end{corollary}
+
+在系 4.20 中，注意对每个对象 $Y\in\cC$ 有 $\theta_Y(f)=F(f)$。
+
+关于反变函子，系 4.19、系 4.20 也同样成立。
+
+\subsection{范畴论中的单射与满射}
+
+在范畴中，对象不过是标签，一般并不要求每个对象都是某个集合。从对象 $X$ 到对象 $Y$ 的态射 $f\colon X\to Y$，不过是确定了 $X$ 与 $Y$ 之后所定出的集合 $\Hom_{\cC}(X,Y)$ 的元素，一般并不具有「从 $X$ 到 $Y$ 的映射」这一含义。
+
+在这样的范畴框架中，现在想对态射定义相当于映射的单射、满射的概念。
+
+\begin{definition}{4.21}
+给定范畴 $\cC$ 与对象 $Y,Z\in\cC$ 时，态射 $g\in\Hom_{\cC}(Y,Z)$ 称为\textbf{单射}，是指对任意对象 $X\in\cC$ 与态射 $f,f'\in\Hom_{\cC}(X,Y)$，
+\begin{equation}
+  g\circ f=g\circ f'\iff f=f' \tag{4.6}
+\end{equation}
+成立。
+\end{definition}
+
+\begin{definition}{4.22}
+给定范畴 $\cC$ 与对象 $X,Y\in\cC$ 时，态射 $f\in\Hom_{\cC}(X,Y)$ 称为\textbf{满射}，是指对任意对象 $Z\in\cC$ 与态射 $g,g'\in\Hom_{\cC}(Y,Z)$，
+\begin{equation}
+  g\circ f=g'\circ f\iff g=g' \tag{4.7}
+\end{equation}
+成立。
+\end{definition}
+
+\begin{remark}{4.23}
+当上述 $X,Y,Z$ 都是某个集合、$f,f',g,g'$ 是它们之间的映射时，若 $g$ 是单射则满足 (4.6)，若 $f$ 是满射则满足 (4.7)，这是显然的。特别地，在集合的范畴 $\Set$ 中，态射是单射、满射一事与它作为映射是单射、满射等价。英语中映射的单射称为 injection、injective morphism，映射的满射称为 surjection、surjective morphism 等，
+% [原文 p.70]
+满足定义 4.21、4.22 者则分别称为 monomorphism、epimorphism；而作为日语译名，本书决定使用同一个词（单射、满射）。
+% [Tutor Note: 这里作者特意说明「日语的译名」：中译本沿用「单射/满射」译 monomorphism/epimorphism，与映射的单射/满射同名，差别只在语境（范畴中的单射用消去律定义）。标准英文对：epimorphism 也称「右可消去」，monomorphism 也称「左可消去」。]
+\end{remark}
+
+与集合间映射的情形相同，下述事实成立。
+
+\begin{lemma}{4.24}
+\begin{itemize}
+  \item 单射的合成是单射。
+  \item 满射的合成是满射。
+  \item 在 $h=g\circ f$ 中若 $h$ 是满射，则 $g$ 也是满射。
+  \item 在 $h=g\circ f$ 中若 $h$ 是单射，则 $g$ 也是单射。
+\end{itemize}
+\end{lemma}
+
+\begin{proof}
+例如对 $f\colon X\to Y$、$g\colon Y\to Z$，当 $h=g\circ f$ 是满射时 $g$ 也是满射，可如下证明。对 $w,w'\colon Z\to W$，若 $w\circ g=w'\circ g$，则总有 $w\circ h=w'\circ h$；而 $h$ 是满射，故 $w=w'$。也就是说，若 $w\circ g=w'\circ g$ 则 $w=w'$，故 $g$ 是满射。
+% [Tutor Note: 补出其余三条的论证。第 4 条（$h$ 单射 $\Rightarrow g$ 单射）：设 $g\circ f_1=g\circ f_2$（$f_i\colon W\to Y$），则 $h\circ f_1=g\circ f_1=g\circ f_2=h\circ f_2$，由 $h$ 单射得 $f_1=f_2$。第 1、2 条由 (4.6)(4.7) 直接代入合成结合律即得。另注意第 3 条要求 $h$ 满射给出 $g$ 满射（不是 $f$），这正是 $h$ 的「右可消去性」传递到 $g$ 的论证。]
+\end{proof}
+
+\subsection{范畴论中的直积与直和}
+
+关于集合、阿贝尔群、$R$-模等的直积、直和此前已讨论过，它们按泛性质的刻画可以直接采用为一般范畴中直和、直积的定义。今后只需要有限直积、有限直和，故此处只定义两个对象的直积、直和。
+
+\begin{definition}{4.25}
+设 $\cC$ 为范畴，$X_1,X_2\in\cC$ 为对象。若存在某个对象 $X\in\cC$ 与态射 $p_i\colon X\to X_i$（$i=1,2$），使得对任意对象 $W\in\cC$ 与态射 $f_i\colon W\to X_i$（$i=1,2$），存在唯一的态射 $f\colon W\to X$ 满足
+\[ p_i\circ f=f_i,\qquad i=1,2, \]
+则称 $X$ 为 $X_1$ 与 $X_2$ 的\textbf{直积}（direct product），记作 $X=X_1\prod X_2$ 或 $X_1\times X_2$。反之，若对对象 $X_1,X_2\in\cC$ 存在某个对象 $X\in\cC$ 与态射 $j_i\colon X_i\to X$（$i=1,2$），使得对任意对象 $W\in\cC$ 与态射 $f_i\colon X_i\to W$（$i=1,2$），存在唯一的态射 $f\colon X\to W$ 满足
+\[ f\circ j_i=f_i,\qquad i=1,2, \]
+则称 $X$ 为 $X_1$ 与 $X_2$ 的\textbf{直和}（direct sum），记作 $X=X_1\coprod X_2$ 或 $X=X_1\oplus X_2$。
+\end{definition}
+
+\[
+\begin{tikzcd}[row sep=2.4em, column sep=2.6em]
+  & W \arrow[dl,"f_1"'] \arrow[d,"f"] \arrow[dr,"f_2"] & \\
+  X_1 & X \arrow[l,"p_1"'] \arrow[r,"p_2"] & X_2
+\end{tikzcd}
+\qquad
+\begin{tikzcd}[row sep=2.4em, column sep=2.6em]
+  & W & \\
+  X_1 \arrow[ur,"f_1"] \arrow[r,"j_1"'] & X \arrow[u,"f"] \arrow[r,"j_2"] & X_2 \arrow[ul,"f_2"']
+\end{tikzcd}
+\]
+
+在一般的范畴 $\cC$ 中，对象 $X_1,X_2\in\cC$ 的直积、直和未必存在，但若存在，则除同构外被唯一确定。实际上，若 $X,X'$ 都是 $X_1$ 与 $X_2$ 的
+
+% [原文 p.71]
+\[\begin{tikzcd}[row sep=2.2em, column sep=3.2em]
+  & X' \arrow[ddl,"p_1'"'] \arrow[ddr,"p_2'"] \arrow[d,shift left=1pt,"f"] & & & & X \arrow[dl,"p_1"'] \arrow[dr,"p_2"] \arrow[d,"f"] & \\
+  & X \arrow[dl,"p_1"'] \arrow[dr,"p_2"] \arrow[u,shift left=1pt,"f'"'] & & & X_1 & X' \arrow[l,"p_1"'] \arrow[r,"p_2"] \arrow[d,"f'"'] & X_2 \\
+  X_1 & & X_2 & & & X & \\
+  & \text{(a)} & & & & \text{(b)} &
+\end{tikzcd}\]
+\begin{center}\small 图 4.1\end{center}
+
+直积，则存在 $p_i\colon X\to X_i$、$p'_i\colon X'\to X_i$（$i=1,2$）；由 $X$ 是直积，存在唯一的态射 $f\colon X'\to X$ 使图 4.1(a) 可交换；由 $X'$ 是直积，存在唯一的态射 $f'\colon X\to X'$ 使图表可交换。进而，由 $X$ 是直积，使图 4.1(b) 可交换的态射 $X\to X$ 是唯一的，而 $f\circ f'$、$\id_X$ 都使图表可交换，故得到等式 $f\circ f'=\id_X$。类似地得到 $f'\circ f=\id_{X'}$，从而证明了 $X$ 的（除同构外的）唯一性。类似地也可证明直和的唯一性。
+% [Tutor Note: 图 4.1 的读法：(a) 中 $X'$ 到 $X$ 的两条竖直箭分别是 $f\colon X'\to X$（向下）与 $f'\colon X\to X'$（向上）；(b) 是把 (a) 的上下端对调后用于「$X\to X$」的唯一性论证——其中可交换的两条 $X\to X$ 分别是 $\id_X$ 与 $f'\circ f$，因 $X$ 是直积故二者相等。]
+
+由直积 $X\simeq X_1\prod X_2$ 的定义，由 $p_1$ 与 $p_2$ 所确定的映射
+\begin{equation}
+  p_1\times p_2\colon\Hom_{\cC}(W,X)\longrightarrow\Hom_{\cC}(W,X_1)\times\Hom_{\cC}(W,X_2) \tag{4.8}
+\end{equation}
+是全单射。类似地，关于直和 $X\simeq X_1\oplus X_2$，映射
+\begin{equation}
+  j_1\times j_2\colon\Hom_{\cC}(X,W)\longrightarrow\Hom_{\cC}(X_1,W)\times\Hom_{\cC}(X_2,W) \tag{4.9}
+\end{equation}
+是全单射。
+% [Tutor Note: 式 (4.8) 的全单射性直接来自直积的泛性质：给定 $(g_1,g_2)\in\Hom(W,X_1)\times\Hom(W,X_2)$，直积定义保证存在唯一的 $g\colon W\to X$ 使 $p_i\circ g=g_i$，故 $p_1\times p_2$ 是双射。这里仅需「全单射」；注 4.30 将指出，在加法范畴中它还是加法群同构。]
+
+\section{加法范畴}
+
+所谓加法范畴，是指射的空间构成加法群，并且对象的直和可定义、且具有与射的空间的加法性相容的结构者。
+
+\begin{definition}{4.26}
+范畴 $\cC$ 在满足以下条件时称为\textbf{加法范畴}（additive category）。
+\begin{itemize}
+  \item （态射的加法性）对所有的对象 $X,Y\in\cC$，$\Hom_{\cC}(X,Y)$ 是加法群。
+  \item （零对象）存在某个对象 $X\in\cC$，使得对 $0_X,1_X\in\Hom_{\cC}(X,X)$ 有 $0_X=1_X$。
+  \item （双线性性）对 $f,f'\in\Hom_{\cC}(X,Y)$、$g,g'\in\Hom_{\cC}(Y,Z)$，
+        \[ g\circ(f+f')=g\circ f+g\circ f',\qquad (g+g')\circ f=g\circ f+g'\circ f \]
+        成立。
+  \item （直和的存在）对所有的对象 $X_1,X_2\in\cC$，直和 $X_1\oplus X_2$ 存在。
+\end{itemize}
+\end{definition}
+
+% [原文 p.72]
+在加法范畴 $\cC$ 中，满足 $0_X=1_X$ 的对象 $X\in\cC$ 称为\textbf{零对象}（zero object）。此时，由 $1_X$ 的定义，对任意对象 $Y\in\cC$ 与 $f\in\Hom_{\cC}(X,Y)$、$g\in\Hom_{\cC}(Y,X)$，有
+\[ f=f\circ 1_X=f\circ 0_X=0_{XY},\qquad g=1_X\circ g=0_X\circ g=0_{YX}. \]
+也就是说，当 $X$ 是零对象时，加法群 $\Hom_{\cC}(X,Y)$、$\Hom_{\cC}(Y,X)$ 仅由零态射构成：$\Hom_{\cC}(X,Y)=\{0_{XY}\}$、$\Hom_{\cC}(Y,X)=\{0_{YX}\}$。
+% [Tutor Note: 零对象的唯一性（除同构外）此处未提：若 $X,X'$ 都是零对象，则 $\Hom(X,X')=\{0_{XX'}\}$ 且 $\Hom(X',X)=\{0_{X'X}\}$，由 $1_X=0_X$、$1_{X'}=0_{X'}$ 知 $X\simeq X'$。另外这里 $0_{XY}$ 的记法表示 $X\to Y$ 的零态射，即 $\Hom(X,Y)$ 的零元（$Y=X$ 时写作 $0_X$）。]
+
+对加法范畴 $\cC$ 的每个对象 $X$，$\End_{\cC}(X):=\Hom_{\cC}(X,X)$ 以态射的合成为乘法构成环。称之为\textbf{自同态环}（endomorphism ring）。也就是说，仅由 $X$ 构成的 $\cC$ 的全子范畴构成环。
+
+\begin{remark}{4.27}
+在加法范畴中，$g$ 是单射的条件成为「若 $g\circ f=0$ 则常有 $f=0$」，$f$ 是满射的条件成为「若 $g\circ f=0$ 则常有 $g=0$」。
+\end{remark}
+
+\begin{definition}{4.28}
+对加法范畴 $\cC$ 的对象 $X\in\cC$，若存在对象 $X_1,X_2\in\cC$ 使得 $X\simeq X_1\oplus X_2$，则称 $X_1,X_2$ 为 $X$ 的\textbf{直和因子}（direct summand）。若对 $X$ 不存在这样的、两者都不是零对象的 $X_1,X_2$，则称 $X$ 是\textbf{直既约的}（indecomposable）。
+\end{definition}
+
+作为加法范畴中直和的特征刻画，下述事实很重要。
+
+\begin{proposition}{4.29}(cf.\ [39, p262, 定理 2])
+对加法范畴 $\cC$ 的对象 $X_1,X_2\in\cC$，以下 3 个对象同构。
+\begin{enumerate}[label=(\alph*)]
+  \item 直和 $X_1\oplus X_2$（定义 4.25）。
+  \item 直积 $X_1\times X_2$（定义 4.25）。
+  \item 对象 $X\in\cC$，使得在图表
+        \[
+          X_1\ \underset{p_1}{\overset{i_1}{\rightleftarrows}}\ X\ \underset{i_2}{\overset{p_2}{\rightleftarrows}}\ X_2
+        \]
+        中满足 $p_j\circ i_j=\id_{X_j}$（$j=1,2$）、$i_1\circ p_1+i_2\circ p_2=\id_X$、$p_2\circ i_1=0_{X_1X_2}$、$p_1\circ i_2=0_{X_2X_1}$。
+\end{enumerate}
+\end{proposition}
+
+在 (c) 中，由定义 $i_1,i_2$ 是单射，$p_1,p_2$ 是满射。(c) 使用了零态射、态射的和等，故须注意它只在加法范畴中才有定义。
+% [Tutor Note: (c) 中「$i_1,i_2$ 是单射」的论证：设 $i_1\circ h=i_1\circ h'$，两边左乘 $p_1$ 得 $h=p_1\circ i_1\circ h=p_1\circ i_1\circ h'=h'$（用了 $p_1\circ i_1=\id$）；$i_2$ 同理用 $p_2\circ i_2=\id$。对偶地，$p_1\circ h=p_1\circ h'$ 时两边右乘 $i_1$ 并由 $i_1\circ p_1+i_2\circ p_2=\id_X$ 即得；$p_2$ 同理。]
+
+\begin{proof}
+首先由 (a) 证明 (c)。对直和 $X=X_1\oplus X_2$，由定义，$\id_{X_1}\colon X_1\to X_1$、$0\colon X_2\to X_1$ 经过 $X$ 分解，故存在唯一的 $p_1\colon X\to X_1$ 满足 $p_1\circ i_1=\id_{X_1}$、$p_1\circ i_2=0_{X_2X_1}$。类似地，存在唯一的 $p_2\colon X_2\to X$ 满足 $p_2\circ i_2=\id_{X_2}$、$p_2\circ i_1=0_{X_1X_2}$。
+% [Tutor Note: 底本此处印作「$p_2\colon X_2\to X$ も一意的に存在する」，与其后 $p_2\circ i_2=\id_{X_2}$（须为 $X\to X_2$ 与 $X_2\to X$ 的复合）不合，按内容应为 $p_2\colon X\to X_2$。此处未列入作者正誤表，属排版疏误；译文照录原文并在此标注。]
+
+\[\begin{tikzcd}[row sep=3.4em, column sep=4.4em]
+  X_1 \arrow[dr,"i_1"'] \arrow[dd,"\id_{X_1}"'] & & X_2 \arrow[dl,"i_2"] \arrow[dd,"\id_{X_2}"] \\
+  & X \arrow[dl,"p_1"'] \arrow[dr,"p_2"] & \\
+  X_1 & & X_2
+\end{tikzcd}\]
+
+% [原文 p.73]（以下为 命題4.29 证明的收尾，原文在 p.73 开头；p.73 其余内容留待下一批）
+现在 $X$ 是直和，故对 $i_j\colon X_j\to X$，满足
+\begin{equation}
+  f\circ i_j=i_j,\qquad j=1,2 \tag{4.10}
+\end{equation}
+的态射 $f\colon X\to X$ 只有 $\id_X$；而 $f=i_1\circ p_1+i_2\circ p_2\colon X\to X$ 满足 (4.10)。因此得到 $i_1\circ p_1+i_2\circ p_2=\id_X$，[证明 (a)$\Rightarrow$(c)] 至此完成。把同一图表反向追溯，即可得到 [证明 (b)$\Rightarrow$(c)]。
+% [Tutor Note: (a)$\Rightarrow$(c) 的最后一步用的是「满足 (4.10) 的 $f$ 唯一」：$f=i_1\circ p_1+i_2\circ p_2$ 满足 $f\circ i_j=i_1\circ p_1\circ i_j+i_2\circ p_2\circ i_j=i_j$（用了 $p_k\circ i_j=\delta_{kj}\id$），与 $\id_X$ 同解，故相等。此唯一性正是直和泛性质中「满足 $f\circ j_i=f_i$ 的 $f$ 唯一」。]
+
+(c) 的对象给出直和、或者直积一事容易看出。例如，给定 $f_j\colon W\to X_j$（$j=1,2$）时，令 $f:=i_1\circ f_1+i_2\circ f_2\colon W\to X$，则满足 $p_j\circ f=f_j$。若 $f'\colon W\to X$ 同样满足 $p_j\circ f'=f_j$，则
+\[ f'=\Bigl(\sum_{j=1,2}i_j\circ p_j\Bigr)\circ f'=\sum_{j=1,2}i_j\circ f_j=\Bigl(\sum_{j=1,2}i_j\circ p_j\Bigr)\circ f=f, \]
+可见 $f$ 是唯一的，故 $X\simeq X_1\times X_2$。类似地也可证明 $X$ 是直和。
+\end{proof}
+
+\begin{remark}{4.30}
+(4.8) 与 (4.9) 的全单射，在加法范畴中是加法群的全单射同态映射，即同构映射。把它与命题 4.29 合起来便知：对加法范畴 $\cC$ 的对象 $X_1,X_2\in\cC$，$X\simeq X_1\oplus X_2$ 一事、以及下述条件 (i)、条件 (ii) 是 3 个等价的条件。
+\begin{enumerate}[label=(\roman*)]
+  \item 存在态射 $p_j\colon X\to X_j$（$j=1,2$），且对任意对象 $Z\in\cC$，
+        \[ p_1\times p_2\colon\Hom_{\cC}(Z,X)\xrightarrow{\ \sim\ }\Hom_{\cC}(Z,X_1)\oplus\Hom_{\cC}(Z,X_2) \]
+        是同构映射。
+  \item 存在态射 $i_j\colon X_j\to X$（$j=1,2$），且对任意对象 $W\in\cC$，
+        \[ i_1\times i_2\colon\Hom_{\cC}(X,W)\xrightarrow{\ \sim\ }\Hom_{\cC}(X_1,W)\oplus\Hom_{\cC}(X_2,W) \]
+        是同构映射。
+\end{enumerate}
+
+若使用与 4.1.2 节的自然同值相关联的词语，则条件 (i) 无非是「$X\in\cC$ 表示由对应 $Z\mapsto\Hom_{\cC}(Z,X_1)\oplus\Hom_{\cC}(Z,X_2)$ 所给出的反变函子 $\cC\to\Ab$」，条件 (ii) 无非是「$X\in\cC$ 表示由对应 $W\mapsto\Hom_{\cC}(X_1,W)\oplus\Hom_{\cC}(X_2,W)$ 所给出的函子 $\cC\to\Ab$」。
+\end{remark}
+
+\begin{definition}{4.31}
+设 $\cC,\cC'$ 为加法范畴。若函子 $F\colon\cC\to\cC'$ 对所有的对象 $X,Y\in\cC$ 使
+\[ F\colon\Hom_{\cC}(X,Y)\longrightarrow\Hom_{\cC'}(F(X),F(Y)) \]
+成为加法群的同态映射，则称 $F$ 为\textbf{加性函子}（additive functor）。类似地也可定义加性反变函子。
+\end{definition}
+
+\begin{remark}{4.32}
+对加性函子 $F\colon\cC\to\cC'$，有 $F(X_1\oplus X_2)\simeq F(X_1)\oplus F(X_2)$。实际上，令 $X=X_1\oplus X_2$，并令
+\[ i_1:=\begin{pmatrix}\id_{X_1}\\ 0_{X_2}\end{pmatrix},\quad
+   i_2:=\begin{pmatrix}0_{X_1}\\ \id_{X_2}\end{pmatrix},\quad
+   p_1:=\bigl(\id_{X_1}\ \ 0_{X_2}\bigr),\quad
+   p_2:=\bigl(0_{X_1}\ \ \id_{X_2}\bigr), \]
+则它们满足命题 4.29(c) 的条件，且可证明 $F(i_j)$、$F(p_j)$（$j=1,2$）也满足命题 4.29(c) 的条件。
+% [Tutor Note: 这里的矩阵写法是「把 $\Hom(X_1\oplus X_2,\,X_1\oplus X_2)$ 按 $\Hom(X_i,X_j)$ 的四块分解」：$i_1$ 是列向量 $(\id_{X_1}:X_1\to X_1,\ 0:X_1\to X_2)^T$，$p_1$ 是行向量。$F$ 加性故保持加法与复合，所以 $F(p_j\circ i_j)=\id$、$F(i_1\circ p_1)+F(i_2\circ p_2)=\id$ 等关系全部被保持，于是 $F(X)$ 满足 4.29(c)。]
+\end{remark}
+
+% [原文 p.74]
+\begin{definition}{4.33}
+设 $\cC,\cC'$ 为加法范畴。若存在加性范畴等价函子 $F\colon\cC\to\cC'$，则称 $\cC$ 与 $\cC'$ 作为加法范畴等价。
+\end{definition}
+
+\section{阿贝尔范畴}
+
+范畴论中态射 $f$ 的核 $\Ker(f)$、像 $\Img(f)$ 等，由如下的泛性质定义。
+
+\begin{definition}{4.34}
+在范畴 $\cC$ 中给定态射 $f\colon X\to Y$ 时，若存在某个对象 $K\in\cC$ 与单射 $\iota\colon K\to X$ 满足以下性质，则称 $\Ker(f):=(K,\iota)$ 为 $f$ 的\textbf{核}（kernel）：
+\begin{itemize}
+  \item 对所有的满足 $f\circ u=0_{WY}$ 的 $W\in\cC$、$u\in\Hom_{\cC}(W,X)$，存在 $u'\in\Hom_{\cC}(W,K)$ 使得 $u=u'\circ\iota$。
+\end{itemize}
+\[\begin{tikzcd}[row sep=2.6em, column sep=3.6em]
+  W \arrow[dr,"u"] \arrow[drr,dashed,"u'"'] & & \\
+  & K \arrow[r,"\iota"] & X \arrow[r,"f"] & Y
+\end{tikzcd}\]
+\end{definition}
+% [Tutor Note: 底本定义 4.34 正文印作「$\Ker(f):=(K,i)$」（用的是 $i$），而性质中的单射记作 $\iota$；据作者正誤表（2014-05-20 版）p74 条订正为 $\Ker(f):=(K,\iota)$。译文按订正后的 $\iota$ 书写。]
+
+\begin{definition}{4.35}
+在范畴 $\cC$ 中给定态射 $f\colon X\to Y$ 时，若存在某个对象 $C\in\cC$ 与满射 $\pi\colon Y\to C$ 满足以下性质，则称 $\Coker(f):=(C,\pi)$ 为 $f$ 的\textbf{余核}（cokernel）：
+\begin{itemize}
+  \item 对所有的满足 $v\circ f=0_{XZ}$ 的 $Z\in\cC$、$v\in\Hom_{\cC}(Y,Z)$，存在 $v'\in\Hom_{\cC}(C,Z)$ 使得 $v=\pi\circ v'$。
+\end{itemize}
+\[\begin{tikzcd}[row sep=2.8em, column sep=3.6em]
+  X \arrow[r,"f"] & Y \arrow[r,"\pi"] \arrow[dr,"v"] & C \arrow[d,dashed,"v'"] \\
+  & & W
+\end{tikzcd}\]
+\end{definition}
+
+\begin{remark}{4.36}
+由于 $\iota$ 是单射、$\pi$ 是满射，此时 $u'$、$v'$ 若存在则唯一。
+\end{remark}
+
+对范畴 $\cC$ 的每个态射 $f\colon X\to Y$，$\Ker(f)$、$\Coker(f)$ 未必存在；但由泛性质，若存在则 $K$、$C$ 除同构外被唯一确定，这一点是有保证的。以下，只要没有混淆之虞，就省略 $\iota$ 而把 $K$ 自身也写作 $\Ker(f)\in\Ob(\cC)$，把 $C$ 自身也写作 $\Coker(f)\in\Ob(\cC)$。
+
+\begin{definition}{4.37}
+对范畴 $\cC$ 的态射 $f\colon X\to Y$，当 $\Ker(f)=(K,\iota)$ 存在时，称
+\[ K\xrightarrow{\ \iota\ }X \]
+的余核为 $\Coim(f):=\Coker(\iota)$，并称之为 $f$ 的\textbf{余像}（coimage）。
+
+对范畴 $\cC$ 的态射 $f\colon X\to Y$，当 $\Coker(f)=(C,\pi)$ 存在时，称
+\[ Y\xrightarrow{\ \pi\ }C \]
+% [原文 p.75]
+的核为 $\Img(f):=\Ker(\pi)$，并称之为 $f$ 的\textbf{像}（image）。
+\end{definition}
+% [Tutor Note: 底本 p.74 末～p.75 首的定義4.37 把「余核/像」与「核/余像」写反了：印作「$K\xrightarrow{\iota}X$ 的余核为 $\Img(f):=\Coker(\iota)$，称为 $f$ 的像(image)」「$Y\xrightarrow{\pi}C$ 的核为 $\Coim(f):=\Ker(\pi)$，称为 $f$ 的余像(cokernel)」。据作者正誤表（2014-05-20 版）p74 line -3 与 p75 line 1 两条订正：前者应为 $\Coim(f):=\Coker(\iota)$、称余像(coimage)；后者应为 $\Img(f):=\Ker(\pi)$、称像(image)。译文按订正后书写（注意：$\Coker(\iota)$ 为 $X/\Img(\iota)$，正是 $f$ 的余像；$\Ker(\pi)$ 为 $\Img(f)$，正是 $f$ 的像）。]
+
+对 $f\colon X\to Y$，当 $\Ker(f)$、$\Coker(f)$、$\Img(f)$、$\Coim(f)$ 都存在时，得到如下图表。
+\begin{equation}
+\begin{tikzcd}[row sep=2.8em, column sep=3.2em]
+  & \Coim(f) \arrow[rr,dashed] \arrow[drr,dashed] & & \Img(f) \arrow[d,"\iota'"] \\
+  \Ker(f) \arrow[rr,"\iota"'] & & X \arrow[ul,"\pi'"'] \arrow[r,"f"'] \arrow[ur,dashed] & Y \arrow[d,"\pi"'] \\
+  & & & \Coker(f)
+\end{tikzcd} \tag{4.11}
+\end{equation}
+
+这里，$X\to\Img(f)$ 由「满足 $f\circ\pi=0$ 的态射 $f$ 经过 $\Img(f)$ 分解」而得到；类似地，$\Coim(f)\to Y$ 由「满足 $\iota\circ f=0$ 的态射 $f$ 经过 $\Coim(f)$ 分解」而得到。进而
+% [Tutor Note: 底本此处印作「$f\circ\pi=0$」「$\iota\circ f=0$」；按 (4.11) 与泛性质，其意应为 $\pi\circ f=0$（其中 $\pi\colon Y\to\Coker(f)$、$f\colon X\to Y$）与 $f\circ\iota=0$（其中 $\iota\colon\Ker(f)\to X$），即「$f$ 经过 $\Img(f)=\Ker(\pi)$ / $\Coim(f)=\Coker(\iota)$ 分解」，这正是 (4.11) 中两条长虚线的来源。正文按底本照印，仅在此说明。]
+\begin{itemize}
+  \item 由「态射 $\Coim(f)\to Y$ 经过 $\iota'\colon\Img(f)\to Y$ 分解」而唯一确定的态射 $\Coim(f)\to\Img(f)$，
+  \item 由「态射 $X\to\Img(f)$ 经过 $\pi'\colon X\to\Coim(f)$ 分解」而唯一确定的态射 $\Coim(f)\to\Img(f)$，
+\end{itemize}
+由于相应图表可交换而一致。然而一般地，如此确定的态射 $\Coim(f)\to\Img(f)$ 未必是同构。
+% [Tutor Note: 两个「唯一确定」的态射为何一致：先设 $c\colon\Coim(f)\to Y$ 为因子化态射，则 $\pi\circ c=0$，于是由 $\Img(f)=\Ker(\pi)$ 的泛性质 $c$ 唯一地经过 $\iota'\colon\Img(f)\to Y$ 分解；另一方面 $d\colon X\to\Img(f)$ 经 $\Coim(f)$ 分解，由 $\Coim(f)=\Coker(\iota)$ 的泛性质也得到同一类态射 $g\colon\Coim(f)\to\Img(f)$，比较 $\iota'\circ g$ 并利用 $\iota'$ 是单射即得一致性。至于「未必是同构」：标准反例是位相阿贝尔群（带连续同态）的范畴，它是加法范畴、核与余核都存在，但 $\Img(f)$ 带子空间拓扑而 $\Coim(f)$ 带商拓扑，$\Coim(f)\to\Img(f)$ 一般不是位相同构（当 $\Img(f)$ 非闭时）。]
+
+\begin{definition}{4.38}[阿贝尔范畴]
+加法范畴 $\cC$ 若对其所有的态射 $f\colon X\to Y$，$\Ker(f)$、$\Coker(f)$ 都存在，且以下对象的同构
+\[ \Coim(f)\simeq\Img(f) \]
+成立，则称为\textbf{阿贝尔范畴}（abelian category）。
+\end{definition}
+
+\begin{example}{4.39}
+阿贝尔群的范畴 $\Ab$（例 4.4）构成阿贝尔范畴。类似地，例 4.5、4.6 中的范畴 $\Mod\text{-}R$、$R\text{-}\Mod$、$\Mod(R)$、$\Vect(K)$、$\mathrm{vect}(K)$ 全都构成阿贝尔范畴。$\mathrm{mod}\text{-}R$、$R\text{-}\mathrm{mod}$、$\mathrm{mod}(R)$ 构成加法范畴，但一般未必存在态射的核。不过例如当 $R$ 是有限维代数时，它们成为阿贝尔范畴（cf.\ 6.1 节）。
+\end{example}
+
+\begin{example}{4.40}
+作为「是加法范畴但不是阿贝尔范畴」的例子，还有偶数维 $K$ 向量空间所构成的 $\mathrm{vect}(K)$ 的全子范畴 $\mathrm{vect}^+(K)$。也就是说，
+\begin{itemize}
+  \item $\mathrm{vect}^+(K)$ 的对象是 $K$ 上偶数维向量空间，
+  \item 对两个对象 $V,V'\in\mathrm{vect}^+(K)$，
+        \[ \Hom_{\mathrm{vect}^+(K)}(V,V')=\Hom_{\mathrm{vect}(K)}(V,V'). \]
+\end{itemize}
+此时，对任意态射 $f\in\Hom_{\mathrm{vect}^+(K)}(V,V')$，$\Ker(f)$ 在 $\mathrm{vect}(K)$ 中有定义；但一般存在使 $\Ker(f)$ 成为奇数维 $K$ 向量空间的态射 $f$，而 $\Ker(f)$ 在 $\mathrm{vect}^+(K)$ 中不存在。
+% [Tutor Note: 具体锚点：取 $V=K^2$、$V'=K^2$，令 $f(x,y)=(x,0)$，则 $\Ker(f)=\{(0,y)\}\cong K^1$ 是 1 维（奇数维），故 $\Ker(f)\notin\mathrm{vect}^+(K)$。这正说明「加法范畴」不足以保证核的存在，需要 定義4.38 的完备性条件。]
+\end{example}
+
+% [原文 p.76]
+一般地，在阿贝尔范畴 $\cC$ 中，取一个态射 $f\colon X\to Y$，可以考虑从 $\cC$ 中除去 $\Ker(f)$（以及与它同构的所有对象）后所得 $\cC$ 的全子范畴 $\cC'$。此时，若 $X$ 与 $Y$ 都不与 $\Ker(f)$ 同构，则 $X,Y\in\Ob(\cC')$，而态射 $f\colon X\to Y$ 的核在范畴 $\cC'$ 中不存在，故 $\cC'$ 不能成为阿贝尔范畴。（此时 $\cC'$ 也未必构成加法范畴。）这样看来，直观上可以说：阿贝尔范畴是加法范畴中「含有与态射空间相称的足够多对象」者。
+% [Tutor Note: 这段是阿贝尔范畴的直观说明，可对照 定義4.38：阿贝尔范畴要求每个态射的核与余核都存在，而「核」作为对象必须属于该范畴。上面的构造说明这一条件是「对子范畴不封闭」的：即使 $\cC$ 阿贝尔，去掉若干个对象后的全子范畴 $\cC'$ 一般也不再阿贝尔。这与「阿贝尔范畴的局部化」在 4.7 节的处理相关。]
+
+\section{复形范畴与其同伦范畴}
+
+设 $\cC$ 为加法范畴。因 $\cC$ 是加法范畴，故对两个对象 $X,Y\in\cC$，可以讨论态射 $f\colon X\to Y$ 是否为零态射。
+
+\begin{definition}{4.41}
+在加法范畴 $\cC$ 中，设对每个 $i\in\Z$ 给定对象 $X^i\in\cC$ 与态射 $d^i\colon X^i\to X^{i+1}$。称 $\{X^i,d^i\}_{i\in\Z}$ 为 $\cC$ 中的\textbf{序列}（sequence）。称 $X^i$ 为序列 $\{X^i,d^i\}_{i\in\Z}$ 的 $i$ 次对象。序列 $\{X^i,d^i\}_{i\in\Z}$ 若对所有 $i\in\Z$ 满足 $d^{i+1}\circ d^i=0$，则称为 $\cC$ 的\textbf{复形}（complex）。复形 $\{X^i,d^i\}_{i\in\Z}$ 若对充分大的 $i$ 有 $X^i=0$，则称为\textbf{上有界的}（upper bounded）；若对充分小的 $i$ 有 $X^i=0$，则称为\textbf{下有界的}（lower bounded）；若上有界且下有界，则称为\textbf{有界的}（bounded）。
+\end{definition}
+
+\begin{definition}{4.42}
+考虑加法范畴 $\cC$ 中的复形 $\{X^i,d_X^i\}_{i\in\Z}$、$\{Y^i,d_Y^i\}_{i\in\Z}$。若对所有的 $i\in\Z$ 给定态射 $\phi^i\colon X^i\to Y^i$，且对所有的 $i\in\Z$ 满足
+\[ \phi^{i+1}\circ d^i=d^{i+1}\circ\phi^i, \]
+则称 $\phi:=\{\phi^i\colon X^i\to Y^i\}_{i\in\Z}$ 为 $\cC$ 中的\textbf{复形映射}（chain map）。
+\[\begin{tikzcd}[row sep=2.6em, column sep=2.8em]
+  \cdots \arrow[r] & X^{i-1} \arrow[r,"d_X^{i-1}"] \arrow[d,"\phi^{i-1}"] & X^i \arrow[r,"d_X^i"] \arrow[d,"\phi^i"] & X^{i+1} \arrow[r,"d_X^{i+1}"] \arrow[d,"\phi^{i+1}"] & \cdots \\
+  \cdots \arrow[r] & Y^{i-1} \arrow[r,"d_Y^{i-1}"] & Y^i \arrow[r,"d_Y^i"] & Y^{i+1} \arrow[r,"d_Y^{i+1}"] & \cdots
+\end{tikzcd}\]
+\end{definition}
+% [Tutor Note: 底本此处印作「$\phi^{i+1}\circ d^i=d^{i+1}\circ\phi^i$」（下标 $X,Y$ 一概省略、且右端上标写作 $i+1$）；按下方图表与链映射的定义，应为 $\phi^{i+1}\circ d_X^i=d_Y^i\circ\phi^i$。作者正誤表 p48 定義3.9 条已对同一类公式给出订正（$d_Y^{i+1}\to d_Y^i$），但 p76 此条未列入正誤表，故正文依「照译存疑」保留原印，仅在此说明。此外图中底排左端的 $d_X^{i-1}$ 亦应为 $d_Y^{i-1}$（正誤表未列，属印刷疏误）。]
+% [Tutor Note: 正誤表 p76–77 条：「複体の写像」（定义 4.42）与「複体の射」（定义 4.43 起）这两个词请视为同一。译文在 4.42 用「复形映射」，在 4.43 依原文用「复形态射」，二者同义，英文均作 morphism of complexes / chain map。]
+
+\begin{definition}{4.43}
+对加法范畴 $\cC$，如下定义加法范畴 $\Comp(\cC)$。
+\begin{itemize}
+  \item $\Ob(\Comp(\cC))$ 是 $\cC$ 中复形的类。
+  \item 对 $X,Y\in\Ob(\Comp(\cC))$，$\Hom_{\Comp(\cC)}(X,Y)$ 是从 $X$ 到 $Y$ 的复形态射的集合（加法群）。
+  \item $\circ\colon\Hom_{\Comp(\cC)}(Y,Z)\times\Hom_{\Comp(\cC)}(X,Y)\to\Hom_{\Comp(\cC)}(X,Z)$ 是复形态射的合成。
+\end{itemize}
+\end{definition}
+
+称 $\Comp(\cC)$ 为加法范畴 $\cC$ 的\textbf{复形范畴}（category of complexes）。
+
+类似地，可以定义上有界复形的范畴、下有界复形的范畴、有界复形的范畴，分别记作 $\Comp^-(\cC)$、$\Comp^+(\cC)$、$\Comp^b(\cC)$。
+
+
+% [原文 p.77]
+容易验证它们构成加法范畴。
+
+复形的同伦等价也与阿贝尔群复形的情形完全同样地定义。
+
+\begin{definition}{4.44}
+对加法范畴 $\cC$ 中的复形 $X:=\{X^i,d_X^i\}_{i\in\Z}$、$Y:=\{Y^i,d_Y^i\}_{i\in\Z}$，若复形态射 $\phi:=\{\phi^i\}_{i\in\Z},\psi:=\{\psi^i\}_{i\in\Z}\colon X\to Y$ 是\textbf{同伦的}（homotopic），是指对每个 $i$ 存在 $h^i\colon X^i\to Y^{i-1}$ 满足
+\[ \phi^i-\psi^i=d_Y^{i-1}\circ h^i+h^{i+1}\circ d_X^i. \]
+\[\begin{tikzcd}[row sep=3.2em, column sep=2.8em]
+  \cdots \arrow[r] & X^{i-1} \arrow[r,"d_X^{i-1}"] \arrow[d,shift left=1pt,"\phi^{i-1}"] \arrow[d,shift right=1pt,"\psi^{i-1}"'] & X^i \arrow[r,"d_X^i"] \arrow[d,shift left=1pt,"\phi^i"] \arrow[d,shift right=1pt,"\psi^i"'] \arrow[dl,dashed,"h^i"'] & X^{i+1} \arrow[r,"d_X^{i+1}"] \arrow[d,shift left=1pt,"\phi^{i+1}"] \arrow[d,shift right=1pt,"\psi^{i+1}"'] \arrow[dl,dashed,"h^{i+1}"] & \cdots \\
+  \cdots \arrow[r] & Y^{i-1} \arrow[r,"d_Y^{i-1}"] & Y^i \arrow[r,"d_Y^i"] & Y^{i+1} \arrow[r,"d_Y^{i+1}"] & \cdots
+\end{tikzcd}\]
+此时记作 $\phi\overset{\mathrm{h.e.}}{\sim}\psi$。
+\end{definition}
+
+\begin{definition}{4.45}
+对加法范畴 $\cC$ 中的复形 $X:=\{X^i,d_X^i\}_{i\in\Z}$、$Y:=\{Y^i,d_Y^i\}_{i\in\Z}$，若存在复形之间的映射 $\phi\colon X\to Y$、$\psi\colon Y\to X$ 满足
+\[ \psi\circ\phi\overset{\mathrm{h.e.}}{\sim}\id_X,\qquad \phi\circ\psi\overset{\mathrm{h.e.}}{\sim}\id_Y, \]
+则称它们\textbf{同伦等价}（homotopy equivalent）。此时，复形态射 $\phi,\psi$ 称为\textbf{同伦等价态射}（homotopy equivalence）。
+\end{definition}
+
+与阿贝尔群的情形（引理 3.15）同样可证下述事实。
+
+\begin{lemma}{4.46}
+设 $\phi,\phi'\colon X\to Y$、$\psi,\psi'\colon Y\to Z$ 为加法范畴 $\cC$ 中的复形态射。若 $\phi\overset{\mathrm{h.e.}}{\sim}\phi'$、$\psi\overset{\mathrm{h.e.}}{\sim}\psi'$，则 $\psi\circ\phi\overset{\mathrm{h.e.}}{\sim}\psi'\circ\phi'$。
+\end{lemma}
+% [Tutor Note: 补出引理 4.46 的证明梗概（原文说「与引理 3.15 同样」，此处按 $h$ 的记号复述）：设 $\phi-\phi'=d_Y h+h'd_X$、$\psi-\psi'=d_Z k+k'd_Y$，则
+% $\psi\phi-\psi'\phi'=\psi(\phi-\phi')+(\psi-\psi')\phi'=\psi(d_Yh+h'd_X)+(d_Zk+k'd_Y)\phi'$；
+% 用 $\psi d_Y=d_Z\psi$、$d_X\phi'=\phi'd_Y$ 合并得 $=d_Z(\psi h+k\phi')+(\psi h'+k'\phi')d_X$，故同伦于 $0$。]
+
+\begin{definition}{4.47}
+对加法范畴 $\cC$，如下定义\textbf{同伦范畴} $K(\cC)$。
+\begin{itemize}
+  \item $\Ob(K(\cC))=\Ob(\Comp(\cC))$。
+  \item 对 $X,Y\in\Ob(K(\cC))$，
+        \[ \Hom_{K(\cC)}(X,Y):=\Hom_{\Comp(\cC)}(X,Y)\big/\{\overset{\mathrm{h.e.}}{\sim}0_{XY}\}. \]
+        这里 $\{\overset{\mathrm{h.e.}}{\sim}0_{XY}\}$ 是与零元 $0_{XY}\in\Hom_{\Comp(\cC)}(X,Y)$ 同伦的复形态射（称为\textbf{零同伦的}（null homotopic）态射）所构成的集合（加法群），$/$ 表示考虑剩余加法群。
+  \item 合成 $\circ\colon\Hom_{K(\cC)}(Y,Z)\times\Hom_{K(\cC)}(X,Y)\to\Hom_{K(\cC)}(X,Z)$ 是由复形态射的合成自然诱导者。
+\end{itemize}
+\end{definition}
+
+称 $K(\cC)$ 为加法范畴 $\cC$（的复形范畴 $\Comp(\cC)$）的\textbf{同伦范畴}（homotopy category）。
+
+类似地，可以定义上有界的同伦范畴、下有界的同伦范畴、有界的同伦范畴，分别记作 $K^-(\cC)$、$K^+(\cC)$、$K^b(\cC)$。
+
+由引理 4.46 可知，同伦范畴中态射的合成 $\circ$ 无矛盾地确定。$K(\cC)$、$K^\pm(\cC)$、$K^b(\cC)$ 构成加法范畴。
+
+% [原文 p.78]
+\section{复形的上同调与拟同构映射}
+
+讨论复形态射的同伦等价性时，并不需要复形态射的核、像等概念；但要讨论拟同构性则需要它们。因此以下设 $\cC$ 为阿贝尔范畴。此时 $\Comp(\cC)$ 也构成阿贝尔范畴。
+% [Tutor Note: 「$\Comp(\cC)$ 也是阿贝尔范畴」是本节的基本事实，其要点是逐次（逐 $i$）取核、余核、像、余像：$\Ker(\phi)^i:=\Ker(\phi^i)$、$\Coker(\phi)^i:=\Coker(\phi^i)$，$d_\phi^i$ 由泛性质诱导，再由 $\cC$ 中 $\Coim\simeq\Img$ 逐次得到 $\Comp(\cC)$ 中的 $\Coim\simeq\Img$。]
+
+\begin{definition}{4.48}
+复形 $X:=\{X^i,d^i\}_{i\in\Z}\in\Comp(\cC)$ 在 $X^i$ 处\textbf{正合}（exact），是指
+\[ \Ker(d^i)\simeq\Img(d^{i-1}). \]
+若对所有的 $i$，$X$ 都在 $X^i$ 处正合，则称复形 $X$ 是\textbf{正合的}（exact）。
+\end{definition}
+
+在阿贝尔范畴 $\cC$ 中，对象 $X,Y\in\cC$ 之间的态射 $f\colon X\to Y$ 是单射一事，与 $0\to X\xrightarrow{f}Y$ 在 $X$ 处正合等价。类似地，态射 $f\colon X\to Y$ 是满射一事，与 $X\xrightarrow{f}Y\to 0$ 在 $Y$ 处正合等价。这些事由图 (4.11) 即可看出。再写一遍：
+\[\begin{tikzcd}[row sep=2.8em, column sep=3.2em]
+  & \Coim(f) \arrow[rr,dashed] \arrow[drr,dashed] & & \Img(f) \arrow[d,"\iota'"] \\
+  \Ker(f) \arrow[rr,"\iota"'] & & X \arrow[ul,"\pi'"'] \arrow[r,"f"'] \arrow[ur,dashed] & Y \arrow[d,"\pi"'] \\
+  & & & \Coker(f)
+\end{tikzcd}\]
+
+$f$ 是单射一事，与上述满射 $X\to\Img(f)$ 成为全单射等价。另一方面，$0\to X\xrightarrow{f}Y$ 正合一事，等价于 $\Ker(f)\simeq 0$、即 $\Coim(f)\simeq X$，再由 $\Coim(f)\simeq\Img(f)$，等价于 $X\to\Img(f)$ 是全单射。类似地可得「$f$ 是满射 $\iff\Img(f)\simeq Y\iff\Coker(f)\simeq 0\iff X\xrightarrow{f}Y\to 0$ 正合」。
+% [Tutor Note: 这里「$f$ 单射 $\iff$ $X\to\Img(f)$ 全单射」的细节：$f$ 单射 $\Rightarrow$ $\Ker(f)=0$，此时 $X\to\Coim(f)$ 是同构，又 $\Coim(f)\simeq\Img(f)$，故 $X\to\Img(f)$ 同构；反之若 $X\to\Img(f)$ 同构，则 $\Ker(f)$ 作为 $X\to\Img(f)$ 的核为 $0$，即 $f$ 单射。同理第二组用 $\Coker$。]
+
+特别地，由上图可知，对阿贝尔范畴 $\cC$ 的任意态射 $f\colon X\to Y$，
+\[ 0\to\Ker(f)\xrightarrow{\ \iota\ }X\xrightarrow{\ \pi'\ }\Coim(f)\to 0,\qquad
+   0\to\Img(f)\xrightarrow{\ \iota'\ }Y\xrightarrow{\ \pi\ }\Coker(f)\to 0 \]
+都是短正合列。
+% [Tutor Note: 这两条短正合列是本节后面反复使用的「标准分解」：$f$ 分解为 $X\twoheadrightarrow\Coim(f)\xrightarrow{\sim}\Img(f)\hookrightarrow Y$。例如在 $\Mod\text{-}R$ 中取 $f\colon R\to R/\!\!\mathfrak{a}$ 为自然投射，则 $\Ker(f)=\mathfrak{a}$、$\Coim(f)=\Img(f)=R/\mathfrak{a}$，两条短正合列分别退化为 $0\to\mathfrak{a}\to R\to R/\mathfrak{a}\to 0$ 与 $0\to R/\mathfrak{a}\to R/\mathfrak{a}\to 0\to 0$。]
+
+一般地，给定阿贝尔范畴 $\cC$ 的短正合列 $0\to X\xrightarrow{f}Y\xrightarrow{g}Z\to 0$ 时，可知 $X\simeq\Ker(g)$、$Z\simeq\Coker(f)$。实际上，由 $Y$ 处的正合性有 $\Ker(g)\simeq\Img(f)$，而 $\Img(f)\simeq X$，故 $X\simeq\Ker(g)$。另一方面，$Z\simeq\Img(g)\simeq\Coim(g)$，而
+\[\begin{tikzcd}[row sep=2.6em, column sep=3.2em]
+  0 \arrow[r] & \Img(f) \arrow[r,"\iota"] \arrow[d,equal] & Y \arrow[r] \arrow[d,equal] & \Coker(f) \arrow[r] & 0 \\
+  0 \arrow[r] & \Ker(g) \arrow[r,"\iota'"] & Y \arrow[r] & \Coim(g) \arrow[r] & 0
+\end{tikzcd}\]
+故得 $Z\simeq\Coim(g)\simeq\Coker(f)$。
+% [Tutor Note: 这个「阶梯图表」的读法：左右两端由短正合列分别得 $\Coker(f)\simeq Y/\Img(f)$、$\Coim(g)=Y/\Img(g)=Y/\Ker(g)$，中间的 $\iota,\iota'$ 都是以 $Y$ 为余核的单射，且 $\Img(f)=\Img(g)=\Ker(g)$（由 $Y$ 处正合），故 $\Coker(f)\simeq Y/\Img(f)=Y/\Ker(g)\simeq\Coim(g)$。]
+
+% [原文 p.79]
+\begin{lemma}{4.49}
+对阿贝尔范畴 $\cC$ 中的态射 $f\colon X\to Y$，$f$ 是同构态射一事与 $f$ 是全单射一事等价。
+\end{lemma}
+
+\begin{proof}
+若 $f$ 是同构态射，则存在态射 $g\colon Y\to X$ 使 $g\circ f=\id_X$、$f\circ g=\id_Y$，故对任意态射 $u\colon W\to X$、$v\colon Y\to Z$，
+\[ f\circ u=0\ \Rightarrow\ 0=g\circ f\circ u=u,\qquad v\circ f=0\ \Rightarrow\ 0=v\circ f\circ g=v, \]
+故 $f$ 是全单射。反之，若 $f$ 是全单射，则存在正合列
+\[ 0\to X\xrightarrow{\ f\ }Y\to 0, \]
+由 $X\simeq\Ker(Y\to 0)$，$\id_Y\colon Y\to Y$ 经过 $X$ 分解。也就是说，存在态射 $g\colon Y\to X$ 使 $f\circ g=\id_Y$。类似地，由 $Y\simeq\Coker(0\to X)$，$\id_X\colon X\to X$ 经过 $Z$ 分解。也就是说，存在态射 $g'\colon Y\to X$ 使 $g'\circ f=\id_X$。由 $g=(g'\circ f)\circ g=g'\circ(f\circ g)=g'$ 得 $g=g'$，故 $f$（以及 $g$）是同构态射。
+% [Tutor Note: 底本此处印作「$\id_X\colon X\to X$ は $Z$ を経由する」，其中 $Z$ 未定义，按上下文应为 $Y$（即 $\id_X$ 经 $Y$ 分解得到 $g'\colon Y\to X$ 使 $g'\circ f=\id_X$）。作者正誤表未列此条，属排版疏误。]
+\end{proof}
+
+下面想对复形 $\{X^i,d^i\}_{i\in\Z}$ 定义上同调。
+
+\[\begin{tikzcd}[row sep=3.2em, column sep=2.6em]
+  & & \Img(d^{i-1}) \arrow[dr,"\iota'"] & & & & \\
+  \cdots & X^{i-1} \arrow[l] \arrow[ur,dashed] \arrow[rr,"d^{i-1}"'] & & X^i \arrow[rr,"d^i"'] \arrow[dl,"\iota"'] \arrow[drr,"\pi"] & & X^{i+1} \arrow[r] & \cdots \\
+  & & \Ker(d^i) & & & \Coker(d^{i-1}) \arrow[u,dashed] &
+\end{tikzcd}\]
+
+由 $\iota'\colon\Img(d^{i-1})\to X^i$ 的定义，有 $\pi\circ\iota'=0$，且 $d^i\circ\iota'=0$ 成立，故 $\iota'$ 经过 $\iota\colon\Ker(d^i)\to X^i$ 分解。也就是说，单射 $\Img(d^{i-1})\to\Ker(d^i)$ 被唯一确定。
+% [Tutor Note: 底本此处印作「$\iota'\circ\pi=0$」；据作者正誤表（2014-05-20 版）p79（図式直後）条订正为 $\pi\circ\iota'=0$。按指标 $\iota'\colon\Img(d^{i-1})\to X^i$、$\pi\colon X^i\to\Coker(d^{i-1})$，只有 $\pi\circ\iota'$ 有意义，且它等于 $0$ 正是「$\Img(d^{i-1})\subset\Ker(d^i)$」这一事实。]
+
+现在令
+\[ Z^i(X):=\Ker(d^i),\qquad B^i(X):=\Img(d^{i-1}), \]
+并由上述所得单射 $B^i(X)\to Z^i(X)$ 所给出的短正合列
+\begin{equation}
+  0\to B^i(X)\to Z^i(X)\to H^i(X)\to 0 \tag{4.12}
+\end{equation}
+定义 $i$ 次\textbf{上同调} $H^i(X)$。也就是说，
+\[ H^i(X):=Z^i(X)/B^i(X)=\Coker\bigl(B^i(X)\to Z^i(X)\bigr). \]
+把复形 $X$ 的上同调再次视为复形，记作 $H(X):=\{H^i(X),0^i\}_{i\in\Z}$。这里 $0^i\colon H^i(X)\to H^{i+1}(X)$ 表示零态射。
+
+给定两个复形 $X:=\{X^i,d_X^i\}_{i\in\Z}$、$Y:=\{Y^i,d_Y^i\}_{i\in\Z}\in\Comp(\cC)$ 与态射 $\phi\colon X\to Y$ 时，诱导出它们的上同调之间的态射 $H(\phi)\colon H(X)\to H(Y)$。要确认这一事实，只需利用 $X,Y$ 为阿贝尔群复形时复形所具有的性质
+
+% [原文 p.80]
+\begin{enumerate}
+  \item $\phi^i(Z^i(X))\subset Z^i(Y)$，
+  \item $\phi^i(B^i(X))\subset B^i(Y)$
+\end{enumerate}
+相对应的东西的存在即可。
+
+1. 存在使以下图表可交换的态射 $Z^i(\phi)\colon Z^i(X)\to Z^i(Y)$。
+\[\begin{tikzcd}[row sep=2.6em, column sep=2.8em]
+  Z^i(X) \arrow[r,"\iota_X"] \arrow[d,"Z^i(\phi)"'] & X^i \arrow[r,"d_X^i"] \arrow[d,"\phi^i"] & X^{i+1} \arrow[d,"\phi^{i+1}"] \\
+  Z^i(Y) \arrow[r,"\iota_Y"] & Y^i \arrow[r,"d_Y^i"] & Y^{i+1}
+\end{tikzcd}\]
+实际上，由 $d_X^i\circ\iota_X=0$，
+\[ d_Y^i\circ(\phi^i\circ\iota_X)=(d_Y^i\circ\phi^i)\circ\iota_X=(\phi^{i+1}\circ d_X^i)\circ\iota_X=\phi^{i+1}\circ(d_X^i\circ\iota_X)=0, \]
+故 $\phi^i\circ\iota_X\colon Z^i(X)\to Y^i$ 提升为 $Z^i(\phi)\colon Z^i(X)\to Z^i(Y)$。特别地，由 $\iota_Y$ 是单射，$Z^i(\phi)\colon Z^i(X)\to Z^i(Y)$ 是唯一的。
+
+2. 存在使以下图表可交换的态射 $B^i(\phi)\colon B^i(X)\to B^i(Y)$。
+\[\begin{tikzcd}[row sep=2.6em, column sep=2.8em]
+  B^i(X) \arrow[r,"\iota'_X"] \arrow[d,"B^i(\phi)"'] & X^i \arrow[d,"\phi^i"] \\
+  B^i(Y) \arrow[r,"\iota'_Y"] & Y^i
+\end{tikzcd}\]
+为证明这一点，首先证明存在使以下图表可交换的态射 $\check{Z}^i(\phi)\colon\check{Z}^i(X)\to\check{Z}^i(Y)$。
+\[\begin{tikzcd}[row sep=2.6em, column sep=2.8em]
+  X^{i-1} \arrow[r,"d_X^{i-1}"] \arrow[d,"\phi^{i-1}"] & X^i \arrow[r,"\pi_X"] \arrow[d,"\phi^i"] & \check{Z}^i(X) \arrow[d,"\check{Z}^i(\phi)"] \\
+  Y^{i-1} \arrow[r,"d_Y^{i-1}"] & Y^i \arrow[r,"\pi_Y"] & \check{Z}^i(Y)
+\end{tikzcd}\]
+这里令 $\check{Z}^i(X):=\Coker(d_X^{i-1}\colon X^{i-1}\to X^i)$、$\check{Z}^i(Y):=\Coker(d_Y^{i-1}\colon Y^{i-1}\to Y^i)$。实际上，
+\[ (\pi_Y\circ\phi^i)\circ d_X^{i-1}=\pi_Y\circ(\phi^i\circ d_X^{i-1})=\pi_Y\circ(d_Y^{i-1}\circ\phi^{i-1})=(\pi_Y\circ d_Y^{i-1})\circ\phi^{i-1}=0, \]
+故射 $\pi_Y\circ\phi^i$ 经过 $\check{Z}^i(X)$ 分解；也就是说，存在唯一的使上述图表可交换的态射 $\check{Z}^i(\phi)\colon\check{Z}^i(X)\to\check{Z}^i(Y)$。其次，由图
+\[\begin{tikzcd}[row sep=2.6em, column sep=2.8em]
+  B^i(X) \arrow[r,"\iota'_X"] \arrow[d,"B^i(\phi)"'] & X^i \arrow[r,"\pi_X"] \arrow[d,"\phi^i"] & \check{Z}^i(X) \arrow[d,"\check{Z}^i(\phi)"] \\
+  B^i(Y) \arrow[r,"\iota'_Y"] & Y^i \arrow[r,"\pi_Y"] & \check{Z}^i(Y)
+\end{tikzcd}\]
+由同样的讨论可知射 $\phi^i\circ\iota'_X$ 经过 $B^i(Y)$ 分解；于是图表
+
+% [原文 p.81]
+可交换的态射 $B^i(\phi)$ 被唯一确定。
+
+由这两个事实，现在得到如下图表。
+\begin{equation}
+\begin{tikzcd}[row sep=2.6em, column sep=3.2em]
+  B^i(X) \arrow[r,"\iota''_X"] \arrow[d,"B^i(\phi)"'] & Z^i(X) \arrow[r,"\iota_X"] \arrow[d,"Z^i(\phi)"] & X^i \arrow[d,"\phi^i"] \\
+  B^i(Y) \arrow[r,"\iota''_Y"] & Z^i(Y) \arrow[r,"\iota_Y"] & Y^i
+\end{tikzcd} \tag{4.13}
+\end{equation}
+
+这里，关于从 $B^i(X)$ 到 $Y^i$ 的态射的合成，
+\[
+\begin{aligned}
+  \iota_Y\circ(\iota''_Y\circ B^i(\phi))&=(\iota_Y\circ\iota''_Y)\circ B^i(\phi)=\phi^i\circ(\iota_X\circ\iota''_X)\\
+  &=(\phi^i\circ\iota_X)\circ\iota''_X=(\iota_Y\circ Z^i(\phi))\circ\iota''_X=\iota_Y\circ(Z^i(\phi)\circ\iota''_X),
+\end{aligned}
+\]
+故 $\iota_Y\circ(\iota''_Y\circ B^i(\phi)-Z^i(\phi)\circ\iota''_X)=0$；而 $\iota_Y$ 是单射，故可知
+\[ \iota''_Y\circ B^i(\phi)=Z^i(\phi)\circ\iota''_X. \]
+也就是说，图表 (4.13) 是交换图表。
+
+由此，与阿贝尔群复形的情形相同，存在使以下图表可交换的态射 $H^i(X)\to H^i(Y)$。
+\[\begin{tikzcd}[row sep=2.8em, column sep=3.2em]
+  0 \arrow[r] & B^i(X) \arrow[r,"\iota''_X"] \arrow[d,"B^i(\phi)"'] & Z^i(X) \arrow[r,"\pi'_X"] \arrow[d,"Z^i(\phi)"] & H^i(X) \arrow[r] \arrow[d,dashed,"H^i(\phi)"] & 0 \\
+  0 \arrow[r] & B^i(Y) \arrow[r,"\iota''_Y"] & Z^i(Y) \arrow[r,"\pi'_Y"] & H^i(Y) \arrow[r] & 0
+\end{tikzcd}\]
+
+这里，横向的序列是 (4.12) 的短正合列。实际上，$H^i(X):=\Coker(B^i(X)\to Z^i(X))$，而关于上图之态射有
+\[
+\begin{aligned}
+  B^i(X)&\xrightarrow{\ \iota''_X\ }\bigl(Z^i(X)\xrightarrow{\ Z^i(\phi)\ }Z^i(Y)\xrightarrow{\ \pi'_Y\ }H^i(Y)\bigr)\\
+  &=\bigl(B^i(X)\xrightarrow{\ \iota''_X\ }Z^i(X)\xrightarrow{\ Z^i(\phi)\ }Z^i(Y)\bigr)\xrightarrow{\ \pi'_Y\ }H^i(Y)\\
+  &=\bigl(B^i(X)\xrightarrow{\ B^i(\phi)\ }B^i(Y)\xrightarrow{\ \iota''_Y\ }Z^i(Y)\bigr)\xrightarrow{\ \pi'_Y\ }H^i(Y)\\
+  &=B^i(X)\xrightarrow{\ B^i(\phi)\ }\bigl(B^i(Y)\xrightarrow{\ \iota''_Y\ }Z^i(Y)\xrightarrow{\ \pi'_Y\ }H^i(Y)\bigr)=0,
+\end{aligned}
+\]
+故射 $Z^i(X)\xrightarrow{Z^i(\phi)}Z^i(Y)\xrightarrow{\pi'_Y}H^i(Y)$ 经过 $H^i(X)$ 分解。也就是说，得到使上图可交换的态射 $H^i(X)\to H^i(Y)$。把这个态射记作 $H^i(\phi)\colon H^i(X)\to H^i(Y)$。
+
+\begin{definition}{4.50}
+复形 $X:=\{X^i,d_X^i\}_{i\in\Z}$、$Y:=\{Y^i,d_Y^i\}_{i\in\Z}\in\Comp(\cC)$ 的态射 $\phi\colon X\to Y$，若对每个 $i\in\Z$，$H^i(\phi)\colon H^i(X)\to H^i(Y)$ 都是同构态射，则称 $\phi$ 为\textbf{拟同构}（quasi-isomorphism）。
+\end{definition}
+
+与阿贝尔群（特别是向量空间与 $R$-模）的复形的情形相同，下述事实成立。
+
+\begin{proposition}{4.51}
+在加法范畴 $\cC$ 中，复形之间的同伦等价态射是拟同构。也就是说，同伦等价的复形具有同构的上同调。
+\end{proposition}
+% [Tutor Note: 由本节开头「以下 $\cC$ 为阿贝尔范畴」的约定，命题 4.51 中的「加法范畴」应为「阿贝尔范畴」（上同调 $H^i$ 只在阿贝尔范畴中定义）。作者正誤表未列此条。证明思路与阿贝尔群情形相同：若 $\psi\phi\overset{\mathrm{h.e.}}{\sim}\id_X$，设 $\psi^i\phi^i-\id=\delta_Y^{i-1}h^i+h^{i+1}\delta_X^i$，把该式送入 $H^i$，同伦项因经过边缘算子而诱导零映射，故 $H^i(\psi)\circ H^i(\phi)=\id$，同理 $H^i(\phi)\circ H^i(\psi)=\id$，即 $H^i(\phi)$ 是同构。]

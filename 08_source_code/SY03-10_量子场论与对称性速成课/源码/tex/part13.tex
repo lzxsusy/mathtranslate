@@ -1,0 +1,657 @@
+% ============================================================
+%  part13.tex  |  原文 PDF p.93–101（页脚 p.92–100）
+%  内容：第 10 章 二维手征量子场论（10.1–10.6，含定理 10.12）
+%  说明：p.101 的 Theorem 10.12 属正文；其后的 References 由 Lead 处理，本片段不重复。
+% ============================================================
+
+% 正则化积分记号 \fint 已在 preamble.tex 中统一定义（不再在片段内兜底）。
+
+% >>> p093
+\section{二维手征量子场论（Two-dim Chiral QFT）}
+
+\begin{keypoints}
+  \item \textbf{核心物理图像}：二维手征模型的场是复微分形式
+        $\Omega^{0,\bullet}(\Sigma,h)$，Dolbeault 微分 $\bar\partial$ 成为 BRST
+        算子的一部分，使“反全纯平移在同调意义下平凡”，由此得到手征（全纯）理论；
+        一维的“融合”升级为顶点代数的无穷族乘积 $A_{(n)}B$。
+  \item \textbf{数学工具}：顶点代数与算子乘积展开（OPE）、模式 Lie 代数、
+        Szegő 核、正则化积分 $\fint_\Sigma$、Beilinson--Drinfeld 手征代数与
+        手征同调、BV 量子化。
+  \item \textbf{主要结论}：$\beta\gamma$-$bc$ 系统的手征形变是紫外（UV）有限的
+        （定理 10.4）；有效 QME 的解等价于 $[\oint\gamma,\oint\gamma]=0$
+        （定理 10.6）；手征关联函数是几乎全纯模的，其反全纯依赖由全纯反常方程
+        控制（定理 10.12）。
+  \item \textbf{译者评注}：本章把第 8--9 章的一维 TQM 框架整体提升到二维：
+        Hochschild 同调 $\to$ 手征同调，Fedosov 联络 $\to$ 手征 Fedosov 联络。
+        技术核心是“看似发散的图积分可用共形结构内蕴正则化”，其中正则化积分的
+        分解 $\omega=\alpha+\partial\beta$ 与留数性质是理解 UV 有限性的钥匙。
+\end{keypoints}
+
+我们已经讨论过拓扑量子力学的一阶形式，其中场是 $S^1$ 上取值于向量丛 $V$ 的
+微分形式 $\Omega^\bullet(S^1,V)$，并配备 de Rham 微分 $d$。这里 $d$ 成为 BRST
+算子的一部分，意味着“平移在同调意义下是平凡的”。这定义了一个拓扑理论。
+
+% [Tutor Note: 一句话点明两种理论的“BRST 算子”差异：TQM 中进入 BRST 的是 de Rham
+% 微分 $d$，它把平移方向（沿 $S^1$）变成同调平凡的；二维手征理论中进入 BRST 的是
+% Dolbeault 微分 $\bar\partial$，它只消灭反全纯平移方向，因此理论只保留全纯（手征）
+% 的依赖。读后文时务必区分 $\partial$（全纯 de Rham 微分）与 $\bar\partial$
+% （Dolbeault 微分）——原书有时把两者都简单写作 $d$，是常见的记号陷阱。]
+
+现在考虑二维手征模型，其中场是复微分形式 $\Omega^{0,\bullet}(\Sigma,h)$，配备
+Dolbeault 微分 $\bar\partial$。$\bar\partial$ 成为 BRST 算子的一部分，意味着
+“反全纯平移在同调意义下是平凡的”，这反过来定义了一个手征（或全纯）理论。
+
+在拓扑量子力学中，理论是紫外（UV）有限的。第 7.4 节的一般讨论适用，我们发现
+重整化后的 QME 转化为 Moyal 交换子与 Fedosov 方程。我们将会看到二维手征理论
+同样是 UV 有限的，并且对 QME 有类似的几何结论 [29]。
+
+\subsection{顶点代数（Vertex algebra）}
+
+正如 1.2 节所讨论的，在一维拓扑理论中我们有由融合 $a\cdot b$ 定义的结合代数；
+在二维手征理论中我们有由 $A_{(n)}B$ 定义的（手征）顶点代数。这些代数出现在
+一个算子逼近另一个算子的情形——一维时在直线上，二维时在平面上。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.33\linewidth]{fig_p093_1.png}
+  \caption*{一维结合代数与二维顶点代数的乘积示意（原文 PDF p.93 示意图，原文无编号）}
+\end{figure}
+
+在平面上，“乘积”（二元运算）全纯地依赖于位置，从而导致无穷多个二元运算。
+
+\begin{wdefn}{10.1}
+  \textbf{顶点代数}是如下一组数据：
+  \begin{itemize}[leftmargin=1.6em,itemsep=0.15em]
+    \item （态空间）一个 $\mathbb{Z}$-分次超空间
+          $\mathcal{V}=\mathcal{V}_0\oplus\mathcal{V}_1$，
+    \item （真空）一个向量 $|0\rangle\in\mathcal{V}_0$，
+    \item （平移算子）一个偶线性映射 $T:\mathcal{V}\to\mathcal{V}$，
+    \item （态–场对应）一个偶线性运算（顶点运算）
+          \[
+            Y(-,z):\ \mathcal{V}\longrightarrow\End\mathcal{V}[[z,z^{-1}]],
+            \qquad
+            A\mapsto Y(A,z)=\sum_{n\in\mathbb{Z}}A_{(n)}z^{-n-1},
+          \]
+          使得对任意 $A,B\in\mathcal{V}$ 有 $Y(A,z)B\in\mathcal{V}((z))$。
+  \end{itemize}
+  这些数据要求满足以下公理：
+  \begin{itemize}[leftmargin=1.6em,itemsep=0.15em]
+    \item （真空公理）$Y(|0\rangle,z)=1_{d\mathcal{V}}$，即对任意
+          $A\in\mathcal{V}$，
+          \[
+            Y(A,z)|0\rangle\in\mathcal{V}[[z]]
+            \qquad\text{且}\qquad
+            \lim_{z\to0}Y(A,z)|0\rangle=A,
+          \]
+    \item （平移公理）$T|0\rangle=0$，即对任意 $A\in\mathcal{V}$，
+          \[
+            [T,Y(A,z)]=\partial_zY(A,z),
+          \]
+% >>> p094
+    \item （局域性公理）所有 $\{Y(A,z)\}_{a\in\mathcal{V}}$ 相互局域。
+  \end{itemize}
+\end{wdefn}
+
+% [Tutor Note: 定义 10.1 中有两处原文笔误，均照录：其一，真空公理写作
+% $Y(|0\rangle,z)=1_{d\mathcal{V}}$，其中 $1_{d\mathcal{V}}$ 记号可疑（疑为恒等
+% 算子 $1_{\mathcal{V}}$ 或 $\mathrm{id}_{\mathcal{V}}$ 之误），按标准公理应理解为
+% $\mathcal{V}$ 上的恒等算子；其二，局域性公理的下标是 $\{Y(A,z)\}_{a\in\mathcal{V}}$，
+% 元素写作 $A$ 而下标却用 $a$（应为 $A\in\mathcal{V}$）。局域性是指任取 $A,B$，
+% 存在 $N\ge0$ 使 $(z-w)^NY(A,z)Y(B,w)$ 无极点；它与真空公理、平移公理合起来
+% 等价于 Borcherds（Jacobi）恒等式，原书未展开证明，可参阅 [5]。
+% 请核对原书 p.92（PDF p.93）。]
+
+粗略地说，相互局域性蕴含着：对任意 $A,B\in\mathcal{V}$，可以展开为
+\[
+  Y(A,z)Y(B,w)=\sum_{n\in\mathbb{Z}}\frac{Y(A_{(n)}\cdot B,w)}{(z-w)^{n+1}}.
+\]
+这称为\textbf{算子乘积展开}（operator product expansion, OPE）。展开系数
+$\{A_{(n)}\cdot B\}$ 可视为定义了一族无穷多个乘积。为简便起见，对
+$A\in\mathcal{V}$ 我们将记
+\[
+  A(z)\equiv Y(A,z).
+\]
+于是 OPE 可以写成
+\[
+  A(z)B(w)=\sum_{n\in\mathbb{Z}}\frac{A_{(n)}\cdot B(w)}{(z-w)^{n+1}}.
+\]
+当只关心奇异部分时，我们也写作
+\[
+  A(z)B(w)\sim\sum_{n\ge0}\frac{A_{(n)}\cdot B(w)}{(z-w)^{n+1}}.
+\]
+
+% [Tutor Note: OPE 的分母幂次 $(z-w)^{n+1}$ 与模式展开 $A(z)=\sum A_{(n)}z^{-n-1}$
+% 是同一约定下的配套写法：围道积分 $\oint\dd z\,z^mA(z)$ 正好挑出模式 $A_{(m)}$。
+% 不同文献常把分母写成 $(z-w)^{-n-1}$ 并对 $n$ 作相反编号，或把模式记作
+% $A_n$（对应 $z^{-n-h}$，$h$ 为共形权重），二者只差重编号/平移；核对公式时先看
+% 分母幂次是 $n+1$ 还是 $-n-1$，这是本章最容易出错的地方。]
+
+给定顶点代数，我们可以定义其\textbf{模式 Lie 代数}
+\[
+  \oint\mathcal{V}:=\operatorname{Span}_{\mathbb{C}}
+  \left\{\oint\dd z\,z^kA(z)=A_{(k)}\right\}_{A\in\mathcal{V},\,k\in\mathbb{Z}}.
+\]
+围道积分的 Lie 括号由 OPE 决定：
+\[
+  \left[\oint\dd z\,z^mA(z),\oint\dd w\,w^nB(w)\right]
+  =\oint\dd w\,w^n\oint_w\dd z\,z^m
+  \sum_{j\in\mathbb{Z}}\frac{A_{(j)}\cdot B(w)}{(z-w)^{j+1}},
+\]
+其中积分中只有奇异部分起作用。该 Lie 括号可用图形表示如下。
+
+% [Tutor Note: $\oint_w$ 表示以 $w$ 为圆心的小围道，且外层积分先做；右端的括号
+% 是“先算内部 OPE 再取围道积分”的结果。注意围道的嵌套次序不能随意交换——交换
+% 次序会产生额外的收缩项，这正是 OPE 中奇异部分的来源；图形表示（下图）正是把
+% 交换子画成两种嵌套方式之差。]
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.32\linewidth]{fig_p094_1.png}
+  \caption*{围道积分的 Lie 括号的图形表示（原文 PDF p.94 示意图，原文无编号）}
+\end{figure}
+
+\begin{wexam}{10.2}（$\beta\gamma$ 系统）
+  $\beta\gamma$ 系统由两个玻色场 $\beta(z),\gamma(z)$ 生成，其缩并（contractions）为
+  \[
+    \beta(z)\gamma(w)\sim\frac{\hbar}{z-w}\sim-\gamma(z)\beta(w).
+  \]
+  顶点代数 $\mathcal{V}$ 等同于微分环
+  \[
+    \mathcal{V}=:\mathbb{C}[[\partial^i\beta,\partial^i\gamma]]:[[\hbar]],
+  \]
+% >>> p095
+  其中 $::$ 是正规序算子。一般的 OPE 由 \textbf{Wick 缩并}得到。例如，
+  \[
+    \begin{aligned}
+      :\beta(z)\gamma(z)::\beta(w)\gamma(w):
+      ={}&\underbrace{\frac{\hbar}{z-w}:\gamma(z)\beta(w):
+      -\frac{\hbar}{z-w}:\beta(z)\gamma(w):}_{\text{1 次缩并}}\\
+      &-\underbrace{\left(\frac{\hbar}{z-w}\right)^{2}}_{\text{2 次缩并}}\\
+      ={}&\sum_{k\ge0}\frac{\hbar}{z-w}\frac{(z-w)^k}{k!}
+      :\partial^k\gamma(w)\beta(w)-\partial^k\beta(w)\gamma(w):
+      -\frac{\hbar^2}{(z-w)^2}.
+    \end{aligned}
+  \]
+\end{wexam}
+
+% [Tutor Note: 两个缩并公式的符号差异来自统计性质：$\beta,\gamma$ 是玻色场，交换
+% 不产生符号，故 $\beta(z)\gamma(w)\sim\frac{\hbar}{z-w}\sim-\gamma(z)\beta(w)$
+% 只是“奇异部分相差一个负号”这一陈述（把 $\gamma(z)\beta(w)$ 的极点移项所致）；
+% 而 $b,c$ 是费米场，交换产生额外负号，所以 $b(z)c(w)\sim\frac{\hbar}{z-w}
+% \sim c(z)b(w)$ 中反而没有负号（见例 10.3）。这两处的 $\sim$ 都只保留奇异部分，
+% 切勿把整条等式当作恒等式。]
+
+\begin{wexam}{10.3}（$bc$ 系统）
+  $bc$ 系统由两个费米场 $b(z),c(z)$ 生成，满足
+  \[
+    b(z)c(w)\sim\frac{\hbar}{z-w}\sim c(z)b(w).
+  \]
+  顶点代数 $\mathcal{V}$ 等同于微分环
+  \[
+    \mathcal{V}=:\mathbb{C}[[\partial^ib,\partial^ic]]:[[\hbar]].
+  \]
+  一般的 OPE 以与 $\beta\gamma$ 系统类似的方式生成（但需要注意符号）。
+\end{wexam}
+
+更一般地，我们可以通过考虑一个 $\mathbb{Z}_2$-分次空间
+\[
+  h=h_0\oplus h_1
+\]
+以及一个偶辛配对
+\[
+  \langle-,-\rangle:\ \wedge^2h\longrightarrow\mathbb{C}
+\]
+来定义一般的 $\beta\gamma$-$bc$ 系统。设 $\{a_i\}$ 是 $h$ 的一组基，则可以定义
+顶点代数 $\mathcal{V}_h$ 为
+\[
+  \mathcal{V}_h=:\mathbb{C}[[\partial^ka_i]]:[[\hbar]].
+\]
+OPE 由下式生成：
+\[
+  a_i(z)a_j(w)\sim\frac{\hbar}{z-w}\langle a_i,a_j\rangle.
+\]
+特别地，$h_0$ 代表 $\beta\gamma$ 系统的副本；$h_1$ 代表 $bc$ 系统的副本。
+
+% [Tutor Note: 这里 $\langle-,-\rangle$ 是“偶”辛配对，即只在 $h_0$ 与 $h_1$ 之间
+% （或同奇偶部分之间）非零，与 $\mathbb{Z}_2$-分次的符号规则相容；$\beta\gamma$
+% 是玻色（偶）场、$bc$ 是费米（奇）场，故 $h_0$ 与 $h_1$ 分别对应两类系统的副本。
+% 若把两类的配对弄反，会得到权重错误的理论——这是构造 $V_h$ 时最常见的错误。]
+
+\subsection{$\beta\gamma$-$bc$ 系统的手征形变（Chiral deformation of $\beta\gamma$-$bc$ systems）}
+
+我们考虑以下数据：
+\begin{itemize}[leftmargin=1.6em,itemsep=0.2em]
+  \item 一条椭圆曲线 $E$（拓扑上是环面 $T^2$），带有线性坐标 $z$，使得
+        $z\sim z+1\sim z+\tau$；
+  \item 一个分次辛空间 $h=h_0\oplus h_1$，带有偶辛配对 $\langle-,-\rangle$。
+\end{itemize}
+这在 BV 形式下定义一个场论，其场空间为
+\[
+  \mathcal{E}=\Omega^{0,\bullet}(E)\otimes h,
+\]
+配以 $(-1)$-辛配对
+\[
+  \omega(\varphi_1,\varphi_2)=\int_E\dd z\,\langle\varphi_1,\varphi_2\rangle,
+  \qquad \varphi_i\in\mathcal{E}.
+\]
+
+% >>> p096
+注意 $\omega$ 的次数为 $\deg=-1$，因为我们需要从 $\varphi_1,\varphi_2$ 中恰好
+取出一个 $\overline{\dd z}$ 用于积分。自由理论由
+\[
+  \frac{1}{2}\int_E\dd z\,\langle\varphi,\bar\partial\varphi\rangle,
+  \qquad \varphi\in\mathcal{E}
+\]
+给出。局部量子可观测量恰好构成 $\beta\gamma$-$bc$ 系统。传播子由 Szegő 核给出：
+\[
+  \bar\partial^{-1}\sim\frac{1}{z-w}+\text{regular}.
+\]
+我们想通过开启形如
+\[
+  \int\mathcal{L}\left(\varphi,\partial_z\varphi,\partial_z^2\varphi,\cdots\right)
+\]
+的手征形变来考虑一般的相互作用理论，这些形变只涉及\emph{全纯}导数。它恰与
+顶点代数
+\[
+  \mathcal{V}_{h^\vee}=\mathbb{C}[[\partial^ih^\vee]][[\hbar]]
+\]
+如下相关。定义映射
+\[
+  I:\ \mathcal{V}_{h^\vee}\longrightarrow\mathcal{O}_{\mathrm{loc}}(\mathcal{E}),
+  \qquad \gamma\mapsto I_\gamma.
+\]
+显式地，若 $\gamma=\sum\partial^{k_1}a_1\cdots\partial^{k_m}a_m$，则
+\[
+  I_\gamma(\varphi)
+  =\ii\int_E\dd z\sum\pm\partial_z^{k_1}a_1(\varphi)
+  \cdots\partial_z^{k_m}a_m(\varphi).
+\]
+这里 $a_i\in h^\vee$，$a_i(\varphi)\in\omega^{0,\bullet}(E)$。
+
+\begin{wthm}{10.4（[29]）}
+  对任意 $\gamma\in\mathcal{V}_{h^\vee}$，手征形变理论
+  \[
+    \frac{1}{2}\int_E\dd z\,\langle\varphi,\bar\partial\varphi\rangle
+    +I_\gamma(\varphi)
+  \]
+  是 \textbf{UV 有限}的，即极限
+  \[
+    \ee^{\frac{1}{\hbar}I_\gamma[L]}
+    =\lim_{\varepsilon\to0}\ee^{\hbar\partial_{P_\varepsilon^L}}
+    \ee^{\frac{1}{\hbar}I_\gamma}
+  \]
+  存在。
+\end{wthm}
+
+% [Tutor Note: $\omega$ 的次数为 $-1$ 是“$(-1)$-辛形式”的含义：配对
+% $\int_E\dd z\langle\varphi_1,\varphi_2\rangle$ 只在 $\varphi_1,\varphi_2$ 各
+% 提供一个 $\overline{\dd z}$ 时才有意义，故形式次数为 $-1$。另注意原文前文用
+% $\dd z$、此处用 $\overline{\dd z}$，以及 $a_i(\varphi)\in\omega^{0,\bullet}(E)$
+% 用了小写 $\omega$（与场空间的 $\Omega^{0,\bullet}(E)$ 不一致）——均照录原文，
+% 后一处在 p.95（PDF p.96）请核对，属记号不统一而非实质错误。]
+
+\begin{wrem}{10.5}
+  UV 有限性定理的证明有些技术性。其原因与拓扑量子力学不同：在那里我们看到
+  传播子是有界的（尽管不连续）。这里的图积分\textbf{不是}绝对收敛的。关于这一
+  事实的几何解释见下一节 [34]。
+\end{wrem}
+
+一旦有了上述良好定义的 $I_\gamma[L]$，我们就可以写出有效 QME
+\[
+  \bar\partial I_\gamma[L]+\hbar\Delta_LI_\gamma[L]
+  +\frac{1}{2}\{I_\gamma[L],I_\gamma[L]\}_L=0,
+\]
+并询问 $\gamma$ 满足该方程的条件。结果表明答案非常简单。
+
+\begin{wthm}{10.6（[29]）}
+  考虑 $\gamma\in\mathcal{V}_{h^\vee}$ 以及上面通过 UV 有限性定义的有效泛函
+  $I_\gamma[L]$。则 $I_\gamma[L]$ 满足有效 QME
+  \[
+    \bar\partial I_\gamma[L]+\hbar\Delta_LI_\gamma[L]
+    +\frac{1}{2}\{I_\gamma[L],I_\gamma[L]\}_L=0
+  \]
+  当且仅当
+  \[
+    \left[\oint\gamma,\oint\gamma\right]=0\in\oint\mathcal{V}.
+  \]
+\end{wthm}
+
+% [Tutor Note: 条件 $[\oint\gamma,\oint\gamma]=0$ 就是 $[\gamma,\gamma]_\star=0$
+% 的手征类比（对照第 9 章定理 9.13 与 Fedosov 方程）：$\oint\gamma$ 是 $\gamma$
+% 在模式 Lie 代数 $\oint\mathcal{V}$ 中的像，$\gamma$ 对应一个“手征相互作用”，
+% 其平方为零等价于有效 QME 可解。注意此处括号是模式 Lie 代数中的括号（由 OPE
+% 决定），不是普通的多项式括号。]
+
+% >>> p097
+\begin{wrem}{10.7}
+  手征形变理论的局部量子可观测量是顶点代数
+  $H^\bullet(\mathcal{V}_{h^\vee},[\oint\gamma,-])$。因此
+  $[\oint\gamma,-]$ 扮演 BRST 约化的角色。反过来推理，来自自由场实现的 BRST
+  约化的顶点代数，都可以用上述手征形变模型来实现。
+\end{wrem}
+
+上述定理可以粘合到手征 $\sigma$ 模型
+\[
+  \varphi:\ E\longrightarrow X
+\]
+上，从而在 $X$ 上产生一个手征顶点代数丛 $\mathcal{V}(X)\to X$。于是有效 QME
+的解要求 $\mathcal{V}(X)$ 上一个形如
+\[
+  D=\dd+\frac{1}{\hbar}\left[\oint\gamma,-\right],
+  \qquad\text{使得}\quad D^2=0
+\]
+的平坦联络。这里 $\gamma\in\Omega^1(X,\mathcal{V}(X))$，$\oint\gamma$ 是逐纤维
+的手征模式算子。这可以看作 Fedosov 联络的手征类比。
+
+% [Tutor Note: 这里 $D^2=0$ 就是“手征 Fedosov 方程”$d\gamma+\frac12[\gamma,\gamma]=0$
+% 的算子形式；注意 $\dd$ 是 $X$ 上的 de Rham 微分，而 $[\oint\gamma,-]$ 是沿纤维
+% 的顶点代数括号，二者作用在不同的方向上，$D^2=0$ 同时包含曲率为零与
+% $[\oint\gamma,\oint\gamma]=0$ 两部分。]
+
+\subsection{正则化积分与 UV 有限性（Regularized integral and UV finiteness）}
+
+传播子 $\bar\partial^{-1}$ 由 Szegő 核给出，它沿对角线呈现全纯极点
+$\frac{1}{z-w}$。一般而言，Feynman 图涉及 $\int_{\Sigma^n}\Omega$，其中 $\Omega$
+在 $z_i\to z_j$ 时呈现任意阶的全纯极点。结果表明，这种看似发散的积分通过其
+共形结构具有内在的\emph{正则化}。
+
+为简单起见，我们先考虑形如 $\int_\Sigma\omega$ 的积分。这里 $\Sigma$ 是 Riemann
+面，可带边界 $\partial\Sigma$；$\omega$ 是 $\Sigma$ 上的 2-形式，沿有限集
+$D\subset\Sigma$ 有任意阶的亚纯极点，且 $D\cap\partial\Sigma=\varnothing$。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.50\linewidth]{fig_p097_1.png}
+  \caption*{带边界与极点集的 Riemann 面（原文 PDF p.97 示意图，原文无编号）}
+\end{figure}
+
+设 $p\in D$，$z$ 是以 $p$ 为中心的局部坐标。则局部地 $\omega$ 可写成
+\[
+  \omega=\frac{\eta}{z^n},
+\]
+其中 $\eta$ 光滑，$n\in\mathbb{Z}$。由于极点阶数可以任意大，朴素的
+$\int_\Sigma\omega$ 一般是发散的。解决这一发散问题的一种同调方法 [34] 如下。
+我们可以把 $\omega$ 分解为
+\[
+  \omega=\alpha+\partial\beta,
+\]
+其中 $\alpha$ 是沿 $D$ 至多有\emph{对数极点}的 2-形式，$\beta$ 是沿 $D$ 有
+\emph{任意阶极点}的 $(0,1)$-形式，而
+$\partial=\dd z\frac{\partial}{\partial z}$ 是全纯 de Rham 微分。这样的分解
+存在且不唯一。
+
+\begin{wdefn}{10.8（[34]）}
+  定义\textbf{正则化积分}
+  \[
+    \fint_\Sigma\omega:=\int_\Sigma\alpha+\int_{\partial\Sigma}\beta
+  \]
+  作为在 $\Sigma$ 上积分奇异形式 $\omega$ 的一种方案。
+\end{wdefn}
+
+它具有以下性质
+% >>> p098
+\begin{itemize}[leftmargin=1.6em,itemsep=0.2em]
+  \item 它不依赖于 $\alpha,\beta$ 的选取；
+  \item $\fint_\Sigma$ 在共形变换下不变；
+  \item $\fint_\Sigma\partial(-)=\int_{\partial\Sigma}(-)$；
+  \item $\fint_\Sigma\bar\partial(-)=\operatorname{Res}(-)$。
+\end{itemize}
+
+% [Tutor Note: 这四条性质刻画了 $\fint$ 与普通积分的差别：第三条是全纯 de Rham
+% 微分的“Stokes 型”性质，第四条是 Dolbeault 微分给出留数——注意两条的右端分别是
+% 边界积分与留数，方向/符号取决于 $\Sigma$ 的定向与 $D$ 的局部坐标选取，核对时
+% 务必固定定向约定。$\alpha$ 允许对数极点、$\beta$ 允许任意阶极点，正是为了让
+% $\fint$ 在共形变换下不变。]
+
+正则化积分延拓了光滑形式的通常积分，即下述图表交换：
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.40\linewidth]{fig_p098_1.png}
+  \caption*{正则化积分与通常积分相容的交换图（原文 PDF p.98 示意图，原文无编号）}
+\end{figure}
+
+我们可以用它来定义 $\Sigma$ 的构型空间上的积分
+\[
+  \operatorname{Conf}_n(\Sigma)=\Sigma^n-\Delta
+  =\left\{(p_1,\cdots,p_n)\in\Sigma^n\,\middle|\,p_i\neq p_i,\ \forall i\neq j\right\},
+\]
+并定义
+\[
+  \fint_{\Sigma^n}:\ \mathcal{A}^{2n}(\Sigma^n,\star\Delta)
+  \longrightarrow\mathbb{C}
+\]
+为
+\[
+  \fint_{\Sigma^n}(-)=\fint_{\Sigma_1}\fint_{\Sigma_2}\cdots
+  \fint_{\Sigma_n}(-).
+\]
+它不依赖于 $\Sigma^n$ 中各因子次序的选取；Fubini 型定理成立。这赋予了
+$\fint_{\Sigma^n}\Omega$ 一个内蕴正则化的含义，其中 $\Omega$ 是 Feynman 图的
+被积式。这就解释了为什么该理论是 UV 有限的。
+
+% [Tutor Note: 原文构型空间定义中第二个条件写作 $p_i\neq p_i$，显然应为
+% $p_i\neq p_j$（$i\neq j$），这是原书笔误；此处照录原式，请核对原书 p.97
+% （PDF p.98）。另外 $\mathcal{A}^{2n}(\Sigma^n,\star\Delta)$ 表示在
+% $\Sigma^n$ 的“对角邻域”上允许指定极点的形式空间，$\star\Delta$ 是奇性支撑的
+% 记号（与 p.96 的 $\star D$ 同义）。]
+
+\subsection{BV 量子化的同调方面（Homological Aspects of BV quantization）}
+
+粗略地说，QFT 中的 BV 量子化导致：
+\begin{itemize}[leftmargin=1.6em,itemsep=0.2em]
+  \item 可观测量的因子化代数 $\Obs$ [11]，
+  \item 由 $\Obs$ 的代数结构给出的链复形 $(C_\bullet(\Obs),d)$，
+  \item 描述零模（在 $L=\infty$ 处）的 BV 代数 $(A,\Delta)$，带有 BV 积分映射
+        \[
+          \int_{BV}:\ A\longrightarrow\mathbb{C},
+        \]
+  \item 一个 $\mathbb{C}[[\hbar]]$-线性映射
+        \[
+          \langle-\rangle:\ C_\bullet(\Obs)\longrightarrow A((\hbar))
+        \]
+        它是从 $L=0$ 到 $L=\infty$ 的 HRG 流，满足 QME
+        $(d+\hbar\Delta)\langle-\rangle=0$；QME 说的是 $\langle-\rangle$ 是
+        交织 $d$ 与 $\hbar\Delta$ 的链映射，
+  \item 导致指标定理的配分函数
+        \[
+          \operatorname{Index}=\int_{BV}\langle1\rangle.
+        \]
+\end{itemize}
+
+回忆在 TQM 的例子中，我们有以下数据。
+\begin{itemize}[leftmargin=1.6em,itemsep=0.2em]
+  \item 因子化代数是 Weyl 代数：$\Obs=\mathcal{W}_{2n}$。
+  \item 因子化复形是 Hochschild 链复形 $(C_\bullet(\Obs),d)$。
+  \item 零模上的 BV 代数：
+        $(A,\Delta)=(\Omega^\bullet(\mathbb{R}^{2n}),\mathcal{L}_{\omega^{-1}})$。
+% >>> p099
+  \item 自由关联映射
+        \[
+          \langle-\rangle:\ C_\bullet(\mathcal{W}_{2n})
+          \longrightarrow\Omega^\bullet(\mathbb{R}^{2n})((\hbar)),
+          \qquad b\mapsto\hbar\mathcal{L}_{\omega^{-1}}.
+        \]
+  \item 指标
+        \[
+          \operatorname{Index}=\int_{BV}\langle1\rangle
+          =\left[\ee^{\omega_\hbar/\hbar}\widehat{A}\right].
+        \]
+\end{itemize}
+在二维手征 QFT 的例子中，我们会有类似的故事 [23]。
+
+% [Tutor Note: 这里 TQM 的指标公式写作 $\left[\ee^{\omega_\hbar/\hbar}\widehat{A}\right]$，
+% 而第 9 章（PDF p.92）的对应公式是 $\int_X\ee^{-\omega_\hbar/\hbar}\widehat{A}(X)$，
+% 两处指数差一个负号；疑为原文笔误或 $\omega_\hbar$ 的符号约定不同，请核对原书
+% p.91 与 p.98（PDF p.92 与 p.99）。照录原文，不做改写。]
+
+\subsection{手征链复形（Chiral Chain Complex）}
+
+直观上，手征链复形可以看作 Hochschild 链复形的二维手征类比。
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.33\linewidth]{fig_p099_1.png}
+  \caption*{手征链复形微分的图形表示（原文 PDF p.99 示意图，原文无编号）}
+\end{figure}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=0.2em]
+  \item \textup{[41]} 研究了亏格 1 共形块的空间（即第 0 个椭圆手征同调）。
+  \item \textup{[5]} 探讨了一般代数曲线的手征同调。
+\end{itemize}
+
+\paragraph*{Beilinson--Drinfeld 的构造（The construction of Beilinson--Drinfeld）}
+
+给定以下数据：
+\begin{itemize}[leftmargin=1.6em,itemsep=0.2em]
+  \item $X=\Sigma$ 上右 $\mathcal{D}$-模的范畴 $\mathcal{M}(X)$，
+  \item $X^S$ 上右 $\mathcal{D}$-模的范畴 $\mathcal{M}(X^S)$，使得每个元素
+        $M\in\mathcal{M}(X^S)$ 是一个“收集”，对每个有限指标集 $I\in S$ 指定
+        乘积 $X^I$ 上的右 $\mathcal{D}$-模 $M_{X^I}$，并满足一定的相容性条件，
+  \item 存在一个正合、全忠实的嵌入
+        \[
+          \Delta_*^{(S)}:\ \mathcal{M}(X)\hookrightarrow\mathcal{M}(X^S),
+        \]
+        它经由对角映射 $\Delta^{(I)}:X\hookrightarrow X^I$ 得到，
+  \item $\mathcal{M}(X^S)$ 带有（手征）张量结构 $\otimes^{\mathrm{ch}}$，
+\end{itemize}
+则手征代数 $\mathcal{A}$ 是通过 $\Delta_*^{(S)}$ 得到的一个 \textbf{Lie 代数对象}。
+
+\begin{wrem}{10.9}
+  手征代数 $\mathcal{A}$ 收集了所有“正规序算子”。
+\end{wrem}
+
+% [Tutor Note: 这段 Beilinson--Drinfeld 构造是全书最浓缩的一段，逐字读很容易迷失。
+% 直观图像：$\mathcal{M}(X^S)$ 是“在所有有限多个点 $I\subset S$ 上同时取值的
+% 右 $\mathcal{D}$-模”的范畴，$\Delta_*^{(S)}$ 把 $X$ 上的模沿对角嵌入拉回到
+% $X^S$ 上；手征张量结构 $\otimes^{\mathrm{ch}}$ 只在互不相交的点之间可乘。手征
+% 代数就是在这个对称张量范畴中的一个交换代数对象（原文称“Lie 代数对象”，指其
+% 在 $\Delta_*^{(S)}$ 下的代数结构）。]
+
+我们考虑 Chevalley--Eilenberg（CE）复形
+\[
+  (C(\mathcal{A}),d_{\mathrm{CE}})
+  =\left(\bigoplus_{\bullet>0}\operatorname{Sym}^\bullet_{\otimes^{\mathrm{ch}}}
+  \left(\Delta_*^{(S)}\mathcal{A}[1]\right),d_{\mathrm{CE}}\right).
+\]
+该复形的手征同调为
+\[
+  C^{\mathrm{ch}}(X,\mathcal{A})=R\Gamma_{DR}(X^S,C(\mathcal{A})).
+\]
+我们将聚焦于 $\beta\gamma$-$bc$ 系统，其中顶点算子代数（VOA）
+$\mathcal{V}^{\beta\gamma-bc}$ 就是手征代数 $\mathcal{A}^{\beta\gamma-bc}$。
+
+\begin{wthm}{10.10（[23]）}
+  设 $E$ 是椭圆曲线。则 HRG 流给出一个映射
+  \[
+    \langle-\rangle_{2d}:\ C^{\mathrm{ch}}
+    (E,\mathcal{A}^{\beta\gamma-bc})\longrightarrow\mathcal{A}((\hbar)),
+  \]
+  满足 QME $(d_{\mathrm{ch}}+\hbar\Delta)\langle-\rangle_{2d}=0$。粗略地说，
+  $\langle-\rangle$ 由
+  \[
+    \langle\mathcal{O}_1\otimes\cdots\otimes\mathcal{O}_n\rangle_{2d}
+    :=\fint_{E^n}\langle\mathcal{O}_1(z_1)\cdots\mathcal{O}_n(z_n)\rangle
+  \]
+  定义，其中 $\langle\mathcal{O}_1(z_1)\cdots\mathcal{O}_n(z_n)\rangle$ 是由
+  Feynman 图给出的局部关联子，$\fint_{E^n}$ 是正则化积分。
+\end{wthm}
+
+% >>> p100
+\subsection{2d $\to$ 1d 约化（2d $\to$ 1d reduction）}
+
+我们把讨论总结如下。
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\textbf{一维 TQM} & \textbf{二维手征 QFT} \\
+\midrule
+结合代数 & 顶点/手征代数 \\
+Hochschild 同调 & 手征同调 \\
+QME $(\hbar\Delta+b)\langle-\rangle_{1d}=0$
+  & QME $(\hbar\Delta+d_{\mathrm{ch}})\langle-\rangle_{2d}=0$ \\
+$\langle\mathcal{O}_1\otimes\cdots\otimes\mathcal{O}_n\rangle_{1d}
+  =\int_{\operatorname{Conf}_n(S^1)}$
+  & $\langle\mathcal{O}_1\otimes\cdots\otimes\mathcal{O}_n\rangle_{2d}
+  =\fint_{\Sigma^n}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+在物理中，椭圆曲线上的配分函数/关联函数由 $S^1$ 上的量子力学描述。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.67\linewidth]{fig_p100_1.png}
+  \caption*{椭圆曲线上的关联函数约化为 $S^1$ 上的量子力学（原文 PDF p.100 示意图，原文无编号）}
+\end{figure}
+\[
+  \langle-\rangle_{2d}\longrightarrow\operatorname{Tr}_{\mathcal{H}}
+  \langle\cdots\rangle
+\]
+
+现在我们可以用正则化积分 $\fint_E$ 来定义二维关联函数。在一维情形，算子由
+$A$-圈 $\oint_A$ 描述。这两个积分并不完全相同，而是通过\emph{全纯反常}相互关联。
+
+\begin{wthm}{10.11（[34]）}
+  设 $\Phi(z_1,\cdots,z_n;\tau)$ 是 $\mathbb{C}^n\times\mathbb{H}$ 上的亚纯椭圆
+  函数，且在离开对角线处全纯。设 $A_1,\cdots,A_n$ 是椭圆曲线
+  $E_\tau=\mathbb{C}/(\mathbb{Z}\oplus\tau\mathbb{Z})$ 上 $n$ 个互不相交的
+  $A$-圈。
+
+  \begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.30\linewidth]{fig_p100_2.png}
+  \caption*{椭圆曲线 $E_\tau$ 上的互不相交 $A$-圈（原文 PDF p.100 示意图，原文无编号）}
+\end{figure}
+
+  则正则化积分
+  \[
+    \fint_{E_\tau^n}\left(\prod_{i=1}^n
+    \frac{\dd^2z_i}{\operatorname{Im}\tau}\right)
+    \Phi(z_1,\cdots,z_n;\tau)
+  \]
+  落在 $\mathcal{O}_{\mathbb{H}}\left[\frac{1}{\operatorname{Im}\tau}\right]$ 中。
+  此外，我们有
+  \[
+    \lim_{\tau\to\infty}\fint_{E_\tau^n}\left(\prod_{i=1}^n
+    \frac{\dd^2z_i}{\operatorname{Im}\tau}\right)\Phi
+    =\frac{1}{n!}\sum_{\sigma\in S_n}\oint_{A_{\sigma(1)}}\dd z_1
+    \cdots\oint_{A_{\sigma(n)}}\dd z_n\,\Phi,
+  \]
+  其中 $S_n$ 是 $n$ 个元素的置换群。本质地说，这意味着
+  \[
+    \fint_{E^n}\ \xrightarrow{\ \lim_{\tau\to\infty}\ }\
+    \text{averaged}\oint_A,
+  \]
+  其中 $\fint_{E^n}$ 是几乎全纯模的，而平均化的 $\oint_A$ 是准模的。
+\end{wthm}
+
+% [Tutor Note: 定理 10.11 是“二维手征”与“一维 TQM”之间的桥梁：左边是二维椭圆
+% 曲线上的正则化积分（几乎全纯模，依赖 $\tau,\bar\tau$），右边是 $A$-圈积分在
+% 各置换下的平均（准模）。测度 $\prod_i\frac{\dd^2z_i}{\operatorname{Im}\tau}$
+% 是环面上的平移不变测度（$\operatorname{Im}\tau$ 来自度规），极限 $\tau\to\infty$
+% 使环面“拉长成 cylinder”，从而二维积分退化为沿 $A$-圈的积分平均。$\mathcal{O}_{\mathbb{H}}[\frac{1}{\operatorname{Im}\tau}]$
+% 表示关于 $\tau$ 的全纯函数环添加 $\frac{1}{\operatorname{Im}\tau}$ 后得到的
+% 几乎全纯函数环。]
+
+% >>> p101
+反全纯依赖有一个精确的描述。
+
+\begin{wthm}{10.12（[35]）}
+  设 $\Phi$ 是几乎椭圆函数。则
+  \[
+    \partial_Y\fint_{E_\tau^n}\Phi
+    =\fint_{E_\tau^n}\partial_Y\Phi
+    -\sum_{i<j}\fint_{E_\tau^{n-1}}
+    \operatorname{Res}_{z_i=z_j}\left((z_i-z_j)\Phi\right).
+  \]
+\end{wthm}
+
+这里 $Y=\frac{1}{\operatorname{Im}\tau}$。这给出\textbf{全纯反常方程}。
+
+% [Tutor Note: 全纯反常方程把“对 $\bar\tau$（等价地 $Y=\frac{1}{\operatorname{Im}\tau}$）
+% 的导数”与“二维正则化积分的边界/留数项”联系起来：右边第二项是当两点 $z_i\to z_j$
+% 时在对角线上取留数所得的“碰撞项”，即积分区域边界的贡献。$Y=\frac{1}{\operatorname{Im}\tau}$
+% 的约定与 $\tau=\tau_1+i\tau_2$、$\operatorname{Im}\tau=\tau_2$ 一致；若采用
+% $\bar\tau$ 的另一种归一化，系数可能相差常数，核对时以原书 p.100（PDF p.101）
+% 的 $Y$ 定义为准。]

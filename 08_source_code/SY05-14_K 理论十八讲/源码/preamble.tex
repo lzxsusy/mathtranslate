@@ -1,0 +1,117 @@
+% =====================================================================
+%  Ioannis P. Zois, "18 Lectures on K-Theory" (arXiv:1008.1346v1, 2010)
+%  —— 中文译注本
+%  本文件为导言区（Lead 独占；译者只读，不得修改）
+%
+%  编译：LuaLaTeX（本机 xdvipdfmx 不稳，统一用 lualatex，编译 3 遍）
+%        powershell -ExecutionPolicy Bypass -File build.ps1
+%
+%  约定：
+%   * 原文无编号公式（实测 0 条），故本译本不使用 \tag；原文的编号定理/定义
+%     一律手工给号：\begin{thm}{1} … \end{thm}（同理 defn/prop/lem/cor/rem/claim）。
+%     原文每个 section 内从 1 重新编号，译文照此。
+%   * 原文的展示式全部逐符号重排，不用截图。
+%   * % [Tutor Note: ...] 为译者批注，不进入排版，汇总见《译注汇总.md》。
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[UTF8]{ctex}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage[a4paper,left=2.6cm,right=2.6cm,top=2.6cm,bottom=2.7cm]{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage{tikz}
+\usetikzlibrary{cd,arrows.meta,positioning,calc}
+\usepackage[hidelinks,unicode]{hyperref}
+\hypersetup{pdftitle={K 理论十八讲（中译注本）},
+  pdfauthor={Ioannis P. Zois; 中译/批注: 本译本},
+  pdfsubject={Zois, 18 Lectures on K-Theory, arXiv:1008.1346v1}}
+
+\captionsetup{font=small,labelsep=quad}
+\setlength{\emergencystretch}{3em}
+\allowdisplaybreaks[1]
+
+% ---------- 页眉 ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape 18 Lectures on K-Theory \textnormal{(Zois, 2010)} 中译注本}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+% ---------- 定理类环境：编号一律手工给出（与原文逐条对应） ----------
+% 中文版体例：粗体 “定义 1.” + 直立体正文（中文不用斜体；原文的斜体是西文排版习惯）。
+\newenvironment{defn}[1]{\par\medskip\noindent\textbf{定义 #1.}\ }{\par\medskip}
+\newenvironment{prop}[1]{\par\medskip\noindent\textbf{命题 #1.}\ }{\par\medskip}
+\newenvironment{lem}[1]{\par\medskip\noindent\textbf{引理 #1.}\ }{\par\medskip}
+\newenvironment{thm}[1]{\par\medskip\noindent\textbf{定理 #1.}\ }{\par\medskip}
+\newenvironment{cor}[1]{\par\medskip\noindent\textbf{推论 #1.}\ }{\par\medskip}
+\newenvironment{rem}[1]{\par\medskip\noindent\textbf{注 #1.}\ }{\par\medskip}
+\newenvironment{claim}[1]{\par\medskip\noindent\textbf{断言 #1.}\ }{\par\medskip}
+\renewenvironment{proof}[1][证明]{\par\medskip\noindent\textbf{#1.}\ }{\hfill$\square$\par\medskip}
+
+% 原文的行内粗体小标题：独立成段、粗体、不缩进
+\newcommand{\para}[1]{\par\medskip\noindent\textbf{#1}\quad\ignorespaces}
+
+% 原文图/表标题（本稿实测无图无表；留宏以备后用）
+\newcommand{\figtitle}[2]{\caption*{\small\textbf{图 #1：}#2}}
+\newcommand{\tabtitle}[2]{\caption*{\small\textbf{表 #1：}#2}}
+
+% 参考文献条目：\refitem{键}{内容}
+\newcommand{\refitem}[2]{\par\hangindent=1.5em\hangafter=1\noindent [#1]~#2}
+
+% ---------- 常用记号（只能用这里定义过的宏，不要自造 \newcommand） ----------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\GL}{\operatorname{GL}}
+\newcommand{\SL}{\operatorname{SL}}
+\newcommand{\SO}{\operatorname{SO}}
+\newcommand{\SU}{\operatorname{SU}}
+\newcommand{\U}{\operatorname{U}}
+\newcommand{\OO}{\operatorname{O}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\Aut}{\operatorname{Aut}}
+\newcommand{\Ext}{\operatorname{Ext}}
+\newcommand{\Tor}{\operatorname{Tor}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\ch}{\operatorname{ch}}
+\newcommand{\ind}{\operatorname{Ind}}
+\newcommand{\rk}{\operatorname{rk}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\Vect}{\mathrm{Vect}}
+\newcommand{\VectC}{\mathrm{Vect}_{\C}}
+\newcommand{\Cstar}{C$^*$}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\Ker}{\operatorname{Ker}}
+\newcommand{\im}{\operatorname{Im}}
+\newcommand{\coker}{\operatorname{Coker}}
+\newcommand{\wt}{\widetilde}
+\newcommand{\ot}{\otimes}
+\newcommand{\semi}{\rtimes}
+\newcommand{\into}{\hookrightarrow}
+\newcommand{\onto}{\twoheadrightarrow}
+\newcommand{\ie}{\textit{i.e.}}
+\newcommand{\eg}{\textit{e.g.}}
+\newcommand{\cf}{\textit{cf.}}
+\newcommand{\xra}[1]{\xrightarrow{#1}}
+
+% hyperref 书签：把数学宏降级为纯文本，避免 PDF 字符串告警
+\pdfstringdefDisableCommands{%
+  \def\R{R}\def\C{C}\def\Z{Z}\def\N{N}\def\Q{Q}\def\HH{H}\def\F{F}%
+  \def\Cstar{C*}\def\Vect{Vect}\def\wt{}\def\ot{otimes}%
+  \def\GL{GL}\def\SU{SU}\def\U{U}\def\OO{O}\def\SO{SO}%
+}

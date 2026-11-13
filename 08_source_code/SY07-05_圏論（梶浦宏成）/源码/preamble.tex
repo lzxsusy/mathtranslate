@@ -1,0 +1,148 @@
+% =====================================================================
+%  preamble.tex —— 梶浦宏成《数物系のための圏論》中文译注本
+%  Lead 独占维护；队友只读。
+%  编译：LuaLaTeX（build.ps1 统一处理），三遍
+%
+%  约定：
+%   * 定理类标题（定義 x.y / 定理 x.y / …）用原书编号，手工输入；
+%   * 编号公式用 \tag{} 复刻原书编号（如 (3.8)），无编号公式用 \[ … \]；
+%   * 交换图表一律用 tikz-cd 重画；
+%   * % [Tutor Note: ...] 为译者批注，不进入排版，汇总见 译注汇总.md。
+% =====================================================================
+\documentclass[11pt,a4paper,openany,UTF8]{ctexbook}
+
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage[a4paper,left=2.5cm,right=2.5cm,top=2.6cm,bottom=2.7cm]{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning,decorations.pathmorphing}
+\usepackage{tikz-cd}
+\usepackage[hidelinks,unicode,bookmarksnumbered]{hyperref}
+\hypersetup{pdftitle={数物系のための圏論（中译注本）},
+  pdfauthor={梶浦宏成; 中译/批注: 本译本}}
+
+\captionsetup{font=small,labelsep=quad}
+\setlength{\emergencystretch}{3em}
+\allowdisplaybreaks[1]
+\graphicspath{{figures/}{../figures/}}
+
+% ---------- 章标题：ctexbook 默认「第1章 背景与概观」，可接受 ----------
+\ctexset{
+  chapter/name = {第,章},
+  chapter/number = \arabic{chapter},
+  chapter/format = \Large\bfseries\centering,
+  section/format = \large\bfseries\raggedright,
+  subsection/format = \normalsize\bfseries\raggedright,
+}
+
+% ---------- 页眉 ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\small\thepage}
+\fancyhead[LO]{\small\itshape\nouppercase{\rightmark}}
+\fancyhead[RE]{\small\itshape\nouppercase{\leftmark}}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ---------- 定理类环境（编号一律由原文手工给出） ----------
+% 用法：\begin{definition}{3.29} …… \end{definition}
+%       \begin{definition}{3.29}[定理] …… \end{definition}  % 改标签名（如「定義・定理」）
+\makeatletter
+\newcommand{\kajthmhead}[2]{%
+  \par\medskip\noindent\textbf{#1 #2.}\hspace{0.6em}\ignorespaces}
+\newenvironment{definition}[2][定义]{\kajthmhead{#1}{#2}\itshape}{\par\medskip}
+\newenvironment{theorem}[2][定理]{\kajthmhead{#1}{#2}}{\par\medskip}
+\newenvironment{proposition}[2][命题]{\kajthmhead{#1}{#2}}{\par\medskip}
+\newenvironment{lemma}[2][引理]{\kajthmhead{#1}{#2}}{\par\medskip}
+\newenvironment{corollary}[2][推论]{\kajthmhead{#1}{#2}}{\par\medskip}
+\newenvironment{example}[2][例]{\kajthmhead{#1}{#2}}{\par\medskip}
+\newenvironment{remark}[2][注]{\kajthmhead{#1}{#2}}{\par\medskip}
+\newenvironment{claim}[2][断言]{\kajthmhead{#1}{#2}}{\par\medskip}
+\newenvironment{notation}[2][记号]{\kajthmhead{#1}{#2}}{\par\medskip}
+\newenvironment{exercise}[2][习题]{\kajthmhead{#1}{#2}}{\par\medskip}
+\newenvironment{question}[2][问题]{\kajthmhead{#1}{#2}}{\par\medskip}
+\newenvironment{assumption}[2][假设]{\kajthmhead{#1}{#2}}{\par\medskip}
+% 无编号的「注意」「例」
+\newenvironment{remark*}{\par\medskip\noindent\textbf{注.}\hspace{0.6em}\ignorespaces}{\par\medskip}
+\newenvironment{example*}{\par\medskip\noindent\textbf{例.}\hspace{0.6em}\ignorespaces}{\par\medskip}
+\makeatother
+
+% 证明环境（amsthm）：中文「证明.」+ □ 收尾
+\renewcommand{\proofname}{\bfseries 证明}
+\renewcommand{\qedsymbol}{$\square$}
+\renewenvironment{proof}[1][\proofname]{\par\medskip\noindent\textbf{#1.}\hspace{0.6em}\ignorespaces}{\hfill$\square$\par\medskip}
+
+% 原文行内粗体小标题 → 独立成段粗体
+\newcommand{\para}[1]{\par\medskip\noindent\textbf{#1}\quad\ignorespaces}
+
+% 图题/表题（本书正文无编号图，保留备用）
+\newcommand{\figtitle}[2]{\caption*{\small\textbf{图 #1：}#2}}
+\newcommand{\tabtitle}[2]{\caption*{\small\textbf{表 #1：}#2}}
+
+% 参考文献条目
+\newcommand{\refitem}[2]{\par\hangindent=1.5em\hangafter=1\noindent [#1]~#2}
+
+% ---------- 常用记号 ----------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\cA}{\mathcal{A}}\newcommand{\cB}{\mathcal{B}}\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}\newcommand{\cE}{\mathcal{E}}\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}\newcommand{\cH}{\mathcal{H}}\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cJ}{\mathcal{J}}\newcommand{\cK}{\mathcal{K}}\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}\newcommand{\cN}{\mathcal{N}}\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}\newcommand{\cQ}{\mathcal{Q}}\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}\newcommand{\cT}{\mathcal{T}}\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}\newcommand{\cW}{\mathcal{W}}\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\Set}{\mathbf{Set}}
+\newcommand{\Top}{\mathbf{Top}}
+\newcommand{\Ab}{\mathbf{Ab}}
+\newcommand{\Vect}{\mathbf{Vect}}
+\newcommand{\Mod}{\operatorname{Mod}}
+\newcommand{\modA}{\mathrm{mod}\text{-}A}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\Aut}{\operatorname{Aut}}
+\newcommand{\Ext}{\operatorname{Ext}}
+\newcommand{\Tor}{\operatorname{Tor}}
+\newcommand{\Ker}{\operatorname{Ker}}
+\newcommand{\Img}{\operatorname{Im}}
+\newcommand{\Coker}{\operatorname{Coker}}
+\newcommand{\Coim}{\operatorname{Coim}}
+\newcommand{\Ob}{\operatorname{Ob}}
+\newcommand{\Mor}{\operatorname{Mor}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\Db}{D^{b}}
+\newcommand{\Kb}{K^{b}}
+\newcommand{\Comp}{\operatorname{Comp}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\Tot}{\operatorname{Tot}}
+\newcommand{\RHom}{\operatorname{RHom}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\nil}{\operatorname{nil}}
+\newcommand{\rad}{\operatorname{rad}}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\opcat}[1]{#1^{\op}}
+\newcommand{\ie}{\textit{i.e.}}
+\newcommand{\eg}{\textit{e.g.}}
+\newcommand{\cf}{\textit{cf.}}
+\newcommand{\Ainf}{A_\infty}
+\newcommand{\T}{\mathsf{T}}   % 三角圏的平移函子（书中记号 T）
+\newcommand{\shift}[1]{#1[1]}

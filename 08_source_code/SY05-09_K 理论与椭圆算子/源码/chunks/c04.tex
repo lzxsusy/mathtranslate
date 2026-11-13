@@ -1,0 +1,223 @@
+% ===== 原书 p.23 =====
+\section{指标定理的证明}
+
+\subsection{拓扑指标的公理}
+
+由拓扑指标的构造立即看出，它满足下面两条初等公理：
+
+\noindent\textbf{公理 A}\quad 若 $X$ 是一点，则 $\tind_{\pt}:\Z\to\Z$ 是恒等映射。
+
+\noindent\textbf{公理 B}\quad $\tind$ 与同态 $i_!$ 交换。
+
+事实上，后面将看到，这两条公理唯一刻画了拓扑指标。
+
+\begin{definition}
+对每个紧流形 $X$ 给定一族同态 $\operatorname{ind}_X:K(TX)\to\Z$。若它关于微分同胚是函子式的，就称为一个指标函数（index function）。换言之，若 $f:X\to Y$ 是微分同胚，则对一切 $y\in K(TY)$ 都有 $\operatorname{ind}_Xf^*y=\operatorname{ind}_Yy$，其中 $f^*:K(TY)\to K(TX)$ 是由 $f$ 到切丛的延拓诱导的映射。
+\end{definition}
+
+\begin{proposition}
+若 $\operatorname{ind}$ 是满足上述公理 A 与公理 B 的指标函数，则 $\operatorname{ind}=\tind$。
+\end{proposition}
+
+\begin{proof}
+对任意紧流形 $X$，取嵌入 $i:X\to\R^m$，并令 $j:\pt\to\R^m$ 为原点的包含映射。由公理 A 可知下图交换：
+\[
+\begin{tikzcd}
+K(TX) \arrow[r,"i_!"] \arrow[dr,"\operatorname{ind}"']
+  & K(T\R^m) \arrow[r,"j_!^{-1}"] & K(T\pt) \arrow[dl,"\operatorname{ind}"] \\
+& \Z & {}
+\end{tikzcd}
+\]
+于是得到
+\[
+\operatorname{ind}_X=\operatorname{ind}_{\pt}\circ j_!^{-1}\circ i_!
+=j_!^{-1}\circ i_!=\tind_X.
+\]
+\end{proof}
+
+\transnote{$j_!^{-1}$ 之所以存在，是因为 $T\R^m$ 可缩，$K(T\R^m)$ 由原点附近生成，$j_!$ 从 $K(T\pt)$ 到 $K(T\R^m)$ 恰好是同构。公理 A 把单点上的值钉死，公理 B 让推前可以穿过 $\tind$；两条合起来，任何 $X$ 上的 $\tind$ 都由嵌入与单点决定。}
+
+Atiyah--Singer 指标定理的证明方向现在清楚了。我们想构造一个解析指标，在象征层面上由 $\aind=\Ind\circ\sigma^{-1}$ 给出：把每个元素 $x\in K(TX)$ 映到某个象征为 $x$ 的椭圆算子的指标。于是指标定理归结为证明拓扑指标与解析指标相等，为此只需对解析指标验证公理 A 与公理 B。此时公理 B 告诉我们：给定 $X$ 上的椭圆算子 $D$ 与包含映射 $i:X\to Y$，可以（在象征层面）构造
+% ===== 原书 p.24 =====
+$Y$ 上的椭圆算子 $i_!D$，它与 $D$ 有相同的指标。于是，既然任何流形都能嵌入 $\R^m$，指标问题就化归为 $m$ 球面 $S^m=(\R^m)^+$ 上椭圆算子的问题，而后者容易解决得多。可惜，正如 §2 讨论奇维流形时看到的，$K(TX)$ 的每个元素未必是某个椭圆偏微分算子的象征。为弥补这一点，需要把讨论推广到伪微分算子类。
+
+\subsection{伪微分算子}
+
+设 $f$ 是 $\R^n$ 上具有紧支撑的实值函数。把 $f$ 的 Fourier 变换定义为函数 $\hat f$：
+\[
+\hat f(\xi)=\frac{1}{(2\pi)^n}\int_{\R^n}f(x)e^{-i\langle x,\xi\rangle}dx.
+\]
+Fourier 反演公式把 $f$ 用 $\hat f$ 写成积分：
+\[
+f(x)=\int_{\R^n}\hat f(\xi)e^{i\langle x,\xi\rangle}.
+\]
+取 $f$ 的偏导数 $D_j=-i\partial/\partial x_j$，得到
+\[
+-i\frac{\partial}{\partial x_j}f(x)
+=\int_{\R^n}-i\frac{\partial}{\partial x_j}\hat f(\xi)e^{i\langle x,\xi\rangle}d\xi
+=\int_{\R^n}\xi_j\hat f(\xi)e^{i\langle x,\xi\rangle}d\xi.
+\]
+于是，Fourier 变换「把微分变成乘法」。特别地，若 $P$ 是 $\R^n$ 上的偏微分算子，则有
+\[
+Pf(x)=\int_{\R^n}p(x,\xi)\hat f(\xi)e^{i\langle x,\xi\rangle}d\xi,
+\]
+其中 $p(x,\xi)$ 是 $\xi=(\xi_1,\ldots,\xi_n)$ 的多项式，其系数是 $x$ 的光滑实值函数。
+
+为看清 $P$ 与 $p(x,\xi)$ 的联系，可以写 $P=p(x,D)$，其中 $D=(-i\partial/\partial x_1,\ldots,-i\partial/\partial x_n)$。注意可以通过取交换子从算子 $P$「提取」多项式 $p(x,\xi)$：
+\[
+p(x,\xi)=e^{-i\langle x,\xi\rangle}Pe^{i\langle x,\xi\rangle}.
+\]
+跃迁到伪微分算子，发生在允许 $p(x,\xi)$ 不必是多项式的时候。此时只要求 $p(x,\xi)$ 满足适当的增长条件，并且能够定义象征 $\sigma(x,\xi)$。
+
+\begin{definition}
+从 $\R^n$ 上具有紧支撑的光滑函数到 $\R^n$ 上光滑函数的线性算子 $P$，若由 $P=p(x,D)$ 给出，就称为 $m$ 阶\textbf{伪微分算子}（pseudo-differential operator），其中 $p(x,\xi)$ 是满足增长条件
+\[
+\big|D_x^\beta D_\xi^\alpha p(x,\xi)\big|\le C_{\alpha,\beta}\big(1+|\xi|\big)^{m-|\alpha|}
+\]
+的光滑函数。\footnote{这些增长条件允许在积分号下求导。}
+\end{definition}
+
+% ===== 原书 p.25 =====
+其中对每个多重指标 $\alpha$、$\beta$ 有正常数 $C_{\alpha,\beta}$。这里记 $|\alpha|=\alpha_1+\cdots+\alpha_n$，$D_\xi^\alpha=(\partial/\partial\xi_1)^{\alpha_1}\cdots\allowbreak(\partial/\partial\xi_n)^{\alpha_n}$。还要求对一切 $x\in\R^n$ 与 $\xi\neq 0$，极限
+\[
+\sigma_m(x,\xi)=\lim_{\lambda\to\infty}\frac{p(x,\lambda\xi)}{\lambda^m}
+\]
+存在；$\sigma_m(x,\xi)$ 称为 $P$ 的 $m$ 阶\textbf{象征}（symbol）。
+
+若 $P$ 是偏微分算子，则对应的多项式 $p(x,\xi)$ 满足增长条件，$\sigma_m(x,\xi)$ 等于去掉 $p(x,\xi)$ 中除最高阶项外所有项后定义的象征。还要注意，阶 $m$ 不必是整数。可以取 $m=\frac12$，例如 $P=p(x,D)$，其中 $p(x,\xi)=a_1(x)\sqrt{\xi_1}+\cdots+a_n(x)\sqrt{\xi_n}$；也可以考虑 $m\le 0$ 的算子。无论如何，$P$ 的象征 $\sigma_m(x,\xi)$ 都有性质
+\[
+\sigma_m(x,\lambda\xi)=\lambda^m\sigma_m(x,\lambda\xi)
+\quad\text{对一切实数 }\lambda>0,
+\]
+于是称 $\sigma_m(x,\xi)$ 为 $m$ 次\textbf{正齐次的}（positively homogeneous）。
+
+\transnote{原文此处印作 $\sigma_m(x,\lambda\xi)=\lambda^m\sigma_m(x,\lambda\xi)$，右端应为 $\sigma_m(x,\xi)$。极限定义 $\sigma_m(x,\xi)=\lim_{\lambda\to\infty}p(x,\lambda\xi)/\lambda^m$ 本身就迫使 $\sigma_m$ 关于 $\xi$ 正齐次，读者按此理解即可。译文照排原文。}
+
+这个定义带来一个问题：函数 $e^{i\langle x,\xi\rangle}$ 没有紧支撑，因此上面那个交换子无法取。为补救，把定义局部化：只要求对每个紧支撑函数 $f$，存在满足上述增长条件的光滑函数 $p_f(x,\xi)$，使得对任意函数 $u$（支撑任意）都有
+\[
+P(f\cdot u)=p_f(x,D)u.
+\]
+此时可以取交换子
+\[
+p_f(x,\xi)=e^{-\langle x,\xi\rangle}P\big(f\cdot e^{i\langle x,\xi\rangle}\big).
+\]
+于是可以这样定义 $P$ 的象征：$\sigma(x,\xi)=\sigma_f(x,\xi)$，其中 $f$ 是紧支撑函数，且在 $x$ 的某个邻域内等于 $1$。结果表明这个定义与 $f$ 的选取无关。
+
+我们的定义容易推广到向量值函数 $f:\R^m\to\R^n$ 上的伪微分算子；此时多项式 $p_f(x,\xi)$ 与象征 $\sigma(x,\xi)$ 是 $x$ 与 $\xi$ 的矩阵值函数。若伪微分算子 $P$ 的象征 $\sigma(x,\xi)$ 对一切 $x$ 与 $\xi\neq0$ 都可逆，就称 $P$ 是\textbf{椭圆的}（elliptic）。现在可以把伪微分算子的概念推广到流形。
+
+\begin{definition}
+设 $E$ 与 $F$ 是流形 $X$ 上的复向量丛。若线性算子 $P:\Gamma_cE\to\Gamma F$ 满足：存在 $X$ 的坐标卡覆盖 $\{U_u\}$，在其上 $E$、$F$、$TX$ 都平凡，且把 $P$ 限制到 $U_i$ 中紧支撑函数得到的算子 $P_i$ 是 $\R^n$ 上的 $m$ 阶伪微分算子（$n=\dim X$），则称 $P$ 是 $X$ 上 $m$ 阶伪微分算子。\footnote{这里用记号 $\Gamma_c$ 表示紧支撑光滑截面的空间。}
+\end{definition}
+
+于是可以定义整体象征 $\sigma(P):\pi^*E\to\pi^*F$。若伪微分算子 $P$ 的象征 $\sigma(P)$ 在零截面之外可逆，就称 $P$ 是椭圆的。如前，若 $X$ 紧，象征给出元素 $\sigma(P)\in K(TX)$。事实上，$K(TX)$ 的任一元素都可以这样得到。在证明这一点之前，先算一个例子。
+
+% ===== 原书 p.26 =====
+\begin{example}
+§2 已证明，奇维流形上任意椭圆偏微分算子的指标为零。特别地，圆周上这样的算子指标为零。现在构造圆周上一个指标为 $-1$ 的椭圆伪微分算子。考虑圆周 $S^1=\R/2\pi\Z$ 上复值函数的线性算子 $P$，它按 Fourier 级数展开给出：
+\[
+P(e^{ik\theta})=
+\begin{cases}
+e^{ik\theta} & k\ge 0,\\
+0 & k<0.
+\end{cases}
+\]
+于是 $P$ 实际上杀掉了 Fourier 级数展开中 $k<0$ 的部分。给定任一在区间 $0<\theta<2\pi$ 中紧支撑的复值函数 $f$，得到
+\[
+\begin{aligned}
+p_f(\theta,\xi)&=e^{-i\theta\xi}P\big(f\cdot e^{i\theta\xi}\big)
+=e^{-i\theta\xi}P\Big(\sum_{-\infty}^{\infty}\hat f(k)e^{ik\theta}\cdot e^{i\theta\xi}\Big)\\
+&=e^{-i\theta\xi}P\Big(\sum_{-\infty}^{\infty}\hat f(k-\xi)e^{ik\theta}\Big)
+=\sigma_0^{\infty}\hat f(k-\xi)e^{i\theta(k-\xi)},
+\end{aligned}
+\]
+
+\transnote{此式最右端原书印作 $\sigma_0^{\infty}\hat f(k-\xi)e^{i\theta(k-\xi)}$，其中 $\sigma_0^{\infty}$ 应是求和号 $\sum_{k=0}^{\infty}$。否则 $k$ 没有约束，这一步也与前一行的 $\sum_{-\infty}^{\infty}$ 不衔接。译文照排原文，理解时按求和处理。}
+
+取极限即见
+\[
+p_f(\theta,\xi)\to
+\begin{cases}
+f(\theta) & \text{当 }\xi\to+\infty,\\
+0 & \text{当 }\xi\to-\infty.
+\end{cases}
+\]
+因此 $p_f(\theta,\xi)$ 满足零阶伪微分算子的增长条件，整体零阶象征为
+\[
+\sigma_p(\theta,\xi)=
+\begin{cases}
+1 & \xi>0,\\
+0 & \xi<0.
+\end{cases}
+\]
+这个算子不是椭圆的，但算子 $A=e^{i\theta}P+(1-P)$ 也是零阶伪微分算子；由于它的象征是
+\[
+\sigma_A(\theta,\xi)=
+\begin{cases}
+e^{i\theta} & \xi>0,\\
+1 & \xi<0,
+\end{cases}
+\]
+可见 $A$ 是椭圆的。此外，按 Fourier 级数展开有
+\[
+A(e^{ik\theta})=
+\begin{cases}
+e^{i(k+1)\theta} & k\ge 0,\\
+e^{ik\theta} & k<0.
+\end{cases}
+\]
+于是 $A$ 把 Fourier 级数中 $k\ge 0$ 的部分挪动一项；又因 $\Ker A$ 为空，而 $\Coker A$ 可以等同于常数函数空间，所以 $\Ind A=-1$。这个例子在 Bott 周期性定理证明中的推广见附录。
+\end{example}
+
+\transnote{算子 $A$ 的象征在 $\xi>0$ 处取 $e^{i\theta}$、在 $\xi<0$ 处取 $1$，两个分支都非零，故 $A$ 椭圆。微分算子的象征在 $\xi$ 与 $-\xi$ 处只差一个 $\pm$ 号，做不出两个分支各取一个可逆值的效果；奇维流形上的指标定理因此必须放下微分算子，改用伪微分算子。}
+
+\subsection{解析指标的构造}
+
+\begin{claim}
+给定 $a\in K(TX)$，其中 $X$ 是紧流形，则存在 $X$ 上任一给定阶 $m$ 的椭圆伪微分算子 $P$，使得 $\sigma(P)=a$。
+\end{claim}
+
+\begin{proof}
+已知 $a$ 可以由长度为一的复形
+\[
+0\to\pi^*E\xrightarrow{\alpha_m}\pi^*F\to 0,
+\]
+表示，
+% ===== 原书 p.27 =====
+其中 $\alpha_m$ 是 $m$ 次齐次的。取使 $E$、$F$、$TX$ 平凡的局部坐标，令 $p(x,\xi)=\varphi(\xi)\alpha_m(x,\xi)$，其中 $\varphi(\xi)$ 是光滑函数，在原点的邻域内为零，其余各处为 $1$。这个修正项是必要的：当 $m\le 0$ 时，$\alpha_m$ 可能在零截面处不连续。于是直接看出，$P=p(x,D)$ 是 $X$ 上 $m$ 阶伪微分算子，其象征恰为 $\alpha_m$。从而 $P$ 是椭圆算子，且 $\sigma(P)=a$。
+\end{proof}
+
+既然已说明象征映射是满射，我们还想说明象征相同的两个椭圆算子指标相同（这样就能说象征映射是「伪单射」）。在证明这一点之前，必须先确认椭圆伪微分算子的指标确有定义。所幸，若 $P$ 是椭圆伪微分算子，则由分析可知 $\Ker P$ 与 $\Coker P$ 都有限维\footnote{这远不是显然的结论。关于 Sobolev 空间的讨论见 [10, \S5]。若仍不放心，可以与做分析的人讨论这个问题。}，于是可以把指标定义为
+\[
+\Ind P=\dim\Ker P-\dim\Coker P.
+\]
+还知道 $m$ 阶椭圆伪微分算子的指标只依赖象征在同阶象征空间中的同伦类。现在可以证明：
+
+\begin{claim}
+若 $P$ 与 $P'$ 是紧流形 $X$ 上两个椭圆伪微分算子，且 $\sigma(P)=\sigma(P')\in K(TX)$，则 $\Ind P=\Ind P'$。
+\end{claim}
+
+\begin{proof}
+设 $\sigma(P)$ 与 $\sigma(P')$ 分别由复形
+\[
+0\to\pi^*E\xrightarrow{\sigma_m}\pi^*F\to 0,
+\qquad
+0\to\pi^*E'\xrightarrow{\sigma'_n}\pi^*F'\to 0
+\]
+给出，其中 $\sigma_m$ 与 $\sigma'_n$ 分别是 $P$ 与 $P'$ 的象征。先设 $P$ 与 $P'$ 同为 $m$ 阶。既然 $\sigma(P)=\sigma(P')$，可见这两个复形或者同伦等价，或者相差一个支撑为空的复形。若同伦，则 $\sigma_m$ 与 $\sigma'_m$ 通过 $m$ 次齐次同态同伦，由此得到 $\Ind P=\Ind P'$。若二者相差形如
+\[
+0\to G\xrightarrow{\beta}G\to 0
+\]
+的复形，其中 $\beta$ 是同构；由于 $\beta$ 也是 $m$ 次齐次的，当 $m\neq0$ 时必有 $\dim G=0$。当 $m=0$ 时，$\beta$ 关于 $\xi$ 为常数，于是 $P$ 与 $P'$ 相差算子 $Qu=\beta(x,0)u$，且 $\Ind Q=0$。同样得到 $\Ind P=\Ind P'$。
+
+现设 $P$ 是 $m$ 阶而 $P'$ 是 $n$ 阶，$m\neq n$。由上面的论证，不妨设 $E=E'$、$F=F'$，且 $\sigma_m=\sigma'_n$ 在 $S(X)$ 上成立。构造映射 $\rho=\sigma'_n\sigma_m^{-1}$，可见 $\rho$ 是 $n-m$ 次齐次的，且在 $S(X)$ 上是恒等映射。于是 $\rho$ 自伴；由此 $P$ 与 $P'$ 相差一个相伴的自伴算子 $R$。由于 $R$ 自伴，有 $\Ind R=\dim\Ker R-\dim\Ker R^*=0$，从而 $\Ind P=\Ind P'$。
+\end{proof}
+
+\transnote{$R$ 自伴时 $\Coker R\cong\Ker R^*=\Ker R$，故 $\Ind R=\dim\Ker R-\dim\Ker R^*=0$。这一步默许 $\Ker R$ 与 $\Ker R^*$ 都有限维，依据是脚注里引用的分析结论。}
+
+\begin{definition}
+\textbf{解析指标}（analytical index）是映射 $\aind:K(TX)\to\Z$，由
+\[
+\aind:x\mapsto\Ind P,\qquad\text{其中 }\sigma(P)=x
+\]
+给出。
+\end{definition}

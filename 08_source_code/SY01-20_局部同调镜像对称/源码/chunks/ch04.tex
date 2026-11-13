@@ -1,0 +1,216 @@
+% ch04 译文：原文 §3c–3d（main.tex 第 811–1054 行）
+\subsection{群作用与轨道范畴}
+本节对离散群 $G$ 在一个 $A_{\infty}$-范畴 $\mathcal{A}$ 上的作用定义相应的轨道范畴。当 $G=\mathbb{Z}$ 时，它与 \cite{FKQ24} 的特殊情形一致。本节假定 $G$ 要么是有限群，要么是有限秩的自由交换群。
+\begin{dfn}[$A_{\infty}$-范畴上的群作用]
+    $\mathcal{A}$ 上的一个\emph{作用}是指：对每个 $g\in G$ 指定 $A_{\infty}$-范畴的一个拟等价 $\{g^i\}_{i\geq 0}\colon\mathcal{A}\to\mathcal{A}$，其中 \[
+    g^i\colon\hom_{\mathcal{A}} (L_{i-1}, L_i)\otimes\dotsb\otimes\hom_{\mathcal{A}} (L_0, L_1)\to\hom_{\mathcal{A}} (g(L_0),g(L_i))[i-1]
+    \] 构成 $\mathcal{A}$ 的一个 $A_{\infty}$-自函子。若 $g^k =0$（$k\geq 2$），则称该 $G$-作用是\emph{严格}的。
+\end{dfn}
+
+\begin{yizhu}[严格作用]
+严格作用意味着每个 $g$ 的 $A_{\infty}$-自函子只有 $g^0$ 与 $g^1$ 可能非零：$g^0$ 给出对象上的映射 $L\mapsto g(L)$，$g^1$ 给出态射上的链映射 $\hom_{\mathcal{A}}(L,L')\to\hom_{\mathcal{A}}(g(L),g(L'))$，于是它其实是一个普通的 dg 函子，只是被要求为拟等价。换言之，「严格」把无穷多个高阶分量 $g^2,g^3,\dots$ 全部砍掉，代价是群作用必须逐点由真正的函子给出；后文轨道范畴的定义与 $\mu^d_{\mathcal{A}/G}$ 的显式公式都只用到 $g^0$ 与 $g^1$，正依赖于此。当 $\mathcal{A}$ 本身是 dg 范畴时，这与「$G$ 通过 dg 函子作用在 $\mathcal{A}$ 上」是同一件事。
+\end{yizhu}
+
+\begin{dfn}\label{defn:Ainf-orbit-category}
+% [原文 p.18]
+    给定带严格 $G$-作用的 $A_{\infty}$-范畴 $\mathcal{A}$，$\mathcal{A}$ 在作用 $G$ 下的\emph{轨道范畴}记作 $\mathcal{A}/G$，它是这样一个范畴：对象为 $\Obj\mathcal{A}$，态射空间为\[
+    \hom_{\mathcal{A}/G} (L,K)\coloneqq\bigoplus_{g\in G}\hom_{\mathcal{A}} (g(L),(K)).
+    \]
+    给定对象元组 $L_0, L_1,\dotsb ,L_d$ 与选定的态射 $a_i\in\hom_{\mathcal{A}/G} (L_i, L_{i+1})$，$\mathcal{A}/G$ 上的 $A_{\infty}$-结构 \begin{align*}
+    \mu_{\mathcal{A}/G}^d &\colon\hom_{\mathcal{A}} ((g_1\dotsb g_d)(L_{d-1}),(g_1\dotsb g_{d-1})(L_d))\otimes\dotsb\otimes\hom_{\mathcal{A}} (g_1 (L_0),L_1)\\
+    &\to\hom_{\mathcal{A}} ((g_1\dotsb g_d)(L_0),L_d)[2-d]
+    \end{align*}
+    由下式显式给出：
+    \begin{align*}
+        \mu_{\mathcal{A}/G}^d (a_{d-1}\otimes\dotsb\otimes a_0)&=\mu_{\mathcal{A}}^d ((g_1\dotsb g_d) (a_{d-1})\otimes\dotsb\otimes g_1 (a_1)\otimes a_0),
+    \end{align*}
+    其中 $a_i\in\hom_{\mathcal{A}} (L_i,g_i (L_{i+1}))$ 为 $G$-齐次元，并作 $d$-线性延拓。
+\end{dfn}
+dg 范畴与普通范畴的对应版本也类似，并且我们有
+\begin{lmm}
+    $\mathcal{A}/G$ 是 $A_{\infty}$-范畴。
+\end{lmm}
+\begin{proof}
+    我们直接验证
+\begin{align*}
+        \sum_{k,l,j}&\mu^{j+k}_{\mathcal{A}}(g_1\dotsb g_j h_1\dotsb h_l g_{j+1}\dotsb g_{j+k-1} (a_{j+k+l})\otimes\dotsb\otimes g_1\dotsb g_j h_1\dotsb h_l (p_{j+l+1})\\
+        &\otimes g_1\dotsb g_j\mu^l_{\mathcal{A}}(h_1\dotsb h_{l-1} (a_{j+l})\otimes\dotsb\otimes a_{j+1})\otimes g_1\dotsb g_{j-1} (a_j)\otimes\dotsb\otimes a_1)\\
+        =&\sum_{k,l,j}\mu_{\mathcal{A}}^{j+k}(g_1\dotsb g_j h_1\dotsb h_l g_{j+1}\dotsb g_{j+k-1} (a_{j+k+l})\otimes\dotsb\otimes g_1\dotsb g_j h_1\dotsb h_l (p_{j+l+1})\\
+        &\otimes\mu^l_{\mathcal{A}}\left(\mathbf{g}(h_1\dotsb h_l(a_{j+l})\otimes\dotsb\otimes\mathbf{g} h_1 (a_{j+1}))\right)\otimes g_1\dotsb g_{j-1} (a_j)\otimes\dotsb\otimes a_1)=0
+\end{align*}
+    其中 $\mathbf{g}=g_1\dotsb g_j$，这里用到了 $\mu_{\mathcal{A}}^{\bullet}$ 的 Maurer--Cartan 方程。
+\end{proof}
+
+\begin{yizhu}[证明中的笔误与读法]
+上面的验证性计算按原文照排，但原文有几处明显的笔误：$p_{j+l+1}$ 在全文中没有定义，从上下文看应为 $a_{j+l+1}$；第二行末的 $\mathbf{g}$ 与 $\mu^l_{\mathcal{A}}$ 的括号配对也略有多余。读者不必逐字核对这串下标，只需把握论证思路：把 $\mu^d_{\mathcal{A}/G}$ 的定义展开成 $\mu^{\bullet}_{\mathcal{A}}$ 与各 $g_i^1$ 的复合，再对 $\mathcal{A}$ 使用 Maurer--Cartan 方程，两边即相消为零。这正是「用 $\mathcal{A}$ 的 $A_{\infty}$ 结构逐项搬运到 $\mathcal{A}/G$」的标准操作。
+\end{yizhu}
+
+\begin{conceptbox}{轨道范畴}
+轨道范畴的直觉是「把群作用吸收进态射」：对象一个都不少，但两个对象 $L$、$K$ 之间除了原来的 $\hom_{\mathcal{A}}(L,K)$，还允许先经 $g$ 把 $L$ 搬过去，故态射空间取 $\bigoplus_{g\in G}\hom_{\mathcal{A}}(g(L),K)$；复合时两个群元素相乘，$\mu^d_{\mathcal{A}/G}$ 因此由 $\mu^d_{\mathcal{A}}$ 与各 $g_i^1$ 拼出。Keller 的三角轨道范畴在自等价 $F$ 不可逆时必须对 $F$ 作局部化才得到三角结构，而本文只处理严格作用、且 $G=\mathbb{Z}$ 时 $1$ 诱导的函子已自然可逆，所以无需局部化（见下文）。这样得到的 $\mathcal{A}/G$ 是 A 侧「商掉 $G$」的标准模型，也是 §4 中 $\mathcal{W}(X)/G$ 的来源。
+\par\smallskip\noindent{\footnotesize 参考：Keller, \emph{On triangulated orbit categories}, arXiv:math/0610212；\cite{FKQ24}。}
+\end{conceptbox}
+
+注意，当 $\mathcal{A}$ 是 dg 范畴（即 $\mu_{\mathcal{A}}^d=0$，$d\geq 3$）且 $G\curvearrowright\mathcal{A}$ 为严格作用时，轨道范畴 $\mathcal{A}/\mathbb{Z}$ 正是 Fan--Keller--Qiu \cite{FKQ24} 意义下的 \emph{dg 强化轨道范畴}（dg enhanced orbit category）。此时由 $1\in\mathbb{Z}$ 诱导的函子自然可逆，因此 \cite{FKQ24} 中的自然变换 $q\colon Q_{\mathbb{N}}F\to Q_{\mathbb{N}}$ 是函子的等价，故不需要作任何局部化。\par
+与 \cite{FKQ24} 一样，存在一个函子 $\mathcal{A}\to\mathcal{A}/G$：它在对象集上是恒等映射，在态射上由嵌入 $\hom_{\mathcal{A}} (X,Y)\hookrightarrow\hom_{\mathcal{A}/G} (X,Y)=\displaystyle\bigoplus_{g\in G}\hom_{\mathcal{A}} (X,g^0(Y))$ 给出，落在 $g=\id$ 的那个分量里。不难验证这定义了一个严格的 $A_{\infty}$-函子 $Q_G\colon\mathcal{A}\to\mathcal{A}/G$。
+\begin{exmp}
+设 $\Lambda$ 是一个群，$\mathcal{C}$ 是 $\field$-线性范畴，$\phi:\Lambda\rightarrow\Aut_{\str}(\mathcal{C})$ 是 $\mathcal{C}$ 上的严格 $\Lambda$-作用。它按显然的方式诱导 dg 范畴 $\Ch(\mathcal{C})_{\dg}$ 上的严格 $\Lambda$-作用 $\phi:\Lambda\rightarrow\Aut_{\str}(\Ch(\mathcal{C})_{\dg})$。
+\end{exmp}
+\subsection{dg 范畴的张量积}
+对 $A_{\infty}$-范畴 $\mathcal{A}$ 与 $\mathcal{B}$，其张量积 $\mathcal{A}\otimes\mathcal{B}$ 最近由 Ornaghi \cite{Ornaghi25} 写出，可惜形式非常复杂。但当 $\mathcal{A}$ 与 $\mathcal{B}$ 都是 dg 范畴时，有一个可以写下来的更简单公式，它正是 Ornaghi 构造的特殊情形；我们在下面的定义中回顾它。
+\begin{dfn}
+设 $\mathcal{A}$、$\mathcal{B}$ 为 dg 范畴，$\Lambda$ 为交换群，$\phi:\Lambda\rightarrow\Aut_{\str}(\mathcal{A})$、$\psi:\Lambda\rightarrow\Aut_{\str}(\mathcal{B})$ 分别为 $\mathcal{A}$、$\mathcal{B}$ 上的严格 $\Lambda$-作用。$\mathcal{A}$ 与 $\mathcal{B}$ 关于 $\Lambda$ 的作用 $\phi$、$\psi$ 的\emph{扭张量积} $\mathcal{A}\underset{\Lambda}{\otimes}\mathcal{B}$ 是这样一个 dg 范畴：
+
+\begin{itemize}
+\item
+$$
+\Ob\left(\mathcal{A}\underset{\Lambda}{\otimes}\mathcal{B}\right)
+:=
+\Ob(\mathcal{A})\times \Ob(\mathcal{B}).
+$$
+
+\item
+两个对象 $(L,R)$ 与 $(L',R')$ 之间的\emph{dg-态射空间}为
+$$
+\hom_{\mathcal{A}\underset{\Lambda}{\otimes}\mathcal{B}}
+\left((L,R),(L',R')\right)
+:=
+\displaystyle\bigoplus_{\lambda\in\Lambda}
+\left(
+\hom_{\mathcal{A}}(\phi_{\lambda}(L),L')
+\underset{\field}{\otimes}
+\hom_{\mathcal{B}}(\psi_{\lambda}(R),R')
+\right)
+$$
+它是 $\field$-向量空间的上链复形。
+% [原文 p.19]
+具体地，微分由
+$$
+d_{\mathcal{A}\underset{\Lambda}{\otimes}\mathcal{B}}
+(f\otimes g)
+=
+d_{\mathcal{A}}f \otimes g
++
+(-1)^{|f|}
+f \otimes d_{\mathcal{B}}g.
+$$
+给出。
+
+\item
+$\Lambda$-齐次 dg-态射
+$$
+f\otimes g
+\in
+\hom_{\mathcal{A}}(\phi_{\lambda}(L),L')
+\underset{\field}{\otimes}
+\hom_{\mathcal{B}}(\psi_{\lambda}(R),R')
+\subseteq
+\hom_{\mathcal{A}\underset{\Lambda}{\otimes}\mathcal{B}}
+\left((L,R),(L',R')\right)
+$$
+与
+$$
+f'\otimes g'
+\in
+\hom_{\mathcal{A}}(\phi_{\lambda'}(L'),L'')
+\underset{\field}{\otimes}
+\hom_{\mathcal{B}}(\psi_{\lambda'}(R'),R'')
+\subseteq
+\hom_{\mathcal{A}\underset{\Lambda}{\otimes}\mathcal{B}}
+\left((L',R'),(L'',R'')\right)
+$$
+的复合定义为
+$$
+(f\otimes g)\comp(f'\otimes g')
+:=
+(-1)^{|g||f'|}
+(\phi_{\lambda'}(f)\comp f')
+\otimes
+(\psi_{\lambda'}(g)\comp g')
+$$
+$$
+\in
+\hom_{\mathcal{A}}(\phi_{\lambda\lambda'}(L),L'')
+\underset{\field}{\otimes}
+\hom_{\mathcal{B}}(\psi_{\lambda\lambda'}(R),R'')
+\subseteq
+\hom_{\mathcal{A}\underset{\Lambda}{\otimes}\mathcal{B}}
+\left((L,R),(L'',R'')\right),
+$$
+再按 $\field$-线性延拓到整个 dg-态射空间。
+\end{itemize}
+当 $\Lambda=\{1\}$ 且 $\phi=\id$ 时，我们直接写 $\mathcal{A}\otimes_1\mathcal{B} =\mathcal{A}\otimes\mathcal{B}$，并称之为 $\mathcal{A}$ 与 $\mathcal{B}$ 的\emph{张量积}。
+\end{dfn}
+
+\begin{yizhu}[扭张量积的符号与复合次序]
+扭张量积把 $\Lambda$ 的作用编码进张量分量：第 $\lambda$ 分量里的元素是 $\phi_\lambda(L)\to L'$ 与 $\psi_\lambda(R)\to R'$ 的张量，因此 $f\otimes g$ 的总次数为 $|f|+|g|$，而微分 $d(f\otimes g)=df\otimes g+(-1)^{|f|}f\otimes dg$ 就是张量复形的标准 Koszul 微分。复合公式额外带一个 $(-1)^{|g||f'|}$：按 $\comp$ 的约定，复合是从右往左读的，要把 $g$ 移过 $f'$ 才能让 $\mathcal{A}$ 侧与 $\mathcal{B}$ 侧分别相乘，Koszul 符号由此而来。验证时先用 $\Lambda$-齐次元计算，再按线性性延拓即可。当 $\Lambda=\{1\}$ 时 $\phi_\lambda$、$\psi_\lambda$ 全为恒等，符号 $(-1)^{|g||f'|}$ 也消失，公式退化为普通张量积的复合。
+\end{yizhu}
+
+\begin{dfn}
+设 $\mathcal{A}$、$\mathcal{B}$、$\mathcal{A}'$、$\mathcal{B}'$ 为 dg 范畴，$\phi:\mathcal{A}\rightarrow\mathcal{A}'$、$\psi:\mathcal{B}\rightarrow\mathcal{B}'$ 为 dg 函子。$\phi$ 与 $\psi$ 的\emph{张量积} $\phi\otimes\psi\colon\mathcal{A}\otimes\mathcal{B}\rightarrow\mathcal{A}'\otimes\mathcal{B}'$ 是这样一个 dg 函子：在对象上为
+$
+(L,R)\mapsto (\phi(L),\psi(R)),
+$
+在态射上为
+$
+f\otimes g \mapsto \phi(f)\otimes\psi(g).
+$
+\end{dfn}
+下面的命题可以直接验证。
+\begin{prp}\label{prp:twisted-tensor-equal-quotient}
+设 $\mathcal{A}$、$\mathcal{B}$ 为 dg 范畴，$\phi:\Lambda\rightarrow\Aut_{\str}(\mathcal{A})$、$\psi:\Lambda\rightarrow\Aut_{\str}(\mathcal{B})$ 分别为 $\mathcal{A}$、$\mathcal{B}$ 上的严格 $\Lambda$-作用。考虑 $\mathcal{A}\otimes\mathcal{B}$ 上的严格 $\Lambda$-作用 $\phi\otimes \psi:\Lambda\rightarrow\Aut_{\str}(\mathcal{A}\otimes\mathcal{B})$，它对每个 $\lambda\in\Lambda$ 由 $(\phi\otimes\psi)_{\lambda}:=\phi_{\lambda}\otimes \psi_{\lambda}\colon\mathcal{A}\otimes\mathcal{B}\rightarrow\mathcal{A}\otimes\mathcal{B}$ 定义。
+
+那么 $\mathcal{A}$ 与 $\mathcal{B}$ 关于 $\phi$、$\psi$ 的扭张量积同构于 $\mathcal{A}\otimes\mathcal{B}$ 关于 $\phi\otimes\psi$ 的轨道范畴：
+$$
+\mathcal{A}\underset{\Lambda}{\otimes}\mathcal{B}
+\cong
+(\mathcal{A}\otimes\mathcal{B})/\Lambda.
+$$
+\end{prp}
+
+\begin{proof}
+两个范畴的对象类都恰是 $\Ob(\mathcal{A})\times \Ob(\mathcal{B})$。
+% [原文 p.20]
+对任意两个对象 $(L,R)$ 与 $(L',R')$，扭张量积中的态射空间为
+$$
+\hom_{\mathcal{A}\underset{\Lambda}{\otimes}\mathcal{B}}((L,R),(L',R'))
+=
+\bigoplus_{\lambda\in\Lambda}
+\left(
+\hom_{\mathcal{A}}(\phi_{\lambda}(L),L')
+\underset{\field}{\otimes}
+\hom_{\mathcal{B}}(\psi_{\lambda}(R),R')
+\right).
+$$
+另一方面，按轨道范畴的定义，$(\mathcal{A}\otimes\mathcal{B})/\Lambda$ 中的态射空间为
+\begin{align*}
+\hom_{(\mathcal{A}\otimes\mathcal{B})/\Lambda}((L,R),(L',R'))
+&=
+\bigoplus_{\lambda\in\Lambda}
+\hom_{\mathcal{A}\otimes\mathcal{B}}((\phi\otimes\psi)_\lambda(L,R), (L',R'))
+\\
+&=
+\bigoplus_{\lambda\in\Lambda}
+\hom_{\mathcal{A}\otimes\mathcal{B}}((\phi_\lambda(L),\psi_\lambda(R)), (L',R'))
+\\
+&=
+\bigoplus_{\lambda\in\Lambda}
+\left(
+\hom_{\mathcal{A}}(\phi_{\lambda}(L),L')
+\underset{\field}{\otimes}
+\hom_{\mathcal{B}}(\psi_{\lambda}(R),R')
+\right).
+\end{align*}
+作为 $\field$-向量空间的上链复形，这两个空间完全一致。进一步，轨道范畴 $(\mathcal{A}\otimes\mathcal{B})/\Lambda$ 中的复合与扭张量积中定义的复合规则也一致。于是，在对象与态射上取恒等映射即给出 dg 范畴的同构。
+\end{proof}
+
+\begin{conceptbox}{扭张量积}
+普通张量积 $\mathcal{A}\otimes\mathcal{B}$ 把两边的 Hom 复形直接张起来；若同一个群 $\Lambda$ 同时作用在两边，想让 $\lambda$ 的作用在两侧「同步」发生，就把第 $\lambda$ 分量的源改成 $(\phi_\lambda(L),\psi_\lambda(R))$，这正是 $\hom_{\mathcal{A}}(\phi_\lambda(L),L')\otimes\hom_{\mathcal{B}}(\psi_\lambda(R),R')$ 的来历。这样得到的范畴恰是 $\mathcal{A}\otimes\mathcal{B}$ 关于对角作用 $\phi\otimes\psi$ 的轨道范畴，于是「等变的张量结构」被翻译成纯粹的 dg 运算，不必再附加额外数据（命题 \ref{prp:twisted-tensor-equal-quotient}）。当 $\Lambda=\{1\}$ 时它退化为普通张量积；本文用它把沿 $\Lambda$ 的等变信息一次性打包进一个 dg 范畴，供后续 Künneth 型论证使用。
+\par\smallskip\noindent{\footnotesize 参考：Ornaghi \cite{Ornaghi25}；Keller, \emph{On differential graded categories}, arXiv:math/0601185。}
+\end{conceptbox}
+
+\begin{keytakeaways}
+\item 语言层面：$A_{\infty}$-范畴（$\mu^1$ 是微分，$\mu^2$ 是复合，$\mu^{\geq 3}$ 记录同伦结合律）与 dg 范畴（$\mu^{\geq 3}=0$）统一刻画了 A/B 两侧的范畴；完美模 $\Perf\mathcal{A}$ 把 Yoneda 像作预三角闭包并补齐直和项，几何上对应向量丛的复形。
+\item 轨道范畴 $\mathcal{A}/G$：对象保持不变，态射取 $\bigoplus_{g\in G}\hom_{\mathcal{A}}(g(L),K)$，群作用被吸收进态射；严格作用保证 $\mu^d_{\mathcal{A}/G}$ 只由 $\mu^d_{\mathcal{A}}$ 与各 $g_i^1$ 拼出，$G=\mathbb{Z}$ 时与 \cite{FKQ24} 的 dg 强化轨道范畴一致，且无需局部化。
+\item 扭张量积 $\mathcal{A}\underset{\Lambda}{\otimes}\mathcal{B}$：用 $\lambda\in\Lambda$ 给张量分量加权，$\Lambda=\{1\}$ 时退化为普通张量积；命题 \ref{prp:twisted-tensor-equal-quotient} 把它等同于 $(\mathcal{A}\otimes\mathcal{B})/\Lambda$，使等变结构与纯 dg 运算可以互相翻译。
+\item 这些工具马上在下一节派上用场：商扇形的包裹 Fukaya 范畴正是轨道范畴 $\mathcal{W}(X)/G$。
+\end{keytakeaways}

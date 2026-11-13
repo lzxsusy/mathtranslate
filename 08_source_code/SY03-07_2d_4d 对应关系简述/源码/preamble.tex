@@ -1,0 +1,165 @@
+% =====================================================================
+%  Yuji Tachikawa, "A brief review of the 2d/4d correspondences"
+%  arXiv:1608.02964v5 (Contribution to "Localization techniques in
+%  quantum field theories", eds. Pestun & Zabzine) —— 中文译注本
+%
+%  编译：LuaLaTeX（本机 xdvipdfmx 不稳定，统一用 lualatex，编译 3 遍）
+%  用法：lualatex -interaction=nonstopmode -file-line-error main.tex  （×3）
+%        或直接跑 build.ps1（会镜像到 ASCII 目录再编译）
+%
+%  约定（详见 work/STYLE_GUIDE.md）：
+%   * 公式编号一律 \tag{} 复刻原文编号（如 (2.13)），与原文 137 条一一对应；
+%   * 图 1--13 为原文矢量图按 500 dpi 截取（figN.png），图注为译者所译；
+%   * % [Tutor Note: ...] 为译者批注，不进入排版，汇总见 译注汇总.md；
+%   * 章节编号由 \section/\subsection/\subsubsection 自动生成，与原文一致。
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[UTF8]{ctex}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage[a4paper,left=2.4cm,right=2.4cm,top=2.6cm,bottom=2.7cm]{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+\usepackage[hidelinks,unicode]{hyperref}
+\hypersetup{pdftitle={2d/4d 对应关系简述（中文译注本）},
+  pdfauthor={Yuji Tachikawa; 中译/批注: 本译本},
+  hypertexnames=false}
+
+\captionsetup{font=small,labelsep=quad}
+\setlength{\emergencystretch}{3em}
+\allowdisplaybreaks[1]
+\graphicspath{{figures/}{../figures/}}
+
+% ---------- 页眉 ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape A brief review of the 2d/4d correspondences}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ---------- 定理类环境（编号一律由原文手工给出） ----------
+\theoremstyle{plain}
+\newtheorem*{theorem*}{定理}
+\newtheorem*{proposition*}{命题}
+\newtheorem*{lemma*}{引理}
+\theoremstyle{definition}
+\newtheorem*{definition*}{定义}
+\newtheorem*{remark*}{注}
+
+% 原文的「Exercise x.y.」：粗体标签 + 斜体正文
+\newenvironment{exercise}[1]%
+  {\par\medskip\noindent\textbf{习题 #1.}\itshape\ }{\par\medskip}
+
+% 原文的灰色要点框
+\newtcolorbox{keybox}[1]{%
+  colback=black!5, colframe=black!55, colbacktitle=black!75, coltitle=white,
+  fonttitle=\bfseries\small, title={#1}, boxrule=0.6pt, arc=2pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt, toptitle=2pt, bottomtitle=2pt,
+  fontupper=\small}
+
+% 无标题版要点框
+\newtcolorbox{keyboxplain}{%
+  colback=black!5, colframe=black!55, boxrule=0.6pt, arc=2pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt, fontupper=\small}
+
+% 原文的粗体行内小标题（如 "Tame punctures."）——独立成段、粗体、不缩进
+\newcommand{\para}[1]{\par\medskip\noindent\textbf{#1}\quad\ignorespaces}
+
+% 原文图/表标题（手工编号）。必须用 \captionof*：译者在 \begin{center} 里调用，
+% 不是浮动体，用 \caption* 会报 "caption outside float" 且图注文字丢失。
+% 开头的 \par\nobreak 把图注与上一行的图像粘住——在 center 环境里图像和图注是两个
+% 段落，中间可被分页拆开（图 4、图 12 曾出现「图在上页底、图注跑到下页顶」）。
+\newcommand{\tabtitle}[2]{\par\nobreak\captionof*{table}{\small\textbf{表 #1：}#2}}
+\newcommand{\figtitle}[2]{\par\nobreak\captionof*{figure}{\small\textbf{图 #1：}#2}}
+
+% 参考文献条目
+\newcommand{\refitem}[2]{\par\hangindent=1.5em\hangafter=1\noindent [#1]~#2}
+
+% ---------- 常用记号（只能用这里定义过的宏，不要自造 \newcommand） ----------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fh}{\mathfrak{h}}
+\newcommand{\ft}{\mathfrak{t}}
+\newcommand{\fu}{\mathfrak{u}}
+\newcommand{\fsu}{\mathfrak{su}}
+\newcommand{\fso}{\mathfrak{so}}
+\newcommand{\fsp}{\mathfrak{sp}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\Sp}{\mathrm{Sp}}
+\newcommand{\USp}{\mathrm{USp}}
+\newcommand{\U}{\mathrm{U}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ee}{\mathrm{e}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\ord}{\operatorname{ord}}
+\newcommand{\vol}{\operatorname{vol}}
+\newcommand{\rk}{\operatorname{rk}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\Pf}{\operatorname{Pf}}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\id}{\mathrm{id}}
+\renewcommand{\Re}{\operatorname{Re}}
+\renewcommand{\Im}{\operatorname{Im}}
+\newcommand{\Toda}{\mathrm{Toda}}
+\newcommand{\Liouville}{\mathrm{Liouville}}
+\newcommand{\half}{\tfrac{1}{2}}
+\newcommand{\ie}{\textit{i.e.}}
+\newcommand{\eg}{\textit{e.g.}}
+\newcommand{\cf}{\textit{cf.}}
+% 带上划线的简写（原文的 \bar 系列）
+\newcommand{\bQ}{\bar{Q}}
+\newcommand{\bq}{\bar{q}}
+\newcommand{\bN}{\bar{N}}
+\newcommand{\bepsilon}{\bar{\epsilon}}
+\newcommand{\btheta}{\bar{\theta}}
+\newcommand{\bphi}{\bar{\phi}}
+\newcommand{\bpsi}{\bar{\psi}}
+\newcommand{\blambda}{\bar{\lambda}}

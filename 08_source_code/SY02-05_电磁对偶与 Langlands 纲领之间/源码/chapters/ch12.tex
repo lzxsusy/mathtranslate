@@ -1,0 +1,688 @@
+\chapter{范畴化}\label{ch:12}
+
+\begin{keytakeaways}
+本章讨论范畴化（categorification）及其几何来源。范畴化是把数替换为向量空间（或范畴）、把向量空间替换为范畴的病态逆过程；其严格形式由 TFT 给出：与$S^{1}$作积对应于取维数，\term{映射环面}{mapping torus}对应于取迹。于是“维数”“迹”在\term{配边}{bordism}范畴$\Bord$、对应范畴$\mathrm{Corr}$与线性目标范畴$\cC$中分别呈现为$(-)\times S^{1}$、不动点$\mathcal{L}(-)$与$\HH_{*}$/$\chi$，并由对称幺半函子保证三者相容。几何上，迹就是不动点，这给出 Lefschetz 不动点公式与 Grothendieck–Lefschetz 迹公式，进而引出函数-层对应、Lusztig 特征层与 Kazhdan–Lusztig 理论。最后，几何 Satake 对应被解释为球 Hecke 范畴的范畴化，它比经典 Satake 同构更强，因为 Tannakian 重构能真正构造出 Langlands 对偶群。
+\end{keytakeaways}
+
+\section{基础}\label{sec:12-1}
+
+\begin{sectionkey}
+本节给出范畴化的非形式定义：一个数若能实现为某向量空间的维数（或分次向量空间的 Euler 特征、某算子的迹），就称该向量空间范畴化了这个数；Grothendieck 群$K_0$是把范畴映回向量空间的标准去范畴化不变量。
+\end{sectionkey}
+
+众所周知，\term{范畴化}{categorification}并没有严格定义。它毋宁是所谓的\term{去范畴化}{decategorification}的一个病态逆过程。基本想法是：给定一个数，人们希望它作为某个向量空间的维数出现。当然，只有自然数能这样出现；但给定一个自然数，人们希望它来自一个向量空间，而后者携带的信息严格多于该数本身。此时称这个数是该向量空间的去范畴化。
+
+\begin{srcex}{80}
+拓扑空间的 Betti 数是同调群的维数。即对拓扑空间$X$，$H_i(X)$的去范畴化是$b_i(X)$。
+\end{srcex}
+
+若我们有一个整数（可能为负），我们仍希望它来自某个向量空间，只是此时要问它是否为某个分次向量空间的 Euler 特征。
+
+于是范畴化就是试图用一个自然的向量空间去替换一个数的病态过程，使得它成为去范畴化的逆。也就是说，一个向量空间范畴化一个数，若该数是这个向量空间的去范畴化/维数/Euler 特征。
+
+这可以如下推广。除了向量空间$V$，人们可能还有别的线性代数数据，例如算子$O\in\End(V)$。此时我们可能期待给定的数作为$\operatorname{Tr}(O)$出现。要点是：算子的迹不总是整数。
+
+\begin{srcex}{81}
+若$O=\mathrm{id}$，则$\operatorname{Tr}(\mathrm{id})=\dim$，于是这退化为上面以$\dim$或$\chi$为去范畴化的概念。
+\end{srcex}
+
+\begin{srcex}{82}
+设$G\circlearrowright V$是群的表示。$V$的特征是一个定义在$G$上的函数$\chi$，它把$g\in G$送到$g$的迹，这里把$g$看成$V$上的算子。于是我们不止有一个数，而是有一族数，以$g\in G$为指标，作为$g\colon V\to V$的迹出现。
+\end{srcex}
+
+这族数$\{\operatorname{Tr}(g)\}_{g\in G}$定义了元素$\chi_V\in\C^{G}_{G}$，即它定义了向量空间的一个元素，然后我们把它升级为真正的表示$V\in\Rep(G)$。
+
+所以在这个例子里，我们从向量空间的一个元素出发，然后把它升级为范畴的一个对象。因此我们可以把这个过程重新表述为：从向量空间出发，把它升级为范畴。这就是这个过程称为范畴化的原因。
+
+这个向量空间显式地由范畴的 Grothendieck 群给出，例如：
+\begin{equation}\tag{12.1}
+\C^{G}_{G}=K_0(\Rep(G)).
+\end{equation}
+所以我们可能从一个数出发，它由某个向量空间的维数或 Euler 特征给出；也可能从一个向量空间出发，它由某个范畴的不变量（如$K_0$）给出。
+
+\begin{srcrem}{86}
+正如一个数的正性是它是某种更深结构的影子（即它是$\dim(V)$，或它来自组合计数）的标志，向量空间的一组自然基也可以看成某种更深结构（即它是某个范畴的$K_0$）的影子。例如，若我们的范畴中有单对象或投射对象，它们可能下降为 Grothendieck 群的自然基。
+\end{srcrem}
+
+\begin{srcex}{83}
+函数空间是向量空间的自然来源。它们往往来自层的范畴。于是几何给我们自然的范畴与自然的向量空间，再由去范畴化程序联系起来。
+\end{srcex}
+
+% [Tutor Note: 这里的$\C^G_G$是$G$上的类函数空间（即$G$在$\C[G]$上的不变量，或等变层$\Shv(G/G)$的截面），并非“$G$的平方”；$K_0(\Rep(G))$与类函数空间在系数域上同构，正是特征标理论的起点。若把$G$换为有限群，$K_0(\Rep(G))$就是表示环。]
+
+\section{（去）范畴化与 TFT}\label{sec:12-2}
+
+\begin{sectionkey}
+本节说明 TFT 如何给出范畴化的严格框架：与$S^{1}$作积对应取维数，映射环面对应取迹，而对偶性与 Mark of Zorro 关系是这一切的代数基础。
+\end{sectionkey}
+
+设$Z$是一个 TFT。有一个自然的操作：在把$Z$作用到配边上之前，先把它与$S^{1}$作积，即我们考虑$Z\bigl((-)\times S^{1}\bigr)$。一般的口号是
+\begin{equation}\tag{12.2}
+Z\bigl((-)\times S^{1}\bigr)=\dim Z(-).
+\end{equation}
+设$Z$是一维 TFT。回忆第 10.1 节：
+\begin{equation}\tag{12.3}
+\begin{array}{rcl}
+Z(\varnothing)&=&\C\\
+Z(\bullet_+)&=&V\\
+Z(\bullet_-)&=&V^{\vee},
+\end{array}
+\end{equation}
+其中$V$是向量空间，$V^{\vee}$是其对偶。于是配边
+\begin{equation}\tag{12.4}
+\overset{+\ \ -}{\smile}
+\end{equation}
+定义了线性映射
+\begin{equation}\tag{12.5}
+\C\to V\otimes V^{\vee}.
+\end{equation}
+类似地，配边
+\begin{equation}\tag{12.6}
+\overset{+\ \ -}{\frown}
+\end{equation}
+定义了线性映射
+\begin{equation}\tag{12.7}
+V\otimes V^{\vee}\to\C.
+\end{equation}
+那么由$S^{1}$定义的配边$\varnothing\to\varnothing$是这两个配边的复合：
+\begin{equation}\tag{12.8}
+\bigcirc=\overset{+\ \ -}{\frown}\circ\overset{+\ \ -}{\smile},
+\end{equation}
+因此被赋予这两个映射的复合：
+\begin{equation}\tag{12.9}
+\begin{array}{ccc}
+ & V\otimes V^{\vee} & \\
+ \mathrm{coev}\nearrow & & \searrow\mathrm{ev}\\
+ \C & \xrightarrow{\ \dim(V)\ } & \C
+\end{array}
+\end{equation}
+即
+\begin{equation}\tag{12.10}
+Z(S^{1})=\dim(V).
+\end{equation}
+当$Z$取值于$\Vect$，即$V\in\Vect$时，这是一个定理；但若$Z$是更高维的、取值于更一般的目标，则这将作为维数的定义。这是什么意思？设$Z$是$n$维 TFT。对维数$\le n$的配边$M$，我们有
+\begin{equation}\tag{12.11}
+Z(M)\in\cC
+\end{equation}
+其中$\cC$是某个对称幺半（高阶）范畴。现在我们有
+\begin{equation}\tag{12.12}
+Z\bigl(M\times S^{1}\bigr)\in\End(1_{\cC}).
+\end{equation}
+我们可以把上面的图与$M$作积，得到一个态射
+\begin{equation}\tag{12.13}
+Z\Bigl(M\times\overset{+\ \ -}{\smile}\Bigr)\colon Z(M)\otimes Z(\overline{M})\to 1_{\cC},
+\end{equation}
+以及一个态射
+\begin{equation}\tag{12.14}
+Z\Bigl(M\times\overset{+\ \ -}{\frown}\Bigr)\colon 1_{\cC}\to Z(M)\otimes Z(\overline{M}).
+\end{equation}
+于是我们可以把$Z(M\times S^{1})$的值计算为复合
+\begin{equation}\tag{12.15}
+1_{\cC}\to Z(M)\otimes Z(\overline{M})\to 1_{\cC},
+\end{equation}
+即
+\begin{equation}\tag{12.16}
+Z(M\times S^{1})=:\dim(Z(M))\colon 1_{\cC}\to 1_{\cC}.
+\end{equation}
+更形式地，设$V\in\cC$是对称幺半范畴的对象。则$V$可对偶，若存在$V^{\vee}\in\cC$以及态射
+\begin{equation}\tag{12.17}
+1\to V\otimes V^{\vee},\qquad V^{\vee}\otimes V\to 1
+\end{equation}
+使得 Mark of Zorro 条件满足。也就是说，在图景中我们有
+\diageq{12.18}{0.07\textwidth}{p209_d4.png}
+而在符号上我们有
+\begin{equation}\tag{12.19}
+(\mathrm{ev}\otimes\mathrm{id})\circ(\mathrm{id}\otimes\mathrm{coev})=\mathrm{id}.
+\end{equation}
+若$V$可对偶，则存在态射$\dim(V)\in\End(1_{\cC})$，由复合
+\begin{equation}\tag{12.20}
+1_{\cC}\xrightarrow{\ \mathrm{coev}\ }V\otimes V^{\vee}\xrightarrow{\ \mathrm{ev}\ }1_{\cC}
+\end{equation}
+给出。这就是对称幺半（高阶）范畴中可对偶对象之维数的概念。
+
+我们还有一个抽象的迹概念$\operatorname{Tr}\colon\End(V)\to 1_{\cC}$，它由赋值映射给出，只要我们有识别
+\begin{equation}\tag{12.21}
+\End(V)\simeq V\otimes V^{\vee},
+\end{equation}
+而这可由$V$的可对偶性推出。
+
+% [Tutor Note: (12.2)–(12.9) 的配边图（杯、帽、$S^{1}$）在原文中是手绘小图，本译本以$\smile$、$\frown$、$\bigcirc$重新排版；$+$与$-$表示边界点的定向。Mark of Zorro 条件 (12.19) 只写出了一条 zig-zag 恒等式，另一条$(\mathrm{id}\otimes\mathrm{ev})\circ(\mathrm{coev}\otimes\mathrm{id})=\mathrm{id}$需对$V^{\vee}$单独验证，二者合起来才给出$\End(V)\simeq V\otimes V^{\vee}$。]
+
+\section{例子}\label{sec:12-3}
+
+\begin{sectionkey}
+本节计算几个基本例子：$\Vect$中对偶即线性对偶，链复形的维数是 Euler 特征，结合代数的维数是 Hochschild 同调$HH_*(A)$，并说明$HH_*$与$K_0$是不同的不变量。
+\end{sectionkey}
+
+\begin{srcex}{84}
+设$\cC=\Vect$。则对偶可定义为
+\begin{equation}\tag{12.22}
+V^{\vee}:=\Hom(V,k),
+\end{equation}
+于是可对偶性就是性质
+\begin{equation}\tag{12.23}
+V\otimes V^{\vee}\simeq\End(V).
+\end{equation}
+有一个自然映射
+\begin{equation}\tag{12.24}
+\mathrm{id}\colon 1\to\End(V),
+\end{equation}
+由恒等映射的包含给出。此外总有一个由配对给出的映射
+\begin{equation}\tag{12.25}
+V\otimes V^{\vee}\to 1.
+\end{equation}
+因此我们得到两个不那么显然的映射（原图中标红）：
+\begin{equation}\tag{12.26}
+\begin{array}{ccc}
+V\otimes V^{*} & \xrightarrow{\ \mathrm{ev}\ } & \C\\
+{\uparrow}^{\sum_i e_i\otimes e^i} & & {\uparrow}^{\mathrm{id}}\\
+\End(V) & \xrightarrow{\ \operatorname{Tr}\ } & \C
+\end{array}
+\end{equation}
+\end{srcex}
+
+\begin{srcex}{85}
+链复形的维数是 Euler 特征。
+\end{srcex}
+
+\begin{srcex}{86}
+结合代数$A$的维数更有意思。要理解维数，我们需要指明把$A$看成生活在哪个范畴中。我们将把$A$看成代数 Morita 范畴的对象。换句话说，我们通过范畴$A\text{-}\mathrm{mod}$来思考$A$。即该范畴的对象是代数，从$A$到$B$的态射是$A$-$B$双模。
+\end{srcex}
+
+我们断言每个结合代数$A$都可对偶，对偶为$A^{\mathrm{op}}$。
+
+单位是$1=k$，$\mathrm{ev}$与$\mathrm{coev}$如下。$\mathrm{coev}\colon k\to A\otimes A^{\mathrm{op}}$是$k$-$A\otimes A^{\mathrm{op}}$双模，等价地是$A$-$A$双模。代数$A$本身定义这样一个双模，因为它在左右两侧都有$A$的作用。这就是$\mathrm{coev}$。类似地，$\mathrm{ev}\colon A\otimes A^{\mathrm{op}}\to k$是$A\otimes A^{\mathrm{op}}$-$k$双模，等价地是$A$-$A$双模。自然的选择仍是$A$本身。
+
+\paragraph{习题 4.}
+证明这组对偶数据满足 Mark of Zorro 关系。
+
+$A$的维数由复合给出，而复合在 Morita 范畴中就是张量积，所以
+\begin{equation}\tag{12.27}
+\dim(A)=A\otimes_{A\otimes A^{\mathrm{op}}}A=:\HH_{*}(A).
+\end{equation}
+这是$A$的 Hochschild 同调。它有一个漂亮的泛性质。有一个自然映射
+\begin{equation}\tag{12.28}
+\tau\colon A\to\HH_{*}(A),
+\end{equation}
+由$a\mapsto a\otimes 1$给出。这个映射满足
+\begin{equation}\tag{12.29}
+\tau(ab)=\tau(ba),
+\end{equation}
+所以$\tau$是一个迹。事实上它是泛迹：若有一个映射
+\begin{equation}\tag{12.30}
+\tau'\colon A\to M
+\end{equation}
+在两个次序上余等化乘法，则存在唯一映射
+\begin{equation}\tag{12.31}
+\begin{array}{ccc}
+A & \xrightarrow{\ \tau\ } & \HH_{*}(A)\\
+ & \searrow{\scriptstyle \tau'} & \downarrow\\
+ & & M
+\end{array}
+\end{equation}
+代数的 Morita 理论通过把$A$送到$A\text{-}\mathrm{mod}$而作为全子范畴嵌入所有范畴之中。所以只要我们能把范畴$\cC$描述为$\cC=A\text{-}\mathrm{mod}$，就有了维数的概念：
+\begin{equation}\tag{12.32}
+\dim(\cC)=\HH_{*}(\cC):=\HH_{*}(A).
+\end{equation}
+即便$\cC$不是$A\text{-}\mathrm{mod}$的形式，$\HH_{*}(\cC)$也有定义。
+
+\paragraph{警告 1.}
+这与上面由 Grothendieck 群$K_0(\cC)$给出的维数概念不同。Grothendieck 群是比$\HH_{*}(\cC)$精细得多的不变量，但$\HH_{*}$更具体。例如若$\cC$是$k$-线性的，则$\HH_{*}(\cC)$是$k$-向量空间。$\HH_{*}$的另一个好处是它相当自然地来自场论。
+
+\begin{srcrem}{87}
+对表示论中出现的大多数范畴，通常的情形是：一旦把$K_0(\cC)$变成$k$-向量空间，它就同构地映到$\HH_{*}$：
+\begin{equation}\tag{12.33}
+k\otimes_{\Z}K_0(\cC)\xrightarrow{\ \sim\ }\HH_{*}(\cC).
+\end{equation}
+例如若$\cC=\Rep(G)$对有限群$G$，则$K_0(\Rep(G))$是表示环，而$\HH_{*}(\Rep(G))$是类函数空间，二者在张量上$k$之后等同。
+\end{srcrem}
+
+\begin{srcex}{87}
+设$\cC$是带一个自同态的向量空间范畴。这等同于$k[x]\text{-}\mathrm{mod}$，所以$\HH_{*}(\cC)=\HH_{*}(k[x])$。与任何交换环一样，在非导出世界里答案就是$\HH_{*}(k[x])=k[x]$。若作导出版本，则在次数$1$处还有一份$k[x]$，所以它是$k[x]$与一个外代数的张量积。当我们看到如何几何地计算$\HH_{*}$时，这一点会更清楚。
+\end{srcex}
+
+% [Tutor Note: $\HH_{*}(A)$在非导出情形等于$A\otimes_{A\otimes A^{\mathrm{op}}}A$，其导出版本应取 Tor，得到$k[x]$与外代数$\Lambda^{\bullet}(k[x])$的张量；原文只给出“degree 1 处另一份$k[x]$”的粗略说法。(12.33) 的同构一般需要$K_0$取在足够好的范畴上且$k$包含足够多的单位根，有限群情形要小心特征$p$。]
+
+\section{迹}\label{sec:12-4}
+
+\begin{sectionkey}
+本节把维数推广为迹：对可对偶对象，任意自同态都有迹$\operatorname{Tr}(F)\in 1_{\cC}$；在代数 Morita 情形即双模的 Hochschild 同调$HH_*(A,M)$。
+\end{sectionkey}
+
+到目前为止我们考虑了结合代数在 Morita 等价意义下的可对偶性，并计算了维数。我们可能也关心存在映射
+\begin{equation}\tag{12.34}
+A\otimes A^{\mathrm{op}}\text{-}\mathrm{mod}\to\End(A\text{-}\mathrm{mod}).
+\end{equation}
+要点是：从$A\text{-}\mathrm{mod}$到$B\text{-}\mathrm{mod}$的 Morita 态射是$A$-$B$双模${}_AM_B$，其中（左）$A$-模在右侧与$M$张量，得到（左）$B$-模。于是$A\otimes A^{\mathrm{op}}$-模，即$A$-$A$双模，定义了$A\text{-}\mathrm{mod}$的自同态。在导出情形下，对函子加适当形容词后，这个映射是等价。
+
+那么诱导出的映射$\End(A\text{-}\mathrm{mod})\to 1$，即赋值映射，就是人们所谓的迹：
+\begin{equation}\tag{12.35}
+\begin{array}{ccc}
+A\otimes A^{\mathrm{op}}\text{-}\mathrm{mod} & \xrightarrow{\ \simeq\ } & \End(A\text{-}\mathrm{mod})\\
+ & \searrow{\scriptstyle \operatorname{Tr}} & \downarrow{\scriptstyle \mathrm{ev}}\\
+ & & 1
+\end{array}
+\end{equation}
+于是若有自函子$F\colon A\text{-}\mathrm{mod}\circlearrowright$，则有其迹
+\begin{equation}\tag{12.36}
+\operatorname{Tr}(F)\in 1=k\text{-}\mathrm{mod}.
+\end{equation}
+所以自函子的迹是一个向量空间，使得
+\begin{equation}\tag{12.37}
+\operatorname{Tr}(\mathrm{id}_{A\text{-}\mathrm{mod}})=\dim(A)=\HH_{*}(A).
+\end{equation}
+所以当你是一个可对偶对象时，你不仅得到维数，还可以取任意自同态的迹。
+
+经典地，我们是在说：若${}_AM_A$是$A$-双模，则我们可以给它附上迹$\operatorname{Tr}(M)$，它不过是$M$与对角双模的张量：
+\begin{equation}\tag{12.38}
+\operatorname{Tr}(M)=M\otimes_{A\otimes A^{\mathrm{op}}}A=:\HH_{*}(A,M),
+\end{equation}
+这也称为$A$以$M$为系数的 Hochschild 同调。用这些术语我们有
+\begin{equation}\tag{12.39}
+\dim(A)=\HH_{*}(A)=\HH_{*}(A,A)=\operatorname{Tr}(\mathrm{id}_{A\text{-}\mathrm{mod}}).
+\end{equation}
+
+% [Tutor Note: (12.35) 的“$\simeq$”只在导出 Morita 理论中成立；在普通范畴层面，$A\otimes A^{\mathrm{op}}$-模到$\End(A\text{-}\mathrm{mod})$的映射未必满。注意$\operatorname{Tr}$与$\mathrm{ev}$是同一个赋值映射的两种写法：$\operatorname{Tr}(M)=\mathrm{ev}(\widetilde{M})$，其中$\widetilde{M}$是$M$对应的自函子。此外 (12.37) 的$\dim(A)$是 Morita 范畴中的维数（即$HH_*$），与第 12.1 节中用$K_0(\cC)$定义的维数不是同一个东西（见警告 1）。]
+
+\section{$\Bord$中的$\dim$}\label{sec:12-5}
+
+\begin{sectionkey}
+本节计算配边范畴中的维数与迹：任何定向流形可对偶，对偶为反向定向的流形，维数是$M\times S^{1}$，迹是映射环面$M\times I/((0,x)\sim(1,f(x)))$；对称幺半函子把这些操作送到目标范畴中的$\HH_*$与$\chi$。
+\end{sectionkey}
+
+回忆 TFT 是从配边范畴到某种线性目标（例如线性（高阶）范畴）的对称幺半函子：
+\begin{equation}\tag{12.40}
+Z\colon(\Bord_n,\sqcup)\to(\cC,\otimes).
+\end{equation}
+任何对称幺半函子都有性质
+\begin{equation}\tag{12.41}
+Z(\dim(-))=\dim Z(-).
+\end{equation}
+维数的概念对任何对称幺半范畴都纯抽象地定义，所以这个等式来自：对偶、$\mathrm{ev}$、$\mathrm{coev}$这些概念都被对称幺半函子保持。
+
+在$\Bord^{\mathrm{or}}$中任何流形$M$都可对偶。对偶是反向定向的流形$\overline{M}$。单位是同一维数的空流形，而$\mathrm{coev}$与$\mathrm{ev}$是如下配边：
+\begin{equation}\tag{12.42}
+\mathrm{coev}\colon\varnothing\to M\sqcup\overline{M},\qquad \mathrm{ev}\colon M\sqcup\overline{M}\to\varnothing.
+\end{equation}
+复合是沿$M\sqcup\overline{M}$的粘合，所以维数是
+\begin{equation}\tag{12.43}
+\dim(M)=M\times S^{1}.
+\end{equation}
+因此 (12.41) 蕴含
+\begin{equation}\tag{12.44}
+Z\bigl(M\times S^{1}\bigr)=\dim(Z(M)),
+\end{equation}
+这正是我们 (12.2) 的口号。
+
+\subsection{$\Bord$中的迹}\label{sec:12-5-1}
+
+设给定配边的自同态$f\colon M\to M$。则我们应当得到$\operatorname{Tr}(f)$，它将是一个新流形，使得若$f=\mathrm{id}$就得到$\operatorname{Tr}(\mathrm{id})=M\times S^{1}$。结果迹正是$f$的映射环面：
+\begin{equation}\tag{12.45}
+\operatorname{Tr}(f)=M\times I\big/\bigl((0,x)\sim(1,f(x))\bigr).
+\end{equation}
+也就是说，我们取流形与区间的积，并把$0$处的点与其在$1$处的像粘起来。由于$Z$是对称幺半函子，我们有
+\begin{equation}\tag{12.46}
+Z(\operatorname{Tr}(f))=\operatorname{Tr}(Z(f),Z(M)),
+\end{equation}
+其中$Z(f)$是$f$在$Z(M)$上诱导的映射。
+
+% [Tutor Note: (12.42) 的两个配边在原文中画成“杯”与“帽”；$\mathrm{coev}$的余定义域应是$M\sqcup\overline{M}$，不要漏掉反向定向。$\Bord$中“迹=映射环面”与下一节$\mathrm{Corr}$中“迹=不动点”是同一对称幺半函子图景的两端，二者由 (12.63) 的分解联系起来。]
+
+\section{$\dim$的几何/拉格朗日解释}\label{sec:12-6}
+
+\begin{sectionkey}
+本节把 TFT 分解为$\Bord_n\to\mathrm{Corr}\to\cC$，从而在对应范畴中给出维数的几何版本：对空间$X$，$\dim(X)$是导出环路空间$\mathcal{L}X=X\times_{X\times X}X$，而迹是$f$的不动点$X^{f}$；这与代数侧的$HH_*$、$\chi$由对称幺半函子保证相容。
+\end{sectionkey}
+
+我们的 TFT $Z$常常通过某个由空间对应构成的范畴$\mathrm{Corr}$（例如拓扑空间、代数簇等）给出的场空间来分解：
+\begin{equation}\tag{12.47}
+\begin{array}{ccc}
+\Bord_n & \xrightarrow{\ Z\ } & \cC\\
+ & \searrow{\scriptstyle \text{场}} & \nearrow{\scriptstyle \text{线性化}}\\
+ & \mathrm{Corr} &
+\end{array}
+\end{equation}
+例如我们可以通过取场空间上的层来作线性化。当这一点成立时，我们说该理论是拉格朗日（Lagrangian）的。
+
+\begin{srcex}{88}
+从配边$M$出发，场空间可以是$\Loc_{G^{\vee}}(M)$，然后可以取线性化为$\QC(\Loc_{G^{\vee}}(M))$。
+\end{srcex}
+
+我们把$Z$分解成的两个函子都是对称幺半的，所以可以应用上面 (12.41) 的同一想法：$\dim$被保持。在$\Bord_n$中维数类似于与$S^{1}$作积，在线性范畴$\cC$中维数类似于$\HH_{*}$或$\chi$，而在这个中间的对应对应范畴中我们将有某种几何版本的维数，或更一般地，非线性迹。
+
+\subsection{非线性迹}\label{sec:12-6-1}
+
+\paragraph{维数（环路空间）.}
+我们把范畴$\mathrm{Corr}$的对象看作空间\footnote{我们可以给空间一个更技术性的定义，但实际上只是指簇、栈、流形之类的东西，只要我们有余极限的概念即可。}，态射看作对应：
+\begin{equation}\tag{12.48}
+\begin{array}{ccc}
+ & Z & \\
+ \swarrow & & \searrow\\
+ X & & Y
+\end{array}
+\end{equation}
+任何$X\in\mathrm{Corr}$都是自对偶的。对偶数据由对角线映射给出的对应提供：
+\begin{equation}\tag{12.49}
+\begin{array}{ccc}
+ & X\times X & \\
+ \Delta\swarrow & & \searrow\\
+ X & & \mathrm{pt}
+\end{array}
+\qquad\qquad
+\begin{array}{ccc}
+ & X\times X & \\
+ \swarrow & & \searrow\Delta\\
+ \mathrm{pt} & & X
+\end{array}
+\end{equation}
+这个对角线映射是我们在 Morita 范畴中考虑代数可对偶性时的对角双模的类比。
+
+现在我们可以计算$X$的维数。这是某个从$\mathrm{pt}$到自身的对应，可以是任何空间。我们知道它由$\mathrm{ev}$与$\mathrm{coev}$对应的复合给出，而后者由纤维积给出：
+\begin{equation}\tag{12.50}
+\begin{array}{ccc}
+X\times_{X\times X}X & \longrightarrow & X\\
+\downarrow & & \downarrow{\scriptstyle \Delta}\\
+X & \xrightarrow{\ \Delta\ } & X\times X
+\end{array}
+\end{equation}
+这类似于代数的 Hochschild 同调公式。
+
+关于$X\times_{X\times X}X$有很多想法，但一种想法是把它看成交对角线$\Delta$的自交：
+\begin{equation}\tag{12.51}
+X\times_{X\times X}X=\Delta\cap\Delta.
+\end{equation}
+在朴素的集合论层面这就是$\Delta$，但若你在 orbifold 中工作，纤维积会更有意思。一般而言它称为导出环路空间：
+\begin{equation}\tag{12.52}
+\Delta\cap\Delta=:\mathcal{L}X:=X\times_{X\times X}X
+\end{equation}
+或$X$的\term{惯性}{inertia}。即
+\begin{equation}\tag{12.53}
+\dim(X)=\mathcal{L}X.
+\end{equation}
+“环路空间”这个名字与我们对拉格朗日场论已有的认识一致。回忆我们把$X\in\mathrm{Corr}$这些空间看成场空间，即看成从配边$M$到某目标空间$T$的映射：
+\begin{equation}\tag{12.54}
+X=\operatorname{Map}(M,T).
+\end{equation}
+在$\Bord$中取维数就是与$S^{1}$作积，而$M$上场空间的维数是维数后的$M$上的场空间（把配边送到场空间的函子是对称幺半的）。因此
+\begin{align}
+\dim(X)&=\dim(\operatorname{Map}(M,T))\tag{12.55}\\
+&=\operatorname{Map}(\dim(M),T)\tag{12.56}\\
+&=\operatorname{Map}(M\times S^{1},T)\tag{12.57}\\
+&=\mathcal{L}\operatorname{Map}(M,T),\tag{12.58}
+\end{align}
+这里$\mathcal{L}$表示通常的环路空间（从$S^{1}$出发的映射空间）。
+
+我们可以如下看出从$S^{1}$到$X$的映射空间与 (12.52) 相同。我们把$S^{1}$想成
+\begin{equation}\tag{12.59}
+S^{1}=\{\bullet\rightrightarrows\bullet\}.
+\end{equation}
+由这个描述，从$S^{1}$到$X$的映射空间可以等同于从$\mathrm{pt}\sqcup\mathrm{pt}$到$X$的映射空间（即$X$中的点对）连同这两点之间的两条不同道路。若我们在局部常值情形，即我们的映射局部常值（$X=\operatorname{Map}_{lc}(M,T)$），则$x,y\in M$的像之间存在一条道路等同于把它们等同起来：$f(x)\sim f(y)$。于是我们得到：$X$的点对连同两个等同。但这恰好是$\Delta\cap\Delta$的点：$X$的点对先被等同一次（故在对角线上），然后再被等同一次（故在$\Delta$的自交上）。
+
+\paragraph{非平凡映射的迹.}
+设$f\colon X\to X$（$X\in\mathrm{Corr}$）。我们要计算$f$的迹。首先把$f$重新表述为对应
+\begin{equation}\tag{12.60}
+\begin{array}{ccc}
+ & Z\simeq X & \\
+ \mathrm{id}\swarrow & & \searrow f\\
+ X & & X
+\end{array}
+\end{equation}
+断言是
+\begin{equation}\tag{12.61}
+\operatorname{Tr}(f)=Z|_{\Delta\hookrightarrow X\times X}=\Gamma(f)\cap\Delta,
+\end{equation}
+其中$\Gamma(f)$表示$f$的图像，但这恰是$f$的不动点：
+\begin{equation}\tag{12.62}
+\operatorname{Tr}(f)=X^{f}.
+\end{equation}
+
+\begin{table}[htbp]
+  \centering
+  \includegraphics[width=0.68\textwidth]{table12-1.png}
+  \caption{$\Bord$、$\mathrm{Corr}$以及 TFT 的目标$\cC$中迹的各种面貌。原文表以图像保留。（原文 p.~216，Table 12.1）}
+  \label{tab:12-1}
+\end{table}
+
+\begin{srcex}{89}
+设$X$是有限集。函数上诱导的映射$f_{*}\colon k(X)\to k(X)$可以看成一个矩阵。于是这个映射的迹是矩阵对角元之和，即$f$的不动点个数。所以经典地，迹来自数不动点。我们稍后会以更精致的说法说明：迹的这种出现与 Lefschetz 不动点公式中的出现是同一回事。
+\end{srcex}
+
+总结：若我们的场论$\Bord\to\cC$分解为两个对称幺半函子
+\begin{equation}\tag{12.63}
+\Bord\to\mathrm{Corr}\to\cC,
+\end{equation}
+则$\operatorname{Tr}$被保持，而$\operatorname{Tr}$在每个范畴中的面貌如表 12.1 所示。
+
+结论如下。考虑$\mathrm{Corr}$对象上的一个对称幺半的层论，例如
+\begin{equation}\tag{12.64}
+\Shv\colon\mathrm{Corr}\to\mathrm{Cat},
+\end{equation}
+它把$X\mapsto\Shv(X)$，并把态射
+\begin{equation}\tag{12.65}
+\begin{array}{ccc}
+ & Z & \\
+ p\swarrow & & \searrow q\\
+ X & & Y
+\end{array}
+\end{equation}
+送到
+\begin{equation}\tag{12.66}
+q_{*}p^{!}\colon\Shv(X)\to\Shv(Y).
+\end{equation}
+注意这只是对应所诱导函子的记号。若我们在这样的设定中，则自动有它把迹送到迹（从而把维数送到维数）。在实践中，我们关心的层论并不平凡地满足这一点。例如我们需要
+\begin{equation}\tag{12.67}
+\Shv(X\times X)\simeq\Shv(X)\otimes\Shv(X),
+\end{equation}
+而实践中这有时不成立。
+
+\subsection{与范畴化的关系}\label{sec:12-6-2}
+
+关于迹的整个讨论的结论是：若一个向量空间$V$作为场论$Z$的值出现：
+\begin{equation}\tag{12.68}
+V=Z\bigl(M\times S^{1}\bigr),
+\end{equation}
+则我们知道如何范畴化它：
+\begin{equation}\tag{12.69}
+V=\dim(Z(M)),
+\end{equation}
+即$Z(M)$范畴化了$V$。或者更一般地，若$V=Z(\text{映射环面})$，则我们有一个自然的视角来范畴化$V$。
+
+% [Tutor Note: (12.51) 在朴素集合层面$\Delta\cap\Delta=\Delta$，真正的信息在导出纤维积：对 orbifold/栈，$X\times_{X\times X}X$记录了对角线的导出自交，这正是“惯性栈”与自由环路空间的区别。(12.67) 的对称幺半性与 §12.6.2 的“迹送到迹”是层论版本的核心假设；在凝聚层或反常层中它通常只在导出意义下成立。]
+
+\section{Lefschetz 不动点公式}\label{sec:12-7}
+
+\begin{sectionkey}
+本节从“迹=不动点”出发陈述 Lefschetz 不动点公式与 Grothendieck–Lefschetz 迹公式，并说明它如何给出函数-层对应：层世界中的 Frobenius 迹对应函数世界中的积分，从而把有限群表示论几何化。
+\end{sectionkey}
+
+范畴化这一主题在 1990 年代随 Frenkel、Khovanov 与 Baez–Dolan 学派而变得非常流行。但范畴化的想法、以及它的一些更深刻的洞见，可以追溯到 1960 年代 Grothendieck 的工作：Grothendieck–Lefschetz 迹公式。所以几何表示论中的人们从 1970 年代初起就一直在做范畴化，只是没有这么称呼它。
+
+设$X$是拓扑空间，$f\colon X\to X$。回忆 Lefschetz 不动点公式是
+\begin{equation}\tag{12.70}
+\sum\{\text{不动点}\}=\sum(-1)^{i}\operatorname{tr}\bigl(f|_{H^{i}}\bigr)=\operatorname{Tr}\bigl(f,H^{*}(X)\bigr).
+\end{equation}
+这个不动点之和等于$\Delta$与$f$的图像的交点个数：
+\begin{equation}\tag{12.71}
+\sum\{\text{不动点}\}=\#\bigl(\Delta\cap\Gamma_{f}\bigr)=\dim H^{*}\bigl(\Delta\cap\Gamma_{f}\bigr).
+\end{equation}
+我们必须仔细地数这些不动点，用不同的指数给每个不动点加权（若交点非横截），但这就是公式的一般形状。
+
+如我们所见，取不动点正是几何世界中映射$f\colon X\to X$之迹的正确概念。所以这个公式是在说：上同调把几何范畴中$f\colon X\circlearrowright$的迹送到$X$的上同调上诱导映射的迹。
+
+Grothendieck–Lefschetz 迹公式如下。设$X/\F_q$是有限域上的概形（或栈）。则有
+\begin{equation}\tag{12.72}
+\#X(\F_{q^{r}})=\operatorname{Tr}\Bigl(F^{r}\big|_{H^{*}_{c}(X,\overline{\Q}_{\ell})}\Bigr),
+\end{equation}
+其中$F$是 Frobenius 态射，$H^{*}_{c}(-,\overline{\Q}_{\ell})$表示紧支撑$\ell$-进上同调。在道德上，这成立是因为
+\begin{equation}\tag{12.73}
+\#X(\F_{q^{r}})=\#\bigl(X^{F^{r}}\bigr).
+\end{equation}
+也就是说，向量空间与自同态
+\begin{equation}\tag{12.74}
+H^{*}_{c}(X)\circlearrowright F
+\end{equation}
+范畴化了$\#X(\F_{q})$。
+
+我们可以把$\#X(\F_{q})$看成$X(\F_{q})$上常值函数$1$在映射
+\begin{equation}\tag{12.75}
+\pi\colon X(\F_{q})\to\mathrm{pt}
+\end{equation}
+下的前推。即
+\begin{equation}\tag{12.76}
+\#X(\F_{q})=\pi_{!}1.
+\end{equation}
+类似地，上同调是$X$上常值层的前推：
+\begin{equation}\tag{12.77}
+H^{*}_{c}(X)=\pi_{!}\overline{\Q}_{\ell}.
+\end{equation}
+这就是函数-层对应的诞生。
+
+\begin{srcrem}{88}
+我们在$!$前推与$*$前推之间有点马虎。积分中有某种“shriek”的东西，这正是我们前推常值函数时所做的；而我们的上同调是紧支撑的，这也意味着我们应当取$\pi_{!}$。
+\end{srcrem}
+
+\subsection{函数-层对应}\label{sec:12-7-1}
+
+\term{函数-层对应}{function-sheaf correspondence}是范畴化更深的概念之一，来自 Weil 猜想。想法是：有一个层的世界，有一个函数的世界。我们说函数，是指在$X(\F_{q})$上的函数。给定一个函数，我们有一个积分操作给出一个数：
+\begin{equation}\tag{12.78}
+\{X(\F_{q})\text{ 上的函数}\}\xrightarrow{\ \#=\int\ }\R.
+\end{equation}
+类似地，紧支撑上同调把层变成向量空间：
+\begin{equation}\tag{12.79}
+\Shv\xrightarrow{\ H^{*}_{c}\ }\Vect.
+\end{equation}
+但这不只是一个向量空间，而是带 Frobenius $F$的向量空间：
+\begin{equation}\tag{12.80}
+\Shv\ni E\longmapsto\bigl(V,\ F\colon V\circlearrowright\bigr).
+\end{equation}
+要从向量空间得到一个数，我们可以取迹：
+\begin{equation}\tag{12.81}
+(V,F)\longmapsto\operatorname{Tr}(F).
+\end{equation}
+函数-层对应是说：存在一个从层到函数的迹概念，使得下图交换：
+\begin{equation}\tag{12.82}
+\begin{array}{ccc}
+\{X(\F_{q})\text{ 上的函数}\} & \xrightarrow{\ \#\ } & \R\\
+{\uparrow}^{\operatorname{Tr}(F)} & & {\uparrow}^{\operatorname{Tr}(F)}\\
+\Shv\ni E & \xrightarrow{\ H^{*}_{c}\ } & \Vect\ni V
+\end{array}
+\end{equation}
+即我们可以在全局化之前或之后取迹。
+
+给定一个数，人们可以把它范畴化为带算子的向量空间，这正是 Lefschetz 公式所说的；然后 Grothendieck 补充说，你可以把这个操作应用到除常值层之外的其他层上，而常值层给出点的个数。从层到函数的操作$\operatorname{Tr}(F)$是
+\begin{equation}\tag{12.83}
+\operatorname{Tr}(F,E)(x)=\operatorname{Tr}\bigl(F,i_{x}^{*}E\bigr)
+\end{equation}
+对$x\in X(\F_{q})$。为使之有意义，我们需要$E$是 Weil 层。这意味着它是弱等变的，即我们有同构
+\begin{equation}\tag{12.84}
+E\xrightarrow{\ \sim\ }F^{*}E.
+\end{equation}
+于是我们通过在给定点处$E$的 stalk 上取$F$的迹，得到$X(\F_{q})$上的函数。
+
+这是一个例子，说明去范畴化是一个映射（给定层，对每个$r$我们得到$X(\F_{q^{r}})$上的函数），而范畴化是一门艺术。函数-层对应的想法是：有意思的函数来自层。
+
+设$G$是约化群。Lusztig、Kazhdan–Lusztig 与 Deligne–Lusztig 在 80 年代的工作给我们如下口号。有限群$G(\F_{q})$的表示论是几何的，意思是它有范畴化，即它来自把$\operatorname{Tr}(F)$作用于层。这个原理有不同表现形式：该表示论的结构在群$G$及其陪集空间上的层论中有几何起源。这极其重要，例如，若你看有限单群的分类，几乎所有单群都以这种方式出现。所以这些群的特征标可以几何地计算。
+
+\subsection{Lusztig 的特征层}\label{sec:12-7-2}
+
+\term{特征层}{character sheaf}理论确立了：复$G(\F_{q})$-表示的特征标来自$G/G$上的层，即对共轭等变的层。于是从这样一个层出发，我们可以取 Frobenius 的迹得到一个类函数：
+\begin{equation}\tag{12.85}
+\operatorname{Tr}(F)\colon\frac{G}{G}\to\C\Bigl(\frac{G(\F_{q})}{G(\F_{q})}\Bigr).
+\end{equation}
+
+\subsection{Kazhdan–Lusztig 理论}\label{sec:12-7-3}
+
+回忆例 46 中的有限 Hecke 代数：
+\begin{equation}\tag{12.86}
+\mathcal{H}_{G(\F_{q}),B(\F_{q})}=\overline{\Q}_{\ell}\bigl[B(\F_{q})\backslash G(\F_{q})/B(\F_{q})\bigr],
+\end{equation}
+即旗簇$G(\F_{q})/B(\F_{q})$上在 Bruhat 轨道上取常值的$\overline{\Q}_{\ell}$值函数。它作为旗簇上函数所给表示的自同态出现：
+\begin{equation}\tag{12.87}
+\mathcal{H}_{G(\F_{q}),B(\F_{q})}=\End\bigl(\overline{\Q}_{\ell}[G(\F_{q})/B(\F_{q})]\bigr).
+\end{equation}
+研究它很重要，因为
+\begin{equation*}
+\mathcal{H}_{G(\F_{q}),B(\F_{q})}\text{-}\mathrm{mod}\subset G(\F_{q})\text{-}\mathrm{mod},
+\end{equation*}
+即有限 Hecke 代数上的模构成$G$表示论的一部分。具体地，它们是“酉主序列”表示。这覆盖了这个有限群的大部分表示。
+
+Kazhdan–Lusztig 理论说$\mathcal{H}_{G(\F_{q}),B(\F_{q})}$通过范畴化出现，并且用这种方式研究它可以获得深刻洞见。具体地，它说$\mathcal{H}_{G(\F_{q}),B(\F_{q})}$来自$\Shv(B\backslash G/B)$上的$\operatorname{Tr}(F)$：
+\begin{equation}\tag{12.88}
+\Shv(B\backslash G/B).
+\end{equation}
+注意现在我们把它看成$\F_{q}$上的概形。人们通常这样说：
+\begin{equation}\tag{12.89}
+\underbrace{K_0}_{=\dim}\bigl(\Shv(B\backslash G/B)\bigr)=\mathcal{H}_{G(\F_{q}),B(\F_{q})}.
+\end{equation}
+结论是：我们可以用这一切美妙的几何来研究有限 Hecke 代数。例如，我们在$\Shv(B\backslash G/B)$上有 Verdier 对偶操作，并且在轨道上有由相交上同调层给出的自然自对偶基。这下降为$\mathcal{H}_{G(\F_{q}),B(\F_{q})}$的 Kazhdan–Lusztig 基。这个基有神奇的性质，只要知道这个基，就能重构这个 Hecke 代数的大部分表示论。
+
+这是范畴化帮助你以离开它就做不到的方式理解有限群表示论的一个例子。
+
+% [Tutor Note: (12.72) 中$F^{r}$表示$r$次 Frobenius 迭代，$\overline{\Q}_{\ell}$上的上同调须取紧支撑；$\F_{q^{r}}$是$\F_{q}$的$r$次扩域。(12.84) 的 Weil 层是“弱等变”而非等变——差一个同构而非严格相等，这正是迹依赖$F$的选择的原因。特征层理论要求$G$有足够好的约化结构，且$q$与$\ell$不交。】
+
+\section{几何 Satake}\label{sec:12-8}
+
+\begin{sectionkey}
+本节把 Satake 同构看作球 Hecke 代数的范畴化：几何 Satake 对应$\sph\simeq\Rep(G^{\vee})$经$\operatorname{Tr}(F)$去范畴化即得经典的$\mathcal{S}\mathrm{ph}\simeq|\Rep(G^{\vee})|$；区别在于前者用 Tannakian 重构真正构造出$G^{\vee}$，而经典同构只给出表示环。
+\end{sectionkey}
+
+几何 Satake 对应大致是说：我们其实没有真正讨论过的 Satake 对应是几何的。Satake 对应是关于球 Hecke 代数的：
+\begin{equation}\tag{12.90}
+\mathcal{S}\mathrm{ph}=\overline{\Q}_{\ell}\bigl[G(\cO)\backslash G(K)/G(\cO)\bigr].
+\end{equation}
+这里$K$是局部域。我们可以把它想成 Laurent 级数$K=\F_{q}((t))$或$K/\Q_{\ell}$的有限扩张。我们是在
+\begin{equation}\tag{12.91}
+\mathcal{S}\mathrm{ph}=\End_{G(K)}\operatorname{Fun}\bigl(G(K)/G(\cO)\bigr)
+\end{equation}
+遇到它的。回忆我们关心它，是因为它自然地作用在
+\begin{equation}\tag{12.92}
+\mathcal{S}\mathrm{ph}\circlearrowright\{\text{$G(\F)\backslash G(\bA)/G(\cO_{\bA})$上的函数}\}
+\end{equation}
+上。所以我们可以把它看成与$G$的局部表示论有关（它是这个表示的自同态），并且它也通过研究自守函数出现在整体图景中。
+
+Hecke 代数一般没有理由交换，但在这种情形我们可以通过范畴化到球 Hecke \emph{范畴}来了解交换性：
+\begin{equation}\tag{12.93}
+\sph=\Shv\bigl(G(\cO)\backslash G(K)/G(\cO)\bigr),
+\end{equation}
+这里我们在正特征设定中：$K=\F_{q}((t))$且$\cO=\F_{q}[[t]]\subset K$。去范畴化由 Frobenius 的迹$\operatorname{Tr}(F)$实现：
+\begin{equation}\tag{12.94}
+\begin{array}{ccc}
+\mathcal{S}\mathrm{ph} & \xleftarrow{\ \operatorname{Tr}(F)\ } & \sph
+\end{array}
+\end{equation}
+几何 Satake 对应识别
+\begin{equation}\tag{12.95}
+\sph\xrightarrow{\ \sim\ }\Rep(G^{\vee})=\QC(\mathrm{pt}/G^{\vee}).
+\end{equation}
+然后我们可以用$\operatorname{Tr}(F)$去范畴化$\Rep(G^{\vee})$，从而推出经典 Satake 对应。$\QC(\mathrm{pt}/G^{\vee})$上的 Frobenius 就是恒等，至少当群分裂时如此。因此$\operatorname{Tr}(F)=\dim$，它映到表示环：
+\begin{equation}\tag{12.96}
+|\Rep(G^{\vee})|\xrightarrow{\ \dim\ }\Rep(G^{\vee}).
+\end{equation}
+但我们知道$\QC$与$\dim$交换，所以我们要计算惯性/环路空间：
+\begin{equation}\tag{12.97}
+\mathcal{L}(\mathrm{pt}/G^{\vee})=\mathrm{pt}/G^{\vee}\times_{\mathrm{pt}/(G^{\vee}\times G^{\vee})}\mathrm{pt}/G^{\vee}=\frac{G^{\vee}}{G^{\vee}}.
+\end{equation}
+因此$G^{\vee}$的表示环是$G^{\vee}/G^{\vee}$上的代数函数：
+\begin{equation}\tag{12.98}
+|\Rep(G^{\vee})|=\cO\Bigl(\frac{G^{\vee}}{G^{\vee}}\Bigr).
+\end{equation}
+合起来我们得到与函数-层对应中一样的图表：
+\begin{equation}\tag{12.99}
+\begin{array}{ccc}
+\mathcal{S}\mathrm{ph} & \xrightarrow{\ \sim\ } & |\Rep(G^{\vee})|=\cO\Bigl(\frac{G^{\vee}}{G^{\vee}}\Bigr)\\
+{\uparrow}^{\operatorname{Tr}(F)} & & {\uparrow}^{\operatorname{Tr}(F)=\dim}\\
+\sph & \xrightarrow{\ \sim\ } & \Rep(G^{\vee})
+\end{array}
+\end{equation}
+而最上面一行就是经典 Satake 同构。注意我们也可以把它看成环面上的 Weyl 不变函数：
+\begin{equation}\tag{12.100}
+\cO\Bigl(\frac{G^{\vee}}{G^{\vee}}\Bigr)=\cO(H^{\vee})^{W}.
+\end{equation}
+这有用的一种方式是：我们对范畴$\sph$交换有一个很好的理由，而现在这表明 Hecke 代数$\mathcal{S}\mathrm{ph}$也交换。也许更深刻的是：Langlands 对偶群$G^{\vee}$出现了。所以 Satake 同构的 Langlands 解释是
+\begin{equation}\tag{12.101}
+\mathcal{S}\mathrm{ph}\simeq|\Rep(G^{\vee})|,
+\end{equation}
+其中$G^{\vee}$是$\C$上的约化群，其根数据对偶于$G$的根数据。但我们不能从$|\Rep(G^{\vee})|$恢复$G^{\vee}$：群一般不由其表示环决定。然而几何 Satake 对应实际上用 Tannakian 重构为我们构造了对偶群$G^{\vee}$。这是几何 Satake 对应比经典版本更强大的众多原因之一。
+
+% [Tutor Note: (12.90) 与 (12.93) 中$\mathcal{S}\mathrm{ph}$（代数）与$\sph$（范畴）用不同字体区分，原文用粗体与花体混排、容易混淆；这里统一以$\mathcal{S}\mathrm{ph}$记球 Hecke 代数、$\sph$记球 Hecke 范畴。(12.97) 的$\mathcal{L}$是惯性/自由环路空间；对$\mathrm{pt}/G^{\vee}$它等于$G^{\vee}/G^{\vee}$，故$\QC$的维数给出$G^{\vee}$的表示环而非群本身——这正是 Tannakian 重构（保留张量结构）比$K_0$（只看表示环）更强的地方。]
+

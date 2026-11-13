@@ -1,0 +1,269 @@
+% ============================================================
+%  part01.tex  |  原文 PDF p.1–6（页脚 p.0–5）
+%  内容：前言 + 第 1 章 引言（1.1 作用量原理；1.2 可观测量代数）
+% ============================================================
+
+\section*{前言}
+\addcontentsline{toc}{section}{前言}
+
+% >>> p002
+首先，我要为这份讲义草率的准备状况致歉。它最初是为了配合我在 2025 年四川大学
+暑期学校讲授的量子场论迷你课程而编写的。那是一个高强度的项目：10 天之内安排了
+30 小时的课程。这些材料是在授课过程中随写随编的，既是我本人也是学生们的“求生指南”。
+所涵盖的专题反映了我的个人视角，绝非穷尽无遗。对于参考文献中的任何遗漏，以及可能
+仍然存在的错误或笔误，我深表歉意。尽管如此，我希望这份讲义对某些人有所帮助。
+
+感谢 Bin Zhang 教授邀请我参加这一项目，感谢 Han Liu 与 Qiyuan Chen 协助录入了
+早期版本的讲义。待我有更多时间时，我会进一步完善和更新这份讲义。新版本将发布在
+我的主页：\url{https://sili-math.github.io/}。
+
+% [Tutor Note: 本讲义是作者 2025 年夏在四川大学“几何与拓扑”暑期学校十天内边讲边写的
+% 速成讲义，因此体例上偏“路线图”而少细节证明；下文凡作者写 "It is obvious that.../
+% left as exercise" 处，译者均在批注中说明省略的实质论证，不擅自补写物理内容。]
+
+\section{引言（Introduction）}
+
+\begin{keypoints}
+  \item \textbf{核心物理图像}：一个物理系统由场空间 $\mathcal{E}$ 上的作用量泛函
+        $S:\mathcal{E}\to\mathbf{k}$ 描述；经典物理关注作用量的临界点（运动方程），
+        量子物理关注由路径积分给出的可观测量的关联。
+  \item \textbf{数学工具}：无穷维流形与变分法、测度论（Wiener 测度）、关于 $\hbar$
+        的渐近分析；代数一侧则引入“可观测量代数/因子化乘积”。
+  \item \textbf{主要结论}：QFT 的根本困难在于无穷维路径积分测度尚无严格构造；
+        可行的两条路径是（i）借助拓扑/几何的约化，（ii）$\hbar$-渐近展开（微扰重整化）。
+  \item \textbf{译者评注}：本节把“可观测量代数”作为贯穿全书的线索，1.2 节的
+        因子化乘积将在第 8 章以预因子化代数/因子化代数的形式严格化，这也是
+        Costello--Gwilliam 学派构造微扰 QFT 的出发点。
+\end{keypoints}
+
+\subsection{作用量原理（Action Principle）}
+
+物理系统通常（尽管并非总是）由一个映射
+\[
+  S:\ \mathcal{E}\longrightarrow \mathbf{k},\qquad \mathbf{k}=\R\ \text{或}\ \C
+\]
+描述，其中 $\mathcal{E}$ 称为\emph{场空间}，泛函 $S$ 称为\emph{作用量}。场空间
+$\mathcal{E}$ 通常是无穷维的。以下是一些典型例子。
+
+% >>> p003
+\begin{itemize}[leftmargin=1.6em,itemsep=0.25em]
+  \item \textbf{标量场论}。$\mathcal{E}=C^{\infty}(X)$。一个可能的作用量是
+        \[
+          S[\phi]=\frac{1}{2}\int_X\left(|\nabla\phi|^2+m^2\phi^2\right),
+          \qquad \phi\in\mathcal{E}.
+        \]
+  \item \textbf{规范场论}。$\mathcal{E}=\{\text{向量丛上的联络 }A\}$。在 Yang--Mills
+        理论中，
+        \[
+          \mathrm{YM}[A]=\frac{1}{4}\int \operatorname{Tr}\left(F\wedge *F\right),
+        \]
+        其中 $F=\dd A+\frac{1}{2}[A,A]$ 是 $A$ 的曲率。在 Chern--Simons 理论中，
+        \[
+          \mathrm{CS}[A]=\int_M \operatorname{Tr}\left(\frac{1}{2}A\wedge \dd A
+          +\frac{1}{6}A\wedge[A,A]\right),
+        \]
+        其中 $M$ 是一个三维流形。
+  \item \textbf{$\sigma$ 模型}。$\mathcal{E}=\{\text{映射 }\Sigma\to X\}$。这里的场是
+        两个流形之间的映射。
+  \item \textbf{引力}。$\mathcal{E}=\{X\ \text{上的度规}\}$。场是流形 $X$ 上的度规。
+\end{itemize}
+
+有时我们可以借助截断（cut-off）、离散化、局部化等方法，把无穷维量子场论的问题
+化归为有限维几何问题。这种化归已经导向了许多深刻的数学预言。
+
+在经典物理中，运动方程描述作用量的极值构型，可以看作 $S$ 的临界点
+\[
+  \operatorname{Crit}(S)=\{\delta S=0\},
+\]
+这是变分方法的表述。许多有趣的方程由此产生，例如 Laplace 方程、Yang--Mills 方程等。
+
+在量子物理中，我们关心的是可观测量的量子关联。粗略地说，可观测量 $O$ 是场空间
+$\mathcal{E}$ 上的一个函数。一种流行的量子关联表述取如下形式：
+\[
+  \langle O\rangle\propto \int_{\mathcal{E}}\ee^{\frac{\ii}{\hbar}S}O,
+\]
+这就是所谓的 \emph{Feynman 路径积分}。这是一个无穷维积分，其测度在数学严格性上
+大多未知。已知的此类无穷维积分理论的一个例子是描述 Brown 运动的 Wiener 积分。
+它可以视为虚时间下的量子力学，一直是随机分析中的基本概念。一般而言，场的这类
+积分的数学构造是量子场论中最具挑战性的问题之一。
+
+另一方面，我们可以通过（关于 $\hbar$ 的）渐近分析获得部分信息。这就是\emph{微扰理论}，
+它在重整化理论中有坚实的基础。本讲义将详细解释微扰重整化理论的构造。
+
+% [Tutor Note: 记号提醒——原文正文用花体 $\mathcal{E}$ 表示“场空间”，用 $E$ 表示
+% 底流形 $X$ 上的向量丛，而 $E(U)=\Gamma(U,E)$ 是开集 $U$ 上的截面空间。三者含义
+% 不同，排版时切勿混用；本译本严格保留这一区分。]
+
+% [Tutor Note: 路径积分 $\langle O\rangle\propto\int_{\mathcal{E}}e^{\frac{i}{\hbar}S}O$
+% 的比例常数就是配分函数（partition function）$Z=\int_{\mathcal{E}}e^{\frac{i}{\hbar}S}$。
+% 注意符号约定：Minkowski 号差下用 $e^{iS/\hbar}$，Wick 转动到 Euclidean 号差后变为
+% $e^{-S_E/\hbar}$，此时才有 Wiener 测度那样的正测度解释。混用两种约定是常见的符号
+% 错误来源，核对文献时请先确认其号差与 $i$ 因子。]
+
+% [Tutor Note: “分布（distribution）是线性可观测量”一句，是指 $\mathcal{O}(\mathcal{E})$
+% 的对偶空间元素（即 $\mathcal{E}$ 上的连续线性泛函）给出线性可观测量；例如
+% $\phi\mapsto\int_X f\phi$。这与 Schwartz 分布在此处的用法一致，不要与“概率分布”混淆。]
+
+\subsection{可观测量代数（Observable Algebra）}
+
+可观测量在量子场论（QFT）中构成丰富的代数结构。为说明这一点，考虑时空流形 $X$
+上的 QFT，$\mathcal{E}$ 是向量丛 $E$ 的截面空间，记 $\mathcal{E}=\Gamma(X,E)$。
+我们想理解
+\[
+  \int_{\mathcal{E}}(-).
+\]
+
+% >>> p004
+\begin{itemize}[leftmargin=1.6em,itemsep=0.25em]
+  \item 当 $X=\text{点}$ 时，$E$ 是向量空间，比如 $\R^n$。此时场空间
+        $\mathcal{E}=\R^n$，而 $\int_{\mathcal{E}}$ 归结为我们在中学学过的通常的微积分。
+  \item 当 $\dim X>0$（即 $X$ 不是一个点）时，在每一点 $p\in X$ 处有一个纤维
+        $E_p$（例如一个线性空间）。但
+        \[
+          \mathcal{E}\neq \prod_{p\in X}E_p.
+        \]
+        $X$ 的拓扑会造成差别，从而带来新的代数结构。
+\end{itemize}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.22\linewidth]{fig_p004_1.png}
+  \caption*{示意图：底流形 $X$、点 $p$ 及其上的纤维 $E_p$；场空间
+    $\mathcal{E}=\Gamma(X,E)$ 是丛 $E\to X$ 的截面空间（原文 PDF p.4，原文无编号）}
+\end{figure}
+
+% [Tutor Note: 第二个要点中 $\mathcal{E}\neq\prod_{p\in X}E_p$ 的“不等”是关键：
+% 截面空间 $\Gamma(X,E)$ 是乘积的子空间（要求截面在 $X$ 上连续/光滑地拼接），
+% 不是逐点纤维的任意选择。原作者用“$\neq$”强调这一点，而不是说两者毫无关系。
+% 这也解释了为何 $X$ 的拓扑会影响可观测量代数——局域截面如何粘合是拓扑问题。]
+
+粗略地说，\emph{可观测量}是场上的函数，记为 $\mathcal{O}(\mathcal{E})$。例如，分布是线性可观测量。新的结构来自以下事实。给定开子集 $U\subset X$，我们可以谈论
+支撑在 $U$ 中的可观测量 $\operatorname{Obs}(U)$：
+\[
+  \operatorname{Obs}(U)=\mathcal{E}(U)\ \text{上的函数}=\Gamma(U,E).
+\]
+
+% [Tutor Note: 这里已隐含了“层”的观点：$U\mapsto\operatorname{Obs}(U)$ 是一个
+% 预层，限制映射由场的限制 $\mathcal{E}(V)\to\mathcal{E}(U)$ 对偶给出。第 8 章
+% 把这一结构公理化为预因子化代数（prefactorization algebra）：不只是限制，
+% 还要求互不相交开集上的可观测量可以“相乘”。]
+
+\begin{wexam}{1.1}
+  $\mathcal{E}=C^{\infty}(X)$，$p\in X$。考虑
+  \[
+    \begin{aligned}
+      \mathcal{O}_1:\ \mathcal{E}&\longrightarrow \R,\\
+      f&\longmapsto \mathcal{O}_1(f)=f(p)^3.
+    \end{aligned}
+  \]
+  $\mathcal{O}_1$ 是一个支撑在 $p$ 的任意开邻域中的可观测量。
+\end{wexam}
+
+给定包含在开集 $V$ 中的互不相交开子集 $U_i\subset V$，使得其不交并
+$\bigsqcup_i U_i\subset V$，我们对可观测量有一个映射（\emph{因子化乘积}）：
+\[
+  \bigotimes_i \operatorname{Obs}(U_i)\longrightarrow \operatorname{Obs}(V).
+\]
+直观上，如果把 $\mathcal{E}(U)$ 限制到 $\mathcal{E}(U_i)$，则对偶地有
+$\mathcal{O}(\mathcal{E}(U_i))\to\mathcal{O}(\mathcal{E}(U))$。朴素地，我们可以把
+这些函数\emph{相乘}，于是得到
+\[
+  \bigotimes_i \operatorname{Obs}(U_i)\longrightarrow \operatorname{Obs}(V).
+\]
+然而，这需要进一步的\emph{量子修正}，因为 $U_i$ 中的场可能相互“交谈”。这一代数结构在物理中称为\emph{算子乘积展开}（operator product expansion, OPE），在数学中
+称为\emph{因子化乘积}（factorization product）。QFT 中可观测量代数的这种数学理论
+在以下工作中得到发展：
+
+\begin{itemize}[leftmargin=1.6em,itemsep=0.2em]
+  \item Beilinson--Drinfeld \textup{[5]}：发展了\emph{因子化代数}，用以表述二维
+        手征共形场论（CFT），并引入了\emph{手征同调}（chiral homology）的概念。
+  \item Costello--Gwilliam \textup{[11]}：在 Batalin--Vilkovisky（BV）形式
+        \textup{[3]} 下，由微扰重整化理论构造了因子化代数。
+\end{itemize}
+
+% >>> p005
+\begin{wexam}{1.2}（拓扑量子力学（TQM））
+  在拓扑 QFT 中，$\operatorname{Obs}(U)$ 只依赖于 $U$ 的拓扑。考虑 $\dim X=1$
+  （一维 QFT 就是量子力学），且对任意可缩开区间 $U$ 有 $\operatorname{Obs}(U)=A$。
+  现在考虑 $X$ 上的两个开区间 $U_1,U_2$，并把它们嵌入一个更大的区间 $V$ 之中。
+
+  \begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.33\linewidth]{fig_p005_1.png}
+    \caption*{示意图：两个开区间 $U_1,U_2$ 嵌入更大的区间 $V$
+      （原文 PDF p.5，原文无编号）}
+  \end{figure}
+
+  在拓扑理论中，因子化乘积不依赖于位置与大小。这给出一个映射
+  \[
+    \operatorname{Obs}(U_1)\otimes\operatorname{Obs}(U_2)\longrightarrow
+    \operatorname{Obs}(V),
+    \qquad\text{或}\qquad A\otimes A\longrightarrow A.
+  \]
+  我们得到一个\emph{结合代数}！我们还可以加入边界。
+
+  \begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.38\linewidth]{fig_p005_2.png}
+    \caption*{示意图：加入边界 $N,M$ 后，$A$ 的乘法给出 $A\otimes M\to M$ 与
+      $N\otimes A\to N$（原文 PDF p.5，原文无编号）}
+  \end{figure}
+
+  于是得到 $A\otimes M\to M$，这意味着 $M$ 是一个左 $A$-模。类似地，$N$ 是一个
+  右 $A$-模。总而言之，量子力学研究算子代数及其表示（模）。
+
+  本例中出现的代数结构有如下的同调解释。考虑两个算子被放置在直线上的两个不同点。
+  当一个算子靠近另一个时，直线拓扑的代数结构来自同调群
+  \[
+    H_{\bullet}(\R-\{0\})=H_0(\R-\{0\})=\Z_{\mathrm{left}}\oplus\Z_{\mathrm{right}},
+  \]
+  它由左乘与右乘构成。结合性来自进一步的一致性：
+
+  \begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.36\linewidth]{fig_p005_3.png}
+    \caption*{示意图：结合性 $(a\cdot b)\cdot c=a\cdot(b\cdot c)$ 的一致性条件
+      （原文 PDF p.5，原文无编号）}
+  \end{figure}
+
+  \[
+    \Longrightarrow\quad (a\cdot b)\cdot c=a\cdot(b\cdot c),
+    \qquad a,b,c\in\operatorname{Obs}(U_i),\ i=1,2,3.
+  \]
+\end{wexam}
+
+% [Tutor Note: $H_{\bullet}(\R-\{0\})=H_0(\R-\{0\})=\Z_{\mathrm{left}}\oplus
+% \Z_{\mathrm{right}}$ 是启发性说明：直线上两个算子的构型空间有两个连通分支
+% （左、右），分别对应左乘与右乘。严格的说法应把“算子放在点上”换成“区间嵌入的
+% 余运算”（operad/因子化代数），见 Costello--Gwilliam [11] 第 1 卷。]
+
+% >>> p006
+\begin{wexam}{1.3}（二维手征 QFT）
+  设 $\dim X=2$。二维（2d）手征理论的因子化乘积是全纯的。
+
+  \begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.22\linewidth]{fig_p006_1.png}
+    \caption*{示意图：二维手征理论中算子 $A(z)$ 与 $B(w)$ 及其相互绕行
+      （原文 PDF p.6，原文无编号）}
+  \end{figure}
+
+  在全纯坐标下，当一个算子靠近（或绕行）另一个算子时，绕数可以通过它们的
+  Fourier/Laurent 模来表达：
+  \[
+    A(z)B(w)=\sum_{n\in\Z}\frac{(A_{(n)}B)(w)}{(z-w)^{n+1}}.
+  \]
+  我们得到无穷多个“乘积”（或二元运算）$\{A_{(n)}B\}$。此时可观测量代数给出一个
+  \emph{顶点算子代数}（vertex operator algebra）。
+
+  % [Tutor Note: OPE 的模记号 $(A_{(n)}B)(w)$ 与分母幂次 $(z-w)^{n+1}$ 是顶点代数
+  % （Borcherds 意义）的标准约定；有些文献写成 $(z-w)^{-n-1}$ 并对 $n$ 作相反的
+  % 编号，两者只差一个重编号。核对公式时先看分母幂次是 $n+1$ 还是 $-n-1$，
+  % 这是极易出错处。]
+\end{wexam}
+
+% [Tutor Note: 原文 PDF p.6 作 "These examples play an fundamental role..."，
+% 其中 "an" 应为 "a"，属原文笔误；p.3 的 "quanatum field theory" 亦应为
+% "quantum field theory"。按体例照录原文意思、不擅自改写英文原文，仅在此注明。]
+
+这些例子在引导我们理解量子场论中的一般构造方面起着根本性的作用，后文将会看到。

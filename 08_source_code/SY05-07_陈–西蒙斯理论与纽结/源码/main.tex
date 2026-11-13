@@ -1,0 +1,148 @@
+﻿% =============================================================================
+%  中文学术译注本：David Grabovsky
+%  《Chern–Simons Theory in a Knotshell》（陈–西蒙斯理论与纽结）
+%  原文：2022-09-14，38 页，pdfTeX；一篇以 Witten 1989 年 Jones 多项式论文
+%        [Commun. Math. Phys. 121 (1989) 351] 为主线的教学性综述
+%
+%  结构：本文件为装配入口；正文分片在 sections/，插图在 figures/。
+%  编译：xelatex main.tex（两遍）
+%  中文字体：默认 fontset=fandol（TeX Live 自带，跨平台）；Windows 可改 fontset=windows
+%  译注开关：\showyizhutrue -> \showyizhufalse 关闭橙色译注方框与编号
+%             \showkeytrue  -> \showkeyfalse  关闭蓝色「本节重点」方框
+% =============================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[UTF8, fontset=fandol, heading=true]{ctex}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage[a4paper,left=2.5cm,right=2.5cm,top=2.6cm,bottom=2.6cm]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[font=small,labelfont=bf,labelsep=quad]{caption}
+\usepackage[sort,compress]{cite}
+\usepackage[colorlinks=true,
+            linkcolor=blue!45!black,
+            citecolor=blue!45!black,
+            urlcolor=blue!45!black]{hyperref}
+
+\linespread{1.12}
+\setlength{\emergencystretch}{3em}
+% ---------------------------------------------------------------------------
+% PDF 元数据与书签
+% ---------------------------------------------------------------------------
+\hypersetup{
+  pdftitle={陈--西蒙斯理论与纽结（Chern--Simons Theory in a Knotshell 中文译注本）},
+  pdfauthor={David Grabovsky（原著）；中文译注：DeepSeek Harness},
+  pdfsubject={Chern--Simons theory, knot invariants, topological field theory},
+  pdfkeywords={Chern--Simons, Wilson loop, framing, Jones polynomial, anyon},
+  bookmarksnumbered=true
+}
+\allowdisplaybreaks[3]
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+\renewcommand{\refname}{参考文献}
+\renewcommand{\contentsname}{目录}
+\renewcommand{\appendixname}{附录}
+
+% ---------------------------------------------------------------------------
+% 常用数学宏
+% ---------------------------------------------------------------------------
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\SCS}{S_{\mathrm{CS}}}
+\newcommand{\SECS}{S^{\mathrm{E}}_{\mathrm{CS}}}
+\newcommand{\sgn}{\operatorname{sign}}
+\newcommand{\eqdef}{\equiv}
+
+% ---------------------------------------------------------------------------
+% 译注（yizhu）：橙色方框，全局连续编号，可一键关闭
+% ---------------------------------------------------------------------------
+\newif\ifshowyizhu
+\showyizhutrue
+\newcounter{yizhu}
+\newsavebox{\yizhubox}
+
+\newenvironment{yizhu}[1][]{%
+    \refstepcounter{yizhu}%
+    \par\medskip
+    \ifshowyizhu
+        \begin{tcolorbox}[enhanced, breakable, fontupper=\small,
+            colback=orange!4!white, colframe=orange!55!black,
+            boxrule=0.5pt, arc=2pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+            title={\small\textbf{译注 \theyizhu\if\relax\detokenize{#1}\relax\else\ ——#1\fi}},
+            fonttitle=\bfseries, coltitle=black, colbacktitle=orange!12!white,
+            toptitle=1pt, bottomtitle=1pt]
+    \else
+        \setbox\yizhubox\vbox\bgroup
+    \fi
+}{%
+    \ifshowyizhu
+        \end{tcolorbox}%
+    \else
+        \egroup
+    \fi
+    \par\smallskip
+}
+
+% ---------------------------------------------------------------------------
+% 本节重点（keytakeaways）：蓝色方框，可一键关闭
+% ---------------------------------------------------------------------------
+\newif\ifshowkey
+\showkeytrue
+\newenvironment{keytakeaways}{%
+    \par\medskip
+    \ifshowkey
+    \begin{tcolorbox}[enhanced,
+        colback=blue!3!white, colframe=blue!35!black,
+        boxrule=0.5pt, arc=2pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+        title={\small\textbf{本节重点}\quad{\footnotesize（译者所加）}},
+        fonttitle=\bfseries, coltitle=black, colbacktitle=blue!10!white,
+        toptitle=1pt, bottomtitle=1pt]
+    \else
+        \setbox\yizhubox\vbox\bgroup
+    \fi
+}{%
+    \ifshowkey
+        \end{tcolorbox}%
+    \else
+        \egroup
+    \fi
+    \par\medskip
+}
+
+% ---------------------------------------------------------------------------
+% 题名
+% ---------------------------------------------------------------------------
+\title{陈--西蒙斯理论与纽结\\[6pt]
+       {\large\mdseries Chern--Simons Theory in a Knotshell}}
+\author{David Grabovsky\\[2pt]
+        {\small 原文：2022 年 9 月 14 日，38 页，pdf\TeX}\\[8pt]
+        {\normalsize 中文译注本}\\
+        {\small 译注与排版：DeepSeek Harness 智能体集群}}
+\date{原文 2022 年 9 月 14 日；中译本 2026 年 10 月}
+
+% =============================================================================
+\begin{document}
+
+\maketitle
+
+\input{sections/s00-front}
+\input{sections/s01-intro}
+\input{sections/s02a-abelian}
+\input{sections/s02b-abelian2}
+\input{sections/s03a-framing}
+\input{sections/s03b-framing2}
+\input{sections/s04a-hilbert}
+\input{sections/s04b-hilbert2}
+\input{sections/s05-wrapup}
+
+\end{document}

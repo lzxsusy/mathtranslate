@@ -1,0 +1,374 @@
+% 译自 arXiv:2306.13589v2 原 tex 第 1291--1646 行
+\section{导出函子}
+\takeaway{%
+  \textbf{物理图像：}本节是一般同调代数框架，暂不直接涉及物理对象；其动机仍来自镜像对称的 B-侧：不同阿贝尔范畴的导出范畴须经由保持正合性（即保持区分三角形）的函子相互比较。\\
+  \textbf{数学工具：}函子到复形范畴的逐分量延拓 $\mathsf{Kom^\#\!(F)}$ 与同伦函子 $\mathsf{H^\#\!(F)}$、适应类（adapted class）、局部化 $\mathsf{H^\#\!(\mathcal{R})}[S_\mathcal{R}^{-1}]\rightarrow\mathsf{D^\#\!(A)}$ 的范畴等价、内射与投射对象类，以及右、左导出函子的泛性质刻画。\\
+  \textbf{主要结论：}左（右）正合函子选定适应类后导出为右（左）导出函子 $\mathsf{RF}$、$\mathsf{LF}$，其存在性与唯一性由泛性质保证；用复形的内射或投射消解代入即得经典导出函子，$\textup{Ext}$ 群与 Tor 函子是其主要实例。%
+}
+\thispagestyle{plain}
+
+
+\subsection{导出函子的构造}\label{ch3.1}
+
+
+本章希望借助保持阿贝尔范畴某些理想性质（例如序列的正合性，此处按区分三角形的意义来理解）的函子，把阿贝尔范畴的导出范畴联系起来：
+
+\begin{Def}\label{exactderivedfunc}
+	设 $\mathsf{A}, \mathsf{B}$ 为阿贝尔范畴。其导出范畴之间的函子 $\mathsf{D(A)}\rightarrow\mathsf{D(B)}$ 若把 $\mathsf{D(A)}$ 中的区分三角形映为 $\mathsf{D(B)}$ 中的区分三角形，即形如 \eqref{distinguitriangle} 或 \eqref{conetriangle} 的三角形，则称该函子为\textbf{正合的}\index{functor!exact (between derived categories)}。
+\end{Def}
+% [Tutor Note: 此处「正合函子」与定义 \ref{additiveexactfunc} 中阿贝尔范畴之间的正合函子含义不同：前者保持区分三角形，后者保持短正合序列。当正合函子由阿贝尔范畴的正合函子诱导时两种含义一致，见命题 \ref{D(F)exact}。]
+
+我们从阿贝尔范畴的正合函子及其到复形的延拓出发，构造这些特定的「导出函子」。
+
+\begin{Def}
+	设 $\mathsf{A}, \mathsf{B}$ 为阿贝尔范畴。函子 $\mathsf{F}:\mathsf{A}\rightarrow\mathsf{B}$ 可按分量延拓为 $\mathsf{Kom^\#\!(F)}:\mathsf{Kom^\#\!(A)}\rightarrow\mathsf{Kom^\#\!(B)}$（$\#=\emptyset,+,-,\mathsf{b}$）：
+	\begin{itemize}[leftmargin=0.5cm]
+		\renewcommand{\labelitemi}{\textendash}
+		\item 对任意 $X^\bullet\in\text{obj}(\mathsf{Kom^\#\!(A)})$，$\mathsf{F}(X^\bullet)^\bullet\equiv\mathsf{F}(X)^\bullet\in\text{obj}(\mathsf{Kom^\#\!(B)})$ 由 $\mathsf{F}(X)^n\coloneqq\mathsf{F}(X^n)$ 给出，其微分为 $d_{\mathsf{F}(X)}^n\coloneqq \mathsf{F}(d_X^n):\mathsf{F}(X^n)\rightarrow\mathsf{F}(X^{n+1})$，$n\in\mathbb{Z}$；
+		
+		\item 对任意 $\mathsf{Kom^\#\!(A)}$ 中的 $f^\bullet:X^\bullet\rightarrow Y^\bullet$，$\mathsf{F}(f)^\bullet:\mathsf{F}(X)^\bullet\rightarrow\mathsf{F}(Y)^\bullet$ 由 $\mathsf{F}(f)^n\coloneqq \mathsf{F}(f^n)$ 给出，$n\in\mathbb{Z}$。
+	\end{itemize}
+	由于 $\mathsf{Kom^\#\!(F)}$ 显然保持同伦关系（只需把 $\mathsf{F}$ 作用到链同伦 $k^\bullet$ 上；参看定义 \ref{quasiso}），它限制为同伦函子 $\mathsf{H^\#\!(F)}:\mathsf{H^\#\!(A)}\rightarrow\mathsf{H^\#\!(B)}$。
+\end{Def}
+
+\begin{Pro}\label{D(F)exact}
+	设 $\mathsf{A}, \mathsf{B}$ 为阿贝尔范畴，$\mathsf{F}:\mathsf{A}\rightarrow\mathsf{B}$ 为正合函子。则 $\mathsf{H^\#\!(F)}$ 把拟同构映为拟同构，从而在导出范畴上诱导出函子 $\mathsf{D^\#\!(F)}:\mathsf{D^\#\!(A)}\rightarrow\mathsf{D^\#\!(B)}$，而且该函子是正合的\textup(按定义 \ref{exactderivedfunc} 的意义\textup)。
+\end{Pro}
+
+\begin{proof}
+	设 $X^\bullet\in\text{obj}(\mathsf{Kom^\#\!(A)})$ 无环，即对每个 $n\in\mathbb{Z}$ 有 $K^n\coloneqq\ker(d_X^n)\cong\text{im}(d_X^{n-1})\subset X^n$。于是由 $\mathsf{F}$ 的正合性（定义 \ref{additiveexactfunc}），$\mathsf{A}$ 中的短正合序列 $0\rightarrow  K^n\xrightarrow{i^n} X^n\xrightarrow{p^n} K^{n+1}\rightarrow 0$（其中 $i^\bullet$ 是典范包含，$p^\bullet$ 等于限制到其像上的 $d_X^\bullet$，从而 $d_X^n=i^{n+1}\circ p^n$）被映为 $\mathsf{B}$ 中的短正合序列 $0\rightarrow\mathsf{F}(K^n)\xrightarrow{\mathsf{F}(i^n)} \mathsf{F}(X^n)\xrightarrow{\mathsf{F}(p^n)} \mathsf{F}(K^{n+1})\rightarrow 0$，且 $\mathsf{F}(d_X^n)=\mathsf{F}(i^{n+1})\circ\mathsf{F}(p^n)$。由于 $\mathsf{F}(i^{n+1})$ 是单态射而 $\mathsf{F}(p^n)$ 是满态射，推出 $\text{im}(\mathsf{F}(d_X^{n-1}))\cong\mathsf{F}(X^{n-1})/\ker(\mathsf{F}(d_X^{n-1}))=\mathsf{F}(X^{n-1})/\ker(\mathsf{F}(p^{n-1}))\cong\text{im}(\mathsf{F}(p^{n-1}))=\mathsf{F}(K^n)$，同时也有 $\ker(\mathsf{F}(d_X^n))\cong\mathsf{F}(K^n)$，于是 $H^n(\mathsf{F}(X)^\bullet)=\ker(\mathsf{F}(d_X^n))/\text{im}(\mathsf{F}(d_X^{n-1}))\cong\{0\}$。因此 $\mathsf{F}$ 把无环复形 $X^\bullet$ 映为无环复形 $\mathsf{F}(X)^\bullet\in\text{obj}(\mathsf{Kom^\#\!(B)})$。
+	
+	现在只需回顾注 \ref{C(f)acyclic}：$f^\bullet:X^\bullet\rightarrow Y^\bullet$ 是 $\mathsf{H^\#\!(A)}$ 中的拟同构，当且仅当其锥 $C(f)^\bullet\in\text{obj}(\mathsf{Kom^\#\!(A)})$ 无环；而我们刚刚看到，这蕴含 $\mathsf{F}(C(f)^\bullet)\cong C(\mathsf{F}(f))^\bullet\in\text{obj}(\mathsf{Kom^\#\!(B)})$ 无环，后者又等价于 $\mathsf{F}(f)^\bullet:\mathsf{F}(X)^\bullet\rightarrow\mathsf{F}(Y)^\bullet$ 是 $\mathsf{H^\#\!(B)}$ 中的拟同构。因此，$\mathsf{H^\#\!(F)}$ 如所述诱导出函子 $\mathsf{D^\#\!(F)}$。
+	
+	这里我们只用到了 $\mathsf{F}$ 因其加性而保持锥：上面的同构就是 $\mathsf{F}(C(f)^\bullet)\cong\mathsf{F}(X)^{\bullet+1}\oplus\mathsf{F}(Y)^\bullet=C(\mathsf{F}(f))^\bullet$。对柱对象也一样：$\mathsf{F}(Z(f)^\bullet)\cong \mathsf{F}(X)^\bullet\oplus \mathsf{F}(X)^{\bullet+1}\oplus \mathsf{F}(Y)^\bullet=Z(\mathsf{F}(f))^\bullet$。特别地，$\mathsf{D^\#\!(F)}$ 把 $\mathsf{A}$ 中的区分三角形——即一切由图表 \eqref{distinguidiag} 得到、与 \eqref{distinguitriangle} 拟同构的三角形——映为 $\mathsf{B}$ 中的区分三角形，后者与典范三角形
+	\[
+	\mathsf{F}(X)^\bullet\xrightarrow{\mathsf{F}(i_1)^\bullet} Z(\mathsf{F}(f))^\bullet\xrightarrow{\mathsf{F}(p_{23})^\bullet} C(\mathsf{F}(f))^\bullet\xrightarrow{\mathsf{F}(\delta)[1]^\bullet}\mathsf{F}(X)[1]^\bullet\,.
+	\] 
+	拟同构。换言之，$\mathsf{D^\#\!(F)}$ 是正合的。
+\end{proof}
+
+然而，要构造导出函子，我们并不能对任意复形施用正合函子。
+
+\begin{Def}\label{adaptedclass}
+	设 $\mathsf{A}, \mathsf{B}$ 为阿贝尔范畴。若对象类 $\mathcal{R}\subset\text{obj}(\mathsf{A})$ 关于有限直和封闭，$(R_i\in\mathcal{R}\,\;\forall i\in I\implies\bigoplus_{i\in I}R_i\in\mathcal{R})$，并且满足以下两条之一，则称 $\mathcal{R}$ 对左/右正合函子 $\mathsf{F}:\mathsf{A}\rightarrow\mathsf{B}$ 是\textbf{适应的}\index{adapted class of objects}：
+	\begin{itemize}[leftmargin=0.5cm]
+		\item 当 $\mathsf{F}$ 左正合时：$\mathsf{F}$ 把 $\mathsf{Kom^+(\mathcal{R})}$ 中的无环复形映为 $\mathsf{Kom(B)}$ 中的无环复形，且对每个 $X\in\text{obj}(\mathsf{A})$ 存在某个 $R\supset X$ 属于~$\mathcal{R}$（读作：$\mathsf{A}$ 的任一对象都是某个由 $\mathcal{R}$ 中对象构成的对象之子对象）；
+		
+		\item 当 $\mathsf{F}$ 右正合时：$\mathsf{F}$ 把 $\mathsf{Kom^-(\mathcal{R})}$ 中的无环复形映为 $\mathsf{Kom(B)}$ 中的无环复形，且每个 $X\in\text{obj}(\mathsf{A})$ 都可写成 $X=R/R'$，其中 $R, R'\in\mathcal{R}$（读作：$\mathsf{A}$ 的任一对象都是 $\mathcal{R}$ 中两个对象的商对象）。
+	\end{itemize}
+	由命题 \ref{D(F)exact} 的证明，只要 $\mathsf{F}$ 正合，关于无环复形的条件便自动满足（此时 $\mathcal{R}=\mathsf{A}$ 显然适应于它）。
+\end{Def}
+% [Tutor Note: 作者的 "read:" 是把 $R\supset X$ 读作子对象关系、把 $X=R/R'$ 读作商对象关系；这两种写法都只保证「可嵌入」或「可表为商」，并不要求唯一性。这套「适应类」条件对应 Grothendieck 的 $\mathsf{F}$-内射/$\mathsf{F}$-投射消解所需的对象类，系统讨论见 \cite[subsection III.5]{[GM03]}。]
+
+\begin{Pro}\label{D(R)equivalent}
+	设 $\mathsf{A}, \mathsf{B}$ 为阿贝尔范畴，$\mathcal{R}\subset\textup{obj}(\mathsf{A})$ 适应于左/右正合函子 $\mathsf{F}:\mathsf{A}\rightarrow\mathsf{B}$，并令 $S_\mathcal{R}$ 为 $\mathsf{H^+}(\mathcal{R})$ 中（相应地 $\mathsf{H^-}(\mathcal{R})$ 中）的拟同构类。则 $S_\mathcal{R}$ 是局部化类，且典范函子 $\mathsf{H^+(\mathcal{R})}[S_\mathcal{R}^{-1}]\rightarrow\mathsf{D^+(A)}$ 与 $\mathsf{H^-(\mathcal{R})}[S_\mathcal{R}^{-1}]\rightarrow\mathsf{D^-(A)}$ 是范畴等价。
+\end{Pro}
+
+\begin{proof}
+	只处理 $\mathsf{F}$ 左正合的情形（另一论证类似）。$S_\mathcal{R}$ 是局部化的这一点容易看出：只需重走命题 \ref{quasilocalizing} 的步骤，并注意那里所作的任何构造都由相继取锥构成；而此处按适应对象类的定义，这些构造都留在 $\mathcal{R}$ 之内。
+	
+	下面断言：对任意复形 $X^\bullet\in\text{obj}(\mathsf{H^+(A)})$，存在某个 $Y^\bullet\in\text{obj}(\mathsf{H^+(\mathcal{R})})$ 与拟同构 $t^\bullet:X^\bullet\rightarrow Y^\bullet$。不妨设 $n<0$ 时 $X^n=0$。然后按 $n\in\mathbb{N}$ 归纳确定 $Y^n, d_Y^n$ 与 $t^n$。对 $n=0,1$，先注意由对 $\mathcal{R}$ 的假设存在某个 $R\in\mathcal{R}$ 使 $X^0\subset R$；令 $Y^0\coloneqq R$，$t^0$ 为相应的包含。推出 $Y^0\sqcup_{X^0} X^1\in\text{obj}(\mathsf{A})$（由阿贝尔性，确实落在 $\mathsf{A}$ 中！）适合图表
+	\[
+	\begin{tikzcd}
+		0\arrow[r] & X^0\arrow[r, "d_X^0"]\arrow[d, "t^0"'] & X^1\arrow[d, dashed, "i_2"] & \\
+		0\arrow[r] & Y^0\arrow[r, dashed,"i_1"'] & Y^0\sqcup_{X^0} X^1\arrow[r, dashed, "j"'] & Y^1
+	\end{tikzcd}\quad,
+	\]
+	其中 $Y^0\sqcup_{X^0} X^1$ 又单射到某个 $Y^1\in\mathcal{R}$。定义 $d_Y^0\coloneqq j\circ i_1$ 与 $t^1\coloneqq j\circ i_2$。对归纳步 $n\rightarrow n+1$，构造推出 $\text{coker}(d_Y^{n-1})\sqcup_{X^n} X^{n+1}\in\text{obj}(\mathsf{A})$，它包含在某个 $Y^{n+1}\in\mathcal{R}$ 中，以及图表
+	\[
+	\begin{tikzcd}
+		& X^n\arrow[r, "d_X^n"]\arrow[d, "\bar{t}^n"]\arrow[dl, "t^n"'] & X^{n+1}\arrow[d, dashed, "i_2"] & \\
+		Y^n\arrow[r, "p"'] & \text{coker}(d_Y^{n-1})\arrow[r, dashed,"i_1"'] & \text{coker}(d_Y^{n-1})\sqcup_{X^n} X^{n+1}\arrow[r, dashed, "j"'] & Y^{n+1}
+	\end{tikzcd}\quad
+	\]
+	（其中 $\bar{t}^n\coloneqq p\circ t^n$）。然后置 $d_Y^{n+1}\coloneqq j\circ i_1\circ p$ 与 $t^{n+1}\coloneqq j\circ i_2$。这最终给出复形 $Y^\bullet\in\text{obj}(\mathsf{H^+(\mathcal{R})})$ 与态射 $t^\bullet:X^\bullet\rightarrow Y^\bullet$。证明后者实际上是拟同构要稍费些功夫；我们请读者参阅 \cite[subsection III.5.25]{[GM03]}。
+	
+	该断言现在补足了引理 \ref{derivedsubcat} 的前提：$S_\mathcal{R}$ 是局部化类，且条件\footnote{当 $\mathsf{F}$ 右正合时，须改为验证条件 (i)，并借助一个适当修改过的断言。} (ii)，即 \big($s^\bullet:\text{obj}(\mathsf{H^+(\mathcal{R})})\ni W^\bullet\rightarrow X^\bullet\in\text{obj}(\mathsf{H^+(A)})$ 属于 $S$ $\implies$ $\exists Y^\bullet\in\text{obj}(\mathsf{H^+(\mathcal{R})})$ $\exists t^\bullet:X^\bullet\rightarrow Y^\bullet$，使得 $t^\bullet\circ s^\bullet\in S$\big)，成立，因为 $t^\bullet\in S$。于是函子 $\mathsf{H^+(\mathcal{R})}[S_\mathcal{R}^{-1}]\rightarrow\mathsf{H^+(A)}[S^{-1}]=\mathsf{D^+(A)}$ 是全忠实的。但上述断言也说明 $\mathsf{D^+(A)}$ 中任何复形都与 $\mathsf{H^+(\mathcal{R})}$ 中某个复形拟同构，故该函子实际上是范畴等价。
+\end{proof}
+% [Tutor Note: 作者以 "we refer the reader to" 跳过了关键一步：$t^\bullet$ 为拟同构须对每一层同时取推出并嵌入 $\mathcal{R}$ 后逐层追踪上同调（等价地，对逐层构造的映射锥作归纳）。完整证明见 \cite[subsection III.5.25]{[GM03]}。]
+
+实践中，有时方便的做法是找出那些对任意左/右正合函子都适应的对象类。
+
+\begin{Lem}\label{enoughinjprojobj}
+	假设阿贝尔范畴 $\mathsf{A}$ 含有足够多的内射对象\textup(见定义 \ref{injprojobj}\textup)。则 $\mathcal{I}\coloneqq\{X\in\textup{obj}(\mathsf{A})\mid X\text{ is injective}\}\subset\textup{obj}(\mathsf{A})$ 适应于从 $\mathsf{A}$ 出发的任意左正合函子。
+	
+	同样，假设 $\mathsf{A}$ 含有足够多的投射对象。则 $\mathcal{P}\coloneqq\{X\in\textup{obj}(\mathsf{A})\mid X\text{ is projective}\}\subset\textup{obj}(\mathsf{A})$ 适应于从 $\mathsf{A}$ 出发的任意右正合函子。
+\end{Lem}
+
+\begin{proof}
+	我们只证内射情形。设 $\mathsf{B}$ 为目标阿贝尔范畴，$\mathsf{F}:\mathsf{A}\rightarrow\mathsf{B}$ 为任意左正合函子。由内射性图表 \eqref{injprojobjdiag} 左可知 $\mathcal{I}$ 对直和封闭。又，$\mathsf{A}$ 有足够多内射对象的假设允许我们把任意 $X\in\text{obj}(\mathsf{A})$ 视为某个 $I^0\in\mathcal{I}$ 的子对象（沿用定义 \ref{injprojobj} 的记号）。
+	
+	剩下要验证的是：任意无环的 $I^\bullet\in\text{obj}(\mathsf{Kom^+(\mathcal{I})})$ 都被映为无环的 $\mathsf{F}(I^\bullet)\in\text{obj}(\mathsf{Kom^+(B)})$。此时零态射 $0_{I^\bullet}: I^\bullet\rightarrow I^\bullet$ 显然是拟同构。再稍加工作（见 \cite[subsection III.5.24]{[GM03]}）可以证明这蕴含 $0_{I^\bullet}\sim\text{id}_I^\bullet$，进而由 $\mathsf{F}$ 的函子性得到 $0_{\mathsf{F}(I^\bullet)}\sim\text{id}_{\mathsf{F}(I)}^\bullet$。但同伦的态射在上同调上诱导相同的态射，故对一切 $n\in\mathbb{Z}$ 有 $H^n(\mathsf{F}(I)^\bullet)=H^n(\text{id}_{\mathsf{F}(I)}^\bullet)\langle H^n(\mathsf{F}(I)^\bullet)\rangle = H^n(0_{\mathsf{F}(I)}^\bullet)\langle H^n(\mathsf{F}(I)^\bullet)\rangle \cong 0$，即 $\mathsf{F}(I)^\bullet$ 无环。
+\end{proof}
+% [Tutor Note: $H^n(\text{id}_{\mathsf{F}(I)}^\bullet)\langle H^n(\mathsf{F}(I)^\bullet)\rangle$ 中的尖括号表示「该自同态作用在……上」；$\text{id}$ 与零态射同伦，故二者诱导的上同调自同态相同，而零自同态使该群为零。这是把链同伦的存在性翻译成上同调消失的标准手法。]
+
+把注意力集中在内射对象类与投射对象类上尤其有利，原因在于下述结果。
+
+\begin{Pro}\label{injprojderivedarehomotopy}
+	设 $\mathsf{A}$ 为阿贝尔范畴，$\mathcal{I}, \mathcal{P}\subset\textup{obj}(\mathsf{A})$ 为上面定义的内射对象类与投射对象类。则局部化函子 $\mathsf{L}_\mathcal{I}:\mathsf{H^+(\mathcal{I})}\rightarrow\mathsf{D^+(A)}$ 与 $\mathsf{L}_\mathcal{P}:\mathsf{H^-(\mathcal{P})}\rightarrow\mathsf{D^-(A)}$ 是到其像上的范畴等价，从而把 $\mathsf{H^+(\mathcal{I})}$ 与 $\mathsf{H^-(\mathcal{P})}$ 分别等同于 ${D^+(A)}$ 与 ${D^-(A)}$ 的全子范畴。
+	
+	此外，若 $\mathsf{A}$ 有足够多的内射/投射对象，则这些函子是范畴等价，我们便可有效地用 $\mathsf{H^+(\mathcal{I})}$ 代替 $\mathsf{D^+(A)}$、用 $\mathsf{H^-(\mathcal{P})}$ 代替 $\mathsf{D^-(A)}$。
+\end{Pro} 
+
+\begin{proof}(\textit{略证})
+	我们不详细证明此陈述（完整证明见 \cite[subsections III.5.22--25]{[GM03]}），因为其中某些步骤只是命题 \ref{D(R)equivalent} 证明的轻微改编，其余则是技术性的。我们宁可强调内射情形所应采取的策略。
+	
+	首先，需验证 $S_\mathcal{I}\coloneqq\{\text{quasi-isomorphisms in }\mathsf{H^+(\mathcal{I})}\}$ 是局部化态射类。其次，通过验证引理 \ref{derivedsubcat} 的条件 (ii) 的下述加强形式来说明该引理适用：对 $I^\bullet\in\text{obj}(\mathsf{H^+(\mathcal{I})})$、$X^\bullet\in\text{obj}(\mathsf{H^+(A)})$ 与拟同构 $s^\bullet\in\text{Hom}_\mathsf{H^+(A)}(I^\bullet, X^\bullet)$，存在某个 $t^\bullet\in\text{Hom}_\mathsf{H^+(A)}(X^\bullet, I^\bullet)$ 使 $t^\bullet\circ s^\bullet\sim\text{id}_I^\bullet$（上一引理的证明中已用过这一事实）。这使 $\mathsf{H^+(\mathcal{I})}[S_\mathcal{I}^{-1}]\subset\mathsf{D^+(A)}$ 成为全子范畴。但实际上可以看出 $\mathsf{H^+(\mathcal{I})}[S_\mathcal{I}^{-1}]=\mathsf{H^+}(\mathcal{I})$（也就是说，同伦范畴中的任何态射都已经是同构）。
+	
+	最后，若 $\mathsf{A}$ 有足够多的内射对象，则确实可发现 $\mathsf{H^+(\mathcal{I})}$ 与 $\mathsf{A}$ 的导出范畴等价：对任意 $X^\bullet\in\text{obj}(\mathsf{D^+(A)})$，存在 $I^\bullet\in\text{obj}(\mathsf{H^+(\mathcal{I})})$ 与拟同构 $t^\bullet\in\text{Hom}_\mathsf{D^+(A)}(X^\bullet, I^\bullet)$（这在命题 \ref{D(R)equivalent} 中已见过，那里把 $\mathcal{I}$ 换成了适应类 $\mathcal{R}$）。
+\end{proof}
+
+回到一般框架，有了上述准备，我们终于可以定义导出函子了。
+
+\begin{Def}\label{derivedfunc}
+	设 $\mathsf{A}, \mathsf{B}$ 为阿贝尔范畴，$\mathcal{R}\subset\text{obj}(\mathsf{A})$ 适应于左/右正合函子 $\mathsf{F}:\mathsf{A}\rightarrow\mathsf{B}$，并令 $S_\mathcal{R}$ 为 $\mathsf{H^+(\mathcal{R})}$ 中（相应地 $\mathsf{H^-(\mathcal{R})}$ 中）的拟同构类，由命题 \ref{D(R)equivalent} 给出自然等价 $\Psi:\mathsf{H^\#\!(\mathcal{R})}[S_\mathcal{R}^{-1}]\rightarrow\mathsf{D^\#\!(A)}$，其拟逆\footnote{因此按定义，存在自然同构 $\alpha:\mathsf{Id}_{\mathsf{H^\#\!(\mathcal{R})}[S_\mathcal{R}^{-1}]}\rightarrow\Phi\circ\Psi$ 与 $\beta:\mathsf{Id}_{\mathsf{D^\#\!(A)}}\rightarrow\Psi\circ\Phi$，从而满足：对 $X^\bullet\in\text{obj}(\mathsf{H^\#\!(\mathcal{R})}[S_\mathcal{R}^{-1}])$ 的每个 $\alpha({X^\bullet})\in\text{Hom}_{\mathsf{H^\#\!(\mathcal{R})}[S_\mathcal{R}^{-1}]}\big(X^\bullet, \Phi(\Psi(X^\bullet))\big)$，以及对 $Y^\bullet\in\text{obj}(\mathsf{D^\#\!(A)})$ 的每个 $\beta({Y^\bullet})\in\text{Hom}_\mathsf{D^\#\!(A)}\big(Y^\bullet,\Psi(\Phi(Y^\bullet))\big)$，都是同构。} 为 $\Phi:\mathsf{D^\#\!(A)}\rightarrow\mathsf{H^\#\!(\mathcal{R})}[S_\mathcal{R}^{-1}]$。然后：
+	\begin{itemize}[leftmargin=0.5cm]
+		\item 对任意 $X^\bullet\in\text{obj}(\mathsf{H^+(\mathcal{R})}[S_\mathcal{R}^{-1}])=\text{obj}(\mathsf{Kom^+(\mathcal{R})})$，按 \begin{equation}\label{derivedfunconcomplexes}
+			\mathsf{RF}(X)^n\coloneqq\mathsf{F}(X^n)\in\text{obj}(\mathsf{B})\,.
+		\end{equation}
+		定义 $\mathsf{RF}(X^\bullet)^\bullet\equiv\mathsf{RF}(X)^\bullet\in\text{obj}(\mathsf{H^+(B)})$。由于 $\mathsf{F}$ 保持无环性，我们得到函子 $\bar{\mathsf{F}}:\mathsf{H^+(\mathcal{R})}[S_\mathcal{R}^{-1}]\rightarrow \mathsf{D^+(B)}$，它在复形上的作用如 \eqref{derivedfunconcomplexes}（论证同命题 \ref{D(F)exact} 的证明）。结合 $\Phi$，即得左正合函子 $\mathsf{F}$ 的\textbf{右导出函子}\index{derived functor!right} $\mathsf{RF}\coloneqq\bar{\mathsf{F}}\circ\Phi:\mathsf{D^+(A)}\rightarrow\mathsf{D^+(B)}$。
+		
+		\item 对任意 $X^\bullet\in\text{obj}(\mathsf{H^-(\mathcal{R})}[S_\mathcal{R}^{-1}])=\text{obj}(\mathsf{Kom^-(\mathcal{R})})$，按
+		\begin{equation}
+			\mathsf{LF}(X)^n\coloneqq\mathsf{F}(X^n)\in\text{obj}(\mathsf{B})\,.
+		\end{equation}
+		定义 $\mathsf{LF}(X^\bullet)^\bullet\equiv\mathsf{LF}(X)^\bullet\in\text{obj}(\mathsf{H^-(B)})$。我们得到函子 $\bar{\mathsf{F}}:\mathsf{H^-(\mathcal{R})}[S_\mathcal{R}^{-1}]\rightarrow \mathsf{D^-(B)}$，它又给出右正合函子~$\mathsf{F}$ 的\textbf{左导出函子}\index{derived functor!left} $\mathsf{LF}\coloneqq\mathsf{F}\circ\Phi:\mathsf{D^-(A)}\rightarrow\mathsf{D^-(B)}$。
+	\end{itemize}
+\end{Def}
+% [Tutor Note: 定义左导出函子时原文写作 $\mathsf{LF}\coloneqq\mathsf{F}\circ\Phi$，与右导出函子 $\mathsf{RF}\coloneqq\bar{\mathsf{F}}\circ\Phi$ 的写法不一致；按上下文应为 $\mathsf{LF}\coloneqq\bar{\mathsf{F}}\circ\Phi$，否则 $\mathsf{F}$ 的定义域不匹配。此处按原文照录，未擅改。]
+
+由于 $\Psi$ 是典范的，十分清楚导出函子 $\mathsf{RF}$ 与 $\mathsf{LF}$ 不依赖于 $\Phi$。然而对 $\mathcal{R}$ 而言这并不显然。因此我们也通过泛性质来刻画导出函子，正如我们对导出范畴所做的那样。
+
+\begin{Def}\label{universalderivedfunc}
+	设 $\mathsf{A}, \mathsf{B}$ 为阿贝尔范畴。加法左/右正合函子 $\mathsf{F}:\mathsf{A}\rightarrow\mathsf{B}$ 的\textit{右/左导出函子}是一对 $(\mathsf{RF},\varepsilon_\mathsf{F})$（相应地 $(\mathsf{LF},\varepsilon_\mathsf{F})$），其中 $\mathsf{RF}, \mathsf{LF}$ 是正合函子，$\varepsilon_\mathsf{F}$ 是自然变换，适合图表
+	\begin{equation}\label{derfuncdiag}
+		\mkern-18mu
+		\begin{tikzcd}[row sep=1cm, column sep=0.6cm]
+			& \mathsf{D^+(A)}\arrow[dr, "\mathsf{RF}"] & \\
+			\mathsf{H^+(A)}\arrow[ur, "\mathsf{L_A}"]\arrow[dr, "\mathsf{H^+(F)}"']\arrow[rr, yshift=0.5ex, out=15, in=165, "\mathsf{RF\circ L_A}"]\arrow[rr, yshift=-0.5ex, out=-15, in=195, "\mathsf{L_B\circ H^+(F)}"'] & & \mathsf{D^+(B)} \\
+			& \mathsf{H^+(B)}\arrow[ur, "\mathsf{L_B}"']\arrow[uu, shorten=6ex, "\varepsilon_\mathsf{F}"] & 
+		\end{tikzcd}\quad,\quad
+		\begin{tikzcd}[row sep=1cm, column sep=0.6cm]
+			& \mathsf{D^-(A)}\arrow[dr, "\mathsf{LF}"]\arrow[dd, shorten=6ex, "\varepsilon_\mathsf{F}"'] & \\
+			\mathsf{H^-(A)}\arrow[ur, "\mathsf{L_A}"]\arrow[dr, "\mathsf{H^-(F)}"']\arrow[rr, yshift=0.5ex, out=15, in=165, "\mathsf{LF\circ L_A}"]\arrow[rr, yshift=-0.5ex, out=-15, in=195, "\mathsf{L_B\circ H^-(F)}"'] & & \mathsf{D^-(B)} \\
+			& \mathsf{H^-(B)}\arrow[ur, "\mathsf{L_B}"'] & 
+		\end{tikzcd}
+	\end{equation}
+	并满足下述泛性质：对任意正合函子（如定义 \ref{exactderivedfunc} 所述）$\mathsf{G}:\mathsf{D^\#\!(A)}$ $\rightarrow\mathsf{D^\#\!(B)}$ 与任意自然变换 $\varepsilon:\mathsf{L_B\circ H^+(F)}\rightarrow\mathsf{G\circ L_A}$（相应地 $\varepsilon:\mathsf{G\circ L_A}\rightarrow\mathsf{L_B\circ H^-(F)}$），存在唯一的自然变换 $\eta:\mathsf{RF}\rightarrow\mathsf{G}$ 与 $\eta:\mathsf{G}\rightarrow\mathsf{LF}$，使函子图表
+	\begin{equation}\label{universalderfuncdiag}
+		\mkern-18mu
+		\begin{tikzcd}[column sep=0.2cm]
+			& \mathsf{L_B\circ H^+(F)}\arrow[dl, "\varepsilon_\mathsf{F}"']\arrow[dr, "\varepsilon"] & \\
+			\mathsf{RF\circ L_A}\arrow[rr, dashed, "\eta\circ\mathsf{L_A}"'] & & \mathsf{G\circ L_A}
+		\end{tikzcd}\quad,\quad
+		\begin{tikzcd}[column sep=0.2cm]
+			& \mathsf{L_B\circ H^-(F)} & \\
+			\mathsf{G\circ L_A}\arrow[ur, "\varepsilon"]\arrow[rr, dashed, "\eta\circ\mathsf{L_A}"'] & & \mathsf{LF\circ L_A}\arrow[ul, "\varepsilon_\mathsf{F}"']
+		\end{tikzcd}
+	\end{equation}
+	交换。
+\end{Def}
+
+
+\subsection{唯一性与存在性}\label{ch3.2}
+
+
+本节证明：由定义 \ref{derivedfunc} 与 \ref{universalderivedfunc} 所刻画的右导出函子 $\mathsf{RF}:\mathsf{D^+(A)}\rightarrow\mathsf{D^+(B)}$ 存在且唯一。类似的论证可确认左导出函子的存在性与唯一性。
+
+\begin{Lem}
+	阿贝尔范畴 $\mathsf{A}, \mathsf{B}$ 之间左正合函子 $\mathsf{F}:\mathsf{A}\rightarrow\mathsf{B}$ 的右导出函子 $\mathsf{RF}:\mathsf{D^+(A)}\rightarrow\mathsf{D^+(B)}$ 是唯一的。
+\end{Lem}
+
+\begin{proof}
+	这是 \eqref{universalderfuncdiag} 左图的直接推论：设另有合适的对 $(\overline{\mathsf{RF}},\bar{\varepsilon}_\mathsf{F})$，则 $(\mathsf{RF},\varepsilon_\mathsf{F})$ 关于 $(\mathsf{G},\varepsilon)=(\overline{\mathsf{RF}},\bar{\varepsilon}_\mathsf{F})$ 的泛性质、以及 $(\overline{\mathsf{RF}},\bar{\varepsilon}_\mathsf{F})$ 关于 $(\mathsf{G},\varepsilon)=(\mathsf{RF},\varepsilon_\mathsf{F})$ 的泛性质，给出合成图表
+	\[
+	\begin{tikzcd}[column sep=0.2cm]
+		& \mathsf{L_B\circ H^+(F)}\arrow[dl, "\varepsilon_\mathsf{F}"']\arrow[dr, "\bar{\varepsilon}_\mathsf{F}"] & \\
+		\mathsf{RF\circ L_A}\arrow[rr, dashed, yshift=1ex, "\eta\circ\mathsf{L_A}"] & & \overline{\mathsf{RF}}\circ\mathsf{L_A}\arrow[ll, dashed, yshift=-1ex, "\bar{\eta}\circ\mathsf{L_A}"]
+	\end{tikzcd}\quad.
+	\]
+	由函子性，虚线箭头复合为 $(\bar{\eta}\circ\eta)\circ\mathsf{L_A}:\mathsf{RF}\circ\mathsf{L_A}\rightarrow\mathsf{RF}\circ\mathsf{L_A}$ 与 $(\eta\circ\bar{\eta})\circ\mathsf{L_A}:\overline{\mathsf{RF}}\circ\mathsf{L_A}\rightarrow\overline{\mathsf{RF}}\circ\mathsf{L_A}$，由此读出 $\mathsf{RF}$ 的自同构 $\bar{\eta}\circ\eta$ 与 $\overline{\mathsf{RF}}$ 的自同构 $\eta\circ\bar{\eta}$。再次应用 \eqref{universalderfuncdiag} 即确认它们是恒等自然变换。于是 $\overline{\mathsf{RF}}\cong\mathsf{RF}$，且 $\bar{\eta}$ 是逆转 $\eta$ 的唯一自然同构。我们得出结论：$\mathsf{F}$ 的右导出函子确实唯一。
+\end{proof}
+% [Tutor Note: 唯一性论证是标准的「双向泛性质夹逼」：先对 $(\overline{\mathsf{RF}},\bar{\varepsilon}_\mathsf{F})$ 用 $(\mathsf{RF},\varepsilon_\mathsf{F})$ 的泛性质得 $\eta$，再反向得 $\bar{\eta}$。注意这里只得到自然同构 $\overline{\mathsf{RF}}\cong\mathsf{RF}$，导出函子本身只在同构意义下唯一，这也正是原文「唯一性」的确切含义。]
+
+要证明导出函子的存在性，我们还需要一些工作。先给出一个预备引理。
+
+\begin{Lem}\label{preplemma}
+	设 $\mathsf{A}, \mathsf{B}$ 为阿贝尔范畴，$\mathcal{R}\subset\textup{obj}(\mathsf{A})$ 适应于左正合函子 $\mathsf{F}:\mathsf{A}\rightarrow\mathsf{B}$，并令 $S_\mathcal{R}$ 为 $\mathsf{H^+}(\mathcal{R})$ 中的拟同构类。给定 $\mathsf{H^+(\mathcal{R})}[S_\mathcal{R}^{-1}]$ 中的任意三角形 $\Delta=\big(X^\bullet\xrightarrow{f^\bullet}Y^\bullet\rightarrow Z^\bullet\rightarrow X[1]^\bullet\big)$，若它在 $\mathsf{D^+(A)}$ 中成为区分三角形，则存在 $\mathsf{H^+(\mathcal{R})}$ 中形如 \eqref{conetriangle} 的区分三角形 $\Delta_\mathcal{R}$，它在 $\mathsf{D^+(A)}$ 中与 $\Delta$ 同构。
+\end{Lem}
+
+\begin{proof}
+	命题 \ref{D(R)equivalent} 给出等价 $\Phi:\mathsf{D^+(A)}\rightarrow\mathsf{H^+(\mathcal{R})}[S_\mathcal{R}^{-1}]$，它把 $f\in\text{Hom}_\mathsf{D^+(A)}(X^\bullet,Y^\bullet)$ 转化为 $\mathsf{H^+(\mathcal{R})}[S_\mathcal{R}^{-1}]$ 中由屋顶 $X^\bullet\xleftarrow{s^\bullet}T^\bullet\xrightarrow{g^\bullet} Y^\bullet$ 代表的态射类，其中 $g^\bullet$ 在 $H^+(\mathcal{R})$ 中、$s^\bullet\in S_\mathcal{R}$。然后考虑 $\mathsf{H^+(\mathcal{R})}$ 中的区分三角形 $\Delta_\mathcal{R}\coloneqq\big(T^\bullet\xrightarrow{g^\bullet} Y^\bullet\rightarrow C(g)^\bullet\rightarrow T[1]^\bullet\big)$ 与图表
+	\[
+	\begin{tikzcd}
+		T^\bullet\arrow[r, "g^\bullet"]\arrow[d, "s^\bullet"'] & Y^\bullet \arrow[r]\arrow[d, "\text{id}_Y^\bullet"] & C(g)^\bullet\arrow[r] & T[1]^\bullet\arrow[d, "{s[1]^\bullet}"] \\
+		X^\bullet\arrow[r, "f^\bullet"'] & Y^\bullet\arrow[r] & Z^\bullet\arrow[r] & X[1]^\bullet
+	\end{tikzcd}
+	\]
+	即 $\mathsf{D^+(A)}$ 中（依假设）区分三角形之间的图表，其左方块交换。施加整体交换性，可用某个 $t^\bullet:C(g)^\bullet\rightarrow Z^\bullet$ 补全该图表；由五引理，$t^\bullet$ 是 $\mathsf{D^+(A)}$ 中的拟同构（因为 $s^\bullet$ 与 $\text{id}_Y^\bullet$ 都是）。因此由定义 \ref{exacttriangles}，$\Delta$ 与 $\Delta_\mathcal{R}$ 在 $\mathsf{D^+(A)}$ 中同构。
+\end{proof}
+% [Tutor Note: 记号提醒：原文此段把同伦范畴写作 $H^+(\mathcal{R})$（不加 \mathsf），与其他处的 $\mathsf{H^+(\mathcal{R})}$ 指同一个范畴，此处照录未改。屋顶 $X^\bullet\xleftarrow{s^\bullet}T^\bullet\xrightarrow{g^\bullet}Y^\bullet$ 即分式演算（calculus of fractions）中的「屋顶」，代表局部化范畴里的态射。]
+
+\begin{Thm}\label{derivedfuncisexact}
+	阿贝尔范畴 $\mathsf{A}, \mathsf{B}$ 之间左正合函子 $\mathsf{F}:\mathsf{A}\rightarrow\mathsf{B}$ 的右导出函子 $\mathsf{RF}:\mathsf{D^+(A)}\rightarrow\mathsf{D^+(B)}$ 存在、正合，且满足定义 \ref{universalderivedfunc} 的泛性质。
+\end{Thm}
+
+\begin{proof}
+	作为起点，考虑 $\mathsf{RF}$ 在复形上的作用 \eqref{derivedfunconcomplexes}、等价 $\Psi:\mathsf{H^+(\mathcal{R})}[S_\mathcal{R}^{-1}]\rightarrow\mathsf{D^+(A)}$ 与 $\Phi:\mathsf{D^+(A)}\rightarrow\mathsf{H^+(\mathcal{R})}[S_\mathcal{R}^{-1}]$，以及定义 \ref{derivedfunc} 中的自然同构 $\alpha:\mathsf{Id}_{\mathsf{H^+(\mathcal{R})}[S_\mathcal{R}^{-1}]}\rightarrow\Phi\circ\Psi$ 与 $\beta:\mathsf{Id}_{\mathsf{D^+(A)}}\rightarrow\Psi\circ\Phi$（见脚注）。那里我们定义了中间函子 $\bar{\mathsf{F}}:\mathsf{H^+(\mathcal{R})}[S_\mathcal{R}^{-1}]\rightarrow\mathsf{D^+(B)}$，它显然与局部化交换，$\bar{\mathsf{F}}\circ\mathsf{L_\mathcal{R}}=\mathsf{L_B}\circ\mathsf{H^+(F)}:\mathsf{H^+(\mathcal{R})}\rightarrow\mathsf{D^+(B)}$，从而是正合的 \big(由注 \ref{alternadistinguitriang}，且因为锥被保持：$\bar{\mathsf{F}}(C(f)^\bullet)=\bar{\mathsf{F}}(\mathsf{L_\mathcal{R}}(C(f)^\bullet))=\mathsf{L_B}(\mathsf{H^+(F)}(C(f)^\bullet))=\mathsf{F}(C(f)^\bullet)\cong C(\mathsf{F}(f)^\bullet)$\big)。
+	
+	$\mathsf{RF}=\bar{\mathsf{F}}\circ\Phi$ 的正合性容易证明：只须再验证 $\Phi$ 正合。首先注意它把 $\mathsf{D^+(A)}$ 中的三角形映为 $\mathsf{H^+(\mathcal{R})}[S_\mathcal{R}^{-1}]$ 中的三角形，因为它与平移函子交换。为对区分三角形证明同样的结论，只需应用引理 \ref{preplemma}；用该引理的话说，$\mathsf{D^+(A)}$ 中任何区分三角形 $\Delta$ 都被 $\Phi$ 映为 $\mathsf{H^+(\mathcal{R})}[S_\mathcal{R}^{-1}]$ 中某个区分（局部化后的）三角形 $\Delta_\mathcal{R}$。
+	
+	现在构造适合图表 \eqref{derfuncdiag} 左图的自然变换 $\varepsilon_\mathsf{F}$。取 $X^\bullet\in\text{obj}(\mathsf{D^+(A)})=\text{obj}(\mathsf{H^+(A)})$，令 $Y^\bullet\coloneqq(\Phi\circ\mathsf{L_A})(X^\bullet)\in\text{obj}(\mathsf{H^+(\mathcal{R})}[S_\mathcal{R}^{-1}])=\text{obj}(\mathsf{H^+(\mathcal{R})})$，于是 $\beta({X^\bullet}):X^\bullet\rightarrow\Psi(Y^\bullet)$ 是 $\mathsf{D^+(A)}$ 中的同构，不妨设它由 $\mathsf{H^+(A)}$ 中的屋顶 $X^\bullet\xrightarrow{s^\bullet} Z^\bullet\xleftarrow{t^\bullet} Y^\bullet$ 给出，其中 $s,t\in S_\mathsf{A}$、$Z^\bullet\in\text{obj}(\mathsf{H^+(\mathcal{R})})$（参看命题 \ref{D(R)equivalent} 证明中的断言；此时实际上也有 $X^\bullet\in\text{obj}(\mathsf{H^+(\mathcal{R})})$）。由于 $\mathcal{R}$ 是适应的，关于无环锥的通常论证告诉我们 $\mathsf{H^+(F)}(s^\bullet)$、$\mathsf{H^+(F)}(t^\bullet)\in S_\mathsf{B}$。因此，把 $\mathsf{L_B}\circ\mathsf{H^+(F)}$ 作用于该屋顶并利用 $\bar{\mathsf{F}}$ 的交换关系与 $\mathsf{RF}$ 的定义，得到 $\mathsf{D^+(B)}$ 中的态射
+	\[
+	\varepsilon_\mathsf{F}(X^\bullet):\mathsf{L_B}(\mathsf{H^+(F)}(X^\bullet))\rightarrow\mathsf{L_B}(\mathsf{H^+(F)}(Y^\bullet))=\bar{\mathsf{F}}(\mathsf{L_\mathcal{R}}(Y^\bullet))=\mathsf{RF}(\mathsf{L_A}(X^\bullet))
+	\]
+	它实际上可以证明不依赖于所选的具体屋顶。下面证明诱导出的 $\varepsilon_\mathsf{F}:\mathsf{L_B}\circ\mathsf{H^+(F)}\rightarrow\mathsf{RF}\circ\mathsf{L_A}$ 是自然变换。取 $X_k^\bullet\in\text{obj}(\mathsf{D^+(A)})=\text{obj}(\mathsf{H^+(A)})$（$k=1,2$）与 $\varphi\in\text{Hom}_\mathsf{D^+(A)}(X_1^\bullet,X_2^\bullet)$，由 $\beta$ 的自然性得到图表
+	\[
+	\begin{tikzcd}[column sep=1cm, row sep=1cm]
+		X_1^\bullet\arrow[r, "\beta(X_1^\bullet)"]\arrow[d, "\varphi"'] & \Psi(\Phi(X_1^\bullet))\arrow[d, "\Psi(\Phi(\varphi))"] \\
+		X_2^\bullet\arrow[r, "\beta(X_2^\bullet)"'] & \Psi(\Phi(X_2^\bullet))
+	\end{tikzcd}\quad\implies\quad
+	\begin{tikzcd}[column sep=1cm, row sep=1cm]
+		\mathsf{L_B}(\mathsf{H^+(F)}(X_1^\bullet))\arrow[r, "\varepsilon_\mathsf{F}(X_1^\bullet)"]\arrow[d, "\mathsf{L_B}(\mathsf{H^+(F)}(\varphi))"'] & \mathsf{RF}(\mathsf{L_A}(X_1^\bullet))\arrow[d, "\mathsf{RF}(\mathsf{L_A}(\varphi))"] \\
+		\mathsf{L_B}(\mathsf{H^+(F)}(X_2^\bullet))\arrow[r, "\varepsilon_\mathsf{F}(X_2^\bullet)"'] & \mathsf{RF}(\mathsf{L_A}(X_2^\bullet))
+	\end{tikzcd}
+	\]
+	它们分别在 $\mathsf{D^+(A)}$ 与 $\mathsf{D^+(B)}$ 中（第二图由第一图施用 $\mathsf{L_B}\circ\mathsf{H^+(F)}$、并按先前同样的推理得到）。这证明 $\varepsilon_\mathsf{F}$ 是自然变换，而且由局部化函子的泛性质（见定义 \ref{dercatdef}）它事实上是唯一的。
+	% [Tutor Note: 作者称 $\varepsilon_\mathsf{F}(X^\bullet)$「不依赖所选屋顶」，其验证需比较两个屋顶并取公共细化，依赖 $S_\mathcal{R}$ 的 Ore 条件（命题 \ref{D(R)equivalent} 已证 $S_\mathcal{R}$ 是局部化类）。]
+	
+	最后，须验证 $(\mathsf{RF},\varepsilon_\mathsf{F})$ 的泛性。考虑另一正合函子 $\mathsf{G}:\mathsf{D^+(A)}\rightarrow\mathsf{D^+(B)}$ 与自然变换 $\varepsilon:\mathsf{L_B\circ H^+(F)}\rightarrow \mathsf{G\circ L_A}$。我们的目标是定义自然变换 $\eta:\mathsf{RF}\rightarrow\mathsf{G}$，使 \eqref{universalderfuncdiag} 左图交换。取 $X^\bullet\in\text{obj}(\mathsf{D^+(A)})=\text{obj}(\mathsf{H^+(A)})$。则有 $\varepsilon(X^\bullet)\in\text{Hom}_\mathsf{D^+(B)}(\mathsf{F}(X^\bullet),\mathsf{G}(X^\bullet))$ 与 $\beta(X^\bullet)\in\text{Hom}_\mathsf{D^+(A)}\big(X^\bullet,\Psi(\Phi(X^\bullet))\big)$，后者是同构，仍由屋顶 $X^\bullet\xrightarrow{s^\bullet} Z^\bullet\xleftarrow{t^\bullet} Y^\bullet=(\Psi\circ\Phi)(X^\bullet)$ 代表，由此得到 $\mathsf{D^+(B)}$ 中的交换图表
+	\[
+	\begin{tikzcd}[row sep=1cm]
+		\mkern-69mu(\mathsf{L_B}\circ\mathsf{H^+(F)})(X^\bullet)=\mathsf{F}(X^\bullet)\arrow[r, "\varepsilon(X^\bullet)"]\arrow[d, shift right=-24mu, "(\mathsf{L_B}\circ\mathsf{F})(s^\bullet)"']\arrow[dd, dashed, shift right=36mu, "\varepsilon_\mathsf{F}(X^\bullet)"']  & \mathsf{G}(X^\bullet)=(\mathsf{G}\circ\mathsf{L_A})(X^\bullet)\arrow[d, shift right=36mu, "(\mathsf{G}\circ\mathsf{L_A})(s^\bullet)"]\arrow[dd, dashed, shift left=24mu, "\mathsf{G}(\beta(X^\bullet))"] \\
+		\mkern+90mu\mathsf{F}(Z^\bullet)\arrow[r, shorten=6.4ex, xshift=-5.9ex, "\varepsilon(Z^\bullet)"] & \mkern-128mu\mathsf{G}(Z^\bullet) \\
+		\mkern-43mu(\mathsf{RF}\circ\mathsf{L_A})(X^\bullet)=\mathsf{F}(Y^\bullet)\arrow[r, shorten=-1ex, xshift=1.5ex, "\varepsilon(Y^\bullet)"']\arrow[u, shift right=24mu, "(\mathsf{L_B}\circ\mathsf{F})(t^\bullet)"] & \mkern+19mu\mathsf{G}(Y^\bullet)=\mathsf{G}((\Psi\circ\Phi)(X^\bullet))\arrow[u, shift right=-36mu, "(\mathsf{G}\circ\mathsf{L_A})(t^\bullet)"']
+	\end{tikzcd}
+	\]
+	其竖直列由拟同构构成。反转那些含 $t^\bullet$ 的箭头，得到两个虚线箭头 $\varepsilon_\mathsf{F}(X^\bullet):(\mathsf{L_B\circ H^+(F)})(X^\bullet)\rightarrow(\mathsf{RF\circ L_A})(X^\bullet)$（由上面通常的论证）与 $\mathsf{G}(\beta(X^\bullet)):\mathsf{G}(X^\bullet)\rightarrow\mathsf{G}((\Psi\circ\Phi)(X^\bullet))$，后者是 $\mathsf{D^+(B)}$ 中的同构（由函子性）。然后定义
+	\[
+	\eta(X^\bullet)\coloneqq\mathsf{G}(\beta(X^\bullet))^{-1}\circ\varepsilon((\Psi\circ\Phi)(X^\bullet)):\mathsf{RF}(X^\bullet)\rightarrow\mathsf{G}(X^\bullet)\,,
+	\]
+	由于 $\beta$ 与 $\varepsilon$ 都是自然变换，这又给出自然变换 $\eta:\mathsf{RF}\rightarrow\mathsf{G}$。从最后一个图表的外方块可以读出 \eqref{universalderfuncdiag}。$\eta(X^\bullet)$ 从而 $\eta$ 的唯一性来自 $\mathsf{G}(\beta(X^\bullet))$ 是同构。
+	% [Tutor Note: 原文 "Inverting those eating $t^\bullet$" 表述含糊（"eating" 疑为 "containing"/"ending at" 之笔误）：它指图中以 $t^\bullet$ 为下标的两个竖直箭头 $(\mathsf{L_B}\circ\mathsf{F})(t^\bullet)$ 与 $(\mathsf{G}\circ\mathsf{L_A})(t^\bullet)$；二者都是拟同构，故可反转。]
+\end{proof}
+
+
+\subsection{经典导出函子与例子}\label{ch3.3}
+
+
+\begin{Def}\label{classicalderivedfunc}
+	设 $\mathsf{A}, \mathsf{B}$ 为阿贝尔范畴，$\mathsf{F}:\mathsf{A}\rightarrow\mathsf{B}$ 为左正合函子。则 $\mathsf{R}^n\mathsf{F}\coloneqq H^0(T^n\circ\mathsf{RF}) = H^n(\mathsf{RF}):\mathsf{A}\rightarrow\mathsf{B}$ 是 $\mathsf{F}$ 的\textbf{经典 $n$ 次右导出函子}\index{derived functor!classical right}，其中 $T^n:\mathsf{D^+(B)}\rightarrow\mathsf{D^+(B)}$ 是平移自等价，$H^n:\mathsf{D^+(B)}\rightarrow\mathsf{B}$ 是第 $n$ 个上同调函子。\footnote{记号可能引起少许混淆：$H^0$ 与 $H^n$ 同时作用在 $\mathsf{D^\#\!(A)}$ 与 $\mathsf{D^\#\!(B)}$ 上，分别得出 $\mathsf{A}$ 与 $\mathsf{B}$。准确地说，$\mathsf{R}^n\mathsf{F}=H^n\circ\mathsf{RF}\circ\mathsf{J'}$，其中 $\mathsf{J'}:\mathsf{A}\rightarrow\mathsf{D^\#\!(A)}$ 是命题 \ref{AinD(A)} 中的全忠实嵌入，故对 $X\in\text{obj}(\mathsf{A})$ 有 $\mathsf{R}^n\mathsf{F}(X)=H^n(F(X[0])^\bullet)$。同样的说明适用于经典左导出函子。}
+	
+	若 $\mathsf{F}$ 右正合，则 $\mathsf{L}^n\mathsf{F}\coloneqq H^0(T^n\circ\mathsf{LF}) = H^n(\mathsf{LF}):\mathsf{A}\rightarrow\mathsf{B}$ 是 $\mathsf{F}$ 的\textbf{经典 $n$ 次左导出函子}\index{derived functor!classical left}（相应的函子 $T^n$ 与 $H^n$ 取在 $\mathsf{D^-(B)}$ 上）。
+\end{Def}
+% [Tutor Note: 易错预警：$\mathsf{R}^n\mathsf{F}\coloneqq H^0(T^n\circ\mathsf{RF})=H^n(\mathsf{RF})$ 的两种写法差一个平移，按本书约定 $(X[1])^n=X^{n+1}$，故 $H^0(T^n\circ\mathsf{RF})=H^n(\mathsf{RF})$。若改用链复形（微分降次）约定，则 $T^n$ 的方次与 $n$ 的正负号须作相应调整。]
+
+\begin{Pro}\label{ExtRHom}
+	设 $\mathsf{A}$ 为有足够多内射对象的阿贝尔范畴，$X\in\textup{obj}(\mathsf{A})$ 固定，给出左正合函子 $\textup{Hom}_\mathsf{A}(X,\square):\mathsf{A}\rightarrow\mathsf{Ab}$（见例 \ref{exactfuncexample}），于是可以考虑其右导出函子 $\mathsf{R}\textup{Hom}_\mathsf{A}(X,\square):\mathsf{D^+(A)}\rightarrow\mathsf{D^+(Ab)}$。则存在函子同构 \begin{equation}\label{ExtRHomeq}
+		\textup{Ext}_\mathsf{A}^n(X,\square)\cong\mathsf{R}^n\textup{Hom}_\mathsf{A}(X,\square):\mathsf{A}\rightarrow\mathsf{Ab}
+	\end{equation}
+	对一切 $n\in\mathbb{Z}$。
+	
+	对称地，若 $\mathsf{A}$ 有足够多投射对象且 $Y\in\textup{obj}(\mathsf{A})$ 固定，则反变左正合函子 $\textup{Hom}_\mathsf{A}(\square,Y):\mathsf{A}^\textup{opp}\rightarrow\mathsf{Ab}$ 给出
+	\begin{equation}\label{eqExtRHom}
+		\textup{Ext}_\mathsf{A}^n(\square,Y)\cong\mathsf{R}^n\textup{Hom}_\mathsf{A}(\square, Y):\mathsf{A^\textup{opp}}\rightarrow\mathsf{Ab}\,.
+	\end{equation}  
+\end{Pro}
+
+\begin{proof}
+	一方面，我们可以把任意 $Y\equiv Y[0]^\bullet\in\text{obj}(\mathsf{Kom^+(A)})=\text{obj}(\mathsf{D^+(A)})$ 换成它在 $\mathsf{Kom^+(\mathcal{I})}$ 中的任一内射消解 $Y\xrightarrow{\varepsilon_Y}I^\bullet$（由注 \ref{0-complex}，它们都与它拟同构），于是 $\text{Ext}_\mathsf{A}^n(X,Y)=\text{Hom}_\mathsf{D^+(A)}(X[0]^\bullet,Y[n]^\bullet)$ $\cong\text{Hom}_\mathsf{D^+(A)}(X[0]^\bullet,I[n]^\bullet)$。现在可以把命题 \ref{injprojderivedarehomotopy} 证明第二段中的论证加以细化，以说明：对一般的阿贝尔范畴 $\mathsf{A}$，只要 $Z_1^\bullet\in\text{obj}(\mathsf{Kom^-(\mathcal{P})})$ 或 $Z_2^\bullet\in\text{obj}(\mathsf{Kom^+(\mathcal{I})})$，就有 $\text{Hom}_\mathsf{H(A)}(Z_1^\bullet,Z_2^\bullet)\cong\text{Hom}_\mathsf{D(A)}(Z_1^\bullet,Z_2^\bullet)$。在我们的情形，这最终给出 $\text{Ext}_\mathsf{A}^n(X,Y)\cong\text{Hom}_\mathsf{H^+(A)}(X[0]^\bullet,I[n]^\bullet)$。
+	
+	关于 \eqref{ExtRHomeq} 的右端，按定义（参看脚注）有 $\mathsf{R}^n\text{Hom}_\mathsf{A}(X,Y)\!=\!H^n(\text{Hom}_\mathsf{A}(X,Y)[0]^\bullet)\!\cong\! H^n(\text{Hom}_\mathsf{Kom^+(A)}^\bullet(X[0]^\bullet,I[0]^\bullet))$，其中第一个等号由 \eqref{derivedfunconcomplexes} 成立，第二个等号由上述对 $Y$ 的替换成立。为理解最后一个上同调群，必须说明：给定固定的 $Z_1^\bullet, Z_2^\bullet\in\text{obj}(\mathsf{Kom(A)})$ 时，复形 $\text{Hom}_\mathsf{Kom(A)}^\bullet(Z_1^\bullet,Z_2^\bullet)\in\text{obj}(\mathsf{Kom(Ab)})=\text{obj}(\mathsf{D(Ab)})$ 是什么。它定义为
+	\begin{align}\label{innerHomcomp}
+		& \text{Hom}_\mathsf{Kom(A)}^n(Z_1^\bullet, Z_2^\bullet)\coloneqq\prod_{i\in\mathbb{Z}}\text{Hom}_\mathsf{A}(Z_1^i,Z_2^{i+n})\in\text{obj}(\mathsf{Ab})\quad\text{and}\nonumber \\
+		& d^n:\text{Hom}_\mathsf{Kom(A)}^n(Z_1^\bullet, Z_2^\bullet)\rightarrow \text{Hom}_\mathsf{Kom(A)}^{n+1}(Z_1^\bullet, Z_2^\bullet),\, f\equiv \prod_{i\in\mathbb{Z}}f^i\mapsto d^n(f)\,,\\
+		& d^n(f)\coloneqq\prod_{i\in\mathbb{Z}}\big(d_{Z_2}^{i+n}\circ f^i -(-1)^nf^{i+1}\circ d_{Z_1}^i\big)\,. \nonumber
+	\end{align}
+	可以仔细验证 $d^{n+1}\circ d^n=0$，故 $\text{Hom}_\mathsf{Kom(A)}^\bullet(Z_1^\bullet,Z_2^\bullet)$ 确实是（乘积）阿贝尔群的一个良定义复形。按定义，任何 $n$-上闭链 $f\in Z^n(\text{Hom}_\mathsf{Kom(A)}^\bullet(Z_1^\bullet,Z_2^\bullet))$ 必须满足 $d^n(f)=0$，这意味着对每个 $i\in\mathbb{Z}$ 有 $(-1)^n d_{Z_2[n]}^i\circ f^i= d_{Z_2}^{i+n}\circ f^i = (-1)^n f^{i+1}\circ d_{Z_1}^i$，亦即 $f$ 是 $\text{Hom}_\mathsf{Kom(A)}(Z_1^\bullet,Z_2[n]^\bullet)$ 中的复形态射。同样，改写 \eqref{innerHomcomp} 中的微分可以看出，任何上边界 $f\in B^n(\text{Hom}_\mathsf{Kom(A)}^\bullet(Z_1^\bullet,Z_2^\bullet))$ 都具有形式 $f=k^{n+1}\circ d_{Z_1} +d_{Z_2[n]}\circ k^n$，其中 $k^\bullet:\text{Hom}_\mathsf{Kom(A)}^\bullet(Z_1^\bullet,Z_2^\bullet)\rightarrow \text{Hom}_\mathsf{Kom(A)}^{\bullet-1}(Z_1^\bullet,Z_2^\bullet)$ 是某个复形态射；也就是说，上边界恰是那些同伦于零态射的态射 $Z_1^\bullet\rightarrow Z_2[n]^\bullet$。因此对它们取商得到
+	\[
+	H^n(\text{Hom}_\mathsf{Kom(A)}^\bullet(Z_1^\bullet,Z_2^\bullet))=\frac{Z^n(\text{Hom}_\mathsf{Kom(A)}^\bullet(Z_1^\bullet,Z_2^\bullet))}{B^n(\text{Hom}_\mathsf{Kom(A)}^\bullet(Z_1^\bullet,Z_2^\bullet))}\cong\text{Hom}_\mathsf{H(A)}(Z_1^\bullet,Z_2[n]^\bullet)\,.
+	\]
+	因此 $\mathsf{R}^n\text{Hom}_\mathsf{A}(X,Y)\cong\text{Hom}_\mathsf{H^+(A)}(X[0]^\bullet,I[n]^\bullet)$，结合上一段即得 $\mathsf{R}^n\text{Hom}_\mathsf{A}(X,Y)\cong\text{Ext}_\mathsf{A}^n(X,Y)$，如所欲证。同构 \eqref{eqExtRHom} 的论证类似。
+\end{proof}
+% [Tutor Note: 微分公式中的符号 $(-1)^n$ 是 Koszul 符号，来源是平移复形 $Z_2[n]$ 的微分 $d_{Z_2[n]}=(-1)^nd_{Z_2}$；漏掉它会使 $d^{n+1}\circ d^n\neq0$，内 Hom 复形便不成立。另：原文把 $k^\bullet$ 写成两个 Hom 复形之间的态射，按上下文它应是给出同伦的映射；此处按原文照录，未改动记号。]
+
+\begin{Rem}\label{classicalderivedonresolutions}
+	若 $\mathsf{A}$ 是有足够多内射对象的阿贝尔范畴，则刚刚结束的证明提示了计算左正合函子 $\mathsf{F}:\mathsf{A}\rightarrow\mathsf{B}$ 在任意 $X\in\text{obj}(\mathsf{A})$ 处的 $\mathsf{R}^n\mathsf{F}(X)$ 的一个显式方法：由假设与注 \ref{0-complex}，$X$ 容许一个右内射消解 $X\xrightarrow{\varepsilon_X}I^\bullet$（在拟同构意义下唯一），可以用它替换 $X$。\footnote{事实上，只需考虑 $X$ 的一个 $\mathsf{F}$-无环右消解即可，见下面的定义 \ref{Facyclic}。右内射消解是其特例。} 于是
+	\begin{equation}\label{classderinjres}
+		\mathsf{R}^n\mathsf{F}(X)\cong H^n(\mathsf{F}(I)^\bullet)\in\text{obj}(\mathsf{B})\,.
+	\end{equation}
+	对称地，若 $\mathsf{A}$ 有足够多投射对象且 $\mathsf{F}$ 右正合，则用任一左投射消解 $P^\bullet\xrightarrow{\varepsilon_X} X$ 替换 $X$ 得出
+	\begin{equation}\label{classderprojres}
+		\mathsf{L}^n\mathsf{F}(X)\cong H^n(\mathsf{F}(P)^\bullet)\in\text{obj}(\mathsf{B})\,.
+	\end{equation}
+\end{Rem}
+% [Tutor Note: 脚注把「右内射消解」推广为 $\mathsf{F}$-无环右消解，这是实际计算经典导出函子的常用形式：只要消解中每一项都 $\mathsf{F}$-无环，就仍可用 $H^n(\mathsf{F}(I)^\bullet)$ 计算 $\mathsf{R}^n\mathsf{F}(X)$。$\mathsf{F}$-无环的定义见定义 \ref{Facyclic}。]
+
+\begin{Cor}\label{whenclassicalderivedtrivial}
+	设 $\mathsf{F}:\mathsf{A}\rightarrow\mathsf{B}$ 为阿贝尔范畴之间的左/右正合函子。则 $\mathsf{R}^0\mathsf{F}\cong\mathsf{F}\cong\mathsf{L}^0\mathsf{F}$，且对 $n\in\mathbb{N}$ 有 $\mathsf{R}^{-n}\mathsf{F}=0=\mathsf{L}^n\mathsf{F}$。
+	
+	此外，$\mathsf{A}$ 中任一短正合序列 $0\rightarrow X_1\rightarrow X_2\rightarrow X_3\rightarrow 0$ 都在 $\mathsf{B}$ 中诱导形如
+	\begin{align*}
+		0&\rightarrow \mathsf{F}(X_1)\rightarrow \mathsf{F}(X_2)\rightarrow \mathsf{F}(X_3)\rightarrow \mathsf{R}^1\mathsf{F}(X_1)\rightarrow... \\
+		&\rightarrow \mathsf{R}^n\mathsf{F}(X_1)\rightarrow \mathsf{R}^n\mathsf{F}(X_2)\rightarrow\mathsf{R}^n\mathsf{F}(X_3)\rightarrow \mathsf{R}^{n+1}\mathsf{F}(X_1)\rightarrow ...\,,  
+	\end{align*}
+	相应地
+	\begin{align*}
+		...&\rightarrow \mathsf{L}^{n+1}\mathsf{F}(X_3)\rightarrow \mathsf{L}^n\mathsf{F}(X_1)\rightarrow \mathsf{L}^n\mathsf{F}(X_2)\rightarrow\mathsf{L}^n\mathsf{F}(X_3)\rightarrow... \\
+		&\rightarrow \mathsf{L}^1\mathsf{F}(X_3)\rightarrow \mathsf{F}(X_1)\rightarrow \mathsf{F}(X_2)\rightarrow \mathsf{F}(X_3)\rightarrow 0\,.  
+	\end{align*}
+\end{Cor}
+
+\begin{proof}
+	这是经典导出函子定义的直接推论：按注 \ref{classicalderivedonresolutions} 用合适的右/左消解替换对象，再看函子在对象上的作用即可看出。注意当 $\mathsf{F}$ 是 Hom 函子的特殊情形，由命题 \ref{ExtRHom} 与定理 \ref{Extprop} 得到同一结论。
+	
+	关于长正合序列的陈述来自导出函子的正合性：与给定短正合序列相联系的 $\mathsf{D}^\#\!(A)$ 中的区分三角形 $X_1^\bullet\rightarrow X_2^\bullet\rightarrow X_3^\bullet\rightarrow X_1[1]^\bullet$ 被映为 $\mathsf{D}^\#\!(B)$ 中的区分三角形 $X_1^\bullet\rightarrow X_2^\bullet\rightarrow X_3^\bullet\rightarrow X_1[1]^\bullet$，后者又由定理 \ref{longexactcohomtriangles} 在上同调中诱导所述的长正合序列。
+\end{proof}
+
+\begin{Ex}\label{Torfunc}
+	再次受例 \ref{exactfuncexample} 启发，我们想知道把右正合函子 $\square\otimes_R Y:\mathsf{Mod}_R\rightarrow\mathsf{Ab}$ 作导出时会得到什么，其中 $R$ 是结合含幺环、$Y\in\text{obj}({}_R\mathsf{Mod})$ 固定。结果发现 $\mathcal{R}\coloneqq\{X\in\text{obj}(\mathsf{Mod}_R)\mid X\text{ is flat}\}\subset\text{obj}(\mathsf{Mod}_R)$ 适应于 $\square\otimes_R Y$（证明略）。于是得到左导出函子 $\mathsf{L}(\square\otimes_R Y):\mathsf{D^-(Mod}_R)\rightarrow\mathsf{D^-(Ab)}$ 及其经典对应物
+	\begin{equation}
+		\text{Tor}_n^R(\square,Y)\coloneqq\mathsf{L}^{-n}(\square\otimes_R Y):\mathsf{Mod}_R\rightarrow\mathsf{Ab}\,,
+	\end{equation}
+	即第 $n$ 个\textbf{Tor 函子}\index{Tor-functor}（$n\geq 0$）。
+	
+	对右正合函子 $X\otimes_R \square:{}_R\mathsf{Mod}\rightarrow\mathsf{Ab}$ 与 $X\in\text{obj}(\mathsf{Mod}_R)$ 作对称构造，得到
+	\begin{equation}
+		\text{Tor}^R_n(X,\square)\coloneqq\mathsf{L}^{-n}(X\otimes_R \square):{}_R\mathsf{\mathsf{Mod}}\rightarrow\mathsf{Ab}\,.
+	\end{equation}
+	\hfill $\blacklozenge$
+\end{Ex}
+% [Tutor Note: 术语提醒：$\text{Tor}_n^R$（下标 $n$、上标 $R$）是左导出函子 $\mathsf{L}^{-n}$ 的经典记号，指标方向与 $\mathsf{L}^n$ 相反；这与 $\text{Ext}_\mathsf{A}^n=\mathsf{R}^n\text{Hom}$ 的写法（命题 \ref{ExtRHom}）恰好对偶。原文两处 Tor 记号本身前后不一致（$\text{Tor}_n^R$ 与 $\text{Tor}^R_n$ 互为镜像），此处照录。]
+
+\begin{Def}\label{Facyclic}
+	设 $\mathsf{RF},\mathsf{LF}:\mathsf{D^\pm(A)}\rightarrow\mathsf{D^\pm(B)}$ 为阿贝尔范畴之间左/右正合函子 $\mathsf{F}:\mathsf{A}\rightarrow\mathsf{B}$ 的右/左导出函子。则 $X\in\text{obj}(\mathsf{A})$ 称为\textbf{$\mathsf{F}$-无环的}\index{facy@$\mathsf{F}$-acyclic}，若对一切 $n>0$ 有 $\mathsf{R}^n\mathsf{F}(X)=H^n(\mathsf{F}(X[0])^\bullet)=0\in\text{obj}(\mathsf{B})$；相应地，若对一切 $n<0$ 有 $\mathsf{L}^n\mathsf{F}(X)=0$，也这样称。
+\end{Def}
+
+在此设定下，若 $\mathsf{A}$ 中所有 $\mathsf{F}$-无环对象构成的类 $\mathcal{Z}$ 足够大——意思是 $\mathsf{A}$ 的任一对象都是某个 $\mathsf{F}$-无环对象的子对象——则可证明 $\mathcal{Z}$ 包含任何适应于 $\mathsf{F}$ 的 $\mathcal{R}\subset\text{obj}(\mathsf{A})$，特别包含全部内射对象构成的 $\mathcal{I}$；并且任何足够大的子类 $\tilde{\mathcal{Z}}\subset\mathcal{Z}$ 都适应于 $\mathsf{F}$（见 \cite[Theorem III.6.16]{[GM03]}）。于是导出函子的存在性（几乎）归结为适应类的存在性。
+\vspace*{0.3cm}
+
+\noindent 作为关于一般导出函子的最后一点，我们讨论它们的可限制性与可复合性。
+
+\begin{Pro}\label{derivedfuncrestrictstobdd}
+	设 $\mathsf{A},\mathsf{B}$ 为阿贝尔范畴，其中 $\mathsf{A}$ 有足够多内射对象，并设 $\mathsf{F}:\mathsf{A}\rightarrow\mathsf{B}$ 为左正合函子，其右导出函子为 $\mathsf{RF}:\mathsf{D^+(A)}\rightarrow\mathsf{D^+(B)}$。
+	\renewcommand{\theenumi}{\roman{enumi}}
+	\begin{enumerate}[leftmargin=0.5cm]
+		\item 设 $\mathsf{C}\subset\mathsf{B}$ 是厚子范畴\textup(见引理 \ref{abeliansubcatderivedequiv}\textup)，且对一切 $X\in\textup{obj}(\mathsf{A})$ 有 $\mathsf{R}^i\mathsf{F}(X)\in\textup{obj}(\mathsf{C})$；又设存在某个 $n\in\mathbb{Z}$，使对一切 $i<n$ 与 $X\in\textup{obj}(\mathsf{A})$ 有 $\mathsf{R}^i\mathsf{F}(X)=0$。则 $\mathsf{RF}$ 取值于 $\mathsf{D^+(B)}$ 中由上同调落在 $\mathsf{C}$ 内的复形所构成的全子范畴。
+		
+		\item 若对任意 $X\in\textup{obj}(\mathsf{A})$ 有 $\mathsf{RF}(X[0]^\bullet)\in\textup{obj}(\mathsf{D^b(B)})$，则 $\mathsf{RF}$ 限制为正合函子 $\mathsf{RF}:\mathsf{D^b(A)}\rightarrow\mathsf{D^b(B)}$。\textup(即使 $\mathsf{A}$ 没有足够多内射对象而 $\mathsf{RF}$ 仍存在，这依然成立；见 \textup{\cite[Corollary 2.68]{[Huy06]}} 及随后的注。\textup) 
+	\end{enumerate}
+\end{Pro}
+
+\begin{Pro}\label{derivedfunccompo}
+	设 $\mathsf{A}, \mathsf{B}, \mathsf{C}$ 为阿贝尔范畴，$\mathsf{F}:\mathsf{A}\rightarrow\mathsf{B}$ 与 $\mathsf{G}:\mathsf{B}\rightarrow\mathsf{C}$ 为加性左正合函子，$\mathcal{R}_\mathsf{A}\subset\textup{obj}(\mathsf{A}), \mathcal{R}_\mathsf{B}\subset\textup{obj}(\mathsf{B})$ 分别为适应于 $\mathsf{F}$ 与 $\mathsf{G}$ 的类，且 $\mathsf{F}(\mathcal{R}_\mathsf{A})\subset\mathcal{R}_\mathsf{B}$。则右导出函子 $\mathsf{R(G\circ F)}:\mathsf{D^+(A)}\rightarrow\mathsf{D^+(C)}$ 存在，且自然变换 $E:\mathsf{R(G\circ F)}\rightarrow \mathsf{RG\circ RF}$ 是自然同构。
+\end{Pro}
+
+\begin{proof}
+	证明是直接的。由假设，$\mathsf{F}$ 把 $\mathsf{Kom^+(\mathcal{R}_\mathsf{A})}$ 映入 $\mathsf{Kom^+(\mathcal{R}_\mathsf{B})}$，故 $\mathcal{R}_\mathsf{A}$ 显然也适应于加性左正合函子 $\mathsf{G\circ F}:\mathsf{A}\rightarrow\mathsf{C}$。因此 $\mathsf{R(G\circ F)}$ 存在，并按定义 \ref{derivedfunc} 的方式构造。此外它是正合的（利用引理 \ref{preplemma} 以及 $\mathsf{RF}, \mathsf{RG}$ 都正合这一事实）且唯一。泛性质 \eqref{universalderfuncdiag} 给出指向正合函子 $\mathsf{RG\circ RF}:\mathsf{D^+(A)}\rightarrow\mathsf{D^+(C)}$ 的自然变换 $E:\mathsf{R(G\circ F)}\rightarrow \mathsf{RG\circ RF}$（即图表中我们称为 $\eta$ 的那个）。由于对每个 $X^\bullet\in\text{obj}(\mathsf{Kom^+(\mathcal{R}_\mathsf{A})})$，$E(X^\bullet)$ 明显是 $\mathsf{D^+(C)}$ 中的同构，而 $\mathsf{D^+(A)}$ 的任一对象依假设（在同构意义下）都有这种形式，故 $E$ 是自然同构。
+\end{proof}
+
+在经典导出函子的层面上，我们得知对一切 $X\in\text{obj}(\mathsf{A})$ 存在 $\mathsf{C}$ 中的同构 $E^n(X):\mathsf{R}^n(\mathsf{G\circ F})(X)\xrightarrow{\sim}\mathsf{R}^n\mathsf{G}(\mathsf{RF}(X))$。它们提示：可以从各分量的经典导出函子重构函子复合的经典导出函子——这件事并非平凡，因为我们注意到取上同调的操作破坏了函子的复合律！关键在于适当描述同构 $E^n(X)$，连同一些额外的数据，它们共同构成一个\textit{谱序列}。我们请有兴趣的读者参阅 \cite[section III.7]{[GM03]}。
+
+
+\newpage
+

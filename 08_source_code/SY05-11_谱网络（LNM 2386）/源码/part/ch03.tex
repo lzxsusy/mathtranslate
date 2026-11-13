@@ -1,0 +1,531 @@
+% ============================================================
+% 第 3 章  丛与联络（Bundles and connections）
+% 底本：Springer LNM 2386，Chapter 3，印刷 pp.21–36 / PDF p61–p76
+% 交付：work/src/part/ch03.tex（片段，不含导言区）
+% ============================================================
+
+\chapter{丛与联络}
+
+% [原文 p.21]
+\ChapterAbstract{向量丛上联络的概念，在微分几何与数学物理中都极为重要。借助联络，人们可以理解向量丛在各点处的局部几何，并沿向量场对截面求导。此外，联络还给出曲率这类基本的几何不变量。在物理上，联络被称为规范场或矢量场，其曲率即相应的场强。规范理论为描述物理学中的各种力提供了恰当的数学框架。例如，Maxwell 理论中的相对论性矢量势就是一个联络，而描述电场与磁场的电磁张量正是它的曲率。Riemann–Hilbert 对应把平坦向量丛的几何与底流形的拓扑结构联系起来。本章简要回顾黎曼曲面上带联络的向量丛的理论；若要获得复向量丛微分几何的恰当入门，文献中有大量教材可供查阅，例如 [235] 或 [356]。对物理背景更强的读者，我们热忱推荐 [37]。}
+
+\section{光滑向量丛与全纯向量丛}
+
+% [原文 p.21]
+流形理论源于对欧氏空间 $\R^n$ 这一概念的推广，而欧氏空间是这样一个概念：它局部看来就像 $\R^n$。十分类似地，纤维丛理论起源于寻求对流形 $M$ 上取值于某空间 $F$ 的函数 $f\colon M\to F$ 的推广。事实证明，恰当的整体对象是纤维为 $F$ 的丛的截面。这里我们把注意力限制在 $F$ 为向量空间的情形。光滑复向量丛的精确定义在技术上要更繁琐一些。
+
+\begin{definition}[3.1]
+设 $E$、$M$ 是两个微分流形，$p\colon E\to M$ 是光滑满射。所谓三元组 $(E,p,M)$ 上的一个\textbf{向量丛图卡}（vector bundle chart），是指一对 $(U,\varphi)$，其中 $U$ 是 $M$ 中的开子集，$\varphi$ 是一个微分同胚，使得下图交换
+\[
+\begin{array}{ccc}
+p^{-1}(U) & \xrightarrow{\ \varphi\ } & U\times\C^{k}\\[4pt]
+{\scriptstyle p}\searrow & & \swarrow{\scriptstyle \mathrm{pr}_1}\\[2pt]
+& U &
+\end{array}
+\]
+\end{definition}
+
+% [原文 p.22]
+\begin{definition}[3.2]
+两个向量丛图卡 $(U,\varphi)$ 与 $(V,\psi)$ 称为\textbf{相容的}（compatible），如果映射 $\varphi\circ\psi^{-1}$ 是线性同构，即
+\[
+\varphi\circ\psi^{-1}(x,\lambda)=(x,\,g_{UV}(x)\cdot\lambda),
+\]
+其中 $g_{UV}\colon U\cap V\to\GL(\C^k)$ 为某个映射，而 $(x,\lambda)\in V\times\C^k$。此时 $g_{UV}$ 是唯一且光滑的，它称为这两个向量丛图卡之间的\textbf{转移函数}（transition function）。
+\end{definition}
+% [Tutor Note: 原文 Definition 3.2 的条件写作 “(x,λ) ∈ V × C^k”，应为 $(x,\lambda)\in(U\cap V)\times\C^k$。理由：$\varphi\circ\psi^{-1}$ 只在 $\psi(U\cap V)$ 上有定义（$\psi$ 需 $x\in V$、$\varphi$ 需 $x\in U$），而 $g_{UV}$ 本身是定义在 $U\cap V$ 上的映射，右端 $g_{UV}(x)$ 对 $x\in V\setminus U$ 无意义。核对方法：取 $x\in V\setminus U$，此时 $\varphi(x)$ 不存在，等式两边无法比较。]
+
+\begin{definition}[3.3]
+三元组 $(E,p,M)$ 的一个\textbf{向量丛图册}（vector bundle atlas）$(U_\alpha,\varphi_\alpha)_{\alpha\in A}$ 定义为这样一族两两相容的向量丛图卡 $(U_\alpha,\varphi_\alpha)$，使得 $\{U_\alpha\}_{\alpha\in A}$ 是 $M$ 的开覆盖。此外，两个向量丛图册称为\textbf{等价的}（equivalent），如果它们的并仍是向量丛图册。
+\end{definition}
+
+\begin{definition}[3.4]
+秩为 $k$ 的\textbf{光滑向量丛}是一个三元组 $(E,p,M)$，它由两个光滑流形 $E$、$M$，一个光滑映射 $p\colon E\to M$，以及向量丛图册的一个等价类组成。流形 $E$ 称为\textbf{全空间}（total space），$M$ 称为\textbf{底空间}（base space），$p$ 称为\textbf{投影映射}（projection mapping）。
+\end{definition}
+
+复向量空间族 $\{E_x\}_{x\in M}$（其中 $E=\bigcup_{x\in M}E_x$）称为该丛的\textbf{纤维}（fibers）。微分同胚 $\varphi_U\colon p^{-1}(U)\to U\times\C^k$ 把每个向量空间 $E_x$（$x\in U$）同构地映入 $\{x\}\times\C^k$，它称为丛 $E$ 在 $U$ 上的\textbf{局部平凡化}（local trivialization）。向量丛的转移函数所取值的群 $G$ 称为该丛的\textbf{结构群}（structure group）。秩为 $1$ 的向量丛特别地称为\textbf{线丛}（line bundle）。
+
+若 $(U,\varphi)$ 与 $(V,\psi)$ 是向量丛图卡，则对转移函数 $g_{UV}\colon U\cap V\to\GL(\C^k)$，$g_{UV}(x)=(\varphi\circ\psi^{-1})|_{\{x\}\times\C^k}$，下列恒等式成立
+\begin{equation}
+g_{UV}(x)\cdot g_{VU}(x)=I,\qquad \text{对一切 } x\in U\cap V \tag{3.1}
+\end{equation}
+\begin{equation}
+g_{UV}(x)\cdot g_{VW}(x)\cdot g_{WU}(x)=I,\qquad \text{对一切 } x\in U\cap V\cap W \tag{3.2}
+\end{equation}
+上述两个恒等式称为\textbf{上循环条件}（cocycle condition），而我们把族 $\{g_{UV}\}$ 称为向量丛图册 $(U_\alpha,\varphi_\alpha)_{\alpha\in A}$ 的\textbf{转移函数上循环}（cocycle of transition functions）。反过来，给定 $M$ 的一个开覆盖 $\{U_\alpha\}_{\alpha\in A}$ 以及光滑映射 $g_{\alpha\beta}\colon U_\alpha\cap U_\beta\to\GL(\C^k)$，只要它们满足上述恒等式，就存在唯一的光滑复向量丛 $(E,p,M)$，其转移函数为 $\{g_{\alpha\beta}\}$。
+
+\begin{definition}[3.5]
+向量丛 $E$ 的\textbf{子丛}（subbundle）$F\subset E$ 是纤维 $E_x$ 的一族子空间 $\{F_x\subset E_x\}_{x\in M}$，使得 $F=\bigcup F_x$ 是 $E$ 的子流形。
+\end{definition}
+
+\begin{definition}[3.6]
+两个光滑向量丛 $E$ 与 $F$ 之间的\textbf{向量丛同态}（vector bundle homomorphism）是一个光滑映射 $f\colon E\to F$，使得 $f(E_x)\subset F_x$，且
+\end{definition}
+
+% [原文 p.23]
+$f_x=f|_{E_x}\colon E_x\to F_x$ 是复向量空间的线性映射。此外，两个光滑向量丛 $E$、$F$ 称为\textbf{同构的}（isomorphic），如果存在向量丛同态 $f\colon E\to F$，使得对一切 $x\in M$，$f_x\colon E_x\to F_x$ 都是复向量空间的同构。
+
+秩为 $k$ 的光滑向量丛称为\textbf{平凡的}（trivial），如果它同构于 $M\times\C^k$。
+
+上述定义中一个重要的特殊情形是 $E=F$，此时我们得到\textbf{丛自同构}（bundle automorphism）的概念，它也称为\textbf{规范变换}（gauge transformation）。
+
+\begin{definition}[3.7]
+对光滑复向量丛 $V$，\textbf{规范变换}（gauge transformation）定义为丛 $V$ 的光滑自同构。$V$ 的全体规范变换所成的集合称为 $V$ 的\textbf{规范群}（gauge group）。
+\end{definition}
+
+既然已经引入了向量丛，那么推广了向量值函数概念的\textbf{截面}（section）概念便自然而然地接踵而至：
+
+\begin{definition}[3.8]
+光滑向量丛 $(E,p,M)$ 的一个\textbf{截面}是一个光滑映射 $\sigma\colon M\to E$，使得对每个 $x\in M$ 都有 $\sigma(x)\in E_x$。截面空间记作 $\mathcal{A}^0(M;E)$。类似地，我们用 $\mathcal{A}^k(M;E)$ 记 $M$ 上取值于 $E$ 的光滑微分 $k$-形式所成的空间。
+\end{definition}
+
+\begin{definition}[3.9]
+丛 $E$ 在 $U\subset M$ 上的一个\textbf{光滑局部标架}（local frame）是一族光滑截面 $\sigma_1,\dots,\sigma_k$，使得对每个 $x\in U$，$\{\sigma_1(x),\dots,\sigma_k(x)\}$ 都是复向量空间 $E_x$ 的一组基。
+\end{definition}
+
+秩为 $k$ 的光滑向量丛 $E$ 在 $U$ 上的光滑局部标架，实际上就是 $E$ 在 $U$ 上的一个平凡化。事实上，给定平凡化 $\varphi_U\colon E_U=p^{-1}(U)\to U\times\C^k$，则截面
+\[
+\sigma_i(x)=\varphi_U^{-1}(x,e_i)
+\]
+构成一个光滑标架。反之，若 $\sigma_1,\dots,\sigma_k$ 是光滑标架，则可定义平凡化 $\varphi_U$ 为
+\[
+\varphi_U(\lambda)=(x,(\lambda_1,\dots,\lambda_k)) ,
+\]
+其中 $\lambda=\sum\lambda_i\sigma_i(x)\in E_x$。
+
+\begin{remark}[3.10]
+局部地，在丛 $V$ 上选定一个标架之后，规范变换就是一个取值于 $\GL_n(\C)$ 的 $C^\infty$-映射。
+\end{remark}
+
+下面我们以与光滑向量丛类似的方式定义全纯向量丛。为此，需要一个复的底流形。
+
+\begin{definition}[3.11]
+（复）维数为 $n$ 的\textbf{复流形}（complex manifold）$M$ 是一个微分流形，它容许一个开覆盖 $\{U_\alpha\}_{\alpha\in A}$ 以及转移函数 $\varphi_\alpha\colon U_\alpha\to\C^n$，使得对一切 $\alpha$ 与 $\beta$，$\varphi_\alpha\circ\varphi_\beta^{-1}$ 在 $\varphi_\beta(U_\alpha\cap U_\beta)\subset\C^n$ 上全纯。维数为 $1$ 的复流形称为\textbf{黎曼曲面}（Riemann surface）。
+\end{definition}
+
+% [原文 p.24]
+\begin{definition}[3.12]
+设 $M$ 是复流形。秩为 $k$ 的\textbf{全纯向量丛}（holomorphic vector bundle）$(E,p,M)$ 是一个光滑复向量丛，并具有如下附加性质：$E$ 上赋予了一个复流形结构，使得对每个 $x\in M$ 都存在包含 $x$ 的开集 $U\subset M$ 以及平凡化 $\varphi_U\colon E_U\to U\times\C^k$，它是复流形之间的双全纯映射。
+\end{definition}
+
+这样的平凡化称为\textbf{全纯平凡化}（holomorphic trivialization）。此外，与光滑复向量丛的情形类似，给定全纯向量丛的一族平凡化 $\{\varphi_\alpha\colon E_{U_\alpha}\to U_\alpha\times\C^k\}$，关于这族平凡化的转移函数便是全纯的。反过来，给定满足恒等式 (3.1)、(3.2) 的全纯映射 $g_{\alpha\beta}\colon U_\alpha\cap U_\beta\to\GL\big(\C^k\big)$，我们可以构造一个以 $g_{\alpha\beta}$ 为转移函数的全纯向量丛。
+
+我们关于光滑复向量丛所讨论的一切方面，都可类似地适用于全纯向量丛这一范畴，区别只在于此处的定义中诸映射都要求是全纯的。
+
+作为例子，我们来分析黎曼球面上的全纯线丛。
+
+\begin{example}[3.13]
+\textbf{黎曼球面}（Riemann sphere）$\C\PP^1$ 由两个图卡 $U_0=\C$ 与 $U_1=\C$ 给出，转移映射 $U_0\cap U_1=\C^\ast\to\C^\ast$ 为 $z\mapsto 1/z$。如下定义线丛 $\OO(k)$：它由两块 $U_0\times\C$ 与 $U_1\times\C$ 组成，二者通过映射
+\[
+\begin{array}{rcl}
+(U_0\cap U_1)\times\C & \to & (U_0\cap U_1)\times\C\\[2pt]
+(z,v) & \mapsto & (1/z,\,z^{k}v)
+\end{array}
+\]
+粘合起来。可以证明，同构意义下，线丛 $\OO(k)$ 描述了 $\C\PP^1$ 上所有的全纯线丛。
+\end{example}
+
+对任意向量丛 $E\to M$，我们可以如下方式联系一个线丛。取 $M$ 的一个开覆盖，由 $E$ 在其上平凡的开集 $U_\alpha$ 组成，其转移映射为 $f_{\alpha\beta}$。定义\textbf{行列式线丛}（determinant line bundle）$\det(E)$ 为在 $U_\alpha$ 上平凡、转移函数为 $\det\big(f_{\alpha\beta}\big)$ 的线丛。
+
+对一般的复流形，一个重要全纯丛是典范丛：
+
+\begin{definition}[3.14]
+复流形 $X$ 的\textbf{典范丛}（canonical bundle）$K_X$ 是联系于全纯余切丛 $T^\ast X$ 的行列式线丛。等价地，它是全纯 $n$-形式所成的线丛，其中 $n$ 是 $X$ 的维数。
+\end{definition}
+
+在紧拓扑曲面 $S$ 上，复向量丛很容易分类。线丛的同构类由其\textbf{次数}（degree）或\textbf{第一陈类}（first Chern class）唯一确定，后者是 $H^2(S,\Z)\cong\Z$ 中的一个元素。高阶的复向量丛则由其行列式线丛分类：
+
+\begin{proposition}[3.15]
+曲面 $S$ 上秩为 $k$ 的复丛 $E\to S$ 同构于 $\det(E)\oplus\C^{k-1}$（作为复丛）。
+\end{proposition}
+% [Tutor Note: 命题 3.15 的“证明”原文省略，依据可用障碍论补出：曲面 $S$ 是二维 CW 复形，而 $\mathrm{BU}(k)$ 单连通且 $\pi_2(\mathrm{BU}(k))\cong\Z$、更高同伦群在维数 $\le 2$ 的障碍中不出现，故 $[S,\mathrm{BU}(k)]\cong H^2(S;\Z)$，即秩为 $k$ 的复丛在同构意义下只由第一陈类 $c_1$ 决定。而 $\det(E)\oplus\C^{k-1}$ 与 $E$ 同秩且同 $c_1$（因为 $c_1(\det E\oplus\C^{k-1})=c_1(\det E)=c_1(E)$），故二者同构。核对方法：$k=1$ 时命题退化为 $\det(E)=E$，自洽。]
+
+% [原文 p.25]
+全纯丛要丰富得多。在亏格至少为 $2$ 的紧黎曼曲面 $X$ 上，存在全纯线丛的光滑族，由\textbf{皮卡簇}（Picard variety）所描述。次数为零的线丛由\textbf{雅可比簇}（Jacobian variety）参数化。$X$ 上高阶全纯丛的模空间可以借助 Mumford [276] 的\textbf{斜率稳定性}（slope stability）概念来构造。
+
+为结束本节，我们给出一个说明复丛与全纯丛之区别的例子：
+
+\begin{example}[3.16]
+在 $\C\PP^1$ 上考虑全纯秩二丛 $\OO(1)\oplus\OO(1)$。其底层的复向量丛是 $\C\oplus T\C\PP^1$，因为容易验证 $\det(\OO(1)\oplus\OO(1))=\OO(2)$，而后者正是 $\C\PP^1$ 的切丛。注意 $\C\oplus T\C\PP^1$ 不是平凡的，因为 $T\C\PP^1$ 没有处处非零的截面（即“毛球定理”）。
+\end{example}
+
+注意其底层的实丛是平凡的。可以验证 $T(\mathbb{S}^2)\oplus\R$ 是平凡丛。事实上，只需取单位球面 $\mathbb{S}^2\subset\R^3$ 并考虑其法丛，后者是平凡的（存在常值截面）。于是它与切丛的直和给出 $\R^3$ 的切丛，而后者限制在球面上是平凡的。因此 $T(\mathbb{S}^2)\oplus\R^2\cong\R^4$。
+
+\section{联络}
+
+% [原文 p.25]
+联络使人们能够定义截面的方向导数。它们借助平行移动的概念，把同一纤维丛的不同纤维联系起来。
+
+\begin{definition}[3.17]
+设 $V$ 是复流形 $M$ 上秩为 $n$ 的光滑复向量丛。我们定义 $V$ 上的一个\textbf{联络}（connection）为一个光滑线性映射
+\[
+d_A\colon \mathcal{A}^0(M;V)\to\mathcal{A}^1(M;V)\cong\mathcal{A}^1(M)\otimes\mathcal{A}^0(M,V) ,
+\]
+它满足莱布尼茨法则
+\begin{equation}
+d_A(fs)=\de f\otimes s+f\,d_A s , \tag{3.3}
+\end{equation}
+其中 $f$ 是任意光滑函数，$s\in\mathcal{A}^0(M;V)$ 是任意截面。
+\end{definition}
+
+设 $e=(e_1,\dots,e_n)$ 是丛 $V$ 的一个局部标架。于是我们可以把 $d_Ae_i$ 写成该标架各元素的线性组合：
+\[
+d_Ae_i=\sum A_i^{\,j}e_j .
+\]
+由 $1$-形式构成的矩阵 $A=(A_{ij})$ 称为 $d_A$ 关于标架 $e$ 的\textbf{联络矩阵}（connection matrix）。\footnote{在规范理论中，联络被视为底流形 $M$（它常被解释为时空流形）上的场。它们被称为规范场，而其量子称为规范玻色子。一个简单的例子是电磁学中的（相对论性）矢量势，它是一个 $1\times 1$ 的 $1$-形式矩阵，局部地表示时空上线丛上的一个联络。}
+
+% [原文 p.26]
+由此可见，标架与联络矩阵完全决定了联络；事实上，把任意截面 $s\in\mathcal{A}^0(M;V)$ 写成 $s=\sum s^ie_i$ 的形式，其中 $s^i\in C^\infty(M)$，我们便有
+\[
+d_As=\sum \de s^i\otimes e_i+\sum s^i\cdot d_Ae_i=\sum_j\Big(\de s^j+\sum_i s^iA_i^{\,j}\Big)e_j .
+\]
+于是，考虑丛 $V$ 的一个局部标架 $e=(e_1,\dots,e_n)$，联络可以局部地写成
+\[
+d_A=\de+A=\de+\sum_i A_i\de x_i ,
+\]
+其中我们在 $M$ 上固定了局部坐标 $(x_1,\dots,x_n)$ 给出 $1$-形式 $\de x^i$，$A$ 是联络矩阵，而 $A_i$ 是元素为 $M$ 上 $C^\infty$-函数的矩阵。
+% [Tutor Note: 本页公式 $d_A=\de+A=\de+\sum_i A_i\de x_i$ 与紧接其后的文字 “the 1-forms $\de x^i$” 上下标不一致（求和号下的 $A_i$ 与 $\de x_i$ 都是下标，正文却写 $\de x^i$）；同页上文的矩阵记号 $A=(A_{ij})$ 与前页的 $d_Ae_i=\sum A_i^{\,j}e_j$ 也不一致。统一的约定是：$A_i^{\,j}$ 的第一个下标 $i$ 是“标架指标”（行）、第二个 $j$ 是“分量指标”（列），$A_i$ 是 $\de/\de x^i$ 方向的矩阵值系数，而 $A=\sum_i A_i\de x^i$。核对方法：把 $d_A$ 作用在 $e_i$ 上并令 $f=1$，即得 $d_Ae_i=Ae_i=\sum_j A_i^{\,j}e_j$；再把 $A=\sum_i A_i\de x^i$ 展开即可读出 $\de x^i$ 的系数是 $A_i$。]
+
+然而，对于一点 $z\in M$，联络矩阵 $A$ 依赖于 $z$ 的邻域中标架的选取。事实上，若在 $z$ 的邻域中另取标架 $e'$，则 $d_A$ 关于 $e'$ 的联络矩阵可写成
+\begin{equation}
+A_{e'}=g^{-1}\cdot(\de g)+g^{-1}\cdot A_e\cdot g ; \tag{3.4}
+\end{equation}
+上式刻画了规范变换群在联络空间上的作用。
+
+联络的局部表达式使我们认识到：联络提供了一种手段，沿着底流形上的曲线，以平行的方式在向量丛的各纤维之间搬运向量。下面我们来描述这一图景。
+
+\begin{definition}[3.18]
+设 $(E,p,M)$ 是带有联络 $d_A$ 的光滑复向量丛。$E$ 的一个局部截面 $s$ 称为关于联络 $d_A$ 的\textbf{平行}（parallel）截面，如果 $d_As=0$。
+\end{definition}
+
+考虑流形 $M$ 上的光滑曲线 $c\colon[0,1]\to M$。关于一个局部标架，条件 $\de_{c'(t)}s=0$（对一切 $t\in[0,1]$）可以表示为一阶线性常微分方程组：
+\begin{equation}
+\frac{\de s^i}{\de t}+\sum_{i,j}A_i^{\,j}(c'(t))s^j=0 , \tag{3.5}
+\end{equation}
+其中 $(A_i^{\,j})$ 是 $d_A$ 关于所选局部标架的联络矩阵的矩阵元。若初始条件由一点 $v\in E_{c(0)}$ 给出，则方程组 (3.5) 的解是一个依赖于时间的截面 $s$，使得 $s(c(0))=v$ 且 $\de_{c'(t)}s=0$。常微分方程组理论的标准技术给出方程组 (3.5) 解的存在唯一性；此外，这些解对一切 $t\in[0,1]$ 都有定义，因为联络矩阵中出现的 $1$-形式 $A_i^{\,j}$ 是光滑的，而我们的方程组是一阶线性的。因此，这个满足 $s(c(0))=v$ 且 $\de_{c'(t)}s=0$ 的、依赖于时间的唯一平行截面 $s\in\mathcal{A}^0(E)$ 是良定义的，它称为 $v$ 沿曲线 $c$ 的\textbf{平行移动}（parallel transport），或称为沿 $c$ 的平行截面。我们作如下定义：
+% [Tutor Note: 式 (3.5) 左端对 $i$ 是自由的（$\de s^i/\de t$ 中 $i$ 不求和），右端求和却写成 $\sum_{i,j}$；按下一行“$(A_i^{\,j})$ 是联络矩阵的矩阵元”的说明，正确的形式是 $\dfrac{\de s^i}{\de t}+\sum_j A_i^{\,j}(c'(t))\,s^j=0$，即求和只对列指标 $j$ 进行。核对方法：$n=1$ 时该式退化为 $\de s/\de t+A(c'(t))s=0$，此时 $\sum_{i,j}$ 与 $\sum_j$ 无差别，须用 $n\ge2$ 且取定 $i$ 来检验。]
+
+% [原文 p.27]
+\begin{definition}[3.19]
+设 $(E,p,M)$ 是光滑复向量丛，$c\colon[0,1]\to M$ 是底流形 $M$ 上的光滑曲线。对固定的 $t\in[0,1]$，沿曲线 $c$ 从 $c(0)$ 到 $c(t)$ 的\textbf{平行移动}是一个线性映射
+\[
+P_{c(t)}\colon E_{c(0)}\to E_{c(t)} ,
+\]
+它把点 $v\in E_{c(0)}$ 映到向量 $P_{c(t)}(v)=s(c(t))\in E_{c(t)}$，其中 $s$ 是沿曲线 $c$ 的唯一平行截面且 $s(c(0))=v$。
+\end{definition}
+
+于是，联络给出了一种把曲线从底流形提升到丛中的方式，而平行移动映射是向量丛各纤维之间的线性同构；见图 3.1。
+
+\Fig[0.45\linewidth]{figures/fig_3_1.png}{3.1}{沿 $M$ 上道路 $c$ 的平行移动。}
+
+\section{曲率与平坦性}
+
+% [原文 p.28]
+我们在研究联络时描述了两个主要视角：一个是整体的，把联络看作微分算子；另一个则借助标架，考虑联络作为 $1$-形式矩阵的局部表达式，并给出沿底流形上曲线作平行移动的手段。光滑复向量丛上任意给定联络的\textbf{曲率}（curvature）可用类似方式整体地定义，即作为唯一延拓联络所定义的算子而得到的二阶线性微分算子；它也可以局部地用 $2$-形式矩阵来描述。
+
+\begin{definition}[3.20]
+设 $(V,p,M)$ 是带有联络 $d_A$ 的光滑复向量丛。我们定义 $d_A$ 在 $V$ 上的\textbf{曲率}为算子
+\[
+F_A=d_A^2\colon \mathcal{A}^0(M;V)\to\mathcal{A}^2(M;V) ,
+\]
+它是光滑线性映射，并且可视为
+\[
+\mathcal{A}^2(M;\End V)=\mathcal{A}^2(\Hom(V,V))
+\]
+中的一个元素。
+\end{definition}
+
+与联络类似，我们可以关于丛的一个标架局部地表示曲率算子。事实上，设 $e=(e_1,\dots,e_n)$ 是丛 $V$ 的局部标架。我们把 $F_Ae_i$ 写成标架各元素的线性组合
+\[
+F_A(e_i)=\sum\Theta_i^{\,j}e_j .
+\]
+这个 $2$-形式矩阵 $\Theta_e=(\Theta_i^{\,j})$ 称为该联络的\textbf{曲率矩阵}（curvature matrix）。对局部标架的另一选取 $e'=(e'_1,\dots,e'_n)$，可以验证
+\[
+\Theta_{e'}=g^{-1}\cdot\Theta_e\cdot g .
+\]
+我们也可以用联络矩阵来表达曲率矩阵。事实上，下列公式容易建立
+\begin{equation}
+\Theta_e=\de A_e+A_e\wedge A_e , \tag{3.6}
+\end{equation}
+它通常称为 \textbf{Cartan 结构方程}（Cartan structure equation）。\footnote{在物理上，曲率算子称为相应规范场的场强。在电磁学中，矢量势的场强就是电磁张量，它描述电场与磁场。}
+
+\begin{definition}[3.21]
+若光滑复向量丛上某联络的曲率 $F_A$ 处处为零，则称该联络是\textbf{平坦的}（flat）。
+\end{definition}
+
+\begin{proposition}[3.22]
+若 $d_A$ 是平坦联络，则方程 $d_As=0$ 存在 $n$ 个线性无关的局部解。
+\end{proposition}
+
+\begin{proof}
+只需说明存在由平行截面构成的局部标架 $e=(s_1,\dots,s_n)$。$d_A$ 关于这样一个局部标架的矩阵 $A$ 是
+% [原文 p.29]
+零矩阵。设 $e'=(e'_1,\dots,e'_n)$ 是局部标架，$A'$ 是 $d_A$ 关于 $e'$ 的联络矩阵。正如前面所提到的，从标架 $e$ 到 $e'$ 的过渡由两个标架相应矩阵之间的如下关系决定：$A=g^{-1}(\de g)+g^{-1}A'g$。于是，条件 $A=0$ 等价于线性微分方程组
+\begin{equation}
+g^{-1}(\de g)+g^{-1}A'g=0 . \tag{3.7}
+\end{equation}
+因此，为这个线性微分方程组找到一个解 $g$，等价于证明存在由平行截面构成的标架。现在，用 $g$ 取式 (3.7) 的像，我们得到 $A'g+\de g=0$，对其求导便得到积分条件
+\[
+0=(\de A')g-A'\wedge \de g=(\de A')g+(A'\wedge A')g=\Theta'g ,
+\]
+其中用到 $\de g=-A'g$ 以及上面的 Cartan 结构方程 (3.6)。
+
+于是我们看到，这个方程组的积分条件恰好是矩阵 $\Theta'$ 的消失，而这一条件与局部标架的选择无关。因此，若联络是平坦的，则显然曲率矩阵是零矩阵；于是，由线性微分方程组解的存在性，我们所求的解 $g$ 存在。
+\end{proof}
+% [Tutor Note: 证明末句“由线性微分方程组解的存在性”跳过了标准论证：$\Theta'=0$ 时 $A'$ 满足 $\de A'+A'\wedge A'=0$，即该联络的曲率形式为零，这正是方程组 $A'g+\de g=0$（等价于 $g^{-1}\de g=-g^{-1}A'g$）的 Frobenius 可积性条件；在单连通邻域上由 Frobenius 定理（或 Poincaré 引理加逐次积分）即得局部解 $g$，且 $g$ 取值于 $\GL_n(\C)$（因初值 $g(z_0)=I$ 附近 $\det g\neq0$）。核对方法：把 $A'g+\de g=0$ 写成 $\de g=-A'g$，求导得 $0=\de^2g=(\de A')g-A'\wedge\de g$，代入 $\de g=-A'g$ 即得 $(\de A'+A'\wedge A')g=0$，与 (3.6) 一致。]
+
+\begin{remark}[3.23]
+若有这样两组解构成的基 $(e_1,\dots,e_n)$ 与 $(\tilde e_1,\dots,\tilde e_n)$，其中 $\tilde e_i=\sum a_i^{\,j}e_j$，则
+\[
+0=d_A\tilde e_i=d_A\Big(\sum a_i^{\,j}e_j\Big)=\sum \de a_i^{\,j}\otimes e_j ,
+\]
+于是 $\de a_i^{\,j}=0$，即 $a_i^{\,j}$ 是常值函数。
+\end{remark}
+
+我们由此得出结论：平坦联络诱导出丛 $V$ 的一族\textbf{局部常值转移函数}。其逆亦真：若 $V$ 具有局部常值的转移函数，则它容许一个平坦联络。事实上，若 $\{U,e_U\}$ 是丛的一族具有常值转移函数的局部标架，我们定义联络 $d_A$ 为 $d_Ae_U=0$。于是，由于转移函数是常值的，条件 $d_Ae_U=0$ 与 $d_Ae_W=0$ 在 $U\cap W\subset V$ 上相容，故该联络良定义。现在显然这个联络是平坦的。带有平坦联络的丛称为\textbf{局部系统}（local system）。
+
+\section{Riemann–Hilbert 对应}
+
+% [原文 p.29]
+下面我们将看到一个深刻的等价性：流形 $M$ 的基本群的表示 $\rho\colon\pi_1(M)\to\GL_n(\C)$，与 $M$ 上秩为 $n$ 的平坦 $C^\infty$-复向量丛 $E$ 之间的等价性。$\rho$ 的像 $H$ 称为\textbf{和乐群}（holonomy group）。我们首先由一个表示构造出平坦丛。
+
+% [原文 p.30]
+设 $\rho\colon\pi_1(M)\to\GL_n(\C)$ 是基本群的一个表示。我们把 $\pi_1(M)$ 视为作用在 $M$ 的泛覆叠空间 $\tilde M$ 上的覆叠变换群，并考虑作用
+\[
+\delta\colon \pi_1(M)\to\Homeo(\tilde M\times\C^n)
+\]
+它由 $\delta(\gamma)(x,v)=(\gamma(x),\rho(\gamma)^{-1}\cdot v)$ 给出。这个作用诱导出交换图
+\[
+\begin{array}{ccc}
+\tilde M\times\C^n & \xrightarrow{\ \mathrm{pr}\ } & \tilde M\\[6pt]
+{\scriptstyle \pi}\downarrow & & {\scriptstyle q}\downarrow\\[6pt]
+E=(\tilde M\times\C^n)/\delta & \xrightarrow{\ p\ } & M ,
+\end{array}
+\]
+其中 $\mathrm{pr}$ 是自然投影（它显然是等变的），$\pi$ 是商映射，$q$ 是覆叠映射，而 $p$ 由投影 $\mathrm{pr}$ 唯一诱导。于是我们可以证明：
+
+\begin{proposition}[3.24]
+对上述图表，有
+\begin{enumerate}[label=\arabic*.]
+\item 映射 $\pi\colon\tilde M\times\C^n\to E$ 是覆叠映射。
+\item 若和乐群 $H=\op{Im}\rho$ 带有从 $\GL_n(\C)$ 诱导的拓扑，则 $\xi_H=(E,p,M)$ 是一个平坦的 $C^\infty$ 复向量丛，其结构群为离散群 $H$。
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\begin{enumerate}[label=\arabic*.]
+\item 由于作用 $\delta$ 是自由且真不连续的，故映射 $\pi$ 是覆叠映射。
+\item 我们取 $M$ 的一个由可缩集构成的开覆盖 $\{U_i\}$。此外，对每个 $i$，我们取一点 $b_i\in U_i$ 以及一条从 $b_0$ 到 $b_i$ 的道路 $c_i$，其中 $b_0\in M$ 是基点，换言之 $\pi_1(M)=\pi_1(M,b_0)$。
+
+对每个 $U_i$，我们要求一个平凡化 $\varphi_i\colon p^{-1}(U_i)\to U_i\times\C^n$。设 $\tilde c_i$ 是道路 $c_i$ 从基点 $\tilde b_0\in q^{-1}(b_0)\subset\tilde M$ 出发的提升，而 $\tilde U_i$ 是 $q^{-1}(U_i)$ 中包含道路 $\tilde c_i$ 终点的子集。由于 $\pi_1(M,b_0)$ 的每个非平凡元素都交换 $\mathrm{pr}^{-1}(q^{-1}(U_i))$ 的各个子集，故
+\[
+\pi_i:=\pi|_{\tilde U_i\times\C^n}\colon \tilde U_i\times\C^n\to p^{-1}(U_i)
+\]
+是同胚。于是
+\[
+\varphi_i=q|_{\tilde U_i\times\C^n}\circ\pi_i^{-1}\colon p^{-1}(U_i)\to U_i\times\C^n
+\]
+是丛 $\xi_H$ 在 $U_i$ 上的局部平凡化，这由交换图的可交换性可得。
+
+现在，设 $U_i$、$U_j$ 是 $M$ 的覆盖中两个满足 $U_i\cap U_j\neq\varnothing$ 的元素。对每个 $b\in U_i\cap U_j$，我们考虑 $U_i$ 上从 $b_i$ 到 $b$ 的道路 $w_{ib}$，以及从 $b_j$ 到 $b$ 的道路 $w_{jb}$。则回路 $\gamma_{ij}=\big[c_i\circ w_{ib}\circ w_{jb}^{-1}\circ c_j^{-1}\big]\in\pi_1(M,b_0)$（这里 $\circ$ 表示道路的衔接）不依赖于 $w_{ib}$ 与 $w_{jb}$ 的选取（图 3.2）。于是可知，映射
+% [原文 p.31]
+\Fig[0.75\linewidth]{figures/fig_3_2.png}{3.2}{以 $b_0$ 为基点的回路的构造。}
+\[
+g_{ij}\colon U_i\cap U_j\to\op{Im}\rho
+\]
+把 $b$ 映到 $\rho(\gamma_{ij})$，故它是局部常值的。因此，我们构造出了一个具有局部常值转移函数的向量丛，于是由注 3.23，该丛是平坦的。
+\end{enumerate}
+\end{proof}
+% [Tutor Note: 原文 “Since every non trivial element of π₁(M,b₀) commutes the subsets of pr⁻¹(q⁻¹(U_i))” 中的 “commutes” 应是 “permutes”（置换）：$\pi_1(M,b_0)$ 通过覆叠变换作用在 $\tilde M\times\C^n$ 上，从而置换 $\mathrm{pr}^{-1}(q^{-1}(U_i))$ 的各连通分支（即各“叶”）；正因如此，$\tilde U_i$ 所代表的这一叶在商掉 $\delta$ 后与 $p^{-1}(U_i)$ 一一对应，$\pi_i$ 才是同胚。照原文直译作“交换”，但数学含义是“置换”。核对方法：$U_i$ 可缩时 $q^{-1}(U_i)$ 是 $|H|$ 个不交叶的并，$\delta$ 置换这些叶而不固定任何一片（自由性），故限制在单片 $\tilde U_i$ 上即为单射且满。]
+
+我们已经看到，表示 $\rho\colon\pi_1(M)\to\GL_n(\C)$ 决定了 $M$ 上一个秩为 $n$、具有局部常值转移函数的光滑复向量丛 $E$。接下来我们将看到，所有具有局部常值转移函数的光滑复向量丛实际上都是这样构造出来的。
+
+\begin{definition}[3.25]
+设 $(E,p,M)$ 是 $C^\infty$-复向量丛，其转移函数局部常值、取值于结构群 $G\subseteq\GL_n(\C)$，并设 $F_0$、$F_1$ 分别是 $b_0,b_1\in M$ 上的纤维。若 $c\colon[0,1]\to M$ 是从 $b_0$ 到 $b_1$ 的道路，则对每个 $y\in F_0$，道路 $c$ 从 $y$ 出发的提升 $\tilde c_y$ 存在且唯一。于是我们可以定义一个同胚
+\[
+T_c\colon F_0\to F_1 ,
+\]
+它称为沿 $c$ 把 $F_0$ \textbf{平移}（translation）到 $F_1$，并且它只依赖于 $c$ 的同伦类（端点固定）。
+\end{definition}
+
+若现在取 $b_0=b_1$，并固定一个满足 $b_0\in U_0$ 的平凡化 $(U_0,\varphi_0)$，则对每个 $\gamma\in\pi_1(M)$ 都构造出一个同胚 $T_\gamma\in G$。容易看出 $T_{\gamma\gamma'}=T_{\gamma'}\circ T_\gamma$。于是，若对丛 $\xi$ 定义 $H_\xi(\gamma)=T_\gamma^{-1}$，则映射
+\[
+H_\xi\colon \pi_1(M)\to G
+\]
+是一个同态，它称为丛 $\xi$ 的\textbf{和乐表示}（holonomy representation，或\textbf{单值表示} monodromy representation）。
+% [Tutor Note: 这里 $T_{\gamma\gamma'}=T_{\gamma'}\circ T_\gamma$ 的“反序”与 $H_\xi(\gamma)=T_\gamma^{-1}$ 的“取逆”必须配套，否则 $H_\xi$ 不是同态：$H_\xi(\gamma\gamma')=T_{\gamma\gamma'}^{-1}=(T_{\gamma'}\circ T_\gamma)^{-1}=T_\gamma^{-1}\circ T_{\gamma'}^{-1}=H_\xi(\gamma)\circ H_\xi(\gamma')$。原因是对道路拼接按“先走 $\gamma$、再走 $\gamma'$”定义，而平移 $T_\gamma$ 是把起点纤维搬到终点纤维，故复合次序相反；取逆恰好把它翻转为左作用下的同态。核对方法：取 $n=1$、$\gamma'=\gamma^{-1}$，则 $H_\xi(\gamma)H_\xi(\gamma^{-1})=T_\gamma^{-1}T_{\gamma^{-1}}^{-1}=T_\gamma^{-1}T_\gamma=\mathrm{id}$。]
+
+\begin{definition}[3.26]
+设 $p\colon\tilde M\to M$ 是覆叠空间投影，$\gamma$ 是 $M$ 上以 $x_0\in M$ 为基点的回路，它唯一地提升为 $\tilde M$ 中以一点
+% [原文 p.32]
+$y_0\in p^{-1}(x_0)$ 为基点的道路 $\tilde\gamma$。对点 $x_0$，定义\textbf{单值作用}（monodromy action）为群 $\pi_1(M,x_0)$ 在 $p^{-1}(x_0)$ 上的右群作用
+\[
+\begin{array}{rcl}
+p^{-1}(x_0)\times\pi_1(M,x_0) & \to & p^{-1}(x_0)\\[2pt]
+(y_0,[\gamma]) & \mapsto & \tilde\gamma(1) .
+\end{array}
+\]
+\end{definition}
+
+联系于单值作用的表示 $\rho\colon\pi_1(M,x_0)\to\GL(p^{-1}(x_0))$ 称为\textbf{单值表示}（monodromy representation）。两个单值表示 $\rho$ 与 $\rho'$ 称为\textbf{等价的}，如果对每个同伦类 $[\gamma]\in\pi_1(M,x_0)$，都存在纤维 $p^{-1}(x_0)$ 的一个线性自同构 $A\in\GL(p^{-1}(x_0))$，使得 $\rho'([\gamma])=A\rho([\gamma])A^{-1}$。
+
+\begin{proposition}[3.27]
+纤维为 $\C^n$、转移函数局部常值且取值于结构群 $G\le\GL_n(\C)$ 的 $C^\infty$-向量丛 $\xi=(E,p,M)$ 是平凡的，当且仅当其和乐表示是平凡的。
+\end{proposition}
+
+\begin{proof}
+正向显然。为证反向，设
+\[
+H_\xi\colon \pi_1(M)\to G
+\]
+是平凡的。则对 $M$ 中任意以 $b$ 为起点、以 $b_0$ 为终点的道路 $c$，平移 $T_c\colon F_b\to F_{b_0}$ 不依赖于道路 $c$，以下记作 $T_b$。我们可以通过相应的图卡把纤维 $F_{b_0}$ 与 $\C^n$ 等同，于是映射 $h\colon E\to M\times\C^n$，$x\mapsto(p(x),T_{p(x)}(x))$ 是一个同构。
+\end{proof}
+
+\begin{theorem}[3.28]
+每个转移函数局部常值、取值于群 $G\le\GL_n(\C)$ 的向量丛 $\xi=(E,p,M)$，都同构于由某个表示 $H_\xi\colon\pi_1(M)\to G$ 所诱导的向量丛。
+\end{theorem}
+
+\begin{proof}
+设 $\tilde\xi=(\tilde E,\tilde p,\tilde M)$ 是由泛覆叠 $q\colon\tilde M\to M$ 所诱导的向量丛。于是我们有交换图
+\[
+\begin{array}{ccc}
+\tilde E & \xrightarrow{\ \tilde p\ } & \tilde M\\[6pt]
+{\scriptstyle \pi}\downarrow & & {\scriptstyle q}\downarrow\\[6pt]
+E & \xrightarrow{\ p\ } & M .
+\end{array}
+\]
+由于泛覆叠空间 $\tilde M$ 单连通，我们有 $H_{\tilde\xi}\equiv id$ 是恒等映射，于是由上一引理，丛 $\tilde\xi$ 同构于平凡丛 $(\tilde M\times\C^n,\mathrm{pr},\tilde M)$。利用这个同构，上面的图表变为
+\[
+\begin{array}{ccc}
+\tilde M\times\C^n & \xrightarrow{\ \mathrm{pr}\ } & \tilde M\\[6pt]
+{\scriptstyle \pi}\downarrow & & {\scriptstyle q}\downarrow\\[6pt]
+E & \xrightarrow{\ p\ } & M .
+\end{array}
+\]
+% [原文 p.33]
+我们由此推断，$\pi$ 是一个正则覆叠，其覆叠变换群由 $\pi_1(M)$ 给出，作用在 $\tilde M\times\C^n$ 上为
+\[
+\begin{array}{rcl}
+\delta\colon \pi_1(M)\times(\tilde M\times\C^n) & \to & \tilde M\times\C^n\\[2pt]
+(\gamma,(\tilde m,y)) & \mapsto & (\gamma(\tilde m),\,H_\xi(\gamma)(y)) .
+\end{array}
+\]
+\end{proof}
+
+综合上述结果，我们得到：
+
+\begin{theorem}[3.29]
+若 $E$ 是流形 $M$ 上秩为 $n$ 的向量丛，则下列命题等价：
+\begin{enumerate}[label=\arabic*.]
+\item 存在一族定义该向量丛 $E$ 的局部常值转移函数。
+\item 向量丛 $E$ 是平坦的，即它容许一个平坦联络。
+\item 向量丛 $E$ 由某个表示 $\rho\colon\pi_1(M)\to\GL_n(\C)$ 所定义。
+\end{enumerate}
+\end{theorem}
+
+平坦向量丛的和乐可以直接由联络几何地描述。事实上，由向量沿底流形上曲线的平行移动的定义（定义 3.19），流形上沿网格的任一方向的平行移动都不改变向量的方向。于是，由于每个端点固定的同伦类都决定了流形上回路之间的一个网格，平行移动对每个同伦类给出唯一的元素。因此我们得到一个良定义的同态 $\rho\colon\pi_1(M)\to\GL_n(\C)$，它就是按定义 3.25 定义的该丛的和乐表示。
+
+由定理 3.29 现在可以看出，规范等价的平坦联络给出等价的和乐表示（参看 [350]）；于是我们有下述定理：
+
+\begin{theorem}[3.30]
+（Riemann–Hilbert 对应）流形 $M$ 上秩为 $n$ 的平坦向量丛 $E$ 的规范等价类所成的空间，与基本群表示 $\rho\colon\pi_1(M,x)\to\GL_n(\C)$ 的等价类之间存在同构。
+\end{theorem}
+
+\begin{remark}[3.31]
+当 $n=1$ 时，$\GL_n(\C)=\C^\times$ 是阿贝尔群，因此由定理 1.22，任何同态 $\rho\colon\pi_1(M,x)\to\C^\times$ 都通过第一同调群分解，即给出同态 $\bar\rho\colon H_1(M)\to\C^\times$。$M$ 上平坦线丛的规范等价类所成的空间，同构于同态 $\bar\rho\colon H_1(M)\to\C^\times$ 所成的空间。
+\end{remark}
+% [Tutor Note: 注 3.31 引用的“定理 1.22”是基本群与第一同调群之间的关系：$\pi_1(M,x)$ 的阿贝尔化同构于 $H_1(M;\Z)$（Hurewicz 定理在 $1$ 维的情形），故任何到阿贝尔群 $\C^\times$ 的同态必通过阿贝尔化分解，即 $\rho=\bar\rho\circ h$，其中 $h\colon\pi_1\to H_1$ 是自然投影。核对方法：$\C^\times$ 阿贝尔，故 $\rho(\alpha\beta\alpha^{-1}\beta^{-1})=1$，即 $\rho$ 在换位子群上平凡。]
+
+\section{主丛}
+
+% [原文 p.33]
+主纤维丛在微分几何与整体分析中具有根本的重要性，因为它们为若干几何与分析问题提供了恰当的形式语言。在数学物理中，它们在建立物理规范理论与粒子物理学标准模型所必需的框架方面起着核心作用。
+
+% [原文 p.34]
+本小节介绍主纤维丛的基本概念与性质，并回顾与主丛相伴的向量丛的构造。关于既贴近规范理论又涉及主丛的参考书，我们推荐 [273]。
+
+\begin{definition}[3.32]
+设 $G$ 是李群，$E$、$M$ 是两个微分流形，$p\colon E\to M$ 是光滑满射。若下列条件满足，则称四元组 $(E,p,M,G)$ 为 \textbf{$G$-主（纤维）丛}：
+\begin{enumerate}[label=\arabic*.]
+\item 存在连续的自由右作用 $E\times G\to E$，$p$ 关于它是等变的，即对每个 $e\in E$ 与 $g\in G$ 有 $p(eg)=p(e)$。
+\item 存在底流形 $M$ 的开覆盖 $U_\alpha$ 以及局部平凡化 $\varphi_\alpha$，使得下图交换
+\[
+\begin{array}{ccc}
+p^{-1}(U_\alpha) & \xrightarrow{\ \varphi_\alpha\ } & U_\alpha\times G\\[4pt]
+{\scriptstyle p}\searrow & & \swarrow{\scriptstyle \mathrm{pr}_1}\\[2pt]
+& U_\alpha &
+\end{array}
+\]
+\end{enumerate}
+\end{definition}
+
+上图中 $\mathrm{pr}_1$ 表示到第一个因子的投影，而映射 $\varphi_\alpha$ 关于右 $G$-作用是 $G$-等变的。
+
+注意，底空间 $M$ 可以看作 $E$ 关于该群作用的商流形。
+
+同一底流形上两个主 $G$-丛之间的同构，是使全空间同胚、$G$-等变且与到底空间的投影交换的同胚。
+
+关于任何纤维丛，最重要的问题之一就是它是否平凡，即是否同构于乘积丛。对主丛而言，平凡性有一个方便的刻画，我们现在来叙述。任何局部平凡化 $\varphi_\alpha$（它是微分同胚）都给出一个局部截面 $\sigma\colon U_\alpha\to E$，因为对任意 $g\in G$ 与 $x\in U_\alpha$ 都有 $\varphi_\alpha^{-1}(x,g)\in p^{-1}(U_\alpha)$。反之，主 $G$-丛的任何局部截面都给出一个局部平凡化，因为映射 $p$ 是 $G$-等变的。由此得到如下刻画：
+
+\begin{proposition}[3.33]
+光滑 $G$-主丛 $(E,p,M,G)$ 是平凡的，即 $E\cong M\times G$，当且仅当它容许一个光滑整体截面 $\sigma\colon M\to E$。
+\end{proposition}
+
+这一刻画对其他纤维丛一般并不成立。例如，向量丛无论平凡与否总有零截面，而球丛可以容许许多整体截面却不平凡。
+
+现在我们关注从 $G$-主丛出发构造若干类丛。对主 $G$-丛 $(E,p,M,G)$ 与连续映射 $f\colon N\to M$，我们可以拉回得到另一个主 $G$-丛 $(f^\ast E,p',N,G)$。此时全空间 $f^\ast E$ 是纤维积
+
+% [原文 p.35]
+\[
+f^\ast E=\{(y,e)\mid f(y)=p(e)\}\subset N\times E .
+\]
+下面两个例子具有核心的重要性，我们将在随后各章中频繁使用：
+
+\begin{example}[3.34]
+设 $(E,p,M,G)$ 是主 $G$-丛，$\rho\colon G\to\GL(V)$ 是李群 $G$ 在某个向量空间 $V$ 上的线性表示。该表示给出群 $G$ 在空间 $V$ 上的自然左作用。于是我们可以考虑全空间 $E\times_G V$，它是 $E\times V$ 在等价关系 $(e\cdot g,v)\sim(e,g\cdot v)$ 下的商流形，从而是底空间 $M$ 上的向量丛。它称为通过表示 $\rho$ \textbf{相伴}（associated）于主 $G$-丛 $E$ 的向量丛。
+\end{example}
+
+相伴向量丛的一个重要特例是：
+
+\begin{example}[3.35]
+对复半单李代数 $\g$，考虑相应李群 $G$ 在 $\g$ 上的伴随表示：
+\[
+\begin{array}{rcl}
+G\times\g & \to & \g\\[2pt]
+(g,X) & \mapsto & gXg^{-1} .
+\end{array}
+\]
+通过这个表示相伴于主 $G$-丛 $(E,p,M,G)$ 的向量丛，称为 $E$ 的\textbf{伴随丛}（adjoint bundle），记作 $\op{ad}E$。
+\end{example}
+
+与向量丛的情形类似，我们可以为主 $G$-丛引入联络与曲率的概念。对李群 $G$ 及其李代数 $\g$，存在唯一的 $1$-形式 $\omega_{MC}\in\mathcal{A}^1(G,\g)$，它在 $G$ 的左乘下不变，且在单位元 $id\in G$ 处就是线性等同映射 $T_{id}G\to\g$。它称为 \textbf{Maurer–Cartan 形式}（Maurer–Cartan form），对点 $g\in G$ 与点 $v\in T_gG$，它由
+\[
+\omega_{MC}(v)=g^{-1}\cdot v\in T_{id}G=\g
+\]
+定义。
+
+现在我们可以用微分 $1$-形式来叙述光滑主 $G$-丛上联络的定义：
+
+\begin{definition}[3.36]
+设 $(E,p,M,G)$ 是李群 $G$ 的主 $G$-丛。$E$ 上的一个\textbf{联络}是 $E$ 上的一个 $1$-形式 $\omega\in\mathcal{A}^1(E,\g)$，满足下列性质：
+\begin{enumerate}[label=\arabic*.]
+\item 在 $G$ 的右乘下，$\omega$ 按 $G$ 在 $\g$ 上的伴随表示变换：
+\[
+\omega_{eg}(v\cdot g)=\op{ad}_g(\omega_e(v)) ,
+\]
+对任意 $e\in E$、任意 $v\in T_eE$ 与任意点 $g\in G$。
+\item 对任意点 $e\in E$ 由规则 $g\mapsto eg$ 定义的嵌入 $\iota_e\colon G\to E$，拉回 $\iota_e^\ast\omega$ 与 Maurer–Cartan 形式 $\omega_{MC}$ 一致。
+\end{enumerate}
+\end{definition}
+
+与向量丛的情形一样，上述联络的存在性归结为某个特定常微分方程组的解的存在性。
+
+% [原文 p.36]
+对主 $G$-丛 $(E,p,M,G)$ 上的联络 $1$-形式 $\omega\in\mathcal{A}^1(E,\g)$，我们也可以把它的曲率 $F_\omega$ 定义为某个恰当的 $2$-形式 $F_\omega\in\mathcal{A}^2(M,\op{ad}(E))$。特别地，对 $\eta\in\mathcal{A}^1(M,\op{ad}(E))$，$\eta\wedge\eta$ 由 $(v,w)\mapsto\frac{1}{2}[\eta(v),\eta(w)]$ 定义，其中 $[\ ,\ ]\colon\op{ad}(E)\otimes\op{ad}(E)\to\op{ad}(E)$ 是李括号。于是有 $p^\ast F_\omega=\de\omega+\omega\wedge\omega$。带有平坦联络的主 $G$-丛称为 \textbf{$G$-局部系统}（$G$-local system）。
+
+Riemann–Hilbert 对应可直接推广到 $G$-主丛：
+
+\begin{theorem}[3.37]
+流形 $M$ 上平坦 $G$-主丛 $P$ 的规范等价类所成的空间，与基本群表示 $\rho\colon\pi_1(M,x)\to G$ 的共轭类之间存在同构。
+\end{theorem}
+% [Tutor Note: 本页 $F_\omega\in\mathcal{A}^2(M,\op{ad}(E))$ 与 $p^\ast F_\omega=\de\omega+\omega\wedge\omega$ 左右两端所在的空间并不同层：右端 $\de\omega+\omega\wedge\omega$ 是 $E$ 上取值于 $\op{ad}E$ 的 $2$-形式（用 $\iota_e^\ast\omega=\omega_{MC}$ 与右等变性把它识别为 $\op{ad}E$-值），故须沿 $p$ 拉回到 $M$ 上才能与 $F_\omega$ 比较；换言之 $F_\omega$ 是由该等式唯一确定的，此处用到 $p$ 是满浸没、$p^\ast$ 为单射。关于 $\eta\wedge\eta$ 中的 $1/2$：取 $\g$ 的一组基并写 $\omega=\sum_a\omega^aT_a$、$[T_a,T_b]=f_{ab}^{\,c}T_c$，按 $(v,w)\mapsto\frac12[\eta(v),\eta(w)]$ 展开即得 $\eta\wedge\eta=\frac12 f_{ab}^{\,c}\,\eta^a\wedge\eta^b\,T_c$，这正是通行的 $\frac12[\eta,\eta]$，与 (3.6) 中 $A_e\wedge A_e$ 采用矩阵乘法的约定相容；当 $\g$ 阿贝尔时 $[\ ,\ ]=0$，该项消失，回到 $F=\de\omega$。核对方法：取 $\g=\mathfrak{u}(1)$ 与 $\omega=f\de t$，则 $F_\omega=\de f\wedge\de t$，与经典情形下场强 $F=\de A$ 一致。]

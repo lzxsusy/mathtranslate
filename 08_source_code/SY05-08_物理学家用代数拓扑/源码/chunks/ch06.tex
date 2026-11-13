@@ -1,0 +1,677 @@
+% =====================================================================
+%  ch06.tex —— 第 6 章 系数取 Z 或 Z2 的（上）同调（原书 p.89–102）
+%  §6.1 一些动机  §6.2 奇异（上）同调  §6.3 单纯（上）同调  §6.4 胞腔（上）同调
+%  §6.5 例子  §6.6 与 Kitaev 环面码的关系  §6.7 积  §6.8 万有系数定理  §6.9 Hurewicz 定理
+%  编号陈述 51 个（6.1–6.42、6.44–6.52；6.43 为无编号附注）。原书本章实止于 p.102：
+%  卷首任务书作 p.89–101 / 49 个陈述，系把 Theorem 6.51、Example 6.52 与 p.102 漏算，
+%  为不省译、不丢编号，本文件按原书实际内容收全，并在 reports/ch06.md 说明。
+% =====================================================================
+
+\chapter[系数取 Z 或 Z2 的（上）同调]{系数取 $\Z$ 或 $\Z_2$ 的（上）同调}
+
+\section{一些动机}
+
+% [原文 p.89]
+前面我们看到，de Rham 上同调类 $[\omega]\in H^p_{\mathrm{dR}}(M)$ 在 $M$ 的 $p$ 维闭子流形 $N$ 上有良定义的积分。这来自 $\int_Nd\eta=\int_{\partial N}\eta=0$。我们还看到，当 $N_1$ 与 $N_2$ 作为高一维流形 $N'$ 的边界出现时，有
+\begin{equation}
+  \int_{N_1}\omega-\int_{N_2}\omega=\int_{N'}d\omega=0.
+  \tag{6.1}
+\end{equation}
+此外，$N$、$N_{1,2}$ 与 $N'$ 不必是真正的子流形；它们都可以换成映射 $N\to M$、$N_{1,2}\to M$ 与 $N'\to M$，因为微分形式可以拉回。
+
+这意味着，可以作为 $[\omega]\in H^p_{\mathrm{dR}}(M)$ 的积分对象的东西，是 $(N,f:N\to M)$ 的等价类：两对 $(N_1,f_1)$ 与 $(N_2,f_2)$ 若作为某对 $(N',f':N'\to M)$ 的边界，就称等价。这其实就是配边群 $\Omega_p(M)$ 的定义。它比 $\pi_p(M)$ 容易计算，但仍比取 $\Z$ 系数的同调群 $H_p(M;\Z)$ 难，后者我们现在就来定义。
+
+为此注意，上面用 $N$、$N_{1,2}$ 与 $N'$ 所做的操作不仅对光滑流形成立，对多面体也成立。
+
+取 $M$ 中的 $p$ 维单形 $S$。它有 $(p+1)$ 个面 $F_{i=1,\dots,p+1}$，每个都是 $(p-1)$ 维单形。于是有
+\begin{equation}
+  \int_Sd\eta=\sum_{i=1}^{p+1}\int_{F_i}\eta.
+  \tag{6.2}
+\end{equation}
+因此，若有一个由许多单形 $S_a$ 构成的闭多面体 $H$，则
+\begin{equation}
+  \int_Hd\eta=\sum_a\int_{S_a}d\eta=\sum_a\sum_{i=1}^{p+1}\int_{F_{a,i}}\eta,
+  \tag{6.3}
+\end{equation}
+其中 $F_{a,i}$ 是第 $a$ 个单形 $S_a$ 的第 $i$ 个面。同一个面从两个不同的单形看方向相反，故最后一个求和为零。
+
+类似地，若两个闭多面体 $H_1$ 与 $H_2$ 作为高一维多面体 $H'$ 的边界出现，则对闭形式 $\omega$ 有
+\begin{equation}
+  \int_{H_1}\omega-\int_{H_2}\omega=\int_{H'}d\omega=0.
+  \tag{6.4}
+\end{equation}
+因此，闭形式 $\omega$（等价地，de Rham 上同调类 $[\omega]$）的积分，在把多面体 $H_1$ 移到 $H_2$ 时不变。
+
+这提示以下定义。
+
+
+本节先把 de Rham 的积分对象推广到多面体：$p$ 维单形的各个面相加时，同一个面从两侧看方向相反而抵消。这提示「链」的概念，于是 $p$ 维同调成为最容易计算的拓扑不变量。
+
+\takeaway{本节先把 de Rham 的积分对象推广到多面体：$p$ 维单形的各面相加时，同一个面从两侧看方向相反而抵消。这提示「链」的概念——$p$ 维同调于是成为最容易计算的拓扑不变量。}
+\section{奇异（上）同调}
+
+% [原文 p.90]
+固定一个阿贝尔群 $A$，例如 $A=\R$、$\Z$、$\Z_2$。
+
+\begin{definition}{6.1}
+  拓扑空间 $M$ 的取 $A$ 系数的 $p$-链 $c$，是 $p$-单形的形式和 $c=\sum_an_aS_a$，其中 $n_a\in A$，$S_a$ 是 $p$-单形（更确切地说，是映射 $f:S_a\to M$）。所有取 $A$ 系数的 $p$-链之集记作 $C_p(M;A)$。
+\end{definition}
+
+\begin{definition}{6.2}
+  给定 $p$-单形 $S$，其边缘 $\partial S$ 是 $(p-1)$-链，由它的各个面 $F_i$ 带适当符号求和 $\sum_i\pm F_i$ 给出。边缘算子 $\partial:C_p(M;A)\to C_{p-1}(M;A)$ 再由线性性定义。
+\end{definition}
+
+\begin{proposition}{6.3}
+  边缘算子 $\partial$ 满足 $\partial^2=0$。
+\end{proposition}
+
+\begin{definition}{6.4}
+  若 $\partial c=0$，则称链 $c$ 为闭链。所有 $p$-闭链之集记作 $Z_p(M;A)$。若 $c=\partial c'$ 对某个 $(p+1)$-链 $c'$ 成立，则称 $c$ 为边缘。所有 $p$-边缘之集记作 $B_p(M;A)$。
+\end{definition}
+
+$M$ 的 $p$-闭链，本质上就是上面讨论的 $M$ 中的 $p$ 维闭多面体。
+
+\begin{definition}{6.5}
+  奇异同调群 $H_p(M;A)$ 定义为商
+  \begin{equation}
+    H_p(M;A)=\frac{Z_p(M;A)}{B_p(M;A)}
+    =\frac{\Ker\bigl(\partial:C_p(M;A)\to C_{p-1}(M;A)\bigr)}
+    {\operatorname{Im}\bigl(\partial:C_{p+1}(M;A)\to C_p(M;A)\bigr)}.
+    \tag{6.5}
+  \end{equation}
+\end{definition}
+
+奇异上同调群类似地定义。
+
+\begin{definition}{6.6}
+  拓扑空间 $M$ 的取 $A$ 系数的 $p$-上链 $c$，是同态 $c:C_p(M;\Z)\to A$。
+\end{definition}
+
+\begin{definition}{6.7}
+  给定 $p$-上链 $c$，定义其上边缘 $\delta c$ 为 $(p+1)$-上链，由
+  \begin{equation}
+    (\delta c)(a)=c(\partial a)
+    \tag{6.6}
+  \end{equation}
+  给出，其中 $a$ 是 $(p+1)$-链。
+\end{definition}
+
+\begin{definition}{6.8}
+  若 $\delta c=0$，则称上链 $c$ 为上闭链。所有 $p$-上闭链之集记作 $Z^p(M;A)$。若 $c=\delta c'$ 对某个 $(p-1)$-上链 $c'$ 成立，则称 $c$ 为上边缘。所有 $p$-上边缘之集记作 $B^p(M;A)$。
+\end{definition}
+
+% [原文 p.91]
+\begin{proposition}{6.9}
+  上边缘算子 $\delta$ 满足 $\delta^2=0$。
+\end{proposition}
+
+\begin{definition}{6.10}
+  奇异上同调群 $H^p(M;A)$ 定义为商
+  \begin{equation}
+    H^p(M;A)=\frac{Z^p(M;A)}{B^p(M;A)}
+    =\frac{\Ker\bigl(\delta:C^p(M;A)\to C^{p+1}(M;A)\bigr)}
+    {\operatorname{Im}\bigl(\delta:C^{p-1}(M;A)\to C^p(M;A)\bigr)}.
+    \tag{6.7}
+  \end{equation}
+\end{definition}
+
+由构造，$H^p(M;A)$ 与 $H_p(M;A)$ 之间有配对：
+
+\begin{definition}{6.11}
+  给定 $[c]\in H^p(M;A)$ 与 $[c']\in H_p(M;A)$，它们分别来自 $p$-上链 $c$ 与 $p$-链 $c'$，定义其配对为
+  \begin{equation}
+    \langle[c],[c']\rangle=c(c').
+    \tag{6.8}
+  \end{equation}
+\end{definition}
+
+这是 de Rham 上同调类在闭流形上积分的对应物。
+
+注意，给定映射 $f:M\to M'$，有映射 $f_*:C_p(M;A)\to C_p(M';A)$，它与 $\partial$ 的作用相容。因此有映射 $f_*:H_p(M;A)\to H_p(M';A)$。由定义相当清楚，$f_*$ 只依赖 $f$ 的同伦类。
+
+也可以由
+\begin{equation}
+  (f^*c)(a)=c(f_*a)
+  \tag{6.9}
+\end{equation}
+定义映射 $f^*:C^p(M';A)\to C^p(M;A)$，它与 $\delta$ 的作用相容。因此有映射 $f^*:H^p(M';A)\to H^p(M;A)$。
+
+总结起来，有：
+
+\begin{proposition}{6.12}
+  给定映射 $f:M\to M'$，有自然同态 $f_*:H_p(M;A)\to H_p(M';A)$ 与 $f^*:H^p(M';A)\to H^p(M;A)$，它们只依赖 $f$ 的同伦类。
+\end{proposition}
+
+注意，同调保持箭头的方向，而上同调把箭头反向。
+
+\begin{corollary}{6.13}
+  $H_p(M;A)$ 与 $H^p(M;A)$ 只依赖 $M$ 的同伦等价类。
+\end{corollary}
+
+所以奇异（上）同调群作为拓扑不变量非常好，但它们不容易按定义计算，因为需要考虑任意单形的任意形式和 $c=\sum_an_aS_a$。
+
+
+奇异链是「$p$-单形到 $M$ 的形式和」，边缘 $\partial$ 取各面并带符号，$\partial^2=0$；$H_p=\Ker\partial/\Im\partial$ 只依赖同伦型，对偶地用 $\Hom$ 得 $H^p$。缺点是任意形式和难以按定义计算。
+
+\takeaway{奇异链是「$p$-单形到 $M$ 的形式和」，边缘 $\partial$ 取各面并带符号，$\partial^2=0$；$H_p=\Ker\partial/\Im\partial$ 只依赖同伦型，对偶地用 $\Hom$ 得 $H^p$。缺点是任意形式和难以按定义计算。}
+\section{单纯（上）同调}
+
+可以建立一套类似但更容易计算的（上）同调理论。
+
+\begin{definition}{6.14}
+  抽象单纯复形 $K$ 是各维单形的集合，满足以下条件：
+  \begin{itemize}
+    \item 若单形 $\sigma$ 在 $K$ 中，则它的所有面也在 $K$ 中。
+    \item 给定 $K$ 中两个单形 $\sigma_1$ 与 $\sigma_2$，其交 $\sigma_1\cap\sigma_2$ 要么为空，要么是两者共同的面。
+  \end{itemize}
+\end{definition}
+
+\begin{definition}{6.15}
+  给流形 $M$ 以单纯复形 $K$ 的结构，称为 $M$ 的三角剖分。
+\end{definition}
+
+\begin{proposition}{6.16}
+  任何光滑流形都有三角剖分。
+\end{proposition}
+
+\begin{definition}{6.17}
+  单纯复形 $K$ 的单纯 $p$-链 $c$ 是 $K$ 中 $p$-单形的形式和 $c=\sum_an_a\sigma_a$，其中 $n_a\in A$。所有单纯 $p$-链之集记作 $C_p(K;A)$。
+\end{definition}
+
+边缘算子 $\partial$ 按以前的方式定义，满足 $\partial^2=0$。可以按以前的方式定义闭链、边缘、同调群、上链、上边缘与上同调群。所得的（上）同调群称为单纯（上）同调群。它们比奇异（上）同调群容易计算，因为只需考虑三角剖分中确定的单形，而不必考虑任意单形的任意形式和。三角剖分的单形个数常常有限，于是剩下的只是取系数阿贝尔群 $A$（$\R$、$\Z$、$\Z_2$）上的有限维线性代数。
+
+遗憾的是，给定单纯复形之间的映射 $f:K\to K'$，不易为单纯（上）同调群定义 $f_*$ 与 $f^*$，因为我们常需考虑不保持单纯结构的映射。挽救局面的是下面这个了不起的定理：
+
+% [原文 p.92]
+\begin{theorem}{6.18}
+  对带有单纯复形结构的合理空间 $M$，奇异与单纯（上）同调群之间有自然同构
+  \begin{align}
+    H_p^{\mathrm{singular}}(M;A)&\simeq H_p^{\mathrm{simplicial}}(M;A), \tag{6.10}\\
+    H^p_{\mathrm{singular}}(M;A)&\simeq H^p_{\mathrm{simplicial}}(M;A). \tag{6.11}
+  \end{align}
+\end{theorem}
+
+
+改用抽象单纯复形：单形集合对面封闭、两两交为共同面；单纯链复形只含有限组合数据，$\partial^2=0$ 照旧成立，于是剩下的只是系数群上的有限维线性代数。
+
+\takeaway{改用抽象单纯复形：单形集合对面封闭、两两交为共同面；单纯链复形只含有限组合数据，$\partial^2=0$ 照旧成立，于是剩下的只是系数群上的有限维线性代数。}
+\section{胞腔（上）同调}
+
+不过，定义 6.14 的第二个条件使寻找流形的最小三角剖分有些困难。例如，网上说 $T^2$ 的最小三角剖分需要 14 个三角形。三角剖分也只允许单形。还有更灵活的结构，称为 CW 复形，它允许用更一般的基本对象搭出空间，并有相应的（上）同调群理论。这里 CW 代表“闭包有限与弱拓扑”（closure-finite and weak topology）。
+
+% [原文 p.93]
+\begin{definition}{6.19}
+  0 维 CW 复形 $X$ 是一些点的集合。
+\end{definition}
+
+\begin{definition}{6.20}
+  $n$ 维 CW 复形 $X$，是把以 $i$ 编号的 $n$ 维胞腔 $e_i$（即 $D^n$ 的副本）通过贴附映射 $f_i:\partial e_i=S^{n-1}\to X'$ 贴到 $(n-1)$ 维 CW 复形 $X'$ 上所得的拓扑空间。
+\end{definition}
+
+\begin{example}{6.21}
+  $S^n$ 可由在一个点上贴一个 $n$-胞腔得到。
+\end{example}
+
+考虑由 $[x_1:\cdots:x_{n+1}]$ 参数化的 $\CP^n$。子空间 $x_1=0$ 是 $\CP^{n-1}$。$\CP^n\setminus\CP^{n-1}$ 由 $[1:x_2:\cdots:x_{n+1}]$ 参数化，它是 $\C^n\simeq\R^{2n}$ 的副本。拓扑上，可以把它换成 $B^{2n}$，贴附映射 $\partial B^{2n}=S^{2n-1}\to\CP^{n-1}$ 由纤维化 $S^{2n-1}\to\CP^{n-1}$ 给出。递归地做下去，得到：
+
+\begin{example}{6.22}
+  $\CP^n$ 具有一个 0-胞腔、一个 2-胞腔、$\dots$、一个 $2n$-胞腔的 CW 复形结构。
+\end{example}
+
+现在可以定义胞腔（上）同调理论。
+
+\begin{definition}{6.23}
+  给定 CW 复形 $X$，胞腔 $p$-链 $c$ 是 $X$ 中 $p$-胞腔的形式和 $c=\sum_an_ae_a$，其中 $n_a\in A$。
+\end{definition}
+
+与奇异/单纯情形相比，边缘映射的定义稍麻烦。
+
+\begin{definition}{6.24}
+  给定 $X$ 的 $p$-胞腔 $e$，$\partial e$ 定义为
+  \begin{equation}
+    \partial e=\sum_{e'}n(e,e')e',
+    \tag{6.12}
+  \end{equation}
+  其中 $e'$ 跑遍所有 $(p-1)$-胞腔，$n(e,e')$ 是如下映射复合的缠绕数：
+  \begin{equation}
+    S^{p-1}\simeq\partial e\xrightarrow{\ f_e\ }X^{p-1}
+    \to X^{p-1}/(X^{p-1}\setminus e')\simeq S^{p-1},
+    \tag{6.13}
+  \end{equation}
+  其中 $f_e$ 是 $e$ 的贴附映射。
+\end{definition}
+
+\begin{proposition}{6.25}
+  边缘算子 $\partial$ 满足 $\partial^2=0$。
+\end{proposition}
+
+于是可以按以前的方式定义闭链、边缘、同调群、上链、上边缘与上同调群。现在有一个了不起的事实：
+
+% [原文 p.94]
+\begin{theorem}{6.26}
+  对带有 CW 复形结构的合理空间 $M$，奇异、单纯与胞腔（上）同调群同构。
+\end{theorem}
+
+还有
+
+\begin{theorem}{6.27}
+  光滑流形 $M$ 的 de Rham 上同调同构于 $M$ 的取 $\R$ 系数的奇异/单纯/胞腔上同调，即
+  \begin{equation}
+    H^p_{\mathrm{dR}}(M)\simeq H^p(M;\R).
+    \tag{6.14}
+  \end{equation}
+\end{theorem}
+
+总之，奇异（上）同调群难以计算，但拓扑性质容易建立。单纯与胞腔上同调群可以算法计算，但拓扑性质较难建立。它们总是一致的，所以我们的处境不错。
+
+例如，现在很容易证明：
+
+\begin{corollary}{6.28}
+  维数为 $n$ 的合理空间的（上）同调群 $H_p(M;A)$ 与 $H^p(M;A)$，只在 $0\le p\le n$ 时可以非零。
+\end{corollary}
+
+这是因为只可能有 $0\le p\le n$ 的 $p$-胞腔。证毕。
+
+单纯/胞腔复形还让我们以直观方式定义连通 $n$ 维流形 $M$ 的基本类。取 CW 复形 $M$。
+
+\begin{definition}{6.29}
+  若 $n$-链 $c=\sum_\sigma\pm\sigma$（$\sigma$ 跑遍 $M$ 的所有 $n$ 维胞腔）满足 $\partial c=0$，则同调类 $[c]$ 称为 $M$ 的基本类，记作 $[M]$。当取 $A$ 系数的这种链存在时，称 $M$ 是 $A$-可定向的。
+\end{definition}
+
+可定向性还有更一般但等价的定义：
+
+\begin{definition}{6.30}
+  连通空间 $M$ 若满足 $H_n(M;A)\simeq A$，则称 $M$ 为 $A$-可定向的。此时，对应于 $1\in A$ 的同调类称为 $M$ 的基本类，记作 $[M]$。
+\end{definition}
+
+基本类 $[M]$ 就是整个空间 $M$ 作为多面体的同调类。
+
+下面给出一个重要事实（Poincaré 对偶）的梗概：
+
+\begin{theorem}{6.31}
+  当光滑紧 $n$ 维流形 $M$ 是 $A$-可定向时，有自然同构 $H^p(M;A)\simeq H_{n-p}(M;A)$。
+\end{theorem}
+
+\para{证明梗概：}取 $M$ 的三角剖分，它有 $p=0,\dots,n$ 的 $p$ 维单形。再取 $M$ 的对偶胞腔分解：把 0-胞腔放在 $n$-单形的“重心”，把 1-胞腔放在 $(n-1)$-单形的重心，依此类推。这样，单纯链群 $C_p(M;A)$ 与胞腔上链群 $C^p(M;A)$ 逐字同构。在 $A$-可定向的额外假设下，可以证明 $\partial$ 与 $\delta$ 的作用也相同。因此有 $H_p(M;A)\simeq H^{n-p}(M;A)$。$\square$
+
+用单纯/胞腔复形，证明又容易多了。
+
+% [原文 p.95]
+基本类的另一个应用如下。设 $N$ 是 $M$ 的光滑 $p$ 维子流形，或更一般地，有光滑映射 $f:N\to M$。假定 $N$ 是 $A$-可定向的。则可取 $N$ 的基本类 $[N]\in H_p(N;A)$，用 $f_*$ 送到 $f_*([N])\in H_p(M;A)$。于是自然要问：$M$ 中所有同调类都是这种形式吗？$M$ 中是否有 $p$ 维同调类不来自 $p$ 维流形？这问题由 Steenrod 提出，回答的方法由 Thom 找到，他引入了配边这一概念；确实存在不来自流形的同调类，只能由闭多面体给出。后面我们会回到这个问题。
+
+
+\takeaway{本节把同伦群换成链复形：奇异、单纯、胞腔三种（上）同调在合理空间上彼此同构，都可由有限胞腔算出。$d^2=0$、$\partial^2=0$、$\delta^2=0$ 是同一件事，三种理论只是同一代数对象的不同描述。}
+\section{例子}
+
+下面看例子。胞腔（上）同调让我们很容易计算 $S^n$ 与 $\CP^n$ 的（上）同调群，因为它们的 CW 复形中胞腔很少。
+
+\begin{example}{6.32}
+  $S^n$ 的（上）同调群由下式给出：
+  \begin{align}
+    H_p(S^n;A)&=\begin{cases}A & (p=0,n),\\ 0 & (\text{其余}).\end{cases} \tag{6.15}\\
+    H^p(S^n;A)&=\begin{cases}A & (p=0,n),\\ 0 & (\text{其余}).\end{cases} \tag{6.16}
+  \end{align}
+\end{example}
+
+除 $n=1$ 外这都很容易，因为只有 0 维与 $n$ 维的胞腔，边缘映射被迫平凡。
+
+\begin{example}{6.33}
+  $\CP^n$ 的（上）同调群由下式给出：
+  \begin{align}
+    H_p(\CP^n;A)&=\begin{cases}A & (p=0,2,4,\dots,2n),\\ 0 & (\text{其余}),\end{cases} \tag{6.17}\\
+    H^p(\CP^n;A)&=\begin{cases}A & (p=0,2,4,\dots,2n),\\ 0 & (\text{其余}).\end{cases} \tag{6.18}
+  \end{align}
+\end{example}
+
+这也很容易，因为只有偶数维胞腔，边缘映射就是零。
+
+$\RP^n$ 的（上）同调群算起来稍麻烦，因为它在每一维都有胞腔。回忆 $\RP^n$ 由 $[x_1:\cdots:x_{n+1}]$ 参数化，子空间 $\RP^{n-1}$ 由 $x_1=0$ 给出。它的补集由 $[1:x_2:\cdots:x_{n+1}]$ 参数化，是 $\R^n$ 的副本。拓扑上，我们有 $B^n$，贴附映射 $\partial B^n=S^{n-1}\to\RP^{n-1}$ 是我们反复讨论过的 2:1 映射。于是每一维 $i$ 有一个胞腔 $e_i$。边缘映射可以通过考察
+
+% [原文 p.96]
+\begin{equation}
+  \partial B^n=S^{n-1}\xrightarrow{\ 2:1\ }\RP^{n-1}\to\RP^{n-1}/\RP^{n-2}\simeq S^{n-1}
+  \tag{6.19}
+\end{equation}
+得到。当 $n$ 为偶数时它的度为 2，$n$ 为奇数时为 0。链群与上链群都由 $C_p(\RP^n;A)=A$ 与 $C^p(\RP^n;A)=A$（$0\le p\le n$）给出，其（上）边缘映射分别为
+\begin{equation}
+  C_0\xleftarrow{\ 0\ }C_1\xleftarrow{\ 2\ }C_2\xleftarrow{\ 0\ }C_3\xleftarrow{\ 2\ }C_4\cdots
+  \tag{6.20}
+\end{equation}
+与
+\begin{equation}
+  C^0\xrightarrow{\ 0\ }C^1\xrightarrow{\ 2\ }C^2\xrightarrow{\ 0\ }C^3\xrightarrow{\ 2\ }C^4\cdots.
+  \tag{6.21}
+\end{equation}
+由此看出
+
+\begin{example}{6.34}
+  $\RP^n$ 的取 $\Z_2$ 系数的（上）同调群为
+  \begin{equation}
+    H_p(\RP^n;\Z_2)=\Z_2,\qquad H^p(\RP^n;\Z_2)=\Z_2
+    \tag{6.22}
+  \end{equation}
+  对所有 $0\le p\le n$ 成立；而
+  \begin{equation}
+    \renewcommand{\arraystretch}{1.15}
+    \begin{array}{c|ccccccc}
+      p & 0 & 1 & 2 & 3 & 4 & 5 & \cdots\\ \hline
+      H_p(\RP^n;\Z) & \Z & \Z_2 & 0 & \Z_2 & 0 & \Z_2 & \cdots\\
+      H_p(\RP^n;\R) & \R & 0 & 0 & 0 & 0 & 0 & \cdots\\
+      H^p(\RP^n;\Z) & \Z & 0 & \Z_2 & 0 & \Z_2 & 0 & \cdots\\
+      H^p(\RP^n;\R) & \R & 0 & 0 & 0 & 0 & 0 & \cdots
+    \end{array}
+    \tag{6.23}
+  \end{equation}
+  注意，$\RP^n$ 总是 $\Z_2$-可定向的，但 $\Z$-与 $\R$-可定向当且仅当 $n$ 为奇数。
+\end{example}
+
+\begin{question}{6.35}
+  设 $\Z_k$ 通过
+  \begin{equation}
+    (z_1,\dots,z_n)\mapsto e^{2\pi i/k}(z_1,\dots,z_n)
+    \tag{6.24}
+  \end{equation}
+  作用在 $\C^n$ 上。这给出 $\Z_k$ 在单位球面 $S^{2n-1}\subset\C^n$ 上的作用。求商空间 $S^{2n-1}/\Z_k$ 的胞腔分解，并计算取系数 $A=\R$、$\Z$、$\Z_k$ 的（上）同调群。
+\end{question}
+
+提示：每一维一个胞腔就够了。答案也可以在网上找到；这个空间 $S^{2n-1}/\Z_k$ 称为透镜空间。
+
+\begin{question}{6.36}
+  设 $\Sigma_g$ 是亏格 $g$ 的定向紧二维曲面。证明 $\Sigma_g$ 的（上）同调群由下式给出：
+  \begin{equation}
+    H_p(\Sigma_g;A)=
+    \begin{cases}
+      A & (p=0),\\
+      A^{2g} & (p=1),\\
+      A & (p=2),
+    \end{cases}
+    \qquad
+    H^p(\Sigma_g;A)=
+    \begin{cases}
+      A & (p=0),\\
+      A^{2g} & (p=1),\\
+      A & (p=2).
+    \end{cases}
+    \tag{6.25}
+  \end{equation}
+\end{question}
+
+
+\takeaway{本节用 $S^n$、$\CP^n$、$\RP^n$、$\Sigma_g$ 演示胞腔计算，并指出 $\RP^n$ 的挠信息只在 $\Z$ 系数下出现。基本类与 Poincaré 对偶由此有了直观来源：对偶胞腔分解让链群与上链群逐字同构。}
+\section{与 Kitaev 环面码的关系}
+
+% [原文 p.97]
+取 $A=\{0,1\}=\Z_2$，并取由顶点 $v$、边 $e$ 与面 $f$ 构成的二维胞腔复形 $M$。为简单起见，假定每个面 $f$ 是以 $e_1,\dots,e_{n_f}$ 为边的多边形。每条边 $e$ 上放一个量子比特，即 $\C^2$。系统的希尔伯特空间以 $\{|m_e\rangle\}$ 为基，其中 $m_e=0,1$。于是希尔伯特空间的基由元素 $m=\{m_e\}\in C^1(M;\Z_2)$ 标号。
+
+对每个 $f$，我们在哈密顿量中加一项局域项，由
+\begin{equation}
+  A_f=-\prod_{e:\ \text{$f$ 的边}}(\sigma_z)_e
+  \tag{6.26}
+\end{equation}
+给出。注意
+\begin{equation}
+  A_f|m\rangle=
+  \begin{cases}
+    -|m\rangle & \bigl((\delta m)(f)=0\bigr),\\
+    +|m\rangle & \bigl((\delta m)(f)=1\bigr).
+  \end{cases}
+  \tag{6.27}
+\end{equation}
+因此，它惩罚使 $\delta m\ne0$ 的基元素。把系数取得很大，就能让系统的基态成为 $\delta m=0$ 的那个。
+
+对每个顶点 $v$，我们也加一项局域项，由
+\begin{equation}
+  B_v=-\prod_{e:\ \text{接在 $v$ 上的边}}(\sigma_x)_e
+  \tag{6.28}
+\end{equation}
+给出。用 $c_v\in C^0(M;\Z_2)$ 记在顶点 $v$ 处为 1、其他处为 0 的上链。$\{c_v\}_v$ 是 $C^0(M;\Z_2)$ 的基。稍加思考可知
+\begin{equation}
+  B_v|m\rangle=|m+\delta c_v\rangle.
+  \tag{6.29}
+\end{equation}
+因此，把 $B_v$ 在哈密顿量中的系数取得很大，系统的动力学就平均掉作用 $m\mapsto m+\delta c_v$ 的轨道，动力学地实现 $C^0(M;\Z_2)$ 经 $\delta$ 的商。
+
+于是看到，系统的基态有一个由上同调群 $H^1(M;\Z_2)=(\Z_2)^{2g}$ 标号的基，从而编码 $2g$ 个逻辑量子比特。
+
+作为好的可观测量，取 $M$ 中的一个 1-闭链 $C$。上链 $m$ 与 $C$ 的配对由
+\begin{equation}
+  \langle m,C\rangle=\sum_{e\in C}m(e)
+  \tag{6.30}
+\end{equation}
+给出。乘性地，有
+\begin{equation}
+  W_C:=(-1)^{\langle m,C\rangle}=\prod_{e\in C}(-1)^{m(e)}=\prod_{e\in C}(\sigma_z)_e.
+  \tag{6.31}
+\end{equation}
+
+% [原文 p.98]
+在系统的基态上，$W_C$ 只依赖同调类 $[C]\in H_1(M;\Z_2)$；后者与基态有自然配对，而基态又由上同调类 $H^1(M;\Z_2)$ 标号。
+
+
+\takeaway{本节把 Kitaev 环面码写成链复形：$\delta m=0$ 的约束给出 $H^1(M;\Z_2)$ 标号的基态，$2g$ 个逻辑量子比特由此而来；闭链算子 $W_C$ 是配对 $\langle m,C\rangle$ 的乘性版本。}
+\section{积}
+
+在 de Rham 上同调情形，给定来自闭微分形式 $\omega$ 与 $\eta$ 的 $[\omega]\in H^p_{\mathrm{dR}}(M)$ 与 $[\eta]\in H^q_{\mathrm{dR}}(M)$，可以定义它们的积 $[\omega][\eta]:=[\omega\wedge\eta]\in H^{p+q}_{\mathrm{dR}}(M)$。由于 $\omega\wedge\eta=(-1)^{pq}\eta\wedge\omega$，上同调类的积也满足 $[\omega][\eta]=(-1)^{pq}[\eta][\omega]$。这就是 de Rham 上同调群的分次交换性。
+
+当系数阿贝尔群 $A$ 有乘法时（$A=\Z$、$\R$、$\Z_2$ 都是），可以为单纯（上）同调群定义类似的积。
+
+为此，把 $p$-上链 $c$（即 $A$-线性映射 $c:C_p(M;A)\to A$）看成 $A$ 值函数
+\begin{equation}
+  c(v_0,\dots,v_p)=\pm c([v_0,\dots,v_p]),
+  \tag{6.32}
+\end{equation}
+若 $(v_0,\dots,v_p)$ 是 $M$ 中某个 $p$-单形顶点的一个重排，否则为零。注意在这个记号下
+\begin{equation}
+  (\delta c)(v_0,\dots,v_{p+1})=\sum_{i=0}^{p+1}(-1)^ic(v_0,\dots,\hat v_i,\dots,v_{p+1}),
+  \tag{6.33}
+\end{equation}
+其中 $\hat v_i$ 表示从函数 $c$ 的自变量中删去 $v_i$。
+
+\begin{definition}{6.37}
+  $p$-上链 $c$ 与 $q$-上链 $d$ 的积，是 $(p+q)$-上链 $c\cup d$，由
+  \begin{equation}
+    (c\cup d)(v_0,\dots,v_{p+q})=c(v_0,\dots,v_p)d(v_p,\dots,v_{p+q})
+    \tag{6.34}
+  \end{equation}
+  定义。
+\end{definition}
+
+\begin{proposition}{6.38}
+  有 $\delta(c\cup d)=(\delta c)\cup d+(-1)^pc\cup(\delta d)$。
+\end{proposition}
+
+证明可由式 (6.33) 给出的上边缘算子形式直接得到。
+
+于是有
+
+\begin{proposition}{6.39}
+  上同调类 $[c]\in H^p(M;A)$ 与 $[d]\in H^q(M;A)$ 的积，由 $[c]\cup[d]=[c\cup d]\in H^{p+q}(M;A)$ 给出，良定义。
+\end{proposition}
+
+这个积与 de Rham 上同调群情形一样是分次交换的，但证明稍麻烦。在 de Rham 情形，分次交换性来自微分形式的楔积分次交换，$\omega\wedge\eta=(-1)^{pq}\eta\wedge\omega$。在单纯上同调中，一般 $\omega\cup\eta\ne(-1)^{pq}\eta\cup\omega$，而满足更复杂的关系 [Ste47]：
+
+% [原文 p.99]
+\begin{definition}{6.40}
+  $p$-上链 $c$ 与 $q$-上链 $d$ 的 $\cup_1$ 积，是 $(p+q-1)$-上链，由
+  \begin{equation}
+    \begin{aligned}
+      (c\cup_1d)(v_0,\dots,v_{p+q-1})
+      =\sum_{i=0}^{p-1}(-1)^{(p-i)(q+1)}
+      &c(v_0,\dots,v_i,v_{i+q},\dots,v_{p+q-1})\\
+      &\cdot d(v_i,\dots,v_{i+q})
+    \end{aligned}
+    \tag{6.35}
+  \end{equation}
+  定义。
+\end{definition}
+
+于是有
+
+\begin{proposition}{6.41}
+  对 $p$-上链 $c$ 与 $q$-上链 $d$，有
+  \begin{equation}
+    c\cup d-(-1)^{pq}d\cup c=\delta(c\cup_1d).
+    \tag{6.36}
+  \end{equation}
+\end{proposition}
+
+于是有
+
+\begin{corollary}{6.42}
+  上同调类 $[c]\in H^p(M;A)$ 与 $[d]\in H^q(M;A)$ 的积满足 $[c]\cup[d]=(-1)^{pq}[d]\cup[c]$。
+\end{corollary}
+
+在这个积下，例 6.33 给出的上同调群 $H^{2k}(\CP^n;\Z)=\Z$ 的生成元已知为 $c^k$，其中 $c$ 是 $H^2(\CP^n;\Z)=\Z$ 的生成元。
+
+\textbf{附注 6.43.} 作为上同调群中积结构的一个应用，我们给出映射 $f:S^{2n-1}\to S^n$ 的 Hopf 不变量的另一个定义。回忆 $H^n(S^n;\Z)=\Z$，其生成元 $[\omega]$ 可以看作取值在 $\Z$ 中的体积形式。取定一个上链 $\omega\in Z^n(S^n;\Z)$，用 $f$ 把它拉回，得到 $n$-上链 $\omega'=f^*(\omega)\in Z^n(S^{2n-1};\Z)$。由于 $H^n(S^{2n-1};\Z)=0$，这个上链是上边缘，$\omega'=\delta c$ 对某个 $(n-1)$-上链 $c$ 成立。于是定义 $f$ 的 Hopf 不变量为
+\begin{equation}
+  \operatorname{Hopf}(f)=\langle c\cup\delta c,[S^{2n-1}]\rangle\in\Z,
+  \tag{6.37}
+\end{equation}
+其中 $\langle\cdot,\cdot\rangle$ 是同调群与上同调群之间的配对，即上链在闭链上的积分。
+
+注意，同样的构造可以用微分形式来做。事实上，取 $S^n$ 的体积形式 $\omega$，满足 $\int_{S^n}\omega=1$。它的拉回 $f^*(\omega)$ 是恰当的，因为 $H^n_{\mathrm{dR}}(S^{2n-1})=H^n(S^{2n-1};\R)=0$。因此存在 $(n-1)$-形式 $\eta$ 使 $f^*(\omega)=d\eta$。于是 Hopf 不变量由
+\begin{equation}
+  \operatorname{Hopf}(f)=\int_{S^{2n-1}}\eta\wedge d\eta
+  \tag{6.38}
+\end{equation}
+给出。不过，从微分形式的这个描述不容易看出它其实是整数。\qedmark
+
+\begin{question}{6.44}
+  证明表达式 (6.37) 良定义，即不依赖代表 $[\omega]$ 的 $\omega$ 的选择，也不依赖解 $\omega'=\delta c$ 的 $c$ 的选择。
+\end{question}
+
+\begin{question}{6.45}
+  证明 $n$ 为奇数时，Hopf 不变量 (6.37) 为零。
+\end{question}
+
+
+\takeaway{本节引入上积：$\cup$ 让上同调成为分次交换环，$\cup_1$ 积补偿单纯上同调中 $\cup$ 的交换性失效；Hopf 不变量用 $\cup$ 与 $\delta$ 写成整数。}
+
+\section{万有系数定理}
+
+% [原文 p.100]
+到目前为止，我们为阿贝尔群 $A$ 定义了 $H_p(M;A)$ 与 $H^p(M;A)$。事实上已知它们都可以从 $H_p(M;\Z)$ 得到。这些结论就是万有系数定理。
+
+\begin{theorem}{6.46}
+  对上同调群，有短正合列
+  \begin{equation}
+    0\to\operatorname{Ext}\bigl(H_{p-1}(M;\Z),A\bigr)\to H^p(M;A)
+    \to\Hom\bigl(H_p(M;\Z),A\bigr)\to0,
+    \tag{6.39}
+  \end{equation}
+  而对同调群，有短正合列
+  \begin{equation}
+    0\to H_p(M;\Z)\otimes_\Z A\to H_p(M;A)
+    \to\operatorname{Tor}\bigl(H_{p-1}(M;\Z),A\bigr)\to0,
+    \tag{6.40}
+  \end{equation}
+  两者都非典范地分裂。
+\end{theorem}
+
+这里，
+\begin{itemize}
+  \item $\Hom(A,B)$ 是从 $A$ 到 $B$ 的同态；
+  \item $A\otimes_\Z B$ 是 $A$ 与 $B$ 在 $\Z$ 上的张量积，即以 $a\otimes b$（$a\in A$、$b\in B$）为生成元、$\otimes$ 对 $\Z$ 双线性的阿贝尔群；
+  \item $\operatorname{Tor}(A,B)=\operatorname{torsion}(A)\otimes_\Z\operatorname{torsion}(B)$；
+  \item $\operatorname{Ext}(A,B)=\operatorname{torsion}(A)\otimes_\Z B$。
+\end{itemize}
+
+更显式地，我们总有如下结构：
+\begin{align}
+  H_p(M;\Z)&=\Z^{b_p}\oplus\Z_{k_p}\oplus\Z_{k'_p}\oplus\cdots, \tag{6.41}\\
+  H_p(M;\Z_2)&=(\Z_2)^{b_p}\oplus\Z_{\gcd(2,k_p)}\oplus\Z_{\gcd(2,k'_p)}\oplus\cdots \tag{6.42}\\
+  &\qquad\oplus\Z_{\gcd(2,k_{p-1})}\oplus\Z_{\gcd(2,k'_{p-1})}\oplus\cdots, \tag{6.43}\\
+  H_p(M;\R)&=\R^{b_p}, \tag{6.44}
+\end{align}
+以及
+\begin{align}
+  H^p(M;\Z)&=\Z^{b_p}\oplus\Z_{k_{p-1}}\oplus\Z_{k'_{p-1}}\oplus\cdots, \tag{6.45}\\
+  H^p(M;\Z_2)&=(\Z_2)^{b_p}\oplus\Z_{\gcd(2,k_p)}\oplus\Z_{\gcd(2,k'_p)}\oplus\cdots \tag{6.46}\\
+  &\qquad\oplus\Z_{\gcd(2,k_{p-1})}\oplus\Z_{\gcd(2,k'_{p-1})}\oplus\cdots, \tag{6.47}\\
+  H^p(M;\R)&=\R^{b_p}, \tag{6.48}
+\end{align}
+其中 $b_p$ 与 $k_p$、$k'_p$、$\dots$ 由上面第一行 $H_p(M;\Z)$ 的分解定义。
+
+\begin{question}{6.47}
+  在 $\RP^n$ 的情形验证这一点。
+\end{question}
+
+% [原文 p.101]
+当 $M$ 是紧定向连通 $n$ 维流形时，我们已经说过
+\begin{equation}
+  H_p(M;\Z)\simeq H^{n-p}(M;\Z);
+  \tag{6.49}
+\end{equation}
+这就是 Poincaré 对偶。我们还曾在前面学到，有自然双线性配对
+\begin{equation}
+  H^p(M;\Z)\times H_p(M;\Z)\to\Z,
+  \tag{6.50}
+\end{equation}
+它对应 $p$-形式在 $p$ 维闭子流形上的积分。
+
+上面的万有系数定理说，这其实是 $H^p(M;\Z)$ 与 $H_p(M;\Z)$ 的自由部分（即 $\Z^{b_p}$ 部分）之间的完美配对，意思是配对的值域是整个 $\Z$。把 Poincaré 对偶与万有系数定理结合起来，得到 $b_p=b_{n-p}$。
+
+\begin{definition}{6.48}
+  数 $b_p$ 称为 $M$ 的 Betti 数。
+\end{definition}
+
+最后注意，Poincaré 对偶有如下推论：
+
+\begin{proposition}{6.49}
+  设 $[N]\in H_p(M;\Z)$ 是 $p$ 维同调类，$[\omega]\in H^{n-p}(M;\Z)$ 是通过 Poincaré 对偶对应于它的上同调类。则对任意类 $[\eta]\in H^p(M;\Z)$，有
+  \begin{equation}
+    \langle[\eta],[N]\rangle=\langle[\eta]\cup[\omega],[M]\rangle.
+    \tag{6.51}
+  \end{equation}
+\end{proposition}
+
+
+\takeaway{本节陈述万有系数定理：取任意系数 $A$ 的（上）同调都从整系数同调经 $\Hom$、$\otimes$、$\operatorname{Tor}$、$\operatorname{Ext}$ 得到，自由部分与挠部分因此分离；Poincaré 对偶把 $b_p$ 与 $b_{n-p}$ 联系起来。}
+\section{Hurewicz 定理}
+
+在结束这段（上）同调群的导论之前，提一下 Hurewicz 同态与 Hurewicz 定理。
+
+设 $f:S^n\to M$。这让我们把生成元 $[S^n]\in H_n(S^n;\Z)=\Z$ 送到 $f_*([S^n])\in H_n(M;\Z)$。由于 $f_*$ 只依赖映射 $f$ 的同伦类，我们发现这定义了一个同态
+\begin{equation}
+  h:\pi_n(M;\Z)\to H_n(M;\Z).
+  \tag{6.52}
+\end{equation}
+这就是 Hurewicz 同态。设 $M$ 连通。则
+
+\begin{theorem}{6.50}
+  Hurewicz 同态 $h:\pi_1(M;\Z)\to H_1(M;\Z)$ 由阿贝尔化给出。
+\end{theorem}
+
+注意 $\pi_1(M)$ 可以是非阿贝尔群，而 $H_1(M;\Z)$ 是阿贝尔群。因此它们不可能总相等。上面的定理说，二者的关系是最简单的那种。
+
+% [原文 p.102]
+\begin{theorem}{6.51}
+  设 $M$ 连通且单连通，即 $\pi_0(M)=\pi_1(M)=0$。再设 $k<n$ 时 $\pi_k(M)=0$。则 Hurewicz 同态 $\pi_n(M;\Z)\to H_n(M;\Z)$ 是同构。
+\end{theorem}
+
+例如取 $M=\CP^n$。我们已经用纤维化 $S^1\to S^{2n+1}\to\CP^n$ 的同伦群长正合列算过 $\pi_k(\CP^n)$，并且知道 $\pi_0(\CP^n)=\pi_1(\CP^1)=0$ 与 $\pi_2(\CP^2)=\Z$。因此 Hurewicz 同态 $\pi_2(\CP^2;\Z)\to H_2(\CP^2;\Z)=\Z$ 是同构。确实，$H_2(\CP^2;\Z)$ 的生成元是子流形 $\CP^1\subset\CP^2$，它是球面 $S^2\simeq\CP^1$ 的像。
+
+另一个例子，考虑 $S^3\simeq SU(2)$。有 2:1 映射 $SU(2)\to SO(3)$。$SO(3)$ 有有限子群 $\Gamma$，即正二十面体的对称群。用 $\hat\Gamma$ 记它在 $SU(2)$ 中的原像。$\hat\Gamma$ 称为二元二十面体群。$\hat\Gamma\subset SU(2)$ 是有限子群，因此 $S^3/\hat\Gamma$ 是紧三维流形。我们已经算过 $\pi_1(S^3/\hat\Gamma)=\hat\Gamma$。那么 $M:=S^3/\hat\Gamma$ 的同调群是什么？由于它连通且可定向，$H_0(M;\Z)=H_3(M;\Z)=\Z$。由 Hurewicz，$H_1(M;\Z)$ 是 $\hat\Gamma$ 的阿贝尔化，已知平凡。因此 $H_1(M;\Z)=0$。由万有系数定理，可得 $H^1(M;\Z)=0$，再由 Poincaré 对偶得 $H_2(M;\Z)=0$。总结起来，我们发现
+
+\begin{example}{6.52}
+  $S^3/\hat\Gamma$ 的同调群由下式给出：
+  \begin{equation}
+    H_p(S^3/\hat\Gamma;\Z)=
+    \begin{cases}
+      \Z & (p=0,3),\\
+      0 & (\text{其余}),
+    \end{cases}
+    \tag{6.53}
+  \end{equation}
+  这与 $S^3$ 的同调群相同。
+\end{example}
+
+这意味着存在与 $S^3$ 同调群相同的、不同于 $S^3$ 的流形。这类流形称为同调球；上面构造的是第一个，由 Poincaré 发现。
+
+把同调群换成同伦群，可以问类似的问题：是否存在不同于 $S^3$ 的紧连通三维流形 $M$ 使 $\pi_1(M)=0$？不存在这样的流形，这就是著名的 Poincaré 猜想，直到 21 世纪才由 Perelman 证明。
+
+
+
+\takeaway{本节陈述 Hurewicz 定理：$\pi_1$ 的阿贝尔化给出 $H_1$；若低阶同伦群消失，则 $\pi_n\cong H_n$。同调球 $S^3/\hat\Gamma$ 说明同调不变量不能区分流形，Poincaré 猜想则要同伦群才看得见。}
+\chapterreview{本章把“积分对象”从子流形换成链，得到系数取 $\Z$ 或 $\Z_2$ 的（上）同调。§6.2 定义奇异链、边缘 $\partial$ 与上边缘 $\delta$，证明 $\partial^2=\delta^2=0$。§6.3–6.4 用单形与胞腔给出可算法计算的理论，并证明三种（上）同调同构、与 de Rham 上同调在 $\R$ 系数下同构。§6.5 用胞腔算出球面、复射影空间、实射影空间与曲面的同调，挠现象首次出现。§6.6 把 Kitaev 环面码解释为链复形，说明 $H^1(M;\Z_2)$ 标号简并基态。§6.7 定义上积与 $\cup_1$ 积，得到分次交换环与 Hopf 不变量。§6.8 的万有系数定理说明整系数同调决定一切系数，§6.9 的 Hurewicz 定理把同伦群与同调群在低阶联系起来。}

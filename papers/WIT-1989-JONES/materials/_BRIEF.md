@@ -1,0 +1,59 @@
+# WIT-1989-JONES 研讨班准备：共用简报
+
+（本文件是给协作者的上下文，不是交付物。不要修改它。）
+
+## 0. 项目与对象
+
+- 项目：威腾文章解经计划（Witten Exegesis Project），仓库 `C:\Users\admin\Desktop\witten-exegesis`。
+- 本轮：新一轮 AI 研讨班，对象是
+  **Edward Witten, “Quantum Field Theory and the Jones Polynomial”, Commun. Math. Phys. 121 (1989) 351–399**。
+  收稿 1988-09-12，修改稿 1988-09-27，49 个印刷页。
+- 本论文的工作目录：`C:\Users\admin\Desktop\witten-exegesis\papers\WIT-1989-JONES\`。
+- 中文全译本（已逐节校勘、带译者批注）：
+  `C:\Users\admin\Documents\deepseek-harness\default-workspace\witten1989\`
+  - 主文件 `main.tex`，分节 `sections/s00-front.tex` … `s10-references.tex`，成品 `deliver/witten.pdf`。
+  - 每个 section 文件头部有：覆盖的**印刷页码**、公式编号范围、图号；批注用 `% [Tutor Note: ...]` 标记，含易错点、原文笔误、归一化约定。
+  - 页边码约定：译文正文中“原文 p. n”= 印刷页码；「PDF 页 = n − 350」只适用于原文页图/OCR（49 张），译本 PDF 为 40 页重排，须用页边注定位。
+- 已发布译本：`C:\Users\admin\Desktop\数译发布\gitee_shuyi\08_source_code\SY05-18_量子场论与 Jones 多项式\源码\witten.tex`（247KB）与 `figures/fig01–18.png`；打包件 `C:\Users\admin\Downloads\_mt\pack2\SY05-18_量子场论与 Jones 多项式.zip`。
+
+## 1. 论文骨架（印刷页码，供锚点用）
+
+| 节 | 内容 | 印刷页 | 公式 |
+|---|---|---|---|
+| 引言（原文无标题） | Atiyah 两问；拓扑不变性=广义协变；本文任务 | 351–353 | 无 |
+| §1 The Chern–Simons Action | CS 作用量、大规范变换、能级量子化、Wilson 线 | 353–356 | (1.1)–(1.6) |
+| §2 The Weak Coupling Limit | 驻相→平坦联络；Ray–Singer 挠率；标架反常；2.1 纽结的纳入 | 356–365 | (2.1)–(2.33) |
+| §3 The Canonical Quantization | 相空间=平坦联络模空间；Kähler 极化；全纯截面 | 366–374 | (3.1)–(3.6) |
+| §3.1 The Holomorphic Viewpoint | 预量子化线丛、极化、$H^0(\mathcal M,L^{\otimes k})$ | 368–369 | |
+| §3.2 A Flat Vector Bundle on Moduli Space | 模空间上的（射影）平坦丛 = 共形块；Hitchin/KZ 联络 | 369–371 | |
+| §3.3 Incorporation of Wilson Lines |  puncture 约束 (3.4)；用 $G/T$ 把 q-数约束换成经典约束；Borel–Weil–Bott | 371–373 | (3.4) |
+| §3.4 The Riemann Sphere with Markings | 大 $k$ 下 $\mathcal H=\mathrm{Inv}(\otimes R_i)$；Verlinde 维数 | 373–374 | (3.5)–(3.6) |
+| §4 Calculability | 4.1 $S^3$ 中的纽结；4.2 链环手术；4.3 亏格一；4.4 $S^1\times X$；4.5 具体手术；4.6 辫群 | 374–394 | (4.1)–(4.56) |
+| §5 Applications to Physics | 3d CS 的 Hilbert 空间 = 2d 共形块；对 CFT/物理的启示 | 394–397 | |
+| 参考文献 | 39 条（照原文） | 397–399 | |
+
+## 2. 用户给的七条主线（讨论班要围绕它们组织）
+
+- T0 起点四问：Witten 为什么写？要解决什么问题？CS 量子化为什么困难？经典相空间是什么？
+- T1 几何量子化：预量子化 → 极化 → 全纯截面；辛流形/线丛/复结构的前提。
+- T2 Wilson 线与穿刺点：Wilson 线→模空间穿刺点；穿刺点上的 Gauss 约束；Borel–Weil–Bott 把约束“反量子化”回去。
+- T3 共形块与 WZW：几何量子化后的模空间如何对应 WZW 共形块；对应是什么级别的同构。
+- T4 Verlinde 公式：如何从共形块推出；物理意义。
+- T5 2d/3d 对偶：与 AdS3/CFT2 的区别；CS/WZW 与全息对偶是不是两码事。
+- T6 纽结范畴化：与 Khovanov 同调的关系（超出本文，作延伸）。
+
+## 2.5 阅读策略（2026-11-13 二次修订：原文是核心，教材补前置）
+
+- **Witten 本文必须逐节读**（中译 40 页重排 + 英文页图）：这是研讨班的对象，不许拿二手综述代替。
+- **前置知识用现代教材**：T1 几何量子化 → 李思《量子力学与几何》第 5 章（中译，`C:\Users\admin\Desktop\数译发布\shuyi\translations\SY07-03\成品\量子力学与几何_李思_中文译注本.pdf`，印刷页 = PDF − 12；5.4.3 预量子化、5.4.4 极化，PDF 313–321 / 印刷 301–309）；T2–T4 → 河野俊丈《场论与拓扑学》中译（126 页，见 `本地教材核查_河野拓扑场论.md`）；细节手册 → 上野健爾 CFT 中译 `C:\Users\admin\Downloads\cft_gauge\`。
+- **不必找 1960–80 年代其他原始文献**（Atiyah/Verlinde/ADPW 等），找不到就用教材代偿；原文只用于核对断言、核对符号、追问“当时证到哪一步”。
+- 覆盖矩阵与分工见 `本地教材核查_河野拓扑场论.md`、`教材核查_李思几何量子化.md`。T5（全息对偶辨析）与 T6（Khovanov）教材不覆盖，仍须新写。
+
+## 3. 硬规矩（违反即返工）
+
+1. **中文**，结论先行，表格优先，不要写成散文。
+2. **证据锚点**：每条实质断言带 `[src p.N]` 或 `[eq x.y]`。拿不到锚点的，只能在专门的小节里标「待核/推测」，不得混进正文结论。
+3. **区分三种出处**：`原文明确说` / `我们据上下文重建` / `后人（年份+文献）`。绝不把后世术语塞进 Witten 嘴里。
+4. **不编造文献**：作者、标题、期刊、卷、页、年份，任何一项没核过就标 `未核`；宁可少写，不许凑数。用 web_search/web_fetch 核对 arXiv/DOI 是允许且鼓励的。
+5. **不动别人的文件**：只写自己名下的那一个文件；不修改 `_BRIEF.md`、`seminar/` 与其它 `materials/` 文件。
+6. 写完用 `send_message` 给 `lead` 发一条 8–15 行的汇报：文件路径、结构、最重要的 3 个发现、你不确定的地方。

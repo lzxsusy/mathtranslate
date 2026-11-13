@@ -1,0 +1,161 @@
+% =====================================================================
+%  Laura P. Schaposnik
+%  "Advanced topics in gauge theory: mathematics and physics of Higgs bundles"
+%  arXiv:1907.09800v1 (PCMI 2019 Graduate Summer School 讲义, 53 页)
+%  —— 中文译注本
+%
+%  编译：LuaLaTeX（本机统一用 lualatex，编译 3 遍）——见 build.ps1
+%  约定：
+%   * 原文公式编号在左侧（leqno），与原文版式一致；全部用 \tag{} 复刻原编号；
+%   * 原文的定理/命题/例/注/猜想/问题与公式共用「节.序号」计数器（如 例 2.10、式 (2.12)），
+%     本译本所有编号一律手工给出，绝不自动编号；
+%   * % [Tutor Note: ...] 为译者批注，不进入排版，汇总见 译注汇总.md。
+% =====================================================================
+\documentclass[11pt,a4paper,leqno]{article}
+
+\usepackage[UTF8]{ctex}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage[a4paper,left=2.6cm,right=2.6cm,top=2.6cm,bottom=2.7cm]{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage{tikz}
+\usepackage[hidelinks,unicode]{hyperref}
+\hypersetup{pdftitle={规范场论中的进阶专题：Higgs 丛的数学与物理（中译注本）},
+  pdfauthor={Laura P. Schaposnik; 中译/批注: 本译本}}
+
+\captionsetup{font=small,labelsep=quad}
+\setlength{\emergencystretch}{3em}
+\allowdisplaybreaks[1]
+\graphicspath{{figures/}{../figures/}}
+
+% ---------- 页眉 ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape Advanced topics in gauge theory: mathematics and physics of Higgs bundles}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ---------- 编号条目环境（编号一律手工给定，见 STYLE_GUIDE §3） ----------
+% 用法：\begin{thm}{2.6} …… \end{thm}
+% 带原文括注时把括注写进参数：\begin{thm}{4.2（[59] 定理 11）}
+\newcommand{\stmtopen}[1]{\par\medskip\noindent\textbf{#1}\ \kaishu}
+\newenvironment{thm}[1]{\stmtopen{定理 #1.}}{\par\medskip}
+\newenvironment{prop}[1]{\stmtopen{命题 #1.}}{\par\medskip}
+\newenvironment{lem}[1]{\stmtopen{引理 #1.}}{\par\medskip}
+\newenvironment{coro}[1]{\stmtopen{推论 #1.}}{\par\medskip}
+\newenvironment{defn}[1]{\stmtopen{定义 #1.}}{\par\medskip}
+\newenvironment{exmp}[1]{\stmtopen{例 #1.}}{\par\medskip}
+\newenvironment{rem}[1]{\stmtopen{注 #1.}}{\par\medskip}
+\newenvironment{conj}[1]{\stmtopen{猜想 #1.}}{\par\medskip}
+% 习题集（原文 Problem set I–IV）中的「Problem N. 标题.」：正文为正常字体
+\newenvironment{prob}[1]{\par\medskip\noindent\textbf{问题 #1.}\ }{\par\medskip}
+
+% 原文作者用粗体行内小标题（如 "Bibliography."）——中文译为 \para{...}
+\newcommand{\para}[1]{\par\medskip\noindent\textbf{#1}\quad\ignorespaces}
+
+% 原文表格标题（手工编号）
+\newcommand{\tabtitle}[2]{\caption*{\small\textbf{表 #1：}#2}}
+% 原文图标题（手工编号）
+\newcommand{\figtitle}[2]{\caption*{\small\textbf{图 #1：}#2}}
+
+% 参考文献条目（gen_refs.py 按 \refitem{编号}{内容} 输出）
+\newcommand{\refitem}[2]{\par\hangindent=1.5em\hangafter=1\noindent [#1]~#2}
+
+% 习题集小节中罗马数字子项：\begin{enumerate}[label=(\roman*)]
+% 原文 "i. ii. iii." 的缩进由 enumitem 控制（见 STYLE_GUIDE）
+
+% ---------- 常用记号（只能用这里定义过的宏，不要自造 \newcommand） ----------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\T}{\mathbb{T}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fh}{\mathfrak{h}}
+\newcommand{\fm}{\mathfrak{m}}
+\newcommand{\fsl}{\mathfrak{sl}}
+\newcommand{\fsp}{\mathfrak{sp}}
+\newcommand{\fso}{\mathfrak{so}}
+\newcommand{\fsu}{\mathfrak{su}}
+\newcommand{\fu}{\mathfrak{u}}
+\newcommand{\Gl}{\mathrm{GL}}
+\newcommand{\Sl}{\mathrm{SL}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\Spin}{\mathrm{Spin}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\Sp}{\mathrm{Sp}}
+\newcommand{\PSL}{\mathrm{PSL}}
+\newcommand{\PGL}{\mathrm{PGL}}
+\newcommand{\U}{\mathrm{U}}
+\newcommand{\Prym}{\operatorname{Prym}}
+\newcommand{\Rep}{\operatorname{Rep}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\Sym}{\operatorname{Sym}}
+\newcommand{\Jac}{\operatorname{Jac}}
+\newcommand{\Pic}{\operatorname{Pic}}
+\newcommand{\rk}{\operatorname{rk}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\coker}{\operatorname{coker}}
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\const}{\mathrm{const}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ee}{\mathrm{e}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\ie}{\textit{i.e.}}
+\newcommand{\eg}{\textit{e.g.}}
+\newcommand{\cf}{\textit{cf.}}
+\newcommand{\half}{\tfrac{1}{2}}
+
+% ---------- 译者常用别名（2026-11-04 依译者实际用法补充） ----------
+\newcommand{\SL}{\mathrm{SL}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\GC}{G_{\C}}
+\newcommand{\HC}{H_{\C}}
+\newcommand{\Aut}{\operatorname{Aut}}
+\newcommand{\Gr}{\operatorname{Gr}}
+\newcommand{\Crit}{\operatorname{Crit}}

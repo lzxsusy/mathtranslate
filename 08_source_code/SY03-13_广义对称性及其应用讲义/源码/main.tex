@@ -1,0 +1,168 @@
+% =============================================================================
+%  Lecture Notes on Generalized Symmetries and Applications
+%  中文学术译本（含审校批注 + 本节重点）
+%
+%  原文：Ran Luo, Qing-Rui Wang, Yi-Nan Wang,
+%        "Lecture Notes on Generalized Symmetries and Applications",
+%        arXiv:2307.09215v3 [hep-th], 23 Aug 2024, 83 pp.
+%        （Published in Physics Reports, doi:10.1016/j.physrep.2024.02.002）
+%
+%  编译：XeLaTeX（推荐；本文件由 Tectonic/XeTeX 引擎验证通过）
+%        xelatex main.tex    （连跑两遍以生成目录与交叉引用）
+%
+%  排版约定（详见 SPEC.md）：
+%    * 全部公式由原文 LaTeX 源码逐字搬运，环境与顺序不变，
+%      因此公式编号（\numberwithin{equation}{section}）与原文逐一对应；
+%    * 图号、表号由 LaTeX 自动生成，与原文 Figure 1--10、Table 1--2 一一对应；
+%    * 正文引用沿用原文 \cite 键，参考文献直接 \input{refs.bbl}（原文编号不变）；
+%    * 每节开头的「本节重点」为译者所加，非原文内容；
+%    * 审校批注为可见的「译注」方框（橙色），可在导言区一键关闭。
+% =============================================================================
+
+\documentclass[11pt,a4paper]{article}
+
+% ---------- 中文支持（必须使用 XeLaTeX 引擎） ----------
+% Linux/macOS 若没有 Windows 字体，把 fontset=windows 改为 fontset=fandol
+\usepackage[UTF8, fontset=windows, heading=true]{ctex}
+
+% ---------- 数学 ----------
+\usepackage{amsmath,amsthm,amssymb,amsfonts,mathrsfs}
+\usepackage{mathtools}
+\usepackage{bm}
+
+% ---------- 版面 ----------
+\usepackage[a4paper,left=2.4cm,right=2.4cm,top=2.6cm,bottom=2.6cm]{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage[font=small,labelfont=bf,labelsep=quad]{caption}
+
+% ---------- 图形（原文插图全部为 TikZ 矢量图，故直接沿用） ----------
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usetikzlibrary{arrows,arrows.meta,shapes.geometric,calc,positioning,
+                shapes.misc,decorations.markings,decorations.pathmorphing}
+
+% ---------- 文献与超链接 ----------
+\usepackage[sort,compress]{cite}
+\usepackage[colorlinks=true,
+            linkcolor=blue!45!black,
+            citecolor=blue!45!black,
+            urlcolor=blue!45!black]{hyperref}
+
+% ---------- 原文记号宏（逐字取自 arXiv 源码导言区） ----------
+\input{defs}
+
+% ---------- 排版微调 ----------
+\setlength{\emergencystretch}{3em}
+\allowdisplaybreaks[3]
+\linespread{1.12}
+\numberwithin{equation}{section}
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+\renewcommand{\proofname}{证明}
+\renewcommand{\abstractname}{摘要}
+% 页眉保留章节标题原样大小写（article 默认会把 Čech 变成 ČECH）
+\makeatletter
+\renewcommand{\sectionmark}[1]{\markright{\thesection\quad #1}}
+\makeatother
+\ctexset{
+  section/name    = {},
+  section/number  = \arabic{section},
+  subsection/name = {},
+  subsubsection/name = {},
+}
+
+% ---------- 定理类环境（中文名；编号方式与原文一致） ----------
+\newtheorem{example}{例}
+\newtheorem{definition}{定义}[section]
+\newtheorem{theorem}{定理}
+\newtheorem{prop}{命题}
+\newtheorem{lemma}{引理}
+\newtheorem{fact}{事实}[section]
+\newtheorem{remark}{注记}
+
+% ---------- 「本节重点」方框（译者所加） ----------
+\newtcolorbox{keytakeaways}[1][本节重点]{
+  enhanced,
+  colback  = blue!3!white,
+  colframe = blue!35!black,
+  boxrule  = 0.4pt,
+  arc      = 2pt,
+  left     = 7pt, right = 7pt, top = 5pt, bottom = 5pt,
+  title    = {#1\,{\normalfont\scriptsize（译者所加）}},
+  fonttitle= \bfseries\small,
+  before skip = 10pt, after skip = 10pt,
+}
+
+% ---------- 译注（可见；可一键关闭） ----------
+%   用法：\begin{yizhu}注文\end{yizhu}
+%         \begin{yizhu}[原文疑误]注文\end{yizhu}
+%   关闭：把下面的 \showyizhutrue 改成 \showyizhufalse
+\newif\ifshowyizhu
+\showyizhutrue
+\newcounter{yizhu}
+\makeatletter
+\newenvironment{yizhu}[1][]{%
+  \ifshowyizhu
+    \refstepcounter{yizhu}%
+    \par\addvspace{5pt}\noindent
+    \begin{tcolorbox}[enhanced, breakable,
+      colback  = orange!4!white,
+      colframe = orange!55!black,
+      boxrule  = 0.3pt,
+      arc      = 1.5pt,
+      left     = 6pt, right = 6pt, top = 4pt, bottom = 4pt,
+      title    = {\small\bfseries 译注~\theyizhu
+                  \if\relax\detokenize{#1}\relax\else\ ——#1\fi}]%
+    \small
+  \else
+    \setbox\z@\vbox\bgroup\small
+  \fi
+}{%
+  \ifshowyizhu
+    \end{tcolorbox}%
+  \else
+    \egroup
+  \fi
+}
+\makeatother
+
+% ---------- PDF 元数据 ----------
+\hypersetup{
+  pdftitle  = {广义对称性及其应用讲义（中译本）},
+  pdfauthor = {Ran Luo, Qing-Rui Wang, Yi-Nan Wang（原著）；中文翻译与译注：DeepSeek Harness},
+  pdfsubject = {Generalized Symmetries; Higher-Form Symmetry; Higher-Group Symmetry; SPT},
+  pdfkeywords = {广义对称性, 高形式对称性, 高群对称性, 反常, 对称保护拓扑相, 配边, 2-群},
+}
+
+\begin{document}
+
+% ============================ 题名页、摘要、目录 ============================
+\input{sections/s00-front}
+
+% ============================ 正文 ============================
+\input{sections/s01-intro}
+\input{sections/s02a-higher-form}
+\input{sections/s02b-trifecta}
+\input{sections/s03a-anomalies}
+\input{sections/s03b-classification}
+\input{sections/s04a-applications}
+\input{sections/s04b-cmt}
+\input{sections/s05a-higher-group}
+\input{sections/s05b-crossed}
+\input{sections/s05c-physical}
+
+% ============================ 附录 ============================
+\appendix
+\input{sections/s06-appa}
+\input{sections/s07-appb}
+
+% ============================ 参考文献 ============================
+\input{refs.bbl}
+
+\end{document}

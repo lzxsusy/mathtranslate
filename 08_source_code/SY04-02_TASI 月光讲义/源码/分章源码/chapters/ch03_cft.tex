@@ -1,0 +1,636 @@
+% ===================================================================
+%  第 3 节 二维共形场论
+%  原文：TASI10.tex 第 1051--1475 行（PDF p.26--37）
+% ===================================================================
+\section{二维共形场论}
+\label{sec:CFT}
+
+\begin{keytakeaways}
+  \item 二维共形对称性由 Witt 代数 (3.1)--(3.2) 描述；量子化把它中心扩张为含中心荷 $c$ 的 Virasoro 代数 (3.7)--(3.8)，中心项 $\frac{c}{12}m(m^2-1)\delta_{m+n,0}$ 是共形反常的源头。
+  \item 态—场对应 (3.3) 使局部算符与态一一对应；OPE (3.4) 与正规序 (3.5) 编码奇异性，柱面—平面映射给出 $H=L_0+\tilde L_0-\frac{c+\tilde c}{24}$ (3.10)，这正是 $q^{h-c/24}$ 中真空能的来历。
+  \item 有理共形场论的态空间按手征代数 $\mathcal{V}$ 的模分解 (3.12)；特征标 (3.14) 是 $\PSL(2,\ZZ)$ 的弱全纯向量值模形式，其混合方式经 Verlinde 公式决定 OPE。
+  \item 轨道流形构造 (3.18)--(3.25) 保留 $G$-不变态并对每个 $g\in G$ 加入 $g$-扭结扇区；twined 特征标与 twisted-twined 特征标及其模变换 (3.27)--(3.28) 是月光模对象的核心。
+  \item 椭圆亏格 (3.34) 只对右行取 Ramond 基态、对左行保留全部谱，是权零、指标 $m=c/6$ 的弱 Jacobi 形式；Witten 指标是它的特例，只计数 BPS 态。
+  \item $K3$ 与 $T^4$ 的例子表明模性足以定出整个椭圆亏格：${\bf EG}(K3)=2\phi_{0,1}$，因为权零、指标 1 的弱 Jacobi 形式空间是一维的。
+\end{keytakeaways}
+
+本章简要总结二维共形场论（conformal field theory，CFT）的若干关键要素，绝非完整的系统论述。
+CFT 与月光相关，因为就目前已知的情形而言，相应的月光模都具有顶点算子代数（vertex operator algebra，VOA）结构，
+而 VOA 结构捕捉的正是二维 CFT 手征代数的结构。我们不采用更形式化的 VOA 语言，
+而选择物理学家更熟悉的 CFT 语言。CFT 基础知识的参考资料包括
+\cite{DiFrancescoPhilippe1997Cft/,BlumenhagenRalph2009ItCF,MR2201600,MatthiasRGaberdiel2000Aitc}。
+另见本卷中 Xi Yin 教授的 TASI 讲义 \cite{xi_yin_tasi17}。
+
+在 \S\ref{subsec:CFTGeneral structure} 概述基本结构之后，我们快速回顾（全纯）轨道流形中与月光相关的方面，
+特别是与理解月光函数的模性质相关的部分。随后我们转向超对称共形场论，
+引入所谓椭圆亏格（elliptic genus），它计数 BPS 态；
+在 \S\ref{chap:moonshineK3} 讨论 Mathieu 月光与本影月光的物理背景时，椭圆亏格将扮演重要角色。
+
+\subsection{一般结构}
+\label{subsec:CFTGeneral structure}
+
+共形场论是具有共形对称性的量子场论。共形变换是保持度规共形平坦性的坐标变换。
+聚焦于欧几里得号差的黎曼流形：若度规可写成 $ds^2=e^{\omega(x)}\delta_{\mu\nu}dx^\mu dx^\nu$ 的形式，
+则称它是共形平坦的。共形变换在局部保持角度不变，但可以任意伸缩长度，
+因此共形对称性通常与不存在内禀长度标度相联系。在 $\RR^{n,0}$（$n\geq3$）的共形紧化上
+（即添加无穷远点，这是特殊共形变换良定义所必需的），所有共形变换都整体良定义，
+并构成同构于 $\SO(n+1,1,\RR)$ 的群。相应的局部变换于是构成同构于
+$\mathfrak{so}(n+1,1,\RR)$ 的有限维 Lie 代数。然而在二维，共形不变性条件等价于
+Cauchy–Riemann 方程，任意全纯函数都给出一个无穷小共形变换。
+
+% [Tutor Note: 二维的特殊性在于共形代数从有限维跳跃到无限维：n≥3 时局部共形代数 so(n+1,1) 只有有限多个生成元，而二维由 ell_n=-z^{n+1} partial_z（n 为整数）张成无限维 Witt 代数；其中只有 ell_{-1}, ell_0, ell_1 在黎曼球面上整体良定义，其余生成元是纯局部的。切勿把无限维 Witt 代数与有限维 Möbius 子代数混为一谈。]
+
+使用生成元
+\begin{equation}
+\label{eq:conf_gen}
+\ell_n=-z^{n+1}\partial_z~,~~\bar{\ell}_n=-\bar{z}^{n+1}\partial_{\bar{z}}~
+\end{equation}
+对 $n\in\ZZ$，我们看到局部共形变换构成一个无限维 Lie 代数，其中包含两个相互对易的
+Witt 代数拷贝，其对易关系为
+\begin{equation}
+\label{eq:witt}
+\witt:~~[\ell_m,\ell_n]=(m-n)\ell_{m+n}~.
+\end{equation}
+必须强调，二维中大多数共形生成元都是纯局部的，也就是说，它们并不生成整体良定义的变换。
+例如考虑 Riemann 球面 $\RS=\CC\cup\infty$，即亏格零的 Riemann 曲面。
+在 $\RS$ 上，只有 $\ell_{0},\ell_{\pm1}$ 生成整体共形变换，它们构成 M\"obius 群
+$\SO(3,1,\RR)\cong\PSL(2,\CC)$。
+
+% [Tutor Note: 易错预警：(3.2) 的系数 (m-n) 依赖生成元取法。若改用 ell_n=+z^{n+1}partial_z 的相反号约定，对易子会变成 (n-m)ell_{m+n}，Virasoro 中心项的符号也随之改变；本节全程采用 (3.1) 的负号约定，抄写时不要混用。]
+
+二维 CFT 的量子化通常在 $\CC$ 上进行。Riemann 球面上的理论唯一决定任意其他 Riemann 曲面上的理论，
+但并不保证它们的自洽性，因为还必须要求交叉对称性与环面配分函数的模不变性（见下文）。
+为看清如何在 $\CC$ 上量子化，注意挖去原点的 $\CC$ 共形等价于柱面 $S^1\times\RR$。
+记 $y$ 与 $t$ 分别为 $S^1$ 与欧几里得时间 $\RR$ 的坐标，则共形映射 $z= e^{t+iy}$
+把柱面映到 $\CC\backslash\{0\}$，特别地把无穷远过去映到原点。
+柱面上的通常时序变为平面上的径向序，相应的态空间建立在径向切片上。
+
+任何像局部场 $\phi(z,\bar{z})$ 的对象在 CFT 中都称为场。若场只依赖全纯变量 $z$，
+我们称它为\emph{手征场}（若只依赖 $\bar{z}$，则称\emph{反手征场}）。
+量子化后，场成为算符值分布，通过作用在真空 $|0\rangle\in\mathcal{H}$ 上，
+在态空间 $\mathcal{H}$ 中产生态。这称为\emph{态—场对应}，它把场 $\phi$ 映为态
+\begin{equation}
+\phi\mapsto|\phi\rangle:=\lim_{z,\bar{z}\rightarrow0}\phi(z,\bar{z})|0\rangle~,
+\end{equation}
+该态在平面上的原点（或柱面上的过去无穷）产生。CFT 的一个关键性质是上述映射是双射：
+每个态唯一对应一个局部算符；而对典型的 QFT，不同场可以产生相同的渐近态。
+可以这样理解：在共形变换下，$t\rightarrow-\infty$ 被映到 $\RS$ 上的单个局部点。
+
+两个场插入同一点时，其乘积一般是奇异的。奇异结构由所谓\emph{算子乘积展开}
+（operator product expansion，OPE）刻画
+\begin{equation}
+\phi_1(z)\phi_2(z')\sim\sum_{n=0}^\infty D_n(z-z') O_n(z')~,
+\end{equation}
+其中 $\sim$ 表示只保留奇异项。这里 $O_n(z)$ 是理论中的场，$D_n(z-z')$ 是复值函数，
+当 $z\to z'$ 时具有多项式或对数奇异。$\phi_1(z)\phi_2(z')$ 的非奇异部分由
+\emph{正规序乘积}（normal-ordered product）捕捉，其定义可以是
+\begin{equation}
+\normord{\phi_1(z)\phi_2(z')}~:=\phi_1(z)\phi_2(z')-\sum_{n=0}^\infty D_n(z-z') O_n(z')~.
+\end{equation}
+当 $D_n(z-z')$ 中只含多项式奇异时，我们说场 $\phi_1$ 与 $\phi_2$ 彼此局部，
+意即没有分支割线，围道积分良定义。
+
+% [Tutor Note: 易错预警：(3.4) 中的 sim 只表示保留奇异项，而正规序 (3.5) 是减去全部奇异项，两者是互补操作。注意 T(z)T(w) 展开 (3.7) 中 (z-w)^-4、(z-w)^-2、(z-w)^-1 的幂次分别对应中心荷、共形维数 2 的二次极点与一次极点；系数 c/2、2T(w)、partial T(w) 由 T 的共形维数 2 与 Ward 恒等式唯一固定，务必要与 (3.8) 的中心项 c/12 m(m^2-1) 对照记忆。]
+
+二维 CFT 连续共形对称性对应的守恒流是\emph{应力张量}（stress-energy tensor），
+我们记 $T(z):=T_{zz}(z)$ 与 $\bar{T}(\bar{z}):=T_{\bar{z}\bar{z}}(\bar{z})$。
+经典地，这些是唯一非零的分量。在一般 Riemann 曲面上量子化后，这被破坏为
+$\langle T^a_{~a}\rangle=-\frac{c}{12}R$，其中 $R$ 是 Ricci 标量。
+
+由于手征与反手征部分的处理完全相同，此后我们聚焦前者。
+应力张量 $T(z)$ 的全纯性来自如下事实：相应的守恒荷恰是无穷小全纯共形变换
+\eqref{eq:conf_gen} 的生成元。具体地，有 mode 展开
+\begin{equation}
+L_n:=\frac{1}{2\pi}\oint T(z) z^{n+1} dz~\Leftrightarrow~~T(z)=\sum_{n\in\ZZ}L_n z^{-n-2}~.
+\end{equation}
+然而 $L_n$ 这些 mode 一般并不满足 Witt 代数 \eqref{eq:witt}。
+这是因为共形对称性通常被量子效应“软”破缺。$T(z)$ 与自身的 OPE，
+\begin{equation}
+T(z)T(w)\sim\frac{c/2}{(z-w)^4}+\frac{2T(w)}{(z-w)^2}+\frac{\partial T(w)}{z-w}~, 
+\end{equation}
+通过 mode 展开等价于对易关系
+\begin{equation}
+[L_m,L_n]=(m-n)L_{m+n}+\frac{c}{12}m(m^2-1)\delta_{m+n,0}~.
+\end{equation}
+
+% [Tutor Note: 易错预警：由 (3.7) 到 (3.8) 的等价依赖围道积分与 mode 展开约定，其中 L_n 的指数为 z^{-n-2}，−2 正是 T 的共形维数，切勿写成 −n-1；若指数约定改动，中心项会整体平移。检验：取 m=1, n=-1 得 [L_1,L_{-1}]=2L_0，中心项因 1·(1-1)=0 而消失，这对应 Möbius 子代数 sl(2) 不含反常。]
+
+上式中，实常数 $c$ 称为\emph{中心荷}（central charge），新代数即\emph{Virasoro 代数} $\vir$，
+它是对 $\witt$ 用含中心荷的项作中心扩张所得的结果。此外，所得的两个 $\vir$ 拷贝相互对易，
+即 $[L_m,\bar{L}_n]=0$，并且反手征部分有中心荷 $\bar{c}$，原则上可与 $c$ 不同。
+中心荷携带着 CFT 的重要信息，是自由度数目的一种度量，但可以存在多个中心荷相同的不同 CFT。
+它与共形对称性的“软”破缺有关，因为它表明生成共形变换的应力张量在共形映射下反常地变换。
+例如，对从柱面到 Riemann 球面的变换 $z=e^w, w=t+iy$，有
+\begin{equation}
+T(z)=z^{-2}\left(T_{\text{cyl}}(w)+\frac{c}{24}\right)~, 
+\end{equation}
+由此得到 Hamiltonian $\oint_{\rm{time-slice}}dw ( T_{\text{cyl}}(w)+ \bar {T}_{\text{cyl}}(\bar w))$
+与 $\oint_{\rm{radial-slice}}{dz\over z}( T(z)+ \bar {T}(\bar z)) $ 之间的如下关系：
+\be\label{hamiltonian}
+H= L_0  +  \tilde L_0 - {c+\tilde c \over 24}. 
+\ee
+类似地，动量（或 {\em spin}）为
+\be\label{momentum}
+P= L_0  -  \tilde L_0 - {c-\tilde c \over 24}. 
+\ee
+
+% [Tutor Note: 易错预警：(3.9) 中 z=e^w 的映射使平面 mode 与柱面 mode 相差一个 +c/24 的常数移动，于是平面 L_0 = L_0^{cyl} + c/24，从而 H=L_0+Lbar_0-(c+cbar)/24 (3.10) 与 P=L_0-Lbar_0-(c-cbar)/24 (3.11)。q^{h-c/24} 里的 −c/24 就是这一真空能移动；符号弄反会使真空能变成 +c/24，进而破坏模变换下 eta 函数的 1/24 幂次。]
+
+因此，$L_0$ 的本征值扮演手征部分能量的角色，而中心荷给出非零的基态能量。
+本征态 $|h\rangle\in\mathcal{H}$ 在 $L_0$ 下的本征值 $h$，即 $L_0|h\rangle=h|h\rangle$，
+称为 $|h\rangle$ 的\emph{共形权}（conformal weight）。若进一步对所有 $n>0$ 都有
+$L_n|h\rangle=0$，则称 $|h\rangle$ 为\emph{Virasoro 原初态}（Virasoro primary state），
+相应的场称为原初场。通过态—场对应，这套术语也推广到相应的场 $\phi_h$。
+形如 $L_{-k_1}L_{-k_2}\cdots L_{-k_n}|h\rangle$（$k_i>0$）的态称为 $|h\rangle$ 的
+\emph{Virasoro 后裔}（Virasoro descendant）。若 $|h\rangle$ 是原初态，
+则它与全部后裔一起构成 $\vir$ 的所谓\emph{Verma 模}。原初态 $|h\rangle$
+于是称为该模的\emph{最高权态}，因为（说来有些令人困惑）它在所有后裔中共形权最低。
+
+由于态自身组织成 Virasoro 表示，可以把 CFT 的态空间分解为 $\vir$ 与 $\overline{\vir}$
+模的直和。一般地，聚焦手征部分，可以有一个包含 $\vir$ 的更大对称代数。
+这称为该 CFT 的\emph{手征代数}（chiral algebra），此处记为 $\mathcal{V}$。
+我们主要关心\emph{有理共形场论}（rational conformal field theory，RCFT），
+它们只含有限多个这样的模；记 $\Phi(\mathcal{V})$、$\overline{\Phi}(\overline{\mathcal{V}})$
+分别为这些模（手征与反手征）的集合。态空间于是可写为
+\begin{equation}
+\label{eq:split_modules_hilbert_space}
+\mathcal{H}~=\bigoplus_{M\in\Phi(\mathcal{V}),\overline{N}\in\overline{\Phi}(\overline{\mathcal{V}})}\mathcal{Z}_{M,\overline{N}}\left(M\otimes\overline{N}\right)~.
+\end{equation}
+这类 RCFT 中的态组织成 $\mathcal{V}$-模，其最高权态对应\emph{手征原初场}（chiral primaries）：
+它们不仅是 Virasoro 原初场，而且关于 $\mathcal{V}$ 也是原初的。
+手征后裔由 $\mathcal{V}$ 作用在手征原初场上生成。这意味着，若 $A(z)\in\mathcal{V}$，
+则对任意 $M\in\Phi(\mathcal{V})$ 有 $A(z)M\subset M$。
+
+% [Tutor Note: 含糊点拨：(3.12) 是有限直和，因为 RCFT 的假设就是只有有限多个不可约模；系数 Z_{M,Nbar} 是 M 与 Nbar 在态空间中出现的重数，幺正理论中为非负整数。作者未展开的是：正是模不变性 (3.17) 迫使这些重数构成模不变矩阵，从而把谱的选取化为求解模不变配分函数这一组合问题。]
+
+通过态—场对应，手征代数 $\mathcal{V}$ 对应的子空间 $V\subset\mathcal{H}$ 总构成不可约
+$\mathcal{V}$-模 $V:=M_1\in\Phi(\mathcal{V})$，它包含真空以及所有对应于生成 $\mathcal{V}$
+的 Virasoro 原初场的态（这些原初场通常也称\emph{流}（currents）），连同它们的全部手征后裔。
+模不变性要求 $L_0-\overline{L}_0$ 的本征值为整数，这也意味着任意 $M\in\Phi(\mathcal{V})$
+中的所有态的权在相差整数的意义下相同。具体地，真空模 $V$ 中所有态都应有整数权。
+然而，若一开始放弃模不变性要求，手征代数就可能含有半整数权的流（费米型流），
+或任意有理权的流（parafermion）。代价是这些流的 OPE 非局部（按前面讨论的意义），
+相应的分支割线导致引入各种扇区（对费米型流即 Ramond 与 Neveu–Schwarz 扇区）。
+此后可以通过适当的投影构造模不变的理论。
+
+% [Tutor Note: 背景直觉：为什么允许丢掉模不变性？因为手征代数只编码全纯部分，非局部的费米型流会带来分支割线，必须靠“扇区 + 投影”才能拼回一个单值、模不变的完整理论。原文所说“靠适当投影构造模不变理论”，在技术上就是 GSO 投影或对角化模不变配分函数，代价是谱中出现半整数权的态，这是超弦与超共形场论的标准做法。]
+
+手征代数本身是顶点算子代数（VOA）理论的核心对象，在那里以公理化方式讨论。
+在月光的语境中，手征代数的一个重要性质是 $\Aut(\mathcal{V})$ 的有限群部分。
+最著名的例子是 Monster CFT $V^\natural$，它是一个满足 $\Aut(V^\natural)=\MM$
+（魔群）的 VOA。此外，$V^\natural$ 是\emph{全纯 VOA} 的一个例子，
+即只有唯一不可约 $\mathcal{V}$-模（也就是空间 $V$）的 VOA。
+
+在二维 CFT 中，人们关心场在 Riemann 曲面 $\Sigma$ 上特定点处的关联函数。
+它们可以用称为\emph{手征块}（chiral blocks）的手征量表达。记 $\Sigma=\Sigma_{g,n}$，
+亏格为 $g$，有 $n$ 个标记点 $p_1,\dots,p_n$，则手征块是从
+$M_1 \otimes\cdots\otimes M_n$ 到亚纯函数的多线性映射。
+这一记号表示在点 $p_i$ 插入 $M_i\in\Phi(\mathcal{V})$ 中的一个场。
+对 RCFT，它们往往可作为某些微分方程的解得到
+\cite{FelderGiovanni1996TKeo,FuchsJürgen1992ALaa,KohnoToshitake2002Cfta}。
+手征块构成\emph{映射类群}（mapping class group）$\Gamma_{g,n}$ 的表示，
+后者捕捉 $\Sigma_{g,n}$ 的离散（且几乎总是无限）对称性。它可由商
+$\Gamma_{g,n}\cong\Aut(\Sigma_{g,n})/\Aut_0(\Sigma_{g,n})$ 定义，
+其中 $\Aut_0(\Sigma_{g,n})$ 是 $\Aut(\Sigma_{g,n})$ 中与恒等元连通的分量。
+因此，$\Gamma_{g,n}$ 在只差一个离散自同构的等价 Riemann 曲面 $\Sigma_{g,n}$ 之间作映射。
+结果，参数化共形不等价 Riemann 曲面的\emph{模空间}（moduli space）
+$\mathcal{M}_{g,n}$ 自然具有如下商形式
+\begin{equation}
+\label{eq:moduli_space}
+\mathcal{M}_{g,n}=\mathcal{T}_{g,n}/\Gamma_{g,n}~,
+\end{equation} 其中 $\mathcal{T}_{g,n}$ 是所谓 \emph{Teichm\"uller 空间}（Teichmüller space）。
+
+手征块作为模空间 $\mathcal{M}_{g,n}$ 上的函数一般有非平凡的 monodromy
+（更多细节见例如 \cite{MR2201600}）。因此手征块一般是 $\mathcal{M}_{g,n}$ 上的多值函数；
+为使其良定义，应把它们提升到 $\mathcal{T}_{g,n}$。结果，它们将携带映射类群
+$\Gamma_{g,n}$ 的表示。这是理解环面手征块——特别是月光模——模性质来源的一种方式。
+
+为说明这一点，现在聚焦 $\Sigma_{1,1}$ 的情形，即带一个标记点的环面。
+如 \S\ref{subsec:modular_forms} 所述，环面在相差一个尺度下可由 $\CC/\Lambda_\t$ 描述，
+其中 $\Lambda_\t$ 是 $\CC$ 中由向量 1 与 $\t\in \HH$ 生成的格。
+$\SL_2(\Z)$ 变换使该格不变，因此映射类群 $\Gamma_{1,0} = \PSL_2(\Z)$
+由 $\SL_2(\Z)$ 中在 Teichm\"uller 空间 $\HH$ 上非平凡作用的部分给出。
+由于环面的平移对称性使任意点等价于任意其他点，我们也有
+$\Gamma_{1,0}=\Gamma_{1,1}$ 与 ${\cal M}_{1,0} = {\cal M}_{1,1}$。
+
+$\Sigma_{1,1}$ 上的手征块提升到 $\mathcal{T}_{1,1}$ 后，便成为模参数 $\tau$ 的函数。
+对 RCFT，它们构成有限维空间，维数等于 $\Phi(\mathcal{V})$ 中不可约模的数目。
+它们有一组自然基，即不可约模 $M\in\Phi(\mathcal{V})$ 的\emph{分次维数}
+（graded dimensions），或称\emph{特征标}（characters）
+\begin{equation}
+\label{eq:character}
+{\it ch}_M(\tau)=\tr_{M} q^{L_0-c/24} ~, 
+\end{equation}
+其中 $q=e^{2\pi i\tau}$ 如前。如前所述，特征标给出 $\Gamma_{1,1}=\PSL(2,\ZZ)$ 的表示，
+因此 $ch_M(\tau)$ 是 $\PSL(2,\ZZ)$ 的弱全纯向量值模形式的分量。换言之，
+它们在模群作用下彼此混合，而混合方式通过 Verlinde 公式决定它们的 OPE。
+RCFT 特征标的模性在 VOA 语境中由 Zhu 定理严格证明 \cite{Zhu_ModInv}。
+
+% [Tutor Note: 易错预警：(3.14) 中 q^{L_0-c/24} 的 −c/24 不能丢，它使特征标成为“弱”全纯模形式——允许 q 的负幂，但要求尖点处增长受控。另注意 ch_M 中取的是模 M 上的迹，M 是手征代数 V 的不可约模；若换成普通 Virasoro 最高权表示，则得到的是 Virasoro 特征标而非 RCFT 特征标。Zhu 定理保证的正是有限多个 ch_M 张成 PSL(2,Z) 的有限维表示。]
+
+二维 CFT 的\emph{配分函数}（partition function）定义为环面上的 0 点关联函数，
+它编码理论的谱。在算符形式中，模参数为 $\tau=\tau_1+i\tau_2$ 的环面可如下得到：
+先把 Riemann 球面共形映射到柱面 $S^1\times\RR$，再对欧几里得时间方向 $\RR$
+施加周期边界条件。Hamiltonian 与动量算符 $H,P$ 于是沿环面的两个圈传播态，
+因此谱体现在相应演化算符在态空间上的迹中，
+\begin{equation}
+\label{eq:part_def}
+Z(\t,\bar \t) := \tr_\mathcal{H}  e^{2\pi  i \t_1 P -2\pi\t_2  H }
+~.
+\end{equation}
+利用 \eq{hamiltonian}-\eq{momentum}，可把它改写为
+\begin{equation}
+Z(\tau,\bar{\tau})=\tr_{\mathcal{H}}q^{L_0-\frac{c}{24}}\bar{q}^{\bar{L}_0-\frac{\bar{c}}{24}}~,
+\end{equation}
+从而明显看出它是 $\mathcal{H}$ 中给定手征与反手征共形权处态多重数的生成函数。
+由 \eqref{eq:split_modules_hilbert_space} 可见，它按手征块有如下分解
+\begin{equation}
+Z(\tau,\bar{\tau})=\sum_{M\in\Phi(\mathcal{V}),\overline{N}\in\overline{\Phi}(\overline{\mathcal{V}})}\mathcal{Z}_{M,\overline{N}}~{\it ch}_{M}(\tau)
+\overline{ {\it ch}_{\bar N}(\tau)}~.
+\end{equation}
+当 CFT 有 Lagrangian 描述时，配分函数 \eqref{eq:part_def} 也可用路径积分形式计算。
+用这种语言，$Z=\int D\phi~e^{-S[\phi]}$，其中场在环面的两个圈上取适当的边界条件。
+也从这个观点看，配分函数应当模不变是清楚的。这一不变性对二维 CFT 的谱施加了严厉限制。
+例如，模不变性曾被用来分类超对称极小模型及其进一步推广。
+其中部分结果见 \cite{Cappelli:1987xt,MR1407165} 及其所引文献。
+在月光的语境中，我们主要关心手征 CFT，那里的模性质不那么严格。
+
+% [Tutor Note: 背景直觉：(3.15) 定义的 Z 是模空间 M_{1,1}=H/PSL(2,Z) 上的函数，故“路径积分显然模不变”的实质是：环面的复结构只有 τ 一个模，重新选取环面的同伦基（即作用 PSL(2,Z)）不改变路径积分。作者略去的条件是路径积分测度与作用量在模变换下不变，这正是无引力反常（c=cbar）的要求。]
+
+\subsection{轨道流形}
+\label{sec:orbifolds}
+
+对月光特别重要的一类特殊 CFT 是所谓\emph{轨道流形 CFT}（orbifold CFT）\cite{Dijkgraaf:1989hb}。
+轨道流形构造本质上是对手征代数 $\cal{V}$ 的一个离散对称群 $G$ 作“规范化”（gauging）。
+更确切地说，它构造一个手征代数包含 $\mathcal{V}$ 的 $G$-不变子代数 $\mathcal{V}^G$ 的理论：
+保留原理论中的 $G$-不变态，并对每个 $g\in G$ 引入新的“$g$-扭结”扇区态。
+
+轨道流形的考虑以两种重要方式进入月光研究。第一，我们将在 \S\ref{cha:weight0}
+看到由 $\ZZ_2$-轨道流形得到的月光手征 CFT 的具体构造。第二，由有限群对称性作 twining
+的配分函数提供了关于群在月光 CFT 上作用的信息，并构成在月光中起核心作用的模对象。
+把它推广到扭结扇区，就得到所谓的广义月光，我们将在讲义下一部分提到。
+
+% [Tutor Note: 背景直觉：“规范化”离散对称群的物理含义是：先把理论投影到 G-不变子空间（未扭结扇区），再加入 twisted 扇区使之恢复模不变性。只做投影会破坏模不变性，因为投影后的谱缺少 twisted 扇区态；只有“投影 + 扭结扇区”合起来，才得到自洽的模不变轨道流形理论。这正是 (3.30) 要对所有对易对 (g,h) 求和的原因。]
+
+\myparagraph{轨道流形手征代数。}
+这里我们主要关心手征 RCFT（有理 VOA）的轨道流形。我们关心算子代数的自同构。
+若这样的自同构平凡地作用在算子代数上，即不置换模 $M_i^e$，则称它是\emph{内}自同构。
+特别地，它保持手征 CFT 的手征代数不变。
+记手征代数为 $\mathcal{V}$，$G\subseteq \Aut(\mathcal{V})$ 为有限对称群，
+$M^e_1,\dots,M^e_n$ 为其不可约 $\mathcal{V}$-模。这里 $e\in G$ 表示恒等元，
+稍后将推广到任意 $g\in G$。特别地，我们有 $M_1^e=V$，即对应于 $\mathcal{V}$ 的真空模。
+
+给定这样的对称性，手征代数按 $G$-表示分解为
+\begin{equation}
+\label{eq:decomp_V}
+\mathcal{V}=\bigoplus_a ~\rho_a \otimes \mathcal{V}_a~,
+\end{equation}
+其中相应空间 $V_a$ 包含在 $G$ 的不可约表示 $\rho_a$ 下变换的态，$a$ 遍历所有这些表示。
+$G$-不变子代数
+\begin{equation}
+\mathcal{V}^G:=\left\lbrace\phi\in\mathcal{V}~|~h\phi=\phi~~\forall~h\in G\right\rbrace~,
+\end{equation}
+对应于 $G$ 的平凡表示 $\rho_0$，在此框架中称为\emph{轨道流形手征代数}。
+注意：虽然 $V$ 作为 $\mathcal{V}$-模不可约，但作为 $\mathcal{V}^G$-模一般可约，
+如 \eqref{eq:decomp_V} 所示。我们转而把对应于 $\mathcal{V}_a$ 的空间 $V_a$
+认定为与轨道流形 CFT 相关的不可约 $\mathcal{V}^G$-模。
+
+% [Tutor Note: 易错预警：(3.18) 中 \rho_a 是 G 的不可约表示、\mathcal{V}_a 是承载这些表示的子空间，两者的指标 a 必须对应；而正文随后又用 V_a 指称同一空间，原文在此混用 V_a 与 \mathcal{V}_a，属记号不统一，译文照录。另注意 (3.19) 要求 h\phi=\phi 对全部 h 属于 G 成立，只对生成元成立是不够的。]
+
+对 $\mathcal{V}$-模的其余部分有类似陈述，我们有分解
+\begin{equation}
+M_i^e=\bigoplus_a~\rr_a\otimes M_{i,a}^e~.
+\end{equation}
+一个重要的微妙之处是：$\rr$ 现在遍历 $G$ 的所有不可约\emph{射影表示}（projective representations）。
+射影表示把 \S\ref{subsec:rep} 引入的通常表示概念加以推广，
+允许它们在相差一个相位的意义下尊重群运算，
+\begin{equation}
+\label{cocycles}
+\rr(h_1h_2)=c_e(h_1,h_2)\rr(h_1)\rr(h_2)~,
+\end{equation}
+其中 $c_e(h_1,h_2)$ 是 $\UU(1)$-值 2-上闭链（2-cocycle），
+代表 $G$ 的群上同调 $H^2(G,\UU(1))$ 中的一个类。
+这种行为在 CFT 中是允许的，因为当手征与反手征贡献合并时该相位相消，
+从而与最终理论的模不变性不冲突。有限群射影表示的综述见 \cite{Tania-LuminiţaCostache2009Oipr}。
+还要注意，真空的 $G$-不变性意味着真空模 $V$ 在分解
+$V=\bigoplus_a \rho_a\otimes V_a$ 中携带真表示。
+
+% [Tutor Note: 易错预警：(3.20) 的 \rho 遍历的是射影不可约表示，而不是普通不可约表示；2-上闭链 c_e (3.21) 取值 U(1)，它使模 M_i^e 只携带射影表示。容易漏掉的是：真空模 V 不受此影响，仍携带真表示，因为真空在 G 下不变；这一区别在后面比较 twined 特征标时会反复用到。]
+
+\myparagraph{Twining。}
+对每个 $h\in G$（作为算子代数的内自同构作用），定义\emph{twined 特征标}
+\begin{equation}
+\label{eq:twined_char}
+{\it ch}_i\left(\mbox{\fontsize{9}{10}\selectfont $h\,$}\underset{e}{\Box}~;\t\right) :=\tr_{M^e_i}\left[h~q^{L_0-\frac{c}{24}}\right]~.
+\end{equation}
+注意 $h=e$ 的特殊情形直接给出 $M_i^e$ 的通常特征标或\emph{分次维数}。
+按对不可约 $\mathcal{V}^G$-模的分解，twined 特征标可表示为
+\begin{equation}
+\label{eq:twined_chars}
+{\it ch}_i\left(\mbox{\fontsize{9}{10}\selectfont $h\,$}\underset{e}{\Box}~;\t\right)=\sum_a\chi_{a}(h)~ ch\left(M_{i,a}^e\right)~,
+\end{equation}
+其中 $\chi_a$ 是 $G$ 的射影特征标，${\it ch}\left(M_{i,a}^e\right)$ 是 $M_{i,a}^e$ 的分次维数。
+利用类似于 \eqref{eq:orthog_char} 的射影表示正交性，可以从 2-上闭链与射影表示 $\rho_a$
+的特征标得到特征标 ${\it ch}_i\left(\mbox{\fontsize{9}{10}\selectfont $h\,$}\underset{e}{\Box}~;\t\right)$。
+
+% [Tutor Note: 易错预警：记号 ch_i(h 方框_e; τ) 中，方框上方的 h 表示时间圈上的 twist，下方的 e 表示空间圈上不 twist；h=e 时它退化为普通特征标 (3.14)。不要把它与 (3.25) 的 twisted-twined 特征标 ch_i(h 方框_g; τ) 混淆：前者的迹取在未扭模 M_i^e 上，后者取在 g-扭模 M_i^g 上。]
+
+% [Tutor Note: 含糊点拨：作者说“利用射影表示的正交性”而未给推导。具体做法是把 (3.22) 的迹按 V^G-模分解展开成 sum_a chi_a(h) ch(M_{i,a}^e)，再用射影特征标的正交关系（对 2-上闭链 twisted 的群代数）反解出各个 ch(M_{i,a}^e)。原文此处把“2-cocycle”写作“2-cycle”，疑为笔误，译文按 2-上闭链理解。]
+
+类似地，定义 twined 配分函数为
+\begin{equation}
+\label{eq:twined_part_def}
+Z\left(\mbox{\fontsize{9}{10}\selectfont $h\,$}\underset{e}{\Box}~;\t,\bar{\t}\right):=\tr_{\mathcal{H}} \left[h~q^{L_0-\frac{c}{24}}\bar{q}^{\bar{L}_0-\frac{\bar{c}}{24}} \right]~.
+\end{equation}
+在路径积分语言中，twined 配分函数是对环面中可等同于“时间”圈的那个圈上的场
+施加 $h$-扭结边界条件得到的，而沿空间圈的边界条件保持不变，
+即 $\phi(z+\tau)=h\cdot\phi(z)$ 与 $\phi(z+1)=\phi(z)$。
+从这个观点看，$Z\left(\mbox{\fontsize{9}{10}\selectfont $h\,$}\underset{e}{\Box}~;\t,\bar{\t}\right)$
+应当在保持 $h$-扭结边界条件的 $\SL_2(\ZZ)$ 子群下不变
+（$\SL_2(\ZZ)$ 按下面 \eq{eq:orb_b.c.} 的方式变换环面两个独立圈上的边界条件）。
+
+\myparagraph{扭结扇区。}
+只要 $\mathcal{V}$ 足够好，即满足所谓 $C_2$-余有限性条件（定义见 \cite{MR2201600}），
+则对任意 $g\in\text{Inn}(\mathcal{V})$（$\mathcal{V}$ 的内自同构），
+可以对每个 $i=1,\cdots,n$ 定义不可约\emph{$g$-扭模} $M^g_i$ \cite{Dong2000}。
+在轨道流形理论中，这些模构成理论的 $g$-扭结扇区。
+显然，$G$ 不再是这些模的对称群；只有中心化子子群 $C_G(g)$（参见 \S\ref{subsec:Groups}）
+仍是 $g$-扭结扇区的对称性。因此，对任意对易的 $g,h\in G$，
+可类似地定义\emph{twisted-twined 特征标}
+\begin{equation}
+\label{eq:twisted-twined_char}
+{\it ch}_i\left(\mbox{\fontsize{9}{10}\selectfont $h\,$}\underset{g}{\Box}~;\t\right):=\tr_{M^g_i}\left[h~q^{L_0-\frac{c}{24}}\right]~,
+\end{equation}
+即扭结扇区中的 twined 特征标（\eqref{eq:twined_char} 是其特殊情形）。
+在路径积分语言中，它们由对环面的空间圈额外施加 $g$-边界条件得到，
+即 $\phi(z+1)=g\cdot \phi(z)$ 以及 $\phi(z+\tau)=h\cdot \phi(z)$。
+它们同样有分解
+\begin{equation}
+M_i^g=\bigoplus_a~\rr_a\otimes M_{i,a}^g~,
+\end{equation}
+其中求和现在遍历 $C_G(g)$ 的所有不可约射影表示。相应地，
+把 \eqref{eq:twined_chars} 中的 $e$ 换成 $g$、$G$ 换成 $C_G(g)$ 得到的显然推广，
+对扭结扇区也成立。
+
+% [Tutor Note: 易错预警：twisted-twined 特征标 (3.25) 只在 g 与 h 对易时才有定义，因为 g-扭模 M_i^g 只对中心化子 C_G(g) 有对称性；h 若不在 C_G(g) 中，h 作用后模不再回到自身。另注意 (3.26) 的求和遍历 C_G(g) 的射影表示，而不是 G 的射影表示，指标群随 g 改变。]
+
+我们已经提到 twined 配分函数具有模性质。类似地，特征标 \eqref{eq:twisted-twined_char}
+构成某个同余子群的向量值模形式，带有一定的乘子系统。
+这可以通过 $\SL_2(\Z)$ 对边界条件的作用来理解：
+在环面的模变换 $(\begin{smallmatrix} a& b \\c&d\end{smallmatrix})\in\SL(2,\ZZ)$ 下，
+两个圈上的边界条件 $(g,h)$ 变为
+\begin{equation}
+\label{eq:orb_b.c.}
+(g,h)\mapsto\left(h^cg^d,h^ag^b\right)~.
+\end{equation}
+结果，twisted-twined 特征标按
+\begin{equation}
+\label{eq:tw_tw_char}
+{\it ch}_i\left(\mbox{\fontsize{9}{10}\selectfont $h\,$}\underset{g}{\Box}~;\frac{a\tau+b}{c\tau+d}\right) =\sum_{j=1}^n\psi(\gamma,g,h)_{ij}~ {\it ch}_i\left(\mbox{\fontsize{9}{10}\selectfont $h^ag^b\,$}\underset{h^cg^d}{\Box}~;\t\right)~,
+\end{equation}
+变换，其中 $\psi(\gamma,g,h)$ 是元素为标量的 $n\times n$ 矩阵。
+
+% [Tutor Note: 易错预警：验证 (3.27) 的两个基本变换——对 S=(0,-1;1,0) 有 (g,h) 映射到 (h,g^{-1})，对应 (3.29) 第二式的 Z(g^{-1} 方框_h;τ)；对 T=(1,1;0,1) 有 (g,h) 映射到 (g,gh)，对应 (3.29) 第一式的 Z(gh 方框_g;τ)。另注意 (3.28) 右边求和指标为 j，但被求和项写成 ch_i，疑为笔误（应为 ch_j）；译文照录原文，不在公式上改动。]
+
+\emph{全纯 VOA}——即只含唯一不可约（未扭）$\mathcal{V}$-模 $\mathcal{H}$ 的 VOA——
+的特殊情形最容易描述。此时手征配分函数与手征代数的特征标重合，
+\eq{eq:tw_tw_char} 变成 \cite{BantayP.1990OaHa}
+\begin{equation}\label{eqn:modular_boundary_condition}
+\begin{split}
+&Z\left(\mbox{\fontsize{9}{10}\selectfont $h\,$}\underset{g}{\Box}~;\t+1\right)=c_g(g,h)Z\left(\mbox{\fontsize{9}{10}\selectfont $gh\,$}\underset{g}{\Box}~;\t\right)~, \\
+&Z\left(\mbox{\fontsize{9}{10}\selectfont $h\,$}\underset{g}{\Box}~;-{1\over\t}\right)=\overline{c_h\left(g,g^{-1}\right)}Z\left(\mbox{\fontsize{9}{10}\selectfont $g^{-1}$}\underset{h}{\Box}~;\t\right)~,
+\end{split}
+\end{equation}
+其中相位现在由代表 $H^2(C_G(g),U(1))$ 中一个类的 2-上闭链给出，如 \eqref{cocycles}。
+此外，所有 $g$ 的全部相位都应当来自代表 $H^3(G,U(1))$ 中一个类的 3-上闭链
+\cite{Roche:1990hs,BantayP.1990OaHa}。
+
+% [Tutor Note: 背景直觉：(3.29) 说明全纯 VOA 的轨道流形只需处理相位：因为手征配分函数只有一个特征标，模变换只能给它乘相位。3-上闭链条件保证这些相位在不同 g 之间相容（满足 cocycle 条件），否则拼不出模不变的配分函数；这正是 (3.30) 中 discrete torsion 只能取特定值的原因。]
+
+在非手征 CFT 中，谱由所有扭结扇区的 $G$-不变部分构成，
+由此得到配分函数的如下表达式
+\begin{equation}\label{eqn:orb_PF}
+Z(\tau,\overline{\tau})=\frac{1}{|G|}\sum_{gh=hg}Z\left(\mbox{\fontsize{9}{10}\selectfont $h\,$}\underset{g}{\Box}~;\t,\bar{\t}\right)\epsilon(g,h)
+\end{equation}
+其中 $\epsilon(g,h)$ 是称为\emph{离散挠率}（discrete torsion）的相位，
+在最简单的轨道流形构造中它就等于 1。如通常那样，在自洽的轨道流形 CFT 中
+上述配分函数是模不变的。
+
+% [Tutor Note: 易错预警：(3.30) 的三处细节不可漏：求和只对满足 gh=hg 的对 (g,h) 进行（否则 twisted-twined 特征标无定义）；整体因子 1/|G| 是投影到 G-不变态所必需的；discrete torsion ε(g,h) 是相位，最简单情形取 1，但它的一般取值受 H^2(G,U(1)) 分类。三个因素中任意漏掉一个，配分函数都不再模不变。]
+
+\subsection{椭圆亏格}
+\label{sec:EG}
+
+前面几个小节讨论了一般的共形理论。在弦论以及本讲义的语境中，我们常遇到具有超对称的二维 CFT。
+本小节将介绍超共形代数及其表示的一些必要背景，并特别解释什么是椭圆亏格：
+先从物理观点，再从几何观点。
+
+有超对称时，费米子的存在带来许多新特征，根源在于 Hilbert 空间上多了
+一个 $\Z_2$ 分次：$V= V_0 \oplus V_1$。（在月光的语境中，这导致有限群的超模，
+参见 \eq{def:supermodule}。）例如，在 Calabi–Yau 流形上紧化的 II 型超弦中，
+相关的“内部”CFT 是具有 ${\cal N}=2$ 超对称的非线性 sigma 模型。
+靶空间的 Calabi–Yau 结构保证该理论具有 Virasoro 对称性的 ${\cal N}=2$ 扩张，
+即所谓 ${\cal N}=2$ 超共形代数（superconformal algebra，SCA）。
+特别地，$K3$ 流形上的超弦及相应的椭圆亏格将在 \S\ref{chap:moonshineK3} 中起重要作用。
+
+术语“${\cal N}=2$”指的是：除玻色型能动张量 $T(z)$ 之外，代数中还包含 2 个费米型流。
+此外还有一个额外的自同构，称为 R 对称性，它把不同的费米型流相互旋转。
+
+我们记两个费米型流为 $G_+(z)$ 与 $G_-(z)$，把二者相旋转的 $U(1)$ R 对称流为 $J(z)$。
+代数读作
+\bea\notag
+\lbrack L_m,L_n\rbrack&=& (m-n) L_{m+n} + \frac{c}{12} m (m^2-1) \,\d_{m+n,0}\\ \notag
+\lbrack J_m,J_n \rbrack&=&\frac{c}{3} m \,\d_{m+n,0}\\ \notag
+\lbrack L_n,J_m \rbrack &=& -m \,J_{m+n}\\ \label{n_2_superconformal_algebra}
+\lbrack L_n,G_r^{\pm} \rbrack &=& (\frac{n}{2} - r)\, G_{r+n}^\pm\\ \notag
+\lbrack J_n,G_r^{\pm} \rbrack &=&\pm G_{r+n}^{\pm} \\ \notag
+\{G^{+}_{r},G^-_{s}\} &=& 2 L_{r+s} + (r-s) J_{r+s} +\frac{c}{3}\, (r^2 -\frac{1}{4})\, \d_{r+s,0}\;,
+\eea
+所有其他（反）对易子为零。如前，费米子有两种可能的边界条件
+\be
+\begin{cases}
+2r =  0 \text{  mod   }2 &\text{对 R 扇区} \\ &\\ 
+2r = 1 \text{  mod   }2 &\text{对 NS 扇区}\;.
+\end{cases} 
+\ee
+
+% [Tutor Note: 易错预警：(3.31) 中有两个中心项容易混淆：J 流的中心项是 (c/3)m δ，G 的反对易子中心项是 (c/3)(r^2-1/4)δ，二者系数同为 c/3 而非常见的 c/12；Virasoro 那一行的 c/12 m(m^2-1) 则由 (3.8) 继承。这三处 c 的系数若写错，会导致谱流不变量 4mL_0-J_0^2 不再守恒。]
+
+关于这个代数，有两点评论。第一，我们现在有两个 Cartan 子代数的生成元 $L_0$ 与 $J_0$。
+因此表示现在由两个“量子数”分次，它们是最高权矢量的 $L_0$ 与 $J_0$ 本征值。
+第二个新特征是代数有一个非平凡内自同构，即在如下重定义下代数保持不变
+\begin{align} \notag
+L_n &\mapsto L_n + \eta J_n + m\, \eta^2 \,\d_{n,0}\\[4pt]
+{\bf SF}_\eta :\hspace{5pt} J_n&\mapsto J_n + 2m\,  \eta \, \d_{n,0}\\[4pt] \notag
+G_r^\pm &\mapsto G_{r\pm\eta}^\pm\;
+\end{align}
+其中 $\eta \in \Z$。这个自同构称为\emph{谱流}（spectral flow），
+上式中我们记 $m:= c/6$。若改为取 $\eta\in \Z+1/2$，则交换 Ramond 代数与 Neveu–Schwarz 代数。
+注意，在此变换下唯一不变的算符（当然，允许平凡重标度与添加中心项）是 $4mL_0 -J_0^2$。
+还要记得，NS 扇区态给出时空费米子，Ramond 扇区态给出时空玻色子。
+因此谱流算符与时空超对称有密切关系。
+
+% [Tutor Note: 易错预警：(3.33) 谱流的参数 m=c/6，而正文又用谱流不变量 4mL_0-J_0^2 定义后面 Fourier 展开中的判别式 4mn-l^2。注意 η 取整数时保持 R 扇区为 R 扇区；只有 η 取半整数时才交换 R 与 NS。把 m=c/6 误记成 m=c/3 或 m=c/24 都会使指标 m 与中心荷的关系错位。]
+
+\myparagraph{Ramond 基态与 Witten 指标。}
+下文中我们聚焦 Ramond 代数，并定义 ${\cal N}=2$ SCFT 的 Ramond 基态。
+如通常那样，要求基态被所有正模湮灭：
+$$
+L_n \lvert \f \rangle=J_m \lvert \f \rangle = G^\pm_r \lvert \f \rangle = 0 \quad\text{对任意} \quad m,n,r > 0\;.
+$$
+此外，它们还必须被费米型流的零模湮灭
+$$
+G^\pm_0\lvert \f \rangle=0\;.
+$$
+这一条件把它们的 $L_0$ 本征值固定为
+$$
+\frac{1}{2} \{G^+_0,G^-_0\}  \lvert \f \rangle= \left(L_0 -\frac{c}{24}\right) \lvert \f \rangle = 0 \;.
+$$
+
+% [Tutor Note: 易错预警：由 (3.31) 取 r=s=0 得 {G^+_0,G^-_0}=2L_0-c/12，再乘 1/2 才是 L_0-c/24，于是 Ramond 基态的共形权被固定为 h=c/24，这就是 BPS（短多重态）条件。注意两处因子都容易出错：中心项在 r=0 时是 (c/3)(-1/4)=-c/12（不是 -c/24），而抵消它需要再乘 1/2；若把 c/12 直接当成 c/24，基态权会算成 c/48。]
+
+暂时忽略谱的右行部分，考虑手征 Hilbert 空间 $V$。定义其 Witten 指标为
+$$
+\text{WI}(\t,V) = \Tr_V \big((-1)^{ J_0}q^{ L_0-\frac{ c}{24}} \big)\; . 
+$$
+若某态 $\lvert \psi \rangle$ 不被 $G^+_0$ 湮灭，则态 $\lvert \psi \rangle$ 与
+$G^+_0\lvert \psi \rangle$ 对 $\text{WI}(\t,V)$ 的贡献合计为 0，
+因为 $[L_0,G^+_0]=0$ 而 $[J_0,G^+_0]=G^+_0$。
+对 $G^-_0$ 有同样的论证，于是我们断定只有 Ramond 基态能对 Witten 指标有贡献。
+结果，Witten 指标 $ \text{WI}: \{{\cal N}=2 \;\text{SCFT}\} \to \Z$
+与 $\t$ 无关，并（带符号地）计数 $V$ 中 Ramond 基态的数目。
+
+% [Tutor Note: 易错预警：Witten 指标中的 (-1)^{J_0} 就是费米宇称；配对论证依赖两个对易子 [L_0,G^+_0]=0 与 [J_0,G^+_0]=G^+_0。后者说明 G^+_0 把 J_0 本征值移动 1，故 (-1)^{J_0} 变号，非基态成对抵消。这也解释了为什么 WI 与 τ 无关：q^{L_0-c/24} 在配对的两个态上因子相同但符号相反，求和为零。]
+
+此外注意，${\cal N}=2$ SCFT 的 Witten 指标获得了如下解释：
+计算 $G^+_0$ 算符上同调的分次维数，其中 $( G_0^+)^2=0$。
+由于 $\{ G^+_0,( G^+_0)^\dag\}  =\{ G^+_0, G^-_0\}   = L_0 -\frac{c}{24}$，
+Ramond 基态可解释为上同调中的调和代表。这一事实是 Witten 指标与下面将要定义的
+椭圆亏格的刚性（rigidity）性质的基础。
+
+% [Tutor Note: 含糊点拨：作者说 G^+_0 上同调“分次维数”而未展开论证。实质是把希尔伯特空间按 G^+_0 做 Hodge 分解，用 {G^+_0,(G^+_0)^dag}=L_0-c/24 说明非零上同调只能出现在 L_0=c/24 的本征值上，且每个上同调类恰有一个调和代表（Ramond 基态）。这就是椭圆亏格“刚性”的来源：形变理论不改变这个分次维数。]
+
+当理论是非手征的、同时具有左右行自由度时，同样的分析可以平凡地推广：Witten 指标
+$$
+\text{WI}(\t,\bar \t,V) = \Tr_V \big((-1)^{\til J_0+J_0}\bar q^{\til L_0-\frac{\til c}{24}} q^{ L_0-\frac{ c}{24}} \big)\; 
+$$
+计数对 ${\cal N}=2$ SCA 的左右行拷贝都是 Ramond 基态的态。
+
+\myparagraph{${\cal N}=2$ 椭圆亏格。}
+能够计算上同调的分次维数当然很好，但我们可以走得更远，计算这个向量空间更有趣的性质。
+例如，我们已经知道 ${\cal N}=2$ SCA 的表示由对应 Cartan 生成元 $L_0$ 与 $J_0$
+的两个量子数标记。因此，考虑下述量是自然的：它计算按左行量子数 $L_0,J_0$
+分次的 $\til G_0^+$ 上同调的维数。
+
+${\cal N}=(2,2)$ SCFT 的椭圆亏格定义为如下 Hilbert 空间痕迹
+\be\label{elliptic_genus}
+ {\bf EG}(\t,z) = \Tr_{{ \cal H}_{\text {RR}}}\Big( (-1)^{J_0+\bar J_0} y^{J_0} q^{L_0-c/24}\bar q^{\bar L_0-c/24}  \Big) \ ,\quad y= e^{2\p i z} \;,
+\ee
+其中 ${ \cal H}_{\text {RR}}$ 表示对 ${\cal N}=2$ SCA 的左右行拷贝都处于 Ramond 扇区的态
+构成的 Hilbert 空间。由与 Witten 指标相同的论证，这个量将不依赖 $\bar q$，
+从而作为 $\tau$ 与 $z$ 的函数是全纯的。
+
+% [Tutor Note: 易错预警：椭圆亏格 (3.34) 中 (-1)^{J_0+Jbar_0} 是左右费米宇称之积，而 y^{J_0} 只插入左行 U(1) 荷；不要把它写成 y^{J_0+Jbar_0}。右行处于 Ramond 基态给出 Lbar_0=cbar/24，故 qbar 指数为零、全纯性成立；这正是 EG 全纯而配分函数不全纯的原因。另注意原文反全纯因子写作 qbar^{Lbar_0-c/24}（用 c 而非 cbar），对 N=(2,2) 理论 c=cbar 无碍，译文照录原文未改。]
+
+注意，椭圆亏格可以看作介于配分函数与 Witten 指标之间的东西。
+前者计数所有态，后者只计数 RR 基态，而椭圆亏格计数一侧为 Ramond 基态、
+另一侧不受约束的态。它包含多得多的信息，但仍具有 Witten 指标的刚性性质，
+这使得对许多 SCFT 都可以计算；因此在信息量与可计算性之间提供了良好的平衡。
+
+当理论具有与超共形对称性对易的有限群对称性 $G$ 时，
+可以定义由 $g\in G$ 作 twining 的椭圆亏格为
+\be\label{def:twined_elliptic_genus}
+ {\bf EG}_g(\t,z) = \Tr_{{ \cal H}_{\text {RR}}}\Big(g\, (-1)^{J_0+\bar J_0} y^{J_0} q^{L_0-c/24}\bar q^{\bar L_0-c/24}  \Big) .
+\ee
+这些对象将在第二、三部分的讨论中起重要作用。
+
+% [Tutor Note: 背景直觉：twined 椭圆亏格 EG_g 就是在迹中多插入群元素 g。月光中真正重要的是这些 twined 对象（如 Mathieu 月光的 K3 椭圆亏格按 M_24 的共轭类分解），因为它们编码群作用，而不只是谱；对 g=e 二者重合。]
+
+\myparagraph{模性质。}
+如同配分函数的情形（参见 \S\ref{subsec:CFTGeneral structure}），
+椭圆亏格的路径积分解释表明它在环面映射类群下有良好的变换性质。
+此外，代数的内自同构（谱流对称性）意味着 $L_0$、$J_0$ 本征空间的分次维数
+应当只依赖于组合算符 $4mL_0 -J_0^2$ 的本征值以及 $J_0$ 的荷模 $2m$，
+其中 $m=c/6$。因此，椭圆亏格的 Fourier 展开应取形式
+$$
+{\bf EG}(\t,z) = \sum_{n,\ell} q^n y^\ell \,c(4mn-\ell^2,\ell) \;.
+$$
+其中 $c(D,\ell)$ 只依赖 $D$ 与 $\ell \xmod 2m$
+（参见 \eq{eqn:jac:hol-DFoucffhol}）。
+由这些事实可以推出，中心荷为 $c=6m$ 的 ${\cal N}=(2,2)$ SCFT 的椭圆亏格
+是权为零、指标为 $m$ 的弱 Jacobi 形式。类似地，沿用同样的论证以及
+\S\ref{sec:orbifolds} 中的论证，twined 椭圆亏格也是权为零、指标相同的弱 Jacobi 形式，
+只是把 \eq{def:Jac_skewJac} 中的模群 $\SL_2(\ZZ)$ 换成某个依赖于 twining 对称性 $g$ 的子群。
+
+% [Tutor Note: 易错预警：Fourier 展开中的判别式是 D=4mn-l^2（对应谱流不变量 4mL_0-J_0^2），指标部分只依赖 l mod 2m。注意弱 Jacobi 形式的“权为零、指标 m”中指标 m=c/6，与 (3.31) 的谱流参数是同一个 m；若把指标写成 c/24 或 c/12，K3 的例子（指标 1、中心荷 6）就对不上。]
+
+\myparagraph{几何椭圆亏格。}
+对维数 $\dim_\C M=d_0$ 的紧复流形 $M$，可以把它的椭圆亏格定义为无穷维形式向量丛的、
+以特征标为值的 Euler 示性数
+\cite{Ochanine,Witten1987,Landweber_book, WittenInt.J.Mod.Phys.A9:4783-48001994, KawaiNucl.Phys.B414:191-2121994}
+$$
+{\bf E}_{q,y} 
+=
+y^{d/2}{\textstyle \bigwedge}{ }_{-y^{-1}} T_M^\ast
+\textstyle{\bigotimes}_{n\geq 1} \textstyle\bigwedge{ }_{-y^{-1}q^n} T_M^\ast\bigotimes_{n\geq 1} \textstyle\bigwedge{ }_{-yq^n} 
+T_M \bigotimes_{n\geq 0} S_{q^n} (T_M\oplus  T_M^\ast),
+$$
+其中 $T_M$ 与 \(T_M^\ast\) 是全纯切丛及其对偶，并采用记号
+\[ 
+\textstyle\bigwedge{ }_q V = 1 + q V + q^2 \textstyle \bigwedge^2 V + \dots,\quad {\rm{and}}\quad S_q V = 1 + q V +q^2 S^2V \dots,
+\]
+其中 $S^kV$ 表示 $V$ 的 $k$ 次对称幂。换言之，我们有
+\be\label{def_eg}
+{\bf EG}(\t,z;M) = \int_M ch({\bf E}_{q,y}) {\rm Td}(M).
+\ee
+
+% [Tutor Note: 易错预警：几何定义中 y^{d/2} 的 d 在前文只定义了 d_0=dim_C M，未见 d 的独立定义，疑为 d_0/2 的笔误（原文 p.36 亦如此印），译文照录未改；其后“指标为 d_0/2”的陈述才与拓扑定义自洽。另注意形式丛中三个下标 -y^{-1}、-y^{-1}q^n、-yq^n 的符号约定决定 z=0, τ/2, (τ+1)/2 分别给出 Euler 数、符号差与 A-hat 亏格。]
+
+由上述定义可见，当把 $z$ 分别取为 $z=0,\t/2,(\t+1)/2$ 时，
+这个“弦论式”拓扑量约化为熟悉的不变量：$M$ 的 Euler 数、符号差（signature）与
+$\hat{A}$ 亏格。
+
+当 $M$ 的第一 Chern 类为零，特别是当 $M$ 是 Calabi–Yau 流形时，
+可以证明其椭圆亏格 ${\bf EG}(\t,z;M)$ 是权为零、指标为 $d_0/2$ 的弱 Jacobi 形式
+\cite{KawaiNucl.Phys.B414:191-2121994}。
+注意 Calabi–Yau 流形上的超对称 sigma 模型在红外流向超共形 SCFT。
+这个按 \eq{elliptic_genus} 定义的 ${\cal N}=(2,2)$ SCFT 的椭圆亏格，
+与 Calabi–Yau 流形在 (\ref{def_eg}) 中定义的几何椭圆亏格重合。
+
+\myparagraph{例子：$K3$ 与 $T^4$。}
+拓扑上不同的 Calabi–Yau 二维流形只有两个：$K3$ 与 $T^4$。
+二者都配有超 Kähler 结构，它是对一般 Calabi–Yau 流形 Kähler 结构的扩充，
+因此超共形对称性从 $\mathcal{N}=(2,2)$ 增强为 $\mathcal{N}=(4,4)$。
+由上文的论证，我们预期它们的椭圆亏格是权为零、指标为 1 的弱 Jacobi 形式。
+凑巧的是，这类形式的空间是一维的，由 $\phi_{0,1}(\t,z)$ 张成（参见 \eq{phi01}），
+因此只需 Calabi–Yau 二维流形的一个拓扑不变量就能确定整个椭圆亏格。由
+\[{\bf EG}(\t,z=0;T^4) =\chi(T^4) = 0 \quad,\quad {\bf EG}(\t,z=0;K3) =\chi(K3) = 24  
+\]
+以及
+\[\phi_{0,1}(\t,z=0) = 12\]
+我们得到
+\[
+{\bf EG}(\t,z;T^4)=0\quad,\quad {\cal Z}(\t,z;K3) =2  \phi_{0,1}(\t,z)\;.
+\]
+这清楚地展示了模性在获取关于 SCFT 谱的极其非平凡信息方面的力量。
+
+% [Tutor Note: 易错预警：最后一行原文把左侧写作 \mathcal{Z}(τ,z;K3)，而其余各处都用 \mathbf{EG}，二者应为同一对象，疑为笔误（原文 p.37 亦如此印），译文照录未改。另注意系数 2 来自 χ(K3)=24 除以 φ_{0,1}(τ,0)=12；若把 K3 的 Euler 数误记作 0（与 T^4 混淆），整个结果就退化为零。]
+
+% [Tutor Note: 背景直觉：这个例子是模性力量的极简示范——弱 Jacobi 形式空间一维，只要一个拓扑不变量（Euler 数）就能定出整条椭圆亏格。Mathieu 月光正是从这里出发：K3 椭圆亏格 EG=2φ_{0,1} 展开后系数 90, 462, 1540, ... 恰为 M_24 不可约表示维数的组合。]
+
+\myparagraph{注记。}
+对谱中含有连续部分的理论，关于椭圆亏格全纯性的论证会以有趣的方式失效。
+由于可能存在谱不对称性（即玻色态与费米态之间不完美的配对），
+当按包含连续谱的完整 Hilbert 空间上的迹/积分来定义时，
+这类理论的椭圆亏格可能出现非平凡的 $\bar q$ 依赖。
+对这样的对象，通常的路径积分直觉仍然成立，所得非全纯函数按 Jacobi 形式变换。
+若限制到谱的离散部分，类似的迹将是全纯的，但不再是模的。
+特别地，它将是模拟 Jacobi 形式（mock Jacobi form）。
+因此在这个语境中，椭圆亏格的全纯部分在物理与数学两方面都是良定义的概念。
+从物理观点，全纯部分对应谱的离散部分的贡献
+\cite{Hanany:2002ev,Troost:2010ud,Eguchi:2010cb,Ashok:2011cy}。
+从数学观点，全纯部分对应调和 Maass 形式的全纯部分 \cite{MR2097357}。
+我们将在 \S\ref{sec:umK3} 中遇到这样的情形。
+
+% [Tutor Note: 含糊点拨：作者说“路径积分直觉仍然成立”而未展开。其含义是：含连续谱时椭圆亏格不再全纯，而按全纯部分加非全纯完成的方式分解；非全纯完成整体按权零 Jacobi 形式变换，全纯部分只按 mock Jacobi 形式变换，两者的差由影子（shadow，一个权 3/2 的 theta 函数）控制，参见第 2 节 mock 模形式的讨论。]
+

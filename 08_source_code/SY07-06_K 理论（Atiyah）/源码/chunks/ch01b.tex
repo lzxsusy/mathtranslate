@@ -1,0 +1,328 @@
+% [原文 p.9]
+设 $E$ 为向量丛，$F$ 为 $E$ 的子丛，$h$ 为 $E$ 上的 Hermite 度量。对 $x\in X$，考虑由这个度量定义的正交投影 $P_x\colon E_x\to F_x$。下面验证由此确定的映射 $P\colon E\to F$ 连续。问题局部，故设 $F$ 平凡。此时存在给出各纤维中的基的 $F$ 的截面 $f_1,\dots,f_n$。于是对 $v\in F_x$ 有
+\[
+P_x(v)=\sum_i h_x(v,f_i(x))f_i(x),
+\]
+由于 $h$ 连续，这就表明 $P$ 连续。因此 $P$ 是 $E$ 上的投影算子。设 $F_x^{\perp}$ 为 $E_x$ 中在 $h$ 下与 $F_x$ 正交的子空间，则 $F^{\perp}=\bigcup_x F_x^{\perp}$ 是 $P$ 的核，即 $E$ 的子丛，且可知 $E\cong F\oplus F^{\perp}$。这样，借助度量就能对任一部分空间具体给出作为补空间的子丛。
+
+% [Tutor Note: 页图此处作 $v\in F_x$，但 $P_x$ 的定义域是 $E_x$，右端的 $h_x(v,f_i(x))$ 也要求 $v\in E_x$；应读作 $v\in E_x$，否则该式只说明 $P_x$ 在 $F_x$ 上是恒等映射。]
+
+\begin{remark}{}
+  到此为止的讨论大多非常一般：把“连续”换成“代数的”“可微的”“解析的”等等都没有问题。下一节的论证就没有这么一般了。
+\end{remark}
+
+\section{紧空间上的向量丛}
+\takeaway{在紧 Hausdorff 底空间上，单位分解把局部构造拼成整体：截面可扩张、同伦映射拉回的丛同构、正合列分裂；Grassmann 流形最终给出 $\Vect_n(X)$ 的同伦解释。}
+
+为了继续向前推进，必须对考虑的底空间加某种限制。以下假定底空间是紧 Hausdorff 空间。哪些结果对更一般的底空间仍然成立，留待读者考察。
+
+回忆一下：向量值连续函数 $f\colon X\to V$ 的支集（记作 $\operatorname{supp}f$）是指 $f^{-1}(V-\{0\})$ 的闭包。
+
+需要拓扑空间论的下列结果。这里把它对向量值函数陈述，这与通常的陈述显然是等价的。
+
+\para{Tietze 扩张定理}
+设 $X$ 为正规空间，$Y\subset X$ 为闭子空间，$V$ 为实向量空间，$f\colon Y\to V$ 为连续映射。此时存在连续映射 $g\colon X\to V$，使 $g|_Y=f$。
+
+% [原文 p.10]
+\para{单位分解的存在}
+设 $X$ 为紧 Hausdorff 空间，$\{U_i\}$ 为有限开覆盖。此时存在满足下列条件的连续映射 $f_i\colon X\to\R$：
+
+\begin{enumerate}[label=(\roman*),leftmargin=2.4em,itemsep=1pt]
+\item 对一切 $x\in X$，$f_i(x)\ge0$；
+\item $\operatorname{supp}f_i\subset U_i$；
+\item 对一切 $x\in X$，$\sum_i f_i(x)=1$。
+\end{enumerate}
+
+这样的 $\{f_i\}$ 称为单位分解（partition of unity）。
+
+% [Tutor Note: 单位分解的存在性本节直接用，其证明要点是：紧 Hausdorff 空间正规，用 Tietze 扩张定理先造出“贴近 $U_i$ 的”函数，再作归一化求和。原书把它作为拓扑空间论的已知结果引用。]
+
+首先，证明向量丛情形的 Tietze 扩张定理。
+
+\begin{lemma*}{1.4.1}
+  设 $X$ 为紧 Hausdorff 空间，$Y\subset X$ 为闭子空间，$E$ 为 $X$ 上的向量丛。此时任一截面 $s\colon Y\to E|_Y$ 都可扩张到 $X$ 上。
+\end{lemma*}
+
+\begin{proof}
+  设 $s\in\Gamma(E|_Y)$。局部地看 $s$ 是向量值函数，故可应用 Tietze 扩张定理，从而可知：对每个 $x\in X$，存在含 $x$ 的开集 $U$ 与 $t\in\Gamma(E|_U)$，使 $t|_{U\cap Y}=s|_{U\cap Y}$。
+
+  由于 $X$ 紧，可找到由这类开集组成的有限部分覆盖 $\{U_\alpha\}$。取对应的截面 $t_\alpha\in\Gamma(E|_{U_\alpha})$，并取单位分解 $\{p_\alpha\}$，使 $\operatorname{supp}p_\alpha\subset U_\alpha$。用
+\[
+S_\alpha(x)=\begin{cases}p_\alpha(x)t_\alpha(x), & x\in U_\alpha,\\ 0, & x\notin U_\alpha\end{cases}
+\]
+定义 $S_\alpha\in\Gamma(E)$。此时 $\sum_\alpha S_\alpha$ 是 $E$ 的截面，它到 $Y$ 上的限制显然是 $s$。
+\end{proof}
+
+% [Tutor Note: 此处 $t_\alpha$ 只在 $U_\alpha$ 上有定义，故 $S_\alpha$ 必须靠 $\operatorname{supp}p_\alpha\subset U_\alpha$ 才能整体定义；这是单位分解在本节中的第一种用法。]
+
+\begin{lemma*}{1.4.2}
+  设 $Y$ 为紧 Hausdorff 空间 $X$ 的闭子空间，$E, F$ 为 $X$ 上的向量丛。若 $f\colon E|_Y\to F|_Y$ 为同构映射，则存在含 $Y$ 的开集 $U$，以及同构的扩张 $f\colon E|_U\to F|_U$。
+\end{lemma*}
+
+\begin{proof}
+  $f$ 是 $\Hom(E|_Y,F|_Y)$ 的截面，因而可扩张为 $\Hom(E,F)$ 的截面。把使这个映射为同构映射的点集记作 $U$。此时 $U$ 是开集，且含 $Y$。
+\end{proof}
+
+% [原文 p.11]
+\begin{lemma*}{1.4.3}
+  设 $Y$ 为紧 Hausdorff 空间，$f_t\colon Y\to X$（$0\le t\le1$）为同伦，$E$ 为 $X$ 上的向量丛。此时
+\[
+f_0^*E\cong f_1^*E
+\]
+成立。
+\end{lemma*}
+
+\begin{proof}
+  用 $I$ 表示单位区间，取满足 $f(y,t)=f_t(y)$ 的同伦 $f\colon Y\times I\to X$，并取射影 $\pi\colon Y\times I\to Y$。这里把引理 1.4.2 用于向量丛 $f^*E$、$\pi^*f_t^*E$ 与子空间 $Y\times\{t\}$。在 $Y\times\{t\}$ 上存在显然的同构 $s$。由 $Y$ 的紧性可知，存在 $I$ 中 $\{t\}$ 的邻域 $\delta t$，使 $f^*E$ 与 $\pi^*f_t^*E$ 在带状区域 $Y\times\delta t$ 上同构。因此 $f_t^*E$ 的同构类是 $t$ 的局部常值函数。由于 $I$ 连通，$f_t^*E$ 的同构类关于 $t$ 是常值函数。于是
+\[
+f_0^*E\cong f_1^*E
+\]
+成立。
+\end{proof}
+
+% [Tutor Note: 这一步是本节的技术核心：之所以能从“每一点 $t$ 处同构”跳到“整个 $I$ 上同构类恒定”，靠的是 $I$ 的连通性与同构类函数的局部常值性；后者又只用到了 $Y$ 紧。]
+
+用 $\Vect(X)$ 表示 $X$ 上向量丛的同构类组成的集合，用 $\Vect_n(X)$ 表示由 $n$ 维向量丛组成的 $\Vect(X)$ 的子集。$\Vect(X)$ 在运算 $\oplus$ 下成为可换半群。$\Vect_n(X)$ 中有一个与其余元素自然可区别的元素，那就是 $n$ 维平凡丛的同构类。
+
+\begin{lemma}{1.4.4}
+  \begin{enumerate}[label=(\roman*),leftmargin=2.4em,itemsep=1pt]
+  \item 若 $f\colon X\to Y$ 为同伦等价映射，则 $f^*\colon\Vect(Y)\to\Vect(X)$ 是双射。
+  \item 若 $X$ 可缩，则 $X$ 上的一切向量丛都平凡，且 $\Vect(X)$ 与由非负整数组成的可换半群同构。
+  \end{enumerate}
+\end{lemma}
+
+\begin{lemma}{1.4.5}
+  若 $E$ 为 $X\times I$ 上的向量丛，$\pi\colon X\times I\to X\times\{0\}$ 为射影，则 $E$ 与 $\pi^*E|_{X\times\{0\}}$ 同构。
+\end{lemma}
+
+这两个引理都是引理 1.4.3 的直接推论。
+
+% [原文 p.12]
+现在，$Y$ 在 $X$ 中是闭的，$E$ 为 $X$ 上的向量丛，$\alpha\colon E|_Y\to Y\times V$ 为同构映射。称这个 $\alpha$ 为 $E$ 在 $Y$ 上的平凡化（trivialization）。用 $\pi\colon Y\times V\to V$ 表示射影，并用
+\[
+e\sim e'\iff\pi\alpha(e)=\pi\alpha(e')
+\]
+在 $E|_Y$ 上定义等价关系，再在 $E|_{X\setminus Y}$ 上按相等关系扩充它。把由这个等价关系给出的 $E$ 的商空间记作 $E/\alpha$。它在 $X/Y$ 上带有自然的向量空间族的结构。以下说明 $E/\alpha$ 是向量丛。为此只需确认它在 $X/Y$ 的基点 $Y/Y$ 处局部平凡。由引理 1.4.2，$\alpha$ 可扩张为含 $Y$ 的某开集 $U$ 上的同构映射 $\tilde\alpha\colon E|_U\to U\times V$。此时 $\tilde\alpha$ 诱导出同构映射
+\[
+(E|_U)/\alpha\cong(U/Y)\times V.
+\]
+这就证明了 $E/\alpha$ 局部平凡。
+
+设 $\alpha_0,\alpha_1$ 为 $E$ 在 $Y$ 上的同伦平凡化。也就是说，在 $Y\times I\subset X\times I$ 上有 $E\times I$ 的平凡化 $\beta$，它在 $I$ 的两个端点处诱导出 $\alpha_0$ 与 $\alpha_1$。取自然映射 $f\colon(X/Y)\times I\to(X\times I)/(Y\times I)$。此时 $f^*(E\times I/\beta)$ 是 $(X/Y)\times I$ 上的向量丛，它到 $(X/Y)\times\{i\}$ 的限制是 $E/\alpha_i$（$i=0,1$）。因此由引理 1.4.3，
+\[
+E/\alpha_0\cong E/\alpha_1
+\]
+成立。归纳起来，就证明了下列引理。
+
+\begin{lemma}{1.4.6}
+  向量丛 $E$ 在 $Y\subset X$ 上的平凡化 $\alpha$ 定义 $X/Y$ 上的向量丛 $E/\alpha$。$E/\alpha$ 的同构类只依赖 $\alpha$ 的同伦类。
+\end{lemma}
+
+用这个引理可以证明下列引理。
+
+\begin{lemma*}{1.4.7}
+  设 $Y\subset X$ 为可缩的闭子空间。此时 $f\colon X\to X/Y$ 诱导出双射 $f^*\colon\Vect(X/Y)\to\Vect(X)$。
+\end{lemma*}
+
+% [原文 p.13]
+\begin{proof}
+  设 $E$ 为 $X$ 上的向量丛，则由引理 1.4.4，$E|_Y$ 平凡。因此存在平凡化 $\alpha\colon E|_Y\to Y\times V$。此外，这样的两个平凡化只相差 $Y\times V$ 的一个自同构，即一个映射 $Y\to\mathrm{GL}(V)$。然而 $\mathrm{GL}(V)=\mathrm{GL}(n,\C)$ 连通，而 $V$ 可缩。因此 $\alpha$ 在差一个同伦的意义下唯一，$E/\alpha$ 的同构类由 $E$ 的同构类唯一确定。这样就构作出了映射
+\[
+\Vect(X)\longrightarrow\Vect(X/Y).
+\]
+它显然是 $f^*$ 的双侧逆映射。因此 $f^*$ 如所断言是双射。
+\end{proof}
+
+% [Tutor Note: 原书 p.13 此处作“$V$ は可縮である”，但论证需要的是 $Y$ 可缩：两个平凡化只相差映射 $Y\to\mathrm{GL}(V)$，要让它与常值映射同伦，靠的正是引理 1.4.7 假设中的 $Y$ 可缩。疑为笔误，正确应为“$Y$ 可缩”。]
+
+向量丛常常通过衔接（glueing 或 clutching）来构造。下面说明这一方法。
+
+设
+\[
+X=X_1\cup X_2,\qquad A=X_1\cap X_2,
+\]
+并设这些空间全都紧。$E_i$ 为 $X_i$ 上的向量丛，$\varphi\colon E_1|_A\to E_2|_A$ 为同构映射。此时如下定义 $X$ 上的向量丛 $E_1\cup_\varphi E_2$。作为拓扑空间，$E_1\cup_\varphi E_2$ 是在把 $e_1\in E_1|_A$ 与 $\varphi(e_1)\in E_2|_A$ 视为同一的等价关系下，不交并 $E_1+E_2$ 的商。把 $X$ 与 $X_1+X_2$ 相应的商等同视之，就得到自然射影 $p\colon E_1\cup_\varphi E_2\to X$，$p^{-1}(x)$ 带有自然的向量空间结构。剩下的只需说明 $E_1\cup_\varphi E_2$ 局部平凡。由于 $(E_1\cup_\varphi E_2)|_{X\setminus A}=E_1|_{X_1\setminus A}+E_2|_{X_2\setminus A}$，点 $x\notin A$ 处的局部平凡性可由 $E_1$、$E_2$ 局部平凡推出。因此取 $a\in A$。取 $V_1$ 为 $X_1$ 中 $a$ 的闭邻域，使 $E_1$ 在 $V_1$ 上平凡，此时有同构映射
+\[
+\theta_1\colon E_1|_{V_1}\to V_1\times\C^n.
+\]
+把它限制到 $A$ 上，就得到同构映射
+\[
+\theta_1^A\colon E_1|_{V_1\cap A}\to(V_1\cap A)\times\C^n.
+\]
+% [原文 p.14]
+设 $\theta_2^A\colon E_2|_{V_1\cap A}\to(V_1\cap A)\times\C^n$ 为在 $\varphi$ 下与 $\theta_1^A$ 对应的同构映射。由引理 1.4.2，它可以扩张为同构映射
+\[
+\theta_2\colon E_2|_{V_2}\to V_2\times\C^n,
+\]
+其中 $V_2$ 是 $X_2$ 中 $a$ 的邻域。此时数对 $(\theta_1,\theta_2)$ 以显然的方式定义同构映射
+\[
+\theta_1\cup_\varphi\theta_2\colon(E_1\cup_\varphi E_2)|_{V_1\cup V_2}\to(V_1\cup V_2)\times\C^n.
+\]
+也就是说，$E_1\cup_\varphi E_2$ 局部平凡。
+
+这个构造具有下列初等性质。
+
+\begin{enumerate}[label=(\roman*),leftmargin=2.4em,itemsep=3pt]
+\item 若 $E$ 为 $X$ 上的向量丛，$E_i=E|_{X_i}$，则恒等映射确定同构映射 $I_A\colon E_1|_A\to E_2|_A$，并且
+\[
+E_1\cup_{I_A}E_2\cong E
+\]
+成立。
+\item 若 $\beta_i\colon E_i\to E_i'$ 为 $X_i$ 上的同构映射，且 $\varphi'\beta_1=\beta_2\varphi$，则
+\[
+E_1\cup_\varphi E_2\cong E_1'\cup_{\varphi'}E_2'
+\]
+成立。
+\item 设 $(E_i,\varphi)$ 与 $(E_i',\varphi')$ 为 $X_i$ 上的两组“衔接数据”，则
+\[
+(E_1\cup_\varphi E_2)\oplus(E_1'\cup_{\varphi'}E_2')\cong(E_1\oplus E_1')\cup_{\varphi\oplus\varphi'}(E_2\oplus E_2'),
+\]
+\[
+(E_1\cup_\varphi E_2)\otimes(E_1'\cup_{\varphi'}E_2')\cong(E_1\otimes E_1')\cup_{\varphi\otimes\varphi'}(E_2\otimes E_2'),
+\]
+\[
+(E_1\cup_\varphi E_2)^*\cong E_1^*\cup_{(\varphi^*)^{-1}}E_2^*
+\]
+成立。
+\end{enumerate}
+
+此外，下列引理也成立。
+
+\begin{lemma*}{1.4.8}
+  $E_1\cup_\varphi E_2$ 的同构类只依赖同构映射 $\varphi\colon E_1|_A\to E_2|_A$ 的同伦类。
+\end{lemma*}
+
+\begin{proof}
+  同构映射 $E_1|_A\to E_2|_A$ 的同伦是指同构映射
+% [原文 p.15]
+\[
+\Phi\colon\pi^*E_1|_{A\times I}\to\pi^*E_2|_{A\times I},
+\]
+其中 $I$ 是单位区间，$\pi\colon X\times I\to X$ 是射影。用 $f_t(x)=(x,t)$ 定义
+\[
+f_t\colon X\to X\times I,
+\]
+并把由 $\Phi$ 经 $f_t$ 诱导的同构记作
+\[
+\varphi_t\colon E_1|_A\to E_2|_A.
+\]
+此时
+\[
+E_1\cup_{\varphi_t}E_2\cong f_t^*(\pi^*E_1\cup_\Phi\pi^*E_2)
+\]
+成立。由于 $f_0$ 与 $f_1$ 同伦，由引理 1.4.3 可得
+\[
+E_1\cup_{\varphi_0}E_2\cong E_1\cup_{\varphi_1}E_2.
+\]
+\end{proof}
+
+% [Tutor Note: 这里 $f_t^*(\pi^*E_1\cup_\Phi\pi^*E_2)$ 与 $E_1\cup_{\varphi_t}E_2$ 的同构是逐纤维给出的，原书只用一句“が成り立つ”带过；要点是把 $(y,t)$ 上的纤维分别对应到 $y$ 上两个丛的纤维。]
+
+\begin{remark}{}
+  把部分空间收缩为一点（collapsing）与沿部分空间衔接（clutching）这两种构造（分别得到 $X/Y$ 上与 $X_1\cup X_2$ 上的向量丛），都是“在商空间上构造向量丛”这一一般手法的特例。给出详细的一般表述，作为练习题留给读者。
+\end{remark}
+
+把连续映射 $X\to Y$ 的同伦类组成的集合记作 $[X,Y]$。
+
+\begin{lemma*}{1.4.9}
+  对任意 $X$，存在自然同构 $\Vect_n(S(X))\cong[X,\mathrm{GL}(n,\C)]$。
+\end{lemma*}
+
+\begin{proof}
+  令 $C^+(X)=\bigl([0,1/2]\times X\bigr)/\bigl(\{0\}\times X\bigr)$，$C^-(X)=\bigl([1/2,1]\times X\bigr)/\bigl(\{1\}\times X\bigr)$，并写成 $S(X)=C^+(X)\cup C^-(X)$。此时 $C^+(X)\cap C^-(X)=X$。设 $E$ 为 $S(X)$ 上的 $n$ 维向量丛，则 $E|_{C^+(X)}$ 与 $E|_{C^-(X)}$ 都是平凡丛。取同构映射 $\alpha^{\pm}\colon E|_{C^\pm(X)}\cong C^\pm(X)\times V$。此时 $(\alpha^+|_X)(\alpha^-|_X)^{-1}\colon X\times V\to X\times V$ 是向量丛的映射，因此确定一个从 $X$ 到 $\mathrm{GL}(n,\C)=\Iso(V)$ 的映射 $\alpha$。$C^+(X)$ 与 $C^-(X)$ 都可缩，故 $\alpha^+$ 与 $\alpha^-$ 的同伦类可以无矛盾地定义。
+% [原文 p.16]
+  于是 $\alpha$ 的同伦类可以无矛盾地定义。这样就得到自然映射 $\theta\colon\Vect_n(S(X))\to[X,\mathrm{GL}(n,\C)]$。另一方面，由引理 1.4.8，衔接着的构造法给出映射
+\[
+\varphi\colon[X,\mathrm{GL}(n,\C)]\longrightarrow\Vect_n(S(X)).
+\]
+显然 $\theta$ 与 $\varphi$ 互为逆映射，因此是双射。
+\end{proof}
+
+这样就知道，$\Vect_n(S(X))$ 具有同伦论的解释。下面给 $\Vect_n(X)$ 以同样的解释。为此必须先证明关于商丛的几个简单事实。
+
+\begin{lemma*}{1.4.10}
+  设 $E$ 为 $X$ 上的向量丛。此时 $E$ 上存在（Hermite）度量。
+\end{lemma*}
+
+\begin{proof}
+  向量空间 $V$ 上的度量确定积丛 $X\times V$ 上的度量。因此平凡丛上存在度量。取有限开覆盖 $\{U_\alpha\}$，使 $E|_{U_\alpha}$ 平凡，并取 $E|_{U_\alpha}$ 上的度量 $h_\alpha$。取单位分解 $\{p_\alpha\}$，使 $\operatorname{supp}p_\alpha\subset U_\alpha$，并按
+\[
+k_\alpha(x)=\begin{cases}p_\alpha(x)h_\alpha(x), & x\in U_\alpha,\\ 0, & x\notin U_\alpha\end{cases}
+\]
+定义。此时 $k_\alpha$ 是 $\mathrm{Herm}(E)$ 的截面，且为半正定的。然而，对任意 $x\in X$，由于 $\sum p_\alpha=1$，存在 $\alpha$ 使 $p_\alpha(x)>0$，从而 $x\in U_\alpha$。因此对这个 $\alpha$，$k_\alpha(x)$ 是正定的。于是对一切 $x\in X$，$\sum_\alpha k_\alpha(x)$ 都是正定的，$k=\sum_\alpha k_\alpha$ 就是 $E$ 上的度量。
+\end{proof}
+
+向量丛的同态的列
+\[
+\cdots\to E\to F\to\cdots
+\]
+% [原文 p.17]
+称为完全的（exact），是指对每个点 $x\in X$，向量空间同态的列
+\[
+\cdots\to E_x\to F_x\to\cdots
+\]
+都完全。
+
+\begin{corollary*}{1.4.11}
+  \[
+  0\to E'\xrightarrow{\varphi'}E\xrightarrow{\varphi''}E''\to0
+  \]
+  为 $X$ 上向量丛的完全序列。此时存在同构 $E\cong E'\oplus E''$。
+\end{corollary*}
+
+\begin{proof}
+  给 $E$ 一个度量。则 $E\cong E'\oplus(E')^{\perp}$。而 $(E')^{\perp}\cong E''$。
+\end{proof}
+
+% [Tutor Note: 此处“$(E')^{\perp}\cong E''$”一步省略了细节：完全性给出 $\varphi''$ 在 $(E')^{\perp}$ 上的限制是单射且像为 $E''$，数维数即得同构；这一步依赖每个纤维上的维数相等，而完全序列正是逐纤维的。]
+
+部分空间 $V\subset\Gamma(E)$ 称为丰富的（ample），是指映射
+\[
+\varphi\colon X\times V\to E
+\]
+为满射，其中 $\varphi(x,s)=s(x)$。
+
+\begin{lemma*}{1.4.12}
+  设 $X$ 为紧 Hausdorff 空间，$E$ 为 $X$ 上的向量丛。此时 $\Gamma(E)$ 含丰富的有限维子空间。
+\end{lemma*}
+
+\begin{proof}
+  取有限开覆盖 $\{U_\alpha\}$，使对每个 $\alpha$，$E|_{U_\alpha}$ 平凡，并取单位分解 $\{p_\alpha\}$，使 $\operatorname{supp}p_\alpha\subset U_\alpha$。由于 $E|_{U_\alpha}$ 平凡，可以找到丰富的有限维子空间 $V_\alpha\subset\Gamma(E|_{U_\alpha})$。这里对 $v_\alpha\in V_\alpha$，按
+\[
+(\theta_\alpha\circ v_\alpha)(x)=\begin{cases}p_\alpha(x)\cdot v_\alpha(x), & x\in U_\alpha,\\ 0, & x\notin U_\alpha\end{cases}
+\]
+定义 $\theta_\alpha\colon V_\alpha\to\Gamma(E)$。此时 $\theta_\alpha$ 确定同态映射
+\[
+\theta\colon\prod_\alpha V_\alpha\longrightarrow\Gamma(E).
+\]
+% [原文 p.18]
+并且 $\theta$ 的像是 $\Gamma(E)$ 的有限维子空间。事实上，对每个 $x\in X$，都存在 $\alpha$ 使 $p_\alpha(x)>0$，故映射
+\[
+\theta_\alpha(V_\alpha)\longrightarrow E_x
+\]
+是满射。
+\end{proof}
+
+\begin{corollary}{1.4.13}
+  设 $E$ 为向量丛。此时存在整数 $m$ 与满射同态 $\varphi\colon X\times\C^m\to E$。
+\end{corollary}
+
+\begin{corollary}{1.4.14}
+  设 $E$ 为向量丛。此时存在向量丛 $F$，使 $E\oplus F$ 平凡。
+\end{corollary}
+
+现在可以证明 $\Vect_n(X)$ 具有同伦论的定义。首先引入 Grassmann 流形。设 $V$ 为任意向量空间，$n$ 为任意非负整数，此时集合 $G_n(V)$ 是 $V$ 的一切余维 $n$ 子空间组成的集合。给 $V$ 一个 Hermite 度量，则 $V$ 的每个子空间都确定一个投影算子。这定义了映射 $G_n(V)\to\End(V)$，其中 $\End(V)$ 是 $V$ 的自同态映射组成的集合。$G_n(V)$ 赋以由这个映射诱导的拓扑。
+
+设 $E$ 为空间 $X$ 上的向量丛，$V$ 为向量空间，$\varphi\colon X\times V\to E$ 为满射同态。令每个 $x$ 对应子空间 $\ker\varphi_x$，就定出从 $X$ 到 $G_n(V)$ 的映射；在 $V$ 的任一度量下，这个映射都连续（其中 $n=\dim E$）。称这个映射 $X\to G_n(V)$ 为由 $\varphi$ 诱导的映射。
+
+% [Tutor Note: 这里的 $G_n(V)$ 是“余维 $n$”的子空间组成的集合，不是“$n$ 维”子空间；后面的 $n=\dim E$ 正是这个意思，因为满射 $\varphi_x\colon V\to E_x$ 的核余维为 $n$。初读极易把它当成通常的 $n$ 维 Grassmann 流形。]
+
+设 $V$ 为向量空间，$F\subset G_n(V)\times V$ 为由一切满足 $v\in g$ 的点 $(g,v)$ 组成的子丛。此时令 $E=(G_n(V)\times V)/F$ 为商丛，则称 $E$ 为 $G_n(V)$ 上的分类丛（classifying bundle）。
+
+注意：若 $E'$ 为 $X$ 上的向量丛，$\varphi\colon X\times V\to E'$ 为满射同态，$f\colon X\to G_n(V)$ 为由 $\varphi$ 诱导的映射，则取分类丛 $E$ 时有 $E'=f^*(E)$。
+
+设 $h$ 为 $V$ 上的度量。把带有 $h$ 诱导的拓扑的集合 $G_n(V)$ 记作 $G_n(V_h)$。
+
+% 块尾跨页句：h を V 上の計量とする．h によって誘導された位相をもつ集合 G_n(V) を（p.19 首句为“G_n(V_h) と表記する．”，已在本 chunk 写完；ch01c 从“h' を V 上のほかの計量とすると…”接续）
+% CHUNK ch01b DONE
+

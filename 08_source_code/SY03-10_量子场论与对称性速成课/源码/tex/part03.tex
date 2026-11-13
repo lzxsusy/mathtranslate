@@ -1,0 +1,592 @@
+% ============================================================
+%  part03.tex  |  原文 PDF p.15–22（页脚 p.14–21）
+%  内容：第 3 章 经典场论
+%        （3.1 运动方程；3.2 Noether 定理；3.3 规范对称性）
+% ============================================================
+
+% >>> p015
+\section{经典场论（Classical Field Theory）}
+
+\begin{keypoints}
+  \item \textbf{核心物理图像}：经典场论由作用量泛函 $S:\mathcal{E}\to\R/\C$ 描述；
+        经典解即作用量的临界点（运动方程），而连续对称性对应守恒流与守恒荷。
+  \item \textbf{数学工具}：向量丛截面与 jet、变分法与分部积分、Lie 群在无穷维场空间
+        $\mathcal{E}$ 上的作用及其无穷小形式、微分形式的 Hodge 星算子与外微分。
+  \item \textbf{主要结论}：Noether 定理的两种推导——“变分 $\delta^G_\varepsilon\mathcal{L}
+        =\varepsilon^\alpha\dd\kappa_\alpha$”与“把 $\varepsilon$ 提升为函数 $\tilde\varepsilon(x)$
+        再分部积分”；自发对称性破缺指经典解本身不保持该对称群；规范对称性是局域对称性，
+        Maxwell 方程可统一写成 $\dd F=0$ 与 $\dd({*}F)={*}J$。
+  \item \textbf{译者评注}：3.3 节用微分形式重写 Maxwell 理论，是全书后文以 BV/BRST
+        处理规范对称性（第 6、7 章）的直接铺垫。Noether 流
+        $J_\alpha=\gamma_\alpha-\kappa_\alpha$ 的构造依赖“分部积分产生 $\dd\gamma$”
+        这一约定，$\kappa_\alpha$ 又只定义到 $\dd$-闭形式，读时需留意其不定性。
+\end{keypoints}
+
+\subsection{运动方程（Equation of Motion）}
+
+考虑由作用量泛函 $S$ 描述的经典场论
+\[
+  S:\ \mathcal{E}\longrightarrow\R/\C.
+\]
+通常，$\mathcal{E}$ 将是流形 $X$ 上某个向量丛 $E$ 的光滑截面空间。我们假设 $X$ 是
+$n$ 维且已定向的，则 $S$ 将是一个\emph{局部}泛函，其\emph{拉格朗日密度}
+$\mathcal{L}$ 取值于 $X$ 上的 $n$-形式：
+\[
+  S[\phi]=\int_{X}\mathcal{L}(\phi),\qquad \phi\in\mathcal{E}.
+\]
+拉格朗日密度由 $\phi$ 的 jet 构造而成，即由 $\phi$ 及其各阶导数构造而成。
+
+% [Tutor Note: 记号提醒——原文用花体 $\mathcal{E}$ 表示“场空间”，用直立体 $E$ 表示
+% $X$ 上的向量丛，二者关系是 $\mathcal{E}=\Gamma(X,E)$（光滑截面空间）。同一句中
+% 同时出现 “$\mathcal{E}$” 与 “a vector bundle $E$”，切勿混为一谈；这与第 1 章
+% 的约定一致，本译本严格保留。]
+
+\begin{wexam}{3.1}（相空间上的力学）
+  在 Hamilton 力学中，我们可以用相空间 $\R^{2m}$ 上由时间 $t$ 参数化的路径来描述
+  一个场
+  \[
+    \phi=\{q^{i}(t),p_{i}(t)\}:\ \R\longrightarrow\R^{2m}.
+  \]
+  于是场空间为
+  \[
+    \mathcal{E}=C^{\infty}(\R)^{\oplus 2m},
+  \]
+  它可以等同于位于 $X=\R$ 上的平凡丛的光滑截面空间。作用量 $S$ 由相空间上的
+  Hamilton 函数 $H$ 构造：
+  \[
+    \begin{aligned}
+      S[\phi]&=\int p_{i}\dd q^{i}-H(q,p)\dd t\\
+      &=\int\left(p_{i}(t)\dot q^{i}(t)-H(q,p)\right)\dd t.
+    \end{aligned}
+  \]
+  由于这里的路径是一维对象，我们可以把量子力学看作一维量子场论。
+\end{wexam}
+
+\begin{wexam}{3.2}（标量场论）
+  设 $(X,g)$ 是 Riemann 流形，$\mathcal{E}$ 是光滑函数空间 $C^{\infty}(X)$。
+  考虑作用量
+  \[
+    S[\phi]=\int_{X}\left(\frac{1}{2}|\nabla\phi|^{2}+V(\phi)\right)\dd Vol_{g},
+  \]
+  其中 $|\nabla\phi|^{2}=\partial_{i}\phi\partial_{j}\phi g^{ij}$，$V$ 是势函数，
+  体积元为 $\dd Vol_{g}=\sqrt{g}\,\dd^{n}x$。假设 $X$ 没有边界，则我们也可以写成
+  \[
+    S[\phi]=\int_{X}\left(-\frac{1}{2}\phi\Delta\phi+V(\phi)\right)\dd Vol_{g},
+  \]
+  其中 $\Delta$ 是 \emph{Laplace--Beltrami 算子}（$-\Delta$ 是正算子）
+  \[
+    \Delta\phi=\frac{1}{\sqrt{g}}\partial_{i}\left(\sqrt{g}g^{ij}\partial_{j}\phi\right).
+  \]
+  对 $X=\R^{n}$ 及标准度规 $g=(\dd x^{1})^{2}+(\dd x^{2})^{2}+\cdots+(\dd x^{n})^{2}$，
+  \[
+    \Delta=\sum_{i}\frac{\partial^{2}}{\partial x^{i}\partial x^{i}}.
+  \]
+\end{wexam}
+
+% [Tutor Note: 本例有两个易错点。(i) $|\nabla\phi|^{2}=\partial_i\phi\partial_j\phi g^{ij}$
+% 中指标 $i,j$ 一上一下缩并，$g^{ij}$ 是度规逆矩阵的分量；若把 $g^{ij}$ 写成 $g_{ij}$
+% 会得到错误的符号/数值。(ii) 从 $\int\frac12|\nabla\phi|^2$ 到 $-\int\frac12\phi\Delta\phi$
+% 用了分部积分并丢掉了边界项——这正是原文假设 “$X$ has no boundary” 的用处；$\Delta$
+% 的符号约定为 $\Delta=\frac{1}{\sqrt g}\partial_i(\sqrt g\,g^{ij}\partial_j)$，
+% 故 $-\Delta$ 为正算子，Euclidean 情形下与通常的 $-\nabla^2$ 一致。]
+
+% >>> p016
+\begin{wexam}{3.3}（Chern--Simons 理论）
+  设 $X$ 是一个三维流形，$\Lie{g}$ 是一个半单 Lie 代数，带有非退化的迹配对
+  （Killing 型）$\Tr:\Lie{g}\otimes\Lie{g}\to\R$。为简单起见，考虑平凡丛，并令
+  \[
+    \mathcal{E}=\Omega^{1}(X,\Lie{g})
+  \]
+  是 $\Lie{g}$-值 $1$-形式的空间。Chern--Simons 作用量为
+  \[
+    CS[A]=\int_{X}\Tr\left(\frac{1}{2}A\wedge\dd A
+    +\frac{1}{6}A\wedge[A,A]\right),\qquad A\in\mathcal{E},
+  \]
+  其中 $[-,-]$ 是由下式定义的广义 Lie 括号：
+  \[
+    [\alpha\otimes e_{1},\beta\otimes e_{2}]
+    =(\alpha\wedge\beta)\otimes[e_{1},e_{2}],
+    \qquad \text{对 } \alpha,\beta\in\Omega^{1}(X),\ e_{i}\in\Lie{g}.
+  \]
+\end{wexam}
+
+\begin{wrem}{3.4}
+  关于 Chern--Simons 的一般拓扑分类，见 \textup{[14]}。
+\end{wrem}
+
+在下面的讨论中我们假设 $X$ 没有边界。经典解是 $S$ 的临界点，
+\[
+  \Crit(S)=\{\delta S=0\}\subset\mathcal{E}.
+\]
+考虑任意的变分 $\delta\phi$。我们总可以用分部积分把作用量的变分写成
+\[
+  \delta S=\int_{X}EL(\phi)\delta\phi.
+\]
+由于 $\delta\phi$ 是任意的，我们得到经典运动方程
+\[
+  \Crit(S)=\{\phi:\ EL(\phi)=0\},
+\]
+它也称为 \emph{Euler--Lagrangian 方程}。
+
+% [Tutor Note: “Euler--Lagrangian equation” 的通行名称是 Euler--Lagrange 方程
+% （Euler–Lagrange equation）；原文用了 “Lagrangian”，属原文笔误，此处照录不擅改。
+% 另注意 $EL(\phi)$ 是 Euler–Lagrange 导数（作为与 $\delta\phi$ 配对后积出 $n$-形式的
+% 密度），与第 6 章 BV 形式中的 $\delta S/\delta\phi$ 是同一对象的不同记法。]
+
+\begin{wexam}{3.5}（相空间上的力学）
+  作用量泛函为
+  \[
+    S[q,p]=\int\left(p\dot q-H(q,p)\right)\dd t.
+  \]
+  其变分计算如下：
+  \[
+    \begin{aligned}
+      \delta S&=\int\left[\delta p\,\dot q+p\frac{\dd}{\dd t}(\delta q)
+      -\left(\frac{\partial H}{\partial q}\delta q
+      +\frac{\partial H}{\partial p}\delta p\right)\right]\dd t\\
+      &=\int\left(\dot q\delta p-\dot p\delta q
+      -\frac{\partial H}{\partial q}\delta q
+      -\frac{\partial H}{\partial p}\delta p\right)\dd t\\
+      &=\int\left(\dot q-\frac{\partial H}{\partial p}\right)\delta p
+      -\left(\dot p+\frac{\partial H}{\partial q}\right)\delta q.
+    \end{aligned}
+  \]
+  经典运动方程是 \emph{Hamilton 方程}
+  \[
+    \begin{cases}
+      \dot q=\dfrac{\partial H}{\partial p}\\[6pt]
+      \dot p=-\dfrac{\partial H}{\partial q}.
+    \end{cases}
+  \]
+\end{wexam}
+
+% [Tutor Note: 例 3.5 变分的第三行原文末尾没有 $\dd t$（前两行都有），疑为排印遗漏；
+% 此处照录原文。读时请自行补上 $\dd t$，否则 $\delta S$ 与 $\int(\cdots)$ 的量纲不匹配。
+% 另外注意第一行 $\delta p\,\dot q$ 与 $p\frac{\dd}{\dd t}(\delta q)$ 来自
+% $\delta(p\dot q)$，第二行对 $p\frac{\dd}{\dd t}(\delta q)$ 分部积分给出
+% $-\dot p\,\delta q$（边界项已丢弃）。]
+
+\begin{wexam}{3.6}（标量场论）
+  \[
+    S[\phi]=\int_{X}\left(\frac{1}{2}|\nabla\phi|^{2}+V(\phi)\right)\dd Vol_{g},
+  \]
+% >>> p017
+  其变分给出
+  \[
+    \begin{aligned}
+      \delta S&=\int_{X}\left(\nabla\phi\cdot\nabla\delta\phi
+      +V'(\phi)\delta\phi\right)\dd Vol_{g}\\
+      &=\int_{X}\left(-(\Delta\phi)\delta\phi+V'(\phi)\delta\phi\right)\dd Vol_{g}.
+    \end{aligned}
+  \]
+  经典运动方程为
+  \[
+    -\Delta\phi+V'(\phi)=0.
+  \]
+\end{wexam}
+
+\begin{wexam}{3.7}（Chern--Simons 理论）
+  \[
+    CS[A]=\int_{X}\Tr\left(\frac{1}{2}A\wedge\dd A
+    +\frac{1}{6}A\wedge[A,A]\right).
+  \]
+  其变分给出
+  \[
+    \begin{aligned}
+      \delta CS&=\int_{X}\Tr\left(\delta A\wedge\dd A
+      +\frac{1}{2}\delta A\wedge[A,A]\right)\\
+      &=\int_{X}\Tr\left(\delta A\wedge F_{A}\right),
+    \end{aligned}
+  \]
+  其中 $F_{A}=\dd A+\frac{1}{2}[A,A]$ 是 $A$ 的曲率。经典运动方程
+  \[
+    F_{A}=0
+  \]
+  描述平坦联络。
+\end{wexam}
+
+\subsection{Noether 定理（Noether's Theorem）}
+
+\paragraph{对称性（Symmetry）}
+
+假设我们有一个经典理论
+\[
+  S:\ \mathcal{E}\longrightarrow\R/\C.
+\]
+所谓（经典）\emph{对称性}，是指一个群 $G$ 作用在 $\mathcal{E}$ 上，使得 $S$ 是
+$G$-不变的：
+\[
+  S[g(\phi)]=S[\phi]\qquad \forall g\in G.
+\]
+经典对称性有两类：离散群对应的\emph{离散对称性}，以及 Lie 群对应的
+\emph{连续对称性}。
+
+\begin{wexam}{3.8}
+  考虑相空间上作用量为
+  \[
+    S[q,p]=\int\left(p\dot q-H(q,p)\right)\dd t
+  \]
+  的力学。这里 Hamilton 函数 $H$ 不依赖于时间。存在 Lie 群 $\R$ 在 $\mathcal{E}$ 上
+  由时间平移给出的光滑作用。对 $a\in\R$，定义 $\phi_{a}:\mathcal{E}\to\mathcal{E}$ 为
+  \[
+    \{q(t),p(t)\}\longmapsto\{q(t+a),p(t+a)\}.
+  \]
+  对任意 $a\in\R$，$S$ 在 $\phi_{a}$ 下不变。这给出一个连续对称性。
+
+  考虑一个特定的 Hamilton 函数
+  \[
+    H(q,p)=\frac{1}{2}p^{2}+V(q),
+  \]
+  其中 $V$ 是偶函数。于是我们有一个离散的 $\Z_{2}$-对称性。记 $\sigma$ 为
+  $\Z_{2}$ 的生成元，则该对称性由
+  \[
+    \sigma:(q,p)\to(-q,-p)
+  \]
+  给出。
+\end{wexam}
+
+% >>> p018
+\paragraph{经典 Noether 定理（Classical Noether's Theorem）}
+
+假设我们有一个由连通 Lie 群 $G$ 给出的连续对称性，其 Lie 代数为 $\Lie{g}$。
+设无穷小变换取如下形式
+\[
+  \delta^{G}_{\varepsilon}\phi=\varepsilon^{\alpha}\mathcal{X}_{\alpha}(\phi),
+\]
+其中无穷小常数 $\varepsilon^{\alpha}$ 参数化 $\Lie{g}$ 中的元素。
+
+% [Tutor Note: 这里 $\alpha$ 是 Lie 代数 $\Lie{g}$ 的指标，$\varepsilon^\alpha$ 与
+% $\mathcal{X}_\alpha$ 按 Einstein 约定缩并；$\mathcal{X}_\alpha$ 是场空间
+% $\mathcal{E}$ 上的向量场（即沿 $\mathcal{X}_\alpha$ 的无穷小变形），而不是底流形
+% $X$ 上的向量场。第 2 章的向量场作用在 $X$ 上，这里的 $\mathcal{X}_\alpha$ 作用在
+% 无穷维的 $\mathcal{E}$ 上，两者不可混淆。]
+
+\begin{wexam}{3.9}
+  时间平移的无穷小变换为
+  \[
+    \delta_{\varepsilon}\phi=\phi(t+\varepsilon)-\phi(t)=\varepsilon\dot\phi(t),
+  \]
+  且 $\mathcal{X}(\phi)=\dot\phi$。
+\end{wexam}
+
+设 $X$ 是 $n$ 维定向流形，且 $X$ 上有一个拉格朗日密度
+\[
+  S=\int_{X}\mathcal{L}(\phi).
+\]
+$S$ 的 $G$-不变性可以在无穷小层面表述为
+\[
+  \delta^{G}_{\varepsilon}\mathcal{L}=\varepsilon^{\alpha}\dd\kappa_{\alpha},
+\]
+其中 $\kappa_{\alpha}$ 是 $(n-1)$-形式。注意 $\kappa_{\alpha}$ 只在相差一个
+$\dd$-闭形式的意义下定义。
+
+另一方面，对任意变分
+\[
+  \delta\mathcal{L}=EL(\phi)\delta\phi+\dd\gamma,
+\]
+其中 $\dd\gamma$ 是分部积分产生的恰当 $n$-形式。代入由对称性给出的特殊变分
+$\delta^{G}_{\varepsilon}$，我们可以写成
+\[
+  \begin{aligned}
+    \delta^{G}_{\varepsilon}\mathcal{L}
+    &=EL(\phi)\,\varepsilon^{\alpha}\mathcal{X}_{\alpha}(\phi)
+    +\dd(\varepsilon^{\alpha}\gamma_{\alpha})\\
+    &=\varepsilon^{\alpha}\left(EL(\phi)\,\mathcal{X}(\phi)
+    +\dd\gamma_{\alpha}\right),
+  \end{aligned}
+\]
+其中 $\gamma_{\alpha}$ 是由 $\gamma$ 与 $\mathcal{X}_{\alpha}$ 决定的某个量。
+比较上面关于 $\delta^{G}_{\varepsilon}\mathcal{L}$ 的两个表达式，我们得到
+\[
+  \varepsilon^{\alpha}\left(\dd(\gamma_{\alpha}-\kappa_{\alpha})
+  +EL(\phi)\,\mathcal{X}_{\alpha}(\phi)\right)=0.
+\]
+由于 $\varepsilon^{\alpha}$ 是任意的，我们得到
+\[
+  \dd J_{\alpha}+EL\,\mathcal{X}=0,
+  \qquad\text{其中 } J_{\alpha}=\gamma_{\alpha}-\kappa_{\alpha}.
+\]
+特别地，在满足运动方程 $EL(\phi)=0$ 的构型处，
+\[
+  \dd J_{\alpha}\big|_{\Crit(S)}=0.
+\]
+
+% [Tutor Note: $\dd J_\alpha+EL\,\mathcal{X}=0$ 中的 $EL\,\mathcal{X}$ 是
+% $EL(\phi)\mathcal{X}_\alpha(\phi)$ 的简写（原文照录），这是一个\emph{离壳}
+% （off-shell）恒等式；限制到 $\Crit(S)$ 上才得到 $\dd J_\alpha=0$。$\kappa_\alpha$
+% 只定义到 $\dd$-闭形式、$\gamma_\alpha$ 的选取又依赖分部积分的方式，因此
+% $J_\alpha$ 只定义到 $\dd$-闭形式——这不影响守恒荷的守恒性，但比较不同文献的
+% Noether 流时必须先固定这一约定。]
+
+$J_{\alpha}$ 按下述方式给出守恒量。设 $Y_{1},Y_{2}\subset X$ 是两个由 $\Sigma$
+同调起来的余维 $1$ 超曲面。Stokes 定理蕴涵：对 $\phi\in\Crit(S)$，
+\[
+  \int_{Y_{1}}J_{\alpha}(\phi)-\int_{Y_{2}}J_{\alpha}(\phi)
+  =\int_{\partial\Sigma}J_{\alpha}
+  =\int_{\Sigma}\dd J_{\alpha}=0.
+\]
+特别地，若 $X$ 是时空、$Y_{t}$ 是时刻 $t$ 的时间切片，则积分
+$\int_{Y_{t}}J_{\alpha}$ 不依赖于 $t$（假设 $\phi$ 满足运动方程）。
+$J_{\alpha}$ 称为\emph{守恒流}，而空间积分 $\int_{Y_{t}}J_{\alpha}$ 称为
+\emph{守恒荷}。
+
+上述论证表明：连续对称性对应于守恒流。这就是 Noether 定理的内容。
+
+% >>> p019
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.46\linewidth]{fig_p019_1.png}
+  \caption*{时空与时间切片 $Y_t$（原文 PDF p.19 示意图，原文无编号）}
+\end{figure}
+
+\begin{wexam}{3.10}
+  考虑相空间上的力学
+  \[
+    S=\int\left(p\dot q-H(q,p)\right)\dd t.
+  \]
+  $S$ 的变分计算结果为
+  \[
+    \delta\mathcal{L}=(\dot q-\partial_{p}H)\delta p
+    -(\dot p+\partial_{q}H)\delta q
+    +\frac{\dd}{\dd t}(p\delta q).
+  \]
+  对无穷小时间平移
+  \[
+    \delta_{\varepsilon}q=\varepsilon\dot q,\qquad
+    \delta_{\varepsilon}p=\varepsilon\dot p,
+  \]
+  我们有
+  \[
+    \delta_{\varepsilon}\mathcal{L}
+    =\varepsilon\frac{\dd}{\dd t}\mathcal{L}.
+  \]
+  用上面的记号，我们得到
+  \[
+    \gamma=p\dot q,\qquad \kappa=\mathcal{L}.
+  \]
+  Noether 定理断言
+  \[
+    J=\gamma-\kappa=p\dot q-\mathcal{L}=H
+  \]
+  在 Hamilton 方程下守恒。这一事实可以直接验证：
+  \[
+    \frac{\dd}{\dd t}H=\partial_{p}H\,\dot p+\partial_{q}\dot q
+    =-\partial_{p}H\,\partial_{q}H+\partial_{q}H\,\partial_{p}H=0.
+  \]
+  我们得到结论：时间平移对称性蕴涵能量守恒。
+\end{wexam}
+
+% [Tutor Note: 上面 $\frac{\dd}{\dd t}H=\partial_pH\,\dot p+\partial_q\dot q$
+% 中第二项原文印作 $\partial_q\dot q$，按推导应为 $\partial_qH\,\dot q$
+% （末式 $-\partial_pH\partial_qH+\partial_qH\partial_pH=0$ 也印证了这一点）；
+% 疑为原文漏排 $H$，此处照录并注明，请核对原书 p.18。]
+
+还有另一种等价的方式推导守恒流。我们将常数 $\varepsilon^{\alpha}$ 提升为 $X$ 上的
+函数 $\tilde\varepsilon^{\alpha}(x)$，并考虑变分
+\[
+  \delta^{G}_{\tilde\varepsilon}\phi
+  =\tilde\varepsilon^{\alpha}(x)\mathcal{X}_{a}(\phi).
+\]
+利用分部积分与 $S$ 的 $G$-不变性，我们总可以写成
+\[
+  \delta^{G}_{\tilde\varepsilon}S
+  =-\int\tilde\varepsilon^{\alpha}\dd\tilde J_{\alpha},
+\]
+当 $\tilde\varepsilon^{\alpha}=\varepsilon^{\alpha}$ 为常数时它为零。
+
+在运动方程上，对任意变分 $\delta\phi$ 都有 $\delta S=0$。把它作用于特殊变分
+$\delta^{G}_{\tilde\varepsilon}\phi$，并利用 $\tilde\varepsilon(x)$ 的任意性，我们得到
+$\dd\tilde J_{\alpha}=0$（在运动方程上）。这就是 Noether 流。
+
+与前面的计算比较并利用 $\dd J_{\alpha}+EL\,\mathcal{X}=0$，
+\[
+  \delta^{G}_{\tilde\varepsilon}S
+  =\int EL\,\delta^{G}_{\tilde\varepsilon}\phi
+  =\int\tilde\varepsilon^{\alpha}EL\,\mathcal{X}_{\alpha}
+  =-\int\tilde\varepsilon^{\alpha}\dd J_{\alpha}.
+\]
+因此 $J_{\alpha}=\tilde J_{\alpha}$ 模 $\dd$-闭形式。
+
+% [Tutor Note: 原文在 $\delta^{G}_{\tilde\varepsilon}\phi
+% =\tilde\varepsilon^{\alpha}(x)\mathcal{X}_{a}(\phi)$ 中把下标写成 $a$，
+% 而同一段与上下文的无穷小变换写作 $\mathcal{X}_{\alpha}$；结合 Lie 代数指标
+% $\alpha$ 的缩并方式，$a$ 疑为 $\alpha$ 的排印之误。此处照录 $\mathcal{X}_a$
+% 并注明，请核对原书 p.18。]
+
+% >>> p020
+\begin{wexam}{3.11}
+  我们用第二种方法计算作用量
+  \[
+    S=\int\left(p\dot q-H(q,p)\right)\dd t
+  \]
+  的时间平移。提升后的无穷小变换为
+  \[
+    \delta_{\tilde\varepsilon}\phi=\tilde\varepsilon\dot\phi.
+  \]
+  代入变分，得
+  \[
+    \delta_{\tilde\varepsilon}S
+    =\int\tilde\varepsilon\frac{\dd}{\dd t}\mathcal{L}
+    +\dot{\tilde\varepsilon}\,p\dot q
+    =-\int\tilde\varepsilon\frac{\dd}{\dd t}(p\dot q-\mathcal{L})
+    =\int\tilde\varepsilon\frac{\dd}{\dd t}H.
+  \]
+  我们再次得到 $\tilde J=H$。
+\end{wexam}
+
+% [Tutor Note: 例 3.11 最后一个等号的符号疑有误：由
+% $-\int\tilde\varepsilon\frac{\dd}{\dd t}(p\dot q-\mathcal{L})$ 且
+% $H=p\dot q-\mathcal{L}$，应得 $-\int\tilde\varepsilon\frac{\dd}{\dd t}H$；原文印作
+% $+\int\tilde\varepsilon\frac{\dd}{\dd t}H$。若取原文的正号，则与
+% $\delta_{\tilde\varepsilon}S=-\int\tilde\varepsilon\dd\tilde J$ 比较会得到
+% $\tilde J=-H$，与下一句 “$\tilde J=H$” 矛盾。此处照录原文，请核对原书 p.19。]
+
+\paragraph{自发对称性破缺（Spontaneous Symmetry Breaking）}
+
+假设 $G$ 是一个对称性，则 $G$ 作用在经典解的空间上。然而，给定经典解
+$\phi\in\Crit(S)$，$\phi$ 本身可能不被 $G$ 固定。在这种情况下，我们说该对称性是
+\emph{自发破缺}的。
+
+\begin{wexam}{3.12}
+  考虑
+  \[
+    S=\int(p\dot q-H)\dd t,\qquad H=\frac{1}{2}p^{2}+V(q),
+  \]
+  其中 $V(q)=V(-q)$。我们有一个 $\Z_{2}$-对称性。运动方程为
+  \[
+    \begin{cases}
+      \dot q=\dfrac{\partial H}{\partial p}=p\\[6pt]
+      \dot p=-\dfrac{\partial H}{\partial q}=-V'(q).
+    \end{cases}
+  \]
+  假设 $V'(a)=0$。则路径
+  \[
+    \begin{cases}
+      q(t)=a\\
+      p(t)=0
+    \end{cases}
+  \]
+  是运动方程的解，但不被 $\Z_{2}$ 保持。
+\end{wexam}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.33\linewidth]{fig_p020_1.png}
+  \caption*{自发对称性破缺（原文 Figure 1，原文 p.19 / PDF p.20）}
+\end{figure}
+
+% [Tutor Note: Figure 1 是原文唯一的编号图（页脚 p.19 / PDF p.20），题注为
+% “Spontaneous Symmetry Breaking”。图意是：势 $V(q)$ 为偶函数，两个极小点
+% $q=\pm a$ 满足 $V'(a)=0$；经典解 $q(t)=a$、$p(t)=0$ 只选了其中一个极小，
+% 从而破坏了 $\Z_2$ 对称性。注意“破缺”指的是\emph{解}不保持对称性，
+% 作用量本身仍然是对称的——这是自发对称性破缺与明显破缺的根本区别。]
+
+% >>> p021
+\subsection{规范对称性（Gauge Symmetry）}
+
+规范对称性是由\emph{局域}变换给出的对称性。设 $X$ 是时空流形。粗略地说，这里的
+局域性是指：无穷小规范变换的集合构成一个 $C^{\infty}(X)$-模。规范变换的概念由
+H. Weyl 引入。
+
+\begin{wexam}{3.13}（Maxwell 方程）
+  \[
+    \begin{cases}
+      \nabla\cdot\vec E=\dfrac{1}{\eps_{0}}\rho\\[6pt]
+      \nabla\cdot\vec B=0\\[6pt]
+      \nabla\times\vec E=-\dfrac{\partial\vec B}{\partial t}\\[6pt]
+      \nabla\times\vec B=\mu_{0}\left(\vec j
+      +\eps_{0}\dfrac{\partial\vec E}{\partial t}\right),
+    \end{cases}
+  \]
+  其中 $\vec E=(E_{x},E_{y},E_{z})$ 与 $\vec B=(B_{x},B_{y},B_{z})$ 是电场与磁场，
+  而 $\vec j=(j_{x},j_{y},j_{z})$ 是电流密度。在 $\R^{3,1}$ 上引入 $2$-形式
+  \[
+    F=(E_{x}\dd x+E_{y}\dd y+E_{z}\dd z)\wedge\dd t
+    +B_{x}\dd y\wedge\dd z+B_{y}\dd z\wedge\dd x+B_{z}\dd x\wedge\dd y
+  \]
+  以及 $1$-形式
+  \[
+    J=\frac{1}{\eps_{0}}\rho\,\dd t
+    -\mu_{0}(j_{x}\dd x+j_{y}\dd y+j_{z}\dd z).
+  \]
+  则 Maxwell 方程可以紧凑地改写为
+  \[
+    \begin{cases}
+      \dd F=0\\
+      \dd({*}F)={*}J,
+    \end{cases}
+  \]
+  其中
+  \[
+    {*}:\ \Omega^{p}(\R^{3,1})\longrightarrow\Omega^{4-p}(\R^{3,1})
+  \]
+  是关于 Minkowski 度规的 Hodge 星算子。相容性条件 $\dd({*}J)=0$ 恰好就是
+  电荷守恒。
+
+  在可缩空间 $\R^{3,1}$ 上，$\dd F=0$ 蕴涵存在势 $1$-形式 $A$ 使 $F=\dd A$，
+  它可以分解为标量势与矢量势：
+  \[
+    A=-\phi\,\dd t+\vec A
+    =-\phi\,\dd t+A_{x}\dd x+A_{y}\dd y+A_{z}\dd z.
+  \]
+  于是我们可以把 Maxwell 方程改写为
+  \[
+    \begin{cases}
+      \vec E=-\nabla\phi-\partial_{t}\vec A\\[6pt]
+      \vec B=\nabla\times\vec A.
+    \end{cases}
+  \]
+  规范变换由一个任意的 $0$-形式 $\chi$ 参数化，它把 $A$ 变为 $A+\dd\chi$，
+  并保持 $F=\dd A$ 不变。
+
+  引入作用量泛函
+  \[
+    S[A]=\frac{1}{\mu_{0}}\int_{\R^{3,1}}
+    \left(\frac{1}{2}F\wedge{*}F+{*}J\wedge A\right).
+  \]
+  在变分 $A\to A+\delta A$ 下，
+  \[
+    \begin{aligned}
+      \delta S&=\frac{1}{\mu_{0}}\int_{\R^{3,1}}
+      \delta F\wedge{*}F+{*}J\wedge\delta A\\
+      &=\frac{1}{\mu_{0}}\int_{\R^{3,1}}
+      \dd\delta A\wedge{*}F-\delta A\wedge{*}J\\
+      &=\frac{1}{\mu_{0}}\int_{\R^{3,1}}
+      \delta A\wedge\left(\dd({*}F)-{*}J\right).
+    \end{aligned}
+  \]
+\end{wexam}
+
+% [Tutor Note: 这里 $F$ 的定义
+% $F=(E_x\dd x+E_y\dd y+E_z\dd z)\wedge\dd t+B_x\dd y\wedge\dd z+\cdots$
+% 依赖 Minkowski 度规的号差约定（原文取 $\R^{3,1}$，即 $(+,-,-,-)$ 型）。
+% 换成 $(-,+,+,+)$ 号差时电场项的符号会改变；Hodge 星算子 ${*}$ 也随号差改变
+% （${*}^2$ 在 4 维的 Lorentz 号差下满足 ${*}^2=-1$ 而非 $+1$）。对照其他文献的
+% Maxwell 方程时，务必先确认号差与 $F$ 的约定，这是最容易出符号错误的地方。]
+
+% [Tutor Note: 作用量 $S[A]$ 中两项的符号与系数 $(1/\mu_0)$ 是原文的约定；若采用
+% SI 制之外的 Gauss 单位制，$\eps_0,\mu_0$ 会被吸收进场与电流的定义中。另注意
+% ${*}J$ 是 $3$-形式（4 维中 Hodge 星把 $1$-形式映为 $3$-形式），故
+% ${*}J\wedge A$ 与 $F\wedge{*}F$ 都是 $4$-形式，可以直接积分。]
+
+% >>> p022
+运动方程由下式读出：
+\[
+  \dd({*}F)-{*}J=0,
+\]
+它恰好就是 Maxwell 方程。
+
+在规范变换 $A\to A+\dd\chi$ 下，
+\[
+  \delta_{\chi}S
+  =\frac{1}{\mu_{0}}\int_{\R^{3,1}}{*}J\wedge\dd\chi
+  =\frac{1}{\mu_{0}}\int_{\R^{3,1}}\dd({*}J)\wedge\chi=0.
+\]
+最后一个等号来自电荷守恒 $\dd({*}J)=0$。
+
+% [Tutor Note: 这里的分部积分给出
+% $\int{*}J\wedge\dd\chi=\int\dd({*}J)\wedge\chi$（无额外符号），因为
+% ${*}J$ 是 $3$-形式、$\chi$ 是 $0$-形式，$\dd({*}J\wedge\chi)
+% =\dd({*}J)\wedge\chi-{*}J\wedge\dd\chi$，边界项为零。若把被积式写成
+% $J\wedge{*}\dd\chi$（而不是 ${*}J\wedge\dd\chi$），则会得到相反的符号；
+% 规范化这一计算时需先固定 Hodge 星的作用位置。]

@@ -1,0 +1,320 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  preamble.tex —— 全局导言区
+%  《辛拓扑导论》（A Symplectic Prolegomenon，arXiv:1401.0269v2）中文译注版
+%  编译方式：xelatex（连续编译两遍以生成交叉引用与目录）
+%  说明：本文件仅含导言，不含 \documentclass；由 main.tex 通过 \input 载入。
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%============================== 1. 文字与版面 ================================%
+\usepackage[UTF8]{ctex}                 % 中文支持（XeLaTeX 下自动选择系统字体）
+\usepackage[a4paper, margin=2.6cm]{geometry}
+\usepackage{indentfirst}                % 中文段落首行缩进
+\setlength{\parindent}{2em}
+\linespread{1.15}
+\setlength{\emergencystretch}{2.5em}    % 减少行内公式/长术语造成的 overfull
+\hbadness=10000
+\vbadness=10000
+
+%============================== 2. 数学与图表 ================================%
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathrsfs}                   % \mathscr
+% 注：原文载入 mathabx；该宏包仅提供 Metafont 字型，XeLaTeX 无法嵌入，
+%     故此处略去。正文中用到的 \pitchfork、\maltese 等符号由 amssymb 提供。
+\usepackage{euscript}                   % \EuScript（原文使用的欧拉花体）
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\graphicspath{{figs/}}
+\usepackage{xy}                         % 保留原稿的 \xymatrix 交换图
+\xyoption{all}
+\usepackage{epigraph}
+\usepackage{etoolbox}
+\usepackage{caption}
+\captionsetup{font=small, labelsep=quad}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage[breakable,skins]{tcolorbox}
+
+%============================== 3. 超链接 ====================================%
+\usepackage[colorlinks=true, linkcolor=blue!45!black, citecolor=blue!45!black,
+            urlcolor=blue!45!black, bookmarksnumbered=true,
+            pdfencoding=auto]{hyperref}
+
+%============================== 4. 定理类环境 ================================%
+% 编号方案与原文一致：所有定理类环境共用一个按节编号的计数器
+\numberwithin{equation}{section}
+
+\newtheorem{thm}{定理}[section]
+\newtheorem{Theorem}[thm]{定理}
+\newtheorem*{Theorem*}{定理}
+\newtheorem{Corollary}[thm]{推论}
+\newtheorem{corollary}[thm]{推论}
+\newtheorem*{corollary*}{推论}
+\newtheorem{Lemma}[thm]{引理}
+\newtheorem{sublemma}[thm]{子引理}
+\newtheorem{addendum}[thm]{补遗}
+\newtheorem{prop}[thm]{命题}
+\newtheorem{Proposition}[thm]{命题}
+\newtheorem{Conjecture}[thm]{猜想}
+\newtheorem*{conjecture*}{猜想}
+\newtheorem{Question}[thm]{问题}
+\newtheorem*{question*}{问题}
+\newtheorem{defn}[thm]{定义}
+\newtheorem{Definition}[thm]{定义}
+\newtheorem{definitions}[thm]{定义}
+\newtheorem*{definitions*}{定义}
+\newtheorem{rem}[thm]{注}
+\newtheorem*{rem*}{注}
+\newtheorem{Remark}[thm]{注}
+\newtheorem{assumption}[thm]{假设}
+\newtheorem{background}[thm]{背景}
+\newtheorem{listthm}[thm]{列表}
+\newtheorem*{remark*}{注}
+\newtheorem{remarks}[thm]{注}
+\newtheorem*{remarks*}{注}
+\newtheorem*{example*}{例}
+\newtheorem{Example}[thm]{例}
+\newtheorem*{examples*}{例}
+\newtheorem{examples}[thm]{例}
+\newtheorem*{convention*}{约定}
+\newtheorem*{conventions*}{约定}
+\newtheorem{cor}[thm]{推论}
+\newtheorem{lemma}[thm]{引理}
+\newtheorem{remark}[thm]{注}
+\newtheorem*{Notes}{选读文献}
+\newtheorem*{bibliographical-note*}{文献说明}
+
+% 原文自定义的证明环境（\begin{pf} ... \end{pf}）
+\newenvironment{pf}{\paragraph{证明}}{\qed\par\medskip}
+\renewcommand{\proofname}{证明}
+
+%============================== 5. 版式细节 ==================================%
+\setlength{\epigraphwidth}{0.82\textwidth}
+\renewcommand{\epigraphsize}{\small}
+\setlength{\epigraphrule}{0pt}
+
+% 「本节重点」提示框：每节开头使用
+\newtcolorbox{keypoints}{
+  enhanced, breakable,
+  colback=black!3, colframe=black!45, boxrule=0.5pt, arc=2pt,
+  left=8pt, right=8pt, top=5pt, bottom=5pt,
+  fonttitle=\bfseries\sffamily,
+  title={本节重点（Key Takeaways）},
+  attach boxed title to top left={xshift=6pt, yshift=-2.5mm},
+  boxed title style={colback=black!45, colframe=black!45, arc=1pt,
+                     left=4pt, right=4pt, top=2pt, bottom=2pt},
+  coltitle=white
+}
+\newenvironment{keylist}{\begin{itemize}[leftmargin=1.6em, itemsep=1pt, topsep=2pt]}{\end{itemize}}
+
+%================================ 6. 记号 ====================================%
+% ---- 黑体字母（域、空间） ----
+\newcommand{\bR}{\mathbb{R}}
+\newcommand{\bZ}{\mathbb{Z}}
+\newcommand{\bC}{\mathbb{C}}
+\newcommand{\bQ}{\mathbb{Q}}
+\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bP}{\mathbb{P}}
+\newcommand{\bK}{\mathbb{K}}
+\newcommand{\bF}{\mathbb{F}}
+\newcommand{\bM}{\mathbb{M}}
+\newcommand{\LL}{\mathbb{L}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbf R}
+\renewcommand{\S}{\mathbb{S}}
+\newcommand{\PP}{\operatorname{\mathbb P}}
+\newcommand{\RR}{\operatorname{R}}
+
+% ---- 花体（欧拉花体，同原文） ----
+\newcommand{\scrB}{\EuScript{B}}
+\newcommand{\scrH}{\EuScript{H}}
+\newcommand{\scrQ}{\EuScript{Q}}
+\newcommand{\scrA}{\EuScript{A}}
+\newcommand{\scrT}{\EuScript{T}}
+\newcommand{\scrX}{\EuScript{X}}
+\newcommand{\scrK}{\EuScript{K}}
+\newcommand{\scrY}{\EuScript{Y}}
+\newcommand{\scrL}{\EuScript{L}}
+\newcommand{\scrM}{\EuScript{M}}
+\newcommand{\scrE}{\EuScript{E}}
+\newcommand{\scrF}{\EuScript{F}}
+\newcommand{\scrJ}{\EuScript{J}}
+\newcommand{\scrG}{\EuScript{G}}
+\newcommand{\scrR}{\EuScript{R}}
+\newcommand{\scrP}{\EuScript{P}}
+\newcommand{\scrC}{\EuScript{C}}
+\newcommand{\scrS}{\EuScript{S}}
+\newcommand{\hatscrF}{\widehat{\EuScript{F}}}
+\newcommand{\Cech}[1]{\check{#1}}
+
+% ---- 花体（\mathcal） ----
+\newcommand{\calA}{\mathcal{A}}
+\newcommand{\calC}{\mathcal{C}}
+\newcommand{\calD}{\mathcal{D}}
+\newcommand{\calE}{\mathcal{E}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\calM}{\mathcal{M}}
+\newcommand{\calO}{\mathcal{O}}
+\newcommand{\calP}{\mathcal{P}}
+\newcommand{\calQ}{\mathcal{Q}}
+\newcommand{\calT}{\mathcal{T}}
+\newcommand{\calK}{\mathcal{K}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\PMF}{\mathcal{PMF}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\Slice}{\mathcal{S}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\I}{\mathcal{I}}
+\newcommand{\G}{\mathcal{G}}
+\newcommand{\J}{\mathcal{J}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\CC}{\mathcal{C}}
+\newcommand{\DD}{\mathbf{D}}
+\newcommand{\XX}{\mathbf{X}}
+\newcommand{\OO}{\mathcal{O}}
+\newcommand{\ZZ}{\mathcal{Z}}
+\newcommand{\TT}{\mathcal{T}}
+\newcommand{\FF}{\mathcal{F}}
+\newcommand{\KK}{\mathcal{K}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\W}{\mathcal{W}}
+\newcommand{\K}{\EuScript{K}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\F}{F}
+\newcommand{\E}{E}
+\newcommand{\T}{T}
+\newcommand{\C}{\mathbb C}
+\renewcommand{\L}{\operatorname{L}}
+\renewcommand{\P}{\mathcal{P}}
+\renewcommand{\H}{\bar{\mathcal{H}}}
+\renewcommand{\O}{\Omega}
+\renewcommand{\o}{\omega}
+\newcommand{\op}{0}
+\renewcommand{\sp}{\operatorname{Sp}}
+\renewcommand{\sc}{\operatorname{sc}}
+\renewcommand{\Im}{\operatorname{Im}}
+\newcommand{\DDelta}{\mathbf{\Delta}}
+
+% ---- 算子名 ----
+\newcommand{\Sym}{\mathrm{Sym}}
+\newcommand{\Diff}{\mathrm{Diff}}
+\newcommand{\Symp}{\mathrm{Symp}}
+\newcommand{\Ham}{\mathrm{Ham}}
+\newcommand{\tr}{\mathrm{tr}}
+\newcommand{\cdbar}{\mathrm{\overline{\partial}}}
+\newcommand{\Pic}{\mathrm{Pic}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\ind}{\mathrm{ind}}
+\newcommand{\re}{\mathrm{re}}
+\newcommand{\im}{\mathrm{im}}
+\renewcommand{\ker}{\mathrm{ker}}
+\newcommand{\coker}{\mathrm{coker}}
+\newcommand{\mymod}{\quad\text{mod }}
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\End}{\mathrm{End}}
+\renewcommand{\index}{\mathrm{index}\,}
+\newcommand{\Zer}{\mathrm{Zer}}
+\newcommand{\Ob}{\mathrm{Ob}}
+\newcommand{\Aut}{\mathrm{Aut}}
+\newcommand{\Isom}{\operatorname{Isom}}
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\triv}{\operatorname{triv}}
+\newcommand{\Pot}{\operatorname{Pot}}
+\newcommand{\Cyc}{\operatorname{Cyc}}
+\newcommand{\Tw}{\operatorname{Tw}}
+\newcommand{\lEnd}{\mathcal{E}nd}
+\newcommand{\lHom}{\mathcal{H}om}
+\newcommand{\lExt}{\mathcal{E}xt}
+\newcommand{\Coh}{\operatorname{Coh}}
+\newcommand{\Hilb}{\operatorname{Hilb}}
+\newcommand{\Hilbs}{\operatorname{Hilb}^\sharp}
+\newcommand{\PHilb}{\operatorname{Hilb^\sharp}}
+\newcommand{\Ker}{\operatorname{Ker}}
+\newcommand{\Ext}{\operatorname{Ext}}
+\newcommand{\Map}{\operatorname{Map}}
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\Obj}{\operatorname{Obj}}
+\newcommand{\DT}{\operatorname{DT}}
+\newcommand{\GL}{\operatorname{GL}}
+\newcommand{\ch}{\operatorname{ch}}
+\newcommand{\PT}{\operatorname{PT}}
+\newcommand{\St}{\operatorname{St}}
+\newcommand{\virt}{\operatorname{vir}}
+\newcommand{\td}{\operatorname{td}}
+\newcommand{\var}{\operatorname{Var}}
+\newcommand{\red}{\operatorname{red}}
+\newcommand{\SF}{\operatorname{SF}}
+\newcommand{\semi}{\operatorname{SS}}
+\newcommand{\ad}{\operatorname{ad}}
+\newcommand{\add}{\operatorname{Ad}}
+\newcommand{\Treg}{\operatorname{QT}_\circ}
+\newcommand{\Tsc}{\operatorname{QT}_\mathrm{sc}}
+\newcommand{\Hs}{\H^\sharp}
+\newcommand{\sch}{\operatorname{Sch}}
+\newcommand{\bij}{\text{bij}}
+\newcommand{\Knum}{N}
+\newcommand{\Quot}{\operatorname{Quot}}
+\newcommand{\Set}{\operatorname{Set}}
+\newcommand{\Auteq}{\mathrm{Auteq}}
+\newcommand{\Quad}{\operatorname{Quad}}
+\newcommand{\Stab}{\operatorname{Stab}}
+\newcommand{\CY}{CY$_3$ }
+\newcommand{\g}{\operatorname{g}}
+\newcommand{\Q}{\operatorname{Q}}
+\newcommand{\perf}{\operatorname{Per}}
+\newcommand{\Dperf}{\operatorname{Perf}}
+\newcommand{\MCG}{\operatorname{MCG}}
+\newcommand{\orb}{\operatorname{orb}}
+\newcommand{\Sph}{\operatorname{Sph}}
+\newcommand{\Mod}{\operatorname{Mod}}
+\newcommand{\st}{\operatorname{st}}
+\newcommand{\Ev}{\operatorname{ev}}
+\newcommand{\Chord}{\operatorname{Chord}}
+\newcommand{\ro}{\operatorname{ro}}
+\newcommand{\Supp}{\operatorname{Supp}}
+\newcommand{\Crit}{\operatorname{Crit}}
+\newcommand{\vol}{\operatorname{vol}}
+\newcommand{\rk}{\operatorname{rk}}
+\newcommand{\Cone}{\operatorname{Cone}}
+\newcommand{\Tot}{\operatorname{Tot}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\gr}{\operatorname{gr}}
+\newcommand{\Eu}[1]{\EuScript{#1}}
+
+% ---- 希腊/字体便捷命令 ----
+\newcommand{\half}{{\textstyle\frac{1}{2}}}
+\newcommand{\quarter}{{\textstyle\frac{1}{4}}}
+\newcommand{\iso}{\cong}
+\newcommand{\htp}{\simeq}
+\newcommand{\smooth}{C^\infty}
+\newcommand{\CP}[1]{\bC {\mathrm P}^{#1}}
+\newcommand{\RP}[1]{\bR{\mathrm P}^{#1}}
+\newcommand{\leftsc}{\langle}
+\newcommand{\rightsc}{\rangle}
+\newcommand{\Rgeq}{\bR^{\scriptscriptstyle \geq 0}}
+\newcommand{\Rleq}{\bR^{\scriptscriptstyle \leq 0}}
+\newcommand{\suchthat}{\; : \;}
+\newcommand{\isom}{\cong}
+\newcommand{\tensor}{\otimes}
+\newcommand{\onto}{\twoheadrightarrow}
+\newcommand{\blob}{{\scriptscriptstyle\bullet}}
+\newcommand{\into}{\hookrightarrow}
+\newcommand{\eu}{\operatorname{\chi}}
+\newcommand{\lRa}[1]{\xrightarrow{\ #1\ }}
+\newcommand{\lLa}[1]{\xleftarrow{\ #1\ }}
+\newcommand{\lra}{\longrightarrow}
+\newcommand{\ha}{\small{1/2}}
+\newcommand{\dual}{\vee}
+\newcommand{\Ltensor}{\mathbin{\buildrel{\mathbf L}\over{\tensor}}}
+\newcommand{\blank}{-}
+
+% ---- 原文中的杂项 ----
+\newcommand{\mo}{(M,\omega)}
+\newcommand{\Acknowledgements}{{\em 致谢.} }
+\newcommand{\ev}{\operatorname{ev}}
+\providecommand{\frak}[1]{\mathfrak{#1}}

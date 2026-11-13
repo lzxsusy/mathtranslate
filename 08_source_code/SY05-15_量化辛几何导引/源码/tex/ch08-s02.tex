@@ -1,0 +1,237 @@
+% 原书 p.201–p.204（PDF p.209–p.212）
+% 第 8 章 8.2 节：非阿基米德线性代数（Non-Archimedean Linear Algebra）
+% 说明：8.3 节自 p.212 中部开始，见 ch08-s03.tex。
+
+\section{非阿基米德线性代数（Non-Archimedean Linear Algebra）}
+% >>> p209
+
+\begin{keytakeaways}
+\begin{itemize}
+  \item 几何图像：经典线性代数中「大小」由 Euclid 范数给出、正交性由内积给出；当系数域换成
+        Novikov 域 $\Lambda^{\mathbf{k},\Gamma}$ 后，内积不复存在，必须改用取值 $\nu$ 构造的
+        「非阿基米德范数」——过滤（filtration）$\ell$。
+  \item 数学工具：过滤的三条公理（$\ell(x)=-\infty\Leftrightarrow x=0$、$\ell(\alpha x)=\ell(x)-\nu(\alpha)$、
+        $\ell(x+y)\leqslant\max\{\ell(x),\ell(y)\}$）、正交基、Gram--Schmidt 过程、以及线性映射的
+        奇异值分解（定理 8.2.1）。
+  \item 本节结论：任何有限维赋范空间都有正交基（事实 8.2.1）；线性映射在正交基下可分解为
+        $\ker$、$\mathrm{im}$、$\mathrm{coker}$ 与一组「奇异值」$\ell_V(v_i)-\ell_W(w_i)$ 的
+        有序序列（定理 8.2.1）；例 8.2.3 用链复形展示了这些正交基可以手算。
+  \item 阅读要点：过滤 $\ell$ 与取值 $\nu$ 的关系是 $\ell=-\nu$（再加基的偏移 $a_i$），不等号方向
+        与经典范数相反（$\leqslant\max$ 而非 $\geqslant$）。
+\end{itemize}
+\end{keytakeaways}
+
+在 $\R^n$ 的线性代数中（例如在 $\R$ 或 $\C$ 上），我们用 Euclid 范数
+$|x|=\sqrt{\langle x,x\rangle}$ 来度量一个元素的大小。于是正交性通常定义如下：
+\begin{equation}\tag{8.10}
+  x\perp_{(\R^n,|\cdot|)}y\qquad\text{当且仅当}\qquad|x+y|=|x|+|y|.
+\end{equation}
+对 $V=\Lambda^{\mathbf{k},\Gamma}$ 或 $V=(\Lambda^{\mathbf{k},\Gamma})^n$，我们有两个类似的问题：
+\begin{enumerate}[label=(\roman*)]
+  \item 如何在 $V$ 上赋予内积（或范数）？
+  \item $V$ 中定义的正交性是什么？
+\end{enumerate}
+我们将在下一节看到，取值 $\nu$ 有助于回答这两个问题。
+% [Tutor Note: 原文疑误（实质）——(8.10) 对 Euclid 范数并不成立：由 $|x+y|^2=|x|^2+|y|^2
+%  +2\langle x,y\rangle$ 可知 Euclid 意义下的正交应写作 $|x+y|^2=|x|^2+|y|^2$；而线性关系
+%  $|x+y|=|x|+|y|$ 刻画的恰恰是 $x,y$ 同向共线。作者此处似把非阿基米德情形的正交判据
+%  （见注 8.2.1：$\ell(x+y)=\max\{\ell(x),\ell(y)\}$）错误地「翻译」成了 Euclid 情形的公式。
+%  译文照录原文，请按「$|x+y|^2=|x|^2+|y|^2$」理解；已记入 qsg/notes/review_ch08.md。
+%  另注：$\perp$ 的下标写成了 $(\R^n,|\cdot|)$（范数），而原文在正文里称之为内积
+%  $\langle\cdot,\cdot\rangle$ 给出的正交性，记号略有混用。]
+
+对 Novikov 域 $\Lambda^{\mathbf{k},\Gamma}$ 上的有限维向量空间 $V$，如下定义范数——它由 (8.9)
+中取值 $\nu$ 的相反数构造，用来度量 $V$ 中每个元素的「高度」。
+
+\begin{wdefn}{8.2.1}（[232] 中的定义 2.2）
+  设 $V$ 是 Novikov 域 $\Lambda^{\mathbf{k},\Gamma}$ 上的有限维向量空间。$V$ 上的
+  \textbf{过滤}（filtration）是一个函数 $\ell\colon V\to\R\cup\{-\infty\}$，满足
+  \begin{enumerate}[label=(\roman*)]
+    \item $\ell(x)=-\infty$ 当且仅当 $x=0$；
+    \item 对任意 $x\in V$ 与 $\alpha\in\Lambda^{\mathbf{k},\Gamma}$，有
+          $\ell(\alpha x)=\ell(x)-\nu(\alpha)$；
+    \item 对任意 $x,y\in V$，有 $\ell(x+y)\leqslant\max\{\ell(x),\ell(y)\}$。
+  \end{enumerate}
+\end{wdefn}
+% [Tutor Note: 易错预警——(1) 注意公理 (iii) 的不等号方向：$\ell(x+y)\leqslant\max$，这比
+%  经典三角不等式 $\ell(x+y)\leqslant\ell(x)+\ell(y)$ 更强（因此称为「非阿基米德」范数）。
+%  (2) 公理 (ii) 中的减号来自取值 $\nu$ 与「高度」方向相反：$\nu$ 越大表示指数越高、元素越小。
+%  (3) $\ell$ 取值为 $-\infty$（不是 $+\infty$），与经典范数只在 $x=0$ 处取 $0$ 相对应；
+%  逐项核对时请与 (8.9) 的 $\nu(x)=+\infty\Leftrightarrow x=0$ 对照，二者恰为「对偶」。
+%  (4) 这里的过滤与同调代数中的「过滤」是同一思想（按高度分层），但记号独立。]
+
+换言之，函数 $\ell$ 是向量空间 $V$ 上的一个「非阿基米德」范数（因为它由公理 (iii) 满足比标准
+Euclid 范数更强的三角不等式）。把这样一对 $(V,\ell)$ 称为赋范向量空间。
+
+\begin{wexam}{8.2.1}
+  考虑 $V=(\Lambda^{\mathbf{k},\Gamma})^n$，其中每个 $x=(x_1,\cdots,x_n)$ 满足
+  $x_i\in\Lambda^{\mathbf{k},\Gamma}$。定义
+  \begin{equation}\tag{8.11}
+    \ell(x):=-\min_{1\leqslant i\leqslant n}\nu(x_i)
+      \ \Bigl(=\max_{1\leqslant i\leqslant n}\bigl((-\nu)(x_i)\bigr)\Bigr).
+  \end{equation}
+  于是容易验证 $\ell$ 满足定义 8.2.1 中的三条公理。\hfill$\square$
+\end{wexam}
+
+受例 8.2.1 启发，人们会试图对 $\Lambda^{\mathbf{k},\Gamma}$ 上任何 $n$ 维向量空间 $V$ 用下述
+步骤定义过滤：固定 $V$ 在 $\Lambda^{\mathbf{k},\Gamma}$ 上的一组基
+$\{e_1,\cdots,e_n\}$，对每个 $1\leqslant i\leqslant n$ 给 $e_i$ 配上一个有限标量
+$a_i\in\R$，然后（在把 $V$ 与 $(\Lambda^{\mathbf{k},\Gamma})^n$ 等同之后）定义
+\begin{equation}\tag{8.12}
+  \ell(x)=\ell\Bigl(\sum_{i=1}^n x_ie_i\Bigr)
+    :=-\min_{1\leqslant i\leqslant n}\bigl(\nu(x_i)-a_i\bigr)
+    =\max_{1\leqslant i\leqslant n}\bigl(a_i-\nu(x_i)\bigr).
+\end{equation}
+% >>> p210
+这立刻蕴涵 $\ell(e_i)=a_i$，因为 $\nu$ 在 $\mathbf{k}\setminus\{0\}$ 上恒为 $0$（并且
+$\nu(0)=+\infty$）。于是 (8.12) 实际上显示了 $\{e_1,\cdots,e_n\}$ 的某种刚性。为说明这一点，
+假设 $\Gamma=\{0\}$（从而 $\Lambda^{\mathbf{k},\Gamma}=\mathbf{k}$）以简化记号。由 (8.12)，我们有
+\begin{equation}\tag{8.13}
+  \ell(x)=\ell\Bigl(\sum_{i=1}^n x_ie_i\Bigr)
+    =-\min_{\substack{1\leqslant i\leqslant n\\ x_i\ne0}}(-a_i)
+    =\max_{\substack{1\leqslant i\leqslant n\\ x_i\ne0}}\ell(e_i).
+\end{equation}
+有趣的是，上式未必总成立——下面的例子说明了这一点。
+
+\begin{wexam}{8.2.2}
+  考虑 $\mathbf{k}=\Lambda^{\mathbf{k},\{0\}}$ 上维数 $n=2$ 的 $V$，取
+  \[
+    e_1=f+g,\qquad e_2=g,
+  \]
+  其中 $\{f,g\}$ 是 $V$ 的一组预先给定的基（于是 $\{e_1,e_2\}$ 也是 $V$ 的基）。指定
+  $\ell(f)=1$ 与 $\ell(g)=2$，则按我们的定义，
+  \[
+    a_1=\ell(e_1)=\max\{\ell(f),\ell(g)\}=2,
+    \qquad\text{且}\qquad a_2=\ell(e_2)=\ell(g)=2.
+  \]
+  然而对线性组合 $x=1\cdot e_1+(-1)\cdot e_2$，我们有
+  \[
+    \ell(x)=\ell\bigl(1\cdot e_1+(-1)\cdot e_2\bigr)=\ell(f)=1
+      <2=\max\{\ell(e_1),\ell(e_2)\}.
+  \]
+  这与 (8.13) 矛盾。\hfill$\square$
+\end{wexam}
+
+仔细想来，例 8.2.2 之所以不满足 (8.12)，恰恰源于下述可能性：在过滤 $\ell$ 下，$V$ 的基
+$\{e_1,e_2\}$ 满足 $\ell(e_1)=\ell(e_2)$，而某些基元素的线性组合却\textbf{严格地}降低了过滤值。
+相反地，可以验证：若改用基 $\{f,g\}$（此时 $\ell(f)\ne\ell(g)$），则 (8.12) 是良定义的。这表明：
+按 (8.12) 在 $V$ 上定义 $\ell$ 与「适当地选取 $V$ 的一组基（使之满足 (8.12)）」这两件事紧密相关。
+澄清这一点有若干途径，我们采取下述做法：考虑赋范向量空间 $(V,\ell)$，把 (8.12) 作为基的\textbf{定义
+性质}，而这样的基就是我们日后要用的「首选基」。
+
+\begin{wdefn}{8.2.2}（[232] 中的定义 2.7）
+  设 $(V,\ell)$ 是 Novikov 环 $\Lambda^{\mathbf{k},\Gamma}$ 上的赋范向量空间。若 $V$ 的一组基
+  $\{e_1,\cdots,e_n\}$ 满足下述关系，则称它是\textbf{正交的}（orthogonal）：
+  \[
+    \ell\Bigl(\sum_{i=1}^n x_ie_i\Bigr)
+      =\max_{1\leqslant i\leqslant n}\bigl(\ell(e_i)-\nu(x_i)\bigr)
+  \]
+  对任意 $x_1,\cdots,x_n\in\Lambda^{\mathbf{k},\Gamma}$ 成立。多个（子）空间之间的正交性类似地
+  定义。
+\end{wdefn}
+
+下面的练习验证了例 8.2.2 中 $\{f,g\}$ 的正交性。同时，按定义 8.2.2，例 8.2.2 中的
+$\{e_1,e_2\}$ 不是正交基。
+
+\begin{wexer}{8.2.1}
+  设 $(V,\ell)$ 是 Novikov 环 $\Lambda^{\mathbf{k},\Gamma}$ 上的赋范向量空间，
+  $\{e_1,\cdots,e_n\}$ 是它的一组基。若对任意 $1\leqslant i\ne j\leqslant n$ 都有
+  $\ell(e_i)\ne\ell(e_j)$，则它是 $(V,\ell)$ 的一组正交基。在此情形还可以反其道而行：从
+  $\{\ell(e_i)\}_{i=1}^n$ 出发在 $V$ 上定义 $\ell$，再按 (8.12) 在线性组合上定义并延拓到整个
+  $V$。
+\end{wexer}
+
+\begin{wrem}{8.2.1}
+  注意：定义 8.2.2 中的定义性质特别蕴涵：若 $x$ 与 $y$ 正交，则
+  $\ell(x+y)=\max\{\ell(x),\ell(y)\}$。这应视为 (8.10) 中正交关系在非阿基米德情形下的类比。
+\end{wrem}
+% [Tutor Note: 易错预警——此注正是理解本节的关键：非阿基米德情形下，「正交」的判据是
+%  $\ell(x+y)=\max\{\ell(x),\ell(y)\}$，而不是 Euclid 情形的「勾股关系」；(8.10) 的写法
+%  见本节开头批注。另请注意定义 8.2.2 中 $\ell(e_i)-\nu(x_i)$ 的符号：系数 $x_i$ 的取值越大，
+%  $\ell(x_ie_i)$ 越小，故取 $\max$ 正好选出「最高的那一层」。]
+
+% >>> p211
+再次检查例 8.2.2：若从非正交基 $\{e_1,e_2\}$ 出发，则正交基 $\{f,g\}$ 可由 $\{e_1,e_2\}$ 经
+某个线性变换得到。事实上，更一般的结论成立。
+
+\whead{事实}{8.2.1}（[232] 中的定理 2.16）\quad 给定 Novikov 环 $\Lambda^{\mathbf{k},\Gamma}$ 上的
+（有限维）赋范向量空间 $(V,\ell)$ 及其任意一组基 $\{e_1,\cdots,e_n\}$，总存在一个
+\textbf{Gram--Schmidt 过程}，把 $\{e_1,\cdots,e_n\}$ 修改为一组正交基（即满足定义 8.2.2 的基）。
+
+实践中，这一修改是归纳地通过减去更高过滤值的项来实现的，从而所得基元素的过滤值两两不同。
+
+为结束本节，我们将研究两个赋范向量空间 $(V,\ell_V)$ 与 $(W,\ell_W)$ 之间的
+$\Lambda^{\mathbf{k},\Gamma}$-线性映射。就线性代数部分而言，例如线性映射 $A\colon V\to W$，
+一切都与经典情形相同：可以计算 $\ker(A)$、$\mathrm{im}(A)$、$\mathrm{coker}(A)$、
+$\mathrm{rank}(A)$ 等等。正交性只在我们要讨论 $V$ 与 $W$ 内部的正交子空间时才出现。事实上，
+下述定理通过把空间 $V$ 与 $W$ 按正交方式分解为若干 1 维子空间的直和，几乎给出了
+$\Lambda^{\mathbf{k},\Gamma}$-线性映射 $A$ 的全部信息（称为 $A$ 的\textbf{奇异值分解}，
+singular value decomposition）。
+
+\begin{wthm}{8.2.1}（[232] 中的定理 3.4）
+  设 $(V^n,\ell_V)$ 与 $(W^m,\ell_W)$ 是（有限维）赋范向量空间，
+  $A\colon(V,\ell_V)\to(W,\ell_W)$ 是秩为 $r$ 的 $\Lambda^{\mathbf{k},\Gamma}$-线性映射。则存在
+  $V$ 的有序正交基 $(v_1,\cdots,v_n)$ 与 $W$ 的有序正交基 $(w_1,\cdots,w_m)$，使得下述结论成立：
+  \begin{enumerate}[label=(\roman*)]
+    \item $\ker(A)=\operatorname{span}_{\Lambda^{\mathbf{k},\Gamma}}
+          \langle v_{r+1},\cdots,v_n\rangle$，且
+          $\mathrm{coker}(A)=\operatorname{span}_{\Lambda^{\mathbf{k},\Gamma}}
+          \langle w_{r+1},\cdots,w_m\rangle$；
+    \item $\mathrm{im}(A)=\operatorname{span}_{\Lambda^{\mathbf{k},\Gamma}}
+          \langle w_1,\cdots,w_r\rangle$；此外，对每个 $1\leqslant i\leqslant r$ 有
+          $Av_i=w_i$；
+    \item $\ell_V(v_1)-\ell_W(w_1)\geqslant\cdots\geqslant\ell_V(v_r)-\ell_W(w_r)$。
+  \end{enumerate}
+\end{wthm}
+% [Tutor Note: 含糊点拨——定理 8.2.1 有两个要点：(1) 由事实 8.2.1，正交基本身总存在，难点
+%  在于找一对同时满足 (i)(ii)(iii) 的正交基（即「对齐」$A$ 的核、像与奇异值）；(2) 这样的
+%  正交基一般不唯一，故 (iii) 中的序列（「奇异值」）才是 $A$ 的不变量。另请注意
+%  $\ell_V(v_i)-\ell_W(w_i)$ 的含义：它度量的是 $A$ 在第 $i$ 个正交方向上把过滤值「抬高/压低」
+%  了多少，与经典奇异值 $\sigma_i=\|Av_i\|/\|v_i\|$ 的地位相当。]
+
+我们要强调两点：其一，证明定理 8.2.1 的困难在于寻找那对正交基（由事实 8.2.1，它们总是存在），
+使得它们同时满足结论 (i)、(ii) 与 (iii)；其二，定理 8.2.1 所保证的正交基并不唯一。
+
+下面我们用一个例子（它可追溯到 5.1 节 Morse 理论中的例 5.1.10，以及 5.2 节中的同一个例子）来说明：
+有时这些所求的正交基可以手工找出来。
+
+\begin{wexam}{8.2.3}
+  考虑 $\Z_2$（$=\mathbf{k}=\Lambda^{\mathbf{k},\{0\}}$）上的链复形
+  $C_*=C_0\oplus C_1$，其中
+  \[
+    C_0=\operatorname{span}_{\Z_2}\langle a,b\rangle,\qquad
+    C_1=\operatorname{span}_{\Z_2}\langle c,d\rangle.
+  \]
+  （唯一非平凡的）边界映射 $\partial=\partial_1\colon C_1\to C_0$ 由
+  \begin{equation}\tag{8.14}
+    \partial c=a+b\qquad\text{且}\qquad\partial d=a+b
+  \end{equation}
+  定义。我们通过指定 $\ell(a)=1$、$\ell(b)=2$、$\ell(c)=3$、$\ell(d)=4$，在 $C_*$ 上给出一个
+  过滤 $\ell$。
+
+  % >>> p212
+  注意由练习 8.2.1，这给出了 $C_*$ 上一个良定义的 $\ell$。于是显然
+  $\ker(\partial)=\operatorname{span}_{\Z_2}\langle c+d\rangle\leqslant C_1$。因此，按定理 8.2.1
+  的记号，$v_2=c+d$。由定义 8.2.2，为补全 $C_1$ 的正交基，我们需要取 $v_1=c$（而不是取 $d$
+  之类）。接着 $w_1=\partial v_1=\partial c=a+b$，这蕴涵
+  $\mathrm{coker}(\partial_1)=\operatorname{span}_{\Z_2}\langle a\rangle$。因此 $w_2=a$。最后，
+  定理 8.2.1 的结论 (iii) 归结为数值
+  \[
+    \ell(v_1)-\ell(w_1)=\ell(c)-\ell(a+b)=3-2=1.
+  \]
+  \hfill$\square$
+\end{wexam}
+
+\begin{wrem}{8.2.2}
+  例 8.2.3 末尾得到的数「$1$」有许多奇妙性质。例如，它不依赖于由定理 8.2.1 得到的正交基的
+  选取。又如，当例 8.2.3 中的 $(C_*,\partial_*)$ 来自一个 Morse 链复形（比如说一个形变
+  $S^1$ 上的高度函数）时，这个数「$1$」具有强烈的几何意义（见 [224] 中「边界深度」
+  boundary depth 这一概念）。
+\end{wrem}
+% [Tutor Note: 含糊点拨——例 8.2.3 的验算：$\partial c=\partial d=a+b$，故
+%  $\ker\partial_1=\langle c+d\rangle$（在 $\Z_2$ 上 $c+d\ne0$），
+%  $\mathrm{coker}\partial_1=C_0/\langle a+b\rangle\cong\langle a\rangle$（因 $b\equiv a$）。
+%  正交性可按定义 8.2.2 直接验证：例如 $v_2=c+d$ 与 $v_1=c$ 的过滤值分别为
+%  $\min\{3,4\}=3$ 与 $3$——注意 $\ell(c+d)=3=\ell(c)$，故按定义 8.2.2 需取
+%  $\nu(x_{c+d})$ 相应调整，读者可自行补全；数值 $1$ 即 $w_1$ 与 $v_1$ 的过滤值之差。
+%  另请与第 5 章 5.1 节的 Morse 链复形例子对照：那里 $1$ 的出现正是「边界深度」的雏形。]

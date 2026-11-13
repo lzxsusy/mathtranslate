@@ -1,0 +1,57 @@
+% ============================================================
+%  appA.tex —— 附录 A 计算镜像映射（原文 p46，含 Figure 4）
+%  原文：Homological Mirror Symmetry for Elliptic Curves
+%  图 4 是 Python 代码清单，按 GUIDE 用 figure+lstlisting 重排，
+%  代码语义与原文完全一致（修正 PDF 抽取造成的字符间距：
+%  "e v a l n s e r i e s" 还原为 "_eval_nseries"，星号与减号还原为 ASCII 的 * 与 -）。
+% ============================================================
+
+\section{计算镜像映射}
+\label{app:mirror-map}
+
+\begin{keytakeaways}
+  \item \textbf{物理/几何图像}：镜像映射的核心数据是把 $j$-不变量写成模参数 $\tau$（即 $q=e^{2\pi i\tau}$）的函数；附录用 theta 级数的显式展开把它逐阶算出。
+  \item \textbf{数学工具}：Python 符号计算库 Sympy；在 \texttt{theta} 类中重载 \texttt{\_eval\_nseries}，让 Sympy 对自定义 theta 级数做 Laurent 展开。
+  \item \textbf{核心结论}：脚本 \texttt{series.py} 可按任意阶计算 $j(x)$，从而独立地逐阶验证定理~\ref{thm:7.2}。
+\end{keytakeaways}
+
+以下 Python 代码（见图~\ref{fig:series-py}）可用于计算镜像曲线的 $j$-不变量 $j(\tau)$ 到任意阶，方法是将相应的 theta 函数公式展开。更多细节见第~\ref{subsec:determination}~小节。
+
+这段代码使用自由软件符号计算包 Sympy\footnote{见 \url{http://sympy.org}。} 来操作幂级数。运行它的一个方便办法是：在 Sympy 的构建目录中执行 sympy，然后用 \texttt{\%run series.py} 加载脚本。这会自动把 $j(x)$ 计算到 $x$ 的某一阶。此后可用例如 \texttt{j.series(x,n=3)} 计算更多项（但很快会变慢）。
+
+% [Tutor Note: \texttt{theta(9, i/S(18), x)} 与 \texttt{theta(3, i/S(6), x)} 分别实现 $B_i=\sum_n t^{9(n+i/18)^2}$ 与 $A_i=\sum_n t^{3(n+i/6)^2}$。\texttt{S(...)} 是 Sympy 的精确有理数构造，用来避免 \texttt{i/18} 被求值为浮点数而导致级数展开失败；\texttt{nargs = 3} 声明 \texttt{theta} 接受三个参数 $(a,b,x)$。]
+
+% [Tutor Note: \texttt{\_eval\_nseries} 的返回值有两项大 O：\texttt{O(x**(a*(n + b)**2))} 截断正方向、\texttt{O(x**(a*(-n + b)**2))} 截断负方向。这正是 theta 级数作为双向 Laurent 级数所需的双侧截断，也是 \texttt{range(-n+1, n)} 的来源；若只写单向大 O，Laurent 展开的负幂部分会丢失。]
+
+\begin{figure}[htbp]
+\begin{lstlisting}
+from sympy import *
+
+var('x')
+
+class theta(Function):
+
+    nargs = 3
+
+    def _eval_nseries(self, x, n, logx):
+        if x != self.args[2]:
+            raise ValueError('series_expansion_not_supported')
+        [a, b, x] = self.args
+        return sum(x**(a*(k + b)**2)
+                   for k in range(-n+1, n)) + \
+               O(x**(a*(n + b)**2), x) + O(x**(a*(-n + b)**2), x)
+
+def b(i): return theta(9, i/S(18), x)
+def a(i): return theta(3, i/S(6), x)
+p = a(0)*b(0) + a(3)*b(9)
+q = a(0)*b(6) + a(3)*b(3)
+u = a(2)*b(0) + a(1)*b(9)
+z = (2*q+p)/(3*u)
+j = -27*z**3*(z**3+8)**3*(1-z**3)**(-3)
+pprint(j.series(x, n=2))
+\end{lstlisting}
+\caption{计算 $j(x)$ Laurent 展开的 Python 脚本 \texttt{series.py}。（原文 Figure 4，第 46 页）}
+\label{fig:series-py}
+\end{figure}
+
+% [Tutor Note: 最后一行 \texttt{pprint(j.series(x, n=2))} 只把 $j$ 展开到 $O(x^2)$ 并打印；把 \texttt{n=2} 改成更大的 $n$ 即可得到更高阶的 Laurent 展开。脚本中的 $j$ 表达式 $-27z^3(z^3+8)^3(1-z^3)^{-3}$ 与命题~\ref{prop:7.1} 完全一致，且 $p,q,u$ 的取法正是 $p=A_0B_0+A_3B_9$、$q=A_0B_6+A_3B_3$、$u=A_2B_0+A_1B_9$。代码先定义 \texttt{b(i)} 再定义 \texttt{a(i)}，只是书写顺序，不影响语义。]

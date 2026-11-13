@@ -1,0 +1,44 @@
+%%%%%%%%%%%%%%%%%%% Young Tableaux %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Macros \Young and \YoungTab by T. Kugo, Aug. 5, 1998.
+%% Original macros supplied with arXiv:1312.2684v2.
+\def\YGrule{0.4}
+\def\YGbox{6.5}
+\def\SymBoxes#1#2#3#4{\newdimen\un@t \un@t#3%
+\raisebox{#1}{\rule{#2\un@t}{#4}\hskip-#2\un@t%
+\@tempdimb\un@t \advance\@tempdimb by-#4\@tempcntb#2\relax%
+\@whilenum{\@tempcntb>0}\do{%
+\rule{#4}{\un@t}\hskip\@tempdimb \advance\@tempcntb by\m@ne}%
+\hskip-#2\un@t \rule[\un@t]{#2\un@t}{#4}%
+\rule[\un@t]{#4}{#4}\hskip-#4%
+\rule{#4}{\un@t}}\hskip-#4}
+\def\Young{\@ifnextchar[{\@Young}{\@Young[0]}}
+\def\@Young[#1]#2{\newdimen\YG@unit \YG@unit\YGbox pt%
+\newdimen\h@ight \h@ight#1\YG@unit \@tempcnta-1\relax
+\@tfor\c@ount:=#2\do{\advance\@tempcnta by\@ne}%
+\@tempdima\@tempcnta\YG@unit%
+\advance\h@ight by\@tempdima\relax
+\@tfor\c@ount:=#2\do{\SymBoxes{\h@ight}{\c@ount}{\YG@unit}{\YGrule pt}%
+\@tempdima-\c@ount\YG@unit \hskip\@tempdima%
+\advance \h@ight by -\YG@unit}
+\@tempdima\YG@unit \multiply\@tempdima by\@car#2\@nil
+\hskip\@tempdima}
+\def\YoungTab{\@ifnextchar[{\@YoungIdx}{\@YoungIdx[0]}}
+\def\@YoungIdx[#1]{\@ifnextchar[{\@iYoungIdx[#1]}{\@iYoungIdx[#1][\@empty]}}
+\def\@iYoungIdx[#1][#2]#3{%
+\newdimen\YG@unit \YG@unit\YGbox pt\newdimen\YG@rule \YG@rule \YGrule pt
+\newcount\c@ount \c@ount\z@ \newdimen\skip@wd \unitlength\@ne pt
+\newdimen\h@ight \h@ight#1\YG@unit \@tempcnta\m@ne\relax
+\@tfor\d@um:=#3\do{\advance\@tempcnta by\@ne}%
+\@tempdima\@tempcnta\YG@unit%
+\advance\h@ight by\@tempdima\relax%
+\@tfor\@idxlist:=#3\do{%
+\@tempcnta\z@\hskip.5\YG@rule\relax
+\@for\@idx:=\@idxlist\do{%
+\raisebox{\h@ight}{\makebox(\YGbox,\YGbox){#2$\@idx$}}
+\advance\@tempcnta by\@ne}\hskip-.5\YG@rule%
+\@tempdima-\@tempcnta\YG@unit \hskip\@tempdima%
+\ifnum\c@ount=\z@ \skip@wd-\@tempdima\fi \relax%
+\SymBoxes{\h@ight}{\@tempcnta}{\YG@unit}{\YG@rule}%
+\hskip\@tempdima \advance\h@ight by -\YG@unit
+\advance\c@ount by\@ne}%
+\hskip\skip@wd}

@@ -1,0 +1,181 @@
+# 结构/图形/编号公式 明细（实测）
+
+## p1  Chan-2014_SYZ-conjecture-and-its-impact_arXiv1408.
+- 矢量线密集页(>40 drawings): []
+- 位图页: []
+- 标题行: 8
+  - p.1: 1. Mirror symmetry before SYZ
+  - p.2: 2. Formulation of the SYZ conjecture
+  - p.3: 3. Semi-flat SYZ
+  - p.5: 4. Constructing SYZ fibrations
+  - p.7: 5. SYZ for compact Calabi-Yau manifolds
+  - p.9: 6. SYZ for noncompact Calabi-Yau manifolds
+  - p.11: 7. SYZ in the non–Calabi-Yau setting
+  - p.13: 8. Beyond SYZ
+- 编号公式 8 条:
+  - p.10: ['6.1', '6.2']
+  - p.11: ['6.2']
+  - p.16: ['2']
+  - p.19: ['4', '2']
+  - p.20: ['2']
+  - p.21: ['2']
+
+## p2  Glimpse-of-the-SYZ-conjecture-and-related-developm
+- 矢量线密集页(>40 drawings): []
+- 位图页: []
+- 标题行: 8
+  - p.1: 1. Mirror symmetry before SYZ
+  - p.2: 2. Formulation of the SYZ conjecture
+  - p.3: 3. Semi-flat SYZ
+  - p.5: 4. Constructing SYZ fibrations
+  - p.7: 5. SYZ for compact Calabi-Yau manifolds
+  - p.9: 6. SYZ for noncompact Calabi-Yau manifolds
+  - p.11: 7. SYZ in the non–Calabi-Yau setting
+  - p.12: 8. Beyond SYZ
+- 编号公式 7 条:
+  - p.10: ['6.1', '6.2']
+  - p.16: ['2']
+  - p.17: ['2']
+  - p.19: ['2']
+  - p.20: ['2']
+  - p.21: ['2']
+
+## p3  Gross-2008_SYZ-conjecture_torus-fibrations-to-dege
+- 矢量线密集页(>40 drawings): [(14, 52)]
+- 位图页: []
+- 标题行: 12
+  - p.4: 1. First a topological observation.
+  - p.5: 0. Finally, consider the possible non-zero maps for the spectral sequence:
+  - p.6: 2. Moduli of special Lagrangian submanifolds
+  - p.8: 3. Semi-ﬂat mirror symmetry
+  - p.11: 4. Aﬃne manifolds with singularities
+  - p.15: 5. The problems with the SYZ conjecture, and how to get around them
+  - p.20: 6. Gromov-Hausdorﬀlimits, algebraic degenerations, and mirror
+  - p.22: 7. Toric degenerations, the intersection complex and its dual
+  - p.30: 8. Log structures
+  - p.33: 3.24. I will not state the precise results, but go into detail in a special case, which
+  - p.37: 9. The cone picture and the fan picture
+  - p.38: 10. Tropical curves
+- 编号公式 29 条:
+  - p.2: ['1']
+  - p.4: ['1']
+  - p.5: ['1']
+  - p.9: ['1', '2']
+  - p.12: ['1', '2', '3']
+  - p.19: ['1', '2', '3', '4']
+  - p.23: ['1', '2', '3', '4']
+  - p.29: ['1', '2', '3', '4']
+  - p.30: ['2']
+  - p.31: ['3', '4', '1', '5']
+  - p.35: ['1', '2']
+  - p.38: ['1']
+  - p.39: ['2']
+
+## p4  Gross-2013_Mirror-symmetry-and-SYZ-conjecture_arXi
+- 矢量线密集页(>40 drawings): [(13, 52), (53, 71)]
+- 位图页: []
+- 标题行: 12
+  - p.5: 1. Moduli of special Lagrangian submanifolds
+  - p.8: 2. Semi-flat mirror symmetry
+  - p.11: 3. Affine manifolds with singularities
+  - p.14: 4. Tropical geometry
+  - p.18: 5. The problems with the SYZ conjecture, and how to get around them
+  - p.24: 6. Gromov-Hausdorff limits, algebraic degenerations, and mirror
+  - p.27: 7. Toric degenerations, the intersection complex and its dual
+  - p.35: 8. Log structures
+  - p.39: 9. The A-model and tropical geometry
+  - p.44: 10. The B-model and tropical geometry
+  - p.54: 11. The tropical vertex
+  - p.63: 12. Other recent results and the future
+- 编号公式 47 条:
+  - p.8: ['1']
+  - p.9: ['2']
+  - p.12: ['2']
+  - p.17: ['1', '2']
+  - p.23: ['1', '2', '3', '4']
+  - p.24: ['2']
+  - p.27: ['1']
+  - p.28: ['2', '3', '4']
+  - p.30: ['1', '2', '3']
+  - p.34: ['1', '2', '3', '4']
+  - p.35: ['1']
+  - p.36: ['1', '2', '4', '5']
+  - p.37: ['4', '6', '1', '2', '3']
+  - p.42: ['1']
+  - p.43: ['2', '3']
+  - p.44: ['1']
+  - p.46: ['1', '2', '3', '4', '5', '6']
+  - p.51: ['10.1']
+  - p.52: ['10.2', '10.3']
+  - p.60: ['1']
+  - p.66: ['4', '2']
+
+## p5  YangLi-2022_Survey-metric-SYZ-conjecture-non-archi
+- 矢量线密集页(>40 drawings): []
+- 位图页: []
+- 标题行: 2
+  - p.19: 1. Either φ,ψ are close together in the L1-sense ∫Y ∣ψ −φ∣ωn ≪1, (‘L1-
+  - p.19: 2. Or the volume densities of ωn
+- 编号公式 28 条:
+  - p.2: ['1', '2', '3']
+  - p.4: ['4']
+  - p.10: ['5', '6']
+  - p.12: ['7']
+  - p.13: ['8']
+  - p.15: ['9']
+  - p.16: ['9']
+  - p.19: ['10']
+  - p.20: ['11']
+  - p.21: ['10']
+  - p.24: ['12']
+  - p.26: ['13']
+  - p.28: ['13']
+  - p.29: ['14', '15']
+  - p.32: ['16', '17']
+  - p.34: ['18']
+  - p.36: ['19', '20']
+  - p.38: ['11']
+  - p.39: ['21']
+  - p.42: ['17']
+  - p.44: ['6', '5']
+
+## p6  Collins-Lin-2022_Recent-progress-SYZ-noncompact-CY
+- 矢量线密集页(>40 drawings): []
+- 位图页: []
+- 标题行: 16
+  - p.1: 1. Introduction
+  - p.3: 2. Special Lagrangian fibrations in del Pezzo Surfaces
+  - p.3: 2.1. The Calabi ansatz. Let D be a projective Calabi-Yau manifold of
+  - p.4: 2.2. Special Lagrangians in Tian-Yau spaces. We now explain how to
+  - p.5: 2.3. Special Lagrangian ﬁbrations in del Pezzo surfaces. In this sec-
+  - p.5: 2.3.1. Local ﬁbration near inﬁnity. When Y is a weak del Pezzo surface,
+  - p.6: 2.3.2. HyperK¨ahler rotation and compactiﬁcation. Next we will explain the
+  - p.7: 2.4. Implications of the Enriques-Kodaira Classiﬁcation. Now we
+  - p.8: 1. For readers interested
+  - p.8: 1. This hints at the relation between mirror
+  - p.10: 4. Non-standard semi-flat metrics
+  - p.13: 5. A uniqueness theorem for hyperK¨ahler metrics
+  - p.15: 6. Applications
+  - p.15: 6.1. SYZ Mirror Symmetry of Log Calabi-Yau Surfaces. It is known
+  - p.20: 6.2. Torelli Theorem for Gravitational Instantons of ALH∗. Grav-
+  - p.25: 6.3. Sympectomorphisms. Let Y be a del Pezzo surface of degree d, D ⊆
+- 编号公式 45 条:
+  - p.1: ['1', '2', '3', '4']
+  - p.2: ['1', '2', '3']
+  - p.3: ['2', '2.1']
+  - p.6: ['2.2']
+  - p.8: ['2.2', '3.1']
+  - p.9: ['1', '2', '3', '3.2']
+  - p.12: ['1', '2']
+  - p.13: ['1', '2', '3', '5.1']
+  - p.14: ['5.2']
+  - p.15: ['1', '2', '3', '5.3']
+  - p.16: ['6.1']
+  - p.17: ['6.1', '6.2']
+  - p.18: ['1', '2']
+  - p.20: ['1', '2', '3']
+  - p.21: ['6.3']
+  - p.23: ['1', '2', '3', '4', '5']
+  - p.25: ['6.4']
+  - p.26: ['1', '2']
+  - p.28: ['2']

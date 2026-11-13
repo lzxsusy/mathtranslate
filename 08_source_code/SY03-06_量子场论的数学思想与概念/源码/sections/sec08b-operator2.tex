@@ -1,0 +1,506 @@
+%=====================================================================
+% 8  量子力学的算符方法（后半：8.5--8.9）
+% 原文：Sections 8.5--8.9, "Quantum mechanical operator methods"
+%      （arXiv:2409.03117v1, p. 111--120）
+%=====================================================================
+
+\begin{keytakeaways}
+\begin{itemize}
+  \item \textbf{物理图像：}Feynman–Kac 公式在哈密顿框架的时间排序关联函数与路径积分的欧氏关联函数之间建立等式（就普朗克常数的渐近展开而言）；在自由（谐振子）情形，这一等式甚至作为普通函数之间的恒等式成立。
+  \item \textbf{数学工具：}产生与湮灭算子及对易关系、迹的循环性（自由情形）；相互作用绘景下的 Duhamel 展开与 Feynman 图计数（一般情形）；theta 函数的模不变性与 Poisson 求和（无质量圆周值情形）；单值矩阵、Sturm–Liouville 谱论与形式 WKB 解（分段常数势与半经典极限）。
+  \item \textbf{关键结论：}圆周上的 Feynman–Kac 公式归结为 theta 函数的模不变性；它“看见拓扑”——拓扑非平凡映射的贡献是瞬子修正，量级为普朗克常数的指数小。无质量直线值理论的配分函数须借圆周半径趋于无穷的渐近（Weyl 型）来定义，因为该理论本身并不完全确定。
+  \item \textbf{关键结论：}分段常数周期势的谱由单值矩阵之迹等于 2 的方程决定；在普朗克常数趋于零且乘积（普朗克常数乘量子数）有界的半经典极限下，二重本征值发生劈裂。WKB 近似给出形式解，量子化条件给出本征值计数，其首项即 Weyl 律（相空间面积除以普朗克常数）。
+  \item \textbf{易错点：}Feynman–Kac 公式只对时间排序的关联函数成立（算子不交换）；定理所说的“相等”是普朗克常数的渐近展开意义下的相等，逐项相等需要额外的解析输入。
+\end{itemize}
+\end{keytakeaways}
+
+\bigskip
+\noindent\rule{\textwidth}{0.6pt}
+\bigskip
+
+\subsection{Feynman–Kac 公式}
+
+考虑一维粒子，其势为 $U(q)$。设 $U\ge 0$，且当 $|q|\to \infty$ 时 $U(q)\to \infty$。此时算子 $\widehat H=-\frac{\hbar^2}{2}\frac{d^2}{dq^2}+U(q)$ 在 Schwartz 函数上本质自伴、正定，且其谱为纯点谱。
+
+\begin{lemma}\label{uniqueeig} 存在唯一的 $\widehat H$ 本征向量 $\Omega$，它对应最小本征值，且由范数为 $1$ 的正函数给出。
+\end{lemma}
+
+\begin{proof} 对应最小本征值 $\lambda$ 的 $\widehat H$ 本征向量 $\Omega$ 使“能量”泛函
+$$
+E(\phi):=\langle\phi,\widehat H\phi\rangle=\int_{\Bbb R} (\tfrac{\hbar^2}{2}\phi'(q)^2+U(q)\phi(q)^2)dq
+$$
+在满足 $\int_{\Bbb R}\phi(t)^2dt=1$ 的实 $C^1$ 函数 $\phi: \Bbb R\to \Bbb R$ 构成的空间上取极小。设 $\Omega(a)=0$，则方程 $\widehat H\Omega=\lambda\Omega$ 蕴涵 $\Omega'(a)\ne 0$。然而 $E(\Omega)=E(|\Omega|)$，所以，由于 $\Omega'(a)\ne 0$，把 $\Omega$ 在 $a$ 的某个小邻域内磨光再归一化为单位范数，就可以使该值进一步减小，矛盾。这也蕴涵 $\lambda$ 是单本征值，故 $\Omega$ 唯一。
+\end{proof}
+
+% [Tutor Note: 证明的要害——极小化“能量”泛函等价于在单位球面上求 $\langle\phi,\widehat H\phi\rangle$ 的极小；由 Lagrange 乘子法，极小点满足 $\widehat H\Omega=\lambda\Omega$。若 $\Omega$ 在某点 $a$ 为零，则 $|\Omega|$ 与原函数有相同的能量与范数，但 $|\Omega|$ 在 $a$ 处出现折角；在该点的小邻域内磨光会严格降低 $\int\phi'^2$（势能项不变），故与极小性矛盾。因此极小点处处非零，可取正的代表元。$\lambda$ 的单性同理：任一属于 $\lambda$ 的本征函数也必须取极小、从而不变号，而两个不变号函数必成比例。这套论证是 Perron–Frobenius 型正性论证的连续类比。]
+
+\begin{remark} 向量 $\Omega$ 称为\emph{基态}或\emph{真空态}，因为它具有最低能量；物理学家常把哈密顿量平移一个常数，使该态的能量为零（即“没有物质”）。
+\end{remark}
+
+哈密顿框架下的关联函数由公式
+$$
+\G_n^{\rm Ham}(t_1,...,t_n):=\langle\Omega,q(t_1)...q(t_n)\Omega\rangle
+$$
+定义，其中 $q(t)$ 是量子化可观测量“粒子在时刻 $t$ 的坐标”所得的算子。
+
+\begin{remark} 物理学家通常把内积 $\langle v,Aw\rangle$ 写作 $\langle v|A|w\rangle$。特别地，$\Omega$ 写作 $\langle 0|$ 或 $|0 \rangle$（即所谓的 Dirac \emph{bra-ket 记号}）。
+\end{remark}
+
+\begin{theorem}\label{FK} （Feynman–Kac 公式）若 $t_1\ge ...\ge t_n$，则函数 $\G_n^{\rm Ham}$ 在 $\hbar=0$ 附近有 $\hbar$ 的渐近展开，且该展开与前面构造的路径积分关联函数 $\G_n^M$ 一致。等价地，Wick 转动后的函数 $\G_n^{\rm Ham}(-it_1,...,-it_n)$ 等于 $\G_n^E(t_1,...,t_n)$。
+\end{theorem}
+
+该定理在量子力学中起核心作用，我们将在下文证明它。在此之前，先陈述它在“圆周上的量子力学”中的类似物。
+
+用 $\G_{n,L}(t_1,...,t_n)$ 表示长度为 $L$ 的圆周上的关联函数（对 $0\le t_n\le...\le t_1\le L$），并用 $Z_{L}$ 表示长度为 $L$ 的圆周上的配分函数（由（欧氏）路径积分定义）。又令
+$$
+Z_{L}^{\rm Ham}=\Tr(e^{-\frac{L\widehat H}{\hbar}}),
+$$  
+以及
+$$
+\G_{n,L}^{\rm Ham}(-it_1,...,-it_n)=\frac{\Tr(q(-it_n)...q(-it_1)e^{-\frac{L\widehat
+    H}{\hbar}})}{\Tr(e^{-\frac{L\widehat H}{\hbar}})}.
+$$
+
+\begin{theorem}\label{FK1} （圆周上的 Feynman–Kac 公式）函数 $Z_{L}^{\rm Ham}$、$\G_{n,L}^{\rm Ham}$ 有 $\hbar$ 的渐近展开，它们分别与由路径积分算出的函数 $Z_{L}$ 和 $\G_{n,L}$ 一致。
+\end{theorem}
+
+注意，把 $L$ 趋于无穷，即由定理 \ref{FK1} 得到定理 \ref{FK}。因此只需证明定理 \ref{FK1}。
+
+\begin{remark} 如前所述，函数 $\G_n^E$ 可用 Wiener 积分定义，而等式
+$$
+\G_n^{\rm Ham}(-it_1,...,-it_n)=
+\G_n^E(t_1,...,t_n)
+$$ 
+实际上对 $\hbar$ 的数值成立，而不只是在幂级数展开的意义下成立。对等式 $Z_L^{\rm Ham}=Z_L$、$\G_{n,L}^{\rm Ham}=\G_{n,L}$ 同样如此。然而这些结果在技术上更复杂（需要非平凡的解析输入），因而超出本讲义的范围。
+\end{remark}
+
+\begin{example}\label{benchoi} 考虑二次势的情形。通过重新标度变量，可设 $\hbar=m=1$，故 $U=\frac{q^2}{2}$。此时已知 $Z_L=\frac{1}{2\sinh({L\over 2})}$。另一方面，$\widehat H$ 是量子谐振子的哈密顿量：
+$$
+\widehat H=-\frac{1}{2}\frac{d^2}{dq^2}+\frac{q^2}{2}.
+$$
+该算子的本征向量为 $H_n(x)e^{-\frac{x^2}{2}}$，其中 $H_n$ 是 Hermite 多项式（$k\ge 0$），本征值为 $n+\frac{1}{2}$（见定理 \ref{Hermite}）。因此，
+$$
+Z_L^{\rm Ham}=e^{-{L\over 2}}+e^{-{3L\over 2}}+...=\frac{1}{e^{L\over 2}-e^{-{L\over 2}}}=Z_L,
+$$
+这与 Feynman–Kac 公式的预期一致。（这也说明了 $Z_L$ 归一化中选取 $C={1\over 2}$ 的好处。）
+\end{example}
+
+\subsection{自由情形（谐振子）下 Feynman–Kac 公式的证明}\label{harosc3}
+
+再次考虑量子谐振子的二次哈密顿量
+$\widehat H=-\frac{1}{2}\frac{d^2}{dq^2}+\frac{q^2}{2}$。注意它可写成形式
+$$
+\widehat H=a^\dagger a+\tfrac{1}{2},
+$$
+其中 $a=\frac{1}{\sqrt{2}}(\frac{d}{dq}+q)$、
+$a^\dagger=\frac{1}{\sqrt{2}}
+(-\frac{d}{dq}+q)$。算子 $a,a^\dagger$ 在 Hilbert 空间 $\mathcal H$（的某个稠密子空间）上给出 Heisenberg 李代数的一个表示：
+$$
+[a,a^\dagger]=1.
+$$
+于是 $\widehat H$ 的本征向量为 $(a^\dagger)^n\Omega$，其中 $\Omega=e^{-\frac{q^2}{2}}$ 是最低本征向量，相应的本征值为 $n+\frac{1}{2}$、$n\in \Bbb Z_{\ge 0}$（此即我们此前在定理 \ref{Hermite} 中已见到的）。
+
+\begin{remark} 算子 $a$ 与 $a^\dagger$ 称为\emph{湮灭与产生算子}，因为 $a\Omega=0$，而 $\widehat H$ 的所有本征向量都可由 $a^\dagger$ 的幂作用于 $\Omega$ “产生”出来。
+\end{remark} 
+
+现在有
+$$
+q(0)=q=\frac{1}{\sqrt{2}}(a+a^\dagger).
+$$
+由于 $[a^\dagger a,a]=-a$、$[a^\dagger a,a^\dagger]=a^\dagger$，可得
+$$
+q(t) =\frac{1}{\sqrt{2}}e^{ita^\dagger a}(a+a^\dagger)
+e^{-ita^\dagger a}=
+\frac{1}{\sqrt{2}}(e^{-it}a+e^{it}a^\dagger)
+$$
+这表明
+$$
+\G_{n,L}^{\rm Ham}(-it_1,...,-it_n)=2^{-\frac{n}{2}}\frac{\Tr(\prod_{j=1}^n
+(e^{t_j}a^\dagger+e^{-t_j}a)e^{-L(a^\dagger a+\frac{1}{2})})}
+{\Tr(e^{-L(a^\dagger a+\frac{1}{2})})}.
+$$
+现在可以轻松证明定理 \ref{FK1}。事实上，利用迹的循环性，把 $e^{t_1}a^\dagger$ 与 $e^{-t_1}a$ 沿迹移动。经过简短计算并利用 \eqref{glformula}，将得到
+$$
+\G_{n,L}^{\rm Ham}(-it_1,...,-it_n)=
+$$
+$$
+\sum_{j=2}^n \tfrac{1}{2}\G_{n-2,L}^{\rm Ham}(-it_2,...,-it_{j-1},-it_{j+1},...,-it_n)
+\left(\frac{e^{t_1-t_j}}{e^L-1}-\frac{e^{t_j-t_1}}{e^{-L}-1}\right)=
+$$
+$$
+\sum_{j=2}^n \G_{n-2,L}^{\rm Ham}(-it_2,...,-it_{j-1},-it_{j+1},...,-it_n)G_L(t_1-t_j).
+$$
+对 $n$ 作归纳即得该定理。
+
+\begin{remark} 1. 在二次情形没有形式展开，Feynman–Kac 公式作为普通函数之间的等式成立。
+
+2. 注意，上面用到的等式 $\frac{e^{t-s}}{e^L-1}-\frac{e^{s-t}}{e^{-L}-1}=G_L(t-s)$ 只在 $t\ge s$ 时成立。事实上，矩阵元 $\langle\Omega, q(t_1)...q(t_n)\Omega\rangle$ 对 $t_j$ 并不对称，因为算子 $q(t_j)$ 互不对易。因此 Feynman–Kac 公式只在 $t_1\ge...\ge t_n$ 时成立。基于此，关联函数 $\mathcal G_{n}^M$ 被称为时间排序的——它对应算子 $q(t_j)$ 按时间先后排列所得的矩阵元。
+\end{remark} 
+
+% [Tutor Note: 时间排序与 Green 函数——移动算符时用的是迹的循环性 $\Tr(XY)=\Tr(YX)$，它要求算符按循环次序排列才不额外产生可观察的交换项；这正是 Feynman–Kac 公式要求 $t_1\ge...\ge t_n$ 的来源。若把 $t$ 与 $s$ 的先后颠倒，等式 $\frac{e^{t-s}}{e^L-1}-\frac{e^{s-t}}{e^{-L}-1}=G_L(t-s)$ 不再成立（这正是原文 Remark 2 强调 $t\ge s$ 的原因）。在路径积分一侧，$G_L(t-s)$ 是圆周上单位质量自由粒子的欧氏 Green 函数，而“按配对求和”就是 Wick 定理的配对展开。]
+
+\subsection{Feynman–Kac 公式的证明（一般情形）}
+
+现在考虑任意势
+$U(q):=\frac{m^2q^2}{2}-V(q)$，其中
+$$
+V(q)=\sum_{k\ge 3}\frac{g_kq^k}{k!}. 
+$$
+为简单起见，我们设系数 $g_j$ 为形式参数，并设 $\hbar=1$（后一条件不失一般性，因为可通过重新标度达到这种情形）。先考虑配分函数的情形。有
+$$
+Z_L^{\rm Ham}=\Tr(e^{-L\widehat H})=\Tr(e^{-L(\widehat H_0-V)}),
+$$ 
+其中 $\widehat H_0=-\frac{1}{2}\frac{d^2}{dq^2}+\frac{1}{2}m^2q^2$ 是哈密顿量的自由（即二次）部分。由于 $g_j$ 是形式参数，有级数展开
+\scriptsize
+\begin{equation}\label{serexp}
+e^{-L(\widehat H_0-V)}=e^{-L\widehat H_0}+\\
+\sum_{N\ge 1}\int_{L\ge s_1\ge...\ge s_N\ge 0}
+e^{-(L-s_1)\widehat H_0}Ve^{-(s_1-s_2)\widehat H_0}V...e^{-(s_{n-1}-s_n)\widehat
+  H_0}Ve^{-s_n\widehat H_0}d\bold s
+\end{equation}
+\normalsize 这来自（完备化后的）由生成元 $A,B$ 生成的自由代数中的一般事实：
+\begin{equation}\label{eAB}
+e^{A+B}=e^A+\sum_{N\ge 1}\int_{1\ge s_1\ge...\ge s_N\ge 0}
+e^{(1-s_1)A}Be^{(s_1-s_2)A}B...e^{(s_{N-1}-s_N)A}Be^{s_NA}d\bold s
+\end{equation}
+（请验证此恒等式！）。
+
+方程 \eqref{serexp} 表明
+$$ 
+Z_L^{\rm Ham}=
+$$
+$$
+\sum_{N\ge 0}\sum_{j_1,...,j_N=3}^\infty
+\frac{g_{j_1}...g_{j_N}}{j_1!...j_N!}\int_{1\ge s_1\ge...\ge s_N\ge 0}
+\Tr(q_0(-is_1)^{j_1}...q_0(-is_N)^{j_N}e^{-L\widehat H_0})d\bold s,
+$$
+其中 $q_0(t)$ 是相应于势 $\frac{m^2q^2}{2}$ 的自由理论中的算子 $q(t)$。
+
+由于自由理论的 Feynman–Kac 公式已经证明，我们知道右边的迹可以按配对求和来计算。为看清具体得到什么，把所有对应于 $j_1,...,j_N$ 的置换的项合并起来。这意味着求和变量将成为 $3,4,..$ 在 $j_1,...,j_N$ 中出现的次数 $i_3,i_4,..$。此外，每个因子 $q_0(-is)^j$ 对应一个 $j$ 价顶点，并带有依附于它的变量 $s$；容易看出，$Z_L^{\rm Ham}$ 等于按所有方式连接这些顶点（即 Feynman 图 $\Gamma$）所得积分
+$$
+\int_{0\le s_1,...,s_N\le L}\prod_{v-w}
+G_L(s_v-s_w)d\bold s, 
+$$
+之和，再乘以系数 $\frac{\prod_k g_k^{i_k}}{|{\rm Aut}\Gamma|}$。于是 $Z_L^{\rm Ham}=Z_L$，正如所需。
+
+% [Tutor Note: 跳步点拨——恒等式 \eqref{eAB} 可由对 $s\mapsto e^{s(A+B)}$ 求导、再用 Duhamel 公式迭代得到：$e^{A+B}=e^A+\int_0^1 e^{(1-s)A}Be^{s(A+B)}ds$，对 $e^{s(A+B)}$ 重复展开并按单形 $1\ge s_1\ge...\ge s_N\ge0$ 切割积分区间，即得该式。原文把 $g_j$ 当作形式参数并取 $\hbar=1$，故一切等式都只在形式幂级数意义下成立。合并置换后，$i_k$ 是 $k$ 价顶点的个数，$|{\rm Aut}\Gamma|$ 则来自把 $N$ 个标号顶点按图自同构群约化——这正是 Feynman 图对称因子的算子来源。另注意 \eqref{serexp} 中被积项的下标由 $N$ 写成了 $s_n$（按 \eqref{eAB} 应为 $s_N$），系原文笔误，译文保留。]
+
+现在考虑关联函数。于是需计算
+$$
+\Tr(e^{-(L-t_1)\widehat H}qe^{-(t_1-t_2)\widehat H}q...qe^{-t_n\widehat
+    H}).
+$$
+把迹中的每个指数按上述方式展开，显然会得到同样的 Feynman 图求和，只是这些 Feynman 图还含有 $n$ 个由变量 $t_1,...,t_n$ 标记的外顶点。这就蕴涵 $\G_{n,L}^{\rm Ham}=\G_{n,L}$，证毕。
+
+\subsection{无质量情形}
+
+现在在哈密顿框架下考虑无质量情形 $m=0$。对映射 $q:\Bbb R\to \Bbb R$，有 ${\mathcal H}=L^2(\Bbb R)$，且 $\widehat H=-\frac{\hbar^2}{2}\frac{d^2}{dq^2}$。该算子具有连续谱，且不存在最低本征向量 $\Omega$（更确切地说，最低本征向量 $\Omega=1$ 存在，但它不属于 $L^2$）；这意味着无法按通常方式定义关联函数，即无法定义 $\langle\Omega,q(t_1)...q(t_n)\Omega\rangle$。（这是 Lagrangian 框架中所遇困难的哈密顿表述：Green 函数在无穷远处增长，即红外发散。）
+
+现在考虑 $q: \Bbb R\to S^1=\Bbb R/2\pi r\Bbb Z$ 的情形。此时哈密顿量相同，但作用在空间 ${\mathcal H}:=L^2(S^1)$ 上。该算子的本征向量为 $e^{\frac{iNq}{r}}$，本征值为 $\hbar^2 \frac{N^2}{2r^2}$。特别地，最低本征向量是 $\Omega=1$。于是哈密顿关联函数（在欧氏设定下，对 $t_1\ge...\ge t_n$）为
+$$
+\la\Omega,e^{\frac{t_1\widehat H}{\hbar}}e^{\frac{ip_1q}{r}}e^{\frac{(t_2-t_1)\widehat H}{\hbar}}...
+e^{\frac{ip_nq}{r}}e^{-\frac{t_n\widehat H}{\hbar}}\Omega\ra=
+$$
+$$
+e^{\frac{\hbar}{2r^2}\sum_j (t_{j}-t_{j+1})(p_1+...+p_{j})^2},
+$$
+它等于 Lagrangian 框架中的关联函数。因此 Feynman–Kac 公式成立。
+
+现在转到圆周上的圆周值量子力学情形。此时有
+$$
+\Tr(e^{-\frac{L\widehat H}{\hbar}})=\sum_{N\in \Bbb Z} e^{-\frac{N^2L\hbar}{2r^2}}
+$$ 
+以及
+$$
+\Tr(e^{\frac{t_1\widehat H}{\hbar}}e^{\frac{ip_1q}{r}}e^{\frac{(t_2-t_1)\widehat H}{\hbar}}...
+e^{\frac{ip_nq}{r}}e^{\frac{(L-t_n)\widehat H}{\hbar}})=
+\sum_{N\in \Bbb Z}e^{\frac{\hbar}{2r^2}\sum_{j=0}^{n} (t_j-t_{j+1})(N-p_1-...-p_{j})^2},
+$$
+其中 $t_{n+1}:=L$、$t_0:=0$。化简此表达式，得到
+$$
+e^{\frac{\hbar}{2r^2}\sum_j (t_j-t_{j+1})(p_1+...+p_j)^2}
+\sum_{N\in \Bbb Z} e^{-\frac{\hbar}{2r^2} (LN^2+2N\sum_j p_jt_j)}=
+$$
+$$
+e^{\frac{\hbar}{2r^2}\sum_j (t_j-t_{j+1})(p_1+...+p_j)^2}
+\theta(\tfrac{\hbar}{2\pi ir^2} \sum_j p_jt_j,\tfrac{L\hbar}{2\pi r^2}).
+$$
+与 (\ref{thetaf}) 比较可见，Feynman–Kac 公式归结为 theta 函数的模不变性：
+$$
+\theta(\tfrac{u}{iT},\tfrac{1}{T})=\sqrt{T} e^{\frac{\pi u^2}{T}}\theta(u,T)
+$$
+其中 $T=\frac{2\pi r^2}{\hbar L}$（它由对 高斯函数应用 Poisson 求和公式得到）。
+
+注意，若在 Lagrangian 框架中忽略拓扑非平凡的映射，本例中的 Feynman–Kac 公式就会不成立。因此可以说，Feynman–Kac 公式“看见拓扑”。Feynman–Kac 公式这种“看见拓扑”的能力（在远为复杂的情形中）是几何与量子场论之间许多相互联系的基石。
+
+\begin{remark} 应当注意，从源圆周到靶圆周的拓扑非平凡映射的贡献严格说来超出我们通常的微扰论框架，因为它们在 $\hbar$ 中是指数小的。具体地说，度为 $N$ 的映射的贡献主要来自接近最小作用量映射 $q_N(t)=\frac{2\pi tNr}{L}$ 的那些映射，因此其量级为 $e^{-\frac{2\pi^2N^2r^2}{L\hbar}}$。映射 $q_N(t)$ 是“瞬子”的最简单例子——瞬子即经典运动方程的非恒定解，具有有限作用量（且在拓扑意义下非平凡）。由对瞬子邻域的积分得到的路径积分中指数小的贡献，称为“微扰级数的瞬子修正”。
+\end{remark} 
+
+% [Tutor Note: 模不变性的来源——$\sum_{N\in\Bbb Z}e^{-\pi T N^2+2\pi iNu}$ 是 高斯函数的周期化，Poisson 求和公式把它变成对偶格上的求和，从而得到 $\theta(u/iT,1/T)=\sqrt{T}e^{\pi u^2/T}\theta(u,T)$，即 $T$ 与 $1/T$ 互换的模变换。若在 Lagrangian 侧丢掉拓扑非平凡映射（即丢掉按 $N$ 平移的整族贡献），两边恰好相差这个模变换因子，Feynman–Kac 公式即失效。瞬子修正的量级 $e^{-2\pi^2N^2r^2/(L\hbar)}$ 与 WKB 型的 $e^{-S_{\rm inst}/\hbar}$ 一致，属于非微扰效应，无法由微扰级数逐项得到。]
+
+\begin{remark}\label{givesen} 
+这一计算使我们能够赋予圆周上的直线值无质量量子力学的配分函数 $Z(L)$ 以意义。为此只需考察配分函数在 $r\to \infty$ 时的渐近：
+$$
+Z(r,L)=\theta(0,\tfrac{\hbar L}{2\pi r^2})=r\sqrt{\tfrac{2\pi}{\hbar L}}\theta(0,\tfrac{2\pi r^2}{\hbar L}). 
+$$
+由于当 $T\to \infty$ 时 $\theta(0,T)\to 1$，渐近的首项系数为（在可自由选取的数值标度意义下）：
+$$
+Z(L)\sim \frac{1}{\sqrt{\hbar L}}. 
+$$
+
+但要注意，此时不能写 $Z(L)={\rm Tr}(e^{-\frac{L\widehat H}{\hbar}})$，因为该算子不是迹类（trace class）。此外向量 $\Omega=1$ 不可归一化。因此如上所述，这个理论在某种意义下是不完全确定的。
+\end{remark} 
+
+\subsection{分段常数周期势下 Schrödinger 算子的谱}
+
+本小节以一个分段常数周期势为例，展示一维 Schrödinger 算子谱的行为；此时本征值与本征函数可以相当显式地算出。
+
+考虑圆周 $\Bbb R/2\pi \Bbb Z$ 上的 Schrödinger 算子
+$H:=-\frac{\hbar^2}{2}\partial^2+U(x)$，其中 $U$ 是分段连续的
+$2\pi$ 周期势。显然，不失一般性可设 $\int_0^{2\pi}U(x)dx=0$，否则可将 $U(x)$ 平移一个常数。由分析中的标准结果（Sturm–Liouville 算子理论），算子 $H$ 具有离散谱，即本征值 $E_0<E_1\le E_2\le...$ 趋于 $+\infty$，并对应本征函数 $\Psi_0,\Psi_1,\Psi_2,...$。例如若
+$U=0$，则 $E_0=0$，且对 $m>0$ 有 $E_{2m-1}=E_{2m}=\frac{\hbar^2 m^2}{2}$，对应本征函数 $\Psi_0=1, \Psi_{2m-1}=\sin mx, \Psi_{2m}=\cos mx$。
+
+现在考虑最简单的非平凡例子——分段常数势
+\begin{equation}\label{pcon}
+U(x)=\begin{cases} Mb,\ 0\le x<a\\ -Ma,a\le x<2\pi\end{cases}
+\end{equation}
+其中 $a,b,M>0$、$a+b=2\pi$。
+
+对每个 $p\in \Bbb R$，方程 $H\Psi=E\Psi$ 在 $[p,\infty]$ 上有一组解的基 $f_p,g_p$，满足 $f_p(p)=g_p'(p)=1,g_p(p)=f_p'(p)=0$。例如，当 $0\le x<a$ 时
+$$
+f_0(x)=\cos \sqrt{\tfrac{2}{\hbar^2}(E-Mb)}x,\ g_0(x)=\frac{\sin \sqrt{\frac{2}{\hbar^2}(E-Mb)}x}{\sqrt{\frac{2}{\hbar^2}(E-Mb)}}
+$$
+而当 $a\le x<2\pi$ 时
+$$
+f_a(x)=\cos \sqrt{\tfrac{2}{\hbar^2}(E+Ma)}(x-a),\ g_a(x)=\frac{\sin \sqrt{\frac{2}{\hbar^2}(E+Ma)}(x-a)}{\sqrt{\frac{2}{\hbar^2}(E+Ma)}(x-a)}
+$$ 
+于是在这些基下，沿区间 $[0,a]$、$[a,2\pi]$ 的单值矩阵（monodromy matrix）为
+$$
+A:=\begin{pmatrix} \cos \sqrt{\frac{2}{\hbar^2}(E-Mb)} a & \frac{\sin \sqrt{\frac{2}{\hbar^2}(E-Mb)}a}{\sqrt{\frac{2}{\hbar^2}(E-Mb)}} \\
+-\sqrt{\frac{2}{\hbar^2}(E-Mb)}\sin \sqrt{\frac{2}{\hbar^2}(E-Mb)} a& \cos \sqrt{\frac{2}{\hbar^2}(E-Mb)} a\end{pmatrix},
+$$
+$$
+B:=\begin{pmatrix} \cos \sqrt{\frac{2}{\hbar^2}(E+Ma)} b & \frac{\sin \sqrt{\frac{2}{\hbar^2}(E+Ma)}b}{\sqrt{\frac{2}{\hbar^2}(E+Ma)}} \\
+-\sqrt{\frac{2}{\hbar^2}(E+Ma)}\sin \sqrt{\frac{2}{\hbar^2}(E+Ma)} b& \cos \sqrt{\frac{2}{\hbar^2}(E+Ma)} b\end{pmatrix}.
+$$
+存在周期解的条件是矩阵 $AB$（绕圆周的单值矩阵）有本征值 $1$。由于 $\det A=\det B=1$，此时 $AB$ 的另一个本征值也是 $1$（一般情形下该矩阵是幺幂 Jordan 块），故条件为 ${\rm Tr}(AB)=2$，即给出
+\scriptsize
+\begin{equation}\label{eigeneq}
+\cos \sqrt{\tfrac{2}{\hbar^2}(E-Mb)} a \cos \sqrt{\tfrac{2}{\hbar^2}(E+Ma)} b-\tfrac{E+M\frac{a-b}{2}}{\sqrt{(E-Mb)(E+Ma)}}\sin \sqrt{\tfrac{2}{\hbar^2}(E-Mb)} a \sin \sqrt{\tfrac{2}{\hbar^2}(E+Ma)} b=1.
+\end{equation}
+\normalsize
+因此 $H$ 的本征值就是 \eqref{eigeneq} 的解 $E$。
+
+若 $a<E<b$，则 $\sqrt{\frac{2}{\hbar^2}(E-Mb)}$ 为虚数，于是 \eqref{eigeneq} 可用实参数写成
+\scriptsize
+\begin{equation}\label{eigeneq1}
+\cosh \sqrt{\tfrac{2}{\hbar^2}(Mb-E)} a \cos \sqrt{\tfrac{2}{\hbar^2}(E+Ma)} b-\tfrac{E+M\frac{a-b}{2}}{\sqrt{(Mb-E)(E+Ma)}}\sinh \sqrt{\tfrac{2}{\hbar^2}(Mb-E)} a \sin \sqrt{\tfrac{2}{\hbar^2}(E+Ma)} b=1.
+\end{equation}
+\normalsize
+
+如上所述，若 $M=0$，则对每个 $n\ge 1$，算子 $H$ 有二重本征值
+$\frac{1}{2}\hbar^2 n^2$。我们想看看当 $M$ 由零变正、同时把乘积 $\hbar n$ 保持在有界区间 $[C^{-1},C]$ 内（于是 $\hbar\to 0$）时，这个本征值在 $n$ 很大时会发生什么。
+
+把 \eqref{eigeneq} 改写为形式
+$$
+1-\cos \left(\sqrt{\tfrac{2}{\hbar^2}(E-Mb)}a+\sqrt{\tfrac{2}{\hbar^2}(E+Ma) }b\right)=
+$$
+$$
+\left(1-\tfrac{E+M\frac{a-b}{2}}{\sqrt{(E-Mb)(E+Ma)}}\right)\sin \sqrt{\tfrac{2}{\hbar^2}(E-Mb)} a \sin \sqrt{\tfrac{2}{\hbar^2}(E+Ma)} b
+$$
+并寻找形如
+$$
+E=\frac{1}{2}(\hbar^2 n^2+\varepsilon),
+$$
+的解，其中 $|\varepsilon|\ll \frac{1}{n}$。有
+$$
+\sqrt{\tfrac{2}{\hbar^2}(E-Mb)}=\sqrt{n^2+\tfrac{\varepsilon-2Mb}{\hbar^2}}=n\left(1+\tfrac{\varepsilon-2Mb}{2\hbar^2 n^2}-\tfrac{(\varepsilon-2Mb)^2}{8\hbar^4 n^4}...\right),
+$$
+$$
+\sqrt{\tfrac{2}{\hbar^2}(E+Ma)}=\sqrt{n^2+\tfrac{\varepsilon+2Ma}{\hbar^2}}=n\left(1+\tfrac{\varepsilon+2Ma}{2\hbar^2 n^2}-\tfrac{(\varepsilon+2Ma)^2}{8\hbar^4 n^4}...\right),
+$$
+故
+$$
+\sqrt{\tfrac{2}{\hbar^2}(E-Mb)}a+\sqrt{\tfrac{2}{\hbar^2}(E+Ma) }b=2\pi n\left(1+\tfrac{\varepsilon}{2\hbar^2 n^2}-\tfrac{M^2ab}{2\hbar^4n^4}+...\right).
+$$
+于是上述方程的左边具有形式
+$$
+LHS=\frac{\pi^2}{2}\left(\frac{\varepsilon}{\hbar^2 n}-\frac{M^2ab}{2\hbar^4n^3}\right)^2+...
+$$
+我们还有
+$$
+1-\frac{E+M\frac{a-b}{2}}{\sqrt{(E-Mb)(E+Ma)}}=-\frac{\pi^2M^2}{2\hbar^4n^4}+...
+$$
+因此得到
+$$
+RHS=\frac{\pi^2M^2}{2\hbar^4n^4}\sin^2 na+...
+$$
+于是得到
+$$
+\frac{\varepsilon}{\hbar^2 n}-\frac{M^2ab}{2\hbar^4n^3}=\pm \frac{M|\sin na|}{\hbar^2n^2}, 
+$$
+亦即
+$$
+\varepsilon=\frac{M^2ab}{2\hbar^2n^2}\pm \frac{M|\sin na|}{n}, 
+$$
+可见当 $M=0$ 时对应 $n>0$ 的二重本征值 $\Lambda_n=\frac{\hbar^2 n^2}{2}$ 劈裂为两个本征值
+\begin{equation}\label{bifur}
+\Lambda_n^\pm(M)=\Lambda_n+\frac{M^2a(2\pi -a)}{8\Lambda_n}\pm \frac{M|\sin na|}{2n}+o((M+\tfrac{1}{n})^2),\ M\to 0,n\to \infty.
+\end{equation}
+
+\subsection{WKB 近似与 Weyl 律}
+
+本小节的目的是说明如何计算量子哈密顿量的本征值与本征函数的半经典渐近。这一方法称为\textbf{Wentzel–Kramers–Brillouin（WKB）近似}，得名于 1926 年各自独立引入该近似的三篇论文的作者。
+
+我们从线性 ODE 的 WKB 近似的一般讨论开始。设有方程
+\begin{equation}\label{odeeq}
+\hbar\frac{dF}{dx}=AF
+\end{equation}
+其中 $F(x)\in \Bbb C^n$ 是单变量向量函数，$A(x)\in {\rm Mat}_n(\Bbb C)$ 是矩阵值函数（在某个区间 $I\subset \Bbb R$ 上光滑）。我们想理解当 $\hbar\to 0$ 时该方程解的渐近行为。为此，为简单计，设对一般的 $x$，$A(x)$ 具有单谱；设 $v_1(x),...,v_n(x)$ 是其列本征向量，对应的本征值为 $\lambda_1(x),...,\lambda_n(x)$，而 $v_1^*(x),...,v_n^*(x)$ 是对偶的行本征向量基。现在寻找 \eqref{odeeq} 的形如
+$$
+F(x)=e^{\frac{\phi(x)}{\hbar}}(\psi_0(x)+\hbar \psi_1(x)+\hbar^2 \psi_2(x)...),
+$$
+的解，其中 $\psi_0(x)\ne 0$，括号中的级数是形式的。代入后得到
+$$
+(\hbar\partial_x+\phi'-A)(\psi_0+\hbar \psi_1+\hbar^2 \psi_2+...)=0,
+$$
+它在关于 $\hbar$ 的 $0$ 次项给出方程
+$$
+A\psi_0=\phi'\psi_0.
+$$
+于是 $\phi'=\lambda_j$ 是 $A$ 的本征值，故
+$$
+\phi(x)=\int \lambda_j(x)dx,\ \psi_0(x)=f(x)v_j(x),
+$$ 
+其中 $f$ 是标量函数。
+
+进一步，关于 $\hbar$ 的 $1$ 次项给出方程
+$$\psi_0'=(A-\lambda)\psi_1,$$
+亦即
+$$
+f'v_j+fv_j'=(A-\lambda)\psi_1. 
+$$
+要使它有解 $\psi_1$，需要
+$(v_j^*,f'v_j+fv_j')=0$，即
+$$
+f'=-(v_j^*,v_j')f.
+$$
+于是
+$$
+f(x)=\exp\left(-\int (v_j^*,v_j')dx\right). 
+$$
+现在可以递归地解出 $\psi_1,\psi_2,...$。这导致如下结果。
+
+\begin{theorem}
+方程 \eqref{odeeq} 存在形如
+$$
+F_j(x)=\exp\left(\frac{\int \lambda_j(x)dx}{\hbar}\right)\left(\exp\left(-\int (v_j^*(x),v_j'(x))dx\right)v_j(x)+O(\hbar)\right).
+$$
+的形式解基，且在标度变换下唯一。
+\end{theorem} 
+
+现在把这一定理用于定态 Schrödinger 方程
+\begin{equation}\label{staschr}
+(-\tfrac{\hbar^2}{2}\partial_x^2+U(x))\Psi=E\Psi.
+\end{equation} 
+令 $p(x):=\sqrt{2(E-U(x))}$，则 \eqref{staschr} 成为
+$$
+\hbar^2\partial_x^2\Psi=-p^2\Psi.
+$$
+这可写成方程组
+$$
+\hbar \partial_x \binom{\Psi}{\hbar \Psi'}=\begin{pmatrix} 0 & 1 \\ -p^2 & 0\end{pmatrix}\binom{\Psi}{\hbar \Psi'}.
+$$
+于是得到形如 \eqref{odeeq} 的方程，其中 $A=\begin{pmatrix} 0 & 1 \\ -p^2 & 0\end{pmatrix}$。从而
+$$
+\lambda_1=ip,\ \lambda_2=-ip
+$$
+且可取
+$$ 
+v_1=\binom{1}{ip},\ v_2=\binom{1}{-ip},
+$$
+使得
+$$
+v_1^*=\frac{1}{2}(1,-ip^{-1}),\ v_2^*=\frac{1}{2}(1,ip^{-1}).
+$$ 
+于是得到 \eqref{staschr} 的如下形式解：
+$$
+\Psi_\pm=\exp\left(\pm \frac{i\int pdx}{\hbar}\right)\left(\exp\left(-\frac{1}{2}\int p^{-1}p'dx\right)+O(\hbar)\right)=
+$$
+$$
+p^{-\frac{1}{2}}\exp\left(\pm\frac{i\int pdx}{\hbar}\right)(1+O(\hbar)).
+$$
+即得
+
+\begin{theorem}\label{localWKB} （局部 WKB 近似）方程 \eqref{staschr} 有一组形式解基
+$$
+\Psi_\pm(x)=(2(E-U(x))^{-\frac{1}{4}}\exp\left(\pm \frac{i\int \sqrt{2(E-U(x))}dx}{\hbar}\right)(1+O(\hbar)).
+$$
+\end{theorem} 
+
+当 Schrödinger 算子具有离散谱时，WKB 近似还可用来求其本征值的渐近分布。下面稍作非形式的说明。
+
+例如，考虑圆周 $\Bbb R/2\pi \Bbb Z$ 上的定态 Schrödinger 方程
+\eqref{staschr}，其中 $U(x)$ 是分段连续的 $2\pi$ 周期势。对给定常数 $A$，当 $n\sim \frac{A}{\hbar}$ 时，我们想对算子 $H=-\frac{1}{2}\hbar^2\partial^2+U(x)$ 的第 $n$ 个本征值 $E_n(\hbar)$ 写出渐近公式。这等价于对给定常数 $E$ 确定 $H$ 的满足不等式 $\Lambda\le E$ 的本征值个数 $\nu(E)$。
+
+为此将使用定理 \ref{localWKB}。先设
+$$
+E>\sup U(x).
+$$  
+定理 \ref{localWKB} 中解 $\Psi_\pm$ 的周期性条件（量子力学中称为\emph{量子化条件}）在零阶近似下即为
+\begin{equation}\label{qcond}
+\int_0^{2\pi} \sqrt{2(E-U(x))}dx=2\pi n\hbar,\ n\in \Bbb Z_{\ge 0}.
+\end{equation} 
+由此可知，若式 \ref{qcond} 成立，则 $H$ 的满足 $\le E$ 的本征值个数约为 $2n$。于是得到
+
+\begin{proposition}\label{weyllaw}
+$$
+\nu(E)\sim \frac{A(E)}{\hbar},\ \hbar\to 0,\text{ 其中 } A(E):=\frac{1}{\pi}\int_0^{2\pi} \sqrt{2(E-U(x))}dx.
+$$
+因此对充分大的 $A$，有
+$$
+E_{[\frac{A}{\hbar}]}(\hbar)\sim E(A),
+$$ 
+其中
+$E(A)$ 是方程
+$$
+A=\frac{1}{\pi}\int_0^{2\pi}\sqrt{2(E-U(x))}dx.
+$$
+的解。
+\end{proposition}  
+
+注意，$A(E)$ 是经典相空间 $T^*S^1=S^1\times \Bbb R$ 中由不等式
+$$
+H_{\rm cl}\le E,
+$$
+定义的区域的面积，其中 $H_{\rm cl}:=\frac{1}{2}p^2+U(x)$ 是相应的经典哈密顿量。此外可以证明，按此方式定义 $A(E)$ 后，公式
+$$
+\nu(E)\sim \frac{A(E)}{\hbar}
+$$
+实际上在远为一般的框架下成立：只要 $H$ 有离散谱（即对任意紧 Riemann 流形上的算子 $-\frac{1}{2}\hbar^2\Delta+U(x)$ 成立；甚至对非紧流形，只要有当 $x\to \infty$ 时 $U(x)\to +\infty$）。此公式称为\emph{Weyl 律}。
+
+\begin{exercise} 证明圆周上 $E\le \sup U(x)$ 时的 Weyl 律。
+\end{exercise} 
+
+% [Tutor Note: WKB 的两处细节——(1) 定理 \ref{localWKB} 中的因子 $p^{-1/2}$ 来自 $\exp(-\frac12\int p^{-1}p'dx)$，即 WKB 振幅满足的概率流守恒，故 $\Psi\sim p^{-1/2}e^{\pm\frac{i}{\hbar}\int pdx}$；(2) 量子化条件 \eqref{qcond} 是在无转向点情形下由 $\Psi_\pm$ 沿圆周的单值性直接得到的。若存在转向点（$E<\sup U$），须在转向点用 Airy 函数作连接，并额外得到 Maslov 指数（相移 $\pi/2$），条件变为 Bohr–Sommerfeld 型 $\oint p\,dx=2\pi\hbar(n+\frac12)$；习题正是要求处理 $E\le\sup U(x)$ 时的这一修正。Weyl 律的首项则与 Maslov 修正无关：它只等于相空间体积除以 $(2\pi\hbar)^d$。]
+
+最后，令 $U(x):=MU_0(x)$，其中 $U_0$ 是固定势，并考虑 $M$ 很小时本征值的渐近，假设 $\hbar \ll M$（即 $\frac{1}{n}\ll M$）。此时可把方程 \eqref{qcond} 写成
+\begin{equation}\label{qcond1}
+\sqrt{2E}\int_0^{2\pi} \left(1-\frac{MU_0(x)}{2E}-\frac{M^2U_0(x)^2}{8E^2}+o(M^2)\right)dx=2\pi n\hbar.
+\end{equation} 
+如前，不失一般性设 $\int_0^{2\pi} U_0(x)dx=0$。令 $I:=\frac{1}{2\pi}\int_0^{2\pi}U_0(x)^2dx$。则得到
+\begin{equation}\label{qcond2}
+\sqrt{2E}=n\hbar+\tfrac{M^2I}{2(2 E)^\frac{3}{2}}+o(M^2)=n\hbar(1+\tfrac{M^2I}{2n^4\hbar^4}+...)
+\end{equation} 
+由此可得
+$$
+E=\tfrac{1}{2}n^2\hbar^2(1+\tfrac{M^2I}{n^4\hbar^4}+...)=\Lambda_n+\frac{M^2I}{8\Lambda_n}+...
+$$
+这给出当 $M$ 由零变正时本征值 $\Lambda_n:=\tfrac{1}{2}n^2\hbar^2$ 的首项修正。
+
+例如，若 $U(x)$ 由 \eqref{pcon} 给出，则 $I=a(2\pi-a)$，我们便恢复渐近式 \eqref{bifur}，但去掉最后一项（劈裂项）；在 $\frac{1}{n}\ll M$ 的范围内，该项相对于
+ $\frac{M^2a(2\pi-a)}{8\Lambda_n}$ 可以忽略。
+
+\bigskip
+\noindent\rule{\textwidth}{0.6pt}
+% [Tutor Note: 本章小结——8.5--8.9 的逻辑主线是“两条计算关联函数的道路必须一致”：哈密顿侧（算符、迹、时间排序矩阵元）与拉格朗日侧（路径积分、Wiener 积分、Feynman 图）。自由情形用产生/湮灭算符与迹的循环性把矩阵元化为 Green 函数的配对求和；一般情形用 Duhamel 展开把相互作用项逐阶化为自由情形的图求和，这正是微扰论展开的算子版本；无质量情形说明必须用紧化（圆周）与拓扑非平凡映射（瞬子）才能救活 Feynman–Kac 公式；最后用分段常数势与 WKB/Weyl 律展示半经典极限下谱的显式计算。读本章时务必把“渐近展开中的相等”与“数值上的相等”分开，并牢记 Feynman–Kac 公式只在时间排序下成立。另有两处原文疑似笔误（译文均保留原文）：8.5 的例中 Hermite 多项式的指标条件写作 $(k\ge 0)$，按上下文应为 $(n\ge 0)$；8.9 中“若 $a<E<b$，则 $\sqrt{\frac{2}{\hbar^2}(E-Mb)}$ 为虚数”按量纲与逻辑应为 $E<Mb$（其中 $a,b$ 是长度、$E$ 是能量）。]

@@ -1,0 +1,713 @@
+% ============================================================
+%  part07.tex  |  原文 PDF p.48–55（页脚 p.47–54）
+%  内容：第 6 章 BRST–BV 形式（BRST-BV Formalism）
+%        6.1 商与鬼场（Quotient and Ghost）
+%        6.2 多向量场（Polyvector Fields）
+%        6.3 Batalin–Vilkovisky（BV）代数
+%        6.4 经典 BV 主方程（Classical BV Master Equation，起于 PDF p54）
+%  说明：6.5 量子主方程起于 PDF p56，属 part08；本片段止于 p55。
+% ============================================================
+
+% >>> p048
+
+\section{BRST--BV 形式（BRST-BV Formalism）}
+
+\begin{keypoints}
+  \item \textbf{核心物理图像}：规范理论的轨道空间 $V/G$ 往往奇异，直接在 $V/G$ 上
+        积分一般不可行。两条路线是：Faddeev--Popov 型（在 $V$ 上取规范切片 $Y$，
+        并以 $\delta(Y)\xi_Y$ 配重使积分在 $Y$ 的连续形变下不变）与 BRST--BV 型
+        （用导出商 $V\times\Lie{g}[-1]$ 代替 $V/G$，鬼场正是导出方向的坐标）。
+  \item \textbf{数学工具}：Chevalley--Eilenberg 复形
+        $C^{\bullet}(\Lie{g},\mathcal{O}(V))$（BRST 微分 $d_{\mathrm{CE}}$）、
+        多向量场 $\mathrm{PV}(M)$（即 $\Gamma(M,\wedge^{\bullet}TM)$）、由体积形式诱导的
+        BV 算子 $\Delta$（广义散度 / 奇 Laplacian），以及 BV 括号
+        （Schouten--Nijenhuis 括号的奇类比）。
+  \item \textbf{主要结论}：在 BV 代数 $(A,\Delta)$ 中，
+        $\{a,b\}:=\Delta(ab)-(\Delta a)b-(-1)^{|a|}a\Delta b$ 度量 $\Delta$ 偏离
+        导子的程度；若 $S_0$ 满足经典主方程 $\{S_0,S_0\}=0$，则
+        $\delta=\{S_0,-\}$ 满足 $\delta^2=0$，给出经典 BRST 微分；任何 $G$-不变
+        经典作用量都可自然延拓为 CME 的解（BV 形式的普适性）。
+  \item \textbf{译者评注}：本章是全书技术核心之一，难点集中在\emph{奇偶符号}、
+        $\Delta$ 的归一化与 Schouten 括号的符号约定；6.4 节只给出经典主方程，
+        量子主方程（QME）与相关上同调的解释留待第 6.5 节（part08）。
+\end{keypoints}
+
+我们讨论经典与量子规范理论的 BRST--BV 形式。本节我们聚焦于有限维玩具模型，
+以说明主要结构。下一节我们讨论如何纳入重整化。
+
+\subsection{商与鬼场（Quotient and Ghost）}
+
+考虑如下有限维规范理论玩具模型
+\[
+  f:\ V\longrightarrow\C,
+\]
+其中连通 Lie 群 $G$ 作用在 $V$ 上，且 $f$ 是 $G$-不变的。等价地，$f$ 是 $V/G$
+上的函数，而我们关心轨道空间上的积分
+\[
+  \int_{V/G}\ee^{\frac{1}{\hbar}f}(-).
+\]
+通常有两种处理方式。
+
+\textcircled{1}\ 寻找一个子空间 $Y\subset V$，使得 $Y$ 中的点代表 $G$ 的轨道，
+并构造一个与 $Y$ 相联系的“形式” $\xi_Y$，使得
+\[
+  \int_V \ee^{\ii f/\hbar}\delta(Y)\xi_Y(-)
+\]
+在 $Y$ 的连续形变下保持不变。这里的 $Y$ 称为\emph{规范固定条件}。著名的
+Faddeev--Popov 方法即属此类。
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.52\linewidth]{fig_p048_1.png}
+  \caption*{规范固定切片：$Y\subset V$（原文 Figure 2，原文 p.47 / PDF p.48）}
+\end{figure}
+
+% [Tutor Note: 两种方案的几何区别要抓住：Faddeev–Popov 仍在原空间 $V$ 上积分，
+% 只是插入 $\delta(Y)\xi_Y$ 把积分“压”到切片 $Y$ 上，并证明结果不随 $Y$ 的连续
+% 形变而变（这相当于在 $V$ 上构造了一个闭形式）；BRST–BV 则改用导出商
+% $V\times\Lie{g}[-1]$，从而在轨道空间 $V/G$ 本身有奇点时仍然有效。原文
+% $\delta(Y)\xi_Y$ 里的 $\xi_Y$ 是与 $Y$ 的选取相关的伴随“形式”，作者未写出其
+% 具体表达式，此处不宜擅自补全。]
+
+当商 $V/G$ 的奇异性不强时，上述构造效果很好。一般地，若轨道空间 $V/G$ 是
+“坏”的，就会出现新问题。这是几何中的典型问题，而教训是我们应当取导出对象
+来消解奇异性。这引出了另一种方法。
+
+\textcircled{2}\ BRST--BV 方法。令 $\mathcal{O}(V)$ 表示 $V$ 上的函数。则 $V/G$
+上的函数
+\[
+  \mathcal{O}(V/G)=\mathcal{O}(V)^G
+\]
+可以自然地等同于 $V$ 上的 $G$-不变函数。假设 $G$ 是连通 Lie 群，Lie 代数为
+$\Lie{g}$。每个 $u\in\Lie{g}$ 生成 $V$ 上的一个向量场 $X_u$，而 $G$-不变函数
+可以无穷小地表示为
+\[
+  \mathcal{O}(V)^G=\{\phi\in\mathcal{O}(V)\mid X_u(\phi)=0,\ \forall u\in\Lie{g}\}.
+\]
+
+% >>> p049
+
+设 $\{e_1,\dots,e_m\}$ 为 $\Lie{g}$ 的一组基，
+$\{c^1,\dots,c^m\}$ 为 $\Lie{g}^{\vee}$ 的对偶基。记 $X_\alpha:=X_{e_\alpha}$。
+回顾 Chevalley--Eilenberg 微分（BRST）
+\[
+  \begin{aligned}
+    d_{\mathrm{CE}}:\ \mathcal{O}(V)&\longrightarrow
+      \Lie{g}^{\vee}\otimes\mathcal{O}(V),\\
+    \phi&\longmapsto\sum_\alpha c^\alpha\otimes X_\alpha(\phi).
+  \end{aligned}
+\]
+我们有如下自然的正合列
+\[
+  0\longrightarrow\mathcal{O}(V)^G\longrightarrow\mathcal{O}(V)
+  \longrightarrow\Lie{g}^{\vee}\otimes\mathcal{O}(V).
+\]
+现在清楚了：完整的 Chevalley--Eilenberg 复形
+\[
+  C^{\bullet}(\Lie{g},\mathcal{O}(V))
+  =\left(\wedge^{\bullet}\Lie{g}^{\vee}\otimes\mathcal{O}(V),
+  d_{\mathrm{CE}}\right)
+\]
+是 $\mathcal{O}(V)^G$ 的一个自然的导出替代（derived replacement）。
+$\Lie{g}^{\vee}$ 中的反交换变量 $c^i$ 称为\emph{鬼场}，如此前所见。由于
+\[
+  \wedge^{\bullet}\Lie{g}^{\vee}
+  =\Sym^{\bullet}\left(\Lie{g}^{\vee}[-1]\right)
+  =\Sym^{\bullet}\left((\Lie{g}[1])^{\vee}\right),
+\]
+我们可以把 $\wedge^{\bullet}\Lie{g}^{\vee}$ 看作（奇）分次空间 $\Lie{g}[-1]$
+上的自由多项式环。于是
+\[
+  C^{\bullet}(\Lie{g},\mathcal{O}(V))=
+  V\times\Lie{g}[-1]\ \text{上的函数}.
+\]
+这是一个 dg 空间，因为 $C^{\bullet}(\Lie{g},\mathcal{O}(V))$ 是以
+Chevalley--Eilenberg 微分为微分的 dg 代数
+\[
+  d_{\mathrm{CE}}
+  =\frac{1}{2}f^{\gamma}_{\ \alpha\beta}c^{\alpha}c^{\beta}
+  \frac{\partial}{\partial c^{\gamma}}+c^{\alpha}X_{\alpha}.
+\]
+我们应把 $V\times\Lie{g}[-1]$ 看作 $V$ 的导出 $G$-商。我们的下一个目标是在
+$V\times\Lie{g}[-1]$ 上建立积分理论
+\[
+  \int_{V\times\Lie{g}[1]}\ee^{f/\hbar},
+\]
+使其能够自然推广到 QFT 的 $\infty$ 维情形。
+
+% [Tutor Note: 上面这个正合列只在 $H^0$ 处给出不变函数：连通 $G$ 时
+% $H^0(\Lie{g}^{\vee}\otimes\mathcal{O}(V))=\mathcal{O}(V)^G$，但右端映射一般不是
+% 满射，$H^1$ 度量的是“不能由单个无穷小对称生成的规范冗余”。原文称其为
+% “natural exact sequence” 是简写，严格地说应读作上链复形的正合列的一部分。]
+
+% [Tutor Note: 这里两次出现 $\Lie{g}[-1]$，最后一行积分却写成
+% $\int_{V\times\Lie{g}[1]}$，前后记号不一致，疑为原文笔误（应为
+% $V\times\Lie{g}[-1]$：鬼场 $c^\alpha$ 的次数为 $+1$，作为坐标它属于
+% $\Lie{g}[-1]$）。按体例照录原文，请核对原书 p.48 / PDF p.49。]
+
+% [Tutor Note: $d_{\mathrm{CE}}=\frac{1}{2}f^{\gamma}_{\ \alpha\beta}
+% c^{\alpha}c^{\beta}\partial_{c^{\gamma}}+c^{\alpha}X_{\alpha}$ 中的 $\frac{1}{2}$
+% 依赖结构常数对 $(\alpha,\beta)$ 反对称 $f^{\gamma}_{\ \alpha\beta}
+% =-f^{\gamma}_{\ \beta\alpha}$。若某文献的结构常数用不同的对称化约定，这个
+% $\frac{1}{2}$ 与整体符号都要相应调整；这是核对 BRST 公式时最常见的差异来源。]
+
+\subsection{多向量场（Polyvector Fields）}
+
+现在我们讨论关于积分的另一种观点。设 $M$ 是 $n$ 维定向流形（或简单地取
+$\R^n$）。设 $\Omega$ 是 $M$ 上的体积形式。它定义了
+\[
+  \begin{aligned}
+    \int:\ C^{\infty}(M)&\longrightarrow\R,\\
+    f&\longmapsto\int_M\Omega f.
+  \end{aligned}
+\]
+几何上，体积形式 $\Omega$ 诱导出散度算子
+\[
+  \operatorname{Div}:\ \operatorname{Vect}(M)\longrightarrow C^{\infty}(M),
+\]
+其定义为
+\[
+  \int\Omega\operatorname{Div}(X)\rho
+  =-\int\Omega X(\rho),\qquad \forall\rho\in C_c^{\infty}(M).
+\]
+具体地，
+\[
+  \operatorname{Div}(X)=\frac{\mathcal{L}_X\Omega}{\Omega}
+  =\frac{\dd\iota_X\Omega}{\Omega}.
+\]
+
+% [Tutor Note: 这里散度的符号约定是全局性的：$\int\Omega\,\mathrm{Div}(X)\rho
+% =-\int\Omega\,X(\rho)$ 中的负号来自分部积分（无边界项，因 $\rho$ 紧支集），
+% 它决定了 $\mathrm{Div}=\Delta|_{\mathrm{PV}^1}$ 的符号，进而决定整个 BV 算子
+% $\Delta$ 的符号。若把 $\Delta$ 与 $\mathrm{Div}$ 差一个负号，后面的 CME/QME
+% 都会跟着变号；核对时务必先固定这一约定。]
+
+% >>> p050
+
+\begin{wdefn}{6.1}
+我们定义\emph{多向量场}
+\[
+  \mathrm{PV}(M)=\bigoplus_k \mathrm{PV}^k(M),
+  \qquad\text{其中}\qquad
+  \mathrm{PV}^k(M):=\Gamma(M,\wedge^k TM),\quad k\ge 0.
+\]
+对 $\alpha\in\mathrm{PV}^k(M)$，记 $|\alpha|=k$。
+\end{wdefn}
+
+注意微分形式是
+\[
+  \Omega^k(M)=\Gamma(M,\wedge^k T^{\vee}_M).
+\]
+因此多向量场可以看作微分形式的对偶概念。$\mathrm{PV}(M)$ 带有类似的外积
+代数结构
+\[
+  \mathrm{PV}^k(M)\otimes\mathrm{PV}^l(M)
+  \xrightarrow{\ \wedge\ }\mathrm{PV}^{k+l}(M),
+\]
+它是分次交换的
+\[
+  \alpha\wedge\beta=(-1)^{|\alpha||\beta|}\beta\wedge\alpha.
+\]
+当 $k=1$ 时，$\mathrm{PV}^1(M)=\operatorname{Vect}(M)$ 正是向量场。
+
+体积形式 $\Omega$ 让我们可以用下式把多向量场与微分形式等同起来
+\[
+  \begin{aligned}
+    \Gamma:\ \mathrm{PV}^k(M)&\xrightarrow{\ \Omega\ }\Omega^{n-k}(M),\\
+    \mu&\longmapsto\mu\lrcorner\,\Omega.
+  \end{aligned}
+\]
+这里对 $\mu=X_1\wedge X_2\wedge\cdots\wedge X_k$，$X_i\in\operatorname{Vect}(M)$，
+\[
+  \mu\lrcorner\,\Omega=\iota_{X_1}\iota_{X_2}\cdots\iota_{X_k}\Omega.
+\]
+由于 $\Omega$ 是体积形式，$\Gamma$ 给出线性同构
+$\mathrm{PV}^k\overset{\simeq}{\longrightarrow}\Omega^{n-k}$。
+
+我们可以用 $\Gamma$ 把 de Rham 复形 $(\Omega^{\bullet}(M),\dd)$ 变换到
+$\mathrm{PV}(M)$ 上：
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.61\linewidth]{fig_p050_1.png}
+  \caption*{de Rham 复形与多向量场复形之间的同构（原文 PDF p.50 示意图，原文无编号）}
+\end{figure}
+验证：$\Delta:\mathrm{PV}^1(M)=\operatorname{Vect}(M)\to\mathrm{PV}^0(M)
+=C^{\infty}(M)$ 正是与 $\Omega$ 相联系的散度算子。一般地，
+\[
+  \Delta:\ \mathrm{PV}^k(M)\longrightarrow\mathrm{PV}^{k-1}(M)
+\]
+可以看作多向量场上的广义散度算子。注意 $\dd^2=0$ 蕴含
+\[
+  \Delta^2=0.
+\]
+在物理学中，$\Delta$ 称为 \emph{Batalin--Vilkovisky（BV）算子}。
+
+为看出 $\Delta$ 的模样，我们在 $U$ 上局部地工作，并选取局部坐标
+$\{x^1,\dots,x^n\}$。设
+\[
+  \Omega=\ee^{\rho(x)}\dd x^1\wedge\cdots\wedge\dd x^n.
+\]
+局部地，
+\[
+  \mathrm{PV}(U)=C^{\infty}(U)[\partial_1,\dots,\partial_n],
+\]
+其中 $\partial_i$ 之间反交换：$\partial_i\wedge\partial_j=-\partial_j\wedge\partial_i$。
+
+% [Tutor Note: 读上方的交换图时请注意两排箭头方向\emph{相反}：上排 de Rham
+% 微分的次数是 $+1$，下排 $\Delta$ 的次数是 $-1$（把 $k$ 形式的多向量场送到
+% $k-1$ 形式）。这是“多向量场是形式的对偶”这一事实的体现；若把 $\Delta$
+% 的次数误记为 $+1$，BV 括号的次数（也是 $+1$）就会算错。]
+
+% >>> p051
+
+为方便起见，引入 Grassmann 变量 $\theta_i$ 来表示
+\[
+  \theta_i\equiv\partial_j,\qquad \theta_i\theta_j=-\theta_j\theta_i.
+\]
+于是 $\mu\in\mathrm{PV}(U)$ 可以写成
+\[
+  \mu=\mu(x^i,\theta_i)=\sum_I\mu_I(x^i)\theta^I.
+\]
+设 $\frac{\partial}{\partial\theta_i}$ 为关于 $\theta_i$ 的导数，其定义为
+\[
+  \frac{\partial g}{\partial\theta_i}=0,\qquad
+  \frac{\partial(\theta_i g)}{\partial\theta_i}=g,
+\]
+这里 $g$ 不含 $\theta_i$。这些算子也是反交换的：
+\[
+  \frac{\partial}{\partial\theta_i}\frac{\partial}{\partial\theta_j}
+  =-\frac{\partial}{\partial\theta_j}\frac{\partial}{\partial\theta_i}.
+\]
+例如
+\[
+  \begin{aligned}
+    \frac{\partial}{\partial\theta_1}\frac{\partial}{\partial\theta_2}
+      (\theta_1\theta_2)
+    &=-\frac{\partial}{\partial\theta_1}\frac{\partial}{\partial\theta_2}
+      (\theta_2\theta_1)
+     =-\frac{\partial\theta_1}{\partial\theta_1}=-1,\\
+    \frac{\partial}{\partial\theta_2}\frac{\partial}{\partial\theta_1}
+      (\theta_1\theta_2)&=1.
+  \end{aligned}
+\]
+
+% [Tutor Note: 上式第一行左端 $\theta_i\equiv\partial_j$ 的指标不匹配：按定义
+% $\theta_i$ 应对偶于 $\partial_i$，即应为 $\theta_i\equiv\partial_i$。原文
+% PDF p.51 作 $\theta_i\equiv\partial_j$，疑为笔误，此处照录并提示核对原书
+% p.50 / PDF p.51。这个指标错位不影响后文（后文只用 $\theta_i$ 作为独立的
+% 奇坐标）。]
+
+\begin{wprop}{6.2}
+在上述假设与记号下，有
+\[
+  \Delta=\sum_i\frac{\partial}{\partial x^i}
+  \frac{\partial}{\partial\theta_i}
+  +\sum_i\partial_i\rho\,\frac{\partial}{\partial\theta_i}.
+\]
+\end{wprop}
+
+\begin{proof}
+习题。
+\end{proof}
+
+特别地，对向量场
+\[
+  X=\sum_i V^i(x)\frac{\partial}{\partial x^i}
+  =\sum_i V^i(x)\theta_i,
+\]
+我们有
+\[
+  \operatorname{Div}(X)=\Delta X
+  =\sum_i\left(\partial_iV^i+\partial_i\rho\,V^i\right).
+\]
+这恰是散度的公式。
+
+注意第一项 $\sum_i\frac{\partial}{\partial x^i}\frac{\partial}{\partial\theta_i}$
+看起来像一个 Laplacian，但它\emph{不是}——$\theta_i$ 是奇变量。尽管如此，
+$\Delta$ 有时被称为 \emph{BV Laplacian}，或\emph{奇 Laplacian}。
+
+回顾积分在同调层面的观点：
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.75\linewidth]{fig_p051_1.png}
+  \caption*{积分的同调观点（原文 PDF p.51 示意图，原文无编号）}
+\end{figure}
+由该图我们得到
+\[
+  \int_{dR}\sim H^n_{dR},\qquad \int_{BV}\sim H^0_{\Delta}.
+\]
+在量子场论中，我们必须处理 $\infty$ 维几何，即 $n=\infty$。此时 $H^n_{dR}$
+失去意义，而 $H^0_{\Delta}$ 变得更好，问题便归结为在 QFT 中构造 $\Delta$。
+我们将在微扰重整化理论中看到如何做到这一点。
+
+% [Tutor Note: “奇 Laplacian”之名强调 $\Delta$ 是二阶算子且 $\Delta^2=0$，
+% 但它的“二阶性”来自奇变量的一阶导数（$\partial_x\partial_\theta$），与通常
+% 椭圆 Laplacian 的 ${}^2=0$ 性质完全不同。术语上不要与 Hodge Laplacian
+% $\dd\dd^*+\dd^*\dd$ 混淆：后者是偶数阶、不平方为零。]
+
+
+% >>> p052
+
+\subsection{Batalin--Vilkovisky（BV）代数}
+
+\begin{wdefn}{6.3}
+\emph{BV 代数}是一对 $(A,\Delta)$，其中
+\begin{itemize}[leftmargin=1.4em,itemsep=0.1em]
+  \item[\textcircled{1}] $A$ 是分次交换结合代数：
+        $a\cdot b=(-1)^{|a||b|}b\cdot a$，$\forall a,b\in A$；
+  \item[\textcircled{2}] $\Delta:A\to A$ 是一个 $\deg=1$ 的“二阶”算子，且
+        满足 $\Delta^2=0$。
+\end{itemize}
+\end{wdefn}
+
+这里“二阶”的意思如下。考虑 $\Delta$ 不是导子的失效程度，用所谓的
+\emph{BV 括号}来衡量：
+\[
+  \{a,b\}:=\Delta(ab)-(\Delta a)b-(-1)^{|a|}a\Delta b.
+\]
+于是 $\{-,-\}$ 对 $a$ 与 $b$ 两个分量都满足 Leibniz 法则。因此
+\[
+  \{-,-\}:\ A\times A\longrightarrow A
+\]
+是 $\deg=1$ 的，并满足
+
+\textcircled{1}\ 分次对称性
+\[
+  \{a,b\}=(-1)^{|a||b|}\{b,a\}
+\]
+
+\textcircled{2}\ 分次 Leibniz 法则
+\[
+  \{a,bc\}=(-1)^{(1+|a|)|b|}b\{a,c\}+\{a,b\}c
+\]
+
+\textcircled{3}\ 由构造，$\{-,-\}$ 与 $\Delta$ 也相容：
+\[
+  \Delta\{a,b\}=-\{\Delta a,b\}-(-1)^{|a|}\{a,\Delta b\}.
+\]
+如果我们还有一个
+\[
+  Q:\ A\longrightarrow A,\qquad \deg=1,
+\]
+它是导子、平方为零 $Q^2=0$，且与 $\Delta$ 相容
+\[
+  Q\Delta+\Delta Q=0,
+\]
+则三元组 $\{A,Q,\Delta\}$ 称为 \emph{DGBV 代数}。
+
+% [Tutor Note: BV 括号定义中的 $(-1)^{|a|}$ 极易放错位置：
+% $\{a,b\}=\Delta(ab)-(\Delta a)b-(-1)^{|a|}a\Delta b$。若把它写成
+% $(-1)^{|b|}$，分次对称性 $\{a,b\}=(-1)^{|a||b|}\{b,a\}$ 立刻不成立。
+% 记忆口诀：第二个“修正项”里的符号要移到 $\Delta$ 越过 $a$ 的位置，故与 $a$
+% 的次数有关。]
+
+
+\begin{wexam}{6.4}
+设 $\Omega$ 是 $M$ 上的体积形式，$\Delta$ 是 $\mathrm{PV}(M)$ 上相应的散度
+算子。则
+\[
+  (\mathrm{PV}(M),\Delta)
+\]
+构成一个 BV 代数。相应的 BV 括号
+\[
+  \{-,-\}:\ \mathrm{PV}^k(M)\times\mathrm{PV}^l(M)
+  \longrightarrow\mathrm{PV}^{k+l-1}(M)
+\]
+不依赖于 $\Omega$ 的选取，且 $\{-,-\}$ 就是 Schouten--Nijenhuis 括号（至多
+差一个符号）（事实上
+$\{\alpha,\beta\}=-(-1)^{|\alpha|}\{\alpha,\beta\}_{SN}$）。
+
+在局部坐标下，设
+\[
+  \Omega=\ee^{\rho(x)}\dd x^1\cdots\dd x^n,
+\]
+则
+\[
+  \Delta=\sum_i\frac{\partial}{\partial x^i}
+  \frac{\partial}{\partial\theta_i}
+  +\sum_i\partial_i\rho\,\frac{\partial}{\partial\theta_i}.
+\]
+我们得到
+\[
+  \{x^i,\theta_j\}=\delta^i_{\ j},
+  \qquad
+  \{x^i,x^j\}=\{\theta_i,\theta_j\}=0.
+\]
+这是 Poisson 括号的奇类比。
+\end{wexam}
+
+% [Tutor Note: Schouten–Nijenhuis 括号在不同文献中的定义相差
+% $(-1)^{|\alpha|}$ 或一个整体负号很常见。原文写作
+% $\{\alpha,\beta\}=-(-1)^{|\alpha|}\{\alpha,\beta\}_{SN}$，即 BV 括号与 SN 括号
+% 差一个与 $|\alpha|$ 有关的符号。按术语表，“Schouten bracket”译作
+% “Schouten 括号”，全称“Schouten–Nijenhuis 括号”；原文排印作
+% “SchoutenNijenhuis”（缺连字符），属排版笔误。核对符号时请以原书
+% p.51 / PDF p.52 为准。]
+
+
+% >>> p053
+
+\begin{wrem}{6.5}
+本例说明了一个关于量子化的重要观点：量子化归结为构造无穷维的体积 / 测度。
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.50\linewidth]{fig_p053_1.png}
+  \caption*{量子化：从经典 Poisson 括号到 BV 算子（原文 PDF p.53 示意图，原文无编号）}
+\end{figure}
+\end{wrem}
+
+% [Tutor Note: 该图是本章的概念枢纽：把经典一侧的 Poisson 括号 $\{-,-\}$ 换成
+% 量子一侧的 BV 算子 $\Delta$（由体积形式 $\Omega$ 构造）。换言之，所谓
+% “量子化”就是构造 $\infty$ 维的体积 / 测度，而 $\Delta$ 正是该测度的散度
+% 算子。这也是第 7 章有效 BV 量子化与第 9 章 Fedosov 量子化的共同出发点。]
+
+\begin{wexam}{6.6}
+设 $X$ 是复流形，$\Omega$ 是全纯体积形式。这样的对 $(X,\Omega)$ 称为
+\emph{Calabi--Yau 流形}。我们可以用下式定义多向量场的复类比
+\[
+  \mathrm{PV}^{k,l}(X)=\Omega^{0,l}\left(X,\wedge^k T^{1,0}_X\right).
+\]
+设 $\Delta$ 是与 $\Omega$ 相联系的散度算子
+\[
+  \Delta:\ \mathrm{PV}^{k,l}\longrightarrow\mathrm{PV}^{k-1,l}.
+\]
+设 $\bar{\partial}$ 是 Dolbeault 微分
+\[
+  \bar{\partial}:\ \mathrm{PV}^{k,l}\longrightarrow\mathrm{PV}^{k,l+1}.
+\]
+则 $(\mathrm{PV}^{-\bullet,\bullet},\bar{\partial},\Delta)$ 是一个 DGBV。这里
+次数约定是 $\mathrm{PV}^{k,l}$ 的次数为 $l-k$。该 DGBV 控制 $X$ 的形变理论。
+\end{wexam}
+
+\begin{wexam}{6.7}
+设 $G$ 是 Lie 群，Lie 代数为 $\Lie{g}$。令
+\[
+  A=\Sym(\Lie{g}^{\vee}[-1])\otimes\Sym(\Lie{g}[2])
+  =\C[e_\alpha,c^\alpha].
+\]
+这里
+\begin{itemize}[leftmargin=1.4em,itemsep=0.15em]
+  \item $\{e_\alpha\}$ 是 $\Lie{g}$ 的一组基，$\deg(e_\alpha)=-2$。它们彼此
+        交换：$e_\alpha e_\beta=e_\beta e_\alpha$。
+  \item $\{c^\alpha\}$ 是 $\Lie{g}$ 的对偶基，$\deg(c^\alpha)=1$。它们彼此
+        反交换：$c^\alpha c^\beta=-c^\beta c^\alpha$。
+  \item $\Delta=\sum_\alpha\frac{\partial}{\partial c^\alpha}
+        \frac{\partial}{\partial e_\alpha}$，且
+        $\{c^\alpha,e_\beta\}=\delta^\alpha_{\ \beta}$。
+\end{itemize}
+则 $(A,\Delta)$ 定义一个 BV 代数。
+
+与上面的多向量场构造相比较
+\[
+  \begin{array}{ccc}
+    \deg=1 & c^{\alpha}\longleftrightarrow x^{i} & \deg=0\\[2pt]
+    \deg=-2 & e_{\alpha}\longleftrightarrow \theta_{i} & \deg=-1
+  \end{array}
+\]
+我们可以把 $A$ 看作奇空间 $\Lie{g}[1]$ 上的多向量场
+\[
+  A=\mathrm{PV}(\Lie{g}[1])=\mathcal{O}\left(\Lie{g}[1]\oplus
+  \Lie{g}^{\vee}[-2]\right).
+\]
+\end{wexam}
+
+\begin{wexam}{6.8}
+一般地，设 $W$ 是分次向量空间。记
+\[
+  T^*W[-1]=W\oplus W^{\vee}[-1].
+\]
+则
+\[
+  \mathrm{PV}(W):=\mathcal{O}(T^*W[-1])
+  =\Sym(W^{\vee})\otimes\Sym(W[1]),
+\]
+带有典范的 $\deg=1$ 的 BV 括号 $\{-,-\}$。在特殊情形
+\begin{itemize}[leftmargin=1.4em,itemsep=0.1em]
+  \item $W=\R^n$ $\Longrightarrow$ $\mathrm{PV}(\R^n)$；
+  \item $W=\Lie{g}[1]$ $\Longrightarrow$ $\mathrm{PV}(\Lie{g}[1])$。
+\end{itemize}
+特别地，为了理解 $\int_{V\times\Lie{g}[1]}$，我们将需要考察
+\[
+  \mathrm{PV}(V\times\Lie{g}[1]).
+\]
+\end{wexam}
+
+% >>> p054
+
+\subsection{经典 BV 主方程（Classical BV Master Equation）}
+
+现在我们讨论所谓的 \emph{BV 主方程}，它是经典与量子规范理论的基本关系。
+
+\begin{wdefn}{6.9}（经典 BV 主方程）
+设 $(A,\Delta)$ 是 BV 代数，$\{-,-\}$ 是 BV 括号。一个次数为 $0$ 的元素
+$S_0\in A$ 称为满足\emph{经典 BV 主方程}，若
+\[
+  \{S_0,S_0\}=0\qquad\text{(CME)}.
+\]
+\end{wdefn}
+
+$S_0$ 通过
+\[
+  \delta=\{S_0,-\}:\ A\longrightarrow A
+\]
+在 $A$ 上诱导一个算子。由于 BV 括号的次数为 $1$、$S_0$ 的次数为 $0$，算子
+$\delta$ 的次数为 $1$。并且由 $\{-,-\}$ 的 Leibniz 法则，$\delta$ 是一个导子。
+
+\begin{wprop}{6.10}
+CME $\{S_0,S_0\}=0$ 蕴含
+\[
+  \delta^2=0.
+\]
+\end{wprop}
+
+\begin{proof}
+由 Jacobi 恒等式
+\[
+  \{\{S_0,S_0\},-\}
+  =-2\{S_0,\{S_0,-\}\}
+  =-2\delta^2.
+\]
+\end{proof}
+
+
+\begin{wexam}{6.11}（对称性）
+设 $G$ 是 Lie 群，Lie 代数为 $\Lie{g}$。记 $\{e_\alpha\}$ 为 $\Lie{g}$ 的一组
+基，$\{c^\alpha\}$ 为 $\Lie{g}^{\vee}$ 的对偶基。设 $(A,\Delta)$ 是
+$\Lie{g}[1]$ 上多向量场的 BV 代数
+\[
+  A=\Sym(\Lie{g}^{\vee}[-1])\otimes\Sym(\Lie{g}[2])
+  =\C[e_\alpha,c^\alpha],\qquad
+  \deg(c^\alpha)=1,\quad \deg(e_\alpha)=-2,
+\]
+且
+\[
+  \Delta=\sum_\alpha\frac{\partial}{\partial c^\alpha}
+  \frac{\partial}{\partial e_\alpha},
+  \qquad
+  \{c^\alpha,e_\beta\}=\delta^\alpha_{\ \beta}.
+\]
+在所选基下 Lie 括号为
+\[
+  [e_\alpha,e_\beta]=\sum_\gamma f^{\gamma}_{\ \alpha\beta}e_\gamma,
+\]
+其中 $f^{\gamma}_{\ \alpha\beta}$ 是 $\Lie{g}$ 的结构常数。则次数为 $0$ 的
+元素
+\[
+  I=\frac{1}{2}\sum_{\alpha,\beta,\gamma}
+  f^{\gamma}_{\ \alpha\beta}c^\alpha c^\beta e_\gamma\in A
+\]
+满足经典主方程
+\[
+  \{I,I\}=0.
+\]
+让我们考虑诱导出的微分
+\[
+  \delta=\{I,-\}:\ A\longrightarrow A.
+\]
+\end{wexam}
+
+% [Tutor Note: 本页原文两处笔误：(i) $\deg(e_\alpha=-2)$ 括号错位，应为
+% $\deg(e_\alpha)=-2$；(ii) 正文另有一处写作 $\{c^\alpha,e_\alpha\}
+% =\delta^\alpha_{\ \beta}$，左端两个指标都是 $\alpha$ 而右端是 $\alpha,\beta$，
+% 应为 $\{c^\alpha,e_\beta\}=\delta^\alpha_{\ \beta}$。两处均照录原意并在
+% 译文中按正确指标排版，请核对原书 p.53 / PDF p.54。]
+
+% >>> p055
+
+由于 $A=\C[c^\alpha,e_\alpha]$ 是自由代数，我们只需知道 $\delta$ 如何作用在
+生成元上。不难看出
+\[
+  \delta(c^\gamma)=\frac{1}{2}f^{\gamma}_{\ \alpha\beta}c^\alpha c^\beta,
+  \qquad
+  \delta(e_\alpha)=\frac{1}{2}f^{\gamma}_{\ \alpha\beta}c^\beta e_\gamma.
+\]
+因此导子 $\delta$ 由向量场
+\[
+  \delta=\frac{1}{2}\sum_{\alpha,\beta,\gamma}
+  f^{\gamma}_{\ \alpha,\beta}c^\alpha c^\beta
+  \frac{\partial}{\partial c^\gamma}
+  +\sum_{\alpha,\beta,\gamma}
+  f^{\gamma}_{\ \alpha\beta}c^\beta e_\gamma
+  \frac{\partial}{\partial e_\alpha}
+\]
+给出。若把 $\delta$ 限制到 $\C[c^\alpha]=\Sym(\Lie{g}^{\vee}[-1])$，则
+$\delta=d_{\mathrm{CE}}$。因此
+\[
+  \left(\Sym(\Lie{g}^{\vee}[-1]),\delta\right)=C^{\bullet}(\Lie{g}).
+\]
+在完整的 BV 代数 $A$ 上，我们有
+\[
+  (A,\delta)=C^{\bullet}(\Lie{g},\Sym(\Lie{g}[2])),
+\]
+其中 $\Lie{g}$ 通过伴随表示作用在 $\Sym(\Lie{g}[2])$ 上。
+
+% [Tutor Note: 本页三处 $\frac{1}{2}$ 的记账需要核对：$\delta(c^\gamma)
+% =\frac{1}{2}f^{\gamma}_{\ \alpha\beta}c^\alpha c^\beta$ 与紧随其后的向量场
+% 第一项一致；但 $\delta(e_\alpha)$ 被写成
+% $\frac{1}{2}f^{\gamma}_{\ \alpha\beta}c^\beta e_\gamma$，而向量场第二项
+% $\sum f^{\gamma}_{\ \alpha\beta}c^\beta e_\gamma\partial/\partial e_\alpha$
+% 却没有 $\frac{1}{2}$。按 BV 括号直接计算（也可由下方向量场反推），应为
+% $\delta(e_\alpha)=f^{\gamma}_{\ \alpha\beta}c^\beta e_\gamma$（无 $\frac{1}{2}$），
+% 故第一个式子的 $\frac{1}{2}$ 疑为原文笔误。按体例照录原文，请核对原书
+% p.54 / PDF p.55。]
+
+\begin{wexam}{6.12}（对称性 $+$ 物质）
+设 $G$ 是作用于流形 $X$ 的 Lie 群，$X$ 的坐标为 $\{x^i\}$，$\{e_\alpha\}$ 是
+Lie 代数 $\Lie{g}$ 的一组基。无穷小作用给出一个 Lie 代数同态
+\[
+  \begin{aligned}
+    \Lie{g}&\longrightarrow\operatorname{Vect}(X),\\
+    e_\alpha&\longmapsto V_\alpha
+    =V^i_\alpha(x)\frac{\partial}{\partial x^i}.
+  \end{aligned}
+\]
+考虑 $G$-不变函数
+\[
+  f:\ X\longrightarrow\C,
+\]
+它模拟一个规范不变的经典作用量。考虑
+\[
+  A=\mathrm{PV}(X\times\Lie{g}[1])=\mathrm{PV}(X)\otimes\mathrm{PV}(\Lie{g}[1])
+  =\C[x^i,\theta_i,e_\alpha,c^\alpha],
+\]
+其中 $\theta_i=\partial_i$，$\{c^\alpha\}$ 是对偶基。我们在下表中总结这些变量。
+
+\begin{center}
+\normalfont\small
+\begin{tabular}{lcccc}
+  \toprule
+  变量 & $c^\alpha$ & $x^i$ & $\theta_i$ & $e_\alpha$ \\
+  \midrule
+  次数（Degree） & $1$ & $0$ & $-1$ & $-2$ \\
+  物理意义（Physics） & 鬼场 & （物质）场 & 反场 & 反鬼场 \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+我们可以把函数 $I=\frac{1}{2}f^{\gamma}_{\ \alpha\beta}c^\alpha c^\beta e_\gamma$
+通过纳入 $x$ 与 $G$-不变函数 $f$ 延拓为
+\[
+  S_0=f(x)+c^\alpha V^i_\alpha(x)\theta_i
+  +\frac{1}{2}f^{\gamma}_{\ \alpha\beta}c^\alpha c^\beta e_\gamma.
+\]
+\end{wexam}
+
+\begin{wprop}{6.13}
+$S_0$ 满足经典主方程。
+\end{wprop}
+
+\begin{proof}
+习题。
+\end{proof}
+
+% [Tutor Note: 上表按原文重排（booktabs）。原文表头第一格为空，第一列是
+% “Degree / Physics”两行；本译本把变量名提到表头、把“次数”“物理意义”放到
+% 第一列，内容与原文一一对应。术语依据：ghost 鬼场、anti-field 反场、
+% anti-ghost 反鬼场（术语表）。]
+
+% [Tutor Note: Prop.\ 6.13 的“Proof: Exercise.”省略了实质验证：把
+% $S_0=f+c^\alpha V^i_\alpha\theta_i+\frac{1}{2}f^{\gamma}_{\ \alpha\beta}
+% c^\alpha c^\beta e_\gamma$ 代入 $\{S_0,S_0\}=0$，需要同时用到
+% (i) $f$ 的 $G$-不变性 $V_\alpha(f)=0$；(ii) 结构常数的 Jacobi 恒等式；
+% (iii) $\Lie{g}\to\operatorname{Vect}(X)$ 是 Lie 代数同态，即
+% $[V_\alpha,V_\beta]=f^{\gamma}_{\ \alpha\beta}V_\gamma$。三者缺一不可，
+% 而原文全部省略。]

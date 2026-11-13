@@ -1,0 +1,487 @@
+%=====================================================================
+% 9  费米积分
+% 原文：Section 9. Fermionic integrals（arXiv:2409.03117v1, p. 121--132）
+%=====================================================================
+\section{费米积分}
+
+\begin{keytakeaways}
+\begin{itemize}
+  \item \textbf{物理图像：}量子理论中玻色子与费米子的区别在于多粒子状态空间取对称幂还是外幂，由此得到 Pauli 不相容原理；经典对应地，玻色子的状态空间是通常的偶空间，费米子的状态空间是奇空间，其光滑函数代数由外代数生成。
+  \item \textbf{数学工具：}超向量空间（分次结构加上带符号的对称换位）、超流形及其结构层、超迹与超行列式（Berezinian）、超区域上的 Berezin 积分与换元公式，以及奇空间中的 Pfaffian 与高斯积分。
+  \item \textbf{关键结论：}超迹等于偶块迹减去奇块迹；超行列式等于约化行列式之商（要求奇块可逆）；奇高斯积分等于 Pfaffian；奇情形的 Wick 公式把多点函数写成 Pfaffian 与逆形式配对之积。
+  \item \textbf{证明策略：}超迹由循环性与分块结构唯一确定；Berezinian 由三角分解与乘法性刻画；Berezin 换元公式按三类局部同构验证；奇高斯积分归结为 Pfaffian 的系数比较，奇 Wick 公式则用标准基直接计算。
+  \item \textbf{易错点：}Grassmann 变量换位带来符号，次序错了整体符号就错；换元公式的 Jacobi 因子是超行列式（奇方向取倒数）而非普通行列式；Pfaffian 的符号约定决定了奇高斯积分中的负号因子。
+\end{itemize}
+\end{keytakeaways}
+
+\bigskip
+\noindent\rule{\textwidth}{0.6pt}
+\bigskip
+
+\subsection{玻色子与费米子}
+
+物理中存在两类粒子——玻色子与费米子。迄今为止我们只处理了玻色子，但许多重要粒子是费米子，例如电子、质子等。因此，把我们的技巧推广到费米子情形是重要的。
+
+在量子理论中，玻色子与费米子的区别如下：若单粒子的状态空间为 ${\mathcal H}$，则 $k$ 个此类粒子组成的系统的状态空间，对玻色子为 $S^k{\mathcal H}$，对费米子为 $\Lambda^k{\mathcal H}$。特别地，在费米子情形，若 $\dim \mathcal H=n$，则 $\ge n+1$ 个全同粒子的状态空间为零，这就是\emph{Pauli 不相容原理}（例如，由此可知原子中第 $m$ 个能级上的电子数不超过 $2m^2$）。在经典理论中，这意味着玻色子的状态空间是通常的实向量空间（或更一般地，一个流形），而费米子的状态空间是\emph{奇向量空间}。数学上，“奇”指的是该空间上光滑函数的代数（即经典可观测量的代数）是一个\emph{外}代数（这与通常的\emph{偶}空间不同：后者上多项式函数的代数是\emph{对称}代数）。
+
+更一般地，可以考虑由经典粒子或场组成的系统，其中一部分是玻色的，另一部分是费米的。此时状态空间将是超向量空间，即偶空间与奇空间的直和（或更一般地，是一个超流形——这一概念我们将在下文定义）。
+
+当用路径积分方法量子化这样的理论时，必须对超流形上的函数作积分。因此，我们应当学会在超流形上积分，然后把我们的 Feynman 图技巧推广到这一情形。这正是本节要做的。
+
+\subsection{超向量空间}
+
+设 $k$ 是特征为零的域。$k$ 上的\emph{超向量空间}（简称超空间）就是一个 $\Bbb Z/2$-分次向量空间：$V=V_0\oplus V_1$。若 $V_0=k^n$、$V_1=k^m$，则 $V$ 记作 $k^{n|m}$。超向量空间的线性算子、直和、张量积、对偶空间等概念，与 $\Bbb Z/2$-分次向量空间的情形完全同样地定义。换言之，超向量空间的张量范畴与 $\Bbb Z/2$-分次向量空间的张量范畴相同。
+
+然而，超向量空间与 $\Bbb Z/2$-分次向量空间这两个概念\emph{并不}相同。差别如下。向量空间（从而 $\Bbb Z/2$-分次向量空间）的范畴具有\emph{对称结构}，即标准同构 $V\otimes W\to W\otimes V$（由 $v\otimes w\to w\otimes v$ 给出）。该同构使我们可以定义对称幂 $S^iV$、外幂 $\Lambda^iV$ 等。对超向量空间，也存在对称性 $V\otimes W\to W\otimes V$，但定义不同：$v\otimes w$ 映到 $(-1)^{ij}w\otimes v$，其中 $v\in V_i, w\in V_j$（$i,j\in \lbrace{0,1\rbrace}$）。换言之，除 $v,w$ 均为奇时 $v\otimes w\mapsto -w\otimes v$ 外，其余与通常情形相同。于是，对超空间 $V$ 可以定义超空间 $S^iV$ 与 $\Lambda^iV$，但它们与通常意义下的对称幂、外幂不同。例如，若 $V$ 是纯奇的（$V=V_1$），则 $S^iV$ 是 $V$ 的第 $i$ 个外幂，而 $\Lambda^iV$ 是 $V$ 的第 $i$ 个对称幂（$i$ 为偶时纯偶，$i$ 为奇时纯奇）。因此一般地对 $V=V_0\oplus V_1$，对称代数 $SV:=\oplus_{i\ge 0}S^iV$ 与外代数 $\Lambda V:=\oplus_{i\ge 0}\Lambda^i V$ 有如下表达式：
+$$
+SV=SV_0\otimes \Lambda V_1,\ \Lambda V=\Lambda V_0\otimes SV_1.
+$$
+
+对超空间 $V$，令 $\Pi V$ 为同一空间但取相反宇称，即 $(\Pi V)_j=V_{1-j}$，$j=0,1$。则有
+$$
+S^iV=\Pi^i(\Lambda^i\Pi V),\ \Lambda^iV=\Pi^i(S^i\Pi V).
+$$
+
+设 $V=V_0\oplus V_1$ 是有限维超空间。定义 $V$ 上多项式函数的代数 ${\mathcal O}(V)$ 为代数 $SV^*$（其中对称幂取超意义下的）。于是 ${\mathcal O}(V)=SV_0^*\otimes \Lambda V_1^*$，这里 $V_0$ 与 $V_1$ 视为通常的空间。更具体地说，若 $x_1,...,x_n$ 是 $V_0$ 上的线性坐标，$\xi_1,...,\xi_m$ 是 $V_1$ 上的线性坐标，则 ${\mathcal O}(V)=k[x_1,...,x_n,\xi_1,...,\xi_m]$，其定义关系为
+$$
+x_ix_j=x_jx_i,\ x_i\xi_r=\xi_rx_i,\ \xi_r\xi_s=-\xi_s\xi_r
+$$
+（特别地，$\xi_r^2=0$）。注意该代数本身是（一般说来无限维的）超向量空间，并在超意义下交换。此外，若 $V,W$ 是两个超空间，则 ${\mathcal O}(V\oplus W)={\mathcal O}(V)\otimes {\mathcal O}(W)$，其中代数的张量积按超意义理解，即
+$$
+(a\otimes b)(c\otimes d)=
+(-1)^{p(b)p(c)}(ac\otimes bd),
+$$
+其中 $p(x)$ 是 $x$ 的宇称。
+
+% [Tutor Note: 超意义下的对称幂与外幂之所以“互换”，根源在于换位符号 $(-1)^{ij}$：对纯奇空间 $V$（所有元素次数为 1），$S^iV$ 中相邻因子的换位给出因子 $-1$，故 $S^iV$ 就是 $V$ 的通常外幂，而 $\Lambda^iV$ 反而成了对称幂。核对办法：若 $V=V_0\oplus V_1$，则 $SV=SV_0\otimes\Lambda V_1$、$\Lambda V=\Lambda V_0\otimes SV_1$，即把 $V_1$ 的奇性“翻”成外/对称角色的互换；这与 $\Pi$ 的公式 $S^iV=\Pi^i(\Lambda^i\Pi V)$ 一致（$\Pi$ 恰好翻转宇称）。]
+
+\subsection{超流形}
+
+现设 $k=\Bbb R$。与上述类比，对任意超向量空间 $V$ 可以定义光滑函数的代数 $C^\infty(V):=C^\infty(V_0)\otimes \Lambda V_1^*$。事实上，这是下述更一般设定的特例。
+
+\begin{definition} \emph{超流形} $M$ 是一个通常的流形 $M_0$，连同其上一个 $\Bbb Z/2\Bbb Z$ 分次代数的层 $C^\infty_{M}$（称为\emph{结构层}），该层局部同构于 $C^\infty_{M_0}\otimes \Lambda (\xi_1,...,\xi_m)$。
+\end{definition}
+
+流形 $M_0$ 称为 $M$ 的\emph{约化流形}。$M$ 的维数是整数对 $\dim M_0|m$。
+
+例如，超向量空间 $V$ 是维数为 $\dim V_0|\dim V_1$ 的超流形。超流形的另一个（更一般的）例子是超区域 $U:=U_0\times V_1$，即区域 $U_0\subset V_0$ 连同层 $C^\infty_{U_0}\otimes \Lambda V_1^*$。此外，超流形的定义蕴含任何超流形都“局部同构”于某个超区域。
+
+设 $M$ 是超流形。$M$ 中的\emph{开集} $U$ 是指超流形（$U_0$，$C^\infty_M|_{U_0}$），其中 $U_0$ 是 $M_0$ 的开子集。
+
+按定义，超流形构成范畴 $\mathcal{S}$。我们来具体描述该范畴中的态射，即超流形 $M$ 与 $N$ 之间的映射 $F:M\to N$。按定义，只需假定 $M,N$ 是超区域，分别带整体坐标 $x_1,...,x_n,\xi_1,...,\xi_m$ 与 $y_1,...,y_p,\eta_1,...,\eta_q$（这里 $x_i$、$y_i$ 是偶变量，$\xi_i,\eta_i$ 是奇变量）。则映射 $F$ 由下述公式给出：
+$$
+y_i=f_{0,i}(x_1,...,x_n)+f_{2,i}^{j_1j_2}(x_1,...,x_n)\xi_{j_1}\xi_{j_2}+...,
+$$
+$$
+\eta_i=a_{1,i}^j(x_1,...,x_n)\xi_j+a_{3,i}^{j_1j_2j_3}(x_1,...,x_n)
+\xi_{j_1}\xi_{j_2}\xi_{j_3}+...,
+$$
+其中 $f_{0,i},f_{2,i}^{j_1j_2},...,a_{1,i}^j,a_{3,i}^{j_1j_2j_3},...$ 是通常的光滑函数，并约定对重复指标求和。这些公式完全决定了 $F$：因为对任意 $g\in C^\infty(N)$，可由 Taylor 公式求出 $g\circ F\in C^\infty(M)$。例如，若 $M=N=\Bbb R^{1|2}$，$F(x,\xi_1,\xi_2)=(x+\xi_1\xi_2,\xi_1,\xi_2)$，且 $g=g(x)$，则
+$$
+g\circ F(x,\xi_1,\xi_2)=
+g(x+\xi_1\xi_2)=g(x)+g'(x)\xi_1\xi_2.
+$$
+
+% 以下 remark 在原文底本中被注释掉，译文同样保留为注释，不参与排版：
+% \begin{remark} 出于这一原因，我们只考虑超流形上的 $C^\infty$（而非 $C^r$）函数。事实上，例如若 $g(x)$ 是单变量的 $C^r$ 函数但不能求 $r+1$ 次导数，则表达式 $g(x+\sum_{i=1}^{r+1}\xi_{2i-1}\xi_{2i})$ 将没有定义，因为该表达式中 $\xi_1,...,\xi_{2r+2}$ 的系数应等于 $g^{(r+1)}(x)$，而这一导数不存在。
+% \end{remark}
+
+\subsection{超流形与向量丛}
+
+设 $M_0$ 是流形，$E$ 是 $M_0$ 上的实向量丛。则可定义超流形 $M:={\rm Tot}(\Pi E)$，即 $E$ 改变宇称后的全空间。具体地说，$M$ 的约化流形是 $M_0$，结构层 $C^\infty_M$ 是 $\Lambda E^*$ 的截面层。由此得到函子 $S: {\mathcal {B}}\to {\mathcal {S}}$，从带向量丛的流形范畴到超流形范畴。我们还有反方向的函子 $S_*$：即 $S_*(M)$ 是流形 $M_0$ 连同向量丛 $(R/R^2)^*$，其中 $R$ 是 $C^\infty_M$ 的幂零根。
+
+下述命题（其证明留作习题）给出超流形的分类。
+
+\begin{proposition}\label{batch} (i) $S_*\circ S={\rm Id}$；
+
+(ii) $S\circ S_*={\rm Id}$ 在对象的同构类上成立。
+\end{proposition}
+
+该命题的用处受限于如下事实：由上文对超流形之间映射的描述可见，$S\circ S_*$ \emph{并非}态射上的恒等（例如它把 $\Bbb R^{1|2}$ 的自同构 $x\to x+\xi_1\xi_2$ 映为 ${\rm Id}$），因此 $S$ 不是范畴等价。事实上，超流形范畴与带向量丛的流形范畴并不等价（超流形范畴“有更多态射”）。
+
+\begin{remark} 1. 这两个范畴之间的关系，与（有限维）滤过向量空间范畴和分次向量空间范畴之间的关系十分相似（在那里我们也有性质相同的函子 $S$、$S_*$——请自行验证！）。因此，在超几何中最好避免把超流形实现为 $S(M_0,E)$，正如在线性代数中最好避免选取滤过空间的分裂。
+
+2. 在超流形的定义中，可以把实外代数 $\Lambda(\xi_1,...,\xi_m)$ 换成复化外代数 $\Lambda_{\Bbb C}(\xi_1,...,\xi_m)$。由此得到 $\Bbb C$-超流形的概念，它推广了带复值（而非实值）光滑函数层的通常光滑流形。与命题 \ref{batch} 类似，约化子流形为 $M_0$ 的 $\Bbb C$-超流形的同构类与 $M_0$ 上\emph{复}向量丛的同构类一一对应，因此后者更一般（并非每个复向量丛都是实向量丛的复化）。除此之外，$\Bbb C$-超流形理论（它确实出现在量子场论中，见下文注 \ref{realcom}）与通常超流形理论完全平行。
+
+也可以类似地定义复解析与代数超流形，但那是另一回事，此处不讨论。
+\end{remark}
+
+\subsection{超迹与超行列式（Berezinian）}
+
+在继续之前，我们需要把线性代数的基本概念（如矩阵的迹与行列式）推广到超情形。
+
+设 $R:=R_0\oplus R_1$ 是超交换的 $\Bbb C$-代数。固定两个非负整数 $m,n$。令 ${\rm Mat}_{n|m}(R)$ 为 $R$ 上具有如下分块分解的 $n+m$ 乘 $n+m$ 矩阵代数：
+$$
+A=\begin{pmatrix} A_{00} & A_{01}\\ A_{10} & A_{11}\end{pmatrix}
+$$
+其中 $A_{00}$ 是 $n$ 乘 $n$、$A_{11}$ 是 $m$ 乘 $m$，且 $A_{00},A_{11}$ 的矩阵元为偶（即在 $R_0$ 中），而 $A_{01},A_{10}$ 的矩阵元为奇（即在 $R_1$ 中）。我们希望把 $A$ 的\emph{超迹}定义为一个线性函数
+$$
+{\rm sTr}(A)=\sum_{i,j=1}^{n+m} \lambda_{ij}a_{ij},\ \lambda_{ij}\in \Bbb Z,
+$$
+使得 ${\rm sTr}\begin{pmatrix} 1& 0\\ 0& 0\end{pmatrix}=n$，且对任意 $R$ 与 $A,B\in {\rm Mat}_{n|m}(R)$ 有 ${\rm sTr}(AB)={\rm sTr}(BA)$。于是必有 ${\rm sTr}(A)={\rm Tr}(A_{00})+\varepsilon {\rm Tr}(A_{11})$，其中 $\varepsilon\in \Bbb Z$；再取 $A,B$ 除 $A_{01},B_{10}$ 外所有块为零，即得 $\varepsilon =-1$。因此 $A$ 的超迹必须由下述公式定义：
+$$
+{\rm sTr}(A)={\rm Tr}(A_{00})-{\rm Tr}(A_{11}).
+$$
+
+现在把行列式的定义推广到超情形。对有限维代数 $R$ 与 $C\in {\rm Mat}_{n|m}(\Bbb R)$，我们希望有
+\begin{equation}\label{expone}
+{\rm sdet}(e^C)=e^{{\rm sTr}C}=e^{{\rm Tr}(C_{00})-{\rm Tr}(C_{11})},
+\end{equation}
+它推广了迹与行列式的通常性质。于是在对角块矩阵 $C=C_{00}\oplus C_{11}$ 的情形得到
+$$
+{\rm sdet}(e^C)=\frac{\det(e^{C_{00}})}{\det(e^{C_{11}})}.
+$$
+因此若 $A=A_{00}\oplus A_{11}$ 是对角块矩阵，则必须有
+$$
+{\rm sdet}A=\frac{\det A_{00}}{\det A_{11}}.
+$$
+这表明不能指望超行列式是 $A$ 的矩阵元的多项式——它只能是定义在某个开子集上的有理函数。事实上，若要求通常的性质 ${\rm sdet}(AB)={\rm sdet}(A){\rm sdet}(B)$，则只有一种可能。设
+$$
+A=\begin{pmatrix} 1 & b\\ 0& 1\end{pmatrix}
+\begin{pmatrix} a_+ & 0\\ 0& a_-\end{pmatrix}
+\begin{pmatrix} 1 & 0\\ c& 1\end{pmatrix}=\begin{pmatrix} a_++ba_-c & ba_-\\ a_-c& a_-\end{pmatrix}.
+$$
+由 \eqref{expone}，必须有
+$$
+{\rm sdet} \begin{pmatrix} 1 & b\\ 0& 1\end{pmatrix}={\rm sdet} \begin{pmatrix} 1 & 0\\ c& 1\end{pmatrix}=1,
+$$
+因此
+$$
+{\rm sdet}(A)=\frac{\det a_+}{\det a_-}.
+$$
+换言之，超行列式必须由公式
+$$
+{\rm sdet}(A)=\frac{\det(A_{00}-A_{01}A_{11}^{-1}A_{10})}
+{\det(A_{11})}
+$$
+定义，前提是 $A_{11}$ 可逆；否则超行列式无定义。
+
+该函数也称为 $A$ 的\emph{Berezinian}，记作 ${\rm Ber}(A)$。于是当 $m=0$ 时有 ${\rm Ber}(A)=\det(A)$，当 $n=0$ 时有 ${\rm Ber}(A)=(\det A)^{-1}$。
+
+\begin{remark} 作为对照，回忆：若 $A$ 是纯偶的分块矩阵，则
+$$
+\det(A)=\det(A_{00}-A_{01}A_{11}^{-1}A_{10})\det(A_{11}).
+$$
+\end{remark}
+
+% [Tutor Note: 超迹的“循环性”${\rm sTr}(AB)={\rm sTr}(BA)$ 与超行列式的乘法性都由分块结构唯一确定，其符号来自奇矩阵元的交换。具体核对：${\rm sTr}(AB)-{\rm sTr}(BA)={\rm Tr}(A_{00}B_{00})-{\rm Tr}(B_{00}A_{00})+{\rm Tr}(A_{01}B_{10})+{\rm Tr}(B_{10}A_{01})-\dots$，其中偶-偶块由普通迹的循环性相消，而奇-奇块 ${\rm Tr}(A_{01}B_{10})$ 与 ${\rm Tr}(B_{10}A_{01})$ 因两个奇元素换位反交换而恰好相差一个负号，于是也相消；若 $A_{11}$ 前不带负号，奇-奇项就不会抵消，循环性便被破坏。这正是 ${\rm sTr}(A)={\rm Tr}(A_{00})-{\rm Tr}(A_{11})$ 中负号的来源。另外，$A_{11}$ 不可逆时超行列式确实无定义（不同于普通行列式在奇异矩阵处仍为零）。]
+
+\begin{proposition} (i) 对任意 $A,B\in {\rm Mat}_{n|m}(R)$，只要 $A_{11},B_{11}$ 可逆，就有
+$$
+{\rm Ber}(AB)={\rm Ber}(A){\rm Ber}(B).
+$$
+
+(ii) 若 $R$ 有限维，$A(t)\in {\rm Mat}_{n|m}(R)$ 是 $0$ 附近的 $C^1$ 函数且 $A(0)$ 可逆，则
+$$
+\tfrac{d}{dt}|_{t=0}{\rm Ber}(A(t))={\rm sTr}(A'(0)A(0)^{-1}){\rm Ber}(A(0)).
+$$
+
+(iii) 若 $R$ 有限维，则对任意 $C\in {\rm Mat}_{n|m}(R)$ 有
+$$
+{\rm Ber}(e^C)=e^{{\rm sTr}C}.
+$$
+\end{proposition}
+
+\begin{proof} (i) 由三角分解可见，只需考虑情形
+$$
+A=\begin{pmatrix} 1 & 0\\ X &1\end{pmatrix},\ 
+B=\begin{pmatrix} 1 & Y\\ 0 &1\end{pmatrix},
+$$
+其中 $X,Y$ 是矩阵元为奇的矩阵，于是
+$$
+AB=\begin{pmatrix} 1 & Y\\ X &1+XY\end{pmatrix}.
+$$
+此时所需恒等式为
+$$
+\det(1-Y(1+XY)^{-1}X)=\det(1+XY).
+$$
+为证明该恒等式，回忆 $X: V_0\to V_1\otimes R$ 且 $Y: V_1\to V_0\otimes R$。我们有 \scriptsize
+$$
+\det(1-Y(1+XY)^{-1}X)=\sum_{k\ge 0}(-1)^k {\rm Tr}(Y(1+XY)^{-1}X|_{\Lambda^k V_0})=
+$$
+$$
+=\sum_{k\ge 0}(-1)^k{\rm sTr}(Y(1+XY)^{-1}|_{\Lambda^kV_1}\circ X|_{\Lambda^kV_0})=\sum_{k\ge 0}(-1)^k{\rm sTr}(XY(1+XY)^{-1}|_{\Lambda^kV_1})
+$$
+$$
+\sum_{k\ge 0}{\rm Tr}(XY(1+XY)^{-1}|_{S^k\Pi V_1})=\det(1-XY(1+XY)^{-1})^{-1}=\det(1+XY).
+$$ \normalsize
+
+(ii) 由 (i) 可用 $A(t)A(0)^{-1}$ 代替 $A(t)$，故只需考虑 $A(0)=1$ 的情形，此时结论容易由定义得出。
+
+(iii) 考虑函数 $f(t):={\rm Ber}(e^{Ct})$。由 (ii) 它满足微分方程 $f'(t)={\rm sTr}(C)f(t)$，且 $f(0)=1$。因此 $f(t)=e^{{\rm sTr}(C)t}$，令 $t=1$ 即得结论。
+\end{proof}
+
+% [Tutor Note: 证明 (i) 中关键的一步是恒等式 $\det(1-Y(1+XY)^{-1}X)=\det(1+XY)$，它是 Sylvester 行列式恒等式 $\det(1-AB)=\det(1-BA)$ 的超版本（此处 $A=Y(1+XY)^{-1}$、$B=X$ 并非对易，故需要外代数上的展开）。中间三个式子把普通迹与外幂 $\Lambda^k$ 的求和按“超迹 = 偶迹减奇迹”重排：对 $V_0$ 上的外幂求和给出 $\det$，对 $V_1$ 上的外幂求和给出逆 $\det$，而把 $V_1$ 换成 $\Pi V_1$ 恰好把外幂换成对称幂 $S^k$，于是两者相抵得到 $\det(1+XY)$。核对时可先取 $X,Y$ 为纯偶（普通交换情形）验证符号，再看奇情形是否多出 $(-1)^k$。]
+
+\subsection{超区域上的积分}
+
+我们现在要建立超流形上的积分理论。在这样做之前，先回忆通常流形上的做法。此时步骤如下。
+
+1. 定义 $\Bbb R^n$ 中区域上紧支（例如光滑）函数的积分。
+
+2. 求积分在坐标变换下的变换公式（即找出因子 $|J|$，其中 $J$ 是 Jacobi 行列式）。
+
+3. 把流形上的\emph{密度}定义为一个局部与函数相同、但在坐标变换下乘以 $|J|$ 的量（真正的函数则什么都不乘）。然后用单位分解定义流形上紧支密度的积分。积分与选取无关，由换元公式与密度的定义保证。
+
+现在我们在超流形上实现这一纲领。首先定义超区域上的积分。
+
+设 $V=V_0\oplus V_1$ 是超向量空间。$V$ 的\emph{Berezinian} 是直线 $\Lambda^{\rm top}V_0^*
+\otimes \Lambda^{\rm top}V_1$（其中 $V_0,V_1$ 视为通常空间）。设 $V$ 配备其 Berezinian 的一个非零元素 $dv$（称为\emph{超体积元}）。
+
+设 $U_0$ 是 $V_0$ 的开集，$f\in C^\infty(U_0)\otimes
+\Lambda V_1^*$ 是超区域 $U:=U_0\times V_1$ 上紧支的光滑函数（即
+$f=\sum f_i\otimes \omega_i$，$f_i\in C^\infty(U_0)$，$\omega_i\in
+\Lambda V_1^*$，且各 $f_i$ 紧支）。设 $dv_0,dv_1$ 是 $V_0,V_1$ 上的体积形式，使得
+$dv=dv_0/dv_1$。
+
+\begin{definition} 积分 $\int_U f(v)dv$
+定义为 $\int_{U_0}(f(v),(dv_1)^{-1})dv_0$。
+\end{definition}
+
+显然，该量只依赖于 $dv$，而不分别依赖于 $dv_0$ 与 $dv_1$。
+
+于是，$\int_U f(v)dv$ 定义为 $f$ 的适当归一化的最高次系数（关于 $\Lambda V_1^*$ 的某个齐次基展开）的积分。为把它写成坐标形式，设 $x_1,...,x_n,\xi_1,...,\xi_m$ 是 $V$ 上的线性坐标系，使得
+$dv=\frac{dx_1...dx_n}{d\xi_1...d\xi_m}$
+（这样的坐标系称为关于 $dv$ 的幺模坐标系）。则
+$\int_U f(v)dv$ 等于 $\int_{U_0} f_{\rm top}(x_1,...,x_n)dx_1...dx_n$，其中
+$f_{\rm top}$ 是 $f$ 的展开式中 $\xi_1...\xi_m$ 的系数。
+
+\subsection{Berezin 换元公式}
+
+设 $V$ 是向量空间，$f\in \Lambda V^*$，$v\in V$。
+用 $\frac{\partial f}{\partial v}$ 表示 $f$ 与 $v$ 缩并的结果。
+
+设 $U,U'$ 是超区域，$F: U\to U'$ 是态射。如上所述，给定 $U$ 上的线性坐标 $x_1,...,x_n,\xi_1,...,\xi_m$
+与 $U'$ 上的 $y_1,...,y_p,\eta_1,...,\eta_q$，可以通过把 $y_i$ 与 $\eta_j$ 表示为 $x_i$ 与
+$\xi_j$ 的函数来描述 $F$。用下述公式定义 $F$ 的\emph{Berezin 矩阵} $A:=DF(x,\xi)$：
+$$
+A_{00}=(\tfrac{\partial y_i}{\partial x_k}),\
+A_{01}=(\tfrac{\partial y_i}{\partial \xi_\ell}),\
+A_{10}=(\tfrac{\partial \eta_j}{\partial x_k}),\
+A_{11}=(\tfrac{\partial \eta_j}{\partial \xi_\ell}).
+$$
+显然，这是 Jacobi 矩阵的超类比。
+
+超微积分的主要定理如下。
+
+\begin{theorem}\label{Ber}（Berezin）
+设 $g$ 是 $U'$ 上紧支的光滑函数，$F: U\to U'$ 是同构。
+设 $dv,dv'$ 分别是 $U,U'$ 上的超体积元。则
+$$
+\int_{U'} g(v')dv'=\int_U g(F(v))|{\rm Ber}(DF(v))|dv,
+$$
+其中 Berezinian 关于幺模坐标系计算。
+\end{theorem}
+
+这里若
+$f(\xi)=a+$ 含 $\xi_j$ 的项，$a\in \Bbb R$，$a\ne 0$，则按定义，当 $a>0$ 时 $|f(\xi)|:=f(\xi)$，当 $a<0$ 时 $|f(\xi)|:=-f(\xi)$。
+
+\begin{proof} 通常微积分的链式法则逐字推广到超微积分。因此，由于
+${\rm Ber}(AB)={\rm Ber}(A){\rm Ber
+}(B)$，只要对两个同构 $F_1: U_2\to U_1$ 与 $F_2: U_3\to U_2$ 命题成立，则对复合 $F_1\circ F_2$ 也成立。
+
+设
+$F(x_1,...,x_n,\xi_1,...,\xi_m)=(x_1',...,x_n',\xi_1',...,\xi_m')$。可见只需考虑下列情形。
+
+1. $x_i'$ 只依赖于 $x_k$，$k=1,...,n$，且 $\xi_j'=\xi_j$。
+
+2. $x_i'=x_i+z_i$，其中 $z_i$ 属于由 $\xi_j$ 生成的理想，且 $\xi_j'=\xi_j$。
+
+3. $x_i'=x_i$。
+
+事实上，显然任何同构 $F$ 都是 $1,2,3$ 型同构的复合。
+
+在情形 1 中，定理的结论由通常的换元公式得出。因此只需考虑情形 2 与 3。
+
+在情形 2 中，只需考虑 $F$ 只改变一个坐标的情形，即
+$x_1'=x_1+z$，且当 $i\ge 2$ 时 $x_i'=x_i$。此时需要证明
+$$
+g(x_1+z,x_2,...,x_n,\xi)(1+\tfrac{\partial z}{\partial
+  x_1})-g(x_1,x_2,...,x_n,\xi)
+$$
+的积分为零。但按 $z$ 的幂展开即容易看出这一点，因为所有项显然都是关于 $x_1$ 的全导数。
+
+在情形 3 中，也可假定 $\xi_j'=\xi_j$（$j\ge 2$），类似的（其实更简单的）论证即可证明结论。
+\end{proof}
+
+% [Tutor Note: Berezin 换元公式的 Jacobi 因子是 ${\rm Ber}(DF)$ 而不是普通行列式，这一点常被误解。直观理由：偶坐标的换元贡献一个普通 Jacobi 行列式，而奇坐标的“积分”$\int d\xi$ 在换元 $\xi\mapsto\xi'$ 下贡献的是变换矩阵行列式的倒数（因为 $\int d\xi\,\xi=1$ 要求 $\int d\xi'\,\xi'=1$，而 $\xi'=A\xi$ 时需乘 $A^{-1}$），两者相除正是 ${\rm Ber}=\det A_{00}/\det A_{11}$（在块对角情形）。另外 $|{\rm Ber}|$ 的绝对值只对偶部分（常数项）取，奇部分的系数不参与取绝对值，故定义中要求常数项 $a\ne 0$。核对办法：在超区域 $U=U'\subset\Bbb R^{1|1}$ 上取 $F(x,\xi)=(x+\xi a,\xi)$ 之类简单换元，直接按定义比较两边。]
+
+\subsection{超流形上的积分}
+
+现在定义超流形上的密度。设 $M$ 是超流形，$\lbrace{U_{\alpha}\rbrace}$ 是 $M$ 的开覆盖，并带同构
+$f_{\alpha}: U_\alpha\to U_{\alpha}'$，其中 $U_{\alpha}'$ 是 $\Bbb R^{n|m}$ 中的超区域。设 $g_{\alpha\beta}: f_\beta (U_\alpha\cap U_\beta)\to
+f_\alpha(U_\alpha\cap U_\beta)$ 是转移映射
+$f_\alpha f_\beta^{-1}$。则 $M$ 上的密度 $s$ 是对每个 $\alpha$ 选取元素
+$s_\alpha\in C^\infty_M(U_\alpha)$，
+使得在 $U_\alpha\cap U_\beta$ 上有
+$s_\beta(z)=s_\alpha(z) |{\rm Ber}(g_{\alpha\beta})(f_\beta(z))|$。
+
+\begin{remark} 显然，$M$ 上的密度是 $M$ 上某个层的整体截面，该层称为密度层。
+\end{remark}
+
+现在，对 $M$ 上任意（紧支的）密度 $\omega$，积分
+$\int_M \omega$ 有定义。具体做法与通常微积分相同：取单位分解 $\phi_\alpha$，
+使 ${\rm Supp}\phi_\alpha\subset (U_\alpha)_0$ 为紧子集，
+并令 $\int_M\omega:=\sum_\alpha \int_M\phi_\alpha\omega$
+（其中各项可借助 $f_\alpha$ 定义）。Berezin 定理保证最终结果与所作选取无关。
+
+\subsection{奇空间中的高斯积分}
+
+现在把高斯积分理论推广到奇情形；在偶情形下，它曾是量子力学与场论路径积分方法的基础。
+
+先回忆\emph{Pfaffian} 的概念。
+设 $A$ 是偶数阶斜对称矩阵。
+则 $A$ 的行列式是 $A$ 的矩阵元的某个多项式的平方。该多项式
+由这一条件在相差一个符号的意义下确定。
+通常通过要求该多项式在矩阵 $\begin{pmatrix}
+0&1\\ -1&0\end{pmatrix}$ 的直和上的取值为 $1$ 来固定符号。按此约定，该多项式
+称为 $A$ 的 Pfaffian，记作 ${\rm Pf}A$。
+Pfaffian 显然具有性质：对任意矩阵 $X$，有 ${\rm Pf}(X^TAX)=
+{\rm Pf}(A)\det(X)$。
+
+现在设 $V$ 是 $2m$ 维向量空间，带体积元 $dv$，$B$
+是 $V$ 上的斜对称双线性型。定义 $B$ 的 Pfaffian ${\rm Pf}B$
+为 $B$ 在任意幺模基下的矩阵的 Pfaffian
+（由上述变换公式，它与基的选取无关）。容易看出（把 $B$ 化为标准形），
+$$
+\frac{\Lambda^mB}{m!}={\rm Pf}(B)dv.
+$$
+用矩阵的语言，这给出 $2m$ 阶斜对称矩阵的 Pfaffian 的下述（众所周知的）公式：
+$$
+{\rm Pf}(A)=\sum_{\sigma\in \Pi_m}\varepsilon_\sigma
+\prod_{i\in \lbrace{1,...,2m\rbrace},
+i<\sigma(i)}a_{i\sigma(i)},
+$$
+其中 $\Pi_m$ 是 $\lbrace{1,...,2m\rbrace}$ 的配对集合，
+$\varepsilon_\sigma$ 是把 $1,...,2m$ 送到 $i_1,\sigma(i_1),...,i_m,\sigma(i_m)$
+的置换的符号（其中对所有 $r$ 有 $i_r<\sigma(i_r)$）。
+例如 $m=2$（即 4 乘 4 矩阵）时，
+$$
+{\rm Pf}(A)=a_{12}a_{34}+a_{14}a_{23}-a_{13}a_{24}.
+$$
+
+现在考虑维数为 $2m$ 的奇向量空间 $V$，带体积元 $d\xi$。
+设 $B$ 是 $V$ 上的对称双线性型（即
+$\Pi V$ 上的斜对称型）。
+设 $\xi_1,...,\xi_{2m}$ 是 $V$ 上的幺模线性坐标（即
+$d\xi=d\xi_1\wedge...\wedge d\xi_{2m}$）。于是若 $\xi=(\xi_1,...,\xi_{2m})$，
+则 $B(\xi,\xi)=\sum_{i,j}b_{ij}\xi_i\xi_j$，其中 $b_{ij}$ 是斜对称矩阵。
+
+\begin{proposition}\label{pfaff}
+$$
+\int_V e^{\frac{1}{2}B(\xi,\xi)}(d\xi)^{-1}={\rm Pf}(B).
+$$
+\end{proposition}
+
+\begin{proof}
+该积分等于 $\frac{1}{m!}\frac{\wedge^m B}{d\xi}$，而这正是 ${\rm Pf}(B)$。
+\end{proof}
+
+该公式有如下重要的特殊情形。
+设 $Y$ 是有限维的奇向量空间，
+$V=Y\oplus Y^*$。空间 $Y$ 有标准的体积元
+$dv=dydy^*$，定义如下：若
+$e_1,...,e_m$ 是 $Y$ 的基，$e_1^*,...,e_m^*$
+是 $Y^*$ 的对偶基，则 $dydy^*=e_1\wedge e_1^*\wedge...\wedge e_n\wedge e_n^*$。
+
+设 $A: Y\to Y$ 是线性算子。则可以如下定义奇空间 $Y$ 上的偶光滑函数
+$S$：$S(y,y^*)=(Ay,y^*)$。
+更具体地说，若 $\xi_i$ 是对应于基 $e_i$ 的 $Y$ 上的坐标，
+$\eta_i$ 是 $Y^*$ 上对偶的坐标组，则
+$$
+S(\xi_1,...,\xi_m,\eta_1,...,\eta_m)=\sum_{i,j} a_{ij}\xi_j\eta_i,
+$$
+其中 $(a_{ij})$ 是 $A$ 在基 $e_i$ 下的矩阵。
+
+\begin{proposition}\label{detp}
+$$
+\int_V e^S(dv)^{-1}=(-1)^{\frac{n(n-1)}{2}}\det A.
+$$
+\end{proposition}
+
+\begin{proof} 我们有 $S(y,y_*)=\frac{1}{2}B((y,y_*),(y,y_*))$，
+其中 $B$ 是 $\Pi V$ 上由公式
+$$
+B((y,y^*),(w,w^*))=(Ay,w^*)-(Aw,y^*).
+$$
+给出的斜对称型。容易看出 ${\rm Pf}(B)=(-1)^{\frac{n(n-1)}{2}}\det(A)$，因此
+命题 \ref{detp} 由命题 \ref{pfaff} 推出。
+
+另一证明可通过对最高次系数的直接计算得到。
+\end{proof}
+
+% [Tutor Note: 奇高斯积分 $\int_V e^{\frac{1}{2}B(\xi,\xi)}(d\xi)^{-1}={\rm Pf}(B)$ 的本质是：$e^{\frac{1}{2}B}$ 展开后只有 $\frac{1}{m!}(\frac{1}{2}B)^m$ 这一项在 Berezin 积分下非零，而 $\frac{1}{m!}\Lambda^mB={\rm Pf}(B)d\xi$ 正是 Pfaffian 的定义式。注意 $B$ 在奇空间上是“对称型”（在通常意义下反对称），所以 $b_{ij}$ 是斜对称矩阵，${\rm Pf}$ 才有意义。命题 \ref{detp} 中的 $(-1)^{\frac{n(n-1)}{2}}$ 来自把 $Y\oplus Y^*$ 上的标准斜对称型 $B((y,y^*),(w,w^*))=(Ay,w^*)-(Aw,y^*)$ 与 $\det A$ 的标准 Pfaffian 约定相比较；核对时可取 $n=1$：此时 $\int e^{a\eta\xi}d\eta\,d\xi=a$，符号因子为 $(-1)^0=1$，与公式一致。]
+
+\subsection{奇情形的 Wick 公式}
+
+设 $V$ 是 $2m$ 维奇空间，带体积形式 $d\xi$，
+$B\in S^2V^*$ 是非退化型（在超意义下对称，在通常意义下反对称）。
+设 $\lambda_1,...,\lambda_n$ 是 $V$ 上的线性函数。
+则 $\lambda_1,...,\lambda_n$ 可视为超空间 $V$ 上的奇光滑函数。
+\begin{theorem}\label{wickodd}
+$$
+\int_V \lambda_1(\xi)...\lambda_n(\xi)e^{-\frac{1}{2}B(\xi,\xi)}(d\xi)^{-1}=
+{\rm Pf}(-B){\rm Pf}(B^{-1}(\lambda_i,\lambda_j)).
+$$
+（按定义，若 $n$ 为奇则该积分为零。）
+换言之，有：
+$$
+\int_V \lambda_1(\xi)...\lambda_n(\xi)e^{-\frac{1}{2}B(\xi,\xi)}(d\xi)^{-1}=
+$$
+$$
+{\rm Pf}(-B)\sum_{\sigma\in \Pi_m}\varepsilon_\sigma
+\prod_{i\in \lbrace{1,...,2m\rbrace},
+i<\sigma(i)}B^{-1}(\lambda_i,\lambda_{\sigma(i)}).
+$$
+\end{theorem}
+
+\begin{proof}
+我们证明第二个公式。
+选取 $V$ 的基 $e_i$，使 $B$ 的标准形为：若
+$j=2i-1,l=2i$ 则 $B(e_j,e_l)=1$，
+而对其他 $j<l$ 有 $B(e_j,e_l)=0$。
+由于公式两端关于 $\lambda_1,...,\lambda_n$ 都是多线性的，
+只需对 $\lambda_1=e_{i_1}^*$,...,
+$\lambda_n=e_{i_n}^*$ 的情形验证。这通过直接计算即可容易完成
+（右端求和中只有一项可能非零）。
+\end{proof}
+
+% [Tutor Note: 奇 Wick 公式中 ${\rm Pf}(-B)$ 的符号来自指数上的负号：$\int e^{-\frac{1}{2}B}$ 的“高斯积分”系数是 ${\rm Pf}(-B)$（对比命题 \ref{pfaff} 的正号），而 $\lambda$ 的多点函数部分按 Wick 定理缩并为 $\lambda_i$ 与 $\lambda_j$ 配对的乘积之和，其组合系数是 ${\rm Pf}(B^{-1}(\lambda_i,\lambda_j))$。当 $n$ 为奇时，$\lambda_1...\lambda_n$ 的宇称为奇，而 Berezin 积分只抽取最高次（$2m$ 次，偶）单项式，故积分为零——这就是公式中“按定义，若 $n$ 为奇则该积分为零”一句的含义。核对办法：取 $n=2$、$m=1$ 的最简情形，直接按 $\int d\xi\,\xi=1$ 计算，可得 $\int \lambda_1\lambda_2 e^{-B/2}=B^{-1}(\lambda_1,\lambda_2)$（符号由 $B$ 的约定决定）。]
+
+\begin{exercise} 设 $Y=\Bbb R^{\frac{n(n+1)}{2}+\frac{m(m-1)}{2}|mn}$
+是实超空间，其元素为在超意义下对称的矩阵 $$
+A=\begin{pmatrix} A_{00} & A_{01}\\ A_{10} & A_{11}\end{pmatrix}
+$$
+（其中 $A_{00}$ 是 $n$ 乘 $n$、$A_{11}$ 是 $m$ 乘 $m$），即 $A_{00}$ 对称、$A_{11}$ 斜对称、且 $A_{01}^T=A_{10}$。设
+$Y_+\subset Y$ 是那些满足
+$A_{00}>0$ 的矩阵构成的超区域。
+设 $dA$ 是 $Y$ 上的超体积元。
+设 $f$ 是 $Y_+$ 上紧支的光滑函数。
+证明
+$$
+\int_{Y_+\times \Bbb R^{n|m}}
+f(A)e^{-x^TA_{00}x-2x^TA_{01}\xi-\xi^TA_{11}\xi}dAdx(d\xi)^{-1}
+=
+$$
+$$
+=C\int_{Y_+}f(A){\rm Ber}(A)^{-1/2}dA.
+$$
+（$C$ 是常数）。问 $C$ 等于多少？
+\end{exercise}
+
+\begin{exercise} 证明 Amitsur–Levitzki 恒等式：
+若 $X_1,...,X_{2n}$ 是交换环上的 n 乘 n 矩阵，则
+$$
+\sum_{\sigma\in S_{2n}}
+(-1)^\sigma X_{\sigma(1)}...X_{\sigma(2n)}=0.
+$$
+
+\textbf{提示。}(a) 证明对任意矩阵元反交换的 n 乘 n 矩阵 $X$，
+有 $X^{2n}=0$（即证明 $X^{2k}$ 的迹对所有正整数
+$k$ 为零，然后对 $X^2$ 使用 Cayley–Hamilton 定理）。
+
+(b) 把它应用于 $X=\sum_{i=1}^{2n} X_i\xi_i$，其中 $\xi_i$ 是反交换变量。
+\end{exercise}
+
+\bigskip
+\noindent\rule{\textwidth}{0.6pt}

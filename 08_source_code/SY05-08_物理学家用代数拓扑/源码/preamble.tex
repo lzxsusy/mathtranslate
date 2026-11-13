@@ -1,0 +1,239 @@
+% =====================================================================
+%  preamble.tex —— 立川裕二《物理学家用代数拓扑》中文译注本 · 导言区
+%  Lead 独占；译者只读，不得修改（需要新宏请在 reports/ 里提）
+%  编译：xelatex（MiKTeX）+ ctexbook，B5
+% =====================================================================
+\usepackage[b5paper,top=21mm,bottom=21mm,left=19mm,right=19mm,headsep=5mm,footskip=9mm]{geometry}
+\usepackage{amsmath,amssymb,mathrsfs,bm}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,decorations.pathmorphing,positioning}
+\usepackage{xcolor}
+\usepackage{booktabs,array,multirow,longtable,multicol}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage{tcolorbox}
+\tcbuselibrary{most}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue!45!black,
+            bookmarksnumbered=true,
+            pdftitle={物理学家用代数拓扑（立川裕二 著，中文译注本）},
+            pdfauthor={立川裕二（Yuji Tachikawa）著，中文译注本}}
+
+\setlength{\parindent}{2em}
+\linespread{1.12}
+\allowdisplaybreaks[2]
+\setlength{\emergencystretch}{6em}
+\tolerance=3000
+\hbadness=10000
+
+% 圈号 ①–⑳ 归入 CJK 字符类，否则会落到 Latin 字体而缺字
+\xeCJKDeclareCharClass{CJK}{"2460 -> "2473}
+
+% ---------- 页眉页脚 ----------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.3pt}
+\fancyhead[LE]{\small\thepage}
+\fancyhead[RE]{\small\leftmark}
+\fancyhead[RO]{\small\thepage}
+\fancyhead[LO]{\small\rightmark}
+\renewcommand{\chaptermark}[1]{\markboth{\CTEXthechapter\quad #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\quad #1}}
+
+% ---------- 章节标题格式 ----------
+\ctexset{
+  chapter = {
+    format = \centering\Large\bfseries,
+    name = {第,章},
+    number = \arabic{chapter},
+    beforeskip = 18pt,
+    afterskip = 22pt,
+  },
+  section = {
+    format = \large\bfseries,
+    beforeskip = 14pt,
+    afterskip = 10pt,
+  },
+  subsection = {
+    format = \normalsize\bfseries,
+    beforeskip = 11pt,
+    afterskip = 6pt,
+  },
+  subsubsection = {
+    format = \normalsize\bfseries,
+    beforeskip = 9pt,
+    afterskip = 5pt,
+  },
+}
+
+% ---------- 公式：原文编号（章.序号，如 (2.1)），一律手工 \tag ----------
+% 用法： \begin{equation} ... \tag{2.1} \end{equation}
+%  或   \[ ... \tag{2.1} \]
+% 正文引用写纯文本「式 (2.1)」，不用 \eqref。
+
+% ---------- 陈述环境：编号照抄原文（手工），灰底（与底本一致）----------
+% 用法： \begin{definition}{2.1} …… \end{definition}
+\newtcolorbox{qmbox}{
+  enhanced, breakable, colback=black!5, colframe=black!5, boxrule=0pt,
+  arc=0pt, left=6pt, right=6pt, top=3pt, bottom=3pt,
+  before skip=4pt, after skip=4pt,
+}
+\newcommand{\qmstmt}[2]{\noindent\textbf{#1~#2.}\ \ignorespaces}
+\newenvironment{definition}[1]{\begin{qmbox}\qmstmt{定义}{#1}}{\end{qmbox}}
+\newenvironment{theorem}[1]{\begin{qmbox}\qmstmt{定理}{#1}}{\end{qmbox}}
+\newenvironment{lemma}[1]{\begin{qmbox}\qmstmt{引理}{#1}}{\end{qmbox}}
+\newenvironment{proposition}[1]{\begin{qmbox}\qmstmt{命题}{#1}}{\end{qmbox}}
+\newenvironment{corollary}[1]{\begin{qmbox}\qmstmt{推论}{#1}}{\end{qmbox}}
+\newenvironment{example}[1]{\begin{qmbox}\qmstmt{例}{#1}}{\end{qmbox}}
+% 原书的 Remark 一律是「无框斜体段 + 段末 ⌟」，不进灰底（已回页图核实 13 条 Remark 全部如此）；
+% 故 remark 环境排成普通段落，段末自动 \qedmark。
+\newenvironment{remark}[1]{\par\medskip\noindent\textbf{注~#1.}\ \ignorespaces}{\qedmark\par\medskip}
+\newenvironment{assumption}[1]{\begin{qmbox}\qmstmt{假设}{#1}}{\end{qmbox}}
+\newenvironment{notation}[1]{\begin{qmbox}\qmstmt{记号}{#1}}{\end{qmbox}}
+\newenvironment{question}[1]{\begin{qmbox}\qmstmt{问}{#1}}{\end{qmbox}}
+\newenvironment{problem}[1]{\begin{qmbox}\qmstmt{问题}{#1}}{\end{qmbox}}
+\newenvironment{exercise}[1]{\begin{qmbox}\qmstmt{练习}{#1}}{\end{qmbox}}
+\newenvironment{conjecture}[1]{\begin{qmbox}\qmstmt{猜想}{#1}}{\end{qmbox}}
+\newenvironment{claim}[1]{\begin{qmbox}\qmstmt{断言}{#1}}{\end{qmbox}}
+\newenvironment{note}[1]{\begin{qmbox}\qmstmt{注}{#1}}{\end{qmbox}}
+% 无编号版
+\newenvironment{definition*}{\begin{qmbox}\noindent\textbf{定义.}\ \ignorespaces}{\end{qmbox}}
+\newenvironment{proposition*}{\begin{qmbox}\noindent\textbf{命题.}\ \ignorespaces}{\end{qmbox}}
+\newenvironment{example*}{\begin{qmbox}\noindent\textbf{例.}\ \ignorespaces}{\end{qmbox}}
+\newenvironment{remark*}{\par\medskip\noindent\textbf{注.}\ \ignorespaces}{\qedmark\par\medskip}
+\newenvironment{theorem*}{\begin{qmbox}\noindent\textbf{定理.}\ \ignorespaces}{\end{qmbox}}
+\newenvironment{lemma*}{\begin{qmbox}\noindent\textbf{引理.}\ \ignorespaces}{\end{qmbox}}
+% 证明（原文常作行内 “Proof.”）
+\newenvironment{proof}[1][证明]{\par\medskip\noindent\textbf{#1.}\ \ignorespaces}{\hfill$\blacksquare$\par\medskip}
+
+% ---------- 原书“无框”块的收束记号 ----------
+% 原书对不放进灰底的段（多数是 Remark，也用于收束一段附注/讨论）用斜体正文 + 右下角 ⌟ 收尾。
+% 译稿保持“无框”体例：普通段落（引导词加粗），段末用 \qedmark。
+\newcommand{\qedmark}{\parfillskip=0pt\relax\hfill$\lrcorner$\par\parfillskip=0pt plus 1fil\relax}
+
+% ---------- 图：原书图有编号与题注（Figure 2.1: ...），手工编号 ----------
+% 用法：
+% \begin{center}
+%   \includegraphics[width=0.55\textwidth]{figures/fig_p012_a.png}\\[2pt]
+%   {\small 图 2.1：流形的坐标卡}
+% \end{center}
+\newcommand{\figtitle}[2]{\par\smallskip\noindent{\centering\small 图 #1：#2\par}\smallskip}
+
+% ---------- “本节重点” 与 “章末评注”（全局开关）----------
+\newif\ifshowtakeaway       \showtakeawaytrue
+\newif\ifshowchapterreview  \showchapterreviewtrue
+
+\newtcolorbox{takeawaybox}{
+  enhanced, colback=blue!4!white, colframe=blue!55!black,
+  boxrule=0.4pt, arc=1.5pt, left=5pt, right=5pt, top=3pt, bottom=3pt,
+  title={\small\bfseries 本节重点}, fonttitle=\small\bfseries,
+  coltitle=white, colbacktitle=blue!55!black,
+  attach boxed title to top left={xshift=4pt,yshift=-2pt},
+}
+\newtcolorbox{reviewbox}{
+  enhanced, breakable, colback=orange!3!white, colframe=orange!65!black,
+  boxrule=0.4pt, arc=1.5pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  title={\small\bfseries 本章回顾与评注}, fonttitle=\small\bfseries,
+  coltitle=white, colbacktitle=orange!65!black,
+  attach boxed title to top left={xshift=4pt,yshift=-2pt},
+}
+\newcommand{\takeaway}[1]{\ifshowtakeaway\begin{takeawaybox}\small #1\end{takeawaybox}\fi}
+\newcommand{\chapterreview}[1]{\ifshowchapterreview\begin{reviewbox}\small #1\end{reviewbox}\fi}
+
+% ---------- 常用记号 ----------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\CP}{\mathbb{C}\mathrm{P}}
+\newcommand{\RP}{\mathbb{R}\mathrm{P}}
+\newcommand{\HP}{\mathbb{H}\mathrm{P}}
+\newcommand{\dR}{d}            % 微分 d（斜体，与底本一致）
+\newcommand{\ii}{i}            % 虚数单位 i
+\newcommand{\ee}{e}            % 自然指数 e
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\coker}{\operatorname{coker}}
+\newcommand{\ind}{\operatorname{ind}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\Real}{\operatorname{Re}}
+\newcommand{\Imag}{\operatorname{Im}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\Aut}{\operatorname{Aut}}
+\newcommand{\Diff}{\operatorname{Diff}}
+\newcommand{\Sym}{\operatorname{Sym}}
+\newcommand{\Alt}{\operatorname{Alt}}
+\newcommand{\Span}{\operatorname{span}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\vol}{\operatorname{vol}}
+\newcommand{\Op}{\operatorname{Op}}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\sm}{\setminus}
+\newcommand{\dd}{\mathrm{d}}   % 上同调的微分（直立 d，用于 d 算子与外微分混排时）
+\newcommand{\bd}{\partial}
+\newcommand{\ox}{\otimes}
+\newcommand{\wx}{\wedge}
+\newcommand{\oxa}{\oplus}
+\newcommand{\SL}{\mathrm{SL}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\Spin}{\mathrm{Spin}}
+\newcommand{\Pin}{\mathrm{Pin}}
+\newcommand{\Sp}{\mathrm{Sp}}
+\newcommand{\Or}{\mathrm{O}}
+\newcommand{\Un}{\mathrm{U}}
+\newcommand{\pin}{\mathrm{pin}}
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\abs}[1]{\lvert #1\rvert}
+\newcommand{\ip}[2]{\left\langle #1,#2\right\rangle}
+\newcommand{\pa}{\partial}
+\newcommand{\wt}[1]{\widetilde{#1}}
+\newcommand{\wh}[1]{\widehat{#1}}
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\ul}[1]{\underline{#1}}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\newcommand{\slim}{\operatorname{s-lim}}
+\newcommand{\wlim}{\operatorname{w-lim}}
+\newcommand{\Dom}{\operatorname{Dom}}
+\newcommand{\Ran}{\operatorname{Ran}}
+\newcommand{\Ker}{\operatorname{Ker}}
+\newcommand{\Hm}{\mathrm{H}}
+\newcommand{\pt}{\mathrm{pt}}
+\newcommand{\Bord}{\mathrm{Bord}}
+
+% ---------- 行内小标题（原文 “Number theory:” 这类粗体引导词）----------
+\newcommand{\para}[1]{\par\medskip\noindent\textbf{#1}\ \ignorespaces}
+
+% ---------- Dirac 记号 ----------
+\newcommand{\bra}[1]{\langle #1|}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\braket}[2]{\langle #1|#2\rangle}
+\newcommand{\mel}[3]{\langle #1|#2|#3\rangle}
+\newcommand{\expv}[1]{\langle #1\rangle}
+
+% ---------- 列表间距（原文 bullet 列表密集）----------
+\setlist[itemize]{topsep=3pt,itemsep=2pt,parsep=0pt,leftmargin=2em}
+\setlist[enumerate]{topsep=3pt,itemsep=2pt,parsep=0pt,leftmargin=2em}
+
+% ---------- 标题页信息 ----------
+\newcommand{\booktitlezh}{物理学家用代数拓扑}
+\newcommand{\booktitleen}{Algebraic topology for physicists}
+\newcommand{\bookauthor}{立川裕二（Yuji Tachikawa）}
+
+% ===== 译者批注（正文可见的小框；谨慎使用，默认只用行内批注）=====
+\newcommand{\tutornote}[1]{%
+  \par\smallskip\noindent
+  \begin{tcolorbox}[colback=gray!7,colframe=gray!55,boxrule=0.4pt,arc=1pt,
+    left=4pt,right=4pt,top=3pt,bottom=3pt,fontupper=\small,breakable]
+  \textbf{译者批注}\quad #1%
+  \end{tcolorbox}\smallskip}

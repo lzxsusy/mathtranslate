@@ -1,0 +1,226 @@
+# playbook.yaml —— 下一次研讨班读到的唯一规则源
+# 版本规则：版本号 +0.1 / 周期；每条规则必须有 evidence 与 verify；≤40 条
+# 渲染：python tools/meta/playbook_render.py --role chair --out build/chair_prompt.md
+version: 0.3.0
+updated: "2026-11-10"
+season: 2026Q4
+owner: human-principal
+notes: >
+  初始版本。规则来自 v0.2 工程备忘的十条教训与《研讨班提效建议_v0.1.md》，
+  并叠加 v0.3 的评分/递归改进约束。Phase 0 校准后只允许改 0.3.x 小版本。
+
+rules:
+  - id: PB-001
+    title: 两页样张先过闸
+    status: active
+    category: SPEC
+    applies_to: [S6, Chair, Mentor]
+    rule: >-
+      S6 先提交两页样张（含一个完整推导、一个定义、一处边界说明），
+      Mentor/人类通过后才写全稿；样张未过不得进入 S6 全稿。
+    evidence: [L-0001, L-0006]
+    verify: "reviews/checkpoint_S6.md 记录样张路径与结论；无样张的 S6 视为未开始"
+    since: 0.3.0
+    sunset_after: 3
+
+  - id: PB-002
+    title: 三读者独立冷读，第一轮禁互看
+    status: active
+    category: QUALITY
+    applies_to: [S3, Reader]
+    rule: >-
+      三名读者在写报告前不得阅读彼此报告、不得引用彼此结论；
+      每人独立通读全文，报告须含自己的疑点清单。
+    evidence: [L-0002]
+    verify: "reports/rXX.md 的首版时间戳早于任何互评；transcript 不在 S3 出现"
+    since: 0.3.0
+    sunset_after: 6
+
+  - id: PB-003
+    title: 实质断言必须有锚点
+    status: active
+    category: QUALITY
+    applies_to: [S3, S4, S6, Reader, Chair]
+    rule: >-
+      每条可核查的实质断言必须带 [src p.N] / [eq x.y] / [fig x.y]；
+      无锚点的断言只能写成「问题/猜测」，不得写成结论。
+    evidence: [L-0003]
+    verify: "check_l1.py L1-C1 ≥0.9；抽查 10 条 claim 的锚点可解析"
+    since: 0.3.0
+    sunset_after: 6
+
+  - id: PB-004
+    title: 公式真值只认页图，关键公式独立复算
+    status: active
+    category: QUALITY
+    applies_to: [S1, S3, S6, Chair, Textual Critic]
+    rule: >-
+      公式的最终依据是页图，不是文字层也不是译本；关键公式（展示公式与所有
+      进入结论的式子）必须独立复算，检查量纲、极限/特例、符号与方向，并留痕。
+    evidence: [L-0002, L-0003]
+    verify: "note 中展示公式 checked=true 比例 ≥0.9；errata 有复算记录"
+    since: 0.3.0
+    sunset_after: 6
+
+  - id: PB-005
+    title: 译本是被告，不是法官
+    status: active
+    category: QUALITY
+    applies_to: [S3, S4, S6]
+    rule: >-
+      译本只用于定位与表述参考；与原文冲突时以原文/页图为准；
+      不得把译本措辞当作原文断言，不得用「译本这么写」证明任何事。
+    evidence: [L-0003]
+    verify: "challenges 中无「译本说」作为唯一依据；errata 记录译本误读"
+    since: 0.3.0
+    sunset_after: 6
+
+  - id: PB-006
+    title: 质询必须有靶子
+    status: active
+    category: QUALITY
+    applies_to: [S4, Examiner, Reader]
+    rule: >-
+      每条质疑必须指向一个具体靶子：claim id、页码、公式号或文件行号；
+      无靶子的质疑只能进「开放问题」，不计入对抗质量。
+    evidence: [L-0003]
+    verify: "challenges/*.md 每条含 target；P3 有靶子比例 ≥0.9"
+    since: 0.3.0
+    sunset_after: 6
+
+  - id: PB-007
+    title: 圆桌只裁三个真分歧
+    status: active
+    category: HUMAN
+    applies_to: [S5, Chair]
+    rule: >-
+      S5 只裁 3 个会改变笔记内容的分歧；其余记入开放问题。
+      裁决必须可定位（文件/公式/页码），并记录 accept/reject/open 三态。
+    evidence: [L-0006]
+    verify: "transcript.md 的 roundtable 段恰好 3 题，每题有 anchor 与裁决"
+    since: 0.3.0
+    sunset_after: 6
+
+  - id: PB-008
+    title: Chair 从零重写，不做拼接
+    status: active
+    category: SPEC
+    applies_to: [S6, Chair]
+    rule: >-
+      note 由 Chair 按论证主线从零写；不得把三份报告段落拼接、不得保留
+      「r01 认为/r02 认为」式并置；分歧先裁决再写。
+    evidence: [L-0001]
+    verify: "note 中无「报告说/读者认为」句式；章节间有显式过渡"
+    since: 0.3.0
+    sunset_after: 6
+
+  - id: PB-009
+    title: brief 预置本篇雷区清单
+    status: active
+    category: SPEC
+    applies_to: [S2, Chair]
+    rule: >-
+      S2 的 brief.md 必须列出与本篇相关的 M1–M12 雷区（至少 3 条），
+      并写明「本篇最可能踩哪一条、在哪一节」。
+    evidence: [L-0003, L-0006]
+    verify: "brief.md 的雷区段可逐条对应 errata 的类别；S3 报告能引用"
+    since: 0.3.0
+    sunset_after: 6
+
+  - id: PB-010
+    title: 文件即消息，禁止轮询
+    status: active
+    category: HUMAN
+    applies_to: [全部角色]
+    rule: >-
+      每个角色完成后写 <role>.done（产出路径 + 一句话结论 + 阻塞项）；
+      协作方读文件，不反复询问「好了吗」，不 sleep 轮询。
+    evidence: [L-0004]
+    verify: "事件日志中轮询/等待类调用占比 <5%；.done 文件齐全"
+    since: 0.3.0
+    sunset_after: 6
+
+  - id: PB-011
+    title: Mentor 独立盲评，禁止 fork
+    status: active
+    category: ANTI
+    applies_to: [S9, Mentor]
+    rule: >-
+      Mentor 必须使用全新会话（fresh context）；禁止 fork Chair；
+      输入只含冻结产物、rubric、匿名 manifest；不得看 transcript、报告、
+      历史分数、round 号。每个扣分必须绑证据，无证据扣分不计分。
+    evidence: [L-0005, L-0007]
+    verify: "scorecard 记录 judge session；输入清单可审计；无证据扣分率=0"
+    since: 0.3.0
+    sunset_after: 10
+
+  - id: PB-012
+    title: 改进只在 held-out 新文献上认证
+    status: active
+    category: ANTI
+    applies_to: [S10, 周期评审]
+    rule: >-
+      同一产物改好再评只记 responsiveness，不算改进；
+      改进成立必须看新文献第一次运行的首次通过率（或人类时间下降），
+      并由 compare_rounds.py 给出 2σ 判据。
+    evidence: [L-0007]
+    verify: "rounds/verdict.md 引用首次通过率、L1、成本、人审、2σ 五项"
+    since: 0.3.0
+    sunset_after: 10
+
+  - id: PB-013
+    title: 每周期至多 3 条 patch，一条一变
+    status: active
+    category: ANTI
+    applies_to: [S10, 周期评审]
+    rule: >-
+      一个周期最多批准 3 条 patch；每条只改一个假设，写验证指标与回滚方式；
+      失败也必须记录为 reverted，并写清为什么无效。
+    evidence: [L-0007]
+    verify: "changelog 每周期 ≤3 条；每条有 verify 与 archive 版本"
+    since: 0.3.0
+    sunset_after: 10
+
+  - id: PB-014
+    title: rubric 赛季冻结，改动双尺并行
+    status: active
+    category: ANTI
+    applies_to: [S9, 周期评审, Mentor]
+    rule: >-
+      rubric 与 Mentor prompt 一个赛季冻结并记 sha256；赛季内只允许人类
+      因「无法判定」做澄清，不得加减分；改动后必须用旧尺与新尺同时评
+      ≥5 份历史产物，确认差异来自产物而非尺子。
+    evidence: [L-0007]
+    verify: "manifest.rubric_sha 全季一致；双尺报告在 rounds/ 可查"
+    since: 0.3.0
+    sunset_after: 10
+
+  - id: PB-015
+    title: 评分者主动抽样回原文，禁止生产者自选
+    status: active
+    category: ANTI
+    applies_to: [S9, Mentor, 人类抽查]
+    rule: >-
+      Mentor 每班随机抽取 ≥10% 的 claims（至少 10 条）与 1 个关键公式，
+      回原文页图核对；样本由评审侧用固定种子抽取，生产者不得自选或替换。
+      抽中硬错误按 S1 incident 处理，该班不得发布。
+    evidence: [L-0002, L-0003]
+    verify: "score/sample.json 记录种子、样本 id、核对结论；与生产者提交清单独立"
+    since: 0.3.0
+    sunset_after: 10
+
+  - id: PB-016
+    title: 闸门必须留执行证据
+    status: active
+    category: QUALITY
+    applies_to: [S8, Chair, Mentor]
+    rule: >-
+      每个 G 闸必须产出 gate_report.json（pass/fail/na + 证据路径）；
+      manifest 至少含原文/译本/note/scorecard 四个 sha256 与 playbook/rubric/judge
+      三个版本字段；`quality_gate: self-assessed` 不算执行，不得据此标 completed。
+      所有计数文件必须 UTF-8 可解码，字数/claims 数由脚本给出。
+    evidence: [L-0008, L-0009]
+    verify: "gate_report.json 完整；manifest 哈希齐全；check_l1.py 前置检查通过"
+    since: 0.3.0
+    sunset_after: 10
+

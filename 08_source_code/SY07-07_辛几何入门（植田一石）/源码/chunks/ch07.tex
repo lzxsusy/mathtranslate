@@ -1,0 +1,202 @@
+% chunk: ch07 —— 原书 p.96–101（PDF 105–110）
+% 第7章 Hamilton 动力系统：7.1 动力系统 / 7.2 近可积系统与摄动理论 / 7.3 KAM 定理
+%                                 / 7.4 Liouville 定理 / 7.5 Poincaré 回复定理 / 7.6 遍历定理
+% 本章为章首 chunk，写 \chapter；章末写 \chapterreview。
+
+% [原文 p.96]
+\chapter{Hamilton 动力系统}
+
+前章讨论了可积系统，但显式地写出 Hamilton 系的解是极为罕见的情形。此外，Hamilton 系的时间演化往往敏感地依赖于初值。这使得对长时间轨道的预言事实上不可能，因此研究必然转向系统的定性行为。这一领域称为动力系统，它由 Poincaré 在天体力学的研究过程中于 1880 年代创立。
+
+研究不是可积系统、但与可积系统非常接近的系统，被 Poincaré 称为力学的基本问题。这方面 20 世纪最大的成果，是以 Kolmogorov、Arnold 以及 Moser 三人之名命名的所谓 KAM 理论。另一方面，反过来利用系统行为的复杂性，不去追踪个别轨道而研究系统在长时间中的平均行为，这一想法结晶为遍历论。本章对这些话题作表面的介绍。
+
+% [Tutor Note: 背景：本章是「定性理论」一章，三条主线为 KAM（不变环面的存留）、Liouville（保测性）、遍历定理（时间平均=空间平均），与第 6 章的可积性理论相对照。]
+\section{动力系统}
+
+动力系统（dynamical system）指由集合 $M$、交换幺半群 $T$ 以及函数 $\Phi\colon T\times M\to M$ 组成的三元组 $(M,T,\Phi)$，它满足：对 $T$ 的单位元 $0$ 与任意 $x\in M$，
+\begin{equation}
+  \Phi(0,x)=x
+  \tag{7.1.1}
+\end{equation}
+成立；且对任意 $s,t\in T$ 与 $x\in M$，
+\begin{equation}
+  \Phi(s,\Phi(t,x))=\Phi(s+t,x)
+  \tag{7.1.2}
+\end{equation}
+成立。通常把 $M$ 视为带有各种附加结构的对象，$(M,T,\Phi)$ 的名称也相应改变。$M$ 为拓扑空间、$\Phi$ 为连续映射时，$(M,T,\Phi)$ 称为拓扑动力系统（topological dynamical system）；$M$ 为测度空间、且对任意 $t\in T$ 映射 $\Phi(t,-)\colon M\to M$ 都是保测变换时，
+% [Tutor Note: 难点：(7.1.2) 说明 $\Phi$ 是 $T$ 在 $M$ 上的作用；$T$ 取 $\N$ 得到频闪映射，取 $\R$ 得到流，二者是同一定义下的特例。]
+% [原文 p.97]
+$(M,T,\Phi)$ 称为保测动力系统（measure-preserving dynamical system）。又，$T$ 为 $\N$ 或 $\Z$ 等离散幺半群时，$(M,T,\Phi)$ 称为离散时间动力系统（discrete-time dynamical system）；$T$ 为 $\R_{\ge0}$ 或 $\R$ 等拓扑幺半群时，称为连续时间动力系统（continuous-time dynamical system）。$M$ 为辛流形、$T=\R$、且 $\Phi$ 由 $M$ 上函数给出的 Hamilton 流给出时，$(M,T,\Phi)$ 称为 Hamilton 动力系统（Hamiltonian dynamical system）。
+
+给定动力系统 $(M,T,\Phi)$ 时，若 $M$ 的子集 $S$ 对任意 $t\in T$ 都满足 $\Phi(t,S)\subset S$，则称 $S$ 为不变集合（invariant set）。特别地，$M$ 为流形、$S$ 为与环面同胚的 $M$ 的子流形时，称 $S$ 为不变环面（invariant torus）。由 Liouville--Arnold 定理，在 Hamilton 动力系统的不变子集中环面占有特殊的地位。由 Liouville--Arnold 定理得到的完全可积系的不变环面，即称为 Liouville 环面（Liouville torus）。
+
+% [Tutor Note: 背景：不变环面之所以特殊，是因为其上运动是准周期的、可以显式写出；KAM 理论正是研究这些环面在小摄动下是否存留。]
+
+\takeaway{动力系统是带时间作用的集合；Hamilton 动力系统即由 Hamilton 流给出的连续时间系统，其不变环面承载准周期运动。}
+
+\section{近可积系统与摄动理论}
+
+太阳系是由太阳、行星、卫星、矮行星、小行星、彗星等极大量天体组成的大自由度系统，开发研究其时间演化的方法，对理论家而言是巨大的挑战。此外，小行星或彗星的碰撞有可能引发大量灭绝（extinction event），因此精确计算它们的轨道对人类存续也具有实用上的价值。
+
+处理多体问题的传统方法是摄动论（perturbation theory）。其做法是：在可解的系统上加入带有小参数的项，关于这个小参数作级数展开，计算最初的几项，从而引出某种有意义的洞见。假定未摄动系统是可积系统，把它的作用–角坐标记作 $(I,\varphi)$，则在该坐标系中辛形式为
+\begin{equation}
+  \omega=\sum_{i=1}^{n}dI_i\wedge d\varphi_i
+  \tag{7.2.1}
+\end{equation}
+而未摄动 Hamilton 函数 $H_0$ 只是 $I$ 的函数。在此基础上加入关于微小参数 $\epsilon$ 实解析的摄动
+\begin{equation}
+  H_{\epsilon}=H_0(I)+\epsilon H_1(I,\varphi,\epsilon)
+  \tag{7.2.2}
+\end{equation}
+以之为 Hamilton 函数的 Hamilton 系
+\begin{equation}
+  \dot{\varphi}_i=\frac{\partial H_{\epsilon}}{\partial I_i},\qquad
+  \dot{I}_i=-\frac{\partial H_{\epsilon}}{\partial\varphi_i}
+  \tag{7.2.3}
+\end{equation}
+% [原文 p.98]
+的研究，Poincaré 称之为力学的基本问题。由 Poincaré 的否定定理可知，对一般的摄动 Hamilton 函数 $H_{\epsilon}$，不存在与 $H_{\epsilon}$ 函数独立、Poisson 可交换、而且关于 $\epsilon$ 解析的函数。
+
+\takeaway{摄动论在可积系上加入小参数作级数展开；共振与小分母使级数发散，KAM 理论以「固定振动数、改初始条件」和 Newton 法化解。}
+
+若在非摄动系的准周期解附近，关于微小参数 $\epsilon$ 以简单的幂级数形式求解，则由于所谓的永年项（secular term），近似误差随时间无限增大。Poincaré--Lindstedt 改进的摄动论引入依赖于摄动参数 $\epsilon$ 的振动数，以回避这一问题。这样得到的级数的系数分母中出现 $\omega\cdot k$ 形状的项；只要 $\omega$ 各成分的线性组合为有理数，该项对充分大的 $k$ 便取 $0$，级数于是失去意义。这称为共振（resonance）。若 $\omega$ 的成分在 $\Q$ 上线性无关，则 $\omega\cdot k$ 对任意 $k\in\Z^d\setminus\{0\}$ 都不为零，但可以变得任意小，从而危及摄动级数的收敛性。这就是所谓小分母（small divisor）的问题。KAM 理论的精髓在于以下两点：
+\begin{itemize}
+  \item 与其固定初始条件、考虑依赖于摄动参数的振动数，不如固定振动数、考虑依赖于摄动参数的初始条件；
+  \item 不用幂级数展开，而用收敛远比它快的 Newton 法，以抑制余项的增大。
+\end{itemize}
+由此克服小分母问题，便得到下节所述的结果。
+
+% [Tutor Note: 校勘：原书此处写 $k\in\Z^d\setminus\{0\}$，而振动数向量的维数为 $n$（见 (7.3.2)），$d$ 当为 $n$；此处照录原样。]
+% [Tutor Note: 背景：「永年项」得名于天体力学：摄动解中随时间线性增长的项会长期（saeculum）累积，导致近似在长时间后失效。]
+
+\section{KAM 定理}
+
+未摄动 Hamilton 函数 $H_0$ 是作用变量 $I$ 的函数，设其定义域 $D$ 为 $\R^n$ 的有界区域。当映射
+\begin{equation}
+  I\mapsto\omega(I):=\frac{\partial H_0}{\partial I}
+  \tag{7.3.1}
+\end{equation}
+给出从 $D$ 到 $\R^n$ 的有界区域 $\Omega$ 的微分同胚时，称 $H_0$ 为非退化的（non-degenerate）。对实数 $\tau>n-1$ 与 $\gamma>0$，令
+\begin{equation}
+  \Omega(\tau,\gamma,n)
+  =\left\{\bm{\omega}\in\R^n\ \middle|\
+  \bm{k}\cdot\bm{\omega}\ge\frac{\gamma}{(|k_1|+\cdots+|k_n|)^{\tau}}\right\}
+  \tag{7.3.2}
+\end{equation}
+对振动数向量 $\bm{\omega}$ 的 Diophantus 条件，主张 $\bm{\omega}$ 不具有有理数的良好近似，意味着 $\bm{\omega}$ 在强意义下是非共振的（non-resonant）。对给定的 Hamilton 系，承载振动数向量 $\bm{\omega}\in\Omega(\tau,\gamma,n)$ 的准周期轨道的 $n$ 维不变环面，称为 KAM 环面（KAM torus）。
+
+\begin{theorem}{7.3.1}[KAM 定理]
+若未摄动 Hamilton 函数 $H_0$ 非退化，则
+% [原文 p.99]
+存在正数 $\epsilon_0$，使得对任意 $\epsilon<\epsilon_0$ 与任意 $\bm{\omega}\in\Omega(\tau,\gamma,n)$，伴随 Hamilton 函数 $H_{\epsilon}$ 的近可积系统具有振动数向量 $\bm{\omega}$ 的 KAM 环面。进而，KAM 环面的集合在横截方向上构成具有正 Lebesgue 测度的 Cantor 集，其补集的测度当 $\epsilon\to0$ 时收敛到 $0$。
+\end{theorem}
+
+% [Tutor Note: 校勘：原书此句印作「正の Lebesgue 速度」，据上下文（补集的「測度」）应为「Lebesgue 測度」；此处译作测度并注明。]
+该定理的本质部分由 Kolmogorov 得到（[76]），发表于 1954 年的国际数学家会议（[77]）。其详细证明在 Hamilton 函数为实解析的假定下由 Arnold [7] 给出，并由 Moser [98] 推广到光滑情形。该定理主张：对非退化的可积系统，Hamilton 系的定性性质不会因小摄动而发生大的改变。
+
+% [Tutor Note: 背景：KAM 定理的结论只覆盖测度为正的 Cantor 集，共振区（补集）虽随 $\epsilon\to0$ 收缩，却在每一 $\epsilon$ 下仍可能存在混沌轨道。]
+
+\takeaway{在非退化情形下，近可积系统的绝大多数不变环面在小摄动下存留，Hamilton 系的定性图像因此是稳定的。}
+
+\section{Liouville 定理}
+
+对 $2n$ 维辛流形 $(M,\omega)$，$\omega^n$ 给出 $M$ 的一个测度，称之为辛形式 $\omega$ 所定的 $M$ 的自然测度。
+
+\begin{theorem}{7.4.1}[Liouville]
+辛流形 $(M,\omega)$ 上的 Hamilton 动力系统，关于由辛形式所定的自然测度构成保测动力系统。
+\end{theorem}
+
+换言之，对任意辛流形上的任意 Hamilton 函数，与之伴随的 Hamilton 流给出关于自然测度的保测变换。这是因为 Hamilton 流保持辛形式 $\omega$，从而必然保持其 $n$ 次外积 $\omega^n$。这一事实称为 Liouville 定理（Liouville's theorem）。证明是显然的，但该定理是把遍历论应用于 Hamilton 动力系统的根据，对 Hamilton 动力系统的研究具有基本的重要性。
+
+% [Tutor Note: 背景：Liouville 定理只要求保测，不要求可积；因此遍历论的一切工具都可施加于任意 Hamilton 系，这是第 7.5、7.6 节的前提。]
+
+\takeaway{Hamilton 流保持辛形式，故保持 $\omega^n$ 所定的自然测度，于是任意 Hamilton 系都是保测动力系统。}
+
+\section{Poincaré 回复定理}
+
+全测度为 $1$ 的测度空间称为概率空间（probability space）。注意全测度有限的测度空间可以通过规范化化为概率空间。作为由保测性导出的重要结论，有 Poincaré 回复定理（Poincaré recurrence theorem）。
+
+\takeaway{保测变换使正测度集合中的几乎所有点无限次回到该集合：Hamilton 流不会永远离开出发区域。}
+
+\begin{theorem*}{7.5.1}[Poincaré]
+对任意概率空间 $(X,\mathfrak{B},\mu)$、任意保测变换 $T\colon X\to X$ 以及任意可测集 $B\in\mathfrak{B}$，若 $\mu(B)>0$，则对几乎所有 $x\in B$，集合 $\{n\in\N\mid T^n(x)\in B\}$ 为无限集。
+\end{theorem*}
+
+\begin{proof}
+从第 $n$ 次起不再与 $B$ 相交的点所成的集合，是 $B$ 的补集在 $T^k\colon X\to X$ 下的逆像之交
+\begin{equation}
+  E_n=\bigcap_{k=n}^{\infty}T^{-k}(X\setminus B)
+  \tag{7.5.1}
+\end{equation}
+注意由定义有
+\begin{equation}
+  E_0\subset E_1\subset E_2\subset\cdots
+  \tag{7.5.2}
+\end{equation}
+以其极限
+\begin{equation}
+  E=\bigcup_{n=0}^{\infty}E_n
+  \tag{7.5.3}
+\end{equation}
+则要证明的命题为
+\begin{equation}
+  \mu(E\cap B)=0
+  \tag{7.5.4}
+\end{equation}
+由定义 $T^{-1}(E_n)=E_{n+1}$，利用 $T$ 为保测变换，得
+\begin{equation}
+  \mu(E_{n+2}\setminus E_{n+1})
+  =\mu\bigl(T^{-1}(E_{n+1}\setminus E_n)\bigr)
+  =\mu(E_{n+1}\setminus E_n)
+  \tag{7.5.5}
+\end{equation}
+由测度的完全加法性，
+\begin{align}
+  \mu(E)&=\sum_{n=0}^{\infty}\mu(E_{n+1}\setminus E_n)+\mu(E_0) \tag{7.5.6}\\
+  &=\sum_{n=0}^{\infty}\mu(E_1\setminus E_0)+\mu(E_0) \tag{7.5.7}
+\end{align}
+故 $\mu(E_1\setminus E_0)=0$ 且 $\mu(E)=\mu(E_0)$。从而
+\begin{equation}
+  \mu(E\cap B)=\mu(E_0\cap B)
+  \tag{7.5.8}
+\end{equation}
+而 $E_0\cap B$ 由定义显然是空集，故 $\mu(E\cap B)=0$。
+\end{proof}
+
+% [Tutor Note: 难点：(7.5.6) 到 (7.5.7) 的变形用 (7.5.5)：各层差集测度相等，故第二行每项都是 $\mu(E_1\setminus E_0)$；再与 $\mu(E_0)$ 相加得 $\mu(E)=\mu(E_0)$。]
+于是可知：给定任意紧辛流形 $(M,\omega)$、$M$ 上任意 Hamilton 函数 $H$ 以及任意开集 $U\subset M$，对几乎所有 $p\in U$，从 $p$ 出发的 Hamilton 流都会无限次回到 $U$。
+
+% [原文 p.100]
+\section{遍历定理}
+
+对概率空间 $(X,\mathfrak{B},\mu)$ 上的保测变换 $T$，定义 $T$ 的不变 $\sigma$ 加法族（invariant $\sigma$-field）为
+\begin{equation}
+  \mathfrak{G}=\{A\in\mathfrak{B}\mid T^{-1}(A)=A\}
+  \tag{7.6.1}
+\end{equation}
+不变 $\sigma$ 加法族 $\mathfrak{G}$ 平凡时，称保测变换 $T$ 为遍历的（ergodic）。$\mathfrak{B}$ 可测函数 $f$ 关于 $\mathfrak{G}$ 的条件期望（conditional expectation）$E(f\mid\mathfrak{G})$，由对任意有界 $\mathfrak{G}$ 可测函数 $g$ 满足
+\begin{equation}
+  \int_X E(f\mid\mathfrak{G})(x)\,g(x)\,\mu(dx)
+  =\int_X f(x)\,g(x)\,\mu(dx)
+  \tag{7.6.2}
+\end{equation}
+的 $\mathfrak{G}$ 可测函数刻画。
+
+% [Tutor Note: 背景：条件期望 $E(f\mid\mathfrak{G})$ 是「已知不变集信息后对 $f$ 的最佳猜测」；(7.6.2) 即其在 $L^2$ 意义下为 $f$ 向 $\mathfrak{G}$ 可测函数空间的正交投影。]
+\begin{theorem}{7.6.1}[Birkhoff--Khinchin]
+对任意 $f\in L^1(X)$ 与几乎所有 $x\in X$，
+\begin{equation}
+  \lim_{n\to\infty}\frac1n\sum_{k=0}^{n-1}f(T^kx)=E(f\mid\mathfrak{G})(x)
+  \tag{7.6.3}
+\end{equation}
+成立。
+\end{theorem}
+
+% [原文 p.101]
+该定理称为 Birkhoff--Khinchin 遍历定理（Birkhoff--Khinchin ergodic theorem）。其证明并不困难，此处割爱。特别地，在遍历的保测动力系统中，对几乎所有 $x\in X$，时间平均收敛到空间平均，这称为 Birkhoff 个别遍历定理（Birkhoff's individual ergodic theorem）。
+
+% [Tutor Note: 背景：遍历性即 $\mathfrak{G}$ 平凡，此时 $E(f\mid\mathfrak{G})=\int_X f\,d\mu$ 为常数，故 (7.6.3) 化为「时间平均=空间平均」，这正是统计力学的理论基础。]
+
+\takeaway{保测变换的不变 $\sigma$ 加法族平凡时称遍历；(7.6.3) 表明时间平均几乎处处收敛到条件期望，遍历时即为空间平均。}
+
+\chapterreview{本章从动力系统的一般定义出发，介绍 Hamilton 系定性研究的两条路线。KAM 定理说明近可积系统的绝大多数不变环面在小摄动下依然存留，因而 Hamilton 系的定性图像具有稳定性。Liouville 定理给出辛形式诱导的自然测度，使任意 Hamilton 流都成为保测变换。在此基础上，Poincaré 回复定理断言几乎所有轨道会无限次回到出发区域附近，Birkhoff--Khinchin 遍历定理则给出时间平均与空间平均的相等关系。这些结论与第 6 章的可积性形成对照：完全可积只是极小的例外，一般 Hamilton 系的研究必须依靠测度论与定性手段。}

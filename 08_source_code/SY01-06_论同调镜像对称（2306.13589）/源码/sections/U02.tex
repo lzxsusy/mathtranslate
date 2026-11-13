@@ -1,0 +1,454 @@
+% 译自 arXiv:2306.13589v2 原 tex 第 462–881 行
+\section{导出范畴}
+\thispagestyle{plain}
+
+\takeaway{%
+  \textbf{物理图像：}导出范畴是把复形范畴沿着所有拟同构形式地倒过来所得的局部化，它只保留上同调信息而抹去复形的具体形状；在镜像对称中，它正是 B-侧用来承载凝聚层的舞台。\\
+  \textbf{数学工具：}复形范畴 $\mathsf{Kom(A)}$ 及其有界变体、上同调函子 $H^n$、链同伦与拟同构、平移函子 $T^n$、锥与柱，以及局部化范畴中的「屋顶」（roof）分式演算。\\
+  \textbf{主要结论：}导出范畴由泛性质唯一刻画（命题 \ref{derivedexists}）；当 $S$ 是局部化类时，其态射可用屋顶显式描述（命题 \ref{derivedstructure}）；$\mathsf{Kom(A)}$ 中的短正合序列给出区分三角形，而区分三角形经上同调函子化为长正合序列（定理 \ref{longexactcohomtriangles}）。%
+}
+
+
+\subsection{复形范畴}\label{ch2.1}
+
+
+在本章与下一章中，我们将更细致地考察范畴的导出过程，它在 \cite[section 3.1]{[Imp21]} 中只是被极为简略地勾勒过。我们的主要参考文献仍是内容极为丰富的 \cite[sections III.1--III.4]{[GM03]}。让我们从一些基本术语开始。
+
+\begin{Def}
+	设 $\mathsf{A}$ 为阿贝尔范畴。$\mathsf{A}$ 上的\textbf{（上链）复形范畴 $\mathsf{Kom(A)}$}\index{category!of coc@of (cochain) complexes}按通常方式定义如下：
+	\begin{itemize}[leftmargin=0.5cm]
+		\renewcommand{\labelitemi}{\textendash}
+		\item 对象\footnote{注意，我们可以把 $X^\bullet$ 视为一个 $\mathbb{Z}$-分次对象 $X=\bigoplus_{n\in\mathbb{Z}} X^n$，并赋予一个次数为 1、平方为零的分次态射 $d_X$。}是形如
+		\[
+		...\rightarrow X^{-1}\xrightarrow{d^{-1}_X} X^0\xrightarrow{d^0_X} X^1\xrightarrow{d^1_X}X^2\rightarrow...\;,
+		\]
+		的上链复形 $X^\bullet\equiv(X^\bullet, d^\bullet_X)$，其中 $\{X^n\}_{n\in\mathbb{Z}}\subset\textup{obj}(\mathsf{A})$，而 $\{d^n_X\}_{n\in\mathbb{Z}}$（微分）是 $\mathsf{A}$ 中的态射，使得对一切 $n\in\mathbb{Z}$ 有 $d^n_X\circ d^{n-1}_X=0$；
+		
+		\item 态射是链映射 $f^\bullet:X^\bullet\rightarrow Y^\bullet$，即 $\mathsf{A}$ 中一族与微分交换的态射 $f^n:X^n\rightarrow Y^n$：对一切 $n\in\mathbb{Z}$ 有 $f^{n+1}\circ d^n_X = d^n_Y\circ f^n:X^n\rightarrow Y^{n+1}$。任意一对可复合的态射的复合都逐分量进行。
+	\end{itemize}
+	若我们只把下方有界/上方有界的复形取作对象——即分别对一切 $n<n_-\in\mathbb{Z}$ 与 $n>n_+\in\mathbb{Z}$ 有 $X^n=0$——则我们相应地写作 $\mathsf{Kom^+(A)}$ 与 $\mathsf{Kom^-(A)}$，并令 $\mathsf{Kom^b(A)}\coloneqq\mathsf{Kom^+(A)}\cap\mathsf{Kom^-(A)}$ 表示\textbf{有界复形范畴}\index{category!of bounded complexes}。这些都是 $\mathsf{Kom(A)}$ 的全子范畴。
+\end{Def}
+
+% [Tutor Note: 全单元统一采用上链复形约定：$d^n_X:X^n\to X^{n+1}$ 且 $d^{n+1}_X\circ d^n_X=0$，平移函子满足 $X[1]^n=X^{n+1}$。若教授习惯下链复形（$d_n:X_n\to X_{n-1}$），则所有上指标须整体下移一位，且平移方向取反——这是本单元符号错误的第一来源。]
+
+例如，投射消解属于 $\mathsf{Kom^-(A)}$，而内射消解属于 $\mathsf{Kom^+(A)}$。作为复习上一章理论的一个好借口，我们来证明：
+
+\begin{Lem}\label{komabelian}
+	若 $\mathsf{A}$ 是阿贝尔范畴，则 $\mathsf{Kom(A)}$ 也是。
+\end{Lem}
+
+\begin{proof}
+	$\mathsf{Kom(A)}$ 的预加性（定义 \ref{addcat} 的公理 (A1)）容易验证，因为我们可以逐分量地相加与复合复形的可复合态射，而 $\mathsf{A}$ 的阿贝尔性保证所需的关系成立。零对象就是由无穷多个零对象 $0\in\text{obj}(\mathsf{A})$ 通过零微分串接而成的平凡复形。此外，复形的直积/直和仍是良定义的复形：对 $(X_1^\bullet, d_{X_1}^\bullet), (X_2^\bullet, d_{X_2}^\bullet)\in\text{obj}(\mathsf{Kom(A)})$，定义 $(X_1^\bullet, d_{X_1}^\bullet)\oplus(X_2^\bullet, d_{X_2}^\bullet)$ 为上链复形 $((X_1\oplus X_2)^\bullet, d_{X_1\oplus X_2}^\bullet)$，其中 $(X_1\oplus X_2)^n\coloneqq X_1^n\oplus X_2^n\in\text{obj}(\mathsf{A})$ 且 $d_{X_1\oplus X_2}^n=d_{X_1}^n\oplus d_{X_2}^n\in\text{Hom}_\mathsf{A}((X_1\oplus X_2)^n,\break(X_1\oplus X_2)^{n+1})$，于是 $d_{X_1\oplus X_2}^n\circ d_{X_1\oplus X_2}^{n-1}=(d_{X_1}^{n}\circ d_{X_1}^{n-1})\oplus(d_{X_2}^{n}\circ d_{X_2}^{n-1})=0$。把链映射 $p_k^\bullet:(X_1\oplus X_2)^\bullet\rightarrow X_k^\bullet$ 与 $i_k^\bullet:X_k^\bullet\rightarrow (X_1\oplus X_2)^\bullet$（$k=1,2$）逐成员地定义为每个 $(X_1\oplus X_2)^n$ 所配备的投影与包含（因此它们确实与微分交换），便可在链的层次上断定分解 \eqref{directprodsum} 的存在性与唯一性。因此公理 (A2)、(A3) 也成立，$\mathsf{Kom(A)}$ 是加性范畴。
+	
+	$\mathsf{Kom(A)}$ 中的核与余核是什么样子？考虑链映射 $f^\bullet:X^\bullet\rightarrow Y^\bullet$，其每个分量 $f^n\in\text{Hom}_\mathsf{A}(X^n,Y^n)$ 都有典范分解 \eqref{candecompo}，于是我们可以把定义 $f^\bullet$ 的图展开为
+	\[
+	\begin{tikzcd}
+		...\arrow[r, dashed] & \text{ker}(f^{n-1})\arrow[r, dashed]\arrow[d, hook, "k^{n-1}"'] & \text{ker}(f^{n})\arrow[r, dashed]\arrow[d, hook, "k^{n}"] & \text{ker}(f^{n+1})\arrow[r, dashed]\arrow[d, hook, "k^{n+1}"] & ... \\
+		...\arrow[r] & X^{n-1}\arrow[r, "d_X^{n-1}"]\arrow[d, "q^{n-1}"'] & X^{n}\arrow[r, "d_X^{n}"]\arrow[d, "q^{n}"] & X^{n+1}\arrow[r]\arrow[d, "q^{n+1}"] & ... \\
+		...\arrow[r] & I^{n-1}\arrow[r, "d_I^{n-1}"]\arrow[d, "j^{n-1}"'] & I^{n}\arrow[r, "d_I^{n}"]\arrow[d, "j^{n}"] & I^{n+1}\arrow[r]\arrow[d, "j^{n+1}"] & ... \\
+		...\arrow[r] & Y^{n-1}\arrow[r, "d_Y^{n-1}"]\arrow[d, two heads, "c^{n-1}"'] & Y^{n}\arrow[r, "d_Y^{n}"]\arrow[d, two heads, "c^{n}"] & Y^{n+1}\arrow[r]\arrow[d, two heads, "c^{n+1}"] & ... \\
+		...\arrow[r, dashed] & \text{coker}(f^{n-1})\arrow[r, dashed] & \text{coker}(f^{n})\arrow[r, dashed] & \text{coker}(f^{n+1})\arrow[r, dashed] & ...
+	\end{tikzcd}\qquad,
+	\]
+	其中对一切 $n\in\mathbb{Z}$ 有 $j^n\circ q^n=f^n$ 且 $\text{coker}(\text{ker}(f^n))=\text{coker}(k^n)=I^n=\ker(c^n)=$\break $\ker(\text{coker}(f^n))\in\text{obj}(\mathsf{A})$。后者典范地定义一个复形 $(I^\bullet, d_I^\bullet)\in\text{obj}(\mathsf{Kom(A)})$，于是图中的中间箭头必然是 $I^\bullet$ 的微分。现在我们可以用虚线箭头把最上行与最下行连接起来，选取方式使得整个图交换。这些虚线箭头定义了另外两个复形 $(\text{ker}(f^\bullet), d_{\text{ker}(f)}^\bullet)$、$(\text{coker}(f^\bullet), d_{\text{coker}(f)}^\bullet)\in\text{obj}(\mathsf{Kom(A)})$（例如 $d_{\text{ker}(f)}^n\circ d_{\text{ker}(f)}^{n-1}=0$，因为可以看出它经过 $d_X^n\circ d_X^{n-1}=0$ 分解）。事实上可以证明它们满足核与余核的泛性质（见定义 \ref{monepicoker} 与图 \eqref{kercokerdiag}）。我们由此理解到，$f^\bullet:X^\bullet\rightarrow Y^\bullet$ 在 $\mathsf{Kom(A)}$ 中典范地分解为
+	\begin{equation*}
+		\begin{tikzcd}
+			\ker(f^\bullet)\arrow[r, hook, "k^\bullet"] & X^\bullet\arrow[r, "q^\bullet"] & I^\bullet\arrow[r, "j^\bullet"] & Y^\bullet\arrow[r, two heads, "c^\bullet"] & \text{coker}(f^\bullet)\;,
+		\end{tikzcd}
+	\end{equation*}
+	其中 $j^\bullet\circ q^\bullet = f^\bullet$ 且 $\text{coker}(k^\bullet)=I^\bullet=\ker(c^\bullet)$。因此公理 (A4) 成立，$\mathsf{Kom(A)}$ 从而是阿贝尔范畴。
+\end{proof}
+
+瞥一眼定义 \ref{abeliancohomology} 便可看出，上同调给出从复形范畴到底层阿贝尔范畴的函子：
+
+\begin{Def}\label{cohomfunc}
+	设 $\mathsf{A}$ 为阿贝尔范畴。则对任意 $n\in\mathbb{Z}$，我们可以通过如下指定定义\textbf{第 $n$ 上同调函子}\index{functor!nthc@$n$-th cohomology} $H^n:\mathsf{Kom(A)}\rightarrow\mathsf{A}$：\begin{small}\begin{equation}
+			\begin{aligned}
+				&X^\bullet=(X^\bullet, d^\bullet)\in\text{obj}(\mathsf{Kom(A)})\mapsto H^n(X^\bullet)\in\text{obj}(\mathsf{A})\quad \text{(from \eqref{cohomodiag})} \\
+				&f^\bullet\in\text{Hom}_\mathsf{Kom(A)}(X^\bullet,Y^\bullet) \mapsto H^n(f^\bullet)\!=\!\langle f^n(\cdot)\rangle\in \text{Hom}_\mathsf{A}(H^n(X^\bullet),H^n(Y^\bullet))
+			\end{aligned}
+	\end{equation}\end{small}
+	\!\!（后者是上同调上诱导的通常态射）。
+\end{Def}
+
+% [Tutor Note: $H^n(f^\bullet)=\langle f^n(\cdot)\rangle$ 的尖括号表示「在商 $\ker d^n/\mathrm{im}\,d^{n-1}$ 上诱导的映射」：先取代表元、用 $f^n$ 作用，再验证它与核、像相容。作者未展开此验证，属标准图追踪。]
+
+\begin{Def}\label{quasiso}
+	设 $\mathsf{A}$ 为阿贝尔范畴。$\mathsf{Kom(A)}$ 中的态射 $f^\bullet:X^\bullet\rightarrow Y^\bullet$ 称为\textbf{同伦于 $0$}\index{homotopic!to 0}，若存在链同伦 $k^\bullet:X^\bullet\rightarrow Y^{\bullet-1}$，即 $\mathsf{A}$ 中的态射 $k^n:X^n\rightarrow Y^{n-1}$，使得
+	\[
+	f^n=k^{n+1}\circ d^n_X + d^{n-1}_Y\circ k^n: X^n\rightarrow Y^n\,. 
+	\]
+	于是两个态射 $f^\bullet, g^\bullet\in\text{Hom}_\mathsf{Kom(A)}(X^\bullet,Y^\bullet)$ 称为\textbf{同伦的}\index{homotopic!pair of morphisms}（记作 $f^\bullet\sim g^\bullet$），若它们的差同伦于 0。
+	
+	若对一切 $n\in\mathbb{Z}$，诱导态射 $H^n(f^\bullet)$ 都是 $\mathsf{A}$ 中的同构，则称复形态射 $f^\bullet: X^\bullet\rightarrow Y^\bullet$ 为\textbf{拟同构}\index{quasi-isomorphism}，并据此称 $X^\bullet$ 与 $Y^\bullet$ 为拟同构复形。
+\end{Def}	
+
+% [Tutor Note: 此处同伦公式的符号极易出错：$f^n=k^{n+1}d^n_X+d^{n-1}_Yk^n$ 中两项的指标必须使得 $k^{n+1}$ 的余域为 $Y^n$、$d^{n-1}_Y$ 的定义域为 $Y^{n-1}$。另注意「同伦等价」强于「拟同构」：拟同构的复形一般并不同伦等价，只有把拟同构全体倒转（即局部化）后才成为同构。]
+
+证明同伦的复形态射在上同调上诱导相同的态射是一个标准论证（其做法与 $\mathsf{Ab}$ 中完全一样）。我们也可以把函子 $H^0$ 反过来：
+
+\begin{Rem}\label{0-complex}
+	始终存在全忠实函子 $\mathsf{J}:\mathsf{A}\rightarrow\mathsf{Kom(A)}$，把阿贝尔范畴 $\mathsf{A}$ 嵌入其复形范畴：它把 $X\in\text{obj}(\mathsf{A})$ 送到\textbf{0-复形}\index{0-complex}
+	\[
+	X^\bullet\equiv X[0]^\bullet=\big(...\rightarrow 0\rightarrow 0\xrightarrow{d^{-1}} X\xrightarrow{d^0} 0\rightarrow 0\rightarrow...\big)\,
+	\]
+	该复形在 0 之外无环，且满足 $H^0(X^\bullet)\cong X$；它把 $f\in\text{Hom}_\mathsf{A}(X,Y)$ 送到由 $f^0=f$、且对一切 $0\neq n\in\mathbb{Z}$ 有 $f^n=0$ 给出的复形态射 $f^\bullet:X^\bullet\rightarrow Y^\bullet$。显然，$H^0\circ\mathsf{J}$ 同构于 $\mathsf{A}$ 上的恒等函子。
+	
+	值得指出的是，给定如定义 \ref{injprojobj} 中的投射消解 $P^\bullet\xrightarrow{\varepsilon_X} X$，我们有到 $X$ 的 0-复形的拟同构 $f^\bullet:P^\bullet\rightarrow X^\bullet$，其中 $f^0=\varepsilon_X$，$i<0$ 时 $f^i:P^i\rightarrow 0$，$i>0$ 时 $f^i=0$；于是在有用之处我们可以有效地用 $P^\bullet$ 替换 $X$（$X$ 的投射消解的具体选取无关紧要，因为任意两个这样的消解都同伦，见 \cite[Theorem III.1.3]{[GM03]}）。对偶版本则适用于用内射对象给出的右消解。  
+\end{Rem}
+
+% [Tutor Note: 注意 $f^i$ 的指标约定：消解只在下标 $i\ge 0$ 有非零项，故 $i<0$ 时 $f^i$ 是到零对象的态射，而 $i>0$ 时取 $0$；这一「正负分界」正是投射消解落在 $\mathsf{Kom}^-$、内射消解落在 $\mathsf{Kom}^+$ 的原因。]
+
+
+\subsection{导出范畴的泛性质}\label{ch2.2}
+
+
+我们可以把阿贝尔范畴的导出范畴的初次尝试性定义，表述为某个泛问题的解。
+
+\begin{Pro}\label{derivedexists}
+	设 $\mathsf{A}$ 为阿贝尔范畴。则存在范畴 $\mathsf{D(A)}$（满足 $\textup{obj}(\mathsf{D(A)})=\textup{obj}(\mathsf{Kom(A)})$）与函子 $\mathsf{L}:\mathsf{Kom(A)}\rightarrow\mathsf{D(A)}$，使得：
+	\renewcommand{\theenumi}{\roman{enumi}}
+	\begin{enumerate}[leftmargin=0.6cm] 
+		\item 对 $\mathsf{Kom(A)}$ 中任意拟同构 $f^\bullet$，$\mathsf{L}(f^\bullet)$ 是同构；
+		
+		\item 对任意满足 i. 的函子 $\mathsf{F}:\mathsf{Kom(A)}\rightarrow\mathsf{D}$，存在唯一的函子 $\mathsf{G}:\mathsf{D(A)}\rightarrow\mathsf{D}$，使得作为函子有 $\mathsf{F}=\mathsf{G}\circ\mathsf{L}$。
+	\end{enumerate}
+	\!我们称 $\mathsf{D(A)}$ 为 $\mathsf{A}$ 的\textbf{导出范畴}\index{derived category}（由 ii. 它在等价意义下唯一），并称 $\mathsf{L}$ 为\textbf{局部化函子}\index{localization functor}。
+	相应地改用 $\mathsf{Kom^\#\!(A)}$（$\#=+,-,\mathsf{b}$）会产生导出范畴 $\mathsf{D^\#\!(A)}$，其中 $\mathsf{D^b(A)}$ 被称作 $\mathsf{A}$ 的\textbf{有界导出范畴}\index{derived category!bounded}。
+\end{Pro}
+
+\begin{proof}
+	此证明涉及范畴的局部化过程，它对任意范畴 $\mathsf{C}$ 都适用。我们的目标是把导出范畴定义为某个 $\mathsf{C}[S^{-1}]$，其中 $S$ 是 $\mathsf{C}$ 中任意一类要被 $\mathsf{L}:\mathsf{C}\rightarrow\mathsf{C}[S^{-1}]$ 变成同构的态射。
+	
+	置 $\text{obj}(\mathsf{C}[S^{-1}])\coloneqq \text{obj}(\mathsf{C})$，并对所有 $X\in\text{obj}(\mathsf{C}[S^{-1}])$ 令 $\mathsf{L}(X)\coloneqq X$。态射按如下「几何式的」方式构造。对每个 $s\in S$ 引入形式态射 $s^{-1}$，并构造一个有向图 $\Gamma$：其顶点是 $\mathsf{C}$ 的对象，其边是 $\mathsf{C}$ 的态射、按各自箭头的方向定向；再对每个 $s$ 添加一条反向的边，对应 $s^{-1}$。于是 $\mathsf{C}[S^{-1}]$ 中的态射 $X\rightarrow Y$ 是包含所有从 $X$ 到 $Y$ 的有向路径的等价类，其中我们可以把可复合态射的复合翻译为其箭头的连接，并把与 $s\circ s^{-1}$ 和 $s^{-1}\circ s$ 相应的路径化简为恒等、「静止的」路径。然后我们要求 $L$ 把 $\mathsf{C}$ 中任意 $f:X\rightarrow Y$ 送到其等价类 $[f]$，从而特别地 $\mathsf{L}(s)$ 是以 $\mathsf{L}(s^{-1})$ 为逆的同构（因为它们的代表元复合为恒等）。
+	
+	现在，给定另一个行为如同 $\mathsf{L}$ 的函子 $\mathsf{F}:\mathsf{C}\rightarrow\mathsf{D}$，我们如下定义函子 $\mathsf{G}:\mathsf{C}[S^{-1}]\rightarrow\mathsf{D}$：对 $X\in\text{obj}(\mathsf{C}[S^{-1}])$ 令 $\mathsf{G}(X)\coloneqq \mathsf{F}(X)$，在 $\mathsf{C}$ 的态射上令 $\mathsf{G}([f])\coloneqq\mathsf{F}(f)$，并对每个 $s\in S$ 令 $\mathsf{G}([s^{-1}])\coloneqq\mathsf{F}(s)^{-1}$。于是显然 $\mathsf{F}=\mathsf{G}\circ\mathsf{L}$，且 $\mathsf{G}$ 被唯一确定（每一类态射的代表元的选取无关紧要）。
+	
+	在我们的具体情形中，只需取 $\mathsf{C}=\mathsf{Kom(A)}$、$S=\{\text{quasi-isomorphisms in }\break\mathsf{Kom(A)}\}$（从而就一切效果而言，每个 $s^{-1}$ 都代表拟逆），并令 $\mathsf{D(A)}\coloneqq\mathsf{Kom(A)}[S^{-1}]$。 
+\end{proof}
+
+% [Tutor Note: 作者用「有向图的路径」来描述 $\mathsf{C}[S^{-1}]$，这只是直观说法：一般地态射类可能成为真类，Hom 集未必是集合。真正的技术要点是后文命题 \ref{derivedstructure} 的屋顶表示——当 $S$ 是局部化类时，每个 Hom 集都可由屋顶的等价类来代表，集合论问题随之消解。原文此处把 $\mathsf{L}$ 误写成了 $L$（同一函子的两种字体），不影响理解。]
+
+注意，我们可以通过全忠实函子 $\mathsf{L}\circ\mathsf{J}:\mathsf{A}\rightarrow\mathsf{D(A)}$ 把阿贝尔范畴 $\mathsf{A}$ 嵌入其导出范畴，其中 $\mathsf{J}:\mathsf{A}\rightarrow\mathsf{Kom(A)}$ 如注 \ref{0-complex} 所述。这一点初看并不显然，将在后文（见命题 \ref{AinD(A)}）我们对导出范畴有更好理解之后再证明。
+
+此外，由于上同调函子把拟同构变成同构（按定义），它们无视局部化过程，因而也可以被视为函子 $H^n:\mathsf{D(A)}\rightarrow\mathsf{A}$。再一次地，$H^0\circ\mathsf{L}\circ\mathsf{J}$ 在 $\mathsf{A}$ 上同构于 $\mathsf{Id_A}$。
+
+\begin{Rem}\label{semisimple}
+	作为导出范畴泛性质的一个应用，让我们考虑由所有循环复形构成的（完备的）子范畴 $\mathsf{Kom_0(A)}\subset\mathsf{Kom(A)}$，即那些微分为零的 $X^\bullet\in\text{obj}(\mathsf{Kom(A)})$（$d^\bullet=0$）——这使 $\mathsf{Kom_0(A)}$ 在结构上同构于 $\mathsf{A}$ 的无穷多个副本的积范畴。由 $(X^\bullet,d^\bullet)\mapsto(H^n(X^\bullet),0)_{n\in\mathbb{Z}}$ 与 $f^\bullet\mapsto (H^n(f^\bullet))_{n\in\mathbb{Z}}$ 指定的函子 $\mathsf{H}^\bullet:\mathsf{Kom(A)}\rightarrow\mathsf{Kom_0(A)}$ 把拟同构变成（无穷多元组的）同构，故由 $\mathsf{A}$ 的导出范畴的泛性质，存在唯一函子 $\mathsf{G}:\mathsf{D(A)}\rightarrow\mathsf{Kom_0(A)}$ 使得 $\mathsf{H}^\bullet=\mathsf{G}\circ\mathsf{L}$。
+	
+	有趣之处在于：若 $\mathsf{A}$ 是\textbf{半单的}\index{semisimple category}，即任何短正合序列都同构于形如 $0\rightarrow X\xrightarrow{(\text{id}_X,0)} X\oplus Y\rightarrow Y\rightarrow 0$ 的序列（此时称该序列\textbf{分裂}\index{short exact sequence!split}），那么 $\mathsf{G}$ 实际上是范畴等价（反之亦然），于是我们只需专注于循环复形就能推断 $\mathsf{D(A)}$ 的更多性质！（该结果的证明见 \cite[Proposition III.2.4]{[GM03]}。）
+\end{Rem}
+
+% [Tutor Note: 原文称 $\mathsf{Kom_0(A)}$ 为「（完备的）子范畴」，但循环复形构成的显然是全子范畴；这里的 complete 疑为 full 之笔误，请教授按「全子范畴」理解。半单情形下的等价 $\mathsf{D(A)}\cong\prod_{\mathbb{Z}}\mathsf{A}$ 恰好说明：导出范畴丢失的信息正是非分裂短正合序列所携带的 Ext 信息。]
+
+然而，对于一般的阿贝尔范畴，其导出范畴的精确结构至今仍相当晦暗：我们需要一种更灵活的方法来处理所选态射构成的类 $S$。这可以通过推广环的乘法子集概念来实现。
+
+\begin{Def}\label{locclass}
+	任意范畴 $\mathsf{C}$ 的一类态射 $S$ 称为\textbf{局部化类}\index{localizing class of morphisms}，若：
+	\renewcommand{\theenumi}{\alph{enumi}}
+	\begin{enumerate}[leftmargin=0.6cm] 
+		\item 对每个 $X\in\text{obj}(\mathsf{C})$ 有 $\text{id}_X\in S$，且 $s, t\in S$ 蕴含 $s\circ t\in S$（只要可复合）；
+		
+		\item 对任意 $f\in\text{Hom}_\mathsf{C}(X,Y)$ 与 $S$ 中的 $s:Z\rightarrow Y$，存在 $g\in\text{Hom}_\mathsf{C}(W,Z)$ 与 $S$ 中的 $t:W\rightarrow X$，使得下图左方块交换；对偶地，对任意 $f\in\text{Hom}_\mathsf{C}(Y,X)$ 与 $S$ 中的 $s:Y\rightarrow Z$，存在 $g\in\text{Hom}_\mathsf{C}(Z,W)$ 与 $S$ 中的 $t:X\rightarrow W$，使得右方块交换：
+		\begin{equation}\label{localsquare}
+			\begin{tikzcd}
+				W\arrow[r, dashed, "g"]\arrow[d, dashed, "t"'] & Z\arrow[d, "s"] \\
+				X\arrow[r, "f"'] & Y
+			\end{tikzcd}
+			\qquad\qquad
+			\begin{tikzcd}
+				W & Z\arrow[l, dashed, "g"'] \\
+				X\arrow[u, dashed, "t"] & Y\arrow[l, "f"]\arrow[u, "s"']
+			\end{tikzcd}\quad;
+		\end{equation}
+		
+		\item 对任意一对 $f_1,f_2\in\text{Hom}_\mathsf{C}(X,Y)$，存在 $S$ 中的 $s:Y\rightarrow Z$ 使得 $s\circ f_1= s\circ f_2$，这等价于存在 $S$ 中的 $t:W\rightarrow X$ 使得 $f_1\circ t= f_2\circ t$。
+		\newline \big(两边相减，对给定的 $f\in\text{Hom}_\mathsf{C}(X,Y)$ 可改写为：$\exists s:Y\rightarrow Z$（在 $S$ 中）使 $s\circ f=0$ $\Longleftrightarrow$ $\exists t:W\rightarrow X$（在 $S$ 中）使 $f\circ t= 0$。\big)
+	\end{enumerate}
+\end{Def}
+
+% [Tutor Note: 定义 \ref{locclass} 的 b. 项在文献中称 Ore 条件（左、右各一条），c. 项是「右消去/左消去」条件；满足 a.–c. 的类 $S$ 通常就叫乘法系统（multiplicative system）。验证 $S$ 是局部化类时，b. 的方图只需对「$s$ 在前、$f$ 在后」的方向画一次，另一方向由对偶得到，切勿两边混用同一张图。]
+
+使用局部化类的好处在于：在 $\mathsf{C}[S^{-1}]$ 中（对每个 $s\in S$ 都有逆态射 $s^{-1}$；参看命题 \ref{derivedexists} 的证明），\eqref{localsquare} 的两个方块还蕴含关系
+\[
+s^{-1}\circ f= s^{-1}\circ f\circ t\circ t^{-1}= s^{-1}\circ s\circ g\circ t^{-1} = g\circ t^{-1}:X\rightarrow Z
+\]
+以及 $f\circ s^{-1}= t^{-1}\circ g:Z\rightarrow X$；两者都告诉我们，可以把 $\mathsf{C}[S^{-1}]$ 中一条路径的一般表达式 $f_1\circ s_1^{-1}\circ f_2\circ s_2^{-1}\circ...\circ f_k\circ s_k^{-1}$ 通过把所有 $S$ 中的态射移到左边或右边而加以改造，并分别处理它们。这一技巧对下面的描述至关重要。
+
+\begin{Pro}\label{derivedstructure}
+	设 $\mathsf{C}$ 为任意范畴，带有局部化类 $S$。则 $\mathsf{C}$ 的导出范畴具有如下显式结构\textup：$\textup{obj}(\mathsf{C}[S^{-1}])=\textup{obj}(\mathsf{C})$ \textup(参看命题 \ref{derivedexists}\textup)，且 $\textup{Hom}_{\mathsf{C}[S^{-1}]}(X,Y)$ 中的态射是 $\mathsf{C}$ 中\textbf{屋顶}\index{roof} $(s,f)$ 的等价类 $\varphi=[(s,f)]$；所谓屋顶，是形如
+	\begin{equation}\label{roof}
+		\begin{tikzcd}
+			& X'\arrow[dl, "s"']\arrow[dr, "f"] & \\
+			X\arrow[rr, squiggly, "\varphi"'] & & Y
+		\end{tikzcd}\vspace*{0.2cm}
+	\end{equation}
+	的图\footnote{波浪箭头是 $\mathsf{C}[S^{-1}]$ 中的态射，因此它并不真正属于屋顶图，这也正是它长成这副模样的原因；不过我们多半会把它省略。}，其中 $f\in\textup{Hom}_\mathsf{C}(X',Y)$、$s\in S$；等价关系断言 $(s,f)\sim (t,g)$ 当且仅当存在一个「顶盖」屋顶 $(r, h)$ 使得图
+	\begin{equation}\label{equivroofs}
+		\begin{tikzcd}
+			& & X'''\arrow[dl, "r"']\arrow[dr, "h"] & & \\
+			& X'\arrow[dl, "s"'] & & X''\arrow[dlll, "t"]\arrow[dr, "g"] & \\
+			X & & & & Y \arrow[from=ulll, crossing over, "f"']
+		\end{tikzcd}\vspace*{0.1cm}
+	\end{equation}
+	交换。态射的复合 $[(t,g)]\circ[(s,f)]$ 在相邻箭头共享同一目标对象时才有定义，其结果是 $[(s\circ t', g\circ f')]$，即
+	\begin{equation}\label{roofcompo}
+		\begin{tikzcd}
+			& & X''\arrow[dl, dashed, "t'"']\arrow[dr, dashed, "f'"] & & \\
+			& X'\arrow[dl, "s"']\arrow[dr, "f"'] & & Y'\arrow[dl, "t"]\arrow[dr, "g"] & \\
+			X & & Y & & Z 
+		\end{tikzcd}\quad,
+	\end{equation}
+	的类，其中上方方块由 \eqref{localsquare} 左图给出。\textup(注意，由定义 \ref{locclass} 的 a. 项，确实有 $s\circ t'\in S$。\textup) 
+	\newline 因此恒等屋顶写作 $X\xleftarrow{\textup{id}_X} X\xrightarrow{\textup{id}_X} X$ \textup(其中 $\textup{id}_X\in S$\textup)。 
+\end{Pro}
+
+\begin{proof}
+	等价关系 $\sim$ 与复合法则的良定义性验证，只不过是仔细画出所需交换图的工作。我们更着眼于主要断言：这个屋顶范畴（暂记作 $\mathsf{R}$）确实与 $\mathsf{C}[S^{-1}]$ 一致。为此，我们只需检验它与命题 \ref{derivedexists} 中描述的导出范畴具有相同的性质。
+	
+	首先，我们需要局部化函子 $\mathsf{L}:\mathsf{C}\rightarrow\mathsf{C}[S^{-1}]$ 的一个替身 $\mathsf{L_R}:\mathsf{C}\rightarrow\mathsf{R}$，它把 $S$ 中的态射变成 $\mathsf{R}$ 中的同构。对任意 $X\in\text{obj}(\mathsf{C})$ 令 $\mathsf{L_R}(X)\coloneqq X$，并把任意 $f\in\text{Hom}_\mathsf{C}(X,Y)$ 送到屋顶 $X\xleftarrow{\text{id}_X} X\xrightarrow{f} Y$ 的类 $\mathsf{L_R}(f)\coloneqq[(\text{id}_X,f)]$。于是 $S$ 中任意 $s:X\rightarrow Y$ 在 $\mathsf{R}$ 中的像可逆，其逆 $\mathsf{L_R}(s)^{-1}$ 由屋顶 $Y\xleftarrow{s} X\xrightarrow{\text{id}_X} X$ 代表（确实，在 \eqref{roofcompo} 中取 $\text{id}_X$ 为虚线箭头便得 $[\mathsf{L_R}(s)^{-1}]\circ[\mathsf{L_R}(s)]=[(\text{id}_X,\text{id}_X)]$；而改为取 $s^{-1}$ 则得 $[\mathsf{L_R}(s)]\circ[\mathsf{L_R}(s)^{-1}]=[(\text{id}_Y,\text{id}_Y)]$）。
+	
+	现在我们必须验证分解性质。设 $\mathsf{F}:\mathsf{C}\rightarrow\mathsf{D}$ 是把任意 $s\in S$ 变成 $\mathsf{D}$ 中同构的函子。如下定义预期满足 $\mathsf{F}=\mathsf{G}\circ\mathsf{L_R}$ 的函子 $\mathsf{G}:\mathsf{R}\rightarrow\mathsf{D}$。首先，对任意 $X\in\text{obj}(\mathsf{R})$ 规定 $\mathsf{G}(X)\coloneqq \mathsf{F}(X)$。其次，把 \eqref{roof} 中任意屋顶类 $[(s,f)]\in\text{Hom}_\mathsf{R}(X,Y)$ 送到 $\mathsf{G}\big([(s,f)]\big)\coloneqq\mathsf{F}(f)\circ\mathsf{F}(s)^{-1}\in\text{Hom}_\mathsf{D}(\mathsf{G}(X),\mathsf{G}(Y))$（关于代表元选取的良定义性留作练习）。$\mathsf{G}$ 的函子性特征是显然的：$\mathsf{G}\big([(\text{id}_X,\text{id}_X)]\big)=\mathsf{F}(\text{id}_X)\circ\mathsf{F}(\text{id}_X)^{-1}=\text{id}_{\mathsf{F}(X)}=\text{id}_{\mathsf{G}(X)}$，且
+	\begin{align*}
+		\mathsf{G}\big([(t,g)]\big)\circ\mathsf{G}\big([(s,f)]\big) &=\mathsf{F}(g)\circ\mathsf{F}(t)^{-1}\circ\mathsf{F}(f)\circ\mathsf{F}(s)^{-1} \\
+		&=\mathsf{F}(g)\circ\mathsf{F}(f')\circ\mathsf{F}(t')^{-1}\circ\mathsf{F}(s)^{-1} \\
+		&=\mathsf{F}(g\circ f')\circ\mathsf{F}(s\circ t')^{-1}=\mathsf{G}\big([(s\circ t', g\circ f')]\big)	
+	\end{align*}
+	（其中第二个等号我们绕道经过图 \eqref{roofcompo} 的虚线箭头，第三个等号用了 $\mathsf{F}$ 的函子性）。于是显然在对象上有 $(\mathsf{G}\circ\mathsf{L_R})(X)=\mathsf{G}(X)=\mathsf{F}(X)$，在态射上有 $(\mathsf{G}\circ\mathsf{L_R})(f)=\mathsf{G}\big([(\text{id}_X,f)]\big)=\mathsf{F}(f)\circ\mathsf{F}(\text{id}_X)^{-1}=\mathsf{F}(f)$。 
+	
+	还剩要证明这样的函子 $\mathsf{G}$ 唯一。为此考虑另一个满足 $\mathsf{F}=\tilde{\mathsf{G}}\circ\mathsf{L_R}$ 的候选函子 $\tilde{\mathsf{G}}$。把后者作用于任意 $X\in\text{obj}(\mathsf{R})$ 给出 $\tilde{\mathsf{G}}(X)=\mathsf{F}(X)$；而把 $\tilde{\mathsf{G}}$ 作用于等式 $[(s,f)]\circ\mathsf{L_R}(s)=[(s,f)]\circ[(\text{id}_{X'},s)]=[(\text{id}_{X'}\circ\text{id}_{X'},f\circ\text{id}_{X'})]=\mathsf{L_R}(f)$（始终参照 \eqref{roof}）则得 $\tilde{\mathsf{G}}([(s,f)])\circ\mathsf{F}(s)=\mathsf{F}(f)$，于是由对 $\mathsf{F}$ 的假设有 $\tilde{\mathsf{G}}([(s,f)])=\mathsf{F}(f)\circ\mathsf{F}(s)^{-1}$。因此 $\tilde{\mathsf{G}}=\mathsf{G}$，如所断言。
+\end{proof}
+
+% [Tutor Note: 「屋顶」即分式 $f\circ s^{-1}$ 的图形表示：先把 $X$ 沿 $S$ 中的态射 $s$ 向右上「撑开」到 $X'$，再沿 $f$ 到 $Y$，模拟分式 $f/s$。\eqref{roofcompo} 中上方那个方块正是 Ore 条件给出的「公共细化」，注意 $t'$ 与 $f'$ 是虚线（由 $S$ 的局部化性质保证存在，而非预先给定）。]
+
+在文献中可能遇到表示 $[(s,f)]$ 的 \eqref{roof} 的一个变体，即\textit{右} $S$-屋顶
+\[
+\begin{tikzcd}
+	& X' & \\
+	X\arrow[ur, "f"] & & Y\arrow[ul, "s"']
+\end{tikzcd}
+\]
+其中 $s\in S$（通常的 \eqref{roof} 称为\textit{左} $S$-屋顶）。这类屋顶的任意一对的复合则要诉诸 \eqref{localsquare} 的右图。 
+
+作为额外收获，我们注意到局部化类限制到全子范畴上时在局部化下表现良好（见 \cite[Proposition III.2.10]{[GM03]}）：
+
+\begin{Lem}\label{derivedsubcat}
+	设 $\mathsf{C}$ 为带有局部化类 $S$ 的范畴，$\mathsf{B}\subset\mathsf{C}$ 为全子范畴，且 $S$ 在其上的限制 $S_\mathsf{B}\subset S$ 是 $\mathsf{B}$ 的局部化类。还假设：
+	\renewcommand{\theenumi}{\roman{enumi}}
+	\begin{enumerate}[leftmargin=0.6cm]
+		\item 对 $S$ 中任意 $s:X\rightarrow Y$ 与 $Y\in\textup{obj}(\mathsf{B})$，存在某个 $W\in\textup{obj}(\mathsf{B})$ 与 $f:W\rightarrow X$，使得 $s\circ f\in S$；或
+		
+		\item 对 $S$ 中任意 $s:X\rightarrow Y$ 与 $X\in\textup{obj}(\mathsf{B})$，存在某个 $Z\in\textup{obj}(\mathsf{B})$ 与 $f:Y\rightarrow Z$，使得 $f\circ s\in S$。
+	\end{enumerate} 
+	则 $\mathsf{B}[S_\mathsf{B}^{-1}]\subset\mathsf{C}[S^{-1}]$ 是全子范畴，意思是包含函子 $\mathsf{I}:\mathsf{B}[S_\mathsf{B}^{-1}]\rightarrow\mathsf{C}[S^{-1}]$ 全忠实。
+\end{Lem}
+
+\begin{proof}
+	假设条件 (i) 成立。我们必须检验对任意 $X,Y\in\text{obj}(\mathsf{B}[S_\mathsf{B}^{-1}])=\text{obj}(\mathsf{B})$，映射 $F_{X,Y}:\text{Hom}_{\mathsf{B}[S_\mathsf{B}^{-1}]}(X,Y)$ $\rightarrow \text{Hom}_{\mathsf{C}[S^{-1}]}(\mathsf{I}(X),\mathsf{I}(Y))$ 是双射。 
+	
+	关于单性，设两个 $S$-屋顶 $X\xleftarrow{s} X'\xrightarrow{f} Y$ 与 $X\xleftarrow{t} X''\xrightarrow{g} Y$ 在 $\mathsf{C}$ 中等价，按 \eqref{equivroofs} 即存在顶盖屋顶 $X'\xleftarrow{r} X'''\xrightarrow{h} X''$，其中 $s, t, r\in S$，而 $f, g, h$ 是 $\mathsf{C}$ 中的态射。由假设 (i) 应用于 $S$ 中的 $s\circ r: X'''\rightarrow X$，存在某个 $W\in\text{obj}(\mathsf{B})$ 与 $u:W\rightarrow X'''$，使得 $s\circ r\circ u\in S$。但 $\mathsf{B}\subset\mathsf{C}$ 是全子范畴意味着 $s\circ r\circ u$ 还是 $\mathsf{B}$ 中的态射，从而按定义属于 $S_\mathsf{B}$。又 $g\circ h\circ u:W\rightarrow Y$ 也属于 $\mathsf{B}$，于是顶盖屋顶 $X\xleftarrow{s\circ r\circ u} W\xrightarrow{g\circ h\circ u} Y$ 表明 $(s,f)$ 与 $(t,g)$ 作为 $\mathsf{B}$ 中的 $S_\mathsf{B}$-屋顶等价。
+	
+	关于满性，注意对任意 $S$-屋顶 $X\xleftarrow{s} X'\xrightarrow{f} Y$，同样由 (i) 与 $\mathsf{B}$ 的全性，存在某个 $W\in\text{obj}(\mathsf{B})$ 与 $u:W\rightarrow X'$，使得 $s\circ u\in S_\mathsf{B}$；如此得到的 $S_\mathsf{B}$-屋顶 $X\xleftarrow{s\circ u} W\xrightarrow{f\circ u} Y$ 显然与原来那个等价，而 $F_{X,Y}$ 把前者映到后者上。
+	
+	这就完成了证明。只需注意在假设 (ii) 之下，我们反而需要使用右 $S$-屋顶。
+\end{proof}
+
+把上一个引理应用于 $\mathsf{B}'\!\coloneqq\!\mathsf{Kom^b(A)}\subset\mathsf{B}\!\coloneqq\!\mathsf{Kom^\#\!(A)}\subset\mathsf{C}\!\coloneqq\!\mathsf{Kom(A)}$（对\break $\#=+,-$），其局部化类由相应有界复形的拟同构组成，我们便得到全子范畴链 $\mathsf{D^b(A)}\subset\mathsf{D^\#\!(A)}\subset\mathsf{D(A)}$，于是实际上可以把 $\mathsf{D^b(A)}$ 看成局部化过程的结果，或看成 $\mathsf{D(A)}$ 中由那些满足「存在 $n_-<n_+\in\mathbb{Z}$，使得当 $n<n_-$ 与 $n>n_+$ 时 $H^n(X^\bullet)\cong 0$」的复形 $X^\bullet$ 构成的全子范畴。
+
+另一个同样风格的有用结果（例如在 \cite[Theorem 13.2.8]{[KS06]} 中证明）是：
+
+\begin{Lem}\label{abeliansubcatderivedequiv}
+	设 $\mathsf{B}$ 为阿贝尔范畴。设 $\mathsf{A}\subset\mathsf{B}$ 是全的、阿贝尔的子范畴，并且是\textup{厚}的——即对 $\mathsf{B}$ 中任意短正合序列 $0\rightarrow X_1\rightarrow X_2\rightarrow X_3\rightarrow 0$，只要 $X_1,X_3\in\textup{obj}(\mathsf{A})$，则「扩张」$X_2\in\textup{obj}(\mathsf{A})$。还假设任意 $X\in\textup{obj}(\mathsf{A})$ 都能嵌入某个 $X'\in\textup{obj}(\mathsf{A})$，而后者作为 $\mathsf{B}$ 的对象是内射的。
+	
+	则对 $\#=\emptyset, +, -, \mathsf{b}$，自然函子 $\mathsf{D^\#\!(A)}\rightarrow \mathsf{D^\#\!(B)}$ 诱导等价 $\mathsf{D^\#\!(A)}\rightarrow \mathsf{D_\mathsf{A}^\#\!(B)}$，其中 $\mathsf{D_\mathsf{A}^\#\!(B)}\subset \mathsf{D^\#\!(B)}$ 是其复形的上同调落在 $\mathsf{A}$ 中的全加性子范畴\textup{\big(}即对一切 $X^\bullet\in\textup{obj}(\mathsf{D_\mathsf{A}^\#\!(B)})$ 有 $H^n(X^\bullet)\in\textup{obj}(\mathsf{A})$\textup{\big)}。
+\end{Lem}
+
+% [Tutor Note: 这里的关键假设是「$\mathsf{A}$ 中每个对象都能嵌入一个 $\mathsf{B}$-内射对象」，即 $\mathsf{A}$ 在 $\mathsf{B}$ 中有足够多的（相对）内射对象。结论只给出 $\mathsf{D^\#\!(A)}\cong\mathsf{D_\mathsf{A}^\#\!(B)}$，即 $\mathsf{B}$ 的导出范畴中上同调落在 $\mathsf{A}$ 内的那个全子范畴，而\textbf{不是} $\mathsf{D^\#\!(A)}\cong\mathsf{D^\#\!(B)}$；两者相差的正是上同调跑出 $\mathsf{A}$ 的那些复形。]
+
+
+\subsection{复形的正合三角形}\label{ch2.3}
+
+
+尽管命题 \ref{derivedstructure} 精确描述了导出范畴的结构，我们却还不能把它应用于 $\mathsf{Kom(A)}$，因为 $S\coloneqq\{\text{quasi-isomorphisms in}\break\text{Kom}(A)\}$ \textit{不是}局部化类！然而，当它属于复形范畴的一个商范畴——即同伦范畴 $\mathsf{H(A)}$——时便是，这将在下一节讨论。 
+
+这里我们要处理一个更紧迫的问题：由命题 \ref{derivedexists} 构造出的阿贝尔范畴 $\mathsf{A}$ 的导出范畴 $\mathsf{D(A)}$，一般说来不是阿贝尔范畴！（理由将在第 \ref{ch2.4} 节给出，那里会说明这种失败在 $\mathsf{H(A)}$ 中就已经出现，而 $\mathsf{H(A)}$ 与 $\mathsf{D(A)}$ 密切相关。）这确实令人担忧，因为我们在第 \ref{ch1.2} 节引入的许多概念不再有效，尤其是依赖于核与余核的短正合序列这一概念。我们需要适当的替代品。它们以熟悉的面貌出现（见 \cite[chapter 3]{[Imp21]}）。 
+
+\begin{Def}\label{translfunc}
+	设 $\mathsf{A}$ 为阿贝尔范畴。\textbf{第 $n$ 平移函子}\index{functor!ntht@$n$-th translation} $T^n:\mathsf{Kom(A)}\rightarrow\mathsf{Kom(A)}$ 把 $(X^\bullet, d_X^\bullet)\in\text{obj}(\mathsf{Kom(A)})$ 送到平移复形 $(X[n]^\bullet,d_{X[n]}^\bullet)\in\text{obj}(\mathsf{Kom(A)})$，后者由 $X[n]^k\coloneqq X^{n+k}$ 与 $d_{X[n]}^\bullet\coloneqq(-1)^n d_X^{n+\bullet}$ 给出；它把任意 $f^\bullet\in\text{Hom}_\mathsf{Kom(A)}(X^\bullet,Y^\bullet)$ 送到平移链映射 $f[n]^\bullet\in\text{Hom}_\mathsf{Kom(A)}(X[n]^\bullet,Y[n]^\bullet)$，后者由 $f[n]^k\coloneqq f^{n+k}:X^{n+k}\rightarrow Y^{n+k}$ 给出。
+	
+	显然，$T^n$ 是以 $T^{-n}$ 为逆的等价，并且对 $\#=+,-,\mathsf{b}$ 确实限制为 $\mathsf{Kom^\#\!(A)}$ 以及相应 $\mathsf{D^\#\!(A)}$ 的自等价。
+\end{Def}
+
+% [Tutor Note: 平移的符号约定是本单元第二个重灾区：$(X[1])^n=X^{n+1}$、$d_{X[1]}^n=-d_X^{n+1}$（即 $d_{X[n]}^\bullet=(-1)^n d_X^{n+\bullet}$）。这个 $(-1)^n$ 不是可有可无的装饰：它保证后续锥的微分与映射 $f[1]$ 拼成复形，也保证三角公理中符号一致。]
+
+后文第 4 章中我们将看到（或说回想起），第一平移函子 $T^1$ 是三角范畴的关键要素。另一个反复出现的概念是\textit{锥}（更详尽的讨论，包括拓扑观点，见 \cite[section 1.5]{[Wei94]}）：
+
+\begin{Def}\label{coneofcomplexes}
+	设 $\mathsf{A}$ 为阿贝尔范畴，$f^\bullet\in\text{Hom}_\mathsf{Kom(A)}(X^\bullet, Y^\bullet)$。
+	\begin{itemize}[leftmargin=0.5cm]
+		\item $f^\bullet$ 的\textbf{（复形的）锥}\index{cone!of complexes}是上链复形 $(C(f)^\bullet, d_{C(f)}^\bullet)\in\text{obj}(\mathsf{Kom(A)})$，其中 $C(f)^n\coloneqq X[1]^n\oplus Y^n$，且
+		\begin{align}
+			&d_{C(f)}^\bullet \coloneqq \begin{pmatrix} d_{X[1]}^\bullet & 0 \\ f[1]^\bullet & d_Y^\bullet \end{pmatrix}\!:\,X^{\bullet+1}\oplus Y^\bullet\rightarrow X^{\bullet+2}\oplus Y^{\bullet+1}, \nonumber\\[0.2cm] 
+			&d_{C(f)}^n(x^{n+1},y^n)=\big(-d_X^{n+1}(x^{n+1}),f^{n+1}(x^{n+1})+d_Y^n(y^n)\big)
+		\end{align}
+		（它确实满足 $d_{C(f)}^n\circ d_{C(f)}^{n-1}=0$，因为由 $f^\bullet$ 的链性质有 $f^{n+1}\circ d_{X[1]}^{n-1} + d_Y^n\circ f^n= -f^{n+1}\circ d_X^n$ $+ f^{n+1}\circ d_X^n=0$）。 
+		
+		\item $f^\bullet$ 的\textbf{（复形的）柱}\index{cylinder of complexes}是上链复形 $(Z(f)^\bullet, d_{Z(f)}^\bullet)\in\text{obj}(\mathsf{Kom(A)})$，其中 $Z(f)^n\coloneqq X^n\oplus C(f)^n= X^n\oplus X[1]^n\oplus Y^n$，且 
+		\begingroup
+		\allowdisplaybreaks
+		\begin{small}\begin{align}
+				&\mkern-16mu d_{Z(f)}^\bullet \!\coloneqq\! \begin{pmatrix} d_X^\bullet & -\text{id}_{X[1]}^\bullet & 0 \\ 0 & d_{X[1]}^\bullet & 0 \\ 0 & f[1]^\bullet & d_Y^\bullet \end{pmatrix}\!:\, X^\bullet\oplus X^{\bullet+1}\oplus Y^\bullet\rightarrow X^{\bullet+1}\oplus X^{\bullet+2}\oplus Y^{\bullet+1}, \nonumber\\[0.2cm]
+				&\mkern-16mu d_{Z(f)}^n(x^n\!,x^{n+1}\!,y^n)\!=\!\big(d_X^n(x^n)\!-\! x^{n+1}\!,-d_X^{n+1}(x^{n+1}), f^{n+1}(x^{n+1})\!+\! d_Y^n(y^n)\big)
+		\end{align}\end{small}
+		\endgroup%\vspace*{-0.1cm}
+		（这也是一个良定义的微分）。柱通过切去第一个分量得到的链映射 $p_{23}^\bullet:Z(f)^\bullet\rightarrow C(f)^\bullet$ 投射到 $f^\bullet$ 的锥上。
+	\end{itemize}
+	当然，$X^\bullet, Y^\bullet\in\text{obj}(\mathsf{Kom^\#\!(A)})$ 蕴含 $C(f)^\bullet, Z(f)^\bullet\in\text{obj}(\mathsf{Kom^\#\!(A)})$（$\#=+,-,\mathsf{b}$），在相应的导出范畴中亦然。又若各组成部分属于复形的一个加性子范畴，则锥与柱也属于其中。 
+\end{Def}
+
+% [Tutor Note: 锥的微分矩阵是分块矩阵，其左下角为 $f[1]$（而非 $f$），对角块为 $d_{X[1]}^\bullet$ 与 $d_Y^\bullet$，且 $d_{X[1]}^\bullet=-d_X^{\bullet+1}$：这正是「$d_{C(f)}^2=0$ 依赖链映射性质 $f^{n+1}d_X^n+d_Y^nf^n=0$ 成立」的原因。柱的矩阵则多出 $-\text{id}_{X[1]}$ 一项，它使得柱与锥同伦等价（见引理 \ref{p3i3quiso}），若漏掉该负号，同伦公式 $k^n(x^n,x^{n+1},y^n)=(0,x^n,0)$ 就不再成立。]
+
+我们注意到，若 $X^\bullet$ 与 $Y^\bullet$ 是由某个 $f\in\text{Hom}_\mathsf{A}(X,Y)$ 连接的 0-复形，按注 \ref{0-complex} 得到平凡链映射 $f^\bullet=\mathsf{J}(f)\in\text{Hom}_\mathsf{Kom(A)}(X^\bullet,Y^\bullet)$，则 $C(f)^\bullet$ 在次数 $-1$ 处为 $X$、在次数 0 处为 $Y$，于是 $H^{-1}(C(f)^\bullet)\cong\ker(d_{C(f)}^{-1})\cong X\cap\ker(f^0)\cong \ker(f^\bullet)$，相应地 $H^0(C(f)^\bullet)\cong$ $\ker(d_Y^0)/\text{im}(f^0)\cong\text{coker}(f^\bullet)$（更严格的证明可用图 \eqref{cohomodiag}）。因此，若 $f$ 是单射，则 $C(f)^\bullet$ 拟同构于 $\mathsf{J}(\text{coker}(f))$；而 $f$ 满射则蕴含 $C(f)^\bullet$ 拟同构于 $T^{-1}\big(\mathsf{J}(\ker(f))\big)$。
+
+因此，锥在某种程度上把在过渡到导出范畴时丢失的核与余核概念封装了起来。下面是一个联系锥与柱的关键引理。
+
+\begin{Lem}\label{p3i3quiso}
+	设 $\mathsf{A}$ 为阿贝尔范畴，$f^\bullet\in\textup{Hom}_\mathsf{Kom(A)}(X^\bullet, Y^\bullet)$。则图
+	\begin{equation}\label{distinguidiag}
+		\begin{tikzcd}
+			& 0\arrow[r] & Y^\bullet\arrow[r, "i_2^\bullet"]\arrow[d, "i_3^\bullet"'] & C(f)^\bullet\arrow[r, "p_1^\bullet"]\arrow[d, "{\textup{id}_{C(f)}^\bullet}"] & X[1]^\bullet\arrow[r] & 0 \\
+			0\arrow[r] & X^\bullet\arrow[r, "{i_1^\bullet}"]\arrow[d, "{\textup{id}_X^\bullet}"'] & Z(f)^\bullet\arrow[r, "p_{23}^\bullet"']\arrow[d, "p_3^\bullet"] & C(f)^\bullet\arrow[r] & 0 & \\
+			& X^\bullet\arrow[r, "f^\bullet"'] & Y^\bullet & & & \\
+		\end{tikzcd}\vspace*{-0.3cm}
+	\end{equation}
+	在 $\mathsf{Kom(A)}$ 中交换且各行正合，其中 $i_k^\bullet, p_k^\bullet$ 表示显然的包含与投影链映射\footnote{警告：此处及以下，即使这些显然的链映射属于不同态射的锥或柱，我们也用同一批符号 $i_k^\bullet$、$p_k^\bullet$ 来记它们！}，唯一的例外是 
+	\[
+	p_3^n:Z(f)^n\rightarrow Y^n,\,(x^n,x^{n+1},y^n)\mapsto f^n(x^n)+y^n\,.
+	\]
+	特别地，$i_3^\bullet, p_3^\bullet$ 是拟同构，满足 $p_3^\bullet\circ i_3^\bullet=\textup{id}_Y^\bullet$ 与 $i_3^\bullet\circ p_3^\bullet\sim\textup{id}_{Z(f)}^\bullet$，这意味着由命题 \ref{derivedexists} 有 $Z(f)^\bullet\cong Y^\bullet\in\textup{obj}(\mathsf{D(A)})$。 
+\end{Lem} 
+
+\begin{proof}
+	所涉态射确实是链映射、图交换、各行正合，这些都是显然的检查。此外，对一切 $y^n\in Y^n$ 与任意 $n\in\mathbb{Z}$ 有 $(p_3^n\circ i_3^n)(y^n)=f^n(0)+y^n=\text{id}_Y^n(y^n)$，因此只需证明 $i_3^\bullet\circ p_3^\bullet$ 与 $\text{id}_{Z(f)}^\bullet$ 是同伦的链映射。令 $k^\bullet:Z(f)^\bullet\rightarrow Z(f)^{\bullet-1}$ 由 $k^n(x^n,x^{n+1},y^n)\coloneqq (0,x^n,0)$ 给出，则
+	\begin{align*}
+		(&d_{Z(f)}^{n-1}\circ k^n + k^{n+1}\circ d_{Z(f)}^n)(x^n,x^{n+1},y^n) \\		
+		&= d_{Z(f)}^{n-1}(0,x^n,0) + k^{n+1}(d_X^n(x^n)-x^{n+1},-d_X^{n+1}(x^{n+1}),f^{n+1}(x^{n+1})+d_Y^n(y^n)) \\
+		&= (-x^n,-d_X^n(x^n),f^n(x^n)) + (0,d_X^n(x^n)-x^{n+1},0)\\
+		&= (0,0,f^n(x^n)+y^n) - (x^n,x^{n+1},y^n)=(i_3^n\circ p_3^n-\text{id}_{Z(f)}^n)(x^n,x^{n+1},y^n)\;, 
+	\end{align*}
+	如所欲。按定义 \ref{quasiso}，$i_3^\bullet$ 与 $p_3^\bullet$ 于是是拟同构。 
+\end{proof}
+
+现在我们描述\textit{复形的三角形}，即导出范畴中短正合序列的替代品。由于下面的命题 \ref{shortexactaretriangles}，这一选择是合理的；而它们为何是 $\mathsf{D(A)}$ 中理想的工具，则由定理 \ref{longexactcohomtriangles} 说明。
+
+\begin{Def}\label{exacttriangles}
+	设 $\mathsf{A}$ 为阿贝尔范畴。则 $\mathsf{Kom^\#\!(A)}$ 或 $\mathsf{D^\#\!(A)}$ 中的\textbf{复形三角形}\index{triangle of complexes}是形如 $\Delta=\big(X^\bullet\xrightarrow{f^\bullet} Y^\bullet\xrightarrow{g^\bullet} Z^\bullet\xrightarrow{h^\bullet} X[1]^\bullet\big)$ 的图，它由复形及复形之间的链映射组成。给定第二个三角形 $\tilde{\Delta}$，\textbf{复形三角形的态射}\index{morphism!of triangles of complexes}是三元链映射 $(i^\bullet,j^\bullet,k^\bullet)$，它使图
+	\begin{equation}\label{triangmorph}
+		\begin{tikzcd}
+			X^\bullet\arrow[r,"f^\bullet"]\arrow[d,"i^\bullet"'] & Y^\bullet\arrow[r,"g^\bullet"]\arrow[d,"j^\bullet"'] & Z^\bullet\arrow[r,"h^\bullet"]\arrow[d,"k^\bullet"] & {X[1]}^\bullet\arrow[d,"{i[1]}^\bullet"] \\
+			\tilde{X}^\bullet\arrow[r,"\tilde{f}^\bullet"'] & \tilde{Y}^\bullet\arrow[r,"\tilde{g}^\bullet"'] & \tilde{Z}^\bullet\arrow[r,"\tilde{h}^\bullet"'] & \tilde{X}[1]^\bullet
+		\end{tikzcd}
+	\end{equation}
+	在所选范畴中交换；若 $i^\bullet$、$j^\bullet$、$k^\bullet$ 都是同构，则进一步称它为同构。
+	
+	一个三角形特称为\textbf{复形的区分三角形}\index{distinguished triangle!of complexes}，若它（拟）同构于如下形状的三角形：
+	\begin{equation}\label{distinguitriangle}
+		X^\bullet\xrightarrow{i_1^\bullet} Z(f)^\bullet\xrightarrow{p_{23}^\bullet} C(f)^\bullet\xrightarrow{\delta[1]^\bullet} X[1]^\bullet
+		\quad\equiv\quad
+		\begin{tikzcd}[column sep=0.5cm]
+			X^\bullet\arrow[rr, "i_1^\bullet"] & & Z(f)^\bullet\arrow[dl, "p_{23}^\bullet"] \\
+			& C(f)^\bullet\arrow[ul, "{\delta[1]^\bullet}"]
+		\end{tikzcd}
+	\end{equation}
+	这样的三角形，它来自图 \eqref{distinguidiag} 的正合中间行；其中右式用了我们从 \cite{[Imp21]} 起就已习惯的三角形画法（此处连接态射 $\delta[1]^\bullet=p_1^\bullet$ 隐含地被理解为映到 $X[1]^\bullet$）。
+\end{Def}
+
+\begin{Pro}\label{shortexactaretriangles}
+	设 $\mathsf{A}$ 为阿贝尔范畴。$\mathsf{Kom(A)}$ 中复形的任意短正合序列 $0\rightarrow X^\bullet\xrightarrow{f^\bullet} Y^\bullet\xrightarrow{g^\bullet} Z^\bullet\rightarrow 0$ 都拟同构于图 \eqref{distinguidiag} 的中间行，即存在如 \eqref{triangmorph} 的三元拟同构。
+	
+	从而相应的三角形 $X^\bullet\rightarrow Y^\bullet\rightarrow Z^\bullet\rightarrow X[1]^\bullet$ 同构于 \eqref{distinguitriangle}，故它是区分三角形。  
+\end{Pro}
+
+\begin{proof}
+	取三角形的态射 $(i^\bullet,j^\bullet,k^\bullet)\coloneqq (\text{id}_X^\bullet,p_3^\bullet,g^\bullet\circ p_2^\bullet)$，它嵌入
+	\begin{equation*}
+		\begin{tikzcd}
+			0\arrow[r] & X^\bullet\arrow[r,"i_1^\bullet"]\arrow[d,"\text{id}_X^\bullet"'] & Z(f)^\bullet\arrow[r,"p_{23}^\bullet"]\arrow[d,"p_3^\bullet"] & C(f)^\bullet\arrow[r]\arrow[d,"g^\bullet\circ p_2^\bullet"] & 0 \\
+			0\arrow[r] & X^\bullet\arrow[r,"f^\bullet"'] & Y^\bullet\arrow[r,"g^\bullet"'] & Z^\bullet\arrow[r] & 0
+		\end{tikzcd}\quad,
+	\end{equation*}
+	其中第一行中的柱与锥都由给定的 $f^\bullet$ 构造。确实 $k^\bullet$ 是链映射：
+	\begin{align*}
+		d_Z^n(k^n(x^{n+1},y^n))&=d_Z^n(g^n(y^n))=0+g^{n+1}(d_Y^n(y^n))\\ 
+		&=g^{n+1}(f^{n+1}(x^{n+1}))+g^{n+1}(d_Y^n(y^n))\\
+		&=k^{n+1}(-d_X^{n+1}(x^{n+1}),f^{n+1}(x^{n+1})+d_Y^n(y^n))\\
+		&=k^{n+1}(d_{C(f)}^n(x^{n+1},y^n))\,,
+	\end{align*}
+	这里利用了第二行的正合性。如此得到的图显然交换，同样是因为 $g^n\circ f^n=0$。
+	
+	由于 $\text{id}_X^\bullet$ 与 $p_3^\bullet$ 是拟同构（后者由引理 \ref{p3i3quiso}），我们只需检验 $k^\bullet$ 也是。其核是复形 $\ker(k)^\bullet = X[1]^\bullet\oplus \ker(g)^\bullet\break= X[1]^\bullet\oplus\text{im}(f)^\bullet\subset C(f)^\bullet$，其微分由限制得到，即 $d_{\ker(k)}^n(x^{n+1},x^n)=(-d_X^{n+1}(x^{n+1}),\,x^{n+1}+d_X^n(x^n))$，其中 $f^\bullet$ 的单性允许我们把 $X^\bullet\equiv\text{im}(f)^\bullet\subset Y^\bullet$ 视为等同。现在注意 $\text{id}_{\ker(k)}^\bullet\sim 0$，同伦由 $h^n:X^{n+1}\oplus X^n\rightarrow X^n\oplus X^{n-1},\, (x^{n+1},x^n)\mapsto (x^n,0)$ 给出\big(确实有 $(h^{n+1}\circ d_{\ker(k)}^n+d_{\ker(k)}^{n-1}\circ h^n)(x^{n+1},x^n)=(x^{n+1}+d_X^n(x^n),0)+(-d_X^n(x^n),x^n)=$ $\text{id}_{\ker(k)}^n(x^{n+1},x^n)$\big)，于是得到 $H^n(\text{id}_{\ker(k)}^\bullet)=H^n(0)=0$，从而 $H^n(\ker(k)^\bullet)=H^n(\text{id}_{\ker(k)}^\bullet)\langle H^n(\ker(k)^\bullet)\rangle=0$。
+	
+	从而短正合序列 $0\rightarrow\ker(k)^\bullet\rightarrow C(f)^\bullet\xrightarrow{k^\bullet} Z^\bullet\rightarrow 0$\break——它正合，因为 $\ker(k)^\bullet$ 是 $f^\bullet$ 的锥的子复形，而 $k^\bullet$ 满射（按定义，因为 $g^\bullet$ 满射）——诱导\footnote{这是同调代数中的标准结果，它在这里成立是因为 $\mathsf{Kom(A)}$ 是阿贝尔范畴！}出长正合序列
+	\begin{small}\[
+		...\rightarrow 0=H^n(\ker(k)^\bullet)\rightarrow H^n(C(f)^\bullet)\xrightarrow{H^n(k^\bullet)} H^n(Z^\bullet)\rightarrow 0=H^{n+1}(\ker(k)^\bullet)\rightarrow...\,.
+		\]\end{small}
+	\!\!于是对所有 $n\in\mathbb{Z}$，$H^n(k^\bullet)$ 是同构，故 $k^\bullet$ 是拟同构，如所欲。 
+\end{proof}
+
+\begin{Rem}\label{alternadistinguitriang}
+	考虑由 $f^\bullet\in\text{Hom}_\mathsf{Kom(A)}(X^\bullet,Y^\bullet)$ 产生的序列 $0\rightarrow Y^\bullet\xrightarrow{i_2^\bullet} C(f)^\bullet\xrightarrow{p_1^\bullet} X[1]^\bullet\rightarrow 0$，它显然是短正合的。由命题 \ref{shortexactaretriangles}，它拟同构于 \eqref{distinguidiag} 的中间行，从而相应的三角形 $X^\bullet\rightarrow Y^\bullet\rightarrow C(f)^\bullet\rightarrow X[1]^\bullet$（向右平移一次）是区分三角形。 
+	
+	事实上，许多作者把同构于\footnote{此处右式三角形图中作为第一个投影的写法形式上有误——$p_1^\bullet$ 其实「向上爬到」$X[1]^\bullet$——但为视觉清晰我们保留这一记号。} 
+	\begin{equation}\label{conetriangle}
+		X^\bullet\xrightarrow{f^\bullet} Y^\bullet\xrightarrow{i_2^\bullet} C(f)^\bullet\xrightarrow{p_1^\bullet} X[1]^\bullet
+		\quad\equiv\quad
+		\begin{tikzcd}[column sep=0.5cm]
+			X^\bullet\arrow[rr, "f^\bullet"] & & Y^\bullet\arrow[dl, "i_2^\bullet"] \\
+			& C(f)^\bullet\arrow[ul, "{p_1[1]^\bullet}"]
+		\end{tikzcd}\quad,
+	\end{equation}
+	的三角形称为区分三角形，如我们刚才所论证的，这与定义 \ref{exacttriangles} 相容。我们将在适当时在两种定义之间互换使用。
+\end{Rem}
+
+\begin{Thm}\label{longexactcohomtriangles}
+	设 $\mathsf{A}$ 为阿贝尔范畴，$X^\bullet\xrightarrow{f^\bullet} Y^\bullet\xrightarrow{g^\bullet} Z^\bullet\xrightarrow{h^\bullet} X[1]^\bullet$ 为 $\mathsf{D(A)}$ 中的区分三角形。则它诱导上同调中的长正合序列
+	\begin{equation}
+		\!...\rightarrow H^n(X^\bullet)\xrightarrow{H^n(f^\bullet)} H^n(Y^\bullet)\xrightarrow{H^n(g^\bullet)} H^n(Z^\bullet)\xrightarrow{H^n(h^\bullet)} H^{n+1}(X^\bullet)\rightarrow...
+	\end{equation}
+	该序列位于 $\mathsf{A}$ 中。
+\end{Thm}
+
+\begin{proof}
+	按区分三角形的定义，我们只需着眼于 \eqref{distinguitriangle}，它在 $\mathsf{Kom(A)}$ 中相应的短正合序列就是图 \eqref{distinguidiag} 的中间行。这诱导出长正合序列
+	\begin{small}\[
+		...\!\rightarrow H^n(X^\bullet)\xrightarrow{H^n(i_1^\bullet)} H^n(Z(f)^\bullet)\xrightarrow{H^n(p_{23}^\bullet)} H^n(C(f)^\bullet)\xrightarrow{H^n(\delta[1]^\bullet)} H^{n+1}(X^\bullet)\rightarrow\!...,
+		\]\end{small}
+	\!其中连接同态 $H^n(\delta[1]^\bullet)$ 实际上对应 $H^n(h^\bullet)\!:$ $H^n(Z^\bullet)\cong H^n(C(f)^\bullet)\rightarrow H^n(X[1]^\bullet)=H^{n+1}(X^\bullet)$，这可通过应用蛇引理来证明。由于区分三角形的概念可搬到 $\mathsf{A}$ 的导出范畴中，所得长序列在 $\mathsf{D(A)}$ 中确实也正合。
+\end{proof}
+
+% [Tutor Note: 作者在此用蛇引理一语带过连接同态的等同，省略的细节是：把 \eqref{distinguidiag} 中间行写成短正合列后，蛇引理给出 $H^n(C(f)^\bullet)\to H^{n+1}(X^\bullet)$ 的连接同态，而它与 $H^n(\delta[1]^\bullet)=H^n(p_1^\bullet)$ 只差 $\mathsf{J}(f)$ 的平移与 $Z(f)\simeq Y$ 的拟同构，故在 $\mathsf{D(A)}$ 中两者一致。]
+
+命题 \ref{shortexactaretriangles} 与定理 \ref{longexactcohomtriangles} 一起说明了三角形为何好用：$\mathsf{Kom(A)}$ 中任何短正合序列经过适当操作后，最终都在上同调中诱导长正合序列。从函子 $H^n$ 的角度看，这只不过告诉我们：它们毫不意外地是\textit{上同调的}。
+
+\begin{Def}\label{cohomfunconabelian}
+设 $\mathsf{A}, \mathsf{B}$ 为阿贝尔范畴。对 $\#=\emptyset, +, -, \mathsf{b}$，函子 $\mathsf{F}:\mathsf{D^\#\!(A)}\rightarrow\mathsf{B}$（或定义在我们将于下文引入的 $\mathsf{A}$ 的同伦范畴上的函子）称为\textbf{上同调函子}\index{functor!cohomological (on a derived category)}，若任何区分三角形 $X^\bullet\xrightarrow{f^\bullet} Y^\bullet\xrightarrow{g^\bullet} Z^\bullet\xrightarrow{h^\bullet} X[1]^\bullet$ 都被映成长正合序列
+\[
+...\rightarrow\mathsf{F}(T^n(X^\bullet))\rightarrow\mathsf{F}(T^n(Y^\bullet))\rightarrow\mathsf{F}(T^n(Z^\bullet))\rightarrow\mathsf{F}(T^{n+1}(X^\bullet))\rightarrow...\,,
+\]
+其中 $T^n$ 是相应复形范畴上的平移自等价。
+\end{Def}
+
+% [Tutor Note: 注意定义中用的是平移自等价 $T^n$ 而不是记号 $[n]$：作者把「上同调函子」定义成在区分三角形的所有平移上取长正合序列的函子。最常见的上同调函子除 $H^n$ 外，还有 $\text{Hom}$-函子 $\text{Hom}_{\mathsf{D(A)}}(X^\bullet,-)$，其长正合序列是 $\text{Ext}$ 长正合列。]
+
+由于 $H^n=H^0\circ T^n:\mathsf{D^\#\!(A)}\rightarrow\mathsf{A}$，定理 \ref{longexactcohomtriangles} 确实表明所有函子 $H^n$ 在名义上和实际上都是上同调的。后文我们将看到 $\text{Hom}$-函子也是上同调的。
+
+\begin{Rem}\label{C(f)acyclic}
+考虑注 \ref{alternadistinguitriang} 中与 $f^\bullet\in\text{Hom}_\mathsf{Kom(A)}(X^\bullet,Y^\bullet)$ 相联系的那个区分三角形 $X^\bullet\xrightarrow{f^\bullet} Y^\bullet\xrightarrow{i_2^\bullet} C(f)^\bullet\xrightarrow{p_1^\bullet} X[1]^\bullet$。由定理 \ref{longexactcohomtriangles}，它诱导上同调中的长正合序列
+\begin{small}\[
+	...\rightarrow H^n(X^\bullet)\xrightarrow{H^n(f^\bullet)} H^n(Y^\bullet)\xrightarrow{H^n(i_2^\bullet)} H^n(C(f)^\bullet)\xrightarrow{H^n(p_1^\bullet)} H^{n+1}(X^\bullet)\xrightarrow{H^{n+1}(f^\bullet)}...\,.
+	\]\end{small}
+\!\!现在，由标准同调代数我们知道：若 $f^\bullet$ 是拟同构，则 $C(f)^\bullet$ 无环：$\ker(H^n(i_2^\bullet))=\text{im}(H^n(f^\bullet))=H^n(Y^\bullet)$ 且 $\text{im}(H^n(p_1^\bullet))=\ker(H^{n+1}(f^\bullet))=\{0\}$，故 $H^n(i_2^\bullet)$ 与 $H^n(p_1^\bullet)$ 都是平凡的，于是我们断定 $H^n(C(f)^\bullet)=\ker(H^n(p_1^\bullet))=\text{im}(H^n(i_2^\bullet))=\{0\}$。其逆亦真。 
+\end{Rem}
+
+% [Tutor Note: 这段的推理链条值得放慢速度：由正合性 $\ker H^n(p_1^\bullet)=\text{im}\,H^n(i_2^\bullet)$ 且 $\text{im}\,H^n(p_1^\bullet)=\ker H^{n+1}(f^\bullet)$。当 $f^\bullet$ 是拟同构时 $H^{n+1}(f^\bullet)$ 是同构，故 $\text{im}\,H^n(p_1^\bullet)=0$，再由 $H^n(i_2^\bullet)$ 单（因 $H^n(f^\bullet)$ 满）得 $H^n(C(f)^\bullet)=0$。这也是「拟同构 ⟺ 锥无环」这一判据的来源，后文构造区分三角形时反复使用。]
+

@@ -1,0 +1,441 @@
+% ch09 译文：原文 §5d 限制到子群概形、§5e 群概形作用的乘积（main.tex 第 2671--3290 行）
+\subsection{限制到子群概形}
+
+设 $G$ 为群概形，$H\subseteq G$ 为闭子群概形，包含态射记为 $i_H : H \hookrightarrow G$。概形 $X$ 上的 $G$-作用
+$\sigma_G : G \times X \rightarrow X$ 自然地诱导出 $X$ 上的 $H$-作用，由
+$$
+\sigma_H
+:=
+(i_H \times \id_X)
+\comp
+\sigma
+:
+H\times X\rightarrow X.
+$$
+给出。
+
+\begin{defn}[等变层的限制]\label{defn:RestrictionOfEquivariantSheaves}
+对任意 $G$-等变 $\mathcal{O}_X$-模 $(\mathcal{F}, \theta) \in \Mod_G(X)$，其到 $H$ 的\emph{限制}定义为 $H$-等变 $\mathcal{O}_X$-模
+$$
+(\mathcal{F}, \theta)|_H := (\mathcal{F}, \theta|_H),
+$$
+其中受限的 $H$-线性化由 $G$-线性化拉回得到
+$$
+\theta|_H 
+:= 
+(i_H \times \id_X)^* \theta 
+: 
+\sigma_H^* \mathcal{F} 
+\xrightarrow{\cong} 
+\left(\pr_X^{H \times X}\right)^* \mathcal{F}
+$$
+这一对象层面的操作连同态射上的恒等映射，自然地定义出一个函子
+$$
+\Res_H^G : \Mod_G(X) \rightarrow \Mod_H(X),
+$$
+称为\emph{限制函子}。它也在相应的全子范畴上诱导限制函子：
+$$
+\QCoh_G(X) \rightarrow \QCoh_H(X),
+\quad
+\Coh_G(X) \rightarrow \Coh_H(X),
+\quad\text{与}\quad
+\VB_G(X) \rightarrow \VB_H(X).
+$$
+\end{defn}
+
+\begin{yizhu}[限制的方向]
+限制只换作用群，不动层本身：$\mathcal{F}$ 保持不变，改变的只是线性化 $\theta$。注意 $\theta|_H$ 沿 $i_H\times\id_X$ 拉回，同构两端都落在 $H\times X$ 上；若把 $i_H$ 与 $\sigma_G$ 的复合顺序颠倒，两端就不在同一个空间上，限制便无从谈起。这是本节最容易搞反的一步。
+\end{yizhu}
+
+下面这个引理是标准的：
+
+\begin{lemma}\cite[Exercise 2.8]{Waterhouse}
+\label{lem:DiagonalizableSurjective}
+设 $G$ 是域 $\field$ 上的对角化群概形，$H \subseteq G$ 为闭子群概形。则 $H$ 也是对角化的，且特征群上的限制映射
+$
+i_H^* : \widehat{G} \rightarrow \widehat{H}
+$
+是满射，其核为 $H^\perp$，其中
+$$
+H^\perp
+:=
+\{ \cha \in \widehat{G} \mid \cha(h) = 1 \text{ 对一切 } h \in H \}
+\subseteq
+\widehat{G}
+$$
+称为 $H$ 在 $\widehat{G}$ 中的零化子。
+\end{lemma}
+
+\begin{proof}
+由于 $H$ 是对角化群概形 $G\cong \Spec(\field[\widehat{G}])$ 的闭子群概形，存在 $\field[\widehat{G}]$ 的 Hopf 理想 $I$，使得 $H\cong\Spec(\field[\widehat{G}]/I)$ 且 $\mathcal{O}_H(H)\cong\field[\widehat{G}]/I$。
+
+我们断言
+$$
+I=\left<\cha-1|\cha\in H^\perp\right>
+\subseteq
+\field[\widehat{G}].
+$$
+
+对任意 $\cha \in H^\perp\subseteq\field[\widehat{G}]\cong\mathcal{O}_G(G)$，有 $\cha|_H=1_{\mathcal{O}_H(H)}\in\mathcal{O}_H(H)$，从而 $(\cha-1)|_H=0\in \mathcal{O}_H(H)$。这说明 $\langle \cha - 1 \mid \cha \in H^\perp \rangle \subseteq I$。
+
+反之，设 $f = \sum_{\cha \in \widehat{G}} c_{\cha} \cha \in I\subseteq\field[\widehat{G}]\cong\mathcal{O}_G(G)$。按各项在 $\mathcal{O}_H(H)$ 中的限制像归并，对 $f|_H$ 求值：
+$$
+0 = f|_H = \sum_{\mu} \left( \sum_{\cha|_H = \mu} c_{\cha} \right) \mu \quad \text{在 } \mathcal{O}_H(H) \text{ 中},
+$$
+其中 $\mu$ 取遍特征在 $\mathcal{O}_H(H)$ 中的互不相同的非零像。由于每个 $\mu$ 都是 Hopf 代数 $\mathcal{O}_H(H)$ 中的群像元素，这些互不相同的元素在 $\field$ 上线性无关
+\cite[\S2.2]{Waterhouse}。于是每个 $\mu$ 的系数都必须为零，即对所有这样的 $\mu$ 都有 $\sum_{\cha|_H = \mu} c_{\cha} = 0$。
+
+% [原文 p.38]
+对求和中出现的每个 $\mu$，固定一个代表元 $\cha_0 \in \widehat{G}$，使得 $\cha_0|_H = \mu$。任何其他限制到 $\mu$ 的特征 $\cha$ 都满足 $(\cha \cha_0^{-1})|_H = 1$，即 $\cha \cha_0^{-1} \in H^\perp$。于是可写 $\cha = h\cha_0$，其中 $h \in H^\perp$。这样就能把对应于 $\mu$ 的那部分和改写为
+$$
+\sum_{h \in H^\perp} c_{h\cha_0} (h\cha_0) = \sum_{h \in H^\perp} c_{h\cha_0} (h - 1)\cha_0 + \left( \sum_{h \in H^\perp} c_{h\cha_0} \right) \cha_0.
+$$
+由于系数之和 $\sum c_{h\cha_0}$ 恰为零，第二项消失，只剩下形如 $h-1$（$h \in H^\perp$）的元素的线性组合。对所有这样的 $\mu$ 求和，即得 $f \in \langle \cha - 1 \mid \cha \in H^\perp \rangle$。
+
+于是 $I = \langle \cha - 1 \mid \cha \in H^\perp \rangle$。由环的第一同构定理得到自然同构 $\mathcal{O}_H(H) \cong \field[\widehat{G}]/I \cong \field[\widehat{G}/H^\perp]$，故 $H$ 是对角化的，且 $\widehat{G}/H^\perp\cong\widehat{H}$。
+\end{proof}
+
+\begin{yizhu}[零化子零化了什么]
+$H^\perp$ 由「在 $H$ 上恒取 $1$」的特征组成，也就是 $H$ 看不见的那些权。因此 $H$-等变层的权分解并不直接按 $\widehat{G}$ 铺开：每个 $H^\perp$-陪集里的 $\widehat{G}$-权会被并成同一个 $\widehat{H}$-权。推论 \ref{crl:orbit-category-GH-restriction} 里按 $H^\perp$ 取商，正是这一步的范畴化。
+\end{yizhu}
+
+\begin{prop}[同态空间的 $H$-不变量]
+\label{prop:HInvariantsOfHomSpace}
+设 $G$ 是对角化群概形、作用在概形 $X$ 上，$H\subseteq G$ 为闭子群概形。对任意
+$(\mathcal{F}, \theta)$、
+$(\mathcal{F}', \theta') \in \Mod_G(X)$，只要 $\mathcal{F}$ 有限呈现，$\Mod_H(X)$ 中从 $(\mathcal{F}, \theta|_H)$ 到 $(\mathcal{F}', \theta'|_H)$ 的同态空间就有典范分解
+$$
+\operatorname{Hom}_{\Mod_H(X)}\left( (\mathcal{F}, \theta|_H), (\mathcal{F}', \theta'|_H) \right)
+=
+\bigoplus_{\cha \in H^\perp} \operatorname{Hom}_{\Mod_G(X)}\left( (\mathcal{F}, \theta)(\cha), (\mathcal{F}', \theta') \right).
+$$
+\end{prop}
+
+\begin{proof}
+由引理 \ref{lem:DiagonalizableSurjective}，$H$ 是对角化的。因此由命题 \ref{prop:WeightSpaceDecompositionOfHomSpace} 可得两个分解
+\begin{align*}
+\operatorname{Hom}_{\Mod(X)}(\mathcal{F}, \mathcal{F}') 
+&=
+\bigoplus_{\cha \in \widehat{G}} \operatorname{Hom}_{\Mod_G(X)}\left( (\mathcal{F}, \theta)(\cha), (\mathcal{F}', \theta') \right)
+\\
+&=
+\bigoplus_{\chaa \in \widehat{H}} \operatorname{Hom}_{\Mod_H(X)}\left( (\mathcal{F}, \theta|_H)(\chaa), (\mathcal{F}', \theta'|_H) \right).
+\end{align*}
+
+我们断言对每个 $\cha\in\widehat{G}$ 都有
+$$
+\operatorname{Hom}_{\Mod_G(X)}\left( (\mathcal{F}, \theta)(\cha), (\mathcal{F}', \theta') \right)
+\subseteq
+\operatorname{Hom}_{\Mod_H(X)}\left( (\mathcal{F}, \theta|_H)(i_H^*\cha), (\mathcal{F}', \theta'|_H) \right).
+$$
+事实上，$f\in\operatorname{Hom}_{\Mod_G(X)}\left( (\mathcal{F}, \theta)(\cha), (\mathcal{F}', \theta') \right)$ 满足
+$$
+\sigma_G^* f\comp \theta'
+=
+\left(\left(\pr_G^{G\times X}\right)^*\cha \cdot \theta\right)
+\comp
+\left(\pr_X^{G\times X}\right)^* f
+$$
+% [原文 p.39]
+在两侧取 $(i_H^*\times \id_X)^*$，得到
+$$
+\sigma_H^*f\comp\left(\theta'|_H\right)
+=
+\left(
+\left(\pr_H^{H\times X}\right)^*
+i_H^*\cha
+\cdot
+\theta|_H
+\right)
+\comp
+\left(\pr_X^{H\times X}\right)^*f,
+$$
+其中
+$
+\theta|_H
+(i_H^*\cha)
+=
+\left(
+\left(\pr_H^{H\times X}\right)^*
+i_H^*\cha
+\cdot
+\theta|_H
+\right).
+$
+这说明
+$
+f\in
+\operatorname{Hom}_{\Mod_H(X)}\left( (\mathcal{F}, \theta|_H)(i_H^*\cha), (\mathcal{F}', \theta'|_H) \right),
+$
+断言得证。
+
+因此，对每个 $\chaa\in\widehat{H}$ 都有如下子分解
+$$
+\operatorname{Hom}_{\Mod_H(X)}\left( (\mathcal{F}, \theta|_H)(\chaa), (\mathcal{F}', \theta'|_H) \right)
+=
+\bigoplus_{\substack{\cha \in \widehat{G} \\[1mm] i_H^*\cha = \chaa}} \operatorname{Hom}_{\Mod_G(X)}\left( (\mathcal{F}, \theta)(\cha), (\mathcal{F}', \theta') \right).
+$$
+命题即为 $\chaa=1$ 的特殊情形。
+\end{proof}
+
+与推论 \ref{thm:EmbeddingOfTheOrbitCategory} 类似，存在把 $G$-等变向量丛限制为 $H$-等变向量丛的轨道范畴嵌入。
+
+\begin{crl}\label{crl:orbit-category-GH-restriction}
+    设 $G$ 为群概形，$H\subseteq G$ 为 $G$ 的子群概形。则存在阿贝尔范畴的嵌入 \[
+        \QCoh_G (X)/H^{\perp}\hookrightarrow\QCoh_H (X).
+    \]
+\end{crl}
+\begin{proof}
+按定义，轨道范畴中的同态空间为
+$$
+\operatorname{Hom}_{\QCoh_G(X)/H^\perp}\left( (\mathcal{F}, \theta), (\mathcal{F}', \theta') \right)
+=
+\bigoplus_{\cha \in H^\perp} \operatorname{Hom}_{\QCoh_G(X)}\left( (\mathcal{F}, \theta)(\cha), (\mathcal{F}', \theta') \right).
+$$
+由命题 \ref{prop:HInvariantsOfHomSpace}，这一直和恰好等于 $\QCoh_H(X)\subseteq\Mod_H(X)$ 中的同态空间
+\[\operatorname{Hom}_{\QCoh_H(X)}
+\left((\mathcal{F}, \theta|_H), (\mathcal{F}', \theta'|_H) \right)\]。
+因此，在对象上取 $(\mathcal{F}, \theta) \mapsto (\mathcal{F},\theta|_H)$、在态射上取恒等映射所定义的函子 $\QCoh_G(X)/H^\perp \hookrightarrow\QCoh_H(X)$ 是全忠实的。
+\end{proof}
+
+\begin{yizhu}[推论略去的前提]
+推论的证明直接调用命题 \ref{prop:HInvariantsOfHomSpace}，而后者要求 $\mathcal{F}$ 有限呈现，推论却对一般拟凝聚层陈述。原文一句带过：通常的补法是利用拟凝聚层可写成有限呈现对象的滤过余极限，而两侧的同态空间都与该余极限交换。补齐这一步并不困难，但不该把该命题读成对任意 $\mathcal{F}$ 无条件成立。
+\end{yizhu}
+
+\subsection{群概形作用的乘积}
+
+设群概形 $G$ 与 $H$ 分别作用在概形 $X$ 与 $Y$ 上，作用态射分别为
+$\sigma_X : G \times X \rightarrow X$
+与
+$\sigma_Y : H \times Y \rightarrow Y$。
+它们自然地诱导乘积群概形 $G\times H$ 在乘积概形 $X\times Y$ 上的作用，其作用态射为
+$$
+\sigma_{X\times Y}
+:=
+\sigma_X\times \sigma_Y
+:
+(G\times H)\times (X\times Y)
+\rightarrow
+X\times Y.
+$$
+\begin{defn}[等变层的外张量积]
+\label{defn:ExternalTensorProductOfEquivariantModules}
+设 $(\mathcal{F},\theta)\in\Mod_G(X)$ 与
+$(\mathcal{G},\eta)\in\Mod_H(Y)$。
+$(\mathcal{F},\theta)$ 与 $(\mathcal{G},\eta)$ 的\emph{外张量积}
+$$
+(\mathcal{F},\theta)\boxtimes(\mathcal{G},\eta)
+:=
+\left(
+\mathcal{F}\boxtimes\mathcal{G},
+\
+\theta\boxtimes\eta
+\right)
+\in\Mod_{G\times H}(X\times Y)
+$$
+定义为 $\mathcal{O}_{X\times Y}$-模
+$
+\mathcal{F}\boxtimes\mathcal{G}
+:=
+\pi_X^*\mathcal{F}
+\underset{\mathcal{O}_{X\times Y}}{\otimes}
+\pi_Y^*\mathcal{G}
+$
+% [原文 p.40]
+连同 $G\times H$-线性化
+$$
+\theta\boxtimes\eta
+:=
+\tilde{\pi}_{G\times X}^*\theta\otimes\tilde{\pi}_{H\times Y}^*\eta
+:
+\sigma_{X\times Y}^*(\mathcal{F}\boxtimes\mathcal{G})
+\xrightarrow{\cong}
+\left(\pr_{X\times Y}^{(G\times H)\times(X\times Y)}\right)^*
+(\mathcal{F}\boxtimes\mathcal{G})
+$$
+其中
+\begin{align*}
+\tilde{\pi}_{G\times X}^*\theta
+&:
+\tilde{\pi}_{G\times X}^*(\sigma_X^*\mathcal{F})
+\xrightarrow{\cong}
+\tilde{\pi}_{G\times X}^*\left(\left(\pr_X^{G\times X}\right)^{\ast}\mathcal{F}\right),
+\\[2mm]
+\tilde{\pi}_{H\times Y}^*\eta
+&:
+\tilde{\pi}_{H\times Y}^*(\sigma_Y^*\mathcal{G})
+\xrightarrow{\cong}
+\tilde{\pi}_{H\times Y}^*\left(\left(\pr_Y^{H\times Y}\right)^*\mathcal{G}\right)
+\end{align*}
+分别是 $\theta$ 与 $\eta$ 沿自然投影
+\begin{align*}
+\tilde{\pi}_{G\times X}
+&:=
+\pr_{G\times X}^{(G\times H)\times(X\times Y)}
+:
+(G\times H)\times(X\times Y)
+\rightarrow
+G\times X,
+\\[2mm]
+\tilde{\pi}_{H\times Y}
+&:=
+\pr_{H\times Y}^{(G\times H)\times(X\times Y)}
+:
+(G\times H)\times(X\times Y)
+\rightarrow
+H\times Y,
+\end{align*}
+的拉回，而张量积
+$
+\tilde{\pi}_{G\times X}^*\theta\otimes\tilde{\pi}_{H\times Y}^*\eta
+$
+在如下典范同构下给出
+\begin{align*}
+\sigma_{X\times Y}^*(\mathcal{F}\boxtimes\mathcal{G})
+&=
+\sigma_{X\times Y}^*
+\Big(
+\pi_X^*\mathcal{F}
+\underset{\mathcal{O}_{X\times Y}}{\otimes}
+\pi_Y^*\mathcal{G}
+\Big)
+\\[2mm]
+&\cong
+(\sigma_{X\times Y}\comp\pi_X)^*\mathcal{F}
+\underset{\mathcal{O}_{(G\times H)\times(X\times Y)}}{\otimes}
+(\sigma_{X\times Y}\comp\pi_Y)^*\mathcal{G}
+\\[2mm]
+&=
+(\tilde{\pi}_{G\times X}\comp \sigma_X)^*\mathcal{F}
+\underset{\mathcal{O}_{(G\times H)\times(X\times Y)}}{\otimes}
+(\tilde{\pi}_{H\times Y}\comp \sigma_Y)^*\mathcal{G}
+\\[2mm]
+&\cong
+\tilde{\pi}_{G\times X}^*\left(\sigma_X^*\mathcal{F}\right)
+\underset{\mathcal{O}_{(G\times H)\times(X\times Y)}}{\otimes}
+\tilde{\pi}_{H\times Y}^*\left(\sigma_Y^*\mathcal{G}\right)
+\end{align*}
+与
+\begin{align*}
+\left(\pr_{X\times Y}^{(G\times H)\times(X\times Y)}\right)^*
+(\mathcal{F}\boxtimes\mathcal{G})
+&=
+\left(\pr_{X\times Y}^{(G\times H)\times(X\times Y)}\right)^*
+\Big(
+\pi_X^*\mathcal{F}
+\underset{\mathcal{O}_{X\times Y}}{\otimes}
+\pi_Y^*\mathcal{G}
+\Big)
+\\
+&\cong
+\left(\pr_{X\times Y}^{(G\times H)\times(X\times Y)}\comp\pi_X\right)^*\mathcal{F}
+\underset{\mathcal{O}_{(G\times H)\times(X\times Y)}}{\otimes}
+\left(\pr_{X\times Y}^{(G\times H)\times(X\times Y)}\comp\pi_Y\right)^*\mathcal{G}
+\\
+&\cong
+\left(\tilde{\pi}_{G\times X}\comp\pr_X^{G\times X}\right)^*\mathcal{F}
+\underset{\mathcal{O}_{(G\times H)\times(X\times Y)}}{\otimes}
+\left(\tilde{\pi}_{H\times Y}\comp\pr_Y^{H\times Y}\right)^*\mathcal{G}
+\\
+&\cong
+\tilde{\pi}_{G\times X}^*\left(\left(\pr_X^{G\times X}\right)^*\mathcal{F}\right)
+\underset{\mathcal{O}_{(G\times H)\times(X\times Y)}}{\otimes}
+\tilde{\pi}_{H\times Y}^*\left(\left(\pr_Y^{H\times Y}\right)^*\mathcal{G}\right).
+\end{align*}
+
+对态射
+$
+f
+\in
+\Hom_{\Mod_G(X)}
+((\mathcal{F},\theta),(\mathcal{F}',\theta'))
+$
+与
+$
+g
+\in
+\Hom_{\Mod_H(Y)}
+((\mathcal{G},\eta),(\mathcal{G}',\eta')),
+$
+定义
+$$
+f\boxtimes g
+:=
+\pi_X^*f
+\otimes
+\pi_Y^*g
+\in
+\Hom_{\Mod_{G\times H}(X\times Y)}
+\big(
+\left(
+\mathcal{F}\boxtimes\mathcal{G},
+\
+\theta\boxtimes\eta
+\right),
+\left(
+\mathcal{F}'\boxtimes\mathcal{G}',
+\
+\theta'\boxtimes\eta'
+\right)
+\big).
+$$
+
+这定义出一个双函子
+$$
+\boxtimes:
+\Mod_G(X)\times\Mod_H(Y)
+\rightarrow
+\Mod_{G\times H}(X\times Y),
+$$
+它限制到等变（拟）凝聚层与等变向量丛上。
+\end{defn}
+
+\begin{conceptbox}{等变层的外张量积}
+给定 $G$-等变层 $(\mathcal{F},\theta)$ 与 $H$-等变层 $(\mathcal{G},\eta)$，外张量积先在底空间上取 $\pi_X^*\mathcal{F}\otimes\pi_Y^*\mathcal{G}$，再把两个线性化沿自然投影拉回并张量起来，得到 $G\times H$-等变层。它对两个变量分别可加，并给出双函子 $\Mod_G(X)\times\Mod_H(Y)\to\Mod_{G\times H}(X\times Y)$；命题 \ref{prop:BoxTensorFunctorFullyFaithful} 进一步说明它在同态层面全忠实。本文需要它，是因为扭 Künneth 公式要把两侧的等变导出范畴「相乘」成乘积空间上的等变导出范畴，而外张量积正是这个乘法在层层面的原型。
+\par\smallskip\noindent{\footnotesize 参考：nLab，\emph{equivariant sheaf}；Waterhouse, \emph{Introduction to Affine Group Schemes}, GTM 66, Springer, 1979, 第 2 章。}
+\end{conceptbox}
+
+\begin{yizhu}[外张量积为什么不必担心符号]
+$G$ 只作用在 $X$ 侧、$H$ 只作用在 $Y$ 侧，两个线性化落在互不相交的变量上，因此可以逐项张量而不产生符号：这里张量的是 $\mathcal{O}$-模而不是复形，没有 Koszul 号出场的机会。真正需要核对的是两个投影 $\tilde{\pi}_{G\times X}$、$\tilde{\pi}_{H\times Y}$ 的方向，它们把 $(G\times H)\times(X\times Y)$ 分别投到 $G\times X$ 与 $H\times Y$。
+\end{yizhu}
+
+\begin{prop}\label{prop:BoxTensorFunctorFullyFaithful}
+函子
+$$
+\boxtimes:
+\Mod_G(X)\otimes\Mod_H(Y)
+\hookrightarrow
+\Mod_{G\times H}(X\times Y)
+$$
+是全忠实的，即
+\begin{align*}
+\boxtimes:
+\Hom_{\Mod_G(X)}&
+\big(
+(\mathcal{F},\theta),
+(\mathcal{F}',\theta')
+\big)
+\
+\otimes
+\
+\Hom_{\Mod_H(Y)}
+\big(
+(\mathcal{G},\eta),
+(\mathcal{G}',\eta')
+\big)
+\\ 
+&\xrightarrow{\cong}
+\Hom_{\Mod_{G\times H}(X\times Y)}
+\big(
+(\mathcal{F},\theta)\boxtimes(\mathcal{G},\eta),
+(\mathcal{F}',\theta')\boxtimes(\mathcal{G}',\eta')
+\big)
+\end{align*}
+\end{prop}
+
+\begin{keytakeaways}
+  \item 限制是本节的基本操作：把 $G$-等变层的线性化沿 $H\hookrightarrow G$ 限制，就得到 $H$-等变层，并给出限制函子 $\Res_H^G$；层本身不动，动的只是线性化。
+  \item 对角化群概形使权分解可以「沿子群重排」：命题 \ref{prop:HInvariantsOfHomSpace} 把 $\Mod_H(X)$ 的同态空间写成 $\bigoplus_{\cha\in H^\perp}\operatorname{Hom}_{\Mod_G(X)}((\mathcal{F},\theta)(\cha),(\mathcal{F}',\theta'))$，于是 $H$-不变部分恰好由 $H^\perp$ 标号。
+  \item 这条分解的范畴化就是推论 \ref{crl:orbit-category-GH-restriction}：轨道范畴 $\QCoh_G(X)/H^\perp$ 全忠实地嵌入 $\QCoh_H(X)$，与前面 $\QCoh_G(X)/\widehat{G}\hookrightarrow\QCoh(X)$ 的嵌入是同一套机制。
+  \item 反向的拼装由外张量积负责：$\boxtimes$ 把两个等变范畴送进乘积空间的等变范畴，且在全子范畴上全忠实（命题 \ref{prop:BoxTensorFunctorFullyFaithful}）。这正是下一节扭 Künneth 公式所需的乘法。
+\end{keytakeaways}

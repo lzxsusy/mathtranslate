@@ -1,0 +1,593 @@
+% =====================================================================
+%  ch06a.tex —— 第 6 章 完全可积系统（原书 p.68–79 / PDF 77–88）
+%  负责页段：p.68–p.79（chunk 终点止于 6.3 节 Toda 格子的证明中途；章末评注在 ch06b，本块不写）
+% =====================================================================
+
+% [原文 p.68]
+\chapter{完全可积系统}
+
+对称性越高，Hamilton 系统的结构就越简单；而具有尽可能大的可交换对称性的系统，便是完全可积系统。完全可积系统的背后往往隐藏着以 Lie 代数为代表的代数结构。本章介绍关于完全可积系统的基本定理——Liouville–Arnold 定理，以及 Lie 代数与完全可积系统之间关系的若干标准话题。
+
+\section{Liouville--Arnold 定理}
+
+理论物理学中最优美的思想之一，大概要数关于对称性与守恒定律之关系的 Noether 定理。由它可知：例如能量守恒定律对应时间平移的对称性，动量守恒定律对应空间平移的对称性，而角动量则对应空间旋转的对称性。
+
+由 Poisson 定理，对称性的生成函数关于 Poisson 括号构成 Lie 代数。系统的对称性越高，守恒量就越多，实质自由度随之减少而变得易于处理。以 Kepler 问题为例，作为系统的对称性，有 3 个空间平移、1 个时间平移，再加上 3 个空间旋转，合计 7 个。然而，伴随空间旋转对称性的守恒量——角动量的 3 个分量 $(M_x,M_y,M_z)$——并不 Poisson 可交换，而是满足三次特殊正交群 $SO(3)$ 的 Lie 代数 $\mathfrak{so}(3)$ 的交换关系
+\[
+  \{M_y,M_z\}=M_x,\qquad
+  \{M_z,M_x\}=M_y,\qquad
+  \{M_x,M_y\}=M_z
+\]
+% [Tutor Note: 背景：角动量三分量之和不 Poisson 可交换，故不能同时取作 Darboux 坐标的一部分；可积性要求守恒量彼此可交换，这正是下面「函数独立 + Poisson 可交换」条件中交换性一项的来源。]
+因此不能把它们同时取作 Darboux 坐标的一部分。另一方面，容易证明 $M_z$ 与 $M^2=M_x^2+M_y^2+M_z^2$ 是 Poisson 可交换的；把它们与系统的能量和动量合在一起，就可以看出这些量连同其正则共轭
+
+% [原文 p.69]
+变量之组已经穷尽了系统的自由度。
+
+\takeaway{完全可积系统的守恒量彼此 Poisson 可交换且函数独立，其正则层为 Liouville 环面。}
+
+Poisson 可交换的守恒量越多，系统的行为就越简单。给定 Poisson 可交换的守恒量 $f_1,\dots,f_k\colon M\to\R$ 时，它们与任意函数 $F\colon\R^k\to\R$ 的复合函数 $F(f_1,\dots,f_k)$ 也与 $f_1,\dots,f_k$ Poisson 可交换；
+\begin{equation}
+  \{F(f_1,\dots,f_k),f_i\}
+  =\sum_{j=1}^{k}\frac{\partial F}{\partial f_j}\{f_j,f_i\}=0.
+  \tag{6.1.1}
+\end{equation}
+% [Tutor Note: 难点：(6.1.1) 的第二个等号用到 Leibniz 法则，并代入 $\{f_j,f_i\}=0$；因此复合函数不提供任何新的独立守恒量。]
+然而，这样的复合函数显然不提供任何新信息。为了排除这种情形，引入以下概念：
+
+\begin{definition}{6.1.1}
+流形 $M$ 上的函数组 $\{f_1,\dots,f_k\}$ 称为函数独立的（functionally independent），是指存在稠密的开子集 $U\subset M$，使得对任意 $p\in U$，$(df_1)_p,\dots,(df_k)_p\in T_p^*M$ 线性无关。
+\end{definition}
+
+函数独立且相互 Poisson 可交换的变量个数不超过相空间维数的一半，这一点容易看出：
+
+\begin{lemma*}{6.1.2}
+设 $(M,\omega)$ 为 $2n$ 维辛流形。若 $M$ 上的函数 $f_1,\dots,f_k\in C^\infty(M)$ 函数独立且相互 Poisson 可交换，则 $k\le n$。
+\end{lemma*}
+
+\begin{proof}
+$\omega_p$ 诱导出 $T_pM$ 与 $T_p^*M$ 的同构，由此 $(df_1)_p,\dots,(df_k)_p$ 的像为 $(X_{f_1})_p,\dots,(X_{f_k})_p$，故 $(X_{f_1})_p,\dots,(X_{f_k})_p$ 线性无关。由
+\begin{equation}
+  \omega(X_{f_i},X_{f_j})=\{f_i,f_j\}=0
+  \tag{6.1.2}
+\end{equation}
+可知，$(X_{f_1})_p,\dots,(X_{f_k})_p$ 张成的 $T_pM$ 的子空间是关于 $\omega_p$ 的各向同性子空间。由命题 3.1.4，$2n$ 维完全反对称二次形式的各向同性子空间维数不超过 $n$，所以 $k\le n$。
+\end{proof}
+
+拥有最大可能的 Poisson 可交换守恒量的 Hamilton 系统称为完全可积系统：
+
+\begin{definition}{6.1.3}
+设 $(M,\omega)$ 为 $2n$ 维辛流形。以 $M$ 上的函数 $H\colon M\to\R$ 为 Hamilton 函数的 Hamilton 系统称为 Liouville 意义下的完全可积系统（completely integrable system in the sense of Liouville），是指存在 $n$ 个守恒量
+\begin{equation}
+  f_1,\dots,f_n\in C^\infty(M),\qquad \{H,f_i\}=0,\quad i=1,\dots,n
+  \tag{6.1.3}
+\end{equation}
+它们相互 Poisson 可交换
+\begin{equation}
+  \{f_i,f_j\}=0,\quad i,j=1,\dots,n
+  \tag{6.1.4}
+\end{equation}
+并且函数独立。
+\end{definition}
+
+% [原文 p.70]
+Liouville 意义下的完全可积系统常常简称为可积系统（integrable system）。Kepler 问题是最为经典的可积系统，而如今还知道许多其他例子。
+
+\begin{theorem}{6.1.4}[Liouville--Arnold]
+设 $((M,\omega),H)$ 为 $2n$ 维辛流形 $(M,\omega)$ 上的完全可积系统，$F=(f_1,\dots,f_n)\colon M\to\R^n$ 为相互 Poisson 可交换且函数独立的 $H$ 的守恒量。此时，$F$ 的正则值的原像的紧致连通分支 $L$ 是与环面同胚的 $M$ 的 Lagrange 子流形，其上的 Hamilton 流在适当的等同 $L\cong\R^n/\Z^n$ 之下成为等速直线运动。
+\end{theorem}
+
+这个定理可以如下证明：记 $F$ 的值域为 $B$，取 $b\in B$ 为 $F$ 的正则值。令 $L\subset F^{-1}(b)$ 为 $F$ 的等值集的连通分支，则由隐函数定理，$L$ 是 $M$ 的 $n$ 维子流形。由 $f_i$ 的 Hamilton 流生成的单参数变换群给出 $\R$ 在 $M$ 上的作用；而由 $f_i$ 之间的 Poisson 可交换性可知，不同 $i$ 对应的 Hamilton 流相互可交换，整体给出 $\R^n$ 在 $M$ 上的作用。由 Noether 定理，$F$ 在此 $\R^n$ 作用下保持不变，因此该作用诱导出 $L$ 上的作用。对任意点 $p\in L$，$p$ 处 $\R^n$ 作用的稳定化子是 $\R^n$ 的闭子群，从而是 Lie 群，但它是 $0$ 维的。事实上，若 $p$ 处的稳定化子具有正维数，则取该子群对应的 Lie 代数之元素 $X\in\R^n=\Lie(\R^n)$，把它所生成的基本向量场 $X$ 表为 $\{f_1,\dots,f_n\}$ 的线性组合 $f$ 的 Hamilton 向量场，则满足
+\begin{equation}
+  (df)_p=\iota_{X_p}\omega_p=0,
+  \tag{6.1.5}
+\end{equation}
+这与 $b$ 是正则值这一假设矛盾。因此，$L$ 上 $\R^n$ 的任意轨道都是开轨道（即作为 $L$ 的子集是开集）。由于 $L$ 连通，由此可知 $\R^n$ 在 $L$ 上的作用是传递的。也就是说，$L$ 是 $\R^n$ 的齐性空间，与 $\R^n$ 的离散子群所作商空间同胚。$\R^n$ 的紧致离散子群只能是最大秩的格子，因此 $L$ 与环面同胚。这个环面称为 Liouville 环面（Liouville torus）。适当选取坐标，把 $L$ 作为齐性空间与 $\R^n/\Z^n$ 等同。这个同胚
+\begin{equation}
+  \varphi=(\varphi_1,\dots,\varphi_n)\colon L\xrightarrow{\ \sim\ }\R^n/\Z^n
+  \tag{6.1.6}
+\end{equation}
+称为角坐标（angle coordinate）。角坐标的选取方式带有 $GL_n(\Z)$ 的任意性。角坐标 $\varphi\colon L\to\R^n/\Z^n$ 可提升为 $L$ 到 $\R^n$ 的多值映射，而常数函数确定的 Hamilton 向量场为零，故角坐标确定的 Hamilton 向量场是 well-defined 的。这个 Hamilton 向量场的流确定了 $b$ 的邻域中 $B$ 的局部坐标 $I=(I_1,\dots,I_n)$，称之为 $B$ 的
+
+% [Tutor Note: 背景：不变环面上的运动经作用–角变量线性化，这一「线性化」正是完全可积系统可解的含义；频率向量 $\omega=\partial H/\partial I$ 的算术性质决定轨道是周期还是稠密。]
+% [原文 p.71]
+作用坐标（action coordinate）。换言之，与角坐标正则共轭的坐标就是作用坐标，而 $(\varphi,I)$ 构成 $M$ 的 Darboux 坐标系。$H$ 与 $\{I_1,\dots,I_n\}$ Poisson 可交换，且 $\{I_1,\dots,I_n\}$ 在相互 Poisson 可交换且函数独立的 $M$ 上函数组之中是极大的，因此 $H$ 是 $I_1,\dots,I_n$ 的函数，不依赖于 $\varphi_1,\dots,\varphi_n$：
+\begin{equation}
+  H=H(I_1,\dots,I_n).
+  \tag{6.1.7}
+\end{equation}
+用作用–角变量写出 $H$ 的时间演化，则
+\begin{equation}
+  \frac{dI_i}{dt}=-\frac{\partial H}{\partial\varphi_i}=0,\qquad
+  \frac{d\varphi_i}{dt}=\frac{\partial H}{\partial I_i}
+  \tag{6.1.8}
+\end{equation}
+由于 $I_i$ 不依赖于时间，
+\begin{equation}
+  \omega_i:=\frac{\partial H}{\partial I_i},\quad i=1,\dots,n
+  \tag{6.1.9}
+\end{equation}
+也不依赖于时间。此时的 $\omega=(\omega_1,\dots,\omega_n)\in\R^n$ 称为频率向量（frequency vector）。系统的时间演化是 Liouville 环面 $L$ 上的等速直线运动
+\begin{equation}
+  \varphi=\varphi_0+\omega t,\qquad \omega=\frac{\partial H}{\partial I}
+  \tag{6.1.10}
+\end{equation}
+系统运动成为周期的充要条件是 $\omega\in\Q^n$。非周期的解称为准周期解（quasi-periodic solution）。一般的准周期解的轨道在 Liouville 环面上构成稠密子集。
+
+\section{Lie 群的分解}
+
+本节复习分解矩阵的 3 种方法。
+
+\takeaway{Cartan、Iwasawa、Bruhat 三种分解分别对应极分解、QR 分解与 LU 分解。}
+
+% [Tutor Note: 校勘：原书 6.2.2 节标题与正文作「岩澤分解」（读作 Iwasawa），OCR 常误识为「岩津」；本译本统一作 Iwasawa 分解。]
+\subsection{Cartan 分解}
+
+设 $n$ 为正整数，$\mathfrak{p}$ 为 $n$ 阶 Hermite 矩阵的空间，$\mathfrak{p}_+$ 为正定 Hermite 矩阵构成的 $\mathfrak{p}$ 的子空间。
+
+\begin{lemma*}{6.2.1}
+矩阵的指数映射
+\begin{equation}
+  \exp\colon X\mapsto\sum_{i=0}^{\infty}\frac{X^i}{i!}
+  \tag{6.2.1}
+\end{equation}
+限制在 $\mathfrak{p}$ 上，给出从 $\mathfrak{p}$ 到 $\mathfrak{p}_+$ 的双射。
+\end{lemma*}
+
+\begin{proof}
+任意 Hermite 矩阵可用酉矩阵对角化，其固有值为实数，因此给出一个 Hermite 矩阵，等同于给出相互正交的特征子空间分解以及各特征子空间对应的实特征值。这样，用指数函数移动 Hermite 矩阵，就等于用指数函数移动特征值，因而二者
+
+% [原文 p.72]
+被视为同一。指数函数给出 $\R$ 到 $\R_{>0}$ 的双射，由此引理 6.2.1 得证。
+\end{proof}
+
+把下面的 (6.2.2) 称为矩阵的极分解（polar decomposition）。
+
+\begin{theorem*}{6.2.2}
+任意可逆复矩阵 $g\in GL(n,\C)$ 都可用酉矩阵 $u\in U(n)$ 与 Hermite 矩阵 $X\in\mathfrak{p}$ 表示为
+\begin{equation}
+  g=ue^X
+  \tag{6.2.2}
+\end{equation}
+的形式，且表示唯一。
+\end{theorem*}
+
+\begin{proof}
+设某个 $g\in GL(n,\C)$ 已由 $u\in U(n)$ 与 $X\in\mathfrak{p}$ 表为 $g=ue^X$，则
+\begin{equation}
+  g^*g=e^{X^*}u^*ue^X=e^X Ie^X=e^{2X}
+  \tag{6.2.3}
+\end{equation}
+由此用引理 6.2.1 可知 $2X$ 由 $g$ 唯一确定。从而 $X$ 以及 $u=ge^{-X}$ 也由 $g$ 唯一确定。
+
+为证存在性，对给定的 $g\in GL(n,\C)$ 令 $h=g^*g$，则 $h^*=h$，且对任意 $v\in\C^n\setminus\{0\}$ 有 $v^*hv=\|gv\|^2>0$，故 $h\in\mathfrak{p}_+$。于是由引理 6.2.1，存在某个 $Y\in\mathfrak{p}$ 使 $h=\exp(Y)$。此处令 $X=\frac12Y$、$u=ge^{-X}$，则
+\begin{equation}
+  u^*u=e^{-X^*}g^*ge^X=e^{-X}e^{2X}e^X=I
+  \tag{6.2.4}
+\end{equation}
+故 $u$ 是酉矩阵。
+\end{proof}
+
+更一般地，对满足 $G^*:=\{g^*\mid g\in G\}=G$ 的 $GL(n,\C)$ 的闭子群 $G$，令 $K=G\cap U(n)$、$\mathfrak{p}_0=\mathfrak{g}\cap\mathfrak{p}$，则
+\begin{equation}
+  K\times\mathfrak{p}_0\to G,\qquad (k,X)\mapsto ke^X
+  \tag{6.2.5}
+\end{equation}
+是双射（甚至是微分同胚）。这称为 $G$ 的 Cartan 分解（Cartan decomposition）。例如，任意实可逆矩阵 $g$ 都可用正交矩阵 $u$ 与实对称矩阵 $p$ 唯一地表为 $g=ue^p$ 的形式。
+
+% [Tutor Note: 背景：极分解 $g=ue^X$ 正是 $GL(n,\C)$ 的 Cartan 分解；$K=U(n)$ 与 Hermite 矩阵空间 $\mathfrak{p}$ 分别是极大紧子群与其正交补（对称空间 $GL(n,\C)/U(n)$ 的切空间）。]
+\subsection{Iwasawa 分解}
+
+设 $A$ 为正定实对角矩阵的集合，$N$ 为对角成分全为 $1$ 的复上三角矩阵的集合。
+
+\begin{theorem*}{6.2.3}
+任意可逆复矩阵 $g$ 都可用 $k\in U(n)$、$a\in A$ 以及 $n\in N$ 的乘积
+\begin{equation}
+  g=kan
+  \tag{6.2.6}
+\end{equation}
+的形式唯一地表出。
+\end{theorem*}
+
+% [原文 p.73]
+\begin{proof}
+为证唯一性，假设对某 $k,k'\in U(n)$、$a,a'\in A$ 以及 $n,n'\in N$ 有
+\begin{equation}
+  kan=k'a'n'
+  \tag{6.2.7}
+\end{equation}
+注意到
+\begin{equation}
+  U(n)\cap AN=\{I\},
+  \tag{6.2.8}
+\end{equation}
+由
+\begin{equation}
+  (k')^{-1}k=a'n'n^{-1}a^{-1}
+  \tag{6.2.9}
+\end{equation}
+得
+\begin{equation}
+  (k')^{-1}k=a'n'n^{-1}a^{-1}=I,
+  \tag{6.2.10}
+\end{equation}
+亦即
+\begin{equation}
+  k=k',\qquad an=a'n'
+  \tag{6.2.11}
+\end{equation}
+同理，由 $A\cap N=\{I\}$ 与 $an=a'n'$ 可得 $a=a'$ 且 $n=n'$，故表示 (6.2.6) 是唯一的。
+
+为证表示 (6.2.6) 的存在性，把 $g$ 的第 $i$ 列的列向量记作 $v_i$，对 $\C^n$ 的基 $\{v_1,\dots,v_n\}$ 施行 Gram–Schmidt 正交化：
+\begin{equation}
+  w_i=v_i-\sum_{j=1}^{i-1}(v_i,u_j)u_j,\qquad
+  a_i=\|w_i\|,\qquad
+  u_i=\frac{1}{a_i}w_i.
+  \tag{6.2.12}
+\end{equation}
+% [Tutor Note: 难点：(6.2.12) 中的内积 $(v_i,u_j)$ 是 $\C^n$ 上的 Hermite 内积（对第二变量共轭线性）；因 $u_j$ 已正交归一，$w_i$ 与 $u_1,\dots,u_{i-1}$ 正交。]
+这里令
+\begin{equation}
+  k=(u_1\ u_2\ \cdots\ u_n)
+  \tag{6.2.13}
+\end{equation}
+则 $k$ 是酉矩阵，且由作法可知
+\begin{equation}
+  k=g\begin{pmatrix}
+    a_1^{-1} & * & \cdots & *\\
+    0 & a_2^{-1} & \cdots & *\\
+    \vdots & & \ddots & \vdots\\
+    0 & 0 & \cdots & a_n^{-1}
+  \end{pmatrix}
+  \tag{6.2.14}
+\end{equation}
+成立。之后只需把它
+\begin{equation}
+  g=k\begin{pmatrix}
+    a_1^{-1} & * & \cdots & *\\
+    0 & a_2^{-1} & \cdots & *\\
+    \vdots & & \ddots & \vdots\\
+    0 & 0 & \cdots & a_n^{-1}
+  \end{pmatrix}^{-1}
+  \tag{6.2.15}
+\end{equation}
+
+% [原文 p.74]
+\begin{equation}
+  \begin{aligned}
+    &=k\begin{pmatrix}
+      a_1 & * & \cdots & *\\
+      0 & a_2 & \cdots & *\\
+      \vdots & & \ddots & \vdots\\
+      0 & 0 & \cdots & a_n
+    \end{pmatrix},
+  \end{aligned}
+  \tag{6.2.16}
+\end{equation}
+\begin{equation}
+  \begin{aligned}
+    &=k\begin{pmatrix}
+      a_1 & 0 & \cdots & 0\\
+      0 & a_2 & \cdots & 0\\
+      \vdots & & \ddots & \vdots\\
+      0 & 0 & \cdots & a_n
+    \end{pmatrix}
+    \begin{pmatrix}
+      1 & * & \cdots & *\\
+      0 & 1 & \cdots & *\\
+      \vdots & & \ddots & \vdots\\
+      0 & 0 & \cdots & 1
+    \end{pmatrix}
+  \end{aligned}
+  \tag{6.2.17}
+\end{equation}
+变形即可。
+\end{proof}
+
+对满足 $G^*:=\{g^*\mid g\in G\}=G$ 的 $GL(n,\C)$ 的闭子群 $G$，把 $G$ 与 $U(n)$、$A$ 以及 $N$ 的公共部分重新记作 $K$、$A$ 以及 $N$，则
+\begin{equation}
+  K\times A\times N\to G,\qquad (k,a,n)\mapsto kan
+  \tag{6.2.18}
+\end{equation}
+是双射（甚至是微分同胚）。这称为 $G$ 的 Iwasawa 分解（Iwasawa decomposition）。例如，任意实可逆矩阵 $g$ 都可用正交矩阵 $u$、正的对角矩阵 $a$ 以及对角成分全为 $1$ 的上三角矩阵 $n$ 唯一地表为 $g=kan$ 的形式。此时令 $g=QR$、$Q=k$、$R=an$，称之为实可逆矩阵的 QR 分解（QR decomposition）。
+
+% [Tutor Note: 背景：Iwasawa 分解 $G=KAN$ 是极分解的「非对称」加强版；在实矩阵情形 $K=O(n)$、$A$ 为正对角、$N$ 为单位上三角，恰是数值线性代数中的 QR 分解。]
+\subsection{Bruhat 分解}
+
+设 $B$ 为上半三角可逆复矩阵构成的群。又对置换 $w\in\mathfrak{S}_n$，把与之对应的置换矩阵记作 $\dot{w}\in GL(n,\Z)$；
+\begin{equation}
+  \dot{w}_{ij}=\delta_{i,w(j)}.
+  \tag{6.2.19}
+\end{equation}
+
+\begin{theorem*}{6.2.4}
+任意可逆复矩阵 $g$ 都可由某个 $w\in\mathfrak{S}_n$ 与 $b,b'\in B$ 表为
+\begin{equation}
+  g=b\dot{w}b'
+  \tag{6.2.20}
+\end{equation}
+的形式。
+\end{theorem*}
+
+\begin{proof}
+表示 (6.2.20) 的存在性可以借助消去法（Gaussian elimination）构造性地证明。首先注意：从右边乘以上三角矩阵，可以通过把某一列乘以一个标量，以及对 $i<j$ 把第 $i$ 列的标量倍加到第 $j$ 列上反复施行来实现。着眼于给定 $g$ 的第 $1$ 列，取使 $g_{i1}\ne0$ 的最大的 $i$ 为 $w(1)$；
+\begin{equation}
+  g_{i1}=0,\qquad i=w(1)+1,\ w(1)+2,\ \dots,\ n.
+  \tag{6.2.21}
+\end{equation}
+此时，从右边乘上适当的 $b^{(1)}\in B$ 可以使
+
+% [原文 p.75]
+\begin{equation}
+  g^{(1)}=gb^{(1)}
+  \tag{6.2.22}
+\end{equation}
+满足
+\begin{equation}
+  g^{(1)}_{w(1),j}=\delta_{1j},\qquad j=1,\dots,n.
+  \tag{6.2.23}
+\end{equation}
+接着着眼于 $g^{(1)}$ 的第 $2$ 列，取使 $g^{(1)}_{i2}\ne0$ 的最大的 $i$ 为 $w(2)$；
+\begin{equation}
+  g^{(1)}_{i2}=0,\qquad i=w(2)+1,\ w(2)+2,\ \dots,\ n.
+  \tag{6.2.24}
+\end{equation}
+由 (6.2.23) 有
+\begin{equation}
+  g^{(1)}_{w(1)2}=0,
+  \tag{6.2.25}
+\end{equation}
+故
+\begin{equation}
+  w(2)\ne w(1).
+  \tag{6.2.26}
+\end{equation}
+再次从右边乘上适当的 $b^{(2)}\in B$，可以在不改变 $g^{(1)}$ 的第 $1$ 列的前提下，使
+\begin{equation}
+  g^{(2)}=g^{(1)}b^{(2)}
+  \tag{6.2.27}
+\end{equation}
+满足
+\begin{equation}
+  g^{(2)}_{w(2),j}=\delta_{2j},\qquad j=2,\dots,n.
+  \tag{6.2.28}
+\end{equation}
+反复进行这一操作，则对 $k=3,\dots,n$ 也存在
+\begin{equation}
+  w(k)\notin\{w(1),w(2),\dots,w(k-1)\}
+  \tag{6.2.29}
+\end{equation}
+与 $b^{(k)}\in B$，使得
+\begin{gather}
+  g^{(k)}=g^{(k-1)}b^{(k)}, \tag{6.2.30}\\
+  g^{(k)}_{w(k),j}\ne0, \tag{6.2.31}\\
+  g^{(k)}_{ik}=0,\qquad i=w(k)+1,\ w(k)+2,\ \dots,\ n, \tag{6.2.32}\\
+  g^{(k)}_{w(k),j}=\delta_{kj},\qquad j=k,\ k+1,\ \dots,\ n \tag{6.2.33}
+\end{gather}
+成立。此处令
+\begin{equation}
+  w=\begin{pmatrix}
+    1 & 2 & \cdots & n\\
+    w(1) & w(2) & \cdots & w(n)
+  \end{pmatrix}\in\mathfrak{S}_n,
+  \tag{6.2.34}
+\end{equation}
+\begin{equation}
+  b=b^{(1)}\cdots b^{(n)}\in B
+  \tag{6.2.35}
+\end{equation}
+则
+
+% [原文 p.76]
+\begin{equation}
+  g^{(n)}=gb
+  \tag{6.2.36}
+\end{equation}
+对任意 $i,j=1,\dots,n$ 满足
+\begin{equation}
+  i>w(j)\ \Longrightarrow\ g^{(n)}_{ij}=0.
+  \tag{6.2.37}
+\end{equation}
+这里令
+\begin{equation}
+  u'=g^{(n)}\dot{w}^{-1}
+  \tag{6.2.38}
+\end{equation}
+则
+\begin{equation}
+  u'_{ij}=\sum_{k=1}^{n}g^{(n)}_{ik}(\dot{w}^{-1})_{kj}=g^{(n)}_{iw^{-1}(j)},
+  \tag{6.2.39}
+\end{equation}
+因此 $i>j$ 时 $u'_{ij}=0$，亦即 $u\in B$。
+% [Tutor Note: 校勘：原书此处作「$u\in B$」，据上下文（(6.2.38) 定义的 $u'$ 及其下标运算）应为「$u'\in B$」，此处照录并注明。]
+\end{proof}
+
+已知表示 (6.2.20) 中的 $w\in W$ 是唯一的。
+% [Tutor Note: 校勘：原书 (6.2.20) 中 $w$ 取自 $\mathfrak{S}_n$，而此处起改用 Weyl 群 $W$；在 $GL(n,\C)$ 的情形二者一致（$W\cong\mathfrak{S}_n$），故不影响结论。]
+这样得到的
+\begin{equation}
+  GL(n,\C)=\bigsqcup_{w\in W}BwB
+  \tag{6.2.40}
+\end{equation}
+称为 $GL(n,\C)$ 的 Bruhat 分解（Bruhat decomposition）。它可推广为对代数闭域上的连通约化代数群 $G$、其 Borel 部分群 $B$ 以及 Wely 群 $W$ 的分解
+% [Tutor Note: 校勘：原书作「Wely 群」，通行拼法为 Weyl 群（Hermann Weyl），此处照录并注明。]
+\begin{equation}
+  G=\bigsqcup_{w\in W}BwB
+  \tag{6.2.41}
+\end{equation}
+因而可以看作矩阵的 LU 分解（LU decomposition）（分解为下三角矩阵 $L$ 与上三角矩阵 $U$ 之积）的推广。
+
+群的 Bruhat 分解 (6.2.41) 所诱导的旗流形的分割
+\begin{equation}
+  G/B=\bigsqcup_{w\in W}Bw
+  \tag{6.2.42}
+\end{equation}
+也称为 Bruhat 分解（Bruhat decomposition）。它是 $G/B$ 的胞体分割，其中每个胞体称为 Schubert 胞体（Schubert cell）。
+
+% [Tutor Note: 背景：$G/B$ 即旗流形；Schubert 胞体 $Bw$ 的闭包给出 Schubert 簇，其维数等于置换 $w$ 的长度，这一胞体分解是 Schubert 演算与相交上同调的出发点。]
+\section{Toda 格子}
+
+% [原文 p.77]
+Toda 格子是 $n$ 个质点由具有指数函数型势能的弹簧连接而成的系统。其 Hamilton 函数在质点位置为 $\bm{q}=(q_1,\dots,q_n)$、与之正则共轭的动量为 $\bm{p}=(p_1,\dots,p_n)$ 时，由
+\begin{equation}
+  H=\sum_{i=1}^{n}\frac12 p_i^2+\sum_{i=1}^{n-1}e^{q_i-q_{i+1}}
+  \tag{6.3.1}
+\end{equation}
+给出。Hamilton 运动方程为
+\begin{align}
+  \frac{dq_i}{dt}&=\frac{\partial H}{\partial p_i}=p_i, \tag{6.3.2}\\
+  \frac{dp_i}{dt}&=-\frac{\partial H}{\partial q_i}=e^{q_{i-1}-q_i}-e^{q_i-q_{i+1}} \tag{6.3.3}
+\end{align}
+而 Newton 运动方程为
+\begin{equation}
+  \frac{d^2q_i}{dt^2}=e^{q_{i-1}-q_i}-e^{q_i-q_{i+1}}.
+  \tag{6.3.4}
+\end{equation}
+
+\takeaway{Toda 格子经 Flaschka 因变量写成 Lax 形式，可用 QR 分解求解。}
+
+此系统显然在平移 $q_i\mapsto q_i+c$ 下不变，因此把系统的运动分为重心的运动与相对运动，则重心动量
+\begin{equation}
+  \frac1n\sum_{i=1}^{n}p_i
+  \tag{6.3.5}
+\end{equation}
+守恒，而重心的坐标
+\begin{equation}
+  \frac1n\sum_{i=1}^{n}q_i
+  \tag{6.3.6}
+\end{equation}
+作等速直线运动。在重心系中改写坐标，仍记作 $(p_i,q_i)_{i=1}^n$，则
+\begin{equation}
+  \sum_{i=1}^{n}p_i=\sum_{i=1}^{n}q_i=0
+  \tag{6.3.7}
+\end{equation}
+成立。在重心系中，$(p_i,q_i)_{i=1}^n$ 里有一组（例如 $p_n$ 与 $q_n$）是多余的，可以用其余的坐标表出，但为了不破坏对称性而将其原样保留。这里取 Flaschka 因变量（Flaschka's dependent variables）
+\begin{equation}
+  a_i=\frac12 e^{(q_i-q_{i+1})/2},\qquad b_i=\frac12 p_i
+  \tag{6.3.8}
+\end{equation}
+作为新坐标，则运动方程为
+\begin{align}
+  \frac{da_i}{dt}&=\frac12 a_i\left(\frac{dq_i}{dt}-\frac{dq_{i+1}}{dt}\right) \tag{6.3.9}\\
+  &=a_i(b_i-b_{i+1}), \tag{6.3.10}\\
+  \frac{db_i}{dt}&=\frac12\left(e^{q_{i-1}-q_i}-e^{q_i-q_{i+1}}\right) \tag{6.3.11}\\
+  &=2\left(a_{i-1}^2-a_i^2\right) \tag{6.3.12}
+\end{align}
+
+% [Tutor Note: 背景：Flaschka 因变量把非线性方程 (6.3.4) 化为 $a_i,b_i$ 的二次方程组，从而可以写成矩阵的 Lax 形式；这一步是 Toda 格子完全可积性的关键。]
+% [原文 p.78]
+成立。这里进一步令
+\begin{equation}
+  L=\begin{pmatrix}
+    b_1 & a_1 & 0 & \cdots & 0\\
+    a_1 & b_2 & a_2 & \cdots & 0\\
+    0 & a_2 & b_3 & \cdots & 0\\
+    \vdots & & & \ddots & \vdots\\
+    0 & 0 & 0 & \cdots & b_n
+  \end{pmatrix},
+  \tag{6.3.13}
+\end{equation}
+\begin{equation}
+  M=\begin{pmatrix}
+    0 & -a_1 & 0 & \cdots & 0\\
+    a_1 & 0 & -a_2 & \cdots & 0\\
+    0 & a_2 & 0 & \cdots & 0\\
+    \vdots & & & \ddots & \vdots\\
+    0 & 0 & 0 & \cdots & 0
+  \end{pmatrix}
+  \tag{6.3.14}
+\end{equation}
+则运动方程可表为 Lax 形式
+\begin{equation}
+  \frac{dL}{dt}=[M,L].
+  \tag{6.3.15}
+\end{equation}
+% [Tutor Note: 难点：Lax 形式意味着 $L(t)$ 与 $L_0$ 相似，故特征值全都不随时间变化；Toda 格子的 $n$ 个独立守恒量即由 $L$ 的特征多项式给出。]
+Toda 方程的初值问题可以借助 QR 分解如下求解：
+
+\begin{theorem*}{6.3.1}
+对实对称三对角矩阵 $L_0$ 与 $t\in\R$，把 $e^{-L_0t}$ 作 QR 分解
+\begin{equation}
+  e^{-L_0t}=Q(t)R(t)
+  \tag{6.3.16}
+\end{equation}
+则
+\begin{equation}
+  L(t):=Q(t)^{-1}L_0Q(t)
+  \tag{6.3.17}
+\end{equation}
+满足 Lax 方程 (6.3.15)。
+\end{theorem*}
+
+\begin{proof}
+由 (6.3.16) 有
+\begin{equation}
+  Q(t)=e^{-L_0t}R(t)^{-1},
+  \tag{6.3.18}
+\end{equation}
+故
+\begin{equation}
+  \begin{aligned}
+    L(t)&=Q(t)^{-1}L_0Q(t)\\
+    &=R(t)e^{L_0t}L_0e^{-L_0t}R(t)^{-1}\\
+    &=R(t)L_0R(t)^{-1}
+  \end{aligned}
+  \tag{6.3.19}
+\end{equation}
+首先证明 $L(t)$ 是对称三对角矩阵。$L_0$ 是对称矩阵、$Q$ 是正交矩阵，因此
+\begin{equation}
+  (QL_0Q^{-1})^T=(Q^{-1})^T L_0^TQ^T=QL_0Q^{-1}
+  \tag{6.3.20}
+\end{equation}
+
+% [原文 p.79]
+成立，即 $QL_0Q^{-1}$ 是对称矩阵。$R$ 是上三角矩阵，故 $R^{-1}$ 也是上三角矩阵。$L_0$ 是三对角的，因此从对角线向下相隔 2 个以上的成分全为零；这一性质在从上三角矩阵的右侧或左侧相乘时都保持不变。从而 $L=RL_0R^{-1}$ 中从对角线向下相隔 2 个以上的成分也为零。由于 $L$ 对称，这说明 $L$ 是三对角的。
+
+把 $Q^{-1}Q=I$ 的两边对 $t$ 求导，得
+\begin{equation}
+  \frac{d(Q^{-1})}{dt}Q+Q^{-1}\dot{Q}=0,
+  \tag{6.3.21}
+\end{equation}
+亦即
+\begin{equation}
+  \frac{d(Q^{-1})}{dt}=-Q^{-1}\dot{Q}Q^{-1}.
+  \tag{6.3.22}
+\end{equation}
+用它把 (6.3.17) 对 $t$ 求导，则
+\begin{align}
+  \frac{dL}{dt}&=\frac{d(Q^{-1})}{dt}L_0Q+Q^{-1}L_0\dot{Q} \tag{6.3.23}\\
+  &=-Q^{-1}\dot{Q}Q^{-1}L_0Q+Q^{-1}L_0QQ^{-1}\dot{Q} \tag{6.3.24}\\
+  &=\left[-Q^{-1}\dot{Q},L\right] \tag{6.3.25}
+\end{align}
+% [Tutor Note: 难点：(6.3.25) 的等式是把第一项写成 $-Q^{-1}\dot{Q}\cdot L$、第二项写成 $L\cdot(-Q^{-1}\dot{Q})$，其中用到 $Q^{-1}L_0\dot{Q}=Q^{-1}L_0QQ^{-1}\dot{Q}$。]
+因此，若令
+\begin{equation}
+  A=-Q^{-1}\dot{Q},
+  \tag{6.3.26}
+\end{equation}
+只需证明 $A$ 与 (6.3.14) 所定义的 $M$ 一致。由 $Q$ 的正交性
+\begin{equation}
+  QQ^T=I
+  \tag{6.3.27}
+\end{equation}
+两边对 $t$ 求导得到
+\begin{equation}
+  \dot{Q}Q^T+Q\dot{Q}^T=0,
+  \tag{6.3.28}
+\end{equation}
+由此
+\begin{equation}
+  Q^{-1}\dot{Q}=-\dot{Q}^T(Q^T)^{-1}=-\left(Q^{-1}\dot{Q}\right)^T,
+  \tag{6.3.29}
+\end{equation}
+亦即 $A=-Q^{-1}\dot{Q}$ 是反对称矩阵。另一方面，把 (6.3.18) 对 $t$ 求导得
+\begin{align}
+  \dot{Q}&=-e^{-L_0t}L_0R^{-1}-e^{-L_0t}R^{-1}\dot{R}R^{-1} \tag{6.3.30}\\
+  &=-QRL_0R^{-1}-QRR^{-1}\dot{R}R^{-1} \tag{6.3.31}\\
+  &=-QL-Q\dot{R}R^{-1} \tag{6.3.32}
+\end{align}
+在两边左乘 $-Q^{-1}$，便得到
+
+% [原文 p.79 末行止；定理 6.3.1 证明的余下部分（p.80 起）续于下一 chunk。]
+% __CONTINUE__
+\ifdefined\UEDAdraft\end{proof}\fi

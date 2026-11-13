@@ -1,0 +1,350 @@
+% ============================================================
+% ch04.tex —— 第 4 章 双曲几何（Spectral Networks, LNM 2386）
+% 覆盖：印刷 pp.37–52（PDF p077–p092）
+% ============================================================
+
+\chapter{双曲几何}
+
+% [原文 p.37]
+\ChapterAbstract{每个紧曲面都容许一个常曲率度量，从而被赋予一种几何。对亏格至少为 2 的曲面，这导致双曲几何，其模型空间是双曲平面。我们简要介绍一下二维双曲几何这一美妙世界：从双曲平面及其等距变换出发，随后讨论双曲曲面。更详尽的处理可参考例如 [344] 或 [47]、[256]、[308]。}
+
+\section{双曲平面}
+
+在 2 维情形，有三种类型的几何：学校里教的欧几里得几何、球面几何与双曲几何。它们由底空间的曲率加以区分：欧几里得平面的曲率为零，单位球面为 $1$，双曲平面为 $-1$。
+
+更确切地说，双曲平面 $\HH$ 是唯一带有常高斯曲率 $-1$ 的黎曼度量 $\de_{\HH}$ 的完备单连通曲面。双曲平面的一个模型是\emph{庞加莱上半平面} $\{z=x+iy\in\C \mid y>0\}$，配以度量
+\[
+\de s^2=\frac{\de x^2+\de y^2}{y^2}\,.
+\]
+上半平面模型中的测地线是垂直于实轴的竖直线与半圆，因此 $\R\cup\{\infty\}$ 中任意两个不同点都是一条唯一测地线的端点（图 4.1 右）。另一个模型是\emph{庞加莱圆盘} $\{z=x+iy\in\C \mid |z|<1\}$，其度量为
+\[
+\de s^2=4\,\frac{|\de z|^2}{(1-|z|^2)^2}\,,
+\]
+
+% [原文 p.38]
+其中测地线是圆盘内垂直于 $\R^2$ 中单位圆周的弧与直线，因此单位圆周 $S^1$ 上任意两个不同点都是一条唯一测地线的端点（图 4.1 左）。映射
+\begin{equation}
+z\longmapsto \frac{z-i}{z+i} \tag{4.1}
+\end{equation}
+是从 $\HH$ 的半平面模型到圆盘模型的等距变换。
+
+% [Tutor Note: 核对式 (4.1)：$|z-i|^2<|z+i|^2\iff (y-1)^2<(y+1)^2\iff \operatorname{Im} z>0$，故该映射把上半平面双全纯地送到单位圆盘；它把 $i$ 送到 $0$、把 $\infty$ 送到 $1$、把实轴送到 $S^1$，与原文「该映射延拓到边界：$\mathbb{P}^1(\mathbb{R})\to S^1$」一致。两个模型的度量曲率都是 $-1$：对共形度量 $\lambda^2|\mathrm{d}z|^2$ 有 $K=-\lambda^{-2}\Delta\log\lambda$；半平面模型 $\lambda=1/y$ 给出 $K=-y^2\cdot(1/y^2)=-1$，圆盘模型 $\lambda=2/(1-|z|^2)$ 同样给出 $-1$。]
+
+\Fig[0.95\linewidth]{figures/fig_4_1.png}{4.1}{左：$\HH$ 的庞加莱圆盘模型。右：$\HH$ 的上半平面模型。两个模型中都画出了若干条测地线（虚线）。}
+
+$\HH$ 的模型图像提示出 $\HH$ 的\emph{无穷远边界}这一自然概念。我们在单位速度测地射线 $\gamma\colon[0,\infty)\to\HH$ 的空间上如下定义等价关系：若存在 $D\in\R_{>0}$ 使得对所有 $t\in[0,\infty)$ 都有
+\[
+\de_{\HH}(\gamma(t),\gamma'(t))\le D\,,
+\]
+则称 $\gamma$ 与 $\gamma'$ 等价。
+
+\begin{definition}[4.1]
+$\HH$ 的\emph{无穷远边界} $\partial_\infty\HH$ 是 $\HH$ 中单位速度测地射线按上述等价关系所得的等价类之集。记 $\overline{\HH}:=\HH\cup\partial_\infty\HH$。
+\end{definition}
+
+边界 $\partial_\infty\HH$ 在半平面模型中自然等同于 $\R\cup\{\infty\}=\PP^1(\R)$，在圆盘模型中自然等同于单位圆周。此外，式 (4.1) 的映射可延拓到边界：$\PP^1(\R)\to S^1$。
+
+$\HH$ 的等距变换自然地由 $\PSL_2(\R)$ 的元素通过分式线性变换（homography）作用在 $\HH$ 上表示：
+\begin{equation}
+\begin{pmatrix} a & b\\ c & d\end{pmatrix}\cdot z=\frac{az+b}{cz+d}\,, \tag{4.2}
+\end{equation}
+其中 $z\in\C$ 满足 $\operatorname{Im}(z)>0$，且 $ad-bc=1$。该作用延拓到 $\partial_\infty\HH$，因此 $\HH$ 的每个等距变换都是 $\C$ 中闭单位圆盘到自身的同胚。于是 Brouwer 不动点定理蕴含它在 $\overline{\HH}$ 中至少有一个不动点。在这样的不动点 $z_0$ 处，式 (4.2) 变为
+\begin{equation}
+P(z):=cz_0^2+(d-a)z_0-b=0\,, \tag{4.3}
+\end{equation}
+
+% [原文 p.39]
+于是可区分三种情形：
+\begin{itemize}
+\item $P$ 在 $\C$ 中有两个共轭根，且恰有一个位于 $\HH$ 中。等价地，$(d-a)^2+4bc<0$；由此并顾及 $ad-bc=1$ 可推得 $(d+a)^2<4$，从而 $|d+a|<2$。$\PSL_2(\R)$ 中相应的元素称为\emph{椭圆的}（elliptic）。它们是绕其不动点的旋转。
+\item $P$ 有一个二重实根。这等价于迹的绝对值等于 $2$；$\PSL_2(\R)$ 中相应的元素称为\emph{抛物的}（parabolic）。
+\item $P$ 有两个互不相同的实根。这等价于迹的绝对值严格大于 $2$；$\PSL_2(\R)$ 中相应的元素称为\emph{双曲的}（hyperbolic）。$\HH$ 的双曲等距变换有唯一的测地线轨道，在图 4.2 中以红色虚线表示。
+\end{itemize}
+
+% [Tutor Note: 式 (4.3) 的判别式为 $(d-a)^2+4bc$。用 $ad-bc=1$ 把 $4bc=4ad-4$ 代入得 $(d+a)^2=(d-a)^2+4ad=(d-a)^2+4bc+4<4$，这正是原文「由 $(d-a)^2+4bc<0$ 推出 $(d+a)^2<4$」的一步计算；易错点是漏掉那个 $+4$。同理，抛物对应 $(d+a)^2=4$（即 $|\mathrm{tr}|=2$），双曲对应 $(d+a)^2>4$（即 $|\mathrm{tr}|>2$）；三种情形按 $|\mathrm{tr}|\lessgtr 2$ 完备划分，与 $P$ 的根的情形一一对应。判据也可用 $z\mapsto (az+b)/(cz+d)$ 在 $\HH$ 中的不动点个数来记：椭圆 $1$ 个（在 $\HH$ 内）、抛物 $1$ 个（在 $\partial_\infty\HH$ 上）、双曲 $2$ 个（在 $\partial_\infty\HH$ 上）。]
+
+由式 (4.3) 可知，$\PSL_2(\R)$ 中固定 $\HH$ 内三个或更多互不相同点的元素只有恒等元。$\PSL_2(\R)$ 中典型的椭圆、抛物与双曲元素作用在 $\HH$ 的上半平面模型或圆盘模型上的轨道如图 4.2 所示，其中边界 $\partial_\infty\HH$ 以虚线表示。
+
+\Fig[0.85\linewidth]{figures/fig_4_2.png}{4.2}{$\PSL_2(\R)$ 中椭圆（左）、抛物（中）与双曲（右）元素的轨道。}
+
+研究双曲平面子空间的无穷远边界的另一工具是所谓的\emph{拟测地线}（quasi-geodesic）。粗略地说，它们是 $\HH$ 中足够好地逼近距离的曲线。下面给出精确定义：
+
+\begin{definition}[4.2]
+若存在正数 $C,D>0$ 使得对所有 $t_1,t_2\in\R$ 有
+\[
+C^{-1}|t_2-t_1|-D\le \de_{\HH}(\gamma(t_1),\gamma(t_2))\le C|t_2-t_1|+D\,,
+\]
+则称映射 $\gamma\colon\R\to\HH$ 为 $(C,D)$-\emph{拟测地线}。
+\end{definition}
+
+同样地，$(C,D)$-拟测地射线可定义为满足上述条件的映射 $\gamma\colon[0,+\infty)\to\HH$。
+
+% [原文 p.40]
+下面的 Morse 引理表明每条拟测地线都停留在与一条真测地线有界距离以内（其证明由 [223] 中更一般的结果特殊化而来）：
+
+\begin{lemma}[4.3]
+设 $C,D>0$。则存在 $M>0$，使得对每条 $(C,D)$-拟测地射线 $\gamma$ 都存在测地射线 $\alpha\colon[0,\infty)\to\HH$，满足：对所有 $t\in[0,\infty)$ 有 $\de_{\HH}(\gamma(t),\alpha([0,\infty)))\le M$。
+\end{lemma}
+
+因此可以说，每条拟测地射线代表 $\partial_\infty\HH$ 的一个点，即对应于一条停留在有界距离内的测地线的那个点。若 $X\subseteq\HH$ 是 $\HH$ 的任一子集，则可定义 $\partial_\infty X\subseteq\HH$ 为 $X$ 中所有彼此停留在有界距离内的拟测地线构成的等价类之集。若 $X$ 是 $\HH$ 的凸子集，即对每个 $p,q\in X$，$X$ 都包含连接 $p$ 与 $q$ 的测地线段，则上述每个拟测地射线的等价类中都有一条测地射线。
+
+% [Tutor Note: 原文此行的集合包含关系有笔误：「we can define $\partial_\infty X\subseteq\mathbb{H}$」应为 $\partial_\infty X\subseteq\partial_\infty\mathbb{H}$。依据有二：紧接的下一句说「$\partial_\infty X$ 是拟测地线的等价类之集」，而每条拟测地射线代表的是 $\partial_\infty\mathbb{H}$ 的点（上一句刚说明）；本节第 4.3 与 4.4 小节中同类构造都写作 $\partial_\infty\Gamma\subseteq\partial_\infty\mathbb{H}$、$\tilde{P}\subseteq\partial_\infty\Sigma\subseteq\partial_\infty\mathbb{H}^2$。另：此处「$X$ 包含连接 $p,q$ 的测地线段」之所以能保证每个等价类里有测地射线，用的正是引理 4.3（在 $X$ 内的拟测地射线被一条真测地射线有界逼近，而凸性迫使该真测地射线落在 $X$ 内）。]
+
+\section{紧双曲曲面}
+
+考虑一个紧、连通、可定向的曲面，允许有边界分支。拓扑上它由其亏格 $g$ 与边界分支的个数 $n$ 分类，因此我们把这样的亏格 $g$、有 $n$ 个边界分支的拓扑曲面记为 $\bar S_{g,n}$。
+
+若 $\bar S_{g,n}$ 的 Euler 示性数 $\chi(\bar S_{g,n})=2-2g-n$ 为负，则称 $\bar S_{g,n}$ 为\emph{双曲型的}。此时 $\bar S_{g,n}$ 容许带测地边界的\emph{双曲结构}，即一个曲率为 $-1$ 的黎曼度量，使得所有边界分支都是闭测地线。该双曲结构一般并不唯一。配备这种双曲结构的曲面称为\emph{双曲曲面}。
+
+闭曲面 $S:=\bar S_{g,0}$ 是双曲型的当且仅当 $g\ge 2$。这可如下看出：类似于环面可由粘合正方形的对边得到，曲面 $S$ 可由粘合一个 $4g$ 边形的边得到。$S$ 的万有覆叠于是是被 $4g$ 边形铺满的空间。当 $g=1$ 时这给出被正方形铺满的平面 $\R^2$；当 $g\ge 2$ 时，可把 $S$ 的万有覆叠与由 $4g$ 边形经等距变换粘合铺成的双曲平面等同起来。
+
+\Fig[0.9\linewidth]{figures/fig_4_3.png}{4.3}{粘合成亏格 2 曲面的八边形。}
+
+双曲曲面 $S$ 可由其万有覆叠 $\widetilde{S}$（它是 $\HH$ 的闭子流形，可能带测地边界）对覆叠变换取商而还原。由于 $\widetilde{S}\subseteq\HH$ 带有自然的常曲率 $-1$ 度量，且覆叠变换按等距变换作用，这在商 $S$ 上给出常曲率 $-1$ 的度量。
+
+双曲曲面的一个重要性质是：在闭曲线的每个自由同伦类中都有唯一的测地线：
+
+\begin{proposition}[4.4]
+（[344] 中的命题 5.3.1）\quad 设 $\alpha\in\pi_1(S)$ 是 $S$ 中闭曲线的一个自由同伦类。则 $\alpha$ 中存在唯一的测地线。当 $S$ 有非空边界时，设 $\beta\in\pi_1(S,\{p_0,p_1\})$ 是 $S$ 中从 $p_0\in\partial S$ 到 $p_1\in\partial S$ 的曲线的一个同伦类，使得 $p_0$ 与 $p_1$ 在覆叠映射 $\HH\to S$ 下的原像落在 $\partial_\infty\HH$ 上，并且是相对于 $\{p_0,p_1\}$ 来考虑的。则 $\beta$ 中存在唯一的测地线。
+\end{proposition}
+
+% [原文 p.41]
+\begin{proof}
+设 $M_\alpha\in\PSL_2(\R)$ 是对应于 $\alpha$ 的 $\HH$ 的覆叠自同构。它不可能是椭圆的，因为 $S$ 是光滑的。它也不可能是抛物的，否则 $\alpha$ 中将有长度任意小的简单闭曲线，这与 $S$ 紧相矛盾。因此 $M_\alpha$ 是 $\PSL_2(\R)$ 的双曲元素，它保持唯一一条测地线，该测地线投影为 $S$ 上同伦类 $\alpha$ 中的一条闭测地线。$\PSL_2(\R)$ 中两个双曲元素 $M_\alpha$ 与 $M_{\alpha'}$ 对应的测地线 $\gamma$ 与 $\gamma'$ 投影为 $S$ 中的同一条测地线，当且仅当存在一个覆叠变换把第一条映为第二条，即 $\alpha'=g\alpha g^{-1}$（$g\in\pi_1(S)$），这等价于说 $\alpha'$ 与 $\alpha$ 位于同一个自由同伦类中。
+
+设 $\tilde p_0$（相应地 $\tilde p_1$）是 $p_0$（相应地 $p_1$）在覆叠映射 $\HH\to S$ 下的一个原像。点 $\tilde p_0$ 与 $\tilde p_1$ 是 $\partial_\infty\HH$ 上互不相同的点。存在 $\PSL_2(\R)$ 中单参数族的双曲元素，它们保持 $\tilde p_0$ 与 $\tilde p_1$，并固定从 $\tilde p_0$ 到 $\tilde p_1$ 的唯一测地线（同样在图 4.2 右侧以红色虚线表示）。该测地线投影为 $S$ 上类 $\beta$ 中的一条测地线。若 $\tilde p_0'$ 与 $\tilde p_1'$ 是 $p_0$ 与 $p_1$ 在 $\partial_\infty\HH$ 中的另两个提升，则从 $\tilde p_0'$ 到 $\tilde p_1'$ 的唯一测地线投影为 $\beta$ 中的一条测地线，当且仅当它与从 $\tilde p_0$ 到 $\tilde p_1$ 的唯一测地线由一个覆叠变换相联系，这意味着 $\HH$ 中这两条测地线投影为 $S$ 中的同一条。
+\end{proof}
+
+\begin{remark}[4.5]
+还有一个用 Gauss--Bonnet 公式的论证，可证明同一同伦类中不可能存在两条测地线。假设相反，设 $\gamma_1$ 与 $\gamma_2$ 是两条不同的测地线，并考虑它们之间的一个同伦 $H$。一方面我们知道 $H$ 的像在拓扑上是一个柱面，其 Euler 示性数为 $0$。另一方面，Gauss--Bonnet 公式给出 Euler 示性数严格为负，因为 $H$ 的边界是测地的（故没有外蕴曲率的贡献）而内部具有常负曲率。这就得到矛盾。
+\end{remark}
+
+% [Tutor Note: 注 4.5 中 Gauss--Bonnet 的用法值得补全：对带测地边界的紧曲面 $H$，$\int_H K\,\mathrm{d}A+\int_{\partial H}k_g\,\mathrm{d}s=2\pi\chi(H)$；边界测地故 $k_g=0$，于是 $2\pi\chi(H)=\int_H K\,\mathrm{d}A=(-1)\operatorname{area}(H)<0$，即 $\chi(H)<0$，与柱面的 $\chi=0$ 矛盾。这也说明该论证只用到「$H$ 的内部常负曲率、边界测地」两条，与 $S$ 的具体形状无关。]
+
+曲面 $\bar S_{g,n}$（不必是双曲型的）的基本群总是有限表示的。即
+
+% [原文 p.42]
+\begin{equation}
+\pi_1(\bar S_{g,n})=\Big\langle a_1,b_1,\dots,a_g,b_g,c_1,\dots,c_n\ \Big|\ \prod_{i=1}^{g}[a_i,b_i]\prod_{i=1}^{n}c_i=1\Big\rangle . \tag{4.4}
+\end{equation}
+特别地，当 $n>0$ 时基本群总是自由的。对双曲曲面 $S$，基本群 $\pi_1(S)$ 可如下嵌入万有覆叠 $\widetilde{S}\subseteq\HH$：我们选取一个闭连通的基本域 $S_0\subset\widetilde{S}$ 以及一点 $p\in S_0$。由于 $S$ 紧，$S_0$ 也紧。群 $\pi_1(S)$ 通过覆叠变换作用在 $\widetilde{S}$ 上（见第 2.1 节）。设 $P$ 是 $p$ 在该作用下的轨道。进一步，对每对 $p_1,p_2\in P$，若 $p_2=h(p_1)$ 其中 $h$ 是给出基本群的那些元素 $a_1,\dots,a_g,b_1,\dots,b_g,c_1,\dots,c_n$ 之一，则用测地线段连接它们。由此得到的 $\HH$ 中的子空间（它事实上在拓扑上就是 $\pi_1(S)$ 关于生成集 $a_1,\dots,a_g,b_1,\dots,b_g,c_1,\dots,c_n$ 的 Cayley 图）将记为 $\Gamma$。注意对每个 $h\in\pi_1(S)$ 都存在用变量 $a_1,\dots,a_g,b_1,\dots,b_g,c_1,\dots,c_n$ 表示 $h$ 的最短词。每个这样的词都在 $\Gamma$ 中诱导一条道路，它是拟测地射线，因为基本域 $S_0$ 紧从而有界。
+
+% [Tutor Note: 式 (4.4) 要读准：关系子是 $\prod_{i=1}^{g}[a_i,b_i]\prod_{i=1}^{n}c_i=1$（文字层把它断成两行并丢了两个 $\prod$，不能直接照抄）。自检：$n>0$ 时 $\bar S_{g,n}$ 形变收缩为 $2g+n-1$ 个圆的束，故 $\pi_1$ 是秩 $2g+n-1$ 的自由群；在 (4.4) 中把 $c_n$ 解出来即得此结论，与原文「$n>0$ 时基本群总是自由」相符。$n=0$ 时关系子仍为 $1$，群秩 $2g$，与 $g\ge 2$ 时 $\chi<0$ 相容。]
+
+因此可以定义边界 $\partial_\infty\Gamma$，它事实上与 $\partial_\infty\widetilde{S}$ 一致。特别地，若 $S$ 闭，则 $\partial_\infty\Gamma=\partial_\infty\widetilde{S}=\partial_\infty\HH\cong S^1$。若 $S$ 有边界分支，则 $\widetilde{S}\subset\HH$，而 $\partial_\infty\Gamma=\partial_\infty\widetilde{S}\subset\partial_\infty\HH$ 是嵌入 $S^1$ 的 Cantor 集，从而带有一个循环序，该循环序定义了 $\partial_\infty\Gamma$ 上的拓扑。群 $\pi_1(S)$ 作用在 $\partial_\infty\Gamma$ 上并保持该循环序。
+
+事实上，由于 $S$ 的任一基本域 $S_0$ 都有界，该构造不依赖于所选基点 $p$ 以及基本域的选取。此外，$\partial_\infty\Gamma$ 的拓扑与循环序并不依赖于 $S$ 上双曲结构的选取。唯一依赖于双曲结构的是：在闭曲面的情形下 $S^1$ 的嵌入，或在带边界曲面的情形下 Cantor 集到 $\partial_\infty\HH$ 的嵌入。
+
+于是我们可以把带循环序的拓扑空间 $\partial\pi_1(S)$ 定义为对 $S$ 上某个双曲结构选取的 $\partial_\infty\Gamma$。$\partial\pi_1(S)$ 上的拓扑是用该循环序定义的。最后注意，群 $\pi_1(S)$ 作用在 $\partial\pi_1(S)$ 上并保持循环序。空间 $\partial\pi_1(S)$ 称为群 $\pi_1(S)$ 的\emph{Gromov 边界}。
+
+关于字双曲群（word-hyperbolic group）的边界之定义与已知结果，更详细的综述可见 [222]。
+
+\section{纤毛曲面}
+
+\emph{纤毛曲面}的概念指的是非紧、但在曲面边界上带有附加数据的双曲曲面。这一附加数据称为\emph{纤毛}（cilia），可看作无穷远点。此外，在此情形下连接纤毛的边界线段是无限测地线。本节我们严格引入带标记曲面（marked surface）与纤毛曲面；前者是纤毛曲面的自然紧化。我们在此还讨论这些曲面的理想三角剖分。
+
+% [原文 p.43]
+\begin{definition}[4.6]
+\emph{带标记曲面}是一个紧致可定向光滑曲面，它由闭可定向光滑曲面挖去有限个互不相交的开圆盘并标记一个有限点集而得到，使得每个边界分支上至少有一个点被标记。这些点称为\emph{标记点}。若标记点位于曲面内部，则称为\emph{内部的}；否则称为\emph{外部的}。
+\end{definition}
+
+设 $k\in\Z_{\ge 0}$ 是从亏格 $g$ 的闭可定向光滑曲面 $\bar S_g$ 中挖去的互不相交开圆盘的个数，并把所得曲面的边界分支标号为 $1,\dots,k$。设 $p_i\in\Z_{>0}$ 是第 $i$ 个边界圆周上标记点的个数，$i\in\{1,\dots,k\}$。我们再以 $p_0$ 记内部标记点的个数。所得的纤毛曲面作为光滑（等价地，拓扑）曲面完全由 $g$ 与向量\footnote{我们用分号把 $p_0$ 与 $p_1$ 隔开，以强调 $p_0$ 与 $i\ge 1$ 的 $p_i$ 在性质上的差别。} $\mathbf p:=(p_0;p_1,\dots,p_k)\in\Z_{\ge 0}\times\Z_{>0}^k$ 决定，因此我们把它记为 $\bar S_{g,\mathbf p}$（当没有外部标记点时简记为 $\bar S_{g,p_0}$）。图 4.4 中给出三个带标记曲面的例子。
+
+\Fig[0.95\linewidth]{figures/fig_4_4.png}{4.4}{三个纤毛曲面（边界分支的标号写在其后的括号中）。}
+
+% [Tutor Note: 原文此段有一处措辞不严：说「The resulting ciliated surface is completely determined by $g$ and the vector $\mathbf p$ … hence we will denote it by $\bar S_{g,\mathbf p}$」，但此时尚未挖去标记点，所得的是「带标记曲面」（定义 4.6）；纤毛曲面 $S_{g,\mathbf p}$ 要到定义 4.7 才由 $S_{g,\mathbf p}:=\bar S_{g,\mathbf p}\setminus P$ 定义。核对办法：本段末句「Three examples of marked surfaces are shown in Fig. 4.4」用的正是 marked，而定义 4.7 又以 $\bar S_{g,\mathbf p}$ 为出发点。读时把本段的 ciliated 一律理解为 marked，并注意记号上的区别：带横线的是紧的带标记曲面 $\bar S_{g,\mathbf p}$，不带横线的是挖去 $P$ 后的纤毛曲面 $S_{g,\mathbf p}$，二者相差一个有限点集 $P$。]
+
+\begin{definition}[4.7]
+\emph{纤毛曲面} $S_{g,\mathbf p}$ 是由带标记曲面 $\bar S_{g,\mathbf p}$ 挖去所有标记点而得到的曲面。形式地说，若 $P$ 表示 $\bar S_{g,\mathbf p}$ 的所有标记点之集，则 $S_{g,\mathbf p}:=\bar S_{g,\mathbf p}\setminus P$。$P$ 中的点称为 $S_{g,\mathbf p}$ 的\emph{穿孔}。$\bar S_{g,\mathbf p}$ 的内部标记点称为 $S_{g,\mathbf p}$ 的\emph{内部穿孔}。$\bar S_{g,\mathbf p}$ 的外部标记点称为 $S_{g,\mathbf p}$ 的\emph{外部穿孔}或\emph{纤毛}。
+\end{definition}
+
+下文除非明确说明，我们总假定每个纤毛曲面非闭，即 $\#P\ge 1$，并且是双曲的，即 $\chi(S_{g,\mathbf p})<0$。这些条件等价于说：或者 $g=0$ 且 $\#P\ge 3$，或者 $g\ge 1$ 且 $\#P\ge 1$。
+
+% [原文 p.44]
+\begin{remark}[4.8]
+纤毛曲面的边界是连接相邻两个纤毛的边界线段的不交并。
+\end{remark}
+
+纤毛曲面可配以一个带标记的、可能不完备的、凸的、有限面积的双曲结构（可能带边界），使得纤毛之间的边界线段是无限测地线，而纤毛是无穷远点；换言之，这些点的邻域具有无限直径。我们引入下述定义。
+
+\begin{definition}[4.9]
+对配以上述双曲结构的纤毛曲面，我们定义\emph{内部穿孔的长度}为所有环绕该穿孔的简单闭回路长度之下确界。
+\end{definition}
+
+对每个穿孔，该长度或正或零。若穿孔的长度为零，则存在该穿孔的一个同胚于穿孔圆盘的邻域，它具有无限直径，并作为度量空间完备。此情形下该穿孔是一个无穷远点，将称为\emph{尖点}（cusp）。若穿孔具有正长度 $l>0$，则每个同胚于圆环的该穿孔邻域作为度量空间不完备，且具有有限直径。这种邻域的度量完备化给圆环添加一条长度为 $l$ 的闭边界测地线而使之紧致；例子见图 4.5。
+
+\Fig[0.9\linewidth]{figures/fig_4_5.png}{4.5}{两个双曲纤毛曲面的例子：带尖点（左）与带边界测地线（右）。}
+
+作为非紧流形，纤毛曲面 $S_{g,\mathbf p}$ 可以许多互不拟等距的方式配以双曲度量。这意味着 $S_{g,\mathbf p}$ 的万有覆叠（看作双曲平面的子空间）将随所选双曲结构不同而有不同的无穷远边界。这使纤毛曲面有别于紧曲面，并使得不可能独立于所选双曲结构而定义万有覆叠的无穷远边界。我们将讨论两种不同的做法。关于纤毛曲面上双曲结构更严格的研究见第 7.2 节，那里引入了纤毛曲面的泰希米勒空间。
+
+% [原文 p.45]
+\begin{remark}[4.10]
+当纤毛曲面 $S_{g,\mathbf p}$ 上选定了这样的双曲结构，万有覆叠 $\widetilde{S}_{g,\mathbf p}$ 可与 $\HH$ 的一个带测地边界的凸子集等同。我们给 $S_{g,\mathbf p}$ 配以由 $\HH$ 上复结构诱导的自然复结构。
+\end{remark}
+
+每个纤毛曲面 $S_{g,\mathbf p}$ 都可配以一个有限体积、带全测地边界的凸双曲结构，使得每个内部穿孔都有一个有限直径的邻域。特别地，每个这样的结构在内部穿孔的邻域内作为度量空间不完备。关于这样的结构，$S_{g,\mathbf p}$ 的所有边界曲线都是连接纤毛的双无限测地线。一旦配以上述双曲结构，$S_{g,\mathbf p}$ 的万有覆叠 $\widetilde{S}_{g,\mathbf p}$ 可看作双曲平面 $\HH^2$ 的凸子集，我们把它记为 $\Sigma$。它在 $\HH^2$ 中的闭包 $\bar\Sigma$ 具有全测地边界，该边界在 $\pi_1(S_{g,\mathbf p})$ 通过和乐表示对 $\HH^2$ 的自然作用下不变。空间 $\bar\Sigma\setminus\Sigma$ 是 $\bar\Sigma$ 边界上的一族无限测地线。$\bar\Sigma$ 的边界测地线的端点是 $\HH^2$ 理想边界中的点，称为 $\Sigma$ 的\emph{纤毛}。所有纤毛之集将记为
+\[
+\widetilde{P}\subseteq\partial_\infty\Sigma=\partial_\infty\bar\Sigma\subseteq\partial_\infty\HH^2\,.
+\]
+对任意两个如上所述的双曲结构，空间 $\partial_\infty\Sigma$ 作为循环序拓扑空间是同构的。因此我们把这个集合记为 $\partial_\infty\widetilde{S}_{g,\mathbf p}$，并称之为 $S_{g,\mathbf p}$ 的万有覆叠的\emph{无穷远边界}。注意 $\widetilde{P}=\partial_\infty\widetilde{S}_{g,\mathbf p}$ 当且仅当 $g=0$ 且 $\mathbf p=(0,n)$（某 $n>0$），即相应的带标记曲面 $\bar S_{g,\mathbf p}$ 是一个多边形。这当且仅当 $\widetilde{P}$ 有限时发生。否则 $\widetilde{P}$ 是无限可数集，而 $\partial_\infty\widetilde{S}_{g,\mathbf p}$ 是 $\partial_\infty\HH^2$ 中的 Cantor 集。
+
+% [Tutor Note: 两处等价关系极易略读过去，而它们正是第 7 章把 Fenchel--Nielsen 坐标推广到纤毛曲面的关键。其一：$\widetilde P=\partial_\infty\widetilde S_{g,\mathbf p}$ 当且仅当 $g=0$ 且 $\mathbf p=(0,n)$，此时 $\bar S_{g,\mathbf p}$ 是 $n$ 边形、$\widetilde P$ 恰有 $n$ 个点；否则 $\widetilde P$ 可数无限、$\partial_\infty\widetilde S_{g,\mathbf p}$ 是 Cantor 集。其二：把 $\bar\Sigma$ 的边界写成 $\bar\Sigma\setminus\Sigma$、再把它的每条测地线的两个端点配对，正是下面 $\partial_\infty^{\mathrm{red}}$ 的等价关系。另注意 $\widetilde P\subseteq\partial_\infty\Sigma=\partial_\infty\bar\Sigma$ 中的等号依赖 $\Sigma$ 凸：由引理 4.3 后一段，凸子集的每个拟测地线等价类都由真正的测地射线代表，故 $\partial_\infty\Sigma=\partial_\infty\bar\Sigma$。]
+
+类似地，每个纤毛曲面 $S_{g,\mathbf p}$ 都可配以一个有限体积、带全测地边界的完备双曲结构。每个这样的双曲结构把 $S_{g,\mathbf p}$ 变成完备度量空间，且每个穿孔的每个邻域都有无限直径。$S_{g,\mathbf p}$ 的所有边界曲线都是连接纤毛的双无限测地线。一旦配以上述双曲结构，$S_{g,\mathbf p}$ 的万有覆叠 $\widetilde{S}_{g,\mathbf p}$ 可看作双曲平面 $\HH^2$ 的闭凸子集，我们把它记为 $\Sigma'$。空间 $\Sigma'$ 具有全测地边界，并在 $\pi_1(S_{g,\mathbf p})$ 通过和乐表示对 $\HH^2$ 的自然作用下不变。$\widetilde{S}_{g,\mathbf p}$ 的边界测地线的端点是 $\HH^2$ 理想边界中的点，称为 $\Sigma'$ 的\emph{纤毛}。$\Sigma'$ 的所有纤毛之集将记为
+\[
+\widetilde{P}\subseteq\partial_\infty\Sigma'\subseteq\partial_\infty\HH^2\,.
+\]
+对任意两个如上所述的双曲结构，空间 $\partial_\infty\Sigma'$ 作为循环序拓扑空间是同构的。因此我们把这个空间记为 $\partial_\infty^{\mathrm{red}}\widetilde{S}_{g,\mathbf p}$，并称之为 $S_{g,\mathbf p}$ 的万有覆叠的\emph{约化无穷远边界}。若 $S_{g,\mathbf p}$ 没有内部穿孔，即 $p_0=0$，则 $\partial_\infty^{\mathrm{red}}\widetilde{S}_{g,\mathbf p}=\partial_\infty\widetilde{S}_{g,\mathbf p}$。然而，若有内部穿孔，则边界 $\partial_\infty^{\mathrm{red}}\widetilde{S}_{g,\mathbf p}$ 可看作 $\partial_\infty\widetilde{S}_{g,\mathbf p}$ 按如下等价关系的商：$p_1\sim p_2$ 当且仅当 $p_1$ 与 $p_2$ 是 $\bar\Sigma\setminus\Sigma$ 中某条测地线的两个端点。由于 $p_1$ 与 $p_2$ 之间没有 $\partial_\infty\widetilde{S}_{g,\mathbf p}$ 的其它点，
+
+% [原文 p.46]
+该等价关系保持循环序，即商映射 $\partial_\infty\widetilde{S}_{g,\mathbf p}\to\partial_\infty^{\mathrm{red}}\widetilde{S}_{g,\mathbf p}$ 是保序、连续且满的。
+
+最后，我们更详细地描述在带穿孔曲面 $S$ 的紧化上诱导出的复结构，其中 $S$ 按注 4.10 的意义配备复结构。即：对 $S$ 上一组互不相同的点 $P=\{s_1,\dots,s_k\}$（$k\ge 1$），存在开子集 $U_P:=U_{s_1}\cup\cdots\cup U_{s_k}\subset S$，使得 $S\setminus U_P$ 紧，且每个 $s_i$ 的邻域 $U_{s_i}$ 同胚于穿孔圆盘 $z_i\colon U_i\to\DD_2\setminus\{0\}=\{z\in\C \mid 0<|z|<1\}$，$i=1,\dots,k$，其中同胚 $z_i$ 与 $S$ 上的复结构全纯相容。对每个 $i=1,\dots,k$，通过令 $z_i(s_i)=0$，这些映射 $z_i$ 可延拓为
+\begin{equation}
+z_i\colon\hat U_{s_i}:=U_{s_i}\cup\{s_i\}\to\DD_2=\{z\in\C \mid |z|<1\}\,, \tag{4.5}
+\end{equation}
+于是，新的黎曼曲面 $\bar S:=S\cup P$（即带穿孔的黎曼曲面 $S$ 的紧化）的一个复图册由 $S$ 的一个复图册 $\mathcal A$ 与和 $\mathcal A$ 相容的坐标卡 (4.5) 之并给出。
+
+\section{双曲三角形、六边形与裤子}
+
+理想三角形在双曲几何中具有根本的重要性，并被广泛用于双曲曲面与泰希米勒空间几何的研究。在第 7.1 节我们将看到，泰希米勒空间上的整体坐标如何由把双曲曲面分解为更简单的几何块而得到。这些几何块在文献中常称为\emph{三圆区域}（three-circle domain）、\emph{$Y$-块}（$Y$-piece）或\emph{裤子}。在这些术语中，本文采用最后一个，并在本节回顾由直角六边形粘合构造裤子的做法。一个核心结果是：裤子上双曲结构的模空间事实上是平凡的；关于相关结果与方法的综述可参阅 [296]。
+
+\begin{definition}[4.11]
+设 $x,y,z$ 是双曲平面 $\HH$ 的无穷远边界 $\partial_\infty\HH$ 上互不相同的点。以 $x,y,z$ 为顶点的\emph{理想三角形}是由两两连接 $x,y,z$ 的三条测地线所围成的 $\HH$ 的闭子集（见图 4.6）。注意任意两个理想三角形都等距。
+\end{definition}
+
+% [原文 p.47]
+% 本页以图 4.6 与图 4.7 开头；正文方面，定义 4.13 的话句跨 p.46–p.47 断开，p.47 自「使得这些穿孔按定义 4.9 的意义具有长度 $l_1,l_2,l_3$（见图 4.8）」起。
+\Fig[0.38\linewidth]{figures/fig_4_6.png}{4.6}{庞加莱圆盘模型中的一个理想三角形，它是纤毛曲面的基本例子。}
+
+\begin{definition}[4.12]
+\emph{直角六边形} $H\subset\HH^2$ 是双曲平面的紧单连通子集，其边界由六条测地线段 $\gamma_i$（$i=1,\dots,6$）组成，它们两两正交相交（见图 4.7）。
+\end{definition}
+
+不难证明，任意直角六边形在等距意义下由它三条互不相邻的边的长度唯一确定（见 [218, 引理 4.3.2]）。
+
+\Fig[0.9\linewidth]{figures/fig_4_7.png}{4.7}{庞加莱上半平面模型中的一个直角六边形 $H\subset\HH^2$。}
+
+\begin{definition}[4.13]
+设 $l_1,l_2,l_3\in[0,\infty)$。类型为 $(l_1,l_2,l_3)$ 的\emph{双曲裤子}是一个亏格 $0$、带三个内部穿孔的纤毛曲面，配有一个双曲结构，使得这些穿孔按定义 4.9 的意义具有长度 $l_1,l_2,l_3$（见图 4.8）。
+\end{definition}
+
+\Fig[0.45\linewidth]{figures/fig_4_8.png}{4.8}{一条裤子。}
+
+注意在双曲裤子的定义中允许尖点边界，即当穿孔长度 $l_i=0$ 时。沿边界把两个理想三角形粘合成一个拓扑空间意义上的裤子，有两种组合上不同的方式；这两种方式在图 4.9 中描述。从几何的观
+
+% [原文 p.48]
+点看，这两种组合粘合可能给出四种不同类型的双曲裤子，取决于它们是完备的还是有 $1$、$2$ 或 $3$ 个尖点（见图 4.10）。
+
+% [Tutor Note: 定理 4.14 的存在性构造可逐步核对：直角六边形由三条相间边长唯一确定，故取两个边长为 $l_1/2,l_2/2,l_3/2$（相间分配）的直角六边形，沿余下三条边粘合，得到亏格 $0$、三条边界长度分别为 $l_1,l_2,l_3$ 的紧双曲曲面；再挖去这些边界分支，按定义 4.9 它们就成为长度 $l_1,l_2,l_3$ 的穿孔。注意 $l_i=0$（尖点）情形不能这样构造（正长度六边形的极限退化），须单独取理想三角形的极限，这正对应图 4.10 的 no cusp / 1 cusp / 2 cusps / 3 cusps 四种情形；也正因为要容纳 $l_i=0$，定义 4.13 才把 $l_i$ 的取值范围写成 $[0,\infty)$。]
+
+\Fig[0.95\linewidth]{figures/fig_4_9.png}{4.9}{由粘合两个理想三角形得到裤子的两种方式。}
+
+\Fig[0.95\linewidth]{figures/fig_4_10.png}{4.10}{由粘合两个理想三角形得到的四种不同的双曲裤子。}
+
+\begin{theorem}[4.14]
+对任意非负实数三元组 $(l_1,l_2,l_3)$，存在唯一的双曲裤子 $P$，其穿孔长度分别为 $l_i$（$i=1,2,3$）。
+\end{theorem}
+
+在没有尖点的情形，即当每个 $i=1,2,3$ 都有 $l_i\ne 0$ 时，上述定理 4.14 可由六边形在给定三条相间边长时的存在性与唯一性得到。具体地，我们首先考虑一对直角六边形，其相间边的长度为 $\frac{l_1}{2},\frac{l_2}{2},\frac{l_3}{2}$。这些六边形在等距意义下唯一确定，我们沿它们余下的边把它们粘合起来。这给出一个亏格 $0$、带三条长度分别为 $l_1,l_2,l_3$ 的边界分支的紧双曲曲面。挖去这些边界分支便把这个紧曲面变成穿孔长度分别为 $l_1,l_2,l_3$ 的纤毛曲面。完整证明请读者参阅 [218, 定理 4.3.1]。
+
+现在考虑所有具有固定长度 $l_1,l_2,l_3$ 的带标签穿孔的双曲裤子 $P$ 在等距意义下的模空间。我们以 $[P]$ 记 $P$ 的等距类。裤子上每个保持标签的自同胚都同伦等价于恒等映射，这一事实蕴含下述结论：
+
+% [原文 p.49]
+\begin{corollary}[4.15]
+具有固定穿孔长度的双曲裤子 $P$ 上双曲结构的模空间是平凡的 $\{[P]\}$。
+\end{corollary}
+
+在所有穿孔都具有正长度的情形，可以取裤子 $P$ 的度量完备化，得到带三条测地边界的紧双曲曲面 $\bar P$。事实上，紧化裤子 $\bar P$ 上唯一的简单闭测地线就是 $\bar P$ 边界上的三条测地线 $\gamma_1,\gamma_2,\gamma_3$。此外，存在唯一的简单测地弧，记为 $c_{ij}=c_{ji}$，称为\emph{正交测地线}（orthogeodesic），连接边界 $\gamma_i$ 与 $\gamma_j$（见图 4.11）。因此，紧化裤子的双曲结构由其三条边界曲线的长度唯一确定。
+
+\Fig[0.55\linewidth]{figures/fig_4_11.png}{4.11}{一条裤子及其正交测地线。}
+
+此外，我们可以沿测地弧 $c_{12},c_{23},c_{31}$ 剪开紧化裤子，得到两个双曲直角六边形（见图 4.12）。
+
+\Fig[0.95\linewidth]{figures/fig_4_12.png}{4.12}{沿测地弧剪开一条裤子。}
+
+\section{三角剖分}
+
+% [原文 p.50]
+纤毛曲面总可以分解为更简单的块，即定义 4.11 中引入的理想三角形。这一分解对本书后文讨论的若干主题与应用将特别有用。
+
+\begin{definition}[4.16]
+对满足 $\#P\ge 1$ 且 $\chi(S_{g,\mathbf p})<0$ 的带标记曲面 $\bar S_{g,\mathbf p}$，其\emph{三角剖分} $\Delta$ 是 $\bar S_{g,\mathbf p}$ 上如下一族曲线的极大同痕类：这些曲线在内部不自交、两两不相交且互不同痕，称为\emph{边}，其端点是标记点。$\bar S_{g,\mathbf p}$ 的三角剖分把带标记曲面分解为拓扑三角形，使每个顶点都是标记点。
+\end{definition}
+
+只要选定了 $S_{g,\mathbf p}$ 上如上所述的双曲结构，带标记曲面 $\bar S_{g,\mathbf p}$ 的每个三角剖分 $\Delta$ 都可变成纤毛曲面 $S_{g,\mathbf p}$ 的\emph{测地理想三角剖分}。这意味着 $\Delta$ 的每条边都由唯一一条连接 $S_{g,\mathbf p}$ 两个穿孔的无限测地线代表。特别地，所有边界测地线都包含在 $\Delta$ 中。$S_{g,\mathbf p}$ 的三角剖分把它分解为理想测地三角形。
+
+$S_{0,(1;3,5)}$ 的一个三角剖分示于图 4.4 右。若 $\Delta$ 是带标记曲面或纤毛曲面的三角剖分，则其边的端点称为\emph{顶点}，而 $S_{g,\mathbf p}\setminus\Delta$ 的连通分支称为\emph{面}。可以区分位于 $S_{g,\mathbf p}$ 边界上的\emph{外部的}边，与位于 $S_{g,\mathbf p}$ 内部的、被称为\emph{内部的}（internal）的边。
+
+设 $V(\Delta),E(\Delta),F(\Delta),E_e(\Delta),E_i(\Delta)$ 分别是 $\Delta$ 的顶点、边、面、外部的边与内部的边之集。又设 $c:=\sum_{i=1}^{k}p_i$ 是 $S_{g,\mathbf p}$ 的纤毛总数。则有
+\[
+\begin{aligned}
+\#E_e(\Delta)&=c\,,\\
+\#V(\Delta)&=p_0+c=\sum_{i=0}^{k}p_i\,.
+\end{aligned}
+\]
+$S_{g,\mathbf p}$ 的 Euler 示性数为
+\[
+\#F(\Delta)-\#E(\Delta)+\#V(\Delta)=2-2g-p_0-k\,,
+\]
+而由于 $\Delta$ 把 $S_{g,\mathbf p}$ 剖分为三角形，
+\[
+3\#F(\Delta)=2\#E(\Delta)-\#E_e(\Delta)=2\#E(\Delta)-c\,,
+\]
+于是由最后这两个等式可推出：
+\[
+\begin{aligned}
+\#E(\Delta)&=6g-6+2c+3k+3p_0\,,\\
+\#E_i(\Delta)&=6g-6+c+3k+3p_0\,,\\
+\#F(\Delta)&=4g-4+c+2k+2p_0\,.
+\end{aligned}
+\]
+因此 $\#E(\Delta),\#E_e(\Delta),\#E_i(\Delta),\#V(\Delta),\#F(\Delta)$ 完全由 $S_{g,\mathbf p}$ 的拓扑决定。
+
+% [Tutor Note: 本段原文自相矛盾，务必自行核对。由 $\#V=p_0+c$ 与 $3\#F=2\#E-c$ 可得 $\#F-\#E+\#V=\frac{2\#E-c}{3}-\#E+p_0+c$；把原文随后三条结论 $\#E=6g-6+2c+3k+3p_0$、$\#E_i=6g-6+c+3k+3p_0$、$\#F=4g-4+c+2k+2p_0$ 代入，算得 $\#F-\#E+\#V=2-2g-k$，而不是原文所写的 $2-2g-p_0-k$。反过来若真取 $\chi=2-2g-p_0-k$ 去解，得到的将是 $\#E=6g-6+2c+3k+6p_0$，与原文不合。故三条计数公式与 $\chi(\bar S_{g,\mathbf p})=2-2g-k$ 相容，而 Euler 示性数那一行中的 $-p_0$ 是笔误：$\Delta$ 剖分的是带标记曲面 $\bar S_{g,\mathbf p}$（挖去 $k$ 个开圆盘，$\chi=2-2g-k$），$p_0$ 个内部标记点只是作为顶点计入 $\#V$，不再从 $\chi$ 中扣除。核对办法：$c=0$ 时三条公式化为平直情形 $\#E=6g-6+3k+3p_0$、$\#F=4g-4+2k+2p_0$，可用 $\#F-\#E+\#V=2-2g-k$ 直接验证。]
+
+% [原文 p.51]
+\begin{definition}[4.17]
+带标记曲面 $\bar S_{g,\mathbf p}$ 的\emph{纯映射类群} $\mathrm{PMod}(\bar S_{g,\mathbf p})$，即 $\bar S_{g,\mathbf p}$ 的所有保持定向、固定曲面上所有标记点的微分同胚，模去相对于边界同痕于恒等映射的微分同胚所得的群，自然地作用在理想三角剖分上。
+\end{definition}
+
+\begin{remark}[4.18]
+注意带标记曲面的理想三角剖分总数一般是无限的，然而模去 $\mathrm{PMod}(\bar S_{g,\mathbf p})$ 在曲面上的作用后，其个数是有限的。
+\end{remark}
+
+\begin{remark}[4.19]
+在 S 类理论的框架中（如第 21 章所述），UV 曲线的映射类群自然地实现该理论的 S 对偶群。
+\end{remark}
+
+下述经典结果对我们至关重要，因为我们稍后要在第 7.2 节中构造在某些实现于纤毛曲面 $S_{g,\mathbf p}$ 之上的空间上的坐标。这些坐标将关联于 $S_{g,\mathbf p}$ 的一个理想三角剖分 $\Delta$ 的各条边，因此为了计算任意两个图卡之间的转移函数，即对 $S_{g,\mathbf p}$ 的任意两个理想三角剖分，只需知道当两个三角剖分仅相差一个内部边的翻转时的转移函数。
+
+\begin{theorem}[4.20]
+（[275, 193, 71]）\quad 纤毛曲面的任意两个三角剖分都可通过图 4.13 中所示的有限次\emph{翻转}（flip，或称 Whitehead 变换）相联系。
+\end{theorem}
+
+\Fig[0.85\linewidth]{figures/fig_4_13.png}{4.13}{在内部边 $\alpha$ 处对三角剖分作一次翻转。}
+
+\section{带标架丛的 Riemann--Hilbert 对应}
+
+经典 Riemann--Hilbert 对应的一个重要推广——后文第 15 章将用到——是关于纤毛曲面上所谓\emph{带标架向量丛}的 Riemann--Hilbert 对应。
+
+% [原文 p.52]
+现在我们把纤毛曲面 $S_{g,\mathbf p}$ 简记为 $S$。设 $\bar S$ 是相应的紧带标记曲面，使得 $S=\bar S\setminus P$，其中 $P$ 是 $S$ 的有限穿孔集。对每个 $p\in P$ 我们固定 $p$ 在 $\bar S$ 中的一个邻域 $\bar S_p\subset\bar S$：若 $p$ 是穿孔，则它微分同胚于以 $p$ 为圆心的穿孔圆盘；若 $p$ 是纤毛，则它微分同胚于以 $p$ 为其直径中点的半圆盘。我们记 $S_p:=\bar S_p\setminus\{p\}$。
+
+设 $E\to S$ 是 $S$ 上秩为 $n$ 的光滑平坦向量丛。设 $p\in P$，而 $\mathcal E_p=(E_0,\dots,E_{k_p})$ 是 $E|_{S_p}$ 的一列向量子丛，使得对所有 $i\in\{1,\dots,k_p\}$ 都有 $0\le\rank(E_{i-1})<\rank(E_i)\le n$。若每个 $E_i$ 都是平行的，则称 $\mathcal E_p$ 是 $E$ 在 $p$ 处的一个\emph{标架化}（framing）。若对每个 $p\in P$，$\mathcal E_p$ 都是 $E$ 在 $p$ 处的标架化，则称族 $\mathcal E=\{\mathcal E_p\}_{p\in P}$ 为 $E$ 的一个标架化。若 $\mathcal E$ 是 $E$ 的标架化，则称二元组 $(E,\mathcal E)$ 为\emph{带标架向量丛}。
+
+如我们所见，经典 Riemann--Hilbert 对应在流形 $M$ 上秩 $n$ 向量丛的规范等价类与 $M$ 的基本群到 $\GL_n(\C)$ 的表示之共轭类之间给出 $1$-$1$ 对应。为对带标架向量丛给出类似的对应，我们需要给基本群的表示配备也被称为\emph{标架化}的附加信息。
+
+设 $\rho\colon\pi_1(S)\to\GL_n(\C)$ 是如上纤毛曲面 $S$ 的基本群的一个同态。设 $\mathcal F$ 是 $\C^n$ 的所有\emph{部分旗}之空间，即
+\[
+\mathcal F:=\{(V_0,\dots,V_k)\mid 0\le k\le n,\ V_k\le\C^n,\ \dim(V_{i-1})<\dim(V_i),\ \forall\,1\le i\le k\}\,.
+\]
+设 $\widetilde{S}$ 是 $S$ 的万有覆叠，$\partial_\infty^{\mathrm{red}}\widetilde{S}$ 是其约化无穷远边界，而 $\widetilde{P}$ 是 $\widetilde{S}$ 的纤毛之集（如第 4.3 节所定义）。$\rho$ 的一个\emph{标架化}是映射 $F\colon\widetilde{P}\to\mathcal F$，它是 $\rho$-等变的，即对所有 $x\in\widetilde{P}$ 与 $\gamma\in\pi_1(S)$ 有 $\rho(\gamma)F(x)=F(\gamma(x))$。若 $F$ 是 $\rho$ 的标架化，则称二元组 $(\rho,F)$ 为\emph{带标架同态}。群 $\GL_n(\C)$ 通过在第一分量上共轭、在第二分量上标准线性作用而作用在所有带标架同态之空间上。该商空间称为 $\pi_1(S)$ 到 $\GL_n(\C)$ 的\emph{带标架表示}之空间。
+
+类似于定理 3.30，我们现在表述 Riemann--Hilbert 对应的带标架版本：
+
+\begin{theorem}[4.21]
+（带标架丛的 Riemann--Hilbert 对应）\quad 在纤毛曲面 $S$ 上秩 $n$ 平坦带标架向量丛 $E$ 的规范等价类之空间，与 $\pi_1(S)$ 到 $\GL_n(\C)$ 的带标架表示之空间之间，存在同构。
+\end{theorem}
+
+% [Tutor Note: 本页记号有两处要读懂。其一，$\mathcal F$ 定义中的 $V_k\le\mathbb{C}^n$ 是「$V_k$ 为 $\mathbb{C}^n$ 的子空间」的写法（书中 $\le$ 表示子空间/子丛，例如前面 $\mathrm{rk}(E_{i-1})<\mathrm{rk}(E_i)$ 与 $0\le k\le n$ 并存），$k=0$ 允许空旗，对应该点处平凡标架化。其二，「每个 $E_i$ 平行」指 $E|_{S_p}$ 的平坦联络 $\nabla$ 满足 $\nabla(E_i)\subseteq E_i\otimes\Omega^1$，即 $E_i$ 是局部常子丛（这正是 4.6 节开头「$E$ 平坦」的用处）；若删去「平行」，$\mathcal E_p$ 只是 $p$ 处逐点的一列子空间，无法与 $\pi_1$ 的表示对应。核对办法：$\rho$-等变条件 $\rho(\gamma)F(x)=F(\gamma(x))$ 中，左边的 $\rho(\gamma)$ 是 $\mathbb{C}^n$ 的自同构、右边的 $\gamma$ 作用在 $\widetilde P$ 上，二者的组合恰是「把 $p$ 处标架平移到 $\gamma(p)$ 处」的陈述，因此 $\mathcal F$ 必须取旗而不是单条直线。]

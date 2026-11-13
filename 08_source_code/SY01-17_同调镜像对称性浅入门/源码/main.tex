@@ -1,0 +1,143 @@
+\documentclass[lang=cn,cm,11pt,scheme=chinese]{elegantbook}
+
+\title{同调镜像对称性浅入门}
+\author{Raf Bocklandt}
+\date{}
+\cover{cover.png}
+\setcounter{tocdepth}{1}
+\hypersetup{
+  unicode=true,
+  bookmarksnumbered=true,
+  bookmarksopen=true,
+  colorlinks=true,
+  linkcolor=structurecolor,
+  citecolor=structurecolor,
+  urlcolor=blue,
+  pdftitle={同调镜像对称性浅入门},
+  pdfauthor={Raf Bocklandt}
+}
+
+\newcommand{\bookciteitem}[1]{%
+  \ifnum\bookcitefirst=0,\,\fi
+  \def\bookcitefirst{0}%
+  \hyperlink{ref:#1}{#1}%
+}
+\newcommand{\bookcite}[2][]{%
+  \begingroup\def\bookcitefirst{1}%
+  [\forcsvlist{\bookciteitem}{#2}%
+   \ifx\relax#1\relax\else,\,#1\fi]\endgroup%
+}
+\usepackage{float}
+\usepackage[noautomatic]{imakeidx}
+\makeindex[title=索引]
+\captionsetup{hypcap=false}
+\setlength{\emergencystretch}{1.5em}
+\renewcommand{\examplename}{例题}
+\renewcommand{\exercisename}{练习}
+\renewcommand{\problemname}{问题}
+\renewcommand{\notename}{笔记}
+\elegantnewtheorem{conjecture}{猜想}{thmstyle}{conj}
+
+% ===== 校订新增：每节“本节重点” =====
+% 若不需要，把下一行的 \showtakeawaytrue 改为 \showtakeawayfalse 即可整体隐藏。
+\newif\ifshowtakeaway
+\showtakeawaytrue
+\ifshowtakeaway
+  \newtcolorbox{takeawaybox}[1][]{%
+    enhanced, breakable,
+    colback=structurecolor!4!white, colframe=structurecolor!45!white,
+    boxrule=0.4pt, arc=1.5pt, left=5pt, right=5pt, top=3pt, bottom=3pt,
+    fontupper=\small, title={本节重点}, coltitle=white,
+    colbacktitle=structurecolor!65!white,
+    toptitle=1.5pt, bottomtitle=1.5pt, #1}
+\else
+  \excludecomment{takeawaybox}
+\fi
+\newcommand{\takeaway}[1]{\begin{takeawaybox}#1\end{takeawaybox}}
+
+% ===== 校订新增：每章“本章回顾与评注” =====
+% 若不需要，把下一行的 \showchapterreviewtrue 改为 \showchapterreviewfalse 即可整体隐藏。
+\newif\ifshowchapterreview
+\showchapterreviewtrue
+\ifshowchapterreview
+  \newtcolorbox{chapterreviewbox}{%
+    enhanced, breakable,
+    colback=black!2!white, colframe=structurecolor!50!white,
+    boxrule=0.5pt, arc=1.5pt, left=7pt, right=7pt, top=5pt, bottom=5pt,
+    fontupper=\small,
+    title={本章回顾与评注}, fonttitle=\bfseries, coltitle=white,
+    colbacktitle=structurecolor!55!white,
+    toptitle=2pt, bottomtitle=2pt}
+\else
+  \excludecomment{chapterreviewbox}
+\fi
+\newcommand{\chapterreview}[1]{\begin{chapterreviewbox}#1\end{chapterreviewbox}}
+
+\begin{document}
+\maketitle
+\hypersetup{pageanchor=true}
+\frontmatter
+\tableofcontents
+
+\chapter*{前言}
+\markboth{前言}{前言}
+\addcontentsline{toc}{chapter}{前言}
+本书源自我在阿姆斯特丹大学每年两次开设的一门高年级硕士课程。课程面向攻读代数与几何或数学物理方向硕士学位的学生。我希望借此让他们感受到同调镜像对称是什么，以及它如何把数学中许多不同领域联系起来。课程重点在于解释主要概念和结果，并用例子加以说明，而不把讨论推向过于技术化的层面。这样，学生若想更深入、细致地理解这套理论，便能更好地继续研读原始文献。
+
+要讲的主题很多，取舍并不容易。辛几何和代数几何都拥有强大的工具箱，研究者借此能够处理许多不同情形以及不同一般性层次的问题；但这也使两个领域对外行和初学者而言都不容易进入。我的研究背景是箭图表示论，在辛几何和代数几何方面都谈不上专家。因此，我决定从表示论的角度而非几何的角度来展开本书，并主要采用复维数或辛维数为一的例子，也就是曲面上的例子。这种处理并不完美，因为一维视角会遗漏理解高维情形时不可或缺的一些重要特征；但它的主要优点是，这些例子很容易可视化。此外，它们保留了同调镜像对称的若干关键特征，同时从复几何和辛几何的角度避开许多额外困难。最后，这些例子往往属于温和型，因此其表示论已有很充分的认识。其中一些例子——例如仿射直线、射影直线或线性箭图——许多数学家都很熟悉，因而可以作为进入同调镜像对称领域的良好切入点。
+
+本书分为三部分，从不同角度探讨这一主题。
+
+\begin{itemize}
+  \item 第一部分建立 $A_\infty$ 形式体系。我们先简要考察范畴的表示论，再研究复形与同调，并将二者结合起来，发展出 $A_\infty$ 代数与 $A_\infty$ 范畴理论。在本部分最后一章，我们把这些思想应用于若干箭图的表示论，并说明如何从两种不同的几何角度解释所得结果：一种是某些曲面上曲线的交理论，另一种是某些一维代数几何对象上的层。这两种解释让我们初步窥见同调镜像对称。
+  \item 第二部分采用较为经典的路径。我们先用一章从理论物理出发的动机，说明若把量子物理视为表示论，便能看出同调镜像对称的来源。随后，我们分别深入考察 $A$ 模型和 $B$ 模型，并引入描述这些模型的各种 $A_\infty$ 范畴。本部分最后一章讨论复环面上的镜像对称，以及如何借助环面几何和热带几何中的技巧将其推广。
+  \item 第三部分聚焦于曲面。我们先利用温和代数显式构造曲面的 Fukaya 范畴，并考察如何通过把较简单的范畴粘合起来构造这些范畴。这个视角还使我们能够在 $\mathbb{Z}_2$ 分次情形下构造许多不同的镜像。接着，我们借助线场转向 $\mathbb{Z}$ 分次情形。最后两章讨论稳定性与变形理论：这两个概念不仅对研究镜像对称十分重要，也在其他领域有许多应用。
+\end{itemize}
+
+第一部分介绍了其余两部分所需的一些 $A_\infty$ 范畴工具；后两部分则各自独立，可以分别阅读。
+
+要为一个快速演进、迅速扩张的研究领域写书并不容易；跟上所有令人兴奋的新进展几乎是不可能的，更不用说对它们作出简明综述。因此，这些讲义只是我个人对该主题的一种不完整看法。我希望自己有限的理解没有造成严重的遗漏和错误，也希望在讲解材料时没有为了简便而省略过多内容。尽管如此，我仍希望这些讲义能成为有意了解这一主题的数学家的入门指南，并为他们亲自探索同调镜像对称做好准备。
+
+写作期间，自然有许多人给予我支持，我想向他们致谢。首先，我要感谢阿姆斯特丹大学修读我的镜像对称课程的学生；他们提出的问题和意见，对组织材料很有帮助。特别感谢 Edward Berengoltz、Sam van den Brink、Niek Lamoree、Peter Spacek、Okke van Garderen、Ronen Brilleslijper，以及我的博士生 Jasper van de Kreeke。我们在黑板前推敲例子、遇到困难并试着把问题弄清楚时，度过了许多既启发思考又令人困惑的时刻。
+
+我也感谢 Pieter Belmans、Simon Cramer、Casper Loman、Philip Schlösser、Jan Marten Sevenster、Lucas Smits、Leonard Tokic 和 Mick van Vliet；他们对手稿不同版本提出了许多有益建议和意见。
+
+还要感谢 Hessel Posthuma、Sergey Shadrin、Han Peters、Lenny Taelman，以及我在阿姆斯特丹大学的其他同事。咖啡机旁的闲谈和午餐时有趣的讨论，让 Korteweg-de Vries 研究所成为一个令人愉快的工作环境。
+
+感谢 Steffen Opperman 邀请我在 Njordfordeid 开设关于 $A_\infty$ 结构的短期课程；也感谢同一暑期学校的其他讲师 Alice Rizzardo 和 Julian Külschammer，以及参加课程的学生，感谢大家带来的愉快交流和启发。我也怀念与 Yankı Lekili、Travis Schedler、Ed Segal 和 Michael Wong 一起造访伦敦的时光：我们在咖啡馆的餐巾纸上画满了弧系、线场、二聚体模型、扭曲复形等图样。
+
+最后，这份致谢若没有感谢 Ella、Idun 和 Jorun，便是不完整的。写作期间与家人共度的美好时光，让我得以暂时从写作中抽身，实在令人欣慰。
+
+\input{frontmatter_note}
+
+\mainmatter
+\part{\texorpdfstring{$A_\infty$}{A-infinity} 及其更远处}
+\chapter{范畴}\label{ch:categories}
+\input{chapters/ch01}
+\input{chapters/ch02}
+\input{chapters/ch03}
+\input{chapters/ch04}
+
+\part{镜中一瞥}
+\input{chapters/ch05}
+\input{chapters/ch06}
+\input{chapters/ch07}
+\input{chapters/ch08}
+
+\part{曲面上的思考}
+\input{chapters/ch09}
+\input{chapters/ch10}
+\input{chapters/ch11}
+\input{chapters/ch12}
+
+\backmatter
+\chapter*{附录：校订批注}
+\markboth{校订批注}{校订批注}
+\addcontentsline{toc}{chapter}{附录：校订批注}
+\input{appendix_notes.tex}
+
+\chapter*{参考文献}
+\addcontentsline{toc}{chapter}{参考文献}
+\input{references.tex}
+\printindex
+\end{document}

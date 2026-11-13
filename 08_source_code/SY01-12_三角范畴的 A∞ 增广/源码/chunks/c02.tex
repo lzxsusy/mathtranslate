@@ -1,0 +1,179 @@
+% =====================================================================
+%  c02.tex —— §3 从 A∞ 范畴构造三角范畴的方法
+%  （原书 p.46（§3 标题起）–p.48（§4 标题前）；PDF p.5–p.7）
+%  编号公式：(4)(5)(6)（(4) 在 §3 首段末，p.46）
+%  定理类环境：定义 3.1、引理 3.2（含证明）
+%  图表：1 幅（p.47 页首的构造流程，tikz-cd 重画）
+%  注：块边界与 (4) 的归属已由 Lead 裁定为 c02（BRIEF §2 表已更新）。
+% =====================================================================
+
+% ===== 原书 p.46 =====
+\section{\texorpdfstring{从$\ainf$范畴构造三角范畴的方法}{从 A∞ 范畴构造三角范畴的方法}}
+\label{sec:c02}
+
+三角范畴$\mathcal{T}$是指带有自同构$T:\mathcal{T}\to\mathcal{T}$、并带有一个由某组公理
+定义的正合三角结构的加法范畴（参见 [5, 13] 等）。在阿贝尔范畴$C$的复形的同伦范畴$K(C)$
+等典型例子中，正合三角结构由与下述「三角」序列同型的序列定出。这样的序列由$K(C)$的映射
+$u:X\to Y$、映射锥$C(u)$，以及由二者自然定出的映射$v,w$构成：
+\begin{equation}
+  \cdots\to T^{-1}(C(u))\xrightarrow{T^{-1}(w)}X\xrightarrow{u}Y
+  \xrightarrow{v}C(u)\xrightarrow{w}T(X)\xrightarrow{T(u)}\cdots
+  \label{eq:c02-4}
+\end{equation}
+
+这里介绍从$\ainf$范畴$\mathcal{C}$构造三角范畴$\Tr(\mathcal{C})$的方法
+（DG 范畴情形见 Bondal--Kapranov [2]，向$\ainf$范畴情形的推广见 Kontsevich [14]；
+另见 [4]）。对$\ainf$范畴$\mathcal{C}$，先构造$\mathcal{C}$的扩张$\ainf$范畴
+$\Tw(\mathcal{C})$，再取$\Tw(\mathcal{C})$的零次上同调，定义三角范畴$\Tr(\mathcal{C})$。
+这里$\Tr(\mathcal{C})$是指对象相同，即$\Ob(\Tr(\mathcal{C}))=\Ob(\Tw(\mathcal{C}))$；
+且对任意两个对象$\alpha,\beta\in\Ob(\Tw(\mathcal{C}))$，态射空间为
+\[
+  \Tr(\mathcal{C})(\alpha,\beta)
+  :=H^{0}\bigl(\Tw(\mathcal{C})\bigr)(\alpha,\beta).
+\]
+$\Tr(\mathcal{C})$的态射合成，由$\Tw(\mathcal{C})$的二次$\ainf$积$m_{2}^{Tw}$诱导。
+
+% ===== 原书 p.47 =====
+\[
+\begin{tikzcd}
+\{\text{$\ainf$ 范畴}\;\mathcal{C}\} \arrow[r]
+  & \{\text{$\ainf$ 范畴}\;\Tw(\mathcal{C})\} \arrow[d,"H^{0}"'] \\
+{}
+  & \{\text{三角范畴}\;\Tr(\mathcal{C})\}
+\end{tikzcd}
+\]
+
+从$\ainf$范畴$\mathcal{C}$构造$\ainf$范畴$\Tw(\mathcal{C})$，按下述步骤进行。
+
+\begin{enumerate}[label=\arabic*.,leftmargin=2.4em,itemsep=4pt,topsep=4pt]
+\item 首先，由$\mathcal{C}$定义另一个$\ainf$范畴$\tilde{C}$，以$\mathcal{C}$中各对象
+平移次数后的副本及其直和（以及零对象）为对象：
+\[
+  \Ob(\tilde{C})=\Bigl\{\bigoplus_{i=1}^{l}\tilde{X}_{i}
+  \ \Bigm|\ \tilde{X}_{i}=X_{i}[r_{i}],\ X_{i}\in\mathcal{C},\ r_{i}\in\Z\Bigr\}.
+\]
+这里，对每个$X,Y\in\mathcal{C}$，把次数分别减去$n,m$后，态射空间定义为
+\begin{equation}
+  \tilde{C}^{r}(X[n],Y[m]):=C^{r+(m-n)}(X,Y),
+  \label{eq:c02-5}
+\end{equation}
+再自然扩充到直和上。由$\mathcal{C}$的$\ainf$结构$\fm$自然定出的$\tilde{C}$的
+$\ainf$结构，记作$\tilde{m}_{1},\tilde{m}_{2},\dots$。
+
+\transnote{式~\eqref{eq:c02-5}的约定是$X[n]^{i}=X^{i+n}$：把次数减少$n$，就是把$X$的
+$i+n$次部分放到$X[n]$的第$i$次。于是$X[n]\to Y[m]$的$r$次映射，就是$X\to Y$的
+$r+(m-n)$次映射。$(m-n)$的符号极易弄反。}
+
+\item $\mathcal{C}$的单侧扭复形（one-sided twisted complex）$(\mathcal{X},\Phi)$，
+是指由$\mathcal{X}=\tilde{X}_{1}\oplus\cdots\oplus\tilde{X}_{l}\in\tilde{C}$与
+\begin{equation}
+  \Phi=\{\phi_{ij}\}_{ij,=1,\dots,l},\qquad
+  \phi_{ij}=0\quad(i\ge j),\qquad
+  \phi_{ij}\in(s\tilde{C})^{0}(\tilde{X}_{i},\tilde{X}_{j})
+  \label{eq:c02-6}
+\end{equation}
+组成的对，且满足下述$\ainf$ Maurer--Cartan 方程：
+\[
+  0=\tilde{m}_{*}(\Phi):=\tilde{m}_{1}(\Phi)+\tilde{m}_{2}(\Phi,\Phi)
+  +\tilde{m}_{3}(\Phi,\Phi,\Phi)+\cdots.
+\]
+
+\transnote{式~\eqref{eq:c02-6}的下标原文印作$ij,=1,\dots,l$，即$ij$与$=$之间多一个
+逗号，通常应写作$i,j=1,\dots,l$；此处照原样保留。另，式~\eqref{eq:c02-6}的分量用
+$\phi$，$m_{n}^{Tw}$的变元用$\varphi$，原文两种字形混用，指同一族分量。}
+
+\item $\ainf$范畴$\Tw(\mathcal{C})$，定义为$\mathcal{C}$中单侧扭复形构成的范畴。
+这里，态射空间与$\tilde{C}$的相同：
+\[
+  \Tw(\mathcal{C})\bigl((\mathcal{X},\Phi),(\mathcal{X}',\Phi')\bigr)
+  :=\tilde{C}(\mathcal{X},\mathcal{X}'),
+\]
+$\ainf$结构$m_{n}^{Tw}$（$n=1,2,\dots$）由
+\[
+\begin{aligned}
+  m_{n}^{Tw}(\varphi_{12},\dots,\varphi_{n(n+1)}) &:=
+  \sum_{k_{1},\dots,k_{n+1}\in\Z_{\ge 0}}
+  \tilde{m}_{n+k_{1}+\cdots+k_{n+1}}\\
+  &\qquad\bigl((\Phi_{1})^{k_{1}},\varphi_{12},(\Phi_{2})^{k_{2}},\dots,
+  (\Phi_{n})^{k_{n}},\varphi_{n(n+1)},(\Phi_{n+1})^{k_{n+1}}\bigr)
+\end{aligned}
+\]
+给出。这里$\alpha_{i}:=(\mathcal{X}_{i},\Phi_{i})\in\Tw(\mathcal{C})$，
+$\varphi_{i(i+1)}\in(s\Tw(\mathcal{C}))(\alpha_{i},\alpha_{i+1})$。
+\end{enumerate}
+
+这样得到的$\ainf$范畴$\Tw(\mathcal{C})$的零次上同调成为三角范畴：
+\[
+  \Tr(\mathcal{C}):=H^{0}\bigl(\Tw(\mathcal{C})\bigr).
+\]
+
+其中三角结构如下定义。首先，对$\Tw(\mathcal{C})$中的态射
+$\Psi\in(s\Tw(\mathcal{C}))^{0}\bigl((\mathcal{Z},\Phi_{Z}),
+(\mathcal{X},\Phi_{\mathcal{X}})\bigr)$，由
+\[
+  \mathcal{Y}:=\mathcal{Z}\oplus\mathcal{X},\qquad
+  \Phi_{\mathcal{Y}}:=
+  \begin{pmatrix}
+    \Phi_{Z} & \Psi\\
+    0 & \Phi_{\mathcal{X}}
+  \end{pmatrix}
+\]
+给出的$(\mathcal{Y},\Phi_{\mathcal{Y}})$是单侧扭复形。事实上，它成为单侧扭复形的
+条件与$m_{1}^{Tw}(\Psi)=0$等价。由此，$\ainf$范畴$s\Tw(\mathcal{C})$中由次数$-1$的
+态射构成的序列
+\[
+  \cdots\to(\mathcal{Z},\Phi_{Z})[-1]\xrightarrow{w[-1]}
+  (\mathcal{X},\Phi_{\mathcal{X}})\xrightarrow{u}
+  (\mathcal{Y},\Phi_{\mathcal{Y}})\xrightarrow{v}
+  (\mathcal{Z},\Phi_{Z})\xrightarrow{w}\cdots
+\]
+如下定义：$w[-1]$是由$\Psi\in(s\Tw(\mathcal{C}))^{0}\bigl((\mathcal{Z},\Phi_{Z}),
+(\mathcal{X},\Phi_{\mathcal{X}})\bigr)$定出的态射，$u$、$v$分别由恒等态射
+$\id_{\mathcal{X}}$、$\id_{\mathcal{Z}}$自然定义。若把与由这类序列诱导出的
+$\Tr(\mathcal{C})$中序列（由次数零的态射构成）同型的序列，定为$\Tr(\mathcal{C})$的
+正合三角序列，则（与阿贝尔范畴中复形的同伦范畴等情形同样）可知它们定义三角结构。
+
+\transnote{序列中的$u$、$v$不是恒等态射本身，而是它们的平移。整个序列写在
+$s\Tw(\mathcal{C})$中，取的次数为$-1$；而$s\Tw(\mathcal{C})$的次数$-1$部分正是
+$\Tw(\mathcal{C})$的次数$0$部分。$w[-1]$同理，由$\Psi$平移一次得到。}
+
+% ===== 原书 p.48 =====
+\begin{definition}\label{def:c02-3.1}
+对三角范畴$\mathcal{T}$，若存在$\ainf$范畴$\mathcal{C}$使三角范畴等价
+$\mathcal{T}\simeq\Tr(\mathcal{C})$成立，则把$\ainf$范畴$\Tw(\mathcal{C})$称为
+$\mathcal{T}$的$\ainf$增广。
+\end{definition}
+
+由构造，$\mathcal{C}$是$\Tw(\mathcal{C})$的全子范畴。对三角范畴$\mathcal{T}$，
+若有$\ainf$范畴$\mathcal{C}$使$\mathcal{T}\simeq\Tr(\mathcal{C})$，则可把
+$\mathcal{C}$视为$\mathcal{T}$的生成子（generator）。
+
+\transnote{这里省去了一步等同：$\mathcal{C}$的对象$X$要看作只含一项
+$\tilde{X}=X[0]$、$\Phi$取空矩阵的单侧扭复形。把$\mathcal{C}$的态射与这类复形之间
+的次数零态射对应起来，$\mathcal{C}$才是$\Tw(\mathcal{C})$的全子范畴。}
+
+由这一构造，下列结论较易证明。
+
+\begin{lemma}[{[20, Lemma 3.25]}]\label{lem:c02-3.2}
+若$\ainf$范畴$\mathcal{C}$、$\mathcal{C}'$是$\ainf$等价的，则存在$\ainf$等价
+$\Tw(\mathcal{C})\simeq\Tw(\mathcal{C}')$。也就是说，存在三角范畴等价
+$\Tr(\mathcal{C})\simeq\Tr(\mathcal{C}')$。
+\end{lemma}
+
+\begin{proof}
+由于$H(\Tw(\mathcal{C}))^{i}(X,Y)\simeq H(\Tw(\mathcal{C}))^{0}(X,T^{i}Y)$等成立，
+$H(\Tw(\mathcal{C}))$的全体由$\Tr(\mathcal{C})=H^{0}(\Tw(\mathcal{C}))$这一零次部分
+决定。于是由$\ainf$等价的定义，若$\Tw(\mathcal{C})\simeq\Tw(\mathcal{C}')$，则存在范畴
+等价$H(\Tw(\mathcal{C}))\simeq H(\Tw(\mathcal{C}'))$；这等价于存在范畴等价
+$\Tr(\mathcal{C})\simeq\Tr(\mathcal{C}')$。这个范畴等价保持三角结构，这一点可直接
+验证。
+\end{proof}
+
+要证明引理 3.2 中「$\mathcal{C}\sim\mathcal{C}'$则
+$\Tw(\mathcal{C})\simeq\Tw(\mathcal{C}')$」这一部分，把它分成
+\begin{enumerate}[label=(\roman*),leftmargin=3em,itemsep=1pt,topsep=2pt]
+\item $\mathcal{C}$与$\mathcal{C}'$是$\ainf$拟同构的情形，
+\item $\mathcal{C}$、$\mathcal{C}'$都是极小$\ainf$范畴的情形
+\end{enumerate}
+来证明，是一条清晰的路线。若 (i) 成立，则由极小模型定理，引理 3.2 归约到（更简单的）
+(ii)。(i) 的证明例如见 [12, Theorem 4.1]。

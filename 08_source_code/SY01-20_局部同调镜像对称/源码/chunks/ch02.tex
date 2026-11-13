@@ -1,0 +1,227 @@
+% ch02 译文：原文 §2 定理的证明（main.tex 第 365--515 行）
+\section{定理的证明\label{sec:proof-of-theorems}}
+
+本节给出引言中各条结论的证明，技术细节留待后面的各节。
+
+\subsection{预备与蓝图}
+
+全文在 $A$ 模型一侧把所有辛流形 $X$ 都视作 \emph{Liouville 扇形}，其定义见定义 \ref{defn:Liouville-sector-inf}。对有限型的 Liouville 扇形，其包裹 Fukaya 范畴已在 \cite{GPS20} 中定义，并具有 \cite{GPS24S} 所解释的许多良好函子性质。
+
+给定 Liouville 扇形 $X$ 的精确辛同胚 $\phi\colon X\to X$，可以定义\emph{映射柱}
+\[
+    M (X,\phi )\coloneqq X\times_{\phi}\mathbb{C}^{\ast}\coloneqq\frac{T^{\ast}\mathbb{R}\times X}{(z,x)\sim (z+1,\phi (x))}
+\]
+% [原文 p.10]
+它可以看作乘积空间 $X\times\mathbb{C}$ 在 $\mathbb{Z}$-作用下的商，该作用在 $X$ 上按 $\phi$ 作用、在 $\mathbb{C}$ 上按平移 $1$ 作用。
+
+\begin{yizhu}[Kartal 的修改在改什么]
+公式里写的是 $T^{\ast}\mathbb{R}\times X$，正文却说乘积 $X\times\mathbb{C}$：因为 $T^{\ast}\mathbb{R}\cong\mathbb{R}^2\cong\mathbb{C}$，坐标 $z$ 就是复坐标，两者是同一空间。光滑层面取商没有问题，但乘积 Weinstein 结构一般并不 $\mathbb{Z}$-不变，直接取商会丢掉 Liouville 形式、破坏凸性；Kartal 的修改正是把辛结构调整成 $\mathbb{Z}$-不变而仍为 Weinstein，命题 \ref{prp:Fukaya-cat-mapping-cylinder} 中「在范畴层面取商」的写法才说得通。
+\end{yizhu}
+
+其 Weinstein 结构按定义 \ref{defn:G-invariant-Weinstein-sector} 由 $X\times\mathbb{C}$ 诱导；更具体地说，是借助 Kartal \cite{Kartal21} 的想法对乘积 Weinstein 结构作一次修改而得到，该修改在命题 \ref{prp:Kartal-modification-Weinstein} 中完成。带停止位的 $T^{\ast}\mathbb{R}$ 的包裹 Fukaya 范畴（停止位取 $e^z+e^{-z}$ 在无穷远处的原像）已在例 \ref{exmp:mirror-to-Coh-G-P1} 中算出，于是有
+
+\begin{prp}\label{prp:Fukaya-cat-mapping-cylinder}
+    $\mathcal{W} (M(X,\phi),z+1/z)\simeq\left(\mathcal{W} (T^{\ast}\mathbb{R}, e^z+e^{-z})\otimes\mathcal{W} (X)\right)/\mathbb{Z}$.
+\end{prp}
+\begin{proof}
+    由 Künneth 公式 \ref{crl:Kunneth-Fukaya-infinite} 并结合 \cite{Ornaghi25} 中 $A_{\infty}$-范畴张量积的定义，我们得到 $A_{\infty}$-范畴的拟等价 \[
+        \mathcal{W} (T^{\ast}\mathbb{R},e^z+e^{-z})\otimes\mathcal{W} (X)\hookrightarrow\mathcal{W} (T^{\ast}\mathbb{R}\times X, e^z+e^{-z}).
+    \]由定理 \ref{thm:wrapped-Fukaya-quotient}，由于我们已把 $T^{\ast}\mathbb{R}\times X$ 上的 Weinstein 结构改成 $\mathbb{Z}$-不变的，便知 \[
+        \mathcal{W} (M(X,\phi),z+z^{-1})=\mathcal{W}\left((T^{\ast}\mathbb{R}\times X,e^z+e^{-z})/\mathbb{Z}\right)\simeq\mathcal{W} (T^{\ast}\mathbb{R}\times X,e^z+e^{-z})/\mathbb{Z}
+    \]命题得证。
+\end{proof}
+
+在镜像一侧，我们从代数簇 $Y$ 以及特征类 $\xi\in CH^2 (Y)$ 的选取出发，后者定义 $Y$ 上的全纯线丛 $L_{\xi, Y}$。去掉零截面 $Y\hookrightarrow L_{\xi, Y}$ 所得的子丛 $L_{\xi,Y}^{\times}$ 因而是 $Y$ 上的主 $\mathbb{G}_m$-丛，从而带有自由的代数 $\mathbb{G}_m$-作用。于是有
+
+\begin{thm}\label{thm:twisted-tensor-P1-bundle}
+    设 $Y$ 光滑且拟射影，则存在 dg 范畴的拟等价\footnote{此处的 $\Perf$ 定义与通常定义不同，见定义 \ref{dfn:dg-enhancement-Coh}。}
+\[
+\Perf_{\mathbb{G}_m}(\mathbb{P}^1)_{\dg}
+\underset{((1),\mathcal{L}(\xi)\otimes-)}{\otimes}
+\Perf(Y)_{\dg}
+\rightarrow
+\Perf(P(Y,\xi))_{\dg}.
+\]
+\end{thm}
+
+\begin{conceptbox}{扭 Künneth 公式}
+普通的 Künneth 公式把两个空间的同调的张量积与乘积空间的同调联系起来；在范畴层面，它呈现为 $\Perf (X)\otimes\Perf (Y)\simeq\Perf (X\times Y)$ 型的等价。扭 Künneth 公式处理的是「张量积带一个由线丛或群作用给出的扭」的情形：此时普通张量积要换成带扭的版本，常见的做法是只取某个权重、某个特征的部分。本文两次用到它：定理 \ref{thm:twisted-tensor-P1-bundle} 中的扭由线丛 $\mathcal{L} (\xi)$ 给出，§6 中则用它把 $\mathbb{G}_m$-等变层与 Fukaya 范畴的 Künneth 对接起来。忽略扭、按普通张量积理解，得到的函子会漏掉权重指标，半正交分解也拼不起来。
+\par\smallskip\noindent{\footnotesize 参考：nLab, Künneth theorem（ncatlab.org/nlab/show/Künneth+theorem）；本文 §2a、§6c。}
+\end{conceptbox}
+
+\begin{yizhu}[脚注里的 $\Perf$ 不是平常的 $\Perf$]
+定理 \ref{thm:twisted-tensor-P1-bundle} 中的 $\Perf_{\mathbb{G}_m}(\mathbb{P}^1)_{\dg}$ 并非通常的 $\Perf(\mathbb{P}^1)$：下标表示取 $\mathbb{G}_m$-等变的完美模，其定义见定义 \ref{dfn:dg-enhancement-Coh}。这个差别至关重要——只有等变版本才与 $\Perf\mathcal{W}(T^{\ast}\mathbb{R},e^z+e^{-z})$ 拟等价；若按非等变版本理解，下面的扭 Künneth 公式与 $\mathbb{Z}$-轨道范畴都接不上。
+\end{yizhu}
+
+\begin{proof}
+    注意 \[
+        Y=\left[\frac{L(Y,\xi)^{\times}}{\mathbb{G}_m}\right],
+    \]因此有拟等价 $\Perf (Y)_{dg}\simeq\Perf_{\mathbb{G}_m} (L(Y,\xi)^{\times})_{dg}$。注意 $\Perf_{\mathbb{G}_m} (\mathbb{P}^1)_{dg}\otimes\Perf_{\mathbb{G}_m} (L(Y,\xi)^{\times})_{dg}$ 上的作用 $((1),\mathcal{L} (\xi)\otimes -)$ 是对角的，由扭 K\"unneth 公式得到拟嵌入 \[
+        \Perf_{\mathbb{G}_m} (\mathbb{P}^1)\otimes_{\mathbb{Z}=\widehat{\mathbb{G}}_m}\Perf_{\mathbb{G}_m} (L(Y,\xi)^{\times})_{dg}\hookrightarrow\Perf_{\mathbb{G}_m} (\mathbb{P}^1\times L(Y,\xi)^{\times} )_{dg}\cong\Perf (P(Y,\xi))_{dg},
+    \]于是只需证明该拟嵌入本质满射。Orlov \cite{Orlov92} 的工作表明，在此情形存在三角范畴的半正交分解 \[
+    D\Perf (P(Y,\xi))_{dg}\simeq\langle D\Perf(Y)_{-1}, D\Perf(Y)_0\rangle,
+% [原文 p.11]
+    \]它表明形如 $\pi^{\ast}\mathcal{F}$ 与 $\pi^{\ast}\mathcal{F}\otimes\mathcal{O}_{P(Y,\xi)} (1)$ 的对象生成 $\Perf(P(Y,\xi))_{dg}$，其中 $\mathcal{O}_{P(Y,\xi)} (1)$ 是限制到每根纤维为 $\mathcal{O}_{\mathbb{P}^1} (1)$ 的可逆层，$\mathcal{F}\in\Perf (Y)$。注意这些对象是$\Perf_{\mathbb{G}_m} (\mathbb{P}^1)_{dg}\widetilde{\otimes}\Perf (Y)_{dg}$ 中对象 $\mathcal{O}_{\mathbb{P}^1} (i)\widetilde{\otimes}\mathcal{F}$ 的像，因此该拟嵌入的像生成目标 dg 范畴。
+\end{proof}
+
+由 \cite{FLTZ12} 与例 \ref{exmp:mirror-to-Coh-G-P1} 显然有 $\Perf_{\mathbb{G}_m} (\mathbb{P}^1)_{dg}\simeq\Perf\mathcal{W} (T^{\ast}\mathbb{R},e^z+e^{-z})$，至此材料已经备齐，可以完成证明。
+
+\begin{proof}[定理 \ref{thm:HMS-projective-bundle} 的证明]
+    由假设 $\Perf\mathcal{W} (X)^{op}\simeq\Coh (Y)_{dg}=\Perf (Y)_{dg}$，又由前述讨论 $\Perf\mathcal{W} (T^{\ast}\mathbb{R},e^z+e^{-z})^{op}\simeq\Perf_{\mathbb{G}_m} (\mathbb{P}^1)_{dg}$，故它们的张量积之间有拟等价 \[
+        \Perf\mathcal{W} (T^{\ast}\mathbb{R},e^z+e^{-z})^{op}\otimes\Perf\mathcal{W} (X)^{op}\simeq\Perf_{\mathbb{G}_m} (\mathbb{P}^1)_{dg}\otimes\Perf (Y)_{dg}.
+    \]在 $A$ 模型一侧，乘积空间上的 $\mathbb{Z}$-作用由 $T^{\ast}\mathbb{R}$ 上的平移 $1$ 与 $\mathcal{W} (X)$ 上的辛同胚 $\phi$ 给出，它与 $B$ 侧来自 $\mathbb{G}_m$-作用的范畴 $\mathbb{Z}$-作用相合。于是取 $\mathbb{Z}$-轨道范畴，再结合命题 \ref{prp:Fukaya-cat-mapping-cylinder} 与定理 \ref{thm:twisted-tensor-P1-bundle}，即完成证明。
+\end{proof}
+
+\begin{conceptbox}{映射柱与停止位}
+映射柱 $M(X,\phi)$ 是把 $T^{\ast}\mathbb{R}\times X$ 沿 $\mathbb{Z}$-作用 $(z,x)\sim(z+1,\phi (x))$ 取商得到的空间，它把自同胚 $\phi$ 的「单值性」实现成一个空间：沿 $z$ 方向绕一圈，纤维上的点就按 $\phi$ 搬一次。最简单的例子是 $\phi$ 取 $T^{\ast}\mathbb{S}^1=T^{\ast}\mathbb{R}/\mathbb{Z}$ 上的平移，此时映射柱退化为映射环面，$\phi$ 即 Dehn 扭转；本文推论 \ref{crl:mirror-to-Hirzebruch} 正是把这个例子与 $\Coh (\mathbb{F}_n)$ 对上。要谈包裹 Fukaya 范畴，还得在扇形边界上指定停止位：Reeb 流只允许在停止位处终结，于是「哪些无穷远处的 Reeb 轨道被算进来」就成了可设计的参数，$\mathcal{W}$ 也因此依赖停止位。本文的映射柱把停止位取成 $e^z+e^{-z}$ 在无穷远处的原像。
+\par\smallskip\noindent{\footnotesize 参考：Kartal, arXiv:2204.04928；Sylvan, arXiv:1601.05080；本文 §2a、§2d。}
+\end{conceptbox}
+
+\begin{proof}[推论 \ref{crl:mirror-symmetry-line-principal-bundles} 的证明]
+    只需证明包含函子 $i_0\colon\Coh (Y)\to\Coh (P(Y,\xi))$ 与 Orlov 函子 $\cup_0\colon\mathcal{W} (X)\to\mathcal{W} (M(X,\phi),z+z^{-1})$ 互为镜像。注意由构造，$i_0$ 可分解为 \[
+        \Perf (Y)_{dg}\xrightarrow{i_0}\Perf (Y)_{dg}\otimes\Perf_{\mathbb{G}_m}(\mathbb{P}^1)_{dg}\to\Perf (P(Y,\xi))_{dg},
+    \]类似地 $\cup_0$ 可分解为 \[
+        \Perf\mathcal{W} (X)^{op}\xrightarrow{\cup_0}\Perf\mathcal{W} (X\times (T^{\ast}\mathbb{R},e^z+e^{-z}))^{op}\to\Perf\mathcal{W} (M(X,\phi),z+z^{-1})^{op},
+    \]其中第二个映射都是对 $\mathbb{Z}$-作用取商，而我们已经知道二者互为镜像。在 $B$ 侧，函子 $i_0$ 把任意 $\mathcal{F}\in\Coh (Y)$ 送到层 $\mathcal{F}\otimes\mathcal{O}_0 [0]$；在 $A$ 侧，$\cup_0$ 把 $L\in\mathcal{W} (X)$ 送到 $L\otimes D[0]$，其中 $D[0]\in\Perf\mathcal{W} (T^{\ast}\mathbb{R},e^z+e^{-z})^{op}\simeq\Perf_{\mathbb{G}_m} (\mathbb{P}^1)_{dg}$ 是以标号为 $0$ 的停止位为边界的链接圆盘，在相差一个平移的意义下等同于 $\mathcal{O}_0 [0]$。因此 $i_0$ 与 $\cup_0$ 互为镜像，再取局部化即完成证明。主丛情形的证明基本相同，只需把 $0$ 换成 $\infty$。
+\end{proof}
+
+\begin{yizhu}[{链接圆盘 ${D[0]}$ 与 $0/\infty$ 的不对称}]
+$D[0]$ 是一块以标号 $0$ 的停止位为边界的链接圆盘，它在 $\Perf\mathcal{W}(T^{\ast}\mathbb{R},e^z+e^{-z})^{op}$ 中对应 $\mathbb{P}^1$ 在零截面处的结构层 $\mathcal{O}_0$（差一个平移）。这里的 $op$ 不是装饰：取 $op$ 之后，「圆盘对应点」才成为函子层面的对应，$\cup_0$ 的方向也才与 $i_0$ 一致。主丛情形把 $0$ 换成 $\infty$、把 $\mathcal{O}_0$ 换成 $\mathcal{O}_\infty$ 即可，但两条推论的停止位选择不能混用，否则拿到的是另一对函子。
+\end{yizhu}
+
+\subsection{扇形下降与真下降}
+
+接下来处理推论 \ref{crl:gluing-mirror-symmetry} 与推论 \ref{crl:gluing-mirror-symmetry-circ} 的证明。尽管陈述相当一般，我们只需理解 $k=2$ 的情形；而这可由例 \ref{exmp:wrapped-Fukaya-cat-twice-punctured-equivariant} 的讨论得到。
+
+给定 $B$ 模型数据 $(Y,\xi_1,\xi_2)$，我们把两个射影丛沿 $0$ 处截面与 $\infty$ 处截面粘起来，构造空间
+\[
+    \mathcal{Y} (\xi_1,\xi_2)=P(Y,\xi_1)\cup_Y P(Y,\xi_2)
+\]
+注意 $\mathcal{Y} (\xi_1,\xi_2)$ 上有 $\mathbb{G}_m^2$-作用：它由每个 $P(Y,\xi_i)$ 上的 $\mathbb{G}_m$-作用给出，而这些作用在另一个分支上平凡地延拓。由真前推图表
+\[
+    \begin{tikzcd}
+        Y\arrow[r,"i_0"]\arrow[d,"i_{\infty}"]&P(Y,\xi_2)\arrow[d]\\ 
+        P(Y,\xi_1)\arrow[r]&\mathcal{Y} (\xi_1,\xi_2)
+    \end{tikzcd}
+\]
+直接得到商叠的真前推图表\footnote{这直接由商叠的定义与赋值判据得到，参见例如 \cite{Alper26}。} \[
+    \begin{tikzcd}
+        {[Y/\mathbb{G}_m^2]}\arrow[r,"i_0"]\arrow[d,"i_{\infty}"]&{\big[P(Y,\xi_2)/\mathbb{G}_m^2\big]}\arrow[d]\\ 
+        \big[P(Y,\xi_1)/\mathbb{G}_m^2\big]\arrow[r]&\big[\mathcal{Y}(\xi_1,\xi_2)/\mathbb{G}_m^2\big]
+    \end{tikzcd}
+\]
+% [原文 p.12]
+对闭浸入的前推图表，拟凝聚层的前推公式（它由 Gaitsgory--Rozenblyum \cite[Theorem A.1.2]{GR17II} 连同拟凝聚层的下降性质得到）给出同伦前推图表 \[
+    \begin{tikzcd}
+        {\IndCoh [Y/\mathbb{G}_m^2]_{\infty}}\arrow[r,"i_0"]\arrow[d,"i_{\infty}"]&{\IndCoh\big[P(Y,\xi_2)/\mathbb{G}_m^2\big]_{\infty}}\arrow[d]\\ 
+        \IndCoh\big[P(Y,\xi_1)/\mathbb{G}_m^2\big]_{\infty}\arrow[r]&\IndCoh\big[\mathcal{Y}(\xi_1,\xi_2)/\mathbb{G}_m^2\big]_{\infty}
+    \end{tikzcd}
+\]又因为闭浸入把凝聚层前推为凝聚层，凝聚层的同一图表也是同伦前推图表。利用 \cite{Cohn16} 证明的 $dg$-范畴与 $\infty$-范畴之间的拟等价，我们有
+
+\begin{prp}\label{prp:pushforward-coherent-stack}
+    存在 $A_{\infty}$-范畴的拟等价 \[
+        \Coh_{\mathbb{G}_m^2}\mathcal{Y} (\xi_1,\xi_2)_{dg}\simeq\hocolim\left(\Perf_{\mathbb{G}_m^2} (P(Y,\xi_1))_{dg}\leftarrow\Perf_{\mathbb{G}_m^2} (Y)_{dg}\rightarrow\Perf_{\mathbb{G}_m^2} (P(Y,\xi_2))_{dg}\right).
+    \]
+\end{prp}
+
+现在转向镜像一侧。由于额外的 $\mathbb{G}_m$-作用在 $Y$ 上也是平凡的，我们有 $[P(Y,\xi_i)/\mathbb{G}_m^2]=[\mathbb{P}^1/\mathbb{G}_m]\times Y\times [\mathrm{pt}/\mathbb{G}_m]$。由于 $\Perf_{\mathbb{G}_m} (\mathbb{P}^1)_{dg}\simeq\Perf\mathcal{W} (T^{\ast}\mathbb{R},e^z+e^{-z})$，只需理解 $[\mathrm{pt}/\mathbb{G}_m]$ 的同调镜像对称。
+
+\begin{yizhu}[两个 $\mathbb{G}_m$ 各管一个方向]
+$\mathcal{Y}(\xi_1,\xi_2)$ 上的 $\mathbb{G}_m^2$ 中，一个 $\mathbb{G}_m$ 作用在 $\mathbb{P}^1$ 纤维方向（它来自射影丛的等变结构），另一个沿 $L(Y,\xi_i)^{\times}\to Y$ 的主丛方向作用（把 $Y$ 展成 $L^{\times}/\mathbb{G}_m$ 的那个作用）。两者交换，故有分解 $[P(Y,\xi_i)/\mathbb{G}_m^2]=[\mathbb{P}^1/\mathbb{G}_m]\times Y\times[\mathrm{pt}/\mathbb{G}_m]$。把哪个因子当作「纤维方向」、哪个当作「底」，决定了下一步该对谁用层—Floer 对应，这是 §2b 全部计算的账本。
+\end{yizhu}
+
+\begin{lmm}
+    存在 $A_{\infty}$-范畴的拟等价 \[
+        \Perf\mathcal{W}\left(\bigsqcup_{i\in\mathbb{Z}}T^{\ast}[0,1]\right)^{op}\simeq\Perf_{\mathbb{G}_m} (\mathrm{pt})_{dg}.
+    \]
+\end{lmm}
+\begin{proof}
+    注意左端是同伦余积 \[
+       \Perf \mathcal{W}\left(\bigsqcup_{i\in\mathbb{Z}}T^{\ast} [0,1]\right)^{op}\simeq\coprod_{i\in\mathbb{Z}}\Perf\mathcal{W} (T^{\ast} [0,1])^{op}\simeq \coprod_{i\in\mathbb{Z}}\Perf (\mathrm{pt})_{dg}\simeq\coprod_{i\in\mathbb{Z}}\Perf\field\text{-}\Mod_{dg},
+    \]另一方面，由 \cite[Proposition 4.9]{TV18} 知 $\mathbb{G}_m$-等变拟凝聚范畴 $\QCoh_{\mathbb{G}_m} (\mathrm{pt})_{dg}\simeq\Rep_{\Bbbk} (\mathbb{G}_m)_{dg}$ 等价于 $\mathbb{G}_m$ 的表示范畴；又因线性 $\mathbb{G}_m$-表示无非是 $\mathbb{Z}$-分次，$\Rep_{\Bbbk} (\mathbb{G}_m)_{dg}$ 等价于带一个额外 $\mathbb{Z}$-分次的 $\field$-向量空间复形范畴。取紧对象，并利用 $\Perf_{\mathbb{G}_m} (\mathrm{pt})_{dg}$ 是 $\QCoh_{\mathbb{G}_m} (\mathrm{pt})_{dg}$ 的紧子范畴 \cite{BZFN10} 这一事实，便知 \[
+        \Perf_{\mathbb{G}_m} (\mathrm{pt})_{\infty}\simeq\left(\Rep_{\Bbbk} (\mathbb{G}_m)_{\infty}\right)^{\omega}\simeq\coprod_{i\in\mathbb{Z}}\Perf\Bbbk\text{-}\Mod_{\infty}
+    \]最后用 \cite{Cohn16} 中 $dg$-范畴与 $\Bbbk$-线性稳定 $\infty$-范畴的等价完成证明。
+\end{proof}
+
+% [原文 p.13]
+由该引理与前述讨论，得到 $A_{\infty}$-范畴的拟等价 \begin{align}\label{eq:equivariant-mirror-Gm2}
+    \begin{split}
+    \Perf\mathcal{W}\left(\bigsqcup_{i\in\mathbb{Z}} (T^{\ast}\mathbb{R},e^z+e^{-z})\right)^{op}&\simeq\Perf\mathcal{W} (T^{\ast}\mathbb{R},e^z+e^{-z})^{op}\otimes\Perf_{\mathbb{G}_m} (\mathrm{pt})\\ 
+    &\simeq\Perf_{\mathbb{G}_m} (\mathbb{P}^1)\otimes\Perf_{\mathbb{G}_m} (\mathrm{pt})\simeq\Perf_{\mathbb{G}_m^2} (\mathbb{P}^1).
+    \end{split}
+\end{align}
+\begin{proof}[推论 \ref{crl:gluing-mirror-symmetry} 的证明]
+    如前所述，只需对选定的镜像数据 $(X,\phi_1,\phi_2)$ 与 $(Y,\xi_1,\xi_2)$ 验证 \[
+        \Perf\mathcal{W}\left(\mathcal{X} (\phi_1,\phi_2)\right)^{op}\simeq\Coh\left(\mathcal{Y}(\xi_1,\xi_2)\right)
+    \]等价 \eqref{eq:equivariant-mirror-Gm2} 连同对镜像函子的分析，给出下述两个图表之间的拟等价 \[
+\begin{aligned}
+&\Perf\left(
+\begin{tikzcd}
+\mathcal{W}\left(\bigsqcup_{\mathbb{Z}^2}T^{\ast}[0,1]\right)
+  \arrow[r]\arrow[d]
+&
+\mathcal{W}\left(\bigsqcup_{\mathbb{Z}}(\mathbb{C},e^{z_1}+e^{-z_1})\right)
+\\
+\mathcal{W}\left(\bigsqcup_{\mathbb{Z}}(\mathbb{C},e^{z_2}+e^{-z_2})\right)
+&
+\end{tikzcd}
+\right)^{op}
+\\[1em]
+&\simeq
+\left(
+\begin{tikzcd}
+\Coh[\mathrm{pt}/\mathbb{G}_m^2]_{dg}\arrow[r]\arrow[d]
+&
+\Coh[\mathbb{P}^1/\mathbb{G}_m^2]_{dg}
+\\
+\Coh[\mathbb{P}^1/\mathbb{G}_m^2]_{dg}
+&
+\end{tikzcd}
+\right).
+\end{aligned}
+\]因此 $\Perf\mathcal{W} (\mathcal{X})^{op}\simeq\Coh_{\mathbb{G}_m^2} (\mathbb{P}^1\cup_{0\sim\infty}\mathbb{P}^1)$，再张量上 $\Perf\mathcal{W} (X)^{op}\simeq\Coh (Y)_{dg}$ 并对典范 $\mathbb{Z}^2$-作用取商，即得所需的范畴等价。
+\end{proof}
+\begin{proof}[推论 \ref{crl:gluing-mirror-symmetry-circ} 的证明]
+    与推论 \ref{crl:gluing-mirror-symmetry} 的证明完全平行。
+\end{proof}
+
+\subsection{环面丛}
+
+注意，由等变凝聚—可构造对应 \cite{FLTZ11}，有 dg 范畴的拟等价 \[
+    \Sh_{\widetilde{\Lambda}_{\Sigma}} (\mathbb{R}^n)^{cc}\simeq\Coh_{\mathbb{G}_m^n} (X_{\Sigma})
+\]只要 $X_{\Sigma}$ 是光滑环簇。这里 $\Sh_{\widetilde{\Lambda}_{\Sigma}} (\mathbb{R}^n)^{cc}$ 是紧支集可构造层复形的 dg 范畴，而由 \cite[Lemma 4.18]{GPS24M} 有 \[
+    \Sh_{\widetilde{\Lambda}_{\Sigma}} (\mathbb{R}^n)^{cc}\simeq\Sh_{\widetilde{\Lambda}_{\Sigma}} (\mathbb{R}^n)^{\omega},
+\]由层—Floer 对应 \ref{prp:inf-type-sheaf-Floer-Rn} 知它拟等价于包裹 Fukaya 范畴 $\Perf\mathcal{W} (T^{\ast}\mathbb{R}^n,\widetilde{\Lambda}_{\Sigma})^{op}$。于是只要 $X_{\Sigma}$ 光滑（等价地，$\Sigma$ 是整凸多面体），就有 $A_{\infty}$-范畴的拟等价 \[
+    \Perf\mathcal{W} (T^{\ast}\mathbb{R}^n,\widetilde{\Lambda}_{\Sigma})^{op}\simeq\Coh_{\mathbb{G}_m^n} (X_{\Sigma})
+\]
+\begin{proof}[推论 \ref{crl:toric-bundle-HMS} 的证明]
+    在 $A$ 侧有 \[
+        \mathcal{W}\left[\mathcal{X}_{\Sigma} (X;\phi_1,\dotsb ,\phi_k)\right]\simeq\mathcal{W} (T^{\ast}\mathbb{R}^k,\widetilde{\Lambda}_{\Sigma})\otimes_{\mathbb{Z}^k}\mathcal{W} (X),
+    \]而在 $B$ 侧可以写 $\mathcal{Y}_{\Sigma} (Y;\xi_1,\dotsb ,\xi_k)=\left(X_{\Sigma}\times \prod_{i=1}^k L(Y,\xi_i)^{\times}\right)/\mathbb{G}_m^k$，于是 \[
+        \Coh\left[\mathcal{Y} (Y;\xi_1,\dotsb ,\xi_k)\right]\simeq\left[\Coh_{\mathbb{G}_m^k} (X_{\Sigma})\otimes\Coh_{\mathbb{G}_m^k} \left(\prod_{i=1}^kL(Y,\xi_i)^{\times}\right)\right]\Big/\mathbb{G}_m^k.
+    \]
+% [原文 p.14]
+把这两个等价配对起来，即完成证明。
+\end{proof}
+
+\subsection{Hirzebruch 面}
+
+证明的最后一部分专门处理 Hirzebruch 面的同调镜像对称。注意推论 \ref{crl:mirror-to-Hirzebruch} 的同调镜像对称部分只是定理 \ref{thm:HMS-projective-bundle} 的直接推论，唯一非平凡之处是对所构造空间 $\rF_n$ 的几何识别。
+
+\begin{proof}[推论 \ref{crl:mirror-to-Hirzebruch} 的证明]
+    考虑仿射超曲面 \[
+            Z\coloneqq\{(x,y,z)\in\mathbb{C}^3\vert x^{n+1}+yz=0\}\subseteq\mathbb{C}^3
+        \]它带有全纯映射 \[
+            \pi\colon Z\to\mathbb{C},\ (x,y,z)\mapsto x
+        \]使得 $\pi^{-1} (0)=\{(y,z)\vert yz=0\}$ 是奇异的节点纤维，而 $\pi^{-1} (t)=\{(y,z)\vert yz =t^{n+1}\}$ 是光滑仿射的，而由该表达式（以及 Riemann--Hurwitz 公式）可以看出它同构于 $\mathbb{C}^{\ast}$。我们还可以验证，绕奇异纤维 $x=0$ 的单值作用与 Dehn 扭转 $\phi^n$ 相同，因此 $\rF_n\cong_{alg} Z\setminus\{x=0\}$。注意 $\rF_n$ 有一个投影 $\rF_n\to\mathbb{C}_x^{\ast}\times\mathbb{C}_y^{\ast}$，每一对 $(x,y)$ 上的纤维恰为单点，因此 $\mathcal{X}\cong_{alg}\mathbb{C}_x^{\ast}\times\mathbb{C}_y^{\ast}$。该同构不改变 $x$ 与 $y$ 的坐标，故在此代数同构下超势仍为 $x+x^{-1} +y+y^{-1}$。
+\end{proof}
+
+\begin{yizhu}[原文的 $\mathcal{X}$ 应为 $\rF_n$]
+证明末尾出现 $\mathcal{X}\cong_{alg}\mathbb{C}_x^{\ast}\times\mathbb{C}_y^{\ast}$，但正文此前并未引入 $\mathcal{X}$；按上下文，投影 $\rF_n\to\mathbb{C}_x^{\ast}\times\mathbb{C}_y^{\ast}$ 的每根纤维是单点，故此处应为 $\rF_n$。这一处笔误若不点明，读者会以为中途换成了另一个空间。译文照原文排印。
+\end{yizhu}
+
+\begin{keytakeaways}
+  \item $A$ 侧的工具：映射柱 $M(X,\phi)$ 的包裹 Fukaya 范畴由 Kartal 修改后的 Weinstein 结构给出，命题 \ref{prp:Fukaya-cat-mapping-cylinder} 把它化成 $\left(\mathcal{W} (T^{\ast}\mathbb{R},e^z+e^{-z})\otimes\mathcal{W} (X)\right)/\mathbb{Z}$——即「一个 $T^{\ast}\mathbb{R}$ 因子 + 一个 $\mathbb{Z}$-轨道范畴」。
+  \item $B$ 侧的对偶工具：定理 \ref{thm:twisted-tensor-P1-bundle} 把 $\Perf(P(Y,\xi))_{dg}$ 写成 $\Perf_{\mathbb{G}_m}(\mathbb{P}^1)_{dg}$ 与 $\Perf(Y)_{dg}$ 的扭张量积，半正交分解给出本质满射；$\mathbb{G}_m$-作用与 $\mathbb{Z}$-作用在两边对上，就是主定理的证明骨架。
+  \item 拼装：扇形下降与真下降把两边都归约到「$\mathbb{P}^1$ 粘 $\mathbb{P}^1$」的万有情形（命题 \ref{prp:pushforward-coherent-stack} 与关于 $\mathbb{Z}$ 个区间的引理），环面丛再把 $\mathbb{P}^1$ 换成 $X_{\Sigma}$；Hirzebruch 面则是把 $\mathbb{P}^1$-丛的镜像显式写成 $\left(\mathbb{C}^{\ast}\times\mathbb{C}^{\ast},x+1/x+y+1/y\right)$。
+\end{keytakeaways}

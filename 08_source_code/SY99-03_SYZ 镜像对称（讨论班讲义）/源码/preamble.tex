@@ -1,0 +1,129 @@
+% =====================================================================
+%  Learning Seminar: SYZ Mirror Symmetry —— 中文译注本 导言区
+%  底本：https://diewildkatze.com/SYZ.html （学习讨论班讲义，2026-04 抓取）
+%
+%  编译：LuaLaTeX（本机 xdvipmap 不稳定，统一 lualatex，编译 3 遍）
+%  约定：
+%   * 底本的编号公式为 0 条，本译本一律不编号（\[ ... \] / equation*）；
+%   * \begin{定理/定义/引理/...} 环境为无编号环境，作者名放在可选参数里；
+%   * % [Tutor Note: ...] 为译者批注，不进入排版，汇总见 译注汇总.md；
+%   * 底本无插图；仅 3 张表、3 个交换图（tikz-cd 重画）。
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[UTF8]{ctex}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage[a4paper,left=2.5cm,right=2.5cm,top=2.6cm,bottom=2.7cm]{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage[hidelinks,unicode]{hyperref}
+\hypersetup{pdftitle={学习讨论班：SYZ 镜像对称（中文译注本）},
+  pdfauthor={学习讨论班；中译/批注：本译本}}
+
+\captionsetup{font=small,labelsep=quad}
+\setlength{\emergencystretch}{3em}
+\allowdisplaybreaks[1]
+\graphicspath{{figures/}{../figures/}}
+
+% ---------- 页眉 ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape Learning Seminar: SYZ Mirror Symmetry}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ---------- 定理类环境（底本无编号，一律 \newtheorem*） ----------
+\theoremstyle{plain}
+\newtheorem*{theorem*}{定理}
+\newtheorem*{proposition*}{命题}
+\newtheorem*{lemma*}{引理}
+\newtheorem*{corollary*}{推论}
+\newtheorem*{statement*}{陈述}
+\theoremstyle{definition}
+\newtheorem*{definition*}{定义}
+\newtheorem*{example*}{例}
+\newtheorem*{remark*}{注}
+\newtheorem*{exercise*}{习题}
+
+\renewcommand{\proofname}{证明}
+
+% 原文的「Exercise.」正文（无编号）：\begin{exercise*} ... \end{exercise*}
+% 原文每节行内小标题（粗体，如 "**Plan of the Seminar.**"）→ \para{...}
+\newcommand{\para}[1]{\par\medskip\noindent\textbf{#1}\quad\ignorespaces}
+
+% 表格标题（手工编号）
+\newcommand{\tabtitle}[2]{\caption*{\small\textbf{表 #1：}#2}}
+% 图注（手工编号）
+\newcommand{\figtitle}[2]{\caption*{\small\textbf{图 #1：}#2}}
+
+% 参考文献条目（gen_refs.py 按 \refitem{编号}{内容} 输出）
+\newcommand{\refitem}[2]{\par\hangindent=1.5em\hangafter=1\noindent [#1]~#2}
+
+% ---------- 常用记号（只能用这里定义过的宏，不要自造 \newcommand） ----------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fh}{\mathfrak{h}}
+\newcommand{\ft}{\mathfrak{t}}
+\newcommand{\fu}{\mathfrak{u}}
+\newcommand{\fsu}{\mathfrak{su}}
+\newcommand{\fso}{\mathfrak{so}}
+\newcommand{\fsp}{\mathfrak{sp}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ee}{\mathrm{e}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\ev}{\operatorname{ev}}
+\newcommand{\hol}{\operatorname{hol}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\rk}{\operatorname{rk}}
+\newcommand{\vol}{\operatorname{vol}}
+\newcommand{\half}{\tfrac{1}{2}}
+\newcommand{\ie}{\textit{i.e.}}
+\newcommand{\eg}{\textit{e.g.}}
+\newcommand{\cf}{\textit{cf.}}

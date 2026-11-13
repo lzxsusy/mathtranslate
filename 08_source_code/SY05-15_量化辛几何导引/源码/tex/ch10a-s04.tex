@@ -1,0 +1,399 @@
+% 原书 p.302–p.306（PDF p.310–p.314）；第 10 章 10.4 节（导出范畴与导出函子）
+% 说明：本文件不含 \chapter（第 10 章标题由 ch10a-s01 写出）；10.4 节起于 PDF p.310 中部。
+% >>> p310
+\section{导出范畴与导出函子（Derived Category and Derived Functor）}
+
+\begin{keytakeaways}
+\begin{itemize}
+  \item 问题：层范畴上的自然函子（$f_\ast$、$\Gamma(U,\cdot)$、$\mathrm{Hom}$、$\otimes$）
+        一般只是单边正合（左正合或右正合），取截面会丢失信息（如 (10.17)、(10.18)）。
+  \item 数学工具：\textbf{导出范畴} $D(\mathcal A)$——对象仍是复形，态射是「屋顶」
+        $C^\bullet\xleftarrow{q}E^\bullet\xrightarrow{f}D^\bullet$（$q$ 为拟同构）的等价类；
+        等价地，它是 $C(\mathcal A)$ 对拟同构的局部化（定义 10.4.2 的泛性质），故拟同构
+        在 $D(\mathcal A)$ 中成为同构。
+  \item 本节结论：$D(\mathcal A)$ 带有三角结构（注 10.4.3）；对左正合函子 $f$，在
+        $\mathcal A$ 有足够内射对象的条件下得到导出函子
+        $Rf:D^+(\mathcal A)\to D^+(\mathcal B)$（定理 10.4.1），它把正合三角送到正合
+        三角，且 $f$ 本身正合时 $Rf=f$。
+  \item 关键例子：例 10.4.3 中 $Rf_\ast$（$f$ 连续）与 $R\Gamma(X,\cdot)$；后者正是
+        10.3 节层上同调的导出函子解释。
+\end{itemize}
+\end{keytakeaways}
+
+正如 9.6 节的例 9.6.2 所讨论的，从阿贝尔范畴 $\mathcal A$ 出发，可以构造 $\mathcal A$
+上的复形范畴，记作 $C(\mathcal A)$，其中
+\[
+\operatorname{Ob}(C(\mathcal A)):=
+\left\{(C^\bullet,\dd^\bullet)\mid C^\bullet\in\operatorname{Ob}(\mathcal A)\right\},
+\]
+而态射就是 $\mathcal A$ 中一族与 $\dd^\bullet$ 交换的态射。再次，在例 9.6.2 中我们引入了
+$\mathcal A$ 的同伦范畴，定义为
+\[
+K(\mathcal A)=C(\mathcal A)\big/\sim,
+\]
+其中 $\sim$ 表示例 9.6.2 中所定义的链同伦关系。关于 $K(\mathcal A)$ 的关键事实是：它带有
+三角结构（见定理 9.6.1）。这里还有另一种从 $C(\mathcal A)$ 得到三角结构的方式，称为
+$\mathcal A$ 的\textbf{导出范畴}（derived category），记作 $D(\mathcal A)$。
+
+在以下讨论中，我们将主要取 $\mathcal A$ 为拓扑空间 $X$ 上（$\mathbf{k}$-模）层构成的
+范畴，如前记作 $\operatorname{Sh}(\mathbf{k}_X)$。范畴 $\operatorname{Sh}(\mathbf{k}_X)$
+是「好的」，意思是：给定态射 $f$，可以定义 $\ker(f)$、$\coker(f)$ 与直和等等。此外，
+$\operatorname{Sh}(\mathbf{k}_X)$ 上还有各种函子，例如前推函子
+% >>> p311
+$f_\ast:\operatorname{Sh}(\mathbf{k}_X)\to\operatorname{Sh}(\mathbf{k}_Y)$（定义 10.2.8 中
+定义）、拉回函子
+$f^{-1}:\operatorname{Sh}(\mathbf{k}_Y)\to\operatorname{Sh}(\mathbf{k}_X)$（定义 10.2.7 中
+定义）。对任意局部闭子空间 $Z\subset X$，对应 $\mathcal F\mapsto\mathcal F_Z$
+（由 (10.10) 定义）也是 $\operatorname{Sh}(\mathbf{k}_X)$ 上的函子。再如，给定任意开子集
+$U\subset X$，取 $U$ 上的截面是一个函子，记作
+$\Gamma(U,\cdot):\operatorname{Sh}(\mathbf{k}_X)\to\operatorname{Mod}(\mathbf{k})$。
+
+回忆：函子 $f^{-1}$ 与 $\cdot_Z$ 都是正合的，但一般而言 $f_\ast$ 与
+$\Gamma(U,\cdot)$ 只是\textbf{左正合}的，意思是：若存在层的短正合列
+$0\to\mathcal F\to\mathcal G\to\mathcal H\to0$，则我们只有正合列
+\begin{equation}\tag{10.17}
+0\to f_\ast\mathcal F\to f_\ast\mathcal G\to f_\ast\mathcal H
+\end{equation}
+以及
+\begin{equation}\tag{10.18}
+0\to\Gamma(U,\mathcal F)\to\Gamma(U,\mathcal G)\to\Gamma(U,\mathcal H).
+\end{equation}
+
+% [Tutor Note: 易错预警——左正合／右正合的说法以「保持何种极限」为准：左正合保持
+% 核（ker）与有限极限，右正合保持余核（coker）与有限余极限，正合则两者兼有。
+% $f_\ast$ 与 $\Gamma(U,\cdot)$ 是左正合的：短正合列经过它们后只在左端保持正合，
+% 右端的满射性（即 $f_\ast\mathcal G\twoheadrightarrow f_\ast\mathcal H$）可能失效，
+% 这正是 (10.17)、(10.18) 右端缺少 $\to0$ 的原因。反之 $\otimes$ 是右正合的，
+% $\mathrm{Hom}$ 是左正合的（见例 10.4.1 与 10.4.1 之后的讨论）。]
+
+例如回忆例 10.2.7 中我们在 $X=\C\setminus\{0\}$ 上引入了层的正合列
+\[
+0\to\Z_X\to\mathcal O_X\xrightarrow{\exp}\mathcal O_X^*\to0.
+\]
+取整体截面 $\Gamma(X,\cdot)$，由 (10.18) 得到如下正合列
+\[
+0\to\Z\to\mathcal O_X(X)\xrightarrow{\exp(X)}\mathcal O_X^*(X).
+\]
+注意映射 $\mathcal O_X(X)\to\mathcal O_X^*(X)$——从 $X$ 上全体全纯函数之集到 $X$ 上全体
+处处非零全纯函数之集——不一定满射。这说明取截面一般不是右正合的。这也说明前推
+$f_\ast:\operatorname{Sh}(X)\to\operatorname{Sh}(Y)$ 不一定右正合：因为可以取 $Y$ 为单点，
+此时由例 10.2.9 的 (i) 有 $f_\ast(\mathcal F)=\Gamma(X,\mathcal F)$。
+
+下面的例子引入 $\operatorname{Sh}(\mathbf{k}_X)$ 上另外两个函子。
+
+\begin{wexam}{10.4.1}
+对范畴 $\operatorname{Sh}(\mathbf{k}_X)$，其 hom-集
+$\mathrm{Hom}_{\operatorname{Sh}(\mathbf{k}_X)}(\mathcal F,\mathcal G)$ 称为
+$\operatorname{Sh}(\mathbf{k}_X)$ 上的\textbf{内 hom-函子}（inner hom-functor），它在
+对象层面把
+$(\mathcal F,\mathcal G)\in\operatorname{Sh}(\mathbf{k}_X)\times
+\operatorname{Sh}(\mathbf{k}_X)$ 映到预层
+\[
+U\to\mathrm{Hom}_{\operatorname{Mod}(\mathbf{k})}(\mathcal F(U),\mathcal G(U))
+\]
+的层化。固定任意 $\mathcal F\in\operatorname{Ob}(\operatorname{Sh}(\mathbf{k}_X))$，
+我们还有如下（在对象层面）定义的函子
+\[
+\mathrm{Hom}_{\operatorname{Sh}(\mathbf{k}_X)}(\mathcal F,\cdot):
+\operatorname{Sh}(\mathbf{k}_X)\to\operatorname{Sh}(\mathbf{k}_X),\qquad
+\mathcal G\to\mathrm{Hom}_{\operatorname{Sh}(\mathbf{k}_X)}(\mathcal F,\mathcal G).
+\]
+一般而言，它只是左正合的（因为 $\mathrm{Hom}_{\operatorname{Mod}(\mathbf{k})}(A,\cdot)$
+只是左正合，这是标准事实）。
+\end{wexam}
+
+% >>> p312
+与 $\mathrm{Hom}_{\operatorname{Sh}(\mathbf{k}_X)}(\cdot,\cdot)$ 类似，我们还有另一个
+双函子
+\[
+\otimes:\operatorname{Sh}(\mathbf{k}_X)\times\operatorname{Sh}(\mathbf{k}_X)
+\to\operatorname{Sh}(\mathbf{k}_X),\qquad
+(\mathcal F,\mathcal G)\to\mathcal F\otimes\mathcal G.
+\]
+对任意 $U\in\operatorname{Op}(X)$，$(\mathcal F\otimes\mathcal G)(U)$ 定义为预层
+$\mathcal F(U)\otimes\mathcal G(U)$ 的层化。再次固定
+$\mathcal G\in\operatorname{Ob}(\operatorname{Sh}(\mathbf{k}_X))$，则函子
+$\mathcal F\to\mathcal F\otimes\mathcal G$ 只是右正合的。\hfill$//$
+
+这里还有另一个函子 $f_!:\operatorname{Sh}(\mathbf{k}_X)\to\operatorname{Sh}(\mathbf{k}_Y)$，
+它与前推 $f_\ast:\operatorname{Sh}(\mathbf{k}_X)\to\operatorname{Sh}(\mathbf{k}_Y)$ 非常
+相似。确切地说，$f_!$ 定义为
+\begin{equation}\tag{10.19}
+(f_!\mathcal F)(U):=
+\left\{s\in\mathcal F(f^{-1}(U))\ \middle|\
+f:\operatorname{supp}(s)\to U\ \text{是紧合的}\right\}.
+\end{equation}
+这里，「紧合」（proper）指 $Y$ 的紧子集的原像在 $X$ 中也是紧的。函子 $f_!$ 通常称为
+\textbf{紧合前推}（proper pushforward）。下面的例子说明 $f_!\mathcal F$ 与
+$f_\ast\mathcal F$ 的差别。
+
+\begin{wexam}{10.4.2}
+考虑 $X=\R$、$Z=(0,1)\xrightarrow{i}\R$、常值层 $\mathbf{k}_\R$（秩 $1$）以及限制
+$\mathcal F:=i^{-1}\mathbf{k}_\R$。回忆命题 10.2.1，我们已经算得
+$(i_\ast\mathcal F)_0=(i_\ast(i^{-1}\mathbf{k}_\R))_0=\mathbf k$。现在我们来计算茎
+$(i_!\mathcal F)_0$ 如下：
+\begin{align*}
+(i_!\mathcal F)_0
+&=(i_!(i^{-1}\mathbf{k}_\R))_0\\
+&=\varinjlim_{U\in\operatorname{Op}(\R,0)}(i^{-1}\mathbf{k}_\R)(i^{-1}(U))\\
+&=\varinjlim_{\varepsilon\to0}(i^{-1}\mathbf{k}_\R)\bigl(i^{-1}((-\varepsilon,\varepsilon))\bigr),
+\end{align*}
+其中 $i$ 满足 (10.19) 中的紧合条件。更明确地说，在最后一步的正向极限内部，对每个
+$\varepsilon>0$，我们数的是如下截面
+\[
+\left\{s\in\mathbf{k}_\R((0,\varepsilon))\ \middle|\
+i:\operatorname{supp}(s)\to(-\varepsilon,\varepsilon)\ \text{是紧合的}\right\}.
+\]
+观察到唯一这样的截面是 $s=0$，这意味着
+$(i_!\mathcal F)_0=(i_!(i^{-1}\mathbf{k}_\R))_0=0$，不同于 $(i_\ast\mathcal F)_0$。
+\hfill$//$
+\end{wexam}
+
+% [Tutor Note: 易错预警——例 10.4.2 的要点是：$i_!$ 要求截面的支撑在 $X$ 中紧并且
+% 其像在目标里紧合；对开嵌入 $i:(0,1)\hookrightarrow\R$，常数截面 $s=1$ 的支撑是
+% $(0,1)$，它在 $\R$ 中的闭包不是紧的（且 $i$ 在支撑上不是紧合的），故不贡献茎；
+% 于是 $(i_!)_0=0$。相较之下 $i_\ast$ 的茎在 $0$ 处仍为 $\mathbf k$。这说明
+% $f_!$ 记录的是「紧支撑」信息，而 $f_\ast$ 记录的是「全部截面」信息。]
+
+\begin{wexer}{10.4.1}
+证明：若 $Z\subset X$ 是闭子集，则对包含映射 $j:Z\hookrightarrow X$，函子
+$j_!=j_\ast$，且它在 $\operatorname{Sh}(\mathbf{k}_X)$ 上是正合的。
+\end{wexer}
+
+% [Tutor Note: 含糊点拨——练习 10.4.1 的理由：闭包含的像在 $X$ 中闭，紧合性自动满足，
+% 故 $j_!=j_\ast$；而闭嵌入的前推是正合的（可逐点检查茎，或注意 $j_\ast$ 有正合的左
+% 伴随 $j^{-1}$）。这是「$f_!$ 与 $f_\ast$ 的差别只出现在非紧合映射」的典型例证。]
+
+$f_!$ 还有另一个优点。回忆例 10.2.9 的 (ii) 表明：一般而言，前推的茎
+$(f_\ast\mathcal F)_x$ 并不能得到有意义的结果。然而对 $(f_!\mathcal F)_x$，我们有如下
+等同。
+
+\begin{wprop}{10.4.1}（[135] 中的命题 2.5.2）
+给定拓扑空间 $X,Y$，设 $f:X\to Y$ 是连续映射，则对任意
+$\mathcal F\in\operatorname{Ob}(\operatorname{Sh}(\mathbf{k}_X))$，有
+\begin{align*}
+(f_!\mathcal F)_y
+&\cong\left\{s\in(\mathcal F|_{f^{-1}(y)})(f^{-1}(y))\ \middle|\
+\operatorname{supp}(s)\ \text{是紧的}\right\}\\
+&\cong\Gamma_c\left(f^{-1}(y),\mathcal F|_{f^{-1}(y)}\right),
+\end{align*}
+其中 $\Gamma_c$ 表示数紧支撑截面。
+\end{wprop}
+
+% >>> p313
+\begin{wrem}{10.4.1}
+(i) 命题 10.4.1 的类似结论对 $f_\ast$ 成立，但需额外假设 $f$ 在
+$\operatorname{supp}(\mathcal F)$ 上是紧合的。(ii) 尽管如此，$f_!$ 一般仍只是左正合的。
+\end{wrem}
+
+为处理层范畴上某些函子并不总是完全正合这一问题，人们引入了一个新概念，称为
+$\mathcal A$ 的\textbf{导出范畴}，使得 $\mathcal A$ 中的「不正合」在导出范畴
+$D(\mathcal A)$ 中提升为「正合」。这里，$D(\mathcal A)$ 中的正合性将由定理 10.4.1
+自行说明。
+
+\begin{wdefn}{10.4.1}
+对给定的范畴 $\mathcal A$，其\textbf{导出范畴} $D(\mathcal A)$ 是带有如下要素的范畴：
+\[
+\operatorname{Ob}(D(\mathcal A)):=\operatorname{Ob}(C(\mathcal A))
+=\left\{(C^\bullet,\dd^\bullet)\mid C^\bullet\in\operatorname{Ob}(\mathcal A)\right\},
+\]
+\[
+\mathrm{Hom}_{D(\mathcal A)}(C^\bullet,D^\bullet):=
+\left\{
+C^\bullet\xleftarrow{q}E^\bullet\xrightarrow{f}D^\bullet\ \middle|\
+\begin{array}{l}
+q\ \text{是拟同构},\\
+f\in\mathrm{Hom}_{K(\mathcal A)}(E^\bullet,D^\bullet)
+\end{array}
+\right\}\Big/\sim.
+\]
+这里，拟同构 $q:E^\bullet\to C^\bullet$ 指它在同调群上诱导同构，即
+$H^*(q):H^*(E^\bullet)\to H^*(C^\bullet)$ 都是同构。
+$\mathrm{Hom}_{D(\mathcal A)}(C^\bullet,D^\bullet)$ 中的等价关系「$\sim$」定义如下：
+$C^\bullet\xleftarrow{q}E^\bullet\xrightarrow{f}D^\bullet
+\sim C^\bullet\xleftarrow{q'}B^\bullet\xrightarrow{f'}D^\bullet$，当且仅当存在
+$F^\bullet\in\operatorname{Ob}(\mathcal A)$ 使下图交换：
+\[
+\begin{array}{ccccc}
+& & E^\bullet & & \\
+& \overset{\scriptstyle q}{\swarrow} & \overset{\scriptstyle q''}{\big\uparrow}
+& \overset{\scriptstyle f}{\searrow} & \\
+C^\bullet & & F^\bullet & & D^\bullet\\
+& \overset{\scriptstyle q'}{\nwarrow} & \overset{\scriptstyle f''}{\big\downarrow}
+& \overset{\scriptstyle f'}{\nearrow} & \\
+& & B^\bullet & &
+\end{array}
+\]
+并且 $q\circ q''$ 是拟同构。
+\end{wdefn}
+
+% [Tutor Note: 原文疑误——上式交换图中写的是「存在 $F^\bullet\in\operatorname{Ob}(\mathcal A)$」，
+% 但 $F^\bullet$ 是一个复形，应为 $F^\bullet\in\operatorname{Ob}(C(\mathcal A))$
+% （或等价地 $F^\bullet\in\operatorname{Ob}(D(\mathcal A))$）。译文照原文保留，
+% 已记入 review_ch10a.md。另注意这是导出范畴的「屋顶（roof）演算」：态射用
+% 先左折（拟同构）再右折的锯齿形表示，等价关系要求存在公共的「加细」$F^\bullet$；
+% 因此必须在 $K(\mathcal A)$（而非 $C(\mathcal A)$）中取 $f$，否则链同伦的差别无法
+% 被吸收。]
+
+\begin{wrem}{10.4.2}
+存在一个自然函子 $\mathcal A\hookrightarrow D(\mathcal A)$，它把 $\mathcal A$ 中的对象
+$X$ 映为复形 $\cdots\to0\to X\to0\to\cdots$（作为 $D(\mathcal A)$ 中的对象），其中
+$X$ 位于次数 $0$ 的位置。
+\end{wrem}
+
+\begin{wrem}{10.4.3}
+由定义 10.4.1，由于 $D(\mathcal A)$ 的构造部分来自同伦范畴 $K(\mathcal A)$，导出范畴
+$D(\mathcal A)$ 的一个自然性质是：它也带有三角结构（见定义 9.6.1 与定理 9.6.1）。
+因此，可以在 $D(\mathcal A)$ 中谈论正合三角。更多细节见 [135] 的 1.6 节。
+\end{wrem}
+
+注意上述定义给出了 $D(\mathcal A)$ 一个相当显式的表述，使人们可以用其构造中的一切
+要素来操作。类似于正向极限的定义既可以有具体表达式（见定义 10.2.5），也可以有基于
+泛性质的抽象表述（见练习 10.2.3），下面的定义给出 $D(\mathcal A)$ 的一个等价定义，
+它来自泛性质。
+
+\begin{wdefn}{10.4.2}（命题式定义）
+给定范畴 $\mathcal A$，存在一个范畴 $D(\mathcal A)$ 与一个函子
+$f:C(\mathcal A)\to D(\mathcal A)$，使得对任意范畴 $\mathcal C$ 与任意函子
+$g:C(\mathcal A)\to\mathcal C$
+% >>> p314
+（它把 $C(\mathcal A)$ 中的任何拟同构映为范畴 $\mathcal C$ 中的同构），都存在唯一的函子
+$h:D(\mathcal A)\to\mathcal C$，使下图交换。
+\[
+\begin{array}{ccc}
+\mathcal C(\mathcal A) & \xrightarrow{f} & D(\mathcal A)\\[10pt]
+{\scriptstyle g}\searrow & & \swarrow{\scriptstyle h}\\
+& \mathcal C &
+\end{array}
+\]
+这个范畴 $D(\mathcal A)$ 在同构意义下唯一（它被称为 $\mathcal A$ 的\textbf{导出范畴}）。
+\end{wdefn}
+
+% [Tutor Note: 含糊点拨——定义 10.4.2 就是「$C(\mathcal A)$ 对拟同构类作局部化」的
+% 泛性质表述：$D(\mathcal A)$ 是使所有拟同构成为同构的「最小」范畴。它解释了为什么
+% 定义 10.4.1 要采用屋顶：局部化后，一个态射只能由「先沿拟同构拉回、再正向映射」
+% 这样的链表示。注意此泛性质只保证 $D(\mathcal A)$ 在同构意义下唯一，存在性需要对
+% 拟同构系作局部化（可能涉及集合论上的宇宙假设）；实操中直接用定义 10.4.1 的显式
+% 描述。]
+
+\begin{wrem}{10.4.4}
+由定义 10.4.2 可知，导出范畴 $D(\mathcal A)$ 的另一个自然性质是：$C(\mathcal A)$ 中的
+任何拟同构在 $D(\mathcal A)$ 中变为可逆。这一性质至关重要，因为人们需要巧妙地在
+$D(\mathcal A)$ 的交换图中反转（拟同构的）箭头，这有时是论证中最棘手的步骤。
+\end{wrem}
+
+对我们的目的（解决函子的不正合性）而言，$D(\mathcal A)$ 的重要性在于：它提供了一个
+平台，使得更高级的函子可以在 $D(\mathcal A)$ 的层面上定义。在此之前，让我们记
+\[
+D^+(\mathcal A):=
+\left\{(C^\bullet,\dd^\bullet)\in\operatorname{Ob}(D(\mathcal A))\ \middle|\
+H^k(C^\bullet)=0\ \text{对}\ k\ll0\right\}
+\]
+为 $\mathcal A$ 的\textbf{有界下方导出范畴}（bounded from below derived category）。
+类似地，可以定义 $\mathcal A$ 的\textbf{有界上方导出范畴}，记作 $D^-(\mathcal A)$。
+于是我们有如下定理。
+
+\begin{wthm}{10.4.1}
+给定两个范畴 $\mathcal A,\mathcal B$ 与一个左正合函子
+$f:\mathcal A\to\mathcal B$，假设 $\mathcal A$ 满足某个条件\footnote{这里的条件是：
+范畴 $\mathcal A$ 具有足够多的内射对象（见定义 10.5.2）。}，则存在一个诱导函子
+\begin{equation}\tag{10.20}
+Rf:D^+(\mathcal A)\to D^+(\mathcal B),
+\end{equation}
+它把 $D^+(\mathcal A)$ 中的正合三角映为 $D^+(\mathcal B)$ 中的正合三角。特别地，若 $f$
+本身已是正合的，则 $Rf=f$。
+\end{wthm}
+
+% [Tutor Note: 含糊点拨——定理 10.4.1 中的「某个条件」即 $\mathcal A$ 有足够多内射对象
+% （定义 10.5.2），这是构造内射消解的充分条件。证明思路：对复形 $C^\bullet$ 取逐项
+% 内射消解 $I^\bullet$（Cartan–Eilenberg 消解），令 $Rf(C^\bullet):=f(I^\bullet)$，
+% 再用消解的同伦唯一性证明它与消解选取无关；$Rf$ 保持正合三角来自内射消解的
+% 链映射性质。由 nLab/Weibel 的标准处理，$Rf$ 只在 $D^+$（有界下方）上良定义，
+% 因为需要消解在足够负的次数上消失。]
+
+(10.20) 中的诱导函子 $Rf$ 称为 $f$ 的\textbf{导出函子}（derived functor）。
+
+\begin{wexam}{10.4.3}
+(i) 设 $f:X\to Y$ 是拓扑空间之间的连续映射。回忆前推函子
+$f_\ast:\operatorname{Sh}(\mathbf{k}_X)\to\operatorname{Sh}(\mathbf{k}_Y)$ 是左正合的。
+于是定理 10.4.1 蕴涵它诱导一个函子
+\[
+Rf_\ast:D^+\left(\operatorname{Sh}(\mathbf{k}_X)\right)
+\to D^+\left(\operatorname{Sh}(\mathbf{k}_Y)\right).
+\]
+特别地，若 $Y$ 是单点，则有
+\[
+Rf_\ast=R\Gamma(X,\cdot):
+D^+\left(\operatorname{Sh}(\mathbf{k}_X)\right)\to D^+\left(\operatorname{Mod}(\mathbf{k})\right).
+\]
+% [Tutor Note: 术语/记号依据——$R\Gamma(X,\cdot)$ 是「整体截面函子 $\Gamma(X,\cdot)$ 的
+% 右导出函子」，其第 $k$ 阶上同调正是 10.3 节定义的层上同调：
+% $H^k(X;\mathcal F)=H^k(R\Gamma(X,\mathcal F))$。这就是问题 10.3.1 的答案框架：
+% 层上同调 = 导出函子的上同调，它同时依赖空间 $X$（通过 $\Gamma$ 的整体性）与层
+% $\mathcal F$（通过其内射消解）。下一节（10.5）将给出导出函子的具体计算。]
+
+% >>> p315
+(ii) 类似地，$f_!$ 诱导函子
+\[
+Rf_!:D^+\left(\operatorname{Sh}(\mathbf{k}_X)\right)
+\to D^+\left(\operatorname{Sh}(\mathbf{k}_Y)\right).
+\]
+此外，若 $Y$ 是单点，则有
+\[
+Rf_!=R\Gamma_c(X,\cdot):
+D^+\left(\operatorname{Sh}(\mathbf{k}_X)\right)\to
+D^+\left(\operatorname{Mod}(\mathbf{k})\right),
+\]
+其中回忆 $\Gamma_c(X,\cdot)$ 数的是紧支撑截面。若把 $X$ 换成开子集
+$U\in\operatorname{Op}(X)$，同样的论证也成立，即得到 $R\Gamma(U,\cdot)$ 或
+$R\Gamma_c(U,\cdot)$。
+
+(iii) 承例 10.4.1，$\mathrm{Hom}_{\operatorname{Sh}(\mathbf{k}_X)}
+(\mathcal F,\cdot)$ 诱导函子
+\[
+R\mathrm{Hom}_{\operatorname{Sh}(\mathbf{k}_X)}(\mathcal F,\cdot):
+D^+\left(\operatorname{Sh}(\mathbf{k}_X)\right)
+\to D^+\left(\operatorname{Sh}(\mathbf{k}_X)\right).
+\]
+这进一步延拓为如下双函子，其两个输入都取自导出范畴（回忆：对范畴 $\mathcal C$，其
+\textbf{对偶范畴} $\mathcal C^{\mathrm{op}}$ 由相同的对象组成，但 hom-集中的箭头
+反向）：
+\[
+R\mathrm{Hom}_{\operatorname{Sh}(\mathbf{k}_X)}(\cdot,\cdot):
+D^-\left(\operatorname{Sh}(\mathbf{k}_X)\right)^{\mathrm{op}}\times
+D^+\left(\operatorname{Sh}(\mathbf{k}_X)\right)
+\to D^+\left(\operatorname{Sh}(\mathbf{k}_X)\right).
+\]
+表达这个延拓双函子
+$R\mathrm{Hom}_{\operatorname{Sh}(\mathbf{k}_X)}(\cdot,\cdot)$ 的一种方式是：给定
+两个层复形 $\mathcal F^\bullet$ 与 $\mathcal G^\bullet$，由不同的配对得到
+\[
+C^{p,q}:=\mathrm{Hom}_{\operatorname{Sh}(\mathbf{k}_X)}
+\left(\mathcal F^p,\mathcal G^q\right).
+\]
+把双复形 $C^{\bullet,\bullet}$ 转换成一个上链复形（它位于对象
+$\mathrm{Ob}\left(D^+(\operatorname{Sh}(\mathbf{k}_X))\right)$ 中）时，我们考虑其
+\textbf{全复形}（total complex）
+\begin{equation}\tag{10.21}
+\operatorname{Tot}\left(C^{\bullet,\bullet}\right):=
+\bigoplus_{k\in\Z}\left(\bigoplus_{p+q=k}C^{p,q}\right).
+\end{equation}
+
+% [Tutor Note: 含糊点拨——(10.21) 的「全复形」是双复形的标准构造：双复形
+% $C^{\bullet,\bullet}$ 带两个微分 $d_h:C^{p,q}\to C^{p+1,q}$ 与
+% $d_v:C^{p,q}\to C^{p,q+1}$（此处 $d_h$ 来自 $\mathcal F^p$ 的上链微分、$d_v$
+% 来自 $\mathcal G^q$ 的上链微分，符号依约定），全复形的第 $k$ 项取对角线上各项的
+% 直和 $\bigoplus_{p+q=k}C^{p,q}$，其微分通常取 $d=d_h+(-1)^p d_v$；由
+% $d_h^2=0$、$d_v^2=0$、$d_h d_v+d_v d_h=0$ 可得 $d^2=0$。原文只说「转换成上链
+% 复形」而未写出微分，读者务必自行补上这一符号约定，否则 (10.21) 只给出分次结构。
+% 有界性条件（$D^-$ 有上界、$D^+$ 有下界）保证每条对角线上只有有限多项，从而内部
+% 的直和是有限和、(10.21) 良定义。]
+
+$D^-\left(\operatorname{Sh}(\mathbf{k}_X)\right)$ 与
+$D^+\left(\operatorname{Sh}(\mathbf{k}_X)\right)$ 上的有界性条件保证：对每个
+$k\in\Z$，和 $\bigoplus_{p+q=k}C^{p,q}$ 作为有限和是良定义的。类似地，可以把张量
+$\otimes$ 延拓为导出范畴之积
+$D^+(\operatorname{Sh}(\mathbf{k}_X))\times
+D^+(\operatorname{Sh}(\mathbf{k}_X))$ 上的「导出」张量，通常仍记作 $\otimes$。
+\hfill$//$
+\end{wexam}

@@ -1,0 +1,757 @@
+% !TEX root = ../main.tex
+% =====================================================================
+%  §3  A Brief Review Of Cohomological TFT Path Integrals   原文 pp. 9–18
+%  文本层对应 text/p010.txt–p019.txt（文本文件编号 = 印刷页码 + 1），
+%  公式一律对照 pages/page010.png–page019.png 逐字符还原。
+%  公式编号 (3.1)–(3.59) 全覆盖。
+% =====================================================================
+
+\section{上同调拓扑场论路径积分简评}
+
+\begin{keytakeaways}
+\item \textbf{物理图像：}“漂亮的积分” $Z=\int\prod_i \dd x_i/\sqrt{2\pi}\,
+  \det(\partial s^i/\partial x^j)\,\ee^{-s(x)^2/2}$ 只在方程 $s(x)=0$ 的解集上取值，
+  且按 $\sign\det(\partial s^i/\partial x^j)$ 带符号计数，因此等于映射 $s$ 的度；
+  超对称表示把这一“局域化”归因于幂零算子 $Q$：$Q$ 不动点即 $\mathcal Z(s)$，
+  而作用量恰是 $Q$-恰当项 $S=Q(\Psi)$，故 $Z$ 与 $\hbar$ 无关，也不受 $Q$-恰当小扰动影响。
+\item \textbf{数学工具：}超空间 $\widehat M=\Pi TM$ 上超场与微分形式的典范同构
+  $C^{\infty}(\widehat M)\cong\Omega^{\ast}(M)$、由 $\int[\dd\psi^1\cdots\dd\psi^n]
+  \psi^n\cdots\psi^1=+1$ 固定的 Berezinian 测度 $\mathrm{ber}(x|\psi)$、
+  对反鬼多重态 $(\chi_a,H_a)$ 作高斯–Berezin 积分得到的 Mathai--Quillen 形式
+  $\widehat{\mathrm{Eul}}_s$，以及 Cartan/Weil 模型下的等变上同调与投影形式
+  $\mathcal P(M\to\bar M)$。
+\item \textbf{核心结论：}局域化公式 (3.40)（等变推广为 (3.54)）给出
+  $\int_{\mathcal Z(s)}\iota^{\ast}\omega_{\mathcal O}\wedge
+  \mathrm{Eul}(\coker\nabla s)$，这正是 Thom 同构中“Euler 类 Poincar\'e 对偶于零点集”
+  的微分形式版本；而 (3.58) 的鬼数选择定则
+  $\mathrm{gh}\#(\widehat{\mathcal O})=\operatorname{Index}(\mathbb F)$
+  说明只有当插入算子的鬼数等于 Fredholm 算子 $\mathbb F$ 的指标时路径积分才非零。
+\end{keytakeaways}
+
+\subsection{一个漂亮的积分}
+
+今天我们要讨论一些复杂而花哨的积分：其中一些虽然十分复杂，却是良定义且有限维的；
+另一些则是函数空间上的无穷维积分——即 QFT 中声名远播的路径积分。因此，从一些我们都能
+立即欣赏并理解的简单积分入手是有益的。
+
+设 $x$ 为实数，考虑函数 $s(x)$，其图像与 $x$ 轴横截，且当 $|x|\to\infty$ 时
+$|s(x)|\to\infty$，如图所示。
+
+\begin{figure}[H]
+  \centering
+  \figplaceholder{〔原文此处于第 9 页仅有 FIGURE 占位，PDF 中未插入实际图形〕}
+  \caption{函数 $s(x)$ 的图像与 $x$ 轴横截相交，且 $|s(x)|\to\infty$（$|x|\to\infty$）}
+  \label{fig:nice-integral}
+\end{figure}
+% [原 PDF 第 9 页（pages/page010.png）]
+
+考虑高斯积分：
+\begin{equation}
+Z = \int_{-\infty}^{+\infty}\frac{\dd x}{\sqrt{2\pi}}\,s'(x)\,
+\ee^{-\frac{1}{2}s(x)^2}
+\tag{3.1}
+\end{equation}
+
+% [Tutor Note: (3.1) 中的归一因子 $1/\sqrt{2\pi}$ 正是使每个分支恰好贡献 $\pm1$ 的原因。
+% 作变量替换 $u=s(x)$ 后，每个分支给出 $\int \dd u/\sqrt{2\pi}\,\ee^{-u^2/2}=1$，
+% 符号由 $s'(x_\ell)$ 的符号决定；因此在 (3.2) 中只出现 $s'(x_\ell)/|s'(x_\ell)|$
+% 而 $|s'(x_\ell)|$ 被约掉——这是全节“带符号计数”的算术来源。
+% 隐含假设：所有零点都是非退化的（横截），否则 (3.2) 发散；(3.4) 中
+% $\det(\partial s^i/\partial x^j)$ 的可逆性正是同一假设的多维版本。]
+作变量替换即可算出该积分，结果是：
+\begin{equation}
+Z = \sum_{\mathcal Z(s)}\frac{s'(x_\ell)}{|s'(x_\ell)|}
+\tag{3.2}
+\end{equation}
+其中
+\begin{equation}
+\mathcal Z(s) = \{x_\ell:\ s(x_\ell)=0\}.
+\tag{3.3}
+\end{equation}
+
+容易推广到 $n$ 维。此时 $s:\RR^n\to\RR^n$，并且
+\begin{equation}
+Z = \int_{\RR^n}\prod_{i=1}^{n}\frac{\dd x_i}{\sqrt{2\pi}}\,
+\det\Big(\frac{\partial s^i}{\partial x^j}\Big)\ee^{-\frac{1}{2}s(x)^2}
+= \sum_{\mathcal Z(s)}\sign\Big(\det\frac{\partial s^i}{\partial x^j}\Big)
+\tag{3.4}
+\end{equation}
+这里我们用 $\RR^n$ 上的欧氏度量来定义 $s(x)^2$。
+
+关于这些积分作几点说明。
+
+\begin{enumerate}
+\item 答案是一串整数之和。它是 $n$ 个未知量、$n$ 个实方程
+  \begin{equation}
+  s(x) = 0
+  \tag{3.5}
+  \end{equation}
+  的解上的带符号求和。\emph{我们的积分 $Z$ 正是在带符号地数方程的解。}
+\item 事实上，这个整数具有拓扑意义：它是（固有）映射 $s:\RR^n\to\RR^n$ 的\emph{度}。
+  另一种拓扑解释是：它是 $s$ 的图像与 $s=0$ 的图像之间的定向相交数。只要不改变
+  $s(x)$ 在 $x\to\infty$ 处的渐近行为，该相交数就是拓扑不变量。例如在一元情形，
+  若 $s(x)$ 是多项式，则不能指望它在首项系数变号下仍保持不变。
+\item 最后注意，我们可以引入参数 $\hbar$，同样有
+  \begin{equation}
+  Z = \int_{\RR^n}\prod_{i=1}^{n}\frac{\dd x_i}{\sqrt{2\pi\hbar}}\,
+  \det\Big(\frac{\partial s^i}{\partial x^j}\Big)
+  \ee^{-\frac{1}{2\hbar}(s(x),s(x))}
+  = \sum_{s(x)=0}\sign\Big(\det\frac{\partial s^i}{\partial x^j}\Big)
+  = \deg(s)
+  \tag{3.6}
+  \end{equation}
+\end{enumerate}
+
+% [原 PDF 第 10 页（pages/page011.png）]
+% [Tutor Note: (3.6) 说的是 $Z$ 与 $\hbar$ 无关，但“与 $\hbar$ 无关”并不等于
+% “与 $s$ 的渐近行为无关”：作者紧接着强调，改变首项系数的符号会改变 $\deg(s)$。
+% §3.2 中 $Q$-恰当形变论证（见 (3.25) 之后）本质上是这句话的场论化，
+% 而“小”的含义恰恰是其中唯一没有被严格化的条件。]
+答案与 $\hbar$ 无关。另一方面，我们可以取 $\hbar\to0$，此时测度显然\emph{局域化}到
+零点集
+\begin{equation}
+\mathcal Z(s) := \{x:\ s(x)=0\}
+\tag{3.7}
+\end{equation}
+而且鞍点近似给出精确答案。
+
+现在我们要把这个积分改写为超空间上的积分，使得所有这些良好性质都能由某个幂零的
+“超对称算子” $Q$ 的存在来解释。我们的超空间积分将是超对称场论中拓扑扭曲路径积分的
+有限维模型。
+
+\subsection{该漂亮积分的超对称表示}
+
+\subsubsection{超空间}
+
+我们回顾超几何中的一个基本构造：\footnote{关于超几何的一些背景见
+\cite{ref6}\cite{ref25}\cite{ref58}。} 设 $E\to M$ 是流形上的向量丛。以 $\Pi E$ 记
+把纤维视为奇的超空间。\footnote{超流形由其“函数代数”定义。局部上，函数构成超代数层。
+若 $E\to M$ 是向量丛，$\mathcal U\subset M$ 是使
+$E|_{\mathcal U}\cong\mathcal U\times V$ 的平凡化邻域（$V$ 为向量空间），
+则相应的格拉斯曼代数为 $C^{\infty}(\mathcal U)\otimes\Lambda^{\ast}V$。
+此代数的元素称为超场。} 把它用于 $E=TM$，所得的超空间记作 $\widehat M$，于是
+\begin{equation}
+\widehat M = \Pi TM
+\tag{3.8}
+\end{equation}
+若 $x^i$ 是 $\mathcal U\subset M$ 上的局部坐标，则 $\psi^i$ 是相应的奇纤维坐标。
+
+% [Tutor Note: (3.8)–(3.9) 之所以不需要任何度量或额外符号就成立，是因为 $\psi^i$
+% 被取为 $TM$ 纤维上的线性函数，而 $\dd x^i$ 作为 1-形式恰好就是纤维上的线性函数：
+% 两者是同一个对象。易错之处有三。(i) 若把 (3.10) 写成对所有指标重复求和而不加
+% $i_1<\cdots<i_k$ 限制，则须补 $1/k!$。(ii) 若把 $\psi^{i_1}\cdots\psi^{i_k}$ 颠倒为
+% $\psi^{i_k}\cdots\psi^{i_1}$，$\phi$ 与 $\omega$ 的对应就要乘 $(-1)^{k(k-1)/2}$。
+% (iii) 上述同构只对 $E=TM$ 成立；对一般向量丛 $E$，
+% $C^{\infty}(\Pi E)\cong\Omega^{\ast}(M;E^{\ast})$ 取的是对偶丛而非 $E$ 本身，
+% 本节只用到 $E=TM$ 这一特例。]
+现在我们有了光滑超场复形与光滑微分形式复形之间的关键同构：
+\begin{equation}
+C^{\infty}(\widehat M)\cong \Omega^{\ast}(M)
+\tag{3.9}
+\end{equation}
+基本想法是：超场局部地形如
+\begin{equation}
+\Phi(x,\psi) = \sum_{k}\sum_{i_1<\cdots<i_k}
+\phi_{i_1\cdots i_k}(x)\,\psi^{i_1}\cdots\psi^{i_k}
+\tag{3.10}
+\end{equation}
+而 $\phi_{i_1\cdots i_k}(x)$ 在坐标卡之间的变换方式，恰好与微分形式
+\begin{equation}
+\omega_{\Phi} = \sum_{k}\sum_{i_1<\cdots<i_k}
+\phi_{i_1\cdots i_k}(x)\,\dd x^{i_1}\cdots\dd x^{i_k}
+\tag{3.11}
+\end{equation}
+的系数相同。原因在于 $\psi^i$ 是 $TM$ 纤维上的线性函数：
+\begin{equation}
+\psi^i\Big(\frac{\partial}{\partial x^j}\Big) = \delta^i{}_j
+\tag{3.12}
+\end{equation}
+而且它们是奇的——因此可以与 $\dd x^i$ 等同。我们将用 $\mathcal O_\omega$ 记对应于
+微分形式 $\omega$ 的超场；反之，$\omega_{\mathcal O}$ 是对应于超场 $\mathcal O$ 的
+微分形式。
+
+% [原 PDF 第 11 页（pages/page012.png）]
+\subsubsection{重写该积分}
+
+\begin{enumerate}
+\item 存在一个整值分次，使得“\emph{鬼数}”对应微分形式的次数：
+  \begin{equation}
+  \mathrm{gh}\#(\mathcal O_\omega) = \deg(\omega)
+  \tag{3.13}
+  \end{equation}
+\item 存在一个平方为零的一阶导子：
+  \begin{equation}
+  Q\mathcal O_\omega\ \leftrightarrow\ \dd\omega
+  \tag{3.14}
+  \end{equation}
+  特别地，用局部坐标表示：
+  \begin{equation}
+  Qx^i = \psi^i \qquad Q\psi^i = 0
+  \tag{3.15}
+  \end{equation}
+  我们尤其关心 $Q$-上同调 $H^{\ast}_Q$，以及超空间上只依赖于上同调类的
+  $Q$-闭“算子”的积分。
+
+% [Tutor Note: $Q$ 的符号约定是本节最容易出错的地方。(3.15) 取 $Qx^i=+\psi^i$、
+% $Q\psi^i=0$，等价于把 $Q$ 取为\emph{左作用}的分次导子
+% $Q=\psi^i\partial/\partial x^i+H_a\partial/\partial\chi_a$。用它重算 (3.26)：
+% 因 $|\chi_a|=1$，分次 Leibniz 律给出
+% $Q(\chi_a s^a)=(Q\chi_a)s^a-\chi_a Q(s^a)=H_as^a-\chi_a\psi^j\partial_js^a$，
+% 故 $S=Q\Psi$ 恰好给出 (3.20) 指数中的
+% $-iH_as^a+i\chi_a(\partial_js^a)\psi^j$；若改取右导子或取 $Qx^i=-\psi^i$，
+% 交叉项整体变号，(3.20) 与 (3.26) 便不再相容。]
+\item 为定义这些积分，我们需要在约化流形 $M$ 上取定定向。一般地，一旦选定了超空间
+  余切丛的 Berezinian 的一个截面，即 $\mathrm{Ber}(\Omega^1(\widehat M))$ 的一个截面，
+  超空间上的超场就可以积分。在我们的情形存在一个典范截面，记作
+  $\mathrm{ber}(x|\psi)$。它具有性质
+  \begin{equation}
+  \int_{\widehat M}\mathrm{ber}(x|\psi)\,\mathcal O_\omega = \int_M\omega
+  \tag{3.16}
+  \end{equation}
+  其中\footnote{〔原稿边注〕是否应在这个定义中计入 $(2\pi)$ 的因子？}
+  \begin{equation}
+  \mathrm{ber}(x|\psi) = \dd x^1\cdots\dd x^n\,[\dd\psi^1\cdots\dd\psi^n]
+  \tag{3.17}
+  \end{equation}
+  其中与 Fubini 定理的相容性要求
+  \begin{equation}
+  \int[\dd\psi^1\cdots\dd\psi^n]\,\psi^n\cdots\psi^1 = +1
+  \tag{3.18}
+  \end{equation}
+  我们也会松散地把它写成 $\prod_{i=1}^{n}\dd x^i\dd\psi^i$。
+\end{enumerate}
+
+% [Tutor Note: (3.18) 是 Berezinian 测度的次序陷阱：测度的书写次序
+% $[\dd\psi^1\cdots\dd\psi^n]$ 与单式的次序 $\psi^n\cdots\psi^1$ 是\emph{相反}的。
+% 若按“自然”次序要求 $\int[\dd\psi^1\cdots\dd\psi^n]\psi^1\cdots\psi^n=+1$，
+% 则与 (3.18) 相差 $(-1)^{n(n-1)/2}$。正是 (3.18) 这一约定使 (3.16) 无需任何附加
+% 符号即成立：把 $\Phi$ 的最高次项 $\psi^1\cdots\psi^n$ 反序成 $\psi^n\cdots\psi^1$
+% 恰好需要 $n(n-1)/2$ 次交换。同理，(3.23) 把所有费米测度并入同一个方括号
+% $[\dd\psi^1\cdots\dd\psi^n\dd\chi_1\cdots\dd\chi_n]$，任何重排都带符号。]
+% [Tutor Note: 由 (3.20) 回到 (3.19) 的高斯积分应为
+% $\int\dd H_a\,\ee^{-\hbar H_aH_a/2-\ii H_as^a}=\sqrt{2\pi/\hbar}\,
+% \ee^{-s^as^a/(2\hbar)}$。代入 (3.20) 得系数
+% $\xi(2\pi\ii)^{-n}(2\pi/\hbar)^{n/2}=\xi(-1)^n\ii^n(2\pi\hbar)^{-n/2}$，
+% 与 (3.19) 的 $\xi\,\ii^n(2\pi\hbar)^{-n/2}$ 相差 $(-1)^n$。这不是可以忽略的细节，
+% 而正是作者在 (3.21) 旁所加边注“our conventions … there is a definite sign.
+% Work it out”所指之处：两式的 $\xi$ 若要一致，须依赖 $H$ 积分围道与 $\dd H$
+% 归一方式的约定。建议读者按自己固定的 Berezin 与高斯测度约定重算 $\xi$，
+% 不要跨节沿用。]
+现在引入反交换变量 $\chi_a$，暂时取 $a=1,\dots,n$，把积分改写为
+\begin{equation}
+Z = \xi\,\ii^n\int_{\widehat{\RR^n}}\prod_{i=1}^{n}
+\frac{\dd x^i\dd\psi^i}{\sqrt{2\pi\hbar}}
+\int_{\Pi(\RR^n)^{\ast}}\prod_{a=1}^{n}\dd\chi_a\,
+\ee^{-\frac{1}{2\hbar}s^a(x)s^a(x)+\ii\chi_a\frac{ds^a}{dx^j}\psi^j}
+\tag{3.19}
+\end{equation}
+
+现在，我们希望以一种明显 $Q$-不变的方式书写它，因此需要 $\chi_a$ 的交换伙伴
+$H_a$。我们干脆用一个高斯积分把它们引入：
+\begin{equation}
+Z = \xi(2\pi\ii)^{-n}\int_{\widehat E}\mathrm{ber}(x,H|\psi,\chi)\,
+\ee^{-\frac{\hbar}{2}H_aH_a-\ii H_as^a+\ii\chi_a\frac{ds^a}{dx^j}\psi^j}
+\tag{3.20}
+\end{equation}
+其中 $\xi=\pm1$，$\widehat E$ 是这样的超空间，使得函数\footnote{〔原稿边注〕
+按我们的约定这是一个确定的符号，须把它算出来。}
+\begin{equation}
+C^{\infty}(\widehat E)
+\tag{3.21}
+\end{equation}
+% [原 PDF 第 12 页（pages/page013.png）]
+是玻色变量 $x^i$ 与 $H_a$ 的 $C^{\infty}$ 函数（两者鬼数均为零），并且是鬼数为 $1$ 的
+费米变量 $\psi^i$ 与鬼数为 $-1$ 的 $\chi_a$ 的多项式：
+\begin{equation}
+\mathrm{gh}\#(\chi_a) = -1 \qquad \mathrm{gh}\#(H_a) = 0.
+\tag{3.22}
+\end{equation}
+Berezinian 测度具体为
+\begin{equation}
+\mathrm{ber}(x,H|\psi,\chi) = \prod_i\dd x^i\prod_a\dd H_a\,
+[\dd\psi^1\cdots\dd\psi^n\dd\chi_1\cdots\dd\chi_n]
+\tag{3.23}
+\end{equation}
+
+% [Tutor Note: 鬼数分配是另一处约定陷阱：此处
+% $\mathrm{gh}\#(x)=\mathrm{gh}\#(H)=0$、$\mathrm{gh}\#(\psi)=+1$、
+% $\mathrm{gh}\#(\chi)=-1$，于是 $\Psi$ 的鬼数为 $-1$、$S=Q\Psi$ 的总鬼数为 $0$，
+% 而 (3.29) 中 $\widehat{\mathrm{Eul}}_s$ 的鬼数 $m$ 完全来自测度
+% $[\dd\chi_1\cdots\dd\chi_m]$。若把 $\psi$ 的鬼数改取 $-1$（从而与形式次数反号），
+% 则 (3.13) 变为 $\mathrm{gh}\#(\mathcal O_\omega)=-\deg(\omega)$，(3.31) 的选择定则
+% 随之改为 $\mathrm{gh}\#(\mathcal O)=m-n$——两套约定不可混用。]
+现在 $Z$ 已写成非常有用的形式。注意：
+
+\begin{enumerate}
+\item 若把 $Q$ 延拓为
+  \begin{equation}
+  Q\chi_a = H_a \qquad QH_a = 0
+  \tag{3.24}
+  \end{equation}
+  则可以把“作用量” $S$（于是路径积分含 $\ee^{S}$）写成
+  \begin{equation}
+  S = Q(\Psi)
+  \tag{3.25}
+  \end{equation}
+  \begin{equation}
+  \Psi = -\frac{\hbar}{2}\chi_aH_a-\ii\chi_a s^a
+  \tag{3.26}
+  \end{equation}
+\item \underline{关键点}：注意 $Q\leftrightarrow \dd$，因此若把作用量改变
+  $Q(\Delta\Psi)$，使边界上的积分（此处即无穷远处的积分）为零，则积分不变。也就是说
+
+  \noindent\emph{作用量的小 $Q$-恰当扰动不改变积分的结果。}
+
+  “小”的技术含义应当是：不引入奇点，且不“剧烈”地改变作用量在场空间无穷远处的
+  渐近行为。一个说明何种形变不被允许的好例子是取 $n=1$，并把 $s(x)$ 取为首项为
+  $N$ 次的多项式：
+  \begin{equation}
+  s(x) = \varepsilon x^N+\cdots.
+  \tag{3.27}
+  \end{equation}
+  改变 $\varepsilon$ 不改变答案，除非 $\varepsilon$ 变号。后者是“剧烈”形变。
+  注意在 $\varepsilon$ 变号的连续族中，多项式的次数必须降到 $N$ 以下。
+  最好能对“剧烈”给出一个有用的技术定义，在路径积分情形尤其如此。
+\item 在上同调场论中，$(\chi_a,H_a)$ 称为\emph{反鬼多重态}。注意 $\chi_a$ 的鬼数为
+  $-1$，故 $H_a$ 的鬼数为 $0$。场 $H_a$ 又称\emph{辅助场}。按定义，辅助场就是
+  可以通过作高斯积分（更一般地，通过解一个纯代数——相对于微分——的方程）
+  从作用量中消去的场。
+\item \underline{$Q$ 不动点}：关于积分 $Z$ 局域化的一个非常有用的启发式观点，由
+  $Q$ 不动点的想法提供。我们已注意到，当 $\hbar\to0$ 时积分局域化到零点集
+  $\mathcal Z(s)$。观察到这与 $Q$ 不动点空间是同一个东西：
+  \begin{equation}
+  Q(\mathit{Fields}) = 0
+  \tag{3.28}
+  \end{equation}
+\end{enumerate}
+
+% [Tutor Note: “$Q$-恰当形变不改变积分”是整讲的支柱，却依赖两个未加证明的前提：
+% (a) 场空间无穷远处的边界项为零；(b) 形变不引入奇点。(3.27) 说明即便 $\varepsilon$
+% 连续变化，只要中途必须经过首项系数为零（次数下降）的点，答案就可以跳变。
+% 作者明确承认无法给出“drastically”的技术定义，这正是 §3.6 开头
+% “上述发展本应可以严格表述（我们的表述并不严格）”的由来。]
+% [原 PDF 第 13 页（pages/page014.png）]
+我们通过把反交换场置零来解它（在算出 $Q$ 的作用、并在高斯积分中把辅助场取为其驻值
+之后）。因此只需检查 $Q(\psi)$ 与 $Q(\chi)$。方程 $Q(\chi)=0$ 给出 $H=0$，但高斯消去
+已置 $H_a=-\ii s^a/\hbar$，于是 $Q$ 不动点轨迹与 $\mathcal Z(s)$ 重合。有一个很好的
+直观理解方式：我们把该积分看作带奇向量场的空间上的积分。只要该向量场自由作用，则由于
+格拉斯曼积分满足 $\int\dd\theta=0$，超空间中被积函数不依赖于 $\theta$ 的那“部分”
+对积分没有贡献。（当然，这是极为启发式的一步。）因此超对称积分局域化到 $Q$ 不动点。
+这一观点虽然十分启发式，却极其有用，原因在于下面这条元定理：
+
+\noindent\emph{所有自然的几何 PDE 都是某个超对称场论的 $Q$ 不动点方程。}
+
+\subsubsection{一个推广：“非零指标”的情形}
+
+我们可以稍作推广：令 $s:\RR^n\to V$，其中 $V\cong\RR^m$ 的维数 $m$ 不必等于 $n$。
+此时让反鬼多重态 $(\chi_a,H_a)$ 的指标取 $a=1,\dots,m$。
+
+在 $\widehat M$ 上定义超场：对反鬼多重态积分掉，得
+\begin{equation}
+\widehat{\mathrm{Eul}}_s := \int_{\widetilde V}\prod_{a=1}^{m}
+\frac{\dd\chi_a\dd H_a}{(2\pi\ii)}\,\ee^{Q(\Psi)}
+\tag{3.29}
+\end{equation}
+其中 $\widetilde V$ 是这样的超空间：其函数是鬼数为零的玻色变量 $H_a$ 与鬼数为 $-1$
+的变量 $\chi_a$ 的函数。这是关于 $x^i$ 与 $\psi^i$ 的 BRST 闭超场，因而通过对应
+(3.9) 给出一个闭微分形式 $\mathrm{Eul}_s$。重要的是，它的鬼数为 $m$。这一点是显然的：
+$\chi_a$ 的鬼数为 $-1$，故每个 $[\dd\chi_a]$ 的鬼数为 $+1$，于是
+$[\dd\chi_1\cdots\dd\chi_m]$ 的鬼数为 $m$。
+
+% [Tutor Note: 小节标题里的“非零指标”指 $n-m\neq0$：此时 $\mathrm{Eul}_s$ 是正次数的
+% 形式，必须插入鬼数为 $n-m$ 的可观测量 $\mathcal O$ 才能得到非零积分。在 QFT 中
+% $n$ 与 $m$ 各自发散而 $n-m$ 有限，这句陈述才有内容——参看 §3.6 关于 Fredholm
+% 指标的说明与 (3.58)。]
+现在，若 $\mathcal O(x,\psi)$ 是另一个 $Q$-闭可观测（量），则可以考虑更一般的积分
+\begin{equation}
+\langle\mathcal O\rangle := \int_{\widehat{\RR^n}}\mathrm{ber}(x|\psi)\,
+\mathcal O\,\widehat{\mathrm{Eul}}_s
+\tag{3.30}
+\end{equation}
+注意
+
+\begin{enumerate}
+\item 我们假设变量比方程多，即 $n>m$，并且至少在 $\mathcal Z(s)$ 上线性变换 $\dd s$
+  是满射。
+\item 仅当 $\mathcal O$ 的鬼数为 $n-m$ 时积分才可能非零。
+\item 该积分只依赖于 $\mathcal O$ 在 $H^{\ast}_Q$ 中的上同调类。
+\end{enumerate}
+
+此外，若 $\mathcal O_\omega$ 是相应于闭形式 $\omega$ 的 $Q$-闭超场，则可以把上面的
+说法推广为
+\begin{equation}
+\langle\mathcal O_\omega\rangle
+= \int_{\widehat{\RR^n}}\mathrm{ber}(x|\psi)\,\mathcal O_\omega\,
+\widehat{\mathrm{Eul}}_s
+= \int_{\RR^n}\omega\wedge\mathrm{Eul}_s
+= \int_{\mathcal Z(s)}\iota^{\ast}(\omega)
+\tag{3.31}
+\end{equation}
+
+% [Tutor Note: 原文此处有一处笔误：“corresponding to a closed from $\omega$ is
+% closed”中 “from” 系 “form” 之误，且 “is closed” 重复。另外 (3.31) 的三个等号
+% 分别是：超空间积分 = 形式积分（用 (3.16)）、局域化到零点集（用 $n>m$ 时的
+% delta 函数性质）。第三等号要求 $\deg(\omega)=n-m$，否则两端次数不符。]
+% [原 PDF 第 14 页（pages/page015.png）]
+它局域化到零点集 $\mathcal Z(s)$ 上。这里 $\iota:\mathcal Z(s)\hookrightarrow\RR^n$
+是包含映射，$\deg(\omega)=n-m$。
+
+在 QFT 应用中 $n$ 与 $m$ 都将无穷大，但 $n-m$ 将是某个 Fredholm 算子的指标，
+从而右端的积分落在有限维空间上。我们将在下文重述这一评注。
+
+\subsection{托姆同构定理}
+
+局域化恒等式 (3.31) 与托姆同构定理极为相似。我们先回顾该定理，再用它推广 (3.31)。
+
+回顾托姆同构定理：设 $\pi:E\to M$ 是 $n$ 维流形上的实定向向量丛，$E$ 的秩为 $m$。
+定理断言存在同构
+\begin{align}
+H^i(M) &\cong H^{i+m}_{v-cpt}(E) \tag{3.32}\\
+\omega &\to \pi^{\ast}(\omega)\Phi(E) \tag{3.33}
+\end{align}
+此外，若 $s:M\to E$ 是一般（generic）截面，则 $s^{\ast}\Phi(E)$ 是 $E$ 的欧拉类。
+若 $M$ 紧，则欧拉类在 Poincar\'e 对偶意义下对偶于 $s$ 的零点集：
+\begin{equation}
+\int_M\omega\,s^{\ast}(\Phi(E)) = \int_{\mathcal Z(s)}\iota^{\ast}(\omega)
+\tag{3.34}
+\end{equation}
+
+% [Tutor Note: (3.32)–(3.34) 与 §3.2 的 $\widehat{\mathrm{Eul}}_s$ 之间有一个容易
+% 忽略的差别：Thom 类 $\Phi(E)$ 是 $E$ 上沿纤维具\emph{紧}支集的形式，而
+% (3.35)–(3.37) 给出的 Mathai–Quillen 代表元沿纤维只是速降、并不具紧支集；作者用
+% “速降上同调” $H^{\ast}_{rd}(E)$ 来弥补。原文此处只假设 $s$ 一般，并未明说
+% $\mathcal Z(s)$ 紧；而 (3.34) 的右端作为普通积分要求 $\iota^{\ast}\omega$ 具紧支集，
+% 这是一个隐含假设。]
+在拓扑学中，紧垂直支集这一条件非常自然，但在物理中并不那么自然。为了与物理接轨，
+我们给 $E\to M$ 的纤维配上黎曼度量。于是可以用速降（rapid decrease）代替紧垂直支集
+（即相应形式沿纤维属于 Schwarz 空间）。我们于是可以用沿纤维速降的上同调代替紧垂直
+支集上同调：$H^{\ast}_{v-cpt}(E)\cong H^{\ast}_{rd}(E)$。
+
+带有 $H^{\ast}_{rd}(E)$ 的托姆定理促使我们把上面的 $\widehat{\mathrm{Eul}}_s$
+推广到用定向实向量丛 $E\to M$ 代替 $\RR^n\times V$ 的情形。为此必须给 $E$ 一个与
+纤维度量相容的联络 $\nabla$。我们以 $\Theta_j^{ab}$ 记相对于正交归一基的局部
+1-形式。\footnote{即：若 $e^a$ 是 $E$ 的局部正交归一截面基，$\nabla$ 为联络，
+则 $\nabla e^a=\dd x^j\Theta_j^{ab}e^b$，其中对 $j$ 与 $b$ 求和。} 为把作用量
+协变化，须在 $\Psi$ 中加上第三项：
+\begin{equation}
+\Psi = -\frac{\hbar}{2}\chi_aH_a-\ii\chi_a s^a
++\frac{\hbar}{2}\chi_a\Theta_i^{ab}\psi^i\chi_b
+\tag{3.35}
+\end{equation}
+算出 $Q\Psi$ 后，第三项使 $s$ 的导数协变化；再把辅助场 $H_a$ 积分掉，得
+\begin{equation}
+S = -\frac{1}{2\hbar}s^as^a+\ii\chi_a(\nabla_js)^a\psi^j
++\frac{\hbar}{4}\chi_a\chi_bF_{ij}^{ab}\psi^i\psi^j
+\tag{3.36}
+\end{equation}
+
+% [Tutor Note: (3.36) 中 $F$ 项的系数 $\hbar/4$ 是作者略去的算术：它来自 $\Psi$ 的
+% 前置因子 $\hbar/2$ 与双重反对称化 $1/2$（分别对 $a\leftrightarrow b$ 与
+% $i\leftrightarrow j$）之积，即 $\frac{\hbar}{2}\cdot\frac12$；$F_{ij}^{ab}$ 则由
+% $Q$ 作用在 $\Theta_i^{ab}\psi^i\chi_b$ 上时产生的 $\psi^j\partial_j\Theta_i^{ab}$
+% 项与 $\Theta\wedge\Theta$ 项合成。符号取决于 $\Theta^{ab}$ 的反对称性
+% $\Theta^{ab}=-\Theta^{ba}$ 与 $\chi$ 的交换次序，读者重算时务必固定
+% $\nabla_js^a=\partial_js^a+\Theta_j^{ab}s^b$ 这一约定。]
+\subsection{局域化公式}
+
+与流形上实定向向量丛 $\pi:E\to M$ 及一般（generic）截面 $s$ 相伴随的局域化公式
+如下。
+% [原 PDF 第 15 页（pages/page016.png）]
+在 $\widehat M$ 上定义超场：
+\begin{equation}
+\widehat{\mathrm{Eul}}_s(E,\nabla) := \int\prod_{a=1}^{m}
+\frac{\dd\chi_a\dd H_a}{(2\pi\ii)}\,\ee^{S}
+\tag{3.37}
+\end{equation}
+其中 $S=Q(\Psi)$ 由 (3.36) 与 (3.35) 给出。
+
+$E$ 上的联络 $\nabla$ 定义一个线性算子：
+\begin{equation}
+\nabla s:\ T_pM\to E_p
+\tag{3.38}
+\end{equation}
+我们假设 $s$ 足够一般（generic），使得由正合列
+\begin{equation}
+0\to\im\nabla s\to E\to\coker\nabla s\to 0
+\tag{3.39}
+\end{equation}
+定义的 $\coker\nabla s$ 的纤维具有有限秩，并构成光滑向量丛。给定 $M$ 与 $E$ 的定向，
+丛 $\coker\nabla s$ 便具有典范定向；我们断言，对超空间上的 $Q$-闭函数 $\mathcal O$ 有
+\begin{equation}
+\int_{\widehat E}\mathrm{ber}(x,H|\psi,\chi)\ee^{S}\mathcal O
+= \int_{\widehat M}\mathrm{ber}(x|\psi)\widehat{\mathrm{Eul}}_s(E,\nabla)\mathcal O
+= \int_{\mathcal Z(s)}\iota^{\ast}(\omega_{\mathcal O})
+\wedge\mathrm{Eul}(\coker\nabla s)
+\tag{3.40}
+\end{equation}
+其中 $\widehat E$ 是与丛 $E$ 相应的总超空间。它是 (3.21) 的自然推广。
+
+% [Tutor Note: (3.40) 与 §3.3 的 Thom 同构的对应关系值得逐项对照。第一等号是
+% 超空间上的局域化（把 (3.20) 附近的 $\hbar\to0$ 论证一般化），第二等号才是 Thom
+% 同构的微分形式版本：Mathai–Quillen 代表元
+% $\widehat{\mathrm{Eul}}_s(E,\nabla)$ 是 Thom 类 $\widehat\Phi(E)$ 沿 $s$ 的拉回，
+% 而 $\Phi(E)$ 拉回到 $M$ 上即 Euler 类（这正是 (3.34) 之前那句陈述），故 (3.34) 的
+% $\int_{\mathcal Z(s)}\iota^{\ast}\omega$ 在此被
+% $\int_{\mathcal Z(s)}\iota^{\ast}\omega_{\mathcal O}\wedge\mathrm{Eul}
+% (\coker\nabla s)$ 取代。差别的来源正是 $\coker\nabla s$：在 $\mathcal Z(s)$ 上有
+% $0\to TM\xrightarrow{\nabla s}E\to\coker\nabla s\to0$，故由 Whitney 和公式
+% $\mathrm{Eul}(E)=\mathrm{Eul}(TM)\,\mathrm{Eul}(\coker\nabla s)$，而
+% $\iota^{\ast}\omega_{\mathcal O}$ 只“看得到”切向部分。换言之，(3.40) 就是把
+% “Euler 类 = 零点集的 Poincar\'e 对偶”这一陈述在形式层面写开的结果，
+% $\mathrm{Eul}_s$ 只是选取了 Thom 类的一个沿纤维速降的代表元。]
+评注：
+
+\begin{enumerate}
+\item (3.40) 的证明是直接的。见 \cite{ref4}。\footnote{〔原稿边注〕须补上节号，
+  并像 CMR 那篇文献一样也引一下威滕（Witten）。}
+\item 可以把 $\widehat{\mathrm{Eul}}_s(E,\nabla)$ 看作 Thom 类 $\widehat\Phi(E)$
+  的某个代表元沿 $s$ 的拉回。$H^m_{rd}(E)$ 中这个特定的 Thom 类代表元属于
+  Mathai 与 Quillen。注意它沿纤维速降，而不具紧支集。完整解释见 \cite{ref4}。
+\item 下文的等变情形中我们需要在 $\Psi$ 中增加一项。届时我们把 (3.35) 中的 $\Psi$
+  记作 $\Psi_{\mathrm{loc}}$。
+\item (3.35) 中出现非规范不变的表达式 $\Theta_i^{ab}$，这或许令人不安。我们并不声称
+  $\Psi$ 在场空间上整体良定义。以这种方式书写作用量，意在表明作用量是 $Q$-闭的，
+  且其小扰动是 $Q$-恰当的（即 $Q$ 作用在某个整体良定义的表达式上）。情形与把示性类的
+  Chern--Weil 代表元写成次级类的外微分颇相类似。（例如把
+  $\Tr F\wedge F=\dd\Tr\big(A\dd A+\frac{2}{3}A^3\big)$。）\footnote{〔原稿边注〕
+  距第 3 节开始已过 43 分钟。}
+\end{enumerate}
+
+% [Tutor Note: 两处原文疑误：(i) 紧随 (3.40) 的“它是 (3.21) 的自然推广”中，
+% (3.21) 只是记号 $C^{\infty}(\widehat E)$，真正被推广的是 (3.30)–(3.31)；
+% (ii) 评注 1 把 (3.40) 的证明称为“straightforward”而完全略去，其关键一步是
+% 对 $\chi_a$ 的 Berezin 积分如何产生 $\mathrm{Eul}(\coker\nabla s)$——当 $m>n$
+% 时这是一族非平凡的高斯–Berezin 积分，而非 delta 函数，值得读者自行补出。
+% 评注 4 的 Chern–Weil 类比其实给出了正确读法：$\Psi$ 之于 $S$ 正如
+% $A\dd A+\frac{2}{3}A^3$ 之于 $\Tr F\wedge F$。]
+% [原 PDF 第 16 页（pages/page017.png）]
+\subsection{等变性}
+
+要把上述形式用于规范理论，还需要一项形式上的发展，以计入规范不变性。不幸的是，
+这稍显繁复，因此我们将略去大部分技术细节，尽量简要地概述整个故事。细节见
+\cite{ref4} 的详尽而从容的讨论，以及 \cite{ref37} 的提纲挈领式总结。
+
+设 $M$ 是主 $\mathcal G$-丛：
+\begin{equation}
+\pi:\ M\to\bar M
+\tag{3.41}
+\end{equation}
+其中 $\mathcal G$ 是某个李群；又设 $E\to M$ 是 $\mathcal G$-等变向量丛，配有
+$\mathcal G$-等变联络。再设截面 $s$ 也是等变的，于是 $\mathcal G$ 作用在零点集
+$\mathcal Z(s)$ 上。我们希望把方程 $s(x)=0$ 的解的\emph{模空间}
+\begin{equation}
+\mathcal M := \mathcal Z(s)/\mathcal G\ \hookrightarrow\ \bar M
+\tag{3.42}
+\end{equation}
+上的闭形式积分，用 $\widehat E$ 上的积分来表示。
+
+为此需要一个\emph{投影形式} $\tilde{\mathcal P}(M\to\bar M)$，它具有性质
+\begin{equation}
+\int_M\pi^{\ast}(\bar\omega)\,\tilde{\mathcal P}(M\to\bar M)
+= \int_{\bar M}\bar\omega
+\tag{3.43}
+\end{equation}
+
+% [Tutor Note: (3.43) 与 (3.44) 的角色容易混淆。(3.43) 是投影形式在 $M$ 上的
+% 原始定义：把 $\bar M$ 上的形式拉回到 $M$，再沿纤维积掉；(3.44) 则把它写成
+% $\Lie(\mathcal G)$ 上的积分，后者只有在 $M\to\bar M$ 确为主丛（纤维 $\cong\mathcal G$）
+% 时才成立，这正是 (3.41) 假设 $M$ 为主丛的用处。注意 (3.44) 的 $[\dd\phi]$ 是
+% 李代数上的积分（$\phi$ 是 2 次\emph{玻色}场），与 (3.17) 的 Berezinian 测度是
+% 两套完全不同的测度，不可混用。]
+结果表明，书写投影形式最方便的方式，是用 $C^{\infty}(\widehat E)$ 的等变上同调来写，
+即把左端换成等变微分形式上的积分：
+\begin{equation}
+\int_M\pi^{\ast}(\bar\omega)\,\tilde{\mathcal P}(M\to\bar M)
+= \int_{\Lie(\mathcal G)}[\dd\phi]\int_M\Omega_{\bar\omega}\,
+\mathcal P(M\to\bar M)
+\tag{3.44}
+\end{equation}
+其中我们引入了新的（2 次）玻色场 $\phi\in\Lie(\mathcal G)$，\footnote{此处破坏了
+我们迄今的约定：交换场用拉丁字母、反交换场用希腊字母。} $\Omega_{\bar\omega}$ 是
+相应于 $\bar\omega$ 的不变且等变闭的微分形式，而 $\mathcal P(M\to\bar M)$ 是等变闭
+形式\footnote{〔原稿边注〕须说明如何（验证）。}。
+
+为写出投影形式 $\mathcal P(M\to\bar M)$，可以使用等变上同调的 Cartan 模型或 Weil
+模型。就 Cartan 模型而言，我们的复形是
+\begin{equation}
+\operatorname{Sym}^{\bullet}(\Lie(\mathcal G))\;\widehat\otimes\;
+C^{\infty}(\widehat E)\;\widehat\otimes\;
+\mathcal W(\Lie(\mathcal G)))^{\vee}
+\tag{3.45}
+\end{equation}
+其中第一个因子由 $\phi$ 生成，第二个由 $x,\psi,\chi,H$ 生成，最后一个因子是 Weil
+代数但取相反的符号次数（这就是“对偶”的含义）。这个对偶 Weil 代数的生成元记作
+$\bar\phi,\eta\in\Lie(\mathcal G)$，它们分别是玻色与费米的，鬼数分别为 $-2$ 与 $-1$。
+微分 $Q$ 现在的作用方式为：
+% [原 PDF 第 17 页（pages/page018.png）]
+\begin{gather}
+Qx = \psi \notag\\
+Q\psi = -\mathcal L_{\phi}x \notag\\
+Q\chi = H \notag\\
+QH = -\mathcal L_{\phi}\chi \tag{3.46}\\
+Q\bar\phi = \eta \notag\\
+Q\eta = -\mathcal L_{\phi}\bar\phi \notag
+\end{gather}
+
+% [Tutor Note: (3.45)–(3.46) 是本讲鬼数分配最反直觉之处。等变参数
+% $\phi\in\Lie(\mathcal G)$ 是 2 次\emph{玻色}场；对偶 Weil 代数的生成元
+% $\bar\phi,\eta$ 分别取 $-2$、$-1$ 次（“相反符号的次数”就是“对偶”的确切含义）。
+% 由 (3.46) 立即可得 $Q^2=-\mathcal L_\phi$ 而非零——这是 Cartan 模型的标准性质，
+% $Q$ 只是等变微分，只在 $\mathcal G$-不变的子复形上才有 $Q^2=0$；因此 (3.56)
+% 的左端必须写成 $(H^{\ast}_Q)^{\mathcal G}$，而不能是 $H^{\ast}_Q$。脚注 7 作者
+% 自承此处破坏了“拉丁字母表交换、希腊字母表反交换”的约定：$\bar\phi$ 是玻色的
+% 却用希腊字母，读时勿被字形误导。另，原文 (3.45) 与 (3.47)、(3.54) 中的
+% $\mathcal W(\Lie(\mathcal G)))^{\vee}$ 多出一个右括号，疑脱漏了最左端的左括号，
+% 本译本照原样保留。]
+这里 $\mathcal L_\phi$ 是沿 $\phi$ 所对应的向量场的李导数；我们还引入了两个新场：
+属于 $\Lie(\mathcal G)$ 的偶场 $\bar\phi$（$-2$ 次）与属于 $\Lie(\mathcal G)$ 的奇场
+$\eta$（$-1$ 次），它们在 $\widehat{\mathrm{Lie}}(\mathcal G)$ 上生成超场。于是我们将有
+如下的等式：
+\begin{equation}
+\mathcal P(M\to\bar M) = \int_{\mathcal W(\Lie(\mathcal G)))^{\vee}}
+\dd\bar\phi\,\dd\eta\ \ee^{Q(\Psi_{\mathrm{proj}})}
+\tag{3.47}
+\end{equation}
+为写出 $\Psi_{\mathrm{proj}}$，我们在 $\Lie(\mathcal G)$ 上取不变度量（给出上面用到的
+测度 $[\dd\phi]$），并在 $\pi:M\to\bar M$ 的纤维上取不变测度。垂直向量场给出一个
+典范映射：
+\begin{equation}
+\mathcal V_m:\ \Lie(\mathcal G)\to T_mM
+\tag{3.48}
+\end{equation}
+而由于我们有 $\mathcal G$-不变度量，便有一个 $\mathcal G$-协变的 1-形式：\footnote{此处
+不妨注意：由与垂直向量场正交补给出的典范联络为
+\begin{equation}
+\Theta = \frac{1}{\mathcal V^{\dagger}\mathcal V}\,\mathcal V^{\dagger}.
+\tag{3.49}
+\end{equation}}
+\begin{equation}
+\mathcal V_m^{\dagger}:\ T_mM\to\Lie(\mathcal G)
+\tag{3.50}
+\end{equation}
+利用这个取值于 $\Lie(\mathcal G)$ 的 1-形式，有
+\begin{equation}
+\Psi_{\mathrm{proj}} = \ii(\bar\phi,\mathcal V^{\dagger})
++(\bar\phi,[\phi,\eta]).
+\tag{3.51}
+\end{equation}
+这里的 $\mathcal V^{\dagger}$ 应理解为取值于 $\Lie(\mathcal G)$ 的超场。第二项反映了
+$\bar\phi,\eta$ 这两个场本身在“规范变换”下的变换行为。\footnote{第二项在本题材中
+一直有点令人头疼，可追溯到威滕（Witten）的原始论文 \cite{ref53}。}
+
+% [Tutor Note: (3.51) 的第二项 $(\bar\phi,[\phi,\eta])$ 是把 (3.46) 中
+% $Q\bar\phi=\eta$、$Q\eta=-\mathcal L_\phi\bar\phi$ 的“非齐次性”吸收进
+% $Q\Psi_{\mathrm{proj}}$ 的必然产物：若略去它，$Q^2\Psi$ 中的
+% $-\mathcal L_\phi$ 项会使 $\ee^{Q\Psi}$ 不闭。\cite{ref53} 的原始处理与此处的
+% 符号约定可能相差一个整体符号，比较文献时请以 $Q^2=-\mathcal L_\phi$ 为准。]
+现在可以验证 $\mathcal P(M\to\bar M)$ 是等变闭的。由于 $s$ 是 $\mathcal G$-等变的，
+我们得知
+\begin{equation}
+0\to\Lie(\mathcal G)\xrightarrow{\mathcal V}TM\xrightarrow{\nabla s}E
+\to\coker(\nabla s)\to 0
+\tag{3.52}
+\end{equation}
+是一个复形。我们可以把它卷起来，定义
+\begin{equation}
+\mathbb F = \nabla s\oplus\mathcal V^{\dagger}:\ TM\to E\oplus\Lie(\mathcal G).
+\tag{3.53}
+\end{equation}
+
+% [Tutor Note: (3.53) 把 (3.52) 的复形“卷起来”（原文 role it up，应为
+% roll it up）成单个算子 $\mathbb F=\nabla s\oplus\mathcal V^{\dagger}$；这一步把
+% “$s=0$ 的模空间”的形变复形压缩成一个 Fredholm 算子，$\operatorname{Index}(\mathbb F)$
+% 遂成为 $\dim\mathcal M$ 在无穷维情形的（形式）替代物，这是 §3.6 与 §4 之后
+% 一切指标计算的接口。(3.58) 的选择定则即由此而来。另：原文在脚注 9 标记之后
+% 还夹着一个无意义的衍字“aaa”，显系未清理的草稿痕迹，本译本略去。]
+% [原 PDF 第 18 页（pages/page019.png）]
+于是我们得到所要考虑的最一般的局域化公式：
+\begin{equation}
+\boxed{
+\begin{aligned}
+Z &:= \int_{\Lie(\mathcal G)}[\dd\phi]
+\int_{\widehat E\times\mathcal W(\Lie(\mathcal G)))^{\vee}}
+\mathrm{ber}(x,H,\bar\phi|\psi,\chi,\eta)\ \widehat{\mathcal O}\,
+\ee^{Q\Psi_s}\\
+&= \int_{\mathcal M}\bar\omega_{\widehat{\mathcal O}}
+\wedge\mathrm{Eul}(\coker(\mathbb F))
+\end{aligned}}
+\tag{3.54}
+\end{equation}
+其中
+\begin{equation}
+\Psi_s = \Psi_{\mathrm{loc},s}+\Psi_{\mathrm{proj}}
+\tag{3.55}
+\end{equation}
+而 $\Psi_{\mathrm{loc}}$ 由式 (3.35) 给出；最后，该公式假定存在同构
+\begin{equation}
+(H^{\ast}_Q)^{\mathcal G}\cong H^{\ast}(\mathcal M)
+\tag{3.56}
+\end{equation}
+把 $\mathcal G$-不变且等变闭的超场 $\widehat{\mathcal O}$ 映为 $\mathcal M$ 上的形式
+$\omega_{\widehat{\mathcal O}}$：
+\begin{equation}
+\widehat{\mathcal O}\ \leftrightarrow\ \bar\omega_{\widehat{\mathcal O}}
+\tag{3.57}
+\end{equation}
+特别注意，仅当
+\begin{equation}
+\mathrm{gh}\#(\widehat{\mathcal O}) = \operatorname{Index}(\mathbb F).
+\tag{3.58}
+\end{equation}
+时积分才可能非零\footnote{〔原稿边注〕须说明 $\widehat{\mathcal O}=\phi$ 如何对应于
+由 $\Theta$ 的曲率给出的 $\omega$。}。
+
+\subsection{场、方程、对称性范式}
+
+上述发展在有限维情形本应可以严格表述（我们的表述并不严格）。现在我们作一个巨大的
+跳跃，假定这一形式体系可推广到无穷维路径积分。上面全部形式发展的要点是：
+
+\noindent\emph{所有拓扑扭曲的量子场论都落在此范式之内。}
+
+一般地，要以我们所谓的“Mathai--Quillen”形式给出一个拓扑场论，需指定三件事。
+
+\begin{enumerate}
+\item \emph{场}：问题的基本场在上文中由 $x^i$ 代表。问题的方程与对称性随后决定了
+  其余的场内容：$H,\phi,\bar\phi,\psi,\chi,\eta$。
+\item \emph{方程}：我们关心场 $s(x^i)$ 所满足的某些方程。它们通常是有趣的偏微分方程。
+  我们把它们看作某个典则截面（其丛在上文中记作 $E$）的零点轨迹。
+\item \emph{对称性}：这些方程通常具有规范对称性。规范变换群记作 $\mathcal G$。
+\end{enumerate}
+
+如上所述，主要结论是：路径积分局域化到模空间
+\begin{equation}
+\mathcal M := \{x:\ s(x)=0\}/\mathcal G
+\tag{3.59}
+\end{equation}
+并且，若计入算子插入，路径积分计算的是该模空间上上同调类的积分。
+
+% [Tutor Note: (3.58)–(3.59) 是全节的落点：路径积分局域化到
+% $\mathcal M=\{x:s(x)=0\}/\mathcal G$，并按
+% $\mathrm{gh}\#(\widehat{\mathcal O})=\operatorname{Index}(\mathbb F)$ 选取插入算子。
+% 作者随即列出四个例子，其共同结构正是“场 $x^i$／方程 $s=0$／规范群 $\mathcal G$”
+% 三件套；§4 起将把唐纳森–威滕理论（$x^i\rightsquigarrow$ 联络 $A$、
+% $s(A)=F+{}^{\ast}F$、$\mathcal G=\Aut(P)$）装进这一范式，届时 (3.54) 中的
+% $\mathbb F$ 变成 ASD 形变复形，其指标给出唐纳森不变量的鬼数选择定则。]
+% [原 PDF 第 19 页（pages/page020.png）]
+我们上文遇到的线性算子 $\mathbb F=\nabla s\oplus\mathcal V^{\dagger}$ 将是 Fredholm
+算子，通常与和该方程相关的椭圆复形相联系。它的指标是 $n-m$ 的推广。此时 $n$ 与 $m$
+都是无穷大，但借助指标理论，其差可以有合理的定义。当指标非零时，我们需要插入具有
+相应鬼数的算子，才能得到非零的路径积分。
+
+这里的这一基本范式归功于威滕（Witten）[待补：ICTP Lectures]。文献 \cite{ref4} 对
+众多流行的上同调拓扑场论详细展开了 Mathai--Quillen 形式体系。
+
+\textbf{例子}
+
+\begin{enumerate}
+\item \emph{唐纳森--威滕理论}：$x^i$ 应解释为定向黎曼四维流形 $X$ 上主
+  $G$-丛的联络 $A\in\Conn(P)$。方程为 $s(A)=F+{}^{\ast}F$。群
+  $\mathcal G=\Aut(P)$ 即规范变换群。
+\item \emph{A 型拓扑 $\sigma$ 模型}：此时 $x^i$ 是从黎曼面到某个带相容近复结构的
+  辛流形（靶空间）的映射。方程是伪全纯映射方程，规范变换群是平凡的。
+\item \emph{B 型拓扑 $\sigma$ 模型}：此时 $x^i$ 是从黎曼面到带复结构的靶空间的映射。\footnote{〔原稿边注〕待查。}
+\item 其他例子包括超对称量子力学（用于指标定理的路径积分证明
+  [待补：Alvarez-Gaum\'e；Friedan--Windey]）、拓扑引力、拓扑弦论、作为弦论的
+  二维大 $N$ YM、Vafa--威滕理论、Kapustin--威滕理论、特殊和乐流形上的
+  瞬子，等等。\footnote{〔原稿边注〕距第 3.5 节开始已过 20 分钟。}
+\end{enumerate}

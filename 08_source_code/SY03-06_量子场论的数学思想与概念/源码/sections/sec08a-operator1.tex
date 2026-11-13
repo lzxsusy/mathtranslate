@@ -1,0 +1,320 @@
+%=====================================================================
+% 8  量子力学的算符方法（前半）
+% 原文：Section 8. Operator approach to quantum mechanics
+%       （arXiv:2409.03117v1, p. 98--111）
+%=====================================================================
+\section{量子力学的算符方法}
+
+\begin{keytakeaways}
+\begin{itemize}
+  \item \textbf{物理图像：}经典力学有拉格朗日与哈密顿两套语言，量子力学相应地有路径积分与算子两套语言；本章处理后者，其核心是把相空间上的经典动力学改写为 Hilbert 空间上的算子动力学。
+  \item \textbf{数学工具：}有界自伴算子的谱定理（酉等价于乘法算子）、无界算子的可闭性与闭包、伴随算子与边界形式、von Neumann 亏指数，以及由自伴算子生成的强连续单参数酉群。
+  \item \textbf{关键结论：}哈密顿量必须实现为（本质）自伴算子，初值问题才适定；自伴扩张的存在性由亏指数是否相等决定，而不同的自伴扩张对应不同的空间边界条件，并可给出完全不同的谱。
+  \item \textbf{易错点：}对称不等于自伴；只有本质自伴时闭包才唯一；Poisson 括号升格为对易子时带有因子 $-i/\hbar$，哈密顿方程由此过渡为 Schr\"odinger 方程。
+\end{itemize}
+\end{keytakeaways}
+
+\bigskip
+\noindent\rule{\textwidth}{0.6pt}
+\bigskip
+
+在力学与场论（无论经典还是量子）中，有两套主要语言——拉格朗日语言与哈密顿语言。在经典情形，拉格朗日语言是变分学的语言（亦即研究作用量泛函的极值），而哈密顿语言则是辛几何与 哈密顿方程的语言。相应地，在量子情形，拉格朗日语言是路径积分的语言，而哈密顿语言是算子与 Schr\"odinger 方程的语言。我们目前已经研究了前者（至少在微扰展开的意义上），现在转向后者。
+
+\subsection{经典力学中的 哈密顿方程}
+
+我们先回顾经典力学的 哈密顿形式。更多细节可参阅优秀的著作 \cite{A}。
+
+首先回顾经典粒子或粒子系统运动的拉格朗日描述。粒子的位置由位形空间 $X$ 中的一点 $q$ 描述，我们假定 $X$ 是一个流形。系统的拉格朗日量是切丛全空间上的（光滑）函数 ${\mathcal L}: TX\to
+\Bbb R$。于是作用量泛函为 $S(q)=\int \mathcal
+L(q,\dot{q})dt$。粒子的轨迹是 $S$ 的极值。$q(t)$ 为 $S$ 的极值的条件等价于欧拉–拉格朗日方程（即运动方程），后者在局部坐标下具有形式
+$$
+\frac{d}{dt}\frac{\partial \mathcal{L}}{\partial \dot{q_i}}=
+\frac{\partial \mathcal{L}}{\partial q_i}.
+$$
+例如，若 $X$ 是 Riemann 流形，且 ${\mathcal L}(q,v)=\frac{v^2}{2}-U(q)$，其中 $U:X\to \Bbb R$ 是势函数，则欧拉–拉格朗日方程就是 Newton 方程
+$$
+\ddot{q}=-U'(q),
+$$
+其中 $\ddot{q}=\nabla_{\dot{q}}\dot q$ 是关于 Levi-Civita 联络的协变导数。
+
+现在考虑拉格朗日量为 ${\mathcal L}(q,v)$ 的系统，其关于 $v$ 的微分（固定 $q$）是微分同胚 $T_qX\to T^*_qX$。在上述 Riemann 流形 $X$ 的特殊情形中这当然成立。
+
+\begin{definition}
+具有拉格朗日量 ${\mathcal L}$ 的系统的\emph{哈密顿量（或能量函数）}是函数 $H: T^*X\to \Bbb R$，它是 ${\mathcal L}$ 沿纤维的 Legendre 变换；亦即 $H(q,p)=pv_0-{\mathcal L(q,v_0)}$，其中 $v_0$ 是 $pv-{\mathcal L(q,v)}$ 的（唯一）临界点。流形 $T^*X$ 称为\emph{相空间（或状状态空间）}。变量 $p$ 称为\emph{动量变量}。
+\end{definition}
+
+例如，若 ${\mathcal L}=\frac{v^2}{2}-U(q)$，则 $H(q,p)=\frac{p^2}{2}+U(q)$。
+
+\begin{remark} 由于 Legendre 变换是对合的，我们也有：拉格朗日量是哈密顿量沿纤维的 Legendre 变换。
+\end{remark}
+
+设 $q_i$ 是 $X$ 上的局部坐标。该坐标系给出 $T^*X$ 上的坐标系 $(q_i,p_i)$。我们得到
+
+\begin{proposition}
+运动方程等价于\emph{哈密顿方程}
+$$
+\dot{q_i}=\frac{\partial H}{\partial p_i},\
+\dot{p_i}=-\frac{\partial H}{\partial q_i},
+$$
+其含义是：它们可由 哈密顿方程消去 $p_i$ 而得到。
+\end{proposition}
+
+用 Poisson 括号来写 哈密顿方程是很有用的。回顾流形 $T^*X$ 具有典范辛结构 $\omega=d\alpha$，其中 $\alpha$ 是 $T^*M$ 上的典范 1-形式（称为\emph{Liouville 形式}），其构造如下：对任意 $z\in T_{(q,p)}(T^*X)$，
+$$
+\alpha(z)=(p,d\pi(q,p)z),
+$$
+其中 $\pi: T^*X\to X$ 是投影。在局部坐标下，我们有
+$$
+\alpha=\sum_i p_idq_i,\
+\omega=\sum_i dp_i\wedge dq_i.
+$$
+
+现在设 $(M,\omega)$ 是辛流形（在我们的情形 $M=T^*X$）。由于 $\omega$ 非退化，可以定义 Poisson 双向量 $\omega^{-1}$，它是丛 $\wedge^2TM$ 的一个截面。于是，给定 $M$ 上任意两个光滑函数 $f,g$，可以定义第三个函数——它们的\emph{Poisson 括号}
+$$
+\lbrace{ f,g\rbrace}=(df\otimes dg,\omega^{-1}).
+$$
+该运算反对称并满足 Jacobi 恒等式，亦即它是 $C^\infty(M)$ 上的李括号。对于 $M=T^*X$，在局部坐标下有
+$$
+\lbrace{ f,g\rbrace}=\sum_i\biggl(\frac{\partial f}{\partial
+  q_i}\frac{\partial g}{\partial p_i}-
+\frac{\partial f}{\partial
+  p_i}\frac{\partial g}{\partial q_i}\biggr).
+$$
+
+这表明 哈密顿方程可以用 Poisson 括号写成如下形式：
+\begin{equation}\label{heobs}
+\frac{d}{dt}f(q(t),p(t))=\lbrace{f,H\rbrace}(q(t),p(t)).
+\end{equation}
+对任意光滑函数（“经典可观测量”）$f\in C^\infty(T^*X)$ 成立；或者简写为
+$$
+\frac{df}{dt}=\lbrace f,H\rbrace.
+$$
+换言之，哈密顿方程说的是：$f$ 的观测值的变化率等于 $\lbrace{f,H\rbrace}$ 的观测值。
+
+\subsection{无界自伴算子}
+
+量子力学在哈密顿框架下的严格数学处理，建立在 von Neumann 关于 Hilbert 空间中无界自伴算子的理论之上。我们回顾该理论的基础。
+
+\subsubsection{有界自伴算子的谱定理}
+设 $\mathcal H$ 是可分复 Hilbert 空间，内积为 $\la,\ra$（对第一个变量反线性，这是量子物理中的传统约定）。我们首先回顾有界自伴算子 $A: \mathcal H\to \mathcal H$ 的\emph{谱定理}，它推广了 Hermitian 矩阵的对角化定理。
+
+\begin{theorem}\label{specthe} (von Neumann) 设 $A$ 是有界自伴算子。则存在测度空间 $(X,\mu)$、本性有界可测函数 $h: X\to \Bbb R$ 以及等距同构 $\mathcal H\to L^2(X,\mu)$，使得在该等距同构下 $A$ 对应于乘以 $h$ 的乘法算子。此外，谱 $\sigma(A)$ 是使集合 $h^{-1}(\lambda-\varepsilon,\lambda+\varepsilon)$ 对每个 $\varepsilon>0$ 都具有正测度（即 $\mu(h^{-1}(\lambda-\varepsilon,\lambda+\varepsilon))>0$）的 $\lambda\in \Bbb R$ 之集；而 $A$ 的本征值（若存在）是满足 $\mu(h^{-1}(\lambda))>0$ 的 $\lambda\in \Bbb R$，其本征函数是 $h^{-1}(\lambda)$ 的具有正测度的子集的指示函数。
+\end{theorem}
+
+\subsubsection{可闭算子与闭算子}
+现在转向不一定有界的算子。设 $\mathcal H'$ 是另一个可分 Hilbert 空间。$\mathcal H$ 上的\emph{稠定线性算子}是一对 $(A,V)$，其中 $V\subset \mathcal H$ 是稠密子空间，$A$ 是（可能无界的）线性算子 $V\to \mathcal H'$。空间 $V$ 称为 $A$ 的\emph{定义域}；在记号中我们常常省略它，只用 $A$ 表示该算子。这样的算子 $A$ 有图 $\Gamma_A\subset V\times \mathcal H'\subset \mathcal H\times \mathcal H'$。设 $\overline \Gamma_A$ 是 $\Gamma_A$ 在 $\mathcal H\times \mathcal H'$ 中的闭包。若 $(0,u)\in \overline \Gamma_A$（其中 $u\in \mathcal H'$）蕴含 $u=0$，即第一投影 $p_1:\overline\Gamma_A\to \mathcal H$ 是单射，则称 $A$ 是\emph{可闭的}。此时令 $\overline V:=p_1(\overline \Gamma_A)\subset \mathcal H$，则 $V\subset \overline V$，并得到算子 $A: V\to \mathcal H'$ 到稠定算子 $\overline A: \overline V\to \mathcal H'$ 的延拓，称之为 $A$ 的\emph{闭包}。若 $A$ 可闭且 $\overline A=A$，则称 $A$ 是\emph{闭的}；换言之，$A$ 闭当且仅当它在 $\mathcal H\times \mathcal H'$ 中的图是闭的。显然，对任何可闭的 $A$，其闭包 $\overline A$ 都是闭的。此外，若 $A$ 有界，则它可闭，$\overline V=\mathcal H$，且 $\overline A: \mathcal H\to \mathcal H'$ 就是 $A$ 的连续（=有界）延拓。
+
+然而一般而言，稠定算子未必可闭。例如，若 $\mathcal H'$ 是有限维的而 $A: V\to \mathcal H'$ 无界，则存在序列 $v_n\in V$ 使 $v_n\to 0$ 但 $||Av_n||\ge 1$。于是序列 $w_n:=\frac{v_n}{||Av_n||}$ 趋于 $0$，而 $||Aw_n||=1$；由于 $\mathcal H'$ 中的单位球面紧，必要时取子列，可设 $Aw_n\to u$，其中 $u\in \mathcal H'$ 且 $||u||=1$。于是 $(0,u)\in \overline{\Gamma}_A$，故 $A$ 不可闭。由此可见，$A$ 可闭当且仅当它是有界的。
+
+另一方面，若 $\mathcal H'$ 是无限维的，则存在重要的无界可闭算子类。例如考虑 $\mathcal H=\mathcal H'$ 的情形。称算子 $A: V\to \mathcal H$ 为\emph{对称的}，若对一切 $v,w\in V$ 有 $\la v,Aw\ra=\la Av,w\ra$。我们断言每个对称算子都可闭，且其闭包是对称的。事实上，设 $(v_n,Av_n)\to (0,u)$，$u\in\mathcal H$。取序列 $u_k\in V$ 使 $u_k\to u$。则
+$$
+\la Au_k,v_n\ra=\la u_k,Av_n\ra\to \la u_k,u\ra,\ n\to \infty.
+$$
+但最左端的表达式趋于零，故对一切 $k$ 有 $\la u_k,u\ra=0$，从而 $||u||^2=0$，即 $u=0$，因此 $A$ 可闭。此外，对任意 $v,w\in \overline V$，存在序列 $v_n\to v,w_n\to w$（均在 $V$ 中）使得 $Av_n\to \overline Av$，$Aw_n\to \overline Aw$，于是
+$$
+\la v,\overline Aw\ra=\lim_{n\to \infty}\la v_n,Aw_n\ra=\lim_{n\to \infty}\la Av_n,w_n\ra=\la \overline Av,w\ra,
+$$
+故 $\overline A$ 对称。
+
+\subsubsection{伴随算子}
+然而，仅有闭对称算子对量子力学来说还不够，因为这样的算子一般不能对角化。我们需要的是\emph{自伴}算子，即满足一个重要的附加性质的闭对称算子。为表述这一性质，首先需要定义伴随算子的概念。
+
+设 $(A,V)$ 是闭对称算子。用 $V^\vee$ 记满足如下条件的 $u\in \mathcal H$ 构成的空间：线性泛函 $v\mapsto \la u,Av\ra$ 在 $V$ 上有界。此时由 Riesz 表示定理，存在唯一的向量 $w\in \mathcal H$ 使 $\la u,Av\ra=\la w,v\ra$，且该向量线性依赖于 $u$。于是得到算子 $A^\dagger: V^\vee\to \mathcal H$。注意 $V^\vee\supset V$，且 $A^\dagger$ 是 $A$ 到 $V^\vee$ 的延拓，故 $(A^\dagger,V^\vee)$ 是稠定算子，称为 $(A,V)$ 的\emph{伴随算子}。此外，该算子是闭的：若 $(u_n,A^\dagger u_n)\to (u,w)$，则对 $v\in V$，
+$$
+\la A^\dagger u_n,v\ra=\la u_n,Av\ra\to \la u,Av\ra,\ n\to \infty,
+$$
+同时 $\la A^\dagger u_n,v\ra\to \la w,v\ra$，故 $\la u,Av\ra=\la w,v\ra$，从而 $u\in V^\vee$ 且 $w=A^\dagger u$。
+
+然而我们将看到，$A^\dagger$ 一般不再对称。因此可以考察 $V^\vee$ 上的斜 Hermitian 形式
+$$
+B(v,w):=(A^\dagger v,w)-(v,A^\dagger w)
+$$
+以刻画其非对称性，称之为\emph{边界形式}（之所以这样称呼，是因为在例子中它对应于分部积分产生的边界项）。按定义 $V\subset {\rm Ker}B$（事实上可以证明 $V={\rm Ker}B$，但我们无需此事实）。容易看出，$A$ 的闭对称扩张对应于关于形式 $B$ 的闭迷向子空间 $V\subset L\subset V^\vee$；具体地说，$A$ 到 $L$ 的扩张定义为 $A^\dagger|_L$ 的限制。此外，这样的扩张 $(A^\dagger,L)$ 的伴随算子是 $(A^\dagger, L^\perp)$，其中 $L^\perp$ 是 $L$ 在 $V^\vee$ 中关于 $B$ 的正交补。
+
+\subsubsection{自伴算子}
+称闭对称算子 $(A,V)$ 为\emph{自伴的}，若 $V^\vee=V$，即 $A^\dagger=A$。我们看到，$A$ 的\emph{自伴扩张}对应于\emph{拉格朗日}子空间 $L$，即使得 $L=L^\perp$ 的子空间。注意这样的扩张/子空间可能存在也可能不存在：自伴扩张（或拉格朗日子空间）存在的充要条件是 Hermitian 形式 $iB$ 的符号差 $(n_+,n_-)$ 满足 $n_+=n_-$（亦即 $A$ 的所谓\emph{亏指数} $n_\pm \in \Bbb Z_{\ge 0}\cup\infty$ 相等）。然而在量子力学模型中它们通常存在，并对应于各种空间边界条件。
+
+% [Tutor Note: 对称与自伴的分界全在定义域：对称只要求 <Av,w>=<v,Aw> 对 v,w∈V 成立，自伴则还要求 A 的伴随算子（定义在 V^∨ 上）不再扩大定义域，即 V^∨=V。一般地 V⊊V^∨，商空间 V^∨/V 上的边界形式 B 度量这种“缺陷”；闭对称扩张 ↔ V 与 V^∨ 之间 B-迷向的闭子空间 L，自伴扩张 ↔ B-拉格朗日子空间 L=L^⊥。本质自伴（闭包自伴）等价于亏指数 (0,0)，此时自伴扩张唯一。]
+
+称对称算子 $(A,V)$ 为\emph{本质自伴的}，若其闭包 $(\overline A,\overline V)$ 是自伴的。于是本质自伴算子有唯一的自伴扩张，因而拥有这样的算子基本上等同于拥有一个自伴算子。这一概念很方便，例如当我们不想显式描述空间 $\overline V$ 时。
+
+无界自伴算子之所以重要，在于 von Neumann 谱定理可自然地推广到它们。具体地说，定义自伴算子 $(A,V)$ 的\emph{谱} $\sigma(A,V)$ 为使算子 $A-\lambda: V\to \mathcal H$ 不满射的 $\lambda\in \Bbb C$ 的集合。于是有
+
+\begin{theorem} 除 $h$ 本性有界这一陈述之外，定理 \ref{specthe} 对不一定有界的自伴算子同样成立。此外，在其谱定理实现中，$A$ 的定义域 $V$ 是满足 $hg\in L^2(X,\mu)$ 的 $g\in L^2(X,\mu)$ 构成的空间。
+\end{theorem}
+
+若测度 $\mu$ 集中在可数集上（即可取 $X=\Bbb N$ 且对 $j\in \Bbb N$ 有 $\mu(j)=1$），则 $\mathcal H$ 有由本征函数组成的基，反之亦然；此时称 $A$ 的谱为\emph{纯点谱}。例如当 $A$ 紧时（Hilbert–Schmidt 定理）就会发生这种情况。另一极端是\emph{纯连续谱}，此时没有本征值（即在谱定理实现中，$X$ 的所有点都是零测度）。谱定理蕴含：任何自伴算子都可唯一地写成两个自伴算子的正交直和，它们分别具有纯点谱与纯连续谱。
+
+谱定理还蕴含如下推论。
+
+\begin{corollary} 设 $(A,V)$ 是自伴算子。则存在唯一的单参数酉算子群 $U(t)=e^{iAt}: \mathcal H\to \mathcal H$，它关于 $t$ 强连续、保持 $V$ 不变并与 $A$ 交换，且对一切 $v\in V$，函数 $t\mapsto U(t)v$ 可微并满足
+$$
+\frac{d}{dt}(U(t)v)=iAU(t)v.
+$$
+\end{corollary}
+
+\begin{proof} 利用 $A$ 为乘以 $h: X\to \Bbb R$ 的乘法算子的谱定理实现，可定义 $U(t)$ 为乘以 $e^{ith}$ 的乘法算子。
+\end{proof}
+
+事实上，反之亦真：每个强连续单参数群 $U(t)$（即 Lie 群 $\Bbb R$ 在 $\mathcal H$ 上的酉表示）都唯一地（在等距同构意义下）来自某个自伴算子。
+
+\begin{remark} 谱定理蕴含：若 $(A,V)$ 是自伴算子且对某个非零 $v\in V$ 有 $Av=\lambda v$，则 $\lambda\in \Bbb R$。相反，若 $(A,V)$ 只是对称而非自伴，von Neumann 证明了 $A$ 在 $V$ 上的本征值集合或者是（开）上半平面 $\Bbb C_+$（当 $n_+>0,n_-=0$），或者是下半平面 $\Bbb C_-$（当 $n_->0,n_+=0$），或者两者兼有（当 $n_+,n_->0$）。
+\end{remark}
+
+\subsubsection{例子}
+
+\begin{example} 考虑 $\mathcal H=L^2(S)$ 上的对称算子 $P:=-i\frac{d}{dx}$，其中 $S:=\Bbb R/2\pi \Bbb Z$（圆周上的动量算子）。该算子在空间 $V:=C^\infty(S)$ 上对称，并且可以证明它在该空间上还是本质自伴的（请验证！）。相应的空间 $\overline V$ 是\emph{Sobolev 空间} $H^1(S)$，由满足 $f'\in L^2(S)$（在分布意义下）的 $f\in L^2(S)$ 组成（注意这样的函数连续）。相应自伴算子的谱为纯点谱且等于 $\Bbb Z$，本征函数为 $e^{inx}$，即 $Pe^{inx}=ne^{inx}$。因此 $A$ 的谱实现是在 $\ell_2(\Bbb Z)$ 上（带计数测度），其中 $P$ 通过乘以函数 $n$ 作用（亦即该实现简单地归结为 $S$ 上函数的 Fourier 展开）。类似地，能量算子 $P^2=-\frac{d^2}{dx^2}$ 在同一空间上本质自伴，但闭包的定义域更小——即由满足 $f''\in L^2(S)$ 的 $f\in L^2(S)$ 组成的 Sobolev 空间 $H^2(S)$。其谱为 $\Bbb Z_{\ge 0}$，本征函数相同：$P^2e^{inx}=n^2e^{inx}$。
+\end{example}
+
+\begin{example} 下一个例子更有趣，是自伴扩张理论的典型。考虑同样的动量算子 $P:=-i\frac{d}{dx}$，但如今作用在稠密子空间 $V\subset L^2[0,2\pi]$ 上，该子空间由在区间两端各阶导数均为零的光滑函数组成。此时 $P$ \textbf{不是}本质自伴的：空间 $\overline V$ 是满足 $f(0)=f(2\pi)=0$ 的函数 $f\in H^1[0,2\pi]$ 构成的空间，而 $V^\vee=H^1[0,2\pi]$，且
+$$
+B(f,g)=i(\overline{f(2\pi)}g(2\pi)-\overline{f(0)}g(0)).
+$$
+于是在商 $V^\vee/\overline V=\Bbb C^2$ 上我们有
+$$
+B((a,b),(a,b))=i(|b|^2-|a|^2),
+$$
+其中 $a=f(0)$，$b=f(2\pi)$。因此 $V^\vee$ 的拉格朗日子空间由满足 $|b|=1$ 的点 $b\in \Bbb C$ 给出；具体地说，它是满足 $f(2\pi)=bf(0)$ 的函数 $f\in H^1[0,2\pi]$ 构成的空间 $L_b$。相应自伴算子的谱仍是纯点谱，因此应在空间 $L_b$ 中寻找本征函数。于是得到本征函数 $e^{i(n+s)x}$，其中 $b=e^{2\pi is}$。所以本征值集合为 $\Bbb Z+s$，可见谱依赖于自伴扩张的选择。
+
+还要注意，任何复数 $\lambda$ 都是对称（非自伴！）算子 $P^\dagger$ 在 $V^\vee$ 上的本征值，本征向量为 $e^{i\lambda x}$。
+\end{example}
+
+\begin{example} 现在考虑同样的动量算子 $P:=-i\frac{d}{dx}$，但它作用在紧支撑光滑函数空间 $V=C_0^\infty(\Bbb R)$ 上，这是 $\mathcal H=L^2(\Bbb R)$ 的子空间。此时 $P$ 本质自伴，且 $\overline V=V^\vee$ 是 $H^1(\Bbb R)$ 中由满足 $f'\in L^2(\Bbb R)$ 的 $f\in L^2(\Bbb R)$ 组成的子空间。$P$ 的谱定理实现是 $L^2(\Bbb R)$ 上乘以 $x$ 的乘法算子，这由 Fourier 变换给出。因此该算子的谱为纯连续谱，并构成整个实直线 $\Bbb R$。类似地，算子 $P^2=-\frac{d^2}{dx^2}$ 在 $V$ 上也本质自伴，其自伴扩张具有纯连续谱 $\Bbb R_{\ge 0}$。
+\end{example}
+
+\begin{example} 再一次取 $P:=-i\frac{d}{dx}$，但如今作用在 $\mathcal H=L^2(\Bbb R_{\ge 0})$ 的子空间 $V$ 上，它由在 $0$ 处各阶导数均为零的紧支撑光滑函数组成。该算子不是本质自伴的：空间 $\overline V$ 是满足 $f(0)=0$ 的函数 $f\in H^1(\Bbb R_{\ge 0})$ 构成的空间，而 $V^\vee$ 是整个 $H^1(\Bbb R_{\ge 0})$。于是空间 $V^\vee/\overline V$ 是一维的，形式 $B$ 由 $B(f,g)=-i\overline{f(0)}g(0)$ 给出，因此不存在自伴扩张（亏指数不相等：$n_+=1,n_-=0$）。
+
+我们来求 $P$ 在 $V$ 上的本征值。本征值为 $\lambda$ 的本征向量是 $e^{i\lambda x}$，它属于 $V$ 当且仅当 $\lambda\in \Bbb C_+$。因此 $P$ 的本征值集合为 $\Bbb C_+$。
+\end{example}
+
+% [Tutor Note: 亏指数的计算：n_± = dim Ker(A^† ∓ i)（在 C_± 内 dim Ker(A^†−λ) 为常数）。本例可逐一验证：e^{iλx}∈L^2(R_{≥0}) 当且仅当 Im λ>0，故 Ker(P^†−i) 由 e^{−x} 张成（一维），而 Ker(P^†+i)=0，即 (n_+,n_-)=(1,0)。这与正文的 remark 相呼应：此时 P 在 V 上的本征值恰为整个上半平面（任意 λ∈C_+ 的 e^{iλx} 都在 V 中）。等价地，iB 在 V^∨/V 上非退化且符号差为 (1,0)，n_+≠n_- 故无自伴扩张。]
+
+\begin{example}\label{harosc1} 设 $A=-\frac{1}{2}\frac{d^2}{dx^2}+\frac{1}{2}x^2$，$V=C^\infty_0(\Bbb R)$（量子谐振子）。则 $A$ 本质自伴，$\overline A$ 具有纯点谱 $n+\frac{1}{2}$，$n\in \Bbb N$，本征向量为 $H_n(x)e^{\frac{x^2}{2}}$，其中 $H_n$ 是 Hermite 多项式（定理 \ref{Hermite}）。
+\end{example}
+
+% [Tutor Note: 原文此处把本征向量写成 H_n(x)e^{x^2/2}，疑为笔误：指数取正号时函数在 |x|→∞ 指数增长，不属于 L^2(R)。按第 4 章定理 \ref{Hermite} 的 (ii)(iii)（H_n e^{−x^2/2} 是 L=−(1/2)∂^2+(1/2)x^2 的本征函数并构成 L^2(R) 的正交基），正确写法应为 H_n(x)e^{−x^2/2}；谱 n+1/2 无误。此处保留原文原样。]
+
+\begin{remark} 更一般地，已知：若 $U(x)$ 是 $\Bbb R$ 上分段连续的势，且在 $\pm \infty$ 处趋于 $+\infty$，则算子 $A:=-\frac{1}{2}\frac{d^2}{dx^2}+U(x)$ 在 $V=C^\infty_0(\Bbb R)$ 上本质自伴并具有纯点谱，本征值为 $E_0< E_1\le E_2\le ...$（下面引理 \ref{uniqueeig} 将证明 $E_0$ 总是单本征值，且相应的本征向量是正函数）。
+\end{remark}
+
+\begin{example} 设 $M$ 是具有边界 $\partial M$ 的紧 Riemann 流形，$\mathcal H=L^2(M)$，$A=\Delta$ 是 $M$ 上的 Laplace 算子，它作用在由 $M$ 上在边界处连同各阶导数都为零的光滑函数构成的空间 $V$ 上。此时 $\overline V$ 是 Sobolev 空间 $H^2(M)$（即满足 $\Delta f\in L^2(M)$ 的 $f\in L^2(M)$）中在 $\partial M$ 上连同一阶法向导数都为零的函数构成的空间，而 $V^\vee=H^2(M)$。由 Stokes 公式
+$$
+\int_M (u\Delta v-v\Delta u)dx=\int_{\partial M}(u\partial_{\bold n} v-v\partial_{\bold n}u)d\sigma,
+$$
+其中 $\bold n$ 表示关于 $\partial M$ 的法向导数，故有
+$$
+B(f,g)=i\int_{\partial M}(\overline f\partial_{\bold n} g-g\partial_{\bold n} \overline f)d\sigma.
+$$
+因此若 $\partial M=0$，则算子 $A$ 本质自伴且有唯一自伴扩张；而若 $\partial M\ne 0$，则它不本质自伴，且存在许多自伴扩张，对应于 $\partial M$ 上的各种边界条件。最常见的是 Dirichlet 边界条件 $f=0$ 与 Neumann 边界条件 $\partial_{\bold n} f=0$。当然，与这些条件相联系的谱（总是纯点谱）完全不同。
+
+边界非平凡的最简单例子是 $M=[0,\pi]$，此时 $\dim V^\vee/\overline V=4$，且
+$$
+B(f,g)=i(\overline {f}g'-\overline{f'}g)|_0^{\pi}.
+$$
+对于 Dirichlet 边界条件 $f(0)=f(\pi)=0$，得到本征基 $\sin nx$，本征值为 $-n^2$，$n\in \Bbb Z_{\ge 1}$；而对于 Neumann 边界条件 $f'(0)=f'(\pi)=0$，得到本征基 $\cos nx$，本征值同样为 $-n^2$，但此时 $n\in \Bbb Z_{\ge 0}$。
+
+考虑混合边界条件：
+$$
+f(0)=0,\ f'(\pi)-af(\pi)=0
+$$
+对某个实数 $a$。则本征函数为 $\sin \lambda x$，其中
+$$
+\lambda \cos \pi \lambda = a \sin \pi\lambda.
+$$
+于是本征值为 $-\lambda^2$，其中 $\lambda$ 取遍方程
+$$
+\lambda\ {\rm cotan} \pi\lambda=a.
+$$
+的解。例如，在极限 $a\to \infty$ 下我们重新得到 Dirichlet 边界条件的答案。
+\end{example}
+
+% [Tutor Note: 原文此处边界形式含因子 i，疑为沿袭动量算符例造成的笔误。按 B(v,w):=(A^†v,w)−(v,A^†w) 及正文的 Stokes 公式，取 A=Δ 直接计算得 B(f,g)=−∫_{∂M}(\bar f∂_n g−g∂_n\bar f)dσ，与原文相差因子 −i；一阶算子 A=−i d/dx 才自然出现因子 i。两种归一化只差非零常数，不影响迷向性与自伴扩张判据。另：下文 “if ∂M=0” 应读作 “∂M 为空集”（无边情形）。两处均保留原文原样。]
+
+\begin{exercise} 设 $H=-\frac{1}{2}\frac{d^2}{dx^2}+a\chi_{[-1,1]}(x)$，其中 $\chi$ 是指示函数，$a\in \Bbb R$，并设它定义在 $V=C^\infty_0(\Bbb R)\subset \mathcal H=L^2(\Bbb R)$ 上。证明 $H$ 本质自伴，并求出其自伴扩张的谱与本征值（分别考虑 $a\ge 0$ 与 $a<0$ 的情形）。
+
+\textbf{提示}：如上所述，谱由使 $H-E: \overline V\to \mathcal H$ 不满射的 $E\in \Bbb R$ 组成。因此尝试对 $f\in \mathcal H$ 求解方程
+$$
+(H-E)u=f
+$$
+并将解写成
+$$
+f(x)=\int_{\Bbb R} G(x,y)dy,
+$$
+其中 $G(x,y)$ 是方程
+$$
+(H-E)f=\delta(x-y).
+$$
+的基本解。你应得到：当 $a\ge 0$ 时没有本征函数（纯连续谱）；而当 $a<0$ 时谱是混合的：既有连续谱，也有一些具有负本征值的本征函数，它们称为\textbf{束缚态}。
+\end{exercise}
+
+% [Tutor Note: 提示中的表达式 f(x)=∫_R G(x,y)dy 疑有笔误：G 是 (H−E) 的基本解，正确的解的表示应为 u(x)=∫_R G(x,y)f(y)dy（或对源项作相应的卷积），否则该式既不依赖于给定的 f，也无法由 (H−E)u=f 解出。此处保留原文原样。]
+
+\subsection{量子力学中的哈密顿量}
+
+量子化的要诀（yoga）是说：要量子化流形 $X$ 上的经典力学，需把经典状状态空间 $T^*X$ 替换为量子状状态空间——$X$ 上平方可积复半密度构成的 Hilbert 空间 ${\mathcal H}=L^2(X)$（更确切地说，是相应的射影空间）。其次，需把经典可观测量，即（足够好的）实函数 $f\in C^\infty(T^*X)$，替换为量子可观测量 $\widehat f$；后者是 ${\mathcal H}$ 上（无界、稠定）的算子，一般彼此不对易。于是，可观测量 $A$ 在单位范数状态 $\psi\in \mathcal H$ 中的（期望）值按定义为 $\la\psi,A\psi\ra$（只要它有良好定义）。
+
+算子 $\widehat f$ 应线性依赖于 $f$。此外，它们应依赖一个称为\emph{普朗克常数}的正实参数 $\hbar$，并满足如下关系：
+$$
+[\widehat{f},\widehat{g}]=i\hbar\widehat{\lbrace{f,g\rbrace}}+O(\hbar^2),\
+\hbar\to 0.
+$$
+由于在量子力学中函数的 Poisson 括号所扮演的角色由算子的对易子承担，该关系表达了“经典力学应是 $\hbar\to 0$ 时量子力学的极限”这一条件。\footnote{注意，映射 $f\mapsto \widehat f$ 不可能满足恒等式 $\widehat{fg}=\widehat f\widehat g$，因为函数乘法可交换而算子乘法不可交换。}
+
+我们必须马上让读者失望地承认：量子化映射 $f\mapsto \widehat f$ 没有典范选择。不过，对于某些特定的 $f$，$\widehat f$ 有一些标准选择，我们下面讨论。
+
+我们限于 $X=\Bbb R$ 的情形，此时相空间上有坐标 $q$（位置）与 $p$（动量）。此时可自然地把半密度视为函数，并有如下标准约定。
+
+1. 当 $f$ 与 $p$ 无关时，$\widehat f=f(q)$（即乘以 $f(q)$ 的乘法算子）。
+
+2. $\widehat{p^m}\to (-i\hbar \frac{d}{dq})^m$。
+
+（注意这些约定满足我们的条件，因为 $[\widehat q,\widehat p]=i\hbar$，而 $\lbrace{q,p\rbrace}=1$。）
+
+\begin{example} 对于上面考虑过的经典哈密顿量 $H=\frac{p^2}{2}+U(q)$，量子化后将得到\emph{Schr\"odinger 算子}
+$$
+\widehat H=-\frac{\hbar^2}{2}\frac{d^2}{dq^2}+U(q).
+$$
+\end{example}
+
+\begin{remark} 这些约定到其他函数的延拓不唯一。不过我们不会用到这样的延拓，故不再具体指定。
+\end{remark}
+
+现在来看 哈密顿方程的量子类比应当是什么。按照前述量子化要诀，Poisson 括号在量子理论中应替换为对易子（系数为 $(i\hbar)^{-1}=-i/\hbar$）。因此，哈密顿方程应替换为方程
+$$
+\frac{d}{dt}\langle\psi(t),A\psi(t)\rangle=\langle\psi(t),\tfrac{[A,\widehat
+  H]}{i\hbar}\psi(t)\rangle=
+-\tfrac{i}{\hbar}
+\langle\psi(t),[A,\widehat H]\psi(t)\rangle,
+$$
+其中 $\langle,\rangle$ 是 ${\mathcal H}$ 上的 Hermitian 形式，$\widehat H$ 是经典哈密顿量 $H$ 的某个量子化。由于该方程必须对任意 $A$ 成立，它等价于\emph{Schr\"odinger 方程}
+$$
+\dot{\psi}=-\frac{i}{\hbar}\widehat H\psi
+$$
+至多差一个把 $\psi$ 乘上含时相位因子（请验证！）。于是，哈密顿方程的量子类比就是 Schr\"odinger 方程。
+
+\begin{remark} 这种对 Schr\"odinger 方程的“推导”绝对不是数学论证，它只是一个旨在引出一个定义的推理。
+\end{remark}
+
+为求解 Schr\"odinger 方程的初值问题，我们需要在 von Neumann 的意义下把哈密顿量 $\widehat H$ 实现为 $\mathcal H$ 上的无界自伴算子；在实践中，这归结为在初值之外再给定 $\psi$ 的空间边界条件。于是 Schr\"odinger 方程的通解具有形式
+$$
+\psi(t)=e^{-\frac{it\widehat H}{\hbar}}\psi(0),
+$$
+其中 $e^{-\frac{it\widehat H}{\hbar}}$ 是附着于自伴算子 $\widehat H$ 的单参数酉算子群，它借助 von Neumann 谱定理而存在。因此，对任何量子可观测量 $A$，合理的是定义一个新可观测量
+$$
+A(t):=e^{\frac{it\widehat H}{\hbar}}A(0)e^{-\frac{it\widehat
+  H}{\hbar}}
+$$
+（使得观测 $A(t)$ 等同于先演化时间 $t$ 再观测 $A=A(0)$）。可观测量 $A(t)$ 满足方程
+$$
+A'(t)=-\frac{i}{\hbar}[A(t),\widehat H]
+$$
+称为\emph{算子 Schr\"odinger 方程}，并且我们有
+$$
+\langle\psi(t),A\psi(t)\rangle=\langle\psi(0),A(t)\psi(0)\rangle.
+$$
+该方程的两端代表量子力学的两种绘景：Schr\"odinger 绘景（状态随时间变化，可观测量不变）与 Heisenberg 绘景（可观测量随时间变化，状态不变）。该方程表达了这两种绘景的等价性。
+
+\bigskip
+\noindent\rule{\textwidth}{0.6pt}
+% [Tutor Note: 本节只构造了由自伴 Ĥ 生成的酉群 e^{−itĤ/ℏ}；下一节的 Feynman–Kac 公式需要的是把 t 解析延拓到 −iτ（τ≥0）后得到的压缩半群 e^{−τĤ}。其存在性依赖 Ĥ 本质自伴且下有界（例如 U≥0 且 U(q)→∞ 时谱为纯点谱且有下界），半群性质 e^{−(τ+σ)Ĥ}=e^{−τĤ}e^{−σĤ} 则由谱定理的泛函演算给出。热核 ⟨x|e^{−τĤ}|y⟩ 的 Wiener 测度表示正是 Feynman–Kac 公式；若 Ĥ 无下界，e^{−τĤ} 一般不再是压缩半群，公式须附加条件或改用虚时间路径积分的收敛性讨论。]
+

@@ -1,0 +1,361 @@
+% ===== 原文 pp.63--75 =====
+% tr05a.tex —— §10 第二讲 / §11 第三讲 / §12 第四讲（pp.63--75）
+% 底本：Ioannis P. Zois, 18 Lectures on K-Theory, arXiv:1008.1346v1；PDF 页号 = 印刷页码
+
+% [原文 p.63]
+\section{第二讲（Toeplitz 算子的指标、绕数与 K-同调）}
+
+我们知道
+\[ \operatorname{Fred}(H)\simeq \Z\times G_\infty. \]
+若 $M$ 是紧的、可定向的 Riemann 流形，则可以构造
+\[ L^2(M)=\left\{f:M\to\C\ \middle|\ \int_M |f|^2\,d\mu<\infty\right\}. \]
+这是一个 Hilbert 空间，其内积为
+\[ \langle f,g\rangle=\int_M f\bar g\,d\mu. \]
+
+% [Tutor Note: p.63 定义 $L^2(M)$ 时原文没有说明测度 $\mu$；按上下文，$\mu$ 是 $M$ 的 Riemann 度量所诱导的体积测度。另注意 $G_\infty$ 只是一个记号，原文未定义，p.70 定理 1 才把它与 $\operatorname{Fred}(H)$ 的弱同伦型联系起来。]
+
+例如，设 $L^2(S^1)$ 为圆周 $S^1$ 上平方可积复函数之集合。我们把圆周看作 $[0,2\pi]/(0=2\pi)$，即把闭区间 $[0,2\pi]$ 的两个端点等同起来。再考虑 Fourier 级数：$L^2(S^1)$ 的一组完备正交基由函数
+\[ e_n(x)=\frac{1}{\sqrt{2\pi}}e^{inx},\quad n\in\Z \]
+给出，亦即若 $f\in L^2(S^1)$，则
+\[ f(x)=\sum c_n e^{inx}, \]
+其中
+\[ c_n=\frac{1}{2\pi}\int_0^{2\pi} f(x)e^{-inx}\,dx. \]
+我们也可以把圆周看作复数集的一个子集，$S^1\subset\C$。这时基变为
+\[ e_n=\frac{1}{\sqrt{2\pi}}z^n. \]
+复分析提示我们考虑子空间 $H^2(S^1)=\{f\in L^2(S^1)\mid f=\sum_{n=0}^{\infty}c_nz^n\}$，即 \emph{Hardy 空间}，也就是只含正 Fourier 系数的函数。正交投影
+\[ P: L^2(S^1)\to H^2(S^1) \]
+
+% [Tutor Note: p.63 原文说 Hardy 空间是「只含正 Fourier 系数」的函数；对照同一行的定义 $f=\sum_{n=0}^{\infty}c_nz^n$，实际条件是 $n\ge0$（非负频率），$n=0$ 的常数项也在内。核对时以定义式为准。]
+
+% [原文 p.64]
+称为 \emph{Hardy 投影}。
+
+注意到 $L^2(S^1)$ 是 $C(S^1)$（圆周上连续复值函数之空间）上的模，即：给定 $f\in C(S^1)$，可以通过关系
+\[ (M_f g)(x)=f(x)g(x) \]
+定义\emph{乘法算子} $M_f: L^2(S^1)\to L^2(S^1)$。这是一个\emph{有界}算子，满足
+\[ \|M_f\|=\sup|f|. \]
+\emph{算子的非局部性可以通过它与乘法算子的换位子来度量。}
+
+\begin{lem}{1}
+若 $f\in C(S^1)$，则换位子
+\[ [P,M_f]=PM_f-M_fP \]
+是紧算子（因此 Hardy 投影是非局部的，但离局部并不太远）。
+\end{lem}
+
+\begin{proof}
+先设 $f$ 是 $z,z^{-1}$ 的多项式，比如
+\[ f=a_{-m}z^{-m}+\cdots+a_mz^m. \]
+那么相对于上面提到的基 $\{e_n\}$，$f$ 可以用一个矩阵表示。与 $M_f$ 作交换，即得本引理（我们得到的是有限秩算子，从而是紧的）。于是若 $f$ 是多项式，则换位子 $[P,M_f]$ 是有限秩算子，从而由 Stone-Weierstrass 定理（见附录）推知多项式在 $C(S^1)$ 中稠密。通过逼近即得完全一般的结果。
+\end{proof}
+
+% [Tutor Note: p.64 引理 1 的证明原文只写「与 $M_f$ 作交换即得」；具体可这样核对：对 $f=z^k$（$k>0$），$M_{z^k}$ 在基 $\{e_n\}$ 下是单向移位，$[P,M_{z^k}]$ 的矩阵只有边界附近 $k$ 条斜线上的元素非零，故为有限秩；$k<0$ 同理。再用多项式逼近。]
+
+\begin{defn}{1}
+设 $f\in C(S^1)$。则 \emph{Toeplitz 算子} $T_f: H^2(S^1)\to H^2(S^1)$ 是算子 $T_f=PM_f$。此时 $f$ 称为 $T_f$ 的\emph{符号}。
+\end{defn}
+
+\begin{prop}{1}
+$T_fT_g-T_{fg}$ 是紧的。
+\end{prop}
+
+% [Tutor Note: p.64 命题 1 的证明在下一页：$T_fT_g-T_{fg}=PM_fPM_g-P^2M_fM_g=P[M_f,P]M_g$，由引理 1 知 $[M_f,P]$ 紧，故右边紧。注意 $T_fT_g=(PM_f)(PM_g)$，中间的 $P$ 不能随手删去。]
+
+% [原文 p.65]
+\begin{proof}
+$PM_fPM_g-P^2M_fM_g=P[M_f,P]M_g$，而这是紧的。
+\end{proof}
+
+\begin{cor}{1}
+若 $f\in C(S^1)$ 可逆，则 $T_f$ 是 Fredholm 算子。
+\end{cor}
+
+\begin{proof}
+$T_{f^{-1}}$ 是模紧算子意义下的逆。
+\end{proof}
+
+\para{关键问题：} $T_f$ 的指标是什么？
+
+设 $f: S^1\to\C^x=\C-\{0\}$ 是这样的映射：其曲线（$f$ 的图像）永不经过原点。回忆：这类映射唯一的拓扑不变量是 $f$ 的\emph{绕数}，记作 $\operatorname{wn}(f)$。
+
+\begin{thm}{1}
+\[ \ind T_f=-\operatorname{wn}(f). \]
+\end{thm}
+
+\begin{proof}
+由指标的形变不变性，对应关系
+\[ f\mapsto \ind T_f \]
+定义一个映射
+\[ [S^1,\C^x]=\Z\to\Z. \]
+每个同伦类都含有一个代表元 $z^m$，我们只需在这个代表元上核验答案。
+例如，取 $f(x)=z$。此时 $H^2(S^1)$ 由 $e_0,e_1,e_2,\ldots$ 张成，而 $M_z(e_i)=e_{i+1}$。于是 $T_z=T_f$ 就是 $T_z(e_i)=e_{i+1}$，$i=0,1,2,\ldots$。因此 $T_z$ 是单侧移位，其指标为 $-1$。
+\end{proof}
+
+% [Tutor Note: p.65 定理 1 的符号约定要靠代表元 $z^m$ 核对：$\ind T_{z^m}=-m$；若绕数按逆时针为正，则 $\operatorname{wn}(z^m)=m$（与文中 $\ind T_z=-1$ 对照）。原文把 $[S^1,\C^x]$ 与 $\Z$ 等同，是因为 $\C^x$ 的连通分支由绕数分类。]
+
+接下来我们改而考虑 $f: S^1\to M_n(\C)$ 的算子 $T_f$；只要 $f$ 可逆，即 $f: S^1\to\GL_n(\C)$，这类算子就是 Fredholm 的。和前面一样，我们得到映射 $[S^1,\GL_n(\C)]\to\Z$，$f\mapsto\ind T_f$。但是
+\[ \GL_n(\C)\xrightarrow{i}\GL_{n+1}(\C), \]
+其中包含映射 $i$ 由
+\[ f\mapsto \begin{pmatrix} f & 0 \\ 0 & 1\end{pmatrix}=\tilde f \]
+具体给出。
+
+% [原文 p.66]
+于是
+\[ T_{\tilde f}=\begin{pmatrix} T_f & 0 \\ 0 & 1\end{pmatrix}. \]
+因此下图交换：
+\[
+\begin{tikzcd}
+{[S^1,\GL_n(\C)]} \arrow[r,"\ind"] \arrow[d,"i"] & \Z \arrow[d,equal] \\
+{[S^1,\GL_{n+1}(\C)]} \arrow[r,"\ind"] & \Z
+\end{tikzcd}
+\]
+在极限 $n\to\infty$ 下，我们得到\emph{指标映射}（实际上是群同态）
+\[ K^{-1}(S^1)\to\Z. \]
+上述讨论可以推广到任意紧空间 $X$（代替圆周 $S^1$），只要它配备下述数据：
+
+\begin{enumerate}[label=\alph*.]
+\item 一个 Hilbert 空间 $H$，它是 $C(X)$ 上的模（即配备代数同态 $C(X)\to B(H)$，$f\mapsto M_f$）。
+\item $H$ 上的一个自伴投影 $P$。
+\item 对一切 $f\in C(X)$，$PM_f-M_fP$ 是紧的。
+\end{enumerate}
+
+上述数据定义了空间 $X$ 的一个\emph{奇 $K$-循环}，即 $K^{-1}(X)$ 的一个元素。
+
+与这样的 $K$-循环相伴有一个群同态
+\[ K^{-1}(X)\to\Z. \]
+这表明 $K$-循环应当生成 K 理论的一个「对偶」，即 $K$-同调。
+
+% [Tutor Note: p.66 上文把 $C(X)\to B(H)$ 中的 $B(H)$ 直接拿来用，原文未定义：$B(H)$ 指 $H$ 上全体有界线性算子。又，交换图中右列竖直的双线是恒等（等号箭头），不是映射；原图两行 $[S^1,\GL_n(\C]$、$[S^1,\GL_{n+1}(\C]$ 都漏印右圆括号，译文按语义补足为 $[S^1,\GL_n(\C)]$。]
+
+\para{注：} 把某个空间 $X$ 的交换代数 $C(X)$ 换成任意（可能非交换的）代数 $A$，就得到
+
+% [原文 p.67]
+非交换几何（Noncommutative Geometry）中 Connes 意义下的 $K$-循环的定义。
+
+% [Tutor Note: p.67 整页只有上一句的续文（两行），并非缺页或渲染失败；页图 p067 上除此之外只有页码。]
+
+% [原文 p.68]
+\section{第三讲（斜积与 K 理论和 K-同调之间的配对）}
+
+\begin{defn}{1}
+设 $X$ 是紧拓扑空间。$X$ 的一个\emph{奇 $K$-循环}（之所以叫奇，是因为正如我们马上会看到的，我们处理的是 $K_1(X)$）由以下数据定义：
+\begin{enumerate}[label=\alph*.]
+\item 一个 Hilbert 空间 $H$，$C(X)$ 作用在其上。
+\item $H$ 上的一个投影 $P$（投影意指 $P=P^2=P^*$）。
+\item 对一切 $f\in C(X)$，$[P,f]$ 是紧的。
+\end{enumerate}
+奇 $K$-循环因此给出同态
+\[ K^{-1}(X)\to\Z \]
+（它由相应 Toeplitz 算子的指标给出）。
+\end{defn}
+
+\begin{defn}{2}
+一个 -循环称为\emph{退化的}，若对一切 $f$ 都有 $[P,f]=0$；此时它诱导零映射 $K^{-1}(X)\to\Z$。
+\end{defn}
+
+% [Tutor Note: p.68 定义 2 原文印作「A -cycle」，短横线前缺了 $K$，应为「A $K$-cycle」（一个 $K$-循环）；正文照原样保留空缺。另，本讲的 $K_1(X)$ 用下标，而下一段的 $K^{-1}(X)$ 用上标，二者分别是 $K$-同调与 K 理论，切勿混读。]
+
+$K$-循环具有以下性质：
+
+\begin{itemize}[leftmargin=1.6em,itemsep=2pt]
+\item $K$-循环可以通过直和相加。
+\item $K$-循环之间有\emph{等价}的概念：\emph{酉等价}，即存在酉算子 $U: H\to H'$；以及同伦等价，即存在 $K$-循环的同伦族 $(H,P_t)$，$t\in[0,1]$，$t\mapsto P_t$。
+\end{itemize}
+
+对给定的 $X$，$K$-循环的等价类集合在直和下构成半群；我们可以取这个半群的 Grothendieck 群，记作 $K_1(X)$（它是阿贝尔群）。
+
+于是我们得到\emph{配对}
+\[ K_1(X)\otimes K^{-1}(X)\to\Z. \]
+
+% [原文 p.69]
+\begin{lem}{1}
+退化的 $K$-循环在 $K_1(X)$ 中是零。
+\end{lem}
+
+\begin{proof}
+设 $(H,P)$ 退化。构造 $(\oplus^{\infty}H,\oplus^{\infty}P)$，它是 $K$-循环。令 $X=[(H,P)]\in K_1(X)$、$Y=[(H^{\infty},P^{\infty})]$。则 $X+Y=Y\Rightarrow X=0$。
+\end{proof}
+
+% [Tutor Note: p.69 引理 1 原文标题里的「Degenerat」拼写有误，应为「Degenerate」；证明中把两个 $K$-同调类记作 $X,Y$，与空间记号 $X$ 相撞，这是原文的记法，勿误读。另外原文 $[(H^{\infty},P^{\infty}]$ 缺右圆括号，译文补足为 $[(H^{\infty},P^{\infty})]$。]
+
+我们应当有斜积的类似物
+\[ K_1(X)\otimes K^{-1}(X\times Y)\to K^0(Y). \]
+$K_1(X)$ 的元素是形如 $(P,H)$ 的奇 $K$-循环，其中 $C(X)$ 作用在 .  $K^{-1}(X\times Y)$ 的元素是映射 $X\times Y\to\GL_n(\C)$，即 $Y\to\operatorname{Maps}(X\to\GL_n(\C))$，也就是 $y\mapsto g_y\mapsto T_{g_y}\in\operatorname{Fred}(P,H)$；于是我们得到映射 $Y\to\operatorname{Fred}(H)$，其中 $\operatorname{Fred}(H)$ 是 $H$ 上 Fredholm 算子之集合。
+
+% [Tutor Note: p.69 「其中 $C(X)$ 作用在 .」句号前原文空缺，应为「作用在 $H$ 上」（页图上此处明显留空）。同一段中的 $\operatorname{Fred}(P,H)$ 原文如此，按上下文应作 $\operatorname{Fred}(H)$，「$P$」疑为讹字。另，这句里的 $K^0(Y)$ 用上标 0，与 p.68 的配对 $K_1(X)\otimes K^{-1}(X)\to\Z$ 写法不同，译文照原样。]
+
+斜积构造的关键点在于说明：$Y$ 上的 Fredholm 族，即连续映射 $Y\to\operatorname{Fred}(H)$，如何给出 $K^0(Y)$ 中的一个 K 理论类。要求是：当 $Y=*$ 为一点时，它应当就是\emph{指标}。
+
+想法是考虑映射 $\{\operatorname{Ker}T_y: y\in Y\}\to Y$ 与 $\{\coker T_y: y\in Y\}\to Y$。我们希望指标 $\ind T_y$ 是向量丛的形式差 $[\operatorname{Ker}T_y]-[\coker T_y]$。遗憾的是，这些未必是向量丛，因为维数可能跳跃。
+
+然而回忆此前关于指标形变不变性的工作：可以找到有限余维的投影 $Q_m$，使得对任意 $y\in Y$，$Q_mT_y$ 都满射到 $Q_m$ 的值域上。
+
+现在核 $\operatorname{Ker}(Q_mT_y)$ 确实构成向量丛。在 $y_0$ 附近，算子 $Q_mT_{y_0}$ 满射到 $Q_m$ 的值域上。考虑映射
+\[ S_y: H\to(\operatorname{Range}Q_m)\oplus(\operatorname{Ker}(Q_mT_{y_0})). \]
+映射 $S_{y_0}$ 可逆，从而对一切 $y\in U$ 有 $S_y$ 可逆，其中 $U$ 是 $y_0$ 的邻域。接着考虑
+\[ S_y^{-1}(O\oplus\operatorname{Ker}(Q_mT_{y_0}))=\operatorname{Ker}S_y. \]
+
+% [Tutor Note: p.69 「finite codimesnion」拼写有误，应为「codimension」（余维数）。同页 $S_y^{-1}(O\oplus\cdots)$ 中的 $O$ 是字母 O，按上下文应是零空间 $0$：$S_y$ 把 $H$ 打到 $\operatorname{Range}Q_m\oplus\operatorname{Ker}(Q_mT_{y_0})$，其核正是 $0\oplus\operatorname{Ker}(Q_mT_{y_0})$ 的原像。]
+
+% [原文 p.70]
+于是 $S_y$ 限制在 $U$ 上，给出向量空间族 $\operatorname{Ker}S_y\to U$ 与常族 $O\oplus\operatorname{Ker}(Q_mT_{y_0})\to U$ 之间的双射。因此 $\operatorname{Ker}S_y$ 构成向量丛。
+
+总结一下：我们「定义」了映射
+\[ [Y,\operatorname{Fred}(H)]\to K^0(Y)=[Y,\Z\times G_\infty]. \]
+
+\begin{thm}{1}
+映射
+\[ \operatorname{Fred}(H)\to\Z\times G_\infty \]
+是弱同伦等价。
+\end{thm}
+
+\begin{proof}
+该结果由上述构造推出。
+\end{proof}
+
+% [Tutor Note: p.70 定理 1 的证明原文只有「由上述构造推出」一句；补出的思路是：上面构造了 $[Y,\operatorname{Fred}(H)]\to[Y,\Z\times G_\infty]=K^0(Y)$ 对一切紧 $Y$ 自然，由 Yoneda 引理即得两空间的弱同伦等价（Hilbert 空间无穷维，$\operatorname{Fred}(H)$ 可当作分类空间）。]
+
+考虑空间
+\[ \operatorname{Fred}^S(H)=\left\{\begin{pmatrix} T & 0 \\ 0 & 1\end{pmatrix}\ \middle|\ T\in\operatorname{Fred}(H)\right\}. \]
+
+\begin{thm}{2}
+映射
+\[ [X,\operatorname{Fred}^S(H)]\to K^0(Y) \]
+是同构。这个映射不是别的，正是指标。
+\end{thm}
+
+% [Tutor Note: p.70 定理 2 定义域写作 $[X,\operatorname{Fred}^S(H)]$、值域写作 $K^0(Y)$，与上下文（参数空间是 $Y$）不一致；按证明与前一式应为 $[Y,\operatorname{Fred}^S(H)]\to K^0(Y)$，正文照原文保留 $X$。又，此处 $S$ 是上标 $\operatorname{Fred}^S$（与下一页的矩阵块对应），不是下标。]
+
+\begin{proof}
+我们必须证明该映射是满射且是单射。
+
+满射性：给定 $Y$ 上两个向量丛 $V,W$，把它们嵌入一个足够大的平凡丛（因为 Hilbert 空间是无穷维的）：
+\[ V\into \C^N\into H \]
+以及
+\[ W\into \C^N\into H. \]
+Hilbert 空间 $H$ 可以写成子空间 $V_y\oplus V_y^{\perp}$ 与 $W_y\oplus W_y^{\perp}$ 的直和，其中 $T_y$ 是它们之间的线性映射。
+
+% [原文 p.71]
+单射性：设 $(T_y)$ 是指标为零的族。那么仿照前面的 $Q_m$ 作一个「截断」，可以把它形变为余核维数恒为 $m$ 的族。由于指标为零，$(\operatorname{Ker}T_y)$ 是 $m$ 维的稳定平凡向量丛。取 $m$ 足够大，便可假设 $(\operatorname{Ker}T_y)$ 是平凡向量丛。Hilbert 空间可以写成直和 $(\operatorname{Ker}T_y)\oplus(\operatorname{Ker}T_y)^{\perp}$ 与 $\C^m\oplus S$，其中 $S$ 是某个固定子空间。它们之间的线性映射是 $U_y+T_y$，它可逆。因此 $T_y$ 可以形变为一族可逆算子。
+
+% [Tutor Note: p.71 原文把 $H$ 上可逆有界算子群写作 $GLH$（$GL$ 与 $H$ 之间没有括号），通常记作 $\GL(H)$，译文统一作 $\GL(H)$；同一句的「contratible」拼写有误，应为「contractible」（可缩的）。证明末尾用到 Whitehead 引理的矩阵同伦：$\begin{pmatrix}U&0\\0&U^{-1}\end{pmatrix}\sim I$，从而把 $U_y\oplus1\oplus1\oplus\cdots$ 与 $U_y\oplus U_y^{-1}\oplus U_y\oplus\cdots$ 同伦起来。]
+
+接下来回忆下述事实：群 $\GL(H)$ 是可缩的（这很难证明）。对于我们的稳定版本，只需知道空间
+\[ \left\{\begin{pmatrix} U & 0 \\ 0 & 1\end{pmatrix}\ \middle|\ U\in\GL(H)\right\} \]
+是可缩的。
+
+为完成证明，我们回忆 Whitehead 引理
+\[ \begin{pmatrix} U & 0 \\ 0 & U^{-1}\end{pmatrix}\sim\begin{pmatrix} 1 & 0 \\ 0 & 1\end{pmatrix}, \]
+（其中 $\sim$ 表示同伦），因此下列类可以同伦：
+\[ U_y\oplus 1\oplus 1\oplus\cdots \]
+\[ U_y\oplus U_y^{-1}\oplus U_y\oplus\cdots \]
+\end{proof}
+
+% [原文 p.72]
+\section{第四讲（Bott 周期性）}
+
+回忆上一节我们定义了斜积：
+\[ K_1(X)\otimes K^{-1}(X\times Y)\to K^0(Y), \]
+其中
+\[ x\otimes y\mapsto x\backslash y. \]
+断言：
+\[ K_1(X)\otimes K^{-1}(X\times Y)\otimes K^0(Z)\to K^0(Y\times Z), \]
+其中
+\[ x\otimes y\otimes z\mapsto (x\backslash y)\otimes z=x\backslash(y\otimes z). \]
+这一点对下述问题是显然的：配对 $K^{-1}(W)\otimes K^0(Z)\to K^{-1}(W\times Z)$ 是什么？
+
+答案来自下述事实：$W$ 上任意丛 $V$ 的自同构定义了群 $K^1(W)$ 中的一个元素 $V\oplus V'$。
+
+% [Tutor Note: p.72 本页起一律用上标 $K^0,K^1$ 记 K 理论，与 §11 中作 $K$-同调的下标 $K_1$ 相对；原文在 $K_1X$、$K^0Y$、$K^{-1}W$ 等处省略了表示空间变元的括号，译文按全稿体例统一补作 $K_1(X)$、$K^0(Y)$、$K^{-1}(W)$。注意同页的 $K^1(W)$ 是上标 1，不要与 $K_1(W)$ 混淆。]
+
+我们引入局部紧空间上的 K 理论这一想法（局部紧意指每一点都有紧邻域）。
+
+设 $X$ 是局部紧拓扑空间，$X^+$ 记其单点紧化，即 $X^+=X\cup\{\infty\}$。
+
+\begin{defn}{1}
+\[ K^i(X)=\wt K^i(X^+):=\operatorname{Ker}(K^i(X^+)\to K(*)). \]
+\end{defn}
+
+这个定义有意义，因为由函子性，映射 $X\to Y$ 诱导映射 $X^+\to Y^+$。
+
+于是 Bott 周期性成为联系 $K_*(X)$ 与 $K_*(\R\times X)$ 的定理。
+
+回忆初等事实：
+\[ K^0(\R\times X)=K^{-1}(X). \]
+此外
+\[ (\R\times X)^+=SX/A \]
+
+% [原文 p.73]
+其中 $SX$ 是 $X$ 的悬挂，$A$ 表示悬挂 $SX$ 的两个顶点。
+
+\begin{thm}{1}
+\[ K^{-1}(\R\times X)\simeq K^0(X). \]
+\end{thm}
+
+\begin{proof}
+把上述同构记作 $\beta$，并试着描述它：设 $b\in K^{-1}(\R)$ 是对应于 $S^1$ 上函数 $z\mapsto 1/z$ 的生成元。则
+\[ \beta: K^0(X)\to K^{-1}(\R\times X), \]
+其中
+\[ x\mapsto b\otimes x. \]
+注意
+\[ K^0(*)\xrightarrow{\beta} K^{-1}(\R)\to K^0(\R^2)=\wt K^0(S^2) \]
+其中 $\beta(1)$ 是万有线丛。
+
+% [Tutor Note: p.73 $K^0(\R^2)=\wt K^0(S^2)$ 的生成元（即 $\beta(1)$）是 Hopf 线丛，这一点由下文「$S^2=\C P^1$ 上南北半球粘合」的描述给出：它是 $\C P^1$ 上的万有线丛。另，此处 $b\in K^{-1}(\R)$ 对应函数 $z\mapsto 1/z$，就是 Bott 元；下文「北半球」「南半球」原文作 North Hemisphere、South Hemisphere。]
+
+在 $S^2=\C P^1$ 的情形，我们取齐次坐标 $(z_0,z_1)$：北半球由齐次坐标为 $(1,z_1)$ 的点组成，而南半球由齐次坐标为 $(z_0,1)$ 的点组成，边界圆周（赤道）由坐标为 $(z_0/z_1)$ 的点组成，于是我们得到 Hopf 线丛。
+
+接着
+\[ \beta: K^0(X)\to K^{-1}(\R\times X)=K^0(\R^2\times X), \]
+其中
+\[ x\mapsto b\otimes x. \]
+我们定义映射
+\[ \alpha: K^{-1}(\R\times X)\to K^0(X). \]
+我们还有映射
+\[ K^{-1}(\R\times X)\to K^{-1}(S^1\times X) \]
+以及
+\[ a\backslash: K^{-1}(S^1\times X)\to K^0(X), \]
+其中 $a\in K_1(S^1)$，于是 $\alpha(y)=a\backslash y$。为继续，我们需要下述
+
+% [原文 p.74]
+\begin{lem}{1}
+\[ \alpha(\beta(x))=x,\quad \forall x\in K^0(X). \]
+\end{lem}
+
+\begin{proof}[引理的证明]
+\[ a\backslash(b\otimes x)=(a\backslash b)\otimes x=1\otimes x=x. \]
+\end{proof}
+
+% [Tutor Note: p.74 引理 1 的证明只用了斜积的结合律与 $a\backslash b=1$。注意这个引理给出 $\alpha\beta=\id$，故 $\beta$ 是单射；下面「只需证满射」正由此而来，原文未明说。]
+
+为完成「$\beta$ 是同构」这一证明，只需证明它是满射，也就是我们想知道 $K^0(\R^2\times X)$ 的每个 $y$ 都具有 $b\otimes(-)$ 的形式。
+
+考虑映射
+\[ K^0(\R^2\times X)\to K^0(\R^2\times X\times\R^2), \]
+其中
+\[ y\mapsto y\otimes b. \]
+注意到由引理 1，$y=(y\otimes b)\backslash a$。而 $y\otimes b=b\otimes\tilde y$，其中 $\tilde y$ 是 $y$ 在映射
+\[ \R^2\times X\to X\times\R^2 \]
+下的像，该映射为
+\[ (v,p)\mapsto(p,-v). \]
+矩阵
+\[ \begin{pmatrix} 0 & -I \\ I & 0\end{pmatrix} \]
+作用在 $\R^2\oplus\R^2$ 上，它与恒等同伦，于是我们得到
+\[ y=(y\otimes b)\backslash a=(b\otimes\tilde y)\backslash a=b\otimes(\tilde y\backslash a). \]
+\end{proof}
+
+% [Tutor Note: p.74 上面这段就是所谓的 Atiyah 技巧：用一个在 $\R^2\oplus\R^2$ 上与恒等同伦的矩阵把 $y\otimes b$ 换成 $b\otimes\tilde y$（交换两个 $\R^2$ 因子并作 $(v,p)\mapsto(p,-v)$），再用斜积把 $\tilde y$ 拉回 $X$。核对要点：矩阵 $\begin{pmatrix}0&-I\\I&0\end{pmatrix}$ 是四块 $2\times2$ 块阵，作用在 $\R^2\oplus\R^2$ 上即 $(v,p)\mapsto(-p,v)$。]
+
+上述内容被称为 Atiyah 技巧。
+
+我们还可以推广：$X\times\R^{2k}$ 是 $X$ 上某个平凡复向量丛的全空间。设 $V$ 是 $X$ 上任意复向量丛。我们能否推广 Bott 周期性，用 $K(X)$ 来计算 $K(V)$？
+
+% [原文 p.75]
+答案是肯定的。
+
+存在映射
+\[ \beta: K(X)\to K(V) \]
+它是同构；$\beta$ 是与 $V$ 的 Thom 类作乘积，即与 $K(V)$ 中的一个类作乘积，该类在每个纤维上限制为通常的 Bott 生成元。
+
+设 $V=L$ 是复线丛。Thom 类是 $\mathbb{P}(L\oplus 1)$ 上的万有线丛。Thom 同构的证明与 Atiyah 技巧非常相似。参见下述文献：M.F. Atiyah: “Bott Periodicity and the Index of Elliptic Operators”, Q.J. of Maths, Oxford, May 1968.
+
+% [Tutor Note: p.75 $\mathbb{P}(L\oplus1)$ 是射影化（$L\oplus1$ 的一维子空间构成的空间），其上的万有线丛即 $V=L$ 的 Thom 类；在每条纤维（$\cong\C P^1$）上它限制为 Bott 生成元，这正是 Bott 周期性在向量丛上的形式。原文所引 Atiyah 1968 一文讨论 Bott 周期性与椭圆算子的指标，是此处 Thom 同构论证的经典出处。]

@@ -1,0 +1,534 @@
+% ============================================================
+%  part06.tex  |  原文 PDF p.41–47（页脚 p.40–46）
+%  内容：第 5 章 微扰展开（续）
+%        5.4 正则量子化（Canonical Quantization）—— 续文
+%        5.5 抵消项与重整化（Counter-term and Renormalization）
+%  分节说明：5.4 的 \subsection 标题位于 PDF p40 下半页，由 part05 提供；
+%            本片段从 p41 的 5.4 续文开始，故不重复 5.4 标题；
+%            5.5 的 \subsection 标题起于 PDF p45，见下文。
+% ============================================================
+
+% >>> p041
+
+代数上，我们可以把它看作相空间上函数环 $A$ 的形变。记
+$A^{\hbar}=A[\hbar]$ 为带有形变乘法 $*$ 的形变环，该乘法称为\emph{Moyal 积}。
+对 $f,g\in A$，有（在 $\hbar$ 的渐近意义下）
+\[
+  \begin{aligned}
+    f(x,p)*g(x,p)
+    &=f(x,p)\,\ee^{\frac{\ii\hbar}{2}\left(
+        \overleftarrow{\frac{\partial}{\partial x}}
+        \overrightarrow{\frac{\partial}{\partial p}}
+        -\overleftarrow{\frac{\partial}{\partial p}}
+        \overrightarrow{\frac{\partial}{\partial x}}
+      \right)}g(x,p)\\
+    &=f(x,p)g(x,p)+\frac{\ii\hbar}{2}\{f,g\}+O(\hbar^2).
+  \end{aligned}
+\]
+可以验证：
+\textcircled{1}\ $*$ 是结合的：
+\[
+  f*(g*h)=(f*g)*h,\qquad \forall f,g,h\in A;
+\]
+\textcircled{2}\ 正则对易关系成立：
+\[
+  [x,p]_*=x*p-p*x=\ii\hbar.
+\]
+
+% [Tutor Note: Moyal 积指数中左右箭头的方向约定极易出错。原文是
+% $\overleftarrow{\partial_x}\overrightarrow{\partial_p}-\overleftarrow{\partial_p}
+% \overrightarrow{\partial_x}$：左箭头表示该导数作用在左边的 $f$ 上，右箭头表示作用在
+% 右边的 $g$ 上。若把两项的次序写反，则一次项 $\{f,g\}$ 整体变号，与后面的
+% $\{f,g\}=\partial_x f\,\partial_p g-\partial_p f\,\partial_x g$ 不再匹配。
+% 校对时请核对原书 p.40 / PDF p.41。]
+
+Moyal 积 $*$ 有如下 Feynman 图解释。引入两个描述相空间 $\R^2$ 上力学的场
+\[
+  \gamma(t)=\left(\mathbb{X}(t),\mathbb{P}(t)\right):\ \R_t\longrightarrow\R^2,
+\]
+并考虑自由作用量
+\[
+  S_0[\gamma]=\int_{\R}\mathbb{P}(t)\dd\mathbb{X}(t)
+  =\int_{\R}\mathbb{P}(t)\dot{\mathbb{X}}(t)\dd t
+  =\int_{\R}\mathbb{P}(t)\frac{\dd}{\dd t}\mathbb{X}(t).
+\]
+我们关心可观测量 $\mathbb{O}$ 的期望
+\[
+  \langle\mathbb{O}\rangle
+  =\frac{\int[D\gamma]\,\ee^{\frac{\ii}{\hbar}S_0[\gamma]}\,\mathbb{O}(\gamma)}
+        {\int[D\gamma]\,\ee^{\frac{\ii}{\hbar}S[\gamma]}}.
+\]
+
+% [Tutor Note: 上式的分母指数中原文写的是 $S[\gamma]$，而分子中写的是自由作用量
+% $S_0[\gamma]$；按上下文（自由理论的期望）分母也应为 $S_0[\gamma]$，此处疑为原文
+% 笔误。按体例照录原文，请核对原书 p.40 / PDF p.41。]
+
+让我们写出（暂时忽略边界行为）
+\[
+  \begin{aligned}
+    S_0[\gamma]
+    &=\frac{1}{2}\int\left(\mathbb{P}\dot{\mathbb{X}}-\mathbb{X}\dot{\mathbb{P}}\right)\dd t\\
+    &=\frac{1}{2}\int
+      \begin{bmatrix}\mathbb{X}&\mathbb{P}\end{bmatrix}
+      \begin{bmatrix}0&-\frac{\dd}{\dd t}\\[2pt]\frac{\dd}{\dd t}&0\end{bmatrix}
+      \begin{bmatrix}\mathbb{X}\\[2pt]\mathbb{P}\end{bmatrix}\dd t.
+  \end{aligned}
+\]
+因此
+\[
+  \ee^{\frac{\ii}{\hbar}S_0[\gamma]}
+  =\exp\left(-\frac{1}{2\hbar}\left(
+    \frac{1}{\ii}\int
+    \begin{bmatrix}\mathbb{X}(t)&\mathbb{P}(t)\end{bmatrix}
+    \begin{bmatrix}0&-\frac{\dd}{\dd t}\\[2pt]\frac{\dd}{\dd t}&0\end{bmatrix}
+    \begin{bmatrix}\mathbb{X}(t)\\[2pt]\mathbb{P}(t)\end{bmatrix}\dd t
+  \right)\right).
+\]
+与有限维情形
+\[
+  \ee^{-\frac{1}{2\hbar}\sum_{i,j}Q_{ij}x^ix^j}
+\]
+相比较，逆矩阵 $Q^{-1}$ 的类比物是
+\[
+  \ii
+  \begin{bmatrix}0&-\frac{\dd}{\dd t}\\[2pt]\frac{\dd}{\dd t}&0\end{bmatrix}^{-1}.
+\]
+$\frac{\dd}{\dd t}$ 的 Green 函数是满足
+\[
+  \frac{\partial}{\partial t_1}G(t_1,t_2)=\delta(t_1-t_2)
+\]
+的函数 $G(t_1,t_2)$。
+
+% [Tutor Note: “与有限维高斯积分比较”这一步是把 $\frac{\ii}{\hbar}S_0$ 写成
+% $-\frac{1}{2\hbar}\cdot\frac{1}{\ii}\int z^{\mathsf T}Mz$ 的形式，其中
+% $z=(\mathbb{X},\mathbb{P})^{\mathsf T}$、$M=\begin{bsmallmatrix}0&-\partial_t\\
+% \partial_t&0\end{bsmallmatrix}$；因为 $\frac{1}{\ii}=-\ii$，指数恰为
+% $\frac{\ii}{2\hbar}\int z^{\mathsf T}Mz$。这个 $\frac{1}{\ii}$ 因子若漏掉，
+% 后面两点函数的 $\ii$ 因子会整体错位。]
+
+% >>> p042
+
+这里 $\delta(t_1-t_2)$ 可以看作 $\delta_{ij}$ 的无穷维类比。用
+$G(t_1,t_2)$ 写出，我们有
+\[
+  \begin{bmatrix}0&-\frac{\partial}{\partial t_1}\\[2pt]
+    \frac{\partial}{\partial t_1}&0\end{bmatrix}
+  \begin{bmatrix}0&G(t_1,t_2)\\[2pt]-G(t_1,t_2)&0\end{bmatrix}
+  =\begin{bmatrix}\delta(t_1-t_2)&0\\[2pt]0&\delta(t_1-t_2)\end{bmatrix}.
+\]
+右端可以看作无穷维单位矩阵的 $(t_1,t_2)$-元。因此上述逆的 $(t_1,t_2)$-元可以写成
+\[
+  \ii
+  \begin{bmatrix}0&-\frac{\dd}{\dd t}\\[2pt]\frac{\dd}{\dd t}&0\end{bmatrix}^{-1}_{t_1,t_2}
+  =\begin{bmatrix}0&\ii G(t_1,t_2)\\[2pt]-\ii G(t_1,t_2)&0\end{bmatrix}.
+\]
+于是我们可以用这个逆来“定义”两点函数：
+\[
+  \left\lbrace
+  \begin{aligned}
+    \langle\mathbb{X}(t_1)\mathbb{P}(t_2)\rangle_\gamma
+      &:=\ii\hbar G(t_1,t_2)\\
+    \langle\mathbb{P}(t_1)\mathbb{X}(t_2)\rangle_\gamma
+      &:=-\ii\hbar G(t_1,t_2)\\
+    \langle\mathbb{X}(t_1)\mathbb{X}(t_2)\rangle_\gamma
+      &=\langle\mathbb{P}(t_1)\mathbb{P}(t_2)\rangle_\gamma=0
+  \end{aligned}
+  \right.
+\]
+我们剩下要解出 $G(t_1,t_2)$。上式要求 $G(t_1,t_2)$ 满足
+\[
+  G(t_1,t_2)=-G(t_2,t_1).
+\]
+$\frac{\dd}{\dd t}$ 的这种 Green 函数由下式显式给出
+\[
+  G(t_1,t_2)=\frac{1}{2}\sgn(t_1-t_2)
+  =\begin{cases}
+    \frac{1}{2}, & t_1>t_2,\\[2pt]
+    0, & t_1=t_2,\\[2pt]
+    -\frac{1}{2}, & t_1<t_2.
+  \end{cases}
+\]
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.73\linewidth]{fig_p042_1.png}
+  \caption*{Green 函数 $G(t_1,t_2)=\tfrac12\sgn(t_1-t_2)$ 的图像（原文 PDF p.42 示意图，原文无编号）}
+\end{figure}
+
+% [Tutor Note: 这里 $G$ 关于两个时间变量\emph{反对称}，故
+% $\langle\mathbb{X}(t_1)\mathbb{P}(t_2)\rangle=-\langle\mathbb{X}(t_2)
+% \mathbb{P}(t_1)\rangle$，这正是 $\langle\mathbb{X}\mathbb{P}\rangle$ 与
+% $\langle\mathbb{P}\mathbb{X}\rangle$ 相差一个负号的原因（见下一段）。若文献把
+% 传播子定义为对称的 $\frac{1}{2}\sgn$ 与 $\frac{\ii\hbar}{2}$ 的组合，请先确认其
+% 时间序/编时约定，两种约定在这一点上不可混用。]
+
+事实上，对任意紧支集检验函数 $f(t)$，
+\[
+  \begin{aligned}
+    -\int_{\R}\dd t_1\,G(t_1,t_2)f'(t_1)
+    &=\frac{1}{2}\int_{-\infty}^{t_2}\dd t_1\,f'(t_1)
+      -\frac{1}{2}\int_{t_2}^{\infty}\dd t_1\,f'(t_1)\\
+    &=\frac{1}{2}f(t_2)-\frac{1}{2}\left(-f(t_2)\right)=f(t_2).
+  \end{aligned}
+\]
+因此
+\[
+  \frac{\partial}{\partial t_1}G(t_1,t_2)=\delta(t_1-t_2)
+\]
+作为分布意义下的等式成立。
+
+总之，我们关心如下两点函数
+\[
+  \langle\mathbb{X}(t_1)\mathbb{P}(t_2)\rangle_\gamma\ \text{“=”}\
+  \frac{\int[D\gamma]\,\ee^{\frac{\ii}{\hbar}S_0[\gamma]}\,
+        \mathbb{X}(t_1)\mathbb{P}(t_2)}
+       {\int[D\gamma]\,\ee^{\frac{\ii}{\hbar}S_0[\gamma]}}.
+\]
+
+% >>> p043
+
+尽管我们先验地不知道路径积分测度的精确信息，仍可与有限维高斯积分作比较，
+得到一个合理的结果
+\[
+  \langle\mathbb{X}(t_1)\mathbb{P}(t_2)\rangle_\gamma
+  :=\ii\hbar G(t_1,t_2)=\frac{\ii\hbar}{2}\sgn(t_1-t_2).
+\]
+以下我们就用这个公式来定义两点函数。
+
+注意这个两点函数，也就是传播子，不依赖于 $t_1,t_2$ 的精确数值，而只依赖于
+它们的相对位置
+\[
+  \langle\mathbb{X}(t_1)\mathbb{P}(t_2)\rangle_\gamma
+  =\begin{cases}
+    \frac{\ii\hbar}{2}, & t_1>t_2,\\[2pt]
+    0, & t_1=t_2,\\[2pt]
+    -\frac{\ii\hbar}{2}, & t_1<t_2.
+  \end{cases}
+\]
+这表明该模型具有拓扑性质——事实上的确如此。
+
+现在设 $f(x,p)$ 与 $g(x,p)$ 是两个多项式。我们在时间轴上把它们画成
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.69\linewidth]{fig_p043_1.png}
+  \caption*{时间轴上的两个算子 $g$ 与 $f$（原文 PDF p.43 示意图，原文无编号）}
+\end{figure}
+如下形式。我们通过如下关联来定义相空间上的一个新函数
+\[
+  \langle f(x+\mathbb{X}(t_2),p+\mathbb{P}(t_2))\,
+    g(x+\mathbb{X}(t_1),p+\mathbb{P}(t_1))\rangle_\gamma.
+\]
+这里我们用时刻 $t_1$ 的量子涨落 $\mathbb{X}(t),\mathbb{P}(t)$ 扰动 $g$ 的变量，
+用时刻 $t_2$ 的涨落扰动 $f$ 的变量。等价地，可以把 $x,p$ 看作“背景”平移。
+这个关联函数依赖于背景变量 $\{x,p\}$，从而定义了相空间上的一个函数。
+
+让我们应用 Wick 定理来计算这个关联。把 $f$ 与 $g$ 各表示为一个顶点，
+其价数等于该多项式的次数
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.62\linewidth]{fig_p043_2.png}
+  \caption*{多项式 $f$ 与 $g$ 对应的星形顶点（原文 PDF p.43 示意图，原文无编号）}
+\end{figure}
+于是 Wick 定理说，该关联等于对所有把 $f$、$g$ 的半边两两配对的方式求和
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.64\linewidth]{fig_p043_3.png}
+  \caption*{Wick 定理：对全部收缩方式求和（原文 PDF p.43 示意图，原文无编号）}
+\end{figure}
+这里对每一个未配对的半边，按它在原来顶点中的位置赋以 $x$ 或 $p$；对配对的
+半边，
+
+% [Tutor Note: 原文 PDF p.43 中“Wick 定理”那一行是一个\emph{图形公式}
+% （左端为关联函数，右端为 $\Sigma$ 加上一张收缩图），不是通常的代数公式。
+% 本译本用图标记 + 文字说明等价地保留其内容，未作任何数学上的改写。若需核对，
+% 请见原书 p.42 下半页 / PDF p.43。]
+
+% [Tutor Note: 配对时只有 $\langle\mathbb{X}\mathbb{P}\rangle$ 与
+% $\langle\mathbb{P}\mathbb{X}\rangle$ 非零，$\langle\mathbb{X}\mathbb{X}\rangle
+% =\langle\mathbb{P}\mathbb{P}\rangle=0$（见 PDF p.42 的定义）。因此一条传播子
+% 必然连接一个“$x$ 型”半边与一个“$p$ 型”半边；哪些半边算 $x$ 型、哪些算 $p$ 型，
+% 由原来顶点 $f,g$ 中该半边所携带的变量决定，这是本段容易看漏的关键。]
+
+% >>> p044
+
+见下图：每一条传播子给出一个因子 $\frac{\ii}{2}\hbar$ 或 $-\frac{\ii}{2}\hbar$
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.69\linewidth]{fig_p044_1.png}
+  \caption*{两种收缩及其对应的两点函数（原文 PDF p.44 示意图，原文无编号）}
+\end{figure}
+\[
+  \langle\mathbb{X}(t_2)\mathbb{P}(t_1)\rangle_\gamma=\frac{\ii}{2}\hbar,
+  \qquad
+  \langle\mathbb{P}(t_2)\mathbb{X}(t_1)\rangle_\gamma=-\frac{\ii}{2}\hbar.
+\]
+对于有 $m$ 条传播子的图，存在由边置换给出的自同构群 $S_m$，它在 Feynman 图
+展开中贡献因子 $\frac{1}{m!}$。于是得到
+\[
+  \begin{aligned}
+    &\langle f(x+\mathbb{X}(t_2),p+\mathbb{P}(t_2))\,
+      g(x+\mathbb{X}(t_1),p+\mathbb{P}(t_1))\rangle_\gamma\\
+    &\quad=f(x,p)\,\ee^{\frac{\ii}{2}\hbar\left(
+        \overleftarrow{\frac{\partial}{\partial x}}
+        \overrightarrow{\frac{\partial}{\partial p}}
+        -\overleftarrow{\frac{\partial}{\partial p}}
+        \overrightarrow{\frac{\partial}{\partial x}}
+      \right)}g(x,p)
+      =\left(f*_{\hbar}g\right)(x,p),
+  \end{aligned}
+\]
+这恰好就是 Moyal 积。
+
+% [Tutor Note: 自同构因子 $\frac{1}{m!}$ 是 Feynman 图展开中最常见的出错点之一：
+% 交换 $m$ 条传播子不改变图，故要除以 $m!$；Moyal 积指数展开的 $m$ 阶项
+% $\frac{1}{m!}\left(\frac{\ii\hbar}{2}\right)^m(\cdots)^m$ 正是这一因子的来源。
+% 漏掉 $m!$ 会使结果变成 $\ee^{\cdots}$ 而非其泰勒展开。]
+
+我们可以把
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.69\linewidth]{fig_p044_2.png}
+  \caption*{在时间轴上依次插入 $g$ 与 $f$（原文 PDF p.44 示意图，原文无编号）}
+\end{figure}
+看作在时刻 $t_1$ 插入一个算子 $g$，然后在较晚的时刻 $t_2$ 插入另一个算子 $f$。
+总的效果是两个算子的复合，它在量子力学中由 Moyal 积 $f*_{\hbar}g$ 表示。
+
+这一图像也给出 Moyal 积 $*_{\hbar}$ 结合性的简单解释。给定三个函数
+$f,g,h$，按时间顺序插入它们
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.69\linewidth]{fig_p044_3.png}
+  \caption*{在时间轴上依次插入 $h$、$g$、$f$（原文 PDF p.44 示意图，原文无编号）}
+\end{figure}
+考虑关联
+\[
+  \langle f(x+\mathbb{X}(t_3),p+\mathbb{P}(t_3))\,
+    g(x+\mathbb{X}(t_2),p+\mathbb{P}(t_2))\,
+    h(x+\mathbb{X}(t_1),p+\mathbb{P}(t_1))\rangle_\gamma.
+\]
+该值在时间位置的局部形变下不变，只有次序是重要的。由先前的计算
+{\small
+\[
+  \begin{aligned}
+    \left(f*_{\hbar}g\right)*_{\hbar}h
+    &=\lim_{t_1\to t_2^-}\lim_{t_3\to t_2^+}
+      \langle f(x+\mathbb{X}(t_3),p+\mathbb{P}(t_3))\,
+      g(x+\mathbb{X}(t_2),p+\mathbb{P}(t_2))\,
+      h(x+\mathbb{X}(t_1),p+\mathbb{P}(t_1))\rangle_\gamma,\\
+    f*_{\hbar}\left(g*_{\hbar}h\right)
+    &=\lim_{t_3\to t_2^+}\lim_{t_1\to t_2^-}
+      \langle f(x+\mathbb{X}(t_3),p+\mathbb{P}(t_3))\,
+      g(x+\mathbb{X}(t_2),p+\mathbb{P}(t_2))\,
+      h(x+\mathbb{X}(t_1),p+\mathbb{P}(t_1))\rangle_\gamma.
+  \end{aligned}
+\]}
+上述关联的拓扑性质蕴含
+\[
+  \left(f*_{\hbar}g\right)*_{\hbar}h
+  =f*_{\hbar}\left(g*_{\hbar}h\right).
+\]
+
+% [Tutor Note: 两个极限的次序不可交换：$t_1\to t_2^-$ 从下方逼近、$t_3\to t_2^+$
+% 从上方逼近，分别表示“把 $h$ 推到 $g$ 的左侧”“把 $f$ 推到 $g$ 的右侧”。结合性
+% 不是来自极限交换，而是来自关联函数对时间位置局部形变的不变性（拓扑性）。
+% 原文正是用这一点绕过了“路径积分测度未定义”的困难。]
+
+% >>> p045
+
+\subsection{抵消项与重整化（Counter-term and Renormalization）}
+
+一般而言，由于传播子的奇异性，Feynman 图积分是发散的。为了赋予它们意义并
+提取有意义的数值，抵消项（counter-term）方法起着重要作用。我们通过 $\R^4$
+上 $\phi^4$ 理论的重整化来说明抵消项的基本思想。作用量为
+\[
+  S[\phi]=\frac{1}{2}\int_{\R^4}\dd^4x\,\phi D\phi
+  +\frac{\lambda}{4!}\int_{\R^4}\dd^4x\,\phi^4,
+  \qquad \phi\in C_c^{\infty}(\R^4),
+\]
+其中
+\[
+  D=-\sum_{i=1}^{4}\frac{\partial}{\partial x^i}\frac{\partial}{\partial x^i},
+\]
+$\lambda$ 是耦合常数。传播子 $D^{-1}$ 由 Green 函数给出
+\[
+  G(x,y)=\frac{1}{|x-y|^2},\qquad x,y\in\R^4.
+\]
+相互作用项给出一个四价顶点。
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.22\linewidth]{fig_p045_1.png}
+  \caption*{四价顶点（原文 PDF p.45 示意图，原文无编号）}
+\end{figure}
+
+% [Tutor Note: 原文的 Laplace 算子取 $D=-\sum_i\partial_i\partial_i$，即通常的
+% $-\Delta$，没有 $\frac{1}{2}$ 因子；相应的 Green 函数写成 $G=1/|x-y|^2$
+% （在 $\R^4$ 上，$-\Delta$ 的基本解通常是 $\frac{1}{4\pi^2|x-y|^2}$）。
+% 因此原文的 $G$ 与常见归一化相差常数 $4\pi^2$。这不是笔误而是作者的归一化
+% 约定（把常数吸收进 $D$ 或 $\lambda$ 的定义），但读者自行代入标准公式时极易
+% 对不上系数，特此提示。]
+
+\paragraph{树图（Tree diagrams）}
+
+让我们从一个树图出发
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.45\linewidth]{fig_p045_2.png}
+  \caption*{树图（原文 PDF p.45 示意图，原文无编号）}
+\end{figure}
+\[
+  \begin{aligned}
+    &=\lambda^2\int_{\R^4\times\R^4}\dd^4x\,\dd^4y\,
+      \phi(x)^3\phi(y)^3\,G(x,y)\\
+    &=\lambda^2\int_{\R^4\times\R^4}\dd^4x\,\dd^4y\,
+      \phi(x)^3\phi(y)^3\,\frac{1}{|x-y|^2}.
+  \end{aligned}
+\]
+对任何紧支集的输入 $\phi$，这是收敛的。事实上，所有树图都收敛。唯一的潜在
+发散出现在我们允许 $\phi$ 在无穷远处没有适当衰减时。这称为\emph{IR 发散}
+（红外发散），源自时空流形的非紧性；它不如 UV 发散（紫外发散）严重。
+
+% [Tutor Note: “所有树图都收敛”是因为树图的内线传播子 $1/|x-y|^2$ 只在
+% $x=y$ 处奇异，不会出现多圈图中的重叠发散；但 $x,y$ 都在非紧的 $\R^4$ 上积分，
+% 当 $\phi$ 在无穷远处衰减不够快时积分可能发散，这就是 IR 发散。原文说它
+% “不如 UV 发散严重”，因为在紧支集 $\phi$ 下 IR 发散并不出现。]
+
+\paragraph{单圈图（One-loop diagrams）}
+
+考虑一个单圈图
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.45\linewidth]{fig_p045_3.png}
+  \caption*{单圈图（原文 PDF p.45 示意图，原文无编号）}
+\end{figure}
+
+% >>> p046
+
+于是有
+\[
+  \begin{aligned}
+    &=\hbar\lambda^2\int_{\R^4\times\R^4}\dd^4x\,\dd^4y\,
+      \phi(x)^2\phi(y)^2\,G(x,y)^2\\
+    &=\hbar\lambda^2\int_{\R^4\times\R^4}\dd^4x\,\dd^4y\,
+      \phi(x)^2\phi(y)^2\,\frac{1}{|x-y|^4}.
+  \end{aligned}
+\]
+这通常是在 $x=y$ 附近发散的积分。著名的重整化思想按如下三步策略给出解决方案。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.2em,itemsep=0.15em]
+  \item 用截断参数 $\eps$ 正则化 $G$；
+  \item 要求耦合常数（此处为 $\lambda$）依赖于截断 $\eps$；
+  \item 适当选取 (1) 与 (2)，使得去掉截断后计算结果具有有限值。
+\end{enumerate}
+
+物理学中常用的正则化是动量截断。设 $k$ 为 $x$ 的 Fourier 变换，则可以用
+$|k|$ 的截断 $[\Lambda_0,\Lambda_1]$ 来正则化 Green 函数 $G(x,y)$：
+\[
+  G(x,y)=\int_{\R^4}\dd^4k\,\frac{\ee^{\ii k(x-y)}}{k^2}
+  \quad\leadsto\quad
+  \int_{\Lambda_0\le |k|\le\Lambda_1}\dd^4k\,
+  \frac{\ee^{\ii k(x-y)}}{k^2}.
+\]
+动量截断是自然的，也是物理学中最常用的。但它在一般流形上并不方便。我们也可
+使用热核截断。对 Laplace 算子 $D$，Green 函数是热核 $\ee^{-tD}$ 的时间积分：
+\[
+  G(x,y)=\int_0^{\infty}\ee^{-tD}\dd t.
+\]
+我们选取 UV 截断 $\eps$ 与 IR 截断 $L$。则正则化传播子为
+\[
+  P_{\eps}^{L}=\int_{\eps}^{L}\ee^{-tD}\dd t
+  =\int_{\eps}^{L}\frac{\dd t}{(2\pi t)^2}\,
+  \ee^{-\frac{|x-y|^2}{4t}}.
+\]
+
+% [Tutor Note: 这里的 heat kernel 归一化疑有笔误：$\R^4$ 上 $-\Delta$ 的热核为
+% $(4\pi t)^{-2}\ee^{-|x-y|^2/(4t)}$，原文分母写作 $(2\pi t)^2$（即 $4\pi^2t^2$），
+% 与标准结果相差因子 $4^2=16$。这会影响下面 $\log\eps$ 的系数归一化。按体例
+% 照录原文并在此提示，请核对原书 p.45 / PDF p.46。]
+
+正则化后的单圈图变为（细节留给读者）
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.45\linewidth]{fig_p046_1.png}
+  \caption*{用正则化传播子 $P_\eps^L$ 替换后的单圈图（原文 PDF p.46 示意图，原文无编号）}
+\end{figure}
+\[
+  \begin{aligned}
+    &=\hbar\lambda^2\int_{\R^4\times\R^4}\dd^4x\,\dd^4y\,
+      \phi(x)^2\phi(y)^2\,P_{\eps}^{L}(x,y)^2\\
+    &=\hbar\lambda^2\int_{\R^4\times\R^4}\dd^4x\,\dd^4y\,
+      \phi(x)^2\phi(x+y)^2
+      \int_{\eps}^{L}\int_{\eps}^{L}
+      \frac{\dd t_1}{(2\pi t_1)^2}\frac{\dd t_2}{(2\pi t_2)^2}\,
+      \ee^{-\frac{|y|^2}{4}\left(\frac{1}{t_1}+\frac{1}{t_2}\right)}\\
+    &=-\hbar\lambda^2\frac{\log\eps}{\pi^2}
+      \int_{\R^4}\dd^4x\,\phi(x)^4
+      +\text{当 }\eps\to0\text{ 时光滑的项}.
+  \end{aligned}
+\]
+% [Tutor Note: 第二行中被积函数里的 $\phi$ 已从 $\phi(x)^2\phi(y)^2$ 改写为
+% $\phi(x)^2\phi(x+y)^2$：这是把 $P_\eps^L(x,y)^2$ 中的相对坐标 $y$ 重命名为
+% 积分变量 $y$ 后的结果（平移不变性），两处 $y$ 含义不同，抄写时容易混。]
+
+% >>> p047
+
+于是我们可以通过加上一个抵消项 $I^{CT}(\eps)$ 来修正作用量 $S$：
+\[
+  S+I^{CT}(\eps)
+  =\frac{1}{2}\int_{\R^4}\dd^4x\,\phi D\phi
+  +\frac{\lambda}{4!}\int_{\R^4}\dd^4x\,\phi^4
+  +\frac{\log\eps}{4!\pi^2}\hbar\lambda^2\int_{\R^4}\dd^4x\,\phi^4.
+\]
+该抵消项给出一个新的单圈顶点
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.31\linewidth]{fig_p047_1.png}
+  \caption*{抵消项给出的新顶点（原文 PDF p.47 示意图，原文无编号）}
+\end{figure}
+\[
+  \frac{\hbar\lambda^2\log\eps}{\pi^2}.
+\]
+
+% [Tutor Note: $4!$ 的记账是抵消项部分的关键：作用量里的抵消项系数是
+% $\frac{\log\eps}{4!\pi^2}\hbar\lambda^2$，但四价顶点带 $4!$ 个外部腿的置换，
+% 因此该顶点在图上贡献 $\frac{\hbar\lambda^2\log\eps}{\pi^2}$，恰与单圈结果
+% $-\frac{\hbar\lambda^2\log\eps}{\pi^2}\phi(x)^4$ 相消。切勿把作用量系数直接
+% 与单圈结果相加；这是初学者最常犯的错误。]
+
+现在若计算带 4 个外线输入的单圈图，我们发现两项贡献
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.68\linewidth]{fig_p047_2.png}
+  \caption*{四点单圈图的两项贡献（原文 PDF p.47 示意图，原文无编号）}
+\end{figure}
+而由构造，这个和对 $\eps\to0$ 的极限存在。
+
+从作用量看，其效果是把耦合常数修正为
+\[
+  \lambda\longrightarrow\lambda+\hbar\lambda^2\frac{\log\eps}{\pi^2}.
+\]
+事实上可以证明，通过加入更高 $\hbar$ 阶的、依赖于 $\eps$ 的项
+\[
+  \lambda\longrightarrow\lambda+\hbar\lambda^2\frac{\log\eps}{\pi^2}
+  +\hbar^2(-)+\cdots,
+\]
+所有 Feynman 图的 UV 发散会相互抵消！这是可重整化理论的一个例子。
+
+% [Tutor Note: 原文 p.46 写“it can shown that”，应为“it can be shown that”；
+% p.46 的“possibley”应为“possibly”，p.45 的“A popular regularization in physics
+% in the momentum cut-off”应为“is the momentum cut-off”。以上均为原文笔误，
+% 译文按原意处理，不在此改写英文原文。]
+一般而言，我们需要在抵消项 $I^{CT}(\eps)$ 中加入许多新项，以抵消所有圈阶的
+所有 UV 发散，甚至可能需要无穷多种不同类型的拉格朗日量。如果我们只需要有限项，如
+\[
+  I^{CT}(\eps)=\lambda_1(\eps)\int\mathscr{L}_1
+  +\lambda_2(\eps)\int\mathscr{L}_2
+  +\cdots+\lambda_N(\eps)\int\mathscr{L}_N,
+\]
+并调整有限个系数 $\lambda_1(\eps),\dots,\lambda_N(\eps)$ 以抵消所有发散，则该理论
+在物理学中称为“\emph{可重整化的}（renormalizable）”。注意抵消项并不唯一。
+引入可重整性这一概念的理由是：我们可以通过有限次实验测量未知的耦合常数，然后
+用该理论作出可进一步检验的新预言。如果我们有无穷多个耦合常数，那么理论就没有
+预言能力，尽管它在数学上仍然有意义。上述 $\R^4$ 上 $\phi^4$ 理论的例子是可
+重整化的。
+% [Tutor Note: 本节只讲了 $\phi^4$ 理论单圈抵消项的“操作示范”，并未证明所有圈
+% 都可重整；原文的“it can shown”之后直接跳到结论。真正的证明需要 Weinberg
+% 幂次计数定理与 BPHZ 减除方案，本讲义在第 7 章用 BV/同伦重整化语言重述，
+% 建议读者对照第 7 章阅读。]

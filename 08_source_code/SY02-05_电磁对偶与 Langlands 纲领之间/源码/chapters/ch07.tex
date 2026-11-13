@@ -1,0 +1,398 @@
+% ============================================================================
+%  第 7 章  几何类域论
+% ============================================================================
+\chapter{几何类域论}\label{ch:07}
+
+\begin{keytakeaways}
+本章讨论几何类域论（即函数域上的类域论）的几何形式。核心论点是：
+$\operatorname{Pic}$ 上带有“乘性”性质的秩 1 局部系统（特征局部系统/特征层），
+与曲线 $C$ 上的秩 1 局部系统一一对应；其机制是把 Abel--Jacobi 映射
+$\mathrm{AJ}\colon C\hookrightarrow\operatorname{Pic}^1\hookrightarrow\operatorname{Pic}$
+提升为群完备化 $\operatorname{Sym}^\bullet C\to\operatorname{Pic}$ 上的层论陈述，
+从而把 $C$ 上局部系统的延拓问题转化为沿 Abel--Jacobi 的拉回问题。
+所使用的工具包括：Jacobian 的 Albanese 性质、Dold--Thom 定理（$\operatorname{Sym}^\infty$ 的
+同伦群即同调）、Fourier--Mukai 变换、Hecke 特征性质以及 Deligne 的证明。
+主要结论是式 \eqref{eq:7.35}：特征局部系统与秩 1 局部系统之间的范畴等价；
+本章最后把几何 CFT 解释为 $\Loc(\operatorname{Pic})$ 的谱分解，为后续非阿贝尔版本作铺垫。
+\end{keytakeaways}
+
+设 $\Sigma$ 是 Riemann 面。则 $\operatorname{Pic}\Sigma$ 适合如下短正合列
+\begin{equation}\tag{7.1}\label{eq:7.1}
+0\to\operatorname{Jac}\Sigma\to\operatorname{Pic}\Sigma\to\Z\to 0,
+\end{equation}
+而 Jacobian 是一个格，即它是
+\begin{equation}\tag{7.2}\label{eq:7.2}
+V/H^1(\Sigma,\Z)
+\end{equation}
+（对某个向量空间 $V$）。这意味着，由 Poincaré 对偶，
+\begin{equation}\tag{7.3}\label{eq:7.3}
+\pi_1(\operatorname{Jac})\simeq H_1(\Sigma,\Z)=\pi_1^{ab}(\Sigma),
+\end{equation}
+故 $\pi_1(\operatorname{Jac})$ 就是 $\pi_1(\Sigma)$ 的 Abel 化。
+
+结果是，对阿贝尔群 $A$ 有
+\begin{equation}\tag{7.4}\label{eq:7.4}
+\Loc_A(\Sigma)=\bigl\{\pi_1(\Sigma)\to A\bigr\}\big/\sim
+\end{equation}
+这等同于
+\begin{equation}\tag{7.5}\label{eq:7.5}
+\Loc_A(\operatorname{Jac}\Sigma)=\bigl\{\pi_1(\operatorname{Jac})\to A\bigr\}\big/\sim,
+\end{equation}
+因为到阿贝尔群的映射不检测源是否已 Abel 化。也就是说，$\Sigma$ 的阿贝尔 $A$-覆盖与
+$\operatorname{Jac}(\Sigma)$ 的阿贝尔 $A$-覆盖一一对应。
+
+我们可以通过特征来理解有限阿贝尔群，故不妨取 $A=\mathrm{GL}_1\C=\C^{\times}$。例如可以写
+\begin{equation}\tag{7.6}\label{eq:7.6}
+\Loc_A\Sigma=\Hom\bigl(A^{\vee},\Loc_1\Sigma\bigr).
+\end{equation}
+这只是说这里的主要内容是
+\begin{equation}\tag{7.7}\label{eq:7.7}
+\Loc_1\Sigma\simeq\Loc_1\bigl(\operatorname{Jac}=\operatorname{Pic}^0\bigr).
+\end{equation}
+
+我们可以更典范地表达这一点。最重要的要素是 Abel--Jacobi 映射：
+\begin{equation}\tag{7.8}\label{eq:7.8}
+\Sigma\to\operatorname{Pic}^1\Sigma .
+\end{equation}
+点 $x\in\Sigma$ 送到除子 $1\cdot x\in\operatorname{Pic}^1\Sigma$。当然 $\operatorname{Pic}^1\simeq\operatorname{Pic}^0$。
+Abel 与 Jacobi 当年会这样写：给定基点 $e\in\Sigma$，我们得到映射（它也通常被称为
+Abel--Jacobi 映射）
+\begin{equation}\tag{7.9}\label{eq:7.9}
+\Sigma\to\operatorname{Jac},
+\end{equation}
+其中 $x$ 送到 $x-e$。
+
+拉回是
+\begin{equation}\tag{7.10}\label{eq:7.10}
+\operatorname{AJ}^*\colon\Loc_1\bigl(\operatorname{Pic}^1\bigr)
+\xrightarrow{\ \sim\ }\Loc_1(\Sigma),
+\end{equation}
+故 $\operatorname{AJ}^*$ 把 $\operatorname{Pic}^1$ 的 $A$-覆盖与 $\Sigma$ 的 $A$-覆盖等同。
+所以这是比之前那个双射更典范的写法。
+
+% [Tutor Note: 式 (7.3) 中 $H_1(\Sigma,\Z)=\pi_1^{ab}(\Sigma)$ 用的是 Hurewicz 定理；
+%  而 $\pi_1(\operatorname{Jac})\simeq H_1(\Sigma,\Z)$ 需要先知道 $\operatorname{Jac}=V/H_1$
+%  是环面。注意 (7.2) 里 $V/H^1(\Sigma,\Z)$ 的 $H^1$ 实为 $H_1$ 的格（原文写作上同调），
+%  且 $V$ 是 $H^0(\Sigma,\Omega^1)^{\vee}$；两者通过 Poincaré 对偶等同，但符号上不要混淆
+%  $H_1$（格）与 $H^1$（对偶格）。]
+
+\section{Albanese 性质}
+
+\begin{sectionkey}
+本节说明 $\operatorname{Pic}$ 之所以“看见”曲线，是因为它满足 Albanese 性质：
+从 $\Sigma$ 到任意阿贝尔群概形的映射都经由 Abel--Jacobi 分解；对曲线，
+Albanese 簇恰好就是 Jacobian，而它与 Picard 簇互为对偶。
+\end{sectionkey}
+
+到此为止我们看到的东西，实际上都在表达 Jacobian 的所谓 \term{Albanese 性质}{Albanese property}。
+对高维簇，可以附着两个不同的阿贝尔簇：Picard 与 Albanese，它们互为对偶。
+其想法是：这从根本上不是关于除子/线丛的事实，而是关于 0 维闭链的事实。
+它们恰好在维数 1 时重合。
+
+设 $A$ 是阿贝尔群概形\footnote{经典上人们可能取 $A$ 为阿贝尔簇；最现代的版本
+可能是取 $A$ 为阿贝尔群栈。}。给定概形映射 $\Sigma\to A$（$A$ 为阿贝尔群），
+Albanese 性质说它可以分解为
+\begin{equation}\tag{7.11}\label{eq:7.11}
+\begin{array}{ccc}
+\Sigma & \xrightarrow{\qquad} & A\\[2pt]
+\downarrow{\scriptstyle \operatorname{AJ}_e}
+& \nearrow{\scriptstyle \text{（虚线）}} & \\[2pt]
+\operatorname{Pic} & &
+\end{array}
+\end{equation}
+换言之，
+\begin{equation}\tag{7.12}\label{eq:7.12}
+\operatorname{AJ}^*\colon\Hom_{Grp}\bigl(\operatorname{Pic}\Sigma,A\bigr)
+\xrightarrow{\ \sim\ }\operatorname{Map}(\Sigma,A).
+\end{equation}
+我们可以把这理解为：$\operatorname{Pic}$ 是由 $\Sigma$“自由生成”的阿贝尔群概形。
+
+\begin{srcrem}{30}
+对光滑射影的 $X$，存在一个阿贝尔簇 $\operatorname{Alb}(X)$，称为 \term{Albanese 簇}{Albanese variety}，
+它满足上述泛性质。（通常把它定义为 0-闭链模去某个等价关系。）
+于是经典的陈述是存在典范映射 $X\to\operatorname{Alb}(X)$。对曲线而言，Albanese 簇恰好与
+Jacobian 相同。Albanese 簇是一个环面，其基本群是 $H_1$。这是 Picard 簇的对偶阿贝尔簇。
+相应地，$\operatorname{Pic}^0$ 的基本群是 $H^1$。
+\end{srcrem}
+
+% [Tutor Note: Remark 30 里“Albanese 的基本群是 $H_1$，故对偶的 $\operatorname{Pic}^0$ 的
+%  基本群是 $H^1$”这句话容易读反：$\operatorname{Alb}(X)$ 与 $\operatorname{Pic}^0(X)$ 互为对偶
+%  阿贝尔簇，对偶把 $H_1$ 与 $H^1$ 互换，而不是说二者相等。对曲线，
+%  $\operatorname{Alb}(\Sigma)=\operatorname{Jac}\Sigma$ 的 $\pi_1$ 是 $H_1(\Sigma,\Z)$，
+%  $\operatorname{Pic}^0$ 的 $\pi_1$ 则是对偶格 $H^1(\Sigma,\Z)$。另 (7.11) 中的虚线箭头
+%  表示泛性质给出的映射；原文画作从 $\operatorname{Pic}$ 到 $A$ 的虚线。]
+
+\section{Dold--Thom 定理}
+
+\begin{sectionkey}
+本节先陈述拓扑的 Dold--Thom 定理（$\operatorname{Sym}^\infty(X,x)$ 的同伦群等于 $X$ 的同调），
+再给出其代数几何类比：对称积 $\operatorname{Sym}^\bullet\Sigma$ 到 $\operatorname{Pic}^\bullet\Sigma$
+的 Abel--Jacobi 映射在商掉有效除子的截面信息后，于高次数处是单连通纤维的丛，
+从而在高次数上诱导 $\pi_1$ 的同构。
+\end{sectionkey}
+
+Dold--Thom 定理把带基点空间 $(X,x)$ 的同调与 $\operatorname{Sym}^{\infty}(X,x)$ 联系起来。
+可以把 $\operatorname{Sym}^{\infty}(X,x)$ 想成由 $X$ 构造的“自由交换幺半群”。
+具体地，定理说它的同伦群就是 $X$ 的同调。现在我们想陈述它的代数几何类比。
+
+我们有如下映射：
+\begin{equation}\tag{7.13}\label{eq:7.13}
+\begin{array}{rcl}
+\Sigma & \longleftrightarrow & \operatorname{Pic}^1\\[2pt]
+\operatorname{Sym}^2\Sigma & \longrightarrow & \operatorname{Pic}^2\\[2pt]
+(x,y) & \longmapsto & x+y\\[2pt]
+& \cdots &\\[2pt]
+\operatorname{Sym}^d\Sigma & \longrightarrow & \operatorname{Pic}^d
+\end{array}
+\end{equation}
+它们组装起来给出映射
+\begin{equation}\tag{7.14}\label{eq:7.14}
+\operatorname{AJ}^{\bullet}\colon\operatorname{Sym}^{\bullet}(\Sigma)\to\operatorname{Pic}^{\bullet}(\Sigma).
+\end{equation}
+$\operatorname{Sym}^{\bullet}\Sigma$ 的元素就是所谓的\term{有效除子}{effective divisor}。
+也就是说，它是点的带正系数的线性组合。这等同于一个线丛 $L$ 与一个全纯截面
+$\sigma\in\Gamma(L)$。即它没有极点，但确实有一些零点，这些零点决定了点的带权组合。
+从这个观点看，$\operatorname{AJ}^{\bullet}$ 映射就是忘掉截面。换言之，$\operatorname{AJ}^{\bullet}$
+的纤维为
+\begin{equation}\tag{7.15}\label{eq:7.15}
+(\operatorname{AJ}^{\bullet})^{-1}(L)=\PP\bigl(H^0(\Sigma,L)\bigr),
+\end{equation}
+这里取射影化，因为除子只把截面确定到相差一个标量。
+
+Riemann--Roch 定理说，当 $d>2g-2$ 时 $H^1(\Sigma,L)=0$，故我们只得到一个射影空间丛
+$\PP^{d-g}$。因此若看足够高的次数，这些空间 $\operatorname{Sym}^{\bullet}$ 与
+$\operatorname{Pic}$ 看起来更相似。要点是这些射影空间单连通，故对 $d\gg 0$，
+$\operatorname{AJ}^{\bullet}$ 在 $\pi_1$ 上是同构。
+
+想法是：我们要更好地理解 $\Loc(\operatorname{Pic})$ 与 $\Loc_1\Sigma$ 之间的关系。回忆
+\begin{equation}\tag{7.16}\label{eq:7.16}
+\Loc(\operatorname{Pic})\simeq\QC(\Loc_1\Sigma).
+\end{equation}
+这是我们要理清的东西。问题在于 $\Sigma$ 只看到了 $\operatorname{Pic}$ 的单个分量。
+但要理解 $\Loc_1\Sigma$，我们必须把不同的分量联系起来。这正是几何类域论的陈述要说的。
+
+% [Tutor Note: (7.15) 里的 Riemann--Roch 需要补充前提：$L$ 的次数为 $d$，且 $d>2g-2$ 时
+%  $h^1(L)=0$，于是 $h^0(L)=d-g+1$，纤维 $\PP(H^0(L))$ 的维数是 $d-g$，故写作
+%  $\PP^{d-g}$ 丛。作者说“这些射影空间单连通，所以 $\operatorname{AJ}^\bullet$ 在 $\pi_1$
+%  上同构”，严格论证需要纤维连通（或单连通）且底空间局部平凡的长正合列；这里单连通性
+%  只用到了 $\PP^n$ 单连通这一事实。另注意 Dold--Thom 定理的精确陈述是
+%  $\pi_i(\operatorname{Sym}^\infty(X,x))\cong H_i(X;\Z)$（$i\ge 1$），且需 $(X,x)$ 为
+%  CW 复形；代数几何类比中“群完备化”对应 $\operatorname{Sym}^\bullet$ 的 Grothendieck 群。]
+
+\section{回顾：非分歧 CFT}
+
+\begin{sectionkey}
+本节回顾非分歧类域论在函数域上的经典形式：$C$ 上秩 1 局部系统 $E$ 给出
+$\operatorname{Pic}$ 的特征 $\chi_E$；$\chi_E$ 在单点修改 $L(x)=L\otimes\cO(x)$ 上的取值
+就是 $E$ 在 $x$ 处 Frobenius 元素上的取值，这提示了 $E$ 与 $\chi_E$ 之间的函子性对应。
+\end{sectionkey}
+
+回忆曲线 $C/\F_q$ 的非分歧 CFT。其陈述是：$C$ 上秩 1 局部系统对应于 $\operatorname{Pic}$ 的特征。
+具体地，我们从 $E\in\Loc_1(C)$ 出发，并附着 $\chi_E$，即 $\operatorname{Pic}$ 的一个特征。
+回忆“是特征”意味着
+\begin{equation}\tag{7.17}\label{eq:7.17}
+\chi_E(L\otimes M)\simeq\chi_E(L)\cdot\chi_E(M).
+\end{equation}
+但这与 $E$ 有何关系？回忆 $\operatorname{Pic}$ 由 $\Z x$（$x\in C$）生成。于是我们可以如下刻画
+$\chi_E$ 所满足的条件。我们知道
+\begin{equation}\tag{7.18}\label{eq:7.18}
+\chi_E\bigl(L(x)\bigr)=\chi_E\bigl(L\otimes\cO(x)\bigr),
+\end{equation}
+其中 $\cO(x)$ 是相伴除子为 $1\cdot x$ 的线丛。由特征性质，
+\begin{align}
+\chi_E\bigl(L(x)\bigr)&=\chi_E\bigl(L\otimes\cO(x)\bigr)\tag{7.19}\label{eq:7.19}\\
+&=\chi_E\bigl(\cO(x)\bigr)\cdot\chi_E(L),\tag{7.20}\label{eq:7.20}
+\end{align}
+而这个数 $\chi_E(\cO(x))$ 应该是局部系统 $E$ 在 $\mathrm{Fr}_x$（$x$ 处的 Frobenius 元素）上的值。
+注意 $\cO(x)=\operatorname{AJ}(x)$，故值 $\chi_E(\cO(x))$ 确实是关于曲线的某种东西。
+
+% [Tutor Note: (7.18) 与 (7.19) 在原文中把同一个等式写了两遍（源文 p.91），这是重复，
+%  这里照原文保留。另需注意 $\chi_E(\cO(x))$ 是 $E$ 在闭点 $x$ 的 Frobenius 上的取值，
+%  严格说需要先固定 $E$ 在基点的纤维（因为局部系统只在同构意义下确定），
+%  这就是为什么完整陈述要取 $C$ 上的“点+平凡化”或采用 $\pi_1$ 的表示。
+%  此外 $\cO(x)=\operatorname{AJ}(x)$ 只在 $\operatorname{Pic}^1$ 的模型下成立。]
+
+\section{特征层}
+
+\begin{sectionkey}
+本节把上一节的特征条件几何化：特征局部系统是带乘法同构
+$\mu^*\chi\simeq\chi\boxtimes\chi$ 的局部系统，且自动是秩 1 的；等价地，
+它给出扩张 $0\to k^\times\to A_\chi\to A\to0$，即元素 $\chi\in\operatorname{Ext}^1(\operatorname{Pic},\GG_m)$。
+沿单点修改的取值 $\chi(L(x))$ 给出 Hecke 特征性质，这是几何 CFT 的关键输入。
+\end{sectionkey}
+
+现在要陈述几何\footnote{这意味着我们在看层。}版本。设 $C/k$ 是任意域上的曲线
+（若只要 $k=\C$，则 $\Sigma$ 是 Riemann 面）。我们不再有 Frobenius 元素，
+故不能自动形成这类陈述，但可以表述别的东西。考虑 $\operatorname{Pic}(C)$ 上的
+\term{特征局部系统}{character local system}。它们满足乘性，正如普通特征一样。
+具体地，特征局部系统是局部系统 $\chi\in\Loc(\operatorname{Pic})$，并带有同构
+\begin{equation}\tag{7.21}\label{eq:7.21}
+\mu^*\chi\xrightarrow{\ \sim\ }\chi\boxtimes\chi,
+\end{equation}
+其中 $\mu\colon\operatorname{Pic}\times\operatorname{Pic}\to\operatorname{Pic}$。
+它还需要满足结合性关系。
+
+\paragraph{题外话 4.}
+我们可以把特征 $\chi_E$ 的定义 (7.17) 改写为要求
+\begin{equation}\tag{7.22}\label{eq:7.22}
+\mu^*\chi_E=\chi_E\boxtimes\chi_E .
+\end{equation}
+于是我们可以对层坚持同样的条件，即
+\begin{equation}\tag{7.23}\label{eq:7.23}
+\mu^*\chi\xrightarrow{\ \sim\ }\chi\boxtimes\chi,
+\end{equation}
+或等价地
+\begin{equation}\tag{7.24}\label{eq:7.24}
+\chi|_{L\otimes M}\simeq\chi|_L\otimes\chi|_M .
+\end{equation}
+我们可以在任何有层生活于其上的东西上做特征层的定义。断言是：它们总是秩 1 的。想法是
+\begin{equation}\tag{7.25}\label{eq:7.25}
+\chi(0+a)\cong\chi(a),
+\end{equation}
+故 $\chi(0)$ 是 1 维的，且有单位性质把它等同于 $k$。然后
+$\chi(a-a)\cong\chi(0)\cong\chi(a)\to\chi(-a)$。这意味着全空间是 $A$ 上的 $k^{\times}$-torsor：
+\begin{equation}\tag{7.26}\label{eq:7.26}
+\begin{array}{c}
+A_{\chi}=\operatorname{Tot}(\chi)^{\times}\\[2pt]
+\downarrow{\scriptstyle k^{\times}}\\[2pt]
+A
+\end{array}
+\end{equation}
+于是陈述是：$\chi$ 是特征，当且仅当 $A_{\chi}$ 是阿贝尔群，即它定义扩张
+\begin{equation}\tag{7.27}\label{eq:7.27}
+0\to k^{\times}\to A_{\chi}\to A\to 0 .
+\end{equation}
+所以我们实际是在说 $\chi\in\operatorname{Ext}^1(\operatorname{Pic},\GG_m)$，
+即 $\chi$ 是特征当且仅当它是同态
+\begin{equation}\tag{7.28}\label{eq:7.28}
+\chi\colon\operatorname{Pic}\to B\GG_m .
+\end{equation}
+
+设 $\chi$ 是 $\operatorname{Pic}C$ 上的特征局部系统。则
+\begin{equation}\tag{7.29}\label{eq:7.29}
+\chi(L\otimes M)\simeq\chi(L)\otimes\chi(M).
+\end{equation}
+正如普通特征一样，我们可以看 $L$ 在单点 $x\in C$ 处的修改：
+\begin{equation}\tag{7.30}\label{eq:7.30}
+\chi\bigl(L(x)\bigr)
+=\chi\Bigl(\underbrace{\cO(x)}_{=\operatorname{AJ}(x)}\Bigr)\otimes\chi(L).
+\end{equation}
+设 $L_{\chi}=\operatorname{AJ}^*\chi\in\Loc_1 C$。于是这说的是
+\begin{equation}\tag{7.31}\label{eq:7.31}
+\chi\bigl(L(x)\bigr)\simeq L_{\chi}|_x\to\chi(L).
+\end{equation}
+我们可以在族中陈述这一点。我们有图
+\begin{equation}\tag{7.32}\label{eq:7.32}
+\begin{array}{ccc}
+\operatorname{Pic}\times\operatorname{Pic} & \xrightarrow{\ \otimes\ } & \operatorname{Pic}\\[2pt]
+\uparrow{\scriptstyle \operatorname{AJ}\times\operatorname{id}}
+& \nearrow{\scriptstyle \mu_C}
+& \uparrow{\scriptstyle L(x)}\\[2pt]
+C\times\operatorname{Pic} & & (x,L)
+\end{array}
+\end{equation}
+而陈述是：我们有等同
+\begin{equation}\tag{7.33}\label{eq:7.33}
+\mu_C^*\chi\simeq L\boxtimes\chi .
+\end{equation}
+这称为 \term{Hecke 特征性质}{Hecke eigenproperty}。这应该足以完全确定 $\chi$ 的乘性。
+
+% [Tutor Note: 式 (7.31) 原文用右箭头 “$\to$” 把 $L_{\chi}|_x$ 与 $\chi(L)$ 连接起来，
+%  但由 (7.30) 应读作张量积：$\chi(L(x))\simeq L_{\chi}|_x\otimes\chi(L)$。
+%  这是原文的笔误（源文 p.92），此处照原文保留箭头，理解时按张量积。
+%  另 (7.26) 中的 $\operatorname{Tot}(\chi)^{\times}$ 是把 $k^\times$-torsor 去掉零截面
+%  得到的 $k^\times$-丛；说 $A_\chi$ 是阿贝尔群即该 torsor 有群结构，
+%  等价于 $\chi$ 给出 $\operatorname{Pic}$ 到 $B\GG_m$ 的同态，即 $\operatorname{Ext}^1$ 类。]
+
+\section{几何 CFT}
+
+\begin{sectionkey}
+本节陈述几何类域论的主定理：$\chi\mapsto L_\chi=\operatorname{AJ}^*\chi$ 给出
+$\operatorname{Pic}$ 上特征局部系统与 $C$ 上秩 1 局部系统之间的等价。证明（Deligne）分两步：
+先把局部系统延拓到 $\operatorname{Sym}^\bullet C$，再利用高次数时纤维 $\PP^{d-g}$ 单连通
+而下降到 $\operatorname{Pic}$；最后把几何 CFT 解释为 $\Loc(\operatorname{Pic})$ 的谱分解。
+\end{sectionkey}
+
+几何 CFT 说，映射
+\begin{equation}\tag{7.34}\label{eq:7.34}
+\chi\mapsto L_{\chi}=\operatorname{AJ}^*\chi
+\end{equation}
+给出等价
+\begin{equation}\tag{7.35}\label{eq:7.35}
+\bigl\{\text{$\operatorname{Pic}$ 上的特征局部系统}\bigr\}
+\simeq\bigl\{\text{$C$ 上秩 1 局部系统}\bigr\}.
+\end{equation}
+之前我们用一些 $\pi_1$ 计算得知：$\operatorname{Pic}$ 的一个分量上的局部系统与 $C$ 上的局部系统相同。
+但现在我们看的是整个 $\operatorname{Pic}$ 上、具有极强特征性质的局部系统。
+而断言是：若取这样的特征，它完全由限制得到的 $C$ 上秩 1 局部系统决定。
+
+我们已经有一个方向的映射。在 $\operatorname{Pic}$ 内部有
+\begin{equation}\tag{7.36}\label{eq:7.36}
+\operatorname{AJ}\colon C\hookrightarrow\operatorname{Pic}^1\subset\operatorname{Pic}.
+\end{equation}
+但我们应当设想我们有整个 $\operatorname{Sym}^{\bullet}C\to\operatorname{Pic}$：
+\begin{equation}\tag{7.37}\label{eq:7.37}
+\begin{array}{ccc}
+\operatorname{Sym}^{\bullet}C & \xrightarrow{\qquad} & \operatorname{Pic}\\[2pt]
+\uparrow & & \uparrow\\[2pt]
+C & \xrightarrow{\ \operatorname{AJ}\ } & \operatorname{Pic}^1
+\end{array}
+\end{equation}
+$\operatorname{Sym}^{\bullet}C$ 像是由 $C$ 生成的自由幺半群，而 $\operatorname{Pic}(C)$ 像是由 $C$
+生成的自由阿贝尔群。故此映射是某种\term{群完备化}{group completion}。
+断言将是：$C$ 上任一秩 1 局部系统 $L$ 都典范地延拓到 $\operatorname{Sym}^{\bullet}C$，
+然后下降到 $\operatorname{Pic}$，即“群完备化”。
+
+\begin{proof}[Deligne 给出的证明]
+从 $C$ 上的局部系统 $L$ 出发。首先把它延拓到 $\operatorname{Sym}^{\bullet}C$。
+在 $\operatorname{Sym}^d C$ 上定义局部系统 $L^{(d)}$ 为
+\begin{equation}\tag{7.38}\label{eq:7.38}
+L^{(d)}\Bigl(\sum_{i=1}^{d}x_i\Bigr)=\bigotimes_i L(x_i).
+\end{equation}
+这对任意 $d$ 定义了 $\operatorname{Sym}^d X$ 上秩 1 的局部系统。更形式地，我们从 $L$ 出发，
+在 $C^d$ 上构造 $L^{\boxtimes d}$；然后前推得到 $\pi_*L^{\boxtimes d}$，
+其中 $\pi\colon C^d\to\operatorname{Sym}^d$。再取对称群下的不变量：
+\begin{equation}\tag{7.39}\label{eq:7.39}
+\bigl(\pi_*L^{\boxtimes d}\bigr)^{S_d}.
+\end{equation}
+现在需要下降到 $\operatorname{Pic}C$。
+
+关键点是：$\PP^{d-g}$（当 $d\gg 0$ 时映射 $\operatorname{Sym}^d\to\operatorname{Pic}^d$ 的纤维）
+单连通，故 $\operatorname{Sym}^{\bullet}C\to\operatorname{Pic}C$ 在足够高的次数上是同构。
+因此 $L^{(d)}$ 下降到 $\operatorname{Pic}^d$，即
+\begin{equation}\tag{7.40}\label{eq:7.40}
+L^{(d)}\simeq\operatorname{AJ}^{d*}\bigl(\chi_L^d\bigr),
+\end{equation}
+其中 $\chi_L^d$ 是 $\operatorname{Pic}^d$ 上的局部系统。
+
+于是从 $L$ 出发，我们构造了 $\operatorname{Pic}^d$ 上（$d\gg 0$）满足乘性的 $\chi_L^{\bullet}$。
+然后存在 $\chi_L^{\bullet}$ 到整个 $\operatorname{Pic}$ 的唯一延拓，且仍满足乘性。
+于是这给出公式
+\begin{equation}\tag{7.41}\label{eq:7.41}
+\chi(D)=\chi(D_1)\otimes\chi(D_2)^{-1},
+\end{equation}
+其中 $D=D_1-D_2$，$D_1$ 与 $D_2$ 是次数 $d\gg 0$ 的有效除子。
+\end{proof}
+
+\begin{srcrem}{31}
+这个证明我们遵循 [Bha]。那里还提到，同样的证明对带分歧的几何 CFT 也适用。
+故对点集 $S\subset C$：
+\begin{equation}\tag{7.42}\label{eq:7.42}
+\operatorname{AJ}\colon C\setminus S\hookrightarrow\operatorname{Pic}(C,S),
+\end{equation}
+其中 $\operatorname{Pic}(C,S)$ 由在 $S$ 附近平凡化的线丛组成。
+\end{srcrem}
+
+我们想把几何 CFT 想成 $\Loc(\operatorname{Pic})$ 的\term{谱分解}{spectral decomposition}。
+
+% [Tutor Note: (7.42) 原文写作 “$S\subset\sigma$”（源文 p.93），其中 $\sigma$ 应为 $C$，
+%  这是把曲线记号 $C$ 误写成 $\sigma$（也可能与某个子集记号混用）。此处按数学含义译作 $S\subset C$。
+%  另证明中 “$\PP^{d-g}$ 是 $\operatorname{Sym}^d\to\operatorname{Pic}^d$ 的纤维” 依赖
+%  Riemann--Roch（$d>2g-2$ 时 $h^1=0$），且“单连通”指的是纤维 $\PP^{d-g}$ 单连通；
+%  严格地说，还需要 $\operatorname{Sym}^d\to\operatorname{Pic}^d$ 在 $d\gg0$ 时是纤维丛，
+%  这由 Riemann--Roch 保证。最后，“谱分解”一词在此是类比：几何 CFT 把
+%  $\Loc(\operatorname{Pic})$ 分解为沿特征层的直和，正如调和分析把函数空间按特征分解。]
+
+\begin{flushright}
+\small 第 14 讲；2021 年 3 月 11 日
+\end{flushright}

@@ -1,0 +1,161 @@
+% =====================================================================
+%  Bhardwaj, Bottini, Fraser-Taliente, Gladden, Gould, Platschorre, Tillim
+%  "Lectures on Generalized Symmetries", arXiv:2307.07547v2 (2023) —— 中文译注本
+%
+%  编译：LuaLaTeX（本机 xdvipdfmx 不稳定，统一用 lualatex，编译 3 遍）
+%  用法：powershell -ExecutionPolicy Bypass -File build.ps1
+%
+%  约定：
+%   * 公式编号用 \tag{} 复刻原文编号（如 (3.13)），与原文一一对应（共 745 条，2.1–6.54）；
+%   * 图 1–28 为原文矢量图按 400 dpi 截取，图注为译者所译；
+%   * % [Tutor Note: ...] 为译者批注，不进入排版，汇总见《译注汇总.md》；
+%   * 原文彩色方框分别用 statementbox（蓝）/ definitionbox（绿）/ notebox（粉）排版。
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[UTF8]{ctex}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage[a4paper,left=2.45cm,right=2.45cm,top=2.6cm,bottom=2.7cm]{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable,skins}
+\usepackage{tikz}
+\usepackage[hidelinks,unicode]{hyperref}
+\hypersetup{pdftitle={广义对称性讲义（中译注本）},
+  pdfauthor={L. Bhardwaj, L. E. Bottini, L. Fraser-Taliente, L. Gladden, D. S. W. Gould, A. Platschorre, H. Tillim; 中译/批注: 本译本},
+  pdfsubject={arXiv:2307.07547v2}}
+
+\captionsetup{font=small,labelsep=quad}
+\setlength{\emergencystretch}{3em}
+\allowdisplaybreaks[1]
+\graphicspath{{figures/}{../figures/}}
+
+% ---------- 页眉页脚 ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape Lectures on Generalized Symmetries（中译注本）}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ---------- 原文彩色方框 ----------
+% 蓝色 Statement 框：\begin{statementbox}{陈述 2.1：标题} … \end{statementbox}
+\newtcolorbox{statementbox}[1]{breakable,enhanced,
+  colback=blue!3!white, colframe=blue!45!black, colbacktitle=blue!18!white, coltitle=black,
+  fonttitle=\bfseries\small, title={#1}, boxrule=0.6pt, arc=2pt,
+  left=6pt,right=6pt,top=4pt,bottom=4pt,toptitle=2pt,bottomtitle=2pt, fontupper=\small}
+
+% 绿色 Definition 框：\begin{definitionbox}{定义 3.1：标题} … \end{definitionbox}
+\newtcolorbox{definitionbox}[1]{breakable,enhanced,
+  colback=green!3!white, colframe=teal!55!black, colbacktitle=green!20!white, coltitle=black,
+  fonttitle=\bfseries\small, title={#1}, boxrule=0.6pt, arc=2pt,
+  left=6pt,right=6pt,top=4pt,bottom=4pt,toptitle=2pt,bottomtitle=2pt, fontupper=\small}
+
+% 橙色 Example 框：\begin{examplebox}{例 2.1：标题译文} … \end{examplebox}
+\newtcolorbox{examplebox}[1]{breakable,enhanced,
+  colback=orange!3!white, colframe=orange!55!black, colbacktitle=orange!20!white, coltitle=black,
+  fonttitle=\bfseries\small, title={#1}, boxrule=0.6pt, arc=2pt,
+  left=6pt,right=6pt,top=4pt,bottom=4pt,toptitle=2pt,bottomtitle=2pt, fontupper=\small}
+
+% 粉色/浅红「带标题」注释框：\begin{notebox}{标题} … \end{notebox}
+\newtcolorbox{notebox}[1]{breakable,enhanced,
+  colback=red!2!white, colframe=red!40!black, colbacktitle=red!18!white, coltitle=black,
+  fonttitle=\bfseries\small, title={#1}, boxrule=0.6pt, arc=2pt,
+  left=6pt,right=6pt,top=4pt,bottom=4pt,toptitle=2pt,bottomtitle=2pt, fontupper=\small}
+
+% 无标题注释框（原文个别方框无标题条）：\begin{noteboxplain} … \end{noteboxplain}
+\newtcolorbox{noteboxplain}{breakable,enhanced,
+  colback=red!2!white, colframe=red!40!black, boxrule=0.6pt, arc=2pt,
+  left=6pt,right=6pt,top=4pt,bottom=4pt, fontupper=\small}
+
+% 原文粗体行内小标题 "**Screening.**" → \para{屏蔽。}
+\newcommand{\para}[1]{\par\medskip\noindent\textbf{#1}\quad\ignorespaces}
+
+% 手工编号的图题/表题
+\newcommand{\figtitle}[2]{\caption*{\small\textbf{图 #1：}#2}}
+\newcommand{\tabtitle}[2]{\caption*{\small\textbf{表 #1：}#2}}
+
+% 参考文献条目
+\newcommand{\refitem}[2]{\par\hangindent=1.5em\hangafter=1\noindent [#1]~#2}
+
+% ---------- 常用记号（只用这里定义过的宏；不要自造 \newcommand） ----------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fh}{\mathfrak{h}}
+\newcommand{\ft}{\mathfrak{t}}
+\newcommand{\fu}{\mathfrak{u}}
+\newcommand{\fsu}{\mathfrak{su}}
+\newcommand{\fso}{\mathfrak{so}}
+\newcommand{\fsp}{\mathfrak{sp}}
+\newcommand{\fZ}{\mathfrak{Z}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\Sp}{\mathrm{Sp}}
+\newcommand{\U}{\mathrm{U}}
+\newcommand{\PSU}{\mathrm{PSU}}
+\newcommand{\PSO}{\mathrm{PSO}}
+\newcommand{\Spin}{\mathrm{Spin}}
+\newcommand{\Pin}{\mathrm{Pin}}
+\newcommand{\SymTFT}{\mathrm{SymTFT}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ee}{\mathrm{e}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\id}{\mathrm{id}}
+\renewcommand{\Re}{\operatorname{Re}}
+\renewcommand{\Im}{\operatorname{Im}}
+\newcommand{\rk}{\operatorname{rk}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\vol}{\operatorname{vol}}
+\newcommand{\half}{\tfrac{1}{2}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\ie}{\textit{i.e.}}
+\newcommand{\eg}{\textit{e.g.}}
+\newcommand{\cf}{\textit{cf.}}
+% 原文的 B 场/规范场常用记号（正体粗体）
+\newcommand{\bB}{\mathbf{B}}
+\newcommand{\bA}{\mathbf{A}}
+\newcommand{\bC}{\mathbf{C}}

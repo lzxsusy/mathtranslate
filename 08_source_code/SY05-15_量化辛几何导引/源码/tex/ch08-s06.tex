@@ -1,0 +1,353 @@
+% 原书 p.222–p.227（PDF p.230–p.235）
+% >>> p230
+\section{Gromov--Witten 势（Gromov–Witten Potential）}
+
+\begin{keytakeaways}
+\begin{itemize}
+  \item 物理图像：把无穷多个计数 $N_d$ 打包成一个生成函数，计数问题就转化为解微分方程
+        （或递推关系）的问题，这正是 Gromov--Witten 势的思想。
+  \item 数学工具：生成函数（指数型）、形式变量 $t_0,\cdots,t_n$、Novikov 环中的
+        $e^A$、度量 $g_{ij}=\int_Me_i\cup e_j$ 及其逆 $g^{ij}$。
+  \item 几何观点：$\Phi$ 的三阶偏导 $\Phi_{ijk}$ 正是三点 Gromov--Witten 不变量；
+        WDVV 方程 (8.49) 是量子乘积结合律的解析形式，等价于 $\Phi$ 满足一组三阶
+        非线性偏微分方程。
+  \item 本节结论：$\CP^2$ 的势 $\Phi=\frac12t_0^2t_2+\frac12t_0t_1^2+
+        \sum_{d\ge1}\frac{N_d}{(3d-1)!}t_2^{3d-1}\ee^{dt_1}\ee^{dL}$（(8.48)）；
+        由 WDVV 得 Kontsevich 递推公式 (8.51)，算出 $N_2=1$、$N_3=12$、$N_4=620$ 等。
+\end{itemize}
+\end{keytakeaways}
+
+为回答例 8.5.3 中提出的关于计算 (8.41) 所定义的数 $N_d$ 的问题——它代表了一列数字的
+计算的标准模型——一个经典的想法是把这列数打包成一个函数，称为该数列
+$\{N_d\}_{d\in\N}$ 的\textbf{生成函数}（generating function）。事实上，生成函数把对
+这些数的计算等价地转化为对（一个或一组）微分方程的表述。让我们用一个初等例子来说明。
+
+\begin{wexam}{8.6.1}
+考虑一列数 $\{N_k\}_{k\in\N_{\ge0}}$，把它打包成如下生成函数
+\[
+  F(t):=\sum_{k\ge0}\frac{N_k}{k!}\,t^k,
+\]
+其中 $t$ 是形式变量（而 $k!$ 意味着 $F(t)$ 是指数型生成函数——当然还有其他类型，例如
+多项式型等）。假设 $F(t)$ 满足如下微分方程
+\[
+  \frac{\dd^2F}{\dd t^2}=\frac{\dd F}{\dd t}+F,
+\]
+则我们有
+\[
+  \sum_{k\ge0}\frac{N_{k+2}}{k!}\,t^k
+  =\sum_{k\ge0}\frac{N_{k+1}}{k!}\,t^k+\sum_{k\ge0}\frac{N_k}{k!}\,t^k .
+\]
+逐项比较两端可知，这个微分方程等价于递推公式 $N_{k+2}=N_{k+1}+N_k$（对任意
+$k\in\N$），它说明 $\{N_k\}$ 是 Fibonacci 数列。$\{N_k\}_{k\in\N_{\ge0}}$ 的前几项
+充当 $F(t)$ 的微分方程的初值条件。\hspace*{\fill}$//$
+\end{wexam}
+
+现在给出能够打包 Gromov--Witten 不变量的生成函数的定义。
+
+\begin{wdefn}{8.6.1}
+（[154] 第 11.2 节）给定辛流形 $(M,\omega)$，$\dim H^*(M;\Z)=n+1$，并固定
+$H^*(M;\Z)$ 的一组基 $\{e_0,e_1,\cdots,e_n\}$，其 \textbf{Gromov--Witten 势}
+（Gromov–Witten potential）是一个形式级数 $\Phi$（变量为 $t_0,\cdots,t_n$），定义为
+\begin{equation}
+  \Phi(t_0,\cdots,t_n)
+  :=\sum_{A\in H_2^S(M)\ \text{或}\ A=0}
+  \left(\sum_{k\ge0}\frac{1}{k!}\mathrm{GW}^M_{A,k}
+  \Big(\sum_{i=0}^nt_ie_i,\cdots,\sum_{i=0}^nt_ie_i\Big)\right)\ee^A .
+  \tag{8.47}
+\end{equation}
+\end{wdefn}
+% [Tutor Note: 重点（Novikov 系数约定）——(8.47) 中的 $\ee^A$ 是 Novikov 环
+% $\Lambda^{\mathbf{k},\Gamma_\omega}$ 中的形式记号，常记为 $T^{\omega(A)}$：它按
+% $A$ 的辛面积分次。外层的和取遍球面类 $A\in H_2^S(M)$ 与 $A=0$（后者给出经典部分）。
+% 内层每个 $k$ 都要对「$k$ 个相同输入」做对称化，故除以 $k!$；这就是 $\Phi$ 是
+% 指数型生成函数的含义。注意 $\ee^A\cdot\ee^B=\ee^{A+B}$ 与
+% $T^{\omega(A)}T^{\omega(B)}=T^{\omega(A)+\omega(B)}$ 相容，两种写法只差对
+% 系数域的约定（等价于把 $\mathbf{k}$ 换成带 $T$ 的形式幂级数域），
+% 具体见 §8.1 中引理 8.1.1 下方的讨论。]
+
+% >>> p231
+注意中间那一项 $\sum\limits_{k\ge0}\dfrac{1}{k!}\mathrm{GW}^M_{A,k}
+\big(\sum\limits_{i=0}^nt_ie_i,\cdots,\sum\limits_{i=0}^nt_ie_i\big)$ 可改写如下
+\begin{align*}
+  &\sum_{k\ge0}\frac{1}{k!}\mathrm{GW}^M_{A,k}
+  \Big(\sum_{i=1}^nt_ie_i,\cdots,\sum_{i=1}^nt_ie_i\Big)\\
+  &\quad=\frac{1}{k!}\sum_{i=\{i_1,\cdots,i_k\}}
+    \mathrm{GW}^M_{A,k}(e_{i_1},\cdots,e_{i_k})\,t_{i_1}\cdots t_{i_k}\\
+  &\quad=\sum_{\substack{\alpha=(\alpha_0,\cdots,\alpha_n)\\
+    \alpha_i=\# e_i\\ \alpha_0+\cdots+\alpha_n=k}}
+    \frac{1}{k!}(-1)^{\varepsilon(\alpha)}\mathrm{GW}^M_{A,k}
+    \big(e_0^{\times\alpha_0},\cdots,e_n^{\times\alpha_n}\big)\\
+  &\qquad\qquad\cdot\frac{k!}{\alpha_0!\cdots\alpha_n!}
+    \,t_0^{\alpha_0}\cdots t_n^{\alpha_n}\\
+  &\quad=\sum_{\substack{\alpha=(\alpha_0,\cdots,\alpha_n)\\
+    \alpha_i=\# e_i\\ \alpha_0+\cdots+\alpha_n=k}}
+    \frac{(-1)^{\varepsilon(\alpha)}}{\alpha_0!\cdots\alpha_n!}\mathrm{GW}^M_{A,k}
+    \big(e_0^{\times\alpha_0},\cdots,e_n^{\times\alpha_n}\big)\,
+    t_0^{\alpha_0}\cdots t_n^{\alpha_n},
+\end{align*}
+其中第三个等号来自把所有基元素重新分组/重排为
+$(e_0,\cdots,e_0,\cdots,e_n,\cdots,e_n)$，其重数为
+$k!/(\alpha_0!\cdots\alpha_n!)$，取决于 $e_i$ 的重数 $\alpha_i$（$i=0,\cdots,n$）。
+这里 $\varepsilon(\alpha)$ 记序列 $(\alpha_0,\cdots,\alpha_n)$ 中由那些\emph{奇次}基
+元素 $e_i$ 的 $\alpha_i$ 所构成部分的乱序数（参见例 8.5.5）。特别地，若
+$e_i\in H^{\mathrm{even}}(M;\Z)$ 对所有 $i=0,\cdots,k$ 成立，则对任意序列 $\alpha$ 有
+$\varepsilon(\alpha)=1$。这种改写通常更便于计算。
+% [Tutor Note: 上式第一个等号之所以写成 $\sum_{i=\{i_1,\cdots,i_k\}}$（即对 $k$ 元
+% 下标集合求和），是因为 $(\sum t_ie_i)^{\otimes k}$ 展开后对每个有序 $k$-元组给出一项，
+% 而后再用分次对称性把它们合并；$\varepsilon(\alpha)$ 的出现正是奇次元素交换时产生的
+% Koszul 符号，故当所有 $e_i$ 为偶次时符号全部消失。核对时请留意：第三个等号把
+% $1/k!$ 与对称化因子 $k!/(\alpha_0!\cdots\alpha_n!)$ 相消，正是「指数型」生成函数的
+% 体现。]
+
+\begin{wexam}{8.6.2}
+计算 $(\CP^2,\omega_{\mathrm{FS}})$ 的 Gromov--Witten 势 $\Phi$。固定标准基
+$e_0=1$、$e_1=c$、$e_2=c^2(=c\cup c)$，其中 $c=\operatorname{PD}([L])$ 而 $[L]$ 是
+标准直线类。这意味着 $\Phi$ 将是三个变量 $t_0,t_1,t_2$ 的形式级数。让我们按不同的类
+$A$ 来计算 $\Phi$。
+
+(i) 若 $A=0$，则由例 8.5.4，
+\[
+  \mathrm{GW}^{\CP^2}_{0,3}(a_1,a_2,a_3)=\int_{\CP^2}a_1\cup a_2\cup a_3 .
+\]
+由次数条件 (8.43)，总次数满足
+\[
+  \deg(a_1)+\deg(a_2)+\deg(a_3)=4,
+\]
+这意味着 $(\deg(a_1),\deg(a_2),\deg(a_3))=(0,0,4)$ 或 $(0,2,2)$。于是
+\[
+  (a_1,a_2,a_3)=(1,1,c^2)
+  \qquad\text{或}\qquad
+  (a_1,a_2,a_3)=(1,c,c).
+\]
+于是 $\Phi\big|_{A=0}$ 可计算为
+\[
+  \Phi(t_0,t_1,t_2)\big|_{A=0}
+  =\frac{1}{2!1!}\mathrm{GW}^{\CP^2}_{0,3}(1,1,c^2)\,t_0^2t_2
+  +\frac{1}{1!2!}\mathrm{GW}^{\CP^2}_{0,3}(1,c,c)\,t_0t_1^2
+  =\frac12t_0^2t_2+\frac12t_0t_1^2,
+\]
+因为 $c^2$ 在 $\CP^2$ 上的积分为 1，其中 $c^2$ 是 $H^4(\CP^2;\Z)$ 的生成元。
+
+(ii) 若 $A=L$ 且 $k=2$，则次数条件化为
+$\deg(a_1)+\deg(a_2)=4+2\cdot3+2\cdot2-6=8$，这意味着 $a_1=a_2=c^2$。由例 8.5.1，
+$\mathrm{GW}^{\CP^2}_{L,2}(a_1,a_2)=1$。对 $k\ge3$，
+$\mathrm{GW}^{\CP^2}_{L,k}(a_1,\cdots,a_k)$ 的次数条件是
+\[
+  \sum_{i=1}^k\deg(a_i)=4+2\cdot3+2k-6=4+2k .
+\]
+% >>> p232
+不失一般性，设没有 $a_i$ 等于 1（见例 8.5.6），且输入 $(a_1,\cdots,a_k)$ 中有
+$\alpha_1$ 个 $c$、$\alpha_2$ 个 $c^2$。则
+\[
+  \alpha_1+\alpha_2=k\qquad\text{且}\qquad 2\alpha_1+4\alpha_2=4+2k .
+\]
+故 $\alpha_2=2$、$\alpha_1=k-2$。此时我们断言
+\[
+  \mathrm{GW}^{\CP^2}_{L,k\ge3}(c,\cdots,c,c^2,c^2)
+  =\mathrm{GW}^{\CP^2}_{L,k\ge3}(c^2,c^2)=1 .
+\]
+这实际上用到了 Gromov--Witten 不变量的一个著名性质——\emph{除子性质}（division
+property），即
+\[
+  \mathrm{GW}^M_{A,k}(a_1,\cdots,a_k)
+  =\Big(\int_Aa_1\Big)\cdot\mathrm{GW}^M_{A,k-1}(a_2,\cdots,a_k),
+\]
+若 $a_1\in H^2(M;\mathbf{k})$。在我们的情形中，$A=L$ 且
+$c\in H^2(\CP^2;\Z)$（故 $\int_Lc=1$）。
+
+(iii) 由 (ii) 中的计算得到启发，若 $A=dL$（$d\ge1$ 为一般整数），则次数条件等价于
+\[
+  \sum_{i=1}^k\deg(a_i)=4+2d\cdot3+2k-6=6d+2k-2 .
+\]
+再次不失一般性，设没有 $a_i$ 等于 1（见例 8.5.6），且输入 $(a_1,\cdots,a_k)$ 中有
+$\alpha_1$ 个 $c$、$\alpha_2$ 个 $c^2$，则
+\[
+  \alpha_1+\alpha_2=k\qquad\text{且}\qquad 2\alpha_1+4\alpha_2=6d+2k-2 .
+\]
+解得 $\alpha_1=k-(3d-1)$、$\alpha_2=3d-1$。于是由上面 (ii) 中的除子性质，
+\[
+  \mathrm{GW}^{\CP^2}_{dL,k}(c,\cdots,c,c^2,\cdots,c^2)
+  =\mathrm{GW}^{\CP^2}_{dL,3d-1}(c^2,\cdots,c^2)
+  =N_d\cdot d^{k-(3d-1)}
+\]
+（其中 (8.41) 中的数 $N_d$ 出现了！）。因此
+\[
+  \Phi(t_0,t_1,t_2)\big|_{dL}
+  =\sum_{k\ge0}\frac{N_d}{(3d-1)!\,(k-(3d-1))!}
+  (dt_1)^{k-(3d-1)}t_2^{3d-1}\ee^{dL},
+\]
+其中下标 $k$ 从 $k\ge3d-1$ 时才开始计入非零项。
+
+总之，通过重新分组
+\[
+  \left(\sum_{k\ge0}\frac{1}{k!}(dt_1)^k\right)
+\]
+并把它简洁地写成 $\ee^{dt_1}$，我们得到 $(\CP^2,\omega_{\mathrm{FS}})$ 的
+Gromov--Witten 势的如下公式
+\begin{equation}
+  \Phi(t_0,t_1,t_2)
+  =\frac12t_0^2t_2+\frac12t_0t_1^2
+  +\sum_{d\ge1}\frac{N_d}{(3d-1)!}\,t_2^{3d-1}\cdot\ee^{dt_1}\ee^{dL}.
+  \tag{8.48}
+\end{equation}
+通常我们用新形式变量 $q:=\ee^L$ 把 $\ee^{dL}$ 记作 $q^d$。\hspace*{\fill}$//$
+\end{wexam}
+% [Tutor Note: 第 (ii) 步的断言 $\mathrm{GW}^{\CP^2}_{L,k\ge3}(c,\cdots,c,c^2,c^2)=1$
+% 依赖除子性质：逐个用 $\int_Lc=1$ 剥去 $c$，最后只剩
+% $\mathrm{GW}^{\CP^2}_{L,2}(c^2,c^2)=\mathrm{GW}^{\CP^2}_{L,2}(a_1,a_2)=1$（例 8.5.1）。
+% 第 (iii) 步中 $d^{k-(3d-1)}$ 的来源是：每剥去一个 $c$ 不产生因子，而
+% $\mathrm{GW}^{\CP^2}_{dL,2}(c^2,c^2)=d$（由 $A=dL$ 的除子性质或例 8.5.1 对 $dL$ 的
+% 直接计数），故 $k-(3d-1)$ 个多余的 $c$ 各贡献一个因子 $d$。
+% $(\CP^2,\omega_{\mathrm{FS}})$ 的 $\Phi$ 是 Gromov--Witten 理论中最早被完全算出的例子
+% 之一（Kontsevich）。]
+
+% >>> p233
+现在，按照与例 8.6.1 相同的精神，为了得到 (8.48) 中 $\Phi(t_0,t_1,t_2)$ 里关于
+$N_d$ 的可计算递推公式，我们需要要求/确认 $\Phi(t_0,t_1,t_2)$ 满足某些（组）微分方程。
+让我们引入一个记号。对 $H^*(M;\Z)$ 的基 $\{e_0,\cdots,e_n\}$，记
+\[
+  g_{ij}:=\int_Me_i\cup e_j\qquad\text{对任意 } 0\le i,j\le n,
+\]
+并记矩阵 $(g^{ij}):=(g_{ij})^{-1}$。于是有下面这个绝对值得注意的结果。
+
+\begin{wthm}{8.6.1}
+（WDVV 方程，[154] 中的定理 11.2.4）对带近复结构 $J$ 的辛流形 $(M,\omega,J)$ 与固定
+基 $\{e_0,\cdots,e_n\}$，其 Gromov--Witten 势 $\Phi(t_0,\cdots,t_n)$ 满足一组偏微分
+方程：对任意 $(a,b,c,d)\in\N^4$（$a,b,c,d\le n$），有
+\begin{equation}
+  \sum_{0\le i,j\le n}\Phi_{iba}\,g^{ij}\,\Phi_{dcj}
+  =(-1)^{\deg(e_a)(\deg(e_b)+\deg(e_c))}
+  \sum_{0\le i,j\le n}\Phi_{icb}\,g^{ij}\,\Phi_{daj}
+  \tag{8.49}
+\end{equation}
+对任意 $0\le i,j\le n$ 成立。这里
+$\Phi_{iba}:=\dfrac{\partial}{\partial t_i}\dfrac{\partial}{\partial t_b}
+\dfrac{\partial}{\partial t_a}$（其他下标同理）。
+\end{wthm}
+% [Tutor Note: 重点（WDVV 与量子上同调环）——(8.49) 是量子乘积结合律
+% $(e_a*e_b)*e_c=e_a*(e_b*e_c)$ 的解析形式：把 $\Phi_{ijk}$ 看成三点函数
+% $\langle e_i,e_j,e_k\rangle$，则 $g^{ij}$ 的作用是「上升指标」（用 Poincaré 配对
+% $\int_Me_i\cup e_j$ 对偶），左右两端分别是两种括号方式得到的结果。右端的整体符号
+% $(-1)^{\deg e_a(\deg e_b+\deg e_c)}$ 来自奇次类交换的 Koszul 符号；当所有基类为偶次
+% 时它等于 1。该方程是 §8.7 中量子乘积结合律的直接推论，也是 Kontsevich 递推公式
+% (8.51) 的来源。注意定理末句「对任意 $0\le i,j\le n$」是多余的（$i,j$ 已被求和），
+% 应为「对任意 $0\le a,b,c,d\le n$」。]
+
+\begin{wrem}{8.6.1}
+WDVV 是四位学者姓氏的首字母缩写：Witten--Dijkgraaf--Verlinde--Verlinde。
+\end{wrem}
+
+在一些简单情形中可以很快验证 (8.49)。
+
+\begin{wexam}{8.6.3}
+取辛流形为 $(\CP^1,\omega_{\mathrm{FS}})$、$A=L$。固定标准基
+$e_0=1$、$e_1=\operatorname{PD}([\mathrm{pt}])$。则 $g_{ij}=1$ 仅当 $i+j=1$
+（其他情形 $g_{ij}=0$）。可以验证 $(\CP^1,\omega_{\mathrm{FS}})$ 的 Gromov--Witten
+势 $\Phi$ 如下
+\[
+  \Phi(t_0,t_1)=\frac{t_0^2t_1}{2}+\ee^{t_1}q,
+\]
+其中 $q=\ee^L$。于是例如取 $(a,b,c,d)=(0,0,1,1)$，方程 (8.49) 化为
+\[
+  \Phi_{000}\cdot\Phi_{111}+\Phi_{100}\cdot\Phi_{110}
+  =\Phi_{010}\cdot\Phi_{101}+\Phi_{110}\cdot\Phi_{100}.
+\]
+注意该式平凡地成立，因为 $\Phi_{000}=\Phi_{110}=0$ 且 $\Phi_{101}=\Phi_{110}=0$。
+\hspace*{\fill}$//$
+\end{wexam}
+
+\begin{wexer}{8.6.1}
+证明：对 $(\CP^2,\omega_{\mathrm{FS}})$，WDVV 方程 (8.49) 等价于如下单个偏微分方程
+\begin{equation}
+  \Phi_{111}\cdot\Phi_{122}+\Phi_{222}=(\Phi_{112})^2 .
+  \tag{8.50}
+\end{equation}
+\end{wexer}
+
+假定练习 8.6.1 成立，通过直接计算可得
+\begin{align*}
+  \Phi_{111}&=\sum_{d\ge1}N_d\frac{t_2^{3d-1}}{(3d-1)!}\,q^d\,d^3\,\ee^{dt_1},
+  &\Phi_{122}&=\sum_{d\ge1}N_d\frac{t_2^{3d-3}}{(3d-3)!}\,q^d\,d\,\ee^{dt_1},\\
+  \Phi_{212}&=\sum_{d\ge2}N_d\frac{t_2^{3d-4}}{(3d-4)!}\,q^d\,\ee^{dt_1},
+  &\Phi_{112}&=\sum_{d\ge1}N_d\frac{t_2^{3d-2}}{(3d-2)!}\,q^d\,d^2\,\ee^{dt_1}.
+\end{align*}
+% [Tutor Note: 原文疑误——上式中第三个函数应为 $\Phi_{222}$（即
+% $\partial^3/\partial t_2^3$）：由 (8.48) 直接求导得
+% $\Phi_{222}=\sum_{d\ge1}N_d\,t_2^{3d-4}/(3d-4)!\,q^d\ee^{dt_1}$；而真正的
+% $\Phi_{212}=\partial_{t_1}\partial_{t_2}^2\Phi$ 应为
+% $\sum_{d\ge1}N_d\,t_2^{3d-3}/(3d-3)!\,q^d\,d\,\ee^{dt_1}$，与 $\Phi_{122}$ 相同。
+% 原文此处下标与公式不相容，而 (8.50) 中恰需 $\Phi_{222}$。详见 review_ch08.md。]
+% >>> p234
+于是 (8.50) 说明
+\begin{align*}
+  \mathrm{LHS}
+  &=\sum_{d\ge2}\left(\left(\sum_{\substack{k+l=d\\ k,l\ge1}}
+    N_kN_l\frac{t_2^{3d-4}}{(3k-1)!(3l-3)!}k^3l\,q^d\ee^{dt_1}\right)
+    +N_d\frac{t_2^{3d-4}}{(3d-4)!}q^d\ee^{dt_1}\right)\\
+  &=\sum_{d\ge2}\left(\left(\sum_{\substack{k+l=d\\ k,l\ge1}}
+    \frac{N_kN_lk^3l}{(3k-1)!(3l-3)!}\right)
+    +\frac{N_d}{(3d-4)!}\right)q^d\ee^{dt_1},
+\end{align*}
+等于
+\[
+  \mathrm{RHS}=\sum_{d\ge2}
+  \left(\sum_{\substack{k+l=d\\ k,l\ge1}}
+  N_kN_l\frac{t_2^{3d-2}}{(3k-2)!(3l-2)!}k^2l^2q^d\ee^{dt_1}\right).
+\]
+比较系数，对每个 $d$ 得
+\[
+  \left(\sum_{\substack{k+l=d\\ k,l\ge1}}
+  \frac{N_kN_lk^3l}{(3k-1)!(3l-3)!}\right)+\frac{N_d}{(3d-4)!}
+  =\sum_{\substack{k+l=d\\ k,l\ge1}}
+  \frac{N_kN_lk^2l^2}{(3k-2)!(3l-2)!}.
+\]
+乘以 $(3d-4)!$，得
+\begin{equation}
+  N_d=\sum_{\substack{k+l=d\\ k,l\ge1}}N_kN_l
+  \left(k^2l^2\binom{3d-4}{3k-2}-k^3l\binom{3d-4}{3k-1}\right).
+  \tag{8.51}
+\end{equation}
+这是 Kontsevich 最先得到的著名公式，它彻底解决了（射影）平面中数曲线的长期未决问题——
+这个问题如今已是\emph{计数几何}（enumerative geometry）分支中的标准问题。
+% [Tutor Note: (8.51) 的组合恒等式来源：$\frac{(3d-4)!}{(3k-2)!(3l-2)!}
+% =\binom{3d-4}{3k-2}$（因为 $(3k-2)+(3l-2)=3d-4$），第二项同理。
+% 这就是著名的 Kontsevich 递推公式（Kontsevich 1994），它把 $\CP^2$ 上 $d$ 次曲线的
+% 计数 $N_d$ 用低次 $N_k$（$k<d$）表示，从而给出了所有 $N_d$ 的完整算法；
+% 其严格证明依赖于 WDVV 与除子性质，以及 $N_1=1$ 这一初值。]
+
+\begin{wexam}{8.6.4}
+下面是由 (8.51) 导出的 $N_d$ 的前几项，其中初值 $N_1=1$（由例 8.5.1）。
+
+对 $d=2$，有
+\[
+  N_2=N_1N_1\left(1^2\cdot1^2\binom21-1^3\cdot1\binom22\right)=1 .
+\]
+对 $d=3$，则
+\begin{align*}
+  N_3&=N_1N_2\left(1^12^2\binom51-1^32\binom52\right)
+  +N_2N_1\left(2^21^2\binom54-2^31\binom55\right)\\
+  &=1\cdot(20-20)+1\cdot(20-8)=12 .
+\end{align*}
+归纳地，得到
+\[
+  N_4=620,\quad N_5=87304,\quad N_6=26312976,\quad N_7=14616808192,\ \cdots .
+\]
+历史上，$N_3$ 由 J. Steiner 于 1848 年得到 [210]，$N_4$ 由 H. G. Zeuthen 于 1873 年
+算出 [244]，而 $N_5$ 是在 1980 年代才被发现的。\hspace*{\fill}$//$
+\end{wexam}
+% [Tutor Note: 这几个数可作为核对译文的无量纲「指纹」：$N_1=1$、$N_2=1$、$N_3=12$、
+% $N_4=620$、$N_5=87304$、$N_6=26312976$、$N_7=14616808192$。其中 $N_4=620$ 是
+% Zeuthen 的经典结果，$N_5=87304$ 与更高项则来自 1980 年代以后的代数几何/辛拓扑方法。
+% 若使用 (8.51) 复核时得不到这些数，通常是把 $\binom{3d-4}{3k-2}$ 写成了
+% $\binom{3d-4}{3k-1}$ 或漏了 $k^2l^2$、$k^3l$ 因子。]
+
+% >>> p235
+为结束本节，我们指出关于 Gromov--Witten 不变量的至少三个可能的进一步发展方向：
+\begin{enumerate}[label=(\roman*)]
+  \item 对一般复射影空间 $\CP^n$ 导出 Gromov--Witten 不变量的递推公式（见
+        Kontsevich--Manin [140]）。
+  \item 定义带固定标记点的 Gromov--Witten 不变量（通常称为「混合不变量」
+        （mixed invariant））（Ruan--Tian [188]）。
+  \item 用亏格更高的 Riemann 曲面作为稳定映射的定义域来定义 Gromov--Witten 不变量，
+        并把它们打包成 Gromov--Witten 势（见 [69] 与 [198] 第 4.5 节）。
+\end{enumerate}

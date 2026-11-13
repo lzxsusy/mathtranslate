@@ -1,0 +1,189 @@
+%=====================================================================
+% 6  矩阵积分与平面图计数
+% 原文：Section 6. Matrix integrals and counting planar diagrams（arXiv:2409.03117v1, p. 75--78）
+%=====================================================================
+\section{矩阵积分与平面图计数}
+
+\begin{keytakeaways}
+\begin{itemize}
+  \item \textbf{物理图像：}矩阵积分换到本征值变量后就是对数势下的 Coulomb 气体；大 $N$ 极限下本征值经验分布收敛到连续密度，积分由该密度的能量泛函的极小值（鞍点）主导。
+  \item \textbf{数学工具：}最速下降原理加变分方程：对 $K$ 求极值得到离散的 Dyson 方程，取连续极限后化为关于密度的奇异积分方程，再用 Hilbert 变换（Plemelj 公式）与 Laurent 分解求解。
+  \item \textbf{关键结论：}单迹四次势情形下，平面粘合数由 BIPZ 公式 $c_n=(12)^n\frac{(2n-1)!}{(n+2)!}$ 给出（$c_1=2$，$c_2=36$），且可由 $E(g)-E(0)$ 的级数展开与 $W_\infty=\sum c_n(-1)^ng^n/n!$ 逐项比较读出。
+  \item \textbf{易错点：}把离散 Dyson 方程取极限时须区分主值与普通积分（$1/(y-x)$ 的奇性）；由 $yF(y)\to 1$ 定出 $a$ 时用了 $\int f=1$；原文末级数系数的阶乘应为 $(k+2)!$，写成 $(k-2)!$ 是笔误（见批注）。
+\end{itemize}
+\end{keytakeaways}
+
+\bigskip
+\noindent\rule{\textwidth}{0.6pt}
+\bigskip
+
+\subsection{平面粘合数}
+
+现在回到第 4 章的框架。于是我们有一个势
+$$
+U(x)=\frac{x^2}{2}-\sum_{j\ge 1}g_j\frac{x^j}{j}
+$$
+（其中 $g_j$ 是形式参数），并考虑矩阵积分
+$$
+Z_N(\hbar)=\hbar^{-\frac{N^2}{2}}\int_{{\frak h}_N}e^{-{\rm Tr}U(A)}dA.
+$$
+令 $\widehat Z_N(\hbar)=Z_N(\hbar/N)$。
+我们已经看到
+$$
+\lim_{N\to \infty}\frac{\log \widehat Z_N}{N^2}=W_\infty, 
+$$
+其中 $W_\infty$ 由对平面胖图的求和给出：
+$$
+W_\infty=\sum_{\bold n}\prod_i (g_i\hbar^{\frac{i}{2}-1})^{n_i}\sum_{\widetilde{\Gamma}\in
+\widetilde{G}_c(\bold n)[0]}\frac{1}
+{|{\rm Aut(\widetilde{\Gamma})}|}.
+$$
+特别地，$\prod_i (g_i\hbar^{\frac{i}{2}-1})^{n_i}$ 的系数等于：用一族胖花（对每个 $i$ 含 $n_i$ 个 $i$-价花）粘合出亏格为零的胖图的（保向）粘合方式数，再除以 $\prod_i i^{n_i}n_i!$。
+
+另一方面，可以先把矩阵积分化为本征值上的积分，再利用随机矩阵理论的一个基本事实——在 $N\to \infty$ 极限下本征值存在渐近分布——来显式地计算作为 $g_i$ 的函数的 $W_\infty$。这一方法使我们能为平面粘合数得到简单的封闭公式；这些数相当不平凡，其直接的组合证明直到很久以后才被发现。
+
+为说明这一方法，我们限于势 $U(x)=\frac{x^2}{2}+gx^4$ 的情形（即 $g_4=-4g$，其余 $g_i=0$），并令 $\hbar=1$。此时
+$$
+W_\infty=\sum_{n\ge 1}c_n\frac{(-1)^ng^n}{n!},
+$$
+其中 $c_n$ 是一族 $n$ 个四价花的连通平面粘合方式数。换言之，$c_n$ 是把 $n$ 个“十字”在二维球面上连接起来（至同痕）的方式数，要求所有十字彼此连通、所有臂都被用到、且连接线互不相交。
+
+\begin{exercise} 通过画图验证 $c_1=2$，$c_2=36$。
+\end{exercise} 
+
+\begin{theorem}\label{BIPZ} (Br\'ezin, Itzykson, Parisi, Zuber, \cite{BIPZ}, 1978)。
+有
+$$
+c_n=(12)^n \frac{(2n-1)!}{(n+2)!}.
+$$
+\end{theorem}
+
+该定理的证明（略去若干细节）将在下一小节给出。
+
+\subsection{定理 \ref{BIPZ} 的证明}
+我们遵循论文 \cite{BIPZ}。
+假定 $g$ 是正实数，并显式地计算函数 $W_\infty(g)$。
+相应的矩阵积分具有形式
+$$
+\widehat Z_N=\int_{{\frak h}_N}e^{-N\Tr(\frac{1}{2}A^2+gA^4)}dA.
+$$
+换到本征值，得到
+$$
+\widehat Z_N=\frac{J_N(g)}{J_N(0)},
+$$
+其中
+\begin{equation}\label{integrand} 
+J_N(g)=\int_{\Bbb R^N}
+e^{-N(\frac{1}{2}\sum_i \lambda_i^2+g\sum_i \lambda_i^4)}
+\prod_{i<j} (\lambda_i-\lambda_j)^2d\lambda.
+\end{equation} 
+于是 $W_\infty(g)=E(g)-E(0)$，
+其中 $E(g)=\lim_{N\to \infty}N^{-2}\log J_N(g)$。
+
+\begin{proposition}（最速下降原理）
+$E(g)$ 等于积分 \eqref{integrand} 中被积函数的对数在 $N\to \infty$ 时的最大值的渐近展开的首项系数。
+\end{proposition}
+% [Tutor Note: 这里的 N\to\infty 与通常最速下降法有一个本质差别：积分所在空间的维数随 N 增长，扰动参数是 1/N 而不是固定维数下的 \hbar，所以不能直接套用有限维 Laplace 方法。严格的论证来自大偏差原理与对数势（Coulomb 气体）理论，参见 Deift 的专著（原文 \cite{De}，p.132 及以后）：先用大数定律确立本征值经验测度的极限，再在该测度空间上做变分。原文明确说“需要作一些估计，而这些估计我们将略去”，引用时不应把它当作无条件结论。]
+
+该命题实质上说的是：被积函数具有足够尖锐的极大值，因而积分的主导行为可由最速下降公式算出。我们指出，不能不加说明地应用最速下降公式，因为积分所在空间的维数随着扰动参数 $1/N$ 趋于 $0$ 而增长。换言之，必须作一些估计，而这些估计我们将略去。我们只提及：当 $g=0$ 时，该结果可由用 Hermite 多项式显式计算积分得到（见第 4 章）。对一般情形，请读者参阅 \cite{De}。
+
+被积函数的对数
+$$
+K(\lambda_1,...,\lambda_N):=
+-N(\tfrac{1}{2}\sum_i \lambda_i^2+g\sum_i \lambda_i^4)+2\sum_{i<j}\log|\lambda_i-\lambda_j|
+$$  
+有唯一的极大值，因为它是凹的（请验证！）。该极大值通过令偏导数为零求得。这给出
+\begin{equation}\label{criti}
+\sum_{j\ne i}\frac{1}{\lambda_i-\lambda_j}=N(\tfrac{1}{2}\lambda_i+2g\lambda_i^3).
+\end{equation}
+设 $\lambda_1<\lambda_2<...<\lambda_N$ 是该方程组唯一的（在置换意义下的）解。
+
+\begin{proposition}
+归一化计数测度 $\frac{1}{N}\sum_i \delta(x-\lambda_i)$ 弱收敛于测度 $\mu(x)=f(x,g)dx$，其中 $f(x,g)$ 是支撑在有限区间 $[-2a,2a]$ 上、在其内部可微的连续函数。
+\end{proposition}
+
+其证明同样请读者参阅 \cite{De}（第 132 页及以后）。我们指出，当 $g=0$ 时，由 Wigner 半圆律，$a=1$ 且
+$f(x,0)=\frac{1}{2\pi}\sqrt{4-x^2}$；故 $f(x,g)=
+\frac{1}{2\pi}\sqrt{4-x^2}+O(g)$。
+
+现在我们的任务就是求出函数 $f(x,g)$。在方程 \eqref{criti} 中取极限（这需要一些我们将略去的论证），得到
+$$
+\int_{-2a}^{2a}\frac{1}{y-x}f(x,g)dx=\frac{1}{2}y+2gy^3,\ |y|\le 2a
+$$
+其中积分按主值意义理解。
+
+这是关于 $f(x,g)$ 的线性积分方程，可用标准方法求解。具体地说，考虑解析函数
+$$
+F(y)=\int_{-2a}^{2a}\frac{1}{y-x}f(x,g)dx
+$$ 
+其中 $y$ 取在复平面上但位于区间 $[-2a,2a]$ 之外。对 $y\in [-2a,2a]$，用 $F_+(y)$、$F_-(y)$ 表示 $F(y)$ 从上方和下方的极限。则由 Plemelj 公式，该积分方程蕴含
+$$
+\frac{1}{2}(F_+(y)+F_-(y))=\frac{1}{2}y+2gy^3.
+$$
+另一方面，$F_-(y)=\overline{F_+(y)}$。因此
+$$
+{\rm Re}F_+(y)={\rm Re}F_-(y)=\frac{1}{2}y+2gy^3.
+$$ 
+% [Tutor Note: Plemelj（Sokhotski）公式的用法：对 f 为实函数，F(y)=\int_{-2a}^{2a} f(x)/(y-x)\,dx 的两个边值满足 \frac12(F_++F_-)=P.V.\int f/(y-x)（即取主值），而跃变为 F_+-F_-=-2\pi i f（符号取决于从上半平面还是下半平面取极限的约定）。由实性 F_-=\overline{F_+}，故 \mathrm{Re}F_+=\mathrm{Re}F_-=\frac12y+2gy^3，这就是原文的等式。最后求密度用 f(y,g)=-\frac{1}{\pi}\mathrm{Im}F_+(y)（在 y 取上半平面极限时），与文中 f(y,g)=\frac1\pi(\cdots)\sqrt{4a^2-y^2} 只差约定的符号，核对时务必看 \sqrt{y^2-4a^2} 在区间内取 +i\sqrt{4a^2-y^2} 还是 -i。]
+
+现在令 $y:=a(z+z^{-1})$。那么当 $y$ 遍历 $[-2a,2a]$ 的外部时，$z$ 遍历单位圆的外部。于是函数 $G(z):=F(y)$ 在单位圆外解析、在无穷远处衰减，并且
+$$
+{\rm Re}G(z)=\frac{1}{2}a(z+z^{-1})+2ga^3(z+z^{-1})^3
+$$ 
+当 $|z|=1$ 时成立。这意味着 $G(z)$ 等于该 Laurent 多项式所有负次数项之和的两倍。换言之，有
+$$
+G(z)=4ga^3z^{-3}+(a+12ga^3)z^{-1}.
+$$
+这给出
+$$
+F(y)=\frac{1}{2}y+2gy^3
+-\left(\frac{1}{2}+4ga^2+2gy^2\right)\sqrt{y^2-4a^2}.
+$$
+现在 $f(y,g)$ 由 $F$ 的跃变求出：
+$$
+f(y,g)=\frac{1}{\pi}\left(\frac{1}{2}+4ga^2+2gy^2\right)\sqrt{4a^2-y^2}.
+$$
+% [Tutor Note: “G 等于该 Laurent 多项式负次数项之和的两倍”这一步值得展开：记 R(z)=\frac12a(z+z^{-1})+2ga^3(z+z^{-1})^3，则 R 是实系数的 Laurent 多项式；设 R_- 为其负幂次部分。在 |z|=1 上 2\mathrm{Re}G=R，且 R_- 只含负幂次，故 H:=G-2R_- 在单位圆外解析、在无穷远衰减、在单位圆上纯虚；由最大模原理（等价于 Schwarz 反射）H\equiv 0。直接算得 R_-=2ga^3z^{-3}+(\frac a2+6ga^3)z^{-1}，于是 G=2R_-=4ga^3z^{-3}+(a+12ga^3)z^{-1}，与原文一致。核对时别把 R 的正幂次项也乘 2。]
+
+剩下的问题是用 $g$ 表示出 $a$。
+我们有 $yF(y)\to 1$，$y\to \infty$（因为 $\int f(x,g)dx=1$），
+从而 $zG(z)\to 1/a$，$z\to \infty$。
+这给出
+$$
+\frac{1}{a}=a+12ga^3,
+$$ 
+或
+$$
+12ga^4+a^2-1=0.
+$$
+由此可唯一地确定 $a$：
+$$
+a=\biggl(\frac{(1+48g)^{1/2}-1}{24g}\biggr)^{1/2}.
+$$
+
+现在来计算 $E(g)$。由上述结果可得
+$$
+E(g)=\int_{-2a}^{2a}\int_{-2a}^{2a}\log|x-y|f(x,g)f(y,g)dxdy-
+\int_{-2a}^{2a}(\tfrac{1}{2}x^2+gx^4)f(x,g)dx.
+$$
+另一方面，把定义 $f(x,g)$ 的积分方程对 $y$ 积分（从 $0$ 到 $u$）。于是得到
+$$
+2\int_{-2a}^{2a}(\log|x-u|-\log|x|)f(x,g)dx=\tfrac{1}{2}u^2+gu^4.
+$$
+把它代入 $E(g)$ 的表达式，得到
+$$
+E(g)=\int_{-2a}^{2a}(\log|u|-\tfrac{1}{4}u^2-\tfrac{1}{2}gu^4)f(u,g)du.
+$$
+由于 $f(u,g)$ 已知，该积分可以算出。事实上，它可以用初等函数表示，经过计算得到
+$$
+E(g)-E(0)=\log a-\frac{1}{24}(a^2-1)(9-a^2).
+$$
+把 $a$ 的表达式代入，稍作计算后最终得到：
+$$
+E(g)-E(0)=\sum_{k=1}^\infty (-12g)^k\frac{(2k-1)!}{k!(k-2)!}.
+$$
+% [Tutor Note: 最后一式疑为原文笔误：若第二项因子为 (k-2)!，则 k=1 时出现 (-1)!，且 k=2 项给出 432g^2，与 W_\infty=\sum c_n(-1)^ng^n/n!（c_2=36，故 g^2 系数应为 18）不符。把 (k-2)! 换成 (k+2)! 后，g^1 项为 -12g/6=-2g（对应 c_1=2），g^2 项为 (144)(6/48)=18（对应 c_2=36），并且一般项给出 c_n=12^n\frac{(2n-1)!}{(n+2)!}，正是 BIPZ 公式。故此处应为 (k+2)!；按规范我们保留原文不动，仅在此指出。]
+% [Tutor Note: 上面把积分方程对 y 从 0 到 u 积分得到的关系可用于核对 E(g)：由 \int f=1 及 2\int\log|x-u|f(x)dx=\frac12u^2+gu^4+2\int\log|x|f(x)dx，代入 E(g)=\iint\log|x-y|ff-\int(\frac12x^2+gx^4)f，即得 E(g)=\int(\log|u|-\frac14u^2-\frac12gu^4)f(u,g)du。这一步的两个关键事实是：对数核的对称性与 \int f=1（密度归一化），否则会漏掉一个依赖 u 的项。]
+
+由此即得所求的 $c_n$ 的公式。
+

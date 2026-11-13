@@ -1,0 +1,587 @@
+% 第 1 章：范畴
+本章回顾范畴\index{fanchou@范畴|hyperpage}论和表示论的一些基础知识。我们将把代数的表示论推广到范畴，并在此背景下讨论 Morita 等价。这里涉及的大部分内容都可以在标准的范畴论或表示论教材中找到[\hyperlink{ref:176}{176}, \hyperlink{ref:148}{148}, \hyperlink{ref:258}{258}]。本章收入这些内容，是为了固定记号并作为参考；在后面的章节中，我们将把这套形式体系拓展到 $A_\infty$ 范畴的世界。
+
+\section{范畴}\label{sec:categories}
+\takeaway{范畴由对象与 Hom 集合组成，复合满足结合律并有单位态射；同构是存在双侧逆的态射。Sets、Groups、Rings、Top、$\mathrm{Open}(X)$ 与基本群胚 $\Pi_1(X)$ 是贯穿全书的原型例子。}
+\begin{definition}{范畴}{category}
+一个范畴 $\mathcal C$ 由一族对象 $\operatorname{Ob}(\mathcal C)$ 组成，并且对每一对对象 $A,B\in\operatorname{Ob}(\mathcal C)$，都指定一个集合 $\mathcal C(A,B)$。这个集合称为从 $A$ 到 $B$ 的 Hom 集合，其中的元素称为态射。它们满足以下性质：
+\begin{itemize}
+  \item 态射可以复合：若 $\varphi\in\mathcal C(A,B)$ 且 $\psi\in\mathcal C(B,C)$，则 $\psi\varphi\in\mathcal C(A,C)$；
+  \item 复合满足结合律：只要复合有定义，就有 $(\varphi\psi)\chi=\varphi(\psi\chi)$；
+  \item 每个对象 $A$ 都有一个恒等态射 $1_A\in\mathcal C(A,A)$，使得对任意 $\varphi\in\mathcal C(A,B)$，
+  \[
+    \varphi=\varphi 1_A=1_B\varphi.
+  \]
+\end{itemize}
+若存在 $\psi\in\mathcal C(B,A)$ 使得 $\varphi\psi=1_B$ 且 $\psi\varphi=1_A$，则称态射 $\varphi\in\mathcal C(A,B)$ 为同构；此时称 $A$ 与 $B$ 同构。
+\end{definition}
+
+\begin{example}[集合范畴]\label{ex:sets}
+最标准的范畴例子是 $\mathrm{Sets}$：它的对象是集合，态射是集合之间的映射。两个集合同构，当且仅当它们具有相同的基数。
+\end{example}
+
+\begin{example}[来自代数的例子]\label{ex:algebra-categories}
+对每一种代数结构，都可以构造一个相应的范畴：对象是带有该代数结构的集合，态射是保持这种结构的映射。这种构造的例子包括 $\mathrm{Groups}$、$\mathrm{Fields}$ 和 $\mathrm{Rings}$。
+我们经常使用的两个重要范畴是 $\mathrm{VECT}(k)$ 和 $\mathrm{vect}(k)$；前者的对象是所有 $k$-向量空间，后者的对象是所有有限维 $k$-向量空间，而它们的态射都是线性映射。
+\end{example}
+
+\begin{example}[来自几何的例子]\label{ex:geometric-categories}
+在拓扑学中，范畴 $\mathrm{Top}$ 的对象是拓扑空间，态射是连续映射；范畴 $\mathrm{Top}_*$ 的对象是一个拓扑空间连同其中选定的一个点，态射则是把选定点映到选定点的映射。
+类似地，在微分几何中可以构造 $\mathrm{Man}$（以及 $\mathrm{Man}_*$）：其对象是（带基点的）流形，态射是光滑映射（并把选定点映到选定点）。
+每个拓扑空间 $X$ 还可以看成一个范畴 $\mathrm{Open}(X)$：对象是 $X$ 的开子集，态射是包含映射。
+\end{example}
+
+以上例子都是这样的范畴：对象是带有某种特殊结构的集合，态射是保持该结构的映射。不过，还有一些有趣的范畴并不属于这一类。
+
+\begin{example}[基本群胚]\label{ex:fundamental-groupoid}
+拓扑空间 $X$ 的基本群胚\index{jibenqunpei@基本群胚|hyperpage} $\Pi_1(X)$ 是一个范畴，其对象是 $X$ 中的点，态射是点与点之间路径的同伦类。注意，若 $X$ 连通，则按定义有
+\[
+  \Pi_1(X)(p,p)=\pi_1(X,p),
+\]
+即它等于 $X$ 在 $p$ 处的基本群。
+\end{example}
+
+\section{函子}\label{sec:functors}
+\takeaway{函子保持复合与单位；反变函子等同于相反范畴上的协变函子。全忠实且本质满的函子给出范畴等价，例如 $\mathrm{mat}(k)\simeq\mathrm{vect}(k)$，以及有限维向量空间上的对偶反等价 $(-)^*$。}
+\begin{definition}{协变函子}{covariant-functor}
+协变函子\index{xiebianhanzi@协变函子|hyperpage} $F\colon\mathcal C\to\mathcal D$ 由映射
+\[
+F\colon\operatorname{Ob}(\mathcal C)\to\operatorname{Ob}(\mathcal D),
+\qquad
+F\colon\mathcal C(A,B)\to\mathcal D(F(A),F(B))
+\]
+组成，并满足
+\[
+F(\psi\varphi)=F(\psi)F(\varphi),\qquad F(1_A)=1_{F(A)}.
+\]
+\end{definition}
+
+\begin{example}[遗忘函子]\label{ex:forgetful-functors}
+协变函子的例子包括遗忘函子\index{yiwanghanzi@遗忘函子|hyperpage}：它们保留相同的对象和映射，却忘掉其中一部分结构。例如，
+\[
+  F\colon\mathrm{Groups}\to\mathrm{Sets},\quad (G,*)\longmapsto G,
+\]
+以及
+\[
+  F\colon\mathrm{Rings}\to\mathrm{Groups},\quad
+  (R,+,\times)\longmapsto(R,+).
+\]
+\end{example}
+
+\begin{example}[自由向量空间与群环]\label{ex:free-vector-space}
+另一些函子会赋予对象更多结构。例如，
+\[
+  U\colon\mathrm{Sets}\to\mathrm{VECT}(k),\quad
+  S\longmapsto\langle S\rangle
+\]
+把集合 $S$ 送到以 $S$ 为基的向量空间。由于线性映射由基向量的像唯一确定，这个函子把生成元之间的每个映射提升为相应向量空间之间的线性映射。
+群环构造也是这样的例子：它把每个群送到其群环，也就是由群元素构成的所有线性组合。这个函子通过线性化，把群同态变成环同态。
+\end{example}
+
+\begin{example}[基本群函子]\label{ex:pi1-functor}
+协变函子的一个稍有趣味的例子是基本群函子，它从带基点的拓扑空间范畴到群范畴：
+\[
+  \pi_1\colon\mathrm{Top}_*\to\mathrm{Groups},\quad
+  (X,p)\longmapsto\pi_1(X,p).
+\]
+若 $f\colon(X,p)\to(Y,q)$ 是连续映射，则定义
+\[
+  \pi_1(f)\colon\pi_1(X,p)\to\pi_1(Y,q),\quad
+  [\ell]\longmapsto[f\ell],
+\]
+其中 $\ell\colon[0,1]\to X$ 是以 $p\in X$ 为起点和终点的环路，$[\ell]$ 是它在基本群中对应的元素。
+\end{example}
+
+\begin{definition}{反变函子}{contravariant-functor}
+反变函子\index{fanbianhanzi@反变函子|hyperpage} $F\colon\mathcal C\to\mathcal D$ 由映射
+\[
+F\colon\operatorname{Ob}(\mathcal C)\to\operatorname{Ob}(\mathcal D),
+\qquad
+F\colon\mathcal C(A,B)\to\mathcal D(F(B),F(A))
+\]
+组成，并满足
+\[
+F(\psi\varphi)=F(\varphi)F(\psi),\qquad F(1_A)=1_{F(A)}.
+\]
+若把相反范畴\index{xiangfanfanchou@相反范畴|hyperpage} $\mathcal C^{\mathrm{op}}$ 定义为与 $\mathcal C$ 有相同对象的范畴，并令
+\[
+\mathcal C^{\mathrm{op}}(V,W):=\mathcal C(W,V),
+\]
+同时把乘法顺序反过来，那么从 $\mathcal C$ 到 $\mathcal D$ 的反变函子，正好等同于从 $\mathcal C^{\mathrm{op}}$ 到 $\mathcal D$ 的协变函子。
+% [Tutor Note: 相反范畴的约定极易记反：本书取 $\mathcal C^{\mathrm{op}}(V,W):=\mathcal C(W,V)$，同时把复合次序整体反转，于是 $\mathcal C^{\mathrm{op}}$ 中的态射 $V\to W$ 对应 $\mathcal C$ 中的态射 $W\to V$。逐项核对含下标的复合式时，务必按这一定义验证配平。]
+\end{definition}
+
+\begin{example}[向量空间的对偶]\label{ex:dual-functor}
+最基本的反变函子是向量空间的对偶：
+\[
+  (-)^*\colon\mathrm{vect}(k)\to\mathrm{vect}(k),\quad
+  V\longmapsto V^*:=\operatorname{Hom}_k(V,k).
+\]
+它是反变的，因为若 $f\colon V\to W$ 是线性映射，相应的对偶映射
+\[
+  f^*\colon W^*\to V^*,\quad \varphi\longmapsto\varphi\circ f
+\]
+方向相反。
+\end{example}
+
+\begin{example}[光滑函数函子]\label{ex:smooth-functions}
+另一个例子是把每个流形关联到其光滑函数环的构造：
+\[
+ C^\infty\colon\mathrm{Man}^{\mathrm{op}}\to\mathrm{Rings},\quad
+ M\longmapsto C^\infty(M):=\{f\colon M\to\mathbb R\mid f\text{ 光滑}\}.
+\]
+% [Tutor Note: 原文把光滑函数构造写成 $C^\infty\colon\mathrm{Man}\to\mathrm{Rings}$，但它是反变函子，规范写法应为 $C^\infty\colon\mathrm{Man}^{\mathrm{op}}\to\mathrm{Rings}$；译文已按反变情形校正。]
+\end{example}
+
+\begin{definition}{全、忠实与等价}{fully-faithful}
+若协变函子 $F\colon\mathcal C\to\mathcal D$ 所诱导的映射
+\[
+  F\colon\mathcal C(A,B)\to\mathcal D(F(A),F(B))
+\]
+分别都是满射、单射或双射，就称 $F$ 为满、忠实或全忠实\index{quanzhongshi@全忠实|hyperpage}函子；对于反变函子，相应的映射为
+\[
+  F\colon\mathcal C(A,B)\to\mathcal D(F(B),F(A)).
+\]若一个协变或反变函子全忠实，并且对每个 $B\in\operatorname{Ob}(\mathcal D)$，都存在 $A\in\operatorname{Ob}(\mathcal C)$ 使得 $F(A)$ 与 $B$ 同构，则称它为等价或反等价\index{fandengjia@反等价|hyperpage}。后一性质也称为本质满。
+\end{definition}
+
+\begin{example}[矩阵范畴]\label{ex:matrix-category}
+定义范畴 $\mathrm{mat}(k)$ 如下：
+\[
+\operatorname{Ob}(\mathrm{mat}(k)):=\{0,1,2,\ldots\},\qquad
+\mathrm{mat}(n,m):=\mathrm{Mat}_{m\times n}(k).
+\]
+通过函子
+\[
+F\colon\mathrm{mat}(k)\to\mathrm{vect}(k),\quad n\longmapsto k^n,
+\]
+以及
+\[
+F\colon\mathrm{mat}(n,m)\to\mathrm{vect}(k^n,k^m),\quad
+A\longmapsto\bigl(\varphi\colon x\longmapsto Ax\bigr),
+\]
+这个范畴与向量空间范畴等价\index{fanchoudengjia@范畴等价|hyperpage}。它是全忠实的，因为 $k^n$ 到 $k^m$ 的每个线性映射都由唯一的矩阵表示；它也是本质满的，因为每个有限维向量空间都同构于某个 $k^n$。
+其核心思想是：等价范畴描述两类行为方式相同的数学对象。一个对象类型及其态射之间的所有构造，都可以转换到另一种对象类型中，反之亦然。在这里，这意味着在向量空间与线性映射中工作，等同于在矩阵中工作。
+% [Tutor Note: 注意 $\mathrm{mat}(n,m):=\mathrm{Mat}_{m\times n}(k)$ 的指标约定：$n$ 是定义域 $k^n$ 的维数、$m$ 是靶 $k^m$ 的维数，故矩阵有 $m$ 行 $n$ 列。若按“$n\times m$ 矩阵”的日常说法记忆，态射的复合方向会立即错位。]
+\end{example}
+
+\begin{example}[有限维对偶给出的反等价]\label{ex:dual-antiequivalence}
+函子 $(-)^*$ 是有限维向量空间范畴 $\mathrm{vect}(k)$ 上的反等价，却不是所有 $k$-向量空间组成的范畴 $\mathrm{VECT}(k)$ 上的反等价。这是因为无限维向量空间的对偶不可能具有可数基，因此 $(-)^*$ 不是本质满\index{benzhiman@本质满|hyperpage}的。
+\end{example}
+
+\section{自然变换}\label{sec:natural-transformations}
+\takeaway{自然变换是函子之间的态射，其定义就是交换方块。$X\to X^{**}$ 给出恒等函子到双对偶函子的自然变换，即有限维向量空间与其双对偶的典范同构；而 $\mathrm{vect}(k)$ 上恒等函子到自身的自然变换只有数乘。}
+范畴论的最后一个主要组成部分是自然变换\index{ziranbianhuan@自然变换|hyperpage}。我们可以把它们看成函子之间的态射。
+
+\begin{definition}{自然变换}{natural-transformation}
+两个协变函子 $F,G\colon\mathcal C\to\mathcal D$ 之间的自然变换 $\eta\colon F\to G$，是由一族 $\mathcal D$ 中的态射
+\[
+  (\eta_X\colon F(X)\to G(X))_{X\in\operatorname{Ob}(\mathcal C)}
+\]
+组成的；它们满足：对 $\mathcal C$ 中的每个态射 $f\colon X\to Y$，都有
+\[
+  \eta_Y\circ F(f)=G(f)\circ\eta_X.
+\]
+\end{definition}
+
+\begin{example}[向量空间到双对偶的自然变换]\label{ex:double-dual}
+自然变换的标准例子是向量空间范畴 $\mathrm{vect}(k)$ 上的恒等函子
+$1\colon\mathrm{vect}(k)\to\mathrm{vect}(k)$ 与双对偶函子 $(-)^{**}$ 之间的自然变换：
+\[
+  \eta_X\colon X\to X^{**},\quad
+  v\longmapsto\bigl(\operatorname{ev}_v\colon X^*\to k,\ 
+  \varphi\longmapsto\varphi(v)\bigr).
+\]
+这正是说有限维向量空间与其双对偶之间存在典范同构：二者之间有一个标准同构。单对偶则不是如此：虽然有限维向量空间与其对偶同构，但要构造一个具体的同构，还需要额外的数据（例如一组基）。
+\end{example}
+
+\begin{example}[恒等函子到自身的自然变换]\label{ex:identity-natural-transformation}
+容易验证，恒等函子 $1\colon\mathrm{vect}(k)\to\mathrm{vect}(k)$ 到自身的每个自然变换，都是由某个公共因子 $\lambda\in k$ 给出的整体缩放：
+\[
+  (\nu_\lambda)_X\colon X\to X,\quad v\longmapsto\lambda v.
+\]
+事实上，若 $\nu\colon1\to1$ 是自然变换，那么它在一维向量空间 $k$ 上必为数乘：
+\[
+  \nu_k\colon k\to k,\quad x\longmapsto\lambda x.
+\]
+给定向量空间 $X$ 中的元素 $v$，线性映射 $f\colon k\to X$（$1\mapsto v$）给出
+\[
+\begin{aligned}
+\nu_X(v)
+&=\nu_X(f(1))
+=f(\nu_k(1))\\
+&=f(\lambda)
+=\lambda v.
+\end{aligned}
+\]
+\end{example}
+
+\section{线性范畴}\label{sec:linear-categories}
+\takeaway{$k$-线性范畴的 Hom 集是 $k$-向量空间且复合双线性；单对象 $k$-线性范畴就是 $k$-代数。于是环的表示论被纳入范畴语言，为下一节的模范畴作准备。}
+固定一个域 $k$ 后，我们可以考虑 $k$-线性范畴\index{xianxingfanchou@线性范畴|hyperpage}。
+
+\begin{definition}{$k$-线性范畴}{k-linear-category}
+若范畴 $\mathcal C$ 的所有 Hom 空间都是 $k$-向量空间，且态射复合是双线性的，则称 $\mathcal C$ 为 $k$-线性范畴。两个 $k$-线性范畴之间的函子若在 Hom 空间之间诱导的映射都是 $k$-线性的，则称为 $k$-线性函子。若 $k$-线性范畴 $\mathcal C$ 中的对象 $X$ 满足对每个 $Y\in\operatorname{Ob}(\mathcal C)$ 都有
+\[
+  \mathcal C(X,Y)=\mathcal C(Y,X)=0,
+\]
+则称 $X$ 为零对象。
+\end{definition}
+
+除非特别说明，两个 $k$-线性范畴之间的函子一律假设为 $k$-线性的。这并不是很强的限制，因为几乎所有自然出现的函子都是 $k$-线性的。
+
+\begin{example}[$k$-代数模范畴]\label{ex:module-categories}
+$k$-线性范畴的例子很多，包括 $\mathrm{VECT}(k)$、$\mathrm{vect}(k)$ 和 $\mathrm{mat}(k)$。给定任意 $k$-代数 $A$，还有以下 $k$-线性范畴：
+\begin{itemize}
+  \item $\mathrm{MOD}\text{-}A$：所有右 $A$-模组成的范畴；
+  \item $\mathrm{Mod}\text{-}A$：所有有限生成右 $A$-模组成的范畴；
+  \item $\mathrm{mod}\text{-}A$：所有有限维右 $A$-模组成的范畴。
+\end{itemize}
+这些范畴中的零对象是带平凡 $A$-作用的零向量空间。它们的 Hom 空间常记作 $\operatorname{Hom}_A(M,N)$，而不写成 $\mathrm{MOD}\text{-}A(M,N)$。左模也有相应的三类范畴：$A\text{-}\mathrm{MOD}$、$A\text{-}\mathrm{Mod}$ 和 $A\text{-}\mathrm{mod}$。
+\end{example}
+
+\begin{example}[代数与范畴之间的转换]\label{ex:algebra-as-category}
+任意 $k$-代数 $A$ 都可以看成一个只有一个对象的 $k$-线性范畴 $A$，其中 $A(\bullet,\bullet)=A$。反过来，也可以把一个有多个对象的范畴 $\mathcal C$ 看成代数：取所有 Hom 空间的直和
+\[
+  \mathcal C:=\bigoplus_{X,Y\in\operatorname{Ob}(\mathcal C)}\mathcal C(X,Y).
+\]
+两个态射的乘积在它们可复合时定义为复合，否则定义为零。注意，对每个对象 $X$，单位态射 $1_X$ 在这个代数中给出一个幂等元。若对象只有有限多个，那么这些幂等元之和是代数的单位；若对象有无限多个，所得代数便没有单位。
+\begin{note}
+上述两种操作互不为逆。若从一个对象有限的范畴出发，先把它变成代数，再把代数变回范畴，所得范畴并不与原范畴等价。不过二者在较弱的意义下仍然等价；我们将在后续小节讨论这一点。
+\end{note}
+\end{example}
+\section{模}\label{sec:modules}
+\takeaway{$\mathcal C$-模就是从 $\mathcal C$ 到 $\mathrm{VECT}(k)$ 的函子（左模协变、右模反变），模之间的态射就是自然变换；几何中的 $C^\infty$、$\Omega^n$、预层与局部系统都是范畴模。Yoneda 嵌入 $\mathcal C\to\mathrm{MOD}\text{-}\mathcal C$ 全忠实。}
+给定一个 $k$-代数 $A$，一个左 $A$-模由一个向量空间 $V$ 和一个代数同态
+\[
+  \rho\colon A\to\operatorname{Hom}_k(V,V)
+\]
+组成。若把 $A$ 看作只有一个对象的范畴 $A$，这恰好就是从 $A$ 到 $\mathrm{Vect}(k)$ 的协变函子。两个模之间的态射是线性映射 $f\colon V\to W$，并且对每个 $a\in A$ 都满足
+\[
+  f\circ\rho_V(a)=\rho_W(a)\circ f;
+\]
+这正是函子 $\rho_V$ 与 $\rho_W$ 之间的自然变换条件。
+
+\begin{definition}{范畴的模范畴}{category-module}
+若 $\mathcal C$ 是一个（$k$-线性）范畴，则定义其左模范畴\index{zuomofanchou@左模范畴|hyperpage} $\mathcal C\text{-}\mathrm{MOD}$ 如下：对象是（$k$-线性的）函子 $\rho\colon\mathcal C\to\mathrm{VECT}(k)$，态射是这些函子之间的自然变换。$\mathcal C\text{-}\mathrm{MOD}$ 中的对象称为左 $\mathcal C$-模。右模范畴\index{youmofanchou@右模范畴|hyperpage} $\mathrm{MOD}\text{-}\mathcal C$ 是从 $\mathcal C$ 到 $\mathrm{VECT}(k)$ 的反变函子范畴；其对象称为右 $\mathcal C$-模。
+\end{definition}
+
+\begin{example}[代数模与函子]\label{ex:modules-as-functors}
+若 $k$-线性范畴 $\mathcal C$ 只有有限多个对象，并令 $\mathcal C$ 表示相应的代数，那么每个经典的左 $\mathcal C$-模 $M$ 都可以变成一个函子
+\[
+  F_M\colon\mathcal C\to\mathrm{VECT}(k).
+\]
+它把对象 $X$ 映到向量空间 $1_XM$，并把态射 $\varphi\colon X\to Y$ 映到线性映射
+\[
+  F_M(\varphi)\colon 1_XM\to1_YM,\quad m\longmapsto\varphi m.
+\]
+反过来，每个 $\mathcal C$-模函子 $F\colon\mathcal C\to\mathrm{VECT}(k)$，都可以看成代数
+\[
+  \mathcal C=\bigoplus_{X,Y\in\operatorname{Ob}(\mathcal C)}\mathcal C(X,Y)
+\]
+的经典模：取向量空间 $\bigoplus_{X\in\operatorname{Ob}(\mathcal C)}F(X)$，并令每个态射 $\varphi$ 按其源与靶作用在相应分量上。
+% [Tutor Note: 原书此处写作 $F_M:=1_XM$，应为 $F_M(X):=1_XM$（把对象 $X$ 映到向量空间 $1_XM$）；译文已按后者处理。注意 $1_XM$ 是 $M$ 的直和项，$\varphi$ 只能作用在与其源、靶匹配的分量上。]
+\end{example}
+
+\begin{example}[几何中的范畴模]\label{ex:geometric-modules}
+几何中的许多经典构造实际上都是范畴的模。
+\begin{itemize}
+  \item 设 $C^\infty(M)$ 为流形 $M$ 上的光滑函数空间。忘掉它的环结构后，函子
+  \[
+    C^\infty\colon\mathrm{Man}^{\mathrm{op}}\to\mathrm{VECT}(\mathbb R)
+  \]
+  可以看成 $\mathrm{Man}$ 的右模。类似地，微分 $n$-形式 $\Omega^n$ 和 de Rham 上同调 $H^n_{\mathrm{dR}}$ 也都可以看成 $\mathrm{Man}$ 的右模。
+  \item 若 $V$ 是拓扑空间 $X$ 上的向量丛，则截面函子 $\Gamma(V,-)$ 把每个开集 $U$ 映到截面空间 $\Gamma(V,U)$。它是从 $\mathrm{Open}(X)$ 到 $\mathrm{VECT}(\mathbb R)$ 的反变函子，因而是 $\mathrm{Open}(X)$ 的右模。一般而言，$\mathrm{Open}(X)$ 的右模也称为 $X$ 上的预层\index{yuceng@预层|hyperpage}。
+  \item 拓扑空间 $X$ 上的局部系统\index{jubuxitong@局部系统|hyperpage}可以看成基本群胚 $\Pi_1(X)$ 的模：它把 $X$ 中每个点关联到一个向量空间，把每条路径关联到一个只依赖其同伦类的线性映射。换言之，它是带平坦联络的向量丛。
+\end{itemize}
+范畴的模在各方面都像环的模，熟悉的概念都仍然成立。若一个自然变换在 $\mathcal C$ 的每个对象上都分别是单射、满射或双射，我们就称相应的 $\mathcal C$-模态射是单射、满射或双射。
+每个模态射的核与余核，也可以通过逐个对象考察相应自然变换的核与余核来定义。短正合列、直和以及直和项等概念同样可以逐对象定义。
+\end{example}
+
+\begin{example}[外微分与 de Rham 上同调]\label{ex:de-rham-module}
+外微分可以看成 $\mathrm{Man}$-模态射
+\[
+  d^n\colon\Omega^n\to\Omega^{n+1},
+\]
+而
+\[
+  H^n_{\mathrm{dR}}=\ker d^n/\operatorname{im}d^{n-1}
+\]
+可以看成 $\mathrm{Man}$ 的右模。更多细节见\hyperref[subsec:de-rham-cohomology]{第 2.2.3 节}。
+\end{example}
+
+正如我们可以把代数看成它自身的模，每个 $k$-线性范畴中的对象也可以看成该范畴的模：对 $X\in\operatorname{Ob}(\mathcal C)$，关联反变函子 $\mathcal C(-,X)$。从对象 $X$ 到对象 $Y$ 的态射 $\varphi\colon X\to Y$，会给出自然变换
+\[
+  \varphi\circ-\colon\mathcal C(-,X)\to\mathcal C(-,Y),\quad
+  f\longmapsto\varphi\circ f.
+\]
+因此得到一个协变函子
+\[
+  Y\colon\mathcal C\to\mathrm{MOD}\text{-}\mathcal C.
+\]
+这个函子称为 Yoneda 嵌入\index{yonedaqianru@Yoneda 嵌入|hyperpage}。
+
+\begin{lemma}{Yoneda 引理}{yoneda}
+函子 $Y\colon\mathcal C\to\mathrm{MOD}\text{-}\mathcal C$ 是全忠实函子。
+\end{lemma}
+
+Yoneda 引理\index{yonedayinli@Yoneda 引理|hyperpage}说明，$\mathcal C$ 可以看成 $\mathrm{MOD}\text{-}\mathcal C$ 的一个全子范畴。类似地，$\mathcal C^{\mathrm{op}}$ 嵌入左模范畴 $\mathcal C\text{-}\mathrm{MOD}$。
+% [Tutor Note: Yoneda 引理此处只给陈述而未证明；完整形式是对所有 $F\colon\mathcal C^{\mathrm{op}}\to\mathrm{VECT}(k)$ 有自然同构 $\operatorname{Nat}(\mathcal C(-,X),F)\cong F(X)$，证明只需沿恒等态射追踪像。该引理是后文“生成元”与“导出范畴”论证的隐性工具。]
+
+\section{Morita 等价}\label{sec:morita-equivalence}
+\takeaway{Morita 等价指右模范畴等价，可由满幂等元 $e$ 通过 $B=eAe$ 构造；Morita 定理给出其一般形式。加法完备化、Karoubi 分裂闭包与分裂加法完备化都与 $\mathcal C$ Morita 等价，且 $\operatorname{SplitAdd}A$ 恰好给出有限生成投射模。}
+有时，非同构的代数也可能具有等价的模范畴。这种现象称为 Morita 等价\index{moritadengjia@Morita 等价|hyperpage}，已有大量研究[\hyperlink{ref:9}{9}, \hyperlink{ref:151}{151}]。
+
+\begin{example}[满幂等元给出的 Morita 等价]\label{ex:full-idempotent}
+若 $A$ 是一个代数，称 $e\in A$ 为幂等元\index{midengyuan@幂等元|hyperpage}是指 $e^2=e$；若进一步满足 $AeA=A$，则称 $e$ 为满幂等元。对于满幂等元 $e$，可以构造代数
+\[
+  B=eAe=\operatorname{Hom}_A(eA,eA)
+\]
+以及函子
+\[
+  E\colon\mathrm{MOD}\text{-}A\to\mathrm{MOD}\text{-}B,\quad
+  M\longmapsto Me,\qquad
+  E(f\colon M\to N)=f|_{Me}.
+\]
+这个函子是全忠实的，因为可以从 $f|_{Me}$ 重建 $f$：
+\[
+  M=MAeA=(Me)A.
+\]
+它也是本质满的，因为
+\[
+  E(N\otimes_B eA)
+  =(N\otimes_B eA)e
+  =N\otimes_B eAe
+  =N\otimes_B B
+  \cong N.
+\]
+因此，$E$ 给出了 $\mathrm{MOD}\text{-}A$ 与 $\mathrm{MOD}\text{-}B$ 之间的等价。
+% [Tutor Note: 这里的全忠实性依赖 $M=MAeA=(Me)A$，即 $e$ 为满幂等元（$AeA=A$）；若 $e$ 不满，$E$ 只能做到全忠实而未必本质满。这是 Morita 理论中最常见的符号疏漏点。]
+\end{example}
+
+\begin{example}[矩阵代数的 Morita 等价]\label{ex:matrix-morita}
+矩阵代数 $\mathrm{Mat}_n(A)=\operatorname{Hom}_A(A^{\oplus n},A^{\oplus n})$ 中左上角为 $1$ 的初等矩阵 $E_{11}$ 是一个满幂等元，因此 $\mathrm{Mat}_n(A)$ 与 $A$ Morita 等价。
+\end{example}
+
+前面的例子表明，构造 Morita 等价有两种做法：取某些直和项（$eA$）的自同态环，或取直和（$A^{\oplus n}$）。这两种做法已经足够：
+
+\begin{theorem}{Morita 定理}{morita}
+两个代数 $A$ 和 $B$ Morita 等价，当且仅当存在某个 $n$ 以及 $\mathrm{Mat}_n(A)$ 中的满幂等矩阵 $e$，使得
+\[
+  B\cong e\,\mathrm{Mat}_n(A)\,e.
+\]
+\end{theorem}
+
+这些思想也可以推广到 $k$-线性范畴之间的 Morita 等价。
+
+\begin{definition}{范畴的 Morita 等价}{category-morita}
+若范畴 $\mathcal C$ 和 $\mathcal D$ 的右模范畴 $\mathrm{MOD}\text{-}\mathcal C$ 与 $\mathrm{MOD}\text{-}\mathcal D$ 等价，则称 $\mathcal C$ 与 $\mathcal D$ Morita 等价。
+\end{definition}
+
+\begin{definition}{加法完备化}{additive-completion}
+$k$-线性范畴 $\mathcal C$ 的加法完备化\index{jiafawanbeihua@加法完备化|hyperpage} $\operatorname{Add}\mathcal C$ 是这样一个范畴：对象是 $\mathcal C$ 中对象的有限形式直和，包括零直和。若 $A_i,B_j\in\operatorname{Ob}(\mathcal C)$，则规定
+\[
+\operatorname{Add}\mathcal C
+ (A_1\oplus\cdots\oplus A_n,B_1\oplus\cdots\oplus B_m)
+ :=\bigoplus_{i,j}\mathcal C(A_i,B_j),
+\]
+其中右边是 $k$-向量空间的直和。态射的复合是 $\mathcal C$ 中复合的双线性延拓。注意，$\mathcal C$ 是 $\operatorname{Add}\mathcal C$ 的全子范畴。
+\end{definition}
+
+\begin{example}[加法完备化]\label{ex:additive-completion}
+把代数 $A$ 看成只有一个对象的范畴，则它的加法完备化等价于范畴 $\mathrm{mat}(A)$。当 $A=k$ 时，这个范畴又等价于 $\mathrm{vect}(k)$。
+\end{example}
+
+\begin{example}[模范畴的加法完备化]\label{ex:module-additive-completion}
+模范畴 $\mathrm{MOD}\text{-}\mathcal C$ 与其加法完备化等价，因为模的直和仍然是模。因此，嵌入
+\[
+  \mathrm{MOD}\text{-}\mathcal C\subset\operatorname{Add}(\mathrm{MOD}\text{-}\mathcal C)
+\]
+是本质满的。
+\end{example}
+
+\begin{definition}{分裂闭包（Karoubi 完备化）}{split-closure}
+分裂闭包\index{fenliebibao@分裂闭包|hyperpage}（或 Karoubi 完备化\index{karoubiwanbeihua@Karoubi 完备化|hyperpage}）$\operatorname{Split}\mathcal C$ 是如下范畴：对象是二元组 $(X,e)$，其中 $X\in\operatorname{Ob}(\mathcal C)$，且 $e\in\mathcal C(X,X)$ 是幂等元；从 $(X,e)$ 到 $(X',e')$ 的态射空间为
+\[
+  e'\mathcal C(X,X')e.
+\]
+若把 $X$ 与 $(X,1_X)$ 等同起来，则 $\mathcal C$ 是 $\operatorname{Split}\mathcal C$ 的全子范畴。
+% [Tutor Note: Karoubi 完备化的对象是二元组 $(X,e)$，Hom 空间取 $e'\mathcal C(X,X')e$；$X\mapsto(X,1_X)$ 才是全嵌入，不能省略幂等元 $e$ 的左右夹逼，否则复合不封闭。]
+\end{definition}
+
+\begin{example}[向量空间范畴的分裂闭包]\label{ex:split-vect}
+$\operatorname{Split}\mathrm{vect}(k)$ 与 $\mathrm{vect}(k)$ 等价，因为若 $(V,e)$ 是带幂等自同态的向量空间，则 $(V,e)$ 等价于 $(\operatorname{im}(e),1_{\operatorname{im}(e)})$。
+\end{example}
+
+模范畴也有同样的性质：若 $M$ 是 $A$-模且 $e\colon M\to M$ 是幂等态射，那么
+\[
+  M=eM\oplus(1-e)M,
+\]
+而且可以把 $(M,e)$ 与 $(eM,1_{eM})$ 等同起来。因此，$\operatorname{Split}(\mathrm{MOD}\text{-}A)$ 中的所有对象都可以看成模的直和项，嵌入
+\[
+  \mathrm{MOD}\text{-}A\subset\operatorname{Split}(\mathrm{MOD}\text{-}A)
+\]
+是一个等价。进一步说，若 $\mathcal C$ 是模范畴的子范畴，那么 $\operatorname{Split}\mathcal C$ 等价于包含 $\mathcal C$ 中所有对象的直和项的子范畴。
+
+\begin{definition}{分裂加法完备化}{split-add-completion}
+这两种操作合在一起记作 $\operatorname{SplitAdd}\mathcal C$，称为分裂加法完备化\index{fenliejiafawanbeihua@分裂加法完备化|hyperpage}。
+\end{definition}
+
+\begin{example}[有限生成投射模]\label{ex:projective-modules}
+把代数 $A$ 看成只有一个对象的范畴，则 $\operatorname{SplitAdd}A$ 中的对象可以看成二元组 $(A^{\oplus n},U)$，其中 $U$ 是系数取自 $A$ 的幂等矩阵。我们可以把 $U$ 看成右 $A$-模 $A^{\oplus n}$ 上的幂等自同态，并把 $(A^{\oplus n},U)$ 与右 $A$-模 $\operatorname{im}(U)$ 等同。这给出一个全忠实函子
+\[
+  \operatorname{SplitAdd}A\to\mathrm{MOD}\text{-}A.
+\]
+这个函子的像中的模称为有限生成投射右 $A$-模，记作 $\operatorname{Proj}A$。
+\end{example}
+
+\begin{example}[向量丛与投射模]\label{ex:vector-bundles}
+若把 $C^\infty(M)$ 看成只有一个对象的范畴，则 $\operatorname{SplitAdd}C^\infty(M)$ 中的对象可以如下识别为 $M$ 上的有限维向量丛：
+\[
+  (C^\infty(M)^{\oplus n},U)\longmapsto
+  V=\{(p,U(p)x)\mid p\in M,\ x\in\mathbb R^n\}.
+\]
+在每个点 $p$ 处，取向量空间 $\operatorname{im}U(p)$。Serre--Swan 定理\index{serreswandingli@Serre–Swan 定理|hyperpage}[\hyperlink{ref:222}{222}, \hyperlink{ref:235}{235}]说明，这给出有限生成投射 $C^\infty(M)$-模范畴与 $M$ 上有限维向量丛范畴之间的等价：
+\[
+  \operatorname{SplitAdd}C^\infty(M)\cong\mathrm{vect}\,M.
+\]
+\end{example}
+
+\begin{theorem}{分裂加法完备化与 Morita 等价}{morita-completion}
+对 $k$-线性范畴 $\mathcal C$，范畴 $\operatorname{Split}\mathcal C$、$\operatorname{Add}\mathcal C$ 和 $\operatorname{SplitAdd}\mathcal C$ 都与 $\mathcal C$ Morita 等价。
+\end{theorem}
+
+\begin{proof}
+给定一个线性函子 $F\colon\mathcal C\to\mathrm{VECT}(k)$，可以构造函子
+\[
+\begin{aligned}
+F_{\mathrm{Add}}\colon\operatorname{Add}\mathcal C&\to\mathrm{VECT}(k),&
+A_1\oplus\cdots\oplus A_n&\longmapsto
+F(A_1)\oplus\cdots\oplus F(A_n),\\
+F_{\mathrm{Split}}\colon\operatorname{Split}\mathcal C&\to\mathrm{VECT}(k),&
+(A,e)&\longmapsto\operatorname{im}F(e).
+\end{aligned}
+\]
+这些操作分别在 $\mathrm{MOD}\text{-}\mathcal C$ 与 $\mathrm{MOD}\text{-}\operatorname{Add}\mathcal C$、以及 $\mathrm{MOD}\text{-}\mathcal C$ 与 $\mathrm{MOD}\text{-}\operatorname{Split}\mathcal C$ 之间诱导函子；可以证明它们都是全忠实且本质满的。
+\hfill$\square$
+\end{proof}
+
+因此，若要研究范畴 $\mathcal C$ 的表示论，考察 $\operatorname{SplitAdd}\mathcal C$ 往往更合适。这个范畴通常比原范畴大得多，但从某种意义上说也更容易处理，因为其中包含了理论上应有的所有对象。和普通代数一样，$\operatorname{SplitAdd}\mathcal C$ 可以看成 $\mathrm{MOD}\text{-}\mathcal C$ 的子范畴。它是包含 $\mathcal C$ 且对直和与直和项封闭的最小子范畴。于是得到范畴塔
+\[
+  \mathcal C\subset\operatorname{Add}\mathcal C
+  \subset\operatorname{SplitAdd}\mathcal C
+  \subset\mathrm{MOD}\text{-}\mathcal C,
+\]
+它推广了代数 $A$ 的模范畴中的以下包含关系：
+\[
+  \{A\}\subset
+  \{\text{有限生成自由 }A\text{-模}\}\subset
+  \{\text{有限生成投射 }A\text{-模}\}\subset
+  \{\text{所有 }A\text{-模}\}.
+\]
+
+\section{练习}\label{sec:categories-exercises}
+\begin{exercise}\label{exer:categories-abelianization}
+证明阿贝尔化
+\[
+  \mathrm{Ab}\colon\mathrm{Groups}\to\mathrm{Groups},\quad
+  G\longmapsto G/[G,G]
+\]
+可以成为一个协变函子，但中心
+\[
+  Z\colon\mathrm{Groups}\to\mathrm{Groups},\quad
+  G\longmapsto Z(G)
+\]
+不能成为协变函子。（提示：把 $\mathbb Z/2\mathbb Z$ 的恒等映射分解经过 $S_3$，并考察这些态射经 $Z$ 映射后的结果。）
+\end{exercise}
+
+\begin{exercise}\label{exer:categories-center}
+把群 $G$ 看成只有一个对象的范畴。证明从恒等函子 $1\colon G\to G$ 到自身的自然变换所组成的群同构于 $Z(G)$。
+\end{exercise}
+
+\begin{exercise}\label{exer:categories-cotangent}
+证明下列两个函子
+\[
+  T^*_p\colon\mathrm{Man}_*\to\mathrm{VECT}(\mathbb R),\quad
+  (M,p)\longmapsto T_p^*M,
+\]
+以及
+\[
+  \Omega^1\colon\mathrm{Man}_*\to\mathrm{VECT}(\mathbb R),\quad
+  (M,p)\longmapsto\Gamma(T^*M)
+\]
+都是反变函子，并证明自然变换
+\[
+  \eta_{(M,p)}\colon\Gamma(T^*M)\to T_p^*M,\quad
+  \varphi\longmapsto\varphi_p
+\]
+是二者之间的自然变换。是否存在非平凡的反向自然变换？
+\end{exercise}
+
+\begin{exercise}\label{exer:categories-additive-idempotent}
+设 $\mathcal C$ 是任意 $k$-线性范畴。证明
+\[
+  \operatorname{Add}(\operatorname{SplitAdd}\mathcal C)
+  \simeq\operatorname{SplitAdd}\mathcal C.
+\]
+\end{exercise}
+
+\begin{exercise}\label{exer:categories-functor-additive}
+设 $\mathcal C$ 是任意 $k$-线性范畴，且 $F\colon\operatorname{Add}\mathcal C\to\mathrm{VECT}(k)$ 是一个 $k$-线性函子。
+\begin{enumerate}
+  \item 证明
+  \[
+    F(X\oplus Y)\cong F(X)\oplus F(Y),
+  \]
+  其中左边的 $\oplus$ 是 $\operatorname{Add}\mathcal C$ 中的形式直和，右边的 $\oplus$ 是向量空间的标准直和。
+  \item 利用这一点补全定理\ref{thm:morita-completion}的第一部分证明。
+  \item 证明 $\mathrm{MOD}\text{-}\mathrm{vect}(k)$ 与 $\mathrm{VECT}(k)$ 等价。
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}\label{exer:categories-presheaves}
+证明：含 $k$ 个点的离散拓扑空间上的预层范畴，与 $\mathbb C^k$-模范畴等价。
+\end{exercise}
+
+\begin{exercise}\label{exer:categories-finite-group}
+设有限群 $G$ 有 $k$ 个不可约表示。证明
+\[
+  \operatorname{SplitAdd}\mathbb CG
+  \simeq\operatorname{SplitAdd}\mathbb C^{\oplus k}.
+\]
+（提示：利用幂等元
+\[
+  e_\rho=\frac{\dim\rho}{|G|}
+  \sum_{g\in G}\operatorname{Tr}\bigl(\rho(g^{-1})\bigr)\,g,
+\]
+% [Tutor Note: 原书此处提示作 $e_\rho=\tfrac{1}{|G|}\sum_g\operatorname{Tr}\rho(g)\,g$，缺少因子 $\dim\rho$ 且应为 $\rho(g^{-1})$：对非平凡不可约表示它并不满足 $e_\rho^2=e_\rho$。译文按特征标投影的标准公式校正；书中为笔误。]
+其中 $\rho\colon G\to\mathrm{Mat}_n(\mathbb C)$ 是不可约表示。）
+\end{exercise}
+
+\begin{exercise}\label{exer:categories-polynomial-laurent}
+设 $A=\mathbb C[X]$，$B=\mathbb C[X,X^{-1}]$。
+\begin{enumerate}
+  \item 证明每个有限维 $A$-模（$B$-模）都可以写成形如 $A/(X-\lambda)^k$（分别为 $B/(X-\lambda)^k$）的模的直和；并证明对应于不同 $\lambda$ 的模之间的 Hom 空间为零。
+  \item 利用这一点证明 $\mathbb C[X]\text{-}\mathrm{mod}$ 与 $\mathbb C[X,X^{-1}]\text{-}\mathrm{mod}$ 是等价范畴。（提示：利用 $\mathbb C$ 与 $\mathbb C\setminus\{0\}$ 之间的一个双射。）
+  \item 证明 $A$ 与 $B$ 并不 Morita 等价。
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}\label{exer:categories-pid}
+把环 $A=\mathbb C[X]$ 看成只有一个对象的范畴。证明 $\operatorname{Add}A$ 与 $\operatorname{SplitAdd}A$ 等价。（提示：使用主理想整环上有限生成模的分类定理。）
+\end{exercise}
+
+\begin{exercise}\label{exer:categories-mobius}
+设 $A=C^\infty(S^1)$，并把 $A$ 的元素写成关于 $\theta$ 的光滑 $2\pi$-周期函数。找出一个幂等矩阵 $U\in\mathrm{Mat}_{2\times2}(A)$，使得 $(A^{\oplus2},U)$ 对应于把 Möbius 带看成 $S^1$ 上向量丛时所得的向量丛。（提示：构造一个投影矩阵，将 $\mathbb R^2$ 投影到一条与 $X$ 轴夹角为 $\theta/2$ 的直线上。）利用 $(A^{\oplus2},U)$ 证明 $\operatorname{Add}A$ 与 $\operatorname{SplitAdd}A$ 不等价。
+\end{exercise}
+
+\chapterreview{%
+\textbf{全章地位。}本章是全书的形式语言准备。作者不假设读者学过范畴论，而是用六节把“范畴—函子—自然变换”这条主线讲完，随即用它重述表示论（线性范畴、模范畴、Morita 等价）。这正是全书策略的缩影：后面出现的 $A_\infty$ 范畴、导出范畴与 Fukaya 范畴，都是在本章语言上逐层加结构。
+
+\textbf{知识脉络。}范畴（对象与 Hom 集合）$\to$ 函子（保持复合与单位）$\to$ 自然变换（函子之间的态射，定义就是交换方块）$\to$ $k$-线性范畴（Hom 集合成为向量空间）$\to$ $\mathcal C$-模范畴（函子 $\mathcal C\to\mathrm{VECT}(k)$，Yoneda 嵌入）$\to$ Morita 等价与三种完备化。每一步都在回答“上一层还缺什么”：有了范畴才能谈函子，有了函子才能谈自然变换；而“表示”不过是把对象送到向量空间并保持运算的函子。
+
+\textbf{核心结论。}（1）全忠实且本质满的函子是范畴等价，这是本书反复使用的判定标准；对偶 $(-)^*$ 是 $\mathrm{vect}(k)$ 上的反变自等价，而 $\mathrm{mat}(k)\simeq\mathrm{vect}(k)$ 说明“换一组基”并不改变范畴。（2）单对象 $k$-线性范畴就是 $k$-代数，于是“环的表示”与“函子”是同一件事，这是第 2、3 章把代数问题翻译成复形与 $A_\infty$ 结构的依据。（3）Yoneda 嵌入 $\mathcal C\to\mathrm{MOD}\text{-}\mathcal C$ 全忠实，对象 $A$ 由其可表函子 $\mathcal C(A,-)$ 完全决定。（4）Morita 等价由满幂等元 $e$ 与 $B=eAe$ 刻画；$\operatorname{Add}$、$\operatorname{SplitAdd}$ 与原范畴 Morita 等价，且 $\operatorname{SplitAdd}A$ 恰是有限生成投射模范畴——第 3 章的“分裂导出范畴”与第 9 章的“生成”都以它为原型。
+
+\textbf{辨析与提醒。}其一，“等价”要求存在自然同构 $1\simeq GF$ 与 $FG\simeq 1$，仅有对象的一一对应并不够；本章习题中 $\mathbb C[X]$ 与 $\mathbb C[X,X^{-1}]$ 的有限维模范畴等价，而两环并不 Morita 等价，恰好说明有限维模与一般模的差别。其二，反变函子的复合次序极易记反：本书约定 $\mathcal C^{\mathrm{op}}(V,W):=\mathcal C(W,V)$ 并整体反转复合，核对含下标的复合式时须按此约定配平。其三，此处的“完备化”只是形式直和与幂等分裂（Karoubi 闭包），不含任何拓扑完备，与第 12 章形式幂级数环意义上的完备是两回事。
+
+\textbf{评注。}本章写得极简，Morita 定理等只给陈述，初次接触的读者宜配合标准教材补证；但从全书看，这一取舍是合算的：作者真正想让读者习惯“用 Hom 说话”，因为同调镜像对称的两个主角——Fukaya 范畴与相干层的导出范畴——本质上是同一套 Hom 语言在不同几何中的实现。读完本章不妨自问：若把 $\mathrm{VECT}(k)$ 换成链复形范畴，哪些定义会原样通过？这正是第 2 章要回答的问题。}
+

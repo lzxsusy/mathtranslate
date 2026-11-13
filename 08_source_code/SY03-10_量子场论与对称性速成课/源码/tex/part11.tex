@@ -1,0 +1,815 @@
+% ============================================================
+%  part11.tex  |  原文 PDF p.77–86（页脚 p.76–85）
+%  内容：第 9 章 拓扑量子力学（9.1 形变量子化；9.2 Fedosov 量子化；
+%        9.3 代数指标定理；9.4 局部理论）
+% ============================================================
+
+% >>> p077
+\section{拓扑量子力学（Topological Quantum Mechanics）}
+
+\begin{keypoints}
+  \item \textbf{核心物理图像}：拓扑量子力学以一维 dg 流形 $S^{1}_{dR}$ 到相空间
+        $\R^{2n}$ 的映射为场，作用是自由的一阶作用量
+        $\int_{S^{1}}\langle\varphi,\dd\varphi\rangle_{\omega}$；其量子可观测量代数
+        恰是 Moyal 星积代数，因此它把“形变量子化”“Weyl 丛”“指标定理”三者具体地
+        联系在同一模型中。
+  \item \textbf{数学工具}：Poisson/辛流形与 Schouten--Nijenhuis 括号、星积
+        （Moyal 积）、Weyl 丛与 Fedosov 联络、Hochschild 与循环同调、BV 积分、
+        $\widehat{A}$ 类（Â 类）。
+  \item \textbf{主要结论}：形变量子化的存在性（DeWilde--Lecomte；Fedosov；
+        Kontsevich 对一般 Poisson 流形）；Fedosov 方程即量子主方程的几何形式；
+        代数指标定理 $\Tr(1)=\int_{X}\ee^{\omega_{\hbar}/\hbar}\widehat{A}(X)$；
+        局部理论给出 Feigin--Felder--Shoikhet 迹公式并据此证明指标定理。
+  \item \textbf{译者评注}：本章是全书的顶点之一：它把第 7 章的有效 BV 量子化落实为
+        可计算的模型，并同时连接 Fedosov 的微分几何与 Atiyah--Singer 指标定理。
+        公式密度极高，$\hbar$ 的幂次与“负次数”上同调约定是主要难点，务必逐式核对。
+\end{keypoints}
+
+本章我们研究拓扑量子力学这一例子，并说明它与形变量子化、代数指标定理的联系。
+
+\subsection{形变量子化（Deformation Quantization）}
+
+形变量子化的方法由 Bayen、Flato、Fronsdal、Lichnerowicz、Sternheimer 在一系列
+论文中发展起来 \textup{[4]}。相空间上实值（或复值）函数构成的空间承载两种代数结构：
+由函数的通常乘法给出的\emph{结合代数}结构，以及由 Poisson 括号给出的 Lie 代数结构。
+研究这两种结构的形变（在适当意义下）的性质，为量子力学提供了一种新的不变量式进路。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.49\linewidth]{fig_p077_1.png}
+  \caption*{Poisson 代数与结合代数之间的量子化示意图（原文 PDF p.77 示意图，原文无编号）}
+\end{figure}
+
+% [Tutor Note: 上图是“量子化 = 结合代数结构的形变”这一图景的示意图：横向的
+% “quantization”把 Poisson 代数变成结合代数，反向的“$\hbar\to0$”是经典极限
+% （取 Poisson 括号为一阶项）。注意这里并没有说量子化函子是唯一的——形变量子化
+% 的“唯一性/模空间”正是 9.3 节中特征类 $\omega_\hbar$ 所刻画的内容。]
+
+这本质上就是量子力学中的量子化方法：经典相空间上的函数 $f$ 被量子化为算子 $\hat{f}$。
+
+\begin{wdefn}{9.1}
+  \emph{Poisson 流形}（Poisson manifold）是指一对 $(X,P)$，其中 $X$ 是光滑流形，
+  $P\in\Gamma(X,\wedge^{2}TX)$ 且满足
+  \[
+    \{P,P\}_{SN}=0.
+  \]
+\end{wdefn}
+
+这里 $\{-,-\}_{SN}$ 是 \emph{Schouten--Nijenhuis 括号}。$P$ 称为
+\emph{Poisson 张量/双向量}。在局部坐标下可写为
+\[
+  P=\sum_{i,j}P^{ij}(x)\partial_i\wedge\partial_j.
+\]
+它在 $C^{\infty}(X)$ 上定义一个 \emph{Poisson 括号} $\{-,-\}_{P}$：
+\[
+  \{f,g\}_{P}:=\sum_{i,j}P^{ij}\partial_i f\partial_j g,
+  \qquad \forall f,g\in C^{\infty}(X).
+\]
+此处 $\{P,P\}_{SN}=0$ 蕴涵 $\{-,-\}_{P}$ 满足 Jacobi 恒等式。因此 $\{-,-\}_{P}$
+自然地定义了 Poisson 代数 $(C^{\infty}(X),\{-,-\}_{P})$。
+
+% [Tutor Note: 此处极易出现 $1/2$ 因子的符号错误。定义 9.1 中
+% $P=\sum_{i,j}P^{ij}\partial_i\wedge\partial_j$ 的求和\emph{不}带 $1/2$
+% （$i,j$ 各自独立遍历，$i\neq j$ 的项被算了两次），故对应的括号公式
+% $\{f,g\}_P=\sum_{i,j}P^{ij}\partial_i f\partial_j g$ 也\emph{不}带 $1/2$。
+% 但例 9.2 中 $P=\omega^{-1}=\frac12\sum_{i,j}\omega^{ij}\partial_i\wedge\partial_j$
+% 却显式写出 $1/2$：这是因为 $\omega^{ij}$ 按 $\omega=\frac12\sum\omega_{ij}
+% \dd x^i\wedge\dd x^j$ 的约定取逆。核对任何文献时，先确认其
+% $P^{ij}$ 的定义里是否含 $1/2$，再决定括号公式是否带 $1/2$。]
+
+\begin{wexam}{9.2}
+  设 $(X,\omega)$ 是辛流形，其中
+  \[
+    \omega=\frac12\sum_{i,j}\omega_{ij}\dd x^{i}\wedge\dd x^{j}
+  \]
+  是辛 $2$-形式。令
+  \[
+    P=\omega^{-1}=\frac12\sum_{i,j}\omega^{ij}\partial_i\wedge\partial_j,
+  \]
+  其中 $(\omega^{ij})$ 是 $(\omega_{ij})$ 的逆矩阵。则
+  \[
+    \dd\omega=0\iff\{P,P\}_{SN}=0.
+  \]
+  因此 $(X,\omega^{-1})$ 定义一个 Poisson 流形。
+\end{wexam}
+
+% >>> p078
+\begin{wdefn}{9.3}
+  Poisson 流形 $(X,P)$ 上的\emph{星积}（star-product）是一个 $\R[[\hbar]]$-双线性映射
+  \[
+    \begin{aligned}
+      C^{\infty}(X)[[\hbar]]\times C^{\infty}(X)[[\hbar]]
+        &\longrightarrow C^{\infty}(X)[[\hbar]],\\
+      f\times g
+        &\longmapsto f\star g=\sum_{k\ge0}\hbar^{k}c_k(f,g),
+    \end{aligned}
+  \]
+  使得
+  \begin{enumerate}[label=(\arabic*),leftmargin=2.2em,itemsep=0.2em]
+    \item $\star$ 是结合的：$(f\star g)\star h=f\star(g\star h)$；
+    \item $f\star g=fg+\mathcal{O}(\hbar)$，$\forall f,g\in C^{\infty}(X)$；
+    \item $\frac12(f\star g-g\star f)=\hbar\{f,g\}+\mathcal{O}(\hbar^{2})$，
+          $\forall f,g\in C^{\infty}(X)$；
+    \item $c_k:C^{\infty}(X)\times C^{\infty}(X)\to C^{\infty}(X)$ 是双微分算子。
+  \end{enumerate}
+  此时称 $(C^{\infty}(X)[[\hbar]],\star)$ 为 $(X,P)$ 的\emph{形变量子化}
+  （deformation quantization）。
+\end{wdefn}
+
+% [Tutor Note: 星积公理 (3) 的系数是关键：$\frac12(f\star g-g\star f)$ 的一阶项
+% 必须等于 $\hbar\{f,g\}$，故 $c_1$ 的反对称部分就是 Poisson 括号；换言之
+% $c_1(f,g)=\frac12\{f,g\}+$（某个对称双微分算子）。物理文献中常用的 Moyal 积
+% 是指数里带 $\ii\hbar/2$ 的版本（见下例的约定），与本节的 $\hbar$ 实系数版本
+% 只差 $\hbar\to\ii\hbar$ 及符号，跨文献搬运公式时务必先核对这一处。
+% 另注：原文在 p.76–77（PDF p.77–78）若干处把 $C^{\infty}(X)$ 印成
+% $C^{\infty}(x)$（小写 $x$，如定义 9.1 之后与定义 9.3 中）；本译本按全书记号
+% 统一为 $C^{\infty}(X)$，特此说明。]
+
+形变量子化的定义是纯代数的。形变量子化的\emph{存在性}却极不平凡。
+DeWilde--Lecomte \textup{[13]} 于 1983 年用上同调方法得到了辛流形上形变量子化的
+一般存在性。独立地，Fedosov \textup{[17]} 于 1985 年用微分几何方法给出了另一条
+漂亮的进路。更一般地，Kontsevich \textup{[26]} 对一般 Poisson 流形给出了完全解答。
+
+\begin{wexam}{9.4}
+  设 $X=\R^{2n}$，Poisson 张量为
+  \[
+    P=\frac12\sum_{i,j}P^{ij}\partial_i\wedge\partial_j.
+  \]
+  这里 $P^{ij}$ 为常数。给定 $f(x),g(x)$，如下定义 \emph{Moyal 积} $\star$：
+  \[
+    (f\star g)(x)
+      =\exp\left(\frac{\hbar}{2}\sum_{i,j}P^{ij}
+        \frac{\partial}{\partial y^{i}}\frac{\partial}{\partial z^{j}}\right)
+      \Big|_{y=z=x}f(y)g(z),
+  \]
+  或用图形表示，
+  \begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.39\linewidth]{fig_p078_1.png}
+  \caption*{Moyal 积的图形表示（原文 PDF p.78 示意图，原文无编号）}
+\end{figure}
+  则 $\star$ 定义一个形变量子化。
+\end{wexam}
+
+\begin{wrem}{9.5}
+  若 $P^{ij}\neq$ 常数，则上述公式不再适用。
+\end{wrem}
+
+BV 结构自然地如下出现。设 $(V,\omega)$ 是线性辛空间，其中 $V\simeq\R^{2n}$，
+$\omega:\wedge^{2}V\to\R$ 是辛配对。记
+\[
+  \widehat{\mathcal{O}}(V):=\widehat{\operatorname{Sym}}(V^{\vee})
+  =\prod_{k\ge0}\operatorname{Sym}^{k}(V^{\vee}),
+\]
+其中 $V^{\vee}=\Hom(V,\R)$ 是 $V$ 的线性对偶。于是 Moyal--Weyl 积定义一个结合代数
+$\big(\widehat{\mathcal{O}}(V)[[\hbar]],\star\big)$，称为（形式）Weyl 代数。
+
+% [Tutor Note: Moyal 公式（例 9.4）中指数上必须同时含 $\partial/\partial y^i$ 与
+% $\partial/\partial z^j$，而 $P^{ij}$ 夹在中间；最后在 $y=z=x$ 处取值。
+% 系数 $\hbar/2$ 与 $P^{ij}$ 的归一化直接相关（见定义 9.1 的批注）。
+% 若 $P^{ij}$ 非常数，该指数公式失效——因为此时导数与 $P^{ij}(x)$ 不再交换，
+% 必须改用 Fedosov 或 Kontsevich 的构造（见注 9.5）。
+% 又，此处 $\widehat{\operatorname{Sym}}(V^\vee)=\prod_{k\ge0}
+% \operatorname{Sym}^k(V^\vee)$ 用的是\emph{直积}（形式幂级数）而非直和
+% （多项式）：Weyl 代数要容纳无穷阶形式幂级数，这是 $\hbar$-进完备化的需要。
+% 这一“直积 vs 直和”的区别在定义 9.6 的 Weyl 丛中同样出现，若误写成
+% $\oplus$ 则得到的是多项式系数的 Weyl 代数，不能刻画 Fedosov 联络的完备性。]
+
+% >>> p079
+\subsection{Fedosov 量子化（Fedosov Quantization）}
+
+现在我们聚焦于辛流形。Fedosov \textup{[17]} 对辛情形给出了形变量子化的一个简单而
+几何的构造。在辛流形 $(X,\omega)$ 上，每一点 $p\in X$ 处的切平面 $T_pX$ 是线性辛空间。
+量子涨落把 $T_pX$ 上函数代数形变为相应的 Weyl 代数。这些逐点的 Weyl 代数构成一个
+向量丛——$X$ 上的 \emph{Weyl 丛} $\mathcal{W}(X)$。
+
+\begin{wdefn}{9.6}
+  设 $(X,\omega)$ 是辛流形。定义 \emph{Weyl 丛}
+  \[
+    \mathcal{W}(X):=\prod_{k\ge0}\operatorname{Sym}^{k}(T^{*}X)[[\hbar]].
+  \]
+  于是在每一点 $p\in X$ 处，其纤维为
+  \[
+    \mathcal{W}(X)\big|_{p}=\widehat{\mathcal{O}}(T_pX)[[\hbar]].
+  \]
+  这里 $\widehat{\mathcal{O}}$ 指形式幂级数函数。
+\end{wdefn}
+
+$\mathcal{W}(X)$ 的一个局部截面为
+\[
+  \sigma(x,y)=\sum_{k,l\ge0}\hbar^{k}a_{k,i_1\cdots i_l}(x)
+  y^{i_1}\cdots y^{i_l},
+\]
+其中 $\{x\}$ 是底流形坐标、$\{y\}$ 是纤维坐标，$a_{k,i_1\cdots i_l}(x)$ 是光滑函数。
+由于 $\big(T_pX,\omega|_{T_pX}\big)$ 是线性辛空间，我们有逐纤维的 Moyal 积，仍记作
+$\star$。于是 $(\mathcal{W}(X),\star)$ 定义了一个无穷维的代数丛。
+
+设 $\nabla$ 是 $TX$ 上的一个无挠且与 $\omega$ 相容（即 $\nabla\omega=0$）的联络。
+这样的联络称为\emph{辛联络}（symplectic connection；它总是存在，且不唯一）。
+$\nabla$ 诱导出所有张量丛上的联络，特别地，它定义了 $\mathcal{W}(X)$ 上的一个联络，
+仍记作 $\nabla$。其曲率为
+\[
+  \nabla^{2}\sigma=\frac{1}{\hbar}[R_{\nabla},\sigma]_{\star},
+  \qquad \forall\sigma\in\Gamma(X,\mathcal{W}(X)),
+\]
+其中
+\[
+  R_{\nabla}=\frac14 R_{ijkl}y^{i}y^{j}\dd x^{k}\wedge\dd x^{l}
+  \in\Omega^{2}(X,\mathcal{W}(X))
+\]
+是取值于 Weyl 丛 $\mathcal{W}(X)$ 的 $2$-形式；$R_{ijkl}=\omega_{im}R^{m}{}_{jkl}$ 是
+与辛配对缩并后的曲率形式。
+
+给定 $X$ 上一列闭 $2$-形式 $\{\omega_k\}_{k\ge1}$，Fedosov 证明了：在相差规范变换的
+意义下，存在唯一的 $\mathcal{W}(X)$ 上形如 $\nabla+\frac{1}{\hbar}[\gamma,-]_{\star}$
+的联络，其中 $\gamma\in\Omega^{1}(X,\mathcal{W}(X))$ 是取值于 $\mathcal{W}(X)$ 的
+$1$-形式，它满足某些初始条件以及 \emph{Fedosov 方程}
+\[
+  \nabla\gamma+\frac{1}{2\hbar}[\gamma,\gamma]_{\star}+R_{\nabla}=\omega_{\hbar},
+\]
+其中 $\omega_{\hbar}=-\omega+\sum_{k\ge1}\hbar^{k}\omega_k$。令
+\[
+  D=\nabla+\frac{1}{\hbar}[\gamma,-]_{\star}
+\]
+为 \emph{Fedosov 联络}。于是 Fedosov 方程蕴涵
+\[
+  D^{2}=\frac{1}{\hbar}[\omega_{\hbar},-]_{\star}=0.
+\]
+
+% >>> p080
+其中 $\omega_{\hbar}$ 沿每个纤维为常数，因而是一个中心项。于是我们得到
+$\mathcal{W}(X)$ 上的平坦联络 $D$。后面将会看到，Fedosov 联络具有\emph{量子主方程}
+的几何解释 \textup{[21, 24]}。
+
+令 $\mathcal{W}_{D}(X):=\{\sigma\in\Gamma(X,\mathcal{W}(X))\mid D\sigma=0\}$ 为平坦
+截面的空间。则 $(\mathcal{W}_{D}(X),\star)$ 是一个结合代数。设
+\[
+  \sigma:\ \mathcal{W}_{D}(X)\longrightarrow C^{\infty}(X)[[\hbar]]
+\]
+为把 $y\mapsto0$ 的\emph{符号映射}（symbol map）。则 $\sigma$ 是同构，且
+\[
+  f\star g\mapsto\sigma\big(\sigma^{-1}(f)\star\sigma^{-1}(g)\big)
+\]
+定义一个形变量子化。$\omega_{\hbar}$ 就是相应的\emph{特征类}（或模）。
+
+% [Tutor Note: Fedosov 方程（p.79 页脚 / PDF p.79）是本章最核心也最容易抄错的公式。
+% 三点提醒：(i) 第二项系数是 $1/(2\hbar)$ 而非 $1/\hbar$，来自 $\gamma$ 的二次项；
+% (ii) $\omega_\hbar=-\omega+\sum_{k\ge1}\hbar^k\omega_k$ 中的负号是必需的——
+% 它与 $\nabla$ 的无挠辛性一起保证 $D^2$ 只用 $\omega_\hbar$ 的中心项表达；
+% (iii) 不同文献对 $R_\nabla$ 的符号（以及 $\omega_\hbar$ 中 $-\omega$ 还是 $+\omega$）
+% 有不同约定，恰好相差整体符号；比对时以 $D^2=0$ 与 $[\omega_\hbar,-]_\star$ 的
+% 中心性为锚点。
+% 又，符号映射 $\sigma$（把 $y\mapsto0$）在这里被用来“搬运”星积：平坦截面代数
+% $(\mathcal{W}_D(X),\star)$ 与函数代数 $C^\infty(X)[[\hbar]]$ 通过 $\sigma$ 同构，
+% 于是 $f\star g:=\sigma(\sigma^{-1}(f)\star\sigma^{-1}(g))$。注意 $\sigma$ 同时是
+% 记号（映射名）与 Weyl 丛截面的记号，原文混用；阅读公式时须由上下文区分。
+% 特征类 $\omega_\hbar$ 的选取对应不同的形变量子化，这正是“模”的含义。]
+
+\subsection{代数指标定理（Algebraic Index Theorem）}
+
+给定辛流形上带特征类 $\omega_{\hbar}$ 的形变量子化
+$(C^{\infty}(X)[[\hbar]],\star)$，存在唯一的\emph{迹映射}（trace map）
+\[
+  \Tr:\ C^{\infty}(X)[[\hbar]]\longrightarrow\R((\hbar))
+\]
+满足一个归一化条件以及迹性质：
+\[
+  \Tr(f\star g)=\Tr(g\star f).
+\]
+于是指标作为该理论的配分函数得到，可表述为
+\[
+  \operatorname{Index}=\Tr(1)=\int_{X}\ee^{\omega_{\hbar}/\hbar}\widehat{A}(X),
+\]
+其中 $\widehat{A}(X)$ 是 $X$ 的（形式）$\widehat{A}$ 类。这是由 Fedosov \textup{[18]}
+与 Nest--Tsygan \textup{[37]} 作为 Atiyah--Singer 指标定理的代数类比而表述的
+\emph{代数指标定理}的最简单版本。
+
+% [Tutor Note: $\widehat{A}$ 类（Â 类）是 Pontryagin 形式的通用级数
+% $\widehat{A}(X)=\det^{1/2}\big(\tfrac{R/2}{\sinh(R/2)}\big)$（$R$ 为曲率
+% $2$-形式矩阵），在此作为形式幂级数处理。$\ee^{\omega_\hbar/\hbar}$ 的
+% $\hbar^{-n}$ 项就是 $\frac{(-1)^n}{n!}\omega^n\hbar^{-n}$，给出辛体积
+% （$2n=\dim X$）；其余各项按 $\hbar$ 幂次（含 $\hbar^0$ 项）给出由曲率形式
+% 组合成的拓扑指标——这正是与 Atiyah--Singer 指标定理对应的部分
+% （不同文献对 $\omega_k$ 的归一化相差常数，比较时逐项核对 $\hbar$ 幂次）。
+% 带 $\operatorname{Ch}(E)$ 的版本见下式。]
+
+我们也可以类似地为 $C^{\infty}(X,\operatorname{End}(E))[[\hbar]]$ 构造形变量子化并
+构造迹映射，于是得到
+\[
+  \Tr(1)=\int_{X}\ee^{\omega_{\hbar}/\hbar}\operatorname{Ch}(E)\widehat{A}(X),
+\]
+其中 $\operatorname{Ch}(E)$ 是 $X$ 上向量丛 $E$ 的 Chern 特征。
+
+\paragraph{与 QFT 的关系（Relation with QFT）}
+
+在超对称（SUSY）量子场论中，\emph{局部化}（localization）经常出现：场空间
+$\mathcal{E}$ 上的路径积分往往被有效地局部化为有限维空间 $M\subset\mathcal{E}$ 上
+的等价积分，而 $M$ 描述某个有趣的模空间：
+\[
+  \int_{\mathcal{E}}\ee^{\ii S/\hbar}=\int_{M}(-).
+\]
+在拓扑量子力学中，我们发现
+\[
+  \int_{\operatorname{Map}(S^{1},X)}\ee^{-S/\hbar}
+  \ \overset{\hbar\to0}{=}\
+  \int_{X}(-),
+\]
+
+% [Tutor Note: 这两个积分的“$(-)$”表示被积的恰当对象（在 $M$ 或 $X$ 上待定的
+% 形式），重点是\emph{积分区域}的局部化，而非被积函数的具体形式。
+% $\overset{\hbar\to0}{=}$ 表示在 $\hbar\to0$ 的精确半经典近似下等式成立：
+% 路径积分被常数映射附近的形式邻域上的有效理论完全捕获，因而化归为 $X$ 上的
+% 有限维积分。左侧通常给出某椭圆算子解析指标的物理表述，右侧则给出由各种曲率
+% 形式组合而成的拓扑指标。]
+
+% >>> p081
+其中 $\operatorname{Map}(S^{1},X)$ 是回路空间，$\int_{X}$ 表示局部化到\emph{常值
+映射}。路径积分将被常数映射在完整映射空间内的形式邻域上的有效理论精确捕获。
+$\hbar\to0$ 下的精确半经典近似使我们能把路径积分约化为常值映射模空间（即 $X$）上
+一个有意义的积分。左端通常给出某个椭圆算子解析指标的物理表述；右端最终会写成
+各种曲率形式的积分，代表拓扑指标。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.42\linewidth]{fig_p081_1.png}
+  \caption*{回路空间局部化到 $X$ 中一点的邻域（左图）（原文 PDF p.81 示意图，原文无编号）}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.35\linewidth]{fig_p081_2.png}
+  \caption*{局部化到 $\R^{2n}$ 的标准相空间（右图）（原文 PDF p.81 示意图，原文无编号）}
+\end{figure}
+
+几何上，回路空间被映到 $X$ 中某点（由常值映射指定）的局部化邻域，该邻域上存在
+一个局部化的有效理论。局部地，通过选取 Darboux 坐标，$X$ 可以看作标准相空间
+$\R^{2n}$。于是回路空间在 $X$ 上粘接成一族有效场论。这可以在有效 BV 量子化
+\textup{[24]} 的框架内严格地完成：
+\begin{itemize}[leftmargin=1.8em,itemsep=0.25em]
+  \item 有效作用量 $\leadsto\gamma$；
+  \item 量子主方程（QME）$\leadsto$ Fedosov 方程；
+  \item BV 积分 $\leadsto$ 迹映射；
+  \item 配分函数 $\leadsto$ 代数指标。
+\end{itemize}
+
+\subsection{局部理论（Local Theory）}
+
+本节我们用有效重整化方法研究拓扑量子力学，并用它证明代数指标定理。我们遵循
+\textup{[21, 24]} 中的表述。
+
+\paragraph{局部模型（Local Model）}
+
+考虑标准相空间 $(V,\omega)$，其中 $V\simeq\R^{2n}$，坐标为
+\[
+  (x^{1},\cdots,x^{n},x^{n+1},\cdots,x^{2n})
+  =(q^{1},\cdots,q^{n},p_1,\cdots,p_n),
+\]
+并且
+\[
+  \omega=\sum_{i=1}^{n}\dd p_i\wedge\dd q^{i}.
+\]
+设 $S^{1}_{dR}$ 是这样的（局部环）空间：其底拓扑空间是圆周 $S^{1}$，结构层为
+$\mathcal{O}(S^{1}_{dR})=\Omega^{\bullet}_{S^{1}}$，这是一个由微分形式构成的 dg
+（微分分次）环，其微分是 de Rham 微分算子 $\dd$。
+
+考虑描述映射空间
+\[
+  \varphi:\ S^{1}_{dR}\longrightarrow V\simeq\R^{2n}
+\]
+的\emph{局部模型}。这样的 $\varphi$ 可以等同于 $\Omega^{\bullet}_{S^{1}}\otimes V$
+中的一个元素。具体地说，设 $\theta$ 是 $S^{1}$ 上的坐标（带有等同
+$\theta\sim\theta+1$）。映射空间于是可写为
+\[
+  \{\varphi\}=\big\{\mathbb{P}_i(\theta),\mathbb{Q}^{i}(\theta)\big\}_{i=1,\cdots,n},
+  \qquad \mathbb{P}_i,\mathbb{Q}^{i}\in\Omega^{\bullet}_{S^{1}}.
+\]
+
+% [Tutor Note: $S^{1}_{dR}$ 是“以圆周为底拓扑、以 de Rham 复形为结构层”的
+% dg 流形（局部环空间），因此到 $\R^{2n}$ 的“映射”不是普通连续映射，而是
+% $\Omega^{\bullet}_{S^{1}}\otimes V$ 中的元素——即取值于 $V$ 的微分形式。
+% 这正是 BV 形式中“场 = 形式次数可变的量”的来源：$\mathbb{P}_i,\mathbb{Q}^i$
+% 可以是 $0$-形式（$p_i,q^i$）也可以是 $1$-形式（$\eta_i,\xi^i$）。
+% 记 $\Omega^{\bullet}_{S^1}$ 的 $\bullet$ 为形式次数，勿与上同调次数混淆。]
+
+% >>> p082
+写成分量形式，
+\[
+  \mathbb{P}_i(\theta)=p_i(\theta)+\eta_i(\theta)\dd\theta,
+  \qquad
+  \mathbb{Q}^{i}(\theta)=q^{i}(\theta)+\xi^{i}(\theta)\dd\theta.
+\]
+于是场空间为
+\[
+  \mathcal{E}=\Omega^{\bullet}_{S^{1}}\otimes V.
+\]
+三元组
+\[
+  \Big(\Omega^{\bullet}_{S^{1}}\otimes V,\ \dd,\
+  \int_{S^{1}}\langle-,-\rangle_{\omega}\Big)
+\]
+是一个无穷维的 $(-1)$-dg 辛空间。作用是自由作用量：
+\[
+  \begin{aligned}
+    S[\varphi]
+      &:=\int_{S^{1}}\langle\varphi,\dd\varphi\rangle_{\omega}\\
+      &=\sum_i\int_{S^{1}}\mathbb{P}_i\dd\mathbb{Q}^{i}
+      =\sum_i\int_{S^{1}}p_i(\theta)\dd q^{i}(\theta).
+  \end{aligned}
+\]
+
+\begin{wrem}{9.7}
+  这是沿 AKSZ 构造 \textup{[1]} 的拓扑量子力学的一阶形式（first-order formalism）。
+\end{wrem}
+
+\paragraph{传播子（Propagator）}
+
+我们选取 $S^{1}$ 上的标准平坦度量。设 $\dd^{*}$ 是 $\dd$ 的伴随算子。Laplacian 为
+\[
+  [\dd,\dd^{*}]=-\left(\frac{\dd}{\dd\theta}\right)^{2}.
+\]
+令
+\[
+  \Pi=\omega^{-1}
+  =\sum_i\frac{\partial}{\partial p_i}\wedge\frac{\partial}{\partial q^{i}}
+  =\frac12\sum_i\left(
+    \frac{\partial}{\partial p_i}\otimes\frac{\partial}{\partial q^{i}}
+    -\frac{\partial}{\partial q^{i}}\otimes\frac{\partial}{\partial p_i}
+  \right)\in\wedge^{2}V
+\]
+为 \emph{Poisson 双向量}（或 Poisson 核）。令
+\[
+  h_t(\theta_1,\theta_2)=\frac{1}{\sqrt{4\pi t}}
+  \sum_{n\in\Z}\ee^{-\frac{(\theta_1-\theta_2+n)^{2}}{4t}}
+\]
+为 $S^{1}$ 上的标准热核。于是正则化传播子为
+\[
+  P^{L}_{\varepsilon}=\int_{\varepsilon}^{L}
+  \partial_{\theta_1}h_t(\theta_1,\theta_2)\dd t\otimes\Pi
+  \in\mathcal{E}\otimes\mathcal{E},
+\]
+其中 $\int_{\varepsilon}^{L}\partial_{\theta_1}h_t(\theta_1,\theta_2)\dd t
+\in C^{\infty}(S^{1}\times S^{1})$ 且 $\Pi\in V\otimes V$。记
+\[
+  P^{S^{1}}(\theta_1,\theta_2)
+  =\int_{0}^{\infty}\partial_{\theta_1}h_t(\theta_1,\theta_2)\dd t.
+\]
+则完整传播子由
+\[
+  P^{\infty}_{0}=P^{S^{1}}\otimes\Pi
+\]
+给出。
+
+% [Tutor Note: 传播子的构造有三处易错：(i) 被积的是 $\partial_{\theta_1}h_t$（对
+% 第一个变量的导数），不是 $\partial_t h_t$，也不是 $h_t$ 本身；(ii) $\varepsilon$
+% 是 UV 截断（$t$ 的下限），$L$ 是标度，取 $\varepsilon\to0$、$L\to\infty$ 得到
+% 完整传播子；(iii) $\Pi\in\wedge^2V\subset V\otimes V$，其 $\frac12$ 系数与定义 9.1
+% 中 Poisson 张量的约定一致——若漏掉 $\frac12$，$P^\infty_0$ 会差一个因子 2。
+% 又，$[\dd,\dd^*]=-(\dd/\dd\theta)^2$ 的符号取决于 $1$-形式的伴随定义
+% （$\int\alpha\wedge*\beta$ 的约定）；这里取平坦度量使 $\dd^*=-\partial_\theta$
+% 在 $1$-形式上。该式说明 Laplacian 在 $0$-形式与 $1$-形式上分别作用为
+% $-\partial_\theta^2$，是热核 $h_t$ 满足热方程的依据。]
+
+\begin{wprop}{9.8}
+  $P^{S^{1}}(\theta_1,\theta_2)$ 是 $\theta_1-\theta_2\in\R/\Z$ 的如下周期函数：
+  当 $0<\theta_1-\theta_2<1$ 时，
+  \[
+    P^{S^{1}}(\theta_1,\theta_2)=\theta_1-\theta_2-\frac12.
+  \]
+\end{wprop}
+
+% >>> p083
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.51\linewidth]{fig_p083_1.png}
+  \caption*{$P^{S^1}$ 作为 $\theta_1-\theta_2$ 的周期函数的图像（原文 PDF p.83 示意图，原文无编号）}
+\end{figure}
+
+$P^{S^{1}}$ \emph{不是} $S^{1}\times S^{1}$ 上的光滑函数（正如所料），但它是有界的。
+
+% [Tutor Note: 命题 9.8 的函数是 Bernoulli 多项式 $B_1$ 的周期化（锯齿波），
+% 在整数点有跳跃，因此不是 $S^1\times S^1$（紧流形）上的光滑函数——这正是
+% 拓扑量子力学作为“拓扑”理论却仍有非平凡传播子的原因：它在 $L^\infty$ 意义下
+% 有界，故 $\exp(\hbar P^\infty_0)$ 作为形式幂级数是良定义的（见下方 HRG 流）。
+% 平移常数 $-\frac12$ 与“哪个变量取导数”“热核归一化”的约定有关，换文献时
+% 可能变为 $+\frac12$，但锯齿波形状与有界性不变。]
+
+\paragraph{关联映射（Correlation Map）}
+
+记形式 Weyl 代数
+\[
+  \mathcal{W}_{2n}=\big(\R[[p_i,q^{i}]]((\hbar)),\star\big),
+\]
+以及形式 Weyl 子代数
+\[
+  \mathcal{W}^{+}_{2n}=\big(\R[[p_i,q^{i}]][[\hbar]],\star\big),
+\]
+其中 $\star$ 是 Moyal--Weyl 积。我们可以把形式 Weyl 子代数等同于 $V$ 上的（形式）
+函数（经由形变量子化）：
+\[
+  \mathcal{W}^{+}_{2n}\simeq\big(\widehat{\mathcal{O}}(V)[[\hbar]],\star\big).
+\]
+
+给定 $f_0,f_1,\cdots,f_m\in\mathcal{W}_{2n}$，如下定义
+$\mathcal{O}_{f_0,f_1,\cdots,f_m}\in\mathcal{O}(\mathcal{E})((\hbar))$：
+\[
+  \mathcal{O}_{f_0,f_1,\cdots,f_m}[\varphi]
+  :=\int_{0<\theta_1<\theta_2<\cdots<\theta_m<1}
+  \dd\theta_1\dd\theta_2\cdots\dd\theta_m\,
+  f^{(0)}_{0}\big(\varphi(\theta_0)\big)
+  f^{(1)}_{1}\big(\varphi(\theta_1)\big)\cdots
+  f^{(1)}_{m}\big(\varphi(\theta_m)\big).
+\]
+这里 $\varphi\in\Omega^{\bullet}_{S^{1}}\otimes V$。令
+$f(\varphi(\theta))=f(\mathbb{P}_i(\theta),\mathbb{Q}^{i}(\theta))
+\in\Omega^{\bullet}_{S^{1}}$，并把它分解为
+\[
+  f(\varphi(\theta))=f^{(0)}(\varphi(\theta))
+  +f^{(1)}(\varphi(\theta))\dd\theta.
+\]
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.53\linewidth]{fig_p083_2.png}
+  \caption*{可观测量 $\mathcal{O}_{f_0,\dots,f_m}$ 的圆周插入表示（原文 PDF p.83 示意图，原文无编号）}
+\end{figure}
+
+\begin{wrem}{9.9}
+  $f^{(1)}(\varphi)$ 是 $f^{(0)}(\varphi)$ 在 Witten 意义下的\emph{拓扑下降}
+  （topological descent）。
+\end{wrem}
+
+% [Tutor Note: 插入次序 $0<\theta_1<\cdots<\theta_m<1$ 是定义的一部分，不能随意
+% 交换：交换两个插入点会因 $f^{(1)}$ 中含 $\dd\theta$（奇元素）而带来符号改变。
+% 这就是“因子化乘积”在拓扑量子力学中表现为按圆周次序排列的积分的原因；
+% $f^{(0)}$ 放在 $\theta_0=0$ 处，其余 $f^{(1)}\dd\theta_i$ 依次插入。
+% “拓扑下降”指出：$\dd(f^{(0)}(\varphi))=f^{(1)}(\varphi)\dd\theta$ 之类关系
+% 把 $0$-形式可观测量与 $1$-形式可观测量联系起来，这正是 $B$ 算子与
+% de Rham 微分 $d_{2n}$ 相对应的物理来源。]
+
+现在我们对 $\exp(\hbar P^{\infty}_{0})\big(\mathcal{O}_{f_0,f_1,\cdots,f_m}\big)$
+施加 HRG 流。由于 $P^{\infty}_{0}$ 有界，它是收敛的、良定义的！这就是\emph{UV 有限}
+性质。
+
+如我们已经讨论过的，在 $L=\infty$ 处，可以把它看作定义零模上的函数：
+\[
+  \HH=H^{\bullet}\big(\Omega^{\bullet}_{S^{1}}\otimes V,\dd\big)
+  =H^{\bullet}(S^{1})\otimes V=V\oplus V\dd\theta.
+\]
+我们有 $\widehat{\mathcal{O}}(\HH)=\widehat{\Omega}^{\bullet}_{2n}$，即 $V$ 上的形式。
+
+% >>> p084
+\begin{wdefn}{9.10}
+  如下定义\emph{关联映射}（correlation map）：
+  \[
+    \langle\cdots\rangle_{free}:\
+    \mathcal{W}_{2n}\otimes\cdots\otimes\mathcal{W}_{2n}
+    \longrightarrow\widehat{\Omega}^{\bullet}_{2n}((\hbar)),
+  \]
+  其定义为
+  \[
+    \langle f_0\otimes f_1\otimes\cdots\otimes f_m\rangle_{free}
+    :=\exp(\hbar P^{\infty}_{0})
+    \big(\mathcal{O}_{f_0,f_1,\cdots,f_m}\big)\big|_{\HH}.
+  \]
+\end{wdefn}
+
+从路径积分的角度看，这就是
+\[
+  \langle f_0\otimes f_1\otimes\cdots\otimes f_m\rangle_{free}(\alpha)
+  =\int_{\operatorname{Im}\dd^{*}\subset\mathcal{E}}[\mathcal{D}\varphi]\,
+  \ee^{-S[\varphi+\alpha]/\hbar}
+  \mathcal{O}_{f_0,f_1,\cdots,f_m}[\varphi+\alpha],
+  \qquad \alpha\in\HH=H^{\bullet}(S^{1})\otimes V.
+\]
+这里零模 $\alpha$ 被看作背景场。它也可以如下用 Feynman 图表示。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.35\linewidth]{fig_p084_1.png}
+  \caption*{关联函数的 Feynman 图表示（原文 PDF p.84 示意图，原文无编号）}
+\end{figure}
+
+\paragraph{回顾（循环）Hochschild 复形（(Cyclic) Hochschild Complex Reviewed）}
+
+设 $A$ 是含幺结合代数，$\overline{A}:=A/(\C\cdot1)$。令
+$C_{-p}(A):=A\otimes\overline{A}^{\otimes p}$ 为循环 $p$-链。它带有自然的
+\emph{Hochschild 微分}
+\[
+  b:\ C_{-p}(A)\longrightarrow C_{-p+1}(A),\qquad p\ge1,
+\]
+其定义为
+\[
+  b(a_0\otimes\cdots\otimes a_p)
+  =(-1)^{p}a_pa_0\otimes\cdots\otimes a_{p-1}
+  +\sum_{i=0}^{p-1}(-1)^{i}
+  a_0\otimes\cdots\otimes a_ia_{i+1}\otimes\cdots\otimes a_p.
+\]
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.28\linewidth]{fig_p084_2.png}
+  \caption*{Hochschild 微分 $b$ 的圆周收缩图（原文 PDF p.84 示意图，原文无编号）}
+\end{figure}
+
+于是结合性蕴涵 $b\circ b=0$。因此，$(C_{-\bullet}(A),b)$ 定义了
+\emph{Hochschild 链复形}。
+
+% [Tutor Note: $b$ 的符号约定在文献中差异极大（有的把 $(-1)^p$ 换成
+% $(-1)^{p+1}$，或把 $(-1)^i$ 换成 $(-1)^{i+1}$），但 $b^2=0$ 与
+% “$b$ 是同伦意义的边界算子”这两点不变。原文用的是 $(-1)^pa_pa_0$ 与
+% $(-1)^i$；抄写时务必逐符号对照，尤其不要把 $a_ia_{i+1}$（相邻两个相乘后
+% 只占一个位置）写成 $a_i\otimes a_{i+1}$。]
+
+我们还可以定义 \emph{Connes 算子}：
+\[
+  B:\ C_{-p}(A)\longrightarrow C_{-p-1}(A),
+\]
+
+% >>> p085
+其定义为
+\[
+  B(a_0\otimes\cdots\otimes a_p)
+  =1\otimes a_0\otimes\cdots\otimes a_p
+  +\sum_{i=1}^{p}(-1)^{pi}
+  1\otimes a_i\otimes\cdots\otimes a_p\otimes a_0\otimes\cdots\otimes a_{i-1}.
+\]
+我们有以下关系：
+\[
+  b^{2}=0,\qquad B^{2}=0,\qquad [b,B]=bB+Bb=0.
+\]
+设 $u$ 是一个次数为 $2$（$\deg=2$）的形式变量。则 $(b+uB)^{2}=0$。这定义了复形
+\[
+  CC^{per}_{-\bullet}(A)
+  =\big(C_{-\bullet}(A)[u,u^{-1}],\ b+uB\big),
+\]
+称为\emph{周期循环复形}（periodic cyclic complex）。
+
+\paragraph{回到关联映射（Back to the Correlation Map）}
+
+由次数（type）的理由不难看出
+\[
+  \langle\cdots\rangle_{free}:\ C_{-p}(\mathcal{W}_{2n})
+  \longrightarrow\widehat{\Omega}^{-p}_{2n}((\hbar)),
+\]
+即 $\langle f_0\otimes f_1\otimes\cdots\otimes f_p\rangle_{free}$ 是一个 $p$-形式。
+回忆 $\widehat{\Omega}^{\bullet}_{2n}$ 上配有 BV 算子
+$\Delta=\mathcal{L}_{\omega^{-1}}=\mathcal{L}_{\Pi}$。
+
+\begin{wprop}{9.11}（\textup{[24]}）
+  \[
+    \langle b(-)\rangle_{free}=\hbar\Delta\langle\cdots\rangle_{free},
+    \qquad
+    \langle B(-)\rangle_{free}=\dd_{2n}\langle\cdots\rangle_{free}.
+  \]
+\end{wprop}
+
+这里 $\dd_{2n}:\widehat{\Omega}^{\bullet}_{2n}
+\to\widehat{\Omega}^{-(\bullet+1)}_{2n}$ 是 de Rham 微分。
+
+换句话说，关联映射
+\[
+  \langle\cdots\rangle_{free}:\ C_{-\bullet}(\mathcal{W}_{2n})
+  \longrightarrow\widehat{\Omega}^{\bullet}_{2n}((\hbar))
+\]
+把 $b$ 与 $\hbar\Delta$ 对应起来、把 $B$ 与 $\dd_{2n}$ 对应起来。把上述两者
+结合起来，得到
+\[
+  \langle\cdots\rangle_{free}:\ CC^{per}_{-\bullet}(\mathcal{W}_{2n})
+  \longrightarrow\widehat{\Omega}^{\bullet}_{2n}((\hbar))[u,u^{-1}],
+\]
+它把 $b+uB$ 与 $\hbar\Delta+u\dd_{2n}$ 对应起来（即与这两个微分交换）。
+
+% [Tutor Note: 这里上同调/形式次数取\emph{负}次数：$C_{-p}$ 的下标是负的，
+% 而 $\widehat{\Omega}^{-p}_{2n}$ 表示形式次数为 $-p$ 的形式（即 $p$-形式配负号）。
+% 因此 de Rham 微分的次数写作 $\widehat{\Omega}^{\bullet}_{2n}\to
+% \widehat{\Omega}^{-(\bullet+1)}_{2n}$，看起来“$\bullet+1$”被加了负号。
+% 这一负次数约定贯穿全节，是抄写时最易丢失细节之处；命题 9.11 的两式必须
+% 在这一约定下才自洽（$b$ 升 $1$ 次 → $\Delta$ 升 $1$ 次；$B$ 降 $1$ 次 →
+% $\dd_{2n}$ 升 $1$ 次形式次数）。
+% 另注：$\widehat{\Omega}^{\bullet}_{2n}$ 表示 $V\simeq\R^{2n}$ 上“形式”微分
+% 形式代数的完备化（$\widehat{}$ 表示形式幂级数系数）；由
+% $\HH=V\oplus V\dd\theta$ 可见零模空间除 $V$ 的坐标 $p_i,q^i$ 外还多了其微分
+% $\dd p_i,\dd q^i$（对应 $\dd\theta$），这就是关联函数取值在形式上、且形式次数
+% 为负的来源。]
+
+\paragraph{零模上的 BV 积分（BV Integral on Zero Modes）}
+
+我们可以在 BV 代数 $\big(\widehat{\Omega}^{\bullet}_{2n},\Delta\big)$ 上定义一个
+\emph{BV 积分}映射，它只在最高次形式 $\widehat{\Omega}^{-2n}_{2n}$ 上非零，并把
+\[
+  \beta\in\widehat{\Omega}^{-2n}_{2n}
+  \longmapsto
+  \frac{\hbar^{n}}{n!}\iota^{n}_{\Pi}\beta\Big|_{p=q=0}.
+\]
+这就是对纯粹费米性的超拉格朗日量所作的 \emph{Berezin 积分}。我们可以把这一 BV 积分
+延拓为 $S^{1}$-等变版本：
+\[
+  \int_{BV}:\ \widehat{\Omega}^{\bullet}_{2n}[u,u^{-1}]
+  \longrightarrow\R((\hbar))[u,u^{-1}],
+  \qquad
+  \beta\longmapsto\Big(u^{n}\ee^{\hbar\iota_{\Pi}/u}\beta\Big)
+  \Big|_{p=q=0}.
+\]
+于是它具有如下性质
+\[
+  \int_{BV}(\hbar\Delta+u\dd_{2n})(-)=0.
+\]
+
+% [Tutor Note: $\iota_\Pi$ 是沿 Poisson 双向量 $\Pi=\omega^{-1}$ 的缩并，
+% $\iota_\Pi^{n}$ 作用后才能得到最高次（$2n$ 次，在此记为 $-2n$）形式，
+% 故只在该次数上非零；$p=q=0$ 表示取出常数项（Berezin 积分只留下最高次项）。
+% 因子 $\hbar^n/n!$ 是归一化选择，不同文献可能差 $n!$ 或符号，比较时以
+% “$n=\dim X$ 时与经典 Berezin 积分一致”为准。等变版本中 $u^n
+% \ee^{\hbar\iota_\Pi/u}$ 是把 $u$ 当作形式变量、以 $\hbar\iota_\Pi/u$ 作指数的
+% 生成函数。]
+
+% >>> p086
+\begin{wrem}{9.12}
+  对 $\beta\in\widehat{\Omega}^{\bullet}_{2n}$，等变极限
+  \[
+    \lim_{u\to\infty}\int_{BV}\beta
+    =\frac{\hbar^{n}}{n!}\iota^{n}_{\Pi}\beta\Big|_{p=q=0}
+  \]
+  给出原来的 Berezin 积分。
+\end{wrem}
+
+把上述映射复合起来，我们定义
+\[
+  \operatorname{Tr}:=\int_{BV}\circ\langle\cdots\rangle_{free}:\
+  CC^{per}_{-\bullet}(\mathcal{W}_{2n})
+  \longrightarrow\R((\hbar))[u,u^{-1}],
+\]
+它满足如下方程：
+\[
+  \operatorname{Tr}\big((b+uB)(-)\big)=0.
+\]
+因此 $\operatorname{Tr}$ 下降为周期循环同调上的映射。这本质上是
+\emph{Feigin--Felder--Shoikhet 公式}。
+
+\paragraph{量子主方程（Quantum Master Equation）}
+
+我们可以稍微作一点推广：考虑一个分次向量空间 $V$，带有 $\deg=0$ 的辛配对 $\omega$。
+我们仍有由 Moyal 积给出的典范量子化
+$\big(\widehat{\mathcal{O}}(V)[[\hbar]],\star\big)$，并类似地定义形式构成的 BV 代数
+$\big(\widehat{\Omega}^{\bullet}_{V},\Delta=\mathcal{L}_{\omega^{-1}}\big)$。
+同一个迹映射给出
+\[
+  \langle\cdots\rangle_{free}:\ C_{-\bullet}\big(\widehat{\mathcal{O}}(V)[[\hbar]]\big)
+  \longrightarrow\widehat{\Omega}^{\bullet}_{V}((\hbar)),
+  \qquad b\longmapsto\hbar\Delta.
+\]
+
+给定 $\gamma\in\widehat{\mathcal{O}}(V)[[\hbar]]$，$\deg(\gamma)=1$，它定义作用量泛函
+\[
+  I_{\gamma}=\int_{S^{1}}\gamma(\varphi)
+  \qquad\forall\varphi\in\Omega^{\bullet}(S^{1})\otimes V.
+\]
+我们把 $I_{\gamma}$ 当作\emph{相互作用}，并考虑
+\[
+  \underbrace{\frac12\int_{S^{1}}\langle\varphi,\dd\varphi\rangle}_{\text{free part}}
+  +\underbrace{\int_{S^{1}}\gamma(\varphi)}_{I_{\gamma}}.
+\]
+然后我们运行 HRG 流，得到
+\[
+  \ee^{\frac{1}{\hbar}I_{\gamma}[\infty]}
+  :=\ee^{\hbar\partial_{P^{\infty}_{0}}}\ee^{\frac{1}{\hbar}I_{\gamma}},
+\]
+由于 $P^{\infty}_{0}$ 有界，它是良定义的。
+
+现在来分析量子主方程。由构造，
+\[
+  \ee^{\frac{1}{\hbar}I_{\gamma}[\infty]}
+  =\Big\langle1\otimes\ee^{\gamma/\hbar}\Big\rangle_{free}.
+\]
+假设 $\gamma\star\gamma=\frac12[\gamma,\gamma]_{\star}=0$。则
+\[
+  \hbar\Delta\ee^{\frac{1}{\hbar}I_{\gamma}[\infty]}
+  =\Big\langle b\big(1\otimes\ee^{\gamma/\hbar}\big)\Big\rangle_{free}=0.
+\]
+
+\begin{wprop}{9.13}（\textup{[21]}）
+  若 $[\gamma,\gamma]_{\star}=0$，则局部相互作用
+  $I_{\gamma}=\int_{S^{1}}\gamma(\varphi)$ 通过
+  \[
+    \ee^{\frac{1}{\hbar}I_{\gamma}[L]}
+    :=\lim_{\varepsilon\to\infty}\ee^{\hbar\partial_{P^{L}_{\varepsilon}}}
+    \ee^{\frac{1}{\hbar}I_{\gamma}}
+  \]
+  在标度 $L>0$ 处定义有效量子主方程 $I_{\gamma}[L]$ 的一族解。
+\end{wprop}
+
+% [Tutor Note: 上面两式中 $\gamma\star\gamma=\frac12[\gamma,\gamma]_\star$ 之所以
+% 成立，是因为 $\deg\gamma=1$ 为奇元素，分次交换子
+% $[\gamma,\gamma]_\star=\gamma\star\gamma-(-1)^{1\cdot1}\gamma\star\gamma
+% =2\gamma\star\gamma$。若 $\gamma$ 为偶元素，则 $[\gamma,\gamma]_\star=0$ 恒成立，
+% 条件就退化——这正是 QME 只对奇（$\deg=1$）的 $\gamma$ 有意义的原因。
+% 另注意 $\ee^{\gamma/\hbar}$ 中 $\gamma$ 的一次项给出插入，$\hbar$ 的幂次与
+% 传播子收缩次数相配。
+% 又，命题 9.13 中的极限是 $\varepsilon\to\infty$（不是 $\varepsilon\to0$）：
+% $P^L_\varepsilon$ 是“$t$ 从 $\varepsilon$ 积分到 $L$”的传播子，取
+% $\varepsilon\to\infty$ 时 $P^L_\varepsilon\to0$、$\ee^{\hbar\partial_{P^L_\varepsilon}}
+% \to1$，故 $I_\gamma[L]$ 在 $L$ 处回到裸相互作用——这是与常见“$\varepsilon\to0$
+% 的 UV 截断”不同的 RG 方向。原文此处的 $\varepsilon\to\infty$ 已逐字核对原图
+% （PDF p.86）。
+% 另注：原文 p.85（PDF p.86）把 Moyal 拼作 "Moayl"（"by Moayl product"），
+% 系笔误，照译其义并在此注明。]

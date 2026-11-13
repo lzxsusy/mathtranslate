@@ -1,0 +1,158 @@
+% =====================================================================
+%  Bruno Le Floch, "A slow review of the AGT correspondence"
+%  arXiv:2006.14025v3 (JPhysA review, Jan 2022) —— 中文译注本
+%
+%  编译：LuaLaTeX（本机 xdvipdfmx 不稳定，统一用 lualatex，编译 3 遍）
+%  用法：lualatex -interaction=nonstopmode main.tex  （×3）
+%
+%  约定：
+%   * 公式编号用 \tag{} 复刻原文编号（如 (3.13)），与原文一一对应；
+%   * 图 1--5 为原文矢量图按 400 dpi 截取，图注为译者所译；
+%   * % [Tutor Note: ...] 为译者批注，不进入排版，汇总见 译注汇总.md；
+%   * 原文每节开头的灰色「要点框」用 keybox 环境排版（标题为原文粗体标题）。
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[UTF8]{ctex}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage[a4paper,left=2.5cm,right=2.5cm,top=2.6cm,bottom=2.7cm]{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+\usepackage[hidelinks,unicode]{hyperref}
+\hypersetup{pdftitle={AGT 对应关系慢讲（中译注本）},
+  pdfauthor={Bruno Le Floch; 中译/批注: 本译本}}
+
+\captionsetup{font=small,labelsep=quad}
+\setlength{\emergencystretch}{3em}
+\allowdisplaybreaks[1]
+\graphicspath{{figures/}{../figures/}}
+
+% ---------- 篇标题：原文用 “Part I/II/III”，中文版由译者直接写“第一篇/第二篇/第三篇”，
+%            故抑制 LaTeX 自动的 “Part I” 前缀（否则会重复出现）----------
+\renewcommand{\partname}{}
+\renewcommand{\thepart}{}
+
+% ---------- 页眉 ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape A slow review of the AGT correspondence}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ---------- 定理类环境（编号一律由原文手工给出） ----------
+\theoremstyle{plain}
+\newtheorem*{theorem*}{定理}
+\newtheorem*{proposition*}{命题}
+\newtheorem*{lemma*}{引理}
+\theoremstyle{definition}
+\newtheorem*{definition*}{定义}
+\newtheorem*{remark*}{注}
+
+% 原文的「Exercise x.y.」：正文中为粗体标签 + 斜体正文
+\newenvironment{exercise}[1]%
+  {\par\medskip\noindent\textbf{习题 #1.}\itshape\ }{\par\medskip}
+
+% 原文每节开头的灰色要点框（深色标题条 + 浅灰底）
+% 用法：\begin{keybox}{标题文字} \begin{itemize}...\end{itemize} \end{keybox}
+\newtcolorbox{keybox}[1]{%
+  colback=black!5, colframe=black!55, colbacktitle=black!75, coltitle=white,
+  fonttitle=\bfseries\small, title={#1}, boxrule=0.6pt, arc=2pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt, toptitle=2pt, bottomtitle=2pt,
+  fontupper=\small}
+
+% 无标题版要点框（原文个别要点框没有深色标题条，如 p.70 与 §10）
+\newtcolorbox{keyboxplain}{%
+  colback=black!5, colframe=black!55, boxrule=0.6pt, arc=2pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt, fontupper=\small}
+
+% 原文作者用粗体行内小标题（如 "**Tame punctures.**"）——
+% 中文译为 \para{...}，独立成段、粗体、不缩进。
+\newcommand{\para}[1]{\par\medskip\noindent\textbf{#1}\quad\ignorespaces}
+
+% 原文表格标题（手工编号）
+\newcommand{\tabtitle}[2]{\caption*{\small\textbf{表 #1：}#2}}
+% 原文图标题（手工编号）
+\newcommand{\figtitle}[2]{\caption*{\small\textbf{图 #1：}#2}}
+
+% 参考文献条目（生成脚本按 \refitem{编号}{内容} 输出）
+\newcommand{\refitem}[2]{\par\hangindent=1.5em\hangafter=1\noindent [#1]~#2}
+
+% ---------- 常用记号（只能用这里定义过的宏，不要自造 \newcommand） ----------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fh}{\mathfrak{h}}
+\newcommand{\ft}{\mathfrak{t}}
+\newcommand{\fu}{\mathfrak{u}}
+\newcommand{\fsu}{\mathfrak{su}}
+\newcommand{\fso}{\mathfrak{so}}
+\newcommand{\fsp}{\mathfrak{sp}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ee}{\mathrm{e}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\id}{\mathrm{id}}
+\renewcommand{\Re}{\operatorname{Re}}
+\renewcommand{\Im}{\operatorname{Im}}
+\newcommand{\rk}{\operatorname{rk}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\Pf}{\operatorname{Pf}}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\const}{\mathrm{const}}
+\newcommand{\Toda}{\mathrm{Toda}}
+\newcommand{\Liouville}{\mathrm{Liouville}}
+\newcommand{\bV}{\widehat{V}}
+\newcommand{\vol}{\operatorname{vol}}
+\newcommand{\Zbb}{\mathbb{Z}}
+\newcommand{\half}{\tfrac{1}{2}}
+\newcommand{\ie}{\textit{i.e.}}
+\newcommand{\eg}{\textit{e.g.}}
+\newcommand{\cf}{\textit{cf.}}
+% 原文中的 \bar 简写（避免与 \bar 冲突，统一用标准 \bar）
+\newcommand{\bQ}{\bar{Q}}
+\newcommand{\bq}{\bar{q}}
+\newcommand{\bepsilon}{\bar{\epsilon}}
+\newcommand{\btheta}{\bar{\theta}}

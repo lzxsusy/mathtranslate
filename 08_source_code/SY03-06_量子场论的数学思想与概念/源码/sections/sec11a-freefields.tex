@@ -1,0 +1,411 @@
+%=====================================================================
+% 11  高维自由场论（前半：11.1--11.6）
+% 原文：Section 11.1--11.6. Minkowski and Euclidean space / Free scalar boson /
+%       Spinors / Fermionic Lagrangians / Free fermions /
+%       Hamiltonian formalism of classical field theory
+%       （arXiv:2409.03117v1, p. 142--154）
+%=====================================================================
+
+\section{高维自由场论}
+
+\begin{keytakeaways}
+\begin{itemize}
+  \item \textbf{物理图像：} Minkowski 空间（号差 $(1,d-1)$）与欧氏空间由 Wick 转动相互联系；自由标量场与自由费米子场的量子理论都归结为求相应椭圆算子（$-\Delta+m^2$、$\bold D_E+M$）的逆，其 Green 函数——即基本解——的奇异性决定了关联函数与因果结构。
+  \item \textbf{数学工具：} 自伴算子的求逆与谱、Fourier 变换、把 Green 函数化为 Bessel 方程、Clifford 代数与 ${\rm Spin}$ 群的旋量表示（其行为按 $d\bmod 8$ 呈实 Bott 周期性），以及辛空间与 Poisson 括号。
+  \item \textbf{关键结论：} 当 $d>1$ 时 Green 函数在 $x=0$ 处奇异，故路径积分只能作为分布来理解；旋量的手征性与实结构（Majorana 条件）依赖 $d\bmod 8$；在哈密顿形式下，场论是辛空间上由 Poisson 括号给出的经典力学，Klein--Gordon 方程的因果性表现为空间定域性。
+  \item \textbf{易错点：} 号差与符号约定（Wick 转动后为 $-\Delta+m^2$、Minkowski 传播子带 $i\varepsilon$）、$\Gamma$ 矩阵的 Clifford 关系与 $\bold D^2=\Delta$、以及实结构对维数模 $8$ 的依赖，都需逐项核对。
+\end{itemize}
+\end{keytakeaways}
+
+\bigskip
+\noindent\rule{\textwidth}{0.6pt}
+\bigskip
+
+\subsection{Minkowski 空间与欧氏空间}
+
+现在我们由量子力学转向 $d\ge 1$ 维的量子场论。如上文所述，我们有两种主要框架。
+
+\textbf{1. Minkowski 空间。} 场是时空 $V=V_M$ 上的函数，这是号差为 $(1,d-1)$ 的实内积空间。物理过程实际上就在此“发生”。$V$ 的对称群 $G=SO(1,d-1)$ 称为\emph{Lorentz 群}，它是狭义相对论中时空的变换群。因此，Minkowski 空间中在适当意义上与 $G$ 的作用“相容”的场论称为\emph{相对论性的}。
+
+回忆一些标准事实与定义。$V$ 中的\emph{光锥}是由方程 $|\bold v|^2=0$ 描述的锥，其中 $|\bold v|^2:=(\bold v,\bold v)$。属于光锥的向量称为\emph{类光的}。光锥把空间 $V$ 分成\emph{类空向量} $|\bold v|^2<0$（锥外）与\emph{类时向量} $|\bold v|^2>0$（锥内）。我们取锥内部两个连通分支之一而称之为正的，记作 $V_+$；相反（负）的分支记作 $V_-$。保持 $V_+$ 不变的 $g\in SO(V)=SO(1,d-1)$ 之全体记作 $SO_+(1,d-1)$；它是群 $SO(1,d-1)$ 的含单位元的连通分支（该群有两个连通分支）。
+
+常常（例如在作哈密顿场论时）需要把 $V$ 分解为空间与时间的正交直和 $V=V_s\oplus \Bbb R$。在此分解中，空间 $V_s$ 要求是类空的（即负定的），这意味着时间轴 ${\Bbb R}$ 必须是类时的（正定的）。注意这样的分解并不唯一，而且一旦取定它，Lorentz 对称性 $SO_+(1,d-1)$ 就破缺为通常的旋转群 $SO(d-1)$。
+
+为作显式计算，再在 $V_s$ 上取笛卡儿坐标 $x_1,...,x_{d-1}$、在时间轴 $\Bbb R$ 上取 $t$，使得 $\bold v=(t,x_1,...,x_{d-1})$。在这些坐标下内积取形式
+$$
+|\bold v|^2=c^2t^2-\sum_{j=1}^{d-1}x_j^2
+$$
+其中 $c$ 是光速。这解释了“光锥”一词的由来——它由自由光子（光的粒子）在空间中沿某方向以速度 $c$ 传播的世界线组成。为简化记号，我们选取测量单位使 $c=1$。
+
+\textbf{2. 欧氏空间。} 场是时空 $V_E$ 上的函数，这是一个正定内积空间。它起辅助作用，没有直接的物理意义，尽管在此空间中算出的路径积分与统计力学中的期望值相似。
+
+这两种框架由“Wick 转动”相联系。即，对应于 Minkowski 空间 $V_M$ 的欧氏空间 $V_E$ 是 $(V_M)_{\Bbb C}$ 中由向量 $(it,x_1,...,x_{d-1})$（其中 $t$ 与 $x_j$ 为实数）构成的实子空间。换句话说，要过渡到欧氏空间，需作变量替换 $t\mapsto it$。注意在此替换下，Minkowski 空间上的标准度量 $dt^2-\sum_j dx_j^2$ 变为负定度量 $-dt^2-\sum_j dx_j^2$。然而传统上略去负号，转而考虑 $V_E$ 上的正度量 $dt^2+\sum_j dx_j^2$。
+
+% [Tutor Note: 全节的符号约定都系于此处：原文取号差 (1,d-1) 且 |v|^2=c^2t^2-Σx_j^2（“mostly minus”），于是类时向量 |v|^2>0、类空向量 |v|^2<0，与许多采用“mostly plus”的教科书（那里 v^2=-t^2+Σx_j^2）恰好相反。Wick 转动 t↦it 把 dt^2-Σdx_j^2 变成 -(dt^2+Σdx_j^2)，而原文顺手丢掉整体负号，这就是欧氏作用量里出现 (dφ)^2+m^2φ^2（动能正定、质量项同号）的来源；相应地 Minkowski 传播子为 i/(p^2-m^2+iε)、欧氏为 1/(p^2+m^2)。后续凡是遇到 □+m^2、-Δ+m^2 与 iε 的符号，都应回到这一处核对，这是最易出错的一步。]
+
+\subsection{自由标量玻色子}
+
+考虑质量为 $m$ 的自由标量玻色场 $\phi$ 的理论。在拉格朗日框架下量子化该理论的步骤，是量子力学情形的直接推广。即，该理论在 Minkowski 空间中的拉格朗日量为
+$$
+{\mathcal L}=\frac{1}{2}((d\phi)^2-m^2\phi^2),
+$$
+而其欧拉–拉格朗日方程即\emph{Klein--Gordon 方程}
+$$
+(\square+m^2)\phi=0,
+$$
+其中 $\square$ 是d'Alembert 算子（波算子）（波算子），
+$$
+\square:=\frac{\partial^2}{\partial t^2}-
+\sum_j \frac{\partial^2}{\partial x_j^2}.
+$$
+因此要定义相应的量子理论，我们应当求算子 $\square+m^2$ 的逆。该算子在紧支光滑函数上本质自伴，从而定义了一个自伴算子；但与量子力学的情形一样，它不可逆——其谱是整个 $\Bbb R$，这一点通过作 Fourier 变换即可容易看出。于是与前面一样，最好借助 Wick 转动来进行。
+
+作 Wick 转动（即变换 $t\mapsto it$）之后，我们得到欧氏拉格朗日量
+$$
+{\mathcal L}_E=\frac{1}{2}((d\phi)^2+m^2\phi^2),
+$$
+而欧拉–拉格朗日方程是欧氏 Klein--Gordon 方程
+$$
+(-\Delta+m^2)\phi=0.
+$$
+因此要定义量子理论，即路径积分
+$$
+\int \phi(x_1)...\phi(x_n)e^{-S(\phi)}D\phi
+$$
+（其中 $S=\int {\mathcal L}$），现在需要求自伴算子 $A=-\Delta+m^2$（最初定义在光滑紧支函数上的本质自伴算子）的逆；其谱为 $[m^2,\infty)$，故当 $m>0$ 时可逆。算子 $A^{-1}$ 是一个积分算子，其 Schwartz 核为 $G(x-y)$，其中 $G(x)$ 是 Green 函数，即 Klein--Gordon 方程的基本解：
+$$
+-\Delta G+m^2G=\delta.
+$$
+
+为解此方程，注意其解是旋转不变的。因此，在原点之外有 $G(x)=g(|x|)$，其中 $g$ 是 $(0,\infty)$ 上的函数，满足
+$$
+-g''-\frac{d-1}{r}g'+m^2g=0
+$$
+（左端是算子 $A$ 的径向部分）。这是 Bessel 方程的一个版本。若 $m>0$，两个基本解为 $r^{\frac{2-d}{2}} J_{\pm\frac{2-d}{2}}(imr)$，其中 $J$ 是 Bessel 函数。（事实上，当 $d$ 为奇数时这些函数是初等的。）由于我们希望 $G$ 在无穷远处衰减（聚类性质），应当选取在无穷远处衰减的、唯一到相差一个标量因子的线性组合，即
+\begin{equation}\label{bess}
+g=Cr^{\frac{2-d}{2}}(J_{\frac{2-d}{2}}(imr)+i^d
+J_{-\frac{2-d}{2}}(imr)),\ d\ne 2. 
+\end{equation}
+当 $d=2$ 时该表达式为零，此时应改取右端除以 $d-2$ 后在 $d\to 2$ 时的极限。归一化常数可由条件 $AG=\delta$ 定出。
+
+\begin{remark} 容易验证，当 $d=1$ 时该函数等于量子力学中熟知的 Green 函数 $\frac{e^{-mr}}{2m}$。
+\end{remark}
+
+若 $m=0$（无质量情形），解空间的基为：$d=1$ 时为 $1,r$，$d=2$ 时为 $1, \log r$，$d>2$ 时为 $1, r^{2-d}$。于是当 $d\le 2$ 时不存在衰减解，相应的量子理论因而有缺陷：它不满足聚类性质。另一方面，当 $d>2$ 时存在唯一到相差一个标量因子的衰减解 $g=Cr^{1-d}$。归一化常数与有质量情形同样定出。
+
+更高阶的关联函数照常由二点函数通过 Wick 公式得到。
+
+% [Tutor Note: 这里把 Green 函数化为 Bessel 方程的关键是径向约化：d 维欧氏 Laplacian 作用在球对称函数上为 g''+((d-1)/r)g'，故 A=-Δ+m^2 的径向部分正是原文括号中的 -g''-((d-1)/r)g'+m^2g；两个基本解 r^{(2-d)/2}J_{±(2-d)/2}(imr) 分别对应 m→0 时的 r^{2-d} 与常数，i^d 因子保证所选线性组合在无穷远处指数衰减（否则 J 的振荡组合会给出增长项）。另注意 G~C|x|^{2-d}（d>2）或 C log|x|（d=2）在 x=0 的奇异性：这正是 d>1 时“二点函数不是函数而是分布”的起源，也是紫外发散在自由理论中的雏形；原文说 G 局部属于 L^1，是指奇异性可积、故可用分布延拓来定义路径积分的值。]
+
+现在应当指出 $d>1$ 维量子力学与量子场论之间的一个根本差别。这一差别来自：当 $d=1$ 时 Green 函数 $G(x)$ 在 $x=0$ 处连续，而当 $d>1$ 时它在 $x=0$ 处奇异。即，当 $d>2$ 时 $G(x)$ 在 $x\to 0$ 时像 $C|x|^{2-d}$ 那样行为，当 $d=2$ 时像 $C\log|x|$ 那样行为。因此当 $d>1$ 时，与 $d=1$ 的情形不同，路径积分
+$$
+\int \phi(x_1)...\phi(x_n)e^{-S(\phi)}D\phi
+$$
+（如上定义）仅在 $x_i\ne x_j$ 时才有意义。换句话说，该路径积分不应看作函数，而应看作分布。幸运的是，由于 Green 函数 $G(x)$ 局部属于 $L^1$，存在一种典范的方式来做到这一点。
+
+现在可以把该理论 Wick 转动回 Minkowski 空间。显然 Green 函数此时变为
+$$
+G_M(x)=g(\sqrt{-|x|^2-i\varepsilon}),
+$$
+它同时涉及实宗量与虚宗量的 Bessel 函数（取决于 $x$ 是类时还是类空），并在光锥 $|x|^2=0$ 上有奇点。特别地，容易验证 $G_M(x)$ 对类空 $x$ 取实值，而对类时 $x$ 则不然。函数 $G_M(x)$ 满足方程
+$$
+(\square+m^2)G_M=i\delta.
+$$
+更高阶的关联函数与前面一样由此通过 Wick 公式确定。
+
+事实上，把该理论“在动量空间中”描述更为方便，此时 Green 函数可以写得更显式。即，分布 $G(x)$ 的 Fourier 变换 $\widehat G(p)$ 是方程
+$$
+p^2\widehat G+m^2\widehat G=1,
+$$
+的解，该方程由对 $G$ 的微分方程作 Fourier 变换得到。于是
+$$
+\widehat G(p)=\frac{1}{p^2+m^2},
+$$
+与量子力学情形相同。因此，如同在量子力学中那样，Wick 转动给出分布
+$$
+\widehat G_M(p)=\frac{i}{p^2-m^2+i\varepsilon},
+$$
+它就是 $G_M(x)$ 的 Fourier 变换。
+
+\subsection{旋量}\label{spinorssec1}
+
+为考虑费米子的场论，我们必须把基本的费米子拉格朗日量 $\frac{1}{2}\psi\frac{d\psi}{dt}$ 推广到 $d>1$ 的情形。为此需把 $\frac{d}{dt}$ 换成 $V$ 上的某个微分算子。该算子应当是一阶的，因为在费米子量子力学中“运动方程是一阶方程”这一点很重要。显然，若 $\psi$ 是 $V$ 上标量值的（奇）函数，就不可能定义这样的算子使拉格朗日量具有 $SO_+(V)$ 不变性。因此，$d>1$ 维场论中的费米子场不可能是标量值的，而必须取值于 $SO_+(V)$ 的一个实表示 $S$，且存在非零交织算子 $V\to {\rm Sym}^2S^*$。\emph{旋量表示}满足这一性质。旋量表示确是费米子场论中的基本对象，下面我们简要讨论之（更详细的讨论见 P. Deligne 的“Spinors”，载于“QFT and string theory: a course for mathematicians”）。
+
+先考虑复情形。设 $V$ 是 $d>1$ 维复内积空间，${\rm Cl}(V)$ 是 $V$ 的 Clifford 代数，由关系 $\xi\eta+\eta\xi=2(\xi,\eta)$、$\xi,\eta\in V$ 定义。正如我们讨论过的，当 $d$ 为偶数时它是单代数，有唯一的 $2^{\frac{d}{2}}$ 维不可约表示 $S$；而当 $d$ 为奇数时它有两个这样的表示 $S',S''$，维数为 $2^{\frac{d-1}{2}}$。容易证明，${\rm Cl}(V)$ 的二次元素空间 ${\rm Cl}_2(V)$（即由形如 $\xi\eta-\eta\xi,\ \xi,\eta\in V$ 的元素张成的子空间）对换位子封闭，并构成 李代数 ${\frak o}(V)$。于是 ${\frak o}(V)$ 作用在 $S$（相应地 $S',S''$）上。该作用不能积分成 $SO(V)$ 的作用，但可积分成其双覆盖 ${\rm Spin}(V)$ 的作用。
+
+当 $d$ 为偶数时，${\rm Spin}(V)$ 的表示 $S$ 不是不可约的。即，回忆 $S$ 是 $V$ 的某个拉格朗日子空间的外代数，因此它分裂为直和 $S=S_+\oplus S_-$（奇元素与偶元素）。子空间 $S_+,S_-$ 是 $S$ 的不可约子表示，它们称为\emph{半旋量表示}。半旋量表示在 $O(V)$ 对 ${\rm Spin}(V)$ 的伴随作用下互换（$SO(V)$ 显然平凡地作用，故这实际上是 $O(V)/SO(V)=\Bbb Z/2$ 在 $SO(V)$ 的不可约表示集合上的作用）。注意与此相反，当 $d$ 为奇数时有 $O(V)=SO(V)\times \Bbb Z/2$，因此 $\Bbb Z/2$ 平凡地作用在 ${\rm Spin}(V)$ 的表示上。
+
+当 $d$ 为奇数时，${\rm Spin}(V)$ 的表示 $S'$ 与 $S''$ 不可约且同构。其中任一个都记作 $S$，并称为\emph{旋量表示}。于是，对奇数与偶数的 $d$ 我们都有旋量表示 $S$；但当 $d$ 为偶数时它是可约的。
+
+附着于旋量表示 $S$ 的一个重要结构是交织算子 $\Gamma: V\to {\rm End}S$，称为\emph{Clifford 乘法}，它由 $V\subset {\rm Cl}(V)$ 在 $S$ 中的作用给出，我们上文已经遇到过。该交织算子使我们能定义\emph{Dirac 算子}
+\begin{equation}\label{dirop}
+\bold{D}=\sum_i \Gamma_i \frac{\partial}{\partial x_i}
+\end{equation}
+其中 $x_i$ 是 $V$ 上相应于正交规范基 $e_i$ 的坐标，且 $\Gamma_i=\Gamma(e_i)$。该算子作用在从 $V$ 到 $S$ 的函数上，且 $\bold D^2=\Delta$，故 $\bold D$ 是 Laplacian 的平方根。矩阵 $\Gamma_i$ 称为\emph{$\Gamma$ 矩阵}。
+
+注意当 $d$ 为偶数时，有 $\Gamma(v): S_\pm\to S_\mp$，故 $\bold D$ 把取值于 $S_\pm$ 的函数映为取值于 $S_\mp$ 的函数。
+
+所谓 ${\rm Spin}(V)$ 的\emph{多旋量表示}（polyspinor representation），当 $d$ 为偶数时指 $S_+,S_-$ 的任意线性组合，当 $d$ 为奇数时指 $S$ 的任意重数倍。当 $d$ 为偶数且 $Y=Y_+\otimes S_+\oplus Y_-\otimes S_-$（即 $Y_{\pm}={\rm Hom}(S_\pm,Y)$，其中 $Y_+,Y_-$ 为向量空间）是多旋量表示时，置 $Y':=Y_+\otimes S_-\oplus Y_-\otimes S_+$；而当 $d$ 为奇数且 $Y=Y_0\otimes S$ 时，置 $Y':=Y$。于是 $Y\mapsto Y'$ 是多旋量表示范畴上的自函子。进而，对每个多旋量表示 $Y$ 与 $v\in V$，我们有 Clifford 乘法算子 $\Gamma(v): Y\to Y'$。
+
+现设 $V$ 是带 Minkowski 度量的实内积空间。此时可定义群 ${\rm Spin}_+(V)$ 为 $SO_+(V)$ 在映射 ${\rm Spin}(V_{\Bbb C})\to SO(V_{\Bbb C})$ 下的原像。它是 $SO_+(V)$ 的双覆盖（若 $d=2$，该双覆盖不连通，实际上是与 $\Bbb Z/2$ 的直积）。
+
+所谓 ${\rm Spin}_+(V)$ 的\emph{实多旋量表示}，指该群的一个实表示 $Y$，使得 $Y_{\Bbb C}$ 是 ${\rm Spin}(V_{\Bbb C})$ 的多旋量表示。
+
+% [Tutor Note: 这里有三个容易混淆的层次。其一，${\rm Cl}_2(V)$ 中的元素 ξη-ηξ 在换位子下封闭并给出 o(V)≅Λ²V，这就是旋量表示为何是 李代数 o(V) 的表示、却只是群 SO(V) 的“射影”表示——必须提升到双覆盖 Spin(V) 才成为真正的表示。其二，偶维时 S 取“拉格朗日子空间的外代数”，S_± 即偶/奇次部分，这就是 Weyl 旋量与手征性的代数来源；O(V) 的伴随作用把 S_+ 与 S_- 互换，正是 O(V)/SO(V)=Z/2 在手征性上的作用。其三，原文说奇维时 S' 与 S'' “不可约且同构”，这是对复 Clifford 代数而言；实形式下它们未必同构，其区分正是实 Bott 周期性的内容（见下一节按 d mod 8 的表），阅读时不要把复同构误当作实同构。]
+
+\begin{remark}\label{anyons} 注意，除 $d=2$ 之外的一切维数下，群 ${\rm Spin}(d)$ 都是 $SO(d)$ 的万有覆盖，这意味着所有粒子的自旋或为整数、或为半整数。另一方面，$SO(2)$ 的万有覆盖不是 ${\rm Spin}(2)$，而是 $\Bbb R$。这在二维造成了一种可能性：粒子的自旋可为任意正实数。这类粒子称为\emph{任意子}（anyons，即任意自旋的粒子），我们将看到它们如何在二维共形场论中出现。
+\end{remark}
+
+\subsection{费米子拉格朗日量}\label{ferlag}
+
+现在考虑取值于多旋量表示 $Y$ 的旋量场 $\psi$ 的拉格朗日量。注意在偶数维中，这样的场分裂为分别取值于 $S_+$ 与 $S_-$ 的场。这样的旋量称为\emph{手征的}。
+
+由于在 Minkowski 框架下拉格朗日量应当是实的，我们在该情形下要求 $Y$ 为实的。首先来看，要写出“动能项” $(\psi,\bold D\psi)$ 需要什么。显然，为定义这样的项（并使作用量中相应的项不会经分部积分化为零），我们需要 $Y$ 与 $Y'$ 之间的不变非退化配对 $(,)$（即表示的同构 $Y'\cong Y^*$），使得对任意 $v\in V$，$Y$ 上的双线性形式 $(x,\Gamma(v)y)$ 是对称的。
+
+我们来找出对哪些 $Y$ 这可行（对复的 $V$）。Spin 群的行为依赖于 $d$ 模 $8$（\emph{实 Bott 周期性}）。因此我们按 $d$ mod $8$ 标记列出答案（它们容易从 Deligne 文中给出的表中提取）。先概述旋量表示的性质。
+
+\vskip .05in
+
+0. $S_\pm$ 正交。
+
+1. $S$ 正交，$S\otimes S\to V$ 对称。
+
+2. $S_+^*=S_-$，$S_\pm\otimes S_\pm\to V$ 对称。
+
+3. $S$ 辛，$S\otimes S\to V$ 对称。
+
+4. $S_\pm$ 辛。
+
+5. $S$ 辛，$S\otimes S\to V$ 反对称。
+
+6. $S_+=S_-^*$，$S_\pm\otimes S_\pm \to V$ 反对称。
+
+7. $S$ 正交，$S\otimes S\to V$ 反对称。
+
+\vskip .05in
+
+于是动能项的可能情形为：
+
+\vskip .05in
+
+0. $n(S_+\oplus S_-)$；(,) 给出 $Y_+$ 与 $Y_-$ 之间的完美配对。
+
+1. $nS$；(,) 给出 $Y_0$ 上的对称内积。
+
+2. $nS_+\oplus kS_-$；(,) 给出 $Y_\pm$ 上的对称内积。
+
+3. $nS$；(,) 给出 $Y_0$ 上的对称内积。
+
+4. $n(S_+\oplus S_-)$；(,) 给出 $Y_+$ 与 $Y_-$ 之间的完美配对。
+
+5. $2nS$；(,) 给出 $Y_0$ 上的反对称内积。
+
+6. $2nS_+\oplus 2kS_-$；(,) 给出 $Y_\pm$ 上的反对称内积。
+
+7. $2nS$；(,) 给出 $Y_0$ 上的反对称内积。
+
+\vskip .05in
+
+现在来看何时还能加入质量项。回忆质量项的形式为 $(\psi,M\psi)$，故它对应于一个不变反对称算子 $M:Y\to Y^*\cong Y'$（注意按定义，$\Gamma_i$ 与 $M$ 交换）。我们从上述列表中列出存在这种非退化算子的那些 $Y$。
+
+\vskip .05in
+
+0. $2n(S_+\oplus S_-)$；$M_\pm: Y_\pm\to Y_\mp$ 在 $(,)$ 下反对称。
+
+1. $2nS$；$M: Y_0\to Y_0$ 在 $(,)$ 下反对称。
+
+2. $n(S_+\oplus S_-)$；$M_\pm: Y_\pm\cong Y_\mp$ 在 $(,)$ 下满足 $M_+^*=-M_-$。
+
+3. $nS$；$M: Y_0\to Y_0$ 在 $(,)$ 下对称。
+
+4. $n(S_+\oplus S_-)$；$M_\pm: Y_\pm\to Y_\mp$ 在 $(,)$ 下对称。
+
+5. $2nS$；$M: Y_0\to Y_0$ 在 $(,)$ 下对称。
+
+6. $2n(S_+\oplus S_-)$；$M_\pm: Y_\pm\cong Y_\mp$ 在 $(,)$ 下满足 $M_+^*=-M_-$。
+
+7. $2nS$；$M: Y_0\to Y_0$ 在 $(,)$ 下反对称。
+
+\vskip .05in
+
+要过渡到实 Minkowski 空间（无质量与有质量情形皆然），应附加要求 $Y$ 为实表示。
+
+% [Tutor Note: 这两张按 d mod 8 排列的表是实 Bott 周期性的具体体现，读表时注意三点。第一，“正交/辛”指的是旋量表示上不变双线性形式是对称的还是反对称的（正交=对称，辛=反对称），而表中第三列给出的是 V→Sym²S* 或 Λ²S*→V 这类交织算子的对称性，它决定了动能项 (ψ,Dψ) 能否非零——若 V 在 Sym²S* 中的像为零，则动能项经分部积分后化为零。第二，重数出现 n 或 2n 的差别来自实结构：辛情形需要成对出现（四元数结构使实维数翻倍），这直接决定该维数下允许的 Majorana 旋量个数。第三，质量项要求 M 是“反对称”的，这来自 (ψ,Mψ) 中两个 ψ 都是奇元素、配对本身已含一个反对称因子；若把 M 的对称性记错，就会得到符号相反的 Majorana 质量项。建议用 d=2、d=4 两个熟悉的情形逐项验证此表。]
+
+我们注意到，在 Wick 转动到 Minkowski 空间之后，可能出现这样的情况：实的旋量表示 $Y$ 会变成没有实结构的复表示。即，对取值于 $S_\pm$ 的无质量旋量，当 $d=2$ mod 8 时就会出现这种情况。这些表示对 Minkowski 的 $V$（即对 ${\rm Spin}_+(1,d-1)$）有实结构，但对欧氏的 $V$（即对 ${\rm Spin}(d)$）没有实结构。例如当 $d=2$ 时这一点相当明显（试检验！）。
+
+\begin{remark}\label{realcom} 或许会认为这在量子场论中造成问题：我们会困惑于该对什么做积分——实空间还是复空间。然而这个问题实际上并不出现，因为我们要对费米子作积分，而费米子上的积分（比如在有限维情形）是纯代数的，并不区分实与复。
+\end{remark}
+
+\subsection{自由费米子}
+
+现在考虑旋量场 $\psi: V\to \Pi Y$ 的自由理论，其中 $Y$ 是多旋量表示，其拉格朗日量为
+$$
+{\mathcal L}=\frac{1}{2}(\psi,(\bold D-M)\psi),
+$$
+其中 $M$ 允许退化（我们假定 $Y$ 使得该表达式有意义）。Minkowski 空间中的运动方程为
+$$
+\bold D\psi=M\psi.
+$$
+因此要定义相应的量子理论，需要求算子 $\bold D-M$ 的逆。照例，由于奇异性这不可行，最好使用 Wick 转动。
+
+Wick 转动给出欧氏拉格朗日量
+$$
+{\mathcal L}=\frac{1}{2}(\psi,(\bold D_E+M)\psi)
+$$
+（注意动能项中的 $i$ 隐藏在欧氏 Dirac 算子的定义中）。我们求 $\bold D_E+M$ 的逆，以得到欧氏 Green 函数。为此，方便的做法是转到动量空间，即作 Fourier 变换。即，作 Fourier 变换后 $\bold D_E$ 变为算子 $i\bold p$，其中 $\bold p=\sum_j p_j\Gamma_j$，而 $p_j$ 是乘以动量坐标 $p_j$ 的算子。于是 Green 函数（即二点函数）$G(x)\in {\rm Hom}(Y^*,Y)$ 是矩阵值函数 $\frac{1}{i\bold p+M}$ 的 Fourier 变换。
+
+在欧氏情形，群 ${\rm Spin}(V)$ 紧致，旋量表示带有自然的正不变 Hermitian 形式。因此在此情形可以不失一般性地考虑配备这种正形式的多旋量表示，且在每一多旋量表示上这样的形式在同构意义下唯一。设
+$$
+M^\dagger: Y^*\to Y
+$$
+是 $M$ 的 Hermitian 伴随算子。则实性条件就是 $M$ 为 Hermitian：$M^\dagger=M$。于是
+$$
+(-i\bold p+M)(i\bold p+M)=p^2+M^2
+$$
+从而
+$$
+\widehat G(p)=(p^2+M^2)^{-1}(-i\bold p+M).
+$$
+这表明 $G(x)$ 可以通过微分由玻色情形的 Green 函数表出（如何表出？）。在 Wick 转动回 Minkowski 空间之后，得到
+$$
+\widehat G_M(p)=(p^2-M^2+i\varepsilon)^{-1}(\bold
+p+iM).
+$$
+最后，更高阶的关联函数照常由 Wick 公式得到。
+
+% [Tutor Note: 原文“（如何表出？）”这一步的答案是：\widehat G(p)=(p^2+M^2)^{-1}(-i bold p+M)，其中 (p^2+M^2)^{-1} 正是玻色情形质量平方为 M^2 的传播子（当 M 为标量倍数时就是 1/(p^2+m^2)），而因子 (-i bold p+M) 在 x 空间对应一阶微分算子，故 G(x) 由玻色传播子经 Γ 矩阵微分算子作用得到——这正是“平方根”技巧的用处。另注意欧氏式中 (p^2+M^2) 与 Minkowski 式中 (p^2-M^2+iε) 的差别，以及 Minkowski 式分子写成 (bold p+iM)：从欧氏 (−i bold p+M) 经 p_0↦ip_0 回到 Minkowski 后，符号需成对翻转，切勿只改分母不改分子。]
+
+\subsection{经典场论的哈密顿形式} \label{hfcft}
+
+现在发展 QFT 的哈密顿方法，它是量子力学哈密顿形式的推广。我们从经典场论开始，推广经典力学的哈密顿形式。与拉格朗日框架一样，这可以通过把“场论是占据空间 $\Bbb R^{d-1}$ 每一点的连续粒子系统的力学”这一想法形式化来实现。
+
+即，考虑 Minkowski 空间 $\Bbb R^d$ 上的自由标量玻色场 $\phi(x)$。如我们所讨论的，其拉格朗日量为 $\mathcal L=\frac{1}{2}((d\phi)^2-m^2\phi^2)$，运动方程为 Klein--Gordon 方程
+$$
+\phi_{tt}-\Delta_s\phi+m^2\phi=0,
+$$
+其中 $\Delta_s$ 是空间 Laplacian。这是关于 $t$ 的二阶方程，故该方程的初值问题形如
+$$
+\phi(0,x)=q(x),\ \phi_t(0,x)=p(x)
+$$
+（该问题有标准的显式解公式，用 Klein--Gordon 方程的基本解表出）。因此自然引入相空间
+$$
+Y:=T^*C^\infty_0(\Bbb R^{d-1}):=C^\infty_0(\Bbb R^{d-1})\oplus C^\infty_0(\Bbb R^{d-1})
+$$
+即紧支光滑函数对 $(q,p)$ 构成的空间，Klein--Gordon 方程的动力学就发生在其上（注意空间 $C^\infty_0(\Bbb R^{d-1})$ 在该动力学下不变，因为波的传播速度有限，等于 $1$）。注意该相空间是无穷维辛空间，具有常辛形式
+$$
+\omega((q_1,p_1),(q_2,p_2))=\int_{\Bbb R^{d-1}}(p_1(x)q_2(x)-p_2(x)q_1(x))dx.
+$$
+
+此外，对任意点 $x\in \Bbb R^{d-1}$ 我们有局部线性泛函
+$$
+(q,p)\mapsto q(x),\ (q,p)\mapsto p(x)
+$$
+它们分别记作 $\phi(x)$ 与 $\phi_t(x)$。由这些泛函可构造其他线性泛函：例如给定 $\rho\in C^\infty_0(\Bbb R^{d-1})$，可定义泛函
+$$
+\phi(\rho)(q,p):=\int_{\Bbb R^{d-1}}q(x)\rho(x)dx,\ \phi_t(\rho)(q,p):=\int_{\Bbb R^{d-1}}p(x)\rho(x)dx.
+$$
+这类泛函之间的 Poisson 括号可按公式
+$$
+\lbrace \phi(\rho_1),\phi(\rho_2)\rbrace=0,\ 
+\lbrace \phi_t(\rho_1),\phi_t(\rho_2)\rbrace=0,
+$$
+$$
+\lbrace \phi(\rho_1),\phi_t(\rho_2)\rbrace=\int_{\Bbb R^{d-1}}\rho_1(x)\rho_2(x)dx.
+$$
+计算。这可以写成\emph{场论 Poisson 括号}的形式：
+$$
+\lbrace \phi(x),\phi(y)\rbrace=0,\ 
+\lbrace \phi_t(x),\phi_t(y)\rbrace=0,\
+\lbrace \phi(x),\phi_t(y)\rbrace=\delta(x-y);
+$$
+于是把两边分别对 $\rho_1(x)\rho_2(y)$ 积分即可恢复前面的公式。换句话说，线性局部泛函 $\phi(x)$ 与 $\phi_t(x)$ 不应看作 $Y$ 上依赖于点 $x\in \Bbb R^{d-1}$ 的光滑函数，而应看作 $\Bbb R^{d-1}$ 上取值于 $Y$ 上光滑函数的分布。
+
+类似地，可以考虑非线性多项式局部泛函，它们由在点 $x$ 处取值的微分多项式 $P(\phi,\phi_t)$ 给出，例如 $\phi^n,\phi_t^2,(d_s\phi)^2, \phi^2 (d_s\phi)^2$（其中 $d_s$ 是空间微分）等等；甚至可以考虑依赖 $\phi$ 的有限多个导数的非多项式泛函，例如 $e^\phi (d_s\phi)^2, \cos \phi$ 等等。它们之所以称为局部的，是因为只依赖于 $\phi$ 在单个点 $x$ 处的导数。其中每一个都是 $\Bbb R^{d-1}$ 上取值于 $Y$ 上光滑函数的分布，并可作用于任意密度 $\rho(x)$ 而产生 $Y$ 上的光滑函数。这类泛函的 Poisson 括号用链式法则、Leibniz 法则以及“取 Poisson 括号与对 $x$ 的微分可交换”这一事实来计算。于是给定两个局部泛函 $P$ 与 $Q$，我们得到
+$$
+\lbrace P(\phi)(x),Q(\phi)(y)\rbrace=\sum_\alpha \lbrace P,Q\rbrace_\alpha(\phi)(x)\partial^\alpha_x\delta(x-y)
+$$
+其中 $\lbrace P,Q\rbrace_\alpha$ 是某些局部泛函，而 $\partial^\alpha$ 是导数的一些单项式。例如当 $d=2$ 时有
+$$
+\lbrace \phi_{tx}(u)\phi_t(u), \tfrac{1}{3}\phi^3(v)\rbrace=
+$$
+$$
+-(\phi_{tx}(u)\phi^2(u)+2\phi_{tx}(u)\phi(u)\phi_x(u))\delta(u-v)-\phi_{t}(u)\phi^2(u)\delta'(u-v).
+$$
+这个 Poisson 括号当然可以用 Leibniz 法则延拓到不同点处局部泛函的乘积上。
+
+理论的哈密顿量则由局部泛函对常密度积分给出：
+$$
+H(\phi)=\frac{1}{2}\int_{\Bbb R^{d-1}}(\phi_t^2+(d_s\phi)^2+m^2\phi^2)dx. 
+$$
+即，它（在相差一个常数的意义下）由下述条件确定：对局部泛函 $\phi,\phi_t$ 而言，哈密顿方程
+$$
+F_t=\lbrace F,H\rbrace
+$$
+等价于 Klein--Gordon 方程。
+
+哈密顿动力学使我们不仅在点 $x\in \Bbb R^{d-1}$ 处、而且在任意点 $(t,x)\in \Bbb R^d$ 处定义局部泛函。这样做时，按定义得到 $\phi_t(t,x)=\frac{d}{dt}\phi(t,x)$，而局部泛函 $\phi(t,x)$ 成为 Klein--Gordon 方程的解：
+$$
+\phi_{tt}-\Delta_s\phi+m^2\phi=0.
+$$
+这可用于计算 Poisson 括号：例如我们看到
+$$
+\lbrace\phi(t_1,x_1),\phi(t_2,x_2)\rbrace=\bold G(t_2-t_1,x_2-x_1)
+$$
+其中 $\bold G(t,x)$ 是 Klein--Gordon 方程满足初始条件
+$$
+\bold G(0,x)=0,\ \bold G_t(0,x)=\delta(x). 
+$$
+的解。为求出它，作 Fourier 变换。于是得到支撑在由方程 $E^2=p^2+m^2$ 给出的双叶双曲面 $X_m$ 上的分布 $\widehat {\bold G}$，其形式为
+$$
+\widehat {\bold G}(E,p)=f_+(p)\delta_{X_m^+}+f_-(p)\delta_{X_m^-},
+$$
+其中 $X_m^\pm$ 是 $X_m$ 的两叶。此外，初始条件给出（在适当的归一化下）
+$$
+\int_{\Bbb R} \widehat {\bold G}(E,p)dE=0,\ \int_{\Bbb R} \widehat {\bold G}(E,p)EdE=1,
+$$
+由此得到
+$$
+f_+(p)+f_-(p)=0,\ \sqrt{p^2+m^2}(f_+(p)-f_-(p))=1.
+$$
+于是 $f_+=-f_-=\frac{1}{2\sqrt{p^2+m^2}}$，我们得到
+$$
+\widehat {\bold G}(E,p)=\frac{1}{2\sqrt{p^2+m^2}}(\delta_{X_m^+}-\delta_{X_m^-}).
+$$
+现在 $\bold G$ 可通过作逆 Fourier 变换求出（它用 Bessel 函数表出）。
+
+注意，由于波的传播速度为 $1$，该分布 $\bold G$ 支撑在实心光锥上，因此若点 $(t_1,x_1)$ 与 $(t_2,x_2)$ 是\emph{类空分离}的（即向量 $(t_1-t_2,x_1-x_2)$ 为类空的），则 $\lbrace\phi(t_1,x_1),\phi(t_2,x_2)\rbrace=0$。这一性质称为\emph{空间定域性}，它是狭义相对论中\emph{因果性}的数学表述。
+
+% [Tutor Note: 这里定义的 G 就是所谓的 Pauli–Jordan 函数（场的对易子/换位子的期望值），它满足 Klein–Gordon 方程、在 t=0 时值为 0、时间导数为 δ(x)，且支撑在实心光锥内——这就是“不同点的场在类空分离时 Poisson 括号为零”的解析内容，也是微观因果性的经典版本。计算要点：对 t 作 Fourier 变换后，Ĝ 必须支撑在双曲面 E^2=p^2+m^2 的两叶 X_m^± 上（否则不满足 KG 方程），再由 Ĝ(0,p)=0、Ĝ_t(0,p)=1 定出两叶上的系数 f_±；原文的 f_+=-f_-=1/(2√(p^2+m^2)) 即由此而来。更精细的一点：把 δ_{X_m^+} 与 δ_{X_m^-} 组合成差而非和，正是为了得到反对称的（换位子型）分布；若改用 Feynman 的 iε 处方，则得到的是时间序乘积而非对易子。]
+
+\begin{remark} 上述分析的一部分可直接推广到非自由理论，例如 $\phi^4$ \emph{理论}，其拉格朗日量为
+$$
+\mathcal L=\frac{1}{2}((d\phi)^2-m^2\phi^2)-\frac{g}{4}\phi^4.
+$$
+此时 Klein--Gordon 方程被其非线性形变
+$$
+\phi_{tt}-\Delta_s\phi+m^2\phi+g\phi^3=0,
+$$
+取代，于是该非线性偏微分方程的初值问题解的存在性成为一个非平凡的问题。然而，若我们只想考虑 $\Bbb R^{d-1}$ 或其形式邻域上局部泛函的 Poisson 括号，则这个问题无关紧要，因为此时计算是纯粹形式的（代数的）。
+\end{remark}
+
+一个重要事实是：该结构在\emph{Poincaré 群} $\bold P:=SO_+(V)\ltimes V$ 下不变，该群由 Minkowski 旋转与平移生成，其中 $V=\Bbb R^d$ 是时空（即\emph{Lorentz 群} $SO_+(V)$ 与平移群 $V$ 的半直积）。这可由该理论的拉格朗日量是相对论不变的事实推出。即，对由
+$$
+g(t,x)=(at+bx+c,\alpha t+\beta x+\gamma)
+$$
+给出的 $g\in \bold P$，我们有
+$$
+(\phi g)(x)(q,p)=\phi(bx+c,\beta x+\gamma)
+$$
+以及
+$$
+(\phi_tg)(x)(q,p)=(\partial_\alpha \phi)(bx+c,\beta x+\gamma)+a\phi_t (bx+c,\beta x+\gamma).
+$$
+其中 $\phi(t,x)$ 是满足初始条件 $(q(x),p(x))$ 的 Klein--Gordon 方程的解。
+
+特别地，注意\emph{Galileo 子群} $SO(\Bbb R^{d-1})\ltimes \Bbb R^{d-1}$ 通过显式的几何对称性作用，而时间平移通过哈密顿流作用。
+
+最后注意，上述讨论可直接推广到含费米子的理论。此时如同在费米子经典力学中那样，我们在经典场上得到场论的\emph{超} Poisson 括号；当两个场都是奇场时，该括号是对称的而非反对称的。此外，由于奇场取值于多旋量表示，Poincaré 群应换为其双覆盖 $\widetilde{\bold P}:={\rm Spin}_+(V)\ltimes V$。细节留给读者。
+
+\bigskip
+\noindent\rule{\textwidth}{0.6pt}

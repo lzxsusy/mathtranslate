@@ -1,0 +1,1484 @@
+% ============================================================================
+% 第 2 章  $A_\infty$-范畴  （原书 pp.10–27，PDF pp.13–30）
+% 底本：Alessandro Imparato, Towards Homological Mirror Symmetry, ETH Zürich
+% 说明：章标题中的 ∞ 以 $A_\infty$ 排出，避免中文字库缺字。
+% 公式编号：原文全书连续编号，本章为 (5)–(33)；main.tex 已改为全书连续编号，
+%           故每个带号 equation 环境自动得到与原文一致的编号，不得手工 \tag。
+%           本章共 29 个编号公式，恰与原文一一对应；多行公式一律 equation+aligned。
+% ============================================================================
+\section{$A_\infty$-范畴}\label{ch:02}
+
+\takeaway{%
+  核心图像：$A_\infty$-范畴是“同伦意义下的范畴”：复合 $\mu^2$ 只在上同调层面结合，
+  高阶运算 $\mu^d$ 精确记录结合律失效的程度。\\
+  数学工具：分次线性范畴与上链复形、$A_\infty$-结合性方程、结合面体 $K_n$ 的组合学、
+  Hochschild 上同调、同调微扰引理。\\
+  主要结论：$\mu^1$ 使每个 Hom 集成为复形，$H(\mathcal A)$ 是通常范畴；预自然变换构成
+  函子范畴；拟等价在 $H^0$ 中可逆；Yoneda 嵌入全忠实地映入 $A_\infty$-模范畴。%
+}
+
+\subsection{范畴论预备}\label{sec:2.1}
+
+在着手研究 $A_\infty$-范畴之前，我们先把范畴论中若干基本定义与结论汇总于此：
+它们在本书中频繁出现，并在后文的证明里起关键作用。回忆：我们始终在某个固定的基域
+$\mathbb K$ 上工作。
+
+\begin{Def}\label{def:2.1}
+称范畴 $\mathsf C$ 为：
+\begin{itemize}
+  \item \emph{线性的}（linear）且\emph{分次的}（graded），若其所有 Hom 集都是分次
+        $\mathbb K$-向量空间，并且相容态射的复合是 $\mathbb K$ 上的双线性运算；
+  \item \emph{微分 $\mathbb Z$-分次的}（dg），若每个 Hom 集都是 $\mathbb Z$-分次的
+        （上链）复形，从而态射的复合是上链映射，且每个恒等态射的微分等于零
+        （例：定义 \ref{def:1.2} 中的范畴 $\mathsf{Ch}$）；
+  \item \emph{小的}（small），若 $\operatorname{obj}(\mathsf C)$ 与所有 Hom 集的全体
+        都是集合；
+  \item \emph{非幺的}（non-unital），若它可能缺少某些恒等态射（此时 $\mathsf C$ 并非
+        真正的范畴）。
+\end{itemize}
+\end{Def}
+% [Tutor Note: 【易错】“线性且分次”一条只要求齐次相容态射之间的复合双线性；非齐次情形由线性延拓定义，原文用 compatible 一词正是指“齐次且次数相加”的态射对。]
+% [Tutor Note: 【背景】dg 范畴中“恒等态射的微分为零”并非额外公理：在 $\mathsf{Ch}$ 里 $d(f)=d_W\circ f-(-1)^{|f|}f\circ d_V$，故 $d(\mathrm{id}_V)=0$ 自动成立；参看定义 \ref{def:1.2} 的约定。]
+
+\begin{Def}\label{def:2.2}
+设 $\mathsf C$ 与 $\mathsf D$ 为范畴。函子 $F:\mathsf C\to\mathsf D$ 称为：
+\begin{itemize}
+  \item \emph{同构}，若存在函子 $G:\mathsf D\to\mathsf C$，使得作为函子有
+        $G\circ F=\mathrm{Id}_{\mathsf C}$ 且 $F\circ G=\mathrm{Id}_{\mathsf D}$；
+        此时称 $\mathsf C$ 与 $\mathsf D$ \emph{同构}；
+  \item \emph{等价}，若存在函子 $G:\mathsf D\to\mathsf C$（有时称为\emph{拟逆}）以及
+        自然同构 $\Phi:\mathrm{Id}_{\mathsf C}\to G\circ F$、$\Psi:F\circ G\to
+        \mathrm{Id}_{\mathsf D}$（意即：对 $X\in\operatorname{obj}(\mathsf C)$，每个
+        $\Phi_X\in\Hom_{\mathsf C}\bigl(X,G(F(X))\bigr)$ 都是对象的同构；对
+        $Y\in\operatorname{obj}(\mathsf D)$，每个 $\Psi_Y\in
+        \Hom_{\mathsf D}(F(G(Y)),Y)$ 亦然）；此时称 $\mathsf C$ 与 $\mathsf D$
+        \emph{等价}；
+  \item \emph{全的}与\emph{忠实的}，若对一切 $X,Y\in\operatorname{obj}(\mathsf C)$，
+        映射 $F_{X,Y}:\Hom_{\mathsf C}(X,Y)\to\Hom_{\mathsf D}(F(X),F(Y))$ 分别是满射、
+        单射（两者兼有时称为\emph{全忠实}）；
+  \item \emph{本质满的}，若对每个 $Y\in\operatorname{obj}(\mathsf D)$，都存在
+        $X\in\operatorname{obj}(\mathsf C)$ 以及对象的同构
+        $f\in\Hom_{\mathsf D}(Y,F(X))$；
+  \item \emph{嵌入}，若它忠实且在对象上单射（即 $F(X_1)=F(X_2)\in
+        \operatorname{obj}(\mathsf D)$ 蕴含 $X_1=X_2\in\operatorname{obj}(\mathsf C)$）；
+  \item \emph{线性的}与\emph{分次的}，若上述每个 $F_{X,Y}$ 都是分次向量空间之间的
+        $\mathbb K$-线性分次态射（设 $\mathsf C,\mathsf D$ 线性且分次）；
+  \item （\emph{非}）\emph{幺的}，若它（不）把一切恒等态射送到恒等态射。
+\end{itemize}
+\end{Def}
+
+下列结论都是上述定义的简单推论（例如其证明可在 \cite{GM03} 中找到）。
+
+\begin{Lem}\label{lem:2.3}
+函子 $F:\mathsf C\to\mathsf D$：
+\begin{enumerate}
+  \item 是同构，当且仅当它在对象上与 Hom 集上都是双射；
+  \item 是等价，当且仅当它全、忠实且本质满。
+\end{enumerate}
+特别地，同构都是等价，从而是全忠实的。
+\end{Lem}
+
+% [Tutor Note: 【易错】引理 \ref{lem:2.3} 第 2 条中“全、忠实、本质满”三者缺一不可：仅“全且忠实”只给出与某个满子范畴的等价，本质满才补上对象的覆盖。]
+
+此后若无另行说明，我们总假定所讨论的（$A_\infty$-）范畴都是线性的且小的。
+
+\subsection{$A_\infty$-范畴与 $A_\infty$-函子}\label{sec:2.2}
+
+\begin{Def}\label{def:2.4}
+一个非幺 $A_\infty$-范畴 $\mathcal A$ 由以下数据组成：
+\begin{itemize}
+  \item 一个对象集 $\operatorname{obj}(\mathcal A)$；
+  \item 对任意一对 $X_0,X_1\in\operatorname{obj}(\mathcal A)$，一个 $\mathbb Z$-分次的
+        $\mathbb K$-向量空间
+        \[
+          \hom_{\mathcal A}(X_0,X_1)=\bigoplus_{p\in\mathbb Z}
+          \hom^p_{\mathcal A}(X_0,X_1),
+        \]
+        其元素仍称为态射（属于 $\hom^p_{\mathcal A}(X_0,X_1)$ 时称为 $p$ 次齐次的）；
+  \item （多）线性分次映射
+        \begin{equation}\label{eq:2.5}
+          \mu^d_{\mathcal A}:\hom_{\mathcal A}(X_{d-1},X_d)\otimes\dots\otimes
+          \hom_{\mathcal A}(X_0,X_1)\longrightarrow\hom_{\mathcal A}(X_0,X_d)[2-d]
+        \end{equation}
+        对每个 $d\ge 1$ 与 $X_0,\dots,X_d\in\operatorname{obj}(\mathcal A)$ 给出，
+        我们称之为\emph{复合映射}。它们必须满足二次的 \emph{$A_\infty$-结合性方程}
+        \begin{equation}\label{eq:2.6}
+          \sum_{\substack{1\le m\le d\\ 0\le n\le d-m}}
+          (-1)^{\dagger_n}\mu^{d-m+1}_{\mathcal A}\bigl(a_d,\dots,a_{n+m+1},
+          \underbrace{\mu^m_{\mathcal A}(a_{n+m},\dots,a_{n+1})}
+          _{\in\hom_{\mathcal A}(X_n,X_{n+m})},a_n,\dots,a_1\bigr)=0
+        \end{equation}
+        在 $\hom_{\mathcal A}(X_0,X_d)$ 中成立，其中
+        $a_i\in\hom_{\mathcal A}(X_{i-1},X_i)$，且
+        $\dagger_n:=\bigl(\sum_{i=1}^n|a_i|\bigr)-n$。\footnote{$\dagger_n$ 连同其他
+        调节我们各表达式符号的变量，此后都作为标准记号使用，不再另行说明。}
+\end{itemize}
+\end{Def}
+% [Tutor Note: 【易错】\eqref{eq:2.5} 中最左的因子是 $\hom_{\mathcal A}(X_{d-1},X_d)$：$\mu^d$ 的第一个变量是“最靠右”的态射。这是 Seidel 采用的记号，与按 $X_0\to X_1\to\cdots$ 自左向右排列的某些文献（如 Keller）相反，套用公式前务必核对变量次序。]
+% [Tutor Note: 【易错】$\dagger_n$ 减去的是 $n$ 而不是 $n(n+1)/2$：作者把每个 $a_i$ 的“平移次数”$|a_i|-1$ 求和，故 $\dagger_n=\sum_{i=1}^n(|a_i|-1)$。]
+
+对 $d=1,2$，前两个这样的方程形如
+\[
+  \mu^1_{\mathcal A}\bigl(\mu^1_{\mathcal A}(a_1)\bigr)=0
+  \quad\text{与}\quad
+  \mu^1_{\mathcal A}\bigl(\mu^2_{\mathcal A}(a_2,a_1)\bigr)
+  =(-1)^{|a_1|}\mu^2_{\mathcal A}\bigl(\mu^1_{\mathcal A}(a_2),a_1\bigr)
+  -\mu^2_{\mathcal A}\bigl(a_2,\mu^1_{\mathcal A}(a_1)\bigr).
+\]
+
+$A_\infty$-子范畴 $\mathcal B\subset\mathcal A$ 是指这样的 $A_\infty$-范畴：
+$\operatorname{obj}(\mathcal B)\subset\operatorname{obj}(\mathcal A)$，对一切
+$X_0,X_1\in\operatorname{obj}(\mathcal B)$ 都有 $\hom_{\mathcal B}(X_0,X_1)\subset
+\hom_{\mathcal A}(X_0,X_1)$ 为分次子空间，且复合映射 $\mu^d_{\mathcal B}$ 的靶空间
+落在 $\mathcal B$ 之内。
+
+式 \eqref{eq:2.5} 与 \eqref{eq:2.6} 的指标体例可能略有误导：它试图调和若干标准约定。
+为保持一致，此处及此后我们都忠实采用 Seidel 在 \cite{Sei08} 中所用的记号。
+
+\begin{Rem}\label{rem:2.5}
+考虑 $\operatorname{obj}(\mathcal A):=\{X\}$ 的情形。此时唯一可能的 $\mathbb Z$-分次
+向量空间 $\mathcal A:=\hom_{\mathcal A}(X,X)$ 配上分次映射 $m_n:=\mu^n_{\mathcal A}$
+确实构成 $A_\infty$-代数，因为方程 \eqref{eq:1.1} 与 \eqref{eq:2.6} 恰好重合（可能相差一个符号）。
+
+此外，若 $d>2$ 时 $\mu^d_{\mathcal A}=0$，则 $A_\infty$-范畴 $\mathcal A$ 就是微分分次
+范畴，反之亦然（例如 dg 范畴 $\mathsf{Ch}$ 可视为 $A_\infty$-范畴）。
+\end{Rem}
+% [Tutor Note: 【易错】注 \ref{rem:2.5} 说方程 \eqref{eq:1.1} 与 \eqref{eq:2.6} “可能相差一个符号”：若第 1 章采用 $(-1)^{|a_2|}$ 或 $(-1)^{|a_1|}$ 的不同 Koszul 约定，两者就不止差一个整体符号，而是逐项符号的重新分配；引用时须回到第 1 章定义 \ref{def:1.1} 核对。]
+
+$A_\infty$-结合性方程给出与注 \ref{rem:1.5} 中对 $A_\infty$-代数完全相同的结论：非幺
+$A_\infty$-范畴一般不是范畴，因为它们可能缺少恒等态射，而且每个复合映射
+$\mu^2_{\mathcal A}$ 未必结合。
+
+然而 $\mu^1_{\mathcal A}\mu^1_{\mathcal A}=0$，所以每个态射空间
+$\hom_{\mathcal A}(X_0,X_1)$ 都是上链复形，其微分为
+$\mu^1_{\mathcal A}:\hom_{\mathcal A}(X_0,X_1)\to\hom_{\mathcal A}(X_0,X_1)[1]$。
+于是谈论\emph{上闭链}（即满足 $\mu^1_{\mathcal A}(a)=0$ 的任意
+$a\in\hom_{\mathcal A}(X_0,X_1)$）、\emph{上边缘}（即对某个
+$b\in\hom_{\mathcal A}(X_0,X_1)$ 形如 $a=\mu^1_{\mathcal A}(b)$ 的任意 $a$）与
+\emph{上同调}才有意义：
+
+\begin{Def}\label{def:2.6}
+设 $\mathcal A$ 为非幺 $A_\infty$-范畴。它的\emph{上同调范畴} $H(\mathcal A)$
+定义如下：$\operatorname{obj}(H(\mathcal A)):=\operatorname{obj}(\mathcal A)$，
+每对 $X_0,X_1\in\operatorname{obj}(\mathcal A)$ 给出一个分次上同调群
+\begin{equation}\label{eq:2.7}
+  \Hom_{H(\mathcal A)}(X_0,X_1):=H\bigl(\hom_{\mathcal A}(X_0,X_1)\bigr)
+  =\bigoplus_{p\in\mathbb Z}H^p\bigl(\hom_{\mathcal A}(X_0,X_1)\bigr),
+\end{equation}
+而“通常的”结合（！）复合映射为\footnote{注意记号的选择：凡谈及上同调范畴，
+我们都在“Hom”中使用大写“H”（相对于 $A_\infty$-范畴的“hom”），并采用复合符号
+“$\circ$”。}
+\begin{equation}\label{eq:2.8}
+  \begin{gathered}
+    \circ:\Hom_{H(\mathcal A)}(X_1,X_2)\times\Hom_{H(\mathcal A)}(X_0,X_1)
+    \longrightarrow\Hom_{H(\mathcal A)}(X_0,X_2),\\
+    (\langle a_2\rangle,\langle a_1\rangle)\longmapsto
+    \langle a_2\rangle\circ\langle a_1\rangle
+    :=(-1)^{|a_1|}\langle\mu^2_{\mathcal A}(a_2,a_1)\rangle.
+  \end{gathered}
+\end{equation}
+这是一个非幺的通常线性分次范畴。
+\end{Def}
+% [Tutor Note: 【易错】\eqref{eq:2.8} 中的符号 $(-1)^{|a_1|}$ 容易漏：$\mu^2$ 本身并不是 $H(\mathcal A)$ 的复合，差一个 Koszul 符号；也正因如此，$\circ$ 才结合（由 \eqref{eq:2.6} 在 $d=3$ 时的项保证）。]
+
+我们记 $H^0(\mathcal A)\subset H(\mathcal A)$ 为\emph{零阶上同调子范畴}，其
+$\operatorname{obj}(H^0(\mathcal A)):=\operatorname{obj}(H(\mathcal A))$，
+$\Hom_{H^0(\mathcal A)}(X_0,X_1):=H^0\bigl(\hom_{\mathcal A}(X_0,X_1)\bigr)$。
+
+\begin{Def}\label{def:2.7}
+两个非幺 $A_\infty$-范畴 $\mathcal A$ 与 $\mathcal B$ 之间的\emph{非幺
+$A_\infty$-函子} $\mathcal F:\mathcal A\to\mathcal B$ 是一个映射
+$\mathcal F:\operatorname{obj}(\mathcal A)\to\operatorname{obj}(\mathcal B)$，
+连同对每个 $d\ge 1$ 与 $X_0,\dots,X_d\in\operatorname{obj}(\mathcal A)$ 给出的一列
+（多）线性分次映射
+\begin{equation}\label{eq:2.9}
+  \mathcal F^d:\hom_{\mathcal A}(X_{d-1},X_d)\otimes\dots\otimes
+  \hom_{\mathcal A}(X_0,X_1)\longrightarrow
+  \hom_{\mathcal B}\bigl(\mathcal F(X_0),\mathcal F(X_d)\bigr)[1-d],
+\end{equation}
+它们满足方程
+\begin{equation}\label{eq:2.10}
+  \begin{aligned}
+    &\sum_{\substack{1\le r\le d\\ s_1+\dots+s_r=d}}
+    \mu^r_{\mathcal B}\bigl(\mathcal F^{s_r}(a_d,\dots,a_{d-s_r+1}),\dots,
+    \mathcal F^{s_1}(a_{s_1},\dots,a_1)\bigr)\\
+    &\qquad=\sum_{\substack{1\le m\le d\\ 0\le n\le d-m}}(-1)^{\dagger_n}
+    \mathcal F^{d-m+1}\bigl(a_d,\dots,a_{n+m+1},
+    \mu^m_{\mathcal A}(a_{n+m},\dots,a_{n+1}),a_n,\dots,a_1\bigr),
+  \end{aligned}
+\end{equation}
+在 $\hom_{\mathcal B}\bigl(\mathcal F(X_0),\mathcal F(X_d)\bigr)$ 中成立，其中
+$a_i\in\hom_{\mathcal A}(X_{i-1},X_i)$。
+\end{Def}
+
+给定另一个非幺 $A_\infty$-函子 $\mathcal G:\mathcal B\to\mathcal C$，复合
+$\mathcal G\circ\mathcal F:\mathcal A\to\mathcal C$ 是严格结合的，它由下式指定为
+$A_\infty$-函子：
+\begin{equation}\label{eq:2.11}
+  (\mathcal G\circ\mathcal F)^d(a_d,\dots,a_1):=
+  \sum_{\substack{1\le r\le d\\ s_1+\dots+s_r=d}}
+  \mathcal G^r\bigl(\mathcal F^{s_r}(a_d,\dots,a_{d-s_r+1}),\dots,
+  \mathcal F^{s_1}(a_{s_1},\dots,a_1)\bigr)
+\end{equation}
+取值于 $\hom_{\mathcal C}\bigl(\mathcal G(\mathcal F(X_0)),\mathcal G(\mathcal
+F(X_d))\bigr)$ 中（可以证明它们确实满足定义方程 \eqref{eq:2.10}）。特别地，
+$(\mathcal G\circ\mathcal F)^1(a_1)=\mathcal G^1(\mathcal F^1(a_1))$ 且
+$(\mathcal G\circ\mathcal F)^2(a_2,a_1)=\mathcal G^1(\mathcal F^2(a_2,a_1))
++\mathcal G^2(\mathcal F^1(a_2),\mathcal F^1(a_1))$。
+
+若 $\mathcal A=\mathcal B$ 且 $\mathcal A$ 幺，则恒等 $A_\infty$-函子
+$\mathrm{Id}_{\mathcal A}$ 由 $\mathrm{Id}_{\mathcal A}(X):=X$、$X\in
+\operatorname{obj}(\mathcal A)$ 时 $\mathrm{Id}^1_{\mathcal A}:=
+\mathrm{id}_{\hom_{\mathcal A}(X,X)}$ 以及一切 $k>1$ 时
+$\mathrm{Id}^k_{\mathcal A}:=0$ 给出。
+
+正如所料，单对象 $A_\infty$-范畴之间的 $A_\infty$-函子恰是 $A_\infty$-代数态射。
+
+由式 \eqref{eq:2.10} 可以推出各自的一阶映射交换：对任意
+$a_1\in\hom_{\mathcal A}(X_0,X_1)$ 有
+$\mu^1_{\mathcal B}\bigl(\mathcal F^1(a_1)\bigr)=
+\mathcal F^1\bigl(\mu^1_{\mathcal A}(a_1)\bigr)$。$d=2$ 的情形则给出
+\[
+  \mu^1_{\mathcal B}\bigl(\mathcal F^2(a_2,a_1)\bigr)
+  +\mu^2_{\mathcal B}\bigl(\mathcal F^1(a_2),\mathcal F^1(a_1)\bigr)
+  =\mathcal F^1\bigl(\mu^2_{\mathcal A}(a_2,a_1)\bigr)
+  +\mathcal F^2\bigl(a_2,\mu^1_{\mathcal A}(a_1)\bigr)
+  +(-1)^{|a_1|-1}\mathcal F^2\bigl(\mu^1_{\mathcal A}(a_2),a_1\bigr).
+\]
+这些方程与我们从定义 \ref{def:1.6} 得到的结果相容（同样相差某些符号）。
+% [Tutor Note: 【勘误】原书 p.12 此式写作 $\mathcal F^2(a_2,A^1(a_1))$，其中 $A^1$ 显然是 $\mu^1_{\mathcal A}$ 的笔误（与同式其余各项对照即可判定）；译文按 $\mu^1_{\mathcal A}$ 排出，原文照录于此备考。]
+
+\begin{Def}\label{def:2.8}
+非幺 $A_\infty$-函子 $\mathcal F:\mathcal A\to\mathcal B$ 诱导\emph{上同调函子}
+$H(\mathcal F):H(\mathcal A)\to H(\mathcal B)$：它把 $X\in
+\operatorname{obj}(H(\mathcal A))$ 映为 $\mathcal F(X)\in
+\operatorname{obj}(H(\mathcal B))$，并对每个 $X_0,X_1\in
+\operatorname{obj}(H(\mathcal A))$ 把
+\begin{equation}\label{eq:2.12}
+  \langle a_1\rangle\in\Hom_{H(\mathcal A)}(X_0,X_1)
+  \longmapsto\langle\mathcal F^1(a_1)\rangle\in
+  \Hom_{H(\mathcal B)}\bigl(\mathcal F(X_0),\mathcal F(X_1)\bigr).
+\end{equation}
+这是通常的非幺线性分次函子。我们称 $\mathcal F$：
+\begin{itemize}
+  \item \emph{拟同构}，若 $H(\mathcal F)$ 是同构；
+  \item \emph{上同调全忠实}，若 $H(\mathcal F)$ 全且忠实；
+  \item \emph{上同调本质满}，若 $H(\mathcal F)$ 本质满。
+\end{itemize}
+注意 $H(\mathcal F):H(\mathcal A)\to H(\mathcal B)$ 本身在零阶上同调范畴上退化为
+$H^0(\mathcal F):H^0(\mathcal A)\to H^0(\mathcal B)$。
+\end{Def}
+
+作为引理 \ref{lem:2.3} 的直接推论，拟同构都是上同调全忠实的 $A_\infty$-函子。
+
+有一类特殊的 $A_\infty$-函子，它将在简化若干证明的框架时派上用场。该定义利用如下
+（非平凡的）事实：给定 $A_\infty$-范畴 $\mathcal A$ 以及一列如式 \eqref{eq:2.9} 那样的
+分次映射 $(\Phi^0,\Phi^1,\dots)$，若
+$\Phi^1:\hom_{\mathcal A}(X_0,X_1)\to\hom_{\mathcal A}(X_0,X_1)$ 是线性自同构，
+则关于 $\mu_{\mathcal B}$ 递归求解方程 \eqref{eq:2.10}，会给出 $\mathcal A$ 上唯一的
+另一种 $A_\infty$-结构 $\tilde{\mathcal A}$，它由
+$\operatorname{obj}(\tilde{\mathcal A}):=\operatorname{obj}(\mathcal A)$、
+$\hom_{\tilde{\mathcal A}}(X_0,X_1):=\hom_{\mathcal A}(X_0,X_1)$ 与
+$\mu_{\tilde{\mathcal A}}:=\mu_{\mathcal B}$ 给出。于是按构造，多线性分次映射
+$\Phi^d$ 满足 \eqref{eq:2.10}。
+% [Tutor Note: 【含糊】“递归求解……给出唯一结构”是原文明确标为 non-trivial 的一步，未给证明。其可行性依赖 $\Phi^1$ 可逆：逐阶解 $d=1,2,\dots$ 时，只有 $\Phi^1$ 出现的那一项可解出新的 $\mu^d$，其余项已由低阶确定；参见 \cite{Sei08} 第 (1e) 节或 \cite{Kel06} 第 2 节。]
+
+\begin{Def}\label{def:2.9}
+设 $\mathcal A$ 为 $A_\infty$-范畴，其另一种 $A_\infty$-结构
+$\tilde{\mathcal A}$ 如上由一列分次映射 $(\Phi^0,\Phi^1,\dots)$ 构造。相应的非幺
+$A_\infty$-函子 $\Phi:\mathcal A\to\Phi_*\mathcal A:=\tilde{\mathcal A}$ 称为
+\emph{形式微分同胚}（formal diffeomorphism）。由式 \eqref{eq:2.12} 与 $\Phi^1$
+的选取，它特别地是拟同构（从而是上同调全忠实的）。
+\end{Def}
+% [Tutor Note: 【易错】形式微分同胚的靶范畴 $\Phi_*\mathcal A$ 与 $\mathcal A$ 有相同的对象和态射空间，只换了高阶运算 $\mu^d$；它不是 $\mathcal A$ 的“子范畴”或“商范畴”，这一点在 §\ref{sec:2.7} 用 $\Phi$ 把 c-幺范畴换成严格幺范畴时至关重要。]
+
+\subsection{预自然变换与复合}\label{sec:2.3}
+
+在通常的范畴论中，我们可以考察函子之间的映射，即自然变换。对 $A_\infty$-函子当然也有
+相应的推广。
+
+\begin{Def}\label{def:2.10}
+给定两个非幺 $A_\infty$-范畴 $\mathcal A$ 与 $\mathcal B$，定义
+$\mathcal Q=\mathrm{nu\text{-}fun}(\mathcal A,\mathcal B)$ 为由以下数据指定的非幺
+$A_\infty$-范畴：
+\begin{itemize}
+  \item 一个对象集 $\operatorname{obj}(\mathcal Q)$，由非幺 $A_\infty$-函子
+        $\mathcal F:\mathcal A\to\mathcal B$ 组成；
+  \item 对任意一对 $\mathcal F_0,\mathcal F_1\in\operatorname{obj}(\mathcal Q)$，
+        态射的齐次部分 $T\in\hom^g_{\mathcal Q}(\mathcal F_0,\mathcal F_1)$ 是序列
+        $(T^0,T^1,\dots)$，其中每个 $d\ge 1$ 的 $T^d$ 是一族（多）线性分次映射
+        \begin{equation}\label{eq:2.13}
+          \hom_{\mathcal A}(X_{d-1},X_d)\otimes\dots\otimes
+          \hom_{\mathcal A}(X_0,X_1)\longrightarrow
+          \hom_{\mathcal B}\bigl(\mathcal F_0(X_0),\mathcal F_1(X_d)\bigr)[g-d],
+        \end{equation}
+        其中 $X_0,\dots,X_d\in\operatorname{obj}(\mathcal A)$。而 $T^0$ 必须视为一族
+        \[
+          \bigl\{T^0_X\equiv T^0(X)\in\hom^g_{\mathcal B}\bigl(\mathcal F_0(X),
+          \mathcal F_1(X)\bigr)\mid X\in\operatorname{obj}(\mathcal A)\bigr\}
+        \]
+        （与自然变换的标准定义一致）。称 $T$ 为从 $\mathcal F_0$ 到 $\mathcal F_1$ 的、
+        次数为 $|T|=g$ 的\emph{预自然变换}；
+  \item 复合映射 $\mu^d_{\mathcal Q}$ 形如 \eqref{eq:2.5} 中的那些，从而对
+        $T_k\in\hom_{\mathcal Q}(\mathcal F_{k-1},\mathcal F_k)$，输出
+        $S:=\mu^d_{\mathcal Q}(T_d,\dots,T_1)\in\hom_{\mathcal Q}(\mathcal F_0,
+        \mathcal F_d)[2-d]$ 仍是形如 \eqref{eq:2.13} 的序列 $(S^0,S^1,\dots)$。
+        前两种情形 $d=1,2$ 为\footnote{注意：按定义，在 \eqref{eq:2.14} 中只有 $s_i$
+        可以为零，而在 \eqref{eq:2.15} 中 $s_i$ 与 $s_j$ 都可以为零。}
+        \begin{equation}\label{eq:2.14}
+          \begin{aligned}
+            &\mu^1_{\mathcal Q}(T_1)^h(a_h,\dots,a_1)\\
+            &\quad:=\sum_{\substack{1\le r\le h+1\\ 1\le i\le r\\ s_1+\dots+s_r=h}}
+            (-1)^{\ddagger^1_i}\mu^r_{\mathcal B}\Bigl(
+            \mathcal F_1^{s_r}(a_h,\dots,a_{h-s_r+1}),\dots,\\
+            &\qquad\qquad \mathcal F_1^{s_{i+1}}(a_{h-\dots-s_{i+2}},\dots,
+            a_{s_1+\dots+s_{i+1}}),T_1^{s_i}(a_{s_1+\dots+s_i},\dots,
+            a_{s_1+\dots+s_{i-1}+1}),\\
+            &\qquad\qquad \mathcal F_0^{s_{i-1}}(a_{s_1+\dots+s_{i-1}},\dots,
+            a_{s_1+\dots+s_{i-2}+1}),\dots,\mathcal F_0^{s_1}(a_{s_1},\dots,a_1)
+            \Bigr)\\
+            &\qquad-\sum_{\substack{1\le m\le h\\ 0\le n\le h-m}}
+            (-1)^{\dagger_n+|T_1|-1}T_1^{h-m+1}\bigl(a_h,\dots,
+            \mu^m_{\mathcal A}(a_{n+m},\dots,a_{n+1}),\dots,a_1\bigr)
+          \end{aligned}
+        \end{equation}
+        取值于 $\hom_{\mathcal B}(\mathcal F_0(X_0),\mathcal F_1(X_h))$ 中；而
+        \begin{equation}\label{eq:2.15}
+          \begin{aligned}
+            &\mu^2_{\mathcal Q}(T_2,T_1)^h(a_h,\dots,a_1)\\
+            &\quad:=\sum_{\substack{1\le r\le h+2<本地路径> i<j\le r\\
+            s_1+\dots+s_r=h}}(-1)^{\ddagger^1_i+\ddagger^2_j}
+            \mu^r_{\mathcal B}\Bigl(\mathcal F_2^{s_r}(a_h,\dots,a_{h-s_r+1}),\dots,\\
+            &\qquad\qquad \mathcal F_2^{s_{j+1}}(\dots),T_2^{s_j}(a_{s_1+\dots+s_j},
+            \dots,a_{s_1+\dots+s_{j-1}+1}),\mathcal F_1^{s_{j-1}}(\dots),\dots,\\
+            &\qquad\qquad \mathcal F_1^{s_{i+1}}(\dots),T_1^{s_i}(a_{s_1+\dots+s_i},
+            \dots,a_{s_1+\dots+s_{i-1}+1}),\mathcal F_0^{s_{i-1}}(\dots),\dots,
+            \mathcal F_0^{s_1}(a_{s_1},\dots,a_1)\Bigr)
+          \end{aligned}
+        \end{equation}
+        取值于 $\hom_{\mathcal B}(\mathcal F_0(X_0),\mathcal F_2(X_h))$ 中，其中
+        $h\ge 1$、$a_k\in\hom_{\mathcal A}(X_{k-1},X_k)$，且
+        $\ddagger^j_i:=\bigl(|T_j|-1\bigr)\cdot\sum_{k=1}^{s_1+\dots+s_{i-1}}
+        \bigl(|a_k|-1\bigr)$。
+\end{itemize}
+\end{Def}
+% [Tutor Note: 【易错】\eqref{eq:2.14}\eqref{eq:2.15} 中 $T$ 的上标是“序列的第几个分量”，与整个预自然变换 $T_1$ 的符号并存：$T_1^{s_i}$ 表示 $T_1$ 的第 $s_i$ 个分量，不是 $T_1$ 的 $s_i$ 次幂。]
+% [Tutor Note: 【易错】$\ddagger^j_i$ 里乘的是 $|T_j|-1$（不是 $|T_j|$），求和到 $s_1+\dots+s_{i-1}$ 为止，即只累计 $T_j$“左边”那些 $a$ 的平移次数；这是由 Koszul 法则逐项决定的。]
+% [Tutor Note: 【背景】\eqref{eq:2.14}\eqref{eq:2.15} 的求和组合对应 Stasheff 结合面体 $K_n$ 的胞腔分解：每个求和项对应把 $h$ 个输入按 $(s_1,\dots,s_r)$ 分成 $r$ 组、再把某个 $T$ 插到第 $i$ 个位置的一棵树；高阶公式见 \cite{Fuk99} 定义 10.15。]
+
+更高阶的公式 $\mu^d_{\mathcal Q}(T_d,\dots,T_1)$ 可在 Fukaya 的工作中找到（见 \cite{Fuk99}
+定义 10.15）。实际计算最好借助编程来完成。这里我们只限于给出 \eqref{eq:2.14} 的前两项：
+\begin{equation}\label{eq:2.16}
+  \mu^1_{\mathcal Q}(T)^0=\bigl\{\mu^1_{\mathcal Q}(T)^0_X=\mu^1_{\mathcal B}(T^0_X)
+  \in\hom_{\mathcal B}(\mathcal F_0(X),\mathcal F_1(X))\mid
+  X\in\operatorname{obj}(\mathcal A)\bigr\},
+\end{equation}
+\begin{equation}\label{eq:2.17}
+  \begin{aligned}
+    \mu^1_{\mathcal Q}(T)^1(a_1)&=\mu^1_{\mathcal B}\bigl(T^1(a_1)\bigr)
+    +(-1)^{|T|-1}T^1\bigl(\mu^1_{\mathcal A}(a_1)\bigr)
+    +\mu^2_{\mathcal B}\bigl(\mathcal F_1^1(a_1),T^0_{X_0}\bigr)\\
+    &\quad+(-1)^{(|T|-1)(|a_1|-1)}\mu^2_{\mathcal B}\bigl(T^0_{X_1},
+    \mathcal F_0^1(a_1)\bigr).
+  \end{aligned}
+\end{equation}
+
+\begin{Def}\label{def:2.11}
+若预自然变换对 $\hom_{\mathcal Q}(\mathcal F_0,\mathcal F_1)$ 的边缘算子封闭，即
+$T\in\hom_{\mathcal Q}(\mathcal F_0,\mathcal F_1)$ 满足一切 $d\ge 0$ 时
+$\mu^1_{\mathcal Q}(T)^d=0$，则称它为（$A_\infty$-）\emph{自然变换}。
+\end{Def}
+
+考察一个自然变换 $T\in\hom_{\mathcal Q}(\mathcal F_0,\mathcal F_1)$。由 \eqref{eq:2.17}
+与 \eqref{eq:2.8}，对一切 $a_1\in\hom_{\mathcal A}(X_0,X_1)$，类
+$\langle T^0_X\rangle$ 满足自然性条件
+\[
+  \langle T^0_{X_1}\rangle\circ\langle\mathcal F_0^1(a_1)\rangle
+  =(-1)^{|a_1|\cdot|T|}\langle\mathcal F_1^1(a_1)\rangle\circ
+  \langle T^0_{X_0}\rangle\in\Hom_{H(\mathcal B)}\bigl(\mathcal F_0(X_0),
+  \mathcal F_1(X_1)\bigr).
+\]
+因此 $H(T)\equiv H(T^0):=\{\langle T^0_X\rangle\in\Hom_{H(\mathcal B)}
+(\mathcal F_0(X),\mathcal F_1(X))\mid X\in\operatorname{obj}(\mathcal A)\}$ 是
+“通常的”自然变换，于是我们可以定义：
+% [Tutor Note: 【易错】自然性条件中的符号 $(-1)^{|a_1|\cdot|T|}$ 来自 \eqref{eq:2.8} 中两次应用 Koszul 符号：一侧是 $\langle T^0\rangle\circ\langle\mathcal F_0^1(a_1)\rangle$，另一侧是 $\langle\mathcal F_1^1(a_1)\rangle\circ\langle T^0\rangle$，交换次序恰好贡献 $(-1)^{|a_1||T|}$。]
+
+\begin{Def}\label{def:2.12}
+设 $\mathcal Q=\mathrm{nu\text{-}fun}(\mathcal A,\mathcal B)$。则
+$H(\mathcal Q)=\mathrm{Nu\text{-}Fun}(H(\mathcal A),H(\mathcal B))$ 表示这样的
+（非幺）范畴：其对象是非幺上同调函子 $H(\mathcal F):H(\mathcal A)\to H(\mathcal B)$，
+其态射是它们的自然变换 $H(T)\in\Hom_{H(\mathcal Q)}(H(\mathcal F),H(\mathcal G))$，
+定义如上段。
+\end{Def}
+
+于是得到非幺函子
+\begin{equation}\label{eq:2.18}
+  \mathcal H:H(\mathcal Q)\longrightarrow H(\mathcal Q),\qquad
+  \begin{cases}
+    \mathcal F\in\operatorname{obj}(\mathcal Q)\longmapsto H(\mathcal F),\\
+    \langle T\rangle\in\Hom_{H(\mathcal Q)}(F,G)\longmapsto H(T).
+  \end{cases}
+\end{equation}
+% [Tutor Note: 【勘误】原书 \eqref{eq:2.18} 写作 $\mathcal H:H(\mathcal Q)\to H(\mathcal Q)$，但其定义域中取的是 $\mathcal F\in\operatorname{obj}(\mathcal Q)$、$\langle T\rangle\in\Hom_{H(\mathcal Q)}(F,G)$，故应读作 $\mathcal H:\mathcal Q\to H(\mathcal Q)$（对象层面即 $F\mapsto H(F)$）；原文照录，读者按定义理解即可。]
+
+有两个有用的运算，分别是用某个固定的 $A_\infty$-函子作左复合与右复合。
+
+\begin{Def}\label{def:2.13}
+设 $\mathcal G:\mathcal A\to\mathcal B$ 为非幺 $A_\infty$-函子，$\mathcal C$ 为任意非幺
+$A_\infty$-范畴。我们定义如下非幺 $A_\infty$-函子：
+\begin{itemize}
+  \item \emph{左复合} $\mathcal L_{\mathcal G}:\mathrm{nu\text{-}fun}(\mathcal C,
+        \mathcal A)\to\mathrm{nu\text{-}fun}(\mathcal C,\mathcal B)$，由
+        $\mathcal F\mapsto\mathcal G\circ\mathcal F$ 给出，且
+        \[
+          \mathcal L^1_{\mathcal G}:\hom_{\mathrm{nu\text{-}fun}(\mathcal C,\mathcal A)}
+          (\mathcal F_0,\mathcal F_1)\to\hom_{\mathrm{nu\text{-}fun}(\mathcal C,
+          \mathcal B)}(\mathcal G\circ\mathcal F_0,\mathcal G\circ\mathcal F_1)
+        \]
+        由下式指定：
+        \begin{equation}\label{eq:2.19}
+          \begin{aligned}
+            &\mathcal L^1_{\mathcal G}(T_1)^d(a_d,\dots,a_1)
+            :=\sum_{\substack{1\le r\le d+1<本地路径> i\le r\\s_1+\dots+s_r=d}}
+            (-1)^{\ddagger^1_i}\mathcal G^r\Bigl(
+            \mathcal F_1^{s_r}(a_d,\dots,a_{d-s_r+1}),\dots,\\
+            &\qquad\qquad \mathcal F_1^{s_{i+1}}(a_{d-\dots-s_{i+2}},\dots,
+            a_{s_1+\dots+s_{i+1}}),T_1^{s_i}(a_{s_1+\dots+s_i},\dots,
+            a_{s_1+\dots+s_{i-1}+1}),\\
+            &\qquad\qquad \mathcal F_0^{s_{i-1}}(a_{s_1+\dots+s_{i-1}},\dots,
+            a_{s_1+\dots+s_{i-2}+1}),\dots,\mathcal F_0^{s_1}(a_{s_1},\dots,a_1)
+            \Bigr)
+          \end{aligned}
+        \end{equation}
+        取值于 $\hom_{\mathcal B}\bigl(\mathcal G(\mathcal F_0(X_0)),
+        \mathcal G(\mathcal F_1(X_d))\bigr)$ 中，更高阶项 $\mathcal L^d_{\mathcal G}$
+        则甚为复杂；
+  \item \emph{右复合} $\mathcal R_{\mathcal G}:\mathrm{nu\text{-}fun}(\mathcal B,
+        \mathcal C)\to\mathrm{nu\text{-}fun}(\mathcal A,\mathcal C)$，由
+        $\mathcal F\mapsto\mathcal F\circ\mathcal G$ 给出，且
+        \[
+          \mathcal R^1_{\mathcal G}:\hom_{\mathrm{nu\text{-}fun}(\mathcal B,\mathcal C)}
+          (\mathcal F_0,\mathcal F_1)\to\hom_{\mathrm{nu\text{-}fun}(\mathcal A,
+          \mathcal C)}(\mathcal F_0\circ\mathcal G,\mathcal F_1\circ\mathcal G)
+        \]
+        由下式指定：
+        \begin{equation}\label{eq:2.20}
+          \mathcal R^1_{\mathcal G}(T_1)^d(a_d,\dots,a_1)
+          :=\sum_{\substack{0\le r\le d\\s_1+\dots+s_r=d}}T^r\bigl(
+          \mathcal G^{s_r}(a_d,\dots,a_{d-s_r+1}),\dots,
+          \mathcal G^{s_1}(a_{s_1},\dots,a_1)\bigr)
+        \end{equation}
+        取值于 $\hom_{\mathcal C}\bigl(\mathcal F_0(\mathcal G(X_0)),
+        \mathcal F_1(\mathcal G(X_d))\bigr)$ 中，且 $d>1$ 时
+        $\mathcal R^d_{\mathcal G}:=0$。
+\end{itemize}
+\end{Def}
+% [Tutor Note: 【易错】左复合的求和从 $r=1$ 起、上界为 $d+1$，右复合的求和却从 $r=0$ 起：后者 $r=0$ 项即 $T^0$ 作用在空张量上（常数项），并且 $\mathcal R^d_{\mathcal G}=0$（$d>1$）说明右复合只保留一阶与零阶误差；两者不对称是 \eqref{eq:2.14} 中 $T$ 出现位置不同造成的。]
+
+同样值得算出低阶项：$\mathcal L^1_{\mathcal G}(T)^0_X=\mathcal G^1(T^0_X)$，以及
+\[
+  \mathcal L^1_{\mathcal G}(T)^1(a_1)=\mathcal G^1\bigl(T^1(a_1)\bigr)
+  +\mathcal G^2\bigl(\mathcal F_1^1(a_1),T^0_{X_0}\bigr)
+  +(-1)^{(|T|-1)(|a_1|-1)}\mathcal G^2\bigl(T^0_{X_1},\mathcal F_0^1(a_1)\bigr),
+\]
+相应地 $\mathcal R^1_{\mathcal G}(T)^0_X=T^0_X$ 且
+$\mathcal R^1_{\mathcal G}(T)^1(a_1)=T^1\bigl(\mathcal G^1(a_1)\bigr)$。
+
+对相容的 $A_\infty$-函子，左复合与右复合本身还可以再复合：
+$\mathcal R_{\mathcal G_1}\circ\mathcal R_{\mathcal G_2}=
+\mathcal R_{\mathcal G_1\circ\mathcal G_2}$、
+$\mathcal L_{\mathcal G_1}\circ\mathcal L_{\mathcal G_2}=
+\mathcal L_{\mathcal G_1\circ\mathcal G_2}$ 以及
+$\mathcal L_{\mathcal G_1}\circ\mathcal R_{\mathcal G_2}=
+\mathcal R_{\mathcal G_2}\circ\mathcal L_{\mathcal G_1}$。
+
+\subsection{插曲：Hochschild 上同调}\label{sec:2.4}
+
+Hochschild 上同调是借助比较论证来证明许多关键结果的有用工具。它在形变理论中占有
+显著地位。然而完整的处理会离题太远，因此我们仅限于给出相关定义与主要应用。更严格的
+叙述可在 \cite{GM03} 第 III.7.3 小节与 \cite{Sei08} 第 (1f) 节中找到。
+
+\begin{Def}\label{def:2.14}
+设 $\mathcal A$ 为上同调范畴 $H(\mathcal A)$ 幺的 $A_\infty$-范畴。定义 $\mathcal A$ 的
+\emph{Hochschild 上同调群}为分次态射空间
+$HH(\mathcal A):=H\bigl(\hom_{\mathrm{nu\text{-}fun}(\mathcal A,\mathcal A)}
+(\mathrm{Id}_{\mathcal A},\mathrm{Id}_{\mathcal A})\bigr)$。它可以由这样的上链复形
+$(CC(\mathcal A),d)$ 计算：其余链 $h=(h^0,h^1,\dots)\in CC^r(\mathcal A)$ 是对每个
+元组 $(X_1,\dots,X_{d+1})\subset\operatorname{obj}(\mathcal A)$ 给出的一族（多）线性
+分次映射
+\[
+  h^d:\hom_{\mathcal A}(X_d,X_{d+1})\otimes\dots\otimes\hom_{\mathcal A}(X_1,X_2)
+  \longrightarrow\hom_{\mathcal A}(X_1,X_{d+1})[r-d],
+\]
+微分作用在这些余链上为
+\[
+  \begin{aligned}
+    (dh)^d(a_d,\dots,a_1):={}&\sum_{0\le i+j<d+1}(-1)^{(r+1)\dagger_i}
+    \mu^{d+1-j}_{\mathcal A}\bigl(a_d,\dots,h^j(a_{i+j},\dots,a_{i+1}),\dots,a_1\bigr)\\
+    &+\sum_{0<i+j\le d+1}(-1)^{r+1+\dagger_i}
+    h^{d+1-j}\bigl(a_d,\dots,\mu^j_{\mathcal A}(a_{i+j},\dots,a_{i+1}),\dots,a_1\bigr).
+  \end{aligned}
+\]
+\end{Def}
+% [Tutor Note: 【易错】Hochschild 余链 $h^d$ 的变量次序与 $\mu^d_{\mathcal A}$ 相同（最左是 $X_d\to X_{d+1}$ 的态射），而 $h^0$ 对应 $X_1\to X_1$ 的自态射（$d=0$ 时靶空间为 $\hom_{\mathcal A}(X_1,X_1)[r]$）；此外 $r$ 是上同调次数，$d$ 是链的次数，两者独立。]
+% [Tutor Note: 【含糊】原文对“$H(\mathcal A)$ 幺”与 $HH(\mathcal A)$ 关系的解释仅一句带过：$HH(\mathcal A)$ 是 $\mathrm{Id}_{\mathcal A}$ 的自预自然变换的上同调，其零阶部分对应通常意义下的 Hochschild 上同调 $HH^0$；完整处理见 \cite{GM03} 第 III.7.3 小节。]
+
+事实上，在双分次情形下可以更明确地写出 Hochschild 复形。现在考虑两个任意的非幺
+$A_\infty$-范畴 $\mathcal A,\mathcal B$ 以及 $\mathcal Q=\mathrm{nu\text{-}fun}
+(\mathcal A,\mathcal B)$。给定两个 $\mathcal G_0,\mathcal G_1\in\operatorname{obj}
+(\mathcal Q)$，向量空间 $\hom_{\mathcal Q}(\mathcal G_0,\mathcal G_1)$ 可以作递降
+过滤：第 $r$ 项只允许那些满足 $T^0=\dots=T^{r-1}=0$ 的预自然变换 $T$。与该过滤
+相伴的谱序列的初始项为
+\begin{equation}\label{eq:2.21}
+  E_1^{rs}=\prod_{X_0,\dots,X_r}\Hom^s_{\mathbb K}\Bigl(
+  \Hom_{H(\mathcal A)}(X_{r-1},X_r)\otimes\dots\otimes
+  \Hom_{H(\mathcal A)}(X_0,X_1),\ \Hom_{H(\mathcal B)}\bigl(\mathcal G_0(X_0),
+  \mathcal G_1(X_r)\bigr)\Bigr).
+\end{equation}
+于是 $\mathcal Q$ 中边缘算子的公式 \eqref{eq:2.14} 给出 $E_1^{rs}$ 上的微分
+$d\equiv d^{rs}$：
+\[
+  \begin{aligned}
+    (dT)(a_{r+1},\dots,a_1)={}&(-1)^{(r+s)(|a_1|-1)+1}T(a_{r+1},\dots,a_2)
+    H(\mathcal G_0)(a_1)\\
+    &+(-1)^{r+s+\dagger_r}H(\mathcal G_1)(a_{r+1})T(a_r,\dots,a_1)\\
+    &+\sum_{0\le n\le r-1}(-1)^{r+s-1+\dagger_{n+1}}
+    T(a_{r+1},\dots,a_{n+2}a_{n+1},\dots,a_1)
+  \end{aligned}
+\]
+（这里 $T$ 与各 $a_i$ 都已取为上同调中的映射）。于是我们得到双分次复形
+$CC^{r+s}(H(\mathcal A),H(\mathcal B))^s:=E_1^{rs}$，它诱导出（双分次的）Hochschild
+上同调 $HH^{r+s}(H(\mathcal A),H(\mathcal B))^s:=E_2^{rs}$（特别地，有
+$HH^s(H(\mathcal A),H(\mathcal B))^s=\Hom^s_{H(\mathcal Q)}(H(\mathcal G_0),
+H(\mathcal G_1))$）。
+% [Tutor Note: 【含糊】最后一项中 $a_{n+2}a_{n+1}$ 是并置乘积，即在 $H(\mathcal A)$ 中把相邻两个变量复合成一个自变量（原文未加逗号，也未说明）；$\dagger_{n+1}$ 的下标同样按复合后的位置理解。这与 Hochschild 复形中“内部”微分由结合乘法给出的通常图景一致。]
+% [Tutor Note: 【背景】过滤按 $T^0=\dots=T^{r-1}=0$ 分层，$E_1^{rs}$ 的 $r$ 记录预自然变换的最低非零阶，$s$ 记录总次数；这正是把 $\hom_{\mathcal Q}$ 的复形结构按“阶数”展成谱序列的标准做法，$E_2$ 项即 Hochschild 上同调。]
+
+为本章的目的，下面列出几个主要结果，它们的证明都要用到 Hochschild 上同调：
+
+\begin{Lem}\label{lem:2.15}
+设 $\mathcal Q=\mathrm{nu\text{-}fun}(\mathcal A,\mathcal B)$，
+$\mathcal G_1,\mathcal G_2,\mathcal G_3\in\operatorname{obj}(\mathcal Q)$，
+$T\in\hom_{\mathcal Q}(\mathcal G_1,\mathcal G_2)$ 为自然变换。假设：
+\begin{itemize}
+  \item 对一切 $X\in\operatorname{obj}(\mathcal A)$，映射
+        $\Hom_{H(\mathcal B)}(\mathcal G_2(X),\mathcal G_3(X))\to
+        \Hom_{H(\mathcal B)}(\mathcal G_1(X),\mathcal G_3(X))$，
+        $\langle c\rangle\mapsto\langle c\rangle\circ\langle T^0_X\rangle$
+        是同构。则 $\Hom_{H(\mathcal Q)}(\mathcal G_2,\mathcal G_3)\to
+        \Hom_{H(\mathcal Q)}(\mathcal G_1,\mathcal G_3)$，
+        $\langle S\rangle\mapsto\langle S\rangle\circ\langle T\rangle$ 也是同构。
+  \item 对一切 $X\in\operatorname{obj}(\mathcal A)$，映射
+        $\Hom_{H(\mathcal B)}(\mathcal G_3(X),\mathcal G_1(X))\to
+        \Hom_{H(\mathcal B)}(\mathcal G_3(X),\mathcal G_2(X))$，
+        $\langle c\rangle\mapsto\langle T^0_X\rangle\circ\langle c\rangle$
+        是同构。则 $\Hom_{H(\mathcal Q)}(\mathcal G_3,\mathcal G_1)\to
+        \Hom_{H(\mathcal Q)}(\mathcal G_3,\mathcal G_2)$，
+        $\langle S\rangle\mapsto\langle T\rangle\circ\langle S\rangle$ 也是同构。
+\end{itemize}
+\end{Lem}
+
+\begin{Lem}\label{lem:2.16}
+设 $\mathcal C$ 为任意非幺 $A_\infty$-范畴。设
+$\mathcal G\in\mathrm{nu\text{-}fun}(\mathcal A,\mathcal B)$：
+\begin{itemize}
+  \item 上同调全忠实，则 $\mathcal L_{\mathcal G}:\mathrm{nu\text{-}fun}
+        (\mathcal C,\mathcal A)\to\mathrm{nu\text{-}fun}(\mathcal C,\mathcal B)$
+        也是上同调全忠实；
+  \item 拟同构，则 $\mathcal R_{\mathcal G}:\mathrm{nu\text{-}fun}(\mathcal B,
+        \mathcal C)\to\mathrm{nu\text{-}fun}(\mathcal A,\mathcal C)$ 也是拟同构。
+\end{itemize}
+\end{Lem}
+% [Tutor Note: 【含糊】引理 \ref{lem:2.15} 与 \ref{lem:2.16} 的证明原文完全略去，只说“要用 Hochschild 上同调作比较论证”；其思路是把 $\Hom_{H(\mathcal Q)}$ 解释为某个 Hochschild 上同调群，再用长正合列比较，细节见 \cite{GM03} 第 III.7.3 小节与 \cite{Sei08} 第 (1f) 节。]
+
+\subsection{同调微扰理论}\label{sec:2.5}
+
+和往常一样，令 $\mathcal Q=\mathrm{nu\text{-}fun}(\mathcal A,\mathcal B)$。给定
+$\mathcal F_0,\mathcal F_1\in\operatorname{obj}(\mathcal Q)$，注意由 $D^0:=0$ 与
+$d\ge 1$ 时 $D^d:=\mathcal F_0^d-\mathcal F_1^d$ 定义的预自然变换
+$D:=\mathcal F_0-\mathcal F_1\in\hom^1_{\mathcal Q}(\mathcal F_0,\mathcal F_1)$
+实际上是自然变换（确实，$\mu^1_{\mathcal Q}(D)=0$ 可借助 \eqref{eq:2.10} 与
+\eqref{eq:2.14} 验证）。
+
+\begin{Def}\label{def:2.17}
+设两个非幺 $A_\infty$-函子 $\mathcal F_0,\mathcal F_1\in\operatorname{obj}
+(\mathcal Q)$ 满足对一切 $X\in\operatorname{obj}(\mathcal A)$ 有
+$\mathcal F_0(X)=\mathcal F_1(X)$。若存在某个 $T\in\hom^0_{\mathcal Q}(\mathcal F_0,
+\mathcal F_1)$ 使 $T^0=0$ 且 $\mathcal F_0-\mathcal F_1=\mu^1_{\mathcal Q}(T)$，
+则称它们\emph{同伦}，记作 $\mathcal F_0\simeq\mathcal F_1$。
+\end{Def}
+
+同伦是一个良定义的等价关系。
+% [Tutor Note: 【易错】“同伦”只对在对象上完全相同的两个函子有定义（原文在定义中已写明 $F_0(X)=F_1(X)$；p.23 的脚注再次强调这一点）。对象不同的函子即使“差一个同伦”也不能直接比较，必须先经由拟等价搬运，这正是 §\ref{sec:2.8} 反复使用的手法。]
+
+正如所料，同伦的 $A_\infty$-函子在上同调上诱导同一映射：
+$(H(\mathcal F_0)-H(\mathcal F_1))\langle c\rangle=H(\mu^1_{\mathcal Q}(T))
+\langle c\rangle=\langle\mu^1_{\mathcal Q}(T)^1(c)\rangle=0$，而对象上的恒等性容易
+验证。此外，若 $\mathcal F_0\simeq\mathcal F_1$ 经由 $T$，则
+$\mathcal G\circ\mathcal F_0\simeq\mathcal G\circ\mathcal F_1$ 经由
+$\mathcal L^1_{\mathcal G}(T)$，而 $\mathcal F_0\circ\mathcal G\simeq
+\mathcal F_1\circ\mathcal G$ 经由 $\mathcal R^1_{\mathcal G}(T)$。
+
+下面是我们的第一个重要结果。
+
+\begin{Pro}[同调微扰引理]\label{pro:2.18}
+设 $\mathcal B$ 为非幺 $A_\infty$-范畴。假设对每一对 $X_0,X_1\in\operatorname{obj}
+(\mathcal B)$ 都有一个图
+\begin{equation}\label{eq:2.22}
+  \begin{tikzcd}
+    \hom_{\mathcal A}(X_0,X_1)
+      \arrow[r, bend left=18, "\mathcal F^1{[}0{]}"]
+    & \hom_{\mathcal B}(X_0,X_1)
+      \arrow[l, bend left=18, "\mathcal G^1{[}0{]}"']
+      \arrow[loop right, "\mathcal T^1{[}-1{]}"]
+  \end{tikzcd}
+\end{equation}
+其中 $(\hom_{\mathcal A}(X_0,X_1),\mu^1_{\mathcal A})$ 是上链复形（如定义 \ref{def:1.2}），
+$\mathcal F^1$ 与 $\mathcal G^1$ 是 0 次链映射，$T^1$ 是 $-1$ 次分次映射，且作为
+$\hom_{\mathcal B}(X_0,X_1)$ 的自同态满足
+$\mu^1_{\mathcal B}T^1+T^1\mu^1_{\mathcal B}=\mathcal F^1\mathcal G^1-\mathrm{id}$。
+则存在：
+\begin{itemize}
+  \item 一个非幺 $A_\infty$-范畴 $\mathcal A$，满足 $\operatorname{obj}(\mathcal A)=
+        \operatorname{obj}(\mathcal B)$，其态射空间为 $\hom_{\mathcal A}(X_0,X_1)$，
+        并带有相应的一阶复合映射 $\mu^1_{\mathcal A}$；
+  \item 非幺 $A_\infty$-函子 $\mathcal F:\mathcal A\to\mathcal B$ 与
+        $\mathcal G:\mathcal B\to\mathcal A$，它们在对象上是恒等，且一阶项分别为
+        $\mathcal F^1$ 与 $\mathcal G^1$；
+  \item 一个同伦 $T\in\hom^0_{\mathrm{nu\text{-}fun}(\mathcal B,\mathcal B)}
+        (\mathcal F\circ\mathcal G,\mathrm{Id}_{\mathcal B})$，其一阶项为 $T^1$。
+\end{itemize}
+\end{Pro}
+% [Tutor Note: 【易错】常见的同调微扰引理写作 $\mathrm{id}-\mathcal F^1\mathcal G^1=\mu^1 T+T\mu^1$，原文取的是相反号。两者只差把 $T^1$ 换成 $-T^1$，但递归公式中的符号随之确定；若照搬其他文献（如 \cite{Kel06} 第 3 节）的公式，务必先统一 $T$ 的符号约定。]
+
+所需的公式可以递归地给出。事实上，
+\[
+  \mathcal F^d(a_d,\dots,a_1):=\sum_{\substack{2\le r\le d\\ s_1+\dots+s_r=d}}
+  T^1\Bigl(\mu^r_{\mathcal B}\bigl(\mathcal F^{s_r}(a_d,\dots,a_{d-s_r+1}),\dots,
+  \mathcal F^{s_1}(a_{s_1},\dots,a_1)\bigr)\Bigr),
+\]
+\[
+  \mu^d_{\mathcal A}(a_d,\dots,a_1):=\sum_{\substack{2\le r\le d\\ s_1+\dots+s_r=d}}
+  \mathcal G^1\Bigl(\mu^r_{\mathcal B}\bigl(\mathcal F^{s_r}(a_d,\dots,
+  a_{d-s_r+1}),\dots,\mathcal F^{s_1}(a_{s_1},\dots,a_1)\bigr)\Bigr)
+\]
+被验证为满足定义方程 \eqref{eq:2.10} 与 \eqref{eq:2.6}（归根结底因为
+$\mu^\bullet_{\mathcal B}$ 是 $\mathcal B$ 上的 $A_\infty$-结构）。然而导出它们的
+证明过于技术化，我们宁愿转向下面的应用。
+% [Tutor Note: 【含糊】原文明确跳过递归构造的细节（“too technical”），只给出公式。构造的可操作性依赖 $\mathcal F^1$ 为包含、$\mathcal G^1$ 为投影这一特殊情形（见引理 \ref{lem:2.19} 的证明）；一般情形可参看 \cite{Lef03} 第 1 章或 \cite{Kel06} 第 3 节。]
+
+\begin{Lem}\label{lem:2.19}
+非幺 $A_\infty$-范畴的任意拟同构 $\mathcal K:\mathcal B\to\tilde{\mathcal B}$ 都有
+同伦逆。也就是说，存在某个 $\mathcal J:\tilde{\mathcal B}\to\mathcal B$ 使得
+$\mathcal K\circ\mathcal J\simeq\mathrm{Id}_{\tilde{\mathcal B}}$ 且
+$\mathcal J\circ\mathcal K\simeq\mathrm{Id}_{\mathcal B}$。
+\end{Lem}
+
+\begin{proof}
+我们先证明如下断言：适当选取复形后，可以构造出命题 \ref{pro:2.18} 中的 $A_\infty$-范畴
+$\mathcal A$，使得 $\mathcal F$ 是拟同构，并且 $\mathcal G\circ\mathcal F\simeq
+\mathrm{Id}_{\mathcal A}$ 也成立。
+
+事实上，给定 $X_0,X_1\in\operatorname{obj}(\mathcal B)$，我们可以把相应的复形
+$(\hom_{\mathcal B}(X_0,X_1),\mu^1_{\mathcal B})$ 分解为
+$(\hom_{\mathcal A}(X_0,X_1),0)\oplus(\hom_{\mathcal B'}(X_0,X_1),
+\mu^1_{\mathcal B'})$，使得 $\mathcal F^1$ 与 $\mathcal G^1$ 分别是第一个直和项的
+包含与投影，而第二个直和项无环。但无环性的成立当且仅当存在收缩同伦
+$(T^1)^n:\hom^n_{\mathcal B'}(X_0,X_1)\to\hom^{n-1}_{\mathcal B'}(X_0,X_1)$。
+这就给出了所需的 $T^1$。
+
+微扰引理适用于构造边缘算子为零的 $A_\infty$-范畴 $\mathcal A$，以及相容的
+$A_\infty$-函子 $\mathcal F$ 与 $\mathcal G$。
+% [Tutor Note: 【勘误】原书 p.18 此处写作“相容的 $A_\infty$-函子 $\mathcal F$ 与 $\mathcal B$”：$\mathcal B$ 是范畴而非函子，下一句又以 $\mathcal G$ 指代该函子，故 $\mathcal B$ 显系 $\mathcal G$ 之误；译文按 $\mathcal G$ 排出，原文照录备考。]
+由于 $\mathcal F^1$ 是包含且
+$\mathcal F\circ\mathcal G\simeq\mathrm{Id}_{\mathcal B}$，可见 $H(\mathcal G)$
+在对象上与态射上都是双射，从而 $\mathcal G$（因而 $\mathcal F$ 也）是拟同构。
+由引理 \ref{lem:2.16}，$\mathcal R_{\mathcal G}$ 也是拟同构，于是任何
+\[
+  H(\mathcal R_{\mathcal G})_{\mathcal F_1,\mathcal F_2}:
+  \Hom_{H(\mathrm{nu\text{-}fun}(\mathcal A,\mathcal A))}(\mathcal F_1,\mathcal F_2)
+  \longrightarrow\Hom_{H(\mathrm{nu\text{-}fun}(\mathcal B,\mathcal A))}
+  (\mathcal F_1\circ\mathcal G,\mathcal F_2\circ\mathcal G)
+\]
+都是双射，在限制到零阶项为零的（预自然变换的类）时亦然。取
+$\mathcal F_1:=\mathrm{Id}_{\mathcal A}$、$\mathcal F_2:=\mathcal G\circ\mathcal F$。
+由于 $\mathrm{Id}_{\mathcal B}\simeq\mathcal F\circ\mathcal G$，故也有
+$\mathcal G\simeq\mathcal G\circ\mathcal F\circ\mathcal G$，比如说经由某个预自然
+变换 $T\in\hom^0_{\mathrm{nu\text{-}fun}(\mathcal B,\mathcal A)}(\mathcal G,
+\mathcal G\circ\mathcal F\circ\mathcal G)$。于是
+$\mu^1_{\mathcal Q}(T)=\mathcal G-\mathcal G\circ\mathcal F\circ\mathcal G=
+\mathcal R^1_{\mathcal G}(\mathrm{Id}_{\mathcal A}-\mathcal G\circ\mathcal F)$，
+从而 $\langle\mu^1_{\mathcal Q}(T)\rangle=H(\mathcal R_{\mathcal G})_{\mathrm{Id}
+_{\mathcal A},\mathcal G\circ\mathcal F}\langle\mathrm{Id}_{\mathcal A}-\mathcal G
+\circ\mathcal F\rangle$，而 $H(\mathcal R_{\mathcal G})_{\mathrm{Id}_{\mathcal A},
+\mathcal G\circ\mathcal F}$ 的双射性给出一个映射到
+$\langle\mathrm{Id}_{\mathcal A}-\mathcal G\circ\mathcal F\rangle$ 的类。其任意
+代表元按构造给出同伦 $\mathrm{Id}_{\mathcal A}\simeq\mathcal G\circ\mathcal F$。
+断言得证。
+
+我们用这一结果构造如下交换图：
+\[
+  \begin{tikzcd}
+    \mathcal A \arrow[r, bend left=18, "\mathcal F"]
+      \arrow[d, dashed, "\mathcal E"]
+    & \mathcal B \arrow[l, bend left=18, "\mathcal G"']
+      \arrow[d, "\mathcal K"] \\
+    \tilde{\mathcal A} \arrow[r, bend left=18, "\tilde{\mathcal F}"]
+    & \tilde{\mathcal B} \arrow[l, bend left=18, "\tilde{\mathcal G}"']
+  \end{tikzcd}
+\]
+其中所有箭头（包括 $\mathcal E:=\tilde{\mathcal G}\circ\mathcal K\circ\mathcal F$）
+都是拟同构。但此时 $\mu^1_{\mathcal A}=\mu^1_{\tilde{\mathcal A}}=0$，而方程
+\eqref{eq:2.10} 迫使 $\mathcal E:\mathcal A\to\tilde{\mathcal A}\equiv
+\mathcal E_*\mathcal A$ 成为形式微分同胚，从而是可逆的。因此非幺 $A_\infty$-函子
+$\mathcal J:=\mathcal F\circ\mathcal E^{-1}\circ\tilde{\mathcal G}:
+\tilde{\mathcal B}\to\mathcal B$ 有定义，并且满足：
+$\mathcal K\simeq\mathrm{Id}_{\tilde{\mathcal B}}\circ\mathcal K\circ
+\mathrm{Id}_{\mathcal B}\simeq\tilde{\mathcal F}\circ\tilde{\mathcal G}\circ
+\mathcal K\circ\mathcal F\circ\mathcal G=\tilde{\mathcal F}\circ\mathcal E\circ
+\mathcal G$，故 $\mathcal K\circ\mathcal J\simeq\tilde{\mathcal F}\circ\mathcal E
+\circ\mathrm{Id}_{\mathcal A}\circ\mathcal E^{-1}\circ\tilde{\mathcal G}\simeq
+\mathrm{Id}_{\tilde{\mathcal B}}$，且 $\mathcal J\circ\mathcal K\simeq\mathcal F
+\circ\mathcal E^{-1}\circ\mathrm{Id}_{\tilde{\mathcal A}}\circ\mathcal E\circ
+\mathcal G\simeq\mathrm{Id}_{\mathcal B}$。我们得出 $\mathcal J$ 是 $\mathcal K$
+的同伦逆。
+\end{proof}
+
+\subsection{$A_\infty$-范畴上的 $A_\infty$-模}\label{sec:2.6}
+
+仿照我们对 $A_\infty$-代数的定义，现在把 $A_\infty$-模的构造推广到 $A_\infty$-范畴。
+
+给定任意非幺 $A_\infty$-范畴 $\mathcal A$，其\emph{反范畴} $\mathcal A^{opp}$
+就是对象相同、$\hom_{\mathcal A^{opp}}(X_0,X_1):=\hom_{\mathcal A}(X_1,X_0)$ 且
+$\mu^d_{\mathcal A^{opp}}(a_d,\dots,a_1):=(-1)^{\dagger_d}\mu^d_{\mathcal A}
+(a_1,\dots,a_d)$ 的非幺 $A_\infty$-范畴。又有
+$H(\mathcal A^{opp})=H(\mathcal A)^{opp}$。
+
+\begin{Def}\label{def:2.20}
+考虑复形的 $A_\infty$-范畴\footnote{参见注 \ref{rem:2.5}。} $\mathsf{Ch}$ 与任意非幺
+$A_\infty$-范畴 $\mathcal A$。则 $\mathcal Q=\mathrm{nu\text{-}mod}(\mathcal A):=
+\mathrm{nu\text{-}fun}(\mathcal A^{opp},\mathsf{Ch})$ 是 $\mathcal A$ 上非幺
+（右）$A_\infty$-模的非幺 $A_\infty$-范畴，由以下数据指定：
+\begin{itemize}
+  \item 对象 $\mathcal M\in\operatorname{obj}(\mathcal Q)$ 是非幺 $A_\infty$-函子
+        $\mathcal M:\mathcal A^{opp}\to\mathsf{Ch}$，从而是一族分次空间
+        $\{\mathcal M(X)=\bigoplus_{p\in\mathbb Z}\mathcal M(X)^p\in
+        \operatorname{obj}(\mathsf{Ch})\mid X\in\operatorname{obj}(\mathcal A)\}$，
+        连同 $d-2$ 次的（多）线性分次映射
+        \begin{equation}\label{eq:2.23}
+          \mu^d_{\mathcal M}:\mathcal M(X_{d-1})\otimes\hom_{\mathcal A}
+          (X_{d-2},X_{d-1})\otimes\dots\otimes\hom_{\mathcal A}(X_0,X_1)
+          \longrightarrow\mathcal M(X_0)
+        \end{equation}
+        对一切 $d\ge 1$ 与 $X_0,\dots,X_{d-1}\in\operatorname{obj}(\mathcal A)$
+        给出。特别地，$\mu^1_{\mathcal M}$ 充当上链复形 $\mathcal M(X_0)$ 的微分。
+        这些 $\mu^d_{\mathcal M}$ 满足类似于 \eqref{eq:2.10} 的结合性方程：
+        \begin{equation}\label{eq:2.24}
+          \begin{aligned}
+            &\sum_{0\le n\le d-1}(-1)^{\dagger_n}\mu^{n+1}_{\mathcal M}\bigl(
+            \mu^{d-n}_{\mathcal M}(b,a_{d-1},\dots,a_{n+1}),a_n,\dots,a_1\bigr)\\
+            &\quad+\sum_{\substack{1\le m\le d\\ 0\le n<d-m}}(-1)^{\dagger_n}
+            \mu^{d-m+1}_{\mathcal M}\bigl(b,a_{d-1},\dots,\mu^m_{\mathcal A}
+            (a_{n+m},\dots,a_{n+1}),\dots,a_1\bigr)=0.
+          \end{aligned}
+        \end{equation}
+  \item 对任意一对 $\mathcal M_0,\mathcal M_1\in\operatorname{obj}(\mathcal Q)$，
+        态射 $t\in\hom_{\mathcal Q}(\mathcal M_0,\mathcal M_1)$ 由（多）线性分次
+        映射的序列 $(t^1,t^2,\dots)$ 组成：
+        \begin{equation}\label{eq:2.25}
+          \begin{aligned}
+            t^d:\ &\mathcal M_0(X_{d-1})\otimes\hom_{\mathcal A}(X_{d-2},X_{d-1})
+            \otimes\dots\otimes\hom_{\mathcal A}(X_0,X_1)\\
+            &\longrightarrow\mathcal M_1(X_0)[|t|-d+1],
+          \end{aligned}
+        \end{equation}
+        对 $d\ge 1$ 与 $X_0,\dots,X_{d-1}\in\operatorname{obj}(\mathcal A)$ 给出。
+        这样的 $t$ 称为\emph{预模同态}。
+  \item 复合映射 $\mu^d_{\mathcal Q}$，使得对 $t_k\in\hom_{\mathcal Q}
+        (\mathcal M_{k-1},\mathcal M_k)$，输出 $s:=\mu^d_{\mathcal Q}(t_d,\dots,
+        t_1)\in\hom_{\mathcal Q}(\mathcal M_0,\mathcal M_d)[2-d]$ 仍是上述形式的
+        序列 $(s^1,s^2,\dots)$。前两种情形 $d=1,2$ 为
+        \begin{equation}\label{eq:2.26}
+          \begin{aligned}
+            \mu^1_{\mathcal Q}(t_1)^h&(b,a_{h-1},\dots,a_1)\\
+            &:=\sum_{0\le n\le h-1}(-1)^{\natural_n}\mu^{n+1}_{\mathcal M_1}
+            \bigl(t_1^{h-n}(b,a_{h-1},\dots,a_{n+1}),a_n,\dots,a_1\bigr)\\
+            &\quad+\sum_{0\le n\le h-1}(-1)^{\natural_n}t_1^{n+1}\bigl(
+            \mu^{h-n}_{\mathcal M_0}(b,a_{h-1},\dots,a_{n+1}),a_n,\dots,a_1\bigr)\\
+            &\quad+\sum_{\substack{1\le m\le h\\ 0\le n<h-m}}(-1)^{\natural_n}
+            t^{h-m+1}\bigl(b,a_{h-1},\dots,\mu^m_{\mathcal A}(a_{n+m},\dots,
+            a_{n+1}),\dots,a_1\bigr),
+          \end{aligned}
+        \end{equation}
+        取值于 $\mathcal M_1(X_0)$ 中，以及
+        \begin{equation}\label{eq:2.27}
+          \mu^2_{\mathcal Q}(t_2,t_1)^h(b,a_{h-1},\dots,a_1):=
+          \sum_{0\le n\le h-1}(-1)^{\natural_n}t_2^{n+1}\bigl(
+          t_1^{h-n}(b,a_{h-1},\dots),a_n,\dots,a_1\bigr),
+        \end{equation}
+        取值于 $\mathcal M_2(X_0)$ 中，其中 $h\ge 1$、$a_k\in\hom_{\mathcal A}
+        (X_{k-1},X_k)$，且 $\natural_n:=|b|+|a_{h-1}|+\dots+|a_{n+1}|-(h-1-n)$。
+        同时，$d>2$ 时 $\mu^d_{\mathcal Q}:=0$。
+\end{itemize}
+\end{Def}
+% [Tutor Note: 【易错】模运算 $\mu^d_{\mathcal M}$ 的次数是 $d-2$（因为 $d$ 个输入中第一个是 $\mathcal M(X_{d-1})$ 的元素、其余 $d-1$ 个是态射），与 $A_\infty$-范畴的 $\mu^d_{\mathcal A}$ 次数 $2-d$ 恰好相反；做符号计算时最容易在这里出错。]
+% [Tutor Note: 【易错】$\natural_n$ 中减的是 $(h-1-n)$，而 $\dagger_n$ 中减的是 $n$：两者不是同一个符号函数，原文用不同的花体字母区分，抄公式时不可混用。]
+
+在平凡 $A_\infty$-范畴的情形，这些数据与定义 \ref{def:1.8}、定义 \ref{def:1.9} 所给的一致（把定义方程
+\eqref{eq:2.24} 与 \eqref{eq:2.26} 分别同式 \eqref{eq:1.3}、\eqref{eq:1.4} 比较，并注意预模同态此时
+恰好退化为 $A_\infty$-代数上 $A_\infty$-模的态射）。
+
+任意预模同态 $t\in\hom_{\mathcal Q}(\mathcal M_0,\mathcal M_1)$ 通过令
+$T^{d-1}(a_1,\dots,a_{d-1})(b):=(-1)^{\text{\S}}t^d(b,a_{d-1},\dots,a_1)$ 确定一个
+预自然变换 $T\in\hom_{\mathrm{nu\text{-}fun}(\mathcal A^{opp},\mathsf{Ch})}
+(\mathcal M_0,\mathcal M_1)$，其中 $\text{\S}:=(|T|-1)|b|+|T|(|T|-1)/2$。
+$d=1$ 时的结合性方程给出 $\mu^1_{\mathcal M}\bigl(\mu^1_{\mathcal M}(b)\bigr)=0$
+——正如所料——而 \eqref{eq:2.26} 与 \eqref{eq:2.27} 化为
+\[
+  \mu^1_{\mathcal Q}(t)^1(b)=(-1)^{|b|}\mu^1_{\mathcal M_1}\bigl(t^1(b)\bigr)
+  +(-1)^{|b|}t^1\bigl(\mu^1_{\mathcal M_0}(b)\bigr),
+  \qquad
+  \mu^2_{\mathcal Q}(t_2,t_1)^1(b)=(-1)^{|b|}t^1_2\bigl(t^1_1(b)\bigr).
+\]
+
+\begin{Def}\label{def:2.21}
+若预模同态对 $\hom_{\mathcal Q}(\mathcal M_0,\mathcal M_1)$ 的边缘算子封闭，即
+$t\in\hom_{\mathcal Q}(\mathcal M_0,\mathcal M_1)$ 满足一切 $d\ge 0$ 时
+$\mu^1_{\mathcal Q}(t)^d=0$，则称它为（$A_\infty$-）\emph{模同态}。
+\end{Def}
+% [Tutor Note: 【易错】注意 $\mu^2_{\mathcal Q}(t_2,t_1)^1(b)$ 中没有来自 $\mathcal M$ 的项：模同态的复合只经 $t_2$ 与 $t_1$ 的合成，$\mu^d_{\mathcal Q}=0$（$d>2$）说明模同态范畴的复合是严格的，不存在高阶修正。]
+
+作为 $A_\infty$-函子，$\mathcal M\in\operatorname{obj}(\mathcal Q)$ 诱导非幺
+（反变）函子 $H(\mathcal M):H(\mathcal A)^{opp}\to H(\mathsf{Ch})\cong
+\mathrm{GradVect}$，取值于分次向量空间范畴（如第 1 章第 \ref{sec:1.2} 节所述）。
+
+\begin{Def}\label{def:2.22}
+设 $\mathcal M\in\operatorname{obj}(\mathcal Q)$ 为 $A_\infty$-模。$\mathcal M$ 的
+\emph{上同调模} $H(\mathcal M):H(\mathcal A)^{opp}\to\mathrm{GradVect}$ 是一个
+$H(\mathcal A)$-模，由一族 $\{(H(\mathcal M)(X),\partial_X)\mid X\in
+\operatorname{obj}(\mathcal A)\}$ 组成，其中 $H(\mathcal M)(X):=H(\mathcal M(X))\in
+\operatorname{obj}(\mathrm{GradVect})$，且对 $b\in\mathcal M(X)$ 有
+$\partial_X(b):=(-1)^{|b|}\mu^1_{\mathcal M}(b)\in\mathcal M(X)[1]$，并带有模乘法
+\[
+  H(\mathcal M)(X_1)\otimes\Hom_{H(\mathcal A)}(X_0,X_1)\to
+  H(\mathcal M)(X_0),\qquad
+  \langle b\rangle\cdot\langle a\rangle:=(-1)^{|a|}
+  \langle\mu^2_{\mathcal M}(b,a)\rangle
+\]
+（参看方程 \eqref{eq:2.8}）。上同调模是非幺范畴 $H(\mathcal Q)=\mathrm{Nu\text{-}
+Fun}(H(\mathcal A)^{opp},\mathrm{GradVect})$（若幺，则记作 $\mathrm{Mod}^0
+(H(\mathcal A))$）的对象。
+\end{Def}
+% [Tutor Note: 【易错】$\partial_X$ 前有符号 $(-1)^{|b|}$，而 $\mu^1_{\mathcal M}$ 本身不带号；这个“平移过的微分”约定与 $\mu^2_{\mathcal M}$ 的模乘法符号相配，才使 $\partial$ 满足 Leibniz 法则（见 \eqref{eq:2.8} 的约定）。]
+
+此外，任意模同态 $t\in\hom_{\mathcal Q}(\mathcal M_0,\mathcal M_1)$ 诱导通常的模
+同态 $H(t)\in\Hom_{H(\mathcal Q)}(H(\mathcal M_0),H(\mathcal M_1))$，即对一切
+$X\in\operatorname{obj}(\mathcal A)$ 的一族分次映射
+\[
+  H(t)_X:H(\mathcal M_0)(X)\to H(\mathcal M_1)(X),\qquad
+  \langle b\rangle\longmapsto\bigl\langle(-1)^{|b|}t^1(b)\bigr\rangle.
+\]
+
+\subsection{严格幺性与上同调幺性}\label{sec:2.7}
+
+正如我们在 §\ref{sec:2.2} 开头已经观察到的，$A_\infty$-范畴一般缺少恒等态射，但——正如所料
+——与它们打交道是可取的，因为它们会显著简化整个理论。所以这里引入两种不同的幺性
+概念（推广 $A_\infty$-代数中遇到的那些），它们最终是等价的。
+
+\begin{Def}\label{def:2.23}
+设 $\mathcal A$ 为非幺 $A_\infty$-范畴。称它：
+\begin{itemize}
+  \item \emph{严格幺的}，若对每个对象 $X$ 都存在某个 $e_X\in\hom^0_{\mathcal A}
+        (X,X)$（此时唯一），称为\emph{严格单位元}，满足条件
+        \begin{equation}\label{eq:2.28}
+          \begin{gathered}
+            \mu^1_{\mathcal A}(e_X)=0,\\
+            (-1)^{|a_1|}\mu^2_{\mathcal A}(e_{X_1},a_1)=a_1
+            =\mu^2_{\mathcal A}(a_1,e_{X_0}),\\
+            \mu^d_{\mathcal A}(a_{d-1},\dots,a_{n+1},e_{X_n},a_n,\dots,a_1)=0,
+          \end{gathered}
+        \end{equation}
+        对 $d>2$、$0\le n<d$ 与 $a_i\in\hom_{\mathcal A}(X_{i-1},X_i)$ 成立
+        （特别地，$e_X$ 必须是上闭链）；
+  \item \emph{c-幺的}（即\emph{上同调幺的}），若上同调范畴 $H(\mathcal A)$ 幺
+        （从而是“真正的”线性分次范畴）。我们称任意使 $X$ 在 $H(\mathcal A)$ 中
+        诱导恒等态射的 $e_X\in\hom^0_{\mathcal A}(X,X)$ 为 \emph{c-单位}
+        （$e_X$ 必然是 0 次上闭链）。
+\end{itemize}
+\end{Def}
+% [Tutor Note: 【易错】\eqref{eq:2.28} 第二条的符号 $(-1)^{|a_1|}$ 只在左边出现：$\mu^2(e,a)$ 与 $a$ 相差一个 Koszul 符号，而 $\mu^2(a,e)=a$ 不带号。这一不对称来自 \eqref{eq:2.8} 中复合的符号约定，若统一写 $a$ 而不加号会在 $d=2$ 的 $A_\infty$-函子方程中出错。]
+
+严格幺性蕴含 c-幺性，这可以借助居间的\emph{同伦幺性}概念来证明：粗略地说，同伦幺的
+$A_\infty$-范畴是这样一个范畴，它带有额外的复合映射
+$\mu^{d,(i_d,\dots,i_0)}_{\mathcal A}$，其次数为 $2-d-2\sum_{k=0}^d i_k$，对一切
+$d+i_0+\dots+i_d>0$ 都有定义，当 $i_0=\dots=i_d=0$ 时与定义 \ref{def:2.4} 中的那些重合，
+并且满足某些修改过的相容 $A_\infty$-结合性方程。
+% [Tutor Note: 【含糊】“同伦幺性”只是为解释证明思路而粗略引入的中间概念，原文既未给定义细节，也未给所用方程；具体构造可参看 \cite{Sei08} 第 (2a) 节与 \cite{Lef03} 第 1 章，那里用“带额外缩并的 $A_\infty$-范畴”表述同一想法。]
+
+事实上，逆蕴含也成立（在形式微分同胚给出的拟同构意义下）：
+
+\begin{Lem}\label{lem:2.24}
+设 $\mathcal A$ 为 c-幺 $A_\infty$-范畴，且对一切 $X\in\operatorname{obj}(\mathcal A)$
+有 $\hom_{\mathcal A}(X,X)=\{0\}$ 或 $H(\hom_{\mathcal A}(X,X))$ 非平凡。则存在
+形式微分同胚 $\Phi:\mathcal A\to\tilde{\mathcal A}=\Phi_*\mathcal A$，满足
+$\Phi^1_{X_0,X_1}=\mathrm{id}_{\hom_{\mathcal A}(X_0,X_1)}$，并使
+$\Phi_*\mathcal A$ 严格幺。
+\end{Lem}
+
+\begin{proof}（略证）
+与大多数情形一样，我们给一个递归构造。首先，对每个 $X\in\operatorname{obj}
+(\mathcal A)$，由假设存在 c-单位 $e_X\in\hom^0_{\mathcal A}(X,X)$，它特别是上闭链。
+令 $\mu^1_{\tilde{\mathcal A}}:=\mu^1_{\mathcal A}$，则显然
+$\mu^1_{\tilde{\mathcal A}}(e_X)=0$。构造\footnote{回忆定义 \ref{def:2.9}：$\Phi_*\mathcal A$
+与 $\mathcal A$ 有相同的态射空间！}
+$\mu^2_{\tilde{\mathcal A}}:\hom_{\mathcal A}(X_1,X_2)\otimes\hom_{\mathcal A}
+(X_0,X_1)\to\hom_{\mathcal A}(X_0,X_2)$，使其表示 $H(\mathcal A)$ 的复合律
+\eqref{eq:2.8} 并满足 \eqref{eq:2.28} 的第二个方程。令 $\Phi^1:=\mathrm{id}$，
+并在每个态射空间上把 $\Phi^2$ 定义为 $\mu^2_{\mathcal A}$ 与
+$\mu^2_{\tilde{\mathcal A}}$ 之间的链同伦。
+
+接下来的构造更为复杂，最终由复合映射给出所需的形式微分同胚
+$\Phi:\mathcal A\to\tilde{\mathcal A}$：
+\[
+  \begin{aligned}
+    \mu^d_{\tilde{\mathcal A}}(a_d,\dots,a_1):={}&\mu^d_{\mathcal A}(a_d,\dots,a_1)
+    -(-1)^{\gamma}\mu^2_{\mathcal A}\bigl(\mu^d_{\mathcal A}(a_d,\dots,
+    e_{X_{n+1}},a_{n+1},\dots,a_2),a_1\bigr)\\
+    &-(-1)^{\dagger_{n+1}}\sum_{j<n}(-1)^{\alpha_j}\mu^d_{\mathcal A}\bigl(
+    a_d,\dots,e_{X_{n+1}},a_{n+1},\dots,\mu^2_{\mathcal A}(a_{j+2},a_{j+1}),
+    \dots,a_1\bigr)\\
+    &-(-1)^{\dagger_n}\sum_{i,j}(-1)^{\beta_j}\mu^{d+2-i}_{\mathcal A}\bigl(
+    b_{d+1},\dots,\mu^i_{\mathcal A}(b_{j+i},\dots,b_{j+1}),b_j,\dots,b_1\bigr),
+  \end{aligned}
+\]
+其中 $0\le n<d$，$(b_1,\dots,b_{d+1}):=(a_1,\dots,a_n,e_{X_n},a_{n+1},\dots,a_d)$，
+$\gamma:=|a_2|+\dots+|a_{n+1}|-n$，$\alpha_j:=|a_1|+\dots+|a_j|-j$，
+$\beta_j:=|b_1|+\dots+|b_j|-j$，而最后一个和式中 $i,j$ 的取值范围为：
+$i=1$ 且 $j\ne n$；$i=2$ 且 $j>n$；$i=d$ 且 $j=0$；$i=d+1$。
+
+现在必须验证：当这些更高阶的 $\mu^d_{\tilde{\mathcal A}}$ 的输入中含有恒等态射时，
+它们会消失。这一策略性做法的细节我们参阅 \cite{Sei08} 引理 2.1。
+\end{proof}
+% [Tutor Note: 【含糊】引理 \ref{lem:2.24} 的证明只是 sketch：原文把“输入含 $e_X$ 时 $\mu^d_{\tilde{\mathcal A}}$ 消失”的验证交给 \cite{Sei08} 引理 2.1，并未展开。另注意假设“$\hom_{\mathcal A}(X,X)=\{0\}$ 或 $H$ 非平凡”是用来排除“平凡对象上 c-单位与零态射无法区分”的退化情形。]
+% [Tutor Note: 【勘误】原书 p.21 该公式最后一项前的指标说明作 “$i=1,\ j\ne n;\ i=2,\ j>n;\ i=d,\ j=0;\ i=d+1$”，其中最后一项只给 $i$、未限定 $j$ 的范围，疑为排印时漏掉了 $j$ 的条件；译文照印，使用时须回到 \cite{Sei08} 引理 2.1 的原始表述核对。]
+
+\begin{Def}\label{def:2.25}
+设 $\mathcal F:\mathcal A\to\mathcal B$ 为 $A_\infty$-范畴之间的函子。若 $\mathcal A$
+与 $\mathcal B$：
+\begin{itemize}
+  \item 严格幺，则称 $\mathcal F$ 为\emph{严格幺 $A_\infty$-函子}，若对一切
+        $X\in\operatorname{obj}(\mathcal A)$ 有 $\mathcal F^1(e_X)=e_{\mathcal F(X)}$，
+        且 $d>1$ 时 $\mathcal F^d(a_{d-1},\dots,a_{n+1},e_{X_n},a_n,\dots,a_1)=0$；
+  \item c-幺，则称 $\mathcal F$ 为 \emph{c-幺 $A_\infty$-函子}，若 $H(\mathcal F)$
+        幺（从而是“真正的”线性分次函子）。
+\end{itemize}
+\end{Def}
+
+我们把重点放在 c-幺性上，因为这是 Fukaya 范畴的一个特征，而 Fukaya 范畴将在本文
+第二部分引入。眼下，我们先考察函子范畴中的幺性。
+
+\begin{Pro}\label{pro:2.26}
+设 $\mathcal A$ 为 $A_\infty$-范畴，$\mathcal C$ 为任意非幺 $A_\infty$-范畴。则：
+\begin{enumerate}
+  \item 若 $\mathcal A$ 严格幺，则 $\mathcal Q=\mathrm{nu\text{-}fun}(\mathcal C,
+        \mathcal A)$ 也严格幺；
+  \item 若 $\mathcal A$ 是 c-幺的，则 $\mathcal Q$ 也是 c-幺的。
+\end{enumerate}
+在后一情形，若 $E_{\mathcal F}\in\hom^0_{\mathcal Q}(\mathcal F,\mathcal F)$ 是
+c-单位，从而表示 $\mathrm{id}_{\mathcal F}\in\Hom^0_{H(\mathcal Q)}(\mathcal F,
+\mathcal F)$，则对 $X\in\operatorname{obj}(\mathcal C)$，每个
+$E^0_{\mathcal F}(X)\equiv E^0_{\mathcal F,X}\in\hom^0_{\mathcal A}(\mathcal F(X),
+\mathcal F(X))$ 都是 c-单位，从而表示 $\mathrm{id}_{\mathcal F(X)}\in
+\Hom^0_{H(\mathcal A)}(\mathcal F(X),\mathcal F(X))$。
+\end{Pro}
+
+\begin{proof}
+\begin{enumerate}
+  \item 我们验证：$\mathcal Q$ 的严格单位元恰是由 $E^0_{\mathcal F}(X):=
+        e_{\mathcal F(X)}\in\hom^0_{\mathcal A}(\mathcal F(X),\mathcal F(X))$
+        （即 $\mathcal F(X)$ 的严格单位元）与 $d>0$ 时 $E^d_{\mathcal F}:=0$ 给出的
+        那些预自然变换 $E_{\mathcal F}\in\hom^0_{\mathcal Q}(\mathcal F,\mathcal F)$。
+        例如，代入 \eqref{eq:2.16} 得 $\mu^1_{\mathcal Q}(E_{\mathcal F})^0_X=
+        \mu^1_{\mathcal A}(e_{\mathcal F(X)})=0$，而 \eqref{eq:2.17} 给出
+        \[
+          \begin{aligned}
+            \mu^1_{\mathcal Q}(E_{\mathcal F})^1(a)
+            &=0+0+\mu^2_{\mathcal A}\bigl(\mathcal F^1(a),e_{\mathcal F(X_0)}\bigr)
+            +(-1)^{1-|a|}\mu^2_{\mathcal A}\bigl(e_{\mathcal F(X_1)},\mathcal F^1(a)
+            \bigr)\\
+            &=\mathcal F^1(a)+(-1)^{1-|a|+|a|}\cdot\mathcal F^1(a)=0.
+          \end{aligned}
+        \]
+        确实，方程 \eqref{eq:2.14} 表明对一切更高的 $d$ 都有
+        $\mu^1_{\mathcal Q}(E_{\mathcal F})^d=0$，故
+        $\mu^1_{\mathcal Q}(E_{\mathcal F})=0$（特别地，$E_{\mathcal F}$ 是自然
+        变换）。由 \eqref{eq:2.15}，严格幺性的第二个要求也满足，而第三个要求涉及
+        更高次的 $\mu^d_{\mathcal Q}$（同样参见 \cite{Fuk99}）。
+  \item 我们把这一情形归到上面的严格幺情形。为此，考虑引理 \ref{lem:2.24} 所给的、在态射
+        空间上满足 $\Phi^1=\mathrm{id}$ 的形式微分同胚 $\Phi:\mathcal A\to
+        \tilde{\mathcal A}$，于是 $\tilde{\mathcal A}$ 严格幺（从而由第 i 部分，
+        $\tilde{\mathcal Q}:=\mathrm{nu\text{-}fun}(\mathcal C,\tilde{\mathcal A})$
+        也严格幺）。按定义 $\Phi$ 是拟同构，故其左复合
+        $\mathcal L_{\Phi}:\mathcal Q\to\tilde{\mathcal Q}$ 也是拟同构（由引理 \ref{lem:2.16}）。于是对每个 $\mathcal F\in\operatorname{obj}(\mathcal Q)$，都存在
+        某个 $E_{\mathcal F}\in\hom^0_{\mathcal Q}(\mathcal F,\mathcal F)$，使
+        $H(\mathcal L_{\Phi})\langle E_{\mathcal F}\rangle=\langle\mathcal L^1
+        _{\Phi}(E_{\mathcal F})\rangle$ 恰是由 $\tilde{\mathcal F}:=
+        \mathcal L_{\Phi}(\mathcal F)\in\operatorname{obj}(\tilde{\mathcal Q})$ 的
+        唯一严格单位元诱导的恒等态射 $\langle\tilde E_{\mathcal F}\rangle\in
+        \Hom^0_{H(\tilde{\mathcal Q})}(\tilde{\mathcal F},\tilde{\mathcal F})$。
+        同构 $H(\mathcal L_{\Phi})$ 的函子性保证 $\langle E_{\mathcal F}\rangle$
+        本身是 $H(\mathcal Q)$ 中的恒等态射，且是 $\mathcal F$ 的唯一个这样的态射，
+        这就证明 $H(\mathcal Q)$ 幺，即 $\mathcal Q$ 是 c-幺的。
+\end{enumerate}
+
+现在，\eqref{eq:2.18} 中的函子 $\mathcal H$ 把 $\langle E_{\mathcal F}\rangle=
+\mathrm{id}_{\mathcal F}$ 映到恒等自然变换 $H(E_{\mathcal F})\in
+\Hom_{H(\mathcal Q)}(H(\mathcal F),H(\mathcal F))$，取值于 $H(\mathcal Q)=
+\mathrm{Nu\text{-}Fun}(H(\mathcal C),H(\mathcal A))$ 中。$\Phi$ 的定义（它使
+$H(\mathcal F)=H(\tilde{\mathcal F})$ 且 $H(\mathcal A)\cong H(\tilde{\mathcal A})$，
+从而 $H(\mathcal Q)\cong H(\tilde{\mathcal Q})$）使我们能构造交换图
+\[
+  \begin{tikzcd}
+    \Hom_{H(\mathcal Q)}(\mathcal F,\mathcal F)
+      \arrow[rr, "H(\mathcal L_{\Phi})"]
+      \arrow[dr, "\mathcal H"'] & &
+    \Hom_{H(\tilde{\mathcal Q})}(\tilde{\mathcal F},\tilde{\mathcal F})
+      \arrow[dl, "\mathcal H"] \\
+    & \Hom_{H(\mathcal Q)}\bigl(H(\mathcal F),H(\mathcal F)\bigr) &
+  \end{tikzcd}
+\]
+它又给出 $H(E_{\mathcal F})=H(\langle E_{\mathcal F}\rangle)=
+\mathcal H\circ H(\mathcal L_{\Phi})\langle E_{\mathcal F}\rangle=
+H(\langle\tilde E_{\mathcal F}\rangle)=H(E_{\tilde{\mathcal F}})$ 作为恒等自然
+变换，从而对 $X\in\operatorname{obj}(\mathcal C)$，每个
+$\langle E^0_{\mathcal F(X)}\rangle=\langle E^0_{\tilde{\mathcal F}(X)}\rangle$
+（参看定义 \ref{def:2.12}）都必须是 $H^0(\mathcal A)$ 中的恒等态射
+$\mathrm{id}_{\mathcal F(X)}$。
+\end{proof}
+% [Tutor Note: 【易错】第 i 部分中 $E_{\mathcal F}$ 的零阶项取的是 $\mathcal F(X)$ 的严格单位元 $e_{\mathcal F(X)}$，而 $E^d_{\mathcal F}=0$（$d>0$）：验证 $\mu^2$-幺性时靠的正是 \eqref{eq:2.28} 的第三条，$\mu^d_{\mathcal A}(e,\dots)=0$ 对 $d>2$ 成立，所以高阶项全部消失。]
+% [Tutor Note: 【含糊】第 ii 部分两次用到“唯一性”：$\tilde{\mathcal F}$ 的严格单位元唯一（严格幺范畴中单位元唯一），以及 $H(\mathcal Q)$ 中 $\mathcal F$ 的恒等态射唯一。原文未说明为何 $H(\mathcal L_\Phi)$ 把恒等类送到恒等类——这由 $H(\mathcal L_\Phi)$ 是同构（故保持恒等）保证。]
+
+\begin{Lem}\label{lem:2.27}
+设 $\mathcal G:\mathcal A\to\mathcal B$ 为 c-幺 $A_\infty$-函子。则对任意非幺
+$A_\infty$-范畴 $\mathcal C$，$\mathcal L_{\mathcal G}:\mathrm{nu\text{-}fun}
+(\mathcal C,\mathcal A)\to\mathrm{nu\text{-}fun}(\mathcal C,\mathcal B)$ 是 c-幺的。
+右复合也有类似结果。
+\end{Lem}
+
+\begin{proof}
+设 $E_{\mathcal F}\in\hom^0_{\mathrm{nu\text{-}fun}(\mathcal C,\mathcal A)}
+(\mathcal F,\mathcal F)$ 为 c-单位。由命题 \ref{pro:2.26}，对每个 $X\in\operatorname{obj}
+(\mathcal C)$ 有 $\langle E^0_{\mathcal F}(X)\rangle=\mathrm{id}_{\mathcal F(X)}$
+在 $H(\mathcal A)$ 中成立。于是 $\langle\mathcal L^1_{\mathcal G}(E_{\mathcal F})^0_X
+\rangle=\langle\mathcal G^1(E^0_{\mathcal F}(X))\rangle=H(\mathcal G)\langle
+E^0_{\mathcal F}(X)\rangle$（利用 $d=0$ 时的 \eqref{eq:2.19}）表明
+$\mathcal L^1_{\mathcal G}(E_{\mathcal F})^0_X\in\hom^0_{\mathcal B}(\mathcal G
+(\mathcal F(X)),\mathcal G(\mathcal F(X)))$ 也是 c-单位（因为 $\mathcal G$ 是 c-幺的，
+$H(\mathcal G)$ 会保持恒等态射）。
+
+现在把引理 \ref{lem:2.15} 施用于如下数据：$\mathcal Q:=\mathrm{nu\text{-}fun}(\mathcal C,
+\mathcal B)$，$\mathcal G_1=\mathcal G_2=\mathcal G_3:=\mathcal G\circ\mathcal F$，
+$T:=\mathcal L^1_{\mathcal G}(E_{\mathcal F})\in\hom^0_{\mathcal Q}(\mathcal G\circ
+\mathcal F,\mathcal G\circ\mathcal F)$，其中上一段的论证保证：与每个
+$\langle T^0_X\rangle=\mathrm{id}_{\mathcal G(\mathcal F(X))}$ 作右复合确实是
+$\Hom_{H(\mathcal B)}(\mathcal G(\mathcal F(X)),\mathcal G(\mathcal F(X)))$ 的
+自同构。因此，与 $\langle\mathcal L^1_{\mathcal G}(E_{\mathcal F})\rangle$ 作右
+复合是 $\Hom_{H(\mathcal Q)}(\mathcal G\circ\mathcal F,\mathcal G\circ\mathcal F)$
+的自同构。
+
+但由命题 \ref{pro:2.26}，$\mathcal Q$ 是 c-幺的，故 $H(\mathcal Q)$ 有恒等态射
+$\mathrm{id}_{\mathcal G\circ\mathcal F}$；而在与 $\langle\mathcal L^1_{\mathcal G}
+(E_{\mathcal F})\rangle$ 作右复合下映到它的那个 $\langle S\rangle\in
+\Hom_{H(\mathcal Q)}(\mathcal G\circ\mathcal F,\mathcal G\circ\mathcal F)$ 就是
+$\langle\mathcal L^1_{\mathcal G}(E_{\mathcal F})\rangle$ 的逆。此外，由
+$H(\mathcal L_{\mathcal G})$ 的函子性与方程 \eqref{eq:2.8}，
+$\langle\mathcal L^1_{\mathcal G}(E_{\mathcal F})\rangle\circ
+\langle\mathcal L^1_{\mathcal G}(E_{\mathcal F})\rangle=
+\langle\mathcal L^1_{\mathcal G}(\mu^2_{\mathcal Q}(E_{\mathcal F},E_{\mathcal F}))
+\rangle=\langle\mathcal L^1_{\mathcal G}(E_{\mathcal F})\rangle$ 是幂等的。唯一
+幂等的可逆映射是恒等映射，于是我们得出 $H(\mathcal L_{\mathcal G}):\langle
+E_{\mathcal F}\rangle\mapsto\langle\mathcal L^1_{\mathcal G}(E_{\mathcal F})\rangle$
+保持恒等态射，即 $\mathcal L_{\mathcal G}$ 是 c-幺的。
+\end{proof}
+% [Tutor Note: 【易错】此证明的关键是“幂等 + 可逆 ⇒ 恒等”：$\langle\mathcal L^1_{\mathcal G}(E_{\mathcal F})\rangle$ 既幂等又可逆（在 $H(\mathcal Q)$ 中），故必须是 $\mathrm{id}_{\mathcal G\circ\mathcal F}$。原文未点明 $H(\mathcal Q)$ 中“可逆”指的是同构类中的可逆性，读者易误以为要求严格相等。]
+
+\begin{Lem}\label{lem:2.28}
+设 $\mathcal A$ 为 c-幺 $A_\infty$-范畴，$\mathcal C$ 为任意非幺 $A_\infty$-范畴。
+若 $\mathcal F_0,\mathcal F_1:\mathcal C\to\mathcal A$ 是同伦的非幺 $A_\infty$-函子，
+则作为 $H^0(\mathrm{nu\text{-}fun}(\mathcal C,\mathcal A))$ 的对象有
+$\mathcal F_0\cong\mathcal F_1$。
+\end{Lem}
+
+\begin{proof}
+与命题 \ref{pro:2.26} 的证明一样，我们经由一个适当的形式微分同胚 $\Phi$ 过渡到严格幺的像
+$\tilde{\mathcal A}=\Phi_*\mathcal A$，并回忆：$\mathcal F_0\simeq\mathcal F_1$
+蕴含 $\tilde{\mathcal F}_0\simeq\tilde{\mathcal F}_1$，其中
+$\tilde{\mathcal F}_i:=\Phi\circ\mathcal F_i$。
+
+再令 $\mathcal Q=\mathrm{nu\text{-}fun}(\mathcal C,\mathcal A)$ 与
+$\tilde{\mathcal Q}=\mathrm{nu\text{-}fun}(\mathcal C,\tilde{\mathcal A})$。设
+$T\in\hom^0_{\tilde{\mathcal Q}}(\tilde{\mathcal F}_0,\tilde{\mathcal F}_1)$
+满足 $T^0=0$，并定义 $S\in\hom^0_{\tilde{\mathcal Q}}(\tilde{\mathcal F}_0,
+\tilde{\mathcal F}_1)$ 使得对一切 $X\in\operatorname{obj}(\mathcal C)$ 有
+$S^0_X=e_{\tilde{\mathcal F}_0(X)}=e_{\tilde{\mathcal F}_1(X)}$\footnote{回忆：
+两个 $A_\infty$-函子只有在对象上相同时才可能同伦！}（于是
+$\mu^1_{\tilde{\mathcal Q}}(S)^0_X=\mu^1_{\tilde{\mathcal A}}
+(e_{\tilde{\mathcal F}_0(X)})=0$），且 $d>0$ 时 $S^d=T^d$。方程
+\eqref{eq:2.14} 表明：$T$ 是从 $\tilde{\mathcal F}_0$ 到 $\tilde{\mathcal F}_1$
+的同伦，当且仅当 $S$ 是自然变换——\eqref{eq:2.17} 已提示这一点：
+\[
+  \begin{aligned}
+    \mu^1_{\tilde{\mathcal Q}}(S)^1(a)&=\mu^1_{\tilde{\mathcal A}}\bigl(S^1(a)\bigr)
+    -S^1\bigl(\mu^1_{\mathcal C}(a)\bigr)
+    +\mu^2_{\tilde{\mathcal A}}\bigl(\tilde{\mathcal F}_1^1(a),S^0_{X_0}\bigr)
+    +(-1)^{1-|a|}\mu^2_{\tilde{\mathcal A}}\bigl(S^0_{X_1},
+    \tilde{\mathcal F}_0^1(a)\bigr)\\
+    &=\mu^1_{\tilde{\mathcal A}}\bigl(S^1(a)\bigr)-S^1\bigl(\mu^1_{\mathcal C}(a)
+    \bigr)+\tilde{\mathcal F}_1^1(a)-\tilde{\mathcal F}_0^1(a)=0
+  \end{aligned}
+\]
+当且仅当 $\mu^1_{\tilde{\mathcal Q}}(T)=\tilde{\mathcal F}_0-\tilde{\mathcal F}_1$。
+
+现在把引理 \ref{lem:2.15} 施用于数据：$\mathcal G_1:=\tilde{\mathcal F}_0$、
+$\mathcal G_2=\mathcal G_3:=\tilde{\mathcal F}_1$ 以及自然变换
+$S\in\hom_{\tilde{\mathcal Q}}(\tilde{\mathcal F}_0,\tilde{\mathcal F}_1)$，
+于是 $\langle c\rangle\mapsto\langle c\rangle\circ\langle S^0_X\rangle=
+\langle\mu_{\tilde{\mathcal A}}(c,e_{\tilde{\mathcal F}_0(X)})\rangle=\langle c
+\rangle$ 确实是同构。于是由与 $\langle S\rangle$ 作右复合给出的映射
+$\Hom^0_{H(\tilde{\mathcal Q})}(\tilde{\mathcal F}_1,\tilde{\mathcal F}_1)\to
+\Hom^0_{H(\tilde{\mathcal Q})}(\tilde{\mathcal F}_0,\tilde{\mathcal F}_1)$ 是
+同构。$\tilde{\mathcal A}$ 严格幺，故 $\tilde{\mathcal Q}$ 也严格幺（由命题 \ref{pro:2.26}），从而也是 c-幺的，于是可以找到恒等态射
+$\mathrm{id}_{\tilde{\mathcal F}_1}\in\Hom^0_{H(\tilde{\mathcal Q})}
+(\tilde{\mathcal F}_1,\tilde{\mathcal F}_1)$。于是经由同构
+$\mathrm{id}_{\tilde{\mathcal F}_1}\circ\langle S\rangle:\tilde{\mathcal F}_0\to
+\tilde{\mathcal F}_1$ 有 $\tilde{\mathcal F}_0\cong\tilde{\mathcal F}_1\in
+\operatorname{obj}(H^0(\tilde{\mathcal Q}))$。
+
+最后，$\Phi$ 是拟同构，从而是上同调全忠实的，故由引理 \ref{lem:2.16}，
+$\mathcal L_{\Phi}:\mathcal Q\to\tilde{\mathcal Q}$ 也是上同调全忠实的。这说明
+$H(\mathcal L_{\Phi})_{\mathcal F_0,\mathcal F_1}$ 是双射，从而保持同构。因此
+$\mathcal F_0\cong\mathcal F_1\in\operatorname{obj}(H^0(\mathcal Q))$，如所欲证。
+\end{proof}
+% [Tutor Note: 【易错】$S^0_X$ 取的是 $\tilde{\mathcal F}_0(X)$ 的严格单位元，而这里用到了 $\tilde{\mathcal F}_0(X)=\tilde{\mathcal F}_1(X)$（同伦的必要条件，见脚注）；否则 $S^0$ 无法同时充当两端的单位元，整个论证失效。]
+
+\subsection{拟等价}\label{sec:2.8}
+
+\begin{Def}\label{def:2.29}
+设 $\mathcal A$ 与 $\mathcal B$ 为 c-幺 $A_\infty$-范畴，用 $\mathrm{fun}
+(\mathcal A,\mathcal B)$ 表示 $\mathrm{nu\text{-}fun}(\mathcal A,\mathcal B)$ 中
+由 c-幺 $A_\infty$-函子组成的满 $A_\infty$-子范畴。若 $H(\mathcal F)$ 是等价，
+则称任意 $\mathcal F\in\operatorname{obj}(\mathrm{fun}(\mathcal A,\mathcal B))$
+为\emph{拟等价}。特别地，由引理 \ref{lem:2.3}，对 $\mathcal F$ 有如下蕴含链：
+\begin{center}
+  \fbox{\parbox{0.86\linewidth}{\centering
+    拟同构 $\Longrightarrow$ 拟等价 $\Longrightarrow$ 上同调全、忠实
+    $\Longrightarrow$ c-幺}}
+\end{center}
+\end{Def}
+% [Tutor Note: 【易错】这条蕴含链的最后一环最易被忽略：拟等价只要求 $H(\mathcal F)$ 是通常范畴的等价，而由引理 \ref{lem:2.3} 等价蕴含全且忠实，故 $H(\mathcal F)$ 保持 Hom 集上的同构类；c-幺性由 $H(\mathcal F)$ 把恒等态射送到恒等态射这一事实得到（等价函子必然如此）。]
+
+以下，对任意 c-幺 $A_\infty$-范畴 $\mathcal A$，记 $\tilde{\mathcal A}\subset
+\mathcal A$ 为使（c-幺）包含 $\mathcal I:\tilde{\mathcal A}\to\mathcal A$ 成为
+拟等价的满 c-幺 $A_\infty$-子范畴。
+
+\begin{Lem}\label{lem:2.30}
+给定另一个 c-幺 $A_\infty$-范畴 $\mathcal B$，由 $\mathcal F\mapsto
+\tilde{\mathcal F}\equiv\mathcal F|_{\tilde{\mathcal A}}$ 与
+$T\in\hom_{\mathcal Q}(\mathcal F_0,\mathcal F_1)\mapsto\tilde T\in
+\hom_{\tilde{\mathcal Q}}(\tilde{\mathcal F}_0,\tilde{\mathcal F}_1)$ 指定的
+限制映射 $\mathcal Q=\mathrm{fun}(\mathcal A,\mathcal B)\to\tilde{\mathcal Q}=
+\mathrm{fun}(\tilde{\mathcal A},\mathcal B)$ 是拟等价。
+\end{Lem}
+
+\begin{proof}（略证）
+用 Hochschild 上同调论证，可以证明 $T\in\hom_{\mathcal Q}(\mathcal F_0,\mathcal F_1)
+\mapsto\tilde T\in\hom_{\tilde{\mathcal Q}}(\tilde{\mathcal F}_0,
+\tilde{\mathcal F}_1)$ 是拟同构，从而是上同调全忠实的；并且任意 c-幺
+$\tilde{\mathcal F}:\tilde{\mathcal A}\to\mathcal B$ 都可以唯一地延拓为某个
+$\mathcal F\in\operatorname{obj}(\mathcal Q)$，这使限制映射上同调本质满。由引理 \ref{lem:2.3}，这两个条件蕴含拟等价。
+\end{proof}
+% [Tutor Note: 【含糊】“用 Hochschild 上同调论证”一语带过的是本章最重的一段技术：需要把 $\hom_{\mathcal Q}(\mathcal F_0,\mathcal F_1)$ 与 $\hom_{\tilde{\mathcal Q}}(\tilde{\mathcal F}_0,\tilde{\mathcal F}_1)$ 分别识别为 Hochschild 复形并比较其谱序列（见 \eqref{eq:2.21}）；原文没有展开，细节见 \cite{Sei08} 第 (2g) 节与 \cite{GM03} 第 III.7.3 小节。]
+
+上一证明中提到的延拓过程施用于恒等 $\mathrm{Id}_{\tilde{\mathcal A}}\in\mathrm{fun}
+(\tilde{\mathcal A},\tilde{\mathcal A})$ 时，会给出 c-幺 $A_\infty$-函子
+$\mathcal P:\mathcal A\to\tilde{\mathcal A}$，满足
+$\mathcal P|_{\tilde{\mathcal A}}=\mathcal P\circ\mathcal I=
+\mathrm{Id}_{\tilde{\mathcal A}}$，并且是拟等价（正如 $\mathcal I$ 那样）。事实上，
+作为 $\operatorname{obj}\bigl(H^0(\mathrm{fun}(\mathcal A,\mathcal A))\bigr)$ 的
+对象有 $\mathcal I\circ\mathcal P\cong\mathrm{Id}_{\mathcal A}$，因为
+$\mathcal L_{\mathcal P}$ 上同调全忠实（由引理 \ref{lem:2.16}），从而
+\[
+  H(\mathcal L_{\mathcal P}):\Hom^0_{H(\mathrm{fun}(\mathcal A,\mathcal A))}
+  (\mathcal I\circ\mathcal P,\mathrm{Id}_{\mathcal A})\longrightarrow
+  \Hom^0_{H(\mathrm{fun}(\mathcal A,\tilde{\mathcal A}))}\Bigl(
+  \underbrace{\mathcal L_{\mathcal P}(\mathcal I\circ\mathcal P)}
+  _{=\mathcal L_{\mathcal P}(\mathrm{Id}_{\mathcal A})},
+  \mathcal L_{\mathcal P}(\mathrm{Id}_{\mathcal A})\Bigr)
+\]
+是双射，它把 $\mathcal L_{\mathcal P}(\mathrm{Id}_{\mathcal A})$ 的恒等态射映回
+所需的同构。
+
+这些映射参与了如下非常重要的结果的证明，它解释了为什么我们关心拟等价。在下一节
+中我们将反复使用它。
+
+\begin{Thm}\label{thm:2.31}
+设 $\mathcal A,\mathcal B$ 为 c-幺 $A_\infty$-范畴，$\mathcal F:\mathcal A\to
+\mathcal B$ 为拟等价。则存在拟等价 $\mathcal G:\mathcal B\to\mathcal A$，使得
+\[
+  \mathcal G\circ\mathcal F\cong\mathrm{Id}_{\mathcal A}
+  \in\operatorname{obj}\bigl(H^0(\mathrm{fun}(\mathcal A,\mathcal A))\bigr),
+  \qquad
+  \mathcal F\circ\mathcal G\cong\mathrm{Id}_{\mathcal B}
+  \in\operatorname{obj}\bigl(H^0(\mathrm{fun}(\mathcal B,\mathcal B))\bigr).
+\]
+\end{Thm}
+
+\begin{proof}
+记 $\tilde{\mathcal A}\subset\mathcal A$ 与 $\tilde{\mathcal B}\subset\mathcal B$
+为使包含 $\mathcal I_{\mathcal A}:\tilde{\mathcal A}\to\mathcal A$ 与
+$\mathcal I_{\mathcal B}:\tilde{\mathcal B}\to\mathcal B$ 成为拟等价的满 c-幺
+$A_\infty$-子范畴；由上段的论证，它们分别经由 $\mathcal P_{\mathcal A}$ 与
+$\mathcal P_{\mathcal B}$ 同构可逆。令 $\tilde{\mathcal F}:=\mathcal P_{\mathcal B}
+\circ\mathcal F\circ\mathcal I_{\mathcal A}:\tilde{\mathcal A}\to\tilde{\mathcal B}$，
+可见 $\tilde{\mathcal F}$ 实际上是拟同构，从而由引理 \ref{lem:2.19} 有同伦逆
+$\tilde{\mathcal G}:\tilde{\mathcal B}\to\tilde{\mathcal A}$，使得
+$\tilde{\mathcal F}\circ\tilde{\mathcal G}\simeq\mathrm{Id}_{\tilde{\mathcal B}}$
+且 $\tilde{\mathcal G}\circ\tilde{\mathcal F}\simeq\mathrm{Id}_{\tilde{\mathcal A}}$。
+现在，引理 \ref{lem:2.28} 给出 $H^0(\mathrm{fun}(\tilde{\mathcal B},\tilde{\mathcal B}))$ 中的
+$\tilde{\mathcal F}\circ\tilde{\mathcal G}\cong\mathrm{Id}_{\tilde{\mathcal B}}$
+以及 $H^0(\mathrm{fun}(\tilde{\mathcal A},\tilde{\mathcal A}))$ 中的
+$\tilde{\mathcal G}\circ\tilde{\mathcal F}\cong\mathrm{Id}_{\tilde{\mathcal A}}$。
+\end{proof}
+% [Tutor Note: 【含糊】定理 \ref{thm:2.31} 的证明在此戛然而止：原文没有说明如何把 $\tilde{\mathcal A},\tilde{\mathcal B}$ 上的同构搬回 $\mathcal A,\mathcal B$（应当用 $\mathcal P_{\mathcal A},\mathcal P_{\mathcal B}$ 与 $\mathcal I$ 作共轭，即 $\mathcal G:=\mathcal I_{\mathcal A}\circ\tilde{\mathcal G}\circ\mathcal P_{\mathcal B}$ 之类），也未验证 $\mathcal G$ 是拟等价；这些步骤留给读者。]
+% [Tutor Note: 【背景】定理 \ref{thm:2.31} 的实际意义：它说明拟等价在 $H^0$ 层面可逆，于是“$A_\infty$-范畴 + 拟等价”构成某种同伦理论；这正是后文可以用 $\tilde{\mathcal A}\subset\mathcal A$ 替换 $\mathcal A$ 而不改变理论的原因（譬如把 $\mathcal A$ 换成极小模型）。]
+
+\begin{Cor}\label{cor:2.32}
+设 $\mathcal C$ 为任意 c-幺 $A_\infty$-范畴。若 $\mathcal G:\mathcal A\to\mathcal B$
+是拟等价，则其右复合 $\mathcal R_{\mathcal G}:\mathrm{fun}(\mathcal B,\mathcal C)
+\to\mathrm{fun}(\mathcal A,\mathcal C)$（以及左复合 $\mathcal L_{\mathcal G}:
+\mathrm{fun}(\mathcal C,\mathcal A)\to\mathrm{fun}(\mathcal C,\mathcal B)$）也是
+拟等价。
+\end{Cor}
+
+\begin{proof}
+由上述，有两种情形可推出一般结果：要么 $\mathcal G$ 是拟同构，要么它是满
+$A_\infty$-子范畴 $\tilde{\mathcal B}:=\mathcal A$ 的包含（于是引理 \ref{lem:2.30} 的限制
+映射恰好就是 $\mathcal R_{\mathcal G}$）。两种情形下 $\mathcal R_{\mathcal G}$
+都是上同调全忠实的（分别由引理 \ref{lem:2.16} 与引理 \ref{lem:2.30}）。
+
+现在，由定理 \ref{thm:2.31} 可以找到拟等价 $\mathcal F:\mathcal B\to\mathcal A$，使得作为
+上同调中的对象有 $\mathcal F\circ\mathcal G\cong\mathrm{Id}_{\mathcal A}$，而引理 \ref{lem:2.27} 保证对任意 $\mathcal E\in\operatorname{obj}(\mathrm{fun}(\mathcal A,
+\mathcal C))$，$\mathcal L_{\mathcal E}:\mathrm{fun}(\mathcal A,\mathcal A)\to
+\mathrm{fun}(\mathcal A,\mathcal C)$ 有定义。我们有
+$\mathcal R_{\mathcal G}(\mathcal E\circ\mathcal F)=\mathcal L_{\mathcal E}
+(\mathcal F\circ\mathcal G)\cong\mathcal L_{\mathcal E}(\mathrm{Id}_{\mathcal A})
+=\mathcal E$ 于 $H^0(\mathrm{fun}(\mathcal A,\mathcal C))$ 中。因此
+$\mathcal R_{\mathcal G}$ 上同调本质满。连同全性与忠实性，这使它成为拟等价
+（$\mathcal L_{\mathcal G}$ 的论证类似）。
+\end{proof}
+% [Tutor Note: 【易错】此证明第一句把拟等价分成两类，但 $\mathcal G$ 一般既非拟同构也非满子范畴的包含；之所以可以这样分，是因为定理 \ref{thm:2.31} 允许先把 $\mathcal G$ 与 $\tilde{\mathcal A},\tilde{\mathcal B}$ 上的拟同构作比较，而“满子范畴包含”这一情形对应的正是限制映射。原文对这一步的表述压缩得极紧。]
+
+最后，$A_\infty$-模的幺性概念。
+
+\begin{Rem}\label{rem:2.33}
+注意 dg 范畴 $\mathsf{Ch}$ 是严格幺的：对任意复形 $(V,d_V)\in\operatorname{obj}
+(\mathsf{Ch})$，唯一的严格单位元由 $e_V:=\mathrm{id}_V\in\hom^0_{\mathsf{Ch}}
+(V,V)$ 给出。确实，由定义 \ref{def:1.2}：
+$\mu^1_{\mathsf{Ch}}(\mathrm{id}_V)=d(\mathrm{id}_V)=d_V\circ\mathrm{id}_V
+-(-1)^0\mathrm{id}_V\circ d_V=0$，且对一切 $f\in\Hom_{\mathsf{Ch}}(V,W)$ 有
+$(-1)^{|f|}\mu^2_{\mathsf{Ch}}(\mathrm{id}_W,f)=(-1)^{2|f|}\mathrm{id}_W\circ f
+=f=f\circ\mathrm{id}_V=\mu^2_{\mathsf{Ch}}(f,\mathrm{id}_V)$，而 $d>2$ 时显然
+$\mu^d_{\mathsf{Ch}}=0$。
+\end{Rem}
+% [Tutor Note: 【易错】这里 $(-1)^{2|f|}=1$ 依赖 $\mathsf{Ch}$ 的复合符号约定：$\mu^2_{\mathsf{Ch}}(f,g)=f\circ g$ 只在偶次情形下不带号，而 $\mu^2_{\mathsf{Ch}}(\mathrm{id}_W,f)$ 的展开中含 $(-1)^{|f|}$，两者相乘才得 $(-1)^{2|f|}$；若改用别的 Koszul 约定，这一行必须重算。]
+
+由上一条注与命题 \ref{pro:2.26}，对任意非幺 $A_\infty$-范畴 $\mathcal A$，
+$\mathcal Q=\mathrm{nu\text{-}mod}(\mathcal A)=\mathrm{nu\text{-}fun}
+(\mathcal A^{opp},\mathsf{Ch})$ 是严格幺的。与 $\mathcal M\in\operatorname{obj}
+(\mathcal Q)$ 相伴的严格单位元是由
+\begin{equation}\label{eq:2.29}
+  e^1_{\mathcal M}(b):=(-1)^{|b|}b\in\mathcal M(X_0)
+  \qquad\text{与}\qquad
+  e^d_{\mathcal M}:=0\quad(d>1)
+\end{equation}
+给出的模同态 $t:=e_{\mathcal M}\in\hom^0_{\mathcal Q}(\mathcal M,\mathcal M)$。
+
+我们借助方程 \eqref{eq:2.26} 与 \eqref{eq:2.27} 在一维情形验证这一点：
+\[
+  \begin{aligned}
+    \mu^1_{\mathcal Q}(t)^1(b)&=(-1)^{|b|}\mu^1_{\mathcal M_1}\bigl(t^1(b)\bigr)
+    +(-1)^{|b|}t^1\bigl(\mu^1_{\mathcal M}(b)\bigr)
+    =\mu^1_{\mathcal M}(b)+(-1)^{2|b|+1}\mu^1_{\mathcal M}(b)=0,\\
+    \text{且}\quad
+    (-1)^{|t_1|}\mu^2_{\mathcal Q}(t,t_1)^1(b)&=(-1)^{|t_1|+|b|}
+    t^1\bigl(t^1_1(b)\bigr)=t^1_1(b)=\mu^2_{\mathcal Q}(t_1,t)^1(b).
+  \end{aligned}
+\]
+% [Tutor Note: 【易错】$e^1_{\mathcal M}(b)=(-1)^{|b|}b$ 是“平移过的恒等”，它在 $\mathcal M(X_0)$ 中并不是恒等映射；只有其同调类 $\langle e^1_{\mathcal M}(b)\rangle=\langle b\rangle$ 才是 $H(\mathcal M)$ 中的恒等。若忘记符号，$d>1$ 时 \eqref{eq:2.24} 中的高阶项将不再消失。]
+% [Tutor Note: 【含糊】最后一行验证里的符号 $(-1)^{|t_1|+|b|}$ 与 $|t^1_1(b)|$ 的关系未写出：$t_1$ 是任意预模同态，$t^1_1$ 表示其第一个分量。原文把两处展开压成一步，读者需自行用 $|t^1_1(b)|=|b|+|t_1|-1$ 补全符号计算。]
+
+\begin{Def}\label{def:2.34}
+设 $\mathcal A$ 为 c-幺 $A_\infty$-范畴。若 $H(\mathcal A)$-模 $H(\mathcal M)$ 幺，
+即 c-单位 $e_X\in\hom^0_{\mathcal A}(X,X)$ 使映射 $\mu^2_{\mathcal M}(\,\cdot\,,e_X):
+\mathcal M(X)\to\mathcal M(X)$ 在上同调中诱导恒等，则称 $A_\infty$-模
+$\mathcal M\in\operatorname{obj}(\mathcal Q)$ 为 \emph{c-幺的}。
+
+记 $\mathrm{mod}(\mathcal A)\subset\mathrm{nu\text{-}mod}(\mathcal A)$ 为 c-幺
+$A_\infty$-模的满子范畴。
+\end{Def}
+
+\subsection{Yoneda 嵌入}\label{sec:2.9}
+
+在转向 $A_\infty$-范畴的三角化之前，我们讨论一个重要的 $A_\infty$-函子，它在后文的
+构造中将扮演主要角色。
+
+\begin{Def}\label{def:2.35}
+非幺 $A_\infty$-范畴 $\mathcal A$ 的\emph{Yoneda 嵌入}是如下非幺
+$A_\infty$-函子 $\Upsilon\equiv\Upsilon_{\mathcal A}:\mathcal A\to\mathcal Q=
+\mathrm{nu\text{-}mod}(\mathcal A)$：
+\begin{itemize}
+  \item 它把 $Y\in\operatorname{obj}(\mathcal A)$ 映为 $\mathcal Y\in
+        \operatorname{obj}(\mathcal Q)$（称为 $Y$ 的\emph{Yoneda 模}），后者由
+        $\mathcal Y(X):=\hom_{\mathcal A}(X,Y)$ 与 $\mu^d_{\mathcal Y}:=
+        \mu^d_{\mathcal A}:\hom_{\mathcal A}(X_{d-1},Y)\otimes\dots\otimes
+        \hom_{\mathcal A}(X_0,X_1)\to\hom_{\mathcal A}(X_0,Y)$ 定义，其中 $d\ge 1$、
+        $X,X_0,\dots,X_{d-1}\in\operatorname{obj}(\mathcal A)$；
+  \item 它由一列如 \eqref{eq:2.9} 的分次映射 $\Upsilon^d$ 组成，其中一阶项
+        $\Upsilon^1$（次数为 0）把 $c_1\in\hom_{\mathcal A}(Y_0,Y_1)$ 映为预模
+        同态 $\Upsilon^1(c_1)\in\hom_{\mathcal Q}(\mathcal Y_0,\mathcal Y_1)$，
+        后者由
+        \begin{equation}\label{eq:2.30}
+          \begin{aligned}
+            \Upsilon^1(c_1)^d:\ &\mathcal Y_0(X_{d-1})\otimes\hom_{\mathcal A}
+            (X_{d-2},X_{d-1})\otimes\dots\otimes\hom_{\mathcal A}(X_0,X_1)
+            \longrightarrow\mathcal Y_1(X_0)\\
+            &(b,a_{d-1},\dots,a_1)\longmapsto\mu^{d+1}_{\mathcal A}
+            (c_1,b,a_{d-1},\dots,a_1)
+          \end{aligned}
+        \end{equation}
+        给出。
+\end{itemize}
+\end{Def}
+% [Tutor Note: 【易错】Yoneda 模是反变的：$\mathcal Y(X)=\hom_{\mathcal A}(X,Y)$ 关于 $X$ 反变，这正是它被定义为 $\mathcal A^{opp}$ 上的函子（即 $\mathcal A$ 的右模）的原因；而 $\mu^d_{\mathcal Y}=\mu^d_{\mathcal A}$ 中第一个变量是 $b\in\hom_{\mathcal A}(X_{d-1},Y)$（“最右”），次序不可对调。]
+
+更高阶的 $\Upsilon^d$ 类似定义：
+$\Upsilon^2(c_2,c_1)^d(b,a_{d-1},\dots,a_1):=\mu^{d+2}_{\mathcal A}(c_2,c_1,
+b,a_{d-1},\dots,a_1)\in\mathcal Y_2$，其中 $c_2\in\hom_{\mathcal A}(Y_1,Y_2)$，
+依此类推。
+% [Tutor Note: 【含糊】“依此类推”省去了 $\Upsilon^d$ 的一般公式以及验证它满足 $A_\infty$-函子方程 \eqref{eq:2.10} 的全部工作；这些正是 Yoneda 嵌入之所以为 $A_\infty$-函子的实质，见 \cite{Sei08} 第 (2g) 节。]
+
+此外，若 $\mathcal A$ 是 c-幺的，则由定义 \ref{def:2.34}，Yoneda 嵌入实际上是
+$A_\infty$-函子 $\Upsilon:\mathcal A\to\mathrm{mod}(\mathcal A)$。
+
+可以证明，对 c-幺 $A_\infty$-范畴 $\mathcal A$，$\Upsilon_{\mathcal A}$ 是上同调
+全忠实的（证明涉及 Hochschild 上同调；见 \cite{Sei08} 第 (2g) 节）。此外，对任意
+$A_\infty$-模 $\mathcal M$ 与 $Y\in\operatorname{obj}(\mathcal A)$，有自然链映射
+\begin{equation}\label{eq:2.31}
+  \lambda=\lambda_{\mathcal M}:\mathcal M(Y)\to\hom_{\mathcal Q}(\mathcal Y,
+  \mathcal M),\qquad
+  \lambda(c)^d(b,a_{d-1},\dots,a_1):=\mu^{d+1}_{\mathcal M}(c,b,a_{d-1},\dots,a_1)
+\end{equation}
+延拓 $\Upsilon^1$。事实上，只要 $c\in\mathcal M(Y)$ 是上闭链，由方程
+\eqref{eq:2.26} 便知 $\lambda(c)$ 是模同态。此外，方程 \eqref{eq:2.27} 表明：
+\begin{equation}\label{eq:2.32}
+  \begin{gathered}
+    \bigl\langle\lambda_{\mathcal M}\bigl(\mu^2_{\mathcal M}(c,b)\bigr)\bigr\rangle
+    =\bigl\langle\mu^2_{\mathcal Q}\bigl(\lambda_{\mathcal M}(c),\Upsilon^1(b)
+    \bigr)\bigr\rangle\in\Hom_{H(\mathcal Q)}(\mathcal Y_0,\mathcal M),\\
+    \bigl\langle\mu^2_{\mathcal Q}\bigl(t,\lambda_{\mathcal M_0}(\tilde c)\bigr)
+    \bigr\rangle=\bigl\langle\lambda_{\mathcal M_1}\bigl(t^1(\tilde c)\bigr)
+    \bigr\rangle\in\Hom_{H(\mathcal Q)}(\mathcal Y,\mathcal M_1),
+  \end{gathered}
+\end{equation}
+对任意 $\langle c\rangle\in H(\mathcal M(Y_1))$、$\langle b\rangle\in
+\Hom_{H(\mathcal A)}(Y_0,Y_1)$、$\langle t\rangle\in\Hom_{H(\mathcal Q)}
+(\mathcal M_0,\mathcal M_1)$ 与 $\langle\tilde c\rangle\in H(\mathcal M_0(Y))$ 成立。
+% [Tutor Note: 【易错】\eqref{eq:2.32} 第一式的两边分别把 $\lambda_{\mathcal M}$ 与 $\Upsilon^1$ 当作“作用”：左边是 $\lambda$ 作用在 $\mu^2_{\mathcal M}(c,b)$ 上，右边是 $\mu^2_{\mathcal Q}$ 把 $\lambda_{\mathcal M}(c)$ 与 $\Upsilon^1(b)$ 复合；这正是说 $\lambda$ 是 $\mathcal A$-线性的（与 $\mathcal Y$ 的作用相容）。]
+
+特别地，经典 Yoneda 引理的推广在 c-幺情形成立（见 \cite{Sei08} 引理 2.12）。
+
+\begin{Lem}[Yoneda 引理]\label{lem:2.36}
+设 $\mathcal A$ 为 c-幺 $A_\infty$-范畴，$\mathcal Q=\mathrm{mod}(\mathcal A)$。
+则对任意 $\mathcal M\in\operatorname{obj}(\mathcal Q)$ 与 $Y\in\operatorname{obj}
+(\mathcal A)$，\eqref{eq:2.31} 中的模同态 $\lambda_{\mathcal M}$ 实际上是拟同构。
+\end{Lem}
+% [Tutor Note: 【含糊】Yoneda 引理的证明原文未给；在 $A_\infty$ 情形它并不像通常范畴那样“显然”，因为 $\hom_{\mathcal Q}(\mathcal Y,\mathcal M)$ 是复形而非集合，需要把两边分别识别为 $\mathcal M(Y)$ 的某个 Hochschild 型复形再比较，见 \cite{Sei08} 第 (2g) 节。]
+
+有一种方式把不同 $A_\infty$-范畴 $\mathcal A$、$\mathcal B$ 的 Yoneda 嵌入联系
+起来。它利用如下构造。
+
+\begin{Def}\label{def:2.37}
+非幺 $A_\infty$-函子 $\mathcal G:\mathcal A\to\mathcal B$ 诱导非幺（dg）
+\emph{拉回函子} $\mathcal G^*:=\mathcal R_{\mathcal G^{opp}}:\mathrm{nu\text{-}mod}
+(\mathcal B)\to\mathrm{nu\text{-}mod}(\mathcal A)$，定义如下：
+\begin{itemize}
+  \item $\mathcal M\in\operatorname{obj}(\mathrm{nu\text{-}mod}(\mathcal B))$ 被
+        映为模 $\mathcal G^*\mathcal M\in\operatorname{obj}(\mathrm{nu\text{-}mod}
+        (\mathcal A))$，后者由 $(\mathcal G^*\mathcal M)(X):=\mathcal M(\mathcal G(X))
+        \in\operatorname{obj}(\mathsf{Ch})$（$X\in\operatorname{obj}(\mathcal A)$）
+        给出，并带有
+        \[
+          \mu^d_{\mathcal G^*\mathcal M}(b,a_{d-1},\dots,a_1):=
+          \sum_{\substack{1\le r\le d\\ s_1+\dots+s_r=d}}
+          \mu^r_{\mathcal M}\bigl(b,\mathcal G^{s_r}(a_{d-1},\dots,a_{d-s_r}),
+          \dots,\mathcal G^{s_1}(a_{s_1},\dots,a_1)\bigr),
+        \]
+  \item $t\in\hom_{\mathrm{nu\text{-}mod}(\mathcal B)}(\mathcal M_0,\mathcal M_1)$
+        被映为预模同态 $\mathcal G^*t\in\hom_{\mathrm{nu\text{-}mod}(\mathcal A)}
+        (\mathcal G^*\mathcal M_0,\mathcal G^*\mathcal M_1)$，后者由
+        \[
+          (\mathcal G^*t)^d(b,a_{d-1},\dots,a_1):=
+          \sum_{\substack{1\le r\le d\\ s_1+\dots+s_r=d}}
+          t^r\bigl(b,\mathcal G^{s_r}(a_{d-1},\dots,a_{d-s_r}),\dots,
+          \mathcal G^{s_1}(a_{s_1},\dots,a_1)\bigr)
+        \]
+        给出。
+\end{itemize}
+\end{Def}
+% [Tutor Note: 【易错】$\mathcal G^{s_r}$ 作用在 $a_{d-1},\dots,a_1$ 上（共 $d-1$ 个自变量），与 \eqref{eq:2.19}\eqref{eq:2.20} 中作用在 $a_d,\dots,a_1$ 上的情形相比下标整体偏移 1：因为 $\mathcal G^*$ 是反范畴 $\mathcal A^{opp}$ 上的右复合。照抄 \eqref{eq:2.20} 的公式会多出一个变量。]
+% [Tutor Note: 【勘误】原书 p.26 上面两式都把求和条件写成 $s_1+\dots+s_r=d$；但左端只有 $b$ 与 $a_{d-1},\dots,a_1$ 共 $d$ 个输入，而 $\mu^r_{\mathcal M}$（或 $t^r$）在 $b$ 之后只应接 $r-1$ 个态射。按原文条件，$r=1$ 时会出现 $\mathcal G^d(a_{d-1},\dots,a_0)$，而 $a_0$ 无定义；按次数核对，条件应为 $s_1+\dots+s_r=d-1$。译文照印原文。]
+% [Tutor Note: 【背景】拉回定义为 $\mathcal G^*:=\mathcal R_{\mathcal G^{opp}}$ 而不是 $\mathcal R_{\mathcal G}$：模是 $\mathcal A^{opp}$ 上的函子，只有在反范畴上作右复合才能得到反向的函子 $\mathrm{nu\text{-}mod}(\mathcal B)\to\mathrm{nu\text{-}mod}(\mathcal A)$。]
+
+若 $\mathcal G$ 是 c-幺的，则由引理 \ref{lem:2.27}，$\mathcal G^*$ 也是 c-幺的，从而给出
+严格幺（dg）函子 $\mathrm{mod}(\mathcal B)\to\mathrm{mod}(\mathcal A)$。此外，若
+$\mathcal G$ 是拟等价，则 $\mathcal G^*$ 也是。
+
+现在考虑非幺 $A_\infty$-函子 $\mathcal F:\mathcal A\to\mathcal B$。则相应的
+Yoneda 嵌入 $\Upsilon_{\mathcal A}$ 与 $\Upsilon_{\mathcal B}$ 经由
+$\mathrm{nu\text{-}fun}(\mathcal A,\mathcal Q)$ 中的自然变换
+$T:\Upsilon_{\mathcal A}\to\mathcal F^*\circ\Upsilon_{\mathcal B}\circ\mathcal F$
+相联系，其中 $T^1:\hom_{\mathcal A}(Y_0,Y_1)\to\hom_{\mathcal Q}(\Upsilon_
+{\mathcal A}(Y_0),\mathcal F^*\Upsilon_{\mathcal B}\mathcal F(Y_1))$ 把
+$\mathcal A$ 中的每个态射对应到 $\mathcal Q$ 中的一个模同态，后者本身是一族分次
+映射
+\begin{equation}\label{eq:2.33}
+  \begin{aligned}
+    &(\Upsilon_{\mathcal A}(Y))(X_{d-1})\otimes\hom_{\mathcal A}(X_{d-2},
+    X_{d-1})\otimes\dots\otimes\hom_{\mathcal A}(X_0,X_1)\longrightarrow
+    \underbrace{(\mathcal F^*\Upsilon_{\mathcal B}\mathcal F(Y))(X_0)}
+    _{=\hom_{\mathcal B}(\mathcal F(X_0),\mathcal F(Y))},\\
+    &(b,a_{d-1},\dots,a_1)\longmapsto(-1)^{\dagger_{d-1}+|b|}
+    \mathcal F^d(b,a_{d-1},\dots,a_1).
+  \end{aligned}
+\end{equation}
+% [Tutor Note: 【易错】\eqref{eq:2.33} 的符号 $(-1)^{\dagger_{d-1}+|b|}$ 里用的是 $\dagger_{d-1}$ 而不是 $\dagger_d$：因为 $b$ 与 $a_1,\dots,a_{d-1}$ 合计 $d$ 个变量，但 $\mathcal F^d$ 的第一个变量 $b$ 已在指数中单独用 $|b|$ 计了一次，其余 $d-1$ 个用 $\dagger_{d-1}$；这一“错位”正是 $T^1$ 为 0 次映射所要求的。]
+
+\begin{Rem}\label{rem:2.38}
+若假设 $\mathcal A$、$\mathcal B$ 是 c-幺的且 $\mathcal F$ 上同调全忠实，则 $T^1$
+是 c-幺 $A_\infty$-模的同构。因此引理 \ref{lem:2.15} 蕴含 $T$ 在相应的上同调范畴中是
+同构，从而给出交换图
+\[
+  \begin{tikzcd}
+    \mathcal A \arrow[r, "\mathcal F"] \arrow[d, "\Upsilon_{\mathcal A}"']
+    & \mathcal B \arrow[d, "\Upsilon_{\mathcal B}"]\\
+    \mathrm{mod}(\mathcal A) & \mathrm{mod}(\mathcal B)
+    \arrow[l, "\mathcal F^*"']
+  \end{tikzcd}
+\]
+它在 $H^0\bigl(\mathrm{fun}(\mathcal A,\mathrm{mod}(\mathcal A))\bigr)$ 中相差
+标准同构的意义下交换。
+\end{Rem}
+% [Tutor Note: 【背景】注 \ref{rem:2.38} 是本节的目的：它说明 Yoneda 嵌入在 $A_\infty$ 层面把函子 $\mathcal F$ 与拉回 $\mathcal F^*$ 联系成一个“自然方块”，这是后文用 Yoneda 嵌入把 $A_\infty$-范畴嵌入其模范畴、进而做三角化的技术基础。]
+
+此后，所有 $A_\infty$-范畴、$A_\infty$-函子与 $A_\infty$-模都假定是 c-幺的，除非
+另有说明。

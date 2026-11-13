@@ -1,0 +1,124 @@
+% ============================================================================
+%  s06-further.tex —— 第 6 节「若干方向」
+%  原文：Ivan Smith, A Symplectic Prolegomenon, arXiv:1401.0269v2
+%  对应源码：p0269/src/Prolegomenon_utf8.tex 第 1495--1617 行
+% ============================================================================
+
+\section{若干方向}\label{Sec:Further}
+
+\begin{keypoints}
+\begin{itemize}
+  \item \textbf{核心图像}：一旦接受 Fukaya 范畴是辛拓扑中具有基本趣味的对象，便可由范畴本身定义辛流形的不变量：稳定性条件的复流形、Orlov 谱的生成时间、非交换向量场的周期类。
+  \item \textbf{关键工具}：Bridgeland 稳定性条件与中心荷、三角范畴的强生成元与生成时间、$A_\infty$-范畴的 Hochschild 上同调 $HH^1$ 与形变理论、Novikov 域上椭圆曲线（Tate 曲线）上的族与联络。
+  \item \textbf{结论}：周期元集合 $\mathrm{Per}(\CC)$ 是 Fukaya 范畴的内蕴不变量，在杀死基本群的手术下保持不变，因而可用于区分微分同胚、甚至形变等价的辛流形。
+  \item \textbf{与前后文的联系}：本节承接上一节的显式计算，把“范畴 $\to$ 辛拓扑”的三条路线（稳定性条件、Orlov 谱、非交换向量场）并列呈现，并指出各自的开放问题。
+\end{itemize}
+\end{keypoints}
+
+一旦接受 Fukaya 范畴是辛拓扑中具有基本趣味的对象，自然就会考虑通过该范畴定义的辛流形不变量，或从 Fukaya 范畴的视角看显得自然的辛流形性质。
+
+% 原文此处有 \renewcommand{\P}{\mathcal{P}}；preamble 已给出同名定义，此处照原样保留。
+\renewcommand{\P}{\mathcal{P}}
+
+\subsection{稳定性条件} 三角范畴 $\CC$ 相伴一个稳定性条件的复流形 Stab$(\CC)$ \cite{Bridgeland}；在关于 $\CC$ 的温和假设下，它是有限维的。Stab($\CC)$ 带有自等价群 $G(\CC)=$Auteq$(\CC)$ 的作用，可以看作试图直接从 $\CC$ 构造其分类空间 $BG(\CC)$ 的几何模型：在已知的少数情形中，Stab$(\CC)$ 的万有覆叠是可缩的，或被猜想为可缩的（参见 \cite{Woolf}）。
+
+设 $K(\CC)$ 记 $\CC$ 的 Grothendieck 群，即以 $\Ob \, \CC$ 中对象为生成元、以正合三角给出的关系 $[\mathrm{Cone}(a: A \rightarrow B)] = [B]-[A]$ 为关系所生成的自由阿贝尔群。$\CC$ 上的一个\emph{稳定性条件} $\sigma=(Z,\P)$ 由以下两部分组成：一个群同态 $Z\colon K(\CC)\to\bC$，称为\emph{中心荷}；以及对每个 $\phi\in\bR$ 的一个全加法子范畴 $\P(\phi)\subset\CC$。它们共同满足如下公理：
+\begin{itemize}
+\item[(a)] 若 $E\in \P(\phi)$，则 $Z(E)\in \bR_{>0}\cdot e^{i\pi\phi}\subset \bC,$ \smallskip
+\item[(b)] 对所有 $\phi\in\bR$，$\P(\phi+1)=\P(\phi)[1]$,\smallskip
+\item[(c)] 若 $\phi_1>\phi_2$ 且 $A_j\in\P(\phi_j)$，则 $\Hom_{\CC}(A_1,A_2)=0$,\smallskip
+\item[(d)] 对每个 $0 \neq E\in\CC$，存在有限个实数 $\phi_1>\phi_2> \dots >\phi_k$ 与一族三角
+\[
+\xymatrix@C=.5em{
+0_{\ } \ar@{=}[r] & E_0 \ar[rrrr] &&&& E_1 \ar[rrrr] \ar[dll] &&&& E_2
+\ar[rr] \ar[dll] && \ldots \ar[rr] && E_{k-1}
+\ar[rrrr] &&&& E_k \ar[dll] \ar@{=}[r] &  E_{\ } \\
+&&& A_1 \ar@{-->}[ull] &&&& A_2 \ar@{-->}[ull] &&&&&&&& A_k \ar@{-->}[ull] 
+}
+\]
+其中对所有 $j$ 有 $A_j\in\P(\phi_j)$；
+\item[(e)] （支撑性质）对 $K(\D)\tensor\bR$ 上的某个范数 $\|\cdot\|$，存在常数 $C>0$，使得对所有由 $\D$ 中 $\sigma$-半稳定对象代表的类 $\gamma\in K(\D)$，都有 $\|\gamma\|< C\cdot |Z(\gamma)|$。
+\end{itemize}
+
+% [Tutor Note: 定义 (d) 所给的链 $0=E_0\to E_1\to\cdots\to E_k=E$ 即 $E$ 的 Harder--Narasimhan 滤过（按相位递减），各 $A_j$ 是相应的半稳定因子；(e) 的支撑性质并非装饰，它保证满足一致有界性的稳定性条件构成 $\Stab(\CC)$ 的开集，从而使遗忘映射成为局部同构。另注意原文 (e) 中的 $K(\D)$、$\D$ 系沿用前文记号，按上下文应与 $K(\CC)$、$\CC$ 一致。]
+
+\begin{Theorem}[Bridgeland] 
+\label{basic}
+空间 $\Stab(\CC)$ 具有复流形结构，使得遗忘映射
+\[\pi\colon \Stab(\CC)\lra \Hom_{\bZ}(K(\CC),\bC)\]
+（把稳定性条件送到其中心荷）是局部同构。
+\end{Theorem}
+
+由于 Stab$(\CC)$ 局部以带整格的固定向量空间为模型，它继承了大量几何结构：平坦 Kähler 度量、仿射结构、Lebesgue 测度等。三角自等价群 $\Auteq(\CC)$ 作用在 $\Stab(\CC)$ 上并保持所有这些结构。重要的是，范畴 $\CC$ 是 $\bZ$-分次的，即平移函子不是周期的，因此该理论适用于满足 $2c_1=0$ 的辛流形。
+
+% [Tutor Note: “遗忘映射是局部同构”是 Bridgeland 定理的核心：$\Stab(\CC)$ 的复流形结构正由该局部同构拉回得到，故其切空间可等同于 $\Hom_{\bZ}(K(\CC),\bC)$。这也解释了为何必须要求 $\CC$ 为 $\bZ$-分次：若平移函子有周期 $d$，则相位只模 $d$ 有定义，公理 (b) 会退化为有限阶的循环条件。]
+
+\begin{Example} 
+设 $Y \rightarrow \bC$ 为仿射 $A_n$-三流形，它是一个 Lefschetz 纤维化，一般纤维为 $T^*S^2$，且有 $n+1 \geq 3$ 个奇异纤维。于是 $Y$ 收缩到拉格朗日球面的 $A_n$-链。$\mathrm{Stab}(\scrF(Y))$ 存在一个连通分支，其模去保持该分支的自等价子群所得的商同构于 $\mathrm{Conf}_0^{n+1}(\bC) / \bZ_{n+3}$（其中循环群通过乘以一个 $(n+3)$ 次单位根作用）。见 \cite{BridgelandSmith}。\end{Example}
+
+设 $\{\sum_{i=0}^3 z_i^4 = 0\} = Q\subset \bP^3$ 为 Fermat 四次 $K3$ 曲面。它带有群 $\bZ_4^4$ 的作用（把各坐标乘以单位根）；记 $\Gamma \cong \bZ_4^3$ 为保持全纯体积形式的元素构成的子群（即 $x_i \mapsto \xi_i x_i$，且 $\prod_i \xi_i = 1$）。设 $\Cech{Q}$ 是轨形 $Q / \Gamma$ 的 crepant 消解。与 \cite{Seidel:HMSquartic} “对偶”的镜像对称的一个猜想情形断言（对 $\Cech{Q}$ 上适当的 Kähler 形式）
+\begin{equation} \label{HMS?}
+D^{b}(Q) \stackrel{?}{\simeq} D^{\pi}\scrF(\Cech{Q}).
+\end{equation}
+事实上，通过改变 $\Cech{Q}$ 的 Kähler 参数，人们期望得到与由 $Q$ 的小复形变所得四次曲面 $Q'$ 上凝聚层导出范畴相对偶的 Fukaya 范畴。存在表示
+\[
+\pi_1(\mathcal{M}(\Cech{Q})) \longrightarrow \pi_0\Symp(\Cech{Q}) \longrightarrow \Auteq(D^{\pi}\scrF(\Cech{Q})).
+\]
+Bridgeland 与 Bayer \cite{Bridgeland:K3, BayerBridgeland} 计算了 Stab$(Q')$，其中 $Q'$ 是一般（Picard 秩 1）四次曲面，从而也计算了 $\Auteq(D^b(Q'))$（例如，在 $K$-理论上平凡作用的“Torelli 群”自等价，模去平移，是无限秩自由群）。\eqref{HMS?} 的一个证明将蕴含：对适当一般的 Kähler 形式，$D^{\pi} \scrF(\Cech{Q})$ 的所有（$\bZ$-分次、Calabi--Yau）自等价都来自代数族的单值（monodromy）（这与第 \ref{Sec:MCGIII} 节及 \cite{Smith:HFQuadrics} 形成对照）。
+
+\subsection{Orlov 谱} 分裂闭三角范畴 $\CC$ 的一个\emph{强生成元}是对象 $E \in \CC$，使得 $\CC$ 中每个对象都是 $E$ 上某个扭曲复形的和分支，即满足 $\Tw^{\pi}\langle E\rangle = \CC$，其中 $\langle \cdot \rangle$ 表示由反复取平移与锥所生成的三角子范畴。给定强生成元，其生成时间 $U(E)$ 是最小的 $n$，使得整个范畴 $\CC$ 可由取长度至多 $n+1$ 的扭曲复形（即涉及取 $n$ 个锥）的和分支得到。三角范畴的\emph{Orlov 谱}为
+\[
+OSpec(\CC) \, = \, \left\{U(E) \ | \ E \in \CC, U(E) < \infty \right\} \ \subset \bZ_{\geq 0}.
+\]
+例如，若 $\CC = D^b(Z)$ 是凝聚层的导出范畴，则由“层可被向量丛消解，而向量丛在充分扭转后由整体截面生成”这一事实，本质上可得：某个丰沛线丛的有限次幂之和是强生成元。Orlov 谱的下确界与上确界给出三角范畴\emph{维数}的两个不同概念。
+
+% [Tutor Note: 生成时间的“$\pm1$”极容易写错：若 $\CC$ 可由长度 $\leq n+1$ 的扭曲复形（即 $n$ 个锥）的和分支得到，则 $U(E)$ 取最小的 $n$。故由双项复形（一个锥）给出的生成元其生成时间为 1，而“平凡”强生成元 $E$ 本身对应长度 0。比较不同文献时必须先确认其 $U$ 采用哪种约定，否则 Orlov 谱的界会整体平移。]
+
+\begin{Example} 第 \ref{Sec:K3} 节提到的命题 \ref{Prop:SpheresGenerate} 的“平移”版本蕴含 \cite{BallardEtAl}：若 $\CC$ 中一族球状对象 $S_1,\ldots, S_n$ 满足正关系 $T_{S_{i_1}}\cdots T_{s_{i_r}} = [k]$（对某个 $k$），则 $\oplus_i S_i$ 是强生成元，且生成时间至多 $r-1$。这类正关系可由曲线上的经典 Dehn 扭转构造，由此可知 $\scrF(\Sigma_g)$ 总有强生成元，它由构成 $A_{2g}$-链的 $2g$ 条简单闭曲线之和 $G$ 给出，且生成时间满足 $4g \leq U(G) \leq 8g$。\end{Example}
+
+% [Tutor Note: 原文此处 $T_{s_{i_r}}$ 的下标为小写 $s$，与紧邻的 $T_{S_{i_1}}$ 不一致，疑为笔误（应为 $T_{S_{i_r}}$）；按 SPEC 要求照抄原式并在此标注。]
+
+\begin{Example}
+设 $\Sigma_2$ 为亏格 2 曲线。由第 \ref{Subsec:genus2} 节，范畴 $\scrF(\Sigma_2)$ 等价于 $\Lambda^*(\bC^3)$ 上由 Maurer--Cartan 元素 $z_1z_2z_3 + z_1^5+z_2^5+z_3^5$ 诱导的 $A_{\infty}$-结构。关于超曲面奇点 Orlov 谱的约束已在 \cite{BallardEtAl} 中得到；此情形下 Orlov 谱的上确界为 $< 29$（更一般地对 $\Sigma_g$ 有 $<12g+5$）。
+\end{Example}
+
+Orlov 谱与经典代数几何有理性问题之间的精巧联系已被 Katzarkov 广泛探索与宣扬，见 \cite{Katzarkov,BallardEtAl}（这类关系本质上来自爆破所得范畴的半正交分解对 Orlov 谱的约束）。Fukaya 范畴的 Orlov 谱的几何意义在很大程度上仍是谜；不过显式的下界将给出 Dehn 扭转之间可能正关系的约束，从而约束以给定辛流形为纤维的 Lefschetz 纤维化的拓扑。
+
+\subsection{非交换向量场} 对任意 $a \in H^1(X;\bR)$，存在一个与通量为 $a$ 的辛同胚路径端点 $\phi_a$ 相联系的 Floer 上同调群。于是 $H^1$ 与辛动力学之间有基本联系。另一方面，在 Gromov--Witten 理论中，或把 $QH^*(X)$ 看作 $\mathcal{CO}$ 的定义域时，它通常只是模 2 分次的，$X$ 的所有奇次上同调（或多或少）处于同等地位。以此为动机，Seidel 引入了新的通量型不变量，用以探测 $H^{odd}(X)$ 的辛动力学。
+
+哲学图景大致如下。一个 $A_{\infty}$-范畴 $\CC$ 有“导出 Picard 群”，其切空间为 $HH^1(\CC,\CC)$。给定一个特定的 $HH^1$-类（“非交换向量场”），可以考虑它是否可积分为 $\CC$ 的“对象模空间”上的“周期流”。要精确表述这一点有明显陷阱：即使在模型情形（例如 $\CC$ 是光滑簇 $Z$ 上凝聚层的导出范畴、该 $HH^1$-类来自 $H^0(TZ)$），也不能指望多项式向量场积分为代数流。Seidel 的洞见是：人们仍然可以理解这个（并不存在的）流的代数轨道。
+
+% 原文此处有 \newcommand{\scrP}{\EuScript{P}}；preamble 已定义 \scrP，为避免重复定义错误，此处省略。
+
+技术上较容易定义的是“双周期”轨道。固定 Novikov 域上的一条椭圆曲线 $\bar{S}$，以及处处非零的微分 $\eta \in \Omega^1_{\bar{S}}$。在 $\bar{S}$ 上取 Zariski 局部，$\CC$ 中对象的扭曲复形概念推广为：系数是仿射 $S \subset \bar{S}$ 的函数环 $\mathcal{R}$ 上的模（即在 $S$ 上的向量丛）的复形。$\CC$ 中对象在 $S$ 上的族，是从 $\CC^{opp}$ 到投射 $\mathcal{R}$-模复形的 $dg$-范畴的函子。这引导到扩展范畴 $\CC_{\mathcal{R}}$，它带有完美模的导出范畴 Perf$(\CC_{\mathcal{R}})$。
+
+投射 $\mathcal{R}$-模 $\scrG$ 本质上具有唯一的联络，即满足 Leibniz 性质的映射 $\scrG \rightarrow \Omega^1_{S} \otimes \scrG$。带联络的族 $\scrP$ 有一个相伴的无穷小形变类 Def$(\scrP)$，它由用该联络对底层扭曲复形中的内蕴微分求导而得到。这给出自然映射
+\begin{equation} \label{Eqn:DifferentiateConnection}
+\mathrm{Def}: HH^{odd}(\CC_{\mathcal{R}}, \CC_{\mathcal{R}}) \longrightarrow H^1(hom_{\mathrm{Perf}(\CC_{\mathcal{R}})}(\scrP, \scrP))
+\end{equation}
+对任何族 $\scrP \in \CC_{\mathcal{R}}$ 成立。另一方面，有代数向量丛的自然映射
+\begin{equation} \label{Eqn:FamilyDeviation}
+\nabla: TS \longrightarrow H^1(hom_{\mathrm{Perf}(\CC_{\mathcal{R}})}(\scrP, \scrP))
+\end{equation}
+它度量该对象族沿 $S$ 中给定方向如何形变。若 \eqref{Eqn:DifferentiateConnection} 与 \eqref{Eqn:FamilyDeviation} 由
+\[
+\nabla \ = \ \eta \otimes \mathrm{Def}([a])
+\]
+相联系（其中 $\eta$ 是 $\bar{S}$ 上固定的 1-形式），则称对象 $\scrP$ \emph{服从形变场} $[a] \in HH^{odd}(\CC_{\mathcal{R}}, \CC_{\mathcal{R}})$。服从形变场的族被视为属于与 $[a]$ 相联系的（形式）流的代数轨道。随后定义周期元子集
+\[
+\mathrm{Per}(\CC) \subset HH^{odd}(\CC,\CC)
+\]
+为使每个对象 $A$ 都延拓为某个仿射 $S\subset \bar{S}$ 上服从该场 $[a]$ 的族 $\scrA$ 的那些类 $[a]$。因此，周期类就是使\emph{所有}对象都能成为 $S\subset \bar{S}$ 上族的特殊纤维的类。
+
+为使之有用，需要判断一个类是否周期的方法。若 $X \rightarrow \bar{S}$ 是平凡辛纤维丛，则对象族的代数概念与几何足够接近，可以推断拉格朗日子流形的平凡乘积族确为对象族，并得出 $H^1(\bar{S})$ 中的类是周期的。另一方面，若 $X\rightarrow \bar{S}$ 是非平凡映射环面，则有望通过 Floer 上同调计算证明 $H^1(\bar{S})$ 中的类\emph{不是}周期的。回到代数向量场的流之存在性与唯一性问题上，Seidel 证明：若服从形变场 $[a]$ 的族 $\scrA$ 存在，则它唯一，从而其到任何有限覆叠的拉回也唯一。利用辛同胚 $f$（来自 $X\rightarrow \bar{S}$ 的单值）的存在性——这些 $f$ 使 $HF^*(f^m)$ 携带非平凡的 $\bZ_m$-作用——人们可以尝试在 $X$ 的 $m$ 重覆盖上构造服从固定形变的不同族，从而破坏 $X$ 自身某个类的周期性。尽管这些例子只是把经典通量嵌入更抽象的周期性概念，其收益在于：周期元是 Fukaya 范畴的不变量，因此在杀死基本群的手术（恰当情形下的次临界柄添加，或闭情形下取某些爆破）下具有一定稳健性。
+
+% [Tutor Note: “非交换向量场”是 $HH^1(\CC,\CC)$ 的类，对应经典意义下 $H^0(TX)$ 的向量场：$HH^1$ 是导出 Picard 群的切空间，而“周期”是它沿椭圆曲线 $\bar{S}$ 的切片方向“积分”出对象族的条件。$\eta\in\Omega^1_{\bar{S}}$ 的选取只改变族的参数化，不改变 $\mathrm{Per}(\CC)$ 作为子集的定义；真正的判据是“所有对象能否族化”，不是某个特定族的性质。]
+
+\begin{Example} 设 $K \subset \bP^3$ 为四次 $K3$ 曲面。令 $X_1 = K^2 \times T^2$ 与 $X_2 = S^1 \times Y$，其中 $Y$ 是 $K^2$ 的某个辛同胚 $f$ 的映射环面，$f$ 在微分意义下平凡但在辛意义下非平凡（这是平方 Dehn 扭转的一个更复杂版本）。可通过 $h$-原理把 $X_i$ 嵌入 $K^7$。Seidel \cite{Seidel:Flux} 证明：对适当的 $f$，爆破 $Z_1 = Bl_{X_1}(K^7)$ 与 $Z_2 = Bl_{X_2}(K^7)$ 在辛意义下不同，尽管它们微分同胚且形变等价（因而有相同的 Gromov--Witten 不变量、量子上同调等）。区分它们的是子集 $\mathrm{Per}(Z_i) \subset QH^{odd}(Z_i) \cong HH^{odd}(\scrF(Z_i),\scrF(Z_i))$：对 $Z_1$，$H^3(Z_1)$ 中来自 $H^1(T^2)$ 的两个类都是周期的；而对 $Z_2$，周期子集与那个二维格相交于单个 $\bZ$。
+\end{Example}
+
+% [Tutor Note: 经典通量 $a\in H^1(X)$ 属于通量群，当且仅当端点辛同胚 $\phi_a$ 与恒等 Hamilton 同痕；这里的类比是“$H^1(\bar{S})$ 中的类是否周期”。关键区别在于：周期性是 Fukaya 范畴内蕴的性质，因而在杀死 $\pi_1$ 的手术下不变——这正是爆破 $Z_1,Z_2$ 能被区分的原因（两者 Gromov--Witten 不变量相同）。]
+
+\begin{Notes}
+关于 Fukaya 范畴上的稳定性条件，见 \cite{KS, Smith:quiver, Thomas:braid}。关于 Katzarkov 的计划，见 \cite{BallardEtAl,KatzarkovKerr, Katzarkov}。关于非交换向量场，见 \cite{Seidel-Solomon, Seidel:Flux, AbouzaidSmith:arc}。
+\end{Notes}

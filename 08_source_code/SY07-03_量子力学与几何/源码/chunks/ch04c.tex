@@ -1,0 +1,578 @@
+% =====================================================================
+%  第 4 章 希尔伯特空间上的算子 —— ch04c（§4.7）
+%  页段：PDF 242–249（原书 p.241–248）
+%  本块承接 ch04b 末尾的证明；第 4 章在本块结束
+% =====================================================================
+
+% [原文 p.241]
+% [本块开头的证明承接上一块 ch04b 末尾的推论 4.6.10（原书 p.240）]
+\begin{proof}
+取 $g=\dfrac{1}{f}\in C(S^1)$。则
+\[
+T_fT_g=I+\text{紧算子}.
+\]
+\end{proof}
+
+\begin{theorem}{4.6.11（托普利茨指标定理）}
+  设 $f\in C(S^1)$ 处处非零。则
+  \[
+  \operatorname{ind}T_f=-\deg f,
+  \]
+  其中 $\deg f$ 是次数，即绕 $0$ 的绕数。
+\end{theorem}
+
+\begin{proof}
+连续映射
+\[
+f:S^1\longrightarrow\C^*
+\]
+可在从 $S^1$ 到 $\C^*$ 的连续映射中连续形变为
+\[
+z^n:S^1\longrightarrow\C^*,\qquad n=\deg f.
+\]
+由命题 4.6.7，
+\[
+\operatorname{ind}(T_f)=\operatorname{ind}(T_{z^n}).
+\]
+设 $n\ge0$。则
+\[
+T_{z^n}:H^2\longrightarrow H^2
+\]
+可等同于移位算子
+\begin{align*}
+S^n&:\ell^2(\N)\longrightarrow\ell^2(\N),\\
+(a_1,a_2,\dots)&\longmapsto(\underbrace{0,\dots,0}_{n},a_1,a_2,\dots).
+\end{align*}
+从而 $\operatorname{ind}(T_{z^n})=-n$。由此可知
+\[
+\operatorname{ind}(T_f)=-\deg f.
+\]
+\end{proof}
+
+\takeaway{§4.6 把弗雷德霍姆算子定义为核与余核都有限维的有界算子，其指标 $\operatorname{ind}=\dim\Ker-\dim\operatorname{Coker}$ 在紧扰动下不变；本节以圆周上的托普利茨算子为例，证明它的指标等于符号绕数之负。}
+
+\section{别列津–托普利茨量子化}
+
+\subsection{相干态}
+
+回忆谐振子的如下基态
+\[
+\psi_0(\mathbf x)=\frac{1}{(\pi\hbar)^{n/4}}\ee^{-\frac{\mathbf x^2}{2\hbar}}\in L^2(\R^n),
+\]
+它已归一化：
+\[
+\norm{\psi_0}^2=\frac{1}{(\pi\hbar)^{n/2}}\int_{\R^n}\rd\mathbf x\,\ee^{-\frac{\mathbf x^2}{\hbar}}=1.
+\]
+
+% [原文 p.242]
+给定 $(\mathbf q,\mathbf p)\in\R^{2n}$，考虑酉变换
+\[
+T_{\hbar}(\mathbf p,-\mathbf q)
+=\left(\ee^{\frac{\ii}{\hbar}\langle\mathbf x,\mathbf p\rangle-\frac{\ii}{\hbar}\langle\mathbf q,\boldsymbol\xi\rangle}\right)^W.
+\]
+具体地（见命题 3.2.8），
+\[
+(T_{\hbar}(\mathbf p,-\mathbf q)\varphi)(\mathbf x)
+=\left(\ee^{\frac{\ii}{\hbar}\mathbf x\cdot\mathbf p-\frac{\ii}{2\hbar}\mathbf q\cdot\mathbf p}\right)\varphi(\mathbf x-\mathbf q).
+\]
+把它作用到 $\psi_0$ 上，定义相干态
+\[
+\psi_{\mathbf q,\mathbf p}(\mathbf x)
+=(T_{\hbar}(\mathbf p,-\mathbf q)\psi_0)(\mathbf x)
+=\frac{1}{(\pi\hbar)^{n/4}}
+\ee^{-\frac{(\mathbf x-\mathbf q)^2}{2\hbar}+\frac{\ii}{\hbar}\mathbf x\cdot\mathbf p-\frac{\ii}{2\hbar}\mathbf q\cdot\mathbf p},
+\]
+这是以 $\mathbf q$ 为中心的高斯波包。它们描述 $\psi_0$ 在海森堡群作用下的轨道，并且是湮灭算子
+\[
+\mathbf a=\frac{1}{\sqrt2}(\mathbf x+\hbar\partial_{\mathbf x})
+\]
+的本征向量：
+\[
+\mathbf a\psi_{\mathbf q,\mathbf p}=\frac{\mathbf q+\ii\mathbf p}{\sqrt{2\hbar}}\psi_{\mathbf q,\mathbf p}.
+\]
+
+相干态的一个重要性质是：它们给出 $L^2(\R^n)$ 上恒等算子的一个自然分解。
+
+\begin{proposition}{4.7.1}
+  相干态构成超完备族，满足
+  \[
+  \int_{\R^{2n}}\ket{\psi_{\mathbf q,\mathbf p}}\bra{\psi_{\mathbf q,\mathbf p}}\,
+  \frac{\rd\mathbf q\,\rd\mathbf p}{(2\pi\hbar)^n}=1.
+  \]
+  这里 $\ket{\psi_{\mathbf q,\mathbf p}}\bra{\psi_{\mathbf q,\mathbf p}}$ 是到相干态
+  $\psi_{\mathbf q,\mathbf p}$ 的正交投影。
+\end{proposition}
+
+\begin{proof}
+给定 $f,g\in\mathcal S(\R^{2n})$，只需证明
+\[
+\braket{f}{g}
+=\int_{\R^{2n}}\braket{f}{\psi_{\mathbf q,\mathbf p}}
+\braket{\psi_{\mathbf q,\mathbf p}}{g}\,
+\frac{\rd\mathbf q\,\rd\mathbf p}{(2\pi\hbar)^n}.
+\]
+事实上，
+\begin{align*}
+&\int_{\R^{2n}}\braket{f}{\psi_{\mathbf q,\mathbf p}}
+\braket{\psi_{\mathbf q,\mathbf p}}{g}\,
+\frac{\rd\mathbf q\,\rd\mathbf p}{(2\pi\hbar)^n}\\
+&=\frac{1}{(\pi\hbar)^{n/2}}\int_{\R^{4n}}\overline{f(\mathbf x)}\,g(\mathbf y)\,
+\ee^{-\frac{(\mathbf x-\mathbf q)^2}{2\hbar}-\frac{(\mathbf y-\mathbf q)^2}{2\hbar}
++\frac{\ii}{\hbar}(\mathbf x-\mathbf y)\cdot\mathbf p}
+\,\rd\mathbf x\,\rd\mathbf y\,\frac{\rd\mathbf q\,\rd\mathbf p}{(2\pi\hbar)^n}\\
+&=\frac{1}{(\pi\hbar)^{n/2}}\int_{\R^{3n}}\overline{f(\mathbf x)}\,g(\mathbf y)\,
+\ee^{-\frac{(\mathbf x-\mathbf q)^2}{2\hbar}-\frac{(\mathbf y-\mathbf q)^2}{2\hbar}}
+\delta(\mathbf x-\mathbf y)\,\rd\mathbf x\,\rd\mathbf y\,\rd\mathbf q\\
+&=\frac{1}{(\pi\hbar)^{n/2}}\int_{\R^{2n}}\overline{f(\mathbf x)}\,g(\mathbf x)\,
+\ee^{-\frac{(\mathbf x-\mathbf q)^2}{\hbar}}\,\rd\mathbf x\,\rd\mathbf q\\
+&=\int_{\R^n}\overline{f(\mathbf x)}\,g(\mathbf x)\,\rd\mathbf x=\braket{f}{g}.
+\end{align*}
+\end{proof}
+
+\begin{proposition}{4.7.2}
+  相干态之间的内积为
+  \[
+  \braket{\psi_{\mathbf q_1,\mathbf p_1}}{\psi_{\mathbf q_2,\mathbf p_2}}
+  =\ee^{-\frac{1}{4\hbar}\left[(\mathbf q_1-\mathbf q_2)^2
+  +(\mathbf p_1-\mathbf p_2)^2\right]}
+  \ee^{\frac{\ii}{2\hbar}(\mathbf q_1\cdot\mathbf p_2-\mathbf q_2\cdot\mathbf p_1)}.
+  \]
+\end{proposition}
+
+% [原文 p.243]
+\begin{proof}
+\begin{align*}
+\braket{\psi_{\mathbf q_1,\mathbf p_1}}{\psi_{\mathbf q_2,\mathbf p_2}}
+&=\braket{T_{\hbar}(\mathbf p_1,-\mathbf q_1)\psi_0}
+{T_{\hbar}(\mathbf p_2,-\mathbf q_2)\psi_0}\\
+&=\braket{\psi_0}{T_{\hbar}(-\mathbf p_1,\mathbf q_1)
+T_{\hbar}(\mathbf p_2,-\mathbf q_2)\psi_0}\\
+&=\braket{\psi_0}{T_{\hbar}(\mathbf p_2-\mathbf p_1,
+-(\mathbf q_2-\mathbf q_1))\psi_0}\,
+\ee^{\frac{\ii}{2\hbar}(\mathbf q_1\cdot\mathbf p_2-\mathbf p_1\cdot\mathbf q_2)}.
+\end{align*}
+这里用了群律
+\[
+T_{\hbar}(-\mathbf p_1,\mathbf q_1)T_{\hbar}(\mathbf p_2,-\mathbf q_2)
+=T_{\hbar}(\mathbf p_2-\mathbf p_1,-(\mathbf q_2-\mathbf q_1))\,
+\ee^{\frac{\ii}{2\hbar}(\mathbf q_1\cdot\mathbf p_2-\mathbf p_1\cdot\mathbf q_2)}.
+\]
+只需计算
+\begin{align*}
+\braket{\psi_0}{\psi_{\mathbf q,\mathbf p}}
+&=\frac{1}{(\pi\hbar)^{n/2}}\int_{\R^n}
+\ee^{-\frac{(\mathbf x-\mathbf q)^2}{2\hbar}-\frac{\mathbf x^2}{2\hbar}
++\frac{\ii}{\hbar}\mathbf x\cdot\mathbf p-\frac{\ii}{2\hbar}\mathbf q\cdot\mathbf p}
+\,\rd\mathbf x\\
+&=\frac{1}{(\pi\hbar)^{n/2}}\int_{\R^n}
+\ee^{-\frac{1}{\hbar}(\mathbf x^2-\mathbf x\cdot\mathbf q-\ii\mathbf x\cdot\mathbf p)
+-\frac{\mathbf q^2}{2\hbar}-\frac{\ii}{2\hbar}\mathbf q\cdot\mathbf p}\,\rd\mathbf x\\
+&=\frac{1}{(\pi\hbar)^{n/2}}\int_{\R^n}
+\ee^{-\frac{1}{\hbar}\left(\mathbf x-\frac12\mathbf q-\frac{\ii}{2}\mathbf p\right)^2}
+\ee^{-\frac{\mathbf q^2}{4\hbar}-\frac{\mathbf p^2}{4\hbar}}\,\rd\mathbf x\\
+&=\ee^{-\frac{1}{4\hbar}(\mathbf q^2+\mathbf p^2)}.
+\end{align*}
+\end{proof}
+
+\begin{definition}{4.7.3}
+  设 $a\in\mathcal S(\R^{2n})$。定义 $a(\mathbf q,\mathbf p)$ 的别列津量子化为
+  \[
+  a^B=\int_{\R^{2n}}a(\mathbf q,\mathbf p)\,
+  \ket{\psi_{\mathbf q,\mathbf p}}\bra{\psi_{\mathbf q,\mathbf p}}\,
+  \frac{\rd\mathbf q\,\rd\mathbf p}{(2\pi\hbar)^n}.
+  \]
+\end{definition}
+
+\begin{proposition}{4.7.4}
+  设 $a^B$ 是 $a(\mathbf q,\mathbf p)$ 的别列津量子化。则
+  \[
+  \braket{\psi_{\mathbf q,\mathbf p}}{a^B|\psi_{\mathbf q,\mathbf p}}
+  =\left(\ee^{\frac{\hbar}{2}\Delta}a\right)(\mathbf q,\mathbf p).
+  \]
+  这里
+  $\Delta=\sum\limits_{i=1}^{n}\left(\dfrac{\partial}{\partial q^i}
+  \dfrac{\partial}{\partial q^i}
+  +\dfrac{\partial}{\partial p^i}\dfrac{\partial}{\partial p^i}\right)$
+  是拉普拉斯算子，$\ee^{t\Delta}$ 是热算子。
+\end{proposition}
+
+\begin{proof}
+\begin{align*}
+\braket{\psi_{\mathbf q,\mathbf p}}{a^B\psi_{\mathbf q,\mathbf p}}
+&=\int_{\R^{2n}}a(\tilde{\mathbf q},\tilde{\mathbf p})\,
+\braket{\psi_{\mathbf q,\mathbf p}}{\psi_{\tilde{\mathbf q},\tilde{\mathbf p}}}\,
+\braket{\psi_{\tilde{\mathbf q},\tilde{\mathbf p}}}{\psi_{\mathbf q,\mathbf p}}\,
+\frac{\rd\tilde{\mathbf q}\,\rd\tilde{\mathbf p}}{(2\pi\hbar)^n}\\
+&=\int_{\R^{2n}}a(\tilde{\mathbf q},\tilde{\mathbf p})\,
+\ee^{-\frac{1}{2\hbar}\left((\mathbf q-\tilde{\mathbf q})^2
++(\mathbf p-\tilde{\mathbf p})^2\right)}
+\frac{\rd\tilde{\mathbf q}\,\rd\tilde{\mathbf p}}{(2\pi\hbar)^n}\\
+&=\left(\ee^{\frac{\hbar}{2}\Delta}a\right)(\mathbf q,\mathbf p).
+\end{align*}
+\end{proof}
+
+\begin{proposition}{4.7.5}
+  设 $a\in\mathcal S(\R^{2n})$。则它的别列津量子化 $a^B$ 与外尔量子化 $a^W$
+  满足
+  \[
+  a^B=\left(\ee^{\frac{\hbar}{4}\Delta}a\right)^W.
+  \]
+  这里
+  $\Delta=\sum\limits_{i=1}^{n}\left(\dfrac{\partial}{\partial q^i}
+  \dfrac{\partial}{\partial q^i}
+  +\dfrac{\partial}{\partial p^i}\dfrac{\partial}{\partial p^i}\right)$
+  是拉普拉斯算子，$\ee^{t\Delta}$ 是热算子。
+\end{proposition}
+
+% [原文 p.244]
+\begin{proof}
+投影 $\ket{\psi_{\mathbf q,\mathbf p}}\bra{\psi_{\mathbf q,\mathbf p}}$
+的维格纳变换为
+\begin{align*}
+&\int_{\R^n}\rd\mathbf y\,\ee^{-\frac{\ii}{\hbar}\mathbf y\cdot\boldsymbol\xi}
+\psi_{\mathbf q,\mathbf p}\left(\mathbf x+\frac12\mathbf y\right)
+\psi_{\mathbf q,\mathbf p}\left(\mathbf x-\frac12\mathbf y\right)\\
+&=\frac{1}{(\pi\hbar)^{n/2}}\int_{\R^n}
+\ee^{-\frac{(\mathbf x+\frac12\mathbf y-\mathbf q)^2}{2\hbar}
+-\frac{(\mathbf x-\frac12\mathbf y-\mathbf q)^2}{2\hbar}}
+\ee^{\frac{\ii}{\hbar}(\mathbf x+\frac12\mathbf y)\cdot\mathbf p
+-\frac{\ii}{\hbar}(\mathbf x-\frac12\mathbf y)\cdot\mathbf p
+-\frac{\ii}{\hbar}\mathbf y\cdot\boldsymbol\xi}\,\rd\mathbf y\\
+&=\frac{1}{(\pi\hbar)^{n/2}}\int_{\R^n}
+\ee^{-\frac{\mathbf y^2}{4\hbar}-\frac{(\mathbf x-\mathbf q)^2}{\hbar}
++\frac{\ii}{\hbar}\mathbf y\cdot(\mathbf p-\boldsymbol\xi)}\,\rd\mathbf y\\
+&=\frac{1}{(\pi\hbar)^{n/2}}\int_{\R^n}
+\ee^{-\frac{1}{4\hbar}\left(\mathbf y-2\ii(\mathbf p-\boldsymbol\xi)\right)^2}
+\ee^{-\frac{(\mathbf x-\mathbf q)^2}{\hbar}
+-\frac{(\mathbf p-\boldsymbol\xi)^2}{\hbar}}\,\rd\mathbf y\\
+&=2^n\ee^{-\frac{(\mathbf x-\mathbf q)^2}{\hbar}
+-\frac{(\mathbf p-\boldsymbol\xi)^2}{\hbar}}.
+\end{align*}
+由此可知
+\[
+\operatorname{Wig}[a^B](\mathbf x,\boldsymbol\xi)
+=\frac{1}{(\pi\hbar)^n}\int_{\R^{2n}}a(\mathbf q,\mathbf p)\,
+\ee^{-\frac{(\mathbf x-\mathbf q)^2}{\hbar}
+-\frac{(\mathbf p-\boldsymbol\xi)^2}{\hbar}}\,\rd\mathbf q\,\rd\mathbf p
+=\left(\ee^{\frac{\hbar}{4}\Delta}a\right)(\mathbf x,\boldsymbol\xi).
+\]
+\end{proof}
+
+\subsection{托普利茨算子}
+
+别列津量子化在标准的福克空间构造下有自然的解释。考虑 $\C^n$ 上的如下高斯测度
+\[
+\rd\mu=\ee^{-\frac{|z|^2}{\hbar}}\frac{\rd^{2n}\mathbf z}{(\pi\hbar)^n}.
+\]
+这里对 $\mathbf z=\mathbf x+\ii\mathbf y$，
+$\rd^{2n}\mathbf z=\rd^n\mathbf x\,\rd^n\mathbf y$。令
+\[
+L^2(\C^n,\rd\mu)
+=\left\{f\ \Big|\ \int_{\C^n}|f|^2\rd\mu<\infty\right\}.
+\]
+考虑 Segal–Bargmann 空间（又称巴格曼–福克空间）
+\[
+\mathcal F_n=\left\{f\in L^2(\C^n,\rd\mu)\ \Big|\ f\text{ 全纯}\right\}.
+\]
+$\mathcal F_n$ 是希尔伯特空间（见命题 5.3.5），且
+\[
+\left\{\lambda_I(\mathbf z)=\frac{\mathbf z^I}
+{\sqrt{\hbar^{|I|}I!}}\right\}_I
+\]
+构成一组正交基。这里 $I=\{i_1,\dots,i_n\}$ 是多重指标，并且
+\[
+\mathbf z^I=z_1^{i_1}z_2^{i_2}\cdots z_n^{i_n},\qquad
+|I|=i_1+i_2+\cdots+i_n,\qquad
+I!=i_1!i_2!\cdots i_n!.
+\]
+$\mathcal F_n$ 自然地是海森堡群的表示，并且与薛定谔表示酉等价。这个酉映射可以显式写成（见 §5.3.4）
+\[
+\mathcal B:L^2(\R^n)\longrightarrow\mathcal F_n,
+\]
+\[
+(\mathcal B\psi)(\mathbf z)
+=\frac{1}{(\pi\hbar)^{n/4}}\int_{\R^n}\rd^n\mathbf x\,
+\ee^{-\frac{1}{2\hbar}\left(\mathbf z^2-2\sqrt2\,\mathbf z\cdot\mathbf x
++\mathbf x^2\right)}\psi(\mathbf x).
+\]
+
+% [原文 p.245]
+$\mathcal B$ 称为 Segal–Bargmann 变换。它给出如下缠结关系：
+\[
+z^i(\mathcal B\psi)
+=\mathcal B\left[\left(\frac{1}{\sqrt2}x^i
+-\frac{\hbar}{\sqrt2}\partial_{x^i}\right)\psi\right],
+\]
+\[
+\hbar\partial_{z^i}(\mathcal B\psi)
+=\mathcal B\left[\left(\frac{1}{\sqrt2}x^i
++\frac{\hbar}{\sqrt2}\partial_{x^i}\right)\psi\right].
+\]
+换言之，在 $\mathcal B$ 之下
+\[
+\mathbf a^\dagger=\frac{1}{\sqrt2}(\mathbf x-\hbar\partial_{\mathbf x})
+\overset{\mathcal B}{\longleftrightarrow}\mathbf z,
+\]
+\[
+\mathbf a=\frac{1}{\sqrt2}(\mathbf x+\hbar\partial_{\mathbf x})
+\overset{\mathcal B}{\longleftrightarrow}\hbar\partial_{\mathbf z}.
+\]
+$\{\mathbf z,\hbar\partial_{\mathbf z}\}$ 与阶梯算子
+$\{\mathbf a^\dagger,\mathbf a\}$ 等同。
+
+设
+\[
+\Pi:L^2(\C^n,\rd\mu)\longrightarrow\mathcal F_n
+\]
+是正交投影。
+
+\begin{proposition}{4.7.6}
+  $\Pi$ 有施瓦茨核，称为\emph{伯格曼核}（Bergman kernel），由
+  \[
+  K(\mathbf z,\mathbf w)=\ee^{\mathbf z\overline{\mathbf w}/\hbar}
+  \]
+  给出。
+\end{proposition}
+
+\begin{proof}
+$K(\mathbf z,\mathbf w)$ 可用 $\mathcal F_n$ 的正交归一基
+$\{\lambda_I\}$ 表示为
+\[
+K(\mathbf z,\mathbf w)=\sum_I\lambda_I(\mathbf z)
+\overline{\lambda_I(\mathbf w)}.
+\]
+\end{proof}
+
+记函数 $K_{\mathbf w}$ 为
+\[
+K_{\mathbf w}(\mathbf z):=K(\mathbf z,\mathbf w)
+=\ee^{\mathbf z\overline{\mathbf w}/\hbar}.
+\]
+由命题 4.7.6，族 $\{K_{\mathbf w}\}$ 满足再生性质：
+\[
+f(\mathbf w)=\braket{K_{\mathbf w}}{f}_{\mathcal F_n},
+\qquad\forall f\in\mathcal F_n.
+\]
+
+\begin{proposition}{4.7.7}
+  $\{K_{\mathbf w}\}$ 给出 $\mathcal F_n$ 上恒等算子的一个分解：
+  \[
+  \int_{\C^n}\ket{K_{\mathbf w}}\bra{K_{\mathbf w}}\,
+  \ee^{-\frac{|w|^2}{\hbar}}\frac{\rd^{2n}\mathbf w}{(\pi\hbar)^n}=1.
+  \]
+\end{proposition}
+
+\begin{proof}
+这由再生性质推出。对任意 $f,g\in\mathcal F_n$，
+\begin{align*}
+&\int_{\C^n}\braket{f}{K_{\mathbf w}}\braket{K_{\mathbf w}}{g}\,
+\ee^{-\frac{|w|^2}{\hbar}}\frac{\rd^{2n}\mathbf w}{(\pi\hbar)^n}\\
+&=\int_{\C^n}\overline{f(\mathbf w)}\,g(\mathbf w)\,
+\ee^{-\frac{|w|^2}{\hbar}}\frac{\rd^{2n}\mathbf w}{(\pi\hbar)^n}
+=\braket{f}{g}.
+\end{align*}
+\end{proof}
+
+下面把相干态与巴格曼–福克空间联系起来。
+
+\begin{proposition}{4.7.8}
+  在 Segal–Bargmann 变换下，
+  \[
+  \mathcal B(\psi_{\mathbf q,\mathbf p})
+  =\ee^{-\frac{|w|^2}{2\hbar}}K_{\mathbf w},
+  \qquad\text{其中}\quad
+  \mathbf w=\frac{\mathbf q-\ii\mathbf p}{\sqrt2}.
+  \]
+\end{proposition}
+
+% [原文 p.246]
+\begin{proof}
+\begin{align*}
+\mathcal B(\psi_{\mathbf q,\mathbf p})(\mathbf z)
+&=\frac{1}{(\pi\hbar)^{n/4}}\int_{\R^n}
+\ee^{-\frac{1}{2\hbar}(\mathbf z^2-2\sqrt2\,\mathbf z\cdot\mathbf x
++\mathbf x^2)}\psi_{\mathbf q,\mathbf p}(\mathbf x)\,\rd\mathbf x\\
+&=\frac{1}{(\pi\hbar)^{n/2}}\int_{\R^n}
+\ee^{-\frac{1}{2\hbar}(\mathbf z^2-2\sqrt2\,\mathbf z\cdot\mathbf x
++\mathbf x^2)}
+\ee^{-\frac{(\mathbf x-\mathbf q)^2}{2\hbar}
++\frac{\ii}{\hbar}\mathbf x\cdot\mathbf p-\frac{\ii}{2\hbar}\mathbf q\cdot\mathbf p}
+\,\rd\mathbf x\\
+&=\frac{1}{(\pi\hbar)^{n/2}}\int_{\R^n}
+\ee^{-\frac{1}{\hbar}\left[\mathbf x^2-\mathbf x\cdot
+(\mathbf q+\sqrt2\mathbf z+\ii\mathbf p)\right]}
+\ee^{-\frac{\mathbf z^2}{2\hbar}-\frac{\mathbf q^2}{2\hbar}
+-\frac{\ii}{2\hbar}\mathbf q\cdot\mathbf p}\,\rd\mathbf x\\
+&=\frac{1}{(\pi\hbar)^{n/2}}\int_{\R^n}
+\ee^{-\frac{1}{\hbar}\left(\mathbf x-\frac12(\mathbf q+\sqrt2\mathbf z
++\ii\mathbf p)\right)^2}
+\ee^{-\frac{1}{4\hbar}(\mathbf q^2+\mathbf p^2)
++\frac{(\mathbf q+\ii\mathbf p)\cdot\mathbf z}{\sqrt2\hbar}}\,\rd\mathbf x\\
+&=\ee^{-\frac{1}{4\hbar}(\mathbf q^2+\mathbf p^2)
++\frac{(\mathbf q+\ii\mathbf p)\cdot\mathbf z}{\sqrt2\hbar}}\\
+&=\ee^{-\frac{1}{2\hbar}|w|^2+\frac{\mathbf z\overline{\mathbf w}}{\hbar}},
+\qquad \mathbf w=\frac{\mathbf q-\ii\mathbf p}{2}.
+\end{align*}
+\tutornote{原文此处最后一行作 $\mathbf w=\frac{\mathbf q-\ii\mathbf p}{2}$，与命题 4.7.8 陈述中的 $\mathbf w=\frac{\mathbf q-\ii\mathbf p}{\sqrt2}$ 相差一个常数因子。}
+\end{proof}
+
+\begin{remark}{4.7.9}
+  命题 4.7.8 把两个恒等分解等同起来：
+  \[
+  \int_{\R^{2n}}\ket{\psi_{\mathbf q,\mathbf p}}\bra{\psi_{\mathbf q,\mathbf p}}\,
+  \frac{\rd\mathbf q\,\rd\mathbf p}{(2\pi\hbar)^n}=1
+  \quad\xrightarrow{\ \mathcal B\ }\quad
+  \int_{\C^n}\ket{K_{\mathbf w}}\bra{K_{\mathbf w}}\,
+  \ee^{-\frac{|w|^2}{\hbar}}\frac{\rd^{2n}\mathbf w}{(\pi\hbar)^n}=1.
+  \]
+\end{remark}
+
+\begin{definition}{4.7.10}
+  给定 $\C^n$ 上的函数 $f$，定义托普利茨算子
+  $T_f:\mathcal F_n\to\mathcal F_n$ 为
+  \[
+  T_f=\Pi\circ M_f\circ\Pi.
+  \]
+  这里 $M_f:L^2(\C^n,\rd\mu)\to L^2(\C^n,\rd\mu)$ 是乘以 $f$ 的乘法算子。
+\end{definition}
+
+由命题 4.7.6，$T_f$ 有施瓦茨核
+\[
+f(\mathbf w,\overline{\mathbf w})\ee^{\mathbf z\overline{\mathbf w}/\hbar},
+\]
+即
+\begin{align*}
+T_f(\varphi)(\mathbf z)
+&=\int_{\C^n}f(\mathbf w,\overline{\mathbf w})\,
+\ee^{\mathbf z\overline{\mathbf w}/\hbar}\varphi(\mathbf w)\,\rd\mu(\mathbf w)\\
+&=\int_{\C^n}f(\mathbf w,\overline{\mathbf w})\,
+\ee^{\mathbf z\overline{\mathbf w}/\hbar-|w|^2/\hbar}\varphi(\mathbf w)\,
+\frac{\rd^{2n}\mathbf w}{(\pi\hbar)^n}.
+\end{align*}
+等价地，可以写成
+\[
+T_f=\int_{\C^n}f(\mathbf w,\overline{\mathbf w})\,
+\ket{K_{\mathbf w}}\bra{K_{\mathbf w}}\,
+\ee^{-\frac{|w|^2}{\hbar}}\frac{\rd^{2n}\mathbf w}{(\pi\hbar)^n}.
+\]
+
+\begin{theorem}{4.7.11}
+  在 Segal–Bargmann 变换 $\mathcal B$ 下，别列津量子化成为托普利茨算子
+  \[
+  a^B=\mathcal B^{-1}\circ T_a\circ\mathcal B,
+  \]
+  其中坐标等同为 $\mathbf z=\dfrac{\mathbf q-\ii\mathbf p}{\sqrt2}$。
+\end{theorem}
+
+\begin{proof}
+由命题 4.7.8，
+\begin{align*}
+a^B&=\int_{\R^{2n}}a(\mathbf q,\mathbf p)\,
+\ket{\psi_{\mathbf q,\mathbf p}}\bra{\psi_{\mathbf q,\mathbf p}}\,
+\frac{\rd\mathbf q\,\rd\mathbf p}{(2\pi\hbar)^n}\\
+&\xrightarrow{\ \mathcal B\ }
+\int_{\C^n}a(\mathbf q,\mathbf p)\,
+\ket{K_{\mathbf w}}\bra{K_{\mathbf w}}\,
+\ee^{-\frac{|w|^2}{\hbar}}\frac{\rd^{2n}\mathbf w}{(\pi\hbar)^n}=T_a.
+\end{align*}
+\end{proof}
+
+% [原文 p.247]
+别列津–托普利茨量子化的优点是保持正性。对非负函数 $a\ge0$，
+对应算子也是正的：
+\[
+a^B\ (\text{或 }T_a)\ \ge 0.
+\]
+这由积分表达式
+\[
+a^B=\int_{\R^{2n}}a(\mathbf q,\mathbf p)\,
+\ket{\psi_{\mathbf q,\mathbf p}}\bra{\psi_{\mathbf q,\mathbf p}}\,
+\frac{\rd\mathbf q\,\rd\mathbf p}{(2\pi\hbar)^n}
+\]
+推出，其中每个投影
+$\ket{\psi_{\mathbf q,\mathbf p}}\bra{\psi_{\mathbf q,\mathbf p}}\ge0$。
+
+作为应用，我们证明下述范数连续性。
+
+\begin{proposition}{4.7.12}
+  设 $a\in\mathcal S(\R^{2n})$。则
+  \[
+  \lim_{\hbar\to0}\norm{a^B}=\norm{a}_\infty.
+  \]
+\end{proposition}
+
+\begin{proof}
+考虑托普利茨表示
+\[
+T_a=\Pi\circ M_a\circ\Pi.
+\]
+对任意 $\hbar$，有
+\[
+\norm{T_a}_{\mathcal F_n\to\mathcal F_n}
+\le\norm{M_a}_{L^2(\C^n,\rd\mu)\to L^2(\C^n,\rd\mu)}
+=\norm{a}_\infty.
+\]
+于是
+\[
+\limsup_{\hbar\to0}\norm{T_a}\le\norm{a}_\infty.
+\]
+另一方面，令
+\[
+\abs{a(\mathbf q_0,\mathbf p_0)}
+=\sup_{\mathbf q,\mathbf p}\abs{a(\mathbf q,\mathbf p)}
+=\norm{a}_\infty.
+\]
+由命题 4.7.4，
+\[
+\braket{\psi(\mathbf q_0,\mathbf p_0)}{a^B|\psi(\mathbf q_0,\mathbf p_0)}
+=\left(\ee^{\frac{\hbar}{2}\Delta}a\right)(\mathbf q_0,\mathbf p_0)
+=a(\mathbf q_0,\mathbf p_0)+O(\hbar).
+\]
+这说明
+\[
+\liminf_{\hbar\to0}\norm{a^B}
+\ge\abs{a(\mathbf q_0,\mathbf p_0)}=\norm{a}_\infty.
+\]
+\end{proof}
+
+\begin{proposition}{4.7.13}
+  设 $a\in\mathcal S(\R^{2n})$。则
+  \[
+  \lim_{\hbar\to0}\norm{a^W}=\norm{a}_\infty.
+  \]
+\end{proposition}
+
+\begin{proof}
+由命题 4.7.5，
+\[
+a^B=\left(\ee^{\frac{\hbar}{4}\Delta}a\right)^W.
+\]
+由定理 3.2.15 及 $\ee^{\frac{\hbar}{4}\Delta}a=a+O(\hbar)$，有
+\[
+\lim_{\hbar\to0}\norm{a^B-a^W}
+=\lim_{\hbar\to0}\norm{\left(\ee^{\frac{\hbar}{4}\Delta}a\right)^W-a^W}=0.
+\]
+结合命题 4.7.12，得到
+\[
+\lim_{\hbar\to0}\norm{a^W}
+=\lim_{\hbar\to0}\norm{a^B}=\norm{a}_\infty.
+\]
+\end{proof}
+
+% [原文 p.248]
+上述范数连续性在里费尔（Rieffel）的严格形变量子化中起重要作用（对应里费尔
+条件）。见 §6.1.3。
+
+\takeaway{本节由谐振子基态构造相干态，说明它们给出恒等算子的分解；再借
+Segal–Bargmann 变换把相干态与伯格曼核联系起来，将别列津量子化化为
+托普利茨算子，并证明 $\hbar\to0$ 时的范数连续性。}
+
+\chapterreview{本章讨论希尔伯特空间上的算子。§4.1 讨论线性算子的图像与闭性、
+伴随算子，以及对称算子与自伴算子的差别、自伴性判据与亏指数。§4.2 建立谱定理：
+预解式与谱、谱基、谱测度与投影值测度、博雷尔泛函演算、谱的类型与紧算子。§4.3
+与 §4.4 分别证明斯通定理和斯通–冯·诺依曼定理，后者给出外尔关系。§4.5 以自由
+粒子、谐振子与半有界势为例研究薛定谔算子，并给出加藤–雷利希定理与特罗特
+乘积公式。§4.6 研究弗雷德霍姆算子与指标，证明指标的伦型不变性与托普利茨指标定
+理。§4.7 由相干态构造别列津–托普利茨量子化，并证明其范数连续性。}
+
+% [本章止于原书 p.248，下接第 5 章 ch05a]

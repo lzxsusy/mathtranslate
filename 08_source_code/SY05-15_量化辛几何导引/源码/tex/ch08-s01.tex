@@ -1,0 +1,364 @@
+% 原书 p.195–p.200（PDF p.203–p.208）
+% 第 8 章 量子上同调（Quantum Cohomology）：章首引言（含 8.0 节预备）与 8.1 节 Novikov 域（环）
+% 说明：本章后半 8.5–8.7 由另一译者续写（ch08b），本文件写到 8.1 节结束。
+
+\chapter{量子上同调（Quantum Cohomology）}
+% >>> p203
+
+\textbf{本章导读。} 第 5 章的哈密顿 Floer 理论通过环路空间 $\Lambda M$ 上的「无穷维 Morse 理论」
+得到了辛流形的同调刚性。本章换一条路线：直接在辛流形自身上构造一个比经典上同调更丰富的环——
+量子上同调，它的乘法（量子乘积）把 $J$-全纯曲线的计数信息编码进系数环之中。本章先铺垫三个复杂度
+层次（辛非球面、单调、半正），再依次建立 Novikov 域、非阿基米德线性代数、稳定映射的模空间，
+最后定义量子上同调群；量子乘积的严格构造、结合性（等价于 WDVV 方程）与若干应用留待 8.5–8.7 节。
+
+借助哈密顿 Floer 理论，我们已经看到：第 5 章的定理 5.4.1 通过哈密顿 Floer 同调群
+$\mathrm{HF}_*(M,\omega,H,J)$，在辛流形 $(M,\omega)$ 上建立了一种同调理论。那么，能否直接在辛
+流形自身上（而不经过某个额外的空间，例如哈密顿 Floer 理论中的环路空间 $\Lambda M$）构造其他
+（上）同调理论呢？事实上，存在上同调群的一个高级版本，称为 $(M,\omega)$ 的
+\textbf{量子上同调}（quantum cohomology），它具有下述三个优点：
+\begin{enumerate}[label=(\roman*)]
+  \item 它还原出经典上同调群 $H^*(M;\mathbf{k})$；
+  \item 它反映辛流形 $(M,\omega)$ 的复杂性；
+  \item 它为研究 $(M,\omega)$ 提供了定量的视角。
+\end{enumerate}
+
+下面简要解释上面第 (ii) 点所说的复杂性——在辛几何的发展历程中，辛流形的复杂性至少经历过三个
+「跳跃」。第一个是\textbf{辛非球面条件}（见 (5.16)），它包括所有亏格 $g\geqslant1$ 的闭定向曲面
+$\Sigma_g$ 以及它们的乘积。
+
+第二个是\textbf{单调条件}（monotone condition），它说的是：存在某个常数 $\kappa>0$，使得对任何
+类 $A\in\pi_2(M)$ 都有
+\begin{equation}\tag{8.1}
+  \omega(A)=\kappa\cdot c_1(A).
+\end{equation}
+这里，与 (5.16) 之后的讨论相同，$c_1(A)$ 表示 $c_1(TM)\in H^2(M;\Z)$ 在第二 Hurewicz 映射下
+作用在同伦类 $A$ 于 $H_2(M;\Z)$ 中的像上。最经典的例子是复射影空间
+$(\CP^n,\omega_{\mathrm{FS}})$（见例 1.2.5）。确实，$\pi_2(\CP^n)=\Z\langle A\rangle$，其中 $A$
+由 $\CP^n$ 中的标准直线代表，并且
+\begin{equation}\tag{8.2}
+  \omega_{\mathrm{FS}}(A)=1\qquad\text{且}\qquad c_1(A)=n+1.
+\end{equation}
+这意味着 $\kappa=n+1$。
+% [Tutor Note: 易错预警——(1) 这里的 $c_1(A)$ 是 $c_1(TM)$ 与球面类 $A$ 的配对；$\pi_2(M)\to
+%  H_2(M;\Z)$ 是第二 Hurewicz 映射，$\pi_2(M)$ 未必自由，故「$c_1$ 在 $\pi_2(M)$ 上为零」应
+%  理解为在该映射像上为零。(2) $\CP^n$ 中直线的类是 $H_2$ 的生成元，$\omega_{\mathrm{FS}}(A)=1$
+%  是该类上最小的正面积，这里的 $A$ 与 $H_2$ 定向一致；若把 $A$ 换成相反定向的类，则两式的
+%  符号同时改变，$\kappa$ 仍为 $n+1$。(3) 单调条件 (8.1) 里的 $\kappa$ 与后面 8.1 节的
+%  Novikov 环没有直接关系，不要与 $\kappa$ 的其他用法混淆。]
+
+最后一个是\textbf{半正条件}（semi-positive condition，或称\textbf{弱单调}，weakly monotone），
+它是上述单调条件 (8.1) 的推广，最早由 [121] 引入。在给出定义之前，先引入下述技术性概念。我们知道，
+第一 Chern 类 $c_1(\cdot)$ 的像
+% >>> p204
+是 $\Z$ 的子群，它总具有 $n\Z$ 的形式（$n\in\Z$）。定义 $(M,\omega)$ 的
+\textbf{极小 Chern 数}（minimal Chern number）为 $n\Z$ 的最小正生成元，记作
+$N_M\in\Z_{\geqslant1}$。按约定，若 $c_1\equiv0$，则令 $N_M=+\infty$。
+
+\begin{wdefn}{8.0.1}（[121] 中的引理 1.1）
+  $2n$ 维辛流形 $(M^{2n},\omega)$ 称为\textbf{半正的}（semi-positive），如果下述情形之一成立：
+  \begin{enumerate}[label=(\roman*)]
+    \item 存在常数 $\kappa\geqslant0$，使得对任意 $A\in\pi_2(M)$ 有
+          $\omega(A)=\kappa c_1(A)$；
+    \item 第一 Chern 类在 $\pi_2(M)$ 上满足 $c_1\equiv0$；
+    \item 极小 Chern 数满足 $N_M\geqslant n-2$。
+  \end{enumerate}
+\end{wdefn}
+% [Tutor Note: 易错预警——(1) 条件 (i) 允许 $\kappa=0$，此时 $\omega$ 在所有球面类上为零，即
+%  $(M,\omega)$ 辛非球面；所以 (i) 同时涵盖了辛非球面与单调两种情形。(2) 条件 (iii) 中的
+%  $N_M$ 按约定在 $c_1\equiv0$ 时取 $+\infty$，于是条件 (ii) 其实是 (iii) 的极端情形；原文把
+%  二者并列列出，是为了强调常被这么用。(3) 本节三个条件的共同点是控制「能量负、Chern 数也负」
+%  的球面类，它们正是 Floer 理论中冒泡与多重覆盖问题的来源（与第 5 章注 5.4.5 对照）。]
+
+\begin{wrem}{8.0.1}
+  定义 8.0.1 中的条件 (iii) 蕴涵：若辛流形 $(M,\omega)$ 满足 $\dim(M)\leqslant6$，即
+  $n\leqslant3$，则 $(M,\omega)$ 总是半正的。
+\end{wrem}
+
+定义 8.0.1 中的条件 (iii) 实际上展示了能量的 $\omega(A)$ 与「次数」$c_1(A)$ 之间相互作用的一种
+\textbf{大间隙}（large gap）现象：若 $(M,\omega)$ 是半正的，则对任何能量为正的类 $A$（即满足
+$\omega(A)>0$），我们有 $c_1(A)\geqslant0$，或者 $c_1(A)\leqslant2-n$；当 $n$（即 $(M,\omega)$
+维数的一半）很大时，后者是一个非常负的数。有趣的是，逆命题也成立。
+
+\begin{wexer}{8.0.1}
+  设 $(M,\omega)$ 是辛流形。假设对任何满足 $\omega(A)>0$ 的 $A\in\pi_2(M)$，都有
+  $c_1(A)\geqslant0$ 或 $c_1(A)\leqslant2-n$，证明：$(M,\omega)$ 按定义 8.0.1 是半正的。
+\end{wexer}
+
+\begin{wrem}{8.0.2}
+  （带偏向的）关于单调辛流形（满足 (8.1) 者）的结论，常常可以推广到半正辛流形（定义 8.0.1）。
+  这种推广通常可以借助技术性的代数论证得到。
+\end{wrem}
+
+下面是半正辛流形的一个例子。
+
+\begin{wexam}{8.0.1}
+  考虑如下辛流形
+  \[
+    (M,\omega)=\bigl(S^2\times S^2,\
+      \omega_\epsilon=(1+\epsilon)\pi_1^*\omega_{\mathrm{area}}
+        +\pi_2^*\omega_{\mathrm{area}}\bigr).
+  \]
+  当 $\epsilon=0$ 时，$(M,\omega)$ 是单调的，其中 $\kappa=2$（见 (8.2)）。当 $\epsilon>0$ 时，
+  $(M,\omega)$ 由注 8.0.1 是半正的。然而在这一情形，对类 $([S^2],0)\in\pi_2(M)$ 有
+  $\omega_\epsilon(([S^2],0))=1+\epsilon$，而对类 $(0,[S^2])\in\pi_2(M)$ 有
+  $\omega_\epsilon((0,[S^2]))=1$。因此不存在满足单调条件 (8.2) 的一致常数 $\kappa>0$。所以
+  $(S^2\times S^2,\omega_{\epsilon>0})$ 不是单调的。\hfill$\square$
+\end{wexam}
+% [Tutor Note: 原文疑误——末句「不存在满足单调条件 (8.2) 的一致常数 $\kappa>0$」中的 (8.2)
+%  应为 (8.1)：(8.2) 是 $\CP^n$ 上的具体计算，单调条件的编号是 (8.1)。译文按原文照译「(8.2)」，
+%  详见 qsg/notes/review_ch08.md。另请核对：$\kappa=2$ 来自 $c_1(TS^2)([S^2])=2$ 与
+%  $\omega_{\mathrm{area}}([S^2])=1$，见 (8.2) 在 $\CP^1$ 的情形（$n=1$）。]
+
+\begin{wexer}{8.0.2}
+  对
+  \[
+    \Bigl(\CP^{n_1}\times\CP^{n_2}\times\cdots\times\CP^{n_k},\
+      \omega=\lambda_1\pi_1^*\omega_1+\cdots+\lambda_k\pi_k^*\omega_k\Bigr),
+  \]
+  求维数 $\{n_i\}_{i=1}^k$ 与标量 $\{\lambda_j\}_{j=1}^k$ 的一个充分条件，使得所得的乘积流形是
+  半正的。
+\end{wexer}
+
+比半正更一般的条件，将或者体现在像 $\omega(\pi_2(M))\subseteq\R$ 上——它可能是稠密的（因为
+$\pi_2(M)$ 一般可能非常复杂），或者体现为 $c_1(\cdot)$ 与 $\omega(\cdot)$ 之间根本没有明显关系。
+作为对照，请注意在单调条件 (8.1) 与定义 8.0.1 的条件 (i) 这两种情形中，像群
+$\omega(\pi_2(M))$ 都是 $\R$ 的离散子群。
+
+% >>> p205
+有时这种离散性便于控制从各种辛机器中产生的量；因此，只要求 $\omega(\pi_2(M))$ 是 $\R$ 的离散
+子群也是一个合理（且流行）的条件，称为\textbf{有理条件}（rational condition）。总而言之，为了把
+群 $\omega(\pi_2(M))$ 的信息编码进来，可以扩大经典上同调群的系数环——这就是量子上同调的诞生处。
+% [Tutor Note: 原文小误——此段原文有三处笔误/不规范：(1) "rend off" 应为 "rendered off"（或
+%  「descend from」），译文按「产生」处理；(2) "therefore" 在句首且小写，前一句的句号应改为
+%  分号；(3) "this is the born of the quantum cohomology" 中 born 应为 birth。三者均不影响
+%  数学内容，已记入 qsg/notes/review_ch08.md。]
+
+\section{Novikov 域（环）（Novikov Field (Ring)）}
+
+\begin{keytakeaways}
+\begin{itemize}
+  \item 几何图像：辛流形上的「面积」$\omega(A)$ 是 $\pi_2(M)$ 到 $\R$ 的同态，其像可能是离散的、
+        稠密的甚至为零；Novikov 环正是把 $\omega$ 的取值当作指数、把经典系数域 $\mathbf{k}$
+        扩大的形式幂级数环。
+  \item 数学工具：Novikov 条件（对每个下界只有有限个指数低于它，等价于指数「$\lambda\to+\infty$」）、
+        求值 $\nu$、群环 $\mathbf{k}[\ker[\omega]]$、短正合列与周期群 $\Gamma_\omega$。
+  \item 本节结论：$\Lambda^{\mathbf{k},\R}$ 是域（引理 8.1.1）；按 $\Gamma_\omega\cong\Z$、
+        $\{0\}$ 或一般情形，Novikov 环分别化为形式 Laurent 级数域、$\mathbf{k}$、以及（在
+        半正情形下）非常复杂的环；再把 $\ker[\omega]$ 的类也记入变量 $S$，就得到环
+        $\Lambda^{\mathbf{k},c}$，并附有 $\deg(T^A):=2c_1(TM)(A)$。
+  \item 阅读要点：$T$ 只是形式变量，不是数，故 (8.3) 讨论的不是「级数收敛」，而是组合上的
+        有限性条件；这一区别是本节全部代数运算（尤其求逆）的前提。
+\end{itemize}
+\end{keytakeaways}
+
+Novikov 环的概念由 S. Novikov 在 [169] 中引入，作为 Morse 理论的一个推广——后者由闭 1-形式
+（而非函数）构造。
+
+\begin{wdefn}{8.1.1}
+  基域 $\mathbf{k}$ 上的\textbf{通用 Novikov 环}（universal Novikov ring）定义为
+  \begin{equation}\tag{8.3}
+    \Lambda^{\mathbf{k},\R}:=\left\{\sum_{\lambda\in\R}a_\lambda T^\lambda
+      \ \middle|\
+      \forall C\in\R,\ \#\{a_\lambda\ne0\mid\lambda<C\}<+\infty\right\},
+  \end{equation}
+  其中 $T$ 是一个形式变量。(8.3) 中的有限性条件称为 \textbf{Novikov 条件}。
+\end{wdefn}
+% [Tutor Note: 易错预警——Novikov 条件要求「指数有下界、且严格低于任何给定值的项只有有限多个」，
+%  等价于说系数非零的那些指数构成 $\R$ 的一个离散且下有界的子集（于是可按指数从小到大排序，
+%  且最小指数存在）。它\textbf{不是}收敛性条件：$T$ 是形式变量，$\sum a_\lambda T^\lambda$ 是
+%  形式和，不做数值求值。这一点在例 8.1.1 的第 (ii) 项体现得最清楚：$\sum_i T^{1/i}$ 之所以
+%  不行，是因为指数 $1/i\to0$，对 $C=1$ 有无限多个 $\lambda<C$ 的项。]
+
+\begin{wexam}{8.1.1}
+  下面是通用 Novikov 环中一些元素与非元素的例子。
+  \begin{enumerate}[label=(\roman*)]
+    \item 幂级数 $\displaystyle\sum_{i\in\N_{\geqslant1}}T^i
+          =T^1+T^2+\cdots+T^n+\cdots$ 属于 $\Lambda^{\mathbf{k},\R}$；
+    \item 幂级数 $\displaystyle\sum_{i\in\N_{\geqslant1}}T^{\frac1i}
+          =T^1+T^{\frac12}+\cdots+T^{\frac1i}+\cdots$ \textbf{不}属于
+          $\Lambda^{\mathbf{k},\R}$；
+    \item 幂级数 $\displaystyle\sum_{i\in\N_{\geqslant1}}T^{-i}
+          =T^{-1}+T^{-2}+\cdots+T^{-n}+\cdots$ \textbf{不}属于 $\Lambda^{\mathbf{k},\R}$；
+    \item 任何（Novikov）多项式（指数取在 $\R$ 而非 $\Z$ 中）都是 $\Lambda^{\mathbf{k},\R}$
+          中的元素。
+  \end{enumerate}
+  \hfill$\square$
+\end{wexam}
+
+\begin{wrem}{8.1.1}
+  表达定义 8.1.1 中 Novikov 条件的一种简洁（但不完全严格）方式是说：指数「$\lambda\to+\infty$」。
+\end{wrem}
+
+下面这个结果展示了 Novikov 环 $\Lambda^{\mathbf{k},\R}$ 的一个良好性质。
+
+\begin{wlem}{8.1.1}
+  通用 Novikov 环 $\Lambda^{\mathbf{k},\R}$ 是一个域。
+\end{wlem}
+
+\begin{wproof}
+  对任意 $x\in\Lambda^{\mathbf{k},\R}$，可把 $x$ 写成
+  \[
+    x=a_{\lambda_1}T^{\lambda_1}+a_{\lambda_2}T^{\lambda_2}+\cdots,
+  \]
+  其中各 $a_{\lambda_i}\ne0$ 且 $\lambda_i\to+\infty$（见注 8.1.1）。于是
+  \[
+    x=a_{\lambda_1}T^{\lambda_1}
+      \left(1+\frac{a_{\lambda_2}}{a_{\lambda_1}}T^{\lambda_2-\lambda_1}+\cdots\right)
+      \in\Lambda^{\mathbf{k},\R}.
+  \]
+  % >>> p206
+  其中 $\lambda_i-\lambda_1>0$ 对一切 $i\geqslant1$ 成立。记
+  \[
+    A:=-\left(\frac{a_{\lambda_2}}{a_{\lambda_1}}T^{\lambda_2-\lambda_1}+\cdots\right).
+  \]
+  定义 $x^{-1}$ 为
+  \[
+    x^{-1}:=a_{\lambda_1}^{-1}T^{-\lambda_1}(1-A)^{-1}
+      =a_{\lambda_1}^{-1}T^{-\lambda_1}\bigl(1+A+A^2+\cdots\bigr),
+  \]
+  代数验算表明 $x\cdot x^{-1}=x^{-1}\cdot x=1$。更重要的是，$1+A+A^2+\cdots$ 也满足
+  Novikov 条件。
+\end{wproof}
+% [Tutor Note: 含糊点拨——这是本节最容易被略过的一步：为什么 $1+A+A^2+\cdots$ 满足 Novikov 条件？
+%  因为 $A$ 的所有指数都严格为正（$A$ 中最低次项的指数为 $\lambda_2-\lambda_1>0$），故 $A^k$ 的
+%  最低指数随 $k$ 趋于 $+\infty$；于是对任何 $C$，只有有限多个 $k$ 能使 $A^k$ 含有指数 $<C$ 的项。
+%  另请注意：$\Lambda^{\mathbf{k},\R}$ 之所以是\textbf{域}而不是环，关键是指数群取整个 $\R$，
+%  从而允许负指数（$T^{-\lambda_1}$）；若把指数限制在 $\Z_{\geqslant0}$，得到的只是形式幂级数环。
+%  「通用」(universal) 一词即指指数群取最大的 $\R$。]
+
+沿用本章引言末尾的讨论：Novikov 环如何编码辛流形 $(M,\omega)$ 的某些定量信息？让我们仍固定基域
+$\mathbf{k}$，但以下述两种方式修改通用 Novikov 环 $\Lambda^{\mathbf{k},\R}$。
+
+(i) 为避免 $\pi_2(M)$ 的复杂性，让我们考虑下述有限生成子群
+\begin{equation}\tag{8.4}
+  H_2^S(M):=\operatorname{im}\bigl(h_2\colon\pi_2(M)\to H_2(M;\Z)\bigr).
+\end{equation}
+这里「$S$」代表「球面类」（spherical classes）。注意当 $(M,\omega)$ 是闭辛流形时，上同调类
+$[\omega]$ 作为 $H_2^S(M)$ 上的线性映射是良定义的。然后把定义 8.1.1 中的 $\R$ 换成
+\begin{equation}\tag{8.5}
+  \Gamma_\omega:=\operatorname{im}\bigl([\omega]\colon H_2^S(M)\to\R\bigr).
+\end{equation}
+这里，$\Gamma_\omega$ 是 $\R$ 的子群，通常称为 $(M,\omega)$ 的\textbf{周期群}（period group）。
+重要的是，$\Gamma_\omega$ 能够反映辛流形的复杂性，正如本章引言中所列举的那样。
+
+(1) 若 $(M,\omega)$ 辛非球面，则 $[\omega]\equiv0$ 于 $H_2^S(M)$ 上，这蕴涵周期群
+$\Gamma_\omega=\{0\}$。
+
+(2) 若 $(M,\omega)$ 单调，则由「$[\omega]$ 在 $H_2^S(M)$ 上与 $c_1(TM)$ 成比例」这一条件，
+可知周期群 $\Gamma_\omega\cong\Z$，从而 Novikov 环 $\Lambda^{\mathbf{k},\R}\cong\mathbf{k}[T]$。
+这里 $\mathbf{k}[T]$ 或者表示多项式环 $\mathbf{k}[T]$ 沿正方向的完备化，或者干脆沿用标准名称——
+Laurent 级数环。
+% [Tutor Note: 原文疑误（记号不一致）——此处原文写 "$\Lambda^{\mathbf{k},\R}\cong\mathbf{k}[T]$。
+%  Here, $\mathbf{k}[T]$ either denotes the completion of the polynomial ring $\mathbf{k}[T]$
+%  in the positive direction, or simply follows the standard name, the ring of Laurent
+%  series."。同一个记号 $\mathbf{k}[T]$ 先后指三样东西：(a) 形式幂级数环（应为
+%  $\mathbf{k}[\![T]\!]$）；(b) 多项式环 $\mathbf{k}[T]$；(c) Laurent 级数环（通常记
+%  $\mathbf{k}(\!(T)\!)$）。按上下文，正确的断言是 $\Lambda^{\mathbf{k},\Z}\cong
+%  \mathbf{k}(\!(T)\!)$（形式 Laurent 级数域），其「正方向完备化」是 $\mathbf{k}[\![T]\!]$。
+%  译文保留原意并加此注，已记入 review_ch08.md。]
+
+(3) 若 $(M,\omega)$ 半正，则我们可能完全无法控制 $[\omega]$ 在 $H_2^S(M)$ 上的取值（例如在
+定义 8.0.1 的条件 (ii) 与 (iii) 的情形），于是周期群 $\Gamma_\omega$ 可能非常复杂。这一点在
+例 8.0.1 中已有体现：对辛流形
+$(M,\omega)=(S^2\times S^2,\ \omega_\epsilon=(1+\epsilon)\pi_1^*\omega_{\mathrm{area}}
++\pi_2^*\omega_{\mathrm{area}})$，其周期群 $\Gamma_{\omega_\epsilon}$ 由 $1$ 与 $1+\epsilon$ 的
+（$\Z$ 上的）线性组合生成。当 $\epsilon\in\R\setminus\Q$ 时，所得的集合将是 $\R$ 的稠密子集
+（练习）。
+
+(ii) 把 $\R$ 换成 $H_2^S(M)$（于是指数将是同调类而非标量），并把修改后的子集记作
+$\Lambda^{\mathbf{k},c}$，其中「$c$」代表类（classes）。每个元素
+% >>> p207
+都具有下述形式：
+\begin{equation}\tag{8.6}
+  x=\sum_{A\in H_2^S(M)}a_A T^A\qquad\text{其中 }a_A\in\mathbf{k},
+\end{equation}
+而 $t$ 是一个形式变量。这并不符合定义 8.1.1 中 Novikov 环的定义，因为对于同调类，我们不清楚
+「Novikov 条件」应当如何表述。
+
+若借助 $[\omega]$ 在其指数 $A$ 上的取值把它转换成标准的 Novikov 元素，就会遇到一个麻烦：若
+$B\in\ker\omega$，则对任何 $n\in\Z$ 都有 $[\omega](A)=[\omega](A+nB)$。换言之，把 $T^A$ 与
+$T^{A+nB}$ 转换成标准 Novikov 元素时，它们将无法被区分。这促使我们考虑下述短正合列
+（见 [220] 第 3 节）
+\[
+  0\to\ker[\omega]\to H_2^S(M)\xrightarrow{\ [\omega]\ }\Gamma_\omega\to0.
+\]
+由于 $\Gamma_\omega\leqslant\R$ 无挠（并且它有限生成、阿贝尔，从而是投射的），上述短正合列分裂，
+即 $H_2^S(M)\cong\ker[\omega]\oplus\Gamma_\omega$。于是任何 $A\in H_2^S(M)$ 都可表为
+$A=(B,\lambda)$，其中 $B\in\ker[\omega]$，$\lambda\in\Gamma_\omega$。因此，(8.6) 中的 $x$
+可以改写为
+\begin{equation}\tag{8.7}
+  x=\sum_{(B,\lambda)\in H_2^S(M)}a_{(B,\lambda)}t^{(B,\lambda)}
+   =\sum_{\lambda\in\Gamma_\omega}
+     \Bigl(\sum_{B\in\ker[\omega]}a_{(B,\lambda)}S^B\Bigr)T^\lambda,
+\end{equation}
+其中 $a_{(B,\lambda)}$ 属于 $\mathbf{k}$，符号 $T^\lambda$ 表示定义 8.1.1 中的单项式，而新引入
+的形式变量 $S$ 用来记录核中的元素 $B\in\ker[\omega]$。注意迄今为止 (8.7) 中的求和号都只是形式
+求和，即并不要求任何有限性或收敛性条件。
+% [Tutor Note: 原文疑误（记号）——(8.6) 中出现的自变量是 $T$，而正文说 "and $t$ is a formal
+%  variable"、(8.7) 的中间表达式又写成小写 $t^{(B,\lambda)}$，与 (8.7) 右端的大写 $T^\lambda$
+%  不一致。按上下文，$t$ 与 $T$ 应统一为大写 $T$（形式变量）。译文在 (8.7) 处按原文照录小写
+%  $t$，但请读者按 $T$ 理解；已记入 review_ch08.md。]
+
+与上面的修改 (i) 相比，在 (8.7) 中或在所期望的 $\Lambda^{\mathbf{k},c}$ 中，我们把系数域
+$\mathbf{k}$ 提升为一个由形如
+\[
+  \sum_{B\in\ker[\omega]}a_{(B,\lambda)}S^B
+\]
+的元素构成的环。
+
+现在，我们准备仿照定义 8.1.1 中的条件，对 $\Lambda^{\mathbf{k},c}$ 定义「Novikov 条件」：
+\begin{equation}\tag{8.8}
+  x\in\Lambda^{\mathbf{k},c}\quad\text{当且仅当}\quad
+  \forall C\in\R,\ \#\{a_{(B,\lambda)}\ne0\mid\lambda<C\}<+\infty,
+\end{equation}
+其中 $x$ 按 (8.7) 写出。注意这特别排除了形如 $\sum_{n\in\Z}T^{A+nB}$（其中
+$B\in\ker[\omega]$）的元素。确实，在 (8.7) 的表述中，我们将有 $\lambda=[\omega](A)$，而当取
+$C=\lambda+1$ 时，有无限多个非零系数 $a_{(nB,\lambda)}=1$（$n\in\Z$）。
+
+% >>> p208
+\begin{wexer}{8.1.1}
+  证明：在 (8.8) 的 Novikov 条件下，(8.7) 中任一指数 $\lambda$ 对应的「核」部分
+  \[
+    \sum_{B\in\ker[\omega]}a_{(B,\lambda)}S^B
+  \]
+  都落在群环 $\mathbf{k}[\ker[\omega]]$ 中。（回忆群环只由有限形式和组成，即任何形式和都是有限
+  多项之和；因此 $x\in\Lambda^{\mathbf{k},c}$ 蕴涵其「核」部分只有有限多项。）
+\end{wexer}
+
+这里修改 (ii) 的明显好处是：$\Lambda^{\mathbf{k},c}$ 中的任何元素都通过给单项式 $t^A$ 指定一个
+次数 $\deg(T^A):=2c_1(TM)(A)$ 来编码来自 $c_1(TM)$ 的信息。与修改 (i) 类似，这个次数反映了
+辛流形的复杂性，正如本章开头所列举的那样。极端情形是：这个（由度数所构成的）子群要么平凡地为
+$0$，要么就是整个 $2\Z$。在半正情形、且 $\dim M$ 很大时，定义 8.0.1 中的条件 (iii) 说这个循环群
+非常稀疏——意思是当次数变化时会出现很大的跳跃。在实践中，那些 $c_1(TM)(A)$ 很小（包括为零）的
+类 $A$，往往会在各种 Floer 理论中引起分析上的麻烦。
+% [Tutor Note: 易错预警——$\deg(T^A)=2c_1(TM)(A)$ 中的因子 $2$ 来自 Maslov 类与第一 Chern 类
+%  的换算（与第 5 章 5.5 节末的 $2c_1(\overline{w}\#w')$ 同源）；因此次数总取偶数值，其值域是
+%  $2\Z$ 的子群。原文说「要么平凡地为 0，要么是整个 $2\Z$」，指的正是这个子群的两种极端。
+%  另请注意 (8.8) 只对指数 $\lambda$（即面积值）施加有限性，而「核」方向 $B\in\ker[\omega]$
+%  上的项由练习 8.1.1 保证有限——两个方向的有限性来源不同，切勿混淆。]
+
+\begin{wrem}{8.1.2}
+  若在 (8.7) 中令 $S=1$，则由 (8.8) 中的 Novikov 条件以及练习 8.1.1（此时和
+  $\sum_{B\in\ker[\omega]}a_{(B,\lambda)}$ 良定义且有限），修改 (ii) 恰好退化为上面紧邻的
+  修改 (i)。
+\end{wrem}
+
+为结束本节，让我们对任意给定子群 $\Gamma\leqslant\R$ 引入记号 $\Lambda^{\mathbf{k},\Gamma}$，
+它由满足定义 8.1.1 中 Novikov 条件的元素组成。该记号把 $\Lambda^{\mathbf{k},\R}$ 或
+$\Lambda^{\mathbf{k},\Gamma_\omega}$ 作为特殊情形包含在内，其中 $\Gamma=\R$ 或
+$\Gamma=\Gamma_\omega$。让我们指出一个有用的观察：正是由于定义 8.1.1 中的 Novikov 条件，
+每个元素 $x\in\Lambda^{\mathbf{k},\Gamma}$ 都有最小指数，这使我们可以如下定义取值
+（valuation）$\nu\colon\Lambda^{\mathbf{k},\Gamma}\to\R\cup\{+\infty\}$：
+\begin{equation}\tag{8.9}
+  \nu(x):=\min\Bigl\{\lambda\ \Big|\ x=\sum_\lambda a_\lambda T^\lambda\Bigr\}
+    \in\R\cup\{+\infty\}.
+\end{equation}
+这里按约定，$\nu(x)=+\infty$ 当且仅当 $x=0$。容易验证 $\nu$ 满足一些额外的性质：
+$\nu(xy)=\nu(x)+\nu(y)$；对任何非零的 $\alpha\in\mathbf{k}$ 有 $\nu(\alpha x)=\nu(x)$；以及
+$\nu(x+y)\geqslant\min\{\nu(x),\nu(y)\}$。
+
+现在，记 $V$ 为 $\Lambda^{\mathbf{k},\Gamma}$ 上的有限维向量空间，其中 $\Gamma\leqslant\R$。
+经典线性代数教给我们如何研究这样的有限维向量空间 $V$——从基、子空间、线性变换等等出发。与经典
+情形中以 $\R$ 为系数域不同，这里系数域换成了 $\Lambda^{\mathbf{k},\Gamma}$（并配以 (8.9) 定义的
+取值 $\nu$），由此产生的本质差别在于一个核心概念——\textbf{正交性}，它高度依赖于内积（或相应的
+范数）。

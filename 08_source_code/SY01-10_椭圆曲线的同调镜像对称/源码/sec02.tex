@@ -1,0 +1,301 @@
+% ============================================================
+%  sec02.tex —— §2 $A_\infty$-范畴
+%  原文：*Homological Mirror Symmetry for Elliptic Curves*，§2，pp.6–13
+%  范围：第 6 页标题 “2. $A_\infty$-categories” 起，
+%        止于第 13 页标题 “3. The enhanced derived category” 之前
+% ============================================================
+
+\section{\texorpdfstring{$A_\infty$-范畴}{A∞-范畴}}\label{sec:ainf}
+
+\begin{keytakeaways}
+  \item \textbf{物理/几何图像}：本节是纯代数的预备，暂不涉及几何；但 $A_\infty$-范畴正是 §3 的增强导出范畴与 §4 的 Fukaya 范畴的共同语言。在 Fukaya 范畴中，$\Hom$ 空间是 Floer 复形，$m_1$ 是 Floer 微分，$m_2$ 及其高阶修正 $m_{\ge 3}$ 记录伪全纯圆盘的计数；高阶结合性的偏差（$m_3$ 等）对应圆盘模空间边界分层的量子修正。
+  \item \textbf{数学工具}：同调微扰论（homological perturbation theory）、形式微分同胚、$A_\infty$-模与拟表示、扭变函子 $T_Y$、三角包络与分裂闭包。
+  \item \textbf{核心结论}：$A_\infty$ 关系的高阶项保证 $m_2$ 在取上同调后结合；域上每个 $A_\infty$-范畴都可替换为对象集不变、上同调相同的等价模型，且该模型至（非唯一）同构唯一；三角 $A_\infty$-范畴的 $H^0$ 是通常的三角范畴；每个 $A_\infty$-范畴有三角包络 $D\mathcal{A}$ 与分裂闭三角包络 $D^\pi\mathcal{A}$，均在拟等价意义下唯一。
+\end{keytakeaways}
+
+我们定义 $A_\infty$-范畴，它是同调镜像对称猜想的构造单元。正如引言中所说，本节将尽可能简短，基本不给出证明。
+
+$A_\infty$-代数的入门介绍见 [9]；更全面的叙述见 [20] 的第一部分。注意这两份文献使用的符号约定不同。我们遵循前者。
+
+% [Tutor Note: 符号约定预警。原文的 $A_\infty$ 关系式取 $(-1)^{a+bc}$，外层下标为 $a+1+c$，这是 Keller 讲义中的标准写法；而 Seidel [20] 的书写习惯（$m_2$ 的变量次序、以及是否给整个关系式乘整体符号）不同，故原文特意声明“遵循前者”。核对时不要只盯一个符号：正确做法是把 $n=1,2,3$ 的展开式逐项写出来反推约定。另注：本页 $m_n$ 的次数平移写作 $(2-d)$（应为 $(2-n)$，见下条），抄录到别的文献时需整体换算。]
+
+\subsection{基本定义}\label{subsec:ainf-basic}
+
+我们固定一个域（也可能是环）$k$。当 $k$ 不是域这一并不常见的情形下，我们实际指的是模，但仍说“向量空间”。
+
+\begin{definition*}
+一个 $A_\infty$-范畴 $\mathcal{C}$ 由以下数据组成：$\mathcal{C}$ 的对象类 $\Ob(\mathcal{C})$；对每一对 $X,Y\in\mathcal{C}$，一个分次向量空间 $\Hom_{\mathcal{C}}(X,Y)$；以及对每一组对象 $X_0,\dots,X_n\in\Ob(\mathcal{C})$，一个线性映射
+\begin{equation}\label{eq:ainf-mn}
+m_n^{\mathcal{C},X_0,\dots,X_n}\colon
+\Hom_{\mathcal{C}}(X_{n-1},X_n)\otimes\cdots\otimes\Hom_{\mathcal{C}}(X_0,X_2)
+\longrightarrow \Hom_{\mathcal{C}}(X_0,X_n)(2-d).
+\end{equation}
+我们要求，对每一组对象 $X_0,\dots,X_n\in\Ob(\mathcal{A})$，以下 $A_\infty$-关系成立：
+\begin{equation}\label{eq:ainf-relation}
+\sum_{a+b+c=n}(-1)^{a+bc}\,
+m_{a+1+b}^{\mathcal{C},X_0,\dots,X_c,X_{b+c},\dots,X_n}
+\bigl(\mathbf{1}^{\otimes a}\otimes m_b^{\mathcal{C},X_c,\dots,X_{c+b}}\otimes \mathbf{1}^{\otimes c}\bigr)=0 .
+\end{equation}
+\end{definition*}
+
+% [Tutor Note: 原文疑误（三处，译文均保留原文写法）：(i) 结构映射的余域写成 $\Hom_{\mathcal{C}}(X_0,X_2)$；按 $m_n$ 接收态射 $X_0\to X_1\to\cdots\to X_n$ 的约定，应为 $\Hom_{\mathcal{C}}(X_0,X_1)$。(ii) 次数平移写成 $(2-d)$，其中 $d$ 从未定义；与下文 $A_\infty$-函子的 $(1-d)$ 类推，此处应读作 $(2-n)$（$m_n$ 的次数为 $2-n$）。(iii) $A_\infty$ 关系中外层 $m$ 的下标原文作 $a+1+b$，但 $1^{\otimes a}\otimes m_b\otimes 1^{\otimes c}$ 给出 $a+1+c$ 个变元，故按标准约定应为 $m_{a+1+c}$；原文的 $b$ 是笔误（$b=1$ 时两种写法恰好一致，$b\neq 1$ 时立刻出错）。此外“对每一组对象 $X_0,\dots,X_n\in\Ob(\mathcal{A})$”中的 $\mathcal{A}$ 与上文 $\mathcal{C}$ 不一致，应统一为 $\mathcal{C}$。]
+
+我们立即简化记号：把 $X\in\Ob(\mathcal{C})$ 直接写成 $X\in\mathcal{C}$；把 $m_n^{\mathcal{C},X_0,\dots,X_n}$ 写成 $m_n^{\mathcal{C}}$，甚至只写 $m_n$。
+
+这个定义方程看起来有些奇怪（第 5 节会给出重新解释）。在 $X_0=X_1=\cdots=X$ 的情形下，对前几个 $n$ 把它写出来：
+\begin{align}
+m_1m_1&=0,\label{eq:ainf-m1}\\
+-m_2(\mathbf{1}\otimes m_1+m_1\otimes\mathbf{1})+m_1m_2&=0,\label{eq:ainf-m2}\\
+m_3(\mathbf{1}\otimes\mathbf{1}\otimes m_1+\mathbf{1}\otimes m_1\otimes\mathbf{1}+m_1\otimes\mathbf{1}\otimes\mathbf{1})
++m_2(-\mathbf{1}\otimes m_2+m_2\otimes\mathbf{1})+m_1m_3&=0.\label{eq:ainf-m3}
+\end{align}
+
+% [Tutor Note: 这三条方程可以用来反推符号约定：$n=2$ 时，$(a,b,c)=(0,1,1)$ 项给出 $(-1)^{0+1}m_2(\mathbf{1}\otimes m_1)=-m_2(\mathbf{1}\otimes m_1)$，$(1,0,1)$ 项给出 $(-1)^{1+0}m_2(m_1\otimes\mathbf{1})=-m_2(m_1\otimes\mathbf{1})$，$(0,2,0)$ 项给出 $m_1m_2$，合起来正是第二式；$n=3$ 时按同样方式逐项比对即可得到第三式。若换用另一套约定，往往只有整体符号或 $m_2$ 的变量次序不同，检验办法始终是固定 $n$ 逐项写出。]
+
+% [Tutor Note: $m_3$ 的几何含义：$m_2$ 的结合子 $m_2(m_2\otimes\mathbf{1})-m_2(\mathbf{1}\otimes m_2)$ 不必为零，第三式说明它与 $[m_1,m_3]$ 只差一个符号，即 $m_3$ 是零映射与结合子之间的广义链同伦。在 Fukaya 范畴中，$m_2$ 是 3 个边界标记点的圆盘计数，$m_3$ 对应 4 个标记点的圆盘在模空间边界上的粘合，$m_1$ 项则对应带一个退化标记点的圆盘；这套“边界分层对齐”的图景是理解所有高阶 $m_n$ 的出发点，详见 §4。]
+
+第一个方程说明 $m_1\colon\Hom(X,X)\to\Hom(X,X)$ 是通常的（分次）微分；第二个说明 $m_2$ 关于 $m_1$ 是导子。特别地，取上同调后 $m_2$ 下降为良定义的双线性运算。第三个方程或许更有用的写法是
+\[
+m_2(\mathbf{1}\otimes m_2)-m_2(m_2\otimes\mathbf{1})
+=m_1m_3+m_3(\mathbf{1}\otimes\mathbf{1}\otimes m_1+\mathbf{1}\otimes m_1\otimes\mathbf{1}+m_1\otimes\mathbf{1}\otimes\mathbf{1}).
+\]
+它特别蕴含 $m_2$ 在上同调中成为结合的。这里 $m_3$ 是零映射与 $m_2$ 的结合子之间的一种广义链同伦。
+
+若 $\mathcal{C}$ 是 $A_\infty$-范畴，则令 $\Ob(H\mathcal{C})=\Ob(\mathcal{C})$、$\Hom_{H\mathcal{C}}(X,Y)=H^*\Hom_{\mathcal{C}}(X,Y)$，得到一个新的“范畴” $H\mathcal{C}$。这几乎是一个范畴，只是它未必有恒等态射。若确有恒等态射，则称 $\mathcal{C}$ 是上同调单位的（cohomologically unital）。本文通篇假设这一点。我们把 $H\mathcal{C}$ 视为取值于分次 $k$-向量空间的充实范畴；类似地定义 $H^0\mathcal{C}$（充实于不分次的 $k$-向量空间）。
+
+% [Tutor Note: $H\mathcal{C}$ 与 $H^0\mathcal{C}$ 的分工要分清：$H\mathcal{C}$ 仍取全上同调 $H^*$，是分次范畴，用来陈述“$m_2$ 在同调上结合”；$H^0\mathcal{C}$ 只保留零次上同调，是同伦范畴，对象间的同构、拟表示、三角结构都在 $H^0$ 层面陈述。下文 $\Hom_{H(\mathcal{A})}$、$\Hom_{H^0(\mathcal{A})}$ 混用，正对应这两层结构，不可互换。]
+
+现在看一些例子。按定义，$A_\infty$-代数就是只有一个对象的 $A_\infty$-范畴。dg-范畴（微分分次范畴）是满足 $n>2$ 时 $m_n=0$ 的 $A_\infty$-范畴。dg-代数按显然的方式定义。任何分次结合代数都是 dg-代数（取 $m_1=0$）。类似地，充实于分次 $k$-向量空间的范畴是 dg-范畴（取 $m_1=0$）。满足 $m_1=0$ 的 $A_\infty$-范畴称为极小的（minimal）。
+
+设 $\mathcal{B}$ 是充实于 $k$-向量空间的阿贝尔范畴。可以如下构造一个 dg-范畴 $\mathcal{C}$：令 $\Ob(\mathcal{C})$ 由 $\mathcal{B}$ 中的链复形组成；对链复形 $M^\bullet,N^\bullet$，令
+\begin{equation}\label{eq:ainf-hom-complex}
+\Hom_{\mathcal{C}}(M,N)^n=\prod_{q-p=n}\Hom_{\mathcal{B}}(M^p,N^q).
+\end{equation}
+它带有自然的微分
+\begin{equation}\label{eq:ainf-differential}
+m_1(f)=d_N\circ f-(-1)^{|f|}f\circ d_M .
+\end{equation}
+把所得的复形记作 $\Hom^\bullet(M,N)$。$\mathcal{B}$ 中的复合给出 $\mathcal{C}$ 的乘法 $m_2$；可以验证这确实给出一个 dg-范畴。一个具体例子是取 $\mathcal{B}$ 为 $k$-向量空间范畴。此时把 dg-范畴 $\mathcal{C}$ 记作 $Ch$。它的一个变体是相反范畴 $Ch^{op}$，其中 $\Hom_{Ch^{op}}(M,N)=\Hom_{Ch}(N,M)$，且
+\begin{equation}\label{eq:ainf-opposite}
+m_2^{op}(f,g)=(-1)^{|f||g|}m_2(g,f).
+\end{equation}
+
+% [Tutor Note: 微分 $m_1(f)=d_N\circ f-(-1)^{|f|}f\circ d_M$ 中 $(-1)^{|f|}$ 的位置极易写错：它是把 $f$ 从 $d_M$ 左侧移到右侧所付的 Koszul 代价。若采用相反的分次约定（例如把 $|f|$ 换成 $|f|+1$，或把微分写成右作用），这一项会移到另一侧。验证 $m_1^2=0$ 只需 $d_N^2=d_M^2=0$，以及 $(+1)$ 与 $(-1)^{|f|+1}\cdot(-1)^{|f|}=-1$ 的抵消；若符号位置写错，$f\circ d_M^2$ 与 $d_N^2\circ f$ 之外会出现无法抵消的交叉项。]
+
+% [Tutor Note: $Ch^{op}$ 的乘法 $m_2^{op}(f,g)=(-1)^{|f||g|}m_2(g,f)$ 中的符号来自交换两个分次映射的次序，与原文“Notation and conventions”中 $(f\otimes g)(x\otimes y)=(-1)^{|g||x|}f(x)\otimes g(y)$ 的约定配套。取相反范畴是因为下文要用 $\iota X(Y)=\Hom_{\mathcal{A}}(Y,X)$ 定义 $A_\infty$-模：它对 $Y$ 反变，故取值于 $Ch^{op}$。另注：原文第 9 页写 $Ch^{op}$，第 11 页写 $Ch^{opp}$，二者是同一对象，只是记号不统一。]
+
+\begin{definition*}
+设 $\mathcal{A}$ 与 $\mathcal{B}$ 是 $A_\infty$-范畴。所谓 $A_\infty$-函子 $F\colon\mathcal{A}\to\mathcal{B}$，指的是一个映射 $F\colon\Ob(\mathcal{A})\to\Ob(\mathcal{B})$，以及对每一组对象 $X_1,\dots,X_n\in\Ob(\mathcal{A})$ 的一个线性映射
+\[
+F_d\colon \Hom(X_{d-1},X_d)\otimes\cdots\otimes\Hom(X_0,X_1)\longrightarrow \Hom(FX_0,FX_d)(1-d).
+\]
+我们要求
+\begin{equation}\label{eq:ainf-functor}
+\sum_{r,\;a_1+\cdots+a_r=d}(-1)^{\epsilon}\,m_r^{\mathcal{B}}(F_{a_1}\otimes\cdots\otimes F_{a_r})
+=\sum_{a+b+c=d}(-1)^{a+bc}\,F_{a+1+c}\bigl(\mathbf{1}^{\otimes a}\otimes m_b^{\mathcal{A}}\otimes\mathbf{1}^{\otimes c}\bigr),
+\end{equation}
+其中
+\begin{equation}\label{eq:ainf-epsilon}
+\epsilon=(r-1)(a_1-1)+(r-2)(a_2-1)+\cdots+(2)(a_{r-2}-1)+(1)(a_{r-1}-1).
+\end{equation}
+\end{definition*}
+
+% [Tutor Note: 定义中“对每一组 $X_1,\dots,X_n$”与下标 $F_d$ 不一致（原文混用 $n$ 与 $d$）；正确读法是：对每个 $d\ge 1$ 与每族 $X_0,\dots,X_d\in\Ob(\mathcal{A})$ 给出 $F_d$。又，式 \eqref{eq:ainf-epsilon} 可紧凑地写成 $\epsilon=\sum_{i=1}^{r-1}(r-i)(a_i-1)$，它是把 $r$ 个块 $F_{a_1},\dots,F_{a_r}$（第 $i$ 块含 $a_i$ 个变元）依次移过前面各块时积累的 Koszul 符号。检验方式仍是先对小 $d=1,2,3$ 展开：$d=1$ 给出 $F_1m_1=m_1F_1$（$F_1$ 是链映射），$d=2$ 给出 $F_2$ 实现 $m_2$ 的同伦相容。]
+
+虽然记号 $m_d$ 有很强的歧义性，但几乎不会引起混淆。这个关系看起来仍然很奇怪。像前面一样对小的 $n$ 写出，可得 $F_1$ 是链映射，$F_2$ 在同伦意义下保持乘法。特别地，只要 $F$ 保持恒等元，它就下降为通常的函子 $HF\colon H\mathcal{A}\to H\mathcal{B}$。本文通篇假设这一点。
+
+若 $HF$ 是同构，则称 $A_\infty$-函子 $F$ 是拟同构（quasi-isomorphism）；若 $HF$ 是等价，则称 $F$ 是拟等价（quasi-equivalence）。
+
+$A_\infty$-函子有自然的复合方式，但我们不会显式用到。实际上还存在 $A_\infty$-函子的同伦与自然变换的概念，它们使从 $\mathcal{A}$ 到 $\mathcal{B}$ 的所有 $A_\infty$-函子构成的类自身成为一个 $A_\infty$-范畴。这非常有用，但定义复杂，我们避开它。
+
+\subsection{同调微扰论}\label{subsec:ainf-hpt}
+
+这或许是关于 $A_\infty$-范畴的第一个非平凡结果。参考文献见 [20, (1i)]。设定如下：设 $\mathcal{B}$ 是 $A_\infty$-范畴，记 $\mathcal{A}$ 为一个“待定的 $A_\infty$-范畴”。后者的意思是：$\Ob(\mathcal{A})=\Ob(\mathcal{B})$，且对每个 $X,Y\in\mathcal{A}$ 给定一个分次向量空间 $\Hom_{\mathcal{A}}(X,Y)$。
+
+\begin{theorem}[同调微扰引理]\label{thm:2.1}
+设 $k$ 是任意环，不必是域。在上述情形下，还假设对每个 $X,Y\in\mathcal{A}$ 给定：$\Hom_{\mathcal{A}}(X,Y)$ 上次数为 $+1$ 的分次微分 $m_1^{\mathcal{A}}$，$\Hom_{\mathcal{B}}(X,Y)$ 上次数为 $-1$ 的线性自同态 $T_1$，以及线性映射 $F_1\colon\Hom_{\mathcal{A}}(X,Y)\to\Hom_{\mathcal{B}}(X,Y)$ 与 $G_1\colon\Hom_{\mathcal{B}}(X,Y)\to\Hom_{\mathcal{A}}(X,Y)$。若（对一切 $X,Y$）成立
+\begin{equation}\label{eq:ainf-hpt}
+m_1^{\mathcal{B}}T_1+T_1m_1^{\mathcal{B}}=F_1G_1-\mathbf{1},
+\end{equation}
+则可以构造 $\mathcal{A}$ 上的 $A_\infty$-结构 $(m_d)$，延拓给定的 $m_1$，并把 $F_1,G_1$ 延拓为 $A_\infty$-函子。此外 $FG$ 是拟同构。
+\end{theorem}
+
+% [Tutor Note: 该定理的证明被完全略去（原文只说“见参考文献”），思路是逐阶递归构造：先由式 \eqref{eq:ainf-hpt} 把 $m_1^{\mathcal{B}}$-闭性的破缺用 $T_1$ 吸收，作为 $m_2^{\mathcal{A}}$ 的一阶修正；一般地，$m_d^{\mathcal{A}}$ 与 $F_d,G_d$ 由只含 $F_1,G_1,T_1$ 与已知 $m^{\mathcal{B}}_k$ 的树形求和公式给出，$A_\infty$ 关系对 $d$ 归纳验证。关键在于所有公式只含加法、复合与 $T_1$ 的多重复合，不出现除法，故对任意基环成立。原文所说“$FG$ 是拟同构”中的复合按原文约定为 $F\circ G$（见式 \eqref{eq:ainf-hpt} 左侧作用在 $\Hom_{\mathcal{B}}$ 上）；要把结论加强为 $F\circ G$ 与恒等函子同伦，需要把 $T_1$ 提升为 $A_\infty$-同伦的高阶项，这正是原文提到的“更强版本”。]
+
+几点说明。把 $T_1$ 看作“$A_\infty$-同伦”的第一项是很有启发性的。该定理的更强版本实际上把这一点延拓为 $FG$ 与 $\mathbf{1}$ 之间的同伦。其次应当指出，上述过程是完全函子性的：定理所构造的所有映射都有显式公式（其中不含除法，这正是它可以在任意基环上工作的原因）。细节见所引文献。
+
+为说明该定理的作用，我们记下两个推论：
+
+\begin{corollary*}
+设 $\mathcal{A}$ 是域上的 $A_\infty$-范畴。则存在 $A_\infty$-范畴 $\widetilde{\mathcal{A}}$，满足 $\Ob(\widetilde{\mathcal{A}})=\Ob(\mathcal{A})$，以及拟同构 $F\colon\widetilde{\mathcal{A}}\to\mathcal{A}$，且 $H(F)=\mathbf{1}$。此外，$\widetilde{\mathcal{A}}$ 在（非唯一）同构意义下唯一。
+\end{corollary*}
+
+\begin{proof}
+由于在域上工作，可以分裂 $\Hom_{\mathcal{A}}(X,Y)=\Hom_{H\mathcal{A}}(X,Y)\oplus C(X,Y)$。这给出一个同伦，可代入上述定理。
+\end{proof}
+
+% [Tutor Note: 该推论的证明只用了“域上复形可分裂”这一事实：分裂 $\Hom_{\mathcal{A}}=\Hom_{H\mathcal{A}}\oplus C$ 相当于选一个（非典范的）同伦收缩，微分在 $C$ 上可逆，取 $T_1$ 为其逆（在 $\Hom_{H\mathcal{A}}$ 上取零），就得到定理所需的收缩同伦。所得 $\widetilde{\mathcal{A}}$ 的 $m_1$ 为零（即极小模型），$H(F)=\mathbf{1}$ 表示 $F$ 在同伦范畴上是恒等；唯一性只是“在非唯一同构意义下”，因为分裂本身依赖选择。]
+
+\begin{corollary*}
+设 $L\colon\mathcal{A}\to\mathcal{B}$ 是 $A_\infty$-范畴之间的 $A_\infty$-函子。若 $L$ 是拟等价，则存在 $M\colon\mathcal{B}\to\mathcal{A}$，使得 $H(ML)\simeq\mathbf{1}_{H(\mathcal{A})}$、$H(LM)\simeq\mathbf{1}_{H(\mathcal{B})}$。（这里 $\simeq$ 指函子同构，即可逆自然变换。）也就是说，$L$ 有拟逆。
+\end{corollary*}
+
+这是同调微扰引理以及下述某类 $A_\infty$-范畴自同构分类的一个容易应用。
+
+设 $\mathcal{A}$ 是 $A_\infty$-范畴，用 $F$ 记如下数据：对每个 $X_0,\dots,X_n\in\mathcal{A}$，一个线性映射 $F_n\colon\Hom_{\mathcal{A}}(X_{n-1},X_n)\otimes\cdots\otimes\Hom_{\mathcal{A}}(X_0,X_1)\to\Hom_{\mathcal{A}}(X_0,X_n)$。若对一切 $X_0\in\mathcal{A}$，$F_1$ 都是同构，则称 $F$ 为形式微分同胚（formal diffeomorphism）。
+
+下述命题是一个相对容易的显式计算。
+
+\begin{proposition}\label{prop:2.2}
+设 $\mathcal{A}$ 是 $A_\infty$-范畴，$F$ 是形式微分同胚。则存在唯一的另一个 $A_\infty$-结构 $F_*\mathcal{A}$，使得 $F$ 成为 $A_\infty$-函子 $F\colon\mathcal{A}\to F_*\mathcal{A}$。此外，$F$ 自动是同构。
+\end{proposition}
+
+% [Tutor Note: 命题的构造是逐阶解方程：要求 $F$ 成为 $\mathcal{A}\to F_*\mathcal{A}$ 的 $A_\infty$-函子，把式 \eqref{eq:ainf-functor} 中的 $m^{\mathcal{B}}$ 换成待定的 $m^{F_*\mathcal{A}}$，按 $d$ 归纳即可解出 $m_d^{F_*\mathcal{A}}$：$d=1$ 由 $m_1^{F_*}F_1=F_1m_1^{\mathcal{A}}$ 得 $m_1^{F_*}=F_1m_1^{\mathcal{A}}F_1^{-1}$，$d=2$ 解出 $m_2^{F_*}$ 时出现 $m_1^{F_*}$ 与 $F_2$ 的修正项，依此类推；$F_1$ 逐对象可逆保证每步唯一。原文称“相对容易的显式计算”，实际工作量在 $n$ 归纳与符号核对。“$F$ 自动是同构”指 $F_1$ 可逆蕴含 $HF$ 在每个 $\Hom$ 空间上可逆，从而 $HF$ 是范畴同构。]
+
+\subsection{拟表示与三角形}\label{subsec:ainf-quasirep}
+
+$A_\infty$-范畴 $\mathcal{A}$ 上的 $A_\infty$-模，指的是 $A_\infty$-函子 $M\colon\mathcal{A}\to Ch^{op}$。如前所述，利用 $A_\infty$-函子的同伦概念，可以把 $\mathcal{A}$ 上所有 $A_\infty$-模构成的集合变成一个 $A_\infty$-范畴 $\Mod(\mathcal{A})$。给定 $X\in\mathcal{A}$，存在 $A_\infty$-模 $\iota X$，由 $\iota X(Y)=\Hom_{\mathcal{A}}(Y,X)$ 给出。事实上存在 $A_\infty$-函子 $\iota\colon\mathcal{A}\to\Mod(\mathcal{A})$，它是 $A_\infty$-范畴的嵌入（嵌入按适当的定义）。
+
+这一概念使我们可以把链复形范畴中的构造搬到任意 $A_\infty$-范畴上。具体地说，给定 $\mathcal{A}$ 上的 $A_\infty$-模 $M$，若 $\iota Y\simeq M$ 在 $H^0\Mod(\mathcal{A})$ 中成立，则说对象 $Y\in\mathcal{A}$ 拟表示 $M$。由于我们还没有真正定义其含义，这里给出更具体的定义。固定 $Y\in\mathcal{A}$。注意对每个 $X\in\mathcal{A}$ 都有合成映射 $m_2\colon M(Y)\otimes\iota Y(X)\to M(X)$。于是对固定的 $c\in M(Y)$，得到合成映射 $m_2(c,\bullet)\colon\iota Y(X)\to M(X)$。
+
+\begin{definition*}
+在上述情形下，设 $[c]\in H^0M(Y)$。若对每个 $X$，$m_2(c,\bullet)$ 都是拟同构——也就是说，$m_2(c,\bullet)$ 诱导同构 $H(\iota Y(X))\to HM(X)$——则称 $(Y,[c])$ 拟表示 $M$。（该条件与代表 $[c]$ 的上闭链 $c$ 的选取无关。）
+\end{definition*}
+
+% [Tutor Note: 拟表示是 Yoneda 引理在 $A_\infty$ 世界的同伦版本：$\iota X=\Hom_{\mathcal{A}}(-,X)$ 是“可表示模”，$\Mod(\mathcal{A})$ 是 $A_\infty$-模的范畴（它只记到 $A_\infty$-同伦，故比 dg-模范畴更粗）。$(Y,[c])$ 拟表示 $M$ 就是说 $M$ 与 $\iota Y$ 在 $H^0$ 中同构；具体判别用 $m_2(c,\bullet)$ 逐点拟同构，这是“用上闭链 $c$ 显式实现自然变换”的写法。之所以对 $c$ 所在的类 $[c]$ 而非 $c$ 本身作要求，是因为换一个代表元只差 $m_1$-恰当项，而 $m_2(m_1\text{-恰当项},\bullet)$ 与零同伦。]
+
+若 $M,N$ 是 $\mathcal{A}$-模，则可定义 $\mathcal{A}$-模 $M\oplus N$：$(M\oplus N)(X)=M(X)\oplus N(X)$，结构映射取 $M$ 与 $N$ 结构映射的直和。类似地，若 $V$ 是分次向量空间（视为微分为零的复形），$M$ 是 $\mathcal{A}$-模，则定义 $(V\otimes M)(X)=V\otimes M(X)$，其结构映射忽略 $V$，即
+\[
+m_d(z\otimes f_d,f_{d-1},\dots,f_1)=z\otimes m_d(f_d,\dots,f_1).
+\]
+
+对 $\mathcal{A}$ 中的 $X,Y$ 与分次向量空间 $V$（同样视为微分为零的复形），任何拟表示 $\iota X\oplus\iota Y$ 的对象都记作 $X\oplus Y$，称为 $X$ 与 $Y$ 的和（sum）。任何拟表示 $V\otimes\iota X$ 的对象都记作 $V\otimes X$，称为 $V$ 与 $X$ 的张量积。若 $V=k[1]$ 是一维且集中在次数 $-1$，则把 $V\otimes X$ 记作 $SX$，甚至记作 $X[1]$，并称之为 $X$ 的平移（shift）。
+
+由上述说明可知，这些构造若存在，则在拟同构意义下唯一。
+
+注意 $Ch$ 中这些构造的某些性质可以搬到任意 $A_\infty$-范畴。例如 $(k\oplus k)\otimes X\simeq X\oplus X$，等等。
+
+% [Tutor Note: 这里所有构造（直和、张量积、平移）都只定义到拟同构，且原文明确加“若存在”：$A_\infty$-范畴层面的构造是借助 $\Mod(\mathcal{A})$ 中的拟表示“弱”实现的，并不保证 $\mathcal{A}$ 中存在代表对象。这正是下一段“函子性构造只有当总能实现时才给出函子”的原因——若对一切 $X$ 都存在 $SX$，才能把 $X\mapsto SX$ 提升为函子 $S\colon\mathcal{A}\to\mathcal{A}$。]
+
+另一些性质则不那么显然。例如，$Ch$ 中的函子性构造用这种方式实际上给出 $\mathcal{A}$ 上的函子，只要它们总能被实现。因此，若例如对一切 $X\in\mathcal{A}$ 都存在 $SX$，则存在函子 $S\colon\mathcal{A}\to\mathcal{A}$，它在 $H^0(\mathcal{A})$ 中的唯一自然变换意义下唯一。细节见 [20, p. 34]。
+
+\subsubsection*{三角 $A_\infty$-范畴}
+
+考虑 $A_\infty$-范畴 $\mathcal{D}$，它有三个对象 $Z_0,Z_1,Z_2$，使得 $\Hom_{\mathcal{D}}(Z_i,Z_i)$ 是一维的，由 $e_{Z_i}$ 张成。从 $Z_0$ 到 $Z_1$ 的态射空间是一维的，由次数 $0$ 的 $z_1$ 张成；从 $Z_1$ 到 $Z_2$ 的态射空间类似。从 $Z_2$ 到 $Z_0$ 的态射空间由次数 $1$ 的 $z_3$ 张成。我们假定除含恒等元的 $m_2$ 以及按循环次序涉及 $z_3,z_2,z_1$ 的 $m_3$ 之外，所有 $m_d$ 都为零；该 $m_3$ 在相应空间中给出恒等元。
+
+\begin{definition*}
+设 $\mathcal{A}$ 是 $A_\infty$-范畴。$H(\mathcal{A})$ 中的三角形（triangle）指的是三个对象 $X_0,X_1,X_2$ 连同态射
+\[
+[x_1]\in\Hom^0_{H(\mathcal{A})}(X_0,X_1),\qquad
+[x_2]\in\Hom^0_{H(\mathcal{A})}(X_1,X_2),\qquad
+[x_3]\in\Hom^1_{H(\mathcal{A})}(X_2,X_0).
+\]
+若存在 $A_\infty$-函子 $F\colon\mathcal{D}\to\mathcal{A}$ 使得 $F(Z_i)=X_i$ 且 $[F(z_i)]=[x_i]$（后一条件指在 $H(\mathcal{A})$ 中相等），则说该三角形是正合的（exact）。
+
+若 (1) 每个态射都能补全为正合三角形，且 (2) 平移函子在 $H^0(\mathcal{A})$ 上本质满，则称 $\mathcal{A}$ 是三角的（triangulated）。
+\end{definition*}
+
+% [Tutor Note: 这是 $A_\infty$ 版本与普通三角范畴的关键差别。普通三角范畴的三角结构是附加数据：一个平移自等价，加一族特殊三角形，再加 TR1–TR4 公理；这里三角由固定的三对象 $A_\infty$-范畴 $\mathcal{D}$ 到 $\mathcal{A}$ 的 $A_\infty$-函子定义，锥与第三个态射（次数为 $1$ 的 $x_3\colon X_2\to X_0[1]$，注意不是 $X_0$ 的自同态）连同全部高阶同伦都由 $m_3(z_3,z_2,z_1)$ 一次性给出，无需选择。公理则被命题 \ref{prop:2.3} 的四条性质取代：它们全是函子性的。条件 (2) 要求平移在 $H^0(\mathcal{A})$ 上本质满——在普通三角范畴中，平移作为自等价的一部分默认满足这一点；此处它必须单独假设。]
+
+我们把由对象 $X_0,X_1,X_2$ 构成的正合三角形记作
+\[
+X_0\to X_1\to X_2\to .
+\]
+
+% [Tutor Note: 原文疑误：此处的链 $X_0\to X_1\to X_2\to.$ 在末尾箭头后直接断句，按三角形定义第三个态射应为 $X_2\to X_0[1]$，故这里很可能漏写了 $X_0[1]$（或该句号本应紧跟 $X_2$ 之后的箭头）。译文保留原文。]
+
+这个定义看起来有些晦涩。可以证明：若 $X_0\to X_1\to X_2\to$ 是正合三角形，则 $\iota(X_1\to X_2\to X_0[1])$ 与 $Ch^{opp}$ 中 $\iota X_0\to\iota X_1$ 上的自然锥构造拟同构。此处篇幅不够，不再多说，只总结我们需要的三角 $A_\infty$-范畴的性质。要点其实是 (1)；(2)–(3) 随之容易得到，(4) 则直接由定义推出。
+
+\begin{proposition}\label{prop:2.3}
+设 $\mathcal{A}$ 是三角 $A_\infty$-范畴，$Y_0\xrightarrow{y_1}Y_1\xrightarrow{y_2}Y_2\xrightarrow{y_3}$ 是正合三角形。
+\begin{enumerate}[label=\arabic*., leftmargin=2em, itemsep=2pt]
+  \item $H^0(\mathcal{A})$ 是三角范畴，其平移函子由 $S$ 诱导，其特殊三角形由 $\mathcal{A}$ 的正合三角形给出。
+  \item 三角形 $Y_1\to Y_2\to SY_0\to$ 连同边缘态射 $[y_2]$、$[y_3]$ 与 $[-Sy_1]$ 是正合的。
+  \item 给定正合三角形 $Y_0\xrightarrow{[a_1]}Y_1\to Z_0\to$、$Y_1\xrightarrow{[a_2]}Y_2\to Z_2\to$ 与 $Y_0\xrightarrow{[a_2a_1]}Y_2\to Z_1\to$，则也存在正合三角形 $Z_0\to Z_1\to Z_2\to$。
+  \item 若 $F\colon\mathcal{A}\to\mathcal{B}$ 是 $A_\infty$-函子，则正合三角形的像仍是正合的。
+\end{enumerate}
+\end{proposition}
+
+% [Tutor Note: “要点其实是 (1)”的含义：$H^0(\mathcal{A})$ 的三角公理不需要逐条重新验证——$\mathcal{D}$ 的三对象结构已经把锥、边缘态射与旋转编码为 $A_\infty$-函子，而 (2)–(3) 只是把这个函子在 $H^0$ 层面的两条同构（旋转三角形、八面体公理）显式化；(4) 是“正合性沿 $A_\infty$-函子拉回”的直接结果。注意 (2) 中第三个边缘态射是 $[-Sy_1]$（$y_1$ 的平移再取负），不是 $[y_1]$，这是核对符号时最容易出错的一处：旋转三角形为 $Y_1\xrightarrow{y_2}Y_2\xrightarrow{y_3}Y_0[1]\xrightarrow{-Sy_1}Y_1[1]$，故接在 $Y_2\to SY_0$ 之后的边缘态射正是 $-Sy_1\colon SY_0\to SY_1$。]
+
+\subsubsection*{分裂闭包}
+
+\begin{definition*}
+设 $\mathcal{A}$ 是 $A_\infty$-范畴。若给定 $X\in\mathcal{A}$ 与 $e\in\Hom_{H^0\mathcal{A}}(X,X)$ 满足 $e^2=e$，总存在 $Y$ 与 $Z$ 使 $X$ 拟同构于 $Y\oplus Z$，并且 $e$ 是典范映射 $X\to Y$ 的类，则称 $\mathcal{A}$ 是分裂闭的（split-closed）。
+\end{definition*}
+
+% [Tutor Note: 分裂闭性完全是在 $H^0$ 层面陈述的：$e\in\Hom_{H^0\mathcal{A}}(X,X)$、$e^2=e$ 都是同伦范畴中的等式，所求的分解 $X\simeq Y\oplus Z$ 也只在 $H^0$ 中要求同构。因此“$\mathcal{A}$ 分裂闭”等价于“$H^0(\mathcal{A})$ 中所有幂等元都可分裂”，即 $H^0(\mathcal{A})$ 是 Karoubi 闭的；$D^\pi\mathcal{A}$ 中的上标 $\pi$ 正是“分裂闭包（Karoubi 包络）”的记号。注意在对象层面：分裂闭化并不改变 $X$，只是保证 $X$ 的每个幂等元都对应 $H^0$ 中的一个直和项（$Y$ 与 $Z$）——换言之，分裂闭性是关于 $H^0$ 中同构类能否沿幂等元分解的性质。]
+
+设 $\mathcal{B}\subset\mathcal{A}$ 是全子范畴。称 $\mathcal{A}$ 中所有包含 $\mathcal{B}$、对拟同构封闭的三角全子范畴之交为 $\mathcal{B}$ 在 $\mathcal{A}$ 内的三角闭包，记作 $\widetilde{\mathcal{B}}$；并说 $\mathcal{B}$ 生成 $\widetilde{\mathcal{B}}$。
+
+若 $\mathcal{B}$ 是 $A_\infty$-范畴，$\mathcal{A}$ 是三角 $A_\infty$-范畴，$F\colon\mathcal{B}\to\mathcal{A}$ 是 $A_\infty$-函子且 $HF$ 全忠实，则当 $F(\mathcal{B})$ 生成 $\mathcal{A}$ 时，称 $\mathcal{A}$ 是 $\mathcal{B}$ 的三角包络（triangulated envelope）。
+
+我们类似地定义分裂三角闭包、分裂闭生成与分裂闭三角包络。
+
+因此例如，$\mathcal{B}$（在 $\mathcal{A}$ 内）的三角闭包可以这样得到：添加零对象，对所有态射取锥，把一切拟同构对象纳入，然后把这一过程重复无穷多次。我们真正要说明的是下述定理。该定理虽然表述抽象，但通常用显式构造来证明。
+
+\begin{theorem}\label{thm:2.4}
+三角包络与分裂闭三角包络都存在，且都在拟等价意义下唯一。
+\end{theorem}
+
+引言中陈述的定理直接由此推出（但弱得多）。给定 $A_\infty$-范畴 $\mathcal{A}$，用 $D\mathcal{A}$ 记任一三角包络，用 $D^\pi\mathcal{A}$ 记任一分裂闭三角包络。
+
+\subsection{扭变}\label{subsec:ainf-twisting}
+
+设 $\mathcal{A}$ 是对任意平移与有限直和封闭的 $A_\infty$-范畴。设 $Y_0,Y_1\in\mathcal{A}$ 使得 $\Hom_{H(\mathcal{A})}(Y_0,Y_1)$ 有限维。于是可以构造张量积 $\Hom_{H(\mathcal{A})}(Y_0,Y_1)\otimes Y_0$。它带有自然的求值同态 $[f]$ 到 $Y_1$，次数为零。若
+\begin{equation}\label{eq:ainf-twist}
+\Hom_{H(\mathcal{A})}(Y_0,Y_1)\otimes Y_0\xrightarrow{[f]}Y_1
+\end{equation}
+能补全为正合三角形，则把第三项记作 $T_{Y_0}(Y_1)$，并称之为 $Y_1$ 沿 $Y_0$ 的扭变（twist）。
+
+若对一切 $X,Y\in\mathcal{A}$，$\Hom_{H\mathcal{A}}(X,Y)$ 都有限维，则称 $\mathcal{A}$ 是上同调有限的（cohomologically finite）。
+
+\begin{proposition}\label{prop:2.5}
+（[20]，引理 5.4）设 $\mathcal{A}$ 与 $\mathcal{B}$ 是三角、上同调有限的 $A_\infty$-范畴。则：
+\begin{enumerate}[label=\arabic*., leftmargin=2em, itemsep=2pt]
+  \item 对任意 $Y\in\mathcal{A}$，存在函子 $T_Y\colon\mathcal{A}\to\mathcal{A}$ 延拓上述构造。它在 $H(\mathcal{A})$ 中是典范的。
+  \item 若 $F\colon\mathcal{A}\to\mathcal{B}$ 具有“$HF$ 全忠实”的性质，则函子 $T^B_{FX}(F\bullet)$ 与 $FT^A_X(\bullet)$ 典范拟同构。
+\end{enumerate}
+\end{proposition}
+
+% [Tutor Note: 扭变 $T_{Y_0}$ 是 Seidel 的 twist 函子的 $A_\infty$ 版本。几何上，取 $Y_0=L$ 为球状拉格朗日子流形（椭圆曲线情形即简单闭曲线），$T_L$ 就是辛 Dehn 扭转；B-模型一侧取 $Y_0=\cO_P$ 为摩天楼层，$T_{\cO_P}$ 是沿球状对象的 twist（Seidel–Thomas）。下面用 $T_Y$ 构造 $R(X,Y)$，正是为了把“沿 $Y$ 反复扭转 $X$”得到的全部对象组织成一个分次环；§7 中的辫作用就是这些 $T_Y$ 的复合（具体几何见 §4、§7）。]
+
+\subsubsection*{应用一：全自同态环}
+
+我们的主要扭变应用如下：设 $\mathcal{A}$、$\mathcal{B}$ 与 $F$ 如上述定理所述。考虑 $\mathcal{A}$ 的对象 $X$ 与 $Y$。可以构造分次向量空间
+\begin{equation}\label{eq:ainf-total-ring}
+R(X,Y)=\bigoplus_{n\ge 0}\Hom_{H^0(\mathcal{A})}(X,T_Y^n(X)).
+\end{equation}
+它可以被赋予（非交换）环结构：给定 $f\in\Hom_{H^0(\mathcal{A})}(X,T_Y^n(X))$ 与 $g\in\Hom_{H^0(\mathcal{A})}(X,T_Y^m(X))$，可作复合
+\begin{equation}\label{eq:ainf-total-composite}
+T_Y^m(f)\circ g\in\Hom_{H^0(\mathcal{A})}(X,T_Y^{m+n}(X)).
+\end{equation}
+
+% [Tutor Note: 原文这里写 “as in the theorem”，下段又写 “the above theorem”，但含 $\mathcal{A},\mathcal{B},F$ 的陈述是命题 \ref{prop:2.5}（$F\colon\mathcal{A}\to\mathcal{B}$ 全忠实），真正的定理 \ref{thm:2.1} 与 \ref{thm:2.4} 都不含 $F$。原文疑误：应指命题 \ref{prop:2.5}。译文保留原文“定理”的措辞。]
+
+上述同构的典范性随即蕴含：
+
+\begin{proposition}\label{prop:2.6}
+在上述情形下，$R(X,Y)$ 与 $R(FX,FY)$ 作为分次环同构。特别地，$R(X,Y)$ 在固定 $X$ 与 $Y$ 的 $\mathcal{A}$ 的自拟等价下不变。
+\end{proposition}
+
+\subsubsection*{应用二：生成判别法}
+
+关于扭变的一个有趣之处是：当复合若干个扭变时，它们仍然给出（越来越复杂的）锥。这由命题 \ref{prop:2.3} 的 (2) 与 (3) 推出，而那两条正是对正合三角形性质的总结。
+
+\begin{lemma*}
+设 $\mathcal{A}$ 是三角 $A_\infty$-范畴，$X,Y_1,\dots,Y_n\in\mathcal{A}$。用 $\widetilde{\mathcal{A}}$ 记 $\mathcal{A}$ 中由 $Y_1,\dots,Y_n$ 生成的三角子范畴。则存在对象 $Z\in\widetilde{\mathcal{A}}$ 与正合三角形
+\[
+X\to T_{Y_n}\cdots T_{Y_1}(X)\to Z\to .
+\]
+\end{lemma*}
+
+\begin{theorem}\label{thm:2.7}
+设 $\mathcal{A}$ 是分裂闭三角 $A_\infty$-范畴，$X,Y_1,\dots,Y_n\in\mathcal{A}$。令 $X'=T_{Y_n}\cdots T_{Y_1}(X)$，$\widetilde{\mathcal{A}}$ 是 $\mathcal{A}$ 中由 $Y_1,\dots,Y_n$ 生成的分裂闭三角子范畴。若 $\Hom_{H^0(\mathcal{A})}(X,X')=0$，则 $X$ 落在 $\widetilde{\mathcal{A}}$ 中。
+\end{theorem}
+
+\begin{proof}
+由引理，存在正合三角形 $X\to X'\to Z\to$，其中 $Z\in\widetilde{\mathcal{A}}$。由假设，$X\to X'$ 是零态射，故 $Z\simeq X'\oplus X[1]$。于是 $X[1]\in\widetilde{\mathcal{A}}$，从而 $X$ 亦然。
+\end{proof}
+
+% [Tutor Note: 定理 \ref{thm:2.7} 的证明极短，但两处跳步值得补出：(i) “$X\to X'$ 是零态射 ⇒ $Z\simeq X'\oplus X[1]$”是正合三角形 $X\to X'\to Z\to$ 的拆分引理（若第二个态射为零，则锥分裂为直和）；(ii) 由 $Z\simeq X'\oplus X[1]$ 且 $Z,X'\in\widetilde{\mathcal{A}}$ 推出 $X[1]\in\widetilde{\mathcal{A}}$，这一步用到 $\widetilde{\mathcal{A}}$ 对直和项封闭——它正是“分裂闭”的用武之地；最后 $X[1]\in\widetilde{\mathcal{A}}\Rightarrow X\in\widetilde{\mathcal{A}}$ 又用到对平移封闭。]

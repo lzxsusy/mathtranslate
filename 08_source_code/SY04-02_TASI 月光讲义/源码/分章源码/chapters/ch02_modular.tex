@@ -1,0 +1,524 @@
+% ===================================================================
+%  第 2 节 模对象 原文：TASI10.tex 第 607--1050 行（PDF p.15--25）
+% ===================================================================
+\section{模对象}
+\label{sec:modular}
+
+\begin{keytakeaways}
+  \item 模形式是上半平面上满足 $f(\t)=(c\t+d)^{-k}f\big(\frac{a\t+b}{c\t+d}\big)$ 的全纯函数；$\SL_2(\ZZ)$ 的模形式环由 $E_4$、$E_6$ 自由生成，权零模函数域则由主模 $J=q^{-1}+O(q)$ 生成，见式 (2.3)--(2.5)。
+  \item theta 函数、Dedekind eta 函数与 Eisenstein 级数是基本构件；$\eta(\t)=q^{1/24}\prod(1-q^n)$ 是带非平凡乘子的权 $1/2$ 形式，而 $\eta^{24}=\Delta$ 才是权 12 的尖形式，见式 (2.19)--(2.21)。
+  \item 权 $k$、指标 $m$ 的 Jacobi 形式是 $\HH\times\CC$ 上的椭圆形式，其模变换同时重标度 $\t$ 与 $z$，并带指数因子 $\ex(-cmz^2/(c\t+d))$；它等价于向量值模形式 $h=(h_r)$ 的 theta 分解，见式 (2.22)--(2.27)。
+  \item 弱 Jacobi 形式的环由 $\phi_{0,1}$ 与 $\phi_{-2,1}$ 在 $\SL_2(\ZZ)$ 的模形式环上自由生成，且 $2\phi_{0,1}$ 就是 K3 的椭圆亏格，见式 (2.31)、(2.32)。
+  \item 模拟模形式 $h$ 的模变换缺陷由权 $2-w$ 的影子 $g$ 补偿：完备化 $\hat h=h+g^\ast$ 是权 $w$ 的调和 Maass 形式，$g^\ast$ 由不完全 gamma 函数给出的 Eichler 积分确定，见式 (2.34)--(2.36)。
+  \item 本影月光的权 $1/2$ 模拟模形式 $H=H^{24A_1}$ 以 $24\eta^3$ 为影子；其 $H/2$ 的 Fourier 系数 45、231、770、2277、5796 是 $M_{24}$ 不可约表示的维数，见式 (2.42)--(2.45)。
+\end{keytakeaways}
+
+本章简要介绍模形式的概念及其若干推广，包括模拟模形式（mock modular form）、Jacobi 形式（Jacobi form）与模拟 Jacobi 形式。
+
+\subsection{模形式}
+\label{subsec:modular_forms}
+
+模形式的标准参考文献之一是 \cite{2008T1om}，本章部分内容依此展开。众所周知，$\SL_2(\RR)$ 通过分式线性（Möbius）变换作用在上半平面 $\HH:=\{\t\in \CC\lvert~ \Im(\t) > 0\}$ 上：
+\be
+\gamma = \begin{pmatrix} a &b \\ c&d\end{pmatrix} : \HH \to \HH~,~~ \t \mapsto \gamma\t := {a\t+b\over c\t+d}~. 
+\ee
+
+% [Tutor Note: $\HH$ 上的 Möbius 作用保持 $\Im\t>0$，因为 $d\gamma\t/d\t=(c\t+d)^{-2}$ 的辐角变化不改变 $\t$ 的虚部符号；又 $\gamma$ 与 $-\gamma$ 给出同一变换，故真正起作用的是 $\PSL_2(\RR)$。式 (2.1) 的约定是“矩阵左乘作用在 $\t$ 上”，下文所有权重因子 $(c\t+d)^{-k}$ 都以这一约定为准。]
+
+在定义模形式时，我们考虑 $\SL_2(\RR)$ 的离散子群，其中重要的例子是模群 $\SL_2(\ZZ)$。它由
+\be
+T = \bem 1& 1\\ 0&1\eem~~{\rm and}~~ S = \bem 0& 1\\ -1&0 \eem
+\ee
+生成，满足 $(ST)^3=1$ 与 $S^2=-1$。我们也常使用 $\PSL_2(\ZZ)\cong \SL_2(\ZZ)/\{\pm 1\}$，它同时也是环面的映射类群（参看 \S\ref{sec:CFT}）。
+我们还会经常考虑把 {\em 尖点}（cusps）$\{i\infty\} \cup \QQ$ 添加上去所得的扩充上半平面；$\SL_2(\ZZ)$ 在尖点集上传递地作用，这一点从 $\gamma\infty = {a\over c}$ 即可看出。
+
+% [Tutor Note: 这里的传递性是初等数论：给定互素的 $a,c$，由 Bezout 定理可取 $b,d$ 使 $ad-bc=1$，故 $\gamma\infty=a/c$ 取遍所有有理数，再加上 $c=0$ 给出的 $i\infty$。作者用“one can see from”一带而过，读者需自补这一步；注意 $\gamma\infty$ 只依赖 $\gamma$ 的第一列。]
+
+我们从模群 $\SL_2(\Z)$ 上的权零模形式开始定义：它就是上半平面上在 $\SL_2(\Z)$ 作用下不变的全纯函数，
+\be \label{def0_mmf}
+f(\t)  =  f(\gamma\t)\quad \forall~ \gamma \in \SL_2(\Z).
+\ee
+特别地，当 $\t$ 趋近 $\HH$ 在尖点 $\{i\infty\} \cup \QQ$ 处的边界时，$f$ 必须保持全纯。但这一要求过强：基本的复分析告诉我们，这样的函数只有常数。
+
+% [Tutor Note: 作者省略的论证是：紧化后的 $\SL_2(\Z)\backslash\widehat\HH$ 是紧 Riemann 面，$f$ 在其上全纯，由最大模原理必为常数。“在尖点全纯”正是 $f$ 能延拓到该紧 Riemann 面上的条件；若只要求 $\HH$ 内全纯，$q^{-1}$ 型极点就允许出现，这正是下一条“弱全纯”推广的动机。]
+
+因此，我们希望在以下几个方向上进一步推广上述定义：
+\begin{enumerate}
+\item {\it 解析性}：允许函数在尖点附近有指数增长。这样的函数称为 {\it 弱全纯模形式}（weakly holomorphic modular forms）。
+\item {\it 权重}：允许变换规则中出现一个标度因子，见 (\ref{def1_mmf})。
+\item {\it 其他群}：把变换性质 (\ref{def0_mmf}) 中的 $\SL_2(\Z)$ 换成一般的 $\Gamma < \SL_2(\RR)$。
+\item {\it 乘子}：修改变换规则 (\ref{def0_mmf})，允许一个非平凡特征标 $\psi : \SL_2(\Z) \to \CC^\ast$，见 \eqref{def1_mmf}。
+\item {\it 向量值}：把 $f: \HH \to \CC$ 换成有 $n$ 个分量的向量值函数 $f: \HH \to \CC^n$。
+\end{enumerate}
+
+当然，上述推广可以组合使用。例如，可以考虑 $\SL_2(\RR)$ 的某个子群 $\Gamma$ 上带乘子的向量值模形式。显然，在向量值情形，特征标 $\psi$ 不再是相位，而是一个矩阵。
+这些概念也并不完全独立。例如，$\SL_2(\Z)$ 的向量值模形式的一个分量，可以看作 $\SL_2(\Z)$ 某个子群上的（单值）模形式，反之亦然。
+
+我们先从第一种推广入手，引入 {\it 模函数}（modular functions）的概念。若 $f:\HH\to \CC$ 在 $\HH$ 内亚纯、满足变换规则 (\ref{def0_mmf})，并且对某个有限的 ${m> -\infty}$ 按 $e^{2\pi i \t m}$ 增长，则称 $f$ 为模函数。
+
+% [Tutor Note: “按 $e^{2\pi i\t m}$ 增长”是“在尖点处至多指数增长”的精确化：存在有限的 $m$ 使 $f(\t)=O(q^m)$（$q=\ex(\t)$）。$m>-\infty$ 只强调 $m$ 有限，允许 $m<0$，即允许尖点处的极点；若对任意 $m$ 都成立，$\SL_2(\Z)$ 不变性会迫使 $f$ 为常数。]
+
+事实上，模函数构成一个单生成的函数域，生成元称为 {\it 主模}（Hauptmodul，亦称 principal modulus）。这是因为，添上有限多个点之后，基本域 $\SL_2(\Z)\backslash \HH$ 是亏格零的 Riemann 面。
+
+% [Tutor Note: 亏格零的紧 Riemann 面同构于 $\widehat\CC$，其亚纯函数域是单变量有理函数域 $\CC(J)$，这就是“单生成”的来源，也是 Hauptmodul 一名的由来。原文此处称“This is because”，略去了这个标准事实：$\SL_2(\Z)\backslash\widehat\HH\cong\mathbb{P}^1$，其上的亚纯函数恰为 $J$ 的有理函数。]
+
+把加上尖点后的上半平面记为 $\widehat \HH = \HH \cup\{i\infty\} \cup \QQ$，则 Hauptmodul 给出两个球面 $\SL_2(\Z)\backslash \widehat\HH$ 与 $\widehat \CC$ 之间的同构。显然，这样的 Hauptmodul 在 Möbius 变换（即球面上三个点的选取）之下唯一。因此，具有展开
+\be
+J(\t) = q^{-1} + O(q)
+\ee
+的 Hauptmodul 唯一。这里及下文记 $q:= \ex(\t)$，其中 $\ex(x):=e^{2\pi i x}$，$x\in \CC$。
+
+% [Tutor Note: 归一化条件 $q^{-1}+O(q)$ 固定了球面自同构的三个自由度：$J(i\infty)=\infty$、以 $q$ 为局部坐标时在 $q=0$ 处留数为 1 的单极点、常数项为 0。换一套归一化得到的是 $J$ 的 Möbius 变换，函数域不变但数值不同；月光中比较不同群的主模时，务必先核对归一化。]
+
+用 Eisenstein 级数与 Dedekind eta 函数（参看 \eq{def:E4E6} 与 \eq{def:dedeta}），$J$ 函数可写成
+\be\label{eq:def_J}
+J(\tau) = j(\tau) -744 =  {E_4^3(\t)\over  \eta^{24}(\t)}-744. 
+\ee
+
+% [Tutor Note: 注意 $j:=E_4^3/\Delta$（$\Delta=\eta^{24}$）的 $q$ 展开是 $q^{-1}+744+196884q+\dots$，故必须减去 744 才满足 (2.4) 的归一化。系数 196884 是魔群最小忠实表示维数 196883 与平凡表示维数之和，即魔群月光猜想的起点；用 $j$ 而非 $J$ 会使所有 McKay–Thompson 系数整体平移。]
+
+一般地，只要 $\Gamma\backslash \widehat\HH$ 亏格零，就可以把 $\Gamma\leq \SL_2(\RR)$ 的模函数域的生成元定义为主模。这些 Hauptmodul 在月光中起重要作用。
+
+% [Tutor Note: 魔群月光的核心结论正是：对魔群 $\mathbb{M}$ 的每个元素 $g$，其 McKay–Thompson 级数 $T_g$ 都是某个亏格零群 $\Gamma_g<\SL_2(\RR)$ 的 Hauptmodul（Conway–Norton 猜想，Borcherds 1992 年证明）。故本段“Hauptmodul 在月光中起重要作用”并非泛泛之谈：月光关系就是“共轭类的级数 = 亏格零群的主模”。]
+
+除了上述定义，模函数还有三种等价看法。第一，由 (\ref{def0_mmf})，可以把 $f$ 看作从适当紧化的基本域 $\SL_2(\Z) \backslash \HH$ 到 Riemann 球面 $\widehat\CC=\CC\cup \{\infty\}$ 的函数。第二，由 $\SL_2(\Z)$ 与秩二格的关系，可以为每个 $\t$ 配上复格 $\Lambda_\t :=1\cdot \ZZ+\t\cdot \ZZ$，并把 $f$ 看作给每个这样的格 $\Lambda_\t$ 指定复数 $f(\t)$ 的函数；它还在格的重新标度下不变。第三种看法在模形式与二维共形场论的联系中起重要作用，它来自把 $\SL_2(\Z)\backslash \HH$ 解释为亏格一 Riemann 面的复结构模空间。
+这一点很容易从以下事实看出：环面可描述为复平面模去一个秩二格，因此在相差一个标度之下由 $\CC/\Lambda_\t$ 给出，其中 $\t\in \HH$。
+于是模函数可以理解为给每个环面指定一个只依赖其复结构模 $\t$ 的复数。
+在这个语境下，群 $\PSL_2(\Z) := \SL_2(\Z)/\{{\mathds{1}},-{\mathds{1}}\}$ 扮演环面的映射类群（参看 \S\ref{sec:CFT}），其中中心子群 $\Z_2=\{{\mathds{1}},-{\mathds{1}}\}$ 在 $\HH$ 上平凡地作用。
+
+% [Tutor Note: 第三种看法是本章与物理的接口：二维 CFT 的配分函数定义在环面上，环面的复结构由 $\t$ 刻画，而 $\t$ 与 $\gamma\t$ 给出同构的环面，所以“模不变性”就是配分函数为 $\t$ 的模函数。$\PSL_2(\Z)$ 作为映射类群作用在环面上，这正是第 \ref{sec:CFT} 节讨论的模群来源，也解释了为何月光级数的 $q$ 展开系数可解释为态计数。]
+
+接下来转向第二种推广，引入模群 $\SL_2(\Z)$ 上一般权重 $k$ 的模形式。它们是 $\HH$ 上的全纯函数，在 $\SL_2(\Z)$ 作用下按
+\be\label{def1_mmf}
+f(\t)  =  ( c\t+d)^{-k} f\left(\frac{a\t+b}{c\t+d}\right)\quad \forall~\bem a& b\\ c&d\eem \in \SL_2(\Z)~.
+\ee
+变换。
+
+% [Tutor Note: 权重约定是本章最易错处：$(c\t+d)^{-k}$ 中的 $\t$ 是变换前的 $\t$，而 $f$ 的自变量已是 $\gamma\t$。若把因子写成 $(c\,\gamma\t+d)^{-k}$，得到的是右作用约定（相当于把 $\gamma$ 换成 $\gamma^{-1}$），与 (2.6) 差一个相位；若把 $(c\t+d)^{+k}$ 抄成正幂则直接把权 $k$ 变成 $-k$。另注意 $k$ 为奇数时 $-\mathds{1}$ 给出因子 $(-1)^{-k}=-1$，故奇权形式在 $\SL_2(\Z)$ 上必须带乘子系统或改用 metaplectic 双覆盖，见下一条脚注。]
+
+从格的观点看，我们考虑与格 $\Lambda$ 相关联的复函数 $f$，要求它在格的重新标度 $\Lambda \mapsto \lambda \Lambda$（$\lambda\in\CC$）下按 $f\mapsto \lambda^{-k}f$ 变化。
+我们将考虑整数与半整数权重 $k$。\footnote{显然，$k$ 为半整数时需特别小心。严格地说，应当使用 $\SL_2(\Z)$ 的 metaplectic 双覆盖。不过，这里的微妙之处不会给我们造成困难，故不在此讨论；细节请参看 \cite{MR1773561}。}
+
+有了这个定义，即便仍要求在尖点处全纯，也开始出现非平凡的例子。例如，下述 Eisenstein 级数
+\begin{gather}\label{def:E4E6}
+\begin{split}
+E_4(\t) &= 1+240 \sum_{n=1}^\infty \frac{n^3 q^n}{1-q^n}= 1+240 \,q +2160\,q^2+\dots \\ 
+E_6(\t) &= 1-504 \sum_{n=1}^\infty \frac{n^5 q^n}{1-q^n}= 1-504 \,q -16632\,q^2+\dots
+\end{split}
+\end{gather}
+分别是权 4 与权 6 的模形式。
+
+% [Tutor Note: Eisenstein 级数的归一化极易记错：式 (2.7) 采用“常数项为 1”的归一化，即 $E_4=1+240\,q+\dots$、$E_6=1-504\,q+\dots$，于是 $E_4^3-E_6^2=1728\,\Delta$。若改用 $G_{2k}=\sum_{(m,n)\neq(0,0)}(m+n\t)^{-2k}$ 的约定，则 $E_{2k}=G_{2k}/(2\zeta(2k))$，常数项仍为 1，但每个系数都带 $\zeta$ 因子；比较文献公式前先确认归一化，否则 240、504 这类系数会整体错位。]
+
+但这个定义仍有些过强，因为 Eisenstein 级数就只有这两个：$\SL_2(\Z)$ 上的模形式环由 $E_4$ 与 $E_6$ 自由生成。也就是说，任何整权 $k$ 的模形式都可以（唯一地）写成单项式 $E_4^\a E_6^\b$ 的和，其中 $k=4\a+6\b$。记群 $\Gamma$ 的权 $k$ 模形式空间为 $M_k(\Gamma)$。在模形式中，所谓的尖形式往往特别受关注。
+若权 $k$ 的模形式 $f$ 使得 $y^{k/2} f(x+i y)$ 在 $y\to \infty$ 时有界，则称 $f$ 为尖形式（cusp form）。这个条件保证 $f$ 在每个尖点处的 Fourier 展开中常数项为零。
+
+% [Tutor Note: “$E_4$、$E_6$ 自由生成”有前提：$k=4\a+6\b$ 需有非负整数解，$k=2$ 时 $M_2=0$（$E_2$ 不是模形式），$k$ 为大于等于 4 的偶数时成立。尖形式定义中 $y^{k/2}f$ 有界等价于每个尖点的常数项为零，因为 $y^{k/2}|q^n|$ 在 $y\to\infty$ 时衰减当且仅当 $n>0$；故该条件恰好排除 $n=0$ 项。]
+
+在第三种类型的推广中，我们常遇到由下述同余条件定义的 $\SL_2(\ZZ)$ 子群。对正整数 $N$，定义
+\be\label{def:cong_subgr}
+\Gamma_0(N) := \left\{ \bem a& b \\ c&d \eem \in \SL_2(\ZZ) ~\mid c\equiv 0 \xmod{N}  \right\}~. 
+\ee
+下面用一些例子说明上述推广。
+
+% [Tutor Note: $\Gamma_0(N)$ 是“上三角模 $N$”的子群：它包含 $T$，一般不含 $S$，故其模形式只在 $\Gamma_0(N)$ 下不变。它的指标是 $[\SL_2(\Z):\Gamma_0(N)]=N\prod_{p\mid N}(1+1/p)$，对应模曲线 $X_0(N)$ 的亏格决定是否存在主模——月光中“亏格零群”的限制正是由此而来。]
+
+先考虑 Jacobi theta 函数。考虑一维格，其双线性型为 $\langle x,x \rangle =x^2$。相应的 theta 函数为
+\be
+\theta_3(\tau)  = \sum_{n\in \Z} q^{n^2/2} \, . 
+\ee
+这个简单函数可以用无穷乘积表示，
+\be
+\theta_3(\tau)  = \sum_{n\in \Z} q^{n^2/2} = \prod_{n=1}^\infty (1-q^n)(1+q^{n-1/2})^2~, 
+\ee
+并且具有漂亮的模性质。
+为描述这些模性质，最自然的做法是再引入两个 theta 函数，
+\begin{equation}
+\begin{split}
+\theta_2(\tau) & = \sum_{n+{1\over 2}\in \Z} q^{n^2/2} =2q^{1/8} \prod_{n=1}^\infty (1-q^n)(1+q^{n})^2~, \\
+\theta_4(\tau) & = \sum_{n\in \Z} (-1)^n q^{n^2/2} = \prod_{n=1}^\infty (1-q^n)(1-q^{n-1/2})^2~.
+\end{split}
+\end{equation}
+它们恰好是 $\SL_2(\Z)$ 的一个向量值模形式的三个分量
+\be\label{eqn:transf_theta}
+\Theta(\t) := \bem  \theta_2(\tau) \\ \theta_3(\tau) \\ \theta_4(\tau)  \eem,~~   \Theta(\t) = \sqrt{i\over \t} {\cal S}\,   \Theta\left(\!-\frac{1}{\t}\right)  = {\cal T} \,\Theta(\t+1)\, ,
+\ee
+其中
+\be
+{\cal S} = \bem  0&0&1\\ 0&1&0 \\ 1&0&0 \eem , ~~{\cal T} = \bem  e(-\tfrac{1}{8})&0&0\\ 0&0&1 \\ 0&1&0 \eem  . 
+\ee
+
+% [Tutor Note: (2.12) 把 $\sqrt{i/\t}$ 写在 $\Theta(-1/\tau)$ 一侧，等价写法是 $\Theta(-1/\t)=\sqrt{\t/i}\,{\cal S}^{-1}\Theta(\t)$。${\cal T}$ 中的相位 $\ex(-1/8)$ 来自 $\theta_2$ 的 $q^{1/8}$：$\theta_2(\t+1)=\ex(1/8)\theta_2(\t)$，而 (2.12) 写成 $\Theta(\t)={\cal T}\,\Theta(\t+1)$，故矩阵元取 $\ex(-1/8)$；$\theta_3\leftrightarrow\theta_4$ 的交换给出 ${\cal T}$ 中的置换块。半整数权的相位分支（$\sqrt{i/\t}$ 的符号）必须与这一写法方向一致，抄写时最易把相位取反。]
+
+为了说明向量值模形式与同余子群上模形式的关系，考虑 $\theta(\tau) := \theta_3(2\tau)$。它按如下方式成为 $\Gamma_0(4)$ 上带非平凡乘子的权 $1/2$ 模形式：
+\be
+\theta(\tau)  = \left(\frac{c}{d}\right) \epsilon_d ~ (c\t+d)^{-\frac{1}{2}} ~  \theta(\gamma\tau)  
+\ee
+对所有 $\gamma\in\Gamma_0(4)$ 成立，其中
+\[ 
+\epsilon_d:=\left\lbrace\begin{array}{rl} 1~, & d\equiv1\bmod4 \\ i~, & d\equiv3\bmod4 \end{array} \right.
+\]
+上面用到的 Legendre 符号定义为\footnote{若存在 $x\in\mathbb{Z}$ 使 $x^2\equiv\kappa\bmod\lambda$，则称 $\kappa$ 为模 $\lambda$ 的二次剩余。}
+\[
+\left(\frac{\kappa}{\lambda}\right):=\left\lbrace\begin{array}{rl} +1~, & \text{若~}~\kappa\neq0\bmod\lambda\text{ 且 $\kappa$ 为模 $\lambda$ 的二次剩余} \\ -1~, & \text{若~}~\kappa\neq0\bmod\lambda\text{ 且 $\kappa$ 不是模 $\lambda$ 的二次剩余} \\ 0~, & \text{若~}~\kappa\equiv0\bmod\lambda\end{array}\right.~.
+\]
+
+% [Tutor Note: (2.14) 是半整数权乘子的样板：$(c/d)$ 是二次剩余符号，$\epsilon_d$ 由 $d\bmod 4$ 取 $1$ 或 $i$。它只对 $\Gamma_0(4)$ 成立，对全 $\SL_2(\Z)$ 并不成立；这正是上文“向量值形式的分量可视为子群上的单值形式”的具体例子。还须注意符号 $(\kappa/\lambda)$ 中 $c$ 在上、$d$ 在下，与通常把模数写在下面的 Legendre 符号习惯相反，抄写时勿颠倒。]
+
+后面我们会看到，这些 theta 函数可以自然地看作两变量 Jacobi theta 函数在 $z=0$ 处的特殊化；后者既可以定义为无穷和，也可以定义为无穷乘积：
+
+% [Tutor Note: 从 (2.15) 起隐含约定 $y:=\ex(z)=e^{2\pi i z}$，而原文未再明说；若把 $y$ 当作一般变量，就读不懂 theta 级数的模变换。$z=0$ 对应 $y=1$，这就是上一句“特殊化”的确切含义。]
+
+\begin{equation}
+\begin{split}
+\theta_1(\tau,z) & = -i \sum_{n+{1\over 2}\in \Z} (-1)^{n-{1\over 2}} y^n q^{n^2/2} \\
+&=-iq^{1/8} (y^{1/2}-y^{-1/2})\prod_{n=1}^\infty (1-q^n)(1-yq^{n})(1-y^{-1}q^{n})\, ,\\
+\theta_2(\tau,z) & = \sum_{n+{1\over 2}\in \Z} y^n q^{n^2/2} \\
+&=(y^{1/2}+y^{-1/2})q^{1/8} \prod_{n=1}^\infty (1-q^n)(1+yq^{n})(1+y^{-1}q^{n}) \, ,\\
+ \theta_3(\tau,z)  &= \sum_{n\in \Z} y^n q^{n^2/2} = \prod_{n=1}^\infty (1-q^n)(1+yq^{n-1/2})(1+y^{-1}q^{n-1/2})\, , \\
+\theta_4(\tau,z) 
+&= \sum_{n\in \Z} (-1)^n y^n q^{n^2/2} = \prod_{n=1}^\infty (1-q^n)(1-yq^{n-1/2})(1-y^{-1}q^{n-1/2})~.
+\end{split}
+\end{equation}
+它们按如下方式变换。
+令
+\be
+\Theta(\t,z): = \bem  \theta_1(\tau,z) \\ \theta_2(\tau,z) \\ \theta_3(\tau,z) \\ \theta_4(\tau,z) \eem~, 
+\ee
+则（参看 \S\ref{subsec:shjacobiforms}）
+\be
+\Theta(\t,z) =  \sqrt{i\over \t} \, e\big(-\frac{z^2}{2\t}\big) \, {\cal S}'\,   \Theta\big(-{1\over \t},{z\over\t}\big)  ={\cal T}' \,\Theta(\t+1,z)\, ,
+\ee
+其中
+\be
+{\cal S}' = \bem  i &0&0&0\\ 0&0&0&1\\ 0&0&1&0 \\ 0&1&0&0 \eem, ~~ {\cal T}' = \bem  e({-1/8})&0&0&0\\0& e({-1/8})&0&0\\  0&0&0&1 \\ 0& 0&1&0 \eem . 
+\ee
+
+% [Tutor Note: (2.17) 的关键是椭圆变量同时被变换：$\tau\mapsto-1/\tau$ 时 $z\mapsto z/\tau$，并乘上高斯型因子 $\ex(-z^2/(2\tau))$。只搬 $\tau$ 不动 $z$、或漏掉这个因子，$\theta_i$ 的权 $1/2$ 变换就不成立；该因子的推广正是 (2.25) 中 Jacobi 形式的 $\ex(-cmz^2/(c\tau+d))$，其中 $m$ 是指标、$c$ 来自矩阵。]
+
+另一个常遇到的模形式是 \emph{Dedekind eta 函数}
+\be\label{def:dedeta}
+\eta(\t) = q^{1/24} \prod_{n=1}^\infty (1-q^n)~.
+\ee
+它是带非平凡乘子的权 $1/2$ 模形式，满足
+\be\label{eta_multiplier}
+\eta(\t) = \sqrt{i\over \t} \eta\big(-{1\over\t}\big),~~ \eta(\t) = e\big(-{1\over 24}\big) \,\eta(\t+1). 
+\ee
+它与 theta 函数的关系为
+\be
+\eta(\t)^3 = {1\over 2}\th_2(\t)\th_3(\t)\th_4(\t).
+\ee
+其 24 次幂 $\Delta:=\eta^{24}$ 就是模群 $\SL_2(\ZZ)$ 上熟悉的权 12 尖形式。
+
+% [Tutor Note: $\eta$ 的 $q^{1/24}$ 与乘子必须配套记：$T:\t\mapsto\t+1$ 使 $q^{1/24}\mapsto\ex(1/24)q^{1/24}$，故 $\eta(\t+1)=\ex(1/24)\eta(\t)$；式 (2.20) 把它写成 $\eta(\t)=\ex(-1/24)\eta(\t+1)$，两式等价。若直接照搬成 $\eta(\t+1)=\ex(-1/24)\eta(\t)$，相位就整体反了；$\eta^{24}$ 的乘子为 $\ex(-1/24)^{24}=1$，这才是无乘子的权 12 形式 $\Delta$。]
+
+% [Tutor Note: $\eta^3=\frac12\theta_2\theta_3\theta_4$ 可用来核对乘子：右边三个 theta 的乘子之积应等于 $\eta^3$ 的乘子。$\eta$ 本身带乘子，故在 $\SL_2(\Z)$ 上不是严格意义的模形式（只在 metaplectic 双覆盖上、或在 $\Gamma_0(24)$ 型子群上才是），但 $\eta^{24}=\Delta$ 是。]
+
+% [Tutor Note: 记号提醒：本节同时使用 $\th$（preamble 中 \th 即 \theta）、${\cal T}$（模变换矩阵）与 $T$（生成元），三者字形相近但含义不同；抄写时 $\th_2,\th_3,\th_4$ 是 theta 函数，${\cal T},{\cal T}'$ 是矩阵，$T$ 是生成元。]
+
+\subsection{（斜）全纯 Jacobi 形式}
+\label{subsec:shjacobiforms}
+
+本小节汇集（斜）全纯 Jacobi 形式的定义。这类对象在月光及其与物理的联系中起关键作用。本小节以定义为主，紧密依据 \cite{omjt} 第 3.1 节。
+
+我们先定义 {\it 椭圆}形式 \cite{Dabholkar:2012nd}。对整数 $m$，定义群 $\ZZ^2$ 在函数 $\phi:\HH\times\CC\to \CC$ 上的指标 $m$ {\em 椭圆作用}为
+\begin{gather} \label{elliptic}
+(\f\lvert_{m} (\l,\m) )(\t,z) := \ex( m\l^2 \t + 2m\l z) \, \f(\t, z+\l \t +\m)
+\end{gather}
+其中 $(\l,\m)\in \ZZ^2$。若光滑函数 $\phi:\HH\times\CC\to\CC$ 满足 $z\mapsto\phi(\t,z)$ 全纯，则称它为指标 $m$ 的 {\it 椭圆形式}（elliptic form）。记 $\E_m$ 为指标 $m$ 的椭圆形式空间。
+
+% [Tutor Note: 椭圆作用的相位 $\ex(m\l^2\t+2m\l z)$ 中两个系数都正比于指标 $m$，且第二项是 $2m\l z$ 而非 $m\l z$：在 $z\mapsto z+\l\t+\m$ 下，$q^{\ell^2/4m}y^\ell$ 的平移正好给出二次项 $m\l^2\t$ 与一次项 $2m\l z$。漏掉因子 2 会使 theta 分解的模从 $2m$ 退化为 $m$，后续指标公式都会错位。]
+
+注意，任何椭圆形式 $\phi\in\E_m$ 都有 {\em theta 分解}
+\begin{gather}\label{eqn:jac:thtdec}
+\phi(\tau,z)=\sum_{r\xmod 2m} h_r(\tau)\theta_{m,r}(\tau,z)~,
+\end{gather}
+其中 theta 级数由 $$\theta_{m,r}(\tau,z):=\sum_{\ell=r\xmod 2m}q^{\ell^2/4m}y^\ell~,$$
+给出，$h_r:\HH\to \CC$ 是某 $2m$ 个光滑函数。
+
+% [Tutor Note: 作者把“theta 分解存在”的证明压缩成两行：$z\mapsto z+1$ 的椭圆不变性给出 $y$ 的 Laurent 展开，$z\mapsto z+\tau$（即 $\phi|_m(1,0)=\phi$）要求 $c_r(\t)q^{-r^2/4m}$ 只依赖 $r\bmod 2m$。注意 $c_\ell$ 与 $c_r$ 是同一族系数，只是按模 $2m$ 归类；$h_r$ 与 $c_r$ 差一个因子 $q^{-r^2/4m}$，抄写时勿把两者混同。]
+
+为看出这一点，注意由 $\phi(\tau,z)=\phi(\tau,z+1)$ 可得 $\phi(\tau,z)=\sum_{\ell \in\ZZ} c_\ell (\tau)y^\ell $，其中 $c_\ell :\HH\to\CC$。再由恒等式 $\phi|_m(1,0)=\phi$ 可知，$c_r(\tau)q^{-r^2/4m}$ 只依赖 $r\xmod 2m$。这 $2m$ 个函数 $h_r(\tau):=c_r(\tau)q^{-r^2/4m}$ 正是 $\phi$ 的 theta 分解中的 theta 系数。
+
+为方便起见，把 (\ref{eqn:jac:thtdec}) 中的 $h_r$ 与 $\th_{m,r}$ 看作定义 $2m$ 维向量值函数 $h:=(h_r)_{r\xmod 2m}$ 与 $\th_m:=(\th_{m,r})_{r\xmod 2m}$。于是 theta 分解 (\ref{eqn:jac:thtdec}) 可更简洁地写成 $\phi=h^t\th_m$，其中上标 $t$ 表示矩阵转置。
+
+由 Poisson 求和公式可知，向量值函数 $\th_{m}=(\th_{m,r})$ 在 $\SL_2(\ZZ)$ 下具有如下行为：
+\begin{gather}\label{transf_theta}
+\theta_m\left(-\frac1\tau,\frac{z}\tau\right)\frac{1}{\sqrt{\tau}}\ex\left(-\frac{mz^2}{\tau}\right)
+=
+{\cal S}\theta_m(\tau,z),\quad
+\theta_{m}(\tau+1,z)
+={\cal T}\theta_m(\tau,z),
+\end{gather}
+其中 ${\cal S}=({\cal S}_{rr'})$ 与 ${\cal T}=({\cal T}_{rr'})$ 是对固定正整数 $m$ 定义的幺正矩阵，由 ${\cal S}_{rr'}:=\frac1{\sqrt{2m}}\ex\left(-\frac{1}{8}-\frac{rr'}{2m}\right)$ 与 ${\cal T}_{rr'}:=\ex\left(\frac{r^2}{4m}\right)\delta_{r,r'}$ 给出（例如参看 \cite{eichler_zagier} 第 5 节）。这表明：只要对 $h$ 施加适当条件，就能得到在 $\SL_2(\ZZ)$ 下具有良好模变换性质的椭圆形式 $\f=h^t\theta_m\in\E_m$。
+
+% [Tutor Note: 作者用“由 Poisson 求和即得 (2.24)”略去了计算：对 $\th_{m,r}$ 作 Poisson 求和会得到高斯和 $\sum_\ell\ex(\ell^2/4m)$，其求值给出 $\mathcal S_{rr'}$ 中的相位 $\ex(-rr'/2m)$ 与归一化 $1/\sqrt{2m}$；$\mathcal T$ 的对角相位则来自 $q^{\ell^2/4m}$ 在 $\t\mapsto\t+1$ 下的平移。完整推导见 \cite{eichler_zagier} 第 5 节。]
+
+为精确表述这些概念，对整数 $k,m$，定义 $\SL_2(\ZZ)$ 在 $\E_m$ 上的权 $k$ {\em 模作用}与{\em 斜模作用}如下：
+\begin{gather}\label{def:Jac_skewJac}
+\begin{split}
+(\f\lvert_{k,m}\gamma)(\t,z) &:= 
+\f\left(\frac{a\t+b}{c\t+d},\frac{z}{c\t+d}\right)
+\frac1{(c\t+d)^{{k}}} 
+\ex\left(- \frac{c mz^2}{c\t+d}\right)
+\\
+(\f\lvert^\sk_{k,m}\gamma )(\t,z) &:= 
+\f\left(\frac{a\t+b}{c\t+d},\frac{z}{c\t+d}\right)
+\frac1{(c\bar\t+d)^{{k}}}\frac{c\bar\t+d}{|c\t+d|}
+\ex\left(- \frac{c mz^2}{c\t+d}\right)~,
+\end{split}
+\end{gather} 
+其中 $\f\in\E_m$，$\gamma=\left(\begin{smallmatrix} a&b\\c&d\end{smallmatrix}\right) \in \SL_2(\ZZ)$。
+
+% [Tutor Note: (2.25) 是 Jacobi 形式的核心约定：$\t\mapsto\frac{a\t+b}{c\t+d}$ 与 $z\mapsto\frac{z}{c\t+d}$ 必须同时进行，再乘 $(c\t+d)^{-k}$ 与指数因子 $\ex(-cmz^2/(c\t+d))$。指数因子里 $m$ 是指标、$c$ 来自矩阵，符号为负，它补偿 $z$ 的重新标度带来的二次项；斜作用只把权因子换成 $(c\bar\t+d)^{-k}\frac{c\bar\t+d}{|c\t+d|}$。漏掉 $z$ 的重新标度、漏掉该指数因子或把 $m$ 写成 $2m$，是 Jacobi 形式计算中最常见的三类错误。]
+
+粗略地说，权 $k$、指标 $m$ 的 Jacobi 形式是 $\t$ 变量上全纯的椭圆形式 $\phi(\t,z)$，并且对一切 $\gamma\in\SL_2(\ZZ)$ 在 $\lvert_{k,m} \gamma$ 下不变。注意，${\phi|_{k,m}\left(\begin{smallmatrix}1&1\\0&1\end{smallmatrix}\right)=\phi}$ 蕴含展开
+\begin{gather}\label{eqn:jac:hol-DFoucffhol}
+\f(\t,z) = \sum_{\substack{D,\ell  \in \ZZ\\D=\ell ^2\xmod 4m}} C_\f(D,\ell ) q^{-D/4m}q^{\ell ^2/4m} y^\ell~,
+\end{gather}
+其中 $C_\f(D,\ell ) $ 只依赖 $\ell \xmod 2m$，对应于 theta 分解
+\begin{gather}\label{eqn:jac:hol-thtcoeffFoucoeff}
+h_r(\tau)=\sum_{\substack{D\in\ZZ\\D=r^2\xmod 4m}}C_\phi(D,r)q^{-D/4m}~.
+\end{gather}
+
+% [Tutor Note: (2.26) 中 $D$ 的模是 $4m$，而 theta 级数的 $q$ 指数是 $\ell^2/4m$，两者由 $D=\ell^2\bmod 4m$ 联系；$q$ 的实际指数是 $(\ell^2-D)/4m$。$D$ 越大，$q$ 的负幂越强、极点越强。不要把 $4m$ 写成 $2m$，也不要把系数记号 $C_\phi(D,r)$ 中 $D$ 与 $r$ 的角色互换。]
+
+$\phi=h^t\theta_m$ 在 $\SL_2(\ZZ)$ 下的不变性导致向量值函数 $h=(h_r)$ 的模性质。换言之，$h=(h_r)$ 按向量值模形式变换，并包含与 Jacobi 形式完全相同的信息。为完成定义，还需指定 $h(\t)$ 在尖点附近的增长行为。
+若椭圆形式 $\phi\in\E_m$ 对一切 $\gamma\in\SL_2(\ZZ)$ 在 $\lvert_{k,m} \gamma$ 下不变，且其 Fourier 系数依次满足：$C_\f(D,r)=0$ 除非对所有 $r'=r \xmod{2m}$ 有 $-D+ r'^{2}\geq 0$；$C_\f(D,r)=0$ 当 $D > 0$；$C_{\f}(D,r)=0$ 当 $D \ge0$，则分别称 $\phi$ 为 {\it 弱全纯}、{\it 全纯}、{\it 尖全纯 Jacobi 形式}。记权 $k$、指标 $m$ 的弱全纯 Jacobi 形式空间为 $J^\wk_{k,m}$。
+
+% [Tutor Note: 三种增长条件按 $D$ 的符号分层，方向容易记反：$q$ 的指数为 $(\ell^2-D)/4m$，$D$ 越大极点越强，故弱全纯形式要求 $D$ 有上界（只允许有限多个极点，对应尖点处的指数增长），全纯形式禁止 $D>0$ 的项，尖形式进一步禁止 $D\ge0$ 的项（无常数项）。名字里的“弱”只是允许指数增长，并不表示条件更弱的方向相反。]
+
+注意，在奇数权时，把 (\ref{def:Jac_skewJac}) 用于 $\gamma = - \big(\begin{smallmatrix} 1& 0 \\ 0&1\end{smallmatrix}\big)$ 的情形，可见 Jacobi 形式必须在 $z\leftrightarrow -z$ 下为奇函数。因此，引入
+\be\label{def:thetahat}
+\tilde\theta_{m,r} = \theta_{m,r}-\theta_{m,-r}~.
+\ee
+会很方便。
+
+% [Tutor Note: 奇数权的结论来自 $-I\in\SL_2(\ZZ)$：把 (2.25) 用于 $\gamma=-\mathds{1}$ 得 $\phi(\t,-z)=(-1)^k\phi(\t,z)$，故 $k$ 为奇数时 $\phi$ 关于 $z$ 为奇。式 (2.28) 的奇组合 $\tilde\theta_{m,r}=\theta_{m,r}-\theta_{m,-r}$ 正是为此准备的；$m=2$ 时它与 $\eta^3$ 的关系见 (2.33) 的讨论。]
+
+现在转向密切相关的斜全纯 Jacobi 形式。若椭圆形式 $\f\in\E_m$ 满足以下条件，则称为 {\em 弱斜全纯 Jacobi 形式}：第一，其 theta 系数是 $\HH$ 上的反全纯函数；第二，它在权 $k$ 的斜模作用 (\ref{def:Jac_skewJac}) 下不变，即对一切 $\gamma \in \SL_2(\ZZ)$ 有 $\f\lvert_{k,m}^\sk\gamma =\f$；最后，对固定的 $z\in \CC$，$\tau \mapsto \f(\t,z)$ 在 $\Im(\tau)\to \infty$ 时保持有界。因此，弱斜全纯 Jacobi 形式具有如下形式的 Fourier 展开
+\begin{gather}\label{eqn:jac:hol-DFoucffskw}
+\f(\t,z) = 
+\sum_{\substack{D,\ell \in \ZZ\\  D=\ell ^2  \xmod 4m} }C_\f(D,\ell )\, 
+\bar q^{D/4m} q^{\ell ^2/4m} y^\ell ~,
+\end{gather}
+其中 $D\mapsto C_\f(D,r)$ 是某 $2m$ 个函数；其 theta 系数由
+\begin{gather}\label{eqn:jac:hol-thtcoeffFoucoeff-skew}
+h_r(\tau)=\sum_{\substack{D\in\ZZ\\D=r^2\xmod 4m}}C_\f(D,r)\bar q^{D/4m}~.
+\end{gather}
+给出。
+
+% [Tutor Note: 斜形式把 $q$ 与 $\bar q$ 的角色分开：式 (2.29) 是 $\bar q^{D/4m}q^{\ell^2/4m}$，与全纯情形 (2.26) 的 $q^{-D/4m}q^{\ell^2/4m}$ 恰好相反。由于 $|\bar q|=|q|=e^{-2\pi\Im\t}$，$D>0$ 的项在尖点处衰减、$D<0$ 的项发散，故有界性自动要求 $D<0$ 的系数为零；“斜”指 theta 系数关于 $\bar\tau$ 反全纯，即权因子中出现 $c\bar\tau+d$。]
+
+若弱斜全纯 Jacobi 形式的 Fourier 系数满足 $C_\f(D,r)=0$ 对 $D < 0$，或 $C_{\f}(D,r)=0$ 对 $D \le0$，则分别称它为 {\em 斜全纯 Jacobi 形式}或 {\em 尖斜全纯 Jacobi 形式}。
+
+% [Tutor Note: 注意这里的“全纯性”方向与全纯情形相反：斜形式要求 $C_\f(D,r)=0$ 对 $D<0$，尖形式再要求 $D\le0$ 时为零；比较 (2.26)-(2.27) 的 $D>0$、$D\ge0$ 条件，符号恰好反过来。若照抄全纯情形的不等号方向，就会得到错误的极点结构。]
+
+本小节以一些例子结束。
+\begin{itemize}
+\item 
+定义
+\begin{gather}
+\begin{split}
+\label{phi01}
+\phi_{0,1}(\t,z)&=4 \sum_{i=2,3,4}\big(\frac{\th_i(\t,z)}{\th_i(\t,0)}\big)^2~,  \\
+\phi_{-2,1} &= -{\th_1(\t,z)^2\over \eta^6(\t)}~. 
+\end{split}
+\end{gather}
+偶权弱 Jacobi 形式的环由 $ \phi_{0,1}$ 与 $ \phi_{-2,1}$ 在 $\SL_2(\ZZ)$ 的模形式环上自由生成：
+\be
+J^{\wk}_{2k,m} = \sum_{j=0}^{m} M_{2k+2j}(\SL_2(\ZZ)) \,   \phi_{-2,1}^j \phi_{0,1}^{m-j}~. 
+\ee
+
+% [Tutor Note: (2.31) 的系数 4 与归一化配套：$\phi_{0,1}(\t,0)=4\times3=12$，故 $2\phi_{0,1}(\t,0)=24=\chi(K3)$，即 K3 的 Euler 特征标。若把 4 改成 1，(2.32) 的生成关系以及由它导出的月光系数都会整体差一个因子。$\phi_{-2,1}=-\theta_1^2/\eta^6$ 是权 $-2$、指标 1 的弱形式，它提供负权生成元，使 (2.32) 能覆盖所有偶权与指标 $m$ 的组合。]
+
+函数 $  \phi_{0,1}$ 在 Mathieu 月光与本影月光中起重要作用，因为 $ 2 \phi_{0,1}$ 与 $K3$ 的椭圆亏格 ${\bf EG}(\t,z;K3)$ 一致。椭圆亏格的定义见 \S\ref{sec:EG}。
+
+\item{\cite{Cheng:2017dlj} 证明，所谓 MSW 弦 \cite{Maldacena:1997de} 的修正椭圆亏格在模固定于其黑洞吸引子值时，涉及一个斜全纯 Jacobi 形式，其指标由黑洞的电荷指定。详见第 \ref{sec:other_physics} 节。}
+
+% [Tutor Note: 术语提醒：“modified elliptic genus”译作“修正椭圆亏格”，与普通椭圆亏格相差 $\eta$ 的幂因子（此处为 $\eta^{-6}$），它出现在谱含连续部分的情形，用来恢复模性质。包裹 $\PP^2$ 的 M5 膜世界体是六维的，包裹四维闭链后剩下二维世界面，故得到一条有效弦。]
+
+作为一个具体例子，考虑一张包裹 $\PP^2$ 的单个 M5 膜。所得有效弦的修正椭圆亏格为 ${1\over 2 \eta^6(\tau)}\overline{t_{2,2}(\tau, {\bar z\over 2})}$，其中 $$t_{2,2}(\t,z) = \sum_{r\xmod{4}} \overline{\theta^1_{2,r}(\t)} \theta_{2,r}(\t,z) $$ 是权 2 的斜全纯 Jacobi 形式。上面我们用了定义
+\begin{equation}
+\theta_{m,r}^1(\tau) := {1\over 2\pi i} {\pa\over\pa z}\theta_{m,r}(\tau,z)\lvert_{z=0}~.
+\end{equation}
+注意 $\theta^1_{2,1}(\t) = -\theta^1_{2,-1}(\t) = \eta^3(\tau)$ 与 Mathieu 月光函数 \eq{second_def_H} 的影子一致。
+
+% [Tutor Note: $t_{2,2}$ 的权 2 来自 $3/2+1/2$：$z$ 的导数使权加 1（$\theta_{m,r}$ 权 $1/2$，$\theta^1_{m,r}$ 权 $3/2$），再乘 $\theta_{2,r}$ 的权 $1/2$；取共轭只把全纯换成反全纯、不改变权，故 $t_{2,2}$ 是斜全纯 Jacobi 形式而非全纯形式。]
+
+% [Tutor Note: $\theta^1_{2,1}=\eta^3$ 可直接验证：$\theta_{2,1}=\sum_{\ell\equiv1\bmod4}q^{\ell^2/8}y^\ell$，对 $z$ 求导后取 $z=0$ 得 $\sum_{\ell\equiv1\bmod4}\ell\,q^{\ell^2/8}$，逐项与 $\eta^3$ 的展开比较（$\ell=-3$ 给出 $-3q^{9/8}$，$\ell=5$ 给出 $5q^{25/8}$）即得。这也说明 $H$ 的影子 $24\eta^3=24\theta^1_{2,1}$ 是权 $3/2$ 的对象，与 $H$ 的权 $1/2$ 相加为 2。]
+
+\end{itemize}
+
+\subsection{模拟模形式}
+\label{subsec:MMF}
+
+本小节介绍模拟模形式以及与之密切相关的模拟 Jacobi 形式。我们紧密依据 \cite{Dabholkar:2012nd} 第 7.1 节与 \cite{omjt} 第 3.2 节的处理。这一课题由传奇数学家 Srinivasa Ramanujan 开创，历史引人入胜；简短的介绍可参看 \cite{zagier_mock}。
+
+设 $w\in \frac12\ZZ$，$h$ 是 $\HH$ 上的全纯函数，且在所有尖点处至多指数增长。若存在权 $2-w$ 的模形式 $g$，使和 $\hat h:= h+ g^\ast$ 按 $\Gamma$ 上权 $w$ 的全纯模形式变换，则称 $h$ 为离散子群 $\Gamma \leq \SL_2(\RR)$ 的（弱全纯）权 $w$ 模拟模形式。此时称 $g$ 为模拟模形式 $h$ 的 {\em 影子}，$\hat h$ 为其 {\em 完备化}。
+上面用到 $g^\ast$ 的如下定义。把 $g$ 的 Fourier 展开写成 $g(\t) = \sum_{n\geq 0} c_g(n) q^n$，则
+\be \label{def:int_shadow}
+g^\ast(\t)  := \overline{c_g(0)} {(-\Im(\t))^{1-w}\over w-1} +\sum_{n>0} (-4\p n)^{w-1}\overline{c_g(n)} q^{-n} \Gamma(1-w,4\pi n \Im(\t))~,
+\ee
+其中 $\Gamma(1-w,x) = \int_{x}^{\infty} e^{-t} t^{w} dt$ 表示不完全 gamma 函数。
+
+% [Tutor Note: 定义中的三个权要一起记：$h$ 权 $w$，影子 $g$ 权 $2-w$，完备化 $\hat h$ 权 $w$。最常见的错误是把 $g$ 当成与 $h$ 同权：Mathieu 月光函数 $H$ 的权是 $1/2$，其影子 $24\eta^3$ 的权是 $3/2$（见 (2.43)），不是 $1/2$。另外 $g^\ast$ 的定义 (2.34) 把常数项与 $n>0$ 项分开处理，只有 $c_g(0)=0$ 时才退化为下文 (2.35) 的 Eichler 积分。]
+
+% [Tutor Note: (2.34) 中的 $4\pi$ 来自 $\bar q^{-n}=\ex(-n\bar\t)=e^{4\pi n y}$（$y=\Im\t$）：故 $\Gamma$ 的下限是 $4\pi n y$，前置因子是 $(-4\pi n)^{w-1}$，即完备化中会出现 $(4\pi y)^{w-1}$ 型的 $y$ 依赖。若把 $4\pi$ 漏成 $2\pi$ 或把 $y$ 写成 $2y$，恒等式 (2.36) 就不再成立，$\hat h$ 也不再是调和 Maass 形式。另注意原文把不完全 gamma 函数的被积函数印成 $t^{w}$，而按定义 $\Gamma(s,x)=\int_x^\infty t^{s-1}e^{-t}dt$（$s=1-w$）应为 $t^{-w}$，此处疑为笔误；译文照录，计算时请用标准定义。]
+
+当 $c_g(0)=0$ 时，上式与所谓的 $g$ 的 {\em 非全纯权 $w$ Eichler 积分}一致：
+\be\label{def:Eichler_integral}
+g^\ast (\t):= (-2)^{w-1}\ex(\tfrac{w-1}{4}) \int_{-\bar \tau}^\inf (\t'+\t)^{-w} \overline{g(-\overline{\t'})} {\rm d}\t'~. 
+\ee
+
+% [Tutor Note: Eichler 积分 (2.35) 有三处易错：下限是 $-\bar\t$（不是 $-\t$）；被积函数是 $\overline{g(-\overline{\t'})}$，即先在 $-\overline{\t'}$ 取 $g$ 的值再共轭（等价于 $g$ 的反全纯延拓）；上限 $\infty$ 应沿虚轴理解为 $i\infty$（原文用 \inf 宏，导言区把 \inf 定义为 \infty）。前置相位 $(-2)^{w-1}\ex(\frac{w-1}{4})$ 决定积分的权；$c_g(0)\neq0$ 时还须补上 (2.34) 第一项的常数贡献。]
+
+注意
+\begin{gather}\label{eqn:jac:mck-partialgstargbar}
+-2i\Im(\t)^w\frac{\pa}{\pa \bar \tau} g^\ast(\t) =  
+\overline{g(\t)}~, 
+\end{gather}
+从而 $\hat h$ 被权 $w$ 的 Laplacian $\Delta_w := \Im(\t)^{2-w} \pa_\t \Im(\t)^w \pa_{\bar\t}$ 消灭。这样的函数称为调和 Maass 形式；并且可以把 $h$ 认作调和 Maass 形式 $\hat h$ 的（唯一确定的）全纯部分。
+最后注意，由 (\ref{def:int_shadow}) 显然可见，调和 Maass 形式 $\hat h$ 的乘子是模形式 $g$ 的乘子的逆。
+
+% [Tutor Note: 作者说“由 (2.34) 显然”，实际要做两步验证：其一，直接代入得 $\pa_{\bar\t}g^\ast=\frac{i}{2}y^{-w}\overline{g}$，故 $\Delta_w g^\ast=0$；而 $\Delta_w$ 含 $\pa_{\bar\t}$，作用在全纯函数 $h$ 上为零，于是 $\Delta_w\hat h=0$。其二，$g^\ast$ 与 $\bar g$ 按同一乘子变换，故 $\hat h$ 的乘子是 $g$ 乘子的逆。这两步正是调和 Maass 形式的标准性质，跳过验证容易在乘子符号上出错。]
+
+与通常模形式的情形一样，上述模拟模形式的定义可以向多个方向推广，包括引入非平凡乘子系统以及考虑向量值模拟模形式。
+接下来关注一类特殊的向量值模拟模形式，即由所谓模拟 Jacobi 形式给出的那些。对整数 $k$ 与 $m$，若以 $\phi=\sum_r {h}_r\th_{m,r}$ 写出椭圆形式 $\phi\in\E_m$ 的 theta 分解后满足以下条件，则称 $\phi$ 为权 $k$、指标 $m$ 的 {\em 弱模拟 Jacobi 形式}：第一，对每个固定的 $z\in\CC$，$\tau\mapsto \phi(\t,z)$ 在 $\Im(\tau)\to \infty$ 时有界；第二，所有 $h_r$ 全纯；最后，存在斜全纯 Jacobi 形式 $\s=\sum_r \overline{g_r}\theta_{m,r}\in S^\sk_{3-k,m}$，使得 $\hat\phi:=\sum_r\hat{h}_r\th_{m,r}$ 在 $\E_m$ 上权 $k$ 的模作用 $\lvert_{k,m}$ 下不变（参看 \eq{def:Jac_skewJac}），其中
+\begin{gather}\label{eqn:jac:mck-hhat}
+\hat{h}_r(\t):=h_r(\t)+\frac1{\sqrt{2m}}g_r^*(\t)~. 
+\end{gather}
+
+% [Tutor Note: 模拟 Jacobi 形式的权重配平务必核对：$\phi$ 权 $k$，theta 分解各分量 $h_r$ 的权为 $k-\frac12$（因 $\theta_{m,r}$ 权 $\frac12$），故影子 $g_r$ 权 $2-(k-\frac12)=\frac52-k$；而斜形式 $\sigma=\sum_r\overline{g_r}\theta_{m,r}$ 的权为 $(\frac52-k)+\frac12=3-k$。这就是 (2.37) 写 $S^\sk_{3-k,m}$ 而非 $S^\sk_{2-k,m}$ 的原因，直接套用标量公式会差 $1/2$。]
+
+如 \cite{Zwegers2008} 所讨论、并在 \cite{Dabholkar:2012nd,umstar} 中仔细分析的，亚纯 Jacobi 形式——即放松 Jacobi 形式的条件、允许在扭点 $z\in \QQ + \QQ \tau $ 处有极点所得的对象——自然地给出模拟 Jacobi 形式。特别地，本影月光中出现的所有模拟 Jacobi 形式都可以看作由亚纯 Jacobi 形式产生。
+
+% [Tutor Note: 这是 Zwegers 的核心发现：亚纯 Jacobi 形式减去其“极部分”后剩下的部分虽不模不变，但其完备化模不变，从而给出模拟 Jacobi 形式。本影月光中，亚纯 Jacobi 形式由 Niemeier 格对应的 theta 商给出，极部分由判别式群决定，细节见第 \ref{sec:umbral} 节。]
+
+从物理角度看，正如近期一系列工作所示，这些模拟模对象的“模拟性”（mockness）往往与理论中相关空间的非紧性有关。例如参看 \cite{VafaWitten1994,Troost:2010ud,Dabholkar:2012nd,Alexandrov:2012au,UMk3}。以靶空间非紧的二维 CFT 为例。靶空间的非紧性往往导致谱的连续部分。此时标准的 CFT 论证可能失效。特别地，谱的连续部分中玻色子态与费米子态之间的配对可能不完美，结果我们得到的是由某个模拟模对象的完备化给出的非全纯 BPS 指标。具体例子的细节参看 \cite{Troost:2010ud,Eguchi:2010cb,Eguchi:2004yi, Ashok:2013pya,Ashok:2011cy,Murthy:2013mya}；椭圆亏格语境下更详细的讨论见第 \ref{sec:EG} 节末尾的评注。
+
+% [Tutor Note: 物理直觉：非紧靶空间给出连续谱，Bose–Fermi 配对在连续谱上不完美，Witten 指标因而不再与 $\bar\tau$ 无关；它对 $\bar\tau$ 的依赖恰好由影子的 Eichler 积分描述，所以“非全纯 BPS 指标 = 模拟模对象的完备化”。这与导言中“新月光必须偏离幺正离散谱 CFT”的说法是同一现象的两面。]
+
+非紧性出现、并使模拟模形式发挥作用的另一个场景是穿墙（wall-crossing）：逼近墙时，被束缚的黑洞中心之间的距离趋于无穷。于是黑洞微观态的 BPS 计数依赖模，相应的积分围道随之改变 \cite{Cheng2007a}；积分结果是模拟模的 \cite{Dabholkar:2012nd}。
+
+% [Tutor Note: 这里的“积分围道随模改变”是穿墙现象的技术核心：BPS 态计数写成对中心电荷的围道积分，围道的选取由稳定性条件（attractor flow）决定；跨过墙时围道变形会扫过极点，留下非全纯的 $\bar\tau$ 依赖，这正是模拟模性质的物理来源。]
+
+物理中模拟模形式的另一个来源是超对称无穷代数（如第 \ref{sec:M24moonshine} 节提到的 ${\cal N}=2$ 与 ${\cal N}=4$ 超共形代数）的特征标。更多例子可参看 \cite{Kac:2014rra} 及其参考文献。
+
+% [Tutor Note: $N=4$ 超共形代数的（无质量）特征标是模拟模形式，这是 Mathieu 月光物理来源的最直接版本：K3 的非线性 sigma 模型椭圆亏格按 $N=4$ 特征标分解，其系数与 $M_{24}$ 的不可约表示维数一致（参见 (2.42) 下方的讨论）。这里的“模拟性”正是 $H$ 的影子 $24\eta^3$。]
+
+有趣的是，正如我们在 \S\ref{sec:umK3} 中将说明的，(\ref{second_def_H}) 中模拟模形式的模拟性既可以看作来自靶空间非紧的 CFT，也可以看作 ${\cal N}=4$ 超共形代数特征标的模拟性。
+
+本小节以几个例子结束。
+\begin{itemize}
+\item
+Ramanujan 在 1920 年致 Hardy 的信中写下如下看似简单的 Euler 级数 \cite{MR2280843}，
+{\footnotesize
+\begin{align}\notag
+\chi_0(q) &=\sum_{n=0}^{\infty} {q^n \over (1-q^{n+1})(1-q^{n+2})\dots (1-q^{2n})}  = 1+ q+ q^2 +2 \,q^3 +\dots~,\\\notag
+  \chi_1(q) &=\sum_{n=0}^{\infty} {q^n \over (1-q^{n+1})(1-q^{n+2})\dots (1-q^{2n}) (1-q^{2n+1})}  = 1+2\, q+ 2\,q^2 +3 \,q^3 +\dots~,
+\end{align}
+}
+作为他的 {\em 模拟 theta 函数}（五阶）的两个例子。事实上，它们与模拟 Jacobi 形式密切相关。
+
+% [Tutor Note: “五阶”指 Ramanujan 模拟 theta 函数的阶（order）：他在 1920 年致 Hardy 的信中给出 17 个这样的函数，分三阶、五阶、七阶，其中五阶有 10 个；原文只取 $\chi_0,\chi_1$ 两个作例，不要以为五阶只有两个。$\chi_0,\chi_1$ 的 Euler 型级数本身不是模形式，差一个 theta 影子后才模不变。]
+
+定义 $I^{3E_8} =\{1,7\}$、$A=\{1,11,19,29\}$，并令
+\be\label{eqn:3E8}
+H_1^{3E_8}(\t) = q^{-1/120}(2  \chi_0(q)  -4)~, ~~H_7^{3E_8}(\t) = 2  q^{71/120} \chi_1(q) , 
+\ee  
+则 $(H_r^{3E_8})_{r\in I^{3E_8}}$ 是模群的权 $1/2$ 向量值模拟模形式。其影子由指标 30 的 theta 函数给出：
+\be
+g_r ^{3E_8}= 3 \sum_{a\in A} \theta_{30,a\,r}^{1}. 
+\ee
+
+% [Tutor Note: $q^{-1/120}$ 的指数来自指标 $m=30$：$-1/120=-1/(4m)$，与 theta 级数的 $q^{\ell^2/4m}$ 约定一致；$H_7$ 的 $q^{71/120}$ 与 (2.40) 的 $T$ 相位 $\ex(-49/120)$ 配套，因为 $71/120\equiv-49/120\pmod 1$。指数与相位必须一致，否则完备化后影子无法抵消。]
+
+% [Tutor Note: $I^{3E_8}=\{1,7\}$ 是 $H_r$ 的指标集，$A=\{1,11,19,29\}$ 是影子 (2.39) 求和中出现的模 30 的类集；两者都由 $3E_8$ 型 Niemeier 格对应的本影数据给出（见第 \ref{sec:umbral} 节），并非随意选取。由于 $r$ 只取两个值，该向量值模拟形式是二维的，其 $T$ 矩阵 (2.40) 为对角矩阵。]
+
+写 $\widehat H_r^{3E_8}(\t) = H_r^{3E_8} +(g_r^{3E_8})^\ast$，则
+\begin{align}
+\bem \widehat H_1^{3E_8}\\\widehat H_7^{3E_8}\eem(\t+1) =\bem \ex(-{1\over 120}) & 0 \\ 0 &\ex(-{49\over 120}) \eem \bem \widehat H_1^{3E_8}\\\widehat H_7^{3E_8}\eem(\t)
+\end{align}
+以及
+\begin{align}
+\bem \widehat H_1^{3E_8}\\\widehat H_7^{3E_8}\eem\left(-{1\over \t}\right) =\tau^{1/2} i^{3/2} \bem {1\over 2}\sqrt{1-{1\over \sqrt{5}}} &  {1\over 2}\sqrt{1+{1\over \sqrt{5}}}\\  {1\over 2}\sqrt{1-{1\over \sqrt{5}}} &- {1\over 2}\sqrt{1-{1\over \sqrt{5}}} \eem \bem \widehat H_1^{3E_8}\\\widehat H_7^{3E_8}\eem(\t)
+\end{align}
+{\sloppy 此外，$H_i^{3E_8}$ 可以看作由模拟 Jacobi 形式 $\psi^{3E_8}(\t,z):= \sum_{r\in I^{3E_8}} H_r^{3E_8}\sum_{a\in A}\tilde \theta^{3E_8}_{a\,r}$ 的 theta 复合得到。更具体地说，$\hat \psi^{3E_8}(\t,z):=\sum_{r\in I^{3E_8}} \widehat H_r^{3E_8}\sum_{a\in A}\tilde \theta^{3E_8}_{a\,r}$ 关于 $\t$ 非全纯，并按权 1、指标 30 的 Jacobi 形式变换。
+正如记号所示，$H_r^{3E_8}$ 编码对应于根系统 $3E_8$ 的 Niemeier 格 $N$ 的本影月光情形背后的本影月光模的分次维数，我们将在 \S\ref{sec:umbral} 中讨论。\par}
+
+\item 设 $H: \HH \to \CC$ 由
+\be\label{second_def_H}
+H(\t) = \frac{-2 E_2(\t) + 48 F_2^{(2)}(\t)}{\eta(\t)^3}=2 q^{-\frac{1}{8}} \left( -1 + 45\, q+ 231\, q^2 + 770\,q^3\dots \right)~,
+\ee
+给出，其中
+$$E_2 = 1- 24\sum_{n=1}^\infty {nq^n \over 1-q^n }$$ 是权二 Eisenstein 级数（它不是模形式），
+而
+$$
+F_2^{(2)}(\t)= \sum_{\substack{r>s>0\\ r-s=1\, {\rm mod }\; 2 }} (-1)^{r} \,s \,q^{rs/2} = q+q^2-q^3+q^4+\dots ~.
+$$
+
+% [Tutor Note: 原文 p.24 把系数印作 “45, 231 770, 2277 , 5796”，231 与 770 之间漏了一个逗号（另有多余空格）；正确读数是 45、231、770、2277、5796，均为 $M_{24}$ 的不可约表示维数。译文按正确读数处理，数值不变，此处登记为原文笔误。]
+
+注意 $H/2$ 的前几个 Fourier 系数：45、231、770、2277、5796，恰与散在群 $M_{24}$ 的某些不可约表示的维数一致！事实上，在本影月光中 $H = H^{24A_1}$ 扮演底层 $M_{24}$ 模的分次维数的角色。参看 \ref{subsec:Mathieu}。
+
+% [Tutor Note: $E_2=1-24\sum n q^n/(1-q^n)$ 是权 2 的准模形式：$E_2(-1/\t)=\t^2E_2(\t)+\frac{12\t}{2\pi i}$，单独并不模不变（原文也特意注明“它不是模形式”）。因此含 $E_2$ 的表达式必须整体看待，不能把 $E_2$ 当作权 2 模形式与其他模形式相乘；这里得到的 $H$ 是权 $1/2$ 的模拟模形式，其完备化 (2.43) 才模不变。]
+
+这个函数是影子为 $24 \eta^3(\t)$ 的模拟模形式（因此其乘子是 $\eta^3(\t)$ 乘子的逆）。换言之，
+\be\label{completion_H}
+\widehat{H}(\t)=H(\t)+24\, (4{i})^{-1/2} \int_{-\bar \t}^{\infty}(z+\t)^{-1/2}\overline{\eta(-\bar z)^3}{\rm d}z,
+\ee
+按模群 $\SL_2(\ZZ)$ 的权 $1/2$ 模形式变换。
+
+% [Tutor Note: (2.43) 是 $w=1/2$、$g=24\eta^3$ 时 (2.34)、(2.35) 的显式写法：积分核 $(z+\t)^{-1/2}$ 就是 Eichler 积分的 $(\t'+\t)^{-w}$，前置常数中 24 来自影子归一化、$(4i)^{-1/2}$ 是权 $1/2$ 的 $\sqrt{i}$ 型相位；$\eta^3$ 的常数项为零，故 (2.34) 第一项（含 $(\Im\t)^{1-w}$ 的项）在此不出现。抄写时勿丢 24、勿把 $4i$ 写成 $4\pi i$。]
+
+此外，两变量函数 $\psi^{24A_1}(\t,z):= H(\t) \tilde{\theta}_{2,1}$ 是权一、指标二的模拟 Jacobi 形式。这个模拟 Jacobi 形式可以看作由亚纯 Jacobi 形式减去其“极部分”得到。为看出这一点，考虑权一、指标二的亚纯 Jacobi 形式
+\be\label{eq:psi_EGK3}
+\psi(\t,z) := -2i{\theta_1(\t,2z)\eta^3(\t)\over \theta_1^2(\t,z)}\phi_{0,1}(\t,z)= -i {\theta_1(\t,2z)\eta^3(\t)\over \theta_1^2(\t,z)}{{ \bf EG}}(\t,z;K3)~,
+\ee
+（参看 (\ref{phi01})）它在 $z\in \ZZ + \ZZ \t$ 处有单极点。于是下述恒等式成立，
+\be\label{polar:M24}
+\psi(\t,z) =  \psi^{24A_1}(\t,z) -24\, {\rm Av}^{(2)}\left[{y+1\over y-1}\right]~. 
+\ee
+上面 ${\rm Av}^{(m)}$ 表示指标 $m$ 的平均化算子
+ \[{\rm Av}^{(m)}[F(y)] = \sum_{k\in \ZZ} q^{mk^2}y^{2mk}F(q^ky)~,\] 
+它对一切 ${\l,\m\in \ZZ}$ 具有椭圆对称性 ${\rm Av}^{(m)}[F(y)] \lvert_m(\l,\mu) ={\rm Av}^{(m)}[F(y)]  $；而 \eq{polar:M24} 中的第二项可以解释为亚纯 Jacobi 形式 $\varphi$ 的典范“极部分”。
+
+% [Tutor Note: 原文 p.24 在定义 $\psi^{24A_1}$ 处把行内公式先以 \( 开头、却以 $ 结尾，混用了两种行内数学定界符，虽能编译但不规范；译文统一改为 $...$，公式内容逐字符不变。此处登记为原文笔误。]
+
+% [Tutor Note: (2.45) 之后给出的平均化算子 ${\rm Av}^{(m)}$ 把任意 $F(y)$ 投影为对指标 $m$ 的椭圆作用不变的函数；${\rm Av}^{(2)}[(y+1)/(y-1)]$ 展开后正是 $\psi$ 在扭点 $z\in\ZZ+\ZZ\t$ 处单极点之和，故减去它后 $\psi^{24A_1}$ 无极点。注意此处 $y=\ex(z)$，且 ${\rm Av}^{(2)}$ 的指标 2 与 $\tilde\theta_{2,1}$ 的指标一致。]
+
+% [Tutor Note: 原文 p.25 把“亚纯 Jacobi 形式”写成 $\varphi$，但 (2.44) 定义并用到的对象是 $\psi$（$\varphi$ 在讲义别处另有含义）；疑为 $\psi$ 之误，译文照录原符号，此处登记。]
+
+\item{考虑判别式为 $D$ 的二元二次型集合
+\be
+{\cal Q}_D := \left\lbrace Q\left(\begin{matrix} X \\ Y \end{matrix}\right)=AX^2+BXY+CY^2\lvert B^2 -4AC = D\right\rbrace~. 
+\ee
+它在 $\SL_2(\Z)$ 下有自然的作用，作用方式为
+\begin{equation}
+\left(\begin{matrix} X \\ Y \end{matrix}\right)\mapsto\left(\begin{matrix} a & b \\ c & d \end{matrix}\right)\left(\begin{matrix} X \\ Y \end{matrix}\right)~,
+\end{equation}
+我们关心 ${\cal Q}_D$ 中在模群作用下互不等价的元素。例如，一个有趣的数是 {\em Hurwitz–Kronecker 类数}
+\be\label{def:hurwitz}
+H(D):= \sum_{Q\in {\cal Q}_D\backslash \SL_2(\ZZ)} {1\over \omega_Q}~,
+\ee
+其中 $\omega_Q$ 表示使 $Q$ 不变的 $\SL_2(\Z)$ 子群的阶。它取值于 $\{1,2,3\}$。粗略地说，这个数计数判别式为 $D$ 的互不等价二次型的个数，并将在 \S\ref{ch:moonshineweight32} 与 \S\ref{sec:other_physics} 中起重要作用。
+
+% [Tutor Note: $\omega_Q$ 是 $Q$ 的自同构群阶（在 $\SL_2(\Z)$ 中模去 $-\mathds{1}$ 后取值为 1、2、3），权重 $1/\omega_Q$ 使 $H(D)$ 成为真正的加权类数。$\omega_Q=3$ 只出现在 $D=-3$，$\omega_Q=2$ 只出现在 $D=-4$；下式 (2.49) 中 $D=-3$ 的系数 $1/3$ 与 $D=-4$ 的系数 $1/2$ 正来自这里。]
+
+对每个 $Q \in {\cal Q}_D$，上半平面内存在唯一的根 $\alpha_D$（满足 $Q[1,\alpha_D]=0$）。显然，$J(\alpha_Q)$ 与在 $\SL_2(\Z)$ 轨道中选取 $Q$ 的哪个代表无关；类似地可以定义像 \eq{def:hurwitz} 那样的加权和，只不过现在涉及在 $\alpha_Q$ 处求值的 $J$ 的多项式的值，称为 {\em 奇异模的迹}（traces of singular moduli）。这类量（对 $D$ 求和，并带某个 $c$ 的分次因子 $q^{cD}$）的生成函数将具有有趣的模性质。
+
+% [Tutor Note: “unique root”指 $D<0$ 时两根共轭、恰有一个落在 $\HH$ 内。原文此处先用 $\alpha_D$、又用 $\alpha_Q$，指同一对象（$Q$ 的根），属记号不一致，译文照录。$J$ 在虚二次点（CM 点）的取值是代数整数，故取迹后为整数；Zagier 证明迹的生成函数是权 $3/2$ 的模形式，而下一段的类数生成函数则是模拟模形式。]
+
+例如，下述 Hurwitz–Kronecker 类数的生成函数（约定 $H(0)=-{1\over 12}$）
+\be\label{hurwitz_mock}
+{\cal H}(\tau) := \sum_{D\leq 0} H(D)q^{|D|} = -{1\over 12}+{1\over 3}q^3 +{1\over 2}q^4+q^7 + q^8 +\dots
+\ee
+是 $\Gamma_0(4)$ 的权 ${3\over 2}$ 模拟模形式，其影子由 theta 函数 $\theta(\t)$ 给出（参看 \S\ref{subsec:modular_forms}）。这个函数的模拟模性质很早就已在 \cite{MR0429750} 中被认识到。
+这个形式还有一个有趣的特点：它在所有尖点处有界，因而 Fourier 系数增长缓慢，这对应类数的微妙增长。
+
+% [Tutor Note: $\mathcal H$ 的权 $3/2$ 加上影子 $\theta(\t)=\theta_3(2\t)$ 的权 $1/2$ 恰为 2，符合“影子权 $2-w$”。常数项 $-1/12$ 是标准约定 $H(0)=-1/12$，不是笔误；求和从 $D\le0$ 起，故 $D=-3$ 对应 $q^3$、$D=-4$ 对应 $q^4$。$\mathcal H$ 在尖点有界意味着无极点，但其 Fourier 系数仍比真正的权 $3/2$ 尖形式增长慢，这正是类数增长的反映。]
+
+这个函数的物理相关性将在 \S\ref{sec:other_physics} 中提及。这或许是最早在物理中发挥作用的模拟模形式 \cite{MR1285785,Vafa:1994tf}。
+}
+\end{itemize}

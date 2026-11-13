@@ -1,0 +1,341 @@
+% !TeX program = xelatex
+% =====================================================================
+%  Witten《量子场论动力学》(Dynamics of Quantum Field Theory)
+%  中文译注本 —— 主文件
+%  编译：xelatex 两遍（需 ctex；图片位于 figs/，分节文件位于 sections/）
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+% ---------- 中文与字体 ----------
+\usepackage[UTF8,scheme=plain,heading=true]{ctex}
+
+% ---------- 数学 ----------
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage{bm}
+
+% ---------- 排版 ----------
+\usepackage[a4paper,margin=2.45cm,top=2.7cm,bottom=2.7cm]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{caption}
+\usepackage{microtype}
+\usepackage[hidelinks,bookmarksnumbered=true,bookmarksopen=true]{hyperref}
+
+\captionsetup{font=small,labelfont=bf}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.15em}
+\linespread{1.28}
+\emergencystretch=3em
+\setlist{itemsep=0.15em,topsep=0.3em}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small 量子场论动力学}
+\fancyhead[R]{\small\nouppercase{\rightmark}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+
+\titleformat{\section}{\Large\bfseries}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{0.5em}{}
+\titlespacing*{\section}{0pt}{2.2ex plus .4ex}{1.4ex plus .2ex}
+
+% ---------- 定理类环境（原文 Remark 等）----------
+\theoremstyle{remark}
+\newtheorem{remark}{注}[section]
+\newtheorem*{remark*}{注}
+\theoremstyle{definition}
+\newtheorem{definition}{定义}[section]
+\theoremstyle{plain}
+\newtheorem{theorem}{定理}[section]
+\newtheorem{proposition}{命题}[section]
+\newtheorem{lemma}{引理}[section]
+\renewcommand{\proofname}{\bfseries 证明}
+
+% ---------- “本节重点” 环境 ----------
+\newenvironment{keytakeaways}
+  {\par\addvspace{8pt}\begin{quote}\small\noindent
+   \textbf{本节重点（Key Takeaways）}\par\vspace{2pt}\ignorespaces}
+  {\end{quote}\addvspace{4pt}}
+
+% ---------- 常用记号 ----------
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\CP}{\mathbb{CP}}
+\newcommand{\half}{\tfrac12}
+\renewcommand{\d}{\mathrm{d}}
+\newcommand{\e}{\mathrm{e}}
+
+% =====================================================================
+\begin{document}
+
+% ---------------------------- 封面 ----------------------------
+\begin{titlepage}
+  \centering
+  \vspace*{2.2cm}
+  {\Huge\bfseries 量子场论动力学\par}
+  \vspace{0.8cm}
+  {\LARGE Dynamics of Quantum Field Theory\par}
+  \vspace{1.6cm}
+  {\Large Edward Witten\par}
+  \vspace{0.35cm}
+  {\large 普林斯顿高等研究院（Institute for Advanced Study）\par}
+  \vspace{2.0cm}
+  {\large 中文译注本\par}
+  \vspace{0.3cm}
+  {\large 逐页对勘扫描原稿 · 公式重排 · 学术批注\par}
+  \vspace{0.6cm}
+  {\large 四维闵氏号差统一取 $(-,+,+,+)$\par}
+  \vfill
+  {\small 原著：\emph{Dynamics of Quantum Field Theory}，载于 AMS 丛书\\[2pt]
+  \emph{Quantum Fields and Strings: A Course for Mathematicians}, Vol.~2,\\[2pt]
+  第 4 部分，pp.~1119--1424（1999）\par}
+  \vspace{1.2cm}
+  {\small 二〇二六年十月\par}
+\end{titlepage}
+
+% ---------------------------- 译者说明 ----------------------------
+\section*{译者说明}
+\addcontentsline{toc}{section}{译者说明}
+\markboth{译者说明}{译者说明}
+
+本译注本以 Witten 在普林斯顿高等研究院讲授的《量子场论动力学》讲义（AMS 版 pp.~1119--1424，
+共 306 个扫描页，含 19 讲正文、习题与部分解答）为底本，逐页译出。原文是排印本的扫描件，
+自带质量参差的 OCR 文本层；凡公式、符号、上下标、图注，一律以页面图像为准重新键入，
+未采用 OCR 字符串。
+
+\paragraph{工作方法}
+\begin{enumerate}[label=\arabic*.]
+  \item \textbf{语义级翻译}：以中文学术界约定术语为准（规范场论、和乐、反常、配分函数、
+        有效作用量、超势、模空间、拓扑扭曲等），首次出现括注英文；不逐字硬译，但不得增删
+        物理内容；长句可拆分，逻辑与限定语必须保留。
+  \item \textbf{公式逐行核对}：保留原书编号（原书编号 (n.m) 一律以 \verb|\tag{n.m}| 复现），
+        上下标、希腊字母、张量指标、费米子符号、拓扑项归一化逐一对照页面图像；原书笔误或
+        存疑处，以 \verb|% [Tutor Note: ...]| 注释如实标出，不改动公式本体。
+  \item \textbf{图表剥离}：原书插图从 400 dpi 扫描页上按图幅裁切，插入对应段落；
+        图注译为中文并注明「原文 Figure k，p.N」。
+  \item \textbf{审校批注}：在关键推导处插入 \verb|% [Tutor Note: ...]| 注释，分三类：
+        易错预警（指标、符号、归一化、欧氏/闵氏约定）、含糊点拨（作者以
+        ``It is obvious that'' 跳过的证明及其所依赖的定理）、原文勘误。
+        注释仅供研读时查阅，不影响正文排版。
+  \item \textbf{结构还原}：每讲开头给出「本节重点（Key Takeaways）」；小节的层次与标题
+        依原文，但因分节编号由 \LaTeX{} 自动生成，小节序号与原书 \S n.m 不尽一致，
+        原编号已在各小节首行注释中标出。
+\end{enumerate}
+
+\paragraph{关于号差与符号约定}
+原书并非自始至终采用同一种号差。\textbf{本版按统一要求，把四维闵氏号差一律取为
+$(-,+,+,+)$}；欧氏号差的各讲保持原样（欧氏号差不存在 $(-,+,+,+)$ 与 $(+,-,-,-)$ 之别）。
+为便于与原书逐页对照，各处\textbf{原印}约定列表如下（页码为原书印刷页码）：
+
+\begin{center}
+\small
+\begin{tabular}{@{}p{0.17\linewidth}p{0.27\linewidth}p{0.48\linewidth}@{}}
+\toprule
+讲次 & 原印 / 本版 & 原文依据 \\
+\midrule
+第 1 讲 & $(-,+,+,+)$ / 同 & p.~1138：质量壳为双曲面 $p^2=-m^2$，类空 $x^2>0$，$\nabla^2W_m=-m^2W_m$ \\
+第 4 讲 & 二维光锥 $(+,-)$ / 同 & p.~1175：$ds^2=dx_+dx_-$（二维光锥坐标，另成一类，见该讲批注） \\
+第 8 讲 & 欧氏 / 同 & p.~1226 脚注：「All Lagrangians ... Euclidean signature.」 \\
+第 16 讲 & 欧氏 / 同 & p.~1341：「In this lecture we work in Euclidean signature.」 \\
+第 17 讲 & $(+,-,-,-)$ / $\mathbf{(-,+,+,+)}$ & 原印 p.~1351：$ds^2=dx_0^2-dx_1^2-dx_2^2-dx_3^2$；本版写作 $-dx_0^2+dx_1^2+dx_2^2+dx_3^2$，原式保留于批注 \\
+第 18--19 讲 & 沿用第 17 讲 / $\mathbf{(-,+,+,+)}$ & 正文只称 Minkowski 四维空间，未再明写度规 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+统一后采用的约定包如下：
+\[
+\eta=\mathrm{diag}(-1,+1,+1,+1),\qquad
+\{\gamma^\mu,\gamma^\nu\}=2\eta^{\mu\nu}\ \ (\text{故 }(\gamma^0)^2=-1),\qquad
+\epsilon^{0123}=+1,
+\]
+\[
+L_{\rm gauge}=-\frac{1}{4e^2}F_{\mu\nu}F^{\mu\nu},\qquad
+L_{\rm scalar}=-\frac12(\partial\phi)^2,\qquad
+L_\theta=\frac{\theta}{32\pi^2}\epsilon^{\mu\nu\rho\sigma}F_{\mu\nu}F_{\rho\sigma}.
+\]
+
+需要说明三点：
+\begin{itemize}
+  \item 第 17 讲自 p.~1354 的 (17.2) 起即转入\textbf{欧氏号差}（该页
+        $\partial a/\partial x^i\,\partial\bar a/\partial x^i$ 对四个欧氏指标求和），
+        故本版只改该讲开头的度规行；欧氏部分的公式与号差无关，逐一改动反而是错的。
+  \item $Q_e=\frac{1}{4\pi}\int_{S^2}\ast F$、$Q_m=\frac{1}{4\pi}\int_{S^2}F$、
+        中心荷 $S=aN_e+a_DN_m$ 与 BPS 界 $M\ge|S|$ 在两种号差下\textbf{形式不变}
+        （因 $\det\eta=-1$、$\epsilon^{0123}$ 固定；$\ast F$ 的 $0i$ 与 $ij$ 分量同时不变），
+        故这些公式无需改写。
+  \item 第 1 讲原本就是 $(-,+,+,+)$；第 9、10、12、14 讲未显式给定闵氏度规，其公式在
+        两种号差下形式不变或属欧氏/超空间约定，未作改动。
+\end{itemize}
+
+% [Tutor Note: 若您要的是更强的"逐式重写"版本（把原书 $(+,-,-,-)$ 下写出的每一个
+% 分量公式都重排为 $(-,+,+,+)$，等价于 $S\to-S$、$\theta\to-\theta$ 并同时重定义
+% $\gamma$ 矩阵），那会改变公式外观、并使译本与印刷原式不再逐式对应；本版未采用该方案，
+% 只在第 17 讲度规行做了统一，原因见上。]
+
+
+\paragraph{编译}
+本文件以 XeLaTeX 编译（\texttt{xelatex main.tex}，运行两遍以生成目录与交叉引用），
+依赖 \texttt{ctex} 宏包；插图位于 \texttt{figs/}，分节源文件位于 \texttt{sections/}。
+若使用 pdfLaTeX，请改用 \texttt{ctex} 的 \texttt{pdftex} 选项并配置中文字体。
+
+\paragraph{关于原稿}
+原书由人工记录、排印，个别公式与文字存在讹误（例如矩阵基序、个别系数与符号归一化）。
+译注本的处理原则是：\emph{忠实于原稿}，可疑处只批注、不擅改；读者若发现新的问题，
+欢迎在批注体例上继续增补。
+
+% ---------------------------- 目录 ----------------------------
+\clearpage
+\tableofcontents
+\clearpage
+
+% ---------------------------- 导言 ----------------------------
+\markboth{导言}{导言}
+\section*{导言}
+\addcontentsline{toc}{section}{导言}
+\input{sections/intro}
+
+% ---------------------------- 正文：19 讲 ----------------------------
+\clearpage
+\input{sections/lec01_p1}
+\input{sections/lec01_p2}
+\input{sections/lec01_p3}
+
+\clearpage
+\input{sections/lec02_p1}
+\input{sections/lec02_p2}
+
+\clearpage
+\input{sections/lec03_p1}
+\input{sections/lec03_p2}
+
+\clearpage
+\input{sections/lec04_p1}
+\input{sections/lec04_p2}
+
+\clearpage
+\input{sections/lec05_p1}
+\input{sections/lec05_p2}
+
+\clearpage
+\input{sections/lec06_p1}
+
+\clearpage
+\input{sections/lec07_p1}
+\input{sections/lec07_p2}
+
+\clearpage
+\input{sections/lec08_p1}
+\input{sections/lec08_p2}
+\input{sections/lec08_p3}
+
+\clearpage
+\input{sections/lec09}
+
+\clearpage
+\input{sections/lec10_p1}
+
+\clearpage
+\input{sections/lec11_p1}
+\input{sections/lec11_p2}
+
+\clearpage
+\input{sections/lec12_p1}
+
+\clearpage
+\input{sections/lec13_p1}
+\input{sections/lec13_p2}
+\input{sections/lec13_p3}
+
+\clearpage
+\input{sections/lec14_p1}
+\input{sections/lec14_p2}
+
+\clearpage
+\input{sections/lec15_p1}
+\input{sections/lec15_p2}
+
+\clearpage
+\input{sections/lec16_p1}
+
+\clearpage
+\input{sections/lec17_p1}
+\input{sections/lec17_p2}
+
+\clearpage
+\input{sections/lec18_p1}
+\input{sections/lec18_p2}
+
+\clearpage
+\input{sections/lec19_p1}
+\input{sections/lec19_p2}
+\input{sections/lec19_p3}
+
+% ---------------------------- 习题与解答 ----------------------------
+\clearpage
+\markboth{习题}{习题}
+\section*{习题}
+\addcontentsline{toc}{section}{习题}
+\input{sections/exo_p1}
+
+\clearpage
+\markboth{部分习题解答}{部分习题解答}
+\section*{部分习题解答}
+\addcontentsline{toc}{section}{部分习题解答}
+\input{sections/sol_p1}
+\input{sections/sol_p2}
+
+% ---------------------------- 附录 A：术语表 ----------------------------
+\clearpage
+\markboth{附录 A：术语表}{附录 A：术语表}
+\section*{附录 A\quad 术语表（英—中对照）}
+\addcontentsline{toc}{section}{附录 A：术语表}
+\input{sections/glossary}
+
+% ---------------------------- 附录 B：文献代号 ----------------------------
+\clearpage
+\markboth{附录 B：原书文献代号}{附录 B：原书文献代号}
+\section*{附录 B\quad 原书文献代号与参考文献说明}
+\addcontentsline{toc}{section}{附录 B：原书文献代号说明}
+
+原书（AMS 版 \emph{Quantum Fields and Strings: A Course for Mathematicians}，两卷本）
+以方括号代号互引，正文中出现的主要代号含义如下：
+
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+代号 & 所指 \\
+\midrule
+\texttt{[I-Perturbative QFT]} & 第 I 卷中关于微扰量子场论的讲义 \\
+\texttt{[I-Homework]} & 第 I 卷所附超对称习题集 \\
+\texttt{[II-CFT]} & 第 II 卷中关于共形场论的讲义 \\
+\texttt{[I-Supersolutions]} & 第 I 卷所附超对称习题解答 \\
+\texttt{[II-...]} & 第 II 卷相应讲义，依此类推 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+其余文献引用（如 Witten 关于 Donaldson 理论、Seiberg--Witten 理论、镜像对称的论文，
+Atiyah--Singer 指标定理，Coleman 关于二维对称性破缺的定理等）保留原文作者的姓与年份，
+可在正文批注给出的线索下查核原始文献。译注本不另编参考文献表，以免与原文编号冲突。
+
+\vspace{1.5em}
+\noindent\rule{0.4\linewidth}{0.4pt}\\[0.4em]
+{\small 译注本完成于二〇二六年十月。译文与批注中若有疏漏，文责在译者。}
+
+\end{document}

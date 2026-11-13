@@ -1,0 +1,473 @@
+% =====================================================================
+%  ch10.tex —— 第 10 章 费米子与旋量（原书 p.141 中段–p.151）
+%  §10.1 费米子与 2-周期性   §10.2 时间反演不变的费米子与 8-周期性
+%  §10.3 一般维数中的旋量     §10.4 Pin 群与 pinor
+%  原书本章属 Part II，无编号陈述环境（无定义/定理编号），全部为散文，
+%  只有 \para 行内小标题与 45 个编号公式；表 5（p.148）与表 6（p.151）
+%  以 tabular 重排，不裁图。p.141 上半页属第 9 章 §9.5。
+% =====================================================================
+\providecommand{\Rep}{\operatorname{Rep}}
+% [原文 p.141]
+\chapter{费米子与旋量}
+
+作为后续材料的准备，我们需要学习费米子与旋量的基本知识。
+
+\section{费米子与 2-周期性}
+
+\subsection{复费米子}
+
+我们从 $n$ 个复费米子 $c_i$ 出发，它们满足反对易关系
+\begin{equation}
+  \{c_i,c_j\}=\{c_i^\dagger,c_j^\dagger\}=0,\qquad
+  \{c_i,c_j^\dagger\}=\delta_{ij}.
+  \tag{10.1}
+\end{equation}
+
+% [原文 p.142]
+要给出显式实现，先注意单个复费米子有实现
+\begin{equation}
+  c=\begin{pmatrix}0&1\\0&0\end{pmatrix},\qquad
+  c^\dagger=\begin{pmatrix}0&0\\1&0\end{pmatrix},
+  \tag{10.2}
+\end{equation}
+它作用在 $\C^2$ 上。注意 $c$ 与 $c^\dagger$ 都与 $\sigma_z$ 反对易。利用这一点，我们定义
+\begin{equation}
+  \begin{aligned}
+    c_1&:=c\otimes 1\otimes 1\otimes\cdots\otimes 1,\\
+    c_2&:=\sigma_z\otimes c\otimes 1\otimes\cdots\otimes 1,\\
+    c_3&:=\sigma_z\otimes\sigma_z\otimes c\otimes\cdots\otimes 1,\\
+    &\quad\vdots\\
+    c_n&:=\sigma_z\otimes\sigma_z\otimes\sigma_z\otimes\cdots\otimes c,
+  \end{aligned}
+  \tag{10.3}
+\end{equation}
+它作用在
+\begin{equation}
+  (\C^2)^{\otimes n}:=\underbrace{\C^2\otimes\C^2\otimes\cdots\otimes\C^2}_{n\ \text{个}}
+  \tag{10.4}
+\end{equation}
+上。还要注意，费米子宇称算子为
+\begin{equation}
+  (-1)^F:=\sigma_z\otimes\sigma_z\otimes\sigma_z\otimes\cdots\otimes\sigma_z,
+  \tag{10.5}
+\end{equation}
+它与所有 $c_i$ 反对易。
+
+\subsection{实费米子}
+
+现在把 $c_i$ 分解为实部与虚部：
+\begin{equation}
+  c_i=\tfrac12(\psi_{2i-1}+i\psi_{2i}).
+  \tag{10.6}
+\end{equation}
+于是 $\psi_{1,\dots,2n}$ 具有统一的反对易关系
+\begin{equation}
+  \{\psi_i,\psi_j\}=2\delta_{ij},\qquad(\psi_i^\dagger=\psi_i).
+  \tag{10.7}
+\end{equation}
+显式代表容易从式 (10.3) 得到，结果为
+\begin{equation}
+  \begin{aligned}
+    \psi_1&:=\sigma_x\otimes 1\otimes 1\otimes\cdots\otimes 1,\\
+    \psi_2&:=\sigma_y\otimes 1\otimes 1\otimes\cdots\otimes 1,\\
+    \psi_3&:=\sigma_z\otimes\sigma_x\otimes 1\otimes\cdots\otimes 1,\\
+    \psi_4&:=\sigma_z\otimes\sigma_y\otimes 1\otimes\cdots\otimes 1,\\
+    \psi_5&:=\sigma_z\otimes\sigma_z\otimes\sigma_x\otimes\cdots\otimes 1,\\
+    \psi_6&:=\sigma_z\otimes\sigma_z\otimes\sigma_y\otimes\cdots\otimes 1,\\
+    &\quad\vdots\\
+    \psi_{2n-1}&:=\sigma_z\otimes\sigma_z\otimes\sigma_z\otimes\cdots\otimes\sigma_x,\\
+    \psi_{2n}&:=\sigma_z\otimes\sigma_z\otimes\sigma_z\otimes\cdots\otimes\sigma_y.
+  \end{aligned}
+  \tag{10.8}
+\end{equation}
+
+% [原文 p.143]
+它们常被称为 Majorana（或实）费米子。注意 $2n$ 个 Majorana 费米子作用在 $V_{2n}:=\C^{2^n}$ 上，其中 $\dim V_{2n}=2^n$。若想让各个 Majorana 费米子分别作用在独立的希尔伯特空间上，就需要 $V_{2n}=V_1^{\otimes 2n}$，从而 $\dim V_{2n}=(\dim V_1)^{2n}$；这意味着单个 Majorana 费米子必须作用在 $\dim V_1=\sqrt2$ 的希尔伯特空间 $V_1$ 上。
+
+你也许会问，为什么想这么做。一个自然的场景是下面这条费米子链。考虑一条 $n$ 个量子比特的链，其哈密顿量为
+\begin{equation}
+  H=A\psi_1\psi_2+B\psi_2\psi_3+A\psi_3\psi_4+B\psi_4\psi_5+\cdots
+  +B\psi_{2n-2}\psi_{2n-1}+A\psi_{2n-1}\psi_{2n}.
+  \tag{10.9}
+\end{equation}
+这就是著名的 Kitaev 链（它只是 Ising 链的费米子形式），在 $A=B$ 时有无能隙模式。现在看两个极端极限。一个是 $A=1$、$B=0$：
+\begin{equation}
+  H=A\psi_1\psi_2+\psi_3\psi_4+\cdots+\psi_{2n-1}\psi_{2n}.
+  \tag{10.10}
+\end{equation}
+这是所有 $n$ 个量子比特上 $\sigma_z$ 之和，基态非简并。另一个极限 $A=0$、$B=1$ 给出
+\begin{equation}
+  H=\psi_3\psi_4+\psi_5\psi_6+\cdots+\psi_{2n-2}\psi_{2n-1}.
+  \tag{10.11}
+\end{equation}
+它不含 $\psi_1$ 与 $\psi_{2n}$。重命名 Majorana 费米子后，它可以轻易对角化，于是我们看到基态简并，且在 $\psi_1$ 与 $\psi_{2n}$ 上有作用。现在设 $n$ 天文数字般大，链的两端相距一百万光年。$\psi_1$ 位于一端，$\psi_{2n}$ 位于另一端。基态是二维的，于是人们很想给一端指定维数 $\sqrt2$、给另一端也指定 $\sqrt2$。
+
+我们最终会看到，这是反常流入的基本费米子版本：端上的单个 Majorana 费米子代表 0+1 维边界的费米子反常，而这个 0+1 维边界处在 1+1 维体的可逆费米子相上。这个体理论称为 Kitaev 链的非平凡相，或 Arf 理论。
+
+无论如何，我们发现奇数个与偶数个 Majorana 费米子的行为相当不同。换句话说，$n$ 个 Majorana 费米子的行为剧烈依赖于 $n\bmod 2$；这种行为具有 2-周期性。
+
+继续之前还有一点评论：若定义 $\psi_0:=(-1)^F$，则 $2n+1$ 个算子 $\psi_{0,\dots,2n}$ 实际上满足统一的反对易关系 (10.7)，其中 $i,j$ 取 $0$ 到 $2n$。数学家称由算子
+\begin{equation}
+  \{\psi_i,\psi_j\}=2\delta_{ij},\qquad i,j=1,\dots,N,
+  \tag{10.12}
+\end{equation}
+生成的代数（系数在 $\C$ 中，且 $\psi_i^\dagger=\psi_i$）为 $N$ 个生成元的复 Clifford 代数 $\mathrm{Cliff}_{\C}(N)$。
+
+$\mathrm{Cliff}_{\C}(N)$ 的无分次表示就是通常的表示。$\mathrm{Cliff}_{\C}(N)$ 的分次表示是式 (10.12) 的表示再加上一个与一切算子反对易的 $\Z_2$-分次算子 $(-1)^F$。显然，$\mathrm{Cliff}_{\C}(N+1)$ 的无分次表示就是 $\mathrm{Cliff}_{\C}(N)$ 的分次表示，反之亦然。所以引入这两套术语略有冗余，但它在后面确实有用。
+
+上面我们构造了 $\mathrm{Cliff}_{\C}(2n)$ 的一个 $2^n$ 维不可约分次表示。它其实并不唯一。考虑算子
+\begin{equation}
+  \Gamma:=(-1)^F\psi_1\psi_2\cdots\psi_{2n}.
+  \tag{10.13}
+\end{equation}
+
+% [原文 p.144]
+它与每个生成元 $\psi_{1,\dots,2n}$ 交换，也与 $(-1)^F$ 交换。因此在不可约表示中，$\Gamma$ 应作用为标量。由于 $\Gamma^2=(-1)^n$，这个标量在 $n$ 为偶时是 $\pm1$，在 $n$ 为奇时是 $\pm i$。因此有两类分次不可约表示，我们记作 $V_{2n}^{\Z_2,\pm}$。它们作为无分次表示仍不可约，但此时已没有 $(-1)^F$，故约化为单一表示：
+\begin{equation}
+  V_{2n}=V_{2n}^{\Z_2,\pm}\qquad(\text{作为无分次表示}).
+  \tag{10.14}
+\end{equation}
+现在，$\mathrm{Cliff}_{\C}(2n-1)$ 的不可约分次表示 $V_{2n-1}^{\Z_2}$ 也唯一，维数为 $2^n$；它正是同一个 $V_{2n}$ 忘掉 $\psi_{2n}$ 的作用：
+\begin{equation}
+  V_{2n-1}^{\Z_2}=V_{2n}.
+  \tag{10.15}
+\end{equation}
+但作为 $\mathrm{Cliff}_{\C}(2n-1)$ 的无分次表示，它并不可约，因为我们可以限制到 $(-1)^F\psi_{2n}$ 的本征值为 $\pm i$ 的本征空间，其维数为 $2^{n-1}$：
+\begin{equation}
+  V_{2n-1}^{\Z_2}=V_{2n-1}^+\oplus V_{2n-1}^-,
+  \tag{10.16}
+\end{equation}
+其中两个表示由 $\psi_1\cdots\psi_{2n-1}$ 的值区分。于是有
+\begin{equation}
+  V_{2n-1}^\pm=V_{2n-2}^{\Z_2,\pm},
+  \tag{10.17}
+\end{equation}
+依此类推。
+
+\takeaway{复费米子与实（Majorana）费米子都能在 $\C^{2^n}$ 上显式构造；Kitaev 链说明奇、偶个 Majorana 的行为截然不同，此即 2-周期性，并由此引出 Clifford 代数的分次表示。}
+
+\section{时间反演不变的费米子与 8-周期性}
+
+\subsection{时间反演不变的费米子与实 Clifford 代数}
+
+我们进一步考虑想要时间反演不变性的情形，此时 $T^2=+1$。$T$ 是反酉算子，故 $Ti=-iT$。暂设费米子宇称算子 $(-1)^F$ 存在，且满足 $T(-1)^F=(-1)^FT$。（稍后我们会考虑在（反）交换关系中插入各种负号，例如 $T^2=(-1)^F$ 或 $T(-1)^F=-(-1)^FT$。但现在从最基本的情形开始。）
+
+可以考虑两类 Majorana 费米子，$T\psi=+\psi T$ 与 $T\psi'=-\psi'T^{-1}$。注意这里的符号纯属约定。若定义 $T':=T(-1)^F$，容易看出 $T'\psi=-\psi T'$ 与 $T'\psi'=+\psi'T'$。所以与约定无关的事实是：$\psi$ 与 $\psi'$ 在时间反演下的行为不同。
+
+话虽如此，若声明希尔伯特空间 $\C^N$ 来自实希尔伯特空间 $\R^N$ 的复化，而 $T$ 就是 $N$ 个坐标 $z_1,\dots,z_N$ 的复共轭，计算会更方便。此时 $\psi$ 是纯实矩阵，$\psi'$ 是纯虚矩阵。于是方便的做法是定义 $\chi:=i\psi'$，使得 $T\chi=+\chi T$，从而 $\chi$ 也是纯实矩阵。代价是 $\chi$ 变成反 Hermite 矩阵，且 $\chi^2=-1$。
+
+数学家称由生成元
+\begin{equation}
+  \psi_{1,\dots,n_+},\qquad \chi_{1,\dots,n_-}
+  \tag{10.18}
+\end{equation}
+（系数为实数，所有不同生成元彼此反对易，且
+\begin{equation}
+  (\psi_i)^2=+1,\qquad(\chi_i)^2=-1
+  \tag{10.19}
+\end{equation}
+）生成的代数为实 Clifford 代数 $\mathrm{Cliff}_{\R}(n_+,n_-)$。\footnote{原文此处为：Whether one lists $n_-$ before $n_-$ or the other way round seems to depend on the paper. 第二个 $n_-$ 应为 $n_+$，属原书笔误。}
+
+% [原文 p.145]
+$\mathrm{Cliff}_{\R}(n_+,n_-)$ 的无分次表示就是用实矩阵表示这个代数。$\mathrm{Cliff}_{\R}(n_+,n_-)$ 的分次表示是这个代数的表示再加上与每个生成元都反对易的 $\Z_2$-分次算子 $(-1)^F$。显然，$\mathrm{Cliff}_{\R}(n_+,n_-)$ 的分次表示等价于 $\mathrm{Cliff}_{\R}(n_++1,n_-)$ 的无分次表示。
+
+我们来讨论一个稍微更微妙的“等价”。给定 $\mathrm{Cliff}_{\R}(n_+,n_-)$ 在实向量空间 $V$ 上的无分次表示，我们可以在 $\R^2\otimes V$ 上构造 $\mathrm{Cliff}_{\R}(n_++1,n_-+1)$ 的无分次表示：
+\begin{equation}
+  \begin{aligned}
+    \psi_0&:=\begin{pmatrix}0&1\\1&0\end{pmatrix}\otimes 1,
+    &\chi_0&:=\begin{pmatrix}0&-1\\1&0\end{pmatrix}\otimes 1,\\
+    \psi_i^{\text{bigger}}&:=\begin{pmatrix}1&0\\0&-1\end{pmatrix}\otimes\psi_i,
+    &\chi_i^{\text{bigger}}&:=\begin{pmatrix}1&0\\0&-1\end{pmatrix}\otimes\chi_i.
+  \end{aligned}
+  \tag{10.20}
+\end{equation}
+反之，给定 $\mathrm{Cliff}_{\R}(n_++1,n_-+1)$ 在 $W$ 上的无分次表示，考虑算子 $Z:=\psi_0\chi_0$。显然 $Z^2=1$，且 $Z$ 与 $\psi_i,\chi_i$（$i\neq0$）交换。令 $V$ 为 $W$ 上 $Z$ 的 $-1$ 本征空间，则 $V$ 是 $\mathrm{Cliff}_{\R}(n_+,n_-)$ 的无分次表示。显然这两个操作互逆。（物理上，我们添加一个“质量项”或“开能隙项”$\psi_0\chi_0$，并“移去这一对”而进入基态。）
+
+这样我们就有了一一对应
+\begin{equation}
+  \Rep(\mathrm{Cliff}_{\R}(n_+,n_-))
+  \longleftrightarrow \Rep(\mathrm{Cliff}_{\R}(n_++1,n_-+1)),
+  \tag{10.21}
+\end{equation}
+其中 $\Rep(A)$ 是代数 $A$ 的无分次表示“集合”（更好的说法是范畴）。若用 $\Rep^{\Z_2}(A)$ 记 $A$ 的分次表示集，则
+\begin{equation}
+  \Rep(\mathrm{Cliff}_{\R}(n_++1,n_-))
+  \longleftrightarrow \Rep^{\Z_2}(\mathrm{Cliff}_{\R}(n_+,n_-)),
+  \tag{10.22}
+\end{equation}
+从而
+\begin{equation}
+  \Rep^{\Z_2}(\mathrm{Cliff}_{\R}(n_+,n_-))
+  \longleftrightarrow \Rep^{\Z_2}(\mathrm{Cliff}_{\R}(n_++1,n_-+1)).
+  \tag{10.23}
+\end{equation}
+注意这并不意味着表示的底层向量空间相同；而是有一个从左到右的操作，又有一个从右到左的操作，使它们一一对应。这是范畴等价的例子。表示范畴等价的两个代数称为 Morita 等价。
+
+类似地，前面用过的重新定义 $T'=T(-1)^F$ 的技巧交换了费米子的时间反演性质，由此得到
+\begin{equation}
+  \Rep^{\Z_2}(\mathrm{Cliff}_{\R}(n_+,n_-))
+  \longleftrightarrow \Rep^{\Z_2}(\mathrm{Cliff}_{\R}(n_-,n_+)).
+  \tag{10.24}
+\end{equation}
+
+% [原文 p.146]
+这进一步蕴含
+\begin{equation}
+  \Rep(\mathrm{Cliff}_{\R}(n_++2,n_-))
+  \longleftrightarrow \Rep(\mathrm{Cliff}_{\R}(n_-,n_+)),
+  \tag{10.25}
+\end{equation}
+这里用了刚才建立的等价关系。（翻转两类费米子时出现的这个移位 2，正是我们同时讨论 Clifford 代数的无分次表示与分次表示的原因之一。）
+
+\subsection{实 Clifford 代数的显式形式}
+
+我们来研究 $\mathrm{Cliff}_{\R}(n_+,n_-)$ 的结构及其无分次表示。由式 (10.21)，只需研究 $n_+=0$ 或 $n_-=0$ 的情形。
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt,topsep=2pt]
+\item $\mathrm{Cliff}_{\R}(0,0)$ 平凡。
+\item $\mathrm{Cliff}_{\R}(1,0)$ 由单个生成元 $x:=\psi_1$ 组成，$x^2=+1$。于是有两个一维表示，$x=\pm1$，可写作 $\R_+$ 与 $\R_-$。
+\item $\mathrm{Cliff}_{\R}(0,1)$ 由单个生成元 $i:=\chi_1$ 组成，$i^2=-1$。只有一个二维表示。这只是把 $\mathrm{Cliff}_{\R}(0,1)\simeq\C$ 这一事实换个说法，其自然表示是 $\C$，作为实向量空间是二维的。
+\item $\mathrm{Cliff}_{\R}(2,0)$ 的最小表示取
+\begin{equation}
+  \psi_1=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad
+  \psi_2=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+  \tag{10.26}
+\end{equation}
+于是 $\mathrm{Cliff}_{\R}(2,0)\simeq M_2(\R)$，即以 $\R$ 为元素的 $2\times2$ 矩阵代数。因此只有一个二维表示。
+\item $\mathrm{Cliff}_{\R}(0,2)\simeq\HP$，只需取 $i:=\chi_1$、$j:=\chi_2$、$k:=\chi_1\chi_2$ 即可。因此只有一个实四维表示 $\HP$。
+\item $\mathrm{Cliff}_{\R}(3,0)$ 可由上面解释的技巧 (10.25) 从 $\mathrm{Cliff}_{\R}(0,1)\simeq\C$ 得到。即 $\mathrm{Cliff}_{\R}(3,0)\simeq M_2(\C)$，且只有一个实四维表示 $\C^2$。
+\item 为理解 $\mathrm{Cliff}_{\R}(0,3)$，考虑 $X=\chi_1\chi_2\chi_3$。则 $X^2=+1$。故在不可约表示中 $X=\pm1$，而 $\chi_3$ 就由 $\chi_1$ 与 $\chi_2$ 决定。因此有两个实四维表示，可写作 $\HP_+$ 与 $\HP_-$。
+\item $\mathrm{Cliff}_{\R}(4,0)$ 再次由技巧 (10.25) 得到。故 $\mathrm{Cliff}_{\R}(4,0)\simeq M_2(\HP)$，且只有一个实八维表示 $\HP^2$。
+\item $\mathrm{Cliff}_{\R}(0,4)$ 可通过考虑 $\chi_4$ 对上面的 $X$ 的作用得到。由于 $X\chi_4=-\chi_4X$，它把 $\HP_+$ 与 $\HP_-$ 结合。因此最小表示在 $\HP^2$ 上。所以 $\mathrm{Cliff}_{\R}(0,4)\subset M_2(\HP)$；但比较代数维数可知 $\mathrm{Cliff}_{\R}(0,4)\simeq M_2(\HP)$。
+\end{itemize}
+
+% [原文 p.147]
+现在注意 $\mathrm{Cliff}_{\R}(4,0)\simeq\mathrm{Cliff}_{\R}(0,4)=M_2(\HP)$，特别地
+\begin{equation}
+  \Rep(\mathrm{Cliff}_{\R}(4,0))\longleftrightarrow\Rep(\mathrm{Cliff}_{\R}(0,4)).
+  \tag{10.27}
+\end{equation}
+我们来证明它的推广
+\begin{equation}
+  \Rep(\mathrm{Cliff}_{\R}(4+n_+,n_-))
+  \longleftrightarrow \Rep(\mathrm{Cliff}_{\R}(n_+,4+n_-)).
+  \tag{10.28}
+\end{equation}
+为此，取 $\mathrm{Cliff}_{\R}(4+n_+,n_-)$ 在实向量空间 $V$ 上的表示。考虑两个算子 $Z:=\psi_1\psi_2$ 与 $Z':=\psi_3\psi_4$。它们满足 $Z^2=Z'^2=-1$，且与所有其他生成元交换。它们在 $V$ 上没有本征空间，但在复化 $V_\C$ 上有。令 $W$ 为 $Z=Z'=+i$ 的本征空间。$V_\C$ 上的时间反演算子 $T$ 翻转 $Z$ 与 $Z'$ 的本征值，故不保持 $W$；但 $\tilde T:=T\psi_1\psi_3$ 保持 $W$。这个 $\tilde T$ 与 $\psi_{4,\dots,n}$ 交换，且 $\tilde T^2=-1$。把上述步骤反过来，即可由 $W$ 重构 $V$。这样我们就建立了
+\begin{equation}
+  \begin{gathered}
+    \Rep(\mathrm{Cliff}_{\R}(4+n_+,n_-))\ \longleftrightarrow
+    \Bigl\{\ \text{$\mathrm{Cliff}_{\R}(n_+,n_-)$ 在复向量空间上的表示，}\\
+    \text{满足 $\tilde T^2=-1$ 且 $\tilde T$ 与所有生成元交换。}\ \Bigr\}
+  \end{gathered}
+  \tag{10.29}
+\end{equation}
+完全相同的论证可用于证明
+\begin{equation}
+  \begin{gathered}
+    \Rep(\mathrm{Cliff}_{\R}(n_+,4+n_-))\ \longleftrightarrow
+    \Bigl\{\ \text{$\mathrm{Cliff}_{\R}(n_+,n_-)$ 在复向量空间上的表示，}\\
+    \text{满足 $\tilde T^2=-1$ 且 $\tilde T$ 与所有生成元交换。}\ \Bigr\}
+  \end{gathered}
+  \tag{10.30}
+\end{equation}
+只需用 $\chi_{1,2,3,4}$ 代替 $\psi_{1,2,3,4}$；于是式 (10.28) 得证。
+
+由式 (10.21)，只有 $n_+-n_-$ 重要；配合式 (10.28)，可保持 $|n_+-n_-|\le4$。由于我们已经确定了 $0\le n_+\le4$ 的 $\mathrm{Cliff}_{\R}(n_+,0)$ 与 $0\le n_-\le4$ 的 $\mathrm{Cliff}_{\R}(0,n_-)$，事情就完成了。特别地，有
+\begin{equation}
+  \begin{gathered}
+    \Rep(\mathrm{Cliff}_{\R}(n_++8,0))\longleftrightarrow\Rep(\mathrm{Cliff}_{\R}(n_+,0)),\\
+    \Rep(\mathrm{Cliff}_{\R}(0,n_-+8))\longleftrightarrow\Rep(\mathrm{Cliff}_{\R}(0,n_-)).
+  \end{gathered}
+  \tag{10.31}
+\end{equation}
+这就是实 Clifford 代数的 8-周期性；等价地说，是时间反演不变的费米子算子的 8-周期性。
+
+Clifford 表示的结构明确列在表 5 中。表中给出的是 $\mathrm{Cliff}_{\R}(n_+,0)$、$\mathrm{Cliff}_{\R}(n_+,1)$、$\mathrm{Cliff}_{\R}(0,n_-)$ 与 $\mathrm{Cliff}_{\R}(1,n_-)$ 的无分次模。分次表示只需把 $n_+$ 加一即可轻易得到。
+
+\subsection{何时能给 $n$ 个时间反演不变的费米子开能隙？}
+
+继续之前，我们来看看 8-周期性的一个物理表现。设有 $n$ 个时间反演不变的费米子 $\psi_i$ 作用在希尔伯特空间 $\mathcal{H}$ 上。我们还假定 $(-1)^F$ 存在。何时能找到用 $\psi_i$ 写成的 Hermite 且 $T$-不变的哈密顿量 $H$，使基态非简并？简而言之，何时能给 $n$ 个时间反演不变的费米子开能隙？
+
+% [原文 p.148]
+\begin{center}
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{0.95}
+\begin{tabular}{c||c|c||c|c}
+\hline
+$n$ & $\mathrm{Cliff}_{\R}(n,0)$ & $\mathrm{Cliff}_{\R}(n,1)$
+    & $\mathrm{Cliff}_{\R}(0,n)$ & $\mathrm{Cliff}_{\R}(1,n)$\\
+\hline
+0 & $\R$ & $\C$ & $\R$ & $\R\ \ \R$\\
+1 & $\R_+\ \ \R_-$ & $\R^2$ & $\C$ & $\R^2$\\
+2 & $\R^2$ & $\R^2\ \ \R^2$ & $\HP$ & $\C^2$\\
+3 & $\C^2$ & $\R^4$ & $\HP\ \ \HP$ & $\HP^2$\\
+4 & $\HP^2$ & $\C^4$ & $\HP^2$ & $\HP^2\ \ \HP^2$\\
+5 & $\HP^2_+\ \ \HP^2_-$ & $\HP^4$ & $\C^4$ & $\HP^4$\\
+6 & $\HP^4$ & $\HP^4\ \ \HP^4$ & $\R^8$ & $\C^8$\\
+7 & $\C^8$ & $\HP^8$ & $\R^8\ \ \R^8$ & $\R^{16}$\\
+\hline
+8 & $\R^{16}$ & $\C^{16}$ & $\R^{16}$ & $\R^{16}\ \ \R^{16}$\\
+9 & $\R^{16}\ \ \R^{16}$ & $\R^{32}$ & $\C^{16}$ & $\R^{32}$\\
+\hline
+\end{tabular}\\[2pt]
+{\small 表 5：实 Clifford 代数的无分次不可约表示}
+\end{center}
+
+\para{两个费米子。}首先可设 $n$ 为偶，因为可以验证：在 $(-1)^F$ 存在时，$\psi_{1,\dots,2m-1}$ 的任何表示上，$\psi_{2m}$ 都能被表示出来。而 $\psi\psi'$ 是 $T$-不变的，但不是 Hermite 的。
+
+\para{四个费米子。}第一个 $T$-不变的 Hermite 组合是 $X:=\psi_1\psi_2\psi_3\psi_4$，它满足 $X^2=1$。于是可用 $-X$ 作为哈密顿量。四个 Majorana 费米子表示在 $V:=\HP^2\simeq\C^4$ 上，因此 $X=+1$ 的本征空间 $W$ 是复二维的，$W=\HP=\C^2$，仍然简并。
+
+这源于 Kramers 简并。注意 $X=ZZ'$，其中 $Z=\psi_1\psi_2$、$Z'=\psi_3\psi_4$ 如前，而 $X=+1$ 的本征空间对应于 $Z=Z'=+i$ 或 $Z=Z'=-i$ 的本征空间。因此 $W$ 不被 $T$ 保持，但被 $\tilde T:=T\psi_1\psi_3$ 保持。这个新的 $\tilde T$ 作用在基态上满足 $\tilde T^2=-1$，这正是 Kramers 简并的符号。（细心的读者会注意，我们上面已经做过完全相同的论证。）注意在这个子空间 $W$ 上有 $\sigma_1:=i\psi_1\psi_4$、$\sigma_2:=i\psi_2\psi_4$、$\sigma_3:=i\psi_3\psi_4$ 的作用，它们满足 Pauli 矩阵的标准对易关系。
+
+\para{六个费米子。}此时允许的哈密顿量仍是 $\psi$ 的四次式：
+\begin{equation}
+  H=\sum_{ijkl}c_{ijkl}\psi_i\psi_j\psi_k\psi_l,
+  \tag{10.32}
+\end{equation}
+其中 $c_{ijkl}$ 为实系数。现在考虑算子
+\begin{equation}
+  X:=\psi_1\psi_2\psi_3\psi_4\psi_5\psi_6.
+  \tag{10.33}
+\end{equation}
+这是满足 $X^2=-1$ 且与 $H$ 交换的实算子。因此 $H$ 的任何本征空间都二重简并，故不能完全开能隙。
+
+% [原文 p.149]
+\para{八个费米子。}现在考虑四费米子的两份，$\psi_{1,2,3,4}$ 与 $\psi'_{1,2,3,4}$。先考虑哈密顿量 $-X-X'$，其中 $X=\psi_1\psi_2\psi_3\psi_4$、$X'=\psi'_1\psi'_2\psi'_3\psi'_4$。这仍留下简并的基态 $W\otimes W'$。现在我们给哈密顿量加上项 $\sigma_1\sigma'_1+\sigma_2\sigma'_2+\sigma_3\sigma'_3$。能级分裂成一个单基态与一个三重激发态。于是我们知道：时间反演不变的费米子只能以 8 个为一组开能隙。
+
+注意总哈密顿量
+\begin{equation}
+  H=X+X'+\sigma_1\sigma'_1+\sigma_2\sigma'_2+\sigma_3\sigma'_3
+  \tag{10.34}
+\end{equation}
+对 $\psi$ 是四次式。这在量子力学中无妨，但在一般维数下，这个哈密顿量会被视为相互作用的。若限制为自由哈密顿量，即 $\psi$ 的二次算子，那么根本写不出这样的项，因此时间反演不变的费米子永远不能开能隙。
+
+\takeaway{实 Clifford 代数只依赖于 $n_+-n_-$：由 $\Rep(n_+,n_-)\leftrightarrow\Rep(n_++1,n_-+1)$ 与四次平移等价可得 8-周期性；其物理表现是时间反演不变的费米子只能 8 个一组开能隙。}
+
+\section{一般维数中的旋量}
+
+让我们把注意力转向相对论物理，考虑一般 $D=d+1$ 维中的 Dirac 方程：
+\begin{equation}
+  \bigl(\gamma^0\partial_0+\gamma^1\partial_1+\cdots+\gamma^d\partial_d+m\bigr)\psi=0.
+  \tag{10.35}
+\end{equation}
+这里我们采取如下立场：$\psi$ 是（Grassmann 值的）经典场，稍后再量子化。
+
+\subsection{复旋量}
+
+先考虑 $\psi$ 构成复向量空间的情形。我们公设反对易关系
+\begin{equation}
+  \{\gamma^\mu,\gamma^\nu\}=2\eta^{\mu\nu},
+  \tag{10.36}
+\end{equation}
+其中 $\eta^{\mu\nu}$ 依约定取 $(+--\cdots--)$ 或 $(-++\cdots++)$。但在复数上约定无关紧要（因为可以把任何生成元乘以 $i$）。
+
+注意，$so(1,d)$ 的表示用到 Lorentz 生成元 $\gamma^\mu\gamma^\nu$，而不是 $\gamma^\mu$ 本身。所以我们需要理解 $\gamma^\mu\gamma^\nu$ 的表示。为此方便的定义是
+\begin{equation}
+  \alpha^i:=\gamma^0\gamma^i,\qquad(i=1,\dots,d).
+  \tag{10.37}
+\end{equation}
+显然 $\alpha^i$ 生成所有必要的 $\gamma^\mu\gamma^\nu$。这意味着 $D=d+1$ 维中的旋量表示可以等同于 $\mathrm{Cliff}_{\C}(d)$ 的无分次表示。
+
+当 $D$ 为偶，$D=2n$ 时，$\mathrm{Cliff}_{\C}(2n-1)$ 有两个不可约无分次表示，我们记作 $V_{2n-1}^\pm$，维数为 $2^{n-1}$。它们是 $so(1,2n-1)$ 的手征（Weyl）旋量表示 $S_\pm:=V^\pm_{2n-1}$。符号由
+\begin{equation}
+  \Gamma:=\gamma^0\gamma^1\cdots\gamma^d
+  \tag{10.38}
+\end{equation}
+的本征值决定。当 $D$ 为奇，$D=2n+1$ 时，$\mathrm{Cliff}_{\C}(2n)$ 只有一个不可约无分次表示，我们记作 $V_{2n}$，维数为 $2^n$。这是 $so(1,2n)$ 的旋量表示 $S$。
+
+% [原文 p.150]
+\subsection{实旋量}
+
+由于我们把 Dirac 场看作待量子化的 Grassmann 值经典场，它不必是复的（波函数才必须如此）。任何复场都可在实基上展开，故设 $\psi$ 为实。这类旋量称为实旋量或 Majorana 旋量。我们设 $d\ge1$，即 $D\ge2$。
+
+我们再次公设反对易关系
+\begin{equation}
+  \{\gamma^\mu,\gamma^\nu\}=2\eta^{\mu\nu},
+  \tag{10.39}
+\end{equation}
+其中 $\eta^{\mu\nu}$ 依约定取 $(+--\cdots--)$ 或 $(-++\cdots++)$。
+
+与复情形一样，旋量是 $\alpha^i$ 的表示。所幸约定自动消失，我们有
+\begin{equation}
+  \{\alpha^i,\alpha^j\}=+2\delta^{ij}.
+  \tag{10.40}
+\end{equation}
+因此，$so(1,d)$ 的实旋量就是 $\mathrm{Cliff}_{\R}(d,0)$ 的无分次表示。相关信息汇总在表 6 中。
+
+\takeaway{$D=d+1$ 维旋量就是 $\mathrm{Cliff}_{\C}(d)$ 或 $\mathrm{Cliff}_{\R}(d,0)$ 的无分次表示：$D=2n$ 时给出手征旋量 $S_\pm$，$D=2n+1$ 时给出 $S$；复、实情形的数据汇总在表 6。}
+
+\section{Pin 群与 pinor}
+
+$\Spin(n)$ 是 $\SO(n)$ 的二重覆叠。$\Or(n)$ 有两个不同的二重覆叠，称为 $\Pin^\pm(n)$。（选 Pin 这个名字，是因为 Pin 之于 Spin 正如 O 之于 SO。）
+
+取由 $\gamma_i$ 生成的 $\mathrm{Cliff}_{\R}(n,0)$。它包含 $\R^n$ 作为子空间，即 $\gamma_i$ 自身的线性组合：
+\begin{equation}
+  \R^n\ni(v^i)\mapsto v^i\gamma_i\in\mathrm{Cliff}_{\R}(n,0).
+  \tag{10.41}
+\end{equation}
+现在用下式定义 $\gamma_a$ 对 $\R^n$ 的作用：
+\begin{equation}
+  v^i\gamma_i\mapsto-\gamma_a(v^i\gamma_i)(\gamma_a)^{-1}.
+  \tag{10.42}
+\end{equation}
+这作用为向量 $v=(v^i)$ 第 $a$ 个方向的反射。类似地，用 $w^a\gamma_a$ 共轭作用在 $\R^n\subset\mathrm{Cliff}_{\R}(n,0)$ 上，是关于与 $w=(w^a)$ 垂直的超平面的反射。
+
+所有正交变换由重复反射生成，而所有旋转由偶数次重复反射生成。于是 $\Spin(n)$ 的一种定义是：$\mathrm{Cliff}_{\R}(n,0)$ 中由形如
+\begin{equation}
+  (w^i_1\gamma_i)(w^i_2\gamma_j)
+  \tag{10.43}
+\end{equation}
+的元素乘法生成的子集。任一 $g\in\Spin(n)$ 通过
+\begin{equation}
+  v^i\gamma_i\mapsto g(v^i\gamma_i)g^{-1}
+  \tag{10.44}
+\end{equation}
+确定一个旋转，并给出同态
+\begin{equation}
+  \Spin(n)\to\SO(n).
+  \tag{10.45}
+\end{equation}
+它显然是满射。也很清楚核包含 $-1$，例如取 $(-\gamma_1)(+\gamma_1)$。可以证明核恰为 $\{\pm1\}$。
+
+\takeaway{$\Spin(n)$ 是 $\SO(n)$ 的二重覆叠，$\Or(n)$ 有两个二重覆叠 $\Pin^\pm(n)$；在 $\mathrm{Cliff}_{\R}(n,0)$ 中用偶数个反射元素定义 $\Spin(n)$，共轭作用给出到 $\SO(n)$ 的同态，核为 $\{\pm1\}$。}
+
+% [原文 p.151]
+\begin{center}
+\small
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{0.95}
+\begin{tabular}{c||c|c|c||c|c|c|c|}
+\hline
+$\boldsymbol{D=d+1}$ & $\mathbf{pinor}_{\C}$ & $\mathbf{spinor}_{\C}$
+  & $\dim_{\R}$ & $\dim_{\R}$ & $\mathbf{spinor}_{\R}$
+  & $\mathbf{pinor}^{+}_{\,\R}$ & $\mathbf{pinor}^{-}_{\,\R}$\\
+\hline
+2 & $\C^2$ & $\C\ \ \C$ & 2 & 1 & $\R\ \ \R$ & $\R^2$ & $\R^2$\\
+3 & $\C^2\ \ \C^2$ & $\C^2$ & 4 & 2 & $\R^2$ & $\R^2\ \ \R^2$ & $\C^2$\\
+4 & $\C^4$ & $\C^2\ \ \C^2$ & 4 & 4 & $\C^2$ & $\R^4$ & $\HP^2$\\
+5 & $\C^4\ \ \C^4$ & $\C^4$ & 8 & 8 & $\HP^2$ & $\C^4$ & $\HP^2\ \ \HP^2$\\
+6 & $\C^8$ & $\C^4\ \ \C^4$ & 8 & 8 & $\HP^2\ \ \HP^2$ & $\HP^4$ & $\HP^4$\\
+7 & $\C^8\ \ \C^8$ & $\C^8$ & 16 & 16 & $\HP^4$ & $\HP^4\ \ \HP^4$ & $\C^8$\\
+8 & $\C^{16}$ & $\C^8\ \ \C^8$ & 16 & 16 & $\C^8$ & $\HP^8$ & $\R^{16}$\\
+9 & $\C^{16}\ \ \C^{16}$ & $\C^{16}$ & 32 & 16 & $\R^{16}$ & $\C^{16}$ & $\R^{16}\ \ \R^{16}$\\
+10 & $\C^{32}$ & $\C^{16}\ \ \C^{16}$ & 32 & 16 & $\R^{16}\ \ \R^{16}$ & $\R^{32}$ & $\R^{32}$\\
+11 & $\C^{32}\ \ \C^{32}$ & $\C^{32}$ & 64 & 32 & $\R^{32}$ & $\R^{32}\ \ \R^{32}$ & $\C^{32}$\\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{itemize}[leftmargin=1.6em,itemsep=1pt,topsep=2pt]
+\item $D$ 是相对论者的维数，$d$ 是非相对论者的维数。
+\item $\mathrm{spinor}_{\C,\R}$、$\mathrm{pinor}_{\C}$、$\mathrm{pinor}^{\pm}_{\R}$ 给出各维中极小的（s）pinor 表示（视情形为 spinor 或 pinor）。若有两个“手征”表示，则分别列出。
+\item $\dim_{\R}$ 给出极小旋量表示的维数。
+\item 对复（s）pinor，若同类型费米子有 $n$ 个，则味对称为 $u(n)$。
+\item 对实（s）pinor，若同类型费米子有 $n$ 个，则味对称依 $\mathrm{spinor}_{\R}$ 或 $\mathrm{pinor}^{\pm}_{\R}$ 列中所示旋量类型分别为 $\R$、$\C$ 或 $\HP$ 而取 $so(n)$、$u(n)$ 或 $sp(n)$。它们来自相应 Clifford 代数的表示类型。
+\end{itemize}
+
+\begin{center}
+{\small 表 6：各维 $D=d+1$ 中 spinor 表示的性质}
+\end{center}
+
+\chapterreview{本章为后面的物理材料打底。复费米子与 Majorana 费米子都能在 $\C^{2^n}$ 上显式构造；Kitaev 链说明奇、偶个 Majorana 的差别就是 2-周期性。把实费米子按时间反演行为分类，得到实 Clifford 代数 $\mathrm{Cliff}_{\R}(n_+,n_-)$；它的表示只依赖 $n_+-n_-$，并给出 8-周期性，据此可知时间反演不变的费米子只能 8 个一组开能隙。后半章转向相对论：$D=d+1$ 维旋量就是 $\mathrm{Cliff}_{\C}(d)$ 或 $\mathrm{Cliff}_{\R}(d,0)$ 的无分次表示，表 5 与表 6 汇总了各维的极小表示。最后在 $\mathrm{Cliff}_{\R}(n,0)$ 中用偶数个反射元素定义 $\Spin(n)$，并引出 $\Or(n)$ 的两个二重覆叠 $\Pin^\pm(n)$。}

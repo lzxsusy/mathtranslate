@@ -1,0 +1,137 @@
+% !TEX program = xelatex
+% =====================================================================
+%  arXiv:2112.12756v2 中译本 —— 主文件
+%  原文：O. Chekeres, A. Losev, P. Mnev, D. R. Youmans,
+%        "Two Field-Theoretic Viewpoints on the Fukaya-Morse A_inf Category"
+%        arXiv:2112.12756v2 [hep-th], 10 Jul 2022, 27 pp.
+%
+%  编译：xelatex main.tex （建议跑两遍以生成目录与交叉引用）
+%  依赖：ctex（中文字体）、amsmath, amssymb, amsthm, graphicx, geometry,
+%        hyperref, verbatim, xcolor —— 均为 TeX Live / MiKTeX 标准宏包
+%  图：figures/fig01.png … fig12.png（由原 PDF 矢量图按 400 dpi 裁剪）
+%
+%  编号约定：原文式号 (1)–(56)、定理 1、假设 2.2、例 1–7、注 2.1/3.1/3.2/4.1
+%            全部原样保留（用 \tag 与 thmenv 环境手工落号），便于与原书对读。
+% =====================================================================
+\documentclass[11pt,a4paper,UTF8,fontset=windows]{ctexart}
+% 非 Windows 平台请把 fontset=windows 换成 fontset=fandol 或 fontset=mac
+
+% ---------- 译注体例开关（教授可一键关闭） ----------
+\newif\ifshowtakeaway \showtakeawaytrue   % 各节“本节重点”
+\newif\ifshownotes    \shownotestrue      % 批注附录（行内 % [Tutor Note: …] 只在源码中可见）
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[numbers,sort&compress]{natbib}  % \cite{fukaya,fukayaoh} -> [5,6]，与原文一致
+\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage{xcolor}
+\usepackage{geometry}
+\geometry{left=2.55cm,right=2.55cm,top=2.4cm,bottom=2.4cm}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,
+            urlcolor=blue!45!black,bookmarksnumbered=true]{hyperref}
+\graphicspath{{figures/}}
+
+\setcounter{tocdepth}{2}
+
+% ---------- 排版微调：减少中英混排造成的 Overfull ----------
+\setlength{\emergencystretch}{3em}
+\tolerance=1500
+\hbadness=10000
+
+% ---------- 定理类环境：编号手写，照录原书 ----------
+% 用法：\begin{thmenv}[可选标题]{类名}{原书编号} … \end{thmenv}
+\newenvironment{thmenv}[3][]{%
+  \par\addvspace{6pt}%
+  \noindent\textbf{#2~#3.}%
+  \if\relax\detokenize{#1}\relax\else\;{\itshape（#1）}\fi
+  \quad\ignorespaces
+}{\par\addvspace{6pt}}
+
+% ---------- “本节重点”环境 ----------
+\ifshowtakeaway
+  \newenvironment{takeaway}{%
+    \par\addvspace{10pt}%
+    \noindent\rule{\linewidth}{0.6pt}\par\nobreak\addvspace{3pt}%
+    \noindent\textbf{本节重点}\par\nobreak\addvspace{2pt}%
+    \begingroup\small\noindent\ignorespaces
+  }{%
+    \par\endgroup\addvspace{3pt}%
+    \noindent\rule{\linewidth}{0.6pt}\par\addvspace{10pt}%
+  }
+\else
+  \excludecomment{takeaway}
+\fi
+
+\newcommand{\Ainf}{A_\infty}
+\newcommand{\Mor}{\operatorname{Mor}}
+
+\title{论 Fukaya--Morse $\Ainf$ 范畴的两种场论视角}
+\author{O.~Chekeres,\ A.~Losev,\ P.~Mnev,\ D.~R.~Youmans}
+\date{arXiv:2112.12756v2 [hep-th]，2022 年 7 月 10 日}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE\bfseries 论 Fukaya--Morse $\Ainf$ 范畴的两种场论视角}\\[8pt]
+  {\large Two Field-Theoretic Viewpoints on the\\ Fukaya--Morse $\Ainf$ Category}\\[12pt]
+  {\large O.~Chekeres\quad A.~Losev\quad P.~Mnev\quad D.~R.~Youmans}\\[6pt]
+  {\small arXiv:2112.12756v2 [hep-th]\quad 2022 年 7 月 10 日\quad 原文 27 页}
+\end{center}
+
+\vspace{0.5em}
+\noindent\textbf{摘要.}\quad
+本文研究 Fukaya $\Ainf$ 范畴的 Morse 退化的一种增强版本，其高阶复合由梯度流树的数目给出。所谓“增强”，是指允许一个对象到自身的态射取为该流形上的链。高阶复合对应于对经过给定一族链的 Morse 树作计数。对于这一构造以及复合映射的 $\Ainf$ 关系式的两种证明，我们给出两种视角。一种视角来自在特殊规范下计算出的 BF 理论的有效作用量；另一种视角来自高阶拓扑量子力学。
+
+\vspace{0.6em}
+\noindent\textbf{关键词：}\ $\Ainf$ 范畴；Fukaya--Morse 范畴；Morse 树；BF 理论；Batalin--Vilkovisky 形式；拓扑量子力学
+
+\vspace{0.4em}
+\noindent\textbf{原文 MSC 分类：}\ 53D37, 53D40, 81T45（据原文主题归类补注，仅供检索）
+
+\medskip
+\noindent\rule{\linewidth}{0.4pt}
+
+% =====================================================================
+%  译校说明
+% =====================================================================
+\section*{译校说明}
+\addcontentsline{toc}{section}{译校说明}
+
+\begin{enumerate}
+  \item \textbf{底本。}译文以 arXiv:2112.12756v2（2022-07-10，27 页）为准，未参考其它版本。文中所标“原书 p.$N$”均指该 PDF 页码，arXiv 版正文与页码一一对应，无需偏移。
+  \item \textbf{编号一律照录。}原文的式号 (1)--(56)、定理 1、假设 2.2、例 1--7、注 2.1/3.1/3.2/4.1、图 1--12 全部保持原编号，源码中以 \verb|\tag{…}| 与 \verb|thmenv| 环境手工落号。这样读者可直接拿中译与原 PDF 对读，批注中的定位也才有意义。
+  \item \textbf{术语。}以中文学界通行译名为准（如 gauge theory 规范场论、holonomy 和乐群、anomaly 反常；本文涉及 $A_\infty$ 范畴、BV 形式、有效作用量、横截性等）。保留英文的术语（\verb|Lefschetz thimble|、Fukaya、Morse--Smale、Feynman 图等）在首次出现处给括注，此后一律英文。全书术语冻结表见 \verb|work/glossary.md|。
+  \item \textbf{批注。}源码中形如 \verb|% [Tutor Note: …]| 的行为译校批注，只写在源码里、不进入排版结果，共三类：易错预警（符号、指标、次数、约定）、含糊点拨（作者以“显然”跳过的论证，点出所用定理与可查文献）、背景直觉。全部批注另按节汇总于附录~\ref{app:notes}，可用导言区开关 \verb|\shownotestrue|／\verb|\shownotesfalse| 整体显示或隐藏。
+  \item \textbf{本节重点。}每节开头给出“本节重点”，提炼物理图像、数学工具与主要结论，可用 \verb|\showtakeawayfalse| 关闭。
+  \item \textbf{不擅改原文。}原文的笔误、含糊与省略一律保留，只在同处加批注并在附录中登记；译文不补写原文没有的内容。
+  \item \textbf{编译。}\verb|xelatex main.tex| 两遍；中文由 \verb|ctex| 宏包处理（Windows 下自动使用宋体/黑体，非 Windows 平台请改 \verb|fontset|）。图表文件在 \verb|figures/| 目录。
+\end{enumerate}
+
+\medskip
+\noindent\rule{\linewidth}{0.4pt}
+
+\tableofcontents
+\newpage
+
+% =====================================================================
+%  正文
+% =====================================================================
+\input{chapters/sec01}
+\input{chapters/sec02a}
+\input{chapters/sec02b}
+\input{chapters/sec02c}
+\input{chapters/sec02d}
+\input{chapters/sec04}
+\input{chapters/sec05}
+
+\input{chapters/sec06}
+
+% =====================================================================
+%  附录（批注一览；由 work/gen_notes.py 从各章源码自动生成，勿手改）
+% =====================================================================
+\appendix
+\ifshownotes
+  \input{chapters/appendix_notes}
+\fi
+
+\end{document}

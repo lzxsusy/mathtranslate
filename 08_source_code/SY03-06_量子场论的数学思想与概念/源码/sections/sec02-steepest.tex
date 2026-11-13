@@ -1,0 +1,686 @@
+%=====================================================================
+% 2  最速下降法与驻相公式
+% 原文：Section 2. The steepest descent and stationary phase formulas
+%       （arXiv:2409.03117v1，第 14--27 页）
+%=====================================================================
+\section{最速下降法与驻相公式}
+
+\begin{keytakeaways}
+\begin{itemize}
+  \item \textbf{物理图像：}当参数趋于零时，路径积分并非真的“变小”，而是“局部化”到作用量的
+        极小值点（实时间下为驻相点）：经典运动方程就是主导鞍点所满足的条件，而量子涨落则以该参数的
+        幂次逐阶展开，这正是 Feynman 图展开的几何来源。
+  \item \textbf{数学工具：}高斯积分（以及带 insertions 的高斯积分）是全章基石；与之配套的 Laplace
+        算子把“每插入一个因子”翻译成“每多出一个参数幂次”。一维与多维的最速下降公式、驻相公式把积分
+        写成指数因子乘上临界点处的振幅，再乘一个在闭半轴上光滑的修正函数，其零阶值给出标准的归一化常数。
+  \item \textbf{关键结论：}振幅中的 Hessian 行列式平方根倒数刻画涨落；最速下降（实指数）情形只给出
+        实的领头系数，驻相（虚指数）情形则出现正负 45 度的相位因子（多维情形由 Hessian 的号差决定）。
+        Morse 引理（变量分离定理）保证临界点附近可把函数化为二次标准形，从而把多维问题化归为一维。
+  \item \textbf{易错点：}修正函数在零点光滑，其 Taylor 级数却通常发散，故该函数在零点非解析；四次型例子
+        即为例证。Borel 求和提供了“典范”的重构方式，而渐近级数看不见的非微扰贡献（指数小项）恰好对应
+        Borel 变换的奇点与 Stokes 现象。
+\end{itemize}
+\end{keytakeaways}
+
+\bigskip
+\noindent\rule{\textwidth}{0.6pt}
+\bigskip
+
+现在暂且撇开这一事实：积分（\ref{brmo}、\ref{quantmech}、\ref{quanft}）是无穷维的，因而在定义上颇成问题；
+转而提出如下问题：当参数 $\kappa$ 或 $\hbar$ 趋于零时，我们凭什么期望还原出通常的经典力学或场论？
+答案是，这一期望基于经典分析中的\emph{最速下降}（相应地，\emph{驻相}）原理：若 $f(x)$ 是 $\Bbb R^d$ 上的函数，
+则积分 $\int g(x)e^{-\frac{f(x)}{\kappa}}dx$、$\int g(x)e^{\frac{if(x)}{\hbar}}dx$ 会“局部化”到函数 $f$
+的极小值点（相应地，临界点）。由于这一经典事实对整个主题具有核心重要性，下面我们较为详细地加以讨论。
+
+\subsection{高斯积分}
+
+我们从线性代数与分析中的一些辅助事实开始。设 $V$ 是 $d$ 维实向量空间。用 $\bold M(V)$ 表示 $V$ 上
+实部非负定的非退化复值对称双线性型之集。其中实部正定的型构成一个开稠密子集 $\bold M^\circ(V)\subset \bold M(V)$。
+若 $B=P+iQ\in \bold M^\circ(V)$，其中 $P,Q$ 是 $B$ 的实部与虚部，则 $P^{-1}Q: V\to V$ 是关于 $P$ 的自伴算子，
+因而具有实本征值，并在正交基下对角化。在该基下 $B(x,y)=\sum_{j=1}^d a_jx_jy_j$，其中 ${\rm Re}(a_j)=1$。
+于是 $B^{-1}\in \bold M^\circ(V^*)$。由此可知，映射 $B\mapsto B^{-1}$ 是同胚 $\bold M(V)\cong \bold M(V^*)$，
+并限制为同胚 $\bold M^\circ (V)\cong \bold M^\circ(V^*)$。
+
+现在固定 $V$ 上一个平移不变体积元 $dx$。于是对 $V$ 上每个复值对称双线性型 $B$ 都可定义其行列式 $\det B$。
+因此，利用在正定型上取正值的那个平方根分支，可以在 $\bold M(V)$ 上定义连续函数 $(\det B)^{-\frac{1}{2}}$
+（该分支存在且唯一，因为 $\bold M(V)$ 关于 $\bold M^\circ(V)$ 中任一点是星形的，从而是单连通的）。注意：
+若 $B=iQ$，其中 $Q$ 是实非退化型，则 $(\det B)^{-\frac{1}{2}}=e^{\frac{\pi i\sigma(Q)}{4}}|\det Q|^{-\frac{1}{2}}$，
+其中 $\sigma$ 是 $Q$ 的号差。事实上，只需对对角型验证该断言，从而只需对 $d=1$ 验证，此时结论是直接的。
+
+% [Tutor Note: 本节的两处约定最易混淆，务必分清。(i) Fourier 变换取酉归一化
+% $(2\pi)^{-\frac{d}{2}}\int_V e^{-i(p,x)}dx$，故有 $\mathcal F^2g(x)=g(-x)$，且 Lemma \ref{gi}
+% 的右端不带任何 $(2\pi)$ 因子；高斯的标准化常数被吸收进 $(\det B)^{-\frac{1}{2}}$。
+% (ii) 式 \eqref{gaui} 左端的 $(2\pi)^{-\frac{d}{2}}$ 是把 $\mathcal F$ 在 $p=0$ 处取值的结果，
+% 不要把它当成“额外约定”。若改用不含 $(2\pi)^{-\frac{d}{2}}$ 的 Fourier 约定，则 \eqref{gaui}
+% 形式不变，而 Lemma \ref{gi} 右端须补 $(2\pi)^{d/2}$。
+% (iii) 若把 $B$ 换成 $B/\hbar$（即恢复量纲），\eqref{gaui} 给出
+% $\int_V e^{-\frac{B(x,x)}{2\hbar}}dx=(2\pi\hbar)^{\frac{d}{2}}(\det B)^{-\frac{1}{2}}$，
+% 这正是路径积分中每个自由度贡献一个 $\sqrt{2\pi\hbar}$ 的来源；本章为记号简洁把 $\hbar$ 吸收进 $B$。]
+
+设 $\mathcal S(V)$ 是 $V$ 的\emph{Schwartz 空间}，亦即 $V$ 上这样一些光滑函数构成的空间：其所有导数在 $\infty$
+处快速衰减（快于 $|x|$ 的任意幂次）。换言之，$\mathcal S(V)$ 由 $V$ 上满足 $D(V)f\subset L^2(V)$ 的光滑函数 $f$
+组成，其中 $D(V)$ 是 $V$ 上系数为多项式的微分算子代数。Schwartz 空间具有由半范数 $||Df||_{L^2}$（$D\in D(V)$）
+定义的自然 Fr\'echet 拓扑。其拓扑对偶空间 $\mathcal S'(V)$ 是 $V$ 上的\emph{缓增分布}空间。
+注意有自然包含 $\mathcal S(V)\subset L^2(V)\subset \mathcal S'(V)$。回忆 Fourier 变换是算子
+$$
+\mathcal F: \mathcal S(V)\to \mathcal S(V^*)
+$$
+由下式给出：
+$$
+\mathcal F(g)(p):=(2\pi)^{-\frac{d}{2}}\int_V g(x)e^{-i(p,x)}dx,
+$$
+它定义了等距同构 $L^2(V)\to L^2(V^*)$，使得 $(\mathcal F^2g)(x)=g(-x)$。由对偶性，它定义了算子
+$$
+\mathcal F: \mathcal S'(V)\to \mathcal S'(V^*) 
+$$
+该算子是 $\mathcal F$ 的延拓。对任意满足 ${\rm Re}B\ge 0$ 的复对称双线性型 $B$，函数 $e^{-\frac{1}{2}B(x,x)}$
+属于 $\mathcal S'(V)$，并且当且仅当 $B\in \bold M^\circ(V)$ 时属于 $\mathcal S(V)$。此外，作为这些空间中的元素，
+它连续依赖于 $B$。我们称其为\emph{复高斯分布}。
+
+\begin{lemma}\label{gi}（高斯积分）对任意 $B\in \bold M(V)$ 有
+$$
+\mathcal F(e^{-\frac{1}{2}B(x,x)})=(\det B)^{-\frac{1}{2}} e^{-\frac{1}{2}B^{-1}(p,p)}.
+$$
+\end{lemma} 
+
+\begin{proof} 由连续性，只需在 ${\rm Re}B>0$ 时证明。
+此时 $B$ 可对角化，故断言化归为 $d=1$ 的情形。
+此时需证明：对每个满足 ${\rm Re}a>0$ 的 $a\in \Bbb C$，
+$$
+\frac{1}{\sqrt{2\pi}}\int_{-\infty}^\infty e^{-ipx-\frac{1}{2}ax^2}dx=
+\frac{1}{\sqrt{a}}e^{-\frac{1}{2a}p^2}.
+$$
+由于两端均关于 $a$ 全纯，只需在 $a$ 为实数时验证该断言。所讨论的积分可写成
+$$
+\frac{e^{-\frac{1}{2}a^{-1}p^2}}{\sqrt{2\pi}}\int_{-\infty}^\infty e^{-\frac{1}{2}a(x+ia^{-1}p)^2}dx.
+$$
+但由 Cauchy 定理，
+$$
+\frac{1}{\sqrt{2\pi}}\int_{-\infty}^\infty e^{-\frac{1}{2}a(x+ia^{-1}p)^2}dx=
+\frac{1}{\sqrt{2\pi}}\int_{\Bbb R+ia^{-1}p} e^{-\frac{1}{2}ax^2}dx=
+\frac{1}{\sqrt{2\pi}}\int_{\Bbb R} e^{-\frac{1}{2}ax^2}dx.
+$$
+于是结论由 Poisson 积分
+$$
+\int_{-\infty}^\infty e^{-x^2}dx=\sqrt{\pi}.
+$$
+经 $x$ 的缩放而得到。
+\end{proof} 
+
+在引理 \ref{gi} 的意义下，取 $p=0$，可以说
+\begin{equation}\label{gaui}
+(2\pi)^{-\frac{d}{2}}\int_V e^{-\frac{1}{2}B(x,x)}dx=(\det B)^{-\frac{1}{2}}.
+\end{equation} 
+注意，当 $B\in \bold M^\circ(V)$ 时该等式也在绝对收敛意义下成立，否则在条件收敛意义下成立
+（请自行验证！）。
+
+\subsection{带插入项的高斯积分（insertions）} \label{inse}
+
+% [Tutor Note: “insertions”指在测度中插入待展开函数的做法：把 $g(\hbar^{\frac{1}{2}}x)$ 对 $\hbar$
+% 展开，$x$ 的每个单项式都按高斯矩定理（Wick 定理）配对，次数为 $2k$ 的单项式给出 $\hbar^k$，
+% 故所有矩都化为 $\hbar$ 的幂级数。定理 \ref{contt2} 中的因子 $\tfrac{1}{2}$ 来自指数上的
+% $-\tfrac{1}{2}B(x,x)$：$\Delta_B$ 是以 $B^{-1}$ 为逆度量的 Laplace–Beltrami 算子，
+% 而分部积分给出 $\ell(x)e^{-\frac{1}{2}B(x,x)}=-\partial_{B^{-1}\ell}e^{-\frac{1}{2}B(x,x)}$，
+% 每分部积分一次就吃掉一个 $\hbar^{\frac{1}{2}}$，这正是 \eqref{diffo} 的来源。核对时请注意
+% $\partial_{B^{-1}e_j^*}$ 的下标是逆变向量而非协变向量，这里最容易把 $B$ 与 $B^{-1}$ 弄反。]
+
+现在设 $g\in \mathcal S(V)$。考虑积分
+$$
+I_g(\hbar):=\int_{V}g(\hbar^{\frac{1}{2}}x)e^{-\frac{1}{2}B(x,x)}dx,\ \hbar\ge 0,
+$$
+其中在 $\hbar=0$ 处我们使用 \eqref{gaui}，于是
+\begin{equation}\label{valzer}
+I_g(0)=(2\pi)^{\frac{d}{2}}(\det B)^{-\frac{1}{2}}g(0). 
+\end{equation}
+
+设 $\Delta_B: \mathcal S(V)\to \mathcal S(V)$ 为对应于 $B$ 的 Laplace 算子：
+对 $V$ 的一组基 $\lbrace e_i\rbrace$，有 $\Delta_B=\sum_{j=1}^d \partial_{B^{-1}e_j^*}\partial_{e_j}$。
+
+\begin{theorem} \label{contt2}
+我们有
+$$
+I_g'(\hbar)=I_{\tfrac{1}{2}\Delta_B g}(\hbar),\ \hbar\ge 0.
+$$
+于是 $I_g\in C^\infty[0,\infty)$。特别地，若 $g$ 在原点处有 $2n+1$ 阶零点，则 $I_g(0)=...=I_g^{(n)}(0)=0$。
+\end{theorem} 
+
+
+
+本小节余下的篇幅用于证明定理 \ref{contt2}。
+
+\begin{lemma}\label{contt} $I_g$ 是连续函数。
+\end{lemma} 
+
+\begin{proof} 只需证明在 $\hbar=0$ 处的连续性。由 Plancherel 定理与引理 \ref{gi}，
+$$
+I_g(\hbar)=(g(\hbar^{\frac{1}{2}} x),e^{-\frac{1}{2}B(x,x)})=
+$$
+$$
+\hbar^{-\frac{d}{2}}(\det B)^{-\frac{1}{2}}(\widehat g(\hbar^{-\frac{1}{2}}p), e^{-\frac{1}{2}B^{-1}(p,p)})=(\det B)^{-\frac{1}{2}}(\widehat g(p), e^{-\frac{\hbar}{2}B^{-1}(p,p)}),
+$$
+其中 $\widehat g$ 是 $g$ 的 Fourier 变换。但当 $\hbar\to 0$ 时 $e^{-\frac{\hbar}{2}B^{-1}(p,p)}\to 1$ 在
+$\mathcal S'(V^*)$ 中成立（因为复高斯分布连续依赖于双线性型）。于是
+$$
+\lim_{\hbar\to 0}I_g(\hbar)=(\det B)^{-\frac{1}{2}}(\widehat g(p),1)=
+(2\pi)^{\frac{d}{2}}(\det B)^{-\frac{1}{2}}g(0)=I_g(0),
+$$
+此即所求。
+\end{proof} 
+
+\begin{lemma}\label{contt1} 若 $\ell\in V^*$ 且 $f\in \mathcal S(V)$，则
+$$
+I_{\ell f}(\hbar)=\hbar I_{\partial_{B^{-1}\ell}f}(\hbar).
+$$
+\end{lemma}
+
+\begin{proof}  
+我们有
+$$
+I_{\ell f}(\hbar)=
+\hbar^{\frac{1}{2}}(\ell(x)f(\hbar^{\frac{1}{2}}x),e^{-\frac{1}{2}B(x,x)})=
+\hbar^{\frac{1}{2}}(f(\hbar^{\frac{1}{2}}x),\ell(x)e^{-\frac{1}{2}B(x,x)})=
+$$
+$$
+-\hbar^{\frac{1}{2}}(f(\hbar^{\frac{1}{2}}x),\partial_{B^{-1}\ell}e^{-\frac{1}{2}B(x,x)})=
+\hbar^{\frac{1}{2}}(\partial_{B^{-1}\ell}f(\hbar^{\frac{1}{2}}x),e^{-\frac{1}{2}B(x,x)})=
+$$
+$$
+\hbar ((\partial_{B^{-1}\ell}f)(\hbar^{\frac{1}{2}}x),e^{-\frac{1}{2}B(x,x)})=\hbar I_{\partial_{B^{-1}\ell}f}(\hbar).
+$$
+这就证明了引理。
+\end{proof} 
+
+现在证明定理 \ref{contt2}。
+若 $\hbar>0$，则直接求导给出
+$$
+I_g'(\hbar)=\tfrac{1}{2}\hbar^{-1}I_{Eg}(\hbar),
+$$
+其中 $E:=\sum_{j=1}^d e_j^*\partial_{e_j}$ 是 $V$ 上的 欧拉向量场。
+于是由引理 \ref{contt1} 可得
+\begin{equation}\label{diffo}
+I_g'(\hbar)=I_{\tfrac{1}{2}\Delta_B g}(\hbar),\ \hbar>0.
+\end{equation} 
+所以，利用引理 \ref{contt}，只需再证明 $I_g\in C^1[0,\infty)$（其后的光滑性可由 \eqref{diffo}
+反复应用而得到）。
+为此注意：若 $C$ 是 $V$ 上的正定型，则
+$$
+I_{e^{-\frac{1}{2}C(x,x)}}(\hbar)=\int_{V}e^{-\frac{1}{2}(B+\hbar C)(x,x)}dx=
+(2\pi)^{\frac{d}{2}}\det (B+\hbar C)^{-\frac{1}{2}},
+$$
+它是解析的，因而在 $[0,\infty)$ 上连续可微。
+于是从 $g$ 中减去这类函数的倍数后，只需在 $g(0)=0$ 时证明 $I_g\in C^1[0,\infty)$。
+此时众所周知 $g$ 是形如 $\ell f$ 的函数的线性组合，其中 $f\in \mathcal S(V)$ 而 $\ell\in V^*$。
+故只需对 $g=\ell f$ 验证 $I_g\in C^1[0,\infty)$。
+但此时由引理 \ref{contt1} 有
+$I_g'(0)=I_{\partial_{B^{-1}\ell}f}(0)=I_{\frac{1}{2}\Delta_Bg}(0)$，
+因为
+$$
+\tfrac{1}{2}\Delta_Bg(0)=\tfrac{1}{2}\Delta_B(\ell f)(0)=\sum_j \ell(e_j)
+\partial_{B^{-1}e_j^*}f(0)=\partial_{B^{-1}\ell}f(0).
+$$
+证毕。
+
+\begin{exercise}\label{gencontt2} 设 $\mathcal S_m(V)\subset C^m(V)$ 为这样的子空间：其中函数的
+$\le m$ 阶导数都快速衰减。证明：对 $g\in \mathcal S_2(V)$，定理 \ref{contt2} 的求导公式仍然成立。
+并推出：若 $g\in \mathcal S_{2n}(V)$，则 $I\in C^n[0,\infty)$；此外若 $g$ 在 $0$ 处有 $2n+1$ 阶零点，
+则 $I_g(0)=...=I_g^{(n)}(0)=0$。
+\end{exercise} 
+
+\subsection{最速下降公式}
+设 $a<b$ 为实数，$f,g: [a,b]\to \Bbb R$ 为连续函数，且在 $(a,b)$ 上光滑。
+
+\begin{theorem}\label{statphase1}（最速下降公式）
+设 $f$ 在唯一一点 $c\in [a,b]$ 处达到全局极小值，且 $a<c<b$、$f''(c)>0$。
+则
+\begin{equation}\label{inte}
+\int_a^bg(x)e^{-\frac{f(x)}{\hbar}}dx=\hbar^{\frac{1}{2}}e^{-\frac{f(c)}{\hbar}}I(\hbar),
+\end{equation}
+其中 $I(\hbar)$ 可延拓为 $[0,\infty)$ 上的光滑函数，且 $$I(0)=\sqrt{2\pi}\frac{g(c)}{\sqrt{f''(c)}}.$$ 
+\end{theorem} 
+
+\begin{proof} 不失一般性，可设 $c=0,f(c)=0$。
+令 $f''(c)=M$。作变量替换，可化归为如下情形：当 $x$ 位于 $0$ 的某个邻域 $U$ 内时，$f(x)=\frac{M}{2}x^2$。
+取 $h$ 为一个“鼓包”函数（bump function）——支撑在 $U$ 中、在更小的邻域 $0\in U'\subset U$ 上等于 $1$ 的光滑函数。写
+$g=g_1+g_2$，其中 $g_1=hg$、$g_2=(1-h)g$。
+设 $I$ 由方程 (\ref{inte}) 定义，而 $I_1,I_2$ 由同一方程把 $g$ 换成 $g_1,g_2$ 定义，于是 $I=I_1+I_2$。
+由于 $f$ 有唯一的全局极小值，直接求导可见：对所有 $n$，当 $\hbar\to 0$ 时 $I_2^{(n)}(\hbar)$ 快速衰减。
+因此对 $g=g_2$ 结论显然，我们只需对 $g=g_1$ 证明它。换言之，不失一般性可设 $g=g_1$ 而 $g_2=0$。
+我们把 $g$ 零延拓到整个实轴。
+
+作变量替换 $y:=\hbar^{-\frac{1}{2}}x$，得到
+\begin{equation}\label{inte1}
+I(\hbar)=\int_{-\infty}^{\infty}g(\hbar^{\frac{1}{2}} y)e^{-\frac{M}{2}y^2}dy.
+\end{equation} 
+于是结论由 \eqref{valzer} 与定理 \ref{contt2} 得到。
+\end{proof} 
+
+\begin{remark}\label{exform} 事实上，定理 \ref{statphase1} 给出了 $I(\hbar)$ 的 Taylor 系数的显式公式。
+具体地说，如定理 \ref{statphase1} 的证明中那样，设 $c=0$，且在 $0$ 附近 $f(x)=\frac{1}{2}p(x)^2$，其中
+$$
+p'(0)=\sqrt{f''(0)}>0.
+$$ 
+忽略积分限（如前所见，它们对 $I(\hbar)$ 的渐近展开没有影响），我们有\footnote{回忆：
+对 $I\in C^\infty[0,\varepsilon)$，若对每个 $N\ge 0$，当 $\hbar\to 0$ 时都有
+$I(\hbar)=\sum_{n=0}^{N-1} a_n\hbar^n+O(\hbar^N)$，则记 $I(\hbar)\sim \sum_{n=0}^\infty a_n\hbar^n$。} 
+$$
+I(\hbar)=\hbar^{-\frac{1}{2}}\int g(x)e^{-\frac{p(x)^2}{2\hbar}}dx\sim \int_{-\infty}^\infty \widetilde g(\hbar^{\frac{1}{2}}y)e^{-\frac{y^2}{2}}dy
+$$
+其中
+$$
+\widetilde g(z):=g(p^{-1}(z))(p^{-1})'(z)=\frac{g(p^{-1}(z))}{p'(p^{-1}(z))}.
+$$ 
+由定理 \ref{contt2}，该积分 Taylor 展开的前 $n+1$ 项由积分
+$$
+I_N(\hbar):=\int_{-\infty}^\infty \widetilde g_N(\hbar^{\frac{1}{2}}y)e^{-\frac{y^2}{2}}dy
+$$
+给出，其中 $\widetilde g_N$ 是 $\widetilde g$ 在 $0$ 处的 $2N$ 阶 Taylor 多项式。
+于是若 $\widetilde g(z)\sim \sum_{n=0}^\infty b_nz^n$，则
+$$
+I(\hbar)\sim \sum_{n=0}^\infty b_{2n}\hbar^n\int_{-\infty}^\infty y^{2n}e^{-\frac{y^2}{2}}dy.
+$$
+但令 $u=\frac{y^2}{2}$，就有
+\begin{equation}\label{gammaint}
+\int_{-\infty}^\infty y^{2n}e^{-\frac{y^2}{2}}dy=
+2^{n+\frac{1}{2}}\int_0^\infty u^{n-\frac{1}{2}} e^{-u}du=
+2^{n+\frac{1}{2}}\Gamma(n+\tfrac{1}{2})=(2\pi)^{\frac{1}{2}}(2n-1)!!,
+\end{equation}
+其中 $(2n-1)!!:=\prod_{1\le j\le n}(2j-1)$。
+因此
+$$
+I(\hbar)\sim \sum_{n=0}^\infty b_{2n}
+2^{n+\frac{1}{2}}\Gamma(n+\tfrac{1}{2})\hbar^n. 
+$$
+\end{remark} 
+
+\subsection{驻相公式}
+定理 \ref{statphase1} 有如下“虚”的类比，称为\emph{驻相公式}。
+\begin{theorem}\label{statphase2}（驻相公式）
+设 $f,g: [a,b]\to \Bbb R$ 为光滑函数。
+设 $f$ 有唯一临界点 $c\in [a,b]$，且 $a<c<b$、$f''(c)\ne 0$，而 $g$ 在 $a$ 与 $b$ 处的各阶导数全为零。则
+$$
+\int_a^bg(x)e^{\frac{if(x)}{\hbar}}dx=\hbar^{\frac{1}{2}}e^{\frac{if(c)}{\hbar}}I(\hbar),
+$$
+其中 $I(\hbar)$ 可延拓为 $[0,\infty)$ 上的光滑函数，且
+$$
+I(0)=\sqrt{2\pi}e^{\pm\frac{\pi i}{4}}\frac{g(c)}{\sqrt{|f''(c)|}},
+$$
+此处 $\pm$ 是 $f''(c)$ 的符号。\footnote{它之所以称为驻相公式，是因为主要贡献来自相位
+$\frac{f(x)}{\hbar}$ 为驻定的那一点。}     
+\end{theorem}
+
+\begin{remark} 必须假定 $g$ 在 $a$ 与 $b$ 处的各阶导数全为零。否则会多出边界贡献。
+\end{remark} 
+
+\begin{proof} 证明与最速下降公式的证明类似，但稍为精细，因为必须控制相消。
+首先需要下面这个非常简单却重要的引理，它使这种控制成为可能。
+
+\begin{lemma}\label{riem}（Riemann 引理）(i) 设 $f: [a,b]\to \Bbb R$ 为光滑函数，
+且对一切 $x\in [a,b]$ 有 $f'(x)>0$；又设 $g: [a,b]\to \Bbb R$ 是 $C^n$ 函数，满足
+$$
+g(a)=...=g^{(n-1)}(a)=g(b)=...=g^{(n-1)}(b)=0.
+$$
+令
+$$
+I(\hbar):=\int_a^b g(x)e^{\frac{if(x)}{\hbar}}dx.
+$$
+则 $I(\hbar)=O(\hbar^{n}),\ \hbar\to 0$。
+
+(ii) 设 $g$ 在 $[a,b]$ 上光滑，且 $g$ 在 $a$ 与 $b$ 处的所有导数均为零。则（令 $I(0):=0$）$I$
+可延拓为 $[0,\infty)$ 上的光滑函数，且其所有导数当 $\hbar\to 0$ 时快速衰减。
+\end{lemma} 
+
+\begin{proof} (i) 作变量替换，不失一般性可设 $f(x)=x$。然后对 $n$ 作归纳。基础情形 $n=0$ 显然。
+对 $n>0$，注意
+ $$
+\int_a^b g(x)e^{\frac{ix}{\hbar}}dx=i\hbar \int_a^b g'(x)e^{\frac{ix}{\hbar}}dx
+$$
+（分部积分），这就给出了归纳步骤。
+
+(ii) 由 (i) 经反复求导即得。
+\end{proof} 
+
+现在来证明定理。如最速下降公式的证明那样，可设 $c=0$，且在 $0$ 附近 $f=\frac{M}{2}x^2$，其中 $M\ne 0$，
+并把 $I$ 写成和 $I_1+I_2$。
+此外，由引理 \ref{riem}(ii)，
+$$
+I_2(\hbar)=\int_a^bg_2(x)e^{\frac{if(x)}{\hbar}}dx
+$$
+及其各阶导数都快速衰减，故只需对 $g=g_1$ 证明定理。
+
+再次仿照最速下降公式的证明，我们有
+\begin{equation}\label{inte12}
+I(\hbar)=\int_{-\infty}^\infty
+g(\hbar^{\frac{1}{2}} y)e^{\frac{iM}{2}y^2}dy,
+\end{equation}
+于是如前，结论由 \eqref{valzer} 与定理 \ref{contt2} 得到。
+\end{proof} 
+
+\begin{remark}\label{exform1} 由于 $I(\hbar)$ 的渐近展开的计算是纯代数过程，虚情形下该展开的显式公式
+与实情形（注 \ref{exform}）相同，只需把 $\hbar$ 换成 $i\hbar$：
+$$
+I(\hbar)\sim \sum_{n=0}^\infty b_{2n}2^{n+\frac{1}{2}}\Gamma(n+\tfrac{1}{2})(i\hbar)^n. 
+$$
+\end{remark}
+
+% [Tutor Note: 驻相公式中的相位 $e^{\pm\frac{\pi i}{4}}$ 是本章最易出错之处，建议用围道法核对：
+% 对 $\int e^{\frac{iM}{2}y^2}dy$，当 $M>0$ 时应把围道转到 $\arg y=\frac{\pi}{4}$ 方向（此时
+% $e^{\frac{iM}{2}y^2}$ 沿该方向衰减），得 $\int e^{\frac{iM}{2}y^2}dy=\sqrt{2\pi}\,e^{\frac{\pi i}{4}}/\sqrt{M}$；
+% 当 $M<0$ 时转到 $\arg y=-\frac{\pi}{4}$，得 $\sqrt{2\pi}\,e^{-\frac{\pi i}{4}}/\sqrt{|M|}$，故 $\pm$ 恰为
+% $f''(c)$ 的符号。注意围道在无穷远处的闭合要靠 Jordan 引理，而定理要求 $g$ 的端点各阶导数为零，
+% 正是为了在旋转围道时不产生边界项；若 $g$ 不满足该条件，边界贡献不可忽略（见紧随其后的注）。
+% 另注意这里的相位与 Lemma \ref{gi} 中 $(\det B)^{-\frac{1}{2}}$ 的相位约定一致。]
+
+\subsection{$I(\hbar)$ 的非解析性与 Borel 求和}
+尽管 $I(\hbar)$ 在 $\hbar=0$ 处光滑，其 Taylor 级数通常只是一个渐近展开，对任何 $\hbar\ne 0$ 都发散，
+因此该函数在 $0$ 处并不解析。为说明这一点，考虑积分
+$$
+\int_{-\infty}^\infty e^{-\frac{x^2+x^4}{2\hbar}}dx=
+\hbar^{\frac{1}{2}}I(\hbar),
+$$
+其中
+\begin{equation}\label{quartic} 
+I(\hbar)=
+\int_{-\infty}^\infty e^{-\frac{y^2+\hbar y^4}{2}}dy.
+\end{equation} 
+由于该积分对任何 $\hbar<0$ 都发散，我们无法由此断定它在 $\hbar=0$ 处解析，而事实上它确实不解析。
+具体地说，如注 \ref{exform} 那样，积分 \eqref{quartic} 的渐近展开可由把指数 $e^{-\frac{1}{2}\hbar y^4}$
+展成 Taylor 级数、再用 \eqref{gammaint} 逐项积分而得到：
+$$
+I(\hbar)\sim \sum_{n=0}^\infty a_n\hbar^n,
+$$
+其中
+$$
+a_n=(-1)^n\int_{-\infty}^\infty 
+e^{-\frac{y^2}{2}}\frac{y^{4n}}{2^n n!}dy=
+$$
+$$
+(-1)^n\frac{2^{n+\frac{1}{2}}\Gamma(2n+\frac{1}{2})}{n!}=(-1)^n\sqrt{2\pi}\frac{(4n-1)!!}{2^nn!}.
+$$
+显然该序列具有超指数增长，故级数的收敛半径为零。
+
+现在讨论如下问题：函数 $I(\hbar)$ 的渐近展开（如下文所述，可用 Feynman 图求出）究竟在多大程度上
+决定了这个函数？
+
+设
+$$
+\widetilde I(\hbar)=\sum_{n\ge 0}a_n\hbar^n
+$$ 
+是收敛半径为零的级数。一般而言，我们无法唯一确定 $[0,\varepsilon)$ 上以该级数为（渐近）展开的函数 $I$：
+这样的函数总是存在（请自行验证！），但一般没有典范的选取。然而，设 $a_n$ 的指数生成函数
+$$
+g(\hbar)=\sum_{n\ge 0}a_n\frac{\hbar^n}{n!}
+$$ 
+在 $0$ 的某邻域内收敛，可解析延拓到 $[0,\infty)$，且当 $\hbar\to \infty$ 时至多呈指数增长。
+此时存在一种“典范”的方式，构造出 $[0,\varepsilon)$ 上以 $\widetilde I$ 为（渐近）Taylor 展开的光滑函数 $I$，
+称为 $\widetilde I$ 的\emph{Borel 求和}。具体地说，函数 $I$ 由公式
+$$
+I(\hbar)=\int_0^\infty g(\hbar u)e^{-u}du=\hbar^{-1}\int_0^\infty g(u)e^{-\frac{u}{\hbar}}du,
+$$
+定义，亦即 $I(\hbar)=\hbar^{-1}(\mathcal Lg)(\hbar^{-1})$，其中 $\mathcal L$ 是 Laplace 变换
+（注意：由于 $g$ 在无穷远处至多指数增长，该式对充分小的 $\hbar>0$ 有定义）。注意
+$$
+I(\hbar)=\int_{-\infty}^\infty |v|g(\hbar v^2)e^{-v^2}dv=\hbar^{-\frac{1}{2}}\int_{-\infty}^\infty g_*(\hbar^{\frac{1}{2}}v)e^{-v^2}dv,
+$$
+其中 $g_*(v)=|v|g(v^2)$。于是习题 \ref{gencontt2} 表明，为计算 $I$ 的渐近展开，可以把 $g$
+换成它在 $0$ 处的 Taylor 多项式。因此，恒等式 $\int_0^\infty x^ne^{-x}dx=n!$ 说明
+$I$ 具有 Taylor 展开 $\widetilde I$。
+
+例如，考虑发散级数
+$$
+\widetilde I:=\sum_{n\ge  0}(-1)^nn!\hbar^n.
+$$ 
+此时
+$$
+g(\hbar)=
+\sum_{n\ge
+  0}(-1)^n\hbar^n=\frac{1}{1+\hbar}.
+$$ 
+于是 Borel 求和给出
+$$
+I(\hbar)=\int_0^\infty\frac{e^{-u}}{1+\hbar u}du=\hbar^{-1} e^{\hbar^{-1}}E_1(\hbar^{-1})
+$$
+其中 $E_1(x):=\int_{x}^\infty \frac{e^{-u}}{u}du$ 是指数积分。
+
+物理学家预期，在物理上有意义的情形中，量子场论的微扰展开是 Borel 可求和的，真正的答案由这些展开
+经 Borel 求和得到。微扰级数的 Borel 可求和性，实际上已在少数非平凡的 QFT 例子中得到确立。
+
+% [Tutor Note: Borel 求和的要害在于 Borel 变换 $g(u)=\sum_n a_nu^n/n!$ 的解析延拓在 Borel 平面
+% （坐标 $u$）上的奇点。以 $\widetilde I=\sum(-1)^nn!\hbar^n$ 为例，$g(u)=\frac{1}{1+u}$ 在 $u=-1$
+% 处有单极点：把积分路径沿 $u<0$ 变形时极点会与路径相遇，使 $I(\hbar)$ 在 $\hbar$ 的负实轴上出现
+% 割线，跨割跳跃为 $-\frac{2\pi i}{\hbar}e^{\hbar^{-1}}$，其大小正是 $e^{-1/\hbar}$ 型，即非微扰项；
+% 绕奇点一周求和发生 Stokes 跳跃，跳跃幅度由该奇点的留数给出。一般地，Borel 平面中距原点
+% $|u|=c$ 的奇点对应物理上 $e^{-c/\hbar}$ 型的贡献（瞬子效应），而渐近级数本身完全看不到它——
+% 这正是微扰级数需要 Borel 求和（或其推广：旁路处方、resurgence）才能还原真实函数的根源。
+% 另请注意本节末尾习题中的四次型例子：其 $g$ 是超几何函数 ${}_2F_1$ 的特例，可用超几何方程把
+% Borel 求和与 $I$ 的微分方程对应起来核对。]
+
+\begin{exercise} 证明由 \eqref{quartic} 给出的函数等于其渐近展开的 Borel 和。
+
+\textbf{提示}。本例中的函数 $g(z)$ 是超几何函数 ${}_2F_{1}$ 的特例，不能用初等函数表示。
+但它满足一个超几何微分方程。写出该方程，并证明 Laplace 变换把它变成另一个二阶线性微分方程，
+且由 \eqref{quartic} 给出的函数 $I(\hbar)$ 满足该方程。
+\end{exercise} 
+
+\subsection{最速下降的应用}
+我们给出定理 \ref{statphase1} 的一个应用。考虑积分
+$$
+\Gamma(s+1)=\int_0^\infty t^se^{-t}dt,\ s>0.
+$$
+作变量替换 $t=sx$，得到
+$$
+\frac{\Gamma(s+1)}{s^{s+1}}=\int_0^\infty x^se^{-sx}dx=
+\int_0^\infty e^{-s(x-\log x)}dx.
+$$
+于是可以对 $\hbar=\frac{1}{s}$、$f(x)=x-\log x$、$g(x)=1$ 应用定理 \ref{statphase1}
+（当然，此时区间 $[a,b]$ 是无限的，且函数 $f$ 在边界处爆破，但容易看出该定理仍然适用，
+证明完全相同）。函数 $f(x)=x-\log x$ 在 $[0,\infty)$ 上有唯一临界点 $c=1$，且 $f''(c)=1$。
+于是得到
+\begin{equation}\label{stir}
+\Gamma(s+1)\sim s^se^{-s}\sqrt{2\pi s}(1+\tfrac{a_1}{s}+\tfrac{a_2}{s^2}+ \cdots).
+\end{equation} 
+这就是著名的\emph{Stirling 公式}。
+
+此外，还可用注 \ref{exform} 计算系数 $a_1,a_2,...$。具体地说，
+$$
+p(x)=\sqrt{2(x-\log(1+x))}=x\sqrt{1-\tfrac{2x}{3}+\tfrac{x^2}{2}-\dots}=x-\tfrac{x^2}{3}+\tfrac{7x^3}{36}+...
+$$ 
+于是
+$$
+p^{-1}(z)=z+\tfrac{z^2}{3}+\tfrac{z^3}{36}+...,
+$$
+从而
+$$
+(p^{-1})'(z)=1+\tfrac{2z}{3}+\tfrac{z^2}{12}+...,
+$$
+因此由注 \ref{exform} 即得 $a_1=b_2=\frac{1}{12}$。
+
+\begin{remark} 计算该渐近展开的另一种方法是利用 Gamma 函数的 欧拉乘积公式。
+把该公式取对数后求导两次，得到（对 $z>0$）：
+$$
+(\log \Gamma)''(z)=\sum_{n=0}^\infty\frac{1}{(z+n)^2}=\sum_{n=0}^\infty \int_0^\infty te^{-(z+n)t}dt=
+\int_0^\infty \frac{te^{-zt}}{1-e^{-t}}dt. 
+$$
+回忆\emph{Bernoulli 数}由如下生成函数定义：
+$$
+\sum_{n\ge 0}\frac{B_nt^n}{n!}=\frac{t}{1-e^{-t}},
+$$
+例如 $B_0=1,B_1=\frac{1}{2}$，且对 $n\ge 1$ 有 $B_{2n+1}=0$。
+因此当 $z\to \infty$ 时
+$$
+(\log \Gamma)''(z)\sim \sum_{n\ge 0}B_nz^{-n-1}.
+$$
+积分一次，得到
+$$
+(\log \Gamma)'(z)\sim \log z+C_1 -\sum_{n\ge 1}\frac{B_n}{n}z^{-n},
+$$
+再积分一次并加上 $\log z$，得到
+$$
+\log \Gamma(z+1)\sim z\log z-z +C_1z+\frac{1}{2}\log z+C_2+\sum_{n\ge 2}\frac{B_n}{n(n-1)}z^{-n+1}.
+$$
+由 Stirling 公式有 $C_1=0,C_2=\frac{1}{2}\log(2\pi)$，故最终得到
+\begin{equation}\label{loggapri}
+(\log \Gamma)'(z)\sim \log z -\sum_{n\ge 1}\frac{B_n}{n}z^{-n},
+\end{equation} 
+\begin{equation}\label{loggapri1}
+\log \Gamma(z+1)\sim z\log z +\frac{1}{2}\log z +\frac{1}{2}\log(2\pi)+\sum_{n\ge 2}\frac{B_n}{n(n-1)}z^{-n+1}.
+\end{equation} 
+于是
+$$
+1+\tfrac{a_1}{s}+\tfrac{a_2}{s^2}+ \cdots=\exp(\sum_{n\ge 2}\tfrac{B_n}{n(n-1)}s^{-n+1}). 
+$$
+特别地，由 $B_2=\frac{1}{6}$ 得到 $a_1=\frac{1}{12}$。
+\end{remark} 
+
+\begin{exercise} 用分部积分计算非负整数 $n$ 情形的 $\int_0^\pi \sin^nxdx$。
+然后对该积分应用最速下降法，并由此发现 $\pi$ 的一个公式（即所谓\emph{Wallis 公式}）。
+\end{exercise} 
+
+\begin{exercise} Bessel 函数 $I_0(a)$ 由公式
+$$
+I_0(a)=\frac{1}{2\pi}\int_0^{2\pi} e^{a\cos \theta} d\theta.
+$$
+定义。它是偶的整函数，Taylor 展开为
+$$
+I_0(a)=\sum_{n=0}^\infty \frac{a^{2n}}{2^{2n}n!^2}.
+$$
+利用最速下降、驻相公式求 $I_0(a)$ 当 $a\to +\infty$ 与 $a\to i\infty$ 时的渐近展开，
+并计算展开的前两项（参见注 \ref{severa}）。
+\end{exercise} 
+
+\subsection{最速下降与驻相公式的多维版本}
+定理 \ref{statphase1}、\ref{statphase2} 有多维的类比。为陈述它们，设 $V$ 是 $d$ 维实向量空间，
+固定了体积元 $dx$，并设 $D\subset V$ 是带光滑边界的紧区域。\footnote{引入光滑边界这一条件只是为了
+叙述简便，并非本质所需。同样的结果与证明经平凡修改后适用于更一般的区域，例如边界只在适当意义下
+分段光滑的区域。}
+
+\begin{theorem}\label{statphase3}（多维最速下降公式） \linebreak
+设 $f,g: D\to \Bbb R$ 为连续函数，且在 $D$ 的内部光滑。设 $f$ 在 $D$ 上于唯一一点 $c$ 处达到
+全局极小值，且 $c$ 是内点、$f''(c)>0$。则
+\begin{equation}\label{intemult}
+\int_{D} g(x)e^{-\frac{f(x)}{\hbar}}dx=\hbar^{\frac{d}{2}}e^{-\frac{f(c)}{\hbar}}I(\hbar),
+\end{equation}
+其中 $I(\hbar)$ 可延拓为 $[0,\infty)$ 上的光滑函数，且
+$$
+I(0)=
+(2\pi)^{\frac{d}{2}}\frac{g(c)}{\sqrt{\det f''(c)}}.
+$$ 
+\end{theorem} 
+
+\begin{theorem}\label{statphase4}（多维驻相公式）
+设 $f,g: D\to \Bbb R$ 为光滑函数。设 $f$ 在 $D$ 中有唯一临界点 $c$，且 $c$ 是内点、
+$\det f''(c)\ne 0$，而 $g$ 在 $\partial D$ 上的各阶导数全为零。则
+\begin{equation}\label{intemult1}
+\int_{D} g(x)e^{\frac{if(x)}{\hbar}}dx=\hbar^{\frac{d}{2}}e^{\frac{if(c)}{\hbar}}I(\hbar),
+\end{equation}
+其中 $I(\hbar)$ 可延拓为 $[0,\infty)$ 上的光滑函数，且
+$$
+I(0)=
+(2\pi)^{\frac{d}{2}}e^{\frac{\pi i\sigma}{4}}\frac{g(c)}{\sqrt{|\det f''(c)|}},
+$$ 
+其中 $\sigma$ 是对称双线性型 $f''(c)$ 的号差。
+\end{theorem} 
+
+\subsection{Morse 引理}
+为证明这两个定理，方便起见使用多变量微积分中的一项基本结果，即\emph{Morse 引理}。
+该引理容易由下面的定理对维数作归纳而得到。
+
+% [Tutor Note: 请核对三处笔误。定理 \ref{sepvar} 的公式写作
+% $f(x_1,...,x_n)=f(x_1,...,x_{d-1})\pm x_d^2$，左端应为 $f(x_1,...,x_d)$（$x_n$ 与 $x_d$ 混用）；
+% 其证明中 $f_*(y,v):=f(y,u)=f(y,g(y,u))$ 的最后一个表达式应为 $f(y,g(y,v))$，且末尾
+% $f(u,y)=f(0,y)\pm u^2$ 的变量次序与右端均应为 $f(y,u)=f(y,0)\pm u^2$。这些是原文排版笔误，
+% 按规范保留原样未改。另注意多重驻相公式的相位 $e^{\frac{\pi i\sigma}{4}}$ 中的 $\sigma$ 是
+% $f''(c)$ 的号差（$p-q$），而非惯性指数中的某一个；当 $\sigma=0$ 时该因子为 $1$，与
+% Lemma \ref{gi} 中 $B=iQ$ 情形的 $(\det B)^{-\frac{1}{2}}$ 相位完全一致。]
+
+\begin{theorem}\label{sepvar}（变量分离）
+设 $f$ 是开球 $0\in B\subset \Bbb R^d$ 上的光滑函数，在 $0$ 处有非退化临界点，且 $f(0)=0$。
+则在 $0$ 附近（可能需在更小的球内定义）存在局部坐标系，使得
+$$
+f(x_1,...,x_n)=f(x_1,...,x_{d-1})\pm x_d^2. 
+$$
+\end{theorem} 
+
+\begin{proof} 作线性变量替换，可设 $f$ 的二次部分具有形式 $Q(y)\pm u^2$，其中
+$y:=(x_1,...,x_{d-1})$、$u:=x_d$。考虑由方程
+$$
+\partial_uf(y,u)=0.
+$$ 
+定义超曲面 $S$。$\partial_uf(y,u)$ 的线性部分是 $\pm 2u$，故由隐函数定理，在 $0$ 附近存在坐标变换 $F$
+（满足 $dF(0)=1$），把 $u$ 换成 $v:=\pm\frac{1}{2}\partial_uf(y,u)$ 而保持 $y$ 不变；于是
+$u=g(y,v)$，其中 $g$ 满足 $(\partial_vg)(0,0)\ne 0$。令
+$$
+f_*(y,v):=f(y,u)=f(y,g(y,u)).
+$$ 
+则由链式法则
+$$
+\partial_v f_*(y,v)=\partial_u f_*(y,v)\tfrac{\partial u}{\partial v}=\partial_uf(y,u)\tfrac{\partial u}{\partial v}=\pm 2v\partial_{v}g(y,v).
+$$
+因此在新坐标下超曲面 $S$ 由方程 $v=0$ 定义。于是不妨一开始就设 $S$ 由方程 $u=0$ 给出。
+这时 $(\partial_uf)(y,0)=0$，故
+$$
+f(y,u)-f(y,0)=h(y,u)u^2,
+$$
+其中 $h$ 是 $B$ 上的光滑函数，且 $h(0,0)=\pm 1$。
+把 $u$ 换成 $\widetilde u:=\sqrt{|h(y,u)|}u$ 并保持 $y$ 不变，可设 $h=\pm 1$。于是
+$$
+f(u,y)=f(0,y)\pm u^2,
+$$
+此即所断言者。
+\end{proof} 
+
+\begin{corollary}\label{morsele}（Morse 引理）
+设 $f$ 是开球 $0\in B\subset \Bbb R^d$ 上的光滑函数，在 $0$ 处有非退化临界点，且 $f(0)=0$。
+则在 $0$ 附近（可能需在更小的球内定义）存在局部坐标系 $(x_1,...,x_d)$，使得
+$$f=x_1^2+...+x_m^2-x_{m+1}^2-...-x_d^2.$$ 换言之，在非退化临界点附近，光滑函数经坐标变换
+等价于其二次部分。
+\end{corollary} 
+
+\begin{proof} 如上所述，这容易由定理 \ref{sepvar} 对维数作归纳而得到。
+\end{proof}
+
+\begin{exercise} 设 $f$ 是 $\Bbb R^2$ 上的光滑函数，且关于 $x$ 是三次多项式：
+$$
+f(x,y)=a(y)+b(y)x+c(y)x^2+d(y)x^3.
+$$
+设 $a(0)=a'(0)=0$、$b(0)=b'(0)=0$、$a''(0)=c(0)=2$。
+在 $0$ 附近显式求出局部坐标 $u=u(x,y),v=v(x,y)$，使得 $f(x,y)=u^2+v^2$。
+\end{exercise} 
+
+\subsection{多维最速下降与驻相公式的证明}
+多维最速下降公式与驻相公式的证明，与它们一维版本的证明平行，只是要用到 Morse 引理。
+也就是说，Morse 引理允许我们不失一般性地假设 $f$ 在临界点附近是二次的。在此之后，
+最速下降公式的证明与一维情形完全相同。对驻相公式也同样，只需利用下面这个 Riemann 引理的多变量类比。
+
+\begin{lemma}\label{mrl} 设 $f,g: D\to \Bbb R$ 为光滑函数，使得 $g$ 的所有导数在 $\partial D$ 上为零，
+且 $df$ 在 $g$ 的支撑集的任何一点都不为零。则函数
+$$
+I(\hbar):=\int_{D} g(x)e^{\frac{if(x)}{\hbar}}dx
+$$
+可延拓为 $[0,\infty)$ 上的光滑函数，且当 $\hbar\to 0$ 时其各阶导数都快速衰减。
+\end{lemma} 
+ 
+\begin{proof} 由于 $df$ 在 ${\rm supp}g$ 上不为零，可用局部坐标卡 $U_i$ 覆盖 ${\rm supp}g$，
+使得在每个坐标卡中 $f(x)$ 就是最后一个坐标 $x_d$。由紧性可选取有限的覆盖。利用从属于该覆盖的、
+${\rm supp}g$ 上的单位分解 $\lbrace h_i\rbrace$，并把 $g$ 换成 $h_ig$，
+可不妨设 $g$ 的支撑集含于单个坐标卡内。再作变量替换，还可设 $f(x)=x_d$。
+然后对变量 $x_1,...,x_{d-1}$ 积分消去，即化归为引理 \ref{riem} 所处理的一维情形。
+\end{proof} 
+
+\begin{remark}\label{severa} 由驻相公式的证明可以看出，当 $f$ 有若干个临界点、而它们都是内点且非退化时，
+该公式仍然成立。此时来自不同临界点的渐近展开直接相加即可。对最速下降公式亦同样，只要全局极小值
+在若干个内点且非退化的点处同时达到。
+\end{remark} 
+
+\bigskip
+\noindent\rule{\textwidth}{0.6pt}
+
+% [Tutor Note: 本章小结与两处跳步。(i) Lemma \ref{mrl} 的证明用了单位分解与紧性把问题局域化，
+% 这是“显然”却常被略过的一步：$df\ne 0$ 只保证局部可把 $f$ 取作末坐标（隐函数定理），而
+% “$g$ 的各阶导数在边界上为零”保证了分部积分不产生边界项。(ii) 注 \ref{severa} 的“相加”
+% 在实积分中看似平凡，但它正是复围道形变与 Stokes 现象的入口：把围道变形到复鞍点后，不同鞍点的
+% 贡献按指数大小分层（$e^{-\frac{f(c)}{\hbar}}$ 的大小），当参数穿越某条 Stokes 线时，某个
+% 指数小的鞍点贡献会突然“开启”，使渐近展开发生跳跃——这就是本章 Borel 求和讨论的几何根源。
+% (iii) 使用本章公式时的核对清单：指数因子前的 $\hbar^{\frac{d}{2}}$、Hessian 平方根倒数、
+% 实情形无相位／虚情形 $e^{\pm\frac{\pi i}{4}}$（多维 $e^{\frac{\pi i\sigma}{4}}$）、以及
+% 端点导数条件是否满足，四项逐一检查即可避免绝大多数符号与 $2\pi$ 因子错误。]
+

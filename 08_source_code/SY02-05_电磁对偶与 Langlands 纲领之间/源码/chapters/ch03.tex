@@ -1,0 +1,918 @@
+% ============================================================================
+% 第 3 章 Fourier 理论/阿贝尔对偶（Fourier theory/abelian duality）
+% 原文 pp. 29--44，Lecture 5（2021-02-02）、Lecture 6（2021-02-04）
+% 说明：原文内嵌交换图（p029_d1、p030_d1、p031_d1、p032_d1、p034_d1--d3、
+%       p036_d1、p037_d1）的裁剪件均含正文残片或缺标签，故各图按原版面
+%       用 LaTeX 数组重排；文件名见各处注释。
+% ============================================================================
+\chapter{Fourier 理论与阿贝尔对偶}\label{ch:03}
+
+\begin{keytakeaways}
+本章把上一章的谱分解机器用于最古典的情形：交换群 $G$ 在其表示上的作用。由于所有算子 $\rho(g)$ 彼此交换，谱由 $G$ 的\term{特征标}{character}（一维酉表示）组成，即对偶群 $G^{\vee}$；Fourier 变换就是“沿 $G^{\vee}$ 层化”的显式版本。作者依次处理：有限群（群代数 $\C G$ 与其交换性）、局部紧 Abel 群（Pontrjagin 对偶，$L^1$ 群代数的 Gelfand 谱）、$\R$ 与环面（经典 Fourier 变换，微分 $\leftrightarrow$ 乘以坐标）、Cartier 对偶（代数群、Hopf 代数与余模、形式完备化）。第 3.7 节把上述对偶统一为 Pontrjagin--Poincaré 对偶 $H^i(M,G)^{\vee}\simeq H^{n-i}(M,G^{\vee})$，并以 A-侧（$\Z$ 系数）/B-侧（$\C^{\times}$ 系数）在 1--4 维的例子（T-对偶、镜像对称、电磁对偶的雏形）作结，汇总于表 3.1。
+\end{keytakeaways}
+
+我们已看到，只要有一个“谱字典”，我们就得到谱分解的概念：模变成层，而层的概念取决于具体语境。这给了我们把模代数铺展到空间的几何或拓扑上的一种方式。
+
+为使之有用，我们需要交换代数的有趣来源。交换算子的一种自然来源是有一个 Abel 群 $G$ 作用在向量空间 $V$ 上：给定态射
+\begin{equation}\tag{3.1}
+\rho\colon G\to\Aut(V),
+\end{equation}
+我们得到一族算子 $\{\rho(g)\}_{g\in G}$，并可用这些算子对 $V$ 作谱分解。这正是 Fourier 理论的内容。所以我们把 Fourier 理论看成谱分解的某种特例。
+
+\section{特征标}
+
+\begin{sectionkey}
+交换群表示的谱由其\term{特征标}{character}（一维表示）构成；所有特征标在逐点乘法下又组成对偶群 $G^{\vee}$。本节建立“表示 $\leftrightarrow$ 对偶群上的层”这一字典的最初版本。
+\end{sectionkey}
+
+设 $V$ 是 Abel 群 $G$ 的表示，即有一个映射
+\begin{equation}\tag{3.2}
+\begin{array}{ccc}
+G & \longrightarrow & \Aut(X)\ \subset\ \End(V)\\[2pt]
+g & \longmapsto & T_g
+\end{array}
+\end{equation}
+使得 $T_gT_h=T_{gh}$。
+% 原文内嵌图 p029_d1.png（裁剪含 “Au” 等正文残片），此处按原版面重排。
+% [Tutor Note: 印刷版 (3.2) 写作 $\Aut(X)$，但按上下文（$g\mapsto T_g$ 是 $V$ 上的算子、且右侧为 $\End(V)$）应为 $\Aut(V)$。这是原文笔误，照录并标出。另注意 $\Aut(V)\subset\End(V)$ 只是幺半群包含：$G$ 的群同态经此包含成为到乘法幺半群的映射，这正是下一节 (3.6)--(3.8) 要用“幺半群而非群”作伴随的原因。]
+
+\begin{srcex}{9}
+若 $G$ 作用在空间 $X$ 上，而 $V$ 是 $X$ 上的函数，则得到 $G$ 在 $V$ 上的作用。
+\end{srcex}
+
+\begin{srcex}{10}
+$G$ 总作用在自身之上，因此它作用在 $G$ 自身的函数上。这就是\term{正则表示}{regular representation}。
+\end{srcex}
+
+现在我们要作谱分解。首先需要知道谱是什么，所以我们提出如下问题。
+
+\textbf{问题 1.} 可能的特征值是什么？
+
+设 $v\in V$ 是特征向量：
+\begin{equation}\tag{3.3}
+g\cdot v=\chi(g)v,
+\end{equation}
+其中
+\begin{equation}\tag{3.4}
+\chi\colon G\to\Aut_{\C}\,V=\C^{\times}\subset\C
+\end{equation}
+是群同态，即 $G$ 的一个\term{特征标}{character}。于是可能的特征值是特征标：
+\begin{equation}\tag{3.5}
+G^{\vee}=\{\text{特征标}\}=\Hom_{\mathbf{Grp}}\bigl(G,\C^{\times}\bigr).
+\end{equation}
+这就是谱，即我们将在 $G^{\vee}$ 上作谱分解。
+
+\section{有限 Fourier 变换}
+
+\begin{sectionkey}
+对有限群 $G$，表示等价于群代数 $\C G$ 上的模；$\Spec(\C G,\ast)=G^{\vee}$ 给出“Fourier 变换 = 沿对偶群层化”的第一个严格版本，并引出对偶群与双对偶同构。
+\end{sectionkey}
+
+现在设 $G$ 是有限群。\footnote{这是一个简化假设，这样我们不必担心所考虑的是“哪一类”函数。}我们最终会假设 $G$ 是 Abel 群，但现在还不需要。我们想看到 $G^{\vee}$ 出现在谱处。对复表示 $V$ 有群映射 $G\to\Aut\,V$，但它与包含
+\begin{equation}\tag{3.6}
+\begin{array}{ccc}
+G & \longrightarrow & \Aut\,V\ \subset\ \End(V)\\
+& \searrow\llap{\scriptsize 幺半群映射} &
+\end{array}
+\end{equation}
+的复合是一个幺半群映射。换言之，$V$ 给出
+\begin{equation}\tag{3.7}
+\Hom_{\mathbf{Monoid}}\bigl(G,\operatorname{Forget}(\End\,V)\bigr)
+\end{equation}
+的一个元素。
+
+和之前一样，我们有伴随性：
+\begin{equation}\tag{3.8}
+\Hom_{\mathbf{Monoid}}\bigl(G,\operatorname{Forget}(\End\,V)\bigr)
+=\Hom_{\C\text{-}\mathbf{Alg}}(?,\End\,V),
+\end{equation}
+其中缺的项应是某种自由构造。事实证明，答案是\term{群代数}{group algebra}：
+\begin{equation}\tag{3.9}
+?=\C G.
+\end{equation}
+这是由标量乘法与 $G$ 的元素之和自由生成的代数。由于群有限，这只是
+\begin{equation}\tag{3.10}
+\C G=\Bigl\{\sum_{g\in G}f(g)\cdot g\Bigr\},
+\end{equation}
+其中 $f\colon G\to\C$ 是任意函数。确实我们应把 $f$ 想成测度而非函数。$G$ 有限时没有区别，但对任意 $g\in G$ 我们都想要一个典范元素
+\begin{equation}\tag{3.11}
+\delta_g=1\cdot g\in\C G,
+\end{equation}
+意思是系数来自某个在 $g$ 处为 $1$、别处为 $0$ 的 $f$，而这一般不是函数。
+% 原文内嵌图 p030_d1.png（裁剪只含 “Aut V/⊂/monoid map” 与箭头），此处按原版面重排。
+% [Tutor Note: 当 $G$ 非交换时 $\C G$ 非交换，$\Spec$ 无从谈起；因此本章最终必须限制到 Abel 群（作者随后即如此假设）。(3.10) 把 $\C G$ 写成“函数之和”，实际只在 $G$ 有限时成立；一般 $G$ 应写成有限支撑函数（即测度）的代数，这就是正文紧接着强调“应把 $f$ 想成测度”的原因。]
+
+我们可以把 $\C G$ 想成由元素 $\delta_g$（$g\in G$）生成。代数结构来自卷积：
+\begin{equation}\tag{3.12}
+\delta_f\ast\delta_g=\delta_{fg}.
+\end{equation}
+一般地
+\begin{align}
+f_1\ast f_2&=\sum_g f_1(g)g\ast\sum_h f_2(h)h\tag{3.13}\\
+&=\sum_k\Bigl(\sum_{gh=k}f_1(g)f_2(h)\Bigr)k\tag{3.14}\\
+&=\sum_k\sum_g f_1(g)f_2(kg^{-1})\cdot k.\tag{3.15}
+\end{align}
+
+可用乘法映射 $\mu\colon G\times G\to G$ 表达卷积。有两个投影 $\pi_1$ 与 $\pi_2$：
+\begin{equation}\tag{3.16}
+\begin{array}{ccc}
+G\times G & \xrightarrow{\ \mu\ } & G\\
+\swarrow_{\pi_1} & & \searrow^{\pi_2}\\
+G & & G
+\end{array}
+\end{equation}
+% 原文内嵌图 p031_d1.png（仅两支对角箭头带 π 标签），此处按原版面重排。
+
+把 $f_1$ 沿 $\pi_1$ 拉回、$f_2$ 沿 $\pi_2$ 拉回，得到 $G\times G$ 上的函数：
+\begin{equation}\tag{3.17}
+f_1\boxtimes f_2:=\pi_1^{*}f_1\,\pi_2^{*}f_2.
+\end{equation}
+再沿 $\mu$ 推前，结果就是卷积：
+\begin{equation}\tag{3.18}
+f_1\ast f_2=\mu_{*}(f_1\boxtimes f_2)=\int_{\mu}f_1\boxtimes f_2.
+\end{equation}
+要点是：只要有可这样拉回与推前的对象，就能以这种方式定义群代数。
+
+对 $G\circlearrowleft V$，我们把这一切扩充为 $\C G\circlearrowleft V$ 的作用。于是 $G$ 是 Abel 群当且仅当 $(\C G,\ast)$ 是交换代数。所以现在 $G$ 的表示论将在其上作层化的根本对象是
+\begin{equation}\tag{3.19}
+\Spec(\C G,\ast),
+\end{equation}
+而事实证明
+\begin{equation}\tag{3.20}
+\Spec(\C G,\ast)=G^{\vee},
+\end{equation}
+即
+\begin{equation}\tag{3.21}
+(\C G,\ast)\simeq\bigl(\cO(G^{\vee}),\cdot\bigr).
+\end{equation}
+
+这是 Fourier 变换的第一个版本。想法是：映射 $\Spec\,k\to\Spec\,A$ 等同于态射 $A\to k$，而后者恰是 $G$ 的一维表示，即一个特征标。在此对应下，特征标 $\chi_t\in\C G$（$t\in G^{\vee}$）对应点 $\delta_t\in\cO(G^{\vee})$（$t\in G^{\vee}$）。此外，平移 $g$ 对应乘以 $g^{\vee}$，即特征标
+\begin{equation}\tag{3.22}
+t\mapsto\chi_t(g).
+\end{equation}
+% [Tutor Note: (3.21) 的对偶性要成立必须限制在 Abel 群 $G$ 上；$\Spec(\C G,\ast)$ 中的 $\ast$ 提醒读者这里取的是卷积乘法。另注意 (3.22) 的 $g^{\vee}$ 是指 $g$ 在对偶群中对应的特征标 $\chi\mapsto\chi(g)$，而不是某个新变量；下一小节 (3.26) 的双对偶映射会把它讲清楚。]
+
+我们可以稍微改写这一等价，使“这是 Fourier 变换的某种版本”更明显。若 $f$ 是 $G$ 上的函数，则可写
+\begin{equation}\tag{3.23}
+f=\sum_{t\in G^{\vee}}\hat f(t)\cdot\chi_t.
+\end{equation}
+这只是用特征标基表示 $f$。然后可把 $\hat f(t)$ 恢复为 $f$ 在这组正交归一的基中的系数。我们还有
+\begin{equation}\tag{3.24}
+f\ast(-)=\hat f\cdot(-).
+\end{equation}
+
+\subsection{隐藏的对称性}
+
+这里有一个隐藏的对称性。$G^{\vee}$ 本身在逐点乘法下是 Abel 群，即
+\begin{equation}\tag{3.25}
+\chi_{t\cdot s}:=\chi_t\cdot\chi_s.
+\end{equation}
+把相应的 Abel 群称为 $G$ 的\term{对偶群}{dual group}。
+
+要看出这是一个好的对偶，注意有一个重言映射
+\begin{equation}\tag{3.26}
+\begin{array}{ccc}
+G & \xrightarrow{\ \sim\ } & G^{\vee\vee}\\[2pt]
+g & \longmapsto & \{\chi\mapsto\chi(g)\},
+\end{array}
+\end{equation}
+它实际上是同构。
+
+我们可以用更对称的方式建立这一切。有两个投影：
+\begin{equation}\tag{3.27}
+\begin{array}{ccc}
+& G\times G^{\vee} &\\
+\swarrow_{\pi_1} & & \searrow^{\pi_2}\\
+G & & G^{\vee}
+\end{array}
+\end{equation}
+% 原文内嵌图 p032_d1.png（仅两支对角箭头带 π 标签），此处按原版面重排。
+以及一个重言对象，称为\term{万有特征标}{universal character}，生活在 $G\times G^{\vee}$ 上：
+\begin{equation}\tag{3.28}
+\begin{array}{c}
+\chi(-,-)\\[-2pt]
+\downarrow\\[-2pt]
+G\times G^{\vee}
+\end{array},
+\end{equation}
+即 $G\times G^{\vee}$ 上的函数，由
+\begin{equation}\tag{3.29}
+\chi(g,t)=\chi_t(g)=\chi_g(t)
+\end{equation}
+给出。
+
+于是 $f\in\operatorname{Fun}(G)$ 的 Fourier 变换由如下步骤给出：拉到 $G\times G^{\vee}$ 上，乘以 $\chi$，再沿 $\pi_2$ 推前求和：
+\begin{equation}\tag{3.30}
+f\mapsto\pi_{2*}\bigl(\pi_1^{*}f\cdot\chi\bigr).
+\end{equation}
+显式地，Fourier 变换是
+\begin{equation}\tag{3.31}
+\hat f(t)=\sum_g f(g)\overline{\chi(g,t)}
+\end{equation}
+与
+\begin{equation}\tag{3.32}
+f(g)=\sum_t\hat f(t)\chi(g,t).
+\end{equation}
+% [Tutor Note: (3.31) 的复共轭不能丢：在有限 Abel 群上 $\overline{\chi(g,t)}=\chi(g,t)^{-1}$，它正是逆变换中“正交关系”的来源，也是 (3.32) 不含共轭的原因。若把 (3.31)(3.32) 视为互逆变换，还必须补上归一化因子 $1/|G|$（或把 $f$ 视为测度、$\hat f$ 视为函数），作者在这里用的是“测度--函数”约定，故两式表面上不对称。]
+
+我们已同时对角化了所有 $g\in G$ 在 $\operatorname{Fun}(G)$ 上的作用。
+
+对任何带 $G$ 作用的 $V$，我们得到 $(\C G,\ast)$ 在 $V$ 上的作用，于是 $V$ 在 $G^{\vee}$ 上作谱分解，即
+\begin{equation}\tag{3.33}
+V=\bigoplus_{t\in G^{\vee}}V_{\chi_t},
+\end{equation}
+其中 $G$ 在子空间 $V_{\chi_t}$ 上按 $\chi_t$ 指定的特征值作用。
+
+这给出有限 Abel 群复表示论的完整图景。同样的形式体系在任何有 Abel 群的设定中都适用。我们将聚焦于拓扑群与代数群的设定。一切看起来大体相同，区别只在于我们考虑哪一类函数。
+
+\section{Pontrjagin 对偶}
+
+\begin{sectionkey}
+对局部紧 Abel 群，\term{Pontrjagin 对偶}{Pontrjagin duality}用酉特征标群 $G^{\vee}$ 取代有限群情形下的特征标集合；$L^1$ 群代数的 Gelfand 谱与 Fourier 变换把分析问题翻译为 $G^{\vee}$ 上的函数代数问题。
+\end{sectionkey}
+
+设 $G$ 是局部紧 Abel（LCA）群。
+
+\begin{srcex}{11}
+$\Z$、$\mathrm{U}(1)$、$\R$、$\Q_p$ 与 $\Q_p^{*}$ 都是（非有限的）例子。
+\end{srcex}
+
+定义对偶为\term{酉特征标}{unitary character}之集
+\begin{equation}\tag{3.34}
+G^{\vee}=\Hom_{\mathbf{TopGrp}}\bigl(G,\mathrm{U}(1)\bigr).
+\end{equation}
+
+\begin{srcrem}{14}
+不应太惊讶于把 $\C^{\times}$ 换成 $\mathrm{U}(1)\subset\C^{\times}$。若 $G$ 有限，所有特征标理论本来就由 $\mathrm{U}(1)$ 捕获。
+\end{srcrem}
+% [Tutor Note: 对一般 LCA 群，$G^{\vee}$ 要取紧开拓扑才成为拓扑群（Pontrjagin 定理）；(3.34) 只写了集合。“$G$ 紧 $\Leftrightarrow$ $G^{\vee}$ 离散”这一条（见 p.~35）正是紧开拓扑的直接推论，后文 (3.50)--(3.51) 用它解释 $e^{2\pi inx}\in L^2$ 与 $\delta_n\in\ell^2$ 的差别。]
+
+\subsection{群代数}
+
+谱将再次是群代数的 $\Spec$，但我们需要确定此语境下群代数的恰当定义。
+
+给 $G$ 装备 Haar 测度。之前我们有计数测度，可以在函数与测度之间自由转换（因此特别地它们都既可推前也可拉回）。
+
+现在 $L^1(G)$ 以与式 (3.18) 完全相同的方式具有卷积结构：
+\begin{equation}\tag{3.35}
+f_1\ast f_2=\int_{g\in G}f_1(h)f_2(gh^{-1})\,dg.
+\end{equation}
+% [Tutor Note: 印刷版 (3.35) 的被积函数用了自由变量 $h$，而积分变量是 $g$，这在原文中即不一致。按 (3.18) 的推前定义应写成 $\int_{g\in G}f_1(g)f_2(g^{-1}h)\,dg$，或把积分变量改为 $h$。叉积次序（$gh^{-1}$ 还是 $g^{-1}h$）取决于群乘法约定，翻译时照录原文，读者按 $f_1\ast f_2(h)=\int f_1(g)f_2(g^{-1}h)dg$ 校正即可。]
+
+和之前一样，这个卷积来自一个伴随。也就是说，它在 $C^{*}$-代数世界中满足一条泛性质。若有一个表示
+\begin{equation}\tag{3.36}
+G\to\End(V),
+\end{equation}
+则它对应一个 $C^{*}$-代数态射
+\begin{equation}\tag{3.37}
+\bigl(L^1(G),\ast\bigr)\to\End(V).
+\end{equation}
+% [Tutor Note: 严格说 $L^1(G)$ 只是 Banach $*$-代数而非 $C^*$-代数（$C^*$-包络才得到群 $C^*$-代数 $C^*(G)$）；作者说“$C^*$-代数世界”是口语化的说法。用 $L^1(G)$ 的好处是（对 Abel $G$）Gelfand 理论直接给出 $G^{\vee}$，无需先取包络。]
+
+谱是 Gelfand 谱：
+\begin{equation}\tag{3.38}
+m\text{-}\Spec\bigl(L^1(G),\ast\bigr)=G^{\vee}.
+\end{equation}
+这是 Fourier 变换的一个版本，它说：
+\begin{equation}\tag{3.39}
+\bigl(L^1(G),\ast\bigr)\simeq\bigl(C_v(G^{\vee}),\cdot\bigr),
+\end{equation}
+其中 $C_v$ 表示消失于无穷的函数。另一个版本说有一个重言映射
+\begin{equation}\tag{3.40}
+G\to G^{\vee\vee},
+\end{equation}
+它是同构。
+
+再次地，这可写成对称的形式：
+\begin{equation}\tag{3.41}
+f\mapsto\pi_{2*}\bigl(\pi_1^{*}f\cdot\chi\bigr),
+\end{equation}
+其中
+\begin{equation}\tag{3.42}
+\begin{array}{ccc}
+& \chi &\\
+& \downarrow &\\
+& G\times G^{\vee} &\\
+\swarrow_{\pi_1} & & \searrow^{\pi_2}\\
+G & & G^{\vee}
+\end{array}.
+\end{equation}
+% 原文内嵌图 p034_d1.png（含 G×G∨ 与两支投影箭头、上方 χ 的标签为正文），此处按原版面重排。
+
+对 $G$ 上任何函数或分布概念，都可作此 Fourier 变换操作。问题是：给定输入的函数类型，另一侧得到什么类型的函数？对 $L^2$ 函数我们简单地得到：
+\begin{equation}\tag{3.43}
+L^2(G)\xrightarrow{\ \sim\ }L^2(G).
+\end{equation}
+这些 Fourier 变换概念都有相同的一般特征，其中包括：
+
+（i）群元素平移变成逐点乘法。
+
+（ii）卷积也变成逐点乘法。
+
+（iii）特征标对应点。
+% [Tutor Note: (3.43) 右端照印本写作 $L^2(G)$，按 Fourier 变换的定义应为 $L^2(G^{\vee})$（Plancherel 定理：Fourier 变换是 $L^2(G)\to L^2(G^{\vee})$ 的等距同构）。这是原文的记号笔误，特此标出。]
+
+\subsection{Fourier 级数}
+
+取 $G=\mathrm{U}(1)$。则
+\begin{equation}\tag{3.44}
+G^{\vee}=\Hom_{\mathbf{TopGrp}}\bigl(\mathrm{U}(1),\mathrm{U}(1)\bigr)=\Z,
+\end{equation}
+其中 $n\in\Z$ 对应
+\begin{equation}\tag{3.45}
+x\mapsto e^{2\pi inx}.
+\end{equation}
+于是 Fourier 变换建立等价
+\begin{equation}\tag{3.46}
+L^2\bigl(\mathrm{U}(1)\bigr)\xrightarrow{\ \sim\ }L^2(\Z)=\ell^2.
+\end{equation}
+和之前一样，这是对称的。有万有特征标
+\begin{equation}\tag{3.47}
+\chi\colon (x,n)\mapsto e^{2\pi inx},
+\end{equation}
+生活在 $\mathrm{U}(1)\times\Z$ 上，并有通常的投影：
+\begin{equation}\tag{3.48}
+\begin{array}{ccc}
+& \mathrm{U}(1)\times\Z &\\
+\swarrow & & \searrow\\
+\mathrm{U}(1) & & \Z
+\end{array}.
+\end{equation}
+% 原文内嵌图 p034_d2.png、p034_d3.png（分别只含一支投影箭头），此处按原版面重排。
+
+于是可以反着读。特征标
+\begin{equation}\tag{3.49}
+\Z\to\mathrm{U}(1)
+\end{equation}
+由 $1\in\Z$ 的像决定，所以 $\Z$ 的特征标由 $\mathrm{U}(1)$ 的点标号。
+
+一般地，在 Pontrjagin 对偶中，$G$ 紧当且仅当 $G^{\vee}$ 离散。具体地，对 $n\in\Z$ 有
+\begin{equation}\tag{3.50}
+e^{2\pi inx}\in L^2,
+\end{equation}
+因为 $G$ 紧。类似地，因为 $\Z$ 离散，
+\begin{equation}\tag{3.51}
+\delta_n\in\ell^2.
+\end{equation}
+
+\begin{flushright}\small 第 5 讲；2021 年 2 月 2 日\end{flushright}
+
+\section{Fourier 变换}
+
+\begin{sectionkey}
+在 $\R^n$、环面与格上具体化 Pontrjagin 对偶：万有特征标 $e^{2\pi i\langle x,t\rangle}$ 给出经典 Fourier 变换；微分算子 $d/dx$ 对应乘以坐标 $t$，从而把“群论一侧”翻译为“几何一侧”。
+\end{sectionkey}
+
+回忆 $\mathrm{U}(1)$ 的 Pontrjagin 对偶是 $\Z$。特征标 $\mathrm{U}(1)\to\mathrm{U}(1)$ 由 $z\mapsto z^{n}$（$n\in\Z$）给出。类似地，$\Z$ 的对偶是 $\mathrm{U}(1)$。
+
+可把 $\mathrm{U}(1)$ 换成环面 $T$，它定义为
+\begin{equation}\tag{3.52}
+T=\R^{d}/\Lambda=\Lambda\otimes_{\Z}\mathrm{U}(1),
+\end{equation}
+其中 $\Lambda\subset\Z^{d}$ 是满秩格。$T$ 的对偶是对偶格：
+\begin{equation}\tag{3.53}
+T^{\vee}=\Lambda^{\vee}.
+\end{equation}
+类似地，格 $\Lambda$ 的对偶是对偶环面：
+\begin{equation}\tag{3.54}
+T^{\vee}=\Lambda^{\vee}\otimes_{\Z}\mathrm{U}(1).
+\end{equation}
+% [Tutor Note: (3.53) 与 (3.54) 的左边都印作 $T^{\vee}$，但二者说的是不同对象的对偶：环面的对偶是格 $\Lambda^{\vee}$（离散），格的对偶是环面 $\Lambda^{\vee}\otimes_{\Z}\mathrm{U}(1)$。作者用同一个符号 $T^{\vee}$ 是记号滥用；后文 (3.81)(3.124) 中的 $T^{\vee}$ 一律指“对偶环面”。这是阅读本节最容易出错处。]
+
+经典 Fourier 变换取 $G$ 为实向量空间。对 $G=\R_x$，对偶是另一个 $\R$：$G^{\vee}=\R_t$。用与之前相同的操作、万有特征标
+\begin{equation}\tag{3.55}
+\chi(x,t)=e^{2\pi ixt},
+\end{equation}
+得到通常的 Fourier 变换。对一般实向量空间，对偶是对偶向量空间，特征标是
+\begin{equation}\tag{3.56}
+\chi(x,t)=e^{2\pi i\langle x,t\rangle},
+\end{equation}
+其中配对是向量空间与其对偶之间的通常配对。
+
+回忆在 $\mathrm{U}(1)$ 与 $\Z$ 的对偶语境中，特征标对应点。现在情形不同：特征标不再是 $L^2$（因为 $\R$ 不像 $\mathrm{U}(1)$ 那样紧），点也不孤立（因为 $\R$ 不像 $\Z$ 那样离散）。但我们仍有
+\begin{equation}\tag{3.57}
+f(x)=\int_{\R}\hat f(t)e^{2\pi ixt}\,dt.
+\end{equation}
+
+微分 $d/dx$ 的运算对应另一侧的乘以 $t$。我们应把 $d/dx$ 想成群平移的无穷小版本，而平移此前变成乘法。所以这是同一框架的一部分：一侧的群论对应于另一侧的几何。
+
+一般地，设 $G$ 是李群，其 Lie 代数 $\fg$ 交换。有从 $\fg$ 到 $G$ 上向量场的映射
+\begin{equation}\tag{3.58}
+\fg\to\Vect G\subset\mathrm{Diff}(G),
+\end{equation}
+并且在
+\begin{equation}\tag{3.59}
+\operatorname{Forget}\colon \mathbf{Alg}_{\mathrm{Assoc.}}\to\mathbf{Lie}\text{-}\mathbf{Alg}
+\end{equation}
+与函子
+\begin{equation}\tag{3.60}
+U\colon \mathbf{Lie}\text{-}\mathbf{Alg}\to\mathbf{Alg}_{\mathrm{Assoc.}}
+\end{equation}
+之间有伴随，后者把 Lie 代数送到\term{泛包络代数}{universal enveloping algebra}。$\fg$ 交换，所以泛包络代数就是对称代数
+\begin{equation}\tag{3.61}
+U(\fg)=\operatorname{Sym}^{*}\fg.
+\end{equation}
+$U\fg$ 现在是作用在 $C^{\infty}(G)$ 上的交换代数。因此可在
+\begin{equation}\tag{3.62}
+\Spec\,U\fg=\fg^{*}
+\end{equation}
+上作谱分解/层化。例如对作用在 $\R_x$ 上的 $d/dx$，
+\begin{equation}\tag{3.63}
+\fg^{*}=\R_t=\Spec_{\R}\R[d/dx=t].
+\end{equation}
+% [Tutor Note: (3.63) 印刷版右端为 “$\Spec\R\R[d/dx=t]$”，其中连续出现两个 $\R$ 是排版重复，应读作 $\Spec_{\R}\R[d/dx=t]$：即在实系数多项式环 $\R[d/dx]$ 上取 $\Spec$，得到 $\R_t$。这里 $\fg=\R$（$G=\R$ 的交换 Lie 代数），$\fg^{*}=\R_t$ 是“动量/频率”坐标所在的直线，与 (3.57) 中 $t$ 的角色一致。]
+
+\begin{srcex}{12}
+$\mathrm{U}(1)$ 的对偶是 $\Z\subset\R_t$。
+\end{srcex}
+
+\section{在量子力学中}
+
+\begin{sectionkey}
+经典相空间的 $T^{*}M$ 与量子态空间 $L^2(M)$ 给出同一对偶的物理版本：位置算子与动量算子互为 Fourier 对偶；在 $M=\R^n$ 上对角化动量即 Fourier 变换，这就是一维 Abel 对偶（“一维镜像对称”）。
+\end{sectionkey}
+
+在我们看到 Fourier 变换如何出现在量子力学中之前，先考虑经典力学。若想建模一个在流形 $M$ 中运动的粒子，则相空间是余切丛 $T^{*}M$，$M$ 上有位置坐标 $q$，纤维方向有动量坐标 $p$。可观测量构成：
+\begin{equation}\tag{3.64}
+\text{$M$ 上的函数}\otimes\operatorname{Sym}TM.
+\end{equation}
+在量子力学中，态空间被 $\mathcal{H}=L^2(M)$ 取代。可观测量包含 $\mathrm{Diff}(M)$，即 $M$ 上的微分算子。在其中我们有两块：
+\begin{equation}\tag{3.65}
+\begin{array}{ccc}
+\text{$M$ 上的函数} & \longrightarrow & \mathrm{Diff}(M)\\
+TM & \nearrow &
+\end{array},
+\end{equation}
+其中
+\begin{equation}\tag{3.66}
+p_j=i\frac{d}{dq_j}.
+\end{equation}
+在经典力学中类似的两块交换。但这里它们差一项才交换：切向量 $\xi\in TM$ 与函数 $f\in\operatorname{Fun}(M)$ 必须满足
+\begin{equation}\tag{3.67}
+\xi f=f\xi+\hbar f'.
+\end{equation}
+% [Tutor Note: (3.66) 取 $p_j=i\,d/dq_j$（数学约定，$\hbar$ 已吸收进 $p$），此时 $[p_j,q_k]=i\delta_{jk}$；而 (3.67) 又写成 $\xi f=f\xi+\hbar f'$，两式的归一化并不一致——若按 (3.66)，(3.67) 右端应为 $i f'$（或把 $p$ 改回物理约定 $-i\hbar\partial$）。此外 (3.67) 中 $f'$ 应理解为 $\xi(f)$，即沿 $\xi$ 的方向导数，而非对某个坐标的偏导。这是本节最容易混用的符号。]
+% 原文内嵌图 p036_d1.png（仅含两支射入 Diff(M) 的箭头），此处按原版面重排。
+
+总结起来，态看起来像“可观测量的平方根”。位置算子
+\begin{equation}\tag{3.68}
+q_j\cdot(-)
+\end{equation}
+被对角化，而动量算子作为导数作用。
+
+我们也可转到\term{动量图景}{momentum picture}，即改为对角化 $p_i$（导数）。对 $M=\R^{n}$，我们有不变向量场的自然基（这是群的好处）。现在可同时对角化
+\begin{equation}\tag{3.69}
+p_j=i\frac{d}{dx_j}
+\end{equation}
+以识别
+\begin{equation}\tag{3.70}
+L^2\bigl(\R^{n}_{q}\bigr)\simeq L^2\bigl(\R^{n}_{p}\bigr),
+\end{equation}
+这就是 Fourier 变换。人们可以说，这把 $G$ 的量子力学与 Pontrjagin 对偶 $G^{\vee}$ 的量子力学等同起来。这是 Abel 对偶的一维情形，或“一维镜像对称”。
+
+\section{Cartier 对偶}
+
+\begin{sectionkey}
+把 Fourier 对偶搬进代数几何：代数群由点函子定义，\term{Cartier 对偶}{Cartier dual} $G^{\vee}=\Hom_{\mathbf{GrpAlg}}(G,\GG_m)$ 在 Hopf 代数层面就是 $\cO(G)^{*}$；有限 Abel 群概形的表示论等价于对偶群上的拟凝聚层。形式完备化（例 19）说明为何需要幂零理想。
+\end{sectionkey}
+
+这就是我们一直在做的同一套 Fourier 理论，但处于代数几何语境，即我们考虑代数函数而非连续函数等。我们最终会看到这种对偶出现在物理（电磁对偶）以及数论（类域论）中。
+
+要在代数几何世界中说一个群是什么，需要回顾\term{点函子}{functor of points}的概念。对一个簇 $X$，可联系一个函子 $\mathbf{cRing}\to\mathbf{Set}$，把环 $R$ 送到
+\begin{equation}\tag{3.71}
+X(R)=\Hom(\Spec\,R,X).
+\end{equation}
+事实证明，指定这个函子等同于指定 $X$ 本身。
+
+一个簇 $G$ 是\term{代数群}{algebraic group}，若相联系的点函子 $\mathbf{cRing}\to\mathbf{Set}$ 提升为取值于群范畴的函子：
+\begin{equation}\tag{3.72}
+\begin{array}{ccc}
+\mathbf{cRing} & \longrightarrow & \mathbf{Set}\\
+& \searrow & \uparrow\\
+& \mathbf{Grp} &
+\end{array},
+\end{equation}
+% 原文内嵌图 p037_d1.png（含虚线与竖直箭头），此处按原版面重排。
+即
+\begin{equation}\tag{3.73}
+G(R)=\Hom(\Spec\,R,G)
+\end{equation}
+是一个群。
+
+\begin{srcrem}{15}
+有时在代数群的定义中还假设别的东西，我们这里不假设。
+\end{srcrem}
+% [Tutor Note: 点函子的 $R$ 取遍所有交换环（不只是域），这是“概形论”代数群与“经典”代数群的关键差别：例如 $\Z$ 作为代数群只在此意义下才是群概形。(3.72) 中的虚线提升不是自动的，它等价于给定 $G(R)$ 的群结构对 $R$ 函子化；作者略去的“群运算与结构态射相容”条件通常还要求乘法、单位、逆都是簇态射。]
+
+\begin{srcex}{13}
+考虑 $\bA^1=\GG_a$。作为函子，它送
+\begin{equation}\tag{3.74}
+R\mapsto (R,+).
+\end{equation}
+这说的是 $\operatorname{Map}(X,\bA^1)=\cO(X)$。
+\end{srcex}
+
+\begin{srcex}{14}
+考虑 $\bA^1\setminus 0=\GG_m=\Spec\,k[t,t^{-1}]$。作为函子它送
+\begin{equation}\tag{3.75}
+R\mapsto (R^{\times},\cdot).
+\end{equation}
+\end{srcex}
+
+\begin{srcex}{15}
+整数构成代数群，其点函子由
+\begin{equation}\tag{3.76}
+\Z\colon R\mapsto(\Z,+)
+\end{equation}
+给出。
+\end{srcex}
+
+设 $G$ 是 Abel（代数）群。$G$ 的\term{Cartier 对偶}{Cartier dual}是
+\begin{equation}\tag{3.77}
+G^{\vee}=\Hom_{\mathbf{GrpAlg}}(G,\GG_m),
+\end{equation}
+其中对偶化对象 $\GG_m$ 来自 $\Aut_k=\GG_m$。
+
+\begin{srcex}{16}
+设 $G=\Z/n$。Cartier 对偶是
+\begin{equation}\tag{3.78}
+\Z/n^{\vee}=\Hom(\Z/n,\GG_m)\simeq\mu_n,
+\end{equation}
+其中 $\mu_n$ 表示 $n$ 次单位根。作为函子，它送
+\begin{equation}\tag{3.79}
+R\mapsto \text{$R$ 中的 $n$ 次单位根}.
+\end{equation}
+\end{srcex}
+
+\begin{srcex}{17}
+整数的对偶是 $\Z^{\vee}\simeq\GG_m$，因为 $\Z\to\GG_m$ 由 $1$ 的像决定。类似地，
+\begin{equation}\tag{3.80}
+\GG_m^{\vee}=\Hom_{\mathbf{TopGrp}}(\GG_m,\GG_m)\simeq\Z=\{z\mapsto z^{n}\}.
+\end{equation}
+\end{srcex}
+
+\begin{srcex}{18}
+更一般地，格 $\Lambda$ 的对偶是对偶环面：
+\begin{equation}\tag{3.81}
+T^{\vee}=\Lambda^{\vee}\otimes_{\Z}\GG_m,
+\end{equation}
+所以在 $\C$ 上它大致形如 $(\C^{\times})^{\operatorname{rank}\Lambda}$。类似地，环面 $T$ 与对偶格 $\Lambda^{\vee}$ 互换。
+\end{srcex}
+
+为避免技术性，假设 $G$ 有限。\footnote{形式上我们假设 $G$ 是有限 Abel 群概形。}考虑 $G$ 上函数的集合 $\cO(G)$。对偶化并取 $\Spec$ 得到对偶群：
+\begin{equation}\tag{3.82}
+G^{\vee}=\Spec\,\cO(G)^{*}.
+\end{equation}
+与其谈群代数，$G$ 上的函数具有群\term{余代数}{coalgebra}的结构如下。$G$ 上的乘法映射诱导 $\cO(G)$ 上的余积：
+\begin{equation}\tag{3.83}
+\begin{array}{ccc}
+G\times G & \xrightarrow{\ \mu\ } & G\\
+\cO(G) & \xrightarrow{\ \Delta:=\mu^{*}\ } & \cO(G)\otimes\cO(G)
+\end{array}.
+\end{equation}
+这使 $\cO(G)$ 成为 \term{Hopf 代数}{Hopf algebra}，即 $\cO(G)$ 有乘法与余乘法 $\Delta$。事实上，这是有限维交换且余交换的 Hopf 代数。这些 Hopf 代数的研究结果等价于有限 Abel 群概形的研究。
+
+\begin{srcex}{19}\textbf{（“Fourier 变换”）}
+设 $\operatorname{char}k=0$。$\GG_a$ 的 Cartier 对偶是它自身的形式完备化：
+\begin{equation}\tag{3.84}
+\GG_a^{\vee}=\widehat{\GG}_a,
+\end{equation}
+其中 $\GG_a$ 的形式完备化由
+\begin{equation}\tag{3.85}
+\widehat{\GG}_a=\bigcup\Spec\,k[t]/(t^{n})
+\end{equation}
+给出。$n$ 维向量空间 $V$ 的 Cartier 对偶是对偶的完备化：
+\begin{equation}\tag{3.86}
+V^{\vee}=\widehat{V^{*}}.
+\end{equation}
+考虑 $\GG_a=\Spec\,k[x]$，即
+\begin{equation}\tag{3.87}
+\GG_a=\Spec\,k[x].
+\end{equation}
+它的特征标应是
+\begin{equation}\tag{3.88}
+e^{xt}=\sum\frac{(xt)^{n}}{n!},
+\end{equation}
+但我们需要它是有限和。这在 $t$ 幂零时有意义，即存在 $N\gg0$ 使 $t^{N}=0$。
+% [Tutor Note: (3.85) 的并集写成 $\bigcup_n\Spec\,k[t]/(t^n)$ 是（形式）归纳极限而非普通概形：每个 $\Spec\,k[t]/(t^n)$ 是加厚点，其并集是形式概形 $\widehat{\GG}_a$，作为函子它把 $R$ 送到 $R$ 的幂零元集。作者在下一段用“$t$ 幂零/接近 0”来直观解释这一点。另注意 (3.87) 单独作为一条编号公式只是重述 $\GG_a=\Spec\,k[x]$，真正的“特征标公式”是 (3.88)。]
+所以当这一点成立，即 $t$ “接近 $0$”时，函数 $e^{\langle x,t\rangle}$ 对 $x\in V$、$t\in V^{*}$ 有定义，并且是 $V$ 的特征标。
+
+类似地，完备化的对偶是 $\GG_a$：
+\begin{equation}\tag{3.89}
+\GG_a=\widehat{\GG_a}^{\vee}.
+\end{equation}
+回忆 Fourier 对偶交换
+\begin{equation}\tag{3.90}
+\bigl(\operatorname{Fun}(G),\ast\bigr)\simeq\bigl(\operatorname{Fun}(G^{\vee}),\cdot\bigr).
+\end{equation}
+于是 $\Rep(G)$ 在 $G^{\vee}$ 上作谱分解。在代数几何中，表示 $V$ 是 $\cO(G)$ 的\term{余模}{comodule}。即有映射 $G\times V\to V$，取函数得到映射
+\begin{equation}\tag{3.91}
+V\to\cO(G)\otimes V.
+\end{equation}
+此外，
+\begin{equation}\tag{3.92}
+\Rep(G)\simeq\cO(G)\text{-}\mathbf{comod}\simeq\cO(G^{\vee})\text{-}\mathbf{mod}\simeq\QC(G^{\vee}).
+\end{equation}
+\end{srcex}
+
+\subsection{Fourier 级数例子}
+
+\begin{srcex}{20}
+对 $G=\Z$，表示范畴由
+\begin{equation}\tag{3.93}
+\Rep(\Z)=k[z,z^{-1}]\text{-}\mathbf{mod}
+\end{equation}
+给出，其中 $z$ 是 $1\in\Z$ 的作用。此作用必须可逆，故包含 $z^{-1}$。于是对偶告诉我们：
+\begin{equation}\tag{3.94}
+\Rep(\Z)=k[z,z^{-1}]\text{-}\mathbf{mod}=\cO(\GG_m)\text{-}\mathbf{mod}=\QC(\GG_m).
+\end{equation}
+\end{srcex}
+
+\begin{srcex}{21}
+向量空间加一个自同态（矩阵）给出
+\begin{equation}\tag{3.95}
+\QC\bigl(\bA^1=\Spec\,k[z]\bigr),
+\end{equation}
+但若是自同构（可逆矩阵）则得到
+\begin{equation}\tag{3.96}
+\Rep(\Z)\leftrightarrow\QC\bigl(\bA^1\setminus\{0\}\bigr).
+\end{equation}
+\end{srcex}
+
+\begin{srcex}{22}
+在代数几何中
+\begin{equation}\tag{3.97}
+\Rep(\GG_m)=\text{$\Z$-分次向量空间}=\QC(\Z),
+\end{equation}
+其中
+\begin{equation}\tag{3.98}
+V\simeq\bigoplus_{n\in\Z}V_n,
+\end{equation}
+且 $z\in\GG_m$ 按 $z^{n}$ 作用于 $V_n$。
+\end{srcex}
+% [Tutor Note: (3.97) 的右边写成 $\QC(\Z)$ 看起来奇怪，但它正是 (3.94) 的对称版本：$\Rep(G)\simeq\QC(G^{\vee})$，取 $G=\GG_m$ 时 $G^{\vee}=\Z$，故 $\Rep(\GG_m)\simeq\QC(\Z)$。注意区分：$\QC(\Z)$ 是 $\Z$（作为离散概形）上的拟凝聚层，即 $\Z$-分次向量空间；而 $\QC(\GG_m)$ 是 $k[z,z^{-1}]$-模。两者在 Fourier 对偶下互换，不要与 (3.94) 的 $\QC(\GG_m)$ 混淆。]
+
+\begin{srcex}{23}\textbf{（拓扑例子）}
+下面是一个来自拓扑的 Fourier 级数例子。设 $M^{3}$ 是紧可定向三维流形。\footnote{这将是做电磁学的三维流形。这个 Cartier 对偶将给出电磁对偶。若把数域想成三维流形，则这种对偶落入类域论的框架。}设
+\begin{equation}\tag{3.99}
+G=\operatorname{Pic}M^{3}
+\end{equation}
+由 $M^{3}$ 上复线丛（或 $\mathrm{U}(1)$-丛）的同构类组成。这在张量积下构成 Abel 群。可把它想成
+\begin{equation}\tag{3.100}
+G=\operatorname{Map}\bigl(M^{3},B\mathrm{U}(1)\bigr),
+\end{equation}
+其中 $B\mathrm{U}(1)$ 表示 $\mathrm{U}(1)$ 的分类空间。同伦意义下可把 $B\mathrm{U}(1)$ 想成
+\begin{equation}\tag{3.101}
+B\mathrm{U}(1)\simeq\C\PP^{\infty}\simeq K(\Z,2).
+\end{equation}
+对 $L\in G$，可附上第一 Chern 类
+\begin{equation}\tag{3.102}
+c_1(L)\in H^{2}(M,\Z),
+\end{equation}
+它是线丛的完全不变量。所以可取
+\begin{equation}\tag{3.103}
+G=\Lambda=H^{2}(M,\Z).
+\end{equation}
+Cartier 对偶是
+\begin{equation}\tag{3.104}
+G^{\vee}\simeq\Lambda^{\vee}\otimes_{\Z}\GG_m
+=\Hom\bigl(H_1(M,\Z),\GG_m\bigr)
+=\Hom\bigl(\pi_1(M),\GG_m\bigr),
+\end{equation}
+其中最后一行来自 $H_1=\pi_1^{\mathrm{ab}}$，而从交换化出发的 $\Hom$ 与从整个群出发的 $\Hom$ 相同。但这正是 $M$ 上的平坦 $\C^{\times}$-丛，即
+\begin{equation}\tag{3.105}
+G^{\vee}=\Loc_{\C^{\times}}(M).
+\end{equation}
+这不应太令人惊讶，因为 $G$ 看起来像 $\Z^{n}$，而 Cartier 对偶 $G^{\vee}$ 看起来像 $(\C^{\times})^{n}$。
+
+还可把线丛换成环面丛，即从 $\mathrm{U}(1)$ 过渡到 $\mathrm{U}(1)^{n}\simeq T$。则
+\begin{equation}\tag{3.106}
+\Bun_T(M)\leftrightarrow\Loc_{T^{\vee}}M,
+\end{equation}
+其中 $\Loc_{T^{\vee}}M$ 由 $M$ 上平坦 $T^{\vee}$-丛的同构类组成。左边仍像格 $\Lambda$，右边仍像环面 $(\C^{\times})^{n}$。
+\end{srcex}
+
+\begin{flushright}\small 第 6 讲；2021 年 2 月 4 日\end{flushright}
+
+\begin{srcex}{24}\textbf{（Fourier 级数）}
+取 $\Z$ 为我的 Abel 群 $G$。于是我们有几种对偶概念。一种是
+\begin{equation}\tag{3.107}
+\Hom_{\mathbf{TopGrp}}\bigl(\Z,\mathrm{U}(1)\bigr)=\mathrm{U}(1),
+\end{equation}
+另一种是
+\begin{equation}\tag{3.108}
+\Hom_{\mathbf{TopGrp}}(\Z,\GG_m)=\GG_m,
+\end{equation}
+即若在 $\C$ 上就是 $\C^{\times}$。
+
+区别在于我们所考虑的函数论。第一种情形有等价
+\begin{equation}\tag{3.109}
+\ell^2=L^2(\Z)\simeq L^2\bigl(\mathrm{U}(1)\bigr),
+\end{equation}
+第二种情形有
+\begin{equation}\tag{3.110}
+\C[\Z]\simeq\cO(\C^{\times}).
+\end{equation}
+注意
+\begin{equation}\tag{3.111}
+\cO(\C^{\times})=\C[z,z^{-1}]\subset L^2\bigl(\mathrm{U}(1)\bigr),
+\end{equation}
+以及
+\begin{equation}\tag{3.112}
+\C[\Z]\subset\ell^2.
+\end{equation}
+所以代数版本在某种意义上位于解析故事内部。
+\end{srcex}
+% [Tutor Note: (3.110) 的 $\C[\Z]$ 是群代数（有限支撑函数），其 Gelfand/代数对偶是 $\cO(\C^{\times})=\C[z,z^{-1}]$；这正是 (3.94) 的另一种写法。(3.111)--(3.112) 说明代数对象（多项式/Laurent 多项式）作为 $L^2$ 的稠密子空间嵌入解析对象，但反之不成立：解析完成包含了代数版本没有的极限点。这一“代数 $\subset$ 解析”的包含关系在第 3.7 节的 A-侧/B-侧对比中会以“有限支撑 vs 局部常值”的形式再次出现。]
+
+\paragraph{题外话 1}
+对任何群 $G$，表示论有许多不同版本，可看成来自群代数的不同版本。在对偶一侧，这对应于 $G^{\vee}$ 上的不同结构。
+
+例如，若把群代数取为 von Neumann 代数意义，则得到 $G^{\vee}$ 作为测度空间。若从 $C^{*}$-代数意义的群代数出发，则得到 $G^{\vee}$ 作为（局部紧）拓扑空间。若从离散/代数群代数出发，则得到 $G^{\vee}$ 作为代数簇。
+% [Tutor Note: 题外话 1 是全章的方法论总结：同一“对偶群”集合 $G^{\vee}$ 上可装三种不同结构（测度 / 拓扑 / 代数），取决于群代数取哪一类完备化。这不是三种不同的对偶，而是同一对象的三种“几何化身”；第 3.7 节的 A-侧（离散/代数）与 B-侧（紧/解析）之分正是这一点的体现。]
+
+\section{Pontrjagin--Poincaré 对偶}
+
+\begin{sectionkey}
+把 Pontrjagin/Fourier 对偶与 Poincaré 对偶结合：$H^{i}(M,G)^{\vee}\simeq H^{n-i}(M,G^{\vee})$。以 A-侧（$\Z$ 系数）与 B-侧（$\C^{\times}$ 系数）在 1--4 维的实例说明 T-对偶、镜像对称与电磁对偶的共同结构（表 3.1）。
+\end{sectionkey}
+
+现在我们要给出一系列 Pontrjagin/Fourier 对偶的例子，它们基本上是同一个例子，但会更有趣，因为我们将引入一些拓扑。所有这些对偶陈述的汇总见表 3.1。
+
+设 $M^{n}$ 是紧可定向流形。$M$ 的上同调群将是我们研究对偶理论的 Abel 群。这个对偶说，对 Abel 群 $G$，
+\begin{equation}\tag{3.113}
+H^{i}(M,G)^{\vee}\simeq H^{n-i}(M,G^{\vee}).
+\end{equation}
+为使自己相信这建立在正确的基础上，可验证如下配对是非退化的：
+\begin{equation}\tag{3.114}
+H^{i}(M,G)\otimes H^{n-i}(M,G^{\vee})
+\to H^{n}(M,G\otimes G^{\vee})
+\to H^{n}\bigl(M,\mathrm{U}(1)\bigr)
+\to\mathrm{U}(1),
+\end{equation}
+其中最后的映射是积分。
+
+下述例子的“维数”最终将对应于相应场论的维数，即我们考虑的几何对象实际上比所列维数低一维，以便得到向量空间。带 $\Z$ 系数的一侧将称为 \term{A-侧}{A-side}，带 $\C^{\times}$ 系数的一侧将称为 \term{B-侧}{B-side}。
+% [Tutor Note: (3.113) 的成立需要 $M$ 紧可定向、$G$ 取合适的（有限或紧）系数，并且对偶取 Pontrjagin 对偶（连续特征标）；(3.114) 的第一支用 $G\otimes G^{\vee}\to\mathrm{U}(1)$ 的求值配对，第二支用 $H^{n}(M,\mathrm{U}(1))\cong\mathrm{U}(1)$（紧可定向 $n$ 维流形上的积分），最后一支即积分。若 $M$ 非紧或系数带拓扑，需要改用 Borel--Moore 同调/紧支撑对偶，这是后续章节（电磁对偶的边界条件）会再遇到的细节。]
+
+\subsection{一维}
+
+在此情形我们只是有 A-侧 $\operatorname{Map}(\mathrm{pt},\Z)=\Z$ 与 B-侧 $\operatorname{Map}(\mathrm{pt},\C^{\times})=\C^{\times}$ 互换。可以把它说成：$\Z$ 上的量子力学就是 $\C^{\times}$ 的 QM，意思是这些上面的某类函数空间由 Fourier 理论等同。
+
+\subsection{二维}
+
+二维中的一种对偶是在
+\begin{equation}\tag{3.115}
+H^{0}(S^{1},\Z)\qquad\text{与}\qquad H^{1}(S^{1},\C^{\times})
+\end{equation}
+之间，意思是这些上面的函数被等同。注意可把 A-侧写成
+\begin{equation}\tag{3.116}
+H^{0}(S^{1},\Z)=\pi_0\bigl(\operatorname{Map}(S^{1},\Z)\bigr)=[S^{1},\Z].
+\end{equation}
+B-侧是
+\begin{equation}\tag{3.117}
+H^{1}(S^{1},\C^{\times})=\bigl|\Loc_{\C^{\times}}S^{1}\bigr|,
+\end{equation}
+其中 $\bigl|\Loc_{\C^{\times}}S^{1}\bigr|$ 表示 $\Loc_{\C^{\times}}S^{1}$ 的底层空间，它是一个栈。
+
+A-侧看起来就像 $\Z$，B-侧看起来就像 $\C^{\times}$。这就是我们在做“同一个”例子的意义。
+
+A-侧是到 $\Z$ 的映射的理论，B-侧是某种 $\mathrm{U}(1)$ 规范理论。所谓规范理论，我们只是指在处理局部系统或主丛。
+
+\paragraph{题外话 2（局部系统）}
+设 $X$ 是拓扑空间，$G$ 是群（带离散拓扑）。则 $\Loc_G X$ 由 $X$ 上的主 $G$-丛组成。这些是局部同构于常值层 $G$ 的层。也可把它想成
+\begin{equation}\tag{3.118}
+\Loc_G X=\{\pi_1(X)\to G\},
+\end{equation}
+其中给定主 $G$-丛，相联系的 $\pi_1$ 表示是\term{单值表示}{monodromy representation}。
+
+若只关心同构类，则这是
+\begin{equation}\tag{3.119}
+H^{1}(X,G)=\bigl|\Loc_G X\bigr|.
+\end{equation}
+% [Tutor Note: (3.118) 用的是 $\pi_1(X)\to G$ 的表示/同态集合，但严格说 $\Loc_G X$ 是群胚（每个对象带自同构），(3.119) 才对同构类取 $\pi_0$；$\bigl|\cdot\bigr|$ 就是取 $\pi_0$。(3.117) 中 $S^1$ 的底层空间是栈：$\Loc_{\C^{\times}}S^{1}\simeq \C^{\times}//\Z$（由绕数作用），其“点”比同构类多。]
+
+\subsection{二维}
+
+二维中这种对偶的另一个版本在 A-侧有
+\begin{equation}\tag{3.120}
+H^{1}(S^{1},\Z),
+\end{equation}
+在 B-侧有
+\begin{equation}\tag{3.121}
+H^{0}(S^{1},\C^{\times}),
+\end{equation}
+即到带离散拓扑的 $\C^{\times}$ 的映射。
+
+在 A-侧：
+\begin{equation}\tag{3.122}
+H^{1}(S^{1},\Z)=[S^{1},B\Z],
+\end{equation}
+以及
+\begin{equation}\tag{3.123}
+B\Z=K(\Z,1)=S^{1}.
+\end{equation}
+所以 A-侧是到 $S^{1}$ 的映射，B-侧也是到 $\C^{\times}$（$S^{1}$ 的某种版本）的映射。这两个空间由有时称为\term{标量场}{scalar field}的东西组成。
+
+这种对偶理论称为 \term{T-对偶}{T-duality} 或\term{镜像对称}{mirror symmetry}，也称为 $R\leftrightarrow 1/R$ 对偶。
+% [Tutor Note: 原文 3.7.2 与 3.7.3 的标题相同（都是 “Two dimensions”），并非重复印刷，而是两个互补的陈述：(3.115) 取 $(H^0,H^1)$，(3.120) 取 $(H^1,H^0)$，即交换 A/B 两侧的同调次数。表 3.1 中两行 “2” 分别对应这两条。T-对偶的半径 $R\leftrightarrow1/R$ 正是这里 $H^1(S^1,\Z)$ 的“格”与 $H^0(S^1,\C^{\times})$ 的“对偶环面”之间的互换在半径上的体现。]
+
+再次，作为群，A-侧就是 $\Z$，B-侧只是 $S^{1}$ 的某种版本。在所有这些例子中有用的一点是把 $\Z$ 换成格 $\Lambda$。对偶结果在
+\begin{equation}\tag{3.124}
+H^{1}(S^{1},\Lambda)\qquad\text{与}\qquad H^{0}\bigl(S^{1},T^{\vee}_{\C}\bigr)
+\end{equation}
+之间，其中可把
+\begin{equation}\tag{3.125}
+H^{1}(S^{1},\Lambda)=[S^{1},T]
+\end{equation}
+想成，其中 $T$ 是紧格
+\begin{equation}\tag{3.126}
+\Lambda\otimes_{\Z}S^{1}
+\end{equation}
+的环面。要点是我们交换到环面的映射与到对偶环面的映射。
+
+\subsection{三维}
+
+设 $\Sigma$ 是紧可定向二维流形。则有对偶
+\begin{equation}\tag{3.127}
+H^{1}(\Sigma,\Z)\qquad\text{与}\qquad H^{1}(\Sigma,\C^{\times}).
+\end{equation}
+B-侧是 $\bigl|\Loc_{\C^{\times}}\Sigma\bigr|$，所以 B-侧是三维规范理论（即涉及主丛）。A-侧是
+\begin{equation}\tag{3.128}
+H^{1}(\Sigma,\Z)=[\Sigma,B\Z=S^{1}],
+\end{equation}
+所以这是标量场。于是到圆的映射与主丛互换。
+
+\subsection{三维}
+
+另一种方式，在三维中得到对偶
+\begin{equation}\tag{3.129}
+H^{2}(\Sigma,\Z)\qquad\text{与}\qquad H^{0}(\Sigma,\C^{\times}).
+\end{equation}
+可把
+\begin{equation}\tag{3.130}
+H^{2}(\Sigma,\Z)=H^{1}\bigl(\Sigma,\mathrm{U}(1)\bigr)
+=[\Sigma,B\mathrm{U}(1)=K(\Z,2)]
+\end{equation}
+看作由 $\mathrm{U}(1)$-主丛（即线丛）组成，所以这是某种规范理论。另一方面，
+\begin{equation}\tag{3.131}
+H^{0}(\Sigma,\C^{\times})=[\Sigma,\C^{\times}]
+\end{equation}
+由标量场组成。所以主丛与到圆的映射互换。再次可升级到环面与格。
+
+\paragraph{题外话 3（向量丛与主丛的字典）}
+设 $\mathcal{P}\to X$ 是 $\mathrm{U}(1)$-丛。则可取乘积 $\mathcal{P}\times_{\mathrm{U}(1)}\C$ 构造线丛。一般地若有主 $G$-丛，则有群的一个表示，于是得到向量丛。
+
+反之，若 $\mathcal{L}\to X$ 是线丛，可取它与平凡丛的 $\Hom$：$\Hom(\mathcal{L},X\times\C)$，这是主 $G\mathrm{U}(1)$-丛。
+% [Tutor Note: 题外话 3 末尾的 “$G\mathrm{U}(1)$-丛” 是排版错误，应为 “$\mathrm{U}(1)$-丛”：从线丛 $\mathcal{L}$ 出发，$\Hom(\mathcal{L},X\times\C)$ 的纤维是 $\Hom(\C,\C)\cong\C$，但可逆元给出 $\C^{\times}=\mathrm{U}(1)_{\C}$，故得到主 $\C^{\times}$-丛（即 $\mathrm{U}(1)$-丛）。另注意原文把 “principal bundle” 与 “gauge theory” 混用，是课程口语传统，指的都是带联络的主丛。]
+
+\begin{table}[htbp]
+  \centering
+  \caption{各维数下 Pontrjagin--Poincaré 对偶的例子汇总。（原文 p.~44，Table 3.1）}
+  \label{tab:3-1}
+  \begin{tabular}{c c c}
+    \toprule
+    维数 & A-侧 & B-侧\\
+    \midrule
+    1 & $\operatorname{Map}(\mathrm{pt},\Z)=\Z$ & $\operatorname{Map}(\mathrm{pt},\C^{\times})=\C^{\times}$\\
+    2 & $H^{0}(S^{1},\Z)$ & $H^{1}(S^{1},\C^{\times})=\bigl|\Loc_{\C^{\times}}S^{1}\bigr|$\\
+    2 & $H^{1}(S^{1},\Z)=[S^{1},S^{1}]$ & $H^{0}(S^{1},\C^{\times})$\\
+    3 & $H^{1}(\Sigma,\Z)=[\Sigma,S^{1}]$ & $H^{1}(\Sigma,\C^{\times})=\bigl|\Loc_{\C^{\times}}\Sigma\bigr|$\\
+    3 & $H^{2}(\Sigma,\Z)=[\Sigma,B\mathrm{U}(1)]$ & $H^{0}(\Sigma,\C^{\times})$\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{四维}
+
+四维情形重要，因为两侧都将是规范理论。假设上同调中无挠。对偶在
+\begin{equation}\tag{3.132}
+H^{2}(M^{3},\Z)\qquad\text{与}\qquad H^{1}(M^{3},\C^{\times})
+\end{equation}
+之间。
+
+B-侧可写成
+\begin{equation}\tag{3.133}
+H^{1}(M^{3},\C^{\times})=\bigl|\Loc_{\C^{\times}}M\bigr|,
+\end{equation}
+即某种规范理论，因为我们在处理 $\C^{\times}$-丛。A-侧是
+\begin{equation}\tag{3.134}
+[M,K(\Z,2)],
+\end{equation}
+而同伦型上
+\begin{equation}\tag{3.135}
+K(\Z,2)=B\mathrm{U}(1)=\C\PP^{\infty}.
+\end{equation}
+所以 A-侧是
+\begin{align}
+[M,K(\Z,2)]&=\pi_0\operatorname{Map}(M,\C\PP^{\infty})\tag{3.136}\\
+&=\pi_0(\text{$M$ 上的线丛})\tag{3.137}\\
+&=\text{线丛}/\sim,\tag{3.138}
+\end{align}
+即线丛的同构类，所以也是某种规范理论。
+% [Tutor Note: 本节标题是“四维”，但 (3.132)--(3.138) 中出现的流形都写作 $M^{3}$：按 3.7 开头声明“几何对象比场论维数低一维”，四维理论的 A-侧应是三维空间 $M^{3}$ 上的线丛/规范场（而 B-侧是 $M$ 上的平坦 $\C^{\times}$-丛）。这里的 $M$ 与 $M^{3}$ 指同一个流形，只是作者在 (3.133) 中省略了上标；[M,K(\Z,2)] 的 $M$ 也应读作 $M^{3}$。这是原文记号不一致处，不影响结论。]
+
+于是等价的向量空间是两侧上的函数。形式陈述是：A-侧上有限支撑函数（或若我们不考虑空间的 $\pi_0$，则局部常值函数）等价于 B-侧上的代数函数。
+
+所有这些对偶陈述的汇总见表 3.1。
+% 原文 p.~41 右上角有一 PDF 注释框「transition between lectures」（指向例 24），无数学内容，故不录入正文。

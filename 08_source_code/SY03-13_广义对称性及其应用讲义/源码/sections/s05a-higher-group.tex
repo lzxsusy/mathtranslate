@@ -1,0 +1,337 @@
+% ============================================================
+% 片段：s05a  对应原文 section3.tex 第 1--307 行；PDF 第 50--58 页
+% 内容：§5 Higher Group Symmetry（5.1 A Touch of Category Theory；5.2 Towards Defining a 2-Group）
+% 译者：t-s05a   审校状态：初稿
+% ============================================================
+
+% ==== 原文 PDF 第 50 页 ====
+\section{高群对称性}\label{sec:higher-group}
+
+\begin{keytakeaways}
+  \begin{itemize}[leftmargin=1.4em,itemsep=2pt,topsep=2pt]
+    \item \textbf{物理图像}：普通规范理论用群元素标记点粒子的世界线；若要描述弦的世界面，就需把群升级为 2-群——1-态射标记世界线，2-态射标记世界面，这正是“高群对称性”的范畴论来源。
+    \item \textbf{数学工具}：范畴（对象、态射、恒等、复合、结合律）$\to$ 群胚 $\to$ 函子；2-范畴（1-态射、2-态射、水平/垂直复合、交换律）$\to$ 2-群胚；交叉模作为严格 2-群的显式替代。
+    \item \textbf{关键结论}：群等同于单对象群胚，其几何实现给出分类空间 $BG$；和乐 ${\rm hol}:\mathcal{P}_1(M)\to G$ 是函子，平凡 $G$-丛上的联络与光滑函子一一对应（定理~\ref{Thm:GaugeTh}）。
+    \item \textbf{关键结论}：严格 2-群与交叉模 $(G,H,\ptl,\rhd)$ 一一对应；两条约束 $\ptl(g\rhd h)=g(\ptl h)g^{-1}$、$\ptl h\rhd h'=hh'h^{-1}$ 由 2-范畴的交换律直接推出，并非额外公设。
+  \end{itemize}
+\end{keytakeaways}
+
+本章用范畴论的语言给出推广对称性的另一种方式。我们将看到如何把群描述为一个 1-范畴，以及如何把它推广到更高范畴的语言中。
+
+对于更关心实际应用而非数学细节的读者，建议跳过开头几小节，直接从第~\ref{sec:2-group-phys}~节读起。该节以平易近人的方式给出物理诠释。随后的第~\ref{sec:2-group-gauging}~节包含具体的物理例子，使这些概念更易接近、更易掌握。
+
+\subsection{范畴论初窥}\label{App:Cat}
+下面介绍范畴论的一些基础知识。
+
+\begin{definition}
+一个\textbf{范畴}（category）$C$ 具有以下结构：
+\begin{enumerate}
+    \item 一族\textbf{对象}（object），记作 ${\rm Obj}(C)$；
+    \item 一族\textbf{态射}（morphism），记作 ${\rm Hom}_C(\cdot , \cdot )$。态射可视为连接两个对象的关系。例如，从 $X \in {\rm Obj}(C) $ 到 $Y \in {\rm Obj}(C)$ 的态射可以像通常的映射那样写成 $f:X\to Y$（后文会看到态射并非映射的例子）。从 $X$ 到 $Y$ 的态射集合记作 ${\rm Hom}_C(X,Y)$；
+    \item $\forall X\in {\rm Obj}(C), \exists {\rm id}_X \in {\rm Hom}_C(X,X)$ 作为 $X$ 到自身的恒等映射，即 $\forall f\in {\rm Hom}_C(X,Y), f\cdot id_X = id_Y\cdot f = f$；
+    \item 复合（composition）。$\cdot :{\rm Hom}_C(Y,Z)\times {\rm Hom}_C(X,Y)\to {\rm Hom}_C(X,Z),\quad (f,g)\mapsto f\cdot g$；
+    \item 结合律（associativity law），$f(gh) = (fg)h$。
+\end{enumerate}
+\end{definition}
+
+我们通常用\textbf{交换图}（commutative diagram）表示这些关系。例如，复合可写为：下图交换
+
+\begin{center}
+\begin{tikzcd}
+X \arrow[rd, "g"'] \arrow[rr, "f\circ g"] &                    & Z \\
+                                          & Y \arrow[ru, "f"'] &  
+\end{tikzcd}
+\end{center}
+
+可以看到，这种范畴结构能够描述我们目前已经熟知的许多事物。
+
+\begin{example}
+所有群构成的总体 $\mathbf{Grp}$ 是一个范畴。显然，其对象是群，而我们把态射取为群同态。可以验证它满足范畴所需的全部要求。
+\end{example}
+
+% ==== 原文 PDF 第 51 页 ====
+\begin{example}
+所有拓扑空间构成的总体 $\mathbf{Top}$ 是一个范畴，其对象是所有拓扑空间，态射是连续映射。
+\end{example}
+
+一个常被问到的问题是：我们是否要求态射必须是映射？答案是\textbf{否}！若如此，我们就不必再声明结合律 $(fg)h = f(gh)$。下一个例子将给出一个态射不是映射的范畴。
+
+\begin{example}
+考虑一个范畴 $\mathbf{C}$，其中
+\begin{enumerate}
+    \item ${\rm Obj}(\mathbf{C}) = \{\text{有限维向量空间}\}$
+    \item \be\ba  {\rm Hom}_C (V,W) &= \{ 1\}, \ {\rm if} \ {\rm dim}(V) = {\rm dim}(W) \\ {\rm Hom}_C (V,W) &=\{ 0 \} , \ {\rm if} \ {\rm dim}(V) \ne {\rm dim}(W) \ea\ee
+    态射的复合就是数的乘法。
+\end{enumerate}
+我们可以观察到，这种态射\textbf{绝对不是}从一个向量空间（一个对象）到另一个向量空间（另一个对象）的映射，它刻画的其实是维数之间的等价关系。
+\end{example}
+
+由上例可见，态射不能被准确地解释为对象之间的映射，而更像是对象之间可以相当随意地指定的“联系”。\footnote{一个更奇特的例子是：取所有集合为对象、取笛卡尔积为态射。为什么？因为它甚至不必满足复合律！它满足的是一条弱化的复合律：$(X\times Y)\times Z$ 与 $X\times (Y\times Z)$ 同构。}
+
+\begin{yizhu}
+脚注中“笛卡尔积只满足弱化复合律”的观察，正是结合子（associator）与五边形方程（pentagon equation）的雏形：$(X\times Y)\times Z$ 与 $X\times(Y\times Z)$ 之间只是自然同构 $\alpha_{X,Y,Z}$，而多重积的结合相容性要求 $\alpha$ 满足五边形方程。在 2-范畴中，若水平复合的结合律只要求“相差一个可逆 2-态射”，所得结合子同样须满足五边形方程；本节采用严格结合律，故作者未展开这一层。可对照原文 PDF 第 51 页脚注 15。
+\end{yizhu}
+
+还可以举出许多其他例子。为达到我们的目的，我们想看看如何添加结构，使范畴看起来更像群。一个直观的想法是让对象之间的“联系”变得“可逆”，从而可以谈论对象之间的“同构”或“等价”。
+
+\begin{definition}
+一个\textbf{群胚}（groupoid）$\CG$ 是态射具有逆结构的范畴。即 $\forall f\in {\rm Hom}_{\CG}(X,Y),\exists f^{-1}\in {\rm Hom}_{\CG}(Y,X)$，使得 $f^{-1}f = id_X,\  ff^{-1} = id_Y$。
+\end{definition}
+
+群胚这一名称已经暗示它与群密切相关，但多少像是群的原始版本。下面介绍一个相当重要的群胚，由此便能看出它为何与群密切相关。
+
+\begin{example}
+给定流形 $M$，\textbf{路径群胚}（path groupoid）$\mathcal{P}_1(M)$ 定义如下：
+\begin{enumerate}
+    \item 对象是流形 $M$ 中的点，${\rm Obj}(\mathcal{P}_1(M)) = M$；
+    \item 点 $x,y\in M$ 之间的态射是连接 $x$ 与 $y$ 的（光滑）曲线的“细同伦类”（thin homotopy class）。也就是说，这样的曲线可写成 $\gamma : [0,1]\to M, 0\mapsto x, 1 \mapsto y$，相应的态射是 $\gamma$ 在重参数化意义下的等价类，记作 $[\gamma]$；
+    \item 复合与逆都是平凡定义的。
+\end{enumerate}
+\end{example}
+
+当我们认真地把对象看作流形中的点时，路径群胚就很具体了，即
+
+\begin{center}
+\begin{tikzcd}
+x & y \arrow[l, "\gamma_2"', bend right] & z \arrow[l, "\gamma_1"', bend right] \arrow[ll, "\gamma_3", bend left]
+\end{tikzcd}
+\end{center}
+
+这个群胚描述流形中的路径，正是规范理论所需要的。但群胚与群如何联系？我们也许记得，构成群的并不是流形中曲线的同伦类，而是起点与终点固定在某一特定点的那些曲线！这给出了从群胚得到群的线索。这一叙述相当优雅（我们希望不失去这种优雅）。
+
+% ==== 原文 PDF 第 52 页 ====
+\begin{definition}
+一个\textbf{群}（group）$G$ 是只有一个对象的群胚。
+\end{definition}
+
+可以验证，这确实与我们通常的群定义一致：态射就是群元素，复合就是乘法。另一个有趣的事实是，群的这一定义在视觉上很像分类空间（classifying space）$BG$（在第~\ref{sec:three}~节引入）。下文将看到，这两者实际上是等价的。
+
+\begin{yizhu}
+“群 $=$ 单对象群胚”与“群 $=$ 分类空间 $BG$”是同一件事的两种说法：单对象群胚的神经（nerve）作几何实现即得 $BG$，且 $\pi_1(BG)\cong G$、$\pi_{n\ge2}(BG)=0$。因此后文把规范场写成函子 $\mathcal{P}_1(M)\to G$，等价于说主 $G$-丛由映射 $M\to BG$ 的分类数据给出；原文所谓“两者实际上等价”，指的正是这一层对应，可与第~\ref{sec:three}~节对照。
+\end{yizhu}
+
+我们接下来关心的是如何用 $\mathcal{P}_1(M)$ 与 $G$ 描述规范理论。显然，需要构造某种把流形中的路径翻译成群元素的映射。范畴之间保持范畴结构的这种“同态”，称为\textbf{函子}（functor）。
+
+\begin{yizhu}[原文疑误]
+原文此处作 “Such ··homomorphism”，引号与字符残缺（本应为 “Such a homomorphism”），与前句 “one object.Given” 一样属排版笔误；译文按“范畴之间保持范畴结构的同态”理解，不影响数学内容。
+\end{yizhu}
+
+\begin{definition}
+范畴 $C$ 与 $D$ 之间的\textbf{（协变）函子}（(covariant) functor）具有以下结构：
+\begin{enumerate}
+    \item 对象上的映射。$F:{\rm Obj}(C)\to {\rm Obj}(D), x\mapsto F(x)$。
+    \item 态射上的映射。对 $f\in {\rm Hom}_C(x,y)$，$F(f)\in {\rm Hom}_D(F(x),F(y))$。
+    \item 保持恒等。$F({\rm id}_x) = {\rm id}_{F(x)}$。
+    \item 复合。$F(fg) = F(f)F(g)$。
+\end{enumerate}
+\end{definition}
+
+% ==== 原文 PDF 第 53 页 ====
+可以看到，函子恰好具备我们直觉上期望范畴之间“同态”（即保持范畴许多性质的映射）所应有的一切，并说明了两个系统能在多大程度上内在地相互联系。
+
+在这么多数学之后，在第一章的末尾，我们终于可以稍微“犒劳”一下自己，尝一点物理的甜头！
+
+\begin{example}[规范理论 \cite{Baez_2010}]\label{Eg:GT}
+在规范理论中，和乐（holonomy）可以看成一个函子：
+\[ {\rm hol}: \mathcal{P}_1(M)\to G \]
+来看看我们得到了什么。对象上的映射是平凡的，因为群 $G$ 只有一个对象。给定流形 $M$ 中的一条路径 $\gamma$，得到
+\[ {\rm hol}: \gamma \mapsto {\rm hol}(\gamma)\in G \]
+复合被保持，故
+\[ {\rm hol}(\gamma \delta) =  {\rm hol}(\gamma)  {\rm hol}(\delta)  \]
+或写成更明确的形式，
+\[ {\rm hol}({\gamma\delta}) = ({\rm hol}{\gamma})\cdot ({\rm hol}{\delta}) \]
+并且恒等被保持
+\[ {\rm hol}({\rm id}_x) = 1_G  \]
+
+所有这些信息都可以简洁地用“${\rm hol}$ 是函子”这句话概括\footnote{更严格地说，${\rm hol}$ 应当是一个亚函子（anafunctor），这意味着从 $\CP_1(M)$ 到 $G$ 的映射须经由另一个范畴中介；在该情形下，这个范畴的对象是流形 $M$ 的开覆盖上的点，态射是穿过各个图卡的拼接路径。在定理~\ref{Thm:GaugeTh}~的证明中，我们通过约定只考虑平凡 $G$-丛来回避这一缺陷。}。还可以加上其他限制，例如考虑路径的同伦类，就会得到具有平坦联络（flat connection）的规范理论。
+下面陈述本节的主定理。
+
+\begin{theorem}\label{Thm:GaugeTh}
+给定流形 $M$ 与李群 $G$，以下两者之间存在一一对应：
+\begin{enumerate}
+    \item $M$ 上平凡 $G$-丛上的联络；
+    \item 光滑函子
+    \[ {\rm hol}: \mathcal{P}_1(M)\to G \ ,  \]
+    其中 $\mathcal{P}_1(M)$ 是 $M$ 的路径群胚。
+\end{enumerate}
+\end{theorem}
+
+% ==== 原文 PDF 第 54 页 ====
+\begin{proof}
+当然，按通常的理解，给定一个联络 $A$（流形 $M$ 上的 $\mathfrak{g}$-值 1-形式），可以构造
+\[ {\rm hol}: \gamma \mapsto \mathcal{P}\exp(\int_\gamma A) \]
+这是我们熟悉的形式，看起来足够好——除非去追究路径排序（path ordering）与光滑性之类的问题。
+
+另一方向是类似的构造。给定和乐函子 ${\rm hol}$，$\mathfrak{g}$-值 1-形式 $A$ 为
+\[ A(v) = \frac{\rm d}{{\rm d}s} {\rm hol}(\gamma_s)\big|_{s=0}  \]
+其中 $v$ 是点 $x$ 处的任意向量，
+\[ \gamma (0) = x\,, \quad \gamma'(0) = v\,. \]
+\end{proof}
+\end{example}
+
+\begin{yizhu}
+定理~\ref{Thm:GaugeTh} 的证明略去了两个技术要点：其一，$A(v)=\frac{\rm d}{{\rm d}s}{\rm hol}(\gamma_s)\big|_{s=0}$ 的良定义性依赖于 ${\rm hol}$ 在细同伦与重参数化下的不变性，还须验证由此得到的 $A$ 确实光滑；其二，$\mathcal{P}_1(M)$ 到 $G$ 的“映射”严格说是亚函子（anafunctor），须经开覆盖的图卡中介（见第 53 页脚注 16），作者通过只考虑平凡 $G$-丛绕开了这一困难。若把路径换成同伦类，则联络的曲率必为零，这正是原文“平坦联络”一句的含义。
+\end{yizhu}
+
+这种关于规范理论的看法，与我们在第~\ref{sec:three}~节中的分类空间视角是一致的。
+
+\subsection{走向 2-群的定义}\label{sec:2-group}
+
+以上说明了如何把对称性从作用在局域算符上推广到作用在非局域对象上。现在我们寻求把定义扩充到更高范畴的框架，这是对群结构的一次偏离。此前我们通过给路径指定态射（等价地，群元素）来描述流形上的路径，而现在想要曲面。一个直观的想法是：用两条起点和终点都相同的路径去“填充”出一个曲面，也就是构造态射之间的“态射”。这就引导出下面的 2-范畴定义。
+
+范畴论的另一个视角是看到如下关系。在集合中，我们只能断言两个元素相等与否；在范畴中，我们可以说两个不同（不相等）的对象是否“连通”，而在某些场合（如群胚）我们甚至可以说两个对象是否同构！怀着“\textbf{一切相等都只是在某个同构意义下成立}”这一哲学，我们自然会问：为什么不把同样的礼遇也给予态射呢？确实，为什么不呢？
+
+\begin{definition}
+一个\textbf{2-范畴}（2-category）$\mathcal{C}$ 由以下数据构成：
+\begin{enumerate}
+    \item 对象。
+    \item 带有通常复合的态射。
+    \item 2-态射（2-morphism），即态射之间的二元关系。一个 2-态射可以写成 $\alpha : {\rm Hom}_C(x,y)\to {\rm Hom}_C(x,y), \ f\mapsto g$。
+    \item 恒等。每个态射都存在恒等 2-态射。
+    \item 复合。复合有两类：水平的与垂直的，见下图。
+
+    水平复合（我们记作 $\circ$）：
+\be
+\begin{tikzcd}
+      & {} \arrow[dd, "\alpha", Rightarrow] &                                                                      & {} \arrow[dd, "\beta", Rightarrow] &                                                                      &   &       & {} \arrow[dd, "\alpha\circ\beta", Rightarrow] &                                                                                     \\
+\cdot &                                     & \cdot \arrow[ll, "f"', bend right=71] \arrow[ll, "f'", bend left=71] &                                    & \cdot \arrow[ll, "g"', bend right=71] \arrow[ll, "g'", bend left=71] & = & \cdot &                                               & \cdot \arrow[ll, "f\cdot g"', bend right=71] \arrow[ll, "f'\cdot g'", bend left=71] \\
+      & {}                                  &                                                                      & {}                                 &                                                                      &   &       & {}                                            &                                                                                    
+\end{tikzcd}
+\ee
+
+垂直复合（我们记作 $\cdot$）：
+\be
+    \centering
+\begin{tikzcd}
+      & {} \arrow[d, "\alpha", Rightarrow] &                                                                                     &   &       & {} \arrow[dd, "\beta\cdot \alpha", Rightarrow] &                                                                                \\
+\cdot & {} \arrow[d, "\beta", Rightarrow]  & \cdot \arrow[ll, "f"', bend right=71] \arrow[ll, "h", bend left=71] \arrow[ll, "g"] & = & \cdot &                                                & \cdot \arrow[ll, "f" description, bend right=67] \arrow[ll, "h", bend left=67] \\
+      & {}                                 &                                                                                     &   &       & {}                                             &                                                                               
+\end{tikzcd}
+\ee
+我们要求这两种复合都满足结合律。
+    \item 两类 2-态射复合的相容性，即对于
+    \be
+\begin{tikzcd}
+      & {} \arrow[d, "\alpha_1", Rightarrow] &                                                                     & {} \arrow[d, "\alpha_2", Rightarrow] &                                                                     \\
+\cdot & {} \arrow[d, "\beta_1", Rightarrow]  & \cdot \arrow[ll, bend left=67] \arrow[ll, bend right=67] \arrow[ll] & {} \arrow[d, "\beta_2", Rightarrow]  & \cdot \arrow[ll, bend right=67] \arrow[ll, bend left=67] \arrow[ll] \\
+      & {}                                   &                                                                     & {}                                   &                                                                    
+\end{tikzcd}
+    \ee
+    两种复合方式应当严格相等，即
+    \be (\beta_1\circ \beta_2)\cdot(\alpha_1 \circ \alpha_2) = (\beta_1\cdot \alpha_1)\circ (\beta_2\cdot \alpha_2) \ee
+\end{enumerate}
+\end{definition}
+
+% ==== 原文 PDF 第 55 页 ====
+同样地，可以构造连接 2-态射的 3-态射、连接 $(n-1)$-态射的 $n$-态射，如此逐级而上\footnote{无限的阶梯又如何呢？}。正如我们对 1-范畴所做的那样，我们希望态射之间具有逆结构或同构结构，更形式化地说，就是 2-群胚。
+
+% ==== 原文 PDF 第 56 页 ====
+\begin{definition}
+一个\textbf{2-群胚}（2-groupoid）是具有以下性质的 2-范畴：
+\begin{enumerate}
+    \item 1-态射可逆（如同群胚中那样）；
+    \item 2-态射可逆（在水平与垂直两种意义下）。
+\end{enumerate}
+2-态射的可逆性具体写为（记 $\alpha: {\rm Hom}_C(x,y)\to {\rm Hom}_C(x,y), f\mapsto g$）：
+\[ \alpha\circ\alpha_h^{-1} = {\rm id}_{{\rm id}_y};\quad \alpha_h^{-1}\circ\alpha = {\rm id}_{{\rm id}_x}\]
+\[ \alpha\cdot\alpha_v^{-1} = {\rm id}_g; \quad \alpha_v^{-1}\cdot \alpha = {\rm id}_f \]
+\end{definition}
+
+于是，我们同样可以优雅而自然地定义 2-群。
+
+\begin{definition}
+一个\textbf{（严格）2-群}（(strict) 2-group）$\mathcal{G}$ 是只有一个对象的 2-群胚。
+\end{definition}
+
+此外，可以把这一结构逐级提升到 $n$-群胚与 $n$-群。并且可以对这一结构作物理诠释。对于普通规范理论，我们通过给一个在时空流形（底流形）中运动的点粒子的\textbf{世界线}指定一个群元素来描述它。现在我们要对弦的\textbf{世界面}做类似的事情。
+
+严格 2-群的结构可以等价地由一个更显式的结构描述：交叉模（crossed module）。
+
+\begin{definition}
+一个\textbf{交叉模}由元组 $(G,H,\partial ,\rhd)$ 定义，其中
+\begin{enumerate}
+    \item $G, \ H$ 是群；
+    \item $\ptl: H\to G$ 是群同态，等价地写作 $\ptl\in{\rm Hom}_{\rm Grp}(H,G)$；
+    \item $\rhd : G\to {\rm Aut}(H)$；
+    \item 约束条件：$\ptl(g\rhd h) = g(\ptl h) g^{-1}$ 与 $\ptl h\rhd h' = hh'h^{-1}$。
+\end{enumerate}
+\end{definition}
+
+\begin{yizhu}
+交叉模的四条数据正是严格 2-群的数据：$G$ 为 1-态射群，$H$ 为源是 ${\rm id}_\cdot$ 的 2-态射群，$\ptl$ 是“边界”同态，$\rhd$ 是 $G$ 对 $H$ 的作用；两条约束并非额外公设，而是由 2-范畴的水平复合与交换律推出的（本节后文逐图验证）。可以证明严格 2-群与交叉模一一对应；若放松严格性，就得到弱 2-群，其等价类由 $(\Pi_1,\Pi_2,\alpha,\beta)$ 刻画，其中 $\beta\in H^3_{\rm grp}(\Pi_1,\Pi_2)$ 是 Postnikov 类，见第~\ref{sec:cross-extension}~节。这就是 2-群的几种等价定义。
+\end{yizhu}
+
+下面说明这些数据如何合起来与严格 2-群等价。
+
+\begin{enumerate}
+    \item 群 $G$ 对应 1-态射，
+
+    \begin{center}
+    \begin{tikzcd}
+    \cdot & \cdot \arrow[l, "g_1"] & \cdot \arrow[l, "g_2"] & = & \cdot & \cdot \arrow[l, "g_1g_2"]
+    \end{tikzcd}
+    \end{center}
+    
+    \item 群 $H$ 对应源为 ${\rm id}_\cdot$ 的 2-态射，这一作用的结果是 $\ptl(h)\in G$，
+
+% ==== 原文 PDF 第 57 页 ====
+    \begin{center}\begin{tikzcd}
+      & {} \arrow[dd, "h", Rightarrow] &                                                                                           \\
+\cdot &                                & \cdot \arrow[ll, "\partial h", bend left=67] \arrow[ll, "{\rm id}_\cdot"', bend right=67] \\
+      & {}                             &                                                                                          
+    \end{tikzcd}\end{center}
+    这也给出水平复合
+\begin{center}\begin{tikzcd}
+      & {} \arrow[dd, "h", Rightarrow] &                                                                                           & {} \arrow[dd, "h'", Rightarrow] &                                                                                            &   &       & {} \arrow[dd, "h\circ h'", Rightarrow] &                                                                                            \\
+\cdot &                                & \cdot \arrow[ll, "\partial h", bend left=67] \arrow[ll, "{\rm id}_\cdot"', bend right=67] &                                 & \cdot \arrow[ll, "\partial h'", bend left=67] \arrow[ll, "{\rm id}_\cdot"', bend right=67] & = & \cdot &                                        & \cdot \arrow[ll, "\partial(hh')", bend left=67] \arrow[ll, "\rm id_\cdot"', bend right=67] \\
+      & {}                             &                                                                                           & {}                              &                                                                                            &   &       & {}                                     &                                                                                           
+\end{tikzcd}\end{center}
+
+\item  $G$ 通过 $\rhd$ 对 $H$ 的作用在范畴上解释为
+\begin{center}
+\begin{tikzcd}
+      & {} \arrow[dd, "{\rm id}_{g}", Rightarrow] &                                                                     & {} \arrow[dd, "h", Rightarrow] &                                                                                           & {} \arrow[dd, "{\rm id}_{g^{-1}}", Rightarrow] &                                                                               &   &       & {} \arrow[dd, "g\rhd h", Rightarrow] &                                                                                                                      \\
+\cdot &                                           & \cdot \arrow[ll, "g"', bend right=67] \arrow[ll, "g", bend left=67] &                                & \cdot \arrow[ll, "\partial h", bend left=67] \arrow[ll, "{\rm id}_\cdot"', bend right=67] &                                                & \cdot \arrow[ll, "g^{-1}", bend left=67] \arrow[ll, "g^{-1}"', bend right=67] & = & \cdot &                                      & \cdot \arrow[ll, "\partial(g\rhd h) = g(\partial h)g^{-1}", bend left=67] \arrow[ll, "\rm id_\cdot"', bend right=67] \\
+      & {}                                        &                                                                     & {}                             &                                                                                           & {}                                             &                                                                               &   &       & {}                                   &                                                                                                                     
+\end{tikzcd}
+\end{center}
+上排仍然复合为 ${\rm id}_\cdot$，但底边随之改变；这就是 $G$ 的作用对 2-态射所做的事情，它为我们先前施加的其中一个约束提供了解释。
+
+\item （Pieffer 恒等式）我们将利用交换律（interchange law）得到 2-群定义中的第二个约束。
+
+% ==== 原文 PDF 第 58 页 ====
+\begin{center}
+    \begin{tikzcd}
+        h h' h^{-1} & = & \cdot & & \cdot  \arrow[ll, bend right=75,"{\rm id}_{\cdot}"' ,""{name = L1}] \arrow[ll, bend left=75,"\partial(h)" ,""{name = L2} ] &  & \cdot  \arrow[ll, bend right=75,"{\rm id}_{\cdot}"' ,""{name = M1}]  \arrow[ll, bend left=75,"\partial (h')" ,""{name = M2}] 
+        & & \cdot  \arrow[ll, bend right=75,"{\rm id}_{\cdot}"' ,""{name=R1}]  \arrow[ll, bend left=75,"\partial (h)^{-1}" ,""{name=R2}]
+        \arrow[Rightarrow, from=R1, to=R2,"h^{-1}"]
+        \arrow[Rightarrow, from=M1, to=M2,"h'"]
+        \arrow[Rightarrow, from=L1, to=L2,"h"]
+        \\
+        \\
+        \\
+        \\
+         & = & \cdot & &  \cdot  \arrow[ll, bend right=75,"{\rm id}_{\cdot}"' ,""{name = L1}] \arrow[ll, bend left=75,"\partial(h)" ,""{name = L2} ]
+         \arrow[ll, ""{name = L3} ]& & \cdot  \arrow[ll, bend right=75,"{\rm id}_{\cdot}"' ,""{name = M1}]  \arrow[ll, bend left=75,"\partial (h')" ,""{name = M2}] \arrow[ll, ""{name = M3} ]
+        & & \cdot  \arrow[ll, bend right=75,"{\rm id}_{\cdot}"' ,""{name=R1}]  \arrow[ll, bend left=75 ,""{name=R2},"\ptl(h^{-1})"]\arrow[ll, ""{name = R3} ]
+        \arrow[Rightarrow, from=L1, to=L3, "h"]
+        \arrow[Rightarrow, from=M1, to=M3, "{\rm id}_{\rm id_\cdot}"]
+        \arrow[Rightarrow, from=R1, to=R3, "h^{-1}"]
+        \arrow[Rightarrow, from=R3, to=R2, "{\rm id}_{\ptl h^{-1}}"]
+        \arrow[Rightarrow, from=M3, to=M2, "h'"]
+        \arrow[Rightarrow, from=L3, to=L2 , "{\rm id}_{\ptl h}"]
+        \\ \\ \\ \\
+        & = & \cdot & & \cdot \arrow[ll, bend right = 75, "{\rm id}_\cdot" , ""{name = 1}]\arrow[ll, bend right = 0, "{\rm id}_\cdot" , ""{name = 2}]\arrow[ll, bend left = 75, "\ptl (hh'h^{-1})" , ""{name = 3}]
+        \arrow[Rightarrow, from = 1, to = 2, "{\rm id}_{\rm id_\cdot}"]
+        \arrow[Rightarrow, from = 2, to = 3, "\ptl h \rhd h'"] & = & \ptl h \rhd h'
+        
+        
+    \end{tikzcd}
+\end{center}
+\end{enumerate}
+
+\begin{yizhu}[原文疑误]
+原文此处写作 “Pieffer identity”，文献中通常拼作 Peiffer 恒等式（Peiffer identity），即 $\ptl h\rhd h' = hh'h^{-1}$；它正是把交换律 (5.4)--(5.5) 应用于三个 2-态射的复合、按两种顺序重排后所得的等式，图中最后一步 $\ptl(hh'h^{-1})=\ptl h\rhd h'$ 即此。译文保留原文拼写。
+\end{yizhu}
+
+可以证明，严格 2-群与交叉模之间存在一一对应。现在我们试图从交叉模中提取更多信息。

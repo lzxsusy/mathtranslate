@@ -1,0 +1,338 @@
+% ============================================================================
+% 第 2 章 谱分解（Spectral decomposition）
+% 原文 pp. 21--28，Lecture 3（2021-01-26）、Lecture 4（2021-01-28）
+% ============================================================================
+\chapter{谱分解}\label{ch:02}
+
+\begin{keytakeaways}
+本章给出全书反复使用的方法论母题：\term{谱分解}{spectral decomposition}。给定一种“空间”范畴及其上的函数代数 $\cO$，则 $\cO$ 的右伴随 $\Spec$ 把交换代数重新解释为几何对象；反过来，一个模（或表示）就沿 $\Spec\,A$ 铺展成一个层。作者依次列出五部“谱字典”：有限集、紧支撑连续函数（Gelfand--Naimark 定理）、测度空间、代数几何、有理同伦论。第 2.3 节说明经典谱定理的三个版本——矩阵的 Jordan 标准形（代数几何）、von Neumann 投影值测度（可测）、局部常值复形（同伦）——都是同一图景的特例。最后 2.3.4 用“可观测量代数作用于态空间”的物理语言重述这一机制，并指出连续谱中特征向量应被余特征向量（分布）取代：这一区别在后续章节的对偶与反常现象中反复出现。
+\end{keytakeaways}
+
+\begin{flushright}\small 第 3 讲；2021 年 1 月 26 日\end{flushright}
+
+\section{什么是谱？}
+
+\begin{sectionkey}
+通过函子 $\cO\colon \text{空间}\to\text{交换代数}$ 及其右伴随 $\Spec$ 的伴随关系，把“从代数恢复几何”这一问题形式化；本节列举若干具体“谱字典”，说明 $\Spec$ 在不同范畴中的化身。
+\end{sectionkey}
+
+基本想法是：我们从几何的世界出发，也就是我们有一个“空间”的概念（例如代数几何、拓扑……），给定这样一个空间 $X$，我们给它配上某种函数集合 $\cO(X)$。这些函数可以有各种不同的风味，但它们总构成某种交换代数，甚至可能带有更多结构。我们将借助这些函数来把握空间的几何。运算 $\cO$ 其实是一个函子，即若有一个空间之间的态射 $\pi\colon X\to Y$，我们就得到拉回态射 $\pi^{*}\colon \cO(Y)\to \cO(X)$。
+
+关于这一套设置的一个基本问题是：我们能在多大程度上逆转这个操作？于是从任意交换代数出发，我们想理解能在多大程度上从中得到几何。范畴论告诉我们，该考虑的是 $\cO$ 的一个右伴随，我们称之为 $\Spec$。它们构成伴随这一事实意味着：
+\begin{equation}\tag{2.1}
+\operatorname{Map}_{\mathbf{Spaces}}(X,\Spec\,R)
+= \Hom_{\mathbf{Ring}^{op}}\bigl(\cO(X),R\bigr)
+= \Hom_{\mathbf{Ring}}\bigl(R,\cO(X)\bigr).
+\end{equation}
+% [Tutor Note: 这里伴随的方向容易记反。$\cO$ 是反变函子，故其“右伴随”应理解为在 $\mathbf{Ring}^{op}$ 与 $\mathbf{Spaces}^{op}$ 上的左伴随；若忘记取 $op$，就会把 $\Spec$ 误认为左伴随。正确读法是：$\Spec\,R$ 表示“以 $R$ 为函数环的自由空间”，而 (2.1) 表明这种自由性对一切测试空间成立。另注意 $\operatorname{Map}_{\mathbf{Spaces}}$ 必须理解为 plain hom-set（0-截断），否则伴随性只在同伦意义下成立。]
+
+用分析的语言，我们或许可以把 $\Spec\,R$ 看作一个“弱解”，意思是它是“找一个与 $R$ 相伴的空间”这一问题的形式解。它是一个把任意测试空间映为集合的函子，但并不保证真有一个诚实的空间与它相符。
+
+\begin{srcrem}{11}
+我们可能必须调整所考虑的范畴，使得
+\begin{equation}\tag{2.2}
+\cO(\Spec\,R)=R,
+\end{equation}
+因为这不是伴随性直接给出的。
+\end{srcrem}
+
+要点在于，对某一类好的空间，人们可以希望从空间上的函数恢复出空间：$X=\Spec\,\cO(X)$。
+
+\begin{srcrem}{12}
+“谱”这个词在数学的许多地方被使用。它们基本上都是一回事，只有同伦论中的谱例外。
+\end{srcrem}
+
+\subsection{有限集}
+
+设 $X$ 是有限集，$k$ 是域。则 $k$ 值函数 $\cO(X)$ 可表为
+\begin{equation}\tag{2.3}
+\cO(X)=\prod_{x\in X}k,
+\end{equation}
+可以把它想成对角 $X\times X$ 矩阵。
+
+\subsection{紧支撑连续函数}
+
+Gelfand 发展了这一哲学的下述版本。作为我们的空间范畴，考虑局部紧 Hausdorff 空间 $X$ 构成的范畴，态射取连续映射。作为函数空间，我们取 $C_v(X)$，即消失于无穷的连续 $\C$ 值函数空间。这属于交换 $C^{*}$-代数范畴。它们是带有 $*$ 运算（应想成共轭）的 Banach $\C$-代数，该运算 $\C$-反线性且与范数相容。给定任意交换 $C^{*}$-代数 $A$，相伴的谱 $m\text{-}\Spec\,A$ 称为 \term{Gelfand 谱}{Gelfand spectrum}，作为集合它由 $A$ 的极大理想组成。可以把它写成
+\begin{equation}\tag{2.4}
+m\text{-}\Spec\,A=\Hom_{\C^{*}}(A,\C),
+\end{equation}
+即 $A$ 的一维酉表示。于是伴随性说的是：
+\begin{equation}\tag{2.5}
+m\text{-}\Spec\,A=\Hom_{\C^{*}}(A,\C)=\operatorname{Map}(\mathrm{pt},m\text{-}\Spec\,A).
+\end{equation}
+
+\begin{srcthm}{1}\textbf{（Gelfand--Naimark）}
+$C_v$ 与 $m\text{-}\Spec$ 给出范畴等价。
+\end{srcthm}
+
+关于这个定理的更多细节，见例如 [aHRW10]。
+% [Tutor Note: 记号 $C_v(X)$ 并非通用记号，通常写作 $C_0(X)$（contract 支撑/消失于无穷）。若 $X$ 非紧，$C_0(X)$ 不含单位元，此时应在单位化代数 $C_0(X)^+$ 上取极大理想，或改用“本原理想/特征”，否则 (2.4) 的 $\Hom_{\C^*}(A,\C)$ 会漏掉零同态之外的信息。作者在正文中默认的应是“含单位的交换 $C^*$-代数”与紧 Hausdorff 空间，非紧情形要靠单位化补救；这是引用 Gelfand--Naimark 时最常见的隐藏约定。]
+
+\subsection{测度空间}
+
+有一个更粗的版本：从测度空间 $X$ 出发，配上（原文 “take attach” 疑为笔误）有界函数 $L^{\infty}(X)$。这构成交换 von Neumann 代数。这同样是范畴等价。
+
+\subsection{代数几何}
+
+我们将聚焦于代数几何的设定。交换代数一侧的范畴就取交换环范畴 $\mathbf{cRing}$。几何一侧取局部环空间范畴。这意思只是说，在每个点上都有“取值”的概念。
+
+函子
+\begin{equation}\tag{2.6}
+(X,\cO_X)\mapsto \cO(X)
+\end{equation}
+有伴随
+\begin{equation}\tag{2.7}
+\Spec\,R \leftarrow R.
+\end{equation}
+仿射概形构成 $\Spec$ 的像：
+\begin{equation}\tag{2.8}
+\begin{array}{ccc}
+\text{局部环空间} & \longrightarrow & \mathbf{cRing}\\
+\uparrow & \qquad\swarrow_{\Spec} &\\
+\text{仿射概形} & &
+\end{array}
+\end{equation}
+% 原文内嵌图 p022_d1.png（裁剪含 “nged spaces” 等正文残片，不可直接使用），此处按原版面重排。
+% [Tutor Note: (2.8) 的交换图应读成：$\Spec\colon \mathbf{cRing}^{op}\to\mathbf{LocRingSpaces}$ 与“整体截面”函子 $\Gamma$ 的伴随关系在仿射对象上的像；竖箭头表示“仿射概形 $\hookrightarrow$ 局部环空间”的满子范畴包含。作者用图把 $\Spec$ 画成从 $\mathbf{cRing}$ 指向仿射概形，实际方向是反变的，读图时须注意箭头两端是范畴而非函子。]
+
+于是仿射概形与交换环等价这一点本质上是构造中自带的。
+
+这并没有真正捕捉到代数几何中我们想研究的大部分内容，因为人们通常关心一般概形，即局部看起来是仿射的局部环空间。处理这一点的一种办法是真正把几何对象想成：
+\begin{equation}\tag{2.9}
+\operatorname{Fun}(\mathbf{Ring}^{op},\mathbf{Set})
+=\operatorname{Fun}(\mathbf{Aff},\mathbf{Set})
+\subset \mathbf{Geometry}.
+\end{equation}
+
+\subsection{拓扑}
+
+在同伦论中，我们可能从空间的同伦范畴出发，转向某种函数概念，例如上同调 $H^{*}(X;\Z)$。它位于分次交换环范畴中。这并不直接导致好的谱理论，但若我们记住多一点结构就可以。取而代之，从带连续映射的空间范畴出发，然后取有理链 $C_*^{\Q}$，得到交换微分分次 $\Q$-代数。这就是 Quillen--Sullivan 有理同伦论。\footnote{这一点也应归功于 Mandell。另见 Yuan 的论文 [Yua19]。}事实证明，单连通空间在有理同伦等价下的范畴，等价于在第 0 次为 $\Q$、第 1 次为 $0$ 的交换微分分次代数范畴。
+
+\section{谱分解}
+
+\begin{sectionkey}
+对交换环 $R$ 上的模 $V$，利用张量积把 $V$ 沿 $\Spec\,R$ 铺展成拟凝聚层 $\underline{V}$；有限集情形的分解就是按特征子空间分解，而一般情形引出“支撑”与拟凝聚层范畴。
+\end{sectionkey}
+
+设 $R$ 是某个域 $k$ 上的交换环。交换环通常通过对它的模的研究而出现。于是设 $V\in R\text{-}\mathbf{mod}$，即有一个映射
+\begin{equation}\tag{2.10}
+R\to \End(V).
+\end{equation}
+现在我们想把 $V$ 分解为 $\Spec\,R$ 上的某个层 $\underline{V}$。我们利用 $R\text{-}\mathbf{mod}$ 是对称幺半范畴，故有张量积 $\otimes_R$，于是可对开集 $U\subset\Spec\,R$ 定义
+\begin{equation}\tag{2.11}
+\underline{V}(U)=V\otimes_R \cO(U).
+\end{equation}
+然后就可以谈 $v\in V$ 的\term{支撑}{support}：
+\begin{equation}\tag{2.12}
+\operatorname{Supp}(v)\subset X.
+\end{equation}
+
+\begin{srcex}{6}
+若 $X$ 有限，即 $R=\prod_{x\in X}k$，则通过要求向量支撑在单点，我们得到分解 $V=\bigoplus_{x\in X}V_x$。但对每个点 $x$，我们都得到一个赋值态射：
+\begin{equation}\tag{2.13}
+\lambda\colon R\xrightarrow{ev_x}k,
+\end{equation}
+它与点 $x$ 相伴。和之前一样，可以把它想成一维 $R$-模，因为 $k=\End(k)$。因此改变记号，我们可以把分解写成
+\begin{equation}\tag{2.14}
+V=\bigoplus_{\lambda\in X}V_\lambda w.
+\end{equation}
+在这一语言中，分解中的空间正是 $\lambda$-特征空间：
+\begin{equation}\tag{2.15}
+V_\lambda=\Hom_{R\text{-}\mathbf{mod}}(k_\lambda,V)
+=\{v\in V\mid r\cdot v=\lambda(r)v\}.
+\end{equation}
+\end{srcex}
+% [Tutor Note: 印刷版 (2.14) 末尾多出一个 $w$，从上下文看是排版残留（应与 (2.11) 中带下划线的 $\underline{V}$ 记号无关，也不进入任何公式）。照录于此；正确写法应为 $V=\bigoplus_{\lambda\in X}V_\lambda$。另注意 (2.12) 的支撑本应定义为 $\Spec\,R$ 中的闭子集而非 $X$，此处 $X$ 是作者对“底空间”的泛称；在有限集情形二者一致，但一般 $R$ 上应说 $\operatorname{Supp}(v)\subset\Spec\,R$。]
+
+其中 $k_\lambda$ 是 $R$ 上的一维模，$R$ 通过映射 $\lambda$ 作用。
+
+这一描述是通过在一个点处取值给出的，但点既开又闭，所以我们也可把它描述为限制：
+\begin{equation}\tag{2.16}
+V_\lambda=V\otimes_{\cO(X)=R}k_\lambda,
+\end{equation}
+因此这个向量空间同时实现为 $\Hom$ 和张量，因为这些点碰巧既开又闭。
+
+定义拟凝聚层范畴为
+\begin{equation}\tag{2.17}
+\begin{aligned}
+\mathrm{QCoh}(X=\Spec\,R) &:= R\text{-}\mathbf{mod}\\
+&\ \ \uparrow\\
+\mathrm{Coh}(X) &:= R\text{-}\mathbf{mod}_{f.g.}
+\end{aligned}
+\end{equation}
+注意一般 $X$ 只是局部地形如 $\Spec\,R$，所以 $\mathrm{QCoh}(X)$ 只是局部地形如 $R\text{-}\mathbf{mod}$。
+
+\section{谱定理}
+
+\begin{sectionkey}
+经典的谱定理（矩阵的 Jordan 形、自伴算子的投影值测度、拓扑空间上局部常值复形）统一为“$A$-模沿 $\Spec\,A$ 层化”的同一机制；2.3.4 给出物理诠释：可观测量代数作用于态空间，测量结果就是层的支撑。
+\end{sectionkey}
+
+\subsection{代数几何版本}
+
+设 $V$ 是向量空间，$M\in\End\,V$。可以把 $M$ 想成 $M\in\Hom_{\mathbf{Set}}(\mathrm{pt},\End\,V)$，但 $\End\,V$ 不只是集合。它是 $k$ 上的结合代数，所以实际上
+\begin{equation}\tag{2.18}
+M\in\Hom_{\mathbf{Set}}(\mathrm{pt},\operatorname{Forget}\End\,V).
+\end{equation}
+这为与自由 $k$-代数构造的伴随性作好铺垫。一个生成元上的自由代数就是 $k[x]$，于是伴随性说：
+\begin{equation}\tag{2.19}
+\Hom_{\mathbf{Set}}(\mathrm{pt},\operatorname{Forget}\End\,V)
+=\Hom_{k\text{-}\mathbf{Alg}}(k[x],\End\,V).
+\end{equation}
+我们在这里看到的是：给 $V$ 配上某个 $M\in\End\,V$ 等价于让 $V$ 成为 $k[x]$ 上的模。也就是说，给 $V$ 配上 $M\in\End\,V$ 等价于 $V$ 是 $\Spec\,k[x]=\bA^1$ 上某个拟凝聚层的整体截面。也就是说，$V$ 铺展到 $\bA^1$ 上。
+
+为使之精确，假设 $V$ 有限生成，即层 $\underline{V}$ 凝聚。则 $V$ 有如下作为商与子空间的分解：
+\begin{equation}\tag{2.20}
+V_{torsion}\hookrightarrow V\twoheadrightarrow V_{tor.\,free},
+\end{equation}
+其中
+\begin{equation}\tag{2.21}
+V_{torsion}=\bigcup_{\lambda\in\bA^1}\{v\in V\mid \operatorname{Supp}v=\lambda\}.
+\end{equation}
+对主理想整环上的普通模（$k[x]$ 是主理想整环）有：
+\begin{equation}\tag{2.22}
+V\simeq \underbrace{V_{tor}}_{\text{离散谱}}\oplus\underbrace{V_{free}}_{\text{连续谱}},
+\end{equation}
+其中
+\begin{equation}\tag{2.23}
+V_{free}=k[x]^{\oplus r}
+\end{equation}
+以及
+\begin{equation}\tag{2.24}
+V_{tor}=\bigoplus_{\lambda\in\Spec}V_{\hat\lambda},
+\end{equation}
+其中 $V_{\hat\lambda}$ 是支撑在 $\lambda$ 处的子空间。事实证明
+\begin{equation}\tag{2.25}
+V_{\hat\lambda}=\bigoplus_i k[x]/(x-\lambda)^{\ell_i},
+\end{equation}
+即对这个空间中的任一元素，$(x-\lambda)$ 的某个幂将其零化，所以这些是\term{广义特征空间}{generalized eigenspace}。这个分解恰是 Jordan 标准形。
+% [Tutor Note: (2.21) 用并集而非直和，是因为不同 $\lambda$ 上的支撑集合可能相交于 0（即同时在两处支撑的向量只能为 0）；对有限生成模，实际只有有限多个 $\lambda$ 使 $V_{\hat\lambda}\neq 0$，所以该并是有限并、无收敛问题。(2.24) 的下标写成 $\lambda\in\Spec$ 是省略了 $\Spec\,k[x]=\bA^1$；$\hat\lambda$ 表示“以 $\lambda$ 为中心的广义特征空间”，即 (2.25) 中的 $k[x]/(x-\lambda)^{\ell_i}$ 部分，注意它与 (2.16) 的 $V_\lambda$（真特征空间）不同：后者是前者的商。]
+
+特征向量是使 $\lambda v=xv$（或按定义 $Mv$）的某元素 $v\in V$。但这等同于
+\begin{equation}\tag{2.26}
+\Hom_{k[x]}(k_\lambda,V)
+\end{equation}
+的一个元素。所以这就是人们可称为“在 $\lambda\in\bA^1$ 处按概形论意义支撑的截面”。
+
+另一方面，纤维
+\begin{equation}\tag{2.27}
+V\otimes_{k[x]}k_\lambda
+\end{equation}
+自然地是 $V$ 的商（而非子），所以它们是某种\term{余特征向量}{co eigenvector}。
+
+在连续谱中没有特征向量：作为自由模，$k[x]$ 不含任何特征向量。
+
+\begin{srcex}{7}
+考虑自由情形。只需考虑 $V=k[x]$，因为否则它只是它的若干拷贝的直和。此时 $X=\cO_{\bA^1}$。没有广义特征向量（因为对某个 $N\gg0$ 和某个 $\lambda\in\bA^1$，$(x-\lambda)^N=0$）。不过有很多余特征向量。对任意 $\lambda\in\bA^1$，有映射
+\begin{equation}\tag{2.28}
+V\twoheadrightarrow k_\lambda.
+\end{equation}
+这是一个分布，即
+\begin{equation}\tag{2.29}
+\Hom(V,k)
+\end{equation}
+的一个元素。于是对每个 $\lambda\in\bA^1$，得到
+\begin{equation}\tag{2.30}
+\Hom(V,k)\ni\delta_\lambda\colon V\twoheadrightarrow k_\lambda.
+\end{equation}
+\end{srcex}
+
+基本例子是 $V=L^2(\R)$ 和 $M=x$。则 $V_\lambda$ 由支撑在 $x$ 处的函数组成，但一个也没有。我们想说 $\delta_\lambda$，但它不是 $L^2$。对偶算子 $M^{\vee}=d/dx$ 有大致为 $e^{i\lambda x}$ 的特征向量，但它们也不是 $L^2$。
+
+这就是连续谱的样子。当你按 $x$ 或 $d/dx$ 的作用分解 $\bA^1$ 上的函数时，在某种意义上它是\term{直积分}{direct integral}，这与直和不同。你所积分的对象实际上并不是子集。于是我们可以把 $\bA^1$ 上的函数想成“一个点上的函数”的某种连续直和，但这些函数不作为子空间存在。在此情形中它们作为商存在，而非子空间。这在无挠情形更简单，但这是连续谱的一般特征。这并不是分析中的奇怪/特殊事实，因为即使在代数（多项式）层面我们也能看到它。
+
+\subsection{可测版本}
+
+代替矩阵 $M$，我们考虑 Hilbert 空间 $V=\mathcal{H}$ 上的自伴算子 $A$。则 von Neumann 谱定理告诉我们，$\R$ 上有一个“层”（投影值测度）$\pi_A$，且
+\begin{equation}\tag{2.31}
+A=\int_{\R}x\,d\pi_A.
+\end{equation}
+投影值测度可按如下方式想成一个层 $\underline{\pi_A}$。对可测集 $U\subset\R$，配上投影下的像：
+\begin{equation}\tag{2.32}
+\underline{\pi_A}(U)=\pi_A(U).
+\end{equation}
+所以这是某种 Hilbert 空间层。没有拓扑要与它相容，但它确实满足可加性：规则
+\begin{equation}\tag{2.33}
+U\mapsto \langle w,\pi_A(U)v\rangle
+\end{equation}
+定义了 $\R$ 上的 $\C$-值测度。所以这是可测世界中的层版本。
+% [Tutor Note: (2.32) 左右两端用同一字母 $\pi_A$ 表示两个不同对象：左边带下划线的是层 $\underline{\pi_A}$，右边是投影算子值测度（对可测集取投影算子）。这种“同一符号、两种范畴”的写法是本节最容易混淆处。另注意 (2.31) 的积分只在 $A$ 自伴时才是实轴上的谱积分；若 $A$ 非自伴（或非正规），应改在 $\C$ 上取谱测度，且 (2.34) 的 $\Spec(A)$ 不再自动是实子集。]
+
+于是式 (2.31) 是说，Hilbert 空间 $\mathcal{H}$ 以某种方式在 $\R$ 上层化，使得 $A$ 通过坐标函数 $x$ 作用，正如上述代数几何设定中那样。于是谱是一个可测子集
+\begin{equation}\tag{2.34}
+\Spec(A):=\operatorname{Supp}\pi_A\subset\R.
+\end{equation}
+
+\begin{srcex}{8}
+若 $\mathcal{H}$ 有限维，则谱是离散的点集，分解就是按特征空间分解。
+\end{srcex}
+
+\subsection{同伦版本}
+
+我们已看到代数几何中有拟凝聚层、测度论中有投影值测度，现在在代数拓扑中我们有如下。若 $R=C^{*}(X)$，则
+\begin{equation}\tag{2.35}
+R\text{-}\mathbf{mod}\hookrightarrow \Loc(X),
+\end{equation}
+其中 $\Loc(X)$ 由 $X$ 上局部常值复形组成。
+
+基本想法是：若我们有 $X$ 上上链的一个模型：
+\begin{equation}\tag{2.36}
+\to R^{\oplus j}\to R^{\oplus i}\to M,
+\end{equation}
+则得到 $M$ 由常值层给出的表示：
+\begin{equation}\tag{2.37}
+\to k_X^{\oplus j}\to k_X^{\oplus i}\to\underline{M},
+\end{equation}
+其中要点是
+\begin{equation}\tag{2.38}
+C^{*}(X)=\End^{*}(k_X,k_X).
+\end{equation}
+或者更直接地，我们可以把层定义为
+\begin{equation}\tag{2.39}
+\underline{M}(U)=M\otimes_{C^{*}(X)}C^{*}(X).
+\end{equation}
+% [Tutor Note: 印刷版 (2.39) 右端写作 $C^{*}(X)$，但若如此则右边恒等于 $M$，与开集 $U$ 无关，不可能定义出层。正确形式应是 $\underline{M}(U)=M\otimes_{C^{*}(X)}C^{*}(U)$：用 $U$ 上的上链把常数模 $M$ “局部化”。这里照录原文并加校勘；读者可按修正后的公式理解后面的陈述。(2.35) 的嵌入也不是逐点单射，而是在拟同构意义下把 $R$-模视为 $X$ 上的局部常值复形。]
+
+\begin{flushright}\small 第 4 讲；2021 年 1 月 28 日\end{flushright}
+
+\subsection{物理诠释：可观测量与态}
+
+我们已看到，从某种风味的交换代数 $A$ 出发，可以构造几何对象 $\Spec\,A$。然后 $A$ 上的模 $M$ 铺展成 $\Spec\,A$ 上的层。代数 $A$ 可看成某物理系统的\term{可观测量}{observable}代数。态的集合构成 $A$ 上的模，因而落入这一框架。
+
+让我们退一步。总体想法是，我们试图通过空间上的函数（即进行观测）来把握这个空间的几何。回忆 $\Spec\,A$ 的定义性质：只要有一个空间 $X$ 和映射 $A\to\cO(X)$（其中 $A$ 交换），就得到映射
+\begin{equation}\tag{2.40}
+X\to\Spec\,A.
+\end{equation}
+可以把映射 $A\to\cO(X)$ 想成在空间上挑选出满足 $A$ 的关系的一些函数（可观测量）。例如若只有一个函数，这就是从空间到直线的映射，于是空间将在其上分解。一般地，空间会在更高维的底上分解。所以这是用函数测量空间的一种方式。
+
+模的谱分解是这一点的线性化版本。我们把 $X$ 换成它的线性化版本，例如 $\cO(X)$，它就变成 $A$ 上的模。即 $A$ 上的模 $M$ 是映射 $X\to\Spec\,A$ 的线性化版本。若只有一个函数，这对应映射 $X\to\Spec\,k[x]=\bA^1$。同样，单个矩阵（向量空间的自同态）给出 $\bA^1$ 上的一个层。
+
+在量子力学中，我们没有相空间。我们只有一个向量空间 $\mathcal{H}$（相空间的某种线性化版本），称为\term{态 Hilbert 空间}{Hilbert space of states}。可观测量是 $\mathcal{H}$ 上的算子。在物理中我们关心实在性，所以可能坚持可观测量自伴的条件：
+\begin{equation}\tag{2.41}
+\mathcal{O}=\mathcal{O}^{*}.
+\end{equation}
+通常我们不会强加这个条件。对可观测量 $\mathcal{O}\circlearrowleft\mathcal{H}$，谱分解告诉我们 $\mathcal{H}$ 在 $\R$ 上层化（作为投影值测度）。底是 $\R$，因为这是单个算子生成的代数的 $\Spec$。这是从经典相空间 $M$ 和单个可观测量 $M\to\R$ 出发、再把 $M$ 在 $\R$ 上分解的类比。
+
+一个\term{态}{state}是元素 $|\varphi\rangle\in\mathcal{H}$。给定一个态和一个算子 $\mathcal{O}$，这个态成为层 $\mathcal{H}$ 的一个截面，即我们得到这个向量的特征空间分解。给定一个截面，我们首先能问的是支撑。这正是我们所做测量“居住”的地方。
+
+利用范数我们可以做得更精确。事实证明，$\|\varphi\|^2$ 是 $\R$ 上的概率测度，告诉我们预期这个态定位在哪里。例如，可取可观测量 $\mathcal{O}$ 在态 $\varphi$ 中的期望值：
+\begin{equation}\tag{2.42}
+\langle\mathcal{O}\rangle_\varphi
+=\frac{\langle\varphi|\mathcal{O}|\varphi\rangle}{\langle\varphi|\varphi\rangle}.
+\end{equation}
+这是如下式子的连续版本：
+\begin{equation}\tag{2.43}
+\frac{1}{\langle\varphi|\varphi\rangle}
+\sum_{\lambda\in\Spec\,\mathcal{O}}
+\lambda\bigl\|\operatorname{Proj}_{\mathcal{H}_\lambda}|\varphi\rangle\bigr\|^2
+=
+\frac{1}{\langle\varphi|\varphi\rangle}
+\sum_{\lambda,\psi_i}
+\lambda\langle\psi_i|\varphi\rangle|\psi_i\rangle
+\end{equation}
+其中 $\psi_i$ 是特征向量的一组基。
+% [Tutor Note: 印刷版 (2.43) 右端明显有误：$|\psi_i\rangle$ 是未配对的右矢，且与左端（正数）量纲不符；按 Jordan 谱分解应写成 $\frac{1}{\langle\varphi|\varphi\rangle}\sum_{\lambda,\psi_i}\lambda\,\langle\psi_i|\varphi\rangle\langle\varphi|\psi_i\rangle$，即 $\lambda|\langle\psi_i|\varphi\rangle|^2$。这里照录原文并标出。另注意 (2.42) 的期望值用 $\langle\varphi|\varphi\rangle$ 归一化，与通常“态已归一化”的约定不同；作者在全书中保持这一不归一化的约定，在后续出现 $\langle\mathcal{O}\rangle$ 的地方须与此一致。]
+
+\begin{srcrem}{13}
+要给出一个量子力学系统，我们还需要指定\term{哈密顿量}{Hamiltonian} $H$。这是一个特定的可观测量（$\mathcal{H}$ 上的自伴算子），扮演能量泛函的角色。$H$ 的本征态是系统的稳态。这让我们把 $\mathcal{H}$ 铺展到 $\R$ 上，得到能量本征态。我们将在 $H=0$ 的拓扑设定中工作，即我们只看 $0$-特征空间。所以这个分解与我们的关切有些正交。
+\end{srcrem}

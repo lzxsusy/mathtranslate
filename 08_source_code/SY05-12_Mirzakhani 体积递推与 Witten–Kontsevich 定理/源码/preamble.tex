@@ -1,0 +1,159 @@
+% =====================================================================
+%  Scott A. Wolpert,
+%  "Lectures and notes: Mirzakhani's volume recursion and approach for the
+%   Witten-Kontsevich theorem on moduli tautological intersection numbers"
+%  arXiv:1108.0174v1 [math.DG] (31 Jul 2011) —— 中文译注本
+%
+%  编译：LuaLaTeX（本机 xdvipdfmx 不稳定，统一用 lualatex，编译 3 遍）
+%  用法：powershell -ExecutionPolicy Bypass -File build.ps1
+%
+%  本底本的特殊性（译者必读）：
+%   * 原文的**编号公式只有 4 条**：(1)(2)(3) 在 p.18，(4) 在 p.21；正文引用了它们（"formula (1)"、
+%     "formulas (3)"）。这 4 条必须用 plain TeX 的 \eqno{(N)} 手工复刻编号，写法：
+%         \[ H(x,y)=... \eqno{(1)} \]
+%     两行共用一个编号时用 \[ \begin{aligned} ... \end{aligned} \eqno{(2)} \]。
+%     其余公式**一律不编号**，禁止 \tag 与带编号的 equation/align。
+%   * 原文的编号对象是**定理类陈述**：Theorem 1--15（其中 12 号是 Definition），
+%     编号在全书连续，必须手工复刻（\begin{thm}{N}）。这是本项目的验收锚点。
+%   * 图 1--11 为原文矢量图 500 dpi 截取（0 位图），图注为译者所译。
+%   * % [Tutor Note: ...] 为译者批注，不进入排版，汇总见 译注汇总.md。
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[UTF8]{ctex}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage[a4paper,left=2.5cm,right=2.5cm,top=2.6cm,bottom=2.7cm]{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+\usepackage[hidelinks,unicode]{hyperref}
+\hypersetup{pdftitle={讲义与注记：Mirzakhani 的体积递推与 Witten–Kontsevich 定理（中译注本）},
+  pdfauthor={Scott A. Wolpert; 中译/批注: 本译本}}
+
+\captionsetup{font=small,labelsep=quad}
+\setlength{\emergencystretch}{3em}
+\allowdisplaybreaks[1]
+\graphicspath{{figures/}{../figures/}}
+
+% ---------- 页眉 ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape Mirzakhani's volume recursion \& Witten-Kontsevich}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ---------- 定理类环境：编号一律由原文手工给出（原文 1--15 连续编号） ----------
+% 用法：\begin{thm}{3} ... \end{thm}  /  \begin{prop}{11} / \begin{defn}{12} / \begin{cor}{N}
+\newenvironment{thm}[1]{\par\medskip\noindent\textbf{定理 #1.}\ }{\par\medskip}
+\newenvironment{prop}[1]{\par\medskip\noindent\textbf{命题 #1.}\ }{\par\medskip}
+\newenvironment{defn}[1]{\par\medskip\noindent\textbf{定义 #1.}\ }{\par\medskip}
+\newenvironment{corl}[1]{\par\medskip\noindent\textbf{推论 #1.}\ }{\par\medskip}
+\newenvironment{lemmaenv}[1]{\par\medskip\noindent\textbf{引理 #1.}\ }{\par\medskip}
+
+% 原文中不编号的 "Theorem." 段（如原文 p.3 的两条）——只有粗体标签、无编号
+\newenvironment{thmplain}{\par\medskip\noindent\textbf{定理.}\ }{\par\medskip}
+\newenvironment{thmplaincite}[1]{\par\medskip\noindent\textbf{定理.}\ [#1].\ }{\par\medskip}
+
+% 原文 Proof. 环境
+\renewcommand{\proofname}{证明}
+
+% 原文的粗体/斜体行内小标题（如 "The papers." "First paper brief."）——
+% 中文译为 \para{...}，独立成段、粗体、不缩进。
+\newcommand{\para}[1]{\par\medskip\noindent\textbf{#1}\quad\ignorespaces}
+
+% 原文图标题（手工编号，不用 \caption 自动编号）
+\newcommand{\figtitle}[2]{\caption*{\small\textbf{图 #1：}#2}}
+% 原文表标题（本项目底本 0 表，保留宏备用）
+\newcommand{\tabtitle}[2]{\caption*{\small\textbf{表 #1：}#2}}
+
+% 参考文献条目（Lead 手工转录，保留英文原貌）
+\newcommand{\refitem}[2]{\par\hangindent=1.8em\hangafter=1\noindent [#1]~#2}
+
+% 原文页码定位（批注/校对用；不进入排版）
+\newcommand{\origp}[1]{}
+
+% ---------- 常用记号（只能用这里定义过的宏，不要自造 \newcommand） ----------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\PP}{\mathbb{P}}
+% 花体：模空间 M、Teichmüller T、曲线 C 等
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+% 本论文专用记号的简写
+\newcommand{\T}{\mathcal{T}}                     % Teichmüller space（译者常用裸 \T）
+\newcommand{\M}{\mathcal{M}}                     % moduli space（译者常用裸 \M）
+\newcommand{\Tg}{\mathcal{T}_g}                 % Teichmüller space
+\newcommand{\Tgn}{\mathcal{T}_{g,n}}
+\newcommand{\Mg}{\mathcal{M}_g}                 % moduli space
+\newcommand{\Mgn}{\mathcal{M}_{g,n}}
+\newcommand{\cMgn}{\mathcal{M}_{g,n}}
+\newcommand{\dimc}{\dim_{\C}}
+\newcommand{\Mbar}{\overline{\mathcal{M}}}      % Deligne-Mumford 紧化
+\newcommand{\Mgb}{\overline{\mathcal{M}}_g}
+\newcommand{\Mgnb}{\overline{\mathcal{M}}_{g,n}}
+\newcommand{\Tbar}{\overline{\mathcal{T}}}      % augmented Teichmüller space
+\newcommand{\Tgnb}{\overline{\mathcal{T}}_{g,n}}
+\newcommand{\MCG}{\mathrm{MCG}}                 % mapping class group
+\newcommand{\WP}{\mathrm{WP}}                   % Weil-Petersson
+\newcommand{\Vol}{\operatorname{Vol}}
+\newcommand{\vol}{\operatorname{vol}}
+\newcommand{\CV}{\operatorname{CV}}             % covolume
+\newcommand{\Int}{\operatorname{Int}}
+\newcommand{\Area}{\operatorname{Area}}
+\newcommand{\len}{\ell}
+\newcommand{\dl}{\mathrm{d}\ell}
+\newcommand{\dtau}{\mathrm{d}\tau}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ee}{\mathrm{e}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\rk}{\operatorname{rk}}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\Id}{\mathrm{Id}}
+\newcommand{\Stab}{\mathrm{Stab}}
+\newcommand{\ie}{\textit{i.e.}}
+\newcommand{\eg}{\textit{e.g.}}
+\newcommand{\cf}{\textit{cf.}}
+\newcommand{\half}{\tfrac{1}{2}}
+\newcommand{\wt}[1]{\widetilde{#1}}
+\newcommand{\what}[1]{\widehat{#1}}

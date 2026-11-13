@@ -1,0 +1,332 @@
+% 译自 arXiv:2306.13589v2 原 tex 第 159–461 行
+\section{阿贝尔范畴}
+\thispagestyle{plain}
+
+\takeaway{%
+  \textbf{物理图像：}本节是全书的语言奠基，本身不含物理内容；但按作者的整体布局，B-侧的 D-膜最终由某个簇上凝聚层的导出范畴来刻画，而导出范畴的局部化、消解与导出函子都要求底范畴是阿贝尔范畴，因此本节正是后文 B-侧几何语言的出发点。\\
+  \textbf{数学工具：}预加性/加性/阿贝尔范畴的公理 (A1)–(A4)、双积、核与余核、典范分解 $\ker(f)\hookrightarrow X\twoheadrightarrow\text{coim}(f)\cong\text{im}(f)\hookrightarrow Y\twoheadrightarrow\text{coker}(f)$、内射/投射对象与单边消解、上同调对象 $H^n(X^\bullet)$、Freyd--Mitchell 嵌入定理与 Yoneda 嵌入定理、伴随函子的正合性。\\
+  \textbf{主要结论：}在阿贝尔范畴中，单态射当且仅当其核为零，满态射当且仅当其余核为零，既单又满的态射必为同构；内射（投射）性分别等价于 $\text{Hom}_\mathsf{A}(\square,X)$（$\text{Hom}_\mathsf{A}(X,\square)$）的正合性；左伴随函子右正合、右伴随函子左正合；任何小阿贝尔范畴都可全忠实、正合地嵌入左 $R$-模范畴。%
+}
+
+
+\subsection{加性范畴}\label{ch1.1}
+
+
+按照惯例，我们用范畴论的一些基础内容来开始我们的叙述。加性范畴与阿贝尔范畴之所以区别于普通范畴，在于它们还要满足一些特定的附加公理，我们将在本章中把这些公理逐一列出。在此提醒读者：文献中往往采用彼此等价但形式不同的公理与记号，须留意分辨。凡在有用之处，我们都会指出这些差异，但总体上仍贴近我们的主要参考文献 \cite[sections II.5--II.6]{[GM03]} 与 \cite[section 4.1]{[ABC+09]} 的叙述。
+
+\begin{Def}\label{addcat}
+	一个范畴 $\mathsf{C}$ 若满足以下公理，则称为\textbf{预加性范畴}（preadditive category）\index{preadditive category}：
+	\begin{itemize}[leftmargin=0.5cm]
+		\renewcommand{\labelitemi}{\textendash}
+		\item (\textbf{A1}) $\text{Hom}_\mathsf{C}:\mathsf{C}^\text{opp}\times\mathsf{C}\rightarrow\mathsf{Ab}$ 是一个双函子；也就是说，对任意 $X,\,Y\in\text{obj}(\mathsf{C})$，集合 $\text{Hom}_\mathsf{C}(X,Y)$ 都是阿贝尔群，并且复合律是双加性的，从而给出群同态 $\circ:\text{Hom}_\mathsf{C}(X,Y)\times \text{Hom}_\mathsf{C}(Y,Z)\rightarrow\text{Hom}_\mathsf{C}(X,Z),\,(f,g)\mapsto g\circ f$（于是对可复合的态射成立 $g\circ (f_1+f_2)=g\circ f_1 + g\circ f_2$ 与 $(g_1+g_2)\circ f= g_1\circ f + g_2\circ f$）。
+	\end{itemize}
+	若一个预加性范畴 $\mathsf{C}$ 还满足以下两条，则称它为\textbf{加性范畴}（additive category）\index{additive category}：
+	\begin{itemize}[leftmargin=0.5cm]
+		\renewcommand{\labelitemi}{\textendash}
+		\item (\textbf{A2}) 存在零对象 $0\in\text{obj}(\mathsf{C})$（从而在同构意义下唯一），按定义这使得对任意 $X\in\text{obj}(\mathsf{C})$，$\text{Hom}_\mathsf{C}(0,X)$ 与 $\text{Hom}_\mathsf{C}(X,0)$ 都是单元素群；
+
+		\item (\textbf{A3}) 对任意 $X_1,\,X_2\in\text{obj}(\mathsf{C})$，存在 $Y\in\text{obj}(\mathsf{C})$ 以及如以下图表所示的态射
+		\begin{equation}\label{directprodsum}
+			\begin{tikzcd}
+				X_1\arrow[r, yshift=1ex, "i_1"] & Y\arrow[l, yshift=-0.5ex, "p_1"]\arrow[r, yshift=-0.5ex, "p_2"'] & X_2\arrow[l, yshift=1ex, "i_2"']
+			\end{tikzcd}
+		\end{equation}
+		使得 $p_1\circ i_1=\text{id}_{X_1},\,p_2\circ i_2=\text{id}_{X_2},\,p_2\circ i_1=0=p_1\circ i_2$ 且 $i_1\circ p_1 + i_2\circ p_2=\text{id}_Y$。
+	\end{itemize}
+\end{Def}
+
+% [Tutor Note: 易错预警] 公理 (A3) 中五条等式构成「双积」定义的全部内容：$p_k\circ i_k=\mathrm{id}_{X_k}$ 说明 $i_k$ 与 $p_k$ 在各自分量上互逆，两条正交性 $p_2\circ i_1=0=p_1\circ i_2$ 排除分量之间的串扰，而最后一条 $i_1\circ p_1+i_2\circ p_2=\mathrm{id}_Y$ 才真正把「积的结构」与「余积的结构」粘成同一个对象；若删去它，$Y$ 只是分别满足积与余积的泛性质，而不必是双积。另注意此处 $0$ 同时表示零对象与零态射，作者在整章中不加区分地这样使用，读者按上下文判断。
+
+若加性范畴中的 Hom 集还是域 $\mathbb{K}$ 上的向量空间，并且态射的复合是 $\mathbb{K}$-双线性的，则称之为\textit{$\mathbb{K}$-线性范畴}。值得指出的是，公理 (A2) 与 (A3) 不过是以隐晦的方式说：在加性范畴中，我们可以作出任意两个对象的直和（余积）与直积，并且所得对象仍属于类 $\text{obj}(\mathsf{C})$：
+
+\begin{Lem}
+	设 $X_1, X_2, Y\in\textup{obj}(\mathsf{C})$ 如公理 \textup{(A3)} 中那样。则 $Y$ 既是 $X_1$ 与 $X_2$ 的直积，又是它们的直和，并且由于刻画它们的泛性质而同构意义下唯一；因此我们可以无歧义地写 $Y=X_1\times X_2$，或者写 $Y=X_1\oplus X_2$ \textup(我们偏爱后一种记号\textup)。
+\end{Lem}
+
+\begin{proof}
+	我们只需验证：给定另一个 $Y'\in\text{obj}(\mathsf{C})$ 及其如 \eqref{directprodsum} 那样的相伴图表
+	\[
+	\begin{tikzcd}
+		X_1\arrow[r, yshift=1ex, "i_1'"] & Y'\arrow[l, yshift=-0.5ex, "p_1'"]\arrow[r, yshift=-0.5ex, "p_2'"'] & X_2\arrow[l, yshift=1ex, "i_2'"']
+	\end{tikzcd}
+	\]
+	则范畴直积与范畴直和的泛性质都得到满足：对任意一对态射 $X_1\xleftarrow{f_1}Y'\xrightarrow{f_2}X_2$ 或 $X_1\xrightarrow{g_1}Y'\xleftarrow{g_2}X_2$，都存在 $\mathsf{C}$ 中的虚线态射 $\varphi:Y'\rightarrow Y$ 或 $\phi:Y\rightarrow Y'$，使得图表
+	\begin{equation}
+		\begin{tikzcd}
+			Y'\arrow[dr, dashed, "\varphi"']\arrow[drr, out=0, in=150, "f_1"]\arrow[ddr, out=270, in=135, "f_2"'] & & \\ & Y\arrow[r, "p_1"']\arrow[d, "p_2"] & X_1 \\
+			& X_2 & 
+		\end{tikzcd}
+		\qquad\text{与}\qquad
+		\begin{tikzcd}
+			Y' & & \\ & Y\arrow[ul, dashed, "\phi"] & X_1\arrow[l, "i_1"]\arrow[ull, out=150, in=0, "g_1"'] \\
+			& X_2\arrow[u, "i_2"']\arrow[uul, out=145, in=270, "g_2"] & 
+		\end{tikzcd}
+	\end{equation}
+	交换。前者由 $\varphi\coloneqq i_1\circ f_1+ i_2\circ f_2$ 给出（事实上，由公理 (A3) 可得 $p_1\circ\varphi = \text{id}_{X_1}\circ f_1+0\circ f_2=f_1$ 以及 $p_2\circ\varphi = 0\circ f_1+\text{id}_{X_2}\circ f_2=f_2$），后者由 $\phi \coloneqq g_1\circ p_1 + g_2\circ p_2$ 给出（于是 $\phi\circ i_1=g_1$ 且 $\phi\circ i_2=g_2$）。按构造，它们都是唯一的。特别地，取 $f_k=p_k'$、$g_k=i_k'$（$k=1,2$），我们得到 $\varphi\circ\phi=\text{id}_Y$ 与 $\phi\circ\varphi=\text{id}_{Y'}$，这就证实了 $Y'\cong Y$，从而 \eqref{directprodsum} 在同构意义下唯一（且该同构是典范的）。
+\end{proof}
+
+因此，公理 (A3) 不过是要求任意两个对象在加性范畴内都有直和，其中态射 $p_k, i_k$ 显然扮演着到各因子的投影与从各因子的包含的角色。当然，任意有限\footnote{若任意一族对象——甚至是\textit{无限}多——的直和本身仍是一个对象，我们称该范畴为\textit{余完备的}（cocomplete）。把直和换成直积的相应性质则使之成为\textit{完备的}（complete）。}多个对象的直和也属于该加性范畴。
+此外，对任意 $Z\in\text{obj}(\mathsf{C})$，包含态射 $i_k:X_k\rightarrow X_1\oplus X_2$ 诱导出阿贝尔群的同构
+\[
+\text{Hom}_\mathsf{C}(Z,X_1)\times\text{Hom}_\mathsf{C}(Z,X_2)\xrightarrow{\sim}\text{Hom}_\mathsf{C}(Z,X_1\oplus X_2),\,(f,g)\mapsto i_1\circ f + i_2\circ g\;.
+\]
+
+% [Tutor Note: 易错预警] 上式最后一个双射是「用分量数据给出 $Z\to X_1\oplus X_2$」的加性版，其逆由 $(\varphi\mapsto(p_1\circ\varphi,p_2\circ\varphi))$ 给出；注意两边都是阿贝尔群而非仅是集合，双射实为群同构。另注意此处 $Z$ 在左边、$X_1\oplus X_2$ 在右边；若把 $\text{Hom}$ 的两个槽位对调（即讨论 $\text{Hom}_\mathsf{C}(X_1\oplus X_2,Z)$），同构的表述改为由限制映射 $(i_1^*,i_2^*)$ 给出，方向相反，考试与推导中最易在此处写反。
+
+再者，(A1) 与 (A2) 使我们能够对任意给定态射的核与余核给出范畴式的定义。具体地说，满足这两条公理的范畴 $\mathsf{C}$ 中的态射 $\varphi:X\rightarrow Y$ 诱导出两个函子 $\text{ker}\varphi:\mathsf{C}^\text{opp}\rightarrow\mathsf{Ab}$ 与 $\text{coker}\varphi=(\text{ker}(\varphi^\text{opp}))^\text{opp}$，它们由 $X$ 与 $Y$ 决定，并且只要存在就唯一（这里 $\varphi^\text{opp}:Y\rightarrow X$ 表示与 $\varphi$ 对偶的态射）。幸运的是，我们可以避开这些繁琐的构造——它们概述于 \cite[subsections II.5.6--II.5.8]{[GM03]}——只需注意到：在我们所关心的几乎所有加性范畴中，众所周知的集合论式定义都适用：$\ker(\varphi)$ 是零对象的原像，而 $\text{coker}(\varphi)$ 是目标空间模去 $\varphi$ 的像；这里它们被看作范畴中的对象，而不是范畴上的函子。然而，对阿贝尔群层范畴而言这一点并不显然：尽管层之间态射的核层本身仍是层，余核的相应论断却更难证明，并且需要作一些调整；关于这一点详见第 \ref{ch5.1} 节。
+
+因此，我们只限于采用下面这些略作变通的重新定义（并请读者在例如 $\mathsf{C}=\mathsf{Ab}$ 的情形核验它们与通常定义相容）。
+
+\begin{Def}\label{monepicoker}
+	设 $\mathsf{C}$ 是加性范畴，$f\in\text{Hom}_\mathsf{C}(X,Y)$。则 $f$ 称为：
+	\begin{itemize}[leftmargin=0.5cm]
+		\item 单射的，或称\textbf{单态射}（monomorphism）\index{monomorphism}，\footnote{在讨论抽象的加性/阿贝尔范畴时，我们更偏爱单态射/满态射这一术语，而不说单射/满射态射，以便与 $\mathsf{Ab}$ 这样最熟知的范畴相区别。此外，我们有时会用箭头 $\hookrightarrow$ 表示单态射，用 $\twoheadrightarrow$ 表示满态射。}若对一切 $W\in\text{obj}(\mathsf{C})$，由后复合给出的群同态 $f_*:\text{Hom}_\mathsf{C}(W,X)\rightarrow\text{Hom}_\mathsf{C}(W,Y),\,\varphi\mapsto f\circ\varphi$ 都是单射；
+
+		\item 满射的，或称\textbf{满态射}（epimorphism）\index{epimorphism}，若对一切 $Z\in\text{obj}(\mathsf{C})$，由前复合给出的群同态 $f^*:\text{Hom}_\mathsf{C}(Y,Z)\rightarrow\text{Hom}_\mathsf{C}(X,Z),\,\varphi\mapsto\varphi\circ f$ 都是单射。
+	\end{itemize}
+% [Tutor Note: 原文笔误] 满态射条目中原文写作「$f^*$ ... is injective」，但由定义 $f^*$ 的出发域是 $\text{Hom}_\mathsf{C}(Y,Z)$、到达域是 $\text{Hom}_\mathsf{C}(X,Z)$，$f$ 为满态射应对应 $f^*$ 为\textit{满射}（surjective）；同一条目中「前复合」的措辞也宜理解为「与 $f$ 复合」。按铁律此处照原文直译保留，读者应以满态射的等价刻画（引理 \ref{aboutmonepi}）为准。
+	现在，参照下文图表 \eqref{kercokerdiag}，我们说：
+	\begin{itemize}[leftmargin=0.5cm]
+		\item 一个态射 $k\in\text{Hom}_\mathsf{C}(K,X)$ 称为 $f$ 的\textbf{核}（kernel）\index{kernel}，若序列
+		\[
+		\{0\}\rightarrow\text{Hom}_\mathsf{C}(W,K)\xrightarrow{k_*}\text{Hom}_\mathsf{C}(W,X)\xrightarrow{f_*}\text{Hom}_\mathsf{C}(W,Y)
+		\]
+		对一切 $W\in\text{obj}(\mathsf{C})$ 都在 $\mathsf{Ab}$ 中正合；等价地说，$k$ 是 $f$ 的核当且仅当 $f\circ k=0$，并且任意满足 $f\circ k'=0$ 的 $k'\in\text{Hom}_\mathsf{C}(K',X)$ 都可分解为 $k'=k\circ h$，其中 $h\in\text{Hom}_\mathsf{C}(K',K)$ 唯一。此时 $k$ 必为单态射，而我们其实应当写 $\ker(f)\coloneqq k:K\rightarrow X$，不过我们直接就把 $\ker(f)\equiv K \in\text{obj}(\mathsf{C})$ 称为 $f$ 的核。
+
+		\item 一个态射 $c\in\text{Hom}_\mathsf{C}(Y,C)$ 称为 $f$ 的\textbf{余核}（cokernel）\index{cokernel}，若序列
+		\[
+		\{0\}\rightarrow\text{Hom}_\mathsf{C}(C,Z)\xrightarrow{c^*}\text{Hom}_\mathsf{C}(Y,Z)\xrightarrow{f^*}\text{Hom}_\mathsf{C}(X,Z)
+		\]
+		对一切 $Z\in\text{obj}(\mathsf{C})$ 都在 $\mathsf{Ab}$ 中正合；等价地说，$c$ 是 $f$ 的余核当且仅当 $c\circ f=0$，并且任意满足 $c'\circ f= 0$ 的 $c'\in\text{Hom}_\mathsf{C}(Y,C')$ 都可分解为 $c'=h'\circ c$，其中 $h'\in\text{Hom}_\mathsf{C}(C,C')$ 唯一。此时 $c$ 必为满态射，而我们其实应当写 $\text{coker}(f)\coloneqq c:Y\rightarrow C$，不过我们直接就把 $\text{coker}(f)\equiv C\in\text{obj}(\mathsf{C})$ 称为 $f$ 的余核。
+	\end{itemize}
+	\begin{equation}\label{kercokerdiag}
+		\begin{tikzcd}[row sep=small]
+			\ker(f)\equiv K\arrow[dr, hook, "k"] & & & \text{coker}(f)\equiv C\arrow[dd, dashed, "h'"] \\
+			& X\arrow[r, "f"] & Y\arrow[ur, two heads, "c"]\arrow[dr, "c'"'] & \\
+			K'\arrow[uu, dashed, "h"]\arrow[ur, "k'"'] & & & C' 
+		\end{tikzcd}
+	\end{equation}
+	按定义，核与余核只要存在就在同构意义下唯一，因此记号是无歧义的。
+\end{Def}   
+
+
+\subsection{阿贝尔范畴}\label{ch1.2}
+
+
+现在，对阿贝尔范畴而言只需再补充一条信息：
+
+\begin{Def}\label{abcat}
+	加性范畴 $\mathsf{A}$ 若满足以下公理，则称为\textbf{阿贝尔范畴}（abelian category）\index{abelian category}：
+	\begin{itemize}[leftmargin=0.5cm]
+		\renewcommand{\labelitemi}{\textendash}
+		\item (\textbf{A4}) 给定 $X,Y\in\text{obj}(\mathsf{A})$，任意态射 $f\in\text{Hom}_\mathsf{A}(X,Y)$ 在 $\mathsf{A}$ 中都容许一个形如
+		\begin{equation}\label{candecompo}
+			\begin{tikzcd}
+				\ker(f)\arrow[r, hook, "k"] & X\arrow[r, "q"] & I\arrow[r, "j"] & Y\arrow[r, two heads, "c"] & \text{coker}(f)\;,
+			\end{tikzcd}
+		\end{equation}
+		的\textbf{典范分解}（canonical decomposition）\index{canonical decomposition}，其中 $j\circ q=f$ 且 $\text{coker}(k)=I=\ker(c)\in\text{obj}(\mathsf{A})$（这里按定义 \ref{monepicoker} 把 $k=\ker(f)$ 与 $c=\text{coker}(f)$ 简写）。特别地，任何其他分解都通过一个唯一确定的同构与 \eqref{candecompo} 同构。
+	\end{itemize}
+\end{Def}
+
+% [Tutor Note: 易错预警] 注意 (A4) 的表述把两件事压在一句话里：一是 $\ker(f)$ 与 $\text{coker}(f)$ 必须存在（在一般加性范畴中这并非自动成立），二是中间那段 $q,j$ 的分解使 $\text{coim}(f)\to\text{im}(f)$ 为同构。后者才是「阿贝尔」与「仅加性」的分水岭：在加性范畴中典范态射 $\text{coim}(f)\to\text{im}(f)$ 总是既单又满，却未必是同构。又，$\text{coker}(k)=I=\ker(c)$ 中的等式是在 $\mathsf{A}$ 中作为对象相等（相差唯一同构）来读的，作者在 (A4) 与 \eqref{candecompo} 中对 $I$ 用了同一字母，读者不要误以为 $I$ 另有定义。
+
+\begin{Rem}
+	\ \vspace*{0.0cm}
+	\begin{itemize}[leftmargin=0.5cm]
+		\item 我们可以把 $f$ 的\textbf{像}（image）\index{image}定义为 $\text{im}(f)\coloneqq\ker(\text{coker}(f))$，把 $f$ 的\textbf{余像}（coimage）\index{coimage}定义为 $\text{coim}(f)\coloneqq\text{coker}(\ker(f))$。于是典范分解 \eqref{candecompo} 的完整展开实际上应读作
+		\[
+		\begin{tikzcd}
+			\ker(f)\arrow[r, hook, "\ker(f)"] & X\arrow[rrr, "f"]\arrow[dr, two heads, "\text{coim}(f)"'] & & & Y\;\arrow[r, two heads, "\text{coker}(f)"] & \;\text{coker}(f) \\
+			& & \text{coim}(f)\arrow[r, "\hat{f}"', "\sim"] & \text{im}(f)\arrow[ur, hook, "\text{im}(f)"'] & & 
+		\end{tikzcd}\quad,
+		\]
+
+		\item 因此，公理 (A4) 要求 $\mathsf{A}$ 中每个态射都有核与余核，并要求 $\hat{f}$ 是同构，于是我们可以写 $I\coloneqq\text{coim}(f)\cong\text{im}(f)$（任何由三元组 $(I',q',j')$ 给出的其他分解都与 \eqref{candecompo} 同构，其含义是 $I'\cong I$ 且该同构是典范的\footnote{一个证明可在 \cite[Proposition VIII.3.1]{[Mac78]} 中找到。}）。事实上，现在任何单态射都可写成某个适当态射的核\big(参照 \eqref{candecompo}，即 $f\cong\ker(c)=\ker(\text{coker}(f))$\big)，任何满态射都可写成某个余核\big($f\cong\text{coker}(k)=\text{coker}(\ker(f))$\big)。
+
+		\item 假设 $\ker(f)=0=\text{coker}(f)$。则 $\text{id}_Y:Y\rightarrow Y$ 是 $c:Y\rightarrow 0$ 的合法核，$\text{id}_X:X\rightarrow X$ 是 $k:0\rightarrow X$ 的合法余核，因此二者都在同构意义下唯一，用我们的记号即 $\ker(c)\cong Y$ 与 $\text{coker}(k)\cong X$。于是该公理推出 $X\cong Y$（作为 $\mathsf{A}$ 的对象）。换个说法（利用下面的引理 \ref{aboutmonepi}）：在阿贝尔范畴中，任何既单又满的态射都是同构。
+
+		\item 若 $\mathsf{A}$ 是加性/阿贝尔的，则由 $\text{obj}(\mathsf{A}^\text{opp})=\text{obj}(\mathsf{A})$ 与 $\text{Hom}_{\mathsf{A}^\text{opp}}(X,Y)=\text{Hom}_\mathsf{A}(Y,X)$（即把所有赋值反向）得到的对偶范畴 $\mathsf{A}^\text{opp}$ 本身也是加性/阿贝尔的。特别地，典范分解在对偶化下保持不变，而单态射/满态射分别变成满态射/单态射。
+	\end{itemize}
+\end{Rem}
+
+\begin{Ex}
+	阿贝尔范畴的原型例子当然是 $\mathsf{Ab}$，即\textbf{阿贝尔群范畴}（category of abelian groups）\index{category!of abelian groups}及其间的群同态。熟知的操作显然满足公理 (A1)--(A3)：任何平凡群都是合法的零对象，单态射/满态射由单射/满射群同态给出，余核/核与它们的代数定义一致。对 $f:X\rightarrow Y$ 而言，典范分解的存在性由群的同构定理保证：只需取 $I\coloneqq X/\ker(f)$，取 $k:\ker(f)\rightarrow X$ 为显然的包含，取 $c:Y\rightarrow \text{coker}(f)$ 与 $q:X\rightarrow X/\ker(f)$ 为显然的投影，最后取 $j:X/\ker(f)\xrightarrow{\sim}\text{im}(f)$ 为同构定理所断言的那个群同构；此时显然 $j\circ q=f$，并且 $\text{coker}(k)=X/\text{im}(k)=X/\ker(f)\cong \text{im}(f)=\ker(c)$。
+
+	阿贝尔范畴的其他例子还有：域 $\mathbb{K}$ 上有限维向量空间的范畴 $\mathsf{Vect}_\mathbb{K}$，以及更一般的、环 $R$ 上\textbf{左/右 $R$-模范畴 ${}_R\mathsf{Mod}$、$\mathsf{Mod}_R$}（category of left/right modules）\index{category!of left/right modules}（记住 $\mathsf{Mod}_\mathbb{Z}=\mathsf{Ab}$，而当 $R$ 交换时有 ${}_R\mathsf{Mod}=\mathsf{Mod}_R$）。\hfill $\blacklozenge$
+\end{Ex}
+
+% [Tutor Note: 术语/记号提醒] 作者用 ${}_R\mathsf{Mod}$ 记左 $R$-模、$\mathsf{Mod}_R$ 记右 $R$-模，这与某些文献（如把 ${}_R\mathsf{Mod}$ 读作右模）相反；判别法子是「环写在作用的一侧」：左模的环作用写在元素左边，故下标在左。此约定在 \S 1.3 的 $\text{Hom}$ 与张量函子正合性中会直接影响左右模的搭配，务必牢记。
+
+在阿贝尔范畴中工作是非常有利的：$\mathsf{Ab}$ 中熟知的许多概念与结果都可以一一移植并加以利用。因此我们可以谈论（上）链复形、消解、序列的正合性、（上）同调群等等，并可以使用五引理、蛇引理以及其他图追踪方法。例如：
+
+\begin{Def}\label{abeliansubcat}
+	设 $\mathsf{A}$ 是阿贝尔范畴，$\mathsf{B}\subset\mathsf{A}$ 是一个子范畴。若 $\mathsf{B}$ 本身是阿贝尔范畴，并且 $\mathsf{B}$ 中任何短正合序列 $0\rightarrow X\xrightarrow{f} Y\xrightarrow{g} Z\rightarrow 0$（其含义是：作为 $\mathsf{B}$ 各自的子对象有 $\ker(f)=0=\text{coker}(g)$ 且 $\text{im}(f)=\ker(g)$）同时也在 $\mathsf{A}$ 中短正合，则称 $\mathsf{B}$ 为\textbf{阿贝尔子范畴}（abelian subcategory）\index{abelian subcategory}。
+\end{Def} 
+
+% [Tutor Note: 含糊点拨] 这个定义把「在 $\mathsf{B}$ 中正合」与「在 $\mathsf{A}$ 中正合」并列要求，容易被误读为冗余。实际上二者不同：$\mathsf{B}$ 中的核/余核可能不等于其在 $\mathsf{A}$ 中的核/余核（若 $\mathsf{B}$ 不是全子范畴），定义的要点正是要求两种含义一致。一个常用的充分判据是：若 $\mathsf{B}$ 是全子范畴且对 $\mathsf{A}$ 中的核与余核封闭，则 $\mathsf{B}$ 是阿贝尔子范畴；反之，仅在 $\mathsf{B}$ 中「看起来」正合的序列未必在 $\mathsf{A}$ 中正合。典型反例：投射模构成的子范畴不是阿贝尔子范畴（投射模之间映射的核未必投射）。
+
+再多说几句，以便对\textit{具体}（concrete）阿贝尔范畴（其对象可视为「带额外结构的集合」，从而 $x\in X$ 之类的记号是合法的）中的单态射与满态射获得更多熟悉感。
+
+\begin{Lem}\label{aboutmonepi}
+	在具体阿贝尔范畴中，态射 $f:X\rightarrow Y$：
+	\begin{itemize}[leftmargin=0.5cm]
+		\item 是单态射，当且仅当 $(f(x)=0\in Y$ $\implies$ $x=0\in X)$ 成立；等价地，当且仅当 $\ker(f)=0$ \textup(零态射\textup)；
+
+		\item 是满态射，当且仅当 \textup($\forall y\in Y$ $\exists x\in X$ 使得 $f(x)=y$\textup) 成立；等价地，当且仅当 $\textup{coker}(f)=0$ \textup(零态射\textup)。
+	\end{itemize}
+	此外，在任何阿贝尔范畴中，给定单态射/满态射 $f:X\rightarrow Y$，我们都可以把它补成一个形如
+	\[
+	\begin{tikzcd}[column sep=1.1em]
+		0\arrow[r] & X\arrow[r, hook, "f"] & Y\arrow[r, two heads, "c"] & \textup{coker}(f)\arrow[r] & 0 & \textup{相应地} & 0\arrow[r] & \ker(f)\arrow[r, hook, "k"] & X\arrow[r, two heads, "f"] & Y\arrow[r] & 0\;.	
+	\end{tikzcd}\vspace*{-0.1cm}
+	\]
+	的短正合序列。因此，任何短正合序列 $0\rightarrow X\xrightarrow{f} Y\xrightarrow{g} Z\rightarrow 0$ 都典范同构于 $0\rightarrow \ker(g)\hookrightarrow Y\twoheadrightarrow \textup{coker}(f)\rightarrow 0$ 。
+\end{Lem}
+
+以下几条性质将在构造导出函子时提供一条捷径：
+
+\begin{Def}\label{injprojobj}
+	设 $\mathsf{A}$ 是阿贝尔范畴。
+	\begin{itemize}[leftmargin=0.5cm]
+		\item 若对每个单态射 $f\in\text{Hom}_\mathsf{A}(Y,Z)$ 以及任意 $g\in\text{Hom}_\mathsf{A}(Y,X)$，都存在某个 $h\in\text{Hom}_\mathsf{A}(Z,X)$ 使得 $h\circ f= g$（见下方左图），则称 $X\in\text{obj}(\mathsf{A})$ 为\textbf{内射对象}（injective object）\index{object!injective}。
+		\newline 若对每个满态射 $f\in\text{Hom}_\mathsf{A}(Y,Z)$ 以及任意 $g\in\text{Hom}_\mathsf{A}(X,Z)$，都存在某个 $h\in\text{Hom}_\mathsf{A}(X,Y)$ 使得 $f\circ h= g$（见右图），则称 $X\in\text{obj}(\mathsf{A})$ 为\textbf{投射对象}（projective object）\index{object!projective}。
+		\begin{equation}\label{injprojobjdiag}
+			\begin{tikzcd}
+				Y\arrow[rr, hook, "f"]\arrow[dr, "g"'] & & Z\arrow[dl, dashed, "h"] \\
+				& X &
+			\end{tikzcd}
+			\qquad\qquad
+			\begin{tikzcd}
+				Y\arrow[rr, two heads, "f"] & & Z \\
+				& X\arrow[ul, dashed, "h"]\arrow[ur, "g"'] &
+			\end{tikzcd}
+		\end{equation}
+
+		\item 进而，若每个 $X\in\text{obj}(\mathsf{A})$ 都容许一个由内射对象 $\{I^i\}_{i\geq 0}\subset\text{obj}(\mathsf{A})$ 给出的\textbf{（右）内射消解}（(right) injective resolution）\index{has enough!injectives}，也就是说，存在一个可能无限的复形
+		\[
+		0\longrightarrow X\xrightarrow{\varepsilon_X} I^0\longrightarrow I^1\longrightarrow I^2\longrightarrow ...
+		\] 
+		（简记为 $X\xrightarrow{\varepsilon_X}I^\bullet$）并且该复形处处正合，则称 $\mathsf{A}$ \textbf{有足够多的内射对象}（has enough injectives）\index{resolution!(right) injective}。
+		\newline 反之，若每个 $X\in\text{obj}(\mathsf{A})$ 都容许一个由投射对象 $\{P^i\}_{i\leq 0}\subset\text{obj}(\mathsf{A})$ 给出的\textbf{（左）投射消解}（(left) projective resolution）\index{has enough!projectives}，也就是说，存在一个可能无限的复形
+		\[
+		... \longrightarrow P^{-2}\longrightarrow P^{-1}\longrightarrow P^0\xrightarrow{\varepsilon_X} X\longrightarrow 0
+		\] 
+		（简记为 $P^\bullet\xrightarrow{\varepsilon_X}X$）并且该复形处处正合，则称 $\mathsf{A}$ \textbf{有足够多的投射对象}（has enough projectives）\index{resolution!(left) projective}。
+	\end{itemize}
+\end{Def}
+
+% [Tutor Note: 易错预警] 两个图极易混淆：内射性是把沿单态射 $f$ 给出的态射「延拓」到更大的 $Z$ 上（$h\circ f=g$，$h$ 补在 $f$ 之后），投射性是把沿满态射 $f$ 给出的态射「提升」到 $Y$ 上（$f\circ h=g$，$h$ 补在 $f$ 之前）。记忆口诀：「内射向后延拓、投射向前提升」。另注意 (左) 投射消解写成 $P^{-2}\to P^{-1}\to P^0\to X\to 0$，指标\textit{递减}到 $0$，与 (右) 内射消解 $X\to I^0\to I^1\to\cdots$ 的指标\textit{递增}方向相反；导出函子中 $R^i\mathsf{F}$ 与 $L_i\mathsf{G}$ 的指标方向即由此而来，符号出错多半源于此处。
+
+为完整起见，我们还要说明对一般阿贝尔范畴如何定义上同调（参见 \cite[subsections II.6.2--II.6.3]{[GM03]}）。
+
+\begin{Def}\label{abeliancohomology}
+	设 $\mathsf{A}$ 是阿贝尔范畴，$X^\bullet\equiv(X^\bullet,d^\bullet)$ 是 $\mathsf{A}$ 中的一个（上链）复形 $(...\xrightarrow{d^{n-1}}X^n\xrightarrow{d^n}X^{n+1}\xrightarrow{d^{n+1}}...)$（从而对一切 $n\in\mathbb{Z}$ 有 $d^n\circ d^{n-1}=0$；详见第 \ref{ch2.1} 节）。则 $X^\bullet$ 的\textbf{$n$ 阶上同调对象}\index{object!nth@$n$-th cohomology}为
+	\[
+	H^n(X^\bullet)\coloneqq \text{coker}(a^{n-1})\cong\ker(b^n)\in\text{obj}(\mathsf{A})
+	\]
+	（它是 $\mathsf{A}$ 的对象，因为后者含有余核/核！），其中 $a^{n-1}, b^n$ 由以下交换图确定：
+	\begin{equation}\label{cohomodiag}
+		\begin{tikzcd}
+			& \text{coker}(d^{n-1})\arrow[dr, dashed, "b^n"]\arrow[r, two heads] & \text{im}(d^n)\arrow[d, hook] \\
+			X^{n-1}\arrow[r, "d^{n-1}"]\arrow[dr, dashed, "a^{n-1}"]\arrow[d, two heads] & X^n\arrow[u, two heads]\arrow[r, "d^n"] & X^{n+1} \\
+			\text{im}(d^{n-1})\arrow[r, hook]& \ker(d^n)\arrow[u, hook] & \\
+		\end{tikzcd}\quad.\vspace*{-0.5cm}
+	\end{equation}
+	若复形 $X^\bullet$ 在每一项处零调（acyclic），即对一切 $n\in\mathbb{Z}$ 都有 $H^n(X^\bullet)=0$，则称之为\textit{正合的}（exact）。
+\end{Def}
+
+% [Tutor Note: 易错预警] 作者采用\textit{上链}复形约定：微分 $d^n$ \textit{升高}指标，$H^n$ 是「$n$ 阶上同调」；若改用链复形（$d_n$ 降低指标），则所有指标须整体翻转。图中 $a^{n-1}$ 是从 $X^{n-1}$ 到 $\text{im}(d^{n-1})$ 的满态射、$b^n$ 是从 $\text{coker}(d^{n-1})$ 到 $\text{im}(d^n)$ 的态射，而 $H^n\coloneqq\text{coker}(a^{n-1})\cong\ker(b^n)$ 的相等只能在阿贝尔范畴（即用上 (A4)）中成立；在一般加性范畴中它只是同构的候选而非定义。
+
+容易看出，在 $\mathsf{Ab}$ 或 ${}_R\mathsf{Mod}$ 中上同调的定义与通常的定义吻合：$H^n(X^\bullet)=\text{coker}(a^{n-1})=\ker(d^n)/\text{im}(a^{n-1})=$ $\ker(d^n)/\text{im}(d^{n-1})=\ker\big(X^n\!\rightarrow\!\text{im}(d^n)\big)/\text{im}(d^{n-1})\cong\ker\big(\text{coker}(d^{n-1})\!\twoheadrightarrow\!\text{im}(d^n)\big)$ $=\ker(b^n)$。
+
+
+\subsection{阿贝尔范畴之间的函子}\label{ch1.3}
+
+
+我们简要考察阿贝尔范畴之间函子的行为。
+
+\begin{Def}\label{additiveexactfunc}
+	设 $\mathsf{C},\mathsf{C}'$ 是加性范畴。若对任意 $X,Y\in\text{obj}(\mathsf{C})$，映射 $\mathsf{F}_{X,Y}:\text{Hom}_\mathsf{C}(X,Y)\rightarrow\text{Hom}_{\mathsf{C}'}(\mathsf{F}(X),\mathsf{F}(Y))$ 都是阿贝尔群的同态，则称函子 $\mathsf{F}:\mathsf{C}\rightarrow\mathsf{C}'$ 为\textbf{加性的}（additive）\index{functor!additive}。若此外 $\mathsf{C}$ 与 $\mathsf{C}'$ 都是 $\mathbb{K}$-线性的，并且这些映射实际上是向量空间的 $\mathbb{K}$-线性映射，则称 $F$ 为\textit{线性的}。
+
+	设 $\mathsf{A},\mathsf{A}'$ 是阿贝尔范畴。若加性函子 $\mathsf{F}:\mathsf{A}\rightarrow\mathsf{A}'$ 把 $\mathsf{A}$ 中的短正合序列 $0\rightarrow X\rightarrow Y\rightarrow Z\rightarrow 0$ 映为 $\mathsf{A}'$ 中的短正合序列 $0\rightarrow \mathsf{F}(X)\rightarrow \mathsf{F}(Y)\rightarrow \mathsf{F}(Z)\rightarrow 0$，则称之为\textbf{正合的}（exact）\index{functor!exact (between abelian categories)}。若它分别只是在 $\mathsf{F}(Z)$ 处、或在 $\mathsf{F}(X)$ 处失去正合性，则称它只是\textbf{左正合/右正合}的\index{functor!left/right exact}。
+\end{Def}
+
+% [Tutor Note: 术语/记号提醒] 作者的措辞按「在何处失效」来命名：左正合函子失去的是右端的满射性（即在 $\mathsf{F}(Z)$ 处不再正合，只保留 $0\to\mathsf{F}(X)\to\mathsf{F}(Y)\to\mathsf{F}(Z)$），右正合函子失去的是左端的单射性（在 $\mathsf{F}(X)$ 处失效，只保留 $\mathsf{F}(X)\to\mathsf{F}(Y)\to\mathsf{F}(Z)\to 0$）。这与「保持左端/右端」的记法方向相反，望文生义最易记反。另注意定义中的「正合函子」指保持短正合序列，与「复形正合」是两个不同概念。
+
+作为标准练习（在 \cite[Propositions II.6.5, II.6.6]{[GM03]} 中完成），我们有：
+
+\begin{Ex}\label{exactfuncexample}
+	给定阿贝尔范畴 $\mathsf{A}$ 与固定的 $X\in\text{obj}(\mathsf{A})$，则（加性）Hom 函子 $\text{Hom}_\mathsf{A}(X,\square):\mathsf{A}\rightarrow\mathsf{Ab}$ 与 $\text{Hom}_\mathsf{A}(\square,X):\mathsf{A}^\text{opp}\rightarrow\mathsf{Ab}$ 都是左正合的。
+
+	给定环 $R$ 与 $R$ 上固定的右模/左模 $X$，则（加性）函子 $X\otimes_R \square:{}_R\mathsf{Mod}\rightarrow\mathsf{Ab}$ 与 $\square\otimes_R X:\mathsf{Mod}_R\rightarrow\mathsf{Ab}$ 都是右正合的。（若它们同时也是左正合的，我们称 $X$ 为 $R$ 上的平坦模。）	\hfill $\blacklozenge$
+\end{Ex}
+
+% [Tutor Note: 易错预警] 张量函子的左右模搭配是本节的符号陷阱：$X\otimes_R\square$ 的出发范畴是\textit{左} $R$-模范畴 ${}_R\mathsf{Mod}$，故 $X$ 必须是\textit{右} $R$-模；$\square\otimes_R X$ 的出发范畴是\textit{右} $R$-模范畴 $\mathsf{Mod}_R$，故 $X$ 必须是\textit{左} $R$-模。若把 $X$ 的左右性写反，$\otimes_R$ 根本无法定义。另注意 Hom 函子只左正合、张量函子只右正合；一般情形下二者都不正合，其失效程度正是 Ext 与 Tor 所度量的（见后文导出函子一节）。
+
+Hom 函子对判别阿贝尔范畴的内射对象与投射对象特别有用（参看定义 \ref{injprojobj}）。
+
+\begin{Lem}\label{Homforinjprojobj}
+	设 $\mathsf{A}$ 是阿贝尔范畴，固定 $X\in\textup{obj}(\mathsf{A})$。则左正合函子 $\textup{Hom}_\mathsf{A}(X,\square)$ 与 $\textup{Hom}_\mathsf{A}(\square,X)$ 正合，当且仅当 $X$ 分别是投射对象与内射对象。
+\end{Lem}
+
+\begin{proof}
+	先从投射性开始。假设 $X$ 是投射的，并考虑短正合序列 $0\rightarrow K\rightarrow Y\rightarrow Z\rightarrow 0$，其中满态射 $f:Y\twoheadrightarrow Z$ 按图表 \eqref{injprojobjdiag} 右图选取。我们须验证 $\text{Hom}_\mathsf{A}(X,Y)\rightarrow\text{Hom}_\mathsf{A}(X,Z)\rightarrow 0$ 在 $\mathsf{Ab}$ 中正合，也就是说 $f_*$ 是满射。事实上，$X$ 的投射性保证：给定任意 $g\in\text{Hom}_\mathsf{A}(X,Z)$，都存在某个 $h\in\text{Hom}_\mathsf{A}(X,Y)$ 使得 $g=f\circ h=f_*(h)$。反之，假设 $\text{Hom}_\mathsf{A}(X,\square)$ 右正合，我们利用这样一点：任何满态射 $f:Y\twoheadrightarrow Z$ 都可以通过在左端添上其核 $K\equiv\ker(f)$ 而补成上述形状的短正合序列。于是，给定态射 $g\in\text{Hom}_\mathsf{A}(X,Z)$，$f_*$ 的满射性给出某个 $h\in\text{Hom}_\mathsf{A}(X,Y)$，使图表 \eqref{injprojobjdiag} 右图交换。
+
+	再论内射性。假设 $X$ 是内射的，并考虑短正合序列 $0\rightarrow Y\hookrightarrow Z\rightarrow C\rightarrow 0$，其中单态射 $f:Y\hookrightarrow Z$ 按 \eqref{injprojobjdiag} 左图选取。为证明 $\text{Hom}_\mathsf{A}(Z,X)\rightarrow\text{Hom}_\mathsf{A}(Y,X)\rightarrow 0$ 在 $\mathsf{Ab}$ 中正合，即 $f^*$ 是满射，我们使用 $X$ 的内射性：对每个 $g\in\text{Hom}_\mathsf{A}(Y,X)$，都存在某个 $h\in\text{Hom}_\mathsf{A}(Z,X)$ 使得 $g=h\circ f=f^*(h)$。反向蕴含的论证类似，只需先把单态射 $f:Y\hookrightarrow Z$ 在右端添上 $C\equiv\text{coker}(f)$ 补成短正合序列。
+\end{proof}
+
+我们提及一个重要的结果，它说明了阿贝尔范畴与 ${}_R\mathsf{Mod}$ 的相容性。其证明可在 \cite[section 1.6]{[Wei94]} 中找到。
+
+\begin{Thm}[Freyd--Mitchell Embedding Theorem]
+	设 $\mathsf{A}$ 是小\footnote{若 obj($\mathsf{A}$) 与它的全体 Hom 集所成的总体都是集合，则称范畴 $\mathsf{A}$ 是小的。}阿贝尔范畴。则存在一个\textup(含幺\textup)环 $R$ 以及一个全忠实\footnote{若对一切 $X, Y \in$ obj$(\mathsf{C})$，$\mathsf{F}_{X,Y}:\textup{Hom}_\mathsf{C}(X,Y)\rightarrow\textup{Hom}_\mathsf{D}(\mathsf{F}(X),\mathsf{F}(Y))$ 分别是满射与单射，则称函子 $\mathsf{F}:\mathsf{C}\rightarrow\mathsf{D}$ 是\textit{满的}与\textit{忠实的}（两者兼具即\textit{全忠实}的）。}正合函子 $\mathsf{F}:\mathsf{A}\rightarrow{}_R\mathsf{Mod}$。
+\end{Thm}
+
+% [Tutor Note: 含糊点拨] 「小」这个假设不可省：对大的阿贝尔范畴（例如全体阿贝尔群层构成的范畴）该定理一般不成立，因为需要一个集合大小的环来承载所有 Hom 集。另须注意该嵌入虽全忠实且正合，却\textit{不}保持内射/投射对象（下段作者已点明），因此不能把 $\mathsf{A}$ 中的内射消解直接搬到 ${}_R\mathsf{Mod}$ 中当消解用；后文讨论层范畴的内射消解时必须回到 $\mathsf{A}$ 内部构造。证明的思路是用 Yoneda 引理把对象映为可表函子，再把这些函子实现为某个环上的模，相关细节见 \cite[section 1.6]{[Wei94]}。
+
+因此，$\mathsf{A}$ 等价于 ${}_R\mathsf{Mod}$ 的一个全子范畴（也就是说，它嵌入到 ${}_R\mathsf{Mod}$ 中），它的全部结构都可以与模上的相应结构等同起来。特别地，我们可以把它的对象想成左 $R$-模，把它的态射想成 $R$-线性映射。然而，这一对应对内射对象与投射对象并不成立。
+
+在上述提到的证明中，用到了下面这个看起来很熟悉的定理：
+
+\begin{Thm}[Yoneda Embedding Theorem]\label{YonedaEmbThm}
+	设 $\mathsf{A}$ 是加性范畴，$\mathsf{Fun}(\mathsf{A},\mathsf{Ab})$、$\mathsf{Fun}(\mathsf{A}^\textup{opp},\mathsf{Ab})$ 分别是从 $\mathsf{A}$ 到 $\mathsf{Ab}$ 的全部协变函子与反变函子连同它们之间的自然变换所构成的\textup(阿贝尔！\textup)范畴。则存在：
+	\begin{itemize}	
+		\item 一个左正合函子 $h_*:\mathsf{A}^\textup{opp}\rightarrow\mathsf{Fun}(\mathsf{A},\mathsf{Ab})$，它把 $X\mapsto\textup{Hom}_\mathsf{A}(X,\square)$、把 $f\mapsto\textup{Hom}_\mathsf{A}(f,\square)=f_*$；若此外 $\mathsf{A}^\textup{opp}$ 是阿贝尔的，则 $h_*$ 全忠实，从而把 $\mathsf{A}^\textup{opp}$ 与全阿贝尔子范畴 $\{h_X:\mathsf{A}\rightarrow\mathsf{Ab}\mid X\in\textup{obj}(\mathsf{A})\}$ 等同起来。
+
+		\item 一个左正合函子 $h^*:\mathsf{A}\rightarrow\mathsf{Fun}(\mathsf{A}^\textup{opp},\mathsf{Ab})$，它把 $X\mapsto\textup{Hom}_\mathsf{A}(\square, X)$、把 $f\mapsto\textup{Hom}_\mathsf{A}(\square, f)=f^*$；若此外 $\mathsf{A}$ 是阿贝尔的，则 $h^*$ 全忠实，从而把 $\mathsf{A}$ 与全阿贝尔子范畴 $\{h^X:\mathsf{A}^\textup{opp}\rightarrow\mathsf{Ab}\mid X\in\textup{obj}(\mathsf{A})\}$ 等同起来。
+	\end{itemize} 
+\end{Thm}
+
+% [Tutor Note: 术语/记号提醒] 定理中「$\mathsf{A}^\textup{opp}$ 阿贝尔」与「$\mathsf{A}$ 阿贝尔」这两个附加条件容易被略过：Hom 函子对任意加性范畴都只是左正合的，只有当对偶范畴也阿贝尔（即 $\mathsf{A}$ 阿贝尔）时，$h_*$ 才可能与其像范畴的全子范畴结构完全吻合。另注意 $h_*$ 与 $h^*$ 的指标方向相反（一个定义在 $\mathsf{A}^\textup{opp}$ 上、一个定义在 $\mathsf{A}$ 上），但两者都是左正合；这是 Yoneda 引理的函子化表述，后文用它把「Hom 层面的正合性」翻译成「对象层面的正合性」。
+
+Yoneda 嵌入定理也在下述命题中起作用。这个命题被纳入本书乍看或许略显随意，但在处理层范畴之间某些具体函子的正合性时（见引理 \ref{sectfuncexact} 与 \ref{inversepushforwardexact}）确实会有用。
+
+\begin{Pro}\label{adjointfunc}
+	设 $\mathsf{C},\mathsf{C}'$ 是加性范畴，$\mathsf{F}:\mathsf{C}\rightarrow\mathsf{C}'$ 与 $\mathsf{G}:\mathsf{C}'\rightarrow\mathsf{C}$ 是一对\textup(左、右\textup)伴随函子。也就是说，假设存在双函子 $\mathsf{C}^\textup{opp}\times\mathsf{C}'\rightarrow\mathsf{Sets}$ 之间的自然同构 $\Psi:\textup{Hom}_{\mathsf{C}'}(\mathsf{F}(\square),\blacksquare)\rightarrow\textup{Hom}_\mathsf{C}(\square,\mathsf{G}(\blacksquare))$，从而对每个 $X\in\textup{obj}(\mathsf{C})$、$Y\in\textup{obj}(\mathsf{C}')$ 给出双射 $\Psi_{X,Y}:\textup{Hom}_{\mathsf{C}'}(\mathsf{F}(X),Y)\xrightarrow{\sim}\textup{Hom}_\mathsf{C}(X,\mathsf{G}(Y))$。则 $\mathsf{F}$ 右正合，$\mathsf{G}$ 左正合。
+\end{Pro}
+
+\begin{proof}
+	我们从 $\mathsf{G}$ 开始，考虑 $\mathsf{C}'$ 中的一个短正合序列 $0\rightarrow Y\xrightarrow{f} Y'\xrightarrow{g} Y''\rightarrow 0$。对任意 $X\in\text{obj}(\mathsf{C})$ 施加左正合函子 $h_{\mathsf{F}(X)}=\text{Hom}_{\mathsf{C}'}(\mathsf{F}(X),\blacksquare):\mathsf{C}'\rightarrow\mathsf{Ab}$（见例 \ref{exactfuncexample}），我们得到下图中正合的上行：
+	\[
+	\begin{tikzcd}
+		0\arrow[r] & \text{Hom}_{\mathsf{C}'}(\mathsf{F}(X),Y)\arrow[r,"f_*"]\arrow[d, "\Psi_{X,Y}"'] & \text{Hom}_{\mathsf{C}'}(\mathsf{F}(X),Y')\arrow[r,"g_*"]\arrow[d, "\Psi_{X,Y'}"] & \text{Hom}_{\mathsf{C}'}(\mathsf{F}(X),Y'')\arrow[d, "\Psi_{X,Y''}"] \\
+		0\arrow[r] & \text{Hom}_\mathsf{C}(X,\mathsf{G}(Y))\arrow[r, "\alpha_*"'] & \text{Hom}_\mathsf{C}(X,\mathsf{G}(Y'))\arrow[r, "\beta_*"'] & \text{Hom}_\mathsf{C}(X,\mathsf{G}(Y''))
+	\end{tikzcd}\quad.
+	\]
+	于是，由于每个竖直映射按假设都是双射，下行也对任意 $X\in\text{obj}(\mathsf{C})$ 正合。又因 Yoneda 嵌入 $h^*$ 全忠实，例如这意味着
+	\[
+	\text{Hom}_{\mathsf{Fun}(\mathsf{A}^\textup{opp},\mathsf{Ab})}\big(\text{Hom}_\mathsf{C}(\square,\mathsf{G}(Y)),\text{Hom}_\mathsf{C}(\square,\mathsf{G}(Y'))\big)\cong\text{Hom}_\mathsf{C}(\mathsf{G}(Y),\mathsf{G}(Y'))\,,
+	\]
+	所以下行就唯一地识别出 $\mathsf{C}$ 中一个序列 $0\rightarrow\mathsf{G}(Y)\xrightarrow{\alpha}\mathsf{G}(Y')\xrightarrow{\beta}\mathsf{G}(Y'')$ ——于是必然有 $\alpha=\mathsf{G}(f)$ 与 $\beta=\mathsf{G}(g)$ ——而它实际上还继承了正合性：取 $X=\mathsf{G}(Y)$，则 $\beta\circ\alpha=(\beta_*\circ\alpha_*)(\text{id}_{\mathsf{G}(Y)})=0$；反之，取 $X=\ker(\beta)$，则包含态射 $\iota:X\hookrightarrow\mathsf{G}(Y')$ 满足 $\beta_*(\iota)=0$，于是 $\iota\in\ker(\beta_*)=\text{im}(\alpha_*)$ 且 $\ker(\beta)=\text{im}(\iota)\subseteq\text{im}(\alpha)$，合起来便得 $\ker(\beta)=\text{im}(\alpha)$；同法可得 $\ker(\alpha)=0$。这就说明 $\mathsf{G}$ 左正合。
+
+	对 $\mathsf{F}$，我们照搬上述程序：$\mathsf{C}$ 中任何短正合序列 $0\rightarrow X\xrightarrow{f} X'\xrightarrow{g} X''\rightarrow 0$ 都通过左正合函子 $h^{\mathsf{G}(Y)}=\text{Hom}_\mathsf{C}(\square,\mathsf{G}(Y)):\mathsf{C}^\text{opp}\rightarrow\mathsf{Ab}$ 以及双射 $\Psi_{\square,Y}^{-1}$，诱导出对每个 $Y\in\text{obj}(\mathsf{C}')$ 的一族正合序列 $0\rightarrow\text{Hom}_{\mathsf{C}'}(\mathsf{F}(X''),Y)\rightarrow\text{Hom}_{\mathsf{C}'}(\mathsf{F}(X'),Y)\rightarrow\text{Hom}_{\mathsf{C}'}(\mathsf{F}(X),Y)$；而后者又借助全忠实的 $h_*$（它起着如下作用：
+	\[
+	\text{Hom}_{\mathsf{Fun}(\mathsf{A},\mathsf{Ab})}\big(\text{Hom}_{\mathsf{C}'}(\mathsf{F}(X''),\blacksquare),\text{Hom}_{\mathsf{C}'}(\mathsf{F}(X'),\blacksquare)\big)\cong\text{Hom}_{\mathsf{C}'}(\mathsf{F}(X'),\mathsf{F}(X''))\,.
+	\]
+	）唯一地确定出所想要的序列 $\mathsf{F}(X)\xrightarrow{\mathsf{F}(f)}\mathsf{F}(X')\xrightarrow{\mathsf{F}(g)}\mathsf{F}(X'')\rightarrow 0$。正合性的证明与上述相同。
+\end{proof}
+
+
+\newpage
+
+

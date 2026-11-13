@@ -1,0 +1,226 @@
+% 原文 pp.41–46（印刷 pp.1159–1164）
+\section{Lecture 3：规范场论的 BRST 量子化}
+
+\begin{keytakeaways}
+本讲用 BRST 上同调给出规范场论的一种系统量子化方案：在 Faddeev–Popov 规范固定之外引入鬼场 $c,\bar c$ 与辅助场 $h$，把被规范固定破坏掉的规范对称性替换为局部泛函代数上的一个奇导子 $\delta$（BRST 微分），它满足 $\delta^2=0$ 并保持含鬼场的 Lagrange 量 $\widetilde L$。核心数学工具是分次导子及其上同调：物理算符就是 $\delta$ 的上同调 $H^\bullet_\delta$，按鬼数分次后 $H^0_\delta$ 恰为规范不变的局部算符，而 $\delta$-恰当算符的插入给出零。主要结论有四条：路径积分 $Z$ 与规范固定函数 $\Lambda$ 的选取无关，其证明只用到 $\delta$ 的幂零性、积分测度的 $\delta$-不变性以及有效作用量的 $\delta$-不变性；后者一旦失效即为反常（anomaly），而反常只出现在微扰论的 1 圈阶。把 $\delta$ 换成 Hamiltonian 框架中的 BRST 荷 $Q$ 后，物理 Hilbert 空间是 $Q$ 在鬼数 $0$ 上的上同调 $H^0_Q$，其上 Hermite 形式正定，并与传统 $L^2(\mathcal A)$ 量子化给出的 $H_{\mathrm{trad}}$ 同构。最后，量纲分析给出 $[c]=0$、$[\bar c]=2$、$[A]=1$，故含鬼场的 Lagrange 量中只有电荷 $e$ 与规范固定参数 $a$ 两个可重整耦合。
+\end{keytakeaways}
+
+% ===== 原文 p.41 =====
+在本讲中，我们将借助 BRST 上同调（BRST cohomology）来讨论规范场论的量子化。\footnote{主要关心量子场论动力学的读者应当注意：我们今天要讨论的许多技术细节，对于理解后续各讲并非严格必需。} 这一方法是对于最初的 Faddeev–Popov 方法的改进。与 Faddeev–Popov 方法相比，BRST 方法的一个优点在于：BRST 使“量子化与规范固定（gauge fixing）方案的选择无关”这一事实成为显式的。
+
+类似的方法也可用于引力（见 [II-Strings]）。
+
+\subsection{一般框架}
+
+我们先建立一个一般框架，然后再考察例子。在这一一般框架中，我们有一个紧致规范群（compact gauge group）$G$，其 Lie 代数为 $\mathfrak{g}$；此外还有一个群 $\widehat{G}$，它是时空 $M$ 上主 $G$-丛（principal $G$-bundle）$E$ 的规范变换群。
+
+形式上，我们要计算路径积分
+\begin{equation}
+  \tag{3.1}
+  \label{eq:3-1}
+  \frac{1}{\mathrm{Vol}(\widehat{G})}\int DA\,D\phi\;e^{-L(A,\phi)},
+\end{equation}
+其中 $L(A,\phi)$ 是含规范场 $A$ 与物质场 $\phi$ 的规范不变 Lagrange 量。
+
+对这一路径积分作微扰处理，困难在于：规范场的动能项 $F_A^2$ 沿 $\widehat{G}$ 的轨道是退化的（degenerate）。
+
+% [Tutor Note: (3.1) 里出现了三个极易混淆的符号：$G$ 是紧致规范群，$\mathfrak{g}$ 是它的 Lie 代数，而 $\widehat{G}$ 是主丛 $E$ 的规范变换群（即从 $M$ 到 $G$ 的映射群）。此外 $\mathrm{Vol}(\widehat{G})=\int_{\widehat{G}}\mathcal{D}g$ 是无穷大，所以 (3.1) 本身并没有严格定义；它的确切含义只能通过后面“在规范条件给出的截面上积分”（Faddeev–Popov 手续）来理解——上式的写法只是把 $\int_{\widehat{G}}\mathcal{D}g$ 形式地约化掉。参见 [I-Faddeev] 第 5 讲。]
+
+处理这一困难的一种办法是：把 (3.1) 中的被积函数替换为某个在 $\widehat{G}$ 的每条轨道上积分都等于 1 的表达式——这样 (3.1) 就等于这个表达式的积分（至少当一切都为有限维时如此）。例如，这个表达式可以取为某个规范条件的 delta 函数，也就是联络与物质场空间中对 $\widehat{G}$-作用而言是截面的某个子流形的 delta 函数（这一手续称为规范固定（gauge fixing））。众所周知（见 [I-Faddeev] 第 5 讲、[II-Strings] 第 3 讲），这会在积分号下引入一个行列式（即 Faddeev–Popov 行列式（Faddeev–Popov determinant））。这个行列式是一个非局部的表达式，因此若只想与局部表达式打交道，就应当把这个行列式替换为「对场空间的一个 Gauss 积分」乘以「$E$ 的余伴随丛（coadjoint bundle）
+
+\par\medskip
+\noindent{\small\itshape 记录整理：Pavel Etingof 与 David Kazhdan。}
+\par\medskip
+
+% ===== 原文 p.42 =====
+的奇（odd）截面空间的两份拷贝」。因此，我们必须引入取值于 $\mathrm{ad}(E)$ 的额外费米场（fermionic fields）$c,\bar c$。这些费米子称为鬼场（ghosts），因为它们不对应任何物理粒子，并且违反自旋–统计关系（spin-statistics）。引入鬼场之后，路径积分就可以按通常方式处理，例如用微扰论技巧。
+
+% [Tutor Note: 上一页末尾说鬼场取值于“余伴随丛”的奇截面空间，而这里说 $c,\bar c$ 取值于 $\mathrm{ad}(E)$（伴随丛）。对紧致群 $G$，伴随丛与余伴随丛可借助不变内积典范地等同，故两种说法一致；但若 $G$ 非紧（例如把下面的形式推广到非紧群），二者必须区分，$\bar c$ 究竟属于哪一束会影响鬼场的对易关系与 Hermite 形式的定义。]
+
+\subsection{BRST 微分}
+
+不言而喻，任何规范固定手续按定义都破坏了规范不变性。因此，为了得到有意义的量子化，我们必须保证在最终结果中规范对称性得以恢复。特别地，我们必须说明：在上一节引入鬼场的框架里，究竟是什么取代了规范对称性。
+
+结果表明，取代规范对称性的是局部泛函代数上的某个奇导子（odd derivation），我们下面就来构造它。
+
+我们先考虑经典理论。先看引入鬼场之后理论有哪些场。基本场是联络 $A$、物质场 $\phi$，以及鬼场 $c,\bar c$——它们是 $E$ 的伴随丛（adjoint bundle）的截面。我们还要添加一个辅助标量玻色场（auxiliary scalar bosonic field）$h$，其意义将在下文中显现。
+
+设 $R$ 为局部泛函代数。我们要定义一个奇导子 $\delta:R\to R$，使得 $\delta^2=0$（这就是 BRST 微分（BRST differential））。
+
+回忆一下：局部泛函代数 $R$ 是商代数 $\widetilde{R}/I$，其中 $\widetilde{R}$ 是场量的局部表达式构成的代数，而 $I$ 是由场方程生成的微分理想（differential ideal）。
+
+我们先定义导子 $\delta:\widetilde{R}\to\widetilde{R}$，然后再确保场方程被尊重。
+
+在生成元上定义 $\delta$ 如下：
+\begin{equation}
+  \tag{3.2}
+  \label{eq:3-2}
+  \delta c=\tfrac12[c,c],\qquad \delta\phi=\delta_c\phi,\qquad \delta A=-d_Ac,\qquad \delta\bar c=h,\qquad \delta h=0,
+\end{equation}
+其中 $\delta_c\phi$ 表示 $\phi$ 沿无穷小规范变换 $c$ 的变分。容易验证 $\delta^2=0$。
+
+% [Tutor Note: 作者说“It is easy to check that $\delta^2=0$”，实际要验证的是 $\delta^2A=0$：由 (3.2) 得 $\delta(d_Ac)=d_A\delta c+[\delta A,c]=\tfrac12d_A[c,c]-[d_Ac,c]$，而 $c$ 是奇元素，$[c,c]=2c^ac^b f_{ab}{}^{c}T_c\neq0$，且 $d_A[c,c]=[d_Ac,c]+[c,d_Ac]=2[d_Ac,c]$，两项正好相消。关键点：$[c,c]$ 前的系数 $\tfrac12$ 与 $\delta A=-d_Ac$ 中的负号是绑定的约定；若把 $\delta A$ 写成 $+d_Ac$，则须同时改 $\delta c$ 的符号（或改用 $[\;,\;]$ 与 $\{\;,\;\}$ 的另一种搭配），否则 $\delta^2A=2[d_Ac,c]\neq0$。另需 $\delta^2\phi=0$，这要求 $\delta_c\phi$ 是线性化的规范变换，从而 $\delta(\delta_c\phi)=\delta_{[\ldots]}\phi$ 由 Lie 代数 Jacobi 恒等式给出。]
+
+回忆 [II-Strings] 第 4 讲：含鬼场的 Lagrange 量为
+\begin{equation}
+  \tag{3.3}
+  \label{eq:3-3}
+  \widetilde{L}=L(A,\phi)-\delta\bigl(\bar c(h/2+\Lambda)\bigr)=L(A,\phi)-\Bigl(h\Lambda+\frac{h^2}{2}-\bar c\,\delta\Lambda\Bigr),
+\end{equation}
+其中 $\Lambda=\Lambda(A,\phi)$ 是一个非规范不变的局部表达式（即规范固定函数（gauge fixing function））。这个 Lagrange 量当然等价于
+\[
+  \widehat{L}=L(A,\phi)+\Bigl(\tfrac12\Lambda^2+\bar c\,\delta\Lambda\Bigr),
+\]
+这是通过消去 $h$ 得到的。
+
+% [Tutor Note: 由 (3.3) 第一步到第二步用了一次 Grassmann 符号：$\delta\bigl(\bar c(h/2+\Lambda)\bigr)=(\delta\bar c)(h/2+\Lambda)+(-1)^{|\bar c|}\bar c\,\delta(h/2+\Lambda)$，因 $\bar c$ 为奇而 $h/2+\Lambda$ 为偶，故第二项取负号，得 $h(h/2+\Lambda)-\bar c\,\delta\Lambda=h^2/2+h\Lambda-\bar c\,\delta\Lambda$。漏掉这个负号会得到 $h^2/2+h\Lambda+\bar c\delta\Lambda$，从而消去 $h$ 后鬼场动能项的符号错误（正确的鬼场作用量必须是“$\bar c$ 乘 $c$ 的算符”这一形式，其符号由 $\delta\bar c=h$ 与 $\delta h=0$ 的对偶配对决定）。此外，由 (3.3) 得到 $\widehat L$ 的消去步骤作者未写出：$h$ 无动能项，$\widetilde L$ 对 $h$ 是二次式，由场方程 $\partial\widetilde L/\partial h=-(\Lambda+h)=0$ 得 $h=-\Lambda$，代回即得 $\widehat L$；在路径积分中这一步就是把 $h$ 的 Gauss 积分积掉（该积分精确，因为对 $h$ 是二次的）。]
+
+我们希望 Lagrange 量在导子 $\delta$ 下不变。由于 $L(A,\phi)$ 已经不变（因为它规范不变），只需检验表达式 $h\Lambda+\frac{h^2}{2}-\bar c\,\delta\Lambda$ 在 $\delta$ 下是闭的；这由 $\delta^2=0$ 即得，因为如 (3.3) 所示，该表达式具有 $\delta(\cdots)$ 的形式。
+
+% ===== 原文 p.43 =====
+由于 $\delta$ 保持 Lagrange 量不变，它保持 Lagrange 量的临界点集，因而确实定义了局部泛函代数上的一个导子。
+
+作为一个例子，考察 $E$ 为平凡丛（并且没有物质场）的情形。一种可能的规范固定条件是库仑（Coulomb，原文误拼作 “Coloumb”）规范条件 $d^*A=0$。于是取 $\Lambda=d^*A$。此时 $\delta\Lambda=-d^*d_Ac$，故消去 $h$ 之后，纯规范理论的 Lagrange 量为
+\begin{equation}
+  \tag{3.4}
+  \label{eq:3-4}
+  L=\frac{1}{4e^2}\int F\wedge *F+\bigl((d^*A)^2-\bar c\,d^*d_Ac\bigr).
+\end{equation}
+
+我们看到这个 Lagrange 量是非退化的（nondegenerate），因此可以照常对它作微扰论。此时 $R$ 上的导子 $\delta$ 由下式定义：
+\begin{equation}
+  \tag{3.5}
+  \label{eq:3-5}
+  \delta c=\tfrac12[c,c],\qquad \delta A=-d_Ac,\qquad \delta\bar c=-d^*A.
+\end{equation}
+
+% [Tutor Note: (3.4) 与由 (3.3) 消去 $h$ 所得的结果有一处不一致：取 $\Lambda=d^*A$ 时 (3.3) 给出规范固定项 $\tfrac12(d^*A)^2$，而 (3.4) 中写作 $(d^*A)^2$，少了因子 $\tfrac12$；而 p.45 正文又把规范固定项写回 $\frac{\Lambda^2}{2}+\bar c\,\delta\Lambda$。这多半是排印时漏掉 $\frac12$（或作者对 $\Lambda$ 作过重新标度而忘了相应改动鬼场项）。此外 (3.4) 中积分号 $\int$ 的排版范围只覆盖 $F\wedge*F$，按文意应理解为覆盖括号内两项；$\frac{1}{4e^2}$ 只归一化 Yang–Mills 项。]
+
+% [Tutor Note: (3.5) 中 $\delta\bar c=-d^*A$ 是用 $h$ 的场方程 $h=-\Lambda=-d^*A$ 代入 (3.2) 的结果。此时 $\delta$ 不再离壳（off-shell）幂零：$\delta^2\bar c=-\delta(d^*A)=d^*d_Ac\neq0$，它只在壳上、即模去 $\bar c$ 的场方程 $\delta\Lambda=0$ 后才为零。保留辅助场 $h$ 的 (3.2) 才是离壳幂零的。这正是作者在 p.42 强调 $\delta$ 先定义在 $\widetilde R$ 上、再“确保场方程被尊重”从而下降到 $R$ 的原因——读者若只在 (3.5) 上验证 $\delta^2=0$ 会得出错误的结论。]
+
+\subsection{BRST 导子的性质}
+
+至此我们构造了一个导子 $\delta$。$\delta$ 的主要性质是：
+
+\begin{enumerate}
+  \item $\delta^2=0$。
+  \item $\delta$ 是先验地（a priori）定义在 $\widetilde{R}$ 上的，不需要用到 Lagrange 量 $L(A,\phi)$ 与规范固定项 $\Lambda$。它保持含鬼场的 Lagrange 量 $\widetilde{L}$，因而下降到 $R$ 上。
+\end{enumerate}
+
+现在转向量子理论。在此情形下，局部泛函被局部算符取代。可以证明，存在一种重整化方案，在其中 $\delta$ 可按上述方式定义，且性质 1、2 成立。这一点下面会讨论。
+
+然而，为了把 BRST 方法用于量子化，我们还需要 $\delta$ 的另一条纯量子的性质。即：记 $\mathcal{L}_{\mathrm{eff}}$ 为有效 Lagrange 量（effective Lagrangian），也就是使得相应的经典理论等价于以 $L$ 描述的量子理论的那个 Lagrange 量。这个 Lagrange 量当然是非局部的。我们所需的 $\delta$ 的第三条性质是
+
+\begin{enumerate}
+  \setcounter{enumi}{2}
+  \item $\delta$ 保持有效作用量（effective action）$\mathcal{L}_{\mathrm{eff}}$，即 $\delta\mathcal{L}_{\mathrm{eff}}=0$。
+\end{enumerate}
+
+这条性质可能失效；一旦失效，人们就说该理论是反常的（anomalous）。
+
+\textbf{评注（Remark）}。虽然 $\mathcal{L}_{\mathrm{eff}}$ 是非局部的，但可以证明 $\delta\mathcal{L}_{\mathrm{eff}}$ 总是某个局部表达式的积分。\footnote{例如，后面我们引入质量为 $m$ 的 Pauli–Villars 调节场（regulator fields）并取 $m\to\infty$ 来作正规化。在 $m\to\infty$ 的极限下，调节场的所有效应都是局部的；另一方面，规范不变性只被调节场的耦合项所破坏，因此规范不变性的破坏也是局部的。} $\delta\mathcal{L}_{\mathrm{eff}}$ 中的一项，只有在无法通过给 $\mathcal{L}_{\mathrm{eff}}$ 添加一个（非规范不变的）局部项把它去掉时才有意义；若能通过添加这样的项把 $\delta\mathcal{L}_{\mathrm{eff}}$ 抵消掉，我们就这样做，从而消除该反常。可以证明，在规范场论中，用这种局部抵消项使 $\delta\mathcal{L}_{\mathrm{eff}}$ 为零的障碍由一个 1 圈（1-loop）计算给出。因此，反常出现在微扰论的 1 圈阶，并且没有更高阶的修正。我们在本讲末尾会看到这一点。
+
+% ===== 原文 p.44 =====
+\subsection{规范场论中的算符与 BRST 上同调}
+
+假设性质 1–3 成立。考虑由 Lagrange 量 $\widetilde{L}$ 给出的路径积分 $Z$：
+\begin{equation}
+  \tag{3.6}
+  \label{eq:3-6}
+  Z=\int DA\,Dc\,D\bar c\,Dh\,D\phi\;e^{-\widetilde{L}}
+\end{equation}
+（可能还带有若干规范不变的插入算符）。性质 1–3 蕴涵 $Z$ 与规范固定条件 $\Lambda$ 无关。事实上，对任何局部表达式 $X$ 都有
+\begin{equation}
+  \tag{3.7}
+  \label{eq:3-7}
+  \int DA\,Dc\,D\bar c\,Dh\,D\phi\;e^{-\widetilde{L}}\,\delta X
+  =\delta\int DA\,Dc\,D\bar c\,Dh\,D\phi\;e^{-\widetilde{L}}\,X=0,
+\end{equation}
+而这蕴涵 $Z$ 与 $\Lambda$ 无关。
+
+\textbf{评注}。在 (3.7) 中我们用到了 $\delta$ 保持积分测度 $DA\,Dc\,D\bar c\,Dh\,D\phi$ 这一事实。容易看出，这与性质 3（无反常）等价。
+
+% [Tutor Note: 把 $\delta$ 提到积分号外并断言结果为零，实际用到三件事：(i) $\delta\widetilde L=0$（性质 2）；(ii) 测度在 $\delta$ 下不变；(iii) $\delta$-恰当项的积分为零——玻色方向是“全导数”，费米方向则是 Berezin 积分对 Grassmann 平移的不变性。若 $X$ 为奇元素，由于 $e^{-\widetilde L}$ 为偶，$\delta(e^{-\widetilde L}X)=\delta(e^{-\widetilde L})X+e^{-\widetilde L}\delta X$，不产生额外符号，这一点容易算错。测度不变性失效即反常，用 Fujikawa 的语言说，反常就是变换 Jacobian 的超迹 $\mathrm{Tr}\,\delta$；这也解释了为何作者把“测度不变”与“性质 3”等同。]
+
+$Z$ 与 $\Lambda$ 无关这一论断，对被 $\delta$ 湮灭的算符（插入）也成立；例如对任何只依赖 $A,\phi$ 的规范不变插入成立。另一方面，若 $\mathcal{O}=\delta\mathcal{O}'$，则由 (3.7) 知 $\mathcal{O}$ 的积分为零。因此，本理论中“物理的”量子算符构成的空间就是 $\delta$ 的上同调。这个上同调称为 BRST 上同调（BRST cohomology）。
+
+BRST 上同调带有自然的 $\mathbb{Z}$-分次（$\mathbb{Z}$-grading）。即：局部算符空间上有一个分次，其中规范场与物质场的次数为 $0$，$c$ 的次数为 $1$，$\bar c$ 的次数为 $-1$。这个次数称为鬼数（ghost number）。容易看出 $\delta$ 使次数升高 $1$。这使我们可以对上同调引入分次：用 $H^q_\delta$ 表示 $q$ 次的上同调。
+
+这种上同调在此情形下通常成立的性质是：
+
+\begin{enumerate}
+  \item 当 $q<0$ 时 $H^q_\delta$ 为零。
+  \item $H^0_\delta$ 是只依赖 $A$ 与 $\phi$ 的规范不变局部算符所构成的空间。
+\end{enumerate}
+
+% [Tutor Note: “$\delta$ 使次数升高 1”这条规则对 $A,c,\phi$ 成立（$\deg\delta A=0+1$，$\deg\delta c=1+1=2$ 对应 $[c,c]$，$\deg\delta\phi=1$），但对辅助场 $h$ 失效：$\deg h=0$ 而 $\delta h=0$，次数并未升高。原因是 $(c,\bar c,h)$ 中含一个“可缩对”（contractible pair）$(\bar c,h)$：$\delta\bar c=h,\ \delta h=0$，它代数上可积掉，只有把 $h$ 消去后该规则才严格成立。反过来说，正是由 $\delta A=-d_Ac$（$[A]=1$ 给 $\deg c=\deg A=1$ 的差分）与 $\delta\bar c=h$、$\deg h=0$ 才定出 $\deg\bar c=-1$。注意不少教材把 $\bar c$ 的鬼数也记作 $+1$ 而另设“反鬼数”，两种约定下对易关系的符号不同。]
+
+这表明 $\delta$ 扮演了引入鬼场时被破坏的规范对称性所扮演的角色。于是我们为规范场论建立了一个在微扰论中行之有效的框架，在其中规范对称性并未消亡，而是以 $\delta$ 的形式出现。
+
+\subsection{重整化与 BRST 微分}
+
+现在我们讨论 BRST 方法中的可重整性（renormalizability）与重整化群方程。我们将只限于 4 维的纯非 Abel 规范理论（pure nonabelian gauge theory）。
+
+回忆一下：一个理论要可重整，其所有相互作用都必须具有非负量纲。为了查明含鬼场的 Lagrange 量是否如此，我们来计算各场的量纲（假定 $\delta$ 保持标度量纲）。容易看出量纲如下：$[c]=0$，$[\bar c]=2$，$[A]=1$。这表明含鬼场 Lagrange 量中的所有相互作用都是可重整的。
+
+% ===== 原文 p.45 =====
+\textbf{评注}。在这个理论中，$c$ 与 $\bar c$ 的量纲并非唯一确定；唯一被正则地（canonically）确定的是 $[\bar cc]$，它等于 $2$。这不导致矛盾，因为所有鬼数非零的算符期望值都为零，故鬼场的标度量纲没有内禀意义。这就是为什么我们需要额外假设 $\delta$ 保持量纲，才能把量纲的精确值固定下来。如果我们改为假设 $\delta$ 使量纲升高 $k$，就会得到另一个答案，而它对我们目的而言同样可用。
+
+% [Tutor Note: 具体地，$[c]$ 与 $[\bar c]$ 的分配由“$\delta$ 保持量纲”这一假设加上 (3.2) 定出：由 $\delta A=-d_Ac$ 及 $[A]=1,[d]=1$ 得 $[c]=0$；由 $\delta\bar c=h$ 及辅助场 $h$ 在 $\frac{h^2}{2}$ 与 $h\Lambda$ 中的量纲得 $[h]=[\Lambda]=2$，故 $[\bar c]=2$。这里 $\Lambda=d^*A$ 确为 2 维，自洽。注意这与通常 Faddeev–Popov 作用量 $\bar c\,\partial^\mu D_\mu c$ 的分配 $[c]=[\bar c]=1$ 不同，但两者给出相同的 $[\bar cc]=2$，因为在 4 维中鬼场动能项 $\bar c\,d^*d_Ac$ 的量纲 $2+0+2=4$ 与 $1+1+1+1=4$ 一致——正如作者在评注中所说，只有乘积被确定。]
+
+现在我们寻找将要被重整化的临界耦合（critical couplings）。在无鬼场的框架中，通常的做法是写下 4 维的可重整（非规范不变）算符，它们对应临界耦合：$[A,A]^2$、$[A,A]dA$、$(dA)^2$，然后论证这些算符只有一个规范不变的组合，从而唯一需要重整化的耦合是电荷 $e$。然而在有鬼场的框架中，我们还必须纳入含鬼场的 4 次算符：$\bar ccA^2$、$\bar cd^*dc$、……。规范不变性条件现在被“$\delta$ 是对称性”这一条件取代，因此我们只需重整化 $\delta$-不变的相互作用。这减少了需要重整化的算符数目，但仍留下两个可重整耦合：电荷 $e$ 与规范固定参数（gauge fixing parameter）$a$，后者对应规范固定项 $\frac{\Lambda^2}{2}+\bar c\,\delta\Lambda$ 的标度变换。于是重整化群向量场形如
+\[
+  W=\mu\frac{\partial}{\partial\mu}+\beta(e)\frac{\partial}{\partial e}+\widetilde{\beta}(e,a)\frac{\partial}{\partial a}.
+\]
+
+这里 $\beta$ 是该理论的 $\beta$ 函数（beta function），$\widetilde{\beta}$ 是鬼场的 $\beta$ 函数。理论的 $\beta$ 函数只依赖 $e$，具有物理意义；例如其首项为负保证了渐近自由（asymptotic freedom）。而鬼场的 $\beta$ 函数 $\widetilde{\beta}$ 没有物理意义：它只对含 $c$ 与 $\bar c$ 的算符及关联函数的重整化有意义，而后者在物理上没有意义。
+
+% [Tutor Note: $W$ 中 $\widetilde\beta$ 依赖于 $e$ 与 $a$ 两者，并非仅依赖 $a$：规范固定项的标度会通过量子修正与电荷混合（这正是 Ward 恒等式/ Slavnov–Taylor 恒等式所允许的），所以不能简单地令 $\widetilde\beta=\widetilde\beta(a)$。另外 $W$ 中没有出现场强归一化的项，是因为 $e$ 的 $\beta$ 函数已经包含了 $F\wedge*F$ 项系数的跑动；若把 $1/4e^2$ 改写为 $1/4g^2$ 之外另设波函数重整化常数，$W$ 的形式会相应改变。]
+
+\subsection{Hamiltonian 途径}
+
+至此我们是从 Lagrange 量的观点考察 BRST 方法的。现在我们来考察 BRST 方法与 Hamiltonian 形式体系之间的联系。
+
+由于鬼场违反自旋–统计关系（它们是标量费米子），含鬼场理论的“Hilbert 空间”不可能是真正的 Hilbert 空间。可以构造某个带有 Hermite 形式（Hermitian form）的空间 $\widetilde{\mathcal{H}}$，它类似于实际物理理论中的 Hilbert 空间，但该形式不是正定的。不过，在这个空间上我们有局部量子算符，它们由经典算符按通常方式量子化得到。特别地，我们有整体荷（global charges）—— Hamiltonian $H$，以及由鬼场得到的 BRST 荷（BRST charge）$Q$，其做法如 [II-Strings] 第 4 讲所述。我们还有 $\widetilde{\mathcal{H}}$ 按鬼数的分次，它自然地来自量子化手续。
+
+算符 $Q$ 具有如下性质：对含鬼场理论中的任何算符 $\mathcal{O}$（不必是 $\delta$-闭的），有 $[Q,\mathcal{O}]=\delta\mathcal{O}$。此外 $Q\Omega=0$，其中 $\Omega$ 是真空，且 $Q$ 的鬼数为 $1$。
+
+算符 $Q$ 具有与 $\delta$ 类似的性质：
+
+\begin{enumerate}
+  \item $Q^2=0$。这可以通过直接计算验证。
+\end{enumerate}
+
+% ===== 原文 p.46 =====
+\begin{enumerate}
+  \setcounter{enumi}{1}
+  \item $Q$ 是先验定义的，不需要用到 $L$ 与 $\Lambda$（其显式公式如 [II-Strings] 第 4 讲公式 (4.52) 所示）。特别地，若 $\widetilde{\mathcal{H}}$ 是算符代数的不可约表示，则 $Q$ 由 $\delta$ 以及性质 $[Q,\mathcal{O}]=\delta\mathcal{O}$、$Q\Omega=0$ 完全确定。
+  \item 若无反常，则元素 $Q$ 与 Hamiltonian 对易，并与所有不含鬼场的规范不变局部算符对易。
+\end{enumerate}
+
+\textbf{评注}。与 Lagrange 框架中一样，这里 $Q$ 的显式表达式只有在使用与 Lagrange 量中辅助场相对应的算符 $h$ 时才与 $\Lambda$ 无关。这个算符可以用理论中其他算符表示，而表示方式依赖于 $\Lambda$：$h=-\Lambda$。若作此代换，所得到的 $Q$ 的公式就会含 $\Lambda$。因此性质 2 应这样理解：存在一个用场（包括 $h$！）表示的 $Q$ 的公式，它与 $L$ 和 $\Lambda$ 无关，只依赖于场的位形。
+
+设 $H^q_Q$ 为 $Q$ 在 $\widetilde{\mathcal{H}}$ 上的上同调，按鬼数分次。$Q$-上同调通常成立的性质是：
+
+\begin{enumerate}
+  \item 若 $q<0$，则 $H^q_Q$ 为零。
+  \item Hermite 形式在 $\widetilde{\mathcal{H}}^0$（鬼数为零的算符）中 $Q$ 的核上是退化的；该形式的核就是 $Q$ 的像。在 $H^0_Q$ 上诱导出的形式是正定的。
+\end{enumerate}
+
+空间 $H^0_Q$ 扮演理论物理 Hilbert 空间的角色，故我们把它记作 $H_{\mathrm{phys}}$。
+
+在空间 $H_{\mathrm{phys}}$ 中，我们有 Hamiltonian $H$ 的作用，以及“物理的”局部算符 $\mathcal{O}\in H^0_\delta$ 的作用。这些算符不再含鬼场，对应于该理论的真实可观测量。
+
+现在我们来比较规范场论量子化的 BRST 途径与“传统”途径。为简单起见，只考虑纯规范理论。传统上，一种量子化方案大致如下。设时空的空间部分紧致。此时我们已经看到，经典上运动方程的解空间可以实现为 $T^*\mathcal{A}$，其中 $\mathcal{A}$ 是空间循环上联络模去规范变换所得的空间。因此我们会把 Hilbert 空间定义为 $L^2(\mathcal{A})$（相对于某个测度）。我们把这个 Hilbert 空间称为传统 Hilbert 空间。
+
+我们断言，这两条途径给出相同的结果，即作为算符代数的表示，$H_{\mathrm{phys}}$ 同构于 $H_{\mathrm{trad}}$。
+
+% [Tutor Note: “同构”这一断言在文中只被论证到一半：作者指出 $\Lambda$ 变动时 $\widetilde{\mathcal{H}}$ 中的算符只改变一个 $\delta$-恰当项，故其在 $\delta$-闭向量间的矩阵元不变——这只说明 $H_{\mathrm{phys}}$ 与 $\Lambda$ 无关。要把 $H_{\mathrm{phys}}$ 与 $L^2(\mathcal{A})$ 真正等同，还需 (i) 性质 2（Hermite 形式在 $H^0_Q$ 上正定，从而 $H_{\mathrm{phys}}$ 是真正的 Hilbert 空间）与 (ii) 非物理态成对消去的“四元组机制”（Kugo–Ojima；参见 T. Kugo and I. Ojima, Prog. Theor. Phys. Suppl. 66 (1979)）；此外 $\mathcal{A}$ 上的测度必须规范不变，而 $T^*\mathcal{A}$ 的辛结构（Liouville 测度）正好提供这样的测度。作者说“It is enough to do it for one such term”，指同构可用任一个方便的 $\Lambda$ 验证。]
+
+首先，$H_{\mathrm{phys}}$ 不依赖规范固定项 $\Lambda$，$H_{\mathrm{phys}}$ 中的 Hamiltonian 与量子算符也不依赖它。这来自如下事实：当 $\Lambda$ 变动时，伪 Hilbert 空间（pseudo-Hilbert space）$\widetilde{\mathcal{H}}$ 中的算符只改变一个 $\delta$-恰当（$\delta$-exact）表达式，故它们在 $\delta$-闭向量上的作用也只改变一个 $\delta$-恰当表达式。
+
+为了把 $H_{\mathrm{phys}}$ 与 $H_{\mathrm{trad}}$ 等同起来，我们可以选用方便的规范固定项 $\Lambda$。对其中一个这样的项做到这一点就够了，但我们要对两个项都做——纯粹为了好玩。
+
+取 $\Lambda=u\,d^*A+vA_0$，其中 $A_0$ 是联络的时间分量（这里用到了把时空分解为空间与时间）。此时除非 $u=0$ 且同时 $v=0$，我们都得到一个合理的理论。即使 $u=0,\ v\neq0$，也给出一个好的理论——这个规范固定项称为“时间规范（temporal gauge）”。
+
+% [Tutor Note: $\Lambda$ 不必是规范不变的，因此加入 $vA_0$ 这一项完全允许；但要注意 $u\neq0$ 与 $u=0,v\neq0$ 两种情形的物理含义不同：前者是 Landau/Coulomb 型条件 $d^*A=0$（乘以 $u$ 只改变规范参数 $a$ 的标度），后者不是强加 $A_0=0$，而是给 $A_0$ 一个 $\frac12(vA_0)^2$ 的 Gauss 权重——这正是时间规范在路径积分中的“软化”版本，其代价是传播子出现 $1/k_0^2$ 型的非协变结构，且 Gauss 定律不再作为算符方程而须作为对物理态的条件（$Q$ 上同调）来实现。原文“unless both $u=0$ and $v=0$”应读作“只要二者不全为零”；当 $u=v=0$ 时 $\Lambda\equiv0$，等于完全不作规范固定，鬼场与 $h$ 的作用量退化，故理论不合理。]

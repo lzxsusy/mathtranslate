@@ -1,0 +1,339 @@
+﻿% 原书 p.217–p.221（PDF p.225–p.229）
+% >>> p225
+% 【注】本页开头三段仍属 §8.4（由前半译者负责）；为不使 p.225 的文字缺失，此处一并保留，
+% 若前半 ch08-s04.tex 已包含同样内容，定稿时可删去本文件开头这三段（勿删 \section 行）。
+再次值得一提的是，事实 8.4.1 中的乘积 $*$ 与配对 $\langle\cdot,\cdot\rangle$ 在如下
+意义下是超对称的：
+\[
+  x*y=(-1)^{\deg x\deg y}\,y*x
+  \qquad\text{以及}\qquad
+  \langle x,y\rangle=(-1)^{\deg x\deg y}\,\langle y,x\rangle .
+\]
+因此，文献中常只考虑 $\mathrm{QH}^*_{\mathrm{even}}(M,\omega)$，即
+$\mathrm{QH}_*(M,\omega)$ 中只由偶数次部分组成的子集。注意事实 8.4.1 仍适用，故三元组
+$(\mathrm{QH}^*_{\mathrm{even}}(M,\omega),*,\langle\cdot,\cdot\rangle)$ 也是结合的
+Frobenius 代数。
+
+回顾 $\mathrm{QH}^*(M,\omega)$ 带有一个过滤函数 $\ell$，它本质上是通过 Novikov 环
+$\Lambda^{\mathbf{k},\Gamma_\omega}$ 上的赋值函数 $\nu$ 的负值来定义的（见例 8.2.1）。
+下面这个令人惊讶的结果把代数与过滤联系起来。
+
+\begin{wthm}{8.4.1}
+（[78] 中的引理 3.2，最初归功于 V. Berkovich）若
+$\mathrm{QH}^*_{\mathrm{even}}(M,\omega)$ 是半单的（见练习 8.4.1），则存在常数
+$c\ge0$，使得对 $\mathrm{QH}^*_{\mathrm{even}}(M,\omega)$ 的任一域因子中的任意 $x$，
+有
+\[
+  \ell(x)+\ell(x^{-1})\ge-c .
+\]
+\end{wthm}
+
+例如，当域因子为 $\Lambda^{\mathbf{k},\Gamma_\omega}$ 时，容易验证定理 8.4.1 的结论。
+事实上，若 $x=T^a(1+\cdots)$、$x^{-1}=T^{-a}(1+\cdots)$，则
+$\ell(x)+\ell(-x)=(-a)+a=0$（且可取 $c=0$）。有趣的是，这一结果构成了哈密顿动力学中
+Hofer--Zehnder 猜想（猜想 5.3.6）的一个高级证明的基础。（更多细节见 [204]。）
+% [Tutor Note: 原文疑误——此处应作 $\ell(x)+\ell(x^{-1})=(-a)+a=0$：定理 8.4.1 的结论是
+% $\ell(x)+\ell(x^{-1})\ge-c$，而 $\ell(-x)$ 对 Novikov 环元素并无定义，是笔误。
+% 译文保留原文写法，详见 review_ch08.md。另注：$\ell$ 与 $\nu$ 相差负号，
+% $\nu(T)=1$、$\nu(T^{-1})=-1$，故 $\ell(T^a)=-a$。]
+
+\section{Gromov--Witten 不变量（Gromov–Witten Invariant）}
+
+\begin{keytakeaways}
+\begin{itemize}
+  \item 物理图像：Gromov--Witten 不变量是「数曲线」的不变量——它数出满足给定同调类与
+        标记点约束的 $J$-全纯曲线（稳定映射）的数目，是量子乘积的系数。
+  \item 数学工具：求值映射 $\operatorname{ev}$、模空间 $\overline{\mathcal{M}}_k(A,J)$
+        及其 0 维开 strata $\mathcal{M}^*_k(A,J)$、虚拟基本类
+        $[\mathcal{M}^*_k(A,J)]$、Poincaré 对偶与交截数。
+  \item 几何观点：$\mathrm{GW}^M_{A,k}(a_1,\cdots,a_k)$ 是上同调类拉回到模空间后沿虚拟
+        基本类的积分；其非零的必要条件是次数条件
+        $\sum_i\deg a_i=\operatorname{vir-dim}=2n+2c_1(TM)(A)+2k-6$（(8.39)）。
+  \item 本节结论：$\mathrm{GW}^M_{0,3}$ 退化为经典三重杯积、$\mathrm{GW}^M_{0,k}=0$
+        （$k\ne3$）；在 $\CP^2$ 上 $\mathrm{GW}^{\CP^2}_{dL,3d-1}$ 给出 $d$ 次曲线的
+        条数 $N_d$（$N_1=N_2=1$），为 §8.6 的递归计算作准备。
+\end{itemize}
+\end{keytakeaways}
+
+为了定义 §8.4 中所述的量子乘积，我们需要一个关键构件——Gromov--Witten 不变量。其动机是
+从 §8.3 所定义模空间 $\overline{\mathcal{M}}_k(A,J)$ 中的等价类
+$u:(\Sigma_g,j)\to(M,\omega,J)$ 中提取数值信息。实现这一点的一个途径是借助\textbf{求值
+映射}（evaluation map）$\operatorname{ev}:\overline{\mathcal{M}}_k(A,J)\to M^k$，其定义
+如下。事实上，对某一族辛流形（例如半正（semi-positive）的那些），对通有的近复结构
+$J$，只需在其 0 维开 strata
+$\mathcal{M}^*_k(A,J)\subset\overline{\mathcal{M}}_k(A,J)$ 上定义求值映射
+$\operatorname{ev}$ 便足够了。粗略地说，原因是 Gromov--Witten 不变量被构造为某种交截数，
+而当辛流形不太「野」时，这个交截数只来自 0 维开 strata
+$\mathcal{M}^*_k(A,J)$。
+
+\begin{wdefn}{8.5.1}
+对每个等价类 $[(u,z_1,\cdots,z_k)]\in\mathcal{M}^*_k(A,J)$，定义
+\begin{equation}
+  \operatorname{ev}\big([(u,z_1,\cdots,z_k)]\big)
+  :=\big(u(z_1),\cdots,u(z_k)\big)\in M^k .
+  \tag{8.36}
+\end{equation}
+\end{wdefn}
+
+注意映射 $\operatorname{ev}$ 是良定义的。类似地，对任意 $1\le i\le k$，定义
+$\operatorname{ev}_i\big([(u,z_1,\cdots,z_k)]\big):=u(z_i)\in M$。
+% [Tutor Note: 求值映射按定义把等价类送到各标记点的像；注意 $\operatorname{ev}_i$ 与
+% $\operatorname{ev}$ 的关系是 $\operatorname{ev}_i=\pi_i\circ\operatorname{ev}$，
+% 其中 $\pi_i:M^k\to M$ 是第 $i$ 个投影。本段「只需在 0 维开 strata 上定义」的实质是：
+% 对半正辛流形，$\overline{\mathcal{M}}_k(A,J)$ 的较高维 strata 上的贡献可被
+% 通有 $J$ 下的横截性论证排除，故不变量由 0 维 strata 的交截数决定。]
+% >>> p226
+于是我们可以考察一些交截。对 $M$ 中的圈 $X_1,\cdots,X_k$，考虑
+\begin{equation}
+  \operatorname{ev}_1^{-1}(X_1)\cap\cdots\cap\operatorname{ev}_k^{-1}(X_k)
+  =\operatorname{ev}^{-1}\big(\pi_1^{-1}(X_1)\cap\cdots\cap\pi_k^{-1}(X_k)\big),
+  \tag{8.37}
+\end{equation}
+其中 $\pi_i:M^k\to M$ 是到 $M^k$ 中第 $i$ 个 $M$-因子的投影。
+
+\begin{wexam}{8.5.1}
+考虑 $(M,\omega,J)=(\CP^2,\omega_{\mathrm{FS}},J_{\mathrm{std}})$。对
+$H_0(\CP^2;\Z)$ 中的类 $[X_1]=[X_2]=[\mathrm{pt}]$，(8.37) 中的求值映射数出的是
+$\CP^2$ 中过 2 个（不同）点的直线（即 $\CP^1$）的条数——只要我们要求映射
+$u:(S^2,j)\to(\CP^2,\omega_{\mathrm{FS}},J_{\mathrm{std}})$ 满足 $[u(S^2)]=L$，
+其中 $L$ 是 $H_2(\CP^2;\Z)$ 中的标准直线类。则答案显然是 1。\hspace*{\fill}$//$
+\end{wexam}
+
+\begin{wrem}{8.5.1}
+在例 8.5.1 中，人们可能对下面这点感到困惑：既然所给的类 $[X_1]=[X_2]$ 是同一个同调类，
+为什么像 $u(S^2)$ 不能只通过一个代表类 $[X_1]=[X_2]=[\mathrm{pt}]$ 的点呢？原因是，
+对于交截理论而言，特别是对于某个类 $[X]$ 的\emph{自交} $[X]\cap[X]$，我们需要选取两个
+\emph{通有的}子流形 $N_1$ 与 $N_2$，二者都代表类 $X$。在此情形下点类 $[\mathrm{pt}]$
+的两个通有代表就是两个不同的点。
+\end{wrem}
+
+\begin{wexam}{8.5.2}
+在与例 8.5.1 相同的设定下，取 $H_0(\CP^2;\Z)$ 中由五个不同点代表的点类。则 (8.37) 中的
+求值映射数出的是 $\CP^2$ 中过 5 个不同点的圆锥曲线（二次曲线）的条数——只要我们要求
+映射 $u:(S^2,j)\to(\CP^2,\omega_{\mathrm{FS}},J_{\mathrm{std}})$ 满足
+$[u(S^2)]=2L$。之所以选五个点与二次曲线，原因见 (8.39) 或例 8.5.3。这个答案（不如例
+8.5.1 那样显然）也等于 1。\hspace*{\fill}$//$
+\end{wexam}
+
+定义 8.5.1 中的求值映射 $\operatorname{ev}$ 帮助我们表述如下关键定义。
+
+\begin{wdefn}{8.5.2}
+给定辛流形 $(M,\omega)$、$\omega$-相容的近复结构 $J$，以及类
+$A\in H_2^S(M)$（见 (8.4)），定义 \textbf{Gromov--Witten 不变量}
+$\mathrm{GW}^M_{A,k}:H^*(M;\mathbf{k})\times\cdots\times H^*(M;\mathbf{k})\to\mathbf{k}$
+为上同调群上的多线性函数，由如下公式给出
+\begin{equation}
+  \mathrm{GW}^M_{A,k}(a_1,\cdots,a_k)
+  :=\int_{\overline{\mathcal{M}}_k(A,J)}\operatorname{ev}_1^*(a_1)\cup\cdots
+  \cup\operatorname{ev}_k^*(a_k),
+  \tag{8.38}
+\end{equation}
+其中 $\operatorname{ev}_i$ 是定义 8.5.1 中定义的求值映射，而模空间
+$\overline{\mathcal{M}}_k(A,J)$ 由 (8.26) 定义。
+\end{wdefn}
+
+注意 (8.38) 中 $\mathrm{GW}^M_{A,k}(a_1,\cdots,a_k)$ 的定义有很强的几何解释
+% >>> p227
+\begin{align*}
+  \mathrm{GW}^M_{A,k}(a_1,\cdots,a_k)
+  &=\int_{\overline{\mathcal{M}}_k(A,J)}\operatorname{ev}_1^*(a_1)\cup\cdots
+    \cup\operatorname{ev}_k^*(a_k)\\
+  &=\int_{\mathcal{M}^*_k(A,J)}\operatorname{ev}^*\big(\pi_1^*(a_1)\cup\cdots
+    \cup\pi_k^*(a_k)\big)\\
+  &=\big(\pi_1^*(\operatorname{PD}([X_1]))\cup\cdots\cup
+    \pi_k^*(\operatorname{PD}([X_k]))\big)
+    \big(\operatorname{ev}_*([\mathcal{M}^*_k(A,J)])\big)\\
+  &=\operatorname{PD}\big(\pi_1^{-1}(X_1)\cap\cdots\cap\pi_k^{-1}(X_k)\big)
+    \big(\operatorname{ev}_*([\mathcal{M}^*_k(A,J)])\big).
+\end{align*}
+最后一行可表述为求值映射的像 $\operatorname{im}(\operatorname{ev})$ 与圈
+$X_1,\cdots,X_k$（它们来自所给上同调类的 Poincaré 对偶）之间的交截数。上面的解释是
+粗略的描述；更严格的、用交截理论表述的版本见 [90]。上述讨论严重依赖于
+$[\mathcal{M}^*_k(A,J)]$ 的存在性（它被称为\emph{虚拟基本类}（virtual fundamental
+class））。实际上，它的存在与否可能成为问题，这导致 $\mathrm{GW}^M_{A,k}$ 未必总是
+良定义的。例如，此处若 $(M,\omega)$ 是半正的，则 $\mathrm{GW}^M_{A,k}$ 的良定义性早已
+为人所知（见 [154] 第 7 章与 [140]）。对更一般的情形，需要借助现代技术（见
+[7,8,117-118]）。
+% [Tutor Note: 重点——虚拟基本类 $[\mathcal{M}^*_k(A,J)]$ 的存在性是 GW 不变量良定义的
+% 核心：模空间一般不是光滑的、维数也可能过大，虚拟基本类把它「修正」为具有正确维数的
+% 同调类。半正（semi-positive）情形下可用经典的横截性论证绕过；一般情形需要
+% Kuranishi 结构/虚拟模链（见 [7,8,117-118]）。书中 $[\cdot]$ 记基本类，
+% $\operatorname{ev}_*$ 为前推。]
+
+\begin{wrem}{8.5.2}
+可以考虑定义在 $H^*(M,\Z)$（而非 $H^*(M;\mathbf{k})$）上的 Gromov--Witten 不变量，
+此时由 $\mathrm{GW}^M_{A,k}$ 得到的计算结果落在 $\Z$ 中。
+\end{wrem}
+
+对定义 8.5.2 中的 (8.38)，为使其有意义，存在一个关于 $a_i$ 的次数的自然条件，即
+\begin{equation}
+  \sum_{i=1}^k\deg(a_i)
+  =\operatorname{vir-dim}\big(\overline{\mathcal{M}}_k(A,J)\big)
+  =\dim M+2c_1(TM)(A)+2k-6,
+  \tag{8.39}
+\end{equation}
+其中第二个等式由定理 8.3.2 中的计算公式 (8.27) 给出。
+% [Tutor Note: 易错预警——(8.39) 的「次数条件」是本节的中心：左边是上同调类的次数
+% （复维数意义下的 deg，即 $a_i\in H^{\deg a_i}$），右边是模空间的虚拟实维数。因为
+% 只有总次数等于虚拟维数时，沿虚拟基本类的积分才可能非零。公式中 $\dim M=2n$、
+% $2c_1(TM)(A)$ 是 $A$ 的「第一条陈数」贡献、$2k-6$ 来自 $k$ 个标记点与
+% $\dim_{\R}\overline{\mathcal{M}}_{0,k}=2k-6$（亏格 0 时）。
+% 注意 $c_1(TM)(A)$ 与 $A$ 的配对用的是复切丛的第一陈类。]
+
+下面是关于次数条件的一个例子。
+
+\begin{wexam}{8.5.3}
+考虑 $(M,\omega)=(\CP^2,\omega_{\mathrm{FS}})$，$J_{\mathrm{std}}$ 为标准复结构。固定
+类 $A=dL$（$d$ 为某正整数，$L$ 为 $H_2(\CP^2;\Z)$ 中的直线类）。对 Gromov--Witten
+不变量 $\mathrm{GW}^M_{A,k}=\mathrm{GW}^{\CP^2}_{dL,3d-1}$，有
+\begin{equation}
+  \mathrm{GW}^{\CP^2}_{dL,3d-1}:
+  H^*(\CP^2;\Z)\times\cdots\times H^*(\CP^2;\Z)\to\Z,
+  \tag{8.40}
+\end{equation}
+而 (8.39) 中的次数条件说明
+\begin{align*}
+  \sum_{i=1}^{3d-1}\deg(a_i)
+  &=4+2c_1(T\CP^2)(dL)+2(3d-1)-6\\
+  &=4+2d\cdot3+6d-2-6=4(3d-1).
+\end{align*}
+这意味着 $\deg(a_i)$ 唯一可能的选择是 4，即 $H^*(\CP^2;\Z)$ 的最高次。换言之，$a_i$ 的
+唯一可能选择是点类 $[\mathrm{pt}]$ 的 Poincaré 对偶。因此，
+$\mathrm{GW}^{\CP^2}_{dL,3d-1}$ 数出的是
+% >>> p228
+\begin{equation}
+  \#\left\{
+  \begin{array}{c}
+    \CP^2\ \text{中过}\ (3d-1)\ \text{个点的}\ d\ \text{次曲线}\\
+    \text{的条数}
+  \end{array}
+  \right\}=:N_d .
+  \tag{8.41}
+\end{equation}
+对 $d=1$，由例 8.5.1，有
+\[
+  N_1=\mathrm{GW}^{\CP^2}_{L,2}\big([\mathrm{pt}],[\mathrm{pt}],[\mathrm{pt}]\big)=1 .
+\]
+对 $d=2$，由例 8.5.2，有
+\[
+  N_2=\mathrm{GW}^{\CP^2}_{2L,5}
+  \big([\mathrm{pt}],[\mathrm{pt}],[\mathrm{pt}],[\mathrm{pt}],[\mathrm{pt}]\big)=1 .
+\]
+于是自然的问题是：对一般的 $d$ 如何计算 $N_d$？一般说来，像例 8.5.1 与例 8.5.2 那样
+用简单论证得到 $N_d$ 的精确值是不现实的，因为人们很快就会失去几何直观。在下一节，我们将
+借助一种代数方法得到一个递归公式，以归纳地计算 $N_d$。\hspace*{\fill}$//$
+\end{wexam}
+
+下面我们列出 $\mathrm{GW}^M_{A,k}$ 的一些特殊情形，它们可以用相对初等的论证得到显式的
+计算结果。
+
+\begin{wexam}{8.5.4}
+给定辛流形 $(M^{2n},\omega)$ 与零类 $A=0$，若 $k\ne3$ 则 Gromov--Witten 不变量
+$\mathrm{GW}^M_{0,k}\equiv0$，并且
+\begin{equation}
+  \mathrm{GW}^M_{0,3}(a_1,a_2,a_3)=\int_Ma_1\cup a_2\cup a_3 .
+  \tag{8.42}
+\end{equation}
+为阐明此情形下 $k=3$ 的特殊性，让我们从次数条件 (8.39) 出发：
+\begin{equation}
+  \sum_{i=1}^k\deg(a_i)=2n+2c_1(TM)(0)+2k-6=2n+2k-6 .
+  \tag{8.43}
+\end{equation}
+若 $[(u,z_1,\cdots,z_k)]\in\overline{\mathcal{M}}_k(0,J)$，则关于标记点的拓扑约束意味着
+$u(z_1)=\cdots=u(z_k)$。特别地，圈 $X_i$（满足
+$\operatorname{PD}([X_i])=a_i$）应当通有地相交。因此
+\[
+  2n\ge\operatorname{codim}\Big(\bigcap_{i=1}^kX_i\Big)
+  =\sum_{i=1}^k\operatorname{codim}X_i=\sum_{i=1}^k\deg(a_i).
+\]
+把它与 (8.43) 比较，可知 $0\ge2k-6$，从而 $k\le3$。
+
+此外，按定义我们处理的是由稳定映射组成的
+$\overline{\mathcal{M}}_k(0,J)$（而不是由简单 $J$-全纯曲线组成的
+$\mathcal{M}^*_k(0,J)$）。由稳定性条件——定义 8.3.3 中的条件 (iii)——定义域
+$(S^2,j)$ 上必须存在三个标记点。这意味着，若要定义 $\mathrm{GW}^M_{0,k}$，就必须有
+$k\ge3$。因此，唯一可能非平凡（即 $\mathrm{GW}^M_{0,k}$ 可能非零）的情形是标记点数
+$k=3$。
+
+对 $k=3$，注意 $\mathrm{GW}^M_{0,3}(a_1,a_2,a_3)$ 由 (8.42) 中的公式给出，因为
+$[\mathcal{M}^*_k(0,J)]=[M]$——$\mathcal{M}^*_k(0,J)$ 中 $J$-全纯映射 $u$ 的像之并
+恰为流形 $M$ 本身。\hspace*{\fill}$//$
+\end{wexam}
+% [Tutor Note: 本例说明 (8.38) 在 $A=0$ 时退化为经典的三重杯积：量子乘积的「$A=0$ 项」
+% 正是经典杯积，这是 §8.7 定义量子乘积时把 $A=0$ 项单独写出的依据。注意 $k\ne3$ 时
+% $\mathrm{GW}^M_{0,k}=0$ 的两点理由：(a) 次数条件迫使 $k\le3$；(b) 稳定性迫使
+% $k\ge3$——两者合起来只剩 $k=3$（前提是 $2n=\sum\deg a_i$ 等度条件满足）。
+% 另注：$\operatorname{codim}X_i=\deg(a_i)$ 用的是 $X_i$ 的复余维。]
+% >>> p229
+\begin{wexam}{8.5.5}
+改变 Gromov--Witten 不变量输入的 $k$-元组 $(a_1,\cdots,a_k)$ 中元素的次序，有
+\begin{equation}
+  \mathrm{GW}^M_{A,k}(a_1,\cdots,a_k)
+  =\varepsilon(i_1,\cdots,i_k)\cdot
+  \mathrm{GW}^M_{A,k}(a_{i_1},\cdots,a_{i_k}).
+  \tag{8.44}
+\end{equation}
+这直接来自交截数的斜对称性。为描述 $\varepsilon(i_1,\cdots,i_k)$，设 $a_i$ 都是纯次的，
+即 $a_i\in H^{n_i}(M;\mathbf{k})$（$i=1,\cdots,k$），则
+$\varepsilon(i_1,\cdots,i_k)$ 记子序列 $(i_1,\cdots,i_k)$ 中由那些\emph{奇次}
+$a_i$ 所构成部分的乱序数（shuffling number）。\hspace*{\fill}$//$
+\end{wexam}
+
+\begin{wexam}{8.5.6}
+记 $1\in H^0(M;\mathbf{k})$ 为给定辛流形 $(M,\omega)$ 的基本类 $[M]$ 的 Poincaré 对偶，
+则
+\begin{equation}
+  \mathrm{GW}^M_{A,k}(a_1,\cdots,a_{k-1},1)=0
+  \qquad\text{若 } A\ne0 \text{ 且 } k\ge1 .
+  \tag{8.45}
+\end{equation}
+事实上，当 $A\ne0$ 时，由定义 8.5.2，对任意 $k\ge1$ 有
+\begin{equation}
+  \mathrm{GW}^M_{A,k}(a_1,\cdots,a_{k-1},1)
+  =\mathrm{GW}^M_{A,k-1}(a_1,\cdots,a_{k-1}),
+  \tag{8.46}
+\end{equation}
+因为要求与基本类 $[M]=\operatorname{PD}(1)$ 相交对标记点不施加任何约束。于是对 (8.46)
+的左端，由次数条件 (8.39)，
+\[
+  \sum_{i=1}^k\deg(a_i)=2n+2c_1(TM)(A)+2k-6 .
+\]
+而对 (8.46) 的右端，再次由次数条件 (8.39)，
+\[
+  \sum_{i=1}^{k-1}\deg(a_i)=2n+2c_1(TM)(A)+2(k-1)-6 .
+\]
+除非 $\mathrm{GW}^M_{A,k}$ 什么也不数（从而按约定等于零），这是不可能的。\hspace*{\fill}$//$
+\end{wexam}
+% [Tutor Note: (8.45)(8.46) 的论证要点：右端是不含单位输入 $1$ 的 $(k-1)$-点不变量，
+% 其虚拟维数比左端少 2；而左端多出一个 $\deg=0$ 的输入 $1$，次数条件却要求总和相同，
+% 二者矛盾。故左端只能恒为 0。「按约定等于零」指 GW 不变量在次数条件不满足时定义为零。
+% (8.46) 本身只是把 $1$ 与 $[M]$ 的交截去掉，是「单位公理」。]
+
+\begin{wrem}{8.5.3}
+注意上面的论证——特别是 (8.46)——在 $A=0$ 时失效。由例 8.5.4 的讨论，
+$\mathrm{GW}^M_{0,k}$ 唯一可能非零的情形是 $\mathrm{GW}^M_{0,3}$。于是
+\[
+  \mathrm{GW}^M_{0,3}\big([\mathrm{pt}],[\mathrm{pt}],\sigma\big)
+  =\int_M\sigma=1,
+\]
+其中 $\sigma\in H^{\dim M}(M;\Z)$ 是最高次上同调群的生成元；而按定义
+$\mathrm{GW}^M_{0,2}\equiv0$。
+\end{wrem}
+
+\begin{wexer}{8.5.1}
+对 $(M,\omega,J)$ 等于 $(\CP^1,\omega_{\mathrm{FS}},J_{\mathrm{std}})$ 的情形，计算
+Gromov--Witten 不变量 $\mathrm{GW}^M_{A,k}$；这里须考虑所有可能的类
+$A\in H_*(\CP^1;\Z)$。
+\end{wexer}
+
+Gromov--Witten 不变量 $\mathrm{GW}^M_{A,k}$ 还有许多其他便利的性质，使我们能计算更多
+初等情形。从抽象与代数的观点看，在革命性的工作 [140] 中，Kontsevich--Manin 提出了定义
+$\mathrm{GW}^M_{A,k}$ 的一套公理化方法（见 [154] 第 7.5 节），其中这些良好性质实际上
+刻画并唯一确定了这样的不变量。
+% [Tutor Note: 术语与文献——Gromov--Witten invariant 通译「Gromov–Witten 不变量」；
+% virtual fundamental class 译「虚拟基本类」（亦作「虚拟基本同调类」）。
+% Kontsevich--Manin 的公理化（[140]）把 GW 不变量刻画为满足若干公理（次数、单位、
+% 分配性质、除子公理等）的多线性映射，这是 §8.6 中「除子性质」（division property）
+% 与 WDVV 方程的理论依据。另注：定义 8.5.2 中的类 $A$ 取在球面类
+% $H_2^S(M)=\operatorname{im}(\pi_2(M)\to H_2(M))$ 中，因为只有球面类才由
+% $S^2$ 上的稳定映射实现。]

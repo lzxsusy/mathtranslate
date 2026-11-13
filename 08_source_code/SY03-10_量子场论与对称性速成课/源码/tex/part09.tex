@@ -1,0 +1,768 @@
+% ============================================================
+%  part09.tex  |  原文 PDF p.61–70（页脚 p.60–69）
+%  内容：第 7 章 Effective Theory of BV Quantization
+%    7.1 (-1)-平移辛结构（$(-1)$-shifted Symplectic Structure）
+%    7.2 有效重整化（Effective Renormalization）
+%    7.3 热核正则化（Heat Kernel Regularization）
+%    7.4 UV 有限理论（UV Finite Theory）
+% ============================================================
+
+% >>> p061
+
+\section{BV 量子化的有效理论（Effective Theory of BV Quantization）}
+
+\begin{keypoints}
+  \item \textbf{核心物理图像}：经典场论（包括规范理论）可统一表述为带 $(-1)$-平移辛配对的
+        椭圆复形 $(\mathcal{E},Q,\omega)$；量子化的根本困难在于 Poisson 核
+        $K=\omega^{-1}$ 是 $\delta$-函数分布，使 BV 算子 $\Delta_K$ 无定义——这正是
+        紫外（UV）问题的代数表述。
+  \item \textbf{数学工具}：有限维 dg 辛空间的 DGBV 玩具模型
+        $(\mathcal{O}(V),Q,\Delta_K)$；Costello 的同伦重整化（链同伦
+        $K_P=K_0+Q(P)$、算子 $\ee^{\hbar\partial_P}$）；热核正则化
+        $K_L=\ee^{-L[Q,Q^{\dagger}]}$ 与正则化传播子 $P^L_{\varepsilon}$；
+        以及紧流形上调和空间的 Hodge 理论。
+  \item \textbf{主要结论}：有效微扰量子化是一族满足有效主方程
+        $(Q+\hbar\Delta_r)\ee^{I[r]/\hbar}=0$ 与同伦 RG 流
+        $\ee^{I[r']/\hbar}=\ee^{\hbar\partial_{P^{r'}_r}}\ee^{I[r]/\hbar}$ 的作用量
+        $I[r]$；障碍（规范反常）位于
+        $H^1(\mathcal{O}_{loc}(\mathcal{E}),Q+\{I_0,-\})$；UV 有限理论主要有
+        拓扑型（Chern--Simons/de Rham 型）与全纯型（Dolbeault 型）两大类。
+  \item \textbf{译者评注}：本章把第 6 章抽象的形变–障碍理论“落地”到无穷维场论。
+        关键手法是避开无定义的 $\Delta$：用链同伦把奇异 Poisson 核换成光滑核，
+        再把不同正则化之间的差异组织成同伦重整化群流。难点在于传播子
+        $P^{r'}_r$ 上下标的方向，以及热核极限 $L\to 0$（回到 $\delta$-函数）
+        与 $L\to\infty$（只剩调和空间）的物理解释。
+\end{keypoints}
+
+\subsection{$(-1)$-平移辛结构（$(-1)$-shifted Symplectic Structure）}
+
+我们将说明，经典场论及其量子化的几何可以用 $(-1)$-平移辛结构给出统一的描述。
+在 BV 框架下量子化规范理论时，这一描述尤其方便。
+
+我们从有限维的玩具模型开始。设 $(V,Q,\omega)$ 是一个有限维 dg 辛空间。这里
+\begin{itemize}[leftmargin=1.6em,itemsep=0.2em]
+  \item $V$ 是有限维分次空间；
+  \item $Q:V\to V$ 是微分，$\deg Q=1$ 且 $Q^2=0$；
+  \item $\omega:\wedge^2V\to\R$ 是次数为 $-1$ 的非退化配对，即当 $|a|+|b|\neq 1$ 时
+        $\omega(a,b)=0$；
+  \item $\omega$ 与 $Q$ 相容：$Q(\omega)=0$，即
+        \[
+          \omega(Q(a),b)+(-1)^{|a|}\omega(a,Q(b))=0.
+        \]
+\end{itemize}
+
+$\omega$ 的非退化性给出线性同构
+\[
+  \begin{aligned}
+    \omega:\ V^{\vee}&\overset{\sim}{\longrightarrow}V[1]\\
+    \Longrightarrow\quad
+    \wedge^2(V^{\vee})&\overset{\sim}{\longrightarrow}\wedge^2(V[1])
+      \simeq\Sym^2(V)[2]\\
+    \omega&\longleftrightarrow K[2].
+  \end{aligned}
+\]
+这里 $K=\omega^{-1}\in\Sym^2(V)$ 是 \textbf{Poisson 核}（Poisson kernel），并且
+\[
+  \deg(K)=1,\qquad Q(K)=0.
+\]
+
+% [Tutor Note: 符号约定预警——$(-1)$-平移辛结构中的“$-1$”指配对 $\omega$ 的次数为
+% $-1$，不是辛形式本身为奇；因此 $\omega(a,b)$ 仅在 $|a|+|b|=1$ 时非零，且
+% $K=\omega^{-1}$ 的次数为 $+1$。核对公式时请始终用这条次数规则自查：
+% 例如下面的 $\Delta_K$ 把 $\Sym^m$ 打到 $\Sym^{m-2}$，正与 $\deg K=1$ 相容。]
+
+我们由此得到三元组 $(A,Q,\Delta)$ 如下：
+\begin{itemize}[leftmargin=1.6em,itemsep=0.2em]
+  \item $A=\mathcal{O}(V):=\widehat{\Sym}(V^{\vee})$（$V$ 上的形式幂级数）；
+  \item $Q:A\to A$ 是由 $Q:V\to V$ 对偶诱导的导子；
+  \item BV 算子
+        \[
+          \Delta=\Delta_K:\ A\longrightarrow A
+        \]
+        由与 Poisson 核 $K$ 缩并给出：
+        \[
+          \Delta_K:\ \Sym^m(V)\longrightarrow\Sym^{m-2}(V).
+        \]
+        具体地，对 $\alpha_i\in V^{\vee}$，
+        \[
+          \Delta_K(\alpha_1\otimes\cdots\otimes\alpha_m)
+          =\sum_{i<j}\pm\langle K,\alpha_i\otimes\alpha_j\rangle\,
+            \alpha_1\otimes\cdots\otimes\widehat{\alpha_i}\otimes\cdots
+            \otimes\widehat{\alpha_i}\otimes\cdots\otimes\alpha_m.
+        \]
+  \item 由于 $K$ 是 $Q$-闭的，我们有
+        \[
+          [Q,\Delta_K]:=Q\Delta_K+\Delta_K Q=0.
+        \]
+\end{itemize}
+
+% [Tutor Note: 原文疑误——上式最后一个张量积中，两处被删去的因子都排成了
+% $\widehat{\alpha_i}$；按公式的含义（删去 $\alpha_i$ 与 $\alpha_j$）第二处应为
+% $\widehat{\alpha_j}$。译文照录原文以存真，请核对原书 p.60。另，公式中的 $\pm$
+% 号来自对称化时对 $i<j$ 的配对计数，具体符号取决于 $K$ 的对称性与各因子的次数，
+% 作者在此未展开，属正常省略。]
+
+因此 $(A,Q,\Delta)$ 定义了一个 \textbf{DGBV}（微分分次 BV 代数）。给定这样的
+DGBV，我们可以谈论：
+\begin{itemize}[leftmargin=1.6em,itemsep=0.25em]
+  \item \textbf{经典主方程}：对 $I_0\in A$、$\deg(I_0)=0$，
+        \[
+          QI_0+\frac{1}{2}\{I_0,I_0\}=0.
+        \]
+        于是经典 BRST 算子 $\delta=Q+\{I_0,-\}$ 满足 $\delta^2=0$。
+  \item \textbf{量子主方程}：对 $I=I_0+\hbar I_1+\cdots\in A[[\hbar]]$，
+        \[
+          QI+\hbar\Delta I+\frac{1}{2}\{I,I\}=0
+          \iff (Q+\hbar\Delta)\ee^{I/\hbar}=0.
+        \]
+        于是量子 BRST 算子 $\delta^\hbar=Q+\hbar\Delta+\{I,-\}$ 满足
+        $(\delta^\hbar)^2=0$。
+\end{itemize}
+
+% [Tutor Note: 与第 6 章的联系——第 6 章的 QME 写作 $\hbar\Delta S+\tfrac12\{S,S\}=0$
+% （无 $Q$），而这里的场论情形含有椭圆微分 $Q$，故 QME 变为
+% $QI+\hbar\Delta I+\tfrac12\{I,I\}=0$。两者并不矛盾：第 6 章处理的是纯代数的 BV
+% 代数，$\Delta$ 为唯一的微分；这里 $Q$ 是经典复形的微分，$\Delta$ 由 Poisson 核给出。
+% 引用时务必分清“$\Delta$ 是否包含 $Q$”。]
+
+% >>> p062
+
+\paragraph{经典场论}
+
+现在讨论 QFT 情形。一个经典场论可以组织为无穷维的 $(-1)$-平移 dg 辛空间
+\[
+  (\mathcal{E},Q,\omega):
+\]
+\begin{itemize}[leftmargin=1.6em,itemsep=0.2em]
+  \item $\mathcal{E}=\Gamma(X,E^{\bullet})$ 是场空间，其中 $E^{\bullet}$ 是 $X$ 上的
+        分次向量丛；
+  \item $(\mathcal{E},Q)$ 是椭圆复形
+        \[
+          \cdots\longrightarrow\mathcal{E}^{-1}\xrightarrow{\ Q\ }\mathcal{E}^{0}
+          \xrightarrow{\ Q\ }\mathcal{E}^{1}\xrightarrow{\ Q\ }\cdots;
+        \]
+        例如 $Q=\bar\partial$ 或 $\dd$；
+  \item $\omega$：局域 $(-1)$-辛配对
+        \[
+          \omega(\alpha,\beta)=\int_X\langle\alpha,\beta\rangle,
+          \qquad \forall\alpha,\beta\in\mathcal{E},
+        \]
+        并且与 $Q$ 相容。
+\end{itemize}
+
+\begin{wexam}{7.1}（Chern--Simons 理论）
+  设 $X$ 是三维流形，$\mathfrak{g}$ 是带迹配对
+  $\Tr:\mathfrak{g}\otimes\mathfrak{g}\to\R$ 的 Lie 代数。场空间为
+  \[
+    \mathcal{E}=\Omega^{\bullet}(X,\mathfrak{g})[1].
+  \]
+  次数移位 $[1]$ 给出如下解释。
+  \begin{center}
+    \begin{tabular}{lcccc}
+      \toprule
+       & $\Omega^0(X,\mathfrak{g})$ & $\Omega^1(X,\mathfrak{g})$
+       & $\Omega^2(X,\mathfrak{g})$ & $\Omega^3(X,\mathfrak{g})$\\
+      \midrule
+      次数 & $-1$ & $0$ & $1$ & $2$\\
+      场 & $c$ & $A$ & $A^{\vee}$ & $c^{\vee}$\\
+      物理 & 鬼场 & 场 & 反场 & 反鬼场\\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  这里 $Q=\dd$ 是 de Rham 微分。$(-1)$-辛配对为
+  \[
+    \omega(\alpha,\beta)=\int_X\Tr(\alpha\wedge\beta),
+    \qquad \alpha,\beta\in\mathcal{E},
+  \]
+  它把 $0$-形式与 $3$-形式配对，把 $1$-形式与 $2$-形式配对。
+\end{wexam}
+
+\begin{wexam}{7.2}（BV 形式下的标量场论）
+  场复形 $\mathcal{E}$ 为
+  \[
+    \underbrace{C^{\infty}(M)}_{\deg=0,\ \phi}
+    \xrightarrow{\ Q=\Delta+m^2\ }
+    \underbrace{C^{\infty}(M)}_{\deg=1,\ \phi^{\vee}} .
+  \]
+  $(-1)$-辛配对为
+  \[
+    \omega(\phi,\phi^{\vee})=\int_M\phi\phi^{\vee}.
+  \]
+\end{wexam}
+
+% [Tutor Note: 术语与记号提醒——（i）“elliptic complex” 译“椭圆复形”；$(\mathcal{E},Q)$
+% 的椭圆性保证上同调有限维、热核存在以及椭圆正则性（见 7.2 节 Costello 方法），
+% 这是整个有效理论能工作的分析基础；$\bar\partial$（Dolbeault）与 $\dd$（de Rham）
+% 分别是全纯理论与拓扑理论的原型，见 7.4 节末尾。（ii）例 7.2 中 $Q=\Delta+m^2$
+% 的 $\Delta$ 是流形上的 Laplace–Beltrami 算子，与 BV 算子 $\Delta$（或 $\Delta_K$）
+% 完全是两回事，只是记号撞车；本章下文的 $\Delta_r,\Delta_0,\Delta_H$ 均指 BV 算子。
+% （iii）反场 $\phi^{\vee}$ 的次数为 $1$（因为 $\omega$ 次数为 $-1$），这正是表中
+% “场/反场”配对的来源。]
+
+% >>> p063
+
+\paragraph{UV 问题}
+
+现在按照玩具模型对 DGBV 代数作同样的构造。我们首先需要 $V$ 上“函数”
+$\mathcal{O}(V)=\widehat{\Sym}(V^{\vee})$ 的概念。
+\begin{itemize}[leftmargin=1.6em,itemsep=0.25em]
+  \item 线性函数：必须取连续对偶，而
+        \[
+          \mathcal{E}^{\vee}=\Hom_X(\mathcal{E},\R)
+        \]
+        由分布给出。
+  \item $(\mathcal{E}^{\vee})^{\otimes n}
+        =\Hom_{X\times\cdots\times X}(\mathcal{E}^{\otimes n},\R)$ 是 $X^n$ 上的分布。
+        这里
+        \[
+          \mathcal{E}^{\otimes n}=\Gamma(X^n,E^{\boxtimes n})
+        \]
+        是完全张量积。于是
+        \[
+          \Sym^m(\mathcal{E}^{\vee}):=(\mathcal{E}^{\vee})^{\otimes m}/S_m
+        \]
+        由 $X^m$ 上的分布良定义。因此我们可以构造
+        \[
+          \mathcal{O}(\mathcal{E})=\prod_{m\ge 0}\Sym^m(\mathcal{E}^{\vee}),
+        \]
+        它表示 $\mathcal{E}$ 上的（形式）函数。
+  \item $Q:\mathcal{E}\to\mathcal{E}$ 对偶地诱导分布上的
+        $Q:\mathcal{E}^{\vee}\to\mathcal{E}^{\vee}$，并给出
+        $Q:\mathcal{O}(\mathcal{E})\to\mathcal{O}(\mathcal{E})$。
+  \item BV 算子：设 $K=\omega^{-1}$ 为上述 Poisson 核。由于
+        \[
+          \omega=\int\langle-,-\rangle
+        \]
+        是一个积分，其逆 $K$ 是支撑在 $X\times X$ 对角线上的 $\delta$-函数分布。
+        因此 $K$ 不是 $\Sym^2(\mathcal{E})$ 中的光滑元素，而是分布截面。于是朴素的
+        BV 算子
+        \[
+          \Delta_K:\ \Sym^m(\mathcal{E}^{\vee})\to\Sym^{m-2}(\mathcal{E}^{\vee})
+        \]
+        是未定义的，因为我们无法把两个分布配对。这本质上就是紫外（UV）问题。
+        量子理论中需要重整化！
+\end{itemize}
+
+在进一步讨论重整化问题之前，我们先说明经典理论实际上是良态的。设
+$\mathcal{O}_{loc}(\mathcal{E})\subset\mathcal{O}(\mathcal{E})$ 表示\textbf{局部泛函}
+的子空间，即由 Lagrange 密度的积分给出的泛函：
+\[
+  \mathcal{O}_{loc}(\mathcal{E})=\left\{\int_X\mathscr{L}(\cdots)\right\}.
+\]
+尽管 BV 算子 $\Delta_K$ 未定义，相应的 BV 括号 $\{-,-\}$ 在局部泛函上其实是
+良定义的：
+\[
+  \{-,-\}:\ \mathcal{O}_{loc}(\mathcal{E})\otimes\mathcal{O}_{loc}(\mathcal{E})
+  \longrightarrow\mathcal{O}_{loc}(\mathcal{E}).
+\]
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.27\linewidth]{fig_p063_1.png}
+  \caption*{局部泛函上 BV 括号的缩并图示（原文 PDF p.63 示意图，原文无编号）}
+\end{figure}
+由此我们看到：经典主方程对局部泛函有意义，而量子主方程则需要重整化。
+
+% [Tutor Note: 省略论证点拨——为什么 $\{-,-\}$ 在局部泛函上有定义？因为两个局部
+% 泛函的 BV 括号只涉及有限阶导数（$\delta$-函数与其中一个泛函的导数缩并后仍为
+% 局部表达式），而 $\Delta$ 需要对两个分布作缩并（即取 $K$ 与两个泛函的乘积），
+% 在 $X$ 的对角线附近发散。故 CME 可写而 QME 不可写——这是本章全部技术工作的
+% 出发点。]
+
+% >>> p064
+
+\begin{wexam}{7.3}（Chern--Simons 理论）
+  取 $\mathcal{E}=\Omega^{\bullet}(X,\mathfrak{g})[1]$：
+  \begin{center}
+    \begin{tabular}{lcccc}
+      \toprule
+       & $\Omega^0(X,\mathfrak{g})$ & $\Omega^1(X,\mathfrak{g})$
+       & $\Omega^2(X,\mathfrak{g})$ & $\Omega^3(X,\mathfrak{g})$\\
+      \midrule
+      次数 & $-1$ & $0$ & $1$ & $2$\\
+      场 & $c$ & $A$ & $A^{\vee}$ & $c^{\vee}$\\
+      物理 & 鬼场 & 场 & 反场 & 反鬼场\\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  设 $\mathcal{A}=C+A+A^{\vee}+C^{\vee}\in\mathcal{E}$ 为汇集全部分量的
+  \textbf{主场}（master field）。则 BV Chern--Simons 作用量为
+  \[
+    \mathrm{CS}[\mathcal{A}]=\int_X\Tr\left(\frac{1}{2}\mathcal{A}\wedge \dd\mathcal{A}
+    +\frac{1}{6}\mathcal{A}\wedge[\mathcal{A},\mathcal{A}]\right).
+  \]
+  这与通常的 Chern--Simons 形式相同，只是需要把 $\mathcal{A}$ 展开以得到含不同
+  分量的项。第一个二次项记为 $S_{\mathrm{free}}$，即自由部分；第二个三次项记为
+  $I$，即相互作用部分。
+\end{wexam}
+
+\begin{wprop}{7.4}
+  $\mathrm{CS}$ 满足如下经典主方程
+  \[
+    \{\mathrm{CS},\mathrm{CS}\}=0.
+  \]
+\end{wprop}
+
+\begin{proof}
+  这源于“经典规范理论可组织为经典主方程的解”这一一般性论证。
+\end{proof}
+
+若把自由部分与相互作用部分分开
+\[
+  \mathrm{CS}=S_{\mathrm{free}}+I,
+\]
+则容易看出
+\[
+  \{S_{\mathrm{free}},-\}=\dd\ (=Q),
+\]
+这恰对应 de Rham 微分。于是
+\[
+  \begin{aligned}
+    \{\mathrm{CS},\mathrm{CS}\}=0
+    &\iff \frac{1}{2}\{S_{\mathrm{free}},S_{\mathrm{free}}\}
+      +\{S_{\mathrm{free}},I\}+\frac{1}{2}\{I,I\}=0\\
+    &\iff QI+\frac{1}{2}\{I,I\}=0.
+  \end{aligned}
+\]
+这恰是我们 DGBV 中经典主方程的形式。
+
+% [Tutor Note: 术语依据——master field 译“主场”（有的文献译“主字段”），
+% 指把鬼场 $c$、场 $A$、反场 $A^{\vee}$、反鬼场 $c^{\vee}$ 合并成的单一分次对象
+% $\mathcal{A}$；Chern--Simons 作用量对 $\mathcal{A}$ 仍取通常形式，展开后才显现
+% 出各分量的耦合。原文全篇排作 Chern-Simons（单连字符），本译本统一用
+% Chern--Simons。]
+
+% >>> p065
+
+\subsection{有效重整化（Effective Renormalization）}
+
+假设有一个经典场论 $(\mathcal{E}=\Gamma(X,E^{\bullet}),Q,\omega)$，其经典局部泛函
+$I_0$（相互作用）满足经典主方程
+\[
+  QI_0+\frac{1}{2}\{I_0,I_0\}=0.
+\]
+如我们先前所述，量子化要求
+\[
+  I_0\longmapsto I=I_0+\hbar I_1+\hbar I_2+\cdots
+  \in\mathcal{O}(\mathcal{E})[[\hbar]]
+\]
+满足量子主方程
+\[
+  QI_0+\frac{1}{2}\{I_0,I_0\}+\hbar\Delta I=0.
+\]
+问题在于：$\Delta I$ 不是良定义的。下面我们解释 Costello 的同伦重整化理论
+（homotopic renormalization theory），以解决这一问题。
+
+% [Tutor Note: 原文用引号把上式标出，提示这只是形式上的写法（因为 $\Delta I$
+% 无定义）；它应被理解为“把经典主方程逐阶 $O(\hbar)$ 修正”的启发式表达，而不是
+% 严格等式。另，原文 “homotopic renormalization theory” 中 homotopic 一词，
+% 学界亦常写作 homotopical/homotopy renormalization，译“同伦重整化理论”。]
+
+\paragraph{玩具模型}
+
+为启发该构造，让我们回顾玩具模型：$(V,Q,\omega)$ 是有限维 $(-1)$-平移 dg 辛空间，
+Poisson 核
+\[
+  K_0\in\Sym^2(V)
+\]
+满足 $\deg(K_0)=1$ 且 $Q(K_0)=0$。这使我们能够通过与 $K_0$ 缩并来构造 BV 算子
+$\Delta_0$，并得到 DGBV 三元组 $(A,Q,\Delta_0)$。
+
+现在考虑用链同伦改变 $K_0$。设
+\[
+  P\in\Sym^2(V),\qquad \deg(P)=0.
+\]
+定义
+\[
+  K_P=K_0+Q(P)=K_0+(Q\otimes1+1\otimes Q)P.
+\]
+我们仍有
+\begin{enumerate}[label=\textcircled{\small\arabic*},leftmargin=2.4em,itemsep=0.15em]
+  \item $K_P\in\Sym^2(V)$，$\deg(K_P)=1$；
+  \item $Q(K_P)=0$。
+\end{enumerate}
+因此可以构造新的 BV 算子 $\Delta_P$（即与 $K_P$ 缩并），使得
+$(\mathcal{O}(V),Q,\Delta_P)$ 构成新的 DGBV。
+
+为看清它与原 DGBV 的关系，记
+\[
+  \partial_P:\ \Sym^m(V^{\vee})\longrightarrow\Sym^{m-2}(V^{\vee}),
+\]
+其中 $\partial_P$ 是与 $P\in\Sym^2(V)$ 缩并的二阶算子。
+
+\begin{wprop}{7.5}
+  如下图表交换
+  \begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.42\linewidth]{fig_p065_1.png}
+  \caption*{命题 7.5 的交换图表（原文 PDF p.65 示意图，原文无编号）}
+\end{figure}
+  即
+  \[
+    (Q+\hbar\Delta_P)\ee^{\hbar\partial_P}
+    =\ee^{\hbar\partial_P}(Q+\hbar\Delta_0).
+  \]
+\end{wprop}
+
+\begin{proof}
+  这由链同伦关系 $K_P=K_0+Q(P)$ 推出。
+\end{proof}
+
+\begin{wcor}{7.6}
+  假设 $I\in\mathcal{O}(V)[[\hbar]]$ 在 DGBV $(\mathcal{O}(V),Q,\Delta_0)$ 中满足
+  量子主方程
+  \[
+    (Q+\hbar\Delta_0)\ee^{I/\hbar}=0.
+  \]
+  则 $\widetilde{I}\in\mathcal{O}(V)[[\hbar]]$ 在 DGBV
+  $(\mathcal{O}(V),Q,\Delta_P)$ 中满足量子主方程
+  \[
+    (Q+\hbar\Delta_P)\ee^{\widetilde{I}/\hbar}=0.
+  \]
+  这里 $\widetilde{I}$ 与 $I$ 的关系为
+  \[
+    \ee^{\widetilde{I}/\hbar}=\ee^{\hbar\partial_P}\ee^{I/\hbar}.
+  \]
+\end{wcor}
+
+% >>> p066
+
+正如我们在 Feynman 图的讨论中所见，算子 $\ee^{\hbar\partial_P}$ 扮演对 Gaussian
+测度积分的角色。关系 $\ee^{\widetilde{I}/\hbar}
+=\ee^{\hbar\partial_P}\ee^{I/\hbar}$ 可按 Wick 定理读作
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.58\linewidth]{fig_p066_1.png}
+  \caption*{$\widetilde{I}$ 的连通图展开（原文 PDF p.66 示意图，原文无编号）}
+\end{figure}
+这里 $I$ 充当顶点，$P$ 充当传播子。于是，Feynman 图给出了不同 DGBV 之间所需的
+链同伦。
+
+% [Tutor Note: 省略论证 + 物理图像——（i）命题 7.5 的交换性证明被原文以
+% “This follows from...” 一句带过：验证时只需注意 $\partial_P$ 是与 $P$ 缩并的
+% 二阶算子，而 $\Delta_P-\Delta_0$ 是与 $Q(P)$ 缩并的算子，利用 $\Delta$ 与
+% $\partial$ 的交换关系（符号由次数决定）即可把 $Q(P)$ 的贡献整理成
+% $[Q,\cdot]$ 的交换子。（ii）$\ee^{\hbar\partial_P}$ 展开后给出所有可能的 Wick
+% 收缩（即把若干 $I$ 的场按 $P$ 配对），连通图部分正是 $\widetilde{I}$ 的 Feynman
+% 图展开。这一步把 5.1–5.2 节的 Wick 定理与图展开“翻译”成 BV 语言：换核
+% $K_0\to K_P$ 相当于“积掉”由 $P$ 描述的高能自由度，这正是重整化的有限维模型。]
+
+\paragraph{回到 QFT}
+
+现在考虑 QFT 的设定 $(\mathcal{E}=\Gamma(X,E^{\bullet}),Q,\omega)$。问题在于
+Poisson 核 $K_0=\omega^{-1}$ 是 $\delta$-函数分布，这导致 BV 算子奇异。不过我们知道
+$K_0$ 是 $Q$-闭的：
+\[
+  Q(K_0)=0.
+\]
+
+\underline{Costello 的方法}：利用椭圆正则性
+\[
+  H^{\bullet}(\text{Distribution},Q)=H^{\bullet}(\text{Smooth},Q).
+\]
+于是我们可以把 $K_0$ 替换为其 $Q$-上同调类中的光滑对象：
+\[
+  K_0=K_r+Q(P_r).
+\]
+这里 $K_r$ 光滑，而 $P_r$（称为\textbf{参数化子}（parametrix））是奇异的。定义
+$\Delta_r$ 为与 $K_r$ 相伴的 BV 算子。由于 $K_r\in\Sym^2(\mathcal{E})$ 现在是
+光滑的，$\Delta_r$ 作用在 $\mathcal{O}(\mathcal{E})$ 上良定义。
+
+% [Tutor Note: 省略论证点拨——$H^{\bullet}(\text{Distribution},Q)
+% =H^{\bullet}(\text{Smooth},Q)$ 是椭圆正则性的推论：椭圆复形的上同调类总可用
+% 光滑（甚至 $C^\infty$）代表元实现，因此可以用光滑的 $K_r$ 代表奇异的
+% $\delta$-函数核；$P_r$ 只需作为“把两者联系起来的链同伦”存在，不必光滑
+% （事实上它奇异，这正是 UV 发散的来源）。这是 Costello 同伦重整化的关键一步。]
+
+\begin{wdefn}{7.7}
+  DGBV $(\mathcal{O}(\mathcal{E}),Q,\Delta_r)$ 称为关于正则化 $r$ 的
+  \textbf{有效 DGBV}（effective DGBV）。
+\end{wdefn}
+
+设 $r'$ 是另一个带有参数化子 $P_{r'}$ 的正则化：
+\[
+  K_0=K_{r'}+Q(P_{r'}).
+\]
+则两个正则化的 Poisson 核相差一个链同伦
+\[
+  K_{r'}-K_r=Q(P^{r'}_r),
+\]
+其中 $P^{r'}_r\in\Sym^2(\mathcal{E})$ 是光滑的。令
+\[
+  \partial_{P^{r'}_r}:\ \mathcal{O}(\mathcal{E})\longrightarrow\mathcal{O}(\mathcal{E})
+\]
+为与光滑核 $P^{r'}_r$ 缩并的二阶算子。与玩具模型中相同的论证给出链同伦
+（下图中箭头即同伦重整化群流）：
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.67\linewidth]{fig_p066_2.png}
+  \caption*{同伦重整化群流（原文 PDF p.66 示意图，原文无编号）}
+\end{figure}
+
+% >>> p067
+
+\begin{wdefn}{7.8}（Costello）
+  所谓 $I_0$（满足经典主方程）的\textbf{有效微扰量子化}，是指对每个正则化 $r$ 的
+  选择给出一族
+  \[
+    I[r]\in\mathcal{O}(\mathcal{E})[[\hbar]],
+  \]
+  使得
+  \begin{itemize}[leftmargin=1.6em,itemsep=0.3em]
+    \item \textbf{有效主方程}
+      \[
+        (Q+\hbar\Delta_r)\ee^{I[r]/\hbar}=0;
+      \]
+    \item \textbf{同伦 RG 流}
+      \[
+        \ee^{I[r']/\hbar}=\ee^{\hbar\partial_{P^{r'}_r}}\ee^{I[r]/\hbar},
+      \]
+      这等价于 Feynman 图展开
+      \begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.60\linewidth]{fig_p067_1.png}
+  \caption*{$I[r']$ 的连通图展开（原文 PDF p.67 示意图，原文无编号）}
+\end{figure}
+    \item $I[r]$ 当 $r\to 0$ 时是渐近局部的，并且有经典极限
+      \[
+        \lim_{r\to0}I_0[r]=I_0.
+      \]
+  \end{itemize}
+\end{wdefn}
+
+% [Tutor Note: 记号方向与原文疑误——（i）传播子 $P^{r'}_r$ 的上标 $r'$、下标 $r$
+% 表示“从正则化 $r$ 到 $r'$”的链同伦；由 $K_{r'}-K_r=Q(P^{r'}_r)$ 可知方向是
+% $r\to r'$。不同文献对上下标的方向约定不一，引用时务必与
+% $\ee^{I[r']/\hbar}=\ee^{\hbar\partial_{P^{r'}_r}}\ee^{I[r]/\hbar}$ 互相校验。
+% （ii）定义 7.8 首句 “An effective perturbative quantization of $I_0$ (which
+% satisfies CME) a family $I[r]$...” 缺少谓语（应为 “is a family”），属笔误；
+% 译文按语义补足为“是指……给出一族”。又，第三条中 $I_0[r]$ 的下标 $0$ 表示其
+% $O(\hbar^0)$ 部分，与 $I[r]$ 的记号不同，切勿混读。]
+
+下面这张图用来说明正在发生什么。情形与代数几何中留数（residue）的定义非常相似：
+我们需要扰动奇点，在变形后的构型处定义留数，并说明所有的局部变形给出相同的答案。
+这里我们用所有“邻近”的正则化来定义未重整化的点。
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.74\linewidth]{fig_p067_2.png}
+  \caption*{以邻近正则化定义未重整化点（原文 PDF p.67 示意图，原文无编号）}
+\end{figure}
+
+实际构造微扰量子化的步骤如下。
+\begin{enumerate}[label=\textcircled{\small\arabic*},leftmargin=2.4em,itemsep=0.3em]
+  \item 构造抵消项 $I^{\varepsilon}\in\hbar\mathcal{O}_{loc}(\mathcal{E})[[\hbar]]$，
+        使得
+        \[
+          \ee^{I[r]^{\mathrm{Naive}}/\hbar}
+          :=\lim_{\varepsilon\to0}
+          \left(\ee^{\hbar P^r_{\varepsilon}}\ee^{(I_0+I^{\varepsilon})/\hbar}\right)
+        \]
+        存在。于是这个朴素族 $\{I[r]^{\mathrm{Naive}}\}_r$ 按构造满足同伦 RG 流。
+  \item 抵消项的选取并不唯一。我们需要进一步修正 $I^{\varepsilon}$，使得
+        $\ee^{I[r]/\hbar}$ 满足量子主方程。
+\end{enumerate}
+第 \textcircled{\small 1} 步总可以用抵消项方法做到；第 \textcircled{\small 2} 步则
+并不总能做到：可能存在障碍，这在物理术语中称为“规范反常”（gauge anomaly）。
+正如我们在形变–障碍理论的讨论中所见，类似的故事在此适用，规范反常位于
+\[
+  H^1(\mathcal{O}_{loc}(\mathcal{E}),Q+\{I_0,-\}).
+\]
+
+% [Tutor Note: 易错预警——第 ② 步是全书反复出现的“障碍”图景：抵消项（局部、
+% 有限项）只能消去 UV 发散，但无法消除上同调类；障碍类住在
+% $H^1(\mathcal{O}_{loc}(\mathcal{E}),Q+\{I_0,-\})$ 中，这与 6.6 节的
+% $H^1(A,\delta)$ 完全平行（把 $A$ 换成 $\mathcal{O}_{loc}(\mathcal{E})$、
+% $\delta$ 换成 $Q+\{I_0,-\}$）。另，原文 “Just as we have is the discussion of
+% deformation-obstruction theory” 语法有误（多出 is），译文按原意处理。]
+
+% >>> p068
+
+\subsection{热核正则化（Heat Kernel Regularization）}
+
+正则化的方式有很多。其中一种与几何相联系的方法是\textbf{热核正则化}。通常，
+固定度量的选取后，我们有
+\begin{itemize}[leftmargin=1.6em,itemsep=0.2em]
+  \item 椭圆算子 $Q:\mathcal{E}\to\mathcal{E}$ 的伴随，记为
+        $Q^{\dagger}:\mathcal{E}\to\mathcal{E}$；
+  \item 广义 Laplacian
+        \[
+          [Q,Q^{\dagger}]=QQ^{\dagger}+Q^{\dagger}Q.
+        \]
+\end{itemize}
+于是对 $L>0$ 可以定义热算子 $\ee^{-L[Q,Q^{\dagger}]}$。设
+$K_L\in\Sym^2(\mathcal{E})$ 是热算子的核，即
+\[
+  \left(\ee^{-L[Q,Q^{\dagger}]}\alpha\right)(x)
+  =\int \dd y\,\langle K_L(x,y),\alpha(y)\rangle,
+  \qquad \alpha\in\mathcal{E}.
+\]
+这里 $\langle-,-\rangle$ 是由 $\omega$ 给出的配对。注意
+\begin{itemize}[leftmargin=1.6em,itemsep=0.2em]
+  \item $K_0=\lim_{L\to0}K_L$ 是 $\delta$-函数分布 $\omega^{-1}$；
+  \item 对 $L>0$，$K_L\in\Sym^2(\mathcal{E})$ 光滑。
+\end{itemize}
+
+设 $P_L$ 是算子 $\int_0^L \dd t\,Q^{\dagger}\ee^{-t[Q,Q^{\dagger}]}$ 的核。具体地，
+我们有
+\[
+  P_L=\int_0^L \dd t\,\left(Q^{\dagger}\otimes1\right)K_t.
+\]
+算子方程
+\[
+  \left[Q,\ \int_0^L \dd t\,Q^{\dagger}\ee^{-t[Q,Q^{\dagger}]}\right]
+  =\int_0^L \dd t\,\left[Q,Q^{\dagger}\right]\ee^{-t[Q,Q^{\dagger}]}
+  =1-\ee^{-L[Q,Q^{\dagger}]}
+\]
+可以翻译为核方程：
+\[
+  K_0-K_L=(Q\otimes1+1\otimes Q)P_L,
+\]
+或简写为
+\[
+  K_0-K_L=Q(P_L).
+\]
+我们可以用 $K_L$ 来定义有效量子主方程。
+
+对 $0<\varepsilon<L$，类似地有算子方程
+\[
+  \left[Q,\ \int_{\varepsilon}^L \dd t\,Q^{\dagger}\ee^{-t[Q,Q^{\dagger}]}\right]
+  =\ee^{-\varepsilon[Q,Q^{\dagger}]}-\ee^{-L[Q,Q^{\dagger}]},
+\]
+或者
+\[
+  K_{\varepsilon}-K_L=(Q\otimes1+1\otimes Q)P^L_{\varepsilon},
+\]
+其中 $P^L_{\varepsilon}
+=\int_{\varepsilon}^L\dd t\,(Q^{\dagger}\otimes1)K_t$ 称为\textbf{正则化传播子}
+（regularized propagator）。现在我们可以用 $P^L_{\varepsilon}$ 通过同伦 RG 流，
+把 $\varepsilon$ 处的有效主方程与 $L$ 处的有效主方程联系起来。
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.47\linewidth]{fig_p068_1.png}
+  \caption*{有效主方程随 $L$ 的同伦 RG 流（原文 PDF p.68 示意图，原文无编号）}
+\end{figure}
+
+% [Tutor Note: 符号与下标预警——（i）算子方程中 $\int_\varepsilon^L$ 的上下限
+% 决定最后是 $\ee^{-\varepsilon[Q,Q^\dagger]}-\ee^{-L[Q,Q^\dagger]}$，差一个符号
+% 就会把 $K_\varepsilon-K_L$ 写成 $K_L-K_\varepsilon$，务必按
+% $-\frac{d}{dt}\ee^{-t[Q,Q^\dagger]}=[Q,Q^\dagger]\ee^{-t[Q,Q^\dagger]}$ 核对。
+% （ii）$P_L$ 与 $P^L_\varepsilon$ 的下标/上标含义不同：$P_L$ 从 $0$ 积到 $L$
+% （对应 $L$ 正则化）；$P^L_\varepsilon$ 从 $\varepsilon$ 积到 $L$
+% （对应从 $\varepsilon$ 到 $L$ 的 HRG 流）。]
+
+\begin{wrem}{7.9}
+  $P^{\infty}_0=\int_0^{\infty}\dd t\,(Q^{\dagger}\otimes1)K_t$ 是\textbf{全传播子}
+  （full propagator）。在 $t=0$ 处会遇到紫外（UV）发散，因为全传播子存在奇点。
+  在非紧流形上，$t=\infty$ 处会遇到红外（IR）发散。
+\end{wrem}
+
+% >>> p069
+
+考虑 $X$ 紧致的情形。设
+\[
+  \mathbb{H}=\left\{\varphi\in\mathcal{E}\ \middle|\ [Q,Q^{\dagger}]\varphi=0\right\}
+  =\left\{\varphi\in\mathcal{E}\ \middle|\ Q\varphi=Q^{\dagger}\varphi=0\right\}
+  \simeq H^{\bullet}(\mathcal{E},Q).
+\]
+$\mathbb{H}$ 称为\textbf{调和空间}（space of harmonics，或\textbf{零模}空间），
+由 Hodge 理论它是有限维空间。于是我们有如下约化（下图示意了 $L\to\infty$
+的极限）：
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.52\linewidth]{fig_p069_1.png}
+  \caption*{从无穷维 $(-1)$-辛几何到有限维 $(-1)$-辛几何的约化（原文 PDF p.69 示意图，原文无编号）}
+\end{figure}
+即 $L\to\infty$ 时，无穷维的 $(-1)$-辛几何 $(\mathcal{E},Q,\omega)$ 约化为有限维的
+$(-1)$-辛几何 $(\mathbb{H},\omega_{\mathbb{H}}=\omega|_{\mathbb{H}})$。
+
+与 $\omega^{-1}_{\mathbb{H}}$ 相伴的 BV 算子 $\Delta_H$ 是
+$\Delta_H=\Delta_{\infty}$。关于 BV 量子化的完整图景如下图所示：
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.23\linewidth]{fig_p069_2.png}
+  \caption*{从 $0$ 到 $L=\infty$ 的 BV 量子化全图（原文 PDF p.69 示意图，原文无编号）}
+\end{figure}
+$I[\infty]$ 在 $L=\infty$ 处解 $(\mathcal{O}(\mathbb{H}),\Delta_H)$ 的量子主方程。
+这是一个有趣的观点，我们从中会发现某些有限维的几何数据。
+
+% [Tutor Note: 物理图像点拨——$L\to\infty$ 的极限把“所有高能模式”积掉，只剩下
+% 调和空间 $\mathbb{H}$（零模）；此时 BV 算子 $\Delta_H$ 由
+% $\omega^{-1}_{\mathbb{H}}$ 给出，是有限维、良定义的算子，于是 QME 变成一个
+% 有限维问题。这正是 Hodge 分解
+% $\mathcal{E}=\mathbb{H}\oplus\operatorname{im}Q\oplus\operatorname{im}Q^{\dagger}$
+% 的量子场论意义，也是第 9、10 章“约化到有限维几何”的出发点。]
+
+\subsection{UV 有限理论（UV Finite Theory）}
+
+在 BV 形式中，经典主方程
+\[
+  QI_0+\frac{1}{2}\{I_0,I_0\}
+\]
+被量子化为量子主方程
+\[
+  QI+\hbar\Delta I+\frac{1}{2}\{I,I\}=0.
+\]
+如上面所解释的，这个朴素的量子主方程对局部
+$I\in\mathcal{O}_{loc}(\mathcal{E})$ 是未定义的，我们必须用正则化来表述重整化后的
+量子主方程
+\[
+  QI[r]+\hbar\Delta_r I[r]+\frac{1}{2}\{I,I\}_r=0.
+\]
+如果正则化 $r$ 处的有效作用量可以写成
+\[
+  \ee^{I[r]/\hbar}
+  =\lim_{\varepsilon\to0}\ee^{\hbar\partial_{P^r_{\varepsilon}}}\ee^{I/\hbar},
+\]
+其中 $I\in\mathcal{O}_{loc}(\mathcal{E})[[\hbar]]$，即不需要依赖 $\varepsilon$ 的
+抵消项，则称该理论是 \textbf{UV 有限的}（UV finite）。也就是说，对所有正则化的
+Feynman 图
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.29\linewidth]{fig_p069_3.png}
+  \caption*{正则化 Feynman 图的 UV 极限（原文 PDF p.69 示意图，原文无编号）}
+\end{figure}
+相应的极限都存在。
+
+% [Tutor Note: 术语依据——UV finite 译“UV 有限”（保留 UV 缩写，与 7.2 节
+% “UV 问题”一致）。注意“不需要抵消项”不等于“没有发散”：是指所有正则化
+% Feynman 图的 $\varepsilon\to0$ 极限本身存在，可用 $I\in\mathcal{O}_{loc}$
+% 直接取极限，而不必先减去发散项。另，原文此处的 $\partial_{P^r_\varepsilon}$ 与
+% 7.2 节的 $P^r_\varepsilon$ 记号一致，$\varepsilon\to0$ 对应移除截断。]
+
+这样，我们可以考虑极限
+\[
+  I[r]\to I,\qquad r\to0,
+\]
+% >>> p070
+以及重整化量子主方程的 $r\to0$ 极限
+\[
+  QI+\frac{1}{2}\{I,I\}+\cdots=0,
+\]
+它将具有一个使经典主方程发生形变的局部表达式。预期其形式为
+\[
+  l^{\hbar}_1I+\frac{1}{2}l^{\hbar}_2(I,I)+\frac{1}{3!}l^{\hbar}_3(I,I,I)
+  +\cdots=0,
+\]
+其中 $\{l^{\hbar}_1,l^{\hbar}_2,\cdots\}$ 定义一个\textbf{量子化 $L_{\infty}$ 代数}
+（quantized $L_\infty$-algebra），它可以视为在重整化过程中由 $\Delta$ 换取而来。
+
+UV 有限理论主要有两大类。
+\begin{enumerate}[label=\textcircled{\small\arabic*},leftmargin=2.4em,itemsep=0.25em]
+  \item \textbf{拓扑理论}（Chern--Simons 型），其中 $\mathcal{E}$ 具有 de Rham
+        复形的形式。见 Kontsevich \textup{[25]} 与 Axelrod--Singer \textup{[2]}。
+  \item \textbf{全纯理论}，其中 $\mathcal{E}$ 具有 Dolbeault 复形的形式。
+        $\dim_{\C}=1$ 的情形见 Li \textup{[28, 29]}，更高维的情形见 Wang \textup{[39]}。
+\end{enumerate}
+
+在这些例子中确定 $\{l^{\hbar}_1,l^{\hbar}_2,\cdots\}$ 是一个极其有趣的问题。
+在第 9 章与第 10 章中，我们分别解释这两类中最简单的例子，以展示它们丰富的结构。
+
+% [Tutor Note: 术语·文献依据与原文疑误——（i）$l^{\hbar}_1,l^{\hbar}_2,\cdots$ 是
+% $L_\infty$ 结构映射（$l^{\hbar}_1$ 为微分，$l^{\hbar}_2$ 为括号，$l^{\hbar}_3$ 为
+% 三阶运算……），方程中各项依次对应经典主方程的量子修正。（ii）原文
+% “which can be viewed as traded from $\Delta$ in terms of the renormalization
+% procedure” 中 “traded” 语义不清，疑为 “derived”（导出）或 “traced”（追踪）之
+% 笔误，译文按字面作“换取而来”，请核对原书 p.69。（iii）方括号中的编号对应本书
+% References（PDF p.101–103，见 part14.tex）：Kontsevich [25] 指其关于
+% Chern–Simons 微扰量子化的拓扑不变量工作，Axelrod–Singer [2] 给出流形上链环的
+% 微扰不变量；Li [28, 29] 与 Wang [39] 则是本书作者及其合作者关于全纯/手征理论的
+% 工作。译文照录编号，读者请对照参考文献表查阅。]

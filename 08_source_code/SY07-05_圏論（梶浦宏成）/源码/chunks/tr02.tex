@@ -1,0 +1,1104 @@
+% ===== 原文 pp.18–44（PDF pp.25–51） =====
+% [原文 p.18]
+\chapter{集合论、环与模的基础}
+
+本章把本书所用到的基本工具归纳一下。关于集合论、环、体、模等，只要大致知道，读者尽可先跳过去，必要时再回来查阅。
+
+\section{集合论}
+
+所谓集合（set），是指由具有明确刻画特征的数学对象所构成的族。属于集合 $A$ 的数学对象 $a$ 称为 $A$ 的元素（element），并把「$a$ 是 $A$ 的元素」记作 $a\in A$。对于集合 $A$ 与 $B$，若对任意 $A$ 的元素 $x\in A$ 都有 $x\in B$，则称 $A$ 是 $B$ 的子集（subset），记作 $A\subset B$。$A\subset B$ 且 $A\supset B$ 时，并且仅当此时，有 $A=B$；也就是说，集合 $A$ 与 $B$ 相等。
+
+% [Tutor Note: 原文 p.18 的「集まり」在此译「族」，与第 1 章体例一致，避免与 ZFC 意义下作为对象的「集合」混淆；「はっきりと特徴付けを持った」译「具有明确刻画特征」，即朴素集合论中的概括原则用语。另：由原文「$A\subset B$ 且 $A\supset B$ $\Leftrightarrow$ $A=B$」可知此书的 $\subset$ 允许相等（并非真子集），故译文一律照用 $\subset$，不改写为 $\subseteq$；第 2 章后文（如 2.2.3 节）的 $Y\subset X$ 同此约定。]
+
+一般而言，比较两个集合时，考虑它们之间的映射。对于集合 $A,B$，映射 $f\colon A\to B$ 是指对 $A$ 的所有元素 $a\in A$ 都对应 $B$ 的元素 $f(a)\in B$ 者。$B$ 的子集
+\[
+  \Img(f) := \{f(a)\in B \mid a\in A\}
+\]
+称为 $A$ 在 $f$ 下的像（image）。对 $B$ 的子集 $B'$，$A$ 的子集
+\[
+  f^{-1}(B') := \{a\in A \mid f(a)\in B'\}
+\]
+称为 $B'$ 在 $f$ 下的原像（inverse image）。特别地，对元素 $b\in B$，仅由 $b$ 构成的 $B$ 的子集 $\{b\}$ 的原像记作 $f^{-1}(\{b\}) = f^{-1}(b)$。
+
+映射 $f\colon A\to B$ 当对任意两个不同的元素 $a,a'\in A$（$a\neq a'$）都有 $f(a)\neq f(a')$ 时称为单射（injection），当对每个元素 $b\in B$ 都存在满足 $f(a)=b$ 的元素 $a\in A$ 时称为满射（surjection）。也就是说，$f$ 为单射这件事，是指对任意元素 $b\in\Img(f)$，$f^{-1}(b)$ 都是仅由 1 点构成的（$A$ 的）集合；而 $f$ 为满射这件事，无非是 $\Img(f)=B$。
+
+% [Tutor Note: 底本 p.19 第 1 行印作「$f$ が全射であることは，$f^{-1}(B)=A$ であることに他ならない」；据作者正誤表（2014-05-20 版）p19 条订正为「$\Img(f)=B$ であることに他ならない」。正文已按订正后的内容翻译，故上句作「$\Img(f)=B$」。注意二者对一般映射并不等价（$f^{-1}(B)=A$ 恒成立），订正后的说法才是满射的定义。]
+
+% [原文 p.19]
+当 $f$ 既是单射又是满射时，称为双射（bijection）。若 $f$ 为双射，则通过使每个元素 $b\in B$ 对应 $f^{-1}(b)$，映射 $f^{-1}\colon B\to A$ 被定义。这个 $f^{-1}$ 称为 $f$ 的逆映射（inverse map）。例如，当两个集合 $A,B$ 为有限集（finite set）（元素个数有限）时，关于 $A$ 的元素个数 $\sharp(A)$ 与 $B$ 的元素个数 $\sharp(B)$，可以说：若有单射 $f\colon A\to B$ 则 $\sharp(A)\le\sharp(B)$，若有满射 $f\colon A\to B$ 则 $\sharp(A)\ge\sharp(B)$。
+
+% [Tutor Note: 上述计数事实可用小例子核对：$A=\{1,2\}$、$B=\{1,2,3\}$ 时存在单射（如 $1\mapsto1,2\mapsto2$）而 $\sharp(A)=2\le3=\sharp(B)$；满射 $A\to B$ 则不存在，正是 $\sharp(A)<\sharp(B)$ 的表现。一般地，对有限集还有更强的结论：单射 $A\to A$、满射 $A\to A$、双射 $A\to A$ 三者等价（抽屉原理 / pigeonhole principle），而这对无限集不成立（如 $\N\to\N,\ n\mapsto n+1$ 是单射但非满射）。]
+
+对于集合 $A$ 与 $B$，把它们的公共部分记作
+\[
+  A\cap B := \{x \mid x\in A \text{ 且 } x\in B\},
+\]
+把它们的和（sum）记作
+\[
+  A\cup B := \{x \mid x\in A \text{ 或 } x\in B\}.
+\]
+特别地，当 $A\cap B=\emptyset$（空集）时，称并集 $A\cup B$ 为 $A$ 与 $B$ 的直和（direct sum），记作 $A\coprod B$。又记
+\[
+  A-B := \{x\in A \mid x\notin B\},
+\]
+特别地当 $B\subset A$ 时，称 $A-B$ 为 $A$ 关于 $B$ 的补集（compleent）。以集合 $A$ 与 $B$ 的元素对为元素的集合
+\[
+  A\times B := \{(a,b) \mid a\in A,\ b\in B\}
+\]
+称为 $A$ 与 $B$ 的直积（direct product）。$A\times B$ 有时也写作 $A\prod B$。例如对两个有限集 $A,B$，设 $A,B$ 的元素个数分别为 $\sharp(A),\sharp(B)$，则直和 $A\coprod B$ 的元素个数为 $\sharp(A\coprod B)=\sharp(A)+\sharp(B)$，直积 $A\prod B$ 的元素个数为 $\sharp(A\prod B)=\sharp(A)\times\sharp(B)$。
+
+% [Tutor Note: 底本 p.19 把「补集」的英文印作 compleent（应为 complement）；正誤表未涉及，按「不改原文」原则照原印保留，读者勿据以记诵。同一段落中直和记作 $A\coprod B$（coproduct）、直积的可选记法为 $A\prod B$（product），二者字形分别为 $\coprod$ 与 $\prod$，与后文 2.4 节加法群的 $\oplus$（直和）不同，勿混。可核对的小例：$A=\{a\}$、$B=\{b\}$ 时 $A\coprod B=\{(a,0),(0,b)\}$（即 $A\times\{0\}\cup\{0\}\times B$）有 2 个元素，而 $A\prod B=A\times B=\{((a),(b))\}$ 仅 1 个元素，与 $\sharp(A)\times\sharp(B)=1$ 相符。]
+
+对集合 $A$ 的任意元素 $a,b,c\in A$，满足
+\begin{itemize}
+  \item $a\sim a$（自反律），
+  \item 若 $a\sim b$ 则 $b\sim a$（对称律），
+  \item 若 $a\sim b$，$b\sim a$ 则 $a\sim c$（传递律）
+\end{itemize}
+这样的关系 $\sim$ 一般称为等价关系（equivalence relation）。
+
+% [Tutor Note: 底本 p.19 第三条印作「$a\sim b$，$b\sim a$ なら $a\sim c$」，按定义应为「$a\sim b$，$b\sim c$ なら $a\sim c$」（传递律 / transitivity）；正誤表未涉及，按「不改原文」原则照原印翻译并在此说明。验证方法：取 $A=\Z$ 与例 2.1 的等价关系（模 2 同余），$0\sim2$、$2\sim4$ 给出 $0\sim4$；若照印文用 $b\sim a$，则 $0\sim2$、$2\sim0$ 推不出 $0\sim4$。]
+
+当 $A$ 上确定了等价关系时，可以考虑 $A$ 的元素按该等价关系所得的等价类的集合。也就是说，把 $a\in A$ 的等价类记作 $[a]$，则由定义，若 $a\sim b$ 则 $[a]=[b]$。
+\[
+  A/{\sim} := \{[a] \mid a\in A\}
+\]
+记作此式，并称之为 $A$ 的、按关系式 $\sim$ 的商集（quotient set）。此时，通过使 $a\in A$ 对应 $[a]\in A/{\sim}$，映射 $\pi\colon A\to A/{\sim}$ 被定义，且它是满射。$\pi$ 称为关于商的标准投射（canonical projection）。
+
+% [原文 p.20]
+\begin{example}{2.1} 取 $A=\Z$，在 $\Z$ 上如下引入等价关系：
+\[
+  a\sim b\ (a,b\in\Z) \iff b-a\in 2\Z
+\]
+（也就是说，若 $b-a$ 为偶数则把 $a$ 与 $b$ 视为同一。）此时，商集 $\Z/\sim$ 是仅由 2 个元素构成的集合，它与集合 $\{0,1\}$ 之间存在双射。\end{example}
+
+% [Tutor Note: 例 2.1 的等价类可具体写出：$[0]=[2]=[4]=\cdots=2\Z$，$[1]=[3]=[5]=\cdots=1+2\Z$。故 $\Z/\sim\,=\{2\Z,\,1+2\Z\}$，同构 $\to\{0,1\}$ 由 $2\Z\mapsto0$、$1+2\Z\mapsto1$ 给出。把 $2$ 换成任意正整数 $n$ 即得 $\Z/n\Z$（后文例 2.26、例 2.48 使用），且第 2.2.4 节将证明 $n$ 为素数时 $\Z/n\Z$ 是体；作为对照的环同构例子是「$m_1,m_2$ 互素时 $\Z/m_1m_2\Z\cong\Z/m_1\Z\times\Z/m_2\Z$」（中国剩余定理），例如 $\Z/6\Z\cong\Z/2\Z\times\Z/3\Z$。注意后者是环同构而非仅集合的双射，与例 2.1 中 $\Z/\sim\;\cong\{0,1\}$ 的区别在于：$\{0,1\}$ 此处只是集合，没有环结构。]
+
+通过反复取两个集合的和、直积，可以得到有限个集合的和、直积；对无限个集合也能定义它们的和、直积。把多个（未必有限个）集合，对某个（未必有限的）集合 $\Lambda$，表示为以 $\Lambda$ 的元素标号的集合 $A_\lambda$ 的族（集合族（family of set））。此时，$\{A_\lambda\}_{\lambda\in\Lambda}$ 的并集是指
+\[
+  \cup_{\lambda\in\Lambda}A_\lambda := \{a \mid \text{存在满足 } a\in A_\lambda \text{ 的 } \lambda\in\Lambda\},
+\]
+而特别地，当 $\lambda\neq\lambda'$ 时 $A_\lambda\cap A_{\lambda'}=\emptyset$，则称此为直和 $\cup_{\lambda\in\Lambda}A_\lambda=\coprod_{\lambda\in\Lambda}A_\lambda$。另一方面，$\{A_\lambda\}_{\lambda\in\Lambda}$ 的直积，是以使各 $\lambda\in\Lambda$ 对应元素 $a_\lambda\in A_\lambda$ 的所有映射（单射）$\Lambda\to\cup_{\lambda\in\Lambda}A_\lambda$ 为元素的集合。当 $\Lambda$ 为 2 个元素构成的集合时，这些与先前给出的和、直和、直积一致，这是显然的。当 $\Lambda$ 为无限集时，对应的直积称为无限直积（infinite direct product）。由于 $\Lambda$ 是无限集，从通常的集合论不能断言 $\prod_{\lambda\in\Lambda}A_\lambda$ 的元素存在。也就是说，若 $\Lambda$ 是无限集，则无法完成「对每个 $\lambda\in\Lambda$ 给出 $A_\lambda$ 的元素」这一操作！在现代数学中，通常采取把 $\prod_{\lambda\in\Lambda}A_\lambda$ 的元素的存在作为公理予以承认的立场。
+
+\begin{definition}[公理]{2.2} (选择公理\footnote{也称为选出公理。}（AC := axiom of choice）) 在直积 $\prod_{\lambda\in\Lambda}A_\lambda$ 中，若关于任意 $\lambda\in\Lambda$ 都有 $A_\lambda\neq\emptyset$，则必有 $\prod_{\lambda\in\Lambda}A_\lambda\neq\emptyset$。\end{definition}
+
+% [Tutor Note: 底本 p.20 脚注作「*1 選出公理と呼ばれることもある」，即「选择公理」亦称「选出公理」（英文均为 axiom of choice）。后文「選択公理′」的记号 $\prod$ 与 $\coprod$ 的用法可对照 2.4 节定义 2.59、2.60（那里把同一记号用于加法群）。可验证锚点：$\Lambda=\N$、$A_\lambda=\{0,1\}$ 时 $\prod_{\lambda\in\N}A_\lambda$ 就是所有 $\{0,1\}$-值数列（即 Cantor 集），其元素由选择公理保证；而对 $A_\lambda=\{0\}$（全为单点集）无需选择公理即可写出唯一元素。]
+
+由直积的定义可知，选择公理与下面的条件等价。
+
+\para{选择公理$'$。} 对集合 $A,B$ 与满射 $f\colon A\to B$，必存在映射 $g\colon B\to A$ 使 $f\circ g=\id_B$。
+
+实际上，若承认（选择公理），则给定集合 $A,B$ 与满射 $f\colon A\to B$ 时，直积 $\prod_{b\in B}f^{-1}(b)$ 存在，它的元素定义了 $g\colon B\to A$。另一方面，若承认（选择公理$'$），则给定直积 $\prod_{\lambda\in\Lambda}A_\lambda$ 时，把 $A_\lambda$ 的元素与 $A_{\lambda'}$ 的元素在 $\lambda\neq\lambda'$ 时视为不同的元素，由此定义的直和 $A:=\coprod_{\lambda\in\Lambda}A_\lambda$ 到 $\Lambda$ 的满射 $f\colon A\to\Lambda$ 满足：存在使 $f\circ g=\id_\Lambda$ 的映射 $g\colon\Lambda\to A$，它定义了直积 $\prod_{\lambda\in\Lambda}A_\lambda$ 的元素。\hfill$\square$
+
+集合族 $\{A_\lambda\}_{\lambda\in\Lambda}$ 的直和、直积由称为普遍性的下述性质刻画。
+
+\begin{lemma}{2.3} 设给定集合族 $\{A_\lambda\}_{\lambda\in\Lambda}$。此时，
+\begin{enumerate}[label=s\arabic*), leftmargin=*]
+  \item 存在集合 $A$ 与映射组 $\{\iota_\lambda\colon A_\lambda\to A\}_{\lambda\in\Lambda}$，使得对任意集合 $W$ 与对每个 $\lambda\in\Lambda$ 给定的映射 $f_\lambda\colon A_\lambda\to W$，存在唯一的映射 $f\colon A\to W$ 满足
+  \[
+    f_\lambda = f\circ\iota_\lambda .
+  \]
+  \item $A$ 与直和 $\coprod_{\lambda\in\Lambda}A_\lambda$ 之间存在双射。
+\end{enumerate}
+\end{lemma}
+
+% [原文 p.21]
+\begin{lemma}{2.4} 设给定集合族 $\{A_\lambda\}_{\lambda\in\Lambda}$。此时，
+\begin{enumerate}[label=p\arabic*), leftmargin=*]
+  \item 存在集合 $\tilde{A}$ 与映射组 $\{\pi_\lambda\colon \tilde{A}\to A_\lambda\}_{\lambda\in\Lambda}$，使得对任意集合 $W$ 与对每个 $\lambda\in\Lambda$ 给定的映射 $f_\lambda\colon W\to A_\lambda$，存在唯一的映射 $f\colon W\to\tilde{A}$ 满足
+  \[
+    f_\lambda = \pi_\lambda\circ f .
+  \]
+  \item $\tilde{A}$ 与直积 $\prod_{\lambda\in\Lambda}A_\lambda$ 之间存在双射。
+\end{enumerate}
+\end{lemma}
+
+也就是说，这意味着直和、直积在除去双射带来的任意性之后，分别由 s1),p1) 的性质确定。由定义，$\iota_\lambda$ 是单射，$\pi_\lambda$ 特别是满射。
+
+% [Tutor Note: 底本 p.21 第 12 行印作「それぞれ s1),p2) の性質によって定められる」；据作者正誤表（2014-05-20 版）p21 条，应作「それぞれ s1),p1)」（即直和由 s1)、直积由 p1) 刻画）。正文已按订正后的内容翻译。补出略去的对应：s1) 正是集合范畴 $\Set$ 中余积（coproduct，即无交并）的泛性质，p1) 是积（product）的泛性质；s2),p2) 则是说「满足该泛性质的对象必与直和/直积双射」，即泛性质在「至多相差唯一同构」的意义下唯一确定对象——这正是 2.4 节命题 2.64、以及范畴论中「极限唯一」的一般论证的原型。]
+
+\begin{proof}
+令 $A = \coprod_{\lambda\in\Lambda}A_\lambda$，$\tilde{A} = \prod_{\lambda\in\Lambda}A_\lambda$，只需证明 s1),p1)。s2),p2) 成立这件事，只要 $A,\tilde{A}$ 存在，就由它们按普遍性所下的定义 s1),p1) 得到保证。
+\end{proof}
+
+单射、满射的定义可以如下改述。
+
+\begin{lemma}{2.5}
+\begin{itemize}
+  \item $f\colon A\to B$ 为单射，等价于存在满足 $g\circ f=\id_A$ 的映射 $g\colon B\to A$，
+  \item $f\colon A\to B$ 为满射，等价于存在满足 $f\circ g=\id_B$ 的映射 $g\colon B\to A$。
+\end{itemize}
+\end{lemma}
+
+\begin{proof}
+关于 $f$ 的单射性很简单。$f\colon A\to B$ 为满射时，「存在满足 $f\circ g=\id_B$ 的映射 $g\colon B\to A$」无非就是（选择公理$'$）本身。
+\end{proof}
+
+% [Tutor Note: 补出上引理中「单射 $\Rightarrow$ 存在左逆」被省略的构造，它是唯一不需要选择公理的方向：对 $b\in\Img(f)$，由单射性 $f^{-1}(b)$ 恰含一点，取该点为 $g(b)$；对 $b\notin\Img(f)$ 任取 $A$ 的一点（$A\neq\emptyset$ 时）即可，故 $g$ 良定义且 $g\circ f=\id_A$。反之满射方向（存在右逆）恰恰等价于选择公理，与 p.20 的「选择公理′」一致；这个不对称是集合范畴中「单射 = 有左逆」「满射 = 有右逆」在无选择公理时的分水岭。]
+
+因此，$f$ 为双射这件事，等价于存在 $g\colon B\to A$ 使
+\begin{equation}
+  g\circ f = \id_A,\qquad f\circ g = \id_B \tag{2.1}
+\end{equation}
+成立。
+
+% [Tutor Note: 式 (2.1) 是本节的枢纽：它把「双射」这一借助元素的说法改写为「存在双边逆」的等式，从而可以逐字搬进任意范畴（范畴的对象未必是集合，见定义 4.7）。可验证锚点：在集合范畴中取 $A=\{1,2\}$、$f=\id_A$，则 $g=\id_A$ 满足 (2.1)；若取 $A=\{1,2\}$、$B=\{1\}$ 的满射 $f$，则不存在 $g$ 使 $g\circ f=\id_A$，故 $f$ 非双射。]
+
+% [原文 p.22]
+一般而言，当集合具有（加法群、环、$R$ 模等）附加结构时，考虑保持该结构的映射这一概念。此时，具有这类附加结构的集合 $A,B$ 之间的同型这一概念，由 (2.1) 定义。这里，$f,g$ 取为保持结构的映射。一般而言，$A$ 与 $B$ 同型，多数情形下等价于存在保持结构的双射 $f\colon A\to B$。使保持结构的双射 $f$ 的逆映射 $g=f^{-1}$ 自动成为保持结构的映射的情形即属此类。然而，这种事情并不总是发生（例如带拓扑结构的集合 $=$ 拓扑空间之间的同胚（$=$ 同相）等）。
+
+% [Tutor Note: 「$A$ 与 $B$ 同型 $\Leftrightarrow$ 存在保持结构的双射」在代数范畴（群、环、模、向量空间）中成立，是因为逆映射自动保结构；其证明模式为：设双射 $f$ 保持运算，要证 $f^{-1}$ 也保持运算，只需对等式两边同时作用 $f$——例如对 $R$ 模同态的双射 $f\colon M\to N$，由 $f(f^{-1}(x+y))=x+y=f(f^{-1}(x))+f(f^{-1}(y))=f(f^{-1}(x)+f^{-1}(y))$ 及 $f$ 的单射性得 $f^{-1}(x+y)=f^{-1}(x)+f^{-1}(y)$。对照的反例即书中提到的拓扑空间：恒等映射 $\R_{\text{离散}}\to\R_{\text{通常}}$ 是连续双射，但逆映射不连续，故二者同胚与否不能只看「存在连续双射」。]
+
+% [Tutor Note: 术语对照：同型（isomorphic）／同型写像（isomorphism）／同相（homeomorphism）；本节此后不再逐处标注英文。]
+
+进一步，在范畴论中，范畴的对象不过是单纯的标签，未必是集合（附带有某种结构者）。这种时候，通常集合论意义的双射这一概念不可能存在。在范畴论中，作为对象 $A$ 与 $B$ 同型这一件事的定义，将采用 (2.1)（定义 4.7）。
+
+\section{加法群、环与体}
+\subsection{加法群、环与体}
+
+所谓群 $G$，是指这样的集合：它具有结合性的积结构 $\circ\colon G\times G\to G$，特别地存在满足对任意元素 $g\in G$ 都有 $g\circ\id_G=\id_G\circ g=g$ 的元素 $\id_G\in G$，并且还存在满足 $g\circ g^{-1}=g^{-1}\circ g=\id_G$ 的元素 $g^{-1}\in G$。当这个积结构 $\circ$ 可交换，也就是说，当 $g\circ g'=g'\circ g$（$g,g'\in G$）时，群 $G$ 被称为阿贝尔群，或称加法群、加群等；本书采用「加法群」这一说法。在加法群 $G$ 中，其可交换的积结构就是四则运算的加法 $+$ 本身，故表作 $\circ=+$。此时，表作 $g^{-1}=:-g$、$\id_G=:0_G$ 更有感觉吧。
+
+% [Tutor Note: 上文对群的描述省略了「积封闭」（$\circ$ 的值域落在 $G$ 内已由 $\circ\colon G\times G\to G$ 蕴含）与「结合律」（已由「结合性的积结构」蕴含）的展开；且 $\id_G$ 与 $g^{-1}$ 的唯一性也被略去——它们由群公理推出（若 $e,e'$ 均为幺元，则 $e=e\circ e'=e'$；若 $h,h'$ 均为 $g$ 的逆，则 $h=h\circ\id=h\circ(g\circ h')=(h\circ g)\circ h'=\id\circ h'=h'$）。加法群的记号：$0_G$ 为零元，$-g$ 为 $g$ 的逆元，$g-g'$ 是 $g+(-g')$ 的简写。]
+
+% [Tutor Note: 术语英文：群 group／阿贝尔群（加法群）abelian group／幺元 identity element／逆元 inverse element。本书的「加法群」一律指 abelian group（定义 2.6 的括注 additive group = abelian group 可证），与 2.2.3 节的「部分加法群」（additive subgroup）同源。]
+
+\begin{definition}{2.6} 集合 $R$ 具有运算 $+\colon R\times R\to R$，当具有以下性质时，称 $R$ 为加法群（additive group $=$ abelian group）。
+\begin{itemize}
+  \item 对 $a,b\in R$，$a+b=b+a$。
+  \item 对 $a,b,c\in R$，$(a+b)+c=a+(b+c)$。
+  \item 对 $a\in R$，存在满足 $a+0_R=a$ 的元素 $0_R\in R$。
+  \item 对 $a\in R$，存在满足 $a+(-a)=0_R$ 的元素 $-a\in R$。
+\end{itemize}
+\end{definition}
+
+\begin{definition}{2.7} 加法群 $R$ 在运算 $+\colon R\times R\to R$ 之外还具有积 $\cdot\colon R\times R\to R$，当具有以下性质时，称 $R$ 为环（ring）。
+\begin{itemize}
+  \item 对 $a,b,c\in R$，$(a\times b)\times c=a\times(b\times c)$。
+  \item 对 $a,b,c\in R$，$(a+b)\times c=a\times c+b\times c$，$c\times(a+b)=c\times a+c\times b$。
+  \item 对 $a\in R$，存在满足 $1_R\times a=a\times1_R=a$ 的 $1_R\in R$。
+\end{itemize}
+特别地，当环 $R$ 对 $a,b\in R$ 满足 $a\times b=b\times a$ 时，称 $R$ 为交换环（commutative ring）。\end{definition}
+
+% [Tutor Note: 定义 2.7 中的「$\times$」只是临时的积记号，与定义 2.59 的直积、以及 2.4 节中的 $\times$ 无关；作者随即声明此后一律用 $\cdot$。另注意：定义 2.9 按字面（「$a\neq0_R$ 的元素皆可逆」）对零环 $\{0\}$ 是空洞成立的，故严格说零环也满足定义 2.9；作者在注意 2.35 中把 $m=1$ 的情形称为「自明な体」$K=\{0_K\}$，正是对这一退化情形的处理，而定义 2.34 要求「最小的整数 $m\ge2$」，据此把零环排除在「特征」讨论之外。]
+
+\begin{definition}{2.8} 对于环 $R$，当元素 $a\in R$ 具有满足 $a\cdot a^{-1}=1_R=a^{-1}\cdot a$ 的元素 $a^{-1}\in R$ 时，称 $a$ 为 $R$ 的可逆元（invertible element）\footnote{这也被称为可逆元、正则元（unit）等。}。此时，$a^{-1}\in R$ 称为 $a$ 的逆元（inverse element）。不是可逆元的 $R$ 的元素称为非可逆元（non-invertible element）。\end{definition}
+
+\begin{definition}{2.9} 交换环 $R$ 中，若除零元以外的所有元素 $a\in R$（$a\neq0_R$）都是可逆元，则称之为体（field）。\end{definition}
+
+\begin{remark}{2.10} （未必交换的）环 $R$ 中，若除零元以外的元素全部是可逆元，则称之为除环（division ring, skew field）。也就是说，体就是成
+% [原文 p.23]
+交换环的除环 $R$。\end{remark}
+
+% [Tutor Note: 注意 2.10 的措辞「つまり体とは斜体 $R$ であって可換環を成すもののことである」在排版上跨 p.22–p.23 两页（p.22 末行为「斜体(division ring, skew field) と呼ばれる．つまり体とは斜体 $R$ であって」，p.23 首行为「可換環を成すもののことである．」）。书中的「斜体」即除环，中文文献亦称「体」（skew field）；为与定义 2.9 的「体（field，可交换）」区分，此处译「除环」。]
+
+% [Tutor Note: 可验证锚点：$\mathbb{H}$（四元数体，quaternion algebra）是除环而非体（$ij=-ji$）；$\mathrm{Mat}_2(\R)$ 不是除环（$\mathrm{diag}(1,0)$ 不可逆）。$\Z$ 是交换环而非体，$\Q,\R,\C$ 是体。]
+
+\begin{example}{2.11} $R=\Z$（整数集合）是交换环，此时 $+$ 就是整数的加法，$\times$ 就是整数的乘法本身。另一方面，$R=\Q$（有理数集合）成为体。对任意 $n\in\Z$，当 $n\neq0$ 时，$\Z$ 不含 $n^{-1}$，但 $n^{-1}\in\Q$。类似地，实数全体构成的集合 $\R$、复数全体构成的集合 $\C$ 都是体。\end{example}
+
+\begin{example}{2.12} 多项式构成的空间 $\R[x]$ 成为交换环。更一般地，对体 $K$，以 $K$ 为系数的多项式构成的空间 $K[x]$、$n$ 元多项式构成的空间 $K[x_1,\ldots,x_n]$ 等都成为交换环。它们具有加法、乘法的结构，这是显然的吧。\end{example}
+
+\begin{example}{2.13} 非交换环的例子有：以体 $K$ 为成分的 $n\times n$ 矩阵所构成的集合等。稍非平凡的例子，例如可以考虑 $n\times n$ 下三角矩阵（或上三角矩阵）所构成的集合。$n=2$ 时，运算由
+\[
+  \begin{pmatrix} a & 0 \\ b & c \end{pmatrix}
+  + \begin{pmatrix} a' & 0 \\ b' & c' \end{pmatrix}
+  = \begin{pmatrix} a+a' & 0 \\ b+b' & c+c' \end{pmatrix},
+\]
+\[
+  \begin{pmatrix} a & 0 \\ b & c \end{pmatrix}
+  \cdot \begin{pmatrix} a' & 0 \\ b' & c' \end{pmatrix}
+  = \begin{pmatrix} aa' & 0 \\ ba'+cb' & cc' \end{pmatrix}
+\]
+定义。\end{example}
+
+% [Tutor Note: 例 2.13 的矩阵乘法结果 $(2,1)$-成分为 $ba'+cb'$，可逐项核对：左下角元素来自 $\begin{pmatrix}a&0\\b&c\end{pmatrix}$ 的第二行 $(b,c)$ 与 $\begin{pmatrix}a'&0\\b'&c'\end{pmatrix}$ 的第一列 $(a',b')$ 的内积，即 $ba'+cb'$。上三角（或下三角）矩阵全体对加法、乘法封闭且含单位矩阵，故成环；$n\ge2$ 时它非交换——取 $\begin{pmatrix}1&0\\1&1\end{pmatrix}$ 与 $\begin{pmatrix}1&0\\0&2\end{pmatrix}$ 相乘即可看出两序结果不同。对照例 2.75：$\mathrm{Mat}_n(K)$ 还是 $K$ 代数。]
+
+\subsection{同态映射}
+
+\begin{definition}{2.14} 设 $X,Y$ 为加法群。（集合之间的）映射 $f\colon X\to Y$ 当满足
+\begin{itemize}
+  \item $f(0_X)=0_Y$，
+  \item 对任意 $x,x'\in X$ 有 $f(x+x')=f(x)+f(x')$
+\end{itemize}
+时，称为加法群之间的同态映射（homomorphism）。\end{definition}
+
+% [Tutor Note: 定义 2.14 的第一条其实可由第二条与 $f(0_X)=f(0_X+0_X)=2f(0_X)$ 推出（在加法群中两边减去 $f(0_X)$ 即得 $f(0_X)=0_Y$），作者把它单列是为了与定义 2.17 的环同态（要求 $f(1_A)=1_B$，它不能由加法部分推出）相区分。可验证锚点：$f\colon\Z\to\Z/2\Z,\ n\mapsto n\bmod2$ 满足两条，是加法群同态。]
+
+对加法群 $X,Y$，把加法群之间的同态映射所构成的集合表作
+\begin{equation}
+  \Hom(X,Y) := \{f\colon X\to Y\}. \tag{2.2}
+\end{equation}
+
+\begin{lemma}{2.15} $\Hom(X,Y)$ 也具有加法群的结构。\end{lemma}
+
+\begin{proof}
+对 $f,g\in\Hom(X,Y)$，通过 $(f+g)(x):=f(x)+g(x)\in Y$（$x\in X$）定义 $f+g\in\Hom(X,Y)$，则可确认由此运算 $\Hom(X,Y)$ 构成加法群。特别地，把所有 $X$ 的元素映到 $0_Y\in Y$ 的同态映射 $0_{XY}\in\Hom(X,Y)$ 成为 $\Hom(X,Y)$ 的零元。
+\end{proof}
+
+% [Tutor Note: 这里补出被略去的验证要点：$(f+g)$ 确为同态，因为 $(f+g)(x+x')=f(x+x')+g(x+x')=f(x)+f(x')+g(x)+g(x')=(f+g)(x)+(f+g)(x')$（用了 $Y$ 交换）；结合律、交换律逐点继承自 $Y$；逆元为 $-f\colon x\mapsto-f(x)$；零元即 $0_{XY}$。注意 $\Hom(X,Y)$ 的这个加法群结构只用到 $Y$ 是加法群，与 $X$ 的群结构无关（$X$ 只需是集合即可定义 $\Hom$，但要求同态时才用到 $X$ 的加法）。]
+
+\begin{definition}{2.16} 加法群 $X$ 与 $Y$ 同型（isomorphic），是指存在满足
+\[
+  g\circ f=\id_X,\qquad f\circ g=\id_Y
+\]
+的同态映射 $f\colon X\to Y$、$g\colon Y\to X$。此时，称 $f,g$ 为同型映射（isomorphism）。\end{definition}
+
+% [原文 p.24]
+由定义，同型映射是双射。反之，若存在双射同态映射 $f\colon X\to Y$，则其作为集合的逆映射 $g\colon Y\to X$ 成为同态映射。也就是说，加法群之间的同型映射就是双射同态映射。
+
+\begin{definition}{2.17} 设 $A,B$ 为环。作为加法群的同态映射 $f\colon A\to B$ 当进一步保持幺元与积结构，即满足
+\begin{itemize}
+  \item $f(1_A)=1_B$，
+  \item 对任意 $a,a'\in A$ 有 $f(a\cdot a')=f(a)\cdot f(a')$
+\end{itemize}
+时，称为环同态映射（ring homomorphism）。\end{definition}
+
+\begin{remark}{2.18} 一般地，环同态映射的空间不具有加法群的结构。\end{remark}
+
+% [Tutor Note: 注意 2.18 的理由：两个环同态 $f,g\colon A\to B$ 的逐点和 $(f+g)(1_A)=f(1_A)+g(1_A)=1_B+1_B$，一般不等于 $1_B$（当 $1_B+1_B\neq1_B$，即 $1_B\neq0_B$ 时），故 $f+g$ 不再是环同态；而定义 2.14 的加法群同态全体却构成加法群（引理 2.15）。这也解释了为何环同态不能像模同态那样用 $\Hom$ 的加法群结构来讨论，后文对环只讨论乘法（如 $\End_R(M)$ 是环，而 $\Hom_R(M,N)$ 仅是加法群）。可验证锚点：$A=B=\Z$ 时，环同态只有 $\id_\Z$（因为 $f(1)=1$ 迫使 $f(n)=n$），而加法群同态 $\Z\to\Z$ 有可数多个（$n\mapsto kn$），$\Hom(\Z,\Z)\cong\Z$ 作为加法群。]
+
+\begin{definition}{2.19} 环 $A$ 与 $B$ 同型（isomorphic），是指存在满足
+\[
+  g\circ f=\id_A,\qquad f\circ g=\id_B
+\]
+的环同态映射 $f\colon A\to B$、$g\colon B\to A$。称 $f,g$ 为同型映射。\end{definition}
+
+此时也同样是：同型映射就是双射环同态映射。
+
+\subsection{部分加法群与剩余加法群}
+
+环 $R$ 可以通过忘掉积结构而看作加法群。首先，对加法群定义部分加法群与剩余加法群。
+
+\begin{definition}{2.20} 加法群 $X$ 的子集 $Y$ 当对加法封闭，也就是说，当对任意 $y,y'\in Y\subset X$ 都有
+\[
+  -y\in Y,\qquad y+y'\in Y
+\]
+时，称为部分加法群（additive subgroup）\footnote{对任意 $y,y'\in Y$，条件「$-y\in Y$，$y+y'\in Y$」可以合并成一条「$y-y'\in Y$」。}$^{*3}$。\end{definition}
+
+% [Tutor Note: 这里补出上文的记号说明：$y\in Y$ 时的 $-y$ 是 $y\in Y\subset X$ 在 $X$ 中的运算，第一条条件说的是 $-y\in X$ 特别地属于 $Y$；第二条同理，$+$ 是 $X$ 中的加法。等价地（见脚注），只要对任意 $y,y'\in Y$ 有 $y-y'\in Y$ 即可（取 $y'=y$ 得 $0\in Y$，取 $y=0$ 得 $-y'\in Y$，再得 $y+y'=y-(-y')\in Y$）。]
+
+\begin{definition}{2.21} 设 $X$ 为加法群，$Y\subset X$ 为 $X$ 的子加群。在 $X$ 的元素之间按「对元素 $x,x'\in X$，当 $x'-x\in Y$ 时称 $x$ 与 $x'$ 等价」定义等价关系（2.1 节），并把它表作
+\[
+  x\sim x' .
+\]
+实际上，由部分加法群的定义，这个 $\sim$ 给出等价关系（2.1 节）。把 $X$ 的元素按此等价关系所得的剩余类所构成的集合记作 $X/Y$，称为 $X$ 关于 $Y$ 的剩余加法群（factor additive group）。\end{definition}
+
+% [原文 p.25]
+实际上 $X/Y$ 具有加法群的结构。首先，$X/Y$ 的元素由 $X$ 的元素 $x$ 代表，但由任意 $y\in Y$ 都有 $x\sim x+y$。此时，作为 $X$ 的运算，$-(x+y)=-x-y\sim-x$，因此在 $X/Y$ 中逆元不依赖于 $y\in Y$ 的任意性而确定。同样地，取 $x,x'\in X$ 时，对任意 $y,y'\in Y$ 有 $x\sim x+y$、$x'\sim x'+y'$，而 $(x+y)+(x'+y')=(x+x')+(y+y')\sim(x+x')$，因此 $X/Y$ 上的加法不依赖于 $y,y'\in Y$ 的取法，由 $X$ 上的加法诱导。
+
+如上所述，由 $x\in X$ 代表的 $X/Y$ 的元素也记作 $[x]$。另一方面，在确认上述运算时，为表达「对任意 $y\in Y$ 考虑 $x+y$」之意，也常便宜地记作 $[x]=x+Y$，以下也使用该记法。
+
+% [Tutor Note: 这段给出了商加法群 $X/Y$ 上运算良定义（well-defined）的标准流程：先验证代表元的取法不影响结果（即 $x\sim x+y$ 时运算结果仍同余），再由此定义 $[x]+[y]:=[x+y]$、$-[x]:=[-x]$。可验证锚点：$X=\Z$、$Y=2\Z$ 时 $X/Y=\Z/2\Z$，$[1]+[1]=[2]=[0]$，与「$1+1=2$ 为偶数」一致；若取 $Y=\{0\}$ 则 $X/Y=X$。]
+
+\subsection{部分环、理想与剩余环}
+
+由部分加法群的定义（定义 2.20）作类比，部分环的定义应该容易想见。
+
+\begin{definition}{2.22} 设 $R$ 为环。部分加法群 $R'\subset R$ 当对任意 $a,b\in R'$ 满足
+\begin{itemize}
+  \item $1_R\in R'$，
+  \item $a\cdot b\in R'$，
+\end{itemize}
+时，称为部分环（sub-ring）。\end{definition}
+
+一般地，由环 $R$ 的部分环 $R'\subset R$ 所得的剩余加法群 $R/R'$ 并不成为环。对环 $R$，考虑部分加法群 $R'\subset R$。此时，为使剩余加法群 $R/R'$ 具有由 $R$ 诱导的积，对 $a,b\in R$ 有
+\[
+  (a+R')\cdot(b+R') = a\cdot b + R'\cdot b + a\cdot R' + R'\cdot R',
+\]
+由此可知，只要除 $R'\cdot R'\subset R'$ 之外还有 $R'\cdot b\subset R'$、$a\cdot R'\subset R'$ 成立，就有 $(a+R')\cdot(b+R')=a\cdot b+R'$ 得到满足。作为满足这些条件的 $R'$，定义了称为理想的东西。不过，$1_R\in R'$ 不作为条件列入。
+
+\begin{definition}{2.23} 环 $R$ 的部分加法群 $I\subset R$ 当满足以下性质时，称 $I$ 为 $R$ 的理想（ideal）\footnote{满足条件 (l) 者称为左理想（left ideal），满足条件 (r) 者称为右理想（right ideal），两者都满足者也称为双边理想（two-sided ideal）。用模的语言来说，右理想无非是把 $R$ 看作右 $R$-模时的右 $R$-子模（cf.\ 例 2.46）。左理想也同理。}$^{*4}$。
+\begin{itemize}
+  \item[(l)] 对 $a\in R$，$x\in I$ 有 $a\cdot x\in I$，
+  \item[(r)] 对 $x\in I$，$b\in R$ 有 $x\cdot b\in I$。
+\end{itemize}
+\end{definition}
+
+若 $1_R\in I$，则例如在第一条条件中取 $b=1_R$，所有的元素 $a\in R$ 就成为 $a\in I$，也就是说此时 $I=R$。同样地，若某个可逆元 $a$ 含于 $I$，则由 $a^{-1}\cdot a=1_R\in I$ 得
+% [原文 p.26]
+$I=R$。如此，满足 $I\neq R$ 的理想不含可逆元。
+
+\begin{definition}{2.24} 环 $R$ 的非可逆元全体构成 $R$ 的理想 $I\neq R$ 时，称 $R$ 为局部环（local ring）。\end{definition}
+
+那么，由理想的定义可得以下结论。
+
+\begin{proposition}{2.25} 对环 $R$ 与其理想 $I\subset R$，如下定义剩余加法群 $R/I$ 中的和、积的结构：对 $a+I\in R/I$、$b+I\in R/I$，
+\[
+  (a+I)+(b+I)=a+b+I,\qquad (a+I)\cdot(b+I)=a\cdot b+I .
+\]
+由此 $R/I$ 构成环。\end{proposition}
+
+% [Tutor Note: 命题 2.25 书未给证明。补出要点：良定义来自 $I$ 是理想——若 $a'\in a+I$、$b'\in b+I$，则 $a'=a+x$、$b'=b+y$（$x,y\in I$），于是 $a'b'=ab+(ay+xb+xy)\in ab+I$，用到的正是定义 2.23 的 (l)（$ay\in I$）与 (r)（$xb\in I$）以及 $I$ 对加法封闭；加法部分同理。环公理（结合律、分配律、幺元 $1_R+I$）逐项由 $R$ 继承。锚点：$R=\Z$、$I=6\Z$ 时 $R/I=\Z/6\Z$，其中 $[2][3]=[6]=[0]$。]
+
+称此 $R/I$ 为 $R$ 关于理想 $I$ 的剩余环（factor ring）。局部环 $R$ 的、由非可逆元全体构成的理想 $I$ 所得的剩余环 $R/I$ 特别是除环。
+
+$R$ 为交换环时，定义 2.23 的条件 (l) 与条件 (r) 等价。对交换环 $R$ 与理想 $I\subset R$，剩余环 $R/I$ 也成为交换环。
+
+\begin{example}{2.26} 取某个正整数 $m$，设 $m\Z:=\{m\cdot n \mid n\in\Z\}$，则它是交换环 $\Z$ 的理想。得到交换环 $\Z/m\Z$。
+
+实际上，若 $m$ 为素数，则 $\Z/m\Z$ 进一步成为体。因为对任意整数 $a\neq0$，$a$ 与 $m$ 互素，故必存在满足 $a\cdot n+b\cdot m=1$ 的整数 $n,b$。因此 $[a]\in\Z/p\Z$ 的逆元存在，为 $[n]\in\Z/p\Z$。\end{example}
+
+% [Tutor Note: 末句原文「よって $[a]\in\Z/p\Z$ の逆元が存在して $[n]\in\Z/p\Z$ となる」表述较绕，实际含义是 $[a]^{-1}=[n]$（由 $an+bm=1$ 得 $[a][n]=[1]$）。注意前文已用 $m$、末句改用 $p$，是指「$m=p$ 为素数」的情形，故 $\Z/p\Z$ 即 $\Z/m\Z$。可验证锚点：$m=5$ 时 $[3]^{-1}=[2]$（$3\cdot2=6\equiv1$）；$m=6$ 时 $[2]$、$[3]$、$[4]$ 都不可逆（$2\cdot3=6\equiv0$ 已是零因子），故 $\Z/6\Z$ 非体，这与 $6$ 非素数一致。]
+
+\begin{example}{2.27} 考虑以体 $K$ 为系数、$x$ 为变量的多项式环 $K[x]$。固定正整数 $n$，则 $x^nK[x]\subset K[x]$ 是理想。得到交换环 $K[x]/(x^n):=K[x]/x^nK[x]$。\end{example}
+
+\begin{definition}{2.28} 设 $R$ 为交换环。$R$ 的理想 $I$ 当对 $a,b\in R$，若 $a\cdot b\in I$ 则 $a\in I$ 与 $b\in I$ 中至少一个成立时，称为素理想（prime ideal）。\end{definition}
+
+\begin{example}{2.29} 在上面的例 2.26 中取 $m$ 为素数 $p$，则 $p\Z\subset\Z$ 是 $\Z$ 的素理想。这就是此名称的由来。\end{example}
+
+\begin{example}{2.30} 对多项式环 $R=K[x]$ 与某个元素 $a\in K$，$K[x]$ 的子集
+\[
+  I_a := (x-a)\cdot K[x] = \{(x-a)\cdot f\in K[x] \mid f\in K[x]\}
+\]
+是素理想。$a=0$ 的情形相当于上面例 2.27 的 $n=1$ 的情形。若 $n\ge2$，则 $x^nK[x]\subset K[x]$ 不是素理想。\end{example}
+
+% [Tutor Note: 例 2.30 的两点可验证：其一，$I_a$ 是素理想——若 $(x-a)f\cdot(x-a)g=(x-a)^2fg\in I_a$，则 $K[x]$ 是整域（无零因子）蕴涵 $(x-a)f\in I_a$ 或 $(x-a)g\in I_a$；其二，$n\ge2$ 时 $x^nK[x]$ 非素理想——$x^n\in x^nK[x]$ 而 $x\notin x^nK[x]$（$n\ge2$）。对照例 2.27：$K[x]/(x-a)\cong K$（由 $f\mapsto f(a)$）是体，而 $K[x]/(x^n)$（$n\ge2$）含幂零元 $[x]$，$[x]^n=0$，故非整域、更非体。]
+
+\begin{definition}{2.31} 设 $R$ 为交换环。$R$ 的理想 $I$ 当不存在满足 $I\subset I'\subset R$ 且 $I'\neq I,R$ 的理想 $I'$ 时，称为极大理想（maximal ideal）。\end{definition}
+
+\begin{lemma}{2.32} 对交换环 $R$，以下等价。
+\begin{itemize}
+  \item $R$ 是局部环。
+  \item $R$ 只有一个极大理想。
+\end{itemize}
+\end{lemma}
+
+% [原文 p.27]
+\begin{proof}
+若 $R$ 为局部环，则非可逆元全体构成的集合是唯一的极大理想。反之，当只有一个极大理想时，设它为 $I$，则对各非可逆元 $a\in R$ 所确定的理想 $a\cdot R\ (\neq R)$ 含于 $I$。由此所有非可逆元都含于 $I$，故 $I$ 是非可逆元全体构成的集合。
+\end{proof}
+
+% [Tutor Note: 引理 2.32 的证明省略了两处依据，补出如下：其一，$a\cdot R$ 是含 $a$ 的理想，而 $a$ 非可逆时 $a\cdot R\neq R$（否则 $1_R\in a\cdot R$ 给出 $a$ 可逆），故由极大性 $a\cdot R\subset I$——这一步需要 $a\cdot R$ 确实含于某个极大理想，用的是 Zorn 引理，书中未提；其二，「非可逆元全体是理想」的验证：若 $a,b$ 非可逆则 $a+b$ 非可逆（若 $a+b$ 可逆，则 $a=(a+b)-b$ 可逆，矛盾），且对任意 $r\in R$，$ra$ 非可逆（若 $ra$ 可逆则 $a$ 有左逆，从而是可逆元）。可验证锚点：$R=\Z/4\Z$ 是局部环（极大理想只有 $(2)$），其非可逆元为 $\{[0],[2]\}=(2)$。]
+
+\subsection{体的特征}
+
+若想避开以下关于体特征的讨论，读者尽可在本书中把「体 $K$」读作 $K=\Q,\R,\C$ 等。它们相当于特征为零的体。
+
+\begin{definition}{2.33} 体 $K$ 的部分体（sub-field）$K'\subset K$，是指 $K$ 的部分环（定义 2.22）中成为体者。\end{definition}
+
+体之间的同态映射取为（交换）环的同态映射。体的同型按环的同型来定义。不过，环同态映射 $f\colon K'\to K$ 在 $K'$ 为体时必为单射。实际上，对 $K'\ni a\neq0$，由 $1_K=f(a\cdot a^{-1})=f(a)\cdot f(a^{-1})$ 可得 $f(a)\neq0$。
+
+% [Tutor Note: 上述单射性证明的完整形式：若 $f(a)=0$（$a\neq0$），则由 $a$ 在体内可逆、$1_K=f(a\cdot a^{-1})=f(a)f(a^{-1})=0$ 与 $1_K\neq0_K$（体非零环）矛盾；更一般地，对任意 $a\neq b$，$f(a)-f(b)=f(a-b)\neq0$（因 $a-b\neq0$，用前一步），故 $f$ 单射。这就是「体的同态必单射」这一常用事实；因此体之间的同型只需单方向存在双射同态，反方向自动。]
+
+考虑体 $K$ 的部分体中最小者。首先 $1_K\in K'$，把它加 $n$ 次所得的 $n\cdot1_K=1_K+\cdots+1_K$ 也应含于 $K'$。若 $n\cdot1_K\neq0_K$，则由 $K$ 为体，逆元 $\frac{1}{n}\cdot1_K\in K$ 存在。部分体 $K'$ 至少包含这些。
+
+\begin{definition}{2.34} 体 $K$ 中，当存在使 $m\cdot1_K=0$ 的最小整数 $m\ge2$ 时，称 $K$ 的特征（characteristic）为 $m$。当这样的 $m$ 不存在时，称特征为零。\end{definition}
+
+\begin{remark}{2.35} 在上述状况中考虑 $m=1$ 的情形，则由 $1_K=0_K$ 知 $K$ 是平凡的体 $K=\{0_K\}$。\end{remark}
+
+% [Tutor Note: 「自明な体」即零环 $\{0_K\}$（其中 $1_K=0_K$），中文常称「零环」或「平凡环」，一般不把它算作体（field）；这正是定义 2.34 要求 $m\ge2$ 的原因——若允许 $m=1$，则把零环也纳入「特征的讨论只会添乱」。可验证锚点：$\Q,\R,\C$ 的特征为 $0$；$\mathbb{F}_2=\{0,1\}$ 的特征为 $2$；$\mathbb{F}_4$（4 元体）的特征为 $2$（因为 $1+1=0$，但其中 $2\cdot1=0$ 而 $m=2$ 是最小者）。]
+
+% [Tutor Note: 术语英文：標数 characteristic／部分体 sub-field／代数的閉体 algebraic closed field（见 2.3.3 节）。]
+
+$K$ 的特征 $m$ 若非零则必为素数。先考虑 $K$ 的特征为零的情形。此时对零以外的任意整数 $m$ 有 $m\cdot1_K\neq0_K$，由 $K$ 为体，对任意有理数 $q\in\Q$，$q\cdot1_K$ 存在。特别地，对 $q,q'\in\Q$，$q\cdot1_K=q'\cdot1_K$ 仅当 $q=q'$ 时成立。由此，特征为零的体 $K$ 具有与 $\Q$ 同型的部分体 $K'$。$K$ 的非平凡部分体必包含此部分体 $K'$。在这个意义上，$K'$ 是 $K$ 的最小部分体。也就是说，$\Q$ 是非平凡的特征为零的体中最小的者。
+
+设 $K$ 的特征为 $m\ge2$。此时 $m\cdot1_K=0$。这里若 $m$ 不是素数，则
+\[
+  m=m_1\cdot m_2,\qquad 1<m_1,m_2<m
+\]
+存在这样的整数 $m_1,m_2$，且 $m_1\cdot1_K$、$m_2\cdot1_K$、$0_K$ 分别给出 $K$ 的互不相同的元。由 $K$ 为体，元 $(1/m_1)\cdot1_K$、$(1/m_2)\cdot1_K\in K$ 存在。此时
+% [原文 p.28]
+\begin{align*}
+  1_K &= \left((m_1\cdot1_K)\cdot\left(\frac{1}{m_1}\cdot1_K\right)\right)\cdot\left((m_2\cdot1_K)\cdot\left(\frac{1}{m_2}\cdot1_K\right)\right)\\
+      &= \left((m_1\cdot1_K)\cdot(m_2\cdot1_K)\right)\cdot\left(\left(\frac{1}{m_1}\cdot1_K\right)\cdot\left(\frac{1}{m_2}\cdot1_K\right)\right) = 0_K
+\end{align*}
+从而与特征为 $m\ge2$ 矛盾。因此 $m$ 必为素数。
+
+对特征 $p\ge2$ 的体 $K$，$K':=\{n\cdot1_K \mid n\in\Z\}$ 是与 $\Z/p\Z$（作为环）同型的 $K$ 的部分体（cf.\ 例 2.26）。因此可知：特征 $p\ge2$ 的体 $K$ 的最小部分体是与 $\Z/p\Z$ 同型者。
+
+% [Tutor Note: 补出上面「$m$ 非素数则矛盾」的计算依据：若 $m=m_1m_2$（$1<m_1,m_2<m$），则由 $m_1\cdot1_K$ 可逆（因 $m_1<m$ 且 $m$ 是使 $n\cdot1_K=0$ 的最小正整数）得 $(m_1\cdot1_K)^{-1}=\frac{1}{m_1}\cdot1_K$，于是 $1_K=(m_1\cdot1_K)(\frac{1}{m_1}\cdot1_K)$、$(m_2\cdot1_K)(\frac{1}{m_2}\cdot1_K)=1_K$，两式相乘并把 $m_1m_2=m$ 换成 $m\cdot1_K=0_K$ 即得上式 $1_K=0_K$ 的矛盾。另补一个可验证锚点：$\Z/p\Z$ 作为特征 $p$ 的体，其最小部分体是自身（$\{n\cdot1 \mid n\in\Z\}=\Z/p\Z$）；而 $\mathbb{F}_{p^2}$ 的最小部分体是 $\mathbb{F}_p$，不是 $\mathbb{F}_{p^2}$，这与「最小部分体 $\cong\Z/p\Z$」一致。]
+
+% [Tutor Note: 术语：標数 p 的体在中文文献常记 $\mathbb{F}_p=\Z/p\Z$（$p$ 元体，prime field）。特征为零的体的最小部分体同构于 $\Q$，故常称 $\Q,\mathbb{F}_p$ 为「素域」（prime field）。]
+
+\subsection{环的局部化}
+
+\begin{definition}{2.36} 设 $R$ 为环。$R$ 的子集 $S\subset R$ 当满足以下性质时，称为积闭集合（multiplicative set）。
+\begin{itemize}
+  \item $1_R\in S$，且 $0$ 不含于 $S$。
+  \item 若 $s,t\in S$ 则 $s\cdot t\in S$。
+\end{itemize}
+\end{definition}
+
+设 $R$ 为交换环，$S$ 为其积闭集合。此时，对 $a\in R$、$s\in S$，想新定义一个以 $a/s$ 为元的环。
+\[
+  S^{-1}(R) := R\times S/{\sim}
+\]
+设作此式。其中，等价关系 $\sim$ 如下确定。
+\[
+  (a,s)\sim(b,t) \iff \text{存在使 } (at-bs)u=0 \text{ 的元 } u\in S.
+\]
+这实际上确实在直积集合 $R\times S$ 上给出等价关系，这是显然的。
+
+% [Tutor Note: 这里的等价关系为什么需要「乘以 $u\in S$」而不能直接要求 $at=bs$：因为 $R$ 未必是整域，$S$ 中的元素可能是零因子，直接通分不合法；乘 $u$ 是为了在商掉 $S$ 中零因子的意义下比较。可验证锚点：$R=\Z/6\Z$、$S=\{1,2,4\}$（$2\cdot2=4$，$2\cdot4=2$，均 $\in S$）是积闭集合；此时 $(1,1)\sim(2,2)$ 因 $(1\cdot2-2\cdot1)\cdot u=0$ 对任意 $u$ 成立。若 $R$ 是整域，则取 $u=1$ 即得 $(a,s)\sim(b,t)\iff at=bs$，此时 $S^{-1}R$ 就是通常的分式环 $K$ 的局部化。]
+
+\begin{lemma}{2.37} 对交换环 $R$ 与积闭集合 $S\subset R$，$S^{-1}R$ 成为交换环。\end{lemma}
+
+\begin{proof}
+为方便起见，把 $S^{-1}R$ 的元 $[(a,s)]$ 表作 $a/s$。$0_R/1_R\in S^{-1}R$ 是 $S^{-1}R$ 的零元。加法与积由
+\[
+  \frac{a}{s}+\frac{b}{t}=\frac{t\cdot a+s\cdot b}{st},\qquad
+  \frac{a}{s}\cdot\frac{b}{t}=\frac{a\cdot b}{st}
+\]
+定义，可以确认它们作为 $S^{-1}R$ 上的运算良定义（well-defined）。
+\end{proof}
+
+% [Tutor Note: 补出「良定义」需要验证的两件事：(i) 与代表元取法无关——若 $a/s=a'/s'$、$b/t=b'/t'$（即存在 $u,v\in S$ 使 $(as'-a's)u=0$、$(bt'-b't)v=0$），则通分后的和、积仍同余；(ii) 运算结果的分母 $st\in S$ 由积闭性保证。此外还需逐项验证环公理：交换律、结合律、分配律都归结为 $R$ 中的相应等式，幺元为 $1_R/1_R$。若 $S$ 含零因子，$S^{-1}R$ 中可能出现 $a/s=0$ 而 $a\neq0$ 的情形（如 $R=\Z/6\Z$，$s=2$ 时 $3/2=0$，因 $3\cdot1\cdot2=0$），这正是 §2.2.6 后半讨论非交换推广时出现麻烦的根源。]
+
+在 $S^{-1}R$ 中，$[(s,1_R)]=s/1_R$（$s\in S\subset R$）的逆元由 $[(1_R,s)]=1_R/s$ 给出。也就是说，由对应 $a\mapsto a/1_R$，可以定义环同态映射 $\epsilon\colon R\to S^{-1}R$，而 $S$ 在 $\epsilon$ 下的像必为可逆元。
+
+\begin{definition}{2.38} 对交换环 $R$ 与其积闭集合 $S\subset R$，称 $S^{-1}R$ 为 $R$ 关于 $S$ 的局部化（localization），或称商环（ring of quotient, ring of fraction）。\end{definition}
+
+\begin{example}{2.39} 取 $R=\Z$、$S=\Z-\{0\}$，则 $S^{-1}R=\Q$（有理数全体）。\end{example}
+
+\begin{example}{2.40} 取 $R=K[x]$、$S=R-I_a$（例 2.30），则 $S^{-1}R$ 可以看作 $K[[x-a]]$（以 $x-a$ 为变量的形式幂级数全体）的部分环。为简单起见设 $K=\R$（实数体），则 $\R[x]$ 的元可以看作定义在 $\R$ 上的函数，但把 $b\in\R$ 代入 $\R[[x-a]]$ 的元的 $x$ 中时，若 $b\neq a$ 则一般为无限和，实数未被定义。
+
+% [Tutor Note: 底本 p.28 第 -3 行印作「$S^{-1}R=K[[x-a]]$（$x-a$ を変数とする形式的冪級数全体）となる．（そんなはずはない!）」，据作者正誤表（2014-05-20 版）p28 条订正为「$S^{-1}R$ は $K[[x-a]]$（以 $x-a$ 为变量的形式幂级数全体）の部分環とみなすことができる」。正文已按订正后的内容翻译。理由：$S^{-1}R=K[x]_{(x-a)}$ 由在 $a$ 处有定义的（形式）分式构成，每个元都可按 $x-a$ 展开为幂级数，且不同的分式给出不同的幂级数（若两个在 $a$ 处有定义的分式的 Taylor 展开相同，则它们相等），故得到单射环同态 $S^{-1}R\hookrightarrow K[[x-a]]$；但它不是满射（如 $\sum_{n\ge0}(x-a)^n$ 不对应于有理函数），所以只能说「可以看作子环」，绝不能写成等号。]
+
+% [Tutor Note: 上段中底本的 $R$ 一字兼指「实数体」与「例 2.40 开头的环 $R=K[x]$」（原文作「$R[x]$ の元は $R$ 上で定義された関数」），按上下文只能是「$K=\R$ 时的 $\R[x]$、$\R$ 上的函数」，译文按此处理为 $\R[x]$、$\R$ 上。这也是为什么「代入」只在 $b=a$ 附近（形式幂级数的收敛意义之外）才有定义：这正是局部化／完化的几何意义。]
+
+% [原文 p.29]
+也就是说，通过这个代入操作，虽然可以从 $\R[[x-a]]$ 的元定义一个在一点 $a\in\R$ 上的函数，却不能定义包含其他点的 $\R$ 的子集上的函数。这给出了局部化的几何意义。\end{example}
+
+% [Tutor Note: 这段的几何直觉可形式化为「局部化 = 只在 $a$ 的邻域（芽）上考虑」：$K[x]_{(x-a)}$ 的元是 $a$ 处的有理函数芽，而 $K[[x-a]]$ 是其完化；两者的差正是「收敛半径」这一信息。这也是代数几何中把局部环 $\mathcal{O}_{X,a}$ 与完化 $\widehat{\mathcal{O}}_{X,a}$ 相比较的原型。]
+
+更一般地，对交换环 $R$ 与其素理想 $I$，$S:=R-I$ 是积闭集合，局部化 $S^{-1}R$ 成为局部环。$S^{-1}R$ 的极大理想由 $\{a/s \mid a\in I,\ s\in S\}$ 给出。（例如 $R=K[x]$ 的情形，$x$、$1_K-x$ 是非可逆元，但 $x+(1_K-x)=1_K$，$R$ 不是局部环。在 $K[[x]]$ 中，由 $(1_K-x)^{-1}=1_K+x+x^2+\cdots$ 知 $1_K-x$ 是可逆元！特别地 $xK[[x]]$ 是 $K[[x]]$ 的唯一的极大理想。）
+
+% [Tutor Note: 补出「$S^{-1}R$ 是局部环」的验证：其非可逆元全体恰为 $\{a/s \mid a\in I, s\in S\}$——若 $a\in I$ 而 $a/s$ 可逆，则存在 $b/t$ 使 $(a/s)(b/t)=1$，即 $ab=st\in S=R-I$，但 $ab\in I$（$I$ 是理想），矛盾；反之若 $a\notin I$，则 $a\in S$，$a/s=(a/1)(1/s)$ 可逆。故非可逆元全体构成理想，由定义 2.24 是局部环。可验证锚点：$K[x]_{(x)}$ 的极大理想为 $(x)$；而 $K[x]$ 本身不是局部环（$(x)$ 与 $(x-1)$ 都是极大理想）。另注意「$xK[[x]]$ 是 $K[[x]]$ 唯一极大理想」与「$K[[x]]$ 是局部环」等价（引理 2.32），这给出形式幂级数环的局部性。]
+
+对 $R$ 未必可交换的环的情形，推广多少变得复杂。实际上，可交换环时的元 $a/s\in S^{-1}R$ 若轻率地表作 $s^{-1}a$，并把它们的和、积按可换环时的样子定义，环的结合律与分配律就不成立。即使 $R$ 不是交换环，当把元写作 $s^{-1}a$ 或 $as^{-1}$ 时，为了能进行例如定义 $S^{-1}R$ 中的和时与「通分」相对应的操作等，希望作为积闭集合 $S$ 考虑满足以下条件者。
+
+\begin{definition}{2.41} 设 $R$ 为（未必交换的）环，$S$ 为其积闭集合（定义 2.36）。以下条件 (r1),(r2) 称为右分母条件（right denominator condition），(l1),(l2) 称为左分母条件（left denominator condition）。
+\begin{itemize}
+  \item[(r1)] 对 $(a,s)\in R\times S$，存在使 $a\cdot t=s\cdot b$ 的 $(b,t)\in R\times S$。
+  \item[(l1)] 对 $(b,t)\in R\times S$，存在使 $a\cdot t=s\cdot b$ 的 $(a,s)\in R\times S$。
+  \item[(r2)] 对 $a\in R$，若存在使 $s\cdot a=0$ 的 $s\in S$，则存在满足 $a\cdot t=0$ 的 $t\in S$。
+  \item[(l2)] 对 $a\in R$，若存在使 $a\cdot t=0$ 的 $t\in S$，则存在满足 $s\cdot a=0$ 的 $s\in S$。
+\end{itemize}
+\end{definition}
+
+% [Tutor Note: 定义 2.41 就是非交换环局部化理论中的 Ore 条件（Ore condition）；(r1),(l1) 保证「右/左公分母」存在（可通分），(r2),(l2) 是「$S$ 中零因子」的双边相容性。可验证锚点：$R$ 为交换环时 $(a,s)\in R\times S$ 取 $(b,t)=(a\cdot s,s\cdot s)$ 即得 $a\cdot(s\cdot s)=s\cdot(a\cdot s)$，故 (r1),(l1) 自动成立；(r2),(l2) 由交换性直接同一条。非交换的典型例子：$R$ 为整环、$S=R-\{0\}$ 时，若 $R$ 是 Ore 整环（如 Weyl 代数 $A_1$），则 $S$ 满足 Ore 条件，可构造除法环 $S^{-1}R$。]
+
+现在，设环 $R$ 的积闭集合 $S$ 满足左分母条件。对元 $(a,s),(b,t)\in R\times S$，当存在满足
+\[
+  (ha,hs)=(h'b,h't),\qquad hs=h't\in S
+\]
+的元 $h,h'\in R$ 时记作 $(a,s)\sim(b,t)$，则可证明这给出等价关系。实际上，自反律、对称律由定义是显然的。关于传递律，要对 $a_i\in R$、$s_i\in S$（$i=1,2,3$），当 $(a_1,s_1)\sim(a_2,s_2)$、$(a_2,s_2)\sim(a_3,s_3)$ 时，证明 $(a_1,s_1)\sim(a_3,s_3)$ 成立。现设存在满足
+\[
+  (h_1a_1,h_1s_1)=(h_2a_2,h_2s_2),\qquad h_1s_1=h_2s_2=:u\in S,
+\]
+\[
+  (h_2'a_2,h_2's_2)=(h_3a_3,h_3s_3),\qquad h_2's_2'=h_3s_3=:v\in S
+\]
+的 $h_1,h_2,h_2',h_3\in R$。此时，例如把 $u\in S$ 单纯看作 $R$ 的元，则由 (l1) 存在满足 $u'\cdot u=v'\cdot v$ 的 $u'\in S$、$v'\in R$，且 $v'\cdot v=u'\cdot u=:w\in S$
+% [原文 p.30]
+可得。特别地
+\[
+  u'(h_2\cdot s_2)=u'\cdot u=v'\cdot v=v'(h_2'\cdot s_2)
+\]
+故得 $(u'\cdot h_2-v'\cdot h_2')s_2=0$，由 (l2) 存在满足 $t_2(u'\cdot h_2-v'\cdot h_2')=0$ 的 $t_2\in S$。综上，
+\begin{align*}
+  (t_2u'h_1a_1,t_2u'h_1s_1) &= (t_2u'h_2a_2,t_2u'h_2s_2)\\
+  &= (t_2v'h_2'a_2,t_2v'h_2's_2) = (t_2v'h_3a_3,t_2v'h_3s_3),
+\end{align*}
+从而证明了 $(a_1,s_1)\sim(a_3,s_3)$。\hfill$\square$
+
+把按此等价关系 $\sim$ 所得的商记作
+\[
+  [S^{-1}]R := R\times S/{\sim}.
+\]
+
+\begin{lemma}{2.42} 对环 $R$ 与满足左分母条件的积闭集合 $S\subset R$，$[S^{-1}]R$ 成为环。\end{lemma}
+
+\begin{proof}
+为方便起见，把 $[S^{-1}]R$ 的元 $[(a,s)]$ 表作 $s^{-1}a$。对 $s^{-1}a,t^{-1}b$，利用由条件 (l1) 存在满足 $t'\cdot a=a'\cdot t$ 的 $t'\in S$、$a'\in R$，把积定义为
+\begin{equation}
+  (s^{-1}a)\cdot(t^{-1}b) := (t's)^{-1}(a'\cdot b). \tag{2.3}
+\end{equation}
+假设积不依赖于 $a',t'$ 的取法而确定，则 $(s^{-1}1_R)\cdot((t')^{-1}1_R)=(t's)^{-1}1_R$，把 $(s^{-1}1_R)$ 简记为 $s^{-1}\in S^{-1}R$ 等，则实际上
+\begin{align*}
+  (s^{-1}a)\cdot(t^{-1}b) &= s^{-1}\cdot(t')^{-1}\cdot t'\cdot a\cdot t^{-1}\cdot b\\
+  &= (t's)^{-1}\cdot(t'a)\cdot t^{-1}\cdot b\\
+  &= (t's)^{-1}\cdot(a't)\cdot t^{-1}\cdot b\\
+  &= (t's)^{-1}\cdot(a'b)
+\end{align*}
+确实如此。下面确认积 (2.3) 不依赖于 $a',t'$ 的取法。对 $s^{-1}a,t^{-1}b$ 再取另一组满足 $t''\cdot a=a''\cdot t$ 的 $t''\in S$、$a''\in R$，则要证明
+\[
+  (t's)^{-1}\cdot(a'b)\sim(t''s)^{-1}\cdot(a''b).
+\]
+实际上，对 $t's,t''s\in S$，把其中一方例如 $t''s$ 单纯看作 $R$ 的元，则由条件 (l1) 存在满足 $u'\cdot t's=u''\cdot t''s=u\in S$ 的 $u'\in R$、$u''\in S$。也就是说，$(u't'-u''t'')s=0$，故由条件 (l2) 存在满足 $w(u't'-u''t'')=0$ 的 $w\in S$。记 $w':=wu'$、$w'':=wu''$，则现在 $w't'-w''t''=0$。另一方面，
+\[
+  0=(w't'-w''t'')a=(w'a'-w''a'')t
+\]
+成立，故由条件 (l2) 存在满足 $x(w'a'-w''a'')=0$ 的 $x\in S$
+% [原文 p.31]
+。因此
+\begin{align*}
+  (t's)^{-1}\cdot(a'b) &\sim (x(w't')s)^{-1}\cdot((xw'a')b)\\
+  &= (x(w''t'')s)^{-1}\cdot((xw''a'')b) \sim (t''s)^{-1}\cdot(a''b)
+\end{align*}
+可得。
+
+和 $s^{-1}a+t^{-1}b$ 如下引入。$s,t\in S$，但把其中一方例如 $t$ 单纯看作 $R$ 的元。由条件 (l1)，
+\[
+  u\cdot t=c\cdot s
+\]
+存在满足此式的 $u\in S$、$c\in R$，特别地由 $s,u\in S$ 得 $u\cdot t=c\cdot s=:s'\in S$。由此
+\[
+  s^{-1}a+t^{-1}b=(c\cdot s)^{-1}(c\cdot a)+(u\cdot t)^{-1}(u\cdot b):=(s')^{-1}(a\cdot c+b\cdot u)
+\]
+如此定义。它不依赖于 $u,c$ 的取法而确定，这一点也可与积的情形同样证明。
+
+对这些结构直接确认环的分配律、结合律，即可证明 $[S^{-1}]R$ 成为环。
+\end{proof}
+
+类似地，对满足右分母条件的积闭集合 $S\subset R$，定义局部化 $R[S^{-1}]$。
+
+$R$ 为交换环时，$R$ 的积闭集合 $S$（定义 2.36）满足右分母条件、左分母条件，这是显然的。此时，作为交换环的局部化 $S^{-1}R$ 与由满足左分母条件的积闭集合 $S$ 所作的局部化 $[S^{-1}]R$ 一致。实际上，等价关系 $\sim$ 乍看似乎不同，但对 $(a,s),(b,t)\in S^{-1}R$，若存在使 $(at-bs)u=0$ 的 $u\in S$，则令 $h':=ut$、$h'':=us$，便有
+\[
+  (h'a,h's)=(uta,uts)=(usb,ust)=(h''b,h''t),
+\]
+反之，若给定满足 $(h'a,h's)=(h''b,h''t)$、$h's=h''t=:u\in S$ 的 $h',h''\in R$，则得
+\[
+  0=(h'a-h''b)st=(at-bs)u .
+\]
+关于由此对应所得的同一视 $S^{-1}R\ni a/s\leftrightarrow s^{-1}a\in[S^{-1}]R$，可以确认 $S^{-1}R$ 与 $[S^{-1}]R$ 中的和与积定出相同的东西。这一事实由环的局部化的普遍性也可看出。
+
+% [Tutor Note: 上段说明了两种构造的等价性，其意义是：可换环情形不需要 Ore 条件，`$S^{-1}R$` 与 `$[S^{-1}]R$` 是同一个环的两种描述。可验证锚点：$R=\Z$、$S=\Z-\{0\}$ 时两者都给出 $\Q$；$R=\Z$、$S=\Z-(p)$（$p$ 为素数）时两者都给出 $\Z_{(p)}=\{a/b\in\Q \mid p\nmid b\}$（$p$ 局部化），后者的极大理想为 $p\Z_{(p)}$。]
+
+\begin{theorem}{2.43}（普遍性） 对环 $R$ 与积闭集合 $S\subset R$，设 $S$ 至少满足右分母条件、左分母条件中的一方。此时，
+\begin{enumerate}[label=(\roman*), leftmargin=*]
+  \item 存在环 $R_S$ 与环同态映射 $\epsilon\colon R\to R_S$，使得对任意环 $R'$ 与满足「$f$ 把 $S\subset R$ 的元全部映为 $R'$ 的可逆元」的环同态映射 $f\colon R\to R'$，存在唯一的环同态映射 $f'\colon R_S\to R'$ 满足
+  \[
+    f=f'\circ\epsilon .
+  \]
+% [原文 p.32]
+  \item 若 $S$ 满足右分母条件，则存在环同型 $R_S\simeq R[S^{-1}]$；若 $S$ 满足左分母条件，则存在环同型 $R_S\simeq[S^{-1}]R$。
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+设 $S$ 满足左分母条件。令 $R_S=[S^{-1}]R$，通过对应 $a\mapsto[(a,1_R)]$ 定义 $\epsilon\colon R\to[S^{-1}]R$，证明它们满足 (i)。首先，对 $f(s)\in R'$（$s\in S\subset R$），逆元 $(f(s))^{-1}\in R'$ 存在。这里，假设存在满足 (i) 中条件的 $f'$，则
+\[
+  1_{R'}=f'((\epsilon(s))^{-1}\cdot\epsilon(s))=f'((\epsilon(s))^{-1})\cdot f'(\epsilon(s)),
+\]
+\[
+  1_{R'}=f'(\epsilon(s)\cdot(\epsilon(s))^{-1})=f'(\epsilon(s))\cdot f'((\epsilon(s))^{-1})
+\]
+故得 $f'((\epsilon(s))^{-1})=(f'(\epsilon(s)))^{-1}$。由此，对任意元 $s^{-1}a\in[S^{-1}]R$，
+\begin{equation}
+  \begin{aligned}
+    f'(s^{-1}a) &= f'((s^{-1}1_R)\cdot(1_R^{-1}a))=f'(s^{-1}1_R)\cdot f'(1_R^{-1}a)\\
+                &= (f'(\epsilon(s)))^{-1}\cdot f'(\epsilon(a))\\
+                &= (f(s))^{-1}\cdot f(a)
+  \end{aligned}
+  \tag{2.4}
+\end{equation}
+故可知 $f'$ 被唯一确定。要说明这样的 $f'$ 存在，只需确认 (2.4) 中的 $f'$
+\begin{itemize}
+  \item 不依赖于代表元 $(a,s)$ 的取法，
+  \item 成为环同态映射，
+  \item 满足 $f=f'\circ\epsilon$。
+\end{itemize}
+这些可以简单确认。例如环同态性如下所示。对 $[S^{-1}]R$ 的积
+\[
+  (s^{-1}a)\cdot(t^{-1}b)=(t's)^{-1}(a'\cdot b),
+\]
+有
+\begin{equation}
+  f'((t's)^{-1}(a'\cdot b))=(f(s))^{-1}(f(t'))^{-1}\cdot f(a')f(b), \tag{2.5}
+\end{equation}
+\begin{equation}
+  \begin{aligned}
+    f(s^{-1}a)\cdot f(t^{-1}b) &= (f(s))^{-1}\cdot f(a)\cdot(f(t))^{-1}\cdot f(b)\\
+    &= (f(s))^{-1}\cdot\left((f(t'))^{-1}\cdot f(t')\right)\cdot f(a)\cdot(f(t))^{-1}\cdot f(b)
+  \end{aligned}
+  \tag{2.6}
+\end{equation}
+而由 $f$ 的环同态性，$f(t')\cdot f(a)=f(t'\cdot a)=f(a'\cdot t)=f(a')\cdot f(t)$，故得 (2.5) 与 (2.6) 一致。
+
+$S$ 满足右分母条件的情形也同样可证。
+
+满足 (i) 的环 $R_S$ 在环同型意义下的唯一性，可按关于普遍性的通常讨论同样证明，故略去。
+\end{proof}
+
+% [Tutor Note: 定理 2.43 是环局部化的泛性质，可与商环的泛性质对照：$S^{-1}R$ 是「把 $S$ 的元变成可逆元」的万有解（universal solution），正如 $R/I$ 是「把 $I$ 的元变成 $0$」的万有解。可验证锚点：取 $R=\Z$、$S=\Z-\{0\}$，则 $R_S=\Q$，$\epsilon$ 为嵌入，任意把非零整数映为可逆元的环同态 $\Z\to R'$ 都唯一地经由 $\Q$ 分解——这正是「$\Q$ 是 $\Z$ 的分式域」的泛性质表述。另注意 $R_S$ 的记号与 $S^{-1}R$、$[S^{-1}]R$、$R[S^{-1}]$ 三种写法的关系：$R_S$ 是「抽象地由泛性质定义的环」，而另三种是「具体构造」；定理 2.43(ii) 断言二者在相应条件下同型。]
+
+由定理 2.43 可知，环 $R$ 的积闭集合 $S$ 同时满足左分母条件、右分母条件时，存在环同型 $R[S^{-1}]\simeq[S^{-1}]R$。特别地，$R$ 为交换环时，令 $R_S=S^{-1}R$ 时 (i) 也满足，由此可以说 $R[S^{-1}]\simeq S^{-1}R\simeq[S^{-1}]R$。
+
+% [Tutor Note: 上句末的 $\simeq$ 链可逐步核对：$R[S^{-1}]\simeq R_S$（定理 2.43(ii) 的右分母条件情形）、$R_S=S^{-1}R$（约定）、$S^{-1}R\simeq[S^{-1}]R$（本页前面已验证两者运算一致）。因此交换环情形下四种写法指同一个环；后文（如 4.7 节范畴的局部化）将把「把一族态射变为可逆」这一思想搬到范畴上，其泛性质与定理 2.43 平行。]
+
+% [原文 p.33]
+\begin{remark}{2.44} 满足定理 2.43(i) 的环 $R_S$，实际上不加「$S$ 满足左分母条件或右分母条件」这一假设也存在。然而，一般地，如此定义的环 $R_S$ 不满足作为交换环的局部化 $S^{-1}R$ 的推广所应有的各种重要性质，被认为在应用上不太有用。（cf.\ [53],[51],[40, Chap.4]）\end{remark}
+
+% [Tutor Note: 注意 2.44 提到的是任意积闭集合（甚至左右 Ore 条件都不满足）上的「环的局部化」构造，即所谓「universal localization」或 Gabriel–Zisman 意义下的局部化；此时所得环可能退化为零环（例如 $S$ 含零因子时），故失去分式环的良好性质。中文文献中「环的局部化」一般默认 Ore 条件。可对照 4.7 节：范畴的局部化 $C[S^{-1}]$ 正是把该构造提升到范畴层面，其对象/态射未必能像分式那样简单表示（需要「屋顶」roof 的等价类）。]
+
+范畴的局部化（4.7 节）是环的局部化的推广，同样的事实可通过平行的讨论得到证明。那时，环 $R$ 的元被分别替换为范畴的态射，本章中的代数式作为与态射相对应的箭头（的合成）被图式化，因此一旦习惯了范畴论的语言，反倒觉得那边更容易理解。
+
+% [Tutor Note: 这段是全书的方法论提示：第 2 章的群、环、模等式（如「$f'\circ\epsilon=f$」「$f\circ g=\id$」）在第 4 章将被重写为交换图表的等式，元素计算换成箭头运算。建议读者把本章的 $a/s$、$s^{-1}a$ 与 4.7 节的屋顶 $X\leftarrow Z\to Y$ 对照阅读。]
+
+\section{R-模}
+\subsection{R-模}
+
+加法群 $X$ 是指集合而其群结构由加法给出的东西（定义 2.6）。$R$ 模、向量空间等是带附加结构的加法群。
+
+\begin{definition}{2.45} 设 $R$ 为环。加法群 $M$ 为右 $R$-模（right $R$-module），是指存在映射 $m\colon M\times R\to M$、$m(\xi,a)=:\xi\cdot a\in M$，且满足条件
+\begin{itemize}
+  \item $(\xi+\xi')\cdot a=(\xi\cdot a)+(\xi'\cdot a)$，
+  \item $\xi\cdot(a+b)=(\xi\cdot a)+(\xi\cdot b)$，
+  \item $(\xi\cdot a)\cdot b=\xi\cdot(a\cdot b)$，
+  \item $\xi\cdot1_R=\xi$
+\end{itemize}
+者。此时，称映射 $m$ 为 $R$ 的右作用。类似地，左 $R$-模（left $R$-module）也这样定义。$R$ 为交换环时，$R$ 的右作用与左作用不再有区别，故单纯称为 $R$ 模。\end{definition}
+
+% [Tutor Note: 定义 2.45 的四条按范畴论语言可概括为「$M$ 是环 $R$ 的加法群范畴中的对象，且 $R$ 通过环同态 $R\to\End(M)^{\mathrm{op}}$ 作用」；对非交换 $R$，右 $R$-模与左 $R$-模通过 $R^{\mathrm{op}}$ 相互转换：右 $R$-模 $=$ 左 $R^{\mathrm{op}}$-模（对调乘法次序）。这一观察在第 6 章路代数的表示论中反复使用。]
+
+\begin{example}{2.46} 环 $R$ 自身具有右 $R$-模的结构。实际上，令 $M:=R$，则由 $R$ 的环结构所确定的 $R$ 的右作用满足定义 2.45 的所有条件式。同样地，$R$ 也具有左 $R$-模的结构。
+
+进而可知，作为集合的直积 $R\times R$ 具有右 $R$-模、左 $R$-模的结构。把它重复 $n$ 次所得的 $\underbrace{R\times\cdots\times R}_{n}$ 也成为右 $R$-模、左 $R$-模。它们在模之中尤其是称为自由模的基本类者（参照 3.8 节）。\end{example}
+
+\begin{example}{2.47} 对交换环 $R$，$R$ 模在 $R$ 特别是体时就是向量空间。也就是说，体 $R=K$ 上的向量空间（线性空间）$V$，是指某个加法群，它具有 $K$ 的作用 $m\colon K\times V\to V$，且满足定义 2.45 中的条件者。\end{example}
+
+\begin{example}{2.48} $R=\Z$ 时（$\Z$ 是交换环，不是体。cf.\ 例 2.11），$\Z$ 模就是加法群。$\Z$ 模的例子，除 $\Z$ 自身及其直积之外，还有 $\Z/m\Z$（$m\ge2$ 为整数）。\end{example}
+
+% [Tutor Note: 例 2.48 值得记住：$\Z$-模与加法群是同一个概念（$\Z$ 是初始环，作用由 $1\mapsto\id$ 唯一确定），因此「模」是「加法群」的推广。可验证锚点：$\Z/6\Z$ 是 $\Z$-模，其子模恰为 $\Z/6\Z$ 的理想 $6\Z$ 的商，即 $(0),(2),(3),(1)$，与 $\Z/6\Z$ 的因子 $6,3,2,1$ 一一对应。]
+
+% [原文 p.34]
+\begin{example}{2.49} 对某个整数 $m\ge2$，令 $R=\Z/m\Z$，则 $\Z/m\Z$ 自身是 $R$ 模；当 $m$ 可写成 2 以上的整数之积 $m=m_1\cdot m_2$ 时，$\Z/m_1\Z$、$\Z/m_2\Z$ 也成为 $R$ 模。若 $m$ 为素数，则 $R$ 是体（例 2.26），故 $R$ 模就是 $R$ 向量空间，此时上述的 $m_1,m_2$ 不存在。\end{example}
+
+% [Tutor Note: 例 2.49 的要点是「模的结构经由环同态拉回」：$R=\Z/m\Z$ 的 $R$-模结构等价于「加法群 $N$ 带有使 $m\cdot n=0$（$\forall n$）的 $\Z$-模结构」；$\Z/m_i\Z$ 上的作用由商映射 $\Z/m\Z\to\Z/m_i\Z$（$m_i\mid m$）给出。可验证锚点：$m=6$ 时 $\Z/2\Z,\Z/3\Z$ 是 $\Z/6\Z$-模，但 $\Z/4\Z$ 不是（$6$ 在 $\Z/4\Z$ 上的作用不为零，$4\nmid6$）。]
+
+\begin{definition}{2.50} 设 $R$ 为环，$M$ 为右 $R$-模。部分加法群 $N\subset M$ 当对任意 $a\in R$ 与 $\eta\in N$ 有 $\eta\cdot a\in N$ 时（也就是说，$R$ 的右作用保持 $N$ 时），称为 $M$ 的右 $R$ 部分模（right $R$-submodule）。类似地，左 $R$ 部分模（left $R$-submodule）也这样定义。\end{definition}
+
+\begin{remark}{2.51} 在各种状况下考虑右 $R$-模还是考虑左 $R$-模，主要是习惯问题，不必深思。\end{remark}
+
+% [Tutor Note: 注意 2.51 在交换环情形当然无害；对非交换环，左右之别是实质性的（右 $R$-模 $=$ 左 $R^{\mathrm{op}}$-模）。可验证锚点：$R=\mathrm{Mat}_n(K)$，列向量空间 $K^n$ 是左 $R$-模（矩阵左乘），改成行向量并右乘则得到右 $R$-模；二者通过转置相联系。本书后半主要讨论 $R$ 为有限维代数（第 6 章）时的右模，读者在阅读时只需始终留意「作用写在右边」即可。]
+
+\begin{definition}{2.52} 设 $R$ 为环，$M,N$ 为右 $R$-模。映射 $f\colon M\to N$ 当对任意 $a\in R$、$\xi,\xi'\in M$ 满足
+\[
+  f(\xi\cdot a)=f(\xi)\cdot a,\qquad f(\xi+\xi')=f(\xi)+f(\xi')
+\]
+时，称为右 $R$-模的同态映射（homomorphism）。特别地，当 $N=M$ 时，右 $R$-模的同态映射 $f\colon M\to M$ 称为自同态映射（endomorphism）。左 $R$-模之间的 $R$ 同态映射、以及交换环 $R$ 上的 $R$ 模之间的 $R$ 同态映射也类似定义。
+
+对环 $R$，当 $M,N$ 为右 $R$-模时，把从 $M$ 到 $N$ 的同态映射所构成的集合记作 $\Hom_R(M,N)$。特别地，当 $N=M$ 时，把自同态映射所构成的集合记作 $\End_R(M):=\Hom_R(M,M)$。\end{definition}
+
+\begin{definition}{2.53} 右 $R$-模 $M$ 与 $N$ 同型（isomorphic），是指存在满足
+\[
+  g\circ f=\id_M,\qquad f\circ g=\id_N
+\]
+的右 $R$-模同态映射 $f\colon M\to N$、$g\colon N\to M$。此时，称 $f,g$ 为同型映射（isomorphism）。\end{definition}
+
+$f\colon M\to N$ 为同型映射，等价于 $f$ 为双射同态映射。实际上，双射同态映射 $f$ 的逆映射定出同态映射 $g\colon N\to M$。
+
+% [Tutor Note: 与引理 2.15 对照：$\Hom_R(M,N)$ 只是加法群（逐点加法），不是环；而 $\End_R(M)=\Hom_R(M,M)$ 因可合成而成为环（乘法为合成），且 $M$ 是左 $\End_R(M)$-模——这正是后文引理 2.65 讨论 $M\otimes_R N$ 的 $\End$ 作用的基础。可验证锚点：$R$ 为交换环、$M=R$ 时 $\End_R(R)\cong R$（由 $f(1)$ 决定）。]
+
+\subsection{R-模的生成系与自由模}
+
+固定（未必交换的）环 $R$。右 $R$-模 $M$ 被定义为「加法群且带有满足适当条件的 $R$ 的右作用」，但在具体计算等场合，有时需要 $M$ 的具体表示。为此，定义 $M$ 的生成系。特别地，$M$ 的自由生成系，在 $R=K$ 为体时就是 $K$ 上向量空间 $M$ 的基。
+
+% [原文 p.35]
+对右 $R$-模 $M$，考虑部分集合 $\{\xi_\lambda\}_{\lambda\in\Lambda}\subset M$。对有限个元 $\xi_1,\ldots,\xi_n\in\{\xi_\lambda\}_{\lambda\in\Lambda}$ 与 $R$ 的元 $a_1,\ldots,a_n\in R$，有限和
+\[
+  \xi_1\cdot a_1+\cdots+\xi_n\cdot a_n
+\]
+是 $M$ 的元。把这样的有限和们所构成的 $M$ 的部分集合表作
+\[
+  \langle \xi_\lambda \mid \lambda\in\Lambda\rangle .
+\]
+可以知道 $\langle \xi_\lambda \mid \lambda\in\Lambda\rangle\subset M$ 构成 $M$ 的右 $R$ 部分模。
+
+\begin{definition}{2.54} 对右 $R$-模 $M$ 的部分集合 $\langle \xi_\lambda \mid \lambda\in\Lambda\rangle\subset M$，当 $\langle \xi_\lambda \mid \lambda\in\Lambda\rangle=M$ 时，称 $\{\xi_\lambda\}_{\lambda\in\Lambda}$ 生成 $M$（generate）。此时，$\{\xi_\lambda\}_{\lambda\in\Lambda}$ 称为 $M$ 的生成系（generator system）。当 $M$ 的生成系可以取为有限集合时，称右 $R$-模 $M$ 为有限生成（finitely generated）。\end{definition}
+
+由定义，任意部分集合 $\{\xi_\lambda\}_{\lambda\in\Lambda}\subset M$ 都是右 $R$ 部分模 $\langle \xi_\lambda \mid \lambda\in\Lambda\rangle\subset M$ 的生成系。
+
+把由 $\{\xi_\lambda\}_{\lambda\in\Lambda}$ 生成的右 $R$ 部分模 $\langle \xi_\lambda \mid \lambda\in\Lambda\rangle\subset M$ 的元表作
+\[
+  \xi=\sum_{\lambda\in\Lambda}\xi_\lambda\cdot a_\lambda,\qquad a_\lambda\in R .
+\]
+不过这里由生成系的定义，注意除有限个 $\lambda\in\Lambda$ 之外 $a_\lambda=0$。
+
+然而，元 $\xi\in M$ 的这种表示未必只有 1 种。现设 $\xi$ 有另一种描述
+\[
+  \xi=\xi'=\sum_{\lambda\in\Lambda}\xi_\lambda\cdot a_\lambda',\qquad a_\lambda'\in R
+\]
+（当然这里同样除有限个 $\lambda\in\Lambda$ 之外 $a_\lambda=0$）。此时，并非对所有 $\lambda\in\Lambda$ 都有 $a_\lambda=a_\lambda'$。这时，
+\[
+  0_M=\xi'-\xi=\sum_{\lambda\in\Lambda}\xi_\lambda\cdot(a_\lambda'-a_\lambda)
+\]
+成立。也就是说，记 $b_\lambda:=a_\lambda'-a_\lambda$，则并非对所有 $\lambda\in\Lambda$ 都有 $b_\lambda=0$，但
+\[
+  \sum_{\lambda\in\Lambda}\xi_\lambda\cdot b_\lambda=0_M
+\]
+成立。如此，元 $\xi\in M$ 的表示唯一的必要充分条件，是零元 $0_M\in M$ 的表示按 $b_\lambda=0$（$\forall\lambda\in\Lambda$）唯一确定。
+
+\begin{definition}{2.55} 右 $R$-模 $M$ 为自由（free），是指存在生成系 $\{\xi_\lambda\}_{\lambda\in\Lambda}\subset M$，使得
+\[
+  \sum_{\lambda\in\Lambda}\xi_\lambda\cdot b_\lambda=0_M
+\]
+% [原文 p.36]
+时，恒有对所有 $\lambda\in\Lambda$ 都有 $b_\lambda=0_M$。此时，称 $M$ 由 $\{\xi_\lambda\}_{\lambda\in\Lambda}$ 自由生成（freely generated），并称 $\{\xi_\lambda\}_{\lambda\in\Lambda}$ 为其基（basis）。\end{definition}
+
+% [Tutor Note: 「生成系」与「基」的差别是本节要点：基要求表示唯一（等价于 $0_M$ 的表示为平凡表示），生成系则允许关系。可验证锚点：$\Z$ 作为 $\Z$-模以 $\{1\}$ 为基（自由）；$\Z/2\Z$ 作为 $\Z$-模由 $[1]$ 生成（有限生成），但不自由——因为 $2\cdot[1]=0$ 而 $2\neq0$，即存在非平凡关系。对体 $K$，$K$-模的生成系都含有基（取极大线性无关组），这正是「所有向量空间都有基」的模论版本，其一般证明需 Zorn 引理（等价于选择公理）。]
+
+现在，对右 $R$-模 $M,N$，取它们的生成系 $\{\xi_\lambda\}_{\lambda\in\Lambda}\subset M$、$\{\eta_{\lambda'}\}_{\lambda'\in\Lambda'}\subset N$。此时，$R$ 同态映射 $f\colon M\to N$ 把有限和 $\sum_{\lambda\in\Lambda}\xi_\lambda\cdot a_\lambda$ 映为
+\[
+  f\left(\sum_{\lambda\in\Lambda}\xi_\lambda\cdot a_\lambda\right)=\sum_{\lambda\in\Lambda}f(\xi_\lambda)\cdot a_\lambda,
+\]
+所以 $f$ 由对每个 $\lambda\in\Lambda$ 指定 $f(\xi_\lambda)\in N$ 所决定。进一步，$f(\xi_\lambda)$ 表为有限和 $\sum_{\lambda'\in\Lambda'}\eta_{\lambda'}\cdot f_{\lambda\lambda'}$（$f_{\lambda\lambda'}\in R$）的形式。也就是说，$f$ 由对每个 $\lambda\in\Lambda$、$\lambda'\in\Lambda'$ 指定 $f_{\lambda\lambda'}\in R$ 所决定。特别地，当 $M,N$ 有限生成时，对其生成系 $\{\xi_1,\ldots,\xi_n\}\subset M$、$\{\eta_1,\ldots,\eta_m\}\subset N$，由于 $f(\xi_i)=\sum_{j=1}^m\eta_j\cdot f_{ij}$（$f_{ij}\in R$），$\Hom_R(M,N)$ 由 $\mathit{Mat}_{n\times m}(R)$ 的元所决定。换言之，$\Hom_R(M,N)$ 与 $\mathit{Mat}_{n\times m}(R)$ 的部分加法群同型。特别地，若 $M,N$ 都是有限生成自由 $R$ 模，则存在加法群的同型 $\Hom_R(M,N)\simeq\mathit{Mat}_{n\times m}(R)$，若进一步 $N=M$，则还得到环的同型 $\End(M):=\Hom_R(M,M)\simeq\mathit{Mat}_{n\times n}(R)$。作为其最简单的例子，在 $N=M=R$ 的情形得到环的同型
+\[
+  \End(R)\simeq R .
+\]
+
+% [Tutor Note: 这里有一处容易混淆的「行列方向」：$f(\xi_i)=\sum_j\eta_j\cdot f_{ij}$ 表示 $f$ 由 $n\times m$ 矩阵 $(f_{ij})$ 右乘给出（右模约定作用写在右边），与通常线性代数中「矩阵左乘列向量」的记法互为转置。可验证锚点：$M=N=R$ 时 $f$ 由 $f(1)=1\cdot a=a$ 决定，故 $\End_R(R)\cong R$（环同型，乘法为合成）；若 $M=R^n$，$N=R^m$ 取标准基，则 $\Hom_R(R^n,R^m)\cong\mathit{Mat}_{n\times m}(R)$。对 $R=\Z$ 尤其清楚：$\Hom_\Z(\Z^n,\Z^m)$ 由 $n\times m$ 整数矩阵构成。]
+
+\subsection{向量空间}
+
+$R$ 为交换环时，右 $R$-模与左 $R$-模不再有区别，故单纯称为 $R$ 模。特别地，当交换环 $R$ 为体时，$R$ 模就是 $R$ 上的向量空间（vector space）。一般体表作 $K$ 等，故称 $K$ 上的向量空间、$K$ 向量空间，或在固定 $K$ 讨论且无混淆之虞时省略 $K$，单纯称向量空间。
+
+$K$ 向量空间 $V$ 的基（basis）$\{v_\lambda\}_{\lambda\in\Lambda}$，是指部分集合 $\{v_\lambda\}_{\lambda\in\Lambda}\subset V$，满足
+\begin{itemize}
+  \item 任意元 $v\in V$ 都可表为有限和 $\sum_{\lambda\in\Lambda}a_\lambda\cdot v_\lambda$（$a_\lambda\in K$），
+  \item 若 $\sum_{\lambda\in\Lambda}a_\lambda\cdot v_\lambda=0$（有限和），则对所有 $\lambda\in\Lambda$ 都有 $a_\lambda=0$
+\end{itemize}
+者。换言之，就是使 $V$ 作为 $K$ 模自由生成者。已知所有向量空间都具有基。也就是说，$K$ 向量空间就是自由 $K$ 模（定义 2.55）。
+
+向量空间 $V$ 的维数（dimension）定义为：当可取由 $n$ 个元构成的基时为 $n$ 维，当不能取由有限个元构成的基时为无限维。
+
+% [Tutor Note: 「所有向量空间都具有基」这一事实的证明要用 Zorn 引理（从而用到选择公理）：取线性无关子集全体按包含关系构成的偏序集，任一链的并仍线性无关，故有极大元，极大线性无关组张成整个空间。反过来，由「所有向量空间都有基」可推出选择公理，故它是与 AC 等价的命题；这与 2.1 节开头「无限直积的元素存在需选择公理」是同一层次的现象。可验证锚点：$\R$ 作为 $\Q$ 上的向量空间是无限维的（其基即 Hamel 基），其存在性依赖 AC，无法具体写出。]
+
+% [原文 p.37]
+也就是说，有限维 $K$ 向量空间就是有限生成自由 $K$ 模。线性映射定义为自由 $K$ 模之间的 $K$ 同态映射。
+
+\begin{definition}{2.56} 设 $V,W$ 为体 $K$ 上的向量空间。映射 $f\colon V\to W$ 当对任意 $a\in K$、$v,v'\in V$ 满足
+\[
+  f(a\cdot v)=a\cdot f(v),\qquad f(v+v')=f(v)+f(v')
+\]
+时，称为线性映射（linear map）。\end{definition}
+
+\begin{definition}{2.57} 设 $K$ 上向量空间 $V$ 与 $W$ 同型（isomorphic），是指存在满足
+\[
+  g\circ f=\id_V,\qquad f\circ g=\id_W
+\]
+的线性映射 $f\colon V\to W$、$g\colon W\to N$。此时，称 $f,g$ 为同型映射（isomorphism）。\end{definition}
+
+% [Tutor Note: 底本 p.37 定義 2.57 印作「$g\colon W\to N$」，按上下文应为 $g\colon W\to V$（$N$ 是下文才出现的矩阵阶数记号，此处为笔误）；正誤表未涉及，按「不改原文」原则照原印翻译，读者据意改正即可。同一段落可对照定义 2.16、2.19、2.53 的同型定义：皆为「两边互逆」。]
+
+与 $R$ 模的情形同样，$f$ 为同型映射等价于 $f$ 为双射线性映射。$n$ 维 $K$ 向量空间与 $K^n$ 同型。特别地，$K^n\simeq K^m$ 仅当 $n=m$ 时成立。因此，两个有限维向量空间同型的必要充分条件是它们的维数相等。
+
+设 $V,W$ 分别为 $n$ 维、$m$ 维的 $K$ 向量空间，则线性映射 $f\colon V\to W$，也就是 $K$ 同态映射 $f$，可由 $n\times m$ 矩阵 $\{f_{ij}\}\in\mathit{Mat}_{n\times m}(K)$ 表示。作为线性代数学中最重要的事实之一，例如当 $K=\C$（复数体）时，矩阵 $\{f_{ij}\}$ 在适当选取 $V,W$ 的基后可化为 Jordan 标准形。更一般地，当体 $K$ 为代数闭体（algebraic closed field），即 $K[x]$ 的 1 次以上的任意多项式都可分解为一次式的积时，可取 Jordan 标准形。（cf.\ [21], [44]）
+
+% [Tutor Note: 上文的「$n$ 维 $V$ 到 $m$ 维 $W$ 的线性映射由 $n\times m$ 矩阵表示」与通常线性代数教材的「$m\times n$ 矩阵」互为转置，原因是本章 2.3.2 采用右模约定 $f(\xi_i)=\sum_j\eta_j\cdot f_{ij}$（作用写在右边），故矩阵指标顺序为 $n\times m$；这只影响转置约定，不影响结论。Jordan 标准形存在性的关键是「$K$ 代数闭」，即特征多项式在 $K$ 上完全分裂（split）；对一般 $K$，只能得到有理标准形（rational canonical form）。可验证锚点：$K=\R$ 时旋转矩阵 $\begin{pmatrix}0&-1\\1&0\end{pmatrix}$ 在 $\R$ 上无实特征值，故无（实）Jordan 形，只有复化后才可化。]
+
+\section{直和、直积、张量积}
+
+定义 $R$ 模之间的直和、直积、张量积。对有限个加法群，直和与直积成为同一个东西。它们的定义在 $R$ 为体时给出向量空间的直和、张量积。设 $V$ 为 $n$ 维 $K$ 向量空间、$W$ 为 $m$ 维 $K$ 向量空间，则存在作为向量空间的同型 $V\simeq K^n$、$W\simeq K^m$。此时，关于直和 $V\oplus W$ 与张量积 $V\otimes W$，$K$ 向量空间的同型
+\[
+  V\oplus W\simeq K^{n+m},\qquad V\otimes W\simeq K^{nm}
+\]
+成立。也就是说，直和中维数为和，张量积中维数为积。以下，在这种意义下，对一般 $R$ 模定义与和、积相对应的直和（直积）、张量积的概念。
+
+% [Tutor Note: 本节的三个构造在 $R=K$ 为体时分别给出向量空间的直和、直积、张量积；但注意 $R$ 非体时三者差别很大：直积常比直和大得多（下页定义 2.60 之后有说明），而张量积甚至可能为 $0$（如 $\Z/2\Z\otimes_\Z\Z/3\Z=0$）。可验证锚点：$\dim_K(V\otimes W)=(\dim V)(\dim W)=nm$，与书中 $V\otimes W\simeq K^{nm}$ 一致；$\dim(V\oplus W)=n+m$。]
+
+% [原文 p.38]
+\subsection{直和与直积}
+
+\begin{definition}{2.58} 加法群 $X,Y$ 的直和（direct sum）$X\oplus Y$，是指作为集合为 $X\times Y$，且对 $(x,y),(x',y')\in X\times Y$ 由
+\[
+  (x,y)+(x',y'):=(x+x,y+y')\in X\times Y
+\]
+确定的加法群。\end{definition}
+
+% [Tutor Note: 底本 p.38 定義 2.58 的公式印作「$(x,y)+(x',y'):=(x+x,\ y+y')$」，第一分量应为 $(x+x')$（对照第二分量 $y+y'$ 即知为笔误）；正誤表未涉及，按「不改原文」原则照原印翻译。验证方法：取 $X=Y=\Z$，$(1,0)+(1,0)$ 按印文得 $(2,0)$ 无误，但 $(1,0)+(2,0)$ 按印文得 $(3,0)$ 而按原意得 $(3,0)$——差别在 $x\neq x'$ 的一般情形，如 $(1,0)+(2,0)$ 若按印文「$x+x$」应为 $(2,0)$，与实际 $(3,0)$ 不符。]
+
+重复此操作即可得有限个加法群的直和。此情形下，直和也称为直积。处理无限个加法群时，它们的直和、直积都被定义，但指不同的东西，故需稍加注意。
+
+\begin{definition}{2.59} 设（未必有限的）集合 $\Lambda$ 与对各 $\lambda\in\Lambda$ 给定的加法群 $X_\lambda$。把作为集合的直积 $\prod_{\lambda\in\Lambda}X_\lambda$ 的元表作 $(x_\lambda)_{\lambda\in\Lambda}$ 等。在直积集合 $\prod_{\lambda\in\Lambda}X_\lambda$ 上如下引入加法结构。对任意元 $(x_\lambda)_{\lambda\in\Lambda},(x_\lambda')_{\lambda\in\Lambda}\in\prod_{\lambda\in\Lambda}X_\lambda$，
+\begin{equation}
+  (x_\lambda)_{\lambda\in\Lambda}+(x_\lambda')_{\lambda\in\Lambda}:=(x_\lambda+x_\lambda')_{\lambda\in\Lambda}. \tag{2.7}
+\end{equation}
+由此 $\prod_{\lambda\in\Lambda}X_\lambda$ 成为加法群。称此加法群 $\prod_{\lambda\in\Lambda}X_\lambda$ 为（加法群 $\{X_\lambda\}_{\lambda\in\Lambda}$ 的）直积（direct product）。\end{definition}
+
+\begin{definition}{2.60} 在加法群 $\{X_\lambda\}_{\lambda\in\Lambda}$ 的直积 $\prod_{\lambda\in\Lambda}X_\lambda$ 的元 $(x_\lambda)_{\lambda\in\Lambda}$ 中，除有限个 $\lambda\in\Lambda$ 之外 $x_\lambda=0_{X_\lambda}$ 者全体的集合，构成直积 $\prod_{\lambda\in\Lambda}X_\lambda$ 的部分加法群。称此为加法群 $\{X_\lambda\}_{\lambda\in\Lambda}$ 的直和（direct sum），记作 $\oplus_{\lambda\in\Lambda}X_\lambda$。称各 $X_\lambda$ 为 $\oplus_{\lambda\in\Lambda}X_\lambda$ 的直和因子（direct summand）。\end{definition}
+
+由定义，当 $\Lambda$ 为有限集合时，（有限）直积 $\prod_{\lambda\in\Lambda}X_\lambda$ 与直和 $\oplus_{\lambda\in\Lambda}X_\lambda$ 一致。
+
+% [Tutor Note: 无限情形下直积与直和的差别是本节最实用的一条：$\prod$ 允许无穷多非零分量，$\oplus$ 只允许有限多个。可验证锚点：$\Lambda=\N$、$X_\lambda=\Z$ 时，$\oplus_{\N}\Z$ 是可数集（有限支撑的整数列），而 $\prod_{\N}\Z$ 与 $\Z^{\N}$ 等势、不可数，二者绝不同构。另有「$\Hom$ 与 $\oplus$ 交换、与 $\prod$ 的对应」见引理 2.61；由 $\Hom(\oplus X_\lambda,Y)\cong\prod\Hom(X_\lambda,Y)$ 可再验证此区别。]
+
+回忆：对加法群 $X,Y$，同态映射的集合 $\Hom(X,Y)$ 也构成加法群（引理 2.15）。
+
+\begin{lemma}{2.61} 对加法群 $X,Y,Z$，
+\[
+  \Hom(X\oplus Y,Z)\simeq\Hom(X,Z)\oplus\Hom(Y,Z),
+\]
+\[
+  \Hom(X,Y\oplus Z)\simeq\Hom(X,Y)\oplus\Hom(X,Z)
+\]
+成立。\end{lemma}
+
+% [Tutor Note: 引理 2.61 的两个同型分别是「$\Hom$ 把第一个变量中的余积变成积」与「第二个变量中的积变成积」，即 $\Hom(-,Z)$ 把 $\oplus$ 变 $\prod$、$\Hom(X,-)$ 保持 $\prod$。验证要点：给定 $f\colon X\oplus Y\to Z$，限制得 $(f|_X,f|_Y)$；反之由两个同态借 $\oplus$ 的泛性质唯一拼出。锚点：$X=Y=Z=\Z$ 时左式 $\Hom(\Z^2,\Z)\cong\Z^2$，右式 $\Hom(\Z,\Z)^2\cong\Z^2$，一致。]
+
+加法群的直积、直和也有与集合的直积、直和的情形（引理 2.3）同样的由普遍性给出的刻画，它们与上面定义的东西在非同型意义下一致。
+
+\begin{lemma}{2.62} 设集合 $\Lambda$ 与对各 $\lambda\in\Lambda$ 给定的加法群 $X_\lambda$。
+\begin{enumerate}[label=(\alph*), leftmargin=*]
+  \item 存在加法群 $\tilde{X}$ 与对各 $\lambda\in\Lambda$ 的同态映射 $\pi_\lambda\colon \tilde{X}\to X_\lambda$，使得对任意加法群 $W$ 与同态映射 $\{f_\lambda\colon W\to X_\lambda\}_{\lambda\in\Lambda}$，存在唯一的同态映射 $f\colon W\to\tilde{X}$ 满足对每个 $\lambda\in\Lambda$ 有 $\pi_\lambda\circ f=f_\lambda$。进一步，此时 $\tilde{X}$ 与直积 $\prod_{\lambda\in\Lambda}X_\lambda$ 同型。
+  \item 存在加法群 $X$ 与对各 $\lambda\in\Lambda$ 的同态映射 $\iota_\lambda\colon X_\lambda\to X$，使得对任意加法群 $W$ 与同态映射 $\{f_\lambda\colon X_\lambda\to W\}_{\lambda\in\Lambda}$，存在唯一的同态映射 $f\colon X\to W$ 满足对每个 $\lambda\in\Lambda$ 有 $f\circ\iota_\lambda=f_\lambda$。
+% [原文 p.39]
+  进一步，此时 $X$ 与直和 $\oplus_{\lambda\in\Lambda}X_\lambda$ 同型。
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+由普遍性，满足上述条件的加法群 $\tilde{X},X$ 只要存在，就在同型意义下唯一，故令 $\tilde{X}=\prod_{\lambda\in\Lambda}X_\lambda$、$X=\oplus_{\lambda\in\Lambda}X_\lambda$，证明 (a),(b) 得到满足。
+
+(a) 令 $\tilde{X}=\prod_{\lambda\in\Lambda}X_\lambda$。此时，由作为集合的直积的定义，存在映射（满射）$\pi_\lambda\colon \tilde{X}\to X_\lambda$，而由在此直积集合上定下的加法群结构的定义 (2.7)，各 $\pi_\lambda$ 成为同态映射。进一步，对任意加法群 $W$ 与同态映射 $\{f_\lambda\colon W\to X_\lambda\}_{\lambda\in\Lambda}$，存在唯一的映射 $f\colon W\to\tilde{X}$ 满足对每个 $\lambda\in\Lambda$ 有 $\pi_\lambda\circ f=f_\lambda$，而它由
+\[
+  f\colon w\mapsto (f_\lambda(w))_{\lambda\in\Lambda}
+\]
+确定，故可知是同态映射。\hfill$\square$
+
+(b) 令 $X=\oplus_{\lambda\in\Lambda}X_\lambda$，对各 $\lambda\in\Lambda$ 如下定义 $\iota_\lambda\colon X_\lambda\to X$：
+\begin{equation}
+  \iota_\lambda(x_\lambda):=(x_{\lambda'}')_{\lambda'\in\Lambda},\qquad
+  x_{\lambda'}'=\begin{cases}
+    x_\lambda, & \lambda'=\lambda\\
+    0_{X'_\lambda}, & \lambda'\neq\lambda
+  \end{cases} \tag{2.8}
+\end{equation}
+此时，对任意加法群 $W$ 与同态映射 $\{f_\lambda\colon X_\lambda\to W\}_{\lambda\in\Lambda}$，如下定义同态映射 $f\colon X\to W$：
+\[
+  f((x_\lambda)_{\lambda\in\Lambda}):=(f_\lambda(x_\lambda))_{\lambda\in\Lambda}.
+\]
+不过由直和的定义，上式中的 $x_\lambda$ 除有限个 $\lambda$ 的情形外 $x_\lambda=0_\lambda$。$f$ 对每个 $\lambda\in\Lambda$ 满足 $f\circ\iota_\lambda=f_\lambda$。现设存在与 $f$ 满足相同条件的同态映射 $f'\colon W\to X$。此时，对每个 $\lambda\in\Lambda$ 有
+\[
+  f'\circ\iota_\lambda(x_\lambda)=f\circ\iota_\lambda(x_\lambda),\qquad x_\lambda\in X_\lambda,
+\]
+而另一方面，任意 $X$ 的元都可表为 $\iota_\lambda(x_\lambda)$ 的有限和，且 $f,f'$ 为同态映射，故得 $f'=f$，从而证明了 $f\colon W\to X$ 唯一。\hfill$\square$
+\end{proof}
+
+% [Tutor Note: 底本 p.39 式 (2.8) 的第二个分支印作「$0_{X'_\lambda}$」（$X$ 带撇、下标 $\lambda$）。按定义，$\iota_\lambda(x_\lambda)$ 在 $\lambda'\neq\lambda$ 处的分量应取 $X_{\lambda'}$ 的零元 $0_{X_{\lambda'}}$，故印文的撇号与下标位置均可疑（可能想写 $0_{X_{\lambda'}}$）；正誤表未涉及，按「不改原文」原则照原印翻译。可验证锚点：$\Lambda=\{1,2\}$、$X_\lambda=\Z$ 时 $\iota_1(1)=(1,0)$、$\iota_2(1)=(0,1)$，其第二个分量为 $X_2$ 的零元。]
+
+由加法群具有零元，注意：对各 $\lambda\in\Lambda$，不仅可定义标准的射影（满射）
+\[
+  \pi_\lambda\colon X_\lambda\to \prod_{\lambda'\in\Lambda}X_{\lambda'},
+\]
+还可定义标准的单射
+\[
+  \iota_\lambda\colon X_\lambda\to \prod_{\lambda'\in\Lambda}X_{\lambda'}.
+\]
+特别地，其像含于 $\oplus_{\lambda\in\Lambda}X_\lambda\subset\prod_{\lambda\in\Lambda}X_\lambda$ 中，且对应的标准单射 $\iota_\lambda\colon X_\lambda\to\oplus_{\lambda'\in\Lambda}X_{\lambda'}$ 就是 (2.8) 中所定义者。类似地，标准射影 $\pi_\lambda\colon X_\lambda\to\prod_{\lambda'\in\Lambda}X_{\lambda'}$ 限制到直和 $\oplus_{\lambda'\in\Lambda}X_{\lambda'}$ 上也是满射同态，并以同一记号 $\pi_\lambda\colon X_\lambda\to\oplus_{\lambda'\in\Lambda}X_{\lambda'}$ 表示。
+\[
+  \begin{tikzcd}[row sep=1.2em, column sep=3.2em]
+    X_\lambda \arrow[r, bend left=18, "\iota_\lambda"] & \oplus_{\lambda'\in\Lambda}X_{\lambda'} \arrow[l, bend left=18, "\pi_\lambda"]
+  \end{tikzcd}
+  \qquad
+  \begin{tikzcd}[row sep=1.2em, column sep=3.2em]
+    X_\lambda \arrow[r, bend left=18, "\iota_\lambda"] & \prod_{\lambda'\in\Lambda}X_{\lambda'} \arrow[l, bend left=18, "\pi_\lambda"]
+  \end{tikzcd}
+\]
+
+% [Tutor Note: 上图的记号与 (2.8) 相配合：$\iota_\lambda$ 是「把 $x_\lambda$ 放到第 $\lambda$ 个分量、其余置零」，$\pi_\lambda$ 是「取第 $\lambda$ 个分量」。对直和 $\oplus$，$\pi_\lambda$ 限制后仍满射；对直积 $\prod$，$\iota_\lambda$ 的像落在直和部分（即有限支撑元全体）。可验证锚点：$\Lambda$ 有限时两图重合（$\oplus=\prod$，引理 2.62）；$\Lambda=\N$ 时，$\prod_{\N}\Z$ 中如 $(1,1,1,\ldots)$ 不在 $\iota_\lambda$ 的像中（须用有限和）。]
+
+设 $R$ 为环，对集合 $\Lambda$，设 $M_\lambda$（$\lambda\in\Lambda$）分别为右 $R$ 模。这些作为加法群的直积 $\prod_{\lambda\in\Lambda}M_\lambda$、直和 $\oplus_{\lambda\in\Lambda}M_\lambda$ 也同样具有右 $R$ 模的结构
+% [原文 p.40]
+，这是显然的吧。分别称它们为右 $R$ 模的直积、直和。各 $M_\lambda$ 称为直和 $\oplus_{\lambda\in\Lambda}M_\lambda$ 的直和因子（direct summand）。由定义，当 $\Lambda$ 为有限集合时，直积 $\prod_{\lambda\in\Lambda}M_\lambda$ 与直和 $\oplus_{\lambda\in\Lambda}M_\lambda$ 一致。
+
+当 $R=K$ 为体时，由此定义向量空间的直积、直和、直和因子等。
+
+\begin{remark}{2.63} 设 $V$ 为 $n$ 维 $K$ 向量空间、$W$ 为 $m$ 维 $K$ 向量空间，设 $V,W$ 的基分别为 $v_1,\ldots,v_n$、$w_1,\ldots,w_m$，则作为 $V\oplus W$ 的基可取
+\[
+  (v_1\oplus0_W),\ldots,(v_n\oplus0_W),(0_V\oplus w_1),\ldots,(0_V\oplus w_m).
+\]
+$V,W$ 为有限生成自由 $R$ 模时也有同样的事实。\end{remark}
+
+\subsection{张量积}
+
+设 $R$ 为环，$M$ 为右 $R$ 模，$N$ 为左 $R$ 模，$X$ 为加法群。与直和 $M\oplus N$ 的情形不同，现在考虑以 $M\times N$ 的元各自的有限个形式的和与差为元的加法群，也就是 $\Z$ 加群 $G$。$G$ 的元具体地写作
+\[
+  \sum_{i=1}^n a_i(\xi_i,\eta_i)
+\]
+的形式。这里，对各 $i=1,\ldots,n$，$a_i\in\Z$、$\xi_i\in M$、$\eta_i\in N$。这里，把由 $G$ 的元
+\begin{itemize}
+  \item $(\xi+\xi',\eta)-(\xi,\eta)-(\xi',\eta)$，
+  \item $(\xi,\eta+\eta')-(\xi,\eta)-(\xi,\eta')$，
+  \item $(\xi\cdot a,\eta)-(\xi,a\cdot\eta)$
+\end{itemize}
+自由生成的 $G$ 的部分 $\Z$ 加群设为 $G_0$。然后把剩余 $\Z$ 加群 $G/G_0$ 称为 $M$ 与 $N$ 的张量积（tensor product），记作 $M\otimes_R N$。
+
+对元 $(\xi,\eta)\in M\times N$，把 $(\xi,\eta)$ 按 $G_0$ 所定义的等价关系所得的等价类记作 $\xi\otimes_R\eta\in M\otimes_R N$。由这个对应 $(\xi,\eta)\mapsto\xi\otimes_R\eta$，同态映射
+\[
+  t\colon M\times N\to M\otimes_R N
+\]
+被定义。由定义，$t$ 对 $\xi,\xi'\in M$、$\eta,\eta'\in N$、$a\in R$ 满足
+\begin{itemize}
+  \item $t(\xi+\xi',\eta)=t(\xi,\eta)+t(\xi',\eta)$，
+  \item $t(\xi,\eta+\eta')=t(\xi,\eta)+t(\xi,\eta')$，
+  \item $t(\xi\cdot a,\eta)=t(\xi,a\cdot\eta)$。
+\end{itemize}
+
+如此，对某个加法群 $X$，满足「把上述 3 个条件中的 $t$ 换成 $\rho$」的同态映射 $\rho\colon M\times N\to X$ 称为双线性形式（bilinear form）。张量积具有以下的普遍性。
+
+\begin{proposition}{2.64} 设 $R$ 为环，$M$ 为右 $R$ 模，$N$ 为左 $R$ 模。此时，
+\begin{enumerate}[label=(\roman*), leftmargin=*]
+  \item 存在加法群 $T'$ 与双线性形式 $t'\colon M\times N\to T'$，使得对任意加法群 $X$ 与双线性形式 $\rho\colon M\times N\to X$，存在唯一的同态映射 $\phi\colon T'\to X$ 满足 $\rho=\phi\circ t'$。
+% [原文 p.41]
+  \item 这样的加法群 $T'$ 必与 $M\otimes_R N$ 同型，特别地 $T'=M\otimes_R N$、$t'=t$ 满足 (i)。
+\end{enumerate}
+\end{proposition}
+
+% [Tutor Note: 底本 p.40 最后一行（命题 2.64(i)）印作「$\rho=\phi\circ t'$ を満たす準同型写像 $\phi\colon M\otimes_R N\to X$」；据作者正誤表（2014-05-20 版）p40 条订正为「$\phi\colon T'\to X$」。正文已按订正后的内容翻译。按普遍性的形式，(i) 断言的正是「$T'$ 连同 $t'$ 是双线性形式范畴的始对象」，其到任意 $(X,\rho)$ 的诱导映射自然应从 $T'$ 出发；若写成 $M\otimes_R N\to X$ 则把待刻画的 $T'$ 换成了具体的 $M\otimes_R N$，与 (ii) 的分工重复且逻辑倒置。可验证锚点：取 $T'=M\otimes_R N$、$t'=t$ 时，$\phi$ 由 $\phi(\xi\otimes\eta):=\rho(\xi,\eta)$ 唯一确定（见 p.41 的証明）。]
+
+\begin{proof}
+首先证明令 $T'=M\otimes_R N$、$t'=t$ 时 (i) 得到满足。$M\otimes_R N$ 的元（未必唯一地）可写作
+\[
+  \sum_{i=1}^n a_i(\xi_i\otimes_R\eta_i).
+\]
+若存在满足 $\rho=\phi\circ t$ 的同态映射 $\phi$，则由其同态性，
+\[
+  \phi\left(\sum_{i=1}^n a_i\xi_i\otimes_R\eta_i\right)=\sum_{i=1}^n a_i\phi(\xi_i\otimes_R\eta_i)
+\]
+应当成立，故对每个 $i$ 确定 $\phi(\xi_i\otimes_R\eta_i)$ 即可确定 $\phi$。由
+\[
+  \phi(\xi_i\otimes_R\eta_i)=\phi\circ t(\xi_i,\eta_i),
+\]
+为使 $\rho=\phi\circ t$ 成立，必须定义 $\phi(\xi_i\otimes_R\eta_i):=\rho(\xi_i,\eta_i)$。如此，$\phi$ 被唯一确定。
+
+$T'$ 的唯一性（按关于具有普遍性者的一般讨论）如下证明。令 $T=M\otimes_R N$。由 $T$ 具有 (i) 的性质，对双线性映射 $t'\colon M\times N\to T'$，满足 $t'=\psi\circ t$ 的同态映射 $\psi\colon T\to T'$ 被唯一确定。同样，假设 $T'$ 具有 (i) 的性质，则对双线性映射 $t\colon M\times N\to T$，满足 $t=\psi'\circ t'$ 的同态映射 $\psi'\colon T'\to T$ 被唯一确定。另一方面，由 $T$ 具有 (i) 的性质，对 $t\colon M\times N\to T$，使图式
+\[
+  \begin{tikzcd}[row sep=3em, column sep=3.4em]
+    M\times N \arrow[r, "t"] \arrow[dr, "t"'] & T \arrow[d, dashed] \\
+    & T
+  \end{tikzcd}
+\]
+可换的同态映射 $T\to T$ 唯一，故 $\psi'\circ\psi=\id_T$。同样可得 $\psi\circ\psi'=\id_{T'}$，从而证明了 $T\simeq T'$。
+\end{proof}
+
+% [Tutor Note: 上图中的虚线箭头表示「由唯一性确定的映射」$T\to T$：由 $t$ 的普遍性，使三角形交换的自同态只有 $\id_T$，故 $\psi'\circ\psi=\id_T$。这是「普遍性 $\Rightarrow$ 唯一同构」的标准论证（与引理 2.3 的 s2)、p2) 同型）。可验证锚点：若把 $T$ 换成 $M\otimes_R N$、$T'$ 换成 $M\otimes_R N$，则 $\psi=\id$，结论退化为平凡的同构。]
+
+对右 $R$ 模 $M$，$\End_R(M):=\Hom_R(M,M)$ 构成环，$M$ 具有左 $\End_R(M)$ 模的结构。同样，左 $R$ 模 $N$ 具有右 $\End_R(N)$ 模的结构。
+
+\begin{lemma}{2.65} 设 $R$ 为环，$M$ 为右 $R$ 模，$N$ 为左 $R$ 模。张量积 $M\otimes_R N$ 具有左 $\End_R(M)$ 模、右 $\End_R(N)$ 模的结构。\end{lemma}
+
+\begin{proof}
+设 $f\in\End_R(M)$。$M\otimes_R N$ 上的自同态映射由对应
+\[
+  \sum_{i=1}^n a_i\xi_i\otimes_R\eta_i\mapsto \sum_{i=1}^n a_if(\xi_i)\otimes_R\eta_i,\qquad \sum_{i=1}^n a_i\xi_i\otimes_R\eta_i\in M\otimes_R N
+\]
+定义。实际上它不依赖于元 $\sum_{i=1}^n a_i\xi_i\otimes_R\eta_i$ 的表示方式，特别地，定出左 $\End_R(M)$ 模的结构，这也是显然的。同样也可定义 $\End_R(N)$ 的右作用。
+\end{proof}
+
+% [Tutor Note: 补出「不依赖表示」的验证要点：$f$ 是右 $R$ 模同态，故 $f(\xi\cdot a)=f(\xi)\cdot a$，于是对关系式 $\xi\cdot a\otimes\eta=\xi\otimes a\cdot\eta$ 两边作用后仍一致；再由张量积的普遍性（命题 2.64）该作用良定义。可验证锚点：$R=K$ 为体、$M=N=K$ 时 $\End_K(K)\cong K$，$K\otimes_K K\cong K$ 上的左 $K$-模结构即数乘，与 $f\in K$ 的乘法一致。]
+
+% [原文 p.42]
+设 $R$ 为交换环。对 $R$ 模 $M,N$，张量积 $M\otimes_R N$（由于 $R\cdot1_{\End_R(M)}\subset\End_R(M)$、$R\cdot1_{\End_R(N)}\subset\End_R(N)$）也构成 $R$ 模。$R$ 可换时，$R$ 模 $M,N$ 的张量积 $M\otimes_R N$ 有等价的另一种构成。考虑由 $M\times N$ 的元生成的自由 $R$ 模 $G_R$。其元可写作
+\[
+  \sum_{i=1}^n a_i(\xi_i,\eta_i),\qquad a_i\in R,\ \xi_i\in M,\ \eta_i\in N
+\]
+的形式。把由 $G_R$ 的元
+\begin{itemize}
+  \item $(\xi+\xi',\eta)-(\xi,\eta)-(\xi',\eta)$，$(\xi,\eta+\eta')-(\xi,\eta)-(\xi,\eta')$，
+  \item $(\xi\cdot a,\eta)-a(\xi,\eta)$，$(\xi,a\cdot\eta)-a(\xi,\eta)$
+\end{itemize}
+自由生成的 $G_R$ 的部分 $R$ 模设为 $G_{R,0}$，则 $M\otimes_R N=G_R/G_{R,0}$。
+
+% [Tutor Note: 这一「另一种构成」与前面 $\Z$ 加群的构成的关系：把 $\Z$ 换成 $R$ 后，关系式从三条变为四条（因为现在允许 $R$ 的纯量 $a$ 直接作用，故不必借 $\Z$ 的整数倍）。两种构造给出同构的 $M\otimes_R N$，前者（$\Z$ 构造）在 $R$ 非交换时也可用，后者（$R$ 构造）更便于计算。可验证锚点：$R=\Z$ 时两者完全一致；$R=K$ 为体时 $\dim_K(M\otimes_K N)=\dim M\cdot\dim N$。]
+
+% [Tutor Note: 注意本节「双线形形式」与「$R$ 双线形写像」两术语的关系：前者（bilinear form）指 $\Z$ 双线性的 $\rho\colon M\times N\to X$（$X$ 为加法群，$R=\Z$ 情形），后者（2.4.3 节，bilinear map）指 $R$ 双线性的 $\rho\colon M_1\times M_2\to M$（$M$ 为 $R$ 模）。二者在 $R=\Z$ 时重合，书中明确指出了这一点。]
+
+当 $R$ 为交换环时，$R$ 模 $M_1,\ldots,M_n$ 的 $n$ 次张量积通过反复取张量积来定义。
+\[
+  M_1\otimes_R M_2\otimes_R M_3\otimes_R\cdots\otimes_R M_n := (\cdots((M_1\otimes_R M_2)\otimes_R M_3)\otimes_R\cdots\otimes_R M_n).
+\]
+这实际上不依赖于张量积的顺序。$R=K$ 为体时，由此得到向量空间的张量积。作为记号，$\otimes_K$ 常简记为 $\otimes$。进一步，$K$ 向量空间 $V$ 的 $n$ 次张量积记作 $V^{\otimes n}:=V\otimes\cdots\otimes V$。
+
+\begin{remark}{2.66} 设 $V$ 为 $n$ 维 $K$ 向量空间、$W$ 为 $m$ 维 $K$ 向量空间，设 $V,W$ 的基分别为 $v_1,\ldots,v_n$、$w_1,\ldots,w_m$，则作为 $V\otimes W$ 的基可取 $v_i\otimes w_j$（$i=1,\ldots,n$，$j=1,\ldots,m$）。\end{remark}
+
+\subsection{双线性映射、多重线性映射}
+
+讨论 $R$ 为交换环时张量积与双线性映射的关系。
+
+\begin{definition}{2.67} 设 $R$ 为交换环，$M_1,M_2,M$ 为 $R$ 模。映射 $f\colon M_1\times M_2\to M$ 当对任意 $\xi,\xi'\in M_1$、$\eta,\eta'\in M_2$、$a,a'\in R$ 满足
+\[
+  f(a\xi+a'\xi',\eta)=a\cdot f(\xi,\eta)+a'\cdot f(\xi',\eta),
+\]
+\[
+  f(\xi,a\eta+a'\eta')=a\cdot f(\xi,\eta)+a'\cdot f(\xi,\eta')
+\]
+时，称为 $R$ 双线性（bilinear）的。\end{definition}
+
+也就是说，$R$ 双线性映射 $f\colon M_1\times M_2\to M$ 是指：固定 $\eta\in M_2$ 时 $f(\cdot,\eta)\colon M_1\to M$ 成为 $R$ 同态映射，固定 $\xi\in M_1$ 时 $f(\xi,\cdot)\colon M_2\to M$ 成为 $R$ 同态映射者。$R=\Z$ 时的 $R$ 双线性映射就是前节所定义的双线性形式。
+
+设 $R$ 为交换环，$M_1,M_2$ 为 $R$ 模。前节所定义的到张量积的标准映射 $t\colon M_1\times M_2\to M_1\otimes_R M_2$、$(\xi,\eta)\mapsto\xi\otimes\eta$ 构成 $R$ 双线性映射。由张量积 $M_1\otimes_R M_2$ 所具有的普遍性（命题 2.64），对任意 $R$ 模 $M$
+% [原文 p.43]
+与 $R$ 双线性映射 $\rho\colon M_1\times M_2\to M$，满足 $\rho=\phi\circ t$ 的同态映射 $\phi\colon M_1\otimes_R M_2\to M$ 曾唯一存在；而看这个 $\phi$ 的构成可知，$\phi$ 特别是 $R$ 同态映射。归纳如下：
+
+\begin{proposition}{2.68} 设 $R$ 为交换环，$M_1,M_2$ 为 $R$ 模。此时，
+\begin{enumerate}[label=(\roman*), leftmargin=*]
+  \item 存在 $R$ 模 $T'$ 与 $R$ 双线性映射 $t'\colon M_1\times M_2\to T'$，使得对任意 $R$ 模 $M$ 与 $R$ 双线性映射 $\rho\colon M_1\times M_2\to M$，存在唯一的 $R$ 同态映射 $\phi\colon M_1\otimes_R M_2\to M$ 满足 $\rho=\phi\circ t'$。
+  \item $T'$ 必与 $M_1\otimes_R M_2$ 作为 $R$ 模同型，特别地 $T'=M_1\otimes_R M_2$、$t'=t$ 满足 (ii)。
+\end{enumerate}
+\end{proposition}
+
+% [Tutor Note: 底本 p.43 命题 2.68(ii) 末句印作「$t'=t$ は (ii) を満たす」（自指），按体例应为「(i) を満たす」（对照 p.41 命题 2.64(ii) 末句「…は (i) を満たす」）；正誤表未涉及，按「不改原文」原则照原印翻译。]
+
+这意味着：给出 $R$ 双线性映射 $\rho\colon M_1\times M_2\to M$ 与给出 $R$ 同态映射 $\phi\colon M_1\otimes_R M_2\to M$ 是等价的。两者由 $\rho=\phi\circ t$ 对应。
+
+以上事实对多重张量积也同样成立。
+
+\begin{definition}{2.69} 设 $R$ 为交换环，$M_1,\ldots,M_n,M$ 为 $R$ 模。映射 $f\colon M_1\times\cdots\times M_n\to M$ 当对每个 $i=1,\ldots,n$ 与任意 $\xi_j\in M_j$（$j\in\{1,\ldots,n\}-\{i\}$）满足
+\[
+  f(\xi_1,\ldots,\xi_{i-1},\hphantom{\xi_i},\xi_{i+1},\ldots,\xi_n)\colon M_i\to M
+\]
+为 $R$ 同态映射时，称为 $n$ 重 $R$ 线性。当 $n\ge2$ 时，$n$ 重 $R$ 线性映射一般称为多重线性映射（multilinear map）。\end{definition}
+
+% [Tutor Note: 定义 2.69 中公式的空白处即第 $i$ 个自变量的位置（底本以空格表示「代入处」），意指固定其余 $n-1$ 个变量、只让第 $i$ 个变量变动时得到 $R$ 同态映射；等价说法是「$f$ 对每个变量分别 $R$ 线性」。可验证锚点：$R=\R$、$M_1=M_2=\R$ 时，$f(\xi,\eta)=\xi\eta$ 是 2 重 $\R$ 线性的，而 $f(\xi,\eta)=\xi+\eta$ 不是（固定 $\eta$ 时 $f(\cdot,\eta)$ 是仿射而非线性）。]
+
+\begin{proposition}{2.70} 设 $R$ 为交换环，$M_1,\ldots,M_n,M$ 为 $R$ 模，$t\colon M_1\times\cdots\times M_n\to M_1\otimes_R\cdots\otimes_R M_n$ 为按 $(\xi_1,\ldots,\xi_n)\mapsto\xi_1\otimes_R\cdots\otimes_R\xi_n$ 给出的到张量积的标准映射。此时，对 $n$ 重 $R$ 线性映射 $\rho\colon M_1\times\cdots\times M_n\to M$，满足 $\phi\circ t=\rho$ 的 $R$ 同态映射 $\phi\colon M_1\otimes_R\cdots\otimes_R M_n\to M$ 被唯一确定。\end{proposition}
+
+% [Tutor Note: 命题 2.70 是命题 2.64、2.68 向 $n$ 元情形的推广，其意义是「$n$ 重 $R$ 线性映射」与「$R$ 模同态 $M_1\otimes\cdots\otimes M_n\to M$」一一对应（张量积是多重线性映射的普遍对象）。可验证锚点：$n=2$ 时即命题 2.68；$R=K$ 为体时，$n$ 重线性映射 $V^n\to K$ 对应 $(V^{\otimes n})^*$ 中的元素。]
+
+\section{代数}
+
+\begin{definition}{2.71} 设 $R$ 为交换环。$R$ 模 $A$ 构成环，且对任意元 $r\in R$、$a,b\in A$ 满足
+\[
+  r(a\cdot b)=(ra)\cdot b=a\cdot(rb)\qquad (a\cdot b \text{ 是环 } A \text{ 的乘法})
+\]
+时，称 $A$ 为 $R$ 代数（algebra），或称 $R$ 上的代数。\end{definition}
+
+% [Tutor Note: 定义 2.71 的条件 $r(a\cdot b)=(ra)\cdot b=a\cdot(rb)$ 说的是「$R$ 的纯量乘法与 $A$ 的乘法相容」，即 $A$ 的乘法是 $R$ 双线性的。可验证锚点：$R=\Z$ 时任意环都唯一地成为 $\Z$ 代数（$\Z$ 到 $A$ 的环同态唯一，见引理 2.74）；$R=K$ 为体时，$K$ 代数就是「含 $K$ 作为中心子环的环」，如 $\mathrm{Mat}_n(K)$、$K[x]$。对照定义 2.67：$A$ 的乘法是双线性映射 $A\times A\to A$。]
+
+\begin{remark}{2.72} $R$ 代数也称为 $R$ 多元环，或称 $R$ 上的多元环。\end{remark}
+
+\begin{remark}{2.73} 也有不假定幺元存在的东西被称为 $R$ 代数。\end{remark}
+
+% [Tutor Note: 术语：日文「多元環」是 algebra（over a ring）的旧称，中文旧译亦作「多元环」，今多径称「代数」；glossary 统一为「代数（多元环）」。注意 2.73 提醒：本书的定义 2.71 要求 $A$ 是环（从而含 $1_A$），但「代数」一词在文献中也常用于不含幺元的结合代数；本书后文（第 6 章有限维代数）一律要求含幺元。]
+
+$R$ 代数 $A$ 作为环的幺元记作 $1_A\in A$，则 $r\in R$ 可作为 $r\cdot1_A\in A$ 看作 $A$ 的元。由 $R$ 模的性质，$1_R\cdot1_A=1_A$，故此对应 $R\subset A$ 定义单射环同态 $\iota\colon R\to A$。实际上其逆也成立。
+
+\begin{lemma}{2.74} 设 $R$ 为交换环。$R$ 代数 $A$ 与环同态映射 $f\colon R\to A$ 等价
+% [原文 p.44]
+。\end{lemma}
+
+\begin{proof}
+把 $R$ 对 $A$ 的作用按 $r\cdot a:=f(r)\cdot a$ 定义即可。
+\end{proof}
+
+% [Tutor Note: 引理 2.74 的「等价」是范畴意义下的：由 $R$ 代数 $A$ 得环同态 $\iota\colon R\to A$（$r\mapsto r\cdot1_A$，为单射，故可把 $R$ 看作 $A$ 的子环）；反之由环同态 $f\colon R\to A$ 按 $r\cdot a:=f(r)\cdot a$ 定义 $R$ 模结构，定义 2.71 的相容条件由 $f$ 保乘法而成立。两个方向互逆，故「$R$ 代数」与「环同态 $R\to A$」一一对应。可验证锚点：$R=\Z$ 时 $\Z\to A$ 唯一，故「$\Z$ 代数 $=$ 环」，与引理 2.74 一致；$R=\mathbb{F}_p$ 时 $\mathbb{F}_p$ 代数 $=$ 特征 $p$ 的环。]
+
+\begin{example}{2.75} 以 $K$ 为成分的 $n\times n$ 矩阵的集合 $\mathit{Mat}_n(K)$ 曾构成环，它特别是 $K$ 代数。同样，以 $K$ 为成分的 $n\times n$ 上三角矩阵环、下三角矩阵环等也是 $K$ 代数。\end{example}
+
+\begin{example}{2.76} 设 $V$ 为 $K$ 向量空间。定义
+\[
+  T(V):=\oplus_{k=0}^\infty V^{\otimes k},
+\]
+则 $T(V)$ 也成为 $K$ 向量空间。不过，令 $V^0=:K$。进一步，通过把积结构 $\otimes\colon T(V)\times T(V)\to T(V)$ 对 $v_1\otimes\cdots\otimes v_n\in V^{\otimes n}$、$v_1'\otimes\cdots\otimes v_m'\in V^{\otimes m}$ 定为
+\[
+  (v_1\otimes\cdots\otimes v_n)\otimes(v_1'\otimes\cdots\otimes v_m')=v_1\otimes\cdots\otimes v_n\otimes v_1'\otimes\cdots\otimes v_m',
+\]
+$T(V)$ 构成 $K$ 代数。$T(V)$ 的幺元是 $V^0$ 的元。$T(V)$ 称为张量代数（tensor algebra）。$\prod_{k=0}^\infty V^{\otimes k}$ 也由同一结构成为 $K$ 代数。\end{example}
+
+% [Tutor Note: 例 2.76 末句「$\prod_{k=0}^\infty V^{\otimes k}$ 也由同一结构成为 $K$ 代数」容易被误认为笔误（张量代数通常取直和），其实成立：对积中的两个元 $(a_k)_k,(b_k)_k$，第 $k$ 个分量 $(ab)_k=\sum_{i+j=k}a_i b_j$ 只有 $k+1$ 项（有限和），故乘法可定义；幺元在 $V^0$ 取 $1_K$、其余分量取 $0$。直和 $\oplus_k V^{\otimes k}$ 对同一公式亦封闭。可验证锚点：取 $\dim V=1$、$V=K$，则 $T(V)=K[x]$（$V^{\otimes k}\cong K$ 由 $x^k$ 张成），而 $\prod_k K$ 可看作形式幂级数环 $K[[x]]$；二者都是 $K$ 代数，前者是后者的子代数。]
+
+以上例子把体 $K$ 换成交换环 $R$ 的情形也可同样考虑。
+
+\para{文献。} 作为集合论的基础有 [43] 等。关于环与模的基础，有 Atiyah–MacDonald [3]、其中译本（新妻）[4]、堀田 [21]、森田 [44]、岩永·佐藤 [24]、永尾·津島 [46]、Cartan–Eilenberg [11] 等。本书省略了关于理想论的重要基础。（非交换）环的局部化方面有谷崎 [53]、Stenströrm [51]、Lam [40] 等。
+
+% [Tutor Note: 上段文献中「Stenströrm」底本如此排印，应为「Stenström」（即 Bo Stenström, *Rings of quotients*，书末文献 [51]）。正誤表未涉及，照原印保留并在此说明。人名「新妻」「堀田」「森田」「岩永·佐藤」「永尾·津島」「谷崎」为日文文献作者，保留汉字；中点用「·」。]

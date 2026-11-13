@@ -1,0 +1,812 @@
+% ===== 原文 pp.45–62（PDF pp.52–69） =====
+% [原文 p.45]
+\chapter{向量空间与模的同调代数}
+
+本章总结关于向量空间的复体与模的复体的同调代数。
+
+注意，$R$ 模中令 $R=\Z$ 者即为加法群，令 $R=K$ 为域者即为向量空间，因此对一般的 $R$ 模成立的事情，对加法群、向量空间也成立。
+
+\section{同态映射的核、像、余核、余像}
+
+\subsection{加法群的情形}
+
+对加法群 $X,Y$，同态映射 $f\colon X\to Y$ 是指保持零元、并与和 $+$ 的运算相容的映射（定义 2.14）。
+
+\begin{definition}{3.1}
+加法群之间的映射 $f\colon X\to Y$ 的核（kernel）$\Ker(f)$、像（image）$\Img(f)$、余核（cokernel）$\Coker(f)$、余像（coimage）$\Coim(f)$ 定义如下。
+\[
+\begin{aligned}
+\Ker(f) &:= \{x\in X \mid f(x)=0_Y\}, & \Img(f) &:= \{f(x)\mid x\in X\},\\
+\Coker(f) &:= Y/\Img(f), & \Coim(f) &:= X/\Ker(f).
+\end{aligned}
+\]
+\end{definition}
+
+这里 $Y/\Img(f)$、$X/\Ker(f)$ 是剩余加法群（定义 2.21）。另一方面也可知 $\Ker(f)$ 是 $X$ 的子加法群，$\Img(f)$ 是 $Y$ 的子加法群。
+
+% [Tutor Note: 原文 p.45 定義 3.1 中「剰余加法群」指商群 $Y/\operatorname{Im}(f)$、$X/\operatorname{Ker}(f)$（定义 2.21 的剩余类群）。补出术语对照：kernel / image / cokernel / coimage；对加法群均有 $\Coim(f)\simeq\Img(f)$（引理 3.2），但在一般的阿贝尔范畴中余像与像之间只有自然映射 $\Coim(f)\to\Img(f)$，未必是同构——这正是第 4 章讨论阿贝尔范畴时的关键点。]
+
+\begin{lemma}{3.2}（同态基本定理）加法群的同构 $\Coim(f)\simeq \Img(f)$ 存在。
+\end{lemma}
+
+\begin{proof}
+只需确认由同态映射 $f\colon X\to Y$ 自然构成的同态映射
+\[
+X/\Ker(f)\to \Img(f)\subset Y
+\]
+是双射。
+\end{proof}
+
+% [Tutor Note: 原文 p.45 此处只说「確認すればよい」，省略了论证。具体地：令 $\bar f(x+\Ker f)=f(x)$。若 $\bar f(x+\Ker f)=0$，则 $x\in\Ker f$，故 $\bar f$ 单射；对任意 $f(x)\in\Img(f)$ 有 $\bar f(x+\Ker f)=f(x)$，故 $\bar f$ 满射。可验证锚点：取 $X=Y=\Z$、$f(n)=2n$，则 $\Coim(f)=\Z/0\simeq\Z\simeq 2\Z=\Img(f)$；取 $f\colon\Z\to\Z/2\Z$ 为标准投射，则 $\Coim(f)=\Z/2\Z\simeq\Img(f)$。]
+
+\subsection{$R$ 模的情形}
+
+对右 $R$ 模之间的 $R$ 同态映射 $f\colon M\to N$，考虑其作为加法群的同态映射的核 $\Ker(f)$、像 $\Img(f)$、余核 $\Coker(f)$、余像 $\Coim(f)$。
+
+% [原文 p.46]
+\begin{lemma}{3.3} $\Ker(f),\Img(f),\Coker(f),\Coim(f)$ 也分别成为右 $R$ 模。
+\end{lemma}
+
+\begin{proof}
+由于 $f\colon M\to N$ 是右 $R$ 模的映射，故对 $\xi\in M$、$a\in R$ 有
+\begin{equation}
+f(\xi\cdot a)=f(\xi)\cdot a \tag{3.1}
+\end{equation}
+成立。由此，若 $\xi\in M$ 满足 $f(\xi)=0$，则 $f(\xi\cdot a)=f(\xi)\cdot a=0$。也就是说，$R$ 对 $M$ 的右作用保持 $\Ker(f)\subset M$，故 $\Ker(f)$ 是 $M$ 的右 $R$ 子模。又由 (3.1)，对 $f(\xi)\in\Img(f)$ 有 $f(\xi)\cdot a=f(\xi\cdot a)\in\Img(f)$，即 $\Img(f)$ 被 $R$ 的右作用保持，故 $\Img(f)\subset N$ 是右 $R$ 子模。另一方面，由 $\Ker(f)\subset M$、$\Img(f)\subset N$ 被 $R$ 的右作用保持，可推出 $\Coker(f)$、$\Coim(f)$ 成为右 $R$ 模。
+\end{proof}
+
+% [Tutor Note: 原文 p.46 对最后一句「$\Coker(f),\Coim(f)$ が右 $R$ 加群となることが従う」未加说明。补足：$M$ 的右 $R$ 作用保持 $\Ker(f)$，故经商映射 $M\to M/\Ker(f)$ 下降为 $M/\Ker(f)$ 上的右 $R$ 作用（良定义性即「保持」）；同理 $N$ 的作用经 $N\to N/\Img(f)$ 下降。可验证锚点：$R=\Z$、$f\colon\Z\to\Z/6\Z$，则 $\Coim(f)=\Z/\Ker(f)=\Z/6\Z$、$\Coker(f)=(\Z/6\Z)/\Img(f)=0$。]
+
+\subsection{向量空间的情形}
+
+体 $K$ 上的向量空间是指把体 $K$ 视为（交换）环时的 $K$ 模。$K$ 上向量空间 $V,W$ 之间的线性映射 $f\colon V\to W$ 的核 $\Ker(f)$、像 $\Img(f)$、余核 $\Coker(f)$、余像 $\Coim(f)$，按把 $f$ 视为加法群的同态映射时的相应概念来定义。
+
+\section{复体与正合列}
+
+\subsection{加法群的复体与正合列}
+
+\begin{definition}{3.4}
+对每个 $i\in\Z$，设 $X^i$ 为加法群、$d^i\colon X^i\to X^{i+1}$ 为加法群之间的映射。
+\[
+\cdots \xrightarrow{d^{i-1}} X^i \xrightarrow{d^i} X^{i+1} \xrightarrow{d^{i+1}} \cdots
+\]
+称之为序列（sequence）。若对所有的 $i\in\Z$ 都有 $d^{i+1}\circ d^i=0$，则称序列 $\{X^i,d^i\}_{i\in\Z}$ 为（加法群的）复体（complex）。特别地，复体若对充分大的 $i$ 恒有 $X^i=0$，则称为上有界（upper bounded）；若对充分小的 $i$ 恒有 $X^i=0$，则称为下有界（lower bounded）；若既上有界又下有界，则称为有界（bounded）。
+\end{definition}
+
+\begin{remark}{3.5} $d^{i+1}\circ d^i=0$ 这一条件等价于
+\[
+\Img(d^i)\subset \Ker(d^{i+1})
+\]
+成立。
+\end{remark}
+
+\begin{definition}{3.6} 对加法群的复体 $\{X^i,d^i\}_{i\in\Z}$，剩余加法群
+\[
+H^i(X):=\Ker(d^i)/\Img(d^{i-1})
+\]
+称为 $i$ 次上同调（cohomology）。
+\end{definition}
+
+\begin{definition}{3.7} 复体 $\{X^i,d^i\}_{i\in\Z}$ 在 $X^i$ 处正合（exact）是指 $H^i(X)=0$，亦即 $\Img(d^{i-1})=\Ker(d^i)$ 成立。若对所有的 $i\in\Z$ 都在 $X^i$ 处正合，则称复体 $\{X^i,d^i\}_{i\in\Z}$ 正合（exact）。正合的复体称为正合列（exact sequence）。
+\end{definition}
+
+% [Tutor Note: 注意 3.5 的验证：若 $d^{i+1}\circ d^i=0$，则对 $y=d^i(x)\in\operatorname{Im}(d^i)$ 有 $d^{i+1}(y)=0$，故 $\operatorname{Im}(d^i)\subset\operatorname{Ker}(d^{i+1})$；反之由包含关系立得 $d^{i+1}\circ d^i=0$。可验证锚点：取 $X^0=\Z\xrightarrow{\times 2}X^1=\Z\xrightarrow{\pi}X^2=\Z/2\Z$，其余项为 $0$，则 $\operatorname{Im}(d^0)=2\Z=\operatorname{Ker}(d^1)$，$H^1=0$，而 $H^0=\Z/2\Z$。]
+
+% [原文 p.47]
+特别重要的正合列是短正合列（short exact sequence）。
+\begin{equation}
+0 \xrightarrow{0} X \xrightarrow{u} Y \xrightarrow{v} Z \xrightarrow{0} 0. \tag{3.2}
+\end{equation}
+这里两端的 $0$ 指仅由零元构成的加法群。为把它与上面的复体 $\{X^i,d^i\}_{i\in\Z}$ 的记法对应起来，要认为 (3.2) 的两端连接着 $\cdots\to 0\to 0\to\cdots$，并选取某个整数 $j$，把 $X,Y,Z$ 分别与 $X^j,X^{j+1},X^{j+2}$ 等同。从这个观点看，(3.2) 的写法丢失了整数 $j$ 的信息；但一般说到加法群的序列时，有时指的正是这种不指定次数标号 $j$ 的对象。在 (3.2) 中，映射 $0\xrightarrow{0}X$ 的像是 $\{0_X\}$，因此为了使
+\[
+0 \xrightarrow{0} X \xrightarrow{u}
+\]
+这部分正合，须有 $\Ker(u)=\{0_X\}$，即 $u$ 是单射。另一方面，映射 $Z\xrightarrow{0}0$ 的核是整个 $Z$，因此为了使
+\[
+Y \xrightarrow{v} Z \xrightarrow{0} 0
+\]
+这部分正合，须有 $\Img(v)=Z$，即 $v$ 是满射。再由 $Y$ 处的正合性得 $\Ker(v)=\Img(u)\simeq X$。
+
+% [Tutor Note: (3.2) 中两端映射都记作 $0$，容易看混：左端 $0\to X$ 是零映射（其像为 $\{0_X\}$，迫使 $u$ 单射），右端 $Z\to 0$ 也是零映射（其核为整个 $Z$，迫使 $v$ 满射）。可验证锚点：取 $X=0$、$Y=Z$、$u=0$、$v=\mathrm{id}_Z$，得短正合列 $0\to 0\to Z\xrightarrow{\mathrm{id}}Z\to 0$；取 $X=\Z\xrightarrow{\times m}\Z=Y$、$Z=\Z/m\Z$ 得 (3.2) 的另一例（$m\ge 2$，见例 3.17）。]
+
+一般地，对加法群 $X,Y$ 与同态映射 $f\colon X\to Y$，存在正合列
+\begin{equation}
+0 \to K \xrightarrow{\iota} X \xrightarrow{f} Y \xrightarrow{\pi} C \xrightarrow{0} 0. \tag{3.3}
+\end{equation}
+事实上，首先设这样的 $C$、$\pi\colon Y\to C$ 存在，则由正合列的条件与引理 3.2 有
+\[
+C=\Img(\pi)\simeq\Coim(\pi)=Y/\Ker(\pi)=Y/\Img(f).
+\]
+同样地，若 $K$、$\iota\colon K\to X$ 存在，则
+\[
+K\simeq\Img(\iota)=\Ker(f).
+\]
+因此取 $C=Y/\Img(f)$、$K=\Ker(f)$ 便有正合列 (3.3) 存在，并且知道 $C,K$ 在同构的意义下唯一。特别地，若 $f$ 是单射，则 $\Ker(f)=0$，故 (3.3) 成为短正合列 $0\to X\xrightarrow{f}Y\xrightarrow{\pi}C\to 0$，且 $C\simeq Y/\Img(f)=Y/X$。同样地，若 $f$ 是满射，则 $Y/\Img(f)=0$，故 (3.3) 成为短正合列 $0\to K\xrightarrow{\iota}X\xrightarrow{f}Y\to 0$，且 $K\simeq\Ker(f)$。以上可知，给定短正合列 (3.2) 时必有 $Z\simeq Y/X$。
+
+% [Tutor Note: (3.3) 的构造补出：取 $K=\operatorname{Ker}(f)$、$\iota$ 为包含、$C=Y/\operatorname{Im}(f)$、$\pi$ 为商映射。正合性逐点验证：$K$ 处 $\iota$ 单射；$X$ 处 $\operatorname{Im}(\iota)=\operatorname{Ker}(f)$；$Y$ 处 $\operatorname{Im}(f)=\operatorname{Ker}(\pi)$；$C$ 处 $\pi$ 满射。可验证锚点：$X=Y=\Z$、$f(n)=3n$，则 $K=0$、$C=\Z/3\Z$，(3.3) 即例 3.17 的短正合列。]
+
+\subsection{$R$ 模的情形}
+
+\begin{definition}{3.8} 设 $R$ 为环。右 $R$ 模的序列 $\{M^i,d^i\}_{i\in\Z}$ 是指加法群意义下的序列，且对每个 $i\in\Z$，$M^i$ 为右 $R$ 模、$d^i\colon M^i\to M^{i+1}$ 为右 $R$ 模之间的 $R$ 同态映射。
+\end{definition}
+
+% [原文 p.48]
+右 $R$ 模的复体（complex）是指右 $R$ 模的序列且作为加法群构成复体者。右 $R$ 模的复体 $\{M^i,d^i\}_{i\in\Z}$ 在 $M^i$ 处正合，是指它作为加法群的复体在 $M^i$ 处正合。右 $R$ 模的正合列是指右 $R$ 模的序列且作为加法群构成正合列者。
+
+对右 $R$ 模之间的 $R$ 同态映射 $f\colon M\to N$，$\Ker(f),\Img(f),\Coker(f),\Coim(f)$ 仍是右 $R$ 模（引理 3.3），因此上一节关于加法群正合列的讨论在右 $R$ 模的情形全部成立。特别地，给定单射 $R$ 同态映射 $\iota\colon L\to M$ 时必有右 $R$ 模的短正合列
+\[
+0\to L\xrightarrow{\iota} M\xrightarrow{\pi} N\to 0
+\]
+存在；反之给定这样的短正合列时必有 $\iota$ 是单射、$\pi$ 是满射，且 $N\simeq M/L$。
+
+\subsection{向量空间的情形}
+
+环 $R=K$ 为域时，右 $R$ 模就是 $K$ 向量空间；$K$ 向量空间的序列、复体、正合列等，按 $K$ 模的相应概念定义。也就是说，右 $R$ 模的序列所具有的性质，令 $R=K$ 为域便原样对 $K$ 向量空间的序列成立。然而，正如 3.5 节、3.6 节将要讨论的，有一些重要性质对一般的 $R$ 模不成立而对向量空间成立。
+
+\section{复体之间的映射}
+
+固定环 $R$，讨论右 $R$ 模的复体。注意令 $R=\Z$ 即为加法群的复体，令 $R=K$ 为域即为向量空间的复体。
+
+\begin{definition}{3.9}
+设 $X:=\{X^i,d_X^i\}_{i\in\Z}$、$Y:=\{Y^i,d_Y^i\}_{i\in\Z}$ 为右 $R$ 模的复体。若 $\phi:=\{\phi^i\colon X^i\to Y^i\}_{i\in\Z}$ 满足：对所有的 $i\in\Z$，$\phi^i\colon X^i\to Y^i$ 是 $R$ 同态映射，且
+\[
+\phi^{i+1}\circ d_X^i = d_Y^i\circ \phi^i
+\]
+则称 $\phi$ 为复体映射（chain map），并记作 $\phi\colon X\to Y$。
+\end{definition}
+
+% [Tutor Note: 底本 p.48 定義 3.9 印作 $\phi^{i+1}\circ d_X^i=d_Y^{i+1}\circ\phi^i$；据作者正誤表（2014-05-20 版）p48 条订正为 $\phi^{i+1}\circ d_X^i=d_Y^i\circ\phi^i$。理由：两边都应是 $X^i\to Y^{i+1}$ 的映射，故右端须用 $d_Y^i$ 而非 $d_Y^{i+1}$。本书「複体の写像」的英文 chain map 按正誤表 p76–p77 与「複体の射」视为同一。]
+
+也就是说，复体映射就是使下列图表交换者。
+\[
+\begin{tikzcd}[row sep=2.4em, column sep=2.8em]
+\cdots \arrow[r] & X^{i-1} \arrow[r,"d_X^{i-1}"] \arrow[d,"\phi^{i-1}"] & X^i \arrow[r,"d_X^i"] \arrow[d,"\phi^i"] & X^{i+1} \arrow[r,"d_X^{i+1}"] \arrow[d,"\phi^{i+1}"] & \cdots \\
+\cdots \arrow[r] & Y^{i-1} \arrow[r,"d_X^{i-1}"] & Y^i \arrow[r,"d_Y^i"] & Y^{i+1} \arrow[r,"d_Y^{i+1}"] & \cdots
+\end{tikzcd}
+\]
+
+% [Tutor Note: 底本 p.48 的图式中下排最左箭头印作 $d_X^{i-1}$（应为 $d_Y^{i-1}$），此点正誤表未涉及，故正文照印并在此指出：$Y$ 这一行的微分只能是 $d_Y^{i-1},d_Y^i,d_Y^{i+1}$。核对方法：该图的可换性正是 $\phi^{i}\circ d_X^{i-1}=d_Y^{i-1}\circ\phi^{i-1}$（即定義 3.9 中指标整体下移一位）。]
+
+\begin{definition}{3.10}
+两个复体 $X:=\{X^i,d_X^i\}_{i\in\Z}$、$Y:=\{Y^i,d_Y^i\}_{i\in\Z}$ 称为同构（isomorphic），是指存在复体映射 $\phi=\{\phi^i\}_{i\in\Z}\colon X\to Y$、$\psi=\{\psi^i\}_{i\in\Z}\colon Y\to X$，使得对每个 $i\in\Z$ 有
+\[
+\psi^i\circ\phi^i=\id_{X^i},\qquad \phi^i\circ\psi^i=\id_{Y^i}
+\]
+此时称 $\phi,\psi$ 为同构映射（isomorphism）。
+\end{definition}
+
+% [原文 p.49]
+复体映射 $\phi\colon X\to Y$ 对每个 $i\in\Z$ 诱导上同调之间的 $R$ 同态映射
+\[
+H^i(\phi)\colon H^i(X)\to H^i(Y).
+\]
+这里说 $H^i(\phi)\colon H^i(X)\to H^i(Y)$ 由 $\phi^i$ 诱导（induce），意思是：对元素 $[x]\in H^i(X)$，取 $[x]$ 的一个代表元 $x\in X^i$，令
+\[
+H^i(\phi)([x]):=[\phi^i(x)]
+\]
+而 $H^i(\phi)([x])\in H^i(Y)$ 由此确定。此时要说明这确实定义了映射，须确认以下两件事。
+\begin{itemize}
+\item[(i)] $\phi^i(x)$ 确定 $H^i(Y)$ 的一个代表元：$[\phi^i(x)]\in H^i(Y)$。
+\item[(ii)] 另取代表元 $x'\in X^i$、$[x']=[x]$ 时，$[\phi^i(x')]=[\phi^i(x)]$。
+\end{itemize}
+两个条件都可由复体之间映射的定义推出。事实上，(i) 由 $d_X^i(x)=0$ 得
+\[
+0_Y=\phi^{i+1}\circ d^i(x)=d^i\circ\phi^i(x)
+\]
+而可知；(ii) 由存在 $x''\in X^{i-1}$ 使 $x'-x=d^{i-1}(x'')$，故 $\phi^i(x'-x)=\phi^i\circ d^{i-1}(x'')$，再由 $\phi^i\circ d^{i-1}(x'')=d^i\circ\phi^{i-1}(x'')$ 得 $H^i(\phi)(x')-H^i(\phi)(x)=[\phi^i(x'-x)]=0_{H^i(Y)}$。
+
+% [Tutor Note: 此处三处印误据作者正誤表（2014-05-20 版）p48 条订正：line 16 的 $d^{i+1}\circ\phi^i(x)$ 应为 $d^i\circ\phi^i(x)$；line 18 的 $H^1(\phi)(x)$ 应为 $H^i(\phi)(x)$。（另底本 $H^i(\phi)$ 曾印作花体 $H^{\imath}$，同属排印之误。）补出省略处：$x'-x=d^{i-1}(x'')$ 是由 $[x']=[x]\in H^i(X)$ 的定义「差属于 $\operatorname{Im}(d^{i-1})$」得到的。可验证锚点：取 $X=0$、$Y$ 任意的复体，则 $H^i(\phi)$ 为零映射，良定义性平凡成立；取 $\phi=\id_X$，则 $H^i(\phi)=\id_{H^i(X)}$。]
+
+\[
+H(\phi):=\{H^i(\phi)\}_{i\in\Z}
+\]
+这样表示。
+
+\begin{definition}{3.11}
+设 $X:=\{X^i,d_X^i\}_{i\in\Z}$、$Y:=\{Y^i,d_Y^i\}_{i\in\Z}$ 为模的复体，$\phi:=\{\phi^i\colon X^i\to Y^i\}_{i\in\Z}$ 为复体之间的映射。若由 $\phi$ 诱导的复体上同调之间的映射 $H(\phi)\colon H(X)\to H(Y)$ 是同构映射，则称 $\phi$ 为拟同构映射（quasi-isomorphism）。
+\end{definition}
+
+% [Tutor Note: 底本 p.49 定義 3.11 印作 $H(\phi)\colon X\to Y$；据作者正誤表（2014-05-20 版）p49 条订正为 $H(\phi)\colon H(X)\to H(Y)$。此处 $H(X):=\{H^i(X)\}_{i\in\Z}$ 是各次上同调所成、微分取零映射的复体（与补題 3.21 中的 $H(V)$ 同一构造）。]
+
+\section{复体的同伦等价}
+
+继续固定环 $R$，讨论右 $R$ 模的复体。也就是说，本章得到的事实对加法群、向量空间的复体也全部成立。
+
+\begin{definition}{3.12}
+对右 $R$ 模的复体 $X:=\{X^i,d_X^i\}_{i\in\Z}$、$Y:=\{Y^i,d_Y^i\}_{i\in\Z}$，若两个复体映射 $\phi:=\{\phi^i\}_{i\in\Z},\psi:=\{\psi^i\}_{i\in\Z}\colon X\to Y$ 满足：对每个 $k$ 存在 $h^k\colon X^k\to Y^{k-1}$，使得
+\[
+\phi^k-\psi^k=d_Y^{k-1}\circ h^k+h^{k+1}\circ d_X^k
+\]
+则称 $\phi$ 与 $\psi$ 同伦（homotopic）。
+\end{definition}
+
+% [原文 p.50]
+使该式成立的图式如下。
+\[
+\begin{tikzcd}[row sep=4.0em, column sep=3.4em]
+\cdots \arrow[r] & X^{k-1} \arrow[r,"d_X^{k-1}"] \arrow[d,bend right=10,"\psi^{k-1}"] \arrow[d,bend left=10,"\phi^{k-1}"'] & X^k \arrow[r,"d_X^k"] \arrow[dl,bend right=10,"h^k"'] \arrow[d,bend right=10,"\psi^k"] \arrow[d,bend left=10,"\phi^k"'] & X^{k+1} \arrow[r,"d_X^{k+1}"] \arrow[dl,bend right=10,"h^{k+1}"'] \arrow[d,bend right=10,"\psi^{k+1}"] \arrow[d,bend left=10,"\phi^{k+1}"'] & \cdots \\
+\cdots \arrow[r] & Y^{k-1} \arrow[r,"d_Y^{k-1}"] & Y^k \arrow[r,"d_Y^k"] & Y^{k+1} \arrow[r] & \cdots
+\end{tikzcd}
+\]
+此时记作 $\phi\overset{\mathrm{h.e.}}{\sim}\psi$。
+
+% [Tutor Note: 图式解读：$h^k$ 是从 $X^k$ 到 $Y^{k-1}$ 的「一次降次」映射，$h^{k+1}$ 从 $X^{k+1}$ 到 $Y^k$；同伦公式 $\phi^k-\psi^k=d_Y^{k-1}h^k+h^{k+1}d_X^k$ 的两项分别对应「先降次再走 $Y$ 的微分」与「先走 $X$ 的微分再降次」。可验证锚点：取 $X,Y$ 均为只在 $0$ 处有 $\Z$、其余为 $0$ 的复体，则任意 $\phi=\psi$（都是同一个态射），同伦条件平凡成立；若 $X$ 为 $0\to\Z\xrightarrow{\mathrm{id}}\Z\to 0$（次数 $0,1$），可验算 $h^1$ 的存在性受制于 $\operatorname{Im}(d_X^0)$。]
+
+由此定义复体之间的同伦等价。
+
+\begin{definition}{3.13}
+右 $R$ 模的复体 $X:=\{X^i,d_X^i\}_{i\in\Z}$、$Y:=\{Y^i,d_Y^i\}_{i\in\Z}$ 称为同伦等价（homotopy equivalent），是指存在复体之间的映射 $\phi\colon X\to Y$、$\psi\colon Y\to X$ 满足
+\[
+\psi\circ\phi\overset{\mathrm{h.e.}}{\sim}\id_X,\qquad \phi\circ\psi\overset{\mathrm{h.e.}}{\sim}\id_Y.
+\]
+此时称 $\phi,\psi$ 为同伦等价映射（homotopy equivalence）。
+\end{definition}
+
+\begin{theorem}{3.14}
+右 $R$ 模的复体 $X=\{X^i,d_X^i\}_{i\in\Z}$、$Y=\{Y^i,d_Y^i\}_{i\in\Z}$ 之间的两个映射 $\phi,\psi\colon X\to Y$ 若同伦，则
+\[
+H(\phi)=H(\psi).
+\]
+\end{theorem}
+
+\begin{proof}
+只需说明：对任意元素 $x\in\Ker(d_X^k)$ 有 $\phi^k(x)-\psi^k(x)\in\Img(d_Y^{k-1})$。事实上，
+\[
+(\phi^k-\psi^k)(x)=(d_Y^{k-1}\circ h^k+h^{k+1}\circ d_X^k)(x),
+\]
+而由 $x\in\Ker(d_X^k)$，右端等于 $d_Y^{k-1}\circ h^k(x)=d_Y^{k-1}(h^k(x))\in\Img(d_Y^{k-1})$，故得证。
+\end{proof}
+
+\begin{lemma}{3.15}
+对右 $R$ 模的复体 $X:=\{X^i,d_X^i\}_{i\in\Z}$、$Y:=\{Y^i,d_Y^i\}_{i\in\Z}$、$Z:=\{Z^i,d_Z^i\}_{i\in\Z}$ 与复体映射 $\phi,\phi'\colon X\to Y$、$\psi,\psi'\colon Y\to Z$，若 $\phi\overset{\mathrm{h.e.}}{\sim}\phi'$、$\psi\overset{\mathrm{h.e.}}{\sim}\psi'$，则 $\psi\circ\phi\overset{\mathrm{h.e.}}{\sim}\psi'\circ\phi'$ 成立。
+\end{lemma}
+
+\begin{proof}
+对每个 $k\in\Z$，存在 $h^k$ 使 $(\psi')^k-\psi^k=d_Z^{k-1}\circ h^k+h^{k+1}\circ d_Y^k$，故
+\[
+\begin{aligned}
+(\psi')^k\circ\phi^k-\psi^k\circ\phi^k
+&=(d_Z^{k-1}\circ h^k+h^{k+1}\circ d_Y^k)\circ\phi^k\\
+&=d_Z^{k-1}\circ(h^k\circ\phi^k)+(h^{k+1}\circ\phi^{k+1})\circ d_X^k
+\end{aligned}
+\]
+从而可知 $\psi\circ\phi$ 与 $\psi'\circ\phi$ 同伦。同样可知 $\psi'\circ\phi$ 与 $\psi'\circ\phi'$ 同伦。
+\end{proof}
+
+\begin{corollary}{3.16} 同伦等价映射 $\phi\colon(X,d_X)\to(Y,d_Y)$ 是拟同构映射。
+\end{corollary}
+
+\begin{proof}
+对同伦等价映射 $\phi\colon X\to Y$、$\phi'\colon Y\to X$，由 $\phi'\circ\phi\overset{\mathrm{h.e.}}{\sim}\id_X$、$\phi\circ\phi'\overset{\mathrm{h.e.}}{\sim}\id_Y$ 有
+% [原文 p.51]
+\[
+H(\phi')\circ H(\phi)=H(\phi'\circ\phi)=H(\id_X)=\id_{H(X)},\qquad
+H(\phi)\circ H(\phi')=H(\phi\circ\phi')=H(\id_Y)=\id_{H(Y)}
+\]
+由此得到，而这正断言了 $H(X)$ 与 $H(Y)$ 同构。
+\end{proof}
+
+% [Tutor Note: 这里用了 $H$ 的函子性：$H(\psi\circ\phi)=H(\psi)\circ H(\phi)$、$H(\id_X)=\id_{H(X)}$；本书未单独列出，其实由 $H^i(\phi)([x])=[\phi^i(x)]$ 直接验算即得（见 p.49 的良定义性讨论）。可验证锚点：取 $\phi=\id_X$，则 $H(\phi)=\id_{H(X)}$，故拟同构；这给出「同伦等价 ⇒ 拟同构」的最简单实例，也说明系 3.16 的逆一般不成立（见 3.5.2 节的讨论）。]
+
+\section{关于 $R$ 模的复体}
+
+\subsection{短正合列的分裂}
+
+考虑 3.2.2 节讨论过的右 $R$ 模的短正合列
+\[
+0\to L\xrightarrow{\iota}M\xrightarrow{\pi}M/L\to 0.
+\]
+$\pi\colon M\to M/L$ 是标准投射（满射），$\iota\colon L\to M$ 是单射；由 $L\simeq\Img(\iota)\subset M$ 可把 $L$ 视为 $M$ 的右 $R$ 子模。如此，作为 $L,M,M/L$ 之间的 $R$ 同态映射自然得到的只有 $\iota\colon L\to M$、$\pi\colon M\to M/L$，而作为 $M\to L$、$M/L\to M$ 的自然映射一般得不到。也就是说，
+\begin{itemize}
+\item 一般不存在满足 $g\circ\iota=\id_L$ 的 $R$ 同态映射 $g\colon M\to L$，
+\item 一般不存在满足 $\pi\circ h=\id_{M/L}$ 的 $R$ 同态映射 $h\colon M/L\to M$。
+\end{itemize}
+
+\begin{example}{3.17}
+设 $m\ge 2$ 为整数，考虑 $\Z$ 模（即加法群）的短正合列
+\[
+0\to \Z\xrightarrow{\iota}\Z\xrightarrow{\pi}\Z/m\Z\to 0.
+\]
+这里 $\iota\colon\Z\to\Z$ 是乘以 $m$ 的映射 $\Z\ni a\mapsto\iota(a)=m\cdot a\in\Z$，$\pi\colon\Z\to\Z/m\Z$ 是标准投射。此时想构造满足 $g\circ\iota=\id_\Z$ 的同态映射 $g\colon\Z\to\Z$。为此，$g$ 例如须满足 $g(m)=1$。另一方面，为使 $g$ 成为同态映射，$g$ 须满足
+\[
+g(m)=\overbrace{g(1)+\cdots+g(1)}^{m}=m\cdot g(1),
+\]
+但此时无法确定满足 $1=m\cdot g(1)$ 的 $g(1)\in\Z$。
+\end{example}
+
+% [Tutor Note: 例 3.17 说明「$\Z$ 上加法群的短正合列未必分裂」；根因是乘法映射 $\times m$ 不是可裂单射（$m\ge 2$ 时不存在 $m\cdot g(1)=1$ 的整数解）。可验证锚点：$m=2$ 时 $\operatorname{Hom}_\Z(\Z,\Z)\simeq\Z$ 而 $\operatorname{Hom}_\Z(\Z/2\Z,\Z)=0$，故 (ii) 亦不成立；这正对应 3.5.1 节末尾「(i) 与 (ii) 等价」的论证。]
+
+\begin{example}{3.18}
+设 $R$ 为以体 $K$ 为成分的 $2\times 2$ 下三角矩阵所成的空间。此时 $M=\mathrm{Mat}_{1\times2}(K)$ 成为右 $R$ 模。事实上，$R$ 对 $M$ 的右作用为：对 $\begin{pmatrix}a&0\\b&c\end{pmatrix}\in R$、$(\xi_1\ \xi_2)\in M$，有
+\[
+(\xi_1\ \xi_2)\cdot\begin{pmatrix}a&0\\b&c\end{pmatrix}
+=(\xi_1\cdot a+\xi_2\cdot b\ \ \xi_2\cdot c).
+\]
+观察此式可知，$M$ 的子加法群
+\[
+L:=\left\{(\xi_1\ 0)\in M \;\middle|\; \xi_1\in K\right\}\subset M
+\]
+是 $M$ 的右 $R$ 子模。事实上，
+% [原文 p.52]
+\[
+(\xi_1\ 0)\cdot\begin{pmatrix}a&0\\b&c\end{pmatrix}=(\xi_1\cdot a\ \ 0)\in L.
+\]
+由此得到短正合列
+\[
+0\to L\xrightarrow{\iota}M\xrightarrow{\pi}M/L\to 0.
+\]
+这里，考虑作为加法群的同态映射 $g\colon M\to L$、$(\xi_1\ \xi_2)\mapsto(\xi_1\ 0)$。它不是右 $R$ 模之间的 $R$ 同态映射。事实上，
+\[
+\begin{aligned}
+g\left((\xi_1\ \xi_2)\cdot\begin{pmatrix}a&0\\b&c\end{pmatrix}\right)
+&=g\big((\xi_1\cdot a+\xi_2\cdot b\ \ \xi_2\cdot c)\big)\\
+&=(\xi_1\cdot a+\xi_2\cdot b\ \ 0),
+\end{aligned}
+\]
+\[
+g\big((\xi_1\ \xi_2)\big)\cdot\begin{pmatrix}a&0\\b&c\end{pmatrix}
+=(\xi_1\ 0)\cdot\begin{pmatrix}a&0\\b&c\end{pmatrix}=(\xi_1\cdot a\ \ 0),
+\]
+故 $g\left((\xi_1\ \xi_2)\cdot\begin{pmatrix}a&0\\b&c\end{pmatrix}\right)\neq g\big((\xi_1\ \xi_2)\big)\cdot\begin{pmatrix}a&0\\b&c\end{pmatrix}$。
+
+同样地，考察作为映射 $h\colon M/L\to M$ 的自然者。$M$ 的元素 $(\xi_1\ \xi_2)$ 模 $L$ 的元素所成的剩余类 $[(\xi_1\ \xi_2)]$ 可取 $(\xi_1\ \xi_2)$ 的代表元 $(0\ \xi_2)\in M$。因此试着把 $h\colon M/L\to M$ 定义为
+\[
+h\colon[(\xi_1\ \xi_2)]\mapsto(0\ \xi_2).
+\]
+这是加法群意义下的同态映射，但不是 $R$ 同态映射。事实上，
+\[
+\begin{aligned}
+h\left([(\xi_1\ \xi_2)]\cdot\begin{pmatrix}a&0\\b&c\end{pmatrix}\right)
+&=h\left(\left[(\xi_1\ \xi_2)\cdot\begin{pmatrix}a&0\\b&c\end{pmatrix}\right]\right)\\
+&=h\big([(\xi_1\cdot a+\xi_2\cdot b\ \ \xi_2\cdot c)]\big)=(0\ \ \xi_2\cdot c),
+\end{aligned}
+\]
+\[
+h\big([(\xi_1\ \xi_2)]\big)\cdot\begin{pmatrix}a&0\\b&c\end{pmatrix}
+=(0\ \xi_2)\cdot\begin{pmatrix}a&0\\b&c\end{pmatrix}=(\xi_2\cdot b\ \ \xi_2\cdot c),
+\]
+故知 $h\left([(\xi_1\ \xi_2)]\cdot\begin{pmatrix}a&0\\b&c\end{pmatrix}\right)\neq h\big([(\xi_1\ \xi_2)]\big)$。同样可知不存在满足 $\pi\circ h=\id_{M/L}$ 的 $R$ 同态映射 $h$。
+\end{example}
+
+% [Tutor Note: 例 3.18 旨在说明：即使每个 $X^i$ 处都能分裂（加群层面），$R$ 模层面也未必能分裂——$2\times2$ 下三角矩阵环的「上三角位置」$b$ 阻止了 $g,h$ 的 $R$ 线性性。此处底本 p.52 最后的不等式右端印作 $h([(\xi_1\ \xi_2)])$，按前后文应理解为 $h([(\xi_1\ \xi_2)])\cdot\begin{pmatrix}a&0\\b&c\end{pmatrix}$（否则比较的对象不同）；此点正誤表未涉及，故正文照印。可验证锚点：取 $K=\mathbb{R}$、$\xi_2=1$、$b=1$，则左端为 $(0\ \ c)$ 而右端第二项为 $(1\ \ c)$，两者不等。]
+
+一般地，对某个环 $R$，给定右 $R$ 模的短正合列
+\[
+0\to L\xrightarrow{\iota}M\xrightarrow{\pi}N\to 0
+\]
+时，下面两个条件
+\begin{itemize}
+\item[(i)] 存在满足 $g\circ\iota=\id_L$ 的右 $R$ 模映射 $g\colon M\to L$，
+\item[(ii)] 存在满足 $\pi\circ h=\id_N$ 的右 $R$ 模映射 $h\colon N\to M$
+\end{itemize}
+% [原文 p.53]
+两者同时成立，与 (i) 或 (ii) 中只有一方成立，是等价的。现在假设例如 (ii) 的条件成立。也就是说，上述 $h\colon N\to M$ 存在。此时可以考虑右 $R$ 模的自同态映射 $e:=h\circ\pi\colon M\to M$，且 $\Img(e),\Img(\id_M-e)$ 是 $M$ 的右 $R$ 子模。特别地，
+\[
+e^2=(h\circ\pi)\circ(h\circ\pi)=h\circ(\pi\circ h)\circ\pi=h\circ(\id_N)\circ\pi=h\circ\pi=e,
+\]
+由此进一步得到
+\[
+(\id_M-e)^2=\id_M-e,\qquad e\circ(\id_M-e)=(\id_M-e)\circ e=0.
+\]
+因此，作为集合有 $\Img(e)\cap\Img(\id_M-e)=\{0_M\}$，作为右 $R$ 模 $M$ 可直和分解为
+\[
+M=\Img(e)\oplus\Img(\id_M-e).
+\]
+另一方面，由 $\pi\circ\iota=0$ 有 $\Img(\iota)\cap\Img(e)=\{0_M\}$，即 $\Img(\iota)=\Img(\id_M-e)$。这里，同态映射 $g\colon M\to L$ 这样定义：若 $\eta\in M$ 满足 $\eta\in\Img(e)$ 则令 $g(\eta)=0_L$；若 $\eta\in\Img(\id_M-e)$，则存在唯一确定的 $\xi\in L$ 使 $\eta=\iota(\xi)$，令 $g(\eta)=\xi$。如此可知 $g$ 成为右 $R$ 模的映射。于是得到以下分解。
+\[
+0\to L\simeq\Img(\iota)=\underset{\Img(e)}{\overset{\Img(\id_M-e)}{\oplus}}\simeq N\to 0
+\]
+
+% [Tutor Note: 补出「幂等元给出直和分解」的省略论证：由 $e^2=e$ 得 $(\id_M-e)^2=\id_M-e$ 且 $e\circ(\id_M-e)=0$。于是任一 $\eta\in M$ 可写成 $\eta=e(\eta)+(\id_M-e)(\eta)$，故 $M=\Img(e)+\Img(\id_M-e)$；又若 $\eta\in\Img(e)\cap\Img(\id_M-e)$，则 $e(\eta)=\eta$（因 $\eta\in\Img(e)$ 且 $e$ 在 $\Img(e)$ 上为恒等）而 $e(\eta)=0$（因 $\eta=(\id_M-e)(\eta')$，故 $e(\eta)=e(\id_M-e)(\eta')=0$），故 $\eta=0$，即和为直和。可验证锚点：取 $R=\Z$、短正合列 $0\to 2\Z\to\Z\to\Z/2\Z\to 0$（不分裂），此时不存在 (ii) 中的 $h$，故上述分解不成立，与例 3.17 一致。]
+
+\begin{definition}{3.19}（分裂）环 $R$ 上右 $R$ 模的短正合列
+\[
+0\to L\xrightarrow{\iota}M\xrightarrow{\pi}N\to 0
+\]
+若存在满足 $\pi\circ h=\id_N$ 的 $R$ 同态映射 $h\colon N\to M$，则称其分裂（split）。
+\end{definition}
+
+\subsection{拟同构与同伦等价}
+
+给定一个正合列时，通过在某一处映射处把它折弯，可以构成两个复体及其间的映射。以上面的短正合列为例来做这件事。
+\begin{equation}
+0\to L\xrightarrow{\iota}M\xrightarrow{\pi}N\xrightarrow{0}0. \tag{3.4}
+\end{equation}
+在映射 $\iota$ 处如下折弯试试。
+\begin{equation}
+\begin{tikzcd}[row sep=1.7em, column sep=3.0em]
+0 \arrow[r] & L \arrow[d,"\iota"] \\
+& M \arrow[r,"\pi"] & N \arrow[r] & 0
+\end{tikzcd} \tag{3.5}
+\end{equation}
+
+% [原文 p.54]
+上面一行、下面一行分别通过在两端添上 $0$ 便成为复体。进一步，作为从 $0$ 出发的映射、到 $0$ 的映射添上零映射，便构成复体之间的映射。
+\begin{equation}
+\begin{tikzcd}[row sep=2.1em, column sep=2.5em]
+\cdots \arrow[r] & 0 \arrow[r] \arrow[d] & L \arrow[r] \arrow[d,"\iota"] & 0 \arrow[r] \arrow[d] & 0 \arrow[r] \arrow[d] & \cdots \\
+\cdots \arrow[r] & 0 \arrow[r] & M \arrow[r,"\pi"] & N \arrow[r] & 0 \arrow[r] & \cdots
+\end{tikzcd} \tag{3.6}
+\end{equation}
+正合列被分成两个复体，因此在被分开的端部，其上同调一般变成非平凡的。把上面一行的复体写作 $L:=\{L^n,d_L^n\}_{n\in\Z}$，下面一行的复体写作 $M:=\{M^n,d_M^n\}_{n\in\Z}$。也就是说，$L^0=L$、$n\neq 0$ 时 $L^n=0$，对所有的 $n$ 有 $d_L^n=0$；而 $M^0=M$、$M^1=N$，$n\neq 0,1$ 时 $M^n=0$，$d_M^0=\pi$，$n\neq 0$ 时 $d_M^n=0$。此时 $n\neq 0$ 时 $H^n(L)=0=H^n(M)$，但 $H^0(L)=L$、$H^0(M)=\Ker(\pi)$。这里，由于 (3.5) 是短正合列，$L\simeq\Img(\iota)=\Ker(\pi)$。因此 $\iota\colon L^0\to M^0$ 诱导复体的同构映射 $H(L)\to H(M)$，$\iota$ 定出从复体 $L$ 到 $M$ 的拟同构映射。
+
+现在设出发点的短正合列 (3.4) 不分裂。此时不存在满足 $g\circ\iota=\id_L$ 的右 $R$ 模映射 $g\colon M\to L$。另一方面，现在 $H^0(L)=L$，故不存在从下面一行复体 $M$ 到上面一行复体 $L$ 的拟同构映射。也就是说，由系 3.16 可知这两个复体不同伦等价。把折弯处从 $\iota$ 换成 $\pi$ 也同样可以做。
+
+如此，给定两个复体时，有可能从一个到另一个存在拟同构映射、而反方向不存在拟同构映射，从而两个复体不同伦等价。另一方面，对两个复体，只要哪怕单方向存在拟同构映射就想把它们视为同一，该怎么做呢？在复体所成的范畴中，把同伦等价的复体视为同一，再通过相当于环的局部化（2.2.6 节）的范畴类似操作添上拟同构的逆射，由此得到的就是第 4 章要讲解的导出范畴。
+
+% [Tutor Note: 底本 p.54 line 24 印作「圏類次」；据作者正誤表（2014-05-20 版）p54 条订正为「圏類似」，即「范畴上的类似物」之意，今译为「范畴类似（操作）」。可验证锚点：本段所构造的 $L\to M$ 是拟同构但一般不同伦等价，恰说明「拟同构」不能像同伦等价那样直接作为范畴中的同构关系，必须做局部化（第 4 章）。]
+
+\section{关于向量空间的复体}
+
+$K$ 上向量空间的复体是（右）$R$ 模的复体而 $R=K$ 为域者，它具有一般环 $R$ 情形下不成立的重要性质。
+
+\begin{lemma}{3.20} 体 $K$ 上任一向量空间的短正合列
+\[
+0\to U\xrightarrow{u}V\xrightarrow{v}W\to 0
+\]
+都分裂。
+\end{lemma}
+
+% [原文 p.55]
+\begin{proof}
+取 $W$ 的一组基 $\{w_\lambda\}_{\lambda\in\Lambda}$，对每个 $\lambda\in\Lambda$ 各取 $v^{-1}(w_\lambda)$ 的一个元素 $v_\lambda\in V$（\cf\ 选择公理（公理 2.2））。由这一对应 $w_\lambda\mapsto v_\lambda$ 可定义线性映射 $s\colon W\to V$，且满足 $v\circ s=\id_W$。
+\end{proof}
+
+% [Tutor Note: 补出「分裂」与「截面」的等价：$v\circ s=\id_W$ 即 $s$ 是满射 $v$ 的一个截面（section），于是 $V\simeq U\oplus W$，$s$ 即 (ii) 中的 $h$。注意此处用到选择公理（基的存在）；在不用选择公理的 ZF 模型中，任意向量空间的短正合列是否分裂并非平凡。可验证锚点：$U=W=K$、$V=K^2$，$v(x,y)=y$，则 $s(y)=(0,y)$ 满足 $v\circ s=\id_W$。]
+
+\begin{lemma}{3.21}（\cf\ [56, p15]）对向量空间的复体 $V:=\{V^i,d^i\}_{i\in\Z}$，把其上同调 $H(V):=\{H^i(V)\}_{i\in\Z}$ 对每个 $i$ 通过零映射 $H^i(V)\xrightarrow{0}H^{i+1}(V)$ 来考虑，便视为复体。此时复体 $V$ 与 $H(V)$ 同伦等价。也就是说，存在复体映射 $\iota\colon H(V)\to V$、$\pi\colon V\to H(V)$ 以及对每个 $i$ 的线性映射 $h^i\colon V^i\to V^{i-1}$，使得
+\begin{equation}
+\pi^i\circ\iota^i=\id_{H^i(V)},\qquad \id_{V^i}-(\iota^i\circ\pi^i)=d^{i-1}\circ h^i+h^{i+1}\circ d^i \tag{3.7}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+对向量空间的复体 $\{V^i,d^i\}_{i\in\Z}$ 的每个 $i$，存在两个短正合列
+\begin{align}
+0&\to\Img(d^{i-1})\to\Ker(d^i)\to H^i(V)\to 0, \tag{3.8}\\
+0&\to\Ker(d^i)\to V^i\to\Coim(d^i)\to 0 \tag{3.9}
+\end{align}
+由引理 3.20，两者都分裂（定义 3.19）。因此得到
+\begin{equation}
+V^i\simeq\Img(d^{i-1})\oplus H^i(V)\oplus\Coim(d^i). \tag{3.10}
+\end{equation}
+进一步，由 $\Coim(d^i)\simeq\Img(d^i)\subset V^{i+1}$，可把 $V^{i+1}$ 到 $\Img(d^i)$ 的射影（满射）、同构映射 $\Img(d^i)\to\Coim(d^i)$ 与插入（单射 $\Coim(d^i)\to V^i$）合成，构成映射
+\[
+h^{i+1}\colon V^{i+1}\to V^i,
+\]
+且由该构成有 $h^{i+1}\circ d^i(V^i)\simeq\Coim(d^i)$、$d^{i-1}\circ h^i(V^i)=\Img(d^{i-1})$。另一方面，把由 (3.10) 的分解得到的映射表示为
+\[
+\pi^i\colon V^i\to H^i(V),\qquad \iota^i\colon H^i(V)\to V^i,
+\]
+则它们都是复体之间的拟同构映射。
+\[
+\begin{tikzcd}[row sep=3.0em, column sep=2.9em]
+\cdots \arrow[r,"d^{i-2}"] & V^{i-1} \arrow[r,"d^{i-1}"] \arrow[d,bend right=10,"\iota^{i-1}"] & V^i \arrow[r,"d^i"] \arrow[d,bend right=10,"\iota^i"] & V^{i+1} \arrow[r,"d^{i+1}"] \arrow[d,bend right=10,"\iota^{i+1}"] & \cdots \\
+\cdots \arrow[r,"0"] & H^{i-1}(V) \arrow[r,"0"] \arrow[u,bend right=10,"\pi^{i-1}"] & H^i(V) \arrow[r,"0"] \arrow[u,bend right=10,"\pi^i"] & H^{i+1}(V) \arrow[r,"0"] \arrow[u,bend right=10,"\pi^{i+1}"] & \cdots
+\end{tikzcd}
+\]
+由此得到 (3.7)。
+\end{proof}
+
+% [Tutor Note: 底本 p.55 的 (3.8) 在 $\operatorname{Ker}(d^i)\to H^i(V)$ 上标有 $\pi^i$、(3.9) 在 $0\to\operatorname{Ker}(d^i)$ 上标有 $\iota^i$；据作者正誤表（2014-05-20 版）p55 条，这两个标注均应删去——因为 $\pi^i,\iota^i$ 在本证明中已被用于 (3.10) 分解所给出的 $V^i→H^i(V)$、$H^i(V)→V^i$（见后文图示），若同时用于短正合列会造成记号冲突。可验证锚点：取 $V^0=K\xrightarrow{0}V^1=K$（微分全为 $0$），则 $H^0(V)=K=H^1(V)$，$H(V)$ 与 $V$ 显然同伦等价（$\iota,\pi$ 取恒等即可）。]
+
+\begin{proposition}{3.22}
+两个向量空间的复体 $V:=\{V^i,d_V^i\}_{i\in\Z}$、$W:=\{W^i,d_W^i\}_{i\in\Z}$ 之间的映射 $\phi\colon V\to W$ 关于以下条件等价。
+\begin{itemize}
+\item $\phi$ 是拟同构映射。
+\item $\phi$ 是同伦等价映射。
+\end{itemize}
+\end{proposition}
+
+% [原文 p.56]
+\begin{proof}
+若 $\phi$ 是同伦等价映射，则它是拟同构映射，这正是引理 3.15 本身。反之设 $\phi$ 是拟同构映射。由引理 3.21，存在同伦等价映射 $\pi_V\colon V\to H(V)$、$\iota_V\colon H(V)\to V$、$\pi_W\colon W\to H(W)$、$\iota_W\colon H(W)\to W$。
+\[
+\begin{tikzcd}[row sep=3.0em, column sep=3.6em]
+V \arrow[r,"\phi"] \arrow[d,bend right=10,"\iota_V"] & W \arrow[d,bend right=10,"\iota_W"] \\
+H(V) \arrow[u,bend right=10,"\pi_V"] & H(W) \arrow[u,bend right=10,"\pi_W"]
+\end{tikzcd}
+\]
+合成 $\bar\phi=\pi_W\circ\phi\circ\iota_V\colon H(V)\to H(W)$ 是同构映射，故把其逆映射记为 $(\bar\phi)^{-1}$，则构成拟同构映射 $\psi:=\iota_V\circ(\bar\phi)^{-1}\circ\pi_W\colon W\to V$。此时把 $\id_V\overset{\mathrm{h.e.}}{\sim}\iota_V\circ\pi_V$ 用两次，得
+\[
+\psi\circ\phi\overset{\mathrm{h.e.}}{\sim}(\psi\circ\phi)\circ(\iota_V\circ\pi_V)=\iota_V\circ\pi_V\overset{\mathrm{h.e.}}{\sim}\id_V.
+\]
+同样地，由 $\id_W\overset{\mathrm{h.e.}}{\sim}\iota_W\circ\pi_W$ 得 $\phi\circ\psi\overset{\mathrm{h.e.}}{\sim}\id_W$，故 $\phi,\psi$ 是同伦等价映射。
+\end{proof}
+
+% [Tutor Note: 补出两处跳步：(a) $\bar\phi=\pi_W\circ\phi\circ\iota_V$ 是同构，因为 $\iota_V,\pi_W$ 是同伦等价（从而拟同构，系 3.16），$\phi$ 是拟同构，而拟同构对合成封闭（$H$ 是函子）；(b) $\psi$ 是拟同构，因为 $H(\psi)=H(\iota_V)\circ H(\bar\phi)^{-1}\circ H(\pi_W)$ 是同构之合成。可验证锚点：取 $V=H(V)$（微分全零）、$W=H(W)$，则 $\phi$ 拟同构 ⇒ $\phi$ 逐次同构 ⇒ $\phi$ 同伦等价（取 $h=0$）。]
+
+\section{复体的短正合列与映射锥}
+
+\subsection{向量空间的情形}
+
+已经看到向量空间的短正合列总是分裂，但向量空间复体的短正合列一般并不分裂。对 $K$ 上向量空间的复体 $X:=\{X^i,d_X^i\}_{i\in\Z}$、$Y:=\{Y^i,d_Y^i\}_{i\in\Z}$、$Z:=\{Z^i,d_Z^i\}_{i\in\Z}$，
+\[
+0\to X\xrightarrow{\phi}Y\xrightarrow{\psi}Z\to 0
+\]
+是短正合列，是指复体映射 $\phi\colon X\to Y$、$\psi\colon Y\to Z$ 对每个 $i\in\Z$ 都构成向量空间的短正合列
+\[
+0\to X^i\xrightarrow{\phi^i}Y^i\xrightarrow{\psi^i}Z^i\to 0.
+\]
+此时，对每个 $i$ 上面的短正合列分裂，故 $Y^i\simeq X^i\oplus Z^i$。因此，为简单起见，考虑如上复体的正合列中令 $Y^i=X^i\oplus Z^i$ 者。把 $Y$ 的微分分解表示为 $d_Y^i=d_{XX}^i+d_{ZZ}^i+d_{XZ}^i+d_{ZX}^i$，
+\[
+\begin{tikzcd}[row sep=2.6em, column sep=2.6em]
+X^i \arrow[d,"d_{XX}^i"'] \arrow[drr,"d_{XZ}^i"] & \oplus & Z^i \arrow[d,"d_{ZZ}^i"] \arrow[dll,"d_{ZX}^i"'] \\
+X^{i+1} & \oplus & Z^{i+1}
+\end{tikzcd}
+\]
+并考察 $\phi^i=\iota^i\colon X^i\to X^i\oplus Y^i$、$\psi^i=\pi^i\colon X^i\oplus Z^i\to Z^i$ 成为复体映射的条件。
+
+% [Tutor Note: 底本 p.56 此处印作 $\phi^i=\iota^i\colon X^i\to X^i\oplus Y^i$，按上下文应为 $X^i\to X^i\oplus Z^i$（$\phi^i$ 是到直和的单射，$\psi^i$ 是从直和的投射）。此点正誤表未涉及，故正文照印。可验证锚点：$\iota^i$ 与 $\pi^i$ 应满足 $\pi^i\circ\iota^i=\id_{X^i}$，而 $\iota^i\colon X^i\to X^i\oplus Y^i$ 与 $\pi^i\colon X^i\oplus Z^i\to Z^i$ 类型不匹配，无法复合。]
+
+% [原文 p.57]
+\[
+\begin{tikzcd}[row sep=1.9em, column sep=2.7em]
+& \vdots \arrow[d,"d_X^{i-1}"] & \vdots \arrow[d,"d_Y^{i-1}"] & \vdots \arrow[d,"d_Z^{i-1}"] & \\
+0 \arrow[r] & X^i \arrow[r,"\phi^i"] \arrow[d,"d_X^i"] & Y^i \arrow[r,"\psi^i"] \arrow[d,"d_Y^i"] & Z^i \arrow[r] \arrow[d,"d_Z^i"] & 0 \\
+0 \arrow[r] & X^{i+1} \arrow[r,"\phi^{i+1}"] \arrow[d,"d_X^{i+1}"] & Y^{i+1} \arrow[r,"\psi^{i+1}"] \arrow[d,"d_Y^{i+1}"] & Z^{i+1} \arrow[r] \arrow[d,"d_Z^{i+1}"] & 0 \\
+& \vdots & \vdots & \vdots &
+\end{tikzcd}
+\]
+由关于 $\phi^i$ 的条件首先有 $d_{XX}^i=d_X^i$，由关于 $\psi^i$ 的条件有 $d_{ZZ}^i=d_Z^i$，且 $d_{XZ}^i=0$。一般地 $d_{ZX}^i\colon Z^i\to X^{i+1}$ 非平凡存在，因此复体的短正合列不分裂。
+
+另一方面，设 $X,Z$ 为复体，为使 $Y$ 成为复体，须有
+\begin{equation}
+\begin{aligned}
+0&=d_Y^{i+1}\circ d_Y^i=(d_X^{i+1}+d_Z^{i+1}+d_{ZX}^{i+1})\circ(d_X^i+d_Z^i+d_{ZX}^i)\\
+&=d_X^{i+1}\circ d_{ZX}^i+d_{ZX}^{i+1}\circ d_Z^i.
+\end{aligned} \tag{3.11}
+\end{equation}
+
+% [Tutor Note: 底本 p.57 (3.11) 第 2 行印作 $=d_X^{i+1}\circ d_{ZX}^i+d_{ZX}^{i+1}\circ d_X^i$；据作者正誤表（2014-05-20 版，带 ♠ 标记的更新条目）p57 条订正为 $=d_X^{i+1}\circ d_{ZX}^i+d_{ZX}^{i+1}\circ d_Z^i$。验算：把 $d_Y$ 写成块矩阵 $\begin{pmatrix}d_X & d_{ZX}\\0 & d_Z\end{pmatrix}$（由 $d_{XX}=d_X,d_{ZZ}=d_Z,d_{XZ}=0$），则 $d_Y^2=\begin{pmatrix}d_X^2 & d_Xd_{ZX}+d_{ZX}d_Z\\0 & d_Z^2\end{pmatrix}$，故 $d_Y^2=0$ 当且仅当 $d_X^{i+1}d_{ZX}^i+d_{ZX}^{i+1}d_Z^i=0$——印本的 $d_{ZX}^{i+1}d_X^i$ 在次数上无法与 $d_X^{i+1}d_{ZX}^i$ 相加。]
+
+现在，对复体 $X$，把它的整数标号 $i\in\Z$ 整体挪 $1$ 而得到的复体 $X[1]$ 定义如下。
+
+\begin{definition}{3.23}（复体的悬垂）对复体 $X:=\{X^i,d_X^i\}_{i\in\Z}$，复体 $X[1]:=\{(X[1])^i,d_{X[1]}^i\}_{i\in\Z}$ 定义为
+\[
+(X[1])^i:=X^{i+1},\qquad d_{X[1]}^i:=-d_X^{i+1},
+\]
+称 $X[1]$ 为 $X$ 的悬垂（suspension）。
+\end{definition}
+
+% [Tutor Note: 定义中的负号不是任意选择：取 $d_{X[1]}^i=-d_X^{i+1}$ 时，$(d_{X[1]}^{i+1})\circ(d_{X[1]}^i)=d_X^{i+2}\circ d_X^{i+1}=0$，故 $X[1]$ 仍是复体；取正号也满足 $d^2=0$，但只有取负号才能使 (3.11) 恰好写成「$d_{ZX}$ 是链映射 $Z\to X[1]$」的形式（链映射条件为 $d_{X[1]}^i d_{ZX}^i=d_{ZX}^{i+1}d_Z^i$，即 $-d_X^{i+1}d_{ZX}^i=d_{ZX}^{i+1}d_Z^i$）。可验证锚点：$X$ 只在 $X^0=K$ 处非零（$d=0$），则 $X[1]$ 只在 $X[1]^{-1}=K$ 处非零。]
+
+此时，(3.11) 的条件无非是 $d_{ZX}:=\{d_{ZX}^i\colon Z^i\to X^{i+1}=(X[1])^i\}_{i\in\Z}$ 构成复体映射 $d_{ZX}\colon Z\to X[1]$。反之，给定复体映射 $d_{ZX}\colon Z\to X[1]$ 时，按上述方式构成复体 $Y$，便得到复体的短正合列 $0\to X\xrightarrow{\phi}Y\xrightarrow{\psi}Z\to 0$，这是明显的。作为结论得到以下事实。
+
+\begin{proposition}{3.24}
+对 $K$ 上向量空间的复体 $X,Y,Z$，这些的短正合列
+\begin{equation}
+0\to X\xrightarrow{\phi}Y\xrightarrow{\psi}Z\to 0 \tag{3.12}
+\end{equation}
+与复体映射 $d_{ZX}\colon Z\to X[1]$ 一一对应。
+\end{proposition}
+
+\begin{remark}{3.25} 对每个 $i$，由于 $X^i,Y^i,Z^i$ 是向量空间，向量空间的短正合列 $0\to X^i\xrightarrow{\phi^i}Y^i\xrightarrow{\psi^i}Z^i\to 0$ 分裂了，但这并不意味着复体的短正合列 (3.12) 分裂。(3.12) 分裂仅限于 $d_{ZX}=0$ 之时。
+\end{remark}
+
+\subsection{$R$ 模的情形}
+
+% [原文 p.58]
+给定右 $R$ 模复体的短正合列
+\begin{equation}
+0\to X\xrightarrow{\phi}Y\xrightarrow{\psi}Z\to 0 \tag{3.13}
+\end{equation}
+时，对每个 $i$，右 $R$ 模的短正合列 $0\to X^i\xrightarrow{\phi^i}Y^i\xrightarrow{\psi^i}Z^i\to 0$ 一般并不分裂，故与上面向量空间复体的情形相同的讨论不成立。另一方面，给定复体映射 $d_{ZX}\colon Z\to X[1]$ 时，通过与向量空间复体完全相同的操作可构成右 $R$ 模的复体 $Y$，得到短正合列 (3.13)。其中 $X[1]$ 为复体 $X$ 的悬垂（定义 3.23）。
+
+\begin{proposition}{3.26}
+给定右 $R$ 模的复体 $X,Z$ 与复体映射 $d_{ZX}\colon Z\to X[1]$ 时，令
+\[
+Y:=\{Y^i,d_Y^i\}_{i\in\Z},\qquad Y^i:=X^i\oplus Z^i,\qquad d_Y^i:=d_X^i+d_Z^i+d_{ZX}^i
+\]
+则 $Y$ 成为右 $R$ 模的复体，且
+\[
+0\to X\xrightarrow{\phi}Y\xrightarrow{\psi}Z\to 0
+\]
+正合。这里，对单射 $\iota^i\colon X^i\to X^i\oplus Z^i$、满射 $\pi^i\colon X^i\oplus Z^i\to Z^i$，令 $\phi:=\{\phi^i:=\iota^i\}_{i\in\Z}$、$\psi:=\{\psi^i:=\pi^i\}_{i\in\Z}$。
+\end{proposition}
+
+% [Tutor Note: 底本 p.58 此处没有点明 §3.7 标题「写像錐」与内容的对应；据作者正誤表（2014-05-20 版）p58 line 4 条，此处应补足一句：「对复体的短正合列中的 $Y$，其 $Y[1]$ 就是被称为复体映射 $d_{ZX}\colon Z\to X[1]$ 的映射锥（mapping cone）的对象。」（「写像錐」亦作「写像錘」，本书 §3.7 标题用「錐」。）这一说法与第 5 章定义 5.23 处的写像錐构造 $C(\varphi):=TY$、$Y^i=X^i\oplus Z^i$、$d_Y^i=d_X^i+d_Z^i+\varphi^i$ 完全一致。]
+
+复体的短正合列中的 $Y$，其 $Y[1]$ 正是被称为复体映射 $d_{ZX}\colon Z\to X[1]$ 的映射锥（mapping cone）的对象。
+
+一般地，给定如 (3.13) 那样横列是短正合列、纵列是复体的双序列时，得到正合列
+\begin{equation}
+\begin{tikzcd}[row sep=3.0em, column sep=2.4em]
+\cdots \arrow[r] & H^i(X) \arrow[r,"H^i(\phi)"] & H^i(Y) \arrow[r,"H^i(\psi)"] & H^i(Z) \arrow[dll,"\delta^i"'] \\
+& H^{i+1}(X) \arrow[r,"H^{i+1}(\phi)"] & H^{i+1}(Y) \arrow[r,"H^{i+1}(\psi)"] & H^{i+1}(Z) \arrow[r] & \cdots
+\end{tikzcd} \tag{3.14}
+\end{equation}
+这里，$\delta^i\colon H^i(Z)\to H^{i+1}(X)$ 称为连接同态映射（connecting homomorphism），定义如下。
+\[
+\begin{tikzcd}[row sep=2.0em, column sep=2.7em]
+& {} \arrow[d,"d_X^{i-1}"] & {} \arrow[d,"d_Y^{i-1}"] & {} \arrow[d,"d_Z^{i-1}"] & \\
+0 \arrow[r] & X^i \arrow[r,"\phi^i"] \arrow[d,"d_X^i"] & Y^i \arrow[r,"\psi^i"] \arrow[d,"d_Y^i"] & Z^i \arrow[r] \arrow[d,"d_Z^i"] & 0 \\
+0 \arrow[r] & X^{i+1} \arrow[r,"\phi^{i+1}"] & Y^{i+1} \arrow[r,"\psi^{i+1}"] & Z^{i+1} \arrow[r] & 0
+\end{tikzcd}
+\]
+首先取 $H^i(Z)$ 的代表元 $z\in Z^i$。由于 $\psi^i$ 是满射，存在满足 $\psi^i(y)=z$ 的 $y\in Y^i$；但由 $d_Z^i(z)=0$ 以及关于从 $Y^i$ 到 $Z^{i+1}$ 的合成映射的可交换性，
+\[
+\psi^{i+1}\circ d_Y^i(y)=d_Z^i\circ\psi^i(y)=0
+\]
+成立。由 $Y^{i+1}$ 处横行的正合性，可取满足 $\phi^{i+1}(x)=d_Y^i(y)$ 的 $x\in X^{i+1}$；特别地，由关于从 $X^{i+1}$ 到 $Y^{i+2}$ 的合成映射的可交换性得 $d_X^{i+1}(x)=0$。
+
+% [Tutor Note: 底本 p.58 此句印作「$X^i$ から $Y^{i+1}$ への合成写像に関する可換性」，按论证应为「$X^{i+1}$ から $Y^{i+2}$ へ」，即 $\phi^{i+2}\circ d_X^{i+1}=d_Y^{i+1}\circ\phi^{i+1}$：由 $d_Y^{i+1}(\phi^{i+1}(x))=d_Y^{i+1}(d_Y^i(y))=0$ 及 $\phi^{i+2}$ 单射，得 $d_X^{i+1}(x)=0$。此点正誤表未涉及，故正文照印。可验证锚点：取 $Z=0$，则 $\delta^i=0$，一切退化；取 $X=K$ 于次数 $0$、$Z=K$ 于次数 $1$、$Y=K\oplus K$（微分把第二个因子送到第一个），可手算 $\delta^1=\id_K$。]
+
+% [原文 p.59]
+如此得到的对应 $z\mapsto x$ 确实作为映射是良定义（well-defined）的，这可以确认。（正好可作习题。）
+
+(3.14) 成为正合列，只需分别在 $H^i(X),H^i(Y),H^i(Z)$ 处确认正合性即可。（这也正好可作习题。这一事实在阿贝尔范畴情形的类似物将在后面证明。作为其特殊情形便得到现在的结论。）如此得到的正合列一般称为长正合列（long exact sequence）。
+
+\begin{proposition}{3.27}
+给定右 $R$ 模的复体 $X,Z$ 与复体映射 $d_{ZX}\colon Z\to X[1]$ 时，在命题 3.26 中右 $R$ 模的短正合列所得到的长正合列中，关于连接同态有 $\delta^i=H^i(d_{ZX})$ 成立。
+\end{proposition}
+
+% [Tutor Note: $\delta^i$ 的良定义性补出要点：(a) 若把 $z$ 换成 $z+d_Z^{i-1}(z')$，则 $y$ 相应地变为 $y+d_Y^{i-1}(y')$，于是 $d_Y^i(y)$ 不变，$x$ 只差 $\operatorname{Im}(d_X^i)$，故 $[x]\in H^{i+1}(X)$ 不变；(b) 与代表元 $z$ 的选取无关（同理）。命题 3.27 说明：这个「蛇形」连接同态恰是链映射 $d_{ZX}$ 诱导的上同调映射 $H^i(d_{ZX})$——可验证锚点：取 (3.13) 中 $d_{ZX}=0$（即复体的短正合列分裂），则 $\delta^i=0$；取 $X,Z$ 为单个向量空间、$d_{ZX}=\mathrm{id}$，则 $\delta^i$ 为同构。]
+
+\section{关于 $R$ 模的同调代数再论}
+
+\subsection{自由模（再论）}
+
+在定义 2.55 中定义了环 $R$ 上的自由右 $R$ 模。设右 $R$ 模 $M$ 的生成系 $\{\xi_\lambda\}_{\lambda\in\Lambda}\subset M$ 自由生成 $M$。此时利用右 $R$ 模的直和可写成
+\[
+M=\bigoplus_{\lambda\in\Lambda}\xi_\lambda\cdot R,
+\]
+且 $M$ 的元素通过给每个 $\lambda\in\Lambda$ 确定 $R$ 的一个元素而被唯一表示。因此把 $\xi_\lambda$ 的系数环 $R$ 写作 $R_\lambda:=R$，便得到右 $R$ 模的同构
+\[
+M\simeq\bigoplus_{\lambda\in\Lambda}R_\lambda.
+\]
+实际上，右 $R$ 模 $M$ 自由的充要条件是：存在某个集合 $\Lambda$ 使得上述同构存在。也就是说，若 $M$ 是有限生成自由右 $R$ 模，则存在某个整数 $n\ge 1$ 使 $M\simeq R^n$。
+
+另一方面，对未必自由的右 $R$ 模 $M$ 及其生成系 $\{\xi_\lambda\}_{\lambda\in\Lambda}$，也可考虑自由右 $R$ 模 $F:=\bigoplus_{\lambda\in\Lambda}R_\lambda$、$R_\lambda=R$。此时存在自然的满射 $R$ 同态 $\pi\colon F\to M$，且
+\[
+\Ker(\pi)=\left\{\bigoplus_{\lambda\in\Lambda}b_\lambda \;\middle|\; \sum_{\lambda\in\Lambda}\xi_\lambda\cdot b_\lambda=0\right\}.
+\]
+对任何右模 $M$，至少可以把 $M$ 自身取作生成系，因此得到以下事实。
+
+% [Tutor Note: 补出「自由 ⇒ 有限生成时 $M\simeq R^n$」的细节：取 $\Lambda=\{1,\dots,n\}$ 即得 $R^n$；反之若 $M$ 有 $n$ 元自由生成系则 $M\simeq R^n$。可验证锚点：$R=\Z$、$M=\Z/6\Z$，取生成系 $\{1\}$ 得 $F=\Z$、$\pi\colon\Z\to\Z/6\Z$，$\operatorname{Ker}(\pi)=6\Z$，故有短正合列 $0\to 6\Z\to\Z\to\Z/6\Z\to 0$——这正是命题 3.28 的实例。]
+
+\begin{proposition}{3.28}
+设 $R$ 为环。对任一右 $R$ 模 $M$，存在自由右 $R$ 模 $F$ 与右 $R$ 模的短正合列
+\[
+0\to\Ker(\pi)\to F\xrightarrow{\pi}M\to 0.
+\]
+特别地，若 $M$ 有限生成，则可取 $F$ 为有限生成自由 $R$ 模。
+\end{proposition}
+
+% [原文 p.60]
+\subsection{投射模与内射模}
+
+\begin{definition}{3.29}
+设 $R$ 为环。右 $R$ 模 $P$ 称为投射的（projective），是指：对任意的右 $R$ 模满射同态 $\pi\colon Y\to Z$ 与右 $R$ 模的同态映射 $f\colon P\to Z$，存在同态映射 $\tilde f\colon P\to Y$ 使得 $f=\pi\circ\tilde f$。
+\begin{equation}
+\begin{tikzcd}[row sep=1.7em, column sep=2.6em]
+& P \arrow[dl,dashed,"\tilde f"] \arrow[d,"f"] & \\
+Y \arrow[r,"\pi"] & Z \arrow[r] & 0
+\end{tikzcd} \tag{3.15}
+\end{equation}
+\end{definition}
+
+这样的状况称为：$f\colon P\to Z$ 提升（lift）为 $\tilde f\colon P\to Y$，或 $f\colon P\to Z$ 经过 $\pi\colon Y\to Z$ 分解，等等。
+
+% [Tutor Note: 底本 p.60 此处印作「$\pi\colon X\to Z$ を経由する」；据作者正誤表（2014-05-20 版）p60 条订正为「$\pi\colon Y\to Z$」——与定义 3.29 正文中的 $\pi\colon Y\to Z$ 保持一致。术语：lift / factor through；本书「持ち上がる」译「提升」，「を経由する」译「经过……分解」。可验证锚点：取 $R=\Z$、$P=\Z$（自由从而投射）、$Y=\Z\xrightarrow{\times2}Z=2\Z$，对 $f=\id_{2\Z}$ 取 $\tilde f=\id_\Z$ 即得 $\pi\circ\tilde f=f$。]
+
+投射模可通过另一个等价定义（命题 3.32）理解为更具体的东西。在此之前，先看几个投射模的性质。
+
+\begin{lemma}{3.30}
+设 $R$ 为环，$\Lambda$ 为集合，对每个 $\lambda\in\Lambda$ 设 $P_\lambda$ 为右 $R$ 模。以下等价。
+\begin{itemize}
+\item $P:=\bigoplus_{\lambda\in\Lambda}P_\lambda$ 是投射的。
+\item 对每个 $\lambda\in\Lambda$，$P_\lambda$ 是投射的。
+\end{itemize}
+\end{lemma}
+
+\begin{proof}
+设 $P$ 是投射的。由直和的定义，任一 $R$ 同态映射 $f_\lambda$ 都经过 $\iota_\lambda\colon P_\lambda\to P$ 分解。也就是说，存在 $R$ 同态映射 $f\colon P\to Z$ 使 $f_\lambda=f\circ\iota_\lambda$。由 $P$ 的投射性，对右模的满射 $R$ 同态 $\pi\colon Y\to Z$，存在 $\tilde f\colon P\to Y$ 使 $f=\pi\circ\tilde f$。也就是说，存在 $R$ 同态映射 $\tilde f_\lambda=\tilde f\circ\iota_\lambda$，且 $f_\lambda=\pi\circ\tilde f_\lambda$，故知 $P_\lambda$ 是投射的。
+\[
+\begin{tikzcd}[row sep=2.8em, column sep=3.2em]
+P_\lambda \arrow[r,bend right=14,"\iota_\lambda"'] \arrow[d,dashed,"\tilde f_\lambda"] & P \arrow[l,bend right=14,"\pi_\lambda"] \arrow[dl,dashed,"\tilde f"] \arrow[d,"f"] \\
+Y \arrow[r,"\pi"] & Z \arrow[r] & 0
+\end{tikzcd}
+\]
+反之，设对所有的 $\lambda\in\Lambda$，$P_\lambda$ 是投射的。给定 $R$ 同态映射 $f\colon P\to Z$ 时，对每个 $\lambda\in\Lambda$，$f\circ\iota_\lambda$ 提升为 $\tilde f_\lambda\colon P_\lambda\to Y$。由直和的定义，对 $\{\tilde f_\lambda\colon P_\lambda\to Y\}_{\lambda\in\Lambda}$ 存在唯一的 $R$ 同态映射 $\tilde f\colon P\to Y$ 使得 $\tilde f\circ\iota_\lambda=\tilde f_\lambda$。另一方面，对 $\{\pi\circ\tilde f_\lambda\colon P_\lambda\to Z\}_{\lambda\in\Lambda}$ 同样考虑，可知 $\pi\circ\tilde f=f$，故 $P$ 是投射的。
+\end{proof}
+
+% [Tutor Note: 图中把 $P_\lambda\to P$ 的包含记作 $\iota_\lambda$、把 $P\to P_\lambda$ 的投射记作 $\pi_\lambda$（$\pi_\lambda\circ\iota_\lambda=\id_{P_\lambda}$）。补出省略处：直和的泛性质给出「$\{\tilde f_\lambda\}$ 唯一确定 $\tilde f$」，于是 $\pi\circ\tilde f$ 与 $f$ 在全部 $\iota_\lambda$ 上的合成相同（都等于 $\pi\circ\tilde f_\lambda=f\circ\iota_\lambda$），由直和泛性质的唯一性得 $\pi\circ\tilde f=f$。可验证锚点：$R=\Z$、$P_\lambda=\Z$（$\Lambda$ 有限），则 $\bigoplus\Z=\Z^n$ 自由从而投射；反之 $P_\lambda=\Z/2\Z$ 非投射，其直和也非投射。]
+
+\begin{lemma}{3.31} 设 $R$ 为环。自由右 $R$ 模是投射的。
+\end{lemma}
+
+\begin{proof}
+设 $P$ 为自由右 $R$ 模，其基为 $\{\xi_\lambda\}_{\lambda\in\Lambda}$。给定右模的满射同态 $\pi\colon Y\to Z$ 与 $R$ 同态映射 $f\colon P\to Z$ 时，如下构成 $\tilde f\colon P\to Y$。
+\end{proof}
+
+% [原文 p.61]
+首先，由 $f$ 的 $R$ 同态性，$f$ 由对每个 $\lambda\in\Lambda$ 指定 $f(\xi_\lambda)$ 而确定。对每个 $\lambda\in\Lambda$，取 $\pi^{-1}(f(\xi_\lambda))$ 的一个元素，令其为 $\tilde f(\xi_\lambda)$。由此，$\tilde f\colon P\to Y$ 确定为
+\[
+\tilde f\left(\sum_{\lambda\in\Lambda}a_\lambda\xi_\lambda\right)=\sum_{\lambda\in\Lambda}a_\lambda\tilde f(\xi_\lambda).
+\]
+（由于 $P$ 是自由模，$P$ 的元素唯一地写成 $\sum_{\lambda\in\Lambda}a_\lambda\xi_\lambda$，故 $\tilde f$ 定得无矛盾。）由定义 $f=\pi\circ\tilde f$，由此可知 $P$ 是投射的。
+
+\begin{proposition}{3.32}
+设 $R$ 为环，$P$ 为右 $R$ 模。以下条件等价。
+\begin{itemize}
+\item $P$ 是投射的。
+\item $P$ 是某个自由模的直和因子。
+\end{itemize}
+\end{proposition}
+
+\begin{proof}
+若 $P$ 是自由模的直和因子，则由引理 3.31、3.30，$P$ 是投射的。
+
+反之设 $P$ 是投射的。取 $P$ 的生成系 $\{\xi_\lambda\}_{\lambda\in\Lambda}\subset P$。（总可以把 $P$ 自身取作 $P$ 的生成系。）以 $\{\xi_\lambda\}_{\lambda\in\Lambda}$ 为基的自由右 $R$ 模记为 $F_\Lambda$，对应的满射同态记为
+\[
+\pi\colon F_\Lambda\to P
+\]
+（命题 3.28）。此时 $\id_P\colon P\to P$ 提升为 $\tilde f\colon P\to F_\Lambda$。
+\[
+\begin{tikzcd}[row sep=1.7em, column sep=2.8em]
+& P \arrow[dl,dashed,"\tilde f"] \arrow[d,"\id_P"] & \\
+F_\Lambda \arrow[r,"\pi"] & P \arrow[r] & 0
+\end{tikzcd}
+\]
+也就是说，得到 $\id_P=\pi\circ\tilde f$，故 $P$ 是自由模（即投射模）$F_\Lambda$ 的直和成分。
+\end{proof}
+
+\begin{remark}{3.33} 命题 3.32 意味着：对自由右 $R$ 模 $F$ 与 $\Hom_R(F,F)$ 的幂等元 $e$（定义 6.3），存在投射模 $e\cdot F$，且所有投射模都如此得到。在上述证明中，$\tilde f\circ\pi$ 成为 $\Hom_R(F_\Lambda,F_\Lambda)$ 的幂等元。
+\end{remark}
+
+投射模的对偶概念是内射模。
+
+\begin{definition}{3.34}
+设 $R$ 为环。右 $R$ 模 $I$ 称为内射的（injective），是指：对任意的右 $R$ 模单射同态 $\iota\colon X\to Y$ 与右 $R$ 模的同态映射 $f\colon X\to I$，存在同态映射 $\tilde f\colon Y\to I$ 使得 $f=\tilde f\circ\iota$。
+\begin{equation*}
+\begin{tikzcd}[row sep=1.9em, column sep=2.6em]
+0 \arrow[r] & X \arrow[r,"\iota"] \arrow[d,"f"] & Y \arrow[dl,dashed,"\tilde f"] \\
+& I &
+\end{tikzcd}
+\end{equation*}
+\end{definition}
+
+% [Tutor Note: 底本 p.61 定義 3.34 的图式中把竖直箭头 $X\to I$ 标作 $\tilde f$、把虚线斜箭头 $Y\to I$ 标作 $f$；据作者正誤表（2014-05-20 版）p61 条「可換図中の $f$ と $\tilde f$ 逆にする」，二者应对调：给定的是 $f\colon X\to I$（竖直），提升所得为 $\tilde f\colon Y\to I$（虚线），且 $f=\tilde f\circ\iota$。今按订正后的标注译出。]
+
+作为图，它是把定义投射模的图式 (3.15) 关于点对称翻转、并把箭头方向反过来得到的。
+
+% [Tutor Note: 底本 p.61–p.62 在此处有「自由右 $R$ 加群は移入的である．集合 $\Lambda$ と右 $R$ 加群 $I_\lambda$，$\lambda\in\Lambda$ に対し，各 $I_\lambda$ が移入的であることと $I:=\bigoplus_{\lambda\in\Lambda}I_\lambda$ が移入的であることは同値である．」两句；据作者正誤表（2014-05-20 版）p61 定義 3.34 条「（一般には成り立たないので）削除する」，本书译本删除该两句（例如 $R=\Z$ 时 $\Z$ 作为 $\Z$ 模并非内射模，故「自由 ⇒ 内射」一般不成立），故 p.62 开头承接的那半句也一并删除。]
+
+% [原文 p.62]
+6.3 节、6.5.4 节等处有几个投射模、内射模的例子。
+
+\subsection{投射分解与内射分解}
+
+\begin{definition}{3.35}
+右 $R$ 模 $X$ 的投射分解（projective resolution）是指以 $P_0,P_1,\ldots$ 为投射右 $R$ 模的右 $R$ 模正合列
+\[
+0\leftarrow X\xleftarrow{p_0}P_0\xleftarrow{p_1}P_1\xleftarrow{p_2}P_2\leftarrow\cdots
+\]
+\end{definition}
+
+\begin{proposition}{3.36}
+任一右 $R$ 模 $X$ 都有投射分解，且投射分解除同伦等价外唯一。
+\end{proposition}
+
+这一事实由引理 3.31 与命题 3.28 推出：对任一右 $R$ 模都存在从某个投射右 $R$ 模出发的满射 $R$ 同态。范畴论地看，这样的性质称为「右 $R$ 模所成的阿贝尔范畴具有足够投射对象」（定义 4.64）。此时任意右 $R$ 模具有投射分解这件事，将在阿贝尔范畴的一般理论中于 5.4.1 节说明。\hfill$\square$
+
+% [Tutor Note: 命题 3.36 的后半「除同伦等价外唯一」是所谓比较定理（comparison theorem）：任两个投射分解之间存在链映射且在同伦意义下唯一。本书未给出证明，只给出存在性（由命题 3.28 逐次构造）并把一般性论证推迟到 5.4.1 节；原文在此段末打印 □，是把它当作命题 3.36 的证明（虽未印「証明」二字）来收尾。可验证锚点：$R=\Z$、$X=\Z/6\Z$，投射分解可取 $\cdots\to 0\to\Z\xrightarrow{\times6}\Z\to\Z/6\Z\to 0$。]
+
+注意，投射模 $P$ 的投射分解可以取它自身。
+\[
+0\leftarrow P\xleftarrow{\id_P}P\xleftarrow{0}0.
+\]
+
+\begin{definition}{3.37}
+右 $R$ 模 $X$ 的内射分解（injective resolution）是指以 $I_0,I_1,\ldots$ 为内射右 $R$ 模的右 $R$ 模正合列
+\[
+0\to X\xrightarrow{i_0}I_0\xrightarrow{i_1}I_1\xrightarrow{i_2}I_2\to\cdots
+\]
+\end{definition}
+
+% [Tutor Note: 底本 p.62 line $-4$ 在此处印作「自由加群は移入的でもあることから，任意の右 $R$ 加群 $X$ は移入分解を持つこともわかる．」；据作者正誤表（2014-05-20 版）p62 条订正为「任意の右 $R$ 加群 $X$ は移入分解を持つことも知られている（例えば [24, p133] など参照）．」。理由是「自由加群是内射的」一般不成立（$\Z$ 不是内射 $\Z$ 模），故不能由它推出内射分解的存在性；存在性须引用文献（如岩永–佐藤 [24, p133]）。今按订正后的内容译出。]
+
+任一右 $R$ 模 $X$ 有内射分解一事也是已知的（例如参照 [24, p133] 等）。
+
+文献：关于模的同调代数，有岩永·佐藤 [24]、Cartan–Eilenberg [11]、MacLane [38]、Weibel [56] 等。

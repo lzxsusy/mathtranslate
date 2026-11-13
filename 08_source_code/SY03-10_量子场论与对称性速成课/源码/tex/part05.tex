@@ -1,0 +1,781 @@
+% ============================================================
+%  part05.tex  |  原文 PDF p.31–40（页脚 p.30–39）
+%  内容：第 5 章 微扰展开（Perturbative Expansion）
+%        5.1 Wick 定理（PDF p.31–34）
+%        5.2 Feynman 图展开（PDF p.34–38）
+%        5.3 Green 函数（PDF p.38–39）
+%        5.4 正则量子化（PDF p.40；仅标题与开头两段，续文见 part06）
+% ============================================================
+
+% >>> p031
+\section{微扰展开（Perturbative Expansion）}
+
+\begin{keypoints}
+  \item \textbf{核心物理图像}：微扰论把路径积分按耦合常数 $\lambda$ 展开，每一项对应一张
+        Feynman 图——图是“相互作用如何把场配成对”的组合记账本，而数值由 Wick 定理
+        逐边赋权得到。
+  \item \textbf{数学工具}：有限维 Gaussian 积分与期望 $\langle-\rangle_x$、Wick 定理
+        （对 $P(2m)$ 的配对求和）、图的公理化定义（顶点/半边/边/入射映射）、
+        自同构群 $\Aut(\Gamma)$、Euler 示性数与圈数 $l(\Gamma)$。
+  \item \textbf{主要结论}：Wick 定理给出
+        $\bigl\langle x^{i_1}\cdots x^{i_{2m}}\bigr\rangle_x
+        =\hbar^m\sum_{\sigma\in P(2m)}\prod_{k=1}^{m}
+        (Q^{-1})^{\sigma(2k-1)\sigma(2k)}$；图的求和公式中每张图带权
+        $\hbar^{l(\Gamma)-1}\omega_\Gamma/|\Aut(\Gamma)|$，且连通图部分取指数。
+  \item \textbf{译者评注}：本节是后面所有计算的“发动机”：$1/|\Aut(\Gamma)|$ 因子
+        （自同构/对称因子）与 $\hbar$ 的幂次是最常出错的两处。5.3 节把同一套组合规则
+        搬到无穷维场论，得到用 Green 函数（传播子）表达的关联函数；5.4 节则转入
+        正则量子化，为 part06 的 UV 发散与重整化作准备。
+\end{keypoints}
+
+在量子场论中，我们关心可观测量 $\mathcal O$ 的量子关联，它是一个无穷维积分
+\[
+  \int_{\mathcal E}\ee^{\frac{\ii S}{\hbar}}\mathcal O[D\phi].
+\]
+这种测度的严格构造在一般情况下尚不清楚。尽管如此，关于 $\hbar\to0$ 的渐近理论
+已经作为微扰重整化方法建立起来。
+
+\subsection{Wick 定理（Wick's Theorem）}
+
+\paragraph{高斯积分（Gaussian Integral）}
+我们从有限维情形开始。设
+\[
+  Q(x)=\sum_{i,j=1}^{n}Q_{ij}x^{i}x^{j}
+\]
+是一个正定二次型，即矩阵 $(Q_{ij})$ 正定。考虑 $\R^n$ 上的如下体积形式
+\[
+  \Omega=\sqrt{\det Q}\prod_{i=1}^{n}\frac{\dd x^{i}}{\sqrt{2\pi\hbar}}\,
+  \ee^{-\frac{1}{2\hbar}Q(x)},
+  \qquad \hbar>0.
+\]
+由高斯积分 $\int_{\R}\dd x\,\ee^{-\frac{1}{2}x^{2}}=\sqrt{2\pi}$ 容易看出
+\[
+  \int_{\R^{n}}\Omega=1.
+\]
+于是 $\Omega$ 定义了 $\R^n$ 上的一个概率密度。
+
+为简单起见，考虑多项式函数 $f(x)\in\R[x^{i}]$。定义关于概率密度 $\Omega$ 的如下期望值：
+\[
+  \langle f(x)\rangle_x
+  :=\frac{\int_{\R^{n}}\Omega\,f(x)}{\int_{\R^{n}}\Omega}
+  =\int_{\R^{n}}\Omega\,f(x).
+\]
+下标 $x$ 表示积分变量。这个期望值定义了映射
+\[
+  \langle-\rangle_x:\ \R[x^{i}]\longrightarrow\R.
+\]
+为计算这一期望映射，我们考虑辅助积分
+\[
+  \begin{aligned}
+    Z[J]&:=\left\langle \ee^{\sum_{i}x^{i}J_i}\right\rangle_x,
+    \qquad J=(J_1,\cdots,J_n)\\
+    &=\sqrt{\det Q}\int_{\R^{n}}\prod_{i=1}^{n}\frac{\dd x^{i}}{\sqrt{2\pi\hbar}}\,
+    \ee^{-\frac{1}{2\hbar}Q(x)+\sum_{i}x^{i}J_i}.
+  \end{aligned}
+\]
+配方可得
+\[
+  \frac{1}{2\hbar}Q(x)-\sum_{i}x^{i}J_i
+  =\frac{1}{2\hbar}Q\Bigl(x^{i}-\hbar\sum_{j}(Q^{-1})^{ij}J_j\Bigr)
+  -\frac{\hbar}{2}Q^{-1}(J).
+\]
+
+% [Tutor Note: 高斯积分的常数因子务必逐项核对。做代换
+% $x^{i}=\sqrt{\hbar}\sum_{j}(Q^{-1/2})^{i}{}_{j}y^{j}$（矩阵写法
+% $x=\sqrt{\hbar}\,Q^{-1/2}y$）时，测度的 Jacobi 因子为
+% $\hbar^{n/2}\det(Q)^{-1/2}$。它与 $\Omega$ 中的 $\sqrt{\det Q}$ 以及每维的
+% $1/\sqrt{2\pi\hbar}$ 恰好凑成 $\prod_i\dd y^{i}/\sqrt{2\pi}$，同时
+% $\frac{1}{2\hbar}Q(x)=\frac{1}{2}|y|^{2}$，于是 $\int\Omega=1$。
+% 若把 $\sqrt{\det Q}$ 写成 $\det Q$，或忘记测度里 $\hbar^{n/2}$ 的幂次，
+% $\int\Omega=1$ 立刻不成立，后续所有期望值也会整体差 $\hbar$ 的幂。
+% 习题：在 $n=1$、$Q=q$ 时逐项验证。]
+
+% >>> p032
+这里 $(Q^{-1})^{ij}$ 是 $Q_{ij}$ 的逆矩阵
+\[
+  \sum_{k}Q_{ik}(Q^{-1})^{kj}=\delta_i^{\ j},
+\]
+而 $Q^{-1}(J)$ 是二次表达式
+\[
+  Q^{-1}(J)=\sum_{i,j}(Q^{-1})^{ij}J_iJ_j.
+\]
+于是
+\[
+  Z[J]=\ee^{\frac{\hbar}{2}Q^{-1}(J)}\int_{\R^{n}}\Omega
+  =\ee^{\frac{\hbar}{2}Q^{-1}(J)}.
+\]
+现在对多项式 $f(x)$，在 $x=0$ 处的 Taylor 级数展开给出
+\[
+  f(x)=\ee^{\sum_{i}x^{i}\frac{\partial}{\partial a^{i}}}f(a)\Big|_{a=0}.
+\]
+利用这个公式，我们得到
+\[
+  \begin{aligned}
+    \langle f(x)\rangle_x
+    &=\left\langle
+    \ee^{\sum_{i}x^{i}\frac{\partial}{\partial a^{i}}}f(a)\Big|_{a=0}
+    \right\rangle_x\\
+    &\overset{J=\frac{\partial}{\partial a}}{=}
+    Z\left[\frac{\partial}{\partial a}\right]f(a)\Big|_{a=0}
+    =\ee^{\frac{\hbar}{2}Q^{-1}\left(\frac{\partial}{\partial a}\right)}
+    f(a)\Big|_{a=0},
+  \end{aligned}
+\]
+其中
+\[
+  Q^{-1}\Bigl(\frac{\partial}{\partial a}\Bigr)
+  =\sum_{i,j}(Q^{-1})^{ij}\frac{\partial}{\partial a^{i}}
+  \frac{\partial}{\partial a^{j}}
+\]
+是一个二阶微分算子。
+
+% [Tutor Note: 配方的符号只需用一维情形检验：$\frac{1}{2\hbar}qx^{2}-xJ
+% =\frac{1}{2\hbar}q\bigl(x-\hbar J/q\bigr)^{2}-\frac{\hbar}{2}J^{2}/q$，
+% 故 $Z[J]=e^{\frac{\hbar}{2}Q^{-1}(J)}$ 的指数是**正**的，且分母里的 $\hbar$
+% 使指数无量纲。若把符号弄反（写成 $e^{-\frac{\hbar}{2}Q^{-1}}$），
+% 后续 Wick 收缩会整体多一个 $(-1)^m$。多分量时还要注意 $Q^{-1}(J)$ 中
+% $J_iJ_j$ 的对称性使 $1/2$ 自动被吸收，不要重复除以 $2$。]
+
+\paragraph{Wick 定理（Wick's Theorem）}
+所得的公式
+\[
+  \langle f(x)\rangle_x
+  =\ee^{\frac{\hbar}{2}Q^{-1}\left(\frac{\partial}{\partial a}\right)}
+  f(a)\Big|_{a=0}
+\]
+有如下组合解释。设
+\[
+  i_1,i_2,\cdots,i_{2m}\in\{1,2,\cdots,n\}
+\]
+是 $2m$ 个指标。我们考虑由该指标集得到的 $2m$ 次单项式
+$x^{i_1}x^{i_2}\cdots x^{i_{2m}}$。由上述公式计算它的期望：
+\begin{equation*}
+  \begin{aligned}
+    \bigl\langle x^{i_1}x^{i_2}\cdots x^{i_{2m}}\bigr\rangle_x
+    &=\ee^{\frac{\hbar}{2}Q^{-1}\left(\frac{\partial}{\partial a}\right)}
+    a^{i_1}a^{i_2}\cdots a^{i_{2m}}\Big|_{a=0}\\
+    &=\frac{\hbar^{m}}{m!}\left[\frac{1}{2}\sum_{i,j}(Q^{-1})^{ij}
+    \frac{\partial}{\partial a^{i}}\frac{\partial}{\partial a^{j}}\right]^{m}
+    a^{i_1}a^{i_2}\cdots a^{i_{2m}}.
+  \end{aligned}
+  \tag*{$*$}
+\end{equation*}
+
+% [Tutor Note: 上式右端的 $(*)$ 是原文自带的公式标号（全书仅此一处用 $(*)$）；
+% 本译本按体例用 \texttt{\textbackslash tag*\{\$*\$\}} 保留在 equation* 中。
+% 中间的等号只是把 $e^{\frac{\hbar}{2}Q^{-1}(\partial_a)}$ 按 Taylor 级数展开：
+% $e^{\frac{\hbar}{2}Q^{-1}(\partial_a)}=\sum_{m}\frac{1}{m!}
+% \bigl(\frac{\hbar}{2}Q^{-1}(\partial_a)\bigr)^{m}$，把每个 $\hbar/2$ 拆成
+% $\hbar\cdot\frac{1}{2}$ 就得到 $\hbar^{m}/m!\,[\frac{1}{2}\sum\cdots]^{m}$。
+% 这里的 $1/m!$ 与括号内的 $1/2$ 各有来源，不可互相吞并。]
+
+为计算这个值，令
+\[
+  P(2m)=\Bigl\{\{1,2,\cdots,2m\}\text{ 分成 }m\text{ 个无序对的划分}\Bigr\}.
+\]
+$P(2m)$ 中的元素 $\sigma$ 可由一个置换 $\sigma\in S_{2m}$ 描述，使得
+\[
+  \sigma(1)<\sigma(2),\quad \sigma(3)<\sigma(4),\quad\cdots,\quad
+  \sigma(2m-1)<\sigma(2m),
+\]
+并且
+\[
+  \sigma(1)<\sigma(3)<\cdots<\sigma(2m-3)<\sigma(2m-1).
+\]
+
+% >>> p033
+然后我们把这一置换
+\[
+  \begin{bmatrix}
+    1 & 2 & 3 & \cdots & 2m-1 & 2m\\
+    \sigma(1) & \sigma(2) & \sigma(3) & \cdots & \sigma(2m-1) & \sigma(2m)
+  \end{bmatrix}
+\]
+通过配对
+\[
+  \underbrace{\sigma(1)\sigma(2)}_{\text{pair}}\quad
+  \underbrace{\sigma(3)\sigma(4)}_{\text{pair}}\quad\cdots\quad
+  \underbrace{\sigma(2m-1)\sigma(2m)}_{\text{pair}}
+\]
+与 $P(2m)$ 中的一个元素等同起来。在上述公式 $(*)$ 中，经计算它成为如下求和：
+\[
+  \boxed{
+  \bigl\langle x^{i_1}x^{i_2}\cdots x^{i_{2m}}\bigr\rangle_x
+  =\hbar^{m}\sum_{\sigma\in P(2m)}
+  (Q^{-1})^{\sigma(1)\sigma(2)}(Q^{-1})^{\sigma(3)\sigma(4)}\cdots
+  (Q^{-1})^{\sigma(2m-1)\sigma(2m)}
+  }.
+\]
+这称为 \textbf{Wick 定理}。
+
+% [Tutor Note: Wick 定理的求和无重复计数：$P(2m)$ 的参数化要求每一对内部递增
+% （$\sigma(1)<\sigma(2)$ 等），且各对的“首项”递增
+% （$\sigma(1)<\sigma(3)<\cdots$），这恰好给每个无序配对唯一的代表元。
+% 若改成对所有置换求和，就会多出 $2^m m!$ 倍的重复；这正是后面
+% $1/(m!(3!)^m)$ 因子的来源。注意 $(Q^{-1})^{\sigma(1)\sigma(2)}$ 的两个指标
+% 是 $\sigma$ 的**值**，不是位置。]
+
+我们也可以把每个求和画成图：
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\linewidth]{fig_p033_1.png}
+  \caption*{Wick 收缩的配对图（原文 PDF p.33 示意图，原文无编号）}
+\end{figure}
+对每条连接 $i$ 与 $j$ 的边，我们赋予因子 $\hbar(Q^{-1})^{ij}$。
+
+% [Tutor Note: 图的读数规则是本节的核心：**每个顶点（指标）贡献一个外线，每条边
+% （配对）贡献 $\hbar(Q^{-1})^{ij}$**。特别注意因子 $\hbar$——它随边数累积成
+% $\hbar^{|E|}$，是后面 $\hbar$ 幂次的唯一来源。漏掉这个 $\hbar$ 会使整张图的
+% 量级错一个 $\hbar$ 的幂，而这类错误在小 $m$ 的例子里往往看不出来。]
+
+\begin{wexam}{5.1}（两点函数，Two-point function）
+  两点函数
+  \[
+    \bigl\langle x^{i}x^{j}\bigr\rangle_x=\hbar(Q^{-1})^{ij}
+  \]
+  由 $Q$ 的逆矩阵给出。$(Q^{-1})^{ij}$ 也称为\textbf{传播子}（propagator）。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.29\linewidth]{fig_p033_2.png}
+  \caption*{两点函数图（原文 PDF p.33 示意图，原文无编号）}
+\end{figure}
+\end{wexam}
+
+\begin{wexam}{5.2}
+  如下四点函数可由下式计算：
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.22\linewidth]{fig_p033_3.png}
+  \caption*{四点函数的三种配对图（原文 PDF p.33 示意图，原文无编号）}
+\end{figure}
+  \[
+    \bigl\langle x^{i}x^{j}x^{k}x^{l}\bigr\rangle_x
+    =\hbar^{2}\Bigl[(Q^{-1})^{ij}(Q^{-1})^{kl}
+    +(Q^{-1})^{ik}(Q^{-1})^{jl}
+    +(Q^{-1})^{il}(Q^{-1})^{jk}\Bigr].
+  \]
+\end{wexam}
+
+我们还可以通过平移 $x\to x+a$ 来加入“背景”：
+\[
+  \langle f(x+a)\rangle_x=\int_{\R^{n}}\Omega\,f(x+a),
+\]
+它现在是 $a$ 的函数。类似的论证给出
+\[
+  \langle f(x+a)\rangle_x
+  =\ee^{\frac{\hbar}{2}Q^{-1}\left(\frac{\partial}{\partial a}\right)}f(a).
+\]
+若 $f(x)=x^{i_1}x^{i_2}\cdots x^{i_k}$，则此时的 Wick 定理是部分配对（partial pairings）之和：
+
+% >>> p034
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.75\linewidth]{fig_p034_1.png}
+  \caption*{部分配对图（原文 PDF p.34 示意图，原文无编号）}
+\end{figure}
+我们把传播子赋给已配对的指标，并把 $a^{i}$ 赋给未配对的指标 $i$。
+
+% [Tutor Note: “背景”情形极易算错：$\langle f(x+a)\rangle_x
+% =e^{\frac{\hbar}{2}Q^{-1}(\partial_a)}f(a)$ 中，指数算子作用在 $a$ 的函数上，
+% 得到的是 $a$ 的**函数**，不是数——不要再取 $a=0$。校验方法：$f$ 为单项式时
+% 未配对指标应保留成 $a^{i}$，已配对指标才产生 $\hbar(Q^{-1})$；取 $a=0$ 就退回
+% 无背景的 Wick 定理。]
+
+\begin{wexam}{5.3}
+  设 $f(x)=x^{i}x^{j}x^{k}x^{l}$。则
+  \[
+    \begin{aligned}
+      \langle f(x+a)\rangle_x
+      ={}&a^{i}a^{j}a^{k}a^{l}
+      +\hbar\Bigl[(Q^{-1})^{ij}a^{k}a^{l}+(Q^{-1})^{ik}a^{j}a^{l}
+      +(Q^{-1})^{il}a^{j}a^{k}\\
+      &\qquad\quad+(Q^{-1})^{jk}a^{i}a^{l}+(Q^{-1})^{jl}a^{i}a^{k}
+      +(Q^{-1})^{kl}a^{i}a^{j}\Bigr]\\
+      &+\hbar^{2}\Bigl[(Q^{-1})^{ij}(Q^{-1})^{kl}
+      +(Q^{-1})^{ik}(Q^{-1})^{jl}
+      +(Q^{-1})^{il}(Q^{-1})^{jk}\Bigr].
+    \end{aligned}
+  \]
+\end{wexam}
+
+\subsection{Feynman 图展开（Feynman Graph Expansion）}
+
+现在我们考虑如下形式的积分
+\[
+  \sqrt{\det Q}\int_{\R^{n}}\prod_{i=1}^{n}\frac{\dd x^{i}}{\sqrt{2\pi\hbar}}\,
+  \ee^{-\frac{1}{\hbar}S(x)},
+\]
+其中
+\[
+  S(x)=\frac{1}{2}Q(x)-\frac{\lambda}{3!}I(x).
+\]
+这里 $Q(x)=\sum_{i,j}Q_{ij}x^{i}x^{j}$ 是如前所述的正定二次型，而
+\[
+  I(x)=\sum_{i,j,k}I_{ijk}x^{i}x^{j}x^{k}
+\]
+是一个三次多项式，称为\textbf{相互作用}（interaction）。常数 $I_{ijk}$ 参数化这些三次型。
+常数 $\lambda$ 称为\textbf{耦合常数}（coupling constant）。
+
+由于三次项在 $\pm\infty$ 两端都趋于无穷且增长快于二次项，上述积分干脆就是“发散的”。
+要使它有意义，本质上有两条出路：
+
+\begin{itemize}[leftmargin=1.6em,itemsep=0.3em]
+  \item ① 把 $x^{i}$ 复化为复变量 $z^{i}$，并把积分围道
+        \[
+          \R^{n}\subset\C^{n}\qquad\Longrightarrow\qquad \Gamma\subset\C^{n}
+        \]
+        换到另一条使积分收敛的围道 $\Gamma$ 上。“Airy 积分”就是这样一个例子。
+        这种方法通常称为\textbf{非微扰方法}（non-perturbative method）。
+  \item ② 把 $\lambda$ 当作微扰参数，计算渐近级数。这种方法通常称为
+        \textbf{微扰方法}（perturbative method）。
+\end{itemize}
+
+% [Tutor Note: ① 的几何实质是鞍点/最速下降：取使 $\operatorname{Re}S>0$ 的
+% Lefschetz 围道即可使积分收敛；原文强调 ② 得到的是**渐近**级数而非收敛级数
+% （Dyson 论证：微扰级数一般收敛半径为零），所以 $\hbar\to0$ 的展开只能逐阶使用。
+% 把渐近等式当成恒等式，是本节最常见的概念性错误。]
+
+这里我们将聚焦于微扰方法 ②。让我们把
+\[
+  \text{“}\sqrt{\det Q}\int_{\R^{n}}\prod_{i=1}^{n}\frac{\dd x^{i}}
+  {\sqrt{2\pi\hbar}}\,\ee^{-\frac{1}{\hbar}S(x)}\text{”}
+  =\text{“}\int_{\R^{n}}\Omega\,\ee^{\frac{\lambda}{3!\hbar}I(x)}\text{”}
+  =\text{“}\Bigl\langle \ee^{\frac{\lambda}{3!\hbar}I(x)}\Bigr\rangle_x
+  \text{”}
+\]
+改写。
+
+% >>> p035
+这里 $\Omega=\sqrt{\det Q}\prod_{i=1}^{n}\frac{\dd x^{i}}{\sqrt{2\pi\hbar}}
+\ee^{-\frac{1}{2\hbar}Q(x)}$ 是如前所述的概率密度。现在我们可以把上述发散积分
+重新定义为一个幂级数：
+\[
+  \sum_{m=0}^{\infty}\frac{\lambda^{m}}{m!\hbar^{m}}
+  \left\langle\left(\frac{1}{3!}I(x)\right)^{m}\right\rangle_x.
+\]
+这里每一项 $\left\langle\left(\frac{1}{3!}I(x)\right)^{m}\right\rangle_x$ 都有
+确定的值，可由 Wick 定理算出。这将给出该幂级数的一个组合图公式。
+
+\begin{wdefn}{5.4}
+  所谓\textbf{图}（graph）$\gamma$，指的是如下数据：
+  \begin{itemize}[leftmargin=1.6em,itemsep=0.25em]
+    \item $V(\gamma)=$ 顶点集；
+    \item $HE(\Gamma)=$ 半边（half-edge）集；
+    \item $i_\Gamma:HE(\Gamma)\to V(\gamma)$，关联映射（incidence map）；
+    \item $E(\Gamma)$：$HE(\Gamma)$ 上的一个完美匹配，即把半边两两配成对。
+          每一对称为一条\textbf{边}（edge）；
+    \item 对每个 $v\in V(\Gamma)$，$\#\{i_\Gamma^{-1}(v)\}$ 称为 $v$ 的\textbf{价}
+          （valency）。
+  \end{itemize}
+\end{wdefn}
+
+% [Tutor Note: Definition 5.4 中原文把图记作 $\gamma$，但其后所有条目（$HE(\Gamma)$、
+% $V(\gamma)$、$i_\Gamma$、$E(\Gamma)$）都在 $\gamma$ 与 $\Gamma$ 之间来回混用。
+% 这是原书的记号不一致，本译本照录；读者应把 $\gamma$ 与 $\Gamma$ 视为同一张图。
+% 另外注意“边”不是独立的顶点对，而是**半边集上的匹配**——这个定义使
+% 自环（tadpole）与多重边都自动被允许，也使自同构群的定义变得干净。]
+
+\begin{wexam}{5.5}
+  考虑如下的 $\Theta$ 图
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.50\linewidth]{fig_p035_1.png}
+  \caption*{$\Theta$ 图（原文 PDF p.35 示意图，原文无编号）}
+\end{figure}
+  这里 $V=\{1,2\}$，$HE=\{a,b,c,a',b',c'\}$，$E=\{(a,a'),(b,b'),(c,c')\}$。关联映射为
+  \[
+    \begin{aligned}
+      i_\Gamma:\ HE&\longrightarrow V,\\
+      \{a,b,c\}&\longmapsto 1,\\
+      \{a',b',c'\}&\longmapsto 2.
+    \end{aligned}
+  \]
+  顶点 $1$ 与 $2$ 的价都是 $3$。
+\end{wexam}
+
+\begin{wdefn}{5.6}
+  两张图 $\Gamma$ 与 $\Gamma'$ 之间的\textbf{图同构}是一对双射
+  \[
+    \sigma_V:\ V(\Gamma)\longrightarrow V(\Gamma'),\qquad
+    \sigma_{HE}:\ HE(\Gamma)\longrightarrow HE(\Gamma'),
+  \]
+  它们与关联映射相容（即下图交换）
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.51\linewidth]{fig_p035_2.png}
+  \caption*{图同构的交换图（原文 PDF p.35 示意图，原文无编号）}
+\end{figure}
+  并且与边相容：对任意 $a,b\in HE(\Gamma)$，
+  \[
+    (a,b)\in E(\Gamma)
+    \iff
+    (\sigma_{HE}(a),\sigma_{HE}(b))\in E(\Gamma').
+  \]
+  $\Gamma$ 的\textbf{自同构}（automorphism）是一个同构 $\sigma:\Gamma\to\Gamma$。记
+  \[
+    \Aut(\Gamma)=\Gamma\ \text{的自同构群}.
+  \]
+\end{wdefn}
+
+% [Tutor Note: 同构的定义要求 $\sigma_V$ 与 $\sigma_{HE}$ 同时给出、且与“哪些半边
+% 粘在哪个顶点”以及“哪些半边配成边”两套结构都相容。计算 $\Aut(\Gamma)$ 时最容易
+% 只数顶点置换而忘了半边/边的置换（或反之）；正确做法是先固定顶点置换，再看
+% 它能延拓出多少半边置换。这个群的阶 $|\Aut(\Gamma)|$ 就是 Feynman 规则中的
+% “对称因子”，其倒数 $1/|\Aut(\Gamma)|$ 是本节的核心。]
+
+% >>> p036
+\begin{wexam}{5.7}
+  考虑
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.33\linewidth]{fig_p036_1.png}
+  \caption*{$\Theta$ 图（例 5.7）（原文 PDF p.36 示意图，原文无编号）}
+\end{figure}
+  这里 $HE=\{a,b,c,a',b',c'\}$，$V=\{1,2\}$，$E=\{(a,a'),(b,b'),(c,c')\}$。
+  关联映射同上。下面是 $\Gamma$ 的两个自同构的例子：
+  \begin{itemize}[leftmargin=1.6em,itemsep=0.25em]
+    \item ① $\sigma_V:(1,2)\mapsto(2,1)$，
+          $\sigma_{HE}:(a,b,c,a',b',c')\mapsto(a',b',c',a,b,c)$；
+    \item ② $\sigma_V:(1,2)\mapsto(1,2)$，
+          $\sigma_{HE}:(a,b,c,a',b',c')\mapsto(b,c,a,b',c',a')$。
+  \end{itemize}
+  类似地可得 $\Aut(\Gamma)=\Z_2\times S_3$。这里 $\Z_2$ 对应两个顶点的置换，
+  $S_3$ 对应三条边的置换。
+\end{wexam}
+
+\begin{wexam}{5.8}
+  考虑
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.37\linewidth]{fig_p036_2.png}
+  \caption*{双圈图（原文 PDF p.36 示意图，原文无编号）}
+\end{figure}
+  可得 $\Aut(\Gamma)=\Z_2\times\Z_2\times\Z_2$。
+\end{wexam}
+
+现在让我们考虑
+\[
+  \langle I(x)^{m}\rangle_x
+  =\Bigl\langle\underbrace{I(x)I(x)\cdots I(x)}_{m}\Bigr\rangle_x
+\]
+的计算。每个 $I(x)$ 给出一个带三条半边的顶点：
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.92\linewidth]{fig_p036_3.png}
+  \caption*{三价顶点及其半边（原文 PDF p.36 示意图，原文无编号）}
+\end{figure}
+\[
+  \begin{aligned}
+    &\text{顶点集} && V=\{1,2,\cdots,m\},\\
+    &\text{半边集} && HE=\{i_1,j_1,k_1,i_2,j_2,k_2,\cdots,i_m,j_m,k_m\},\\
+    &\text{关联映射} && i:\{i_s,j_s,k_s\}\longmapsto\{s\}.
+  \end{aligned}
+\]
+由 Wick 定理，$\langle I(x)^{m}\rangle_x$ 是对完美匹配 $E$ 的一个求和：
+\[
+  \langle I(x)^{m}\rangle_x
+  =\sum_{E\in Y}\hbar^{|E(\Gamma_E)|}\,\omega_{\Gamma_E}.
+\]
+这里 $Y=\{HE\text{ 的完美匹配}\}$，而 $\Gamma_E$ 是把配对 $E$ 赋给顶点集 $V$ 与半边集
+$HE$ 所得到的图。
+对每张图 $\Gamma$，$\omega_\Gamma$ 是按照如下赋值得到的数：
+
+% >>> p037
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.67\linewidth]{fig_p037_1.png}
+  \caption*{图的赋值规则（原文 PDF p.37 示意图，原文无编号）}
+\end{figure}
+\begin{itemize}[leftmargin=1.6em,itemsep=0.25em]
+  \item ① 每个顶点（三价顶点，三条外线标 $i,j,k$）$\ \Longrightarrow\ I_{ijk}$；
+  \item ② 每条边（线段，两端标 $i,j$）$\ \Longrightarrow\ (Q^{-1})^{ij}$；
+  \item ③ 对指标求和。
+\end{itemize}
+
+\begin{wexam}{5.9}
+  考虑
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.37\linewidth]{fig_p037_2.png}
+  \caption*{$\Theta$ 图的权（原文 PDF p.37 示意图，原文无编号）}
+\end{figure}
+  \[
+    \omega_\Gamma
+    =\sum_{\substack{i_1,j_1,k_1\\ i_2,j_2,k_2}}
+    I_{i_1j_1k_1}I_{i_2j_2k_2}
+    (Q^{-1})^{i_1i_2}(Q^{-1})^{j_1j_2}(Q^{-1})^{k_1k_2}.
+  \]
+\end{wexam}
+
+显然，若 $\Gamma$ 与 $\Gamma'$ 同构，则
+\[
+  \omega_\Gamma=\omega_{\Gamma'}.
+\]
+这里所有的图都是三价的（每个顶点的价都是 $3$）。保持关联映射的双射
+\[
+  \sigma_V:V\longrightarrow V,\qquad
+  \sigma_{HE}:HE\longrightarrow HE
+\]
+构成的集合是
+\[
+  G=\underbrace{S_m}_{\text{置换顶点}}\times
+  \underbrace{(S_3)^{m}}_{\text{置换半边}}.
+\]
+$G$ 在 $Y$ 上有自然的作用，其轨道为
+\[
+  Y/G=\{\text{由 }m\text{ 个顶点构成的三价图的同构类}\}.
+\]
+于是
+\[
+  \begin{aligned}
+    \frac{1}{m!(3!)^{m}}\langle I(x)^{m}\rangle_x
+    &=\frac{1}{|G|}\sum_{\Gamma\in Y/G}\frac{|G|}{|\Aut(\Gamma)|}
+    \,\omega_\Gamma\,\hbar^{|E(\Gamma)|}\\
+    &=\sum_{\substack{\Gamma:\text{ 三价图}\\ \text{含 }m\text{ 个顶点}}}
+    \frac{\omega_\Gamma}{|\Aut(\Gamma)|}\,\hbar^{|E(\Gamma)|}.
+  \end{aligned}
+\]
+我们还可以把不连通的图按连通同构类归并，从而细化为下面的 Feynman 图展开公式
+（细节留给读者）。
+
+% [Tutor Note: 这一段的“除以 $|\Aut(\Gamma)|$”是全节最易错的地方，来龙去脉是：
+% 左边 $\frac{1}{m!(3!)^m}$ 把 $m$ 个顶点与每个顶点的 $3!$ 种半边编号都除掉；
+% 右边用轨道–稳定子公式 $\sum_{\Gamma\in Y/G}\frac{|G|}{|\Aut|}=|Y|$（更准确地说，
+% 每个轨道上的求和给出 $|G|/|\Aut(\Gamma)|$ 个代表），于是 $\frac{1}{|G|}$ 与
+% $|G|$ 相消，剩下 $\sum_{\Gamma}\omega_\Gamma/|\Aut(\Gamma)|$。记忆口诀：
+% **每张图的权 = 拓扑赋值 $\times$ 耦合常数 $\times\hbar$ 幂 $\div$ 自同构群阶**。
+% 对 $\Theta$ 图，$|\Aut|=2\cdot 6=12$，漏掉它会使结果大 $12$ 倍。]
+
+\begin{wprop}{5.10}（Feynman 图展开公式，Feynman Graph Expansion Formula）
+  对渐近幂级数，我们有如下的组合图展开公式
+  \[
+    \begin{aligned}
+      \Bigl\langle \ee^{\frac{\lambda}{3!\hbar}I(x)}\Bigr\rangle_x
+      &{}:=\sum_{m=0}^{\infty}\frac{\lambda^{m}}{m!\hbar^{m}}
+      \left\langle\left(\frac{1}{3!}I(x)\right)^{m}\right\rangle_x\\
+      &=\sum_{\Gamma:\ \text{三价}}
+      \hbar^{|E(\Gamma)|-|V(\Gamma)|}\lambda^{|V(\Gamma)|}
+      \frac{\omega_\Gamma}{|\Aut(\Gamma)|}\\
+      &=\exp\left(
+      \sum_{\substack{\Gamma:\text{ 连通}\\ \text{三价}}}
+      \lambda^{|V(\Gamma)|}\hbar^{l(\Gamma)-1}
+      \frac{\omega_\Gamma}{|\Aut(\Gamma)|}
+      \right).
+    \end{aligned}
+  \]
+\end{wprop}
+
+% [Tutor Note: 命题 5.10 中的等号应理解为**渐近展开**意义下的等式（原文在 p.38 用
+% $e^{\cdots}\stackrel{\text{asymptotic}}{=}\exp(\cdots)$ 强调），不是收敛级数的恒等式。
+% 最后一步“不连通图之和取指数”是标准的指数公式
+% （exponential formula）：任何一张图唯一分解为若干连通图的无序并，
+% 而 $\exp$ 的 Taylor 系数中 $\frac{1}{k!}$ 恰好负责“无序”。这里的 $k!$ 与
+% $|\Aut|$ 的配合是本段的技术核心。]
+
+% >>> p038
+这里对连通图 $\Gamma$，
+\[
+  l(\Gamma)=|E(\Gamma)|-|V(\Gamma)|+1=1-\chi(\Gamma)
+\]
+称为 $\Gamma$ 的\textbf{圈数}（loop number）。
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.62\linewidth]{fig_p038_1.png}
+  \caption*{圈数的两个例子（原文 PDF p.38 示意图，原文无编号）}
+\end{figure}
+\[
+  l(\Gamma)=3-2+1=2
+  \qquad\qquad
+  l(\Gamma)=6-4+1=3
+\]
+一般而言，如果相互作用包含所有可能次数的项
+\[
+  \frac{\lambda_3}{3!}I_3(x)+\frac{\lambda_4}{4!}I_4(x)
+  +\cdots+\frac{\lambda_m}{m!}I_m(x)+\cdots,
+\]
+那么级数展开将包含所有可能的图，其中每个价为 $m$ 的顶点都类似地赋予值 $I_m$。
+一般的 Feynman 图展开公式为
+\[
+  \Bigl\langle
+  \ee^{\frac{1}{\hbar}\left(\sum_{m\ge3}\frac{\lambda_m}{m!}I_m(x)\right)}
+  \Bigr\rangle_x
+  \overset{\text{asymptotic}}{=}
+  \exp\left(
+  \sum_{\substack{\Gamma:\text{ 连通}\\\text{图}}}
+  \Bigl(\prod_{m\ge3}\lambda_m^{|V_m(\Gamma)|}\Bigr)
+  \hbar^{l(\Gamma)-1}\frac{\omega_\Gamma}{|\Aut(\Gamma)|}
+  \right),
+\]
+其中 $V_m(\Gamma)$ 是价为 $m$ 的顶点的集合。
+
+% [Tutor Note: 圈数公式的两种写法 $l=|E|-|V|+1=1-\chi$ 只有在 $\Gamma$ **连通**时
+% 才相等（$\chi=|V|-|E|$ 对连通图成立）；对不连通图应以 $|E|-|V|+c$ 为准，
+% 其中 $c$ 是连通分支数。原文此处已声明 “for a connected graph”，引用时勿丢。
+% 另外 $\hbar^{l-1}$ 的幂次是“圈数减一”：树图（$l=0$）给 $\hbar^{-1}$，
+% 与整体归一化相消，这是半经典展开的体现。]
+
+\subsection{Green 函数（Green's Function）}
+
+现在讨论无穷维情形。为说明基本想法，让我们考虑标量场论，其场空间为
+$\mathcal E=C_c^{\infty}(\R^d)$，作用量泛函为
+\[
+  S[\phi]=\frac{1}{2}\int_{\R^d}\Bigl(\sum_i(\partial_i\phi)^2
+  +m^2\phi^2\Bigr)\dd x^d,
+  \qquad \phi\in\mathcal E.
+\]
+我们关心的是关联函数（correlation function）
+\[
+  \langle\mathcal O\rangle
+  =\frac{\displaystyle\int_{\mathcal E}[\mathcal D\phi]\,
+  \ee^{-\frac{1}{\hbar}S[\phi]}\mathcal O(\phi)}
+  {\displaystyle\int_{\mathcal E}[\mathcal D\phi]\,
+  \ee^{-\frac{1}{\hbar}S[\phi]}},
+\]
+其中 $\mathcal O$ 是 $\mathcal E$ 上的函数，称为\textbf{可观测量}（observable）。
+例如我们想计算
+\[
+  \langle\phi(y_1)\cdots\phi(y_{2s})\rangle,
+  \qquad\text{其中 } y_i\in\R^d.
+\]
+尽管对这种无穷维积分我们没有一般的测度理论，我们仍可以模仿有限维情形，
+得到一个组合式的预期结果。让我们写成
+\[
+  S[\phi]=\frac{1}{2}\int_{\R^d}\phi D\phi\,\dd x^d,
+\]
+其中
+\[
+  D=-\sum_{i=1}^{d}\frac{\partial^{2}}{\partial x^{i}\partial x^{i}}+m^{2}.
+\]
+
+% >>> p039
+这是 $\phi$ 的二次型，类似于高斯积分中的 $Q(x)$。确切地说，我们可以把有限维与
+无穷维情形作如下对照：
+\begin{center}
+  \begin{tabular}{cc}
+    \toprule
+    \textbf{有限维情形} & \textbf{无穷维情形}\\
+    \midrule
+    $\R^{n}$ & $\mathcal E=C_c^{\infty}(\R^{d})$\\
+    $x^{i}$ & $\phi(x)$\\
+    $i$ & 一个点 $x\in\R^{d}$\\
+    $\sum_{i}$ & $\int_{\R^{d}}\dd x$\\
+    $\frac{1}{2}Q(x)=\frac{1}{2}\sum_{i,j}Q_{ij}x^{i}x^{j}$
+      & $S[\phi]=\frac{1}{2}\int\phi D\phi$\\
+    $\langle x^{i}x^{j}\rangle=(A^{-1})^{ij}$
+      & $\langle\phi(x)\phi(y)\rangle=G(x,y)$\\
+    $\delta_{ij}$ & $\delta(x-y)$\\
+    \bottomrule
+  \end{tabular}
+\end{center}
+
+% [Tutor Note: 对照表中有两处原书的不一致，引用时请留意：（i）左栏写的是
+% $(A^{-1})^{ij}$，而本节前文一直用 $(Q^{-1})^{ij}$，应读作同一逆矩阵；
+% （ii）表右栏只写 $S[\phi]=\frac12\int\phi D\phi$，漏了测度 $\dd x^d$
+% （前文公式是带 $\dd x^d$ 的）。这两处均照录原文。表中“$\sum_i\leftrightarrow\int$”
+% 一行说明有限维与无穷维的唯一差别是把求和换成积分——Wick 定理的组合结构完全不变。]
+
+函数 $G(x,y)$ 表示 $D$ 关于 $x$ 的逆：
+\[
+  D_xG(x,y)=\delta(x-y).
+\]
+事实上，若对光滑函数 $f$ 定义如下算子
+\[
+  (Gf)(x)=\int\dd y\,G(x,y)f(y),
+\]
+则
+\[
+  \begin{aligned}
+    D(Gf)(x)&=\int\dd y\,D_xG(x,y)f(y)\\
+    &=\int\dd y\,\delta(x-y)f(y)=f(x).
+  \end{aligned}
+\]
+这样的函数存在，称为\textbf{Green 函数}。
+
+\begin{wexam}{5.11}
+  考虑 $\R^d$ 上的标准 Laplacian
+  $D=-\sum_i\frac{\partial^2}{\partial x^i\partial x^i}$。当 $d\ge3$ 时，
+  Green 函数具有如下形式
+  \[
+    G(x,y)\propto\frac{1}{\|x-y\|^{d-2}}.
+  \]
+  特别地，当 $x\to y$ 时 $G(x,y)$ 变得奇异。这反映了无穷维的本质，
+  也是量子场论中“\textbf{UV 发散}”（紫外发散）的根源。
+\end{wexam}
+
+% [Tutor Note: 例 5.11 只写了比例关系 $\propto$；精确常数是
+% $G(x,y)=\frac{1}{(d-2)\Omega_{d-1}}\|x-y\|^{-(d-2)}$，其中 $\Omega_{d-1}$
+% 是单位球面面积。注意 $d=1,2$ 时形式不同（$d=2$ 是对数），所以“$d\ge3$”不可省。
+% 对角 $x=y$ 处的奇点就是后面 UV 发散的来源：图积分沿对角方向发散，
+% 需靠重整化（part06）处理。]
+
+我们用 Wick 定理来计算
+\[
+  \langle\phi(y_1)\cdots\phi(y_{2s})\rangle
+  =\hbar^{s}\sum_{\sigma\in P(2s)}
+  G(y_{\sigma(1)},y_{\sigma(2)})G(y_{\sigma(3)},y_{\sigma(4)})\cdots
+  G(y_{\sigma(2s-1)},y_{\sigma(2s)}),
+\]
+它可以形象化为对完美配对的求和。每条从 $y$ 到 $z$ 的边代表 Green 函数 $G(y,z)$，
+它扮演传播子的角色。
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.76\linewidth]{fig_p039_1.png}
+  \caption*{无穷维情形的配对图（原文 PDF p.39 示意图，原文无编号）}
+\end{figure}
+
+% [Tutor Note: 与有限维 Wick 定理逐项对应：$\langle x^{i}x^{j}\rangle
+% =\hbar(Q^{-1})^{ij}$ 换成 $\langle\phi(x)\phi(y)\rangle=\hbar G(x,y)$，
+% 而 $2s$ 个场配成 $s$ 对给出总因子 $\hbar^{s}$。原文在这一段混用了 $2s$（公式）
+% 与 $2m$（图注、下文），实为同一整数；本译本照录。还要注意符号约定：
+% 作用量写成 $e^{-S/\hbar}$（Euclidean 号差），而 p.31 的路径积分写成
+% $e^{iS/\hbar}$（Minkowski）——两处约定不同，是常见混淆点，Wick 转动即联系二者。]
+
+% >>> p040
+现在我们可以进而考虑有相互作用的理论。例如，我们可以通过给 $S$ 加上如下项
+\[
+  I_3(\phi)=\frac{\lambda}{3!}\int\phi^{3}
+\]
+来考虑 $\phi^{3}$ 理论，或者通过加上
+\[
+  I_4(\phi)=\frac{\lambda}{4!}\int\phi^{4}
+\]
+来考虑 $\phi^{4}$ 理论。
+
+我们将有类似的 Feynman 图展开。下面是两个三价图的例子以及它们所代表的积分。
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.32\linewidth]{fig_p040_1.png}
+  \caption*{三价图及其积分（一）（原文 PDF p.40 示意图，原文无编号）}
+\end{figure}
+\[
+  \int_{(\R^{d})^{2}}\dd x\,\dd y\,G(x,y)^{3}
+\]
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.32\linewidth]{fig_p040_2.png}
+  \caption*{三价图及其积分（二）（原文 PDF p.40 示意图，原文无编号）}
+\end{figure}
+\[
+  \int_{(\R^{d})^{4}}\dd x\,\dd y\,\dd z\,\dd w\,
+  G(x,y)G(y,w)G(w,x)G(x,z)G(y,z)G(w,z)
+\]
+然而，由于 $G(x,y)$ 在对角上的奇异性，这样的图积分一般是发散的。这就是
+\textbf{UV 发散}。“\textbf{重整化理论}”（renormalization theory）研究如何处理
+这种发散以得到有意义的有限答案。
+
+\subsection{正则量子化（Canonical Quantization）}
+
+在一般地研究 UV 发散之前，让我们先理解这样的考虑如何导向量子力学中的正则量子化。
+
+考虑相空间 $\R^{2}$ 上的力学，其坐标为 $(x,p)$，辛形式为 $\omega=\dd x\wedge\dd p$。
+经典地，相空间上的函数集合带有由下式定义的 Poisson 结构 $\{-,-\}$：
+\[
+  \{f(x,p),g(x,p)\}
+  =\frac{\partial f}{\partial x}\frac{\partial g}{\partial p}
+  -\frac{\partial f}{\partial p}\frac{\partial g}{\partial x}.
+\]
+量子力学地，$x$ 与 $p$ 被量子化为算符 $\hat x$ 与 $\hat p$，满足正则对易关系
+\[
+  [\hat x,\hat p]=\ii\hbar .
+\]

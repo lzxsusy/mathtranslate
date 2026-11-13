@@ -1,0 +1,494 @@
+% 译自 arXiv:2306.13589v2 原 tex 第 2075–2545 行
+\section{层的范畴}
+\thispagestyle{plain}
+
+\takeaway{%
+  \textbf{物理图像：}同调镜像对称的 B-侧以凝聚层（及其导出范畴）为舞台，D-膜对应其中的对象；要在这个框架里做同调代数，首先必须让层本身构成阿贝尔范畴，才能谈论核、余核与正合序列。本节的讨论先在一般拓扑空间上展开，最终服务于代数簇上的凝聚层。\\
+  \textbf{数学工具：}预层与层、茎与芽、层化；预层/层范畴中的直和、核预层与余核预层；层的推出 $f_*$ 与拉回 $f^{-1}$、局部 $\mathcal{H}om$ 层；环空间上的模层、自由层、局部自由层、可逆层与 Picard 群，以及拟凝聚层与凝聚层。\\
+  \textbf{主要结论：}$\mathsf{Sh}(X;\mathsf{Ab})$ 是阿贝尔范畴（定理 \ref{Sh(X,Ab)isabelian}），其关键是层化函子是包含函子的左伴随（命题 \ref{biglemma}）；层态射的正合性可以逐茎检验；局部自由层与向量丛一一对应；拟凝聚层构成包含局部自由层及其余核的、局部定义的最小阿贝尔子范畴。%
+}
+
+
+\subsection{阿贝尔范畴的结构}\label{ch5.1}
+
+
+我们首先引入本综述第二部分的基本研究对象——层，目标是证明它们构成一个阿贝尔范畴。这些对象可以在任意底范畴上定义，但最终我们将主要关注阿贝尔群层与模层。关于详尽的入门介绍，读者可参阅 \cite[section II.1]{[Har77]}。
+
+\begin{Def}									% SHEAF
+设 $X$ 为拓扑空间，$\mathsf{C}$ 为范畴。$X$ 上取值于 $\mathsf{C}$ 的\textbf{预层（presheaf）$\mathcal{F}$}\index{presheaf!on a topological space with values in $\mathsf{C}$} 由以下数据组成：
+\begin{itemize}[leftmargin=0.5cm]
+	\item 对每个开子集 $U\subset X$，一个对象 $\mathcal{F}(U)=\Gamma(U,\mathcal{F})\in\textup{obj}(\mathsf{C})$，其元素 $s\in\mathcal{F}(U)$ 称为 $\mathcal{F}(U)$ 的\textbf{截面}\index{section}；以及
+	\item 对所有开子集对 $V\subset U\subset X$ 的\textbf{限制映射}\index{restriction map} $\rho^U_V\in\textup{Hom}_\mathsf{C}(\mathcal{F}(U),\mathcal{F}(V))$，其在截面上的作用也记作 $\rho^U_V(s)=s|_V$。
+\end{itemize}
+这些数据必须满足：$\mathcal{F}(\emptyset)=0$，对所有开集 $U\subset X$ 有 $\rho_U^U=\textup{id}_{\mathcal{F}(U)}$，且对所有开子集三元组 $W\subset V\subset U\subset X$ 有 $\rho^V_W\circ\rho^U_V=\rho^U_W$。
+
+若层性质（或称「粘合」性质）成立，则称预层 $\mathcal{F}$ 为 $X$ 上取值于 $\mathsf{C}$ 的\textbf{层}\index{sheaf!!on a topological space with values in $\mathsf{C}$}：对任意开子集 $U\subset X$ 及其开覆盖 $\{U_i\}_{i\in I}$，只要所有截面 $s_i\in\mathcal{F}(U_i)$ 相容，即 $s_i|_{U_i\cap U_j} = s_j|_{U_i\cap U_j}$，就存在唯一的 $s\in\mathcal{F}(U)$ 使得对所有 $i\in I$ 都有 $s|_{U_i}=s_i$。
+\end{Def}
+
+\begin{Def}									% CATEGORY OF SHEAVES
+设 $X$ 为拓扑空间，其上赋有取值于某范畴 $\mathsf{C}$ 的层 $\mathcal{F}$ 与 $\mathcal{G}$。$X$ 上的\textbf{层态射}\index{morphism!of sheaves} $\chi:\mathcal{F}\rightarrow\mathcal{G}$ 是一族映射 $\{\chi_U\in\textup{Hom}_\mathsf{C}(\mathcal{F}(U),\mathcal{G}(U))\mid U\subset X\text{ open}\}$，满足\footnote{此处及以下，$\rho$ 一律隐含地表示所有层的限制映射，不加区分。}
+\[
+\rho^U_V\circ\chi_U=\chi_V\circ\rho^U_V\in\textup{Hom}_\mathsf{C}(\mathcal{F}(U),\mathcal{G}(V))
+\]
+对任意开子集对 $V\subset U\subset X$ 成立。若每个 $\chi_U$ 都是 $\mathsf{C}$ 中的同构，则称 $\chi$ 为层的同构。
+
+给定 $X$ 上另一个层态射 $\tilde{\chi}:\mathcal{G}\rightarrow\mathcal{H}$，我们按开集逐点定义复合 $\tilde{\chi}\circ\chi:\mathcal{F}\rightarrow\mathcal{H}$ 为 $(\tilde{\chi}\circ\chi)_U\coloneqq\tilde{\chi}_U\circ\chi_U\in\textup{Hom}_\mathsf{C}(\mathcal{F}(U),\mathcal{H}(U))$。这些运算给出一个良定义的范畴 $\mathsf{Sh}(X;\mathsf{C})$，即 $X$ 上取值于 $\mathsf{C}$ 的\textbf{层范畴}\index{category!of sheaves on a topological space}。它是 $\mathsf{PSh}(X;\mathsf{C})$ 的全子范畴，后者称为 $X$ 上取值于 $\mathsf{C}$ 的\textbf{预层范畴}\index{category!of presheaves on a topological space}，其态射的定义完全相同。
+\end{Def}
+
+例如取 $\mathsf{C}=\mathsf{Ab}$，即得\textbf{阿贝尔群（预）层}\index{presheafofabelian@(pre)sheaf of abelian groups}，而：
+
+\begin{Def}\label{ringedspace}
+为拓扑空间 $X$ 配备任意取值于 $\mathsf{C=Rings}$（环范畴）的层 $\mathcal{S}_X$，就使其成为一个\textbf{环空间（ringed space）}\index{ringed space} $X=(X,\mathcal{S}_X)$，其中 $\mathcal{S}_X$ 称为\textbf{结构层（structure sheaf）}\index{sheaf!structure}。
+
+给定另一个环空间 $(Y,\mathcal{S}_Y)$，\textbf{环空间态射}\index{morphism!of ringed spaces} $(f,f^\#):(X,\mathcal{S}_X)\rightarrow (Y,\mathcal{S}_Y)$ 由一个连续映射 $f:X\rightarrow Y$ 连同 $Y$ 上环层的一个态射 $f^\#:\mathcal{S}_Y\rightarrow f_*(\mathcal{S}_X)$ 组成（其中 $f_*(\mathcal{S}_X)$ 是下文 \eqref{pushforwardsheaf} 中定义的「推出」层）。
+\end{Def}
+
+\begin{Def}										% STALK
+设 $X$ 为拓扑空间，$\mathcal{F}$ 为 $X$ 上取值于 $\mathsf{C}$ 的预层。$\mathcal{F}$ 在给定点 $x\in X$ 处的\textbf{茎（stalk）}\index{stalk}（或\textit{纤维}）为
+\begin{equation}
+	\mathcal{F}_x\coloneqq\varinjlim_{U\ni x}\mathcal{F}(U)= \{(U,s)\mid x\in U,\, U\subset X \text{ open}, \,s\in\mathcal{F}(U)\}/\!\sim\,,
+\end{equation}
+其中 $(U,s)\sim(U',s')$ 当且仅当存在开子集 $V\subset U\cap U'$ 使得 $x\in V$ 且 $s|_V=s'|_V$。我们把类 $s_x\coloneqq[(U,s)]\in\mathcal{F}_x$ 称为 $\mathcal{F}$ 在 $x$ 处的\textbf{芽（germ）}\index{germ}。注意茎继承了 $\mathsf{C}$ 中对象的结构。
+
+另注意，$X$ 上任意预层态射 $\chi:\mathcal{F}\rightarrow\mathcal{G}$ 对每个 $x\in X$ 都诱导出 $\mathsf{C}$ 中茎上的态射 $\chi_x:\mathcal{F}_x\rightarrow\mathcal{G}_x,\,s_x=[(U,s)]\mapsto\chi_x(s_x)\coloneqq[(U,\chi_U(s))]$。换言之，在 $x\in X$ 处取茎的运算给出一个良定义的（正合）函子 $\square_x:\mathsf{Sh}(X;\mathsf{C})\rightarrow\mathsf{C}$。
+\end{Def}
+
+茎之所以重要，是因为它们凸显了层的局部本性：例如，层态射是同构当且仅当诱导的茎态射在 $X$ 的每一点处都是同构（见 \cite[Proposition II.1.1]{[Har77]}）。研究茎并不会限制我们，因为任何对象 $\mathcal{F}(U)$ 都完全由族 $\bigsqcup_{x\in U}\mathcal{F}_x$ 决定！茎还充当预层与层之间的基本桥梁：
+
+\begin{Def}\label{asssheaf}
+设 $X$ 为拓扑空间，$\mathcal{F}$ 为 $X$ 上的预层。对任意开子集 $U\subset X$，定义
+\begin{align}
+	\mathcal{F}^+(U)\!\coloneqq\!\Big\{\varphi:U\!\rightarrow\!\bigsqcup_{x\in U}\mathcal{F}_x \Bigm|\, &\forall x\!\in\! U\!:\,\varphi_x\!\coloneqq\!\varphi(x)\!\in\!\mathcal{F}_x\text{ and }\exists U_x\!\subset\! U\text{ $x$-neighb. } \nonumber\\[-0.3cm]
+	&\exists\, s\!\in\!\mathcal{F}(U_x)\text{ s.t. }\varphi_y\!=\!s_y\,\forall y\!\in\! U_x\Big\}\,.
+\end{align}
+如此便确定了 $X$ 上的一个层 $\mathcal{F}^+$，它带有显然的限制映射。我们称其为\textbf{与 $\mathcal{F}$ 相伴的层}\index{sheaf!associated to a presheaf}（或 $\mathcal{F}$ 的\textit{层化}，sheafification）。于是存在自然态射 $\theta:\mathcal{F}\rightarrow\mathcal{F}^+$，使得每个 $\theta_U(s)\in\mathcal{F}^+(U)$ 的像恰为 $s\in\mathcal{F}(U)$ 在 $U$ 中的芽族。当然，对所有 $x\in X$ 有 $\mathcal{F}^+_x\cong\mathcal{F}_x$，且 $(\mathcal{F}\text{ sheaf}\implies\mathcal{F}^+\cong\mathcal{F})$。
+
+下述泛性质成立：对任意其他层 $\mathcal{G}$ 与预层态射 $\chi:\mathcal{F}\rightarrow\mathcal{G}$，存在唯一的层态射 $\psi:\mathcal{F}^+\rightarrow\mathcal{G}$ 使得 $\psi\circ\theta=\chi$（这也表明对 $(\mathcal{F}^+,\theta)$ 在唯一同构的意义下唯一）。
+
+由此可以证明，层化还把预层态射 $\mathcal{F}\rightarrow\mathcal{G}$ 对应到相伴层之间的态射 $\mathcal{F}^+\rightarrow\mathcal{G}^+$（见命题 \ref{biglemma} 的证明），从而层化是一个函子 $\varsigma:\mathsf{PSh}(X;\mathsf{C})\rightarrow\mathsf{Sh}(X;\mathsf{C})$，称为\textbf{层化函子}\index{functor!sheafification}。
+\end{Def}
+% [Tutor Note: 术语提醒：作者用 $\varsigma$ 记层化函子，多数文献写作 $(-)^+$ 或 $a(-)$，并把它称为「层化」，其左伴随性即命题 \ref{biglemma} 的内容；见到 $\varsigma$ 时不要误以为是某个特定层的记号。]
+
+回顾一下，我们的最终目标是描述某些非常特定的层的导出范畴。这要求我们重温第 1 章并检查必要的范畴论前提。我们先对刚刚引入的这些范畴做这件事。
+
+\begin{Pro}\label{pre-/sheafcatadditive}
+范畴 $\mathsf{PSh}(X;\mathsf{Ab})$ 与 $\mathsf{Sh}(X;\mathsf{Ab})$ 都是加性范畴。
+\end{Pro}
+
+\begin{proof}
+我们只对 $\mathsf{Sh}(X;\mathsf{Ab})$ 证明加性，于是按定义 $\mathsf{PSh}(X;\mathsf{Ab})$ 的加性也随之自动成立。关于定义 \ref{addcat} 的公理 (A1)，对任意两个 $\mathcal{F}_1,\mathcal{F}_2\in\text{obj}(\mathsf{Sh}(X;\mathsf{Ab}))$，集合 $\text{Hom}_{\mathsf{Sh}(X;\mathsf{Ab})}(\mathcal{F}_1,\mathcal{F}_2)$ 是一个阿贝尔群，其结构由每个开集 $U\subset X$ 上各个阿贝尔群 $\text{Hom}_\mathsf{Ab}(\mathcal{F}_1(U),\mathcal{F}_2(U))$ 诱导；具体而言，层态射的加法按开集逐点定义，复合律的双加性同理可得。
+
+公理 (A2) 中的零层 $0\in\text{obj}(\mathsf{Sh}(X;\mathsf{Ab}))$ 就是可预期的那个：它把每个 $U$ 送到平凡阿贝尔群 $\{0\}$，限制映射取 $\text{id}_{\{0\}}$，满足预层性质与粘合性质（平凡截面粘合为平凡截面）。
+
+最后，对公理 (A3)，我们把 $\mathcal{F}_1,\mathcal{F}_2\in\text{obj}(\mathsf{Sh}(X;\mathsf{Ab}))$ 的直和定义为层 $\mathcal{F}_1 \oplus\mathcal{F}_2$，由 $(\mathcal{F}_1 \oplus\mathcal{F}_2)(U)\coloneqq\mathcal{F}_1(U)\oplus\mathcal{F}_2(U)$ 与 $\rho^U_V\coloneqq(\rho_1)^V_U\oplus(\rho_2)^V_U$ 指定（其中 $\rho_i$ 为 $\mathcal{F}_i$ 的限制映射；层性质成立是因为逐分量成立）。此外，填入图 \eqref{directprodsum} 的层态射，正是由阿贝尔群的逐开集包含与投影构成的显然的包含与投影。
+\end{proof}
+
+为处理公理 (A4)，我们必须先弄清楚 $\mathsf{Sh}(X;\mathsf{Ab})$ 中核与余核是什么样子。
+
+\begin{Def}
+设 $\chi:\mathcal{F}\rightarrow\mathcal{G}$ 为拓扑空间 $X$ 上的预层态射，$V\subset U\subset X$ 为任意一对开子集。则：
+\begin{itemize}[leftmargin=0.5cm]
+	\item $\chi$ 的\textbf{核预层}\index{presheaf!kernel}是预层 $\mathcal{K}er(\chi)\in\text{obj}(\mathsf{PSh}(X;\mathsf{Ab}))$，由
+	\begin{equation}
+		\mathcal{K}er(\chi)(U)\coloneqq\ker(\chi_U:\mathcal{F}(U)\rightarrow\mathcal{G}(U))=(\chi_U)^{-1}(0)
+	\end{equation}
+	（确实是一个阿贝尔群）以及 $\rho^U_V:\mathcal{K}er(\chi)(U)\rightarrow\mathcal{K}er(\chi)(V),\,s\mapsto s|_{\mathcal{F}(V)}$ 指定；
+	
+	\item $\chi$ 的\textbf{像预层}\index{presheaf!image}是预层 $\mathcal{I}m(\chi)\in\text{obj}(\mathsf{PSh}(X;\mathsf{Ab}))$，由
+	\begin{equation}
+		\mathcal{I}m(\chi)(U)\coloneqq\text{im}(\chi_U:\mathcal{F}(U)\rightarrow\mathcal{G}(U))=\chi_U(\mathcal{F}(U))
+	\end{equation}
+	（一个阿贝尔群）以及 $\rho^U_V:\mathcal{I}m(\chi)(U)\rightarrow\mathcal{I}m(\chi)(V),\,s\mapsto s|_{\mathcal{G}(V)}$ 指定；
+	
+	\item $\chi$ 的\textbf{余核预层}\index{presheaf!cokernel}是预层 $\mathcal{C}oker(\chi)\in\text{obj}(\mathsf{PSh}(X;\mathsf{Ab}))$，由\footnote{也可以取预层 $\mathcal{F}$ 对其子预层 $\mathcal{F}'$ 的商——所谓子预层，指对每个开集 $U\subset X$ 都有 $\mathcal{F}'(U)<\mathcal{F}(U)$ 为子群、并带有来自 $\mathcal{F}$ 的相容限制映射的预层——其逐开集的定义方式显然。于是 $\mathcal{C}oker(\chi)\cong\mathcal{G}/\mathcal{I}m(\chi)$。}
+	\begin{equation}
+		\mathcal{C}oker(\chi)(U)\coloneqq\text{coker}(\chi_U:\mathcal{F}(U)\rightarrow\mathcal{G}(U))=\mathcal{G}(U)/\text{im}(\chi_U)
+	\end{equation}
+	（阿贝尔群）以及 $\rho^U_V:\mathcal{C}oker(\chi)(U)\rightarrow\mathcal{C}oker(\chi)(V),\,s\mapsto s|_{\mathcal{G}(V)}$ 指定。
+\end{itemize}
+\end{Def}
+
+\begin{Lem}\label{PShabelian}
+范畴 $\mathsf{PSh}(X;\mathsf{Ab})$ 是阿贝尔范畴。
+\end{Lem}
+
+\begin{proof}
+为验证公理 (A4)，我们必须确定任意给定预层态射 $\chi:\mathcal{F}\rightarrow\mathcal{G}$ 的典范分解 \eqref{candecompo}。按定义，$\chi$ 诱导出群同态 $\chi_U\in\text{Hom}_\mathsf{Ab}(\mathcal{F}(U),\mathcal{G}(U))$，而它们确实具有如下形式的典范分解
+\[
+\begin{tikzcd}
+	\ker(\chi_U)\arrow[r, hook, "k_U"] & \mathcal{F}(U)\arrow[r, "q_U"] & \mathcal{I}(U)\arrow[r, "j_U"] & \mathcal{G}(U)\arrow[r, two heads, "c_U"] & \text{coker}(\chi_U)\;,
+\end{tikzcd}
+\]
+其中 $\mathcal{I}(U)=\text{coker}(k_U)=\ker(c_U)$ 且 $j_U\circ q_U=\chi_U$。事实上，这些核与余核共同描述了核预层 $\mathcal{K}er(\chi)$ 与余核预层 $\mathcal{C}oker(\chi)$，而映射 $k_U$、$q_U$、$j_U$、$c_U$ 提升为与限制映射相容的预层态射，特别地分别满足 $j\circ q=\chi$ 与 $\mathcal{C}oker(k)=\mathcal{I}=\mathcal{K}er(c)$。因此 $\mathsf{PSh}(X;\mathsf{Ab})$ 是阿贝尔范畴。
+\end{proof}
+
+\begin{Rem}
+注意核预层确实满足层性质。事实上，设相应于 $U$ 的开覆盖 $\{U_i\}_{i\in I}$ 的截面 $s_i\in\ker(\chi_{U_i})\subset\mathcal{F}(U_i)$ 在其两两交叠上一致，于是把它们看作 $\mathcal{F}$ 的截面时，它们粘合为唯一的 $s\in\mathcal{F}(U)$。那么在 $\mathcal{G}(U)$ 中有 $\chi_U(s)|_{U_i}=\chi_{U_i}(s|_{U_i})=\chi_{U_i}(s_i)=0$（第一个等号利用了 $\chi$ 是层态射，从而与限制映射交换），因此它们必然粘合为零截面。故由唯一性得 $\chi_U(s)=0$，这意味着 $s\in\mathcal{K}er(\chi)(U)$，且按构造对所有 $i\in I$ 有 $s|_{U_i}=s_i\in\mathcal{K}er(\chi)(U_i)$。因此，我们可以谈论\textbf{核层}\index{sheaf!kernel} $\mathcal{K}er(\chi)\in\text{obj}(\mathsf{Sh}(X;\mathsf{Ab}))$。我们指出，对每个 $x\in X$ 都有自然的 $\mathcal{K}er(\chi)_x\cong\ker(\chi_x)$。
+
+另一方面，可以证明像预层与（商，从而）余核预层都不是层！反例可见 \cite[construction 13.12]{[Gat20]} 与 \cite[Proposition I.5.4.b]{[GM03]}。相反，我们应当关注它们在 $\text{obj}(\mathsf{Sh}(X;\mathsf{Ab}))$ 中的相伴层，即\textbf{像层}\index{sheaf!image} $\mathcal{I}m(\chi)^+\cong\mathcal{F}/\mathcal{K}er(\chi)$ 与\textbf{余核层}\index{sheaf!cokernel} $\mathcal{C}oker(\chi)^+\cong\mathcal{G}/\mathcal{I}m(\chi)^+$，如定义 \ref{asssheaf} 所述。尽管如此，对每个 $x\in X$ 我们仍有 $\mathcal{I}m(\chi)_x\cong\text{im}(\chi_x)$ 与 $\mathcal{C}oker(\chi)_x\cong\text{coker}(\chi_x)$（这已经暗示了为什么用茎来处理要有利得多！）。
+\end{Rem}
+% [Tutor Note: 易错预警：层范畴中的余核不是逐开集取的余核预层，而是 $\mathcal{C}oker(\chi)^+$；正因如此，定理 \ref{Sh(X,Ab)isabelian} 证明中的典范分解 \eqref{sheafcandecompo} 要把每个预层构造再层化一次。若把余核预层误当作余核层，$\mathcal{I}m$ 与 $\mathcal{K}er$（乃至短正合性）都会失配。]
+
+为验证层范畴的阿贝尔性，我们还必须更好地理解它与预层范畴的关系：
+
+\begin{Pro}\label{biglemma}
+包含/遗忘函子 $\iota:\mathsf{Sh}(X;\mathsf{Ab})\rightarrow\mathsf{PSh}(X;\mathsf{Ab})$ 有一个左伴随函子，即存在某个 $\varsigma:\mathsf{PSh}(X;\mathsf{Ab})\rightarrow\mathsf{Sh}(X;\mathsf{Ab})$ 连同双函子的自然同构 $\Psi:\textup{Hom}_{\mathsf{Sh}(X;\mathsf{Ab})}(\varsigma(\square),\blacksquare)\rightarrow\textup{Hom}_{\mathsf{PSh}(X;\mathsf{Ab})}(\square,\iota(\blacksquare))$（与命题 \ref{adjointfunc} 相比较）。
+\end{Pro}  
+
+\begin{proof}
+我们先构造 $\varsigma$。给定预层 $\mathcal{F}$，我们很想令 $\varsigma(\mathcal{F})\coloneqq\mathcal{F}^+\in\text{obj}(\mathsf{Sh}(X;\mathsf{Ab}))$。这没错（$\varsigma$ 确实就是定义 \ref{asssheaf} 中的层化函子），但为使随后的构造更透明——也作为对目前所见层论的一个有益练习——我们改用一个等价的替代定义。对开集 $U\subset X$，令
+\[
+\varsigma(\mathcal{F})(U)\coloneqq\Big\{[(U_i, s_i)_{i\in I}] \Bigm| \bigcup_{i\in I}U_i=U,\,s_i\in\mathcal{F}(U_i)\text{ s.t. }s_i|_{U_i\cap U_j}=s_j|_{U_i\cap U_j}\Big\}\,,
+\]
+其中定义等价类的关系为
+\[
+(U_i, s_i)_{i\in I}\sim(U_j', s_j')_{j\in J} \Leftrightarrow \exists \{U_k''\}_{k\in K}: \forall i,j\,\exists U_k''\subset U_i\cap U_j'\text{ and } s_i|_{U_k''}=s_j'|_{U_k''}.
+\]
+再定义 $\rho^U_V:\varsigma(\mathcal{F})(U)\rightarrow\varsigma(\mathcal{F})(V),\,\rho^U_V([(U_i, s_i)_{i\in I}])\coloneqq [(U_i\cap V, s_i|_{U_i\cap V})_{i\in I}]$ 与 $[(U_i, s_i)_{i\in I}] + [(U_j', s_j')_{j\in J}]\coloneqq [(U_i\cap U_j', s_i|_{U_i\cap U_j'} + s_j'|_{U_i\cap U_j'})_{(i,j)\in I\times J}]$，它们赋予 $\varsigma(\mathcal{F})(U)$ 阿贝尔群的结构（单位元为 $[({U},0)]$），从而使 $\varsigma(\mathcal{F})\in\text{obj}(\mathsf{PSh}(X;\mathsf{Ab}))$。
+
+我们要证明它其实是层。我们用反证法：注意一个预层不是层，必属以下两种情形之一——要么存在非零截面，限制到各子集上却为零（它们会粘合为 0），要么存在一族相容的「子截面」，却不是来自任何截面（同样违反粘合性质）。对前一情形，设存在某个 $0\neq s=[(U_i,s_i)_{i\in I}]\in\varsigma(\mathcal{F})(U)$ 以及覆盖 $U$ 的 $\{V_j\}_{j\in J}$，使得对所有 $j$ 都有 $s|_{V_j}=0$；固定 $j$，由 $\sim$ 可知存在 $\bigcup_i(U_i\cap V_j)=V_j$ 的某个加细 $\{U_{j,k}'\}_{k\in K}$，使得对任意满足 $U_{j,k}'\subset U_i\cap V_j$ 的 $i,k$ 都有 $s_i|_{U_{j,k}'}=0|_{U_{j,k}'}=0$，这表明 $s=[(U_{j,k}',0)_{k\in K}]=0$，矛盾。对第二种情形，可类似地推出：任意相容截面 $s_j\in\varsigma(\mathcal{F})(V_j)$（其中 $\bigcup_{j\in J}V_j=U$）都可实现为某个 $s\in\varsigma(\mathcal{F})(U)$ 的 $s|_{V_j}$（细节见 \cite[Proposition II.5.13]{[GM03]}）。于是 $\varsigma(\mathcal{F})\in\text{obj}(\mathsf{Sh}(X;\mathsf{Ab}))$。
+此外，给定预层态射 $\chi:\mathcal{F}\rightarrow\mathcal{G}$，令 $\varsigma(\chi)$ 为按开集逐点定义的层态射
+\[
+\varsigma(\chi)_U:\varsigma(\mathcal{F})(U)\rightarrow\varsigma(\mathcal{G})(U),\,\varsigma(\chi)_U([(U_i, s_i)_{i\in I}])\coloneqq[(U_i, \chi_{U_i}(s_i))_{i\in I}]\,,
+\]
+它确实与限制映射交换。这就完成了 $\varsigma$ 的构造。
+
+至于 $\Psi$，我们先定义自然变换 $\varepsilon:\mathsf{Id}_{\mathsf{PSh}(X;\mathsf{Ab})}\rightarrow\iota\circ\varsigma$，它给出预层态射 $\varepsilon(\mathcal{F}):\mathcal{F}\rightarrow(\iota\circ\varsigma)(\mathcal{F})$，由\footnote{因此在这里，在缺少指标的情形下，$[(U,s)]$ 被理解为单元素集合对 $\{U\}$ 与 $\{s\}$ 的类。以下同样的记号约定仍然适用。}
+\[
+\varepsilon(\mathcal{F})_U:\mathcal{F}(U)\rightarrow(\iota\circ\varsigma)(\mathcal{F})(U),\, s\mapsto[(U,s)]=\iota\big([(U,s)]\big)\,.
+\]
+给出。然后对 $\mathcal{F}\in\text{obj}(\mathsf{PSh}(X;\mathsf{Ab}))$ 与 $\mathcal{G}\in\text{obj}(\mathsf{Sh}(X;\mathsf{Ab}))$，置
+\begin{small}
+	\[
+	\Psi(\mathcal{F},\mathcal{G}):\textup{Hom}_{\mathsf{Sh}(X;\mathsf{Ab})}(\varsigma(\mathcal{F}),\mathcal{G})\rightarrow\textup{Hom}_{\mathsf{PSh}(X;\mathsf{Ab})}(\mathcal{F},\iota(\mathcal{G})),\,\Psi(\mathcal{F},\mathcal{G})(\chi)\coloneqq\iota(\chi)\circ\varepsilon(\mathcal{F})\,,
+	\]
+\end{small}
+并想证明它是双射。设 $\iota(\chi)\circ\varepsilon(\mathcal{F})=0$，并任取 $s=[(U_i,s_i)_{i\in I}]\in\varsigma(\mathcal{F})(U)$。则 $r\coloneqq\chi_U(s)\in\mathcal{G}(U)$ 对每个 $i$ 都满足 $r|_{U_i}=\chi_{U_i}(s|_{U_i})=\chi_{U_i}(s_i)=\chi_{U_i}([(U_i,s_i)])=\iota(\chi)_{U_i}([(U_i,s_i)])=(\iota(\chi)\circ\varepsilon(\mathcal{F}))_{U_i}(s_i)=0$，于是 $\mathcal{G}$ 的层性质蕴含必有 $r=0$，而这只在 $\chi=0$ 时可能。这表明 $\Psi(\mathcal{F},\mathcal{G})$ 是单射。
+
+为证满射性，设 $\psi:\mathcal{F}\rightarrow\iota(\mathcal{G})$ 为预层态射，任取 $s=[(U_i,s_i)_{i\in I}]$ $\in\varsigma(\mathcal{F})(U)$，并令 $r_i\coloneqq \psi_{U_i}(s_i)\in\mathcal{G}(U_i)$。则 $r_i|_{U_i\cap U_j}=\psi_{U_i\cap U_j}(s_i|_{U_i\cap U_j})=\psi_{U_i\cap U_j}(s_j|_{U_i\cap U_j})=r_j|_{U_i\cap U_j}$（第二个等号由 $\varsigma(\mathcal{F})(U)$ 的定义得到），这在层 $\mathcal{G}$ 中意味着存在某个 $r\in\mathcal{G}(U)$ 限制为这些 $r_i$。我们通过 $\chi_U(s)\coloneqq r$ 定义 $\chi:\varsigma(\mathcal{F})\rightarrow\mathcal{G}$（实际上它与代表元 $(U_i,s_i)_{i\in I}$ 的选取无关）。于是 $\psi_{U_i}(s_i)=\chi_U(s)|_{U_i}=\iota(\chi)_{U_i}(s_i)=\iota(\chi)_{U_i}([(U_i,s_i)])=(\iota(\chi)\circ\varepsilon(\mathcal{F}))_{U_i}(s_i)\in\mathcal{G}(U_i)$，故 $\psi=\iota(\chi)\circ\varepsilon(\mathcal{F})=\Psi(\mathcal{F},\mathcal{G})(\chi)$；并且确实有 $\chi\in\textup{Hom}_{\mathsf{Sh}(X;\mathsf{Ab})}(\varsigma(\mathcal{F}),\mathcal{G})$，因为 $(\rho^U_V\circ\chi_U)(s)|_{U_i}=(\rho^{U_i}_{U_i\cap V}\circ\psi_{U_i})(s_i)=\psi_{U_i\cap V}(s_i|_{U_i\cap V})=\iota(\chi)_{U_i\cap V}([(U_i\cap V,s_i|_{U_i\cap V})])=(\chi_V\circ\rho^U_V)(s)|_{U_i}$。这证明了满射性。
+$\Psi$ 的自然性留作练习。
+% [Tutor Note: 含糊点拨：$\Psi$ 的自然性要对 $\mathcal{F}\in\mathsf{PSh}$ 与 $\mathcal{G}\in\mathsf{Sh}$ 两个变元分别验证，即 $\Psi$ 与两变元上的态射拉回相容。这直接来自 $\varepsilon$ 的自然性、$\iota$ 的忠实性以及 $\varsigma$ 的函子性；其净效果正是断言 $(\varsigma,\iota)$ 构成伴随对。]
+\end{proof}
+
+\begin{Thm}\label{Sh(X,Ab)isabelian}
+范畴 $\mathsf{Sh}(X;\mathsf{Ab})$ 是阿贝尔范畴。
+\end{Thm}
+
+\begin{proof}
+我们已由命题 \ref{pre-/sheafcatadditive} 知道 $\mathsf{Sh}(X;\mathsf{Ab})$ 是加性范畴，故只需再验证定义 \ref{abcat} 的公理 (A4)。考虑层态射 $\chi:\mathcal{F}\rightarrow\mathcal{G}$ 及其相应的预层态射 $\iota(\chi):\iota(\mathcal{F})\rightarrow\iota(\mathcal{G})$；由于 $\mathsf{PSh}(X;\mathsf{Ab})$ 由引理 \ref{PShabelian} 是阿贝尔范畴，该预层态射具有典范分解 $\mathcal{K}er(\iota(\chi))\xrightarrow{k}\iota(\mathcal{F})\xrightarrow{q}\mathcal{I}\xrightarrow{j}\iota(\mathcal{G})\xrightarrow{c}\mathcal{C}oker(\iota(\chi))$，其中 $\mathcal{K}er(c)=\mathcal{I}=\mathcal{C}oker(k)$。于是我们断言
+\begin{equation}\label{sheafcandecompo}
+	\begin{tikzcd}
+		\varsigma\big(\mathcal{K}er(\iota(\chi))\big)\arrow[r, "\varsigma(k)"] & \mathcal{F}\arrow[r, "\varsigma(q)"] & \varsigma(\mathcal{I})\arrow[r, "\varsigma(j)"] & \mathcal{G}\arrow[r, "\varsigma(c)"] & \varsigma\big(\mathcal{C}oker(\iota(\chi))\big)
+	\end{tikzcd}
+\end{equation}
+是 $\chi$ 在 $\mathsf{Sh}(X;\mathsf{Ab})$ 中的典范分解，它来自命题 \ref{biglemma} 的伴随函子 $\varsigma:\mathsf{PSh}(X;\mathsf{Ab})\rightarrow\mathsf{Sh}(X;\mathsf{Ab})$ 的作用；这里我们注意到层 $\mathcal{F}=\iota(\mathcal{F})$ 与 $\mathcal{G}=\iota(\mathcal{G})$ 的相伴层等于它们自身，即 $\varsigma(\iota(\mathcal{F}))=\mathcal{F}$ 与 $\varsigma(\iota(\mathcal{G}))=\mathcal{G}$，从而 $\varsigma(\iota(\chi))=\chi$（参看定义 \ref{asssheaf}）。显然，$\varsigma$ 的函子性保证 $\varsigma(j)\circ\varsigma(q)=\varsigma(\iota(\chi))=\chi$。因此只需验证 $\varsigma\big(\mathcal{K}er(\iota(\chi))\big)$ 与 $\varsigma\big(\mathcal{C}oker(\iota(\chi))\big)$ 分别是 $\chi$ 的核与余核。
+% [Tutor Note: 易错预警：$\varsigma(\iota(\mathcal{F}))=\mathcal{F}$ 与 $\varsigma(\iota(\chi))=\chi$ 严格说只是在典范同构的意义下成立（层化一个层，得到与之典范同构的层），这里使用等号属于滥用记号。追图时若把 $\varsigma$ 当成严格的恒等函子，容易把伴随的单位 $\varepsilon$ 与余单位弄混。]
+
+关于余核，考虑任意 $\mathcal{Z}\in\text{obj}(\mathsf{Sh}(X;\mathsf{Ab}))$。由定义 \ref{monepicoker} 的刻画性质，序列
+\[
+\{0\}\!\rightarrow\!\text{Hom}_{\mathsf{PSh}}(\mathcal{C}oker(\iota(\chi)),\iota(\mathcal{Z}))\!\rightarrow\!\text{Hom}_{\mathsf{PSh}}(\iota(\mathcal{G}),\iota(\mathcal{Z}))\!\rightarrow\!\text{Hom}_{\mathsf{PSh}}(\iota(\mathcal{F}),\iota(\mathcal{Z}))
+\]
+正合。然后应用命题 \ref{biglemma} 的双射 $\Psi(\square,\mathcal{Z})^{-1}:\textup{Hom}_{\mathsf{PSh}(X;\mathsf{Ab})}(\square,\iota(\mathcal{Z}))\longrightarrow\break \textup{Hom}_{\mathsf{Sh}(X;\mathsf{Ab})}(\varsigma(\square),\mathcal{Z})$，我们立刻得到必然正合的序列
+\[
+\{0\}\rightarrow\text{Hom}_{\mathsf{Sh}}(\varsigma\big(\mathcal{C}oker(\iota(\chi))\big),\mathcal{Z})\rightarrow\text{Hom}_{\mathsf{Sh}}(\mathcal{G},\mathcal{Z})\rightarrow\text{Hom}_{\mathsf{Sh}}(\mathcal{F},\mathcal{Z})\,,
+\]
+这又表明 $\text{coker}(\chi)\equiv\varsigma(c):\mathcal{G}\rightarrow\mathcal{C}oker(\chi)=\varsigma\big(\mathcal{C}oker(\iota(\chi))\big)$。
+
+关于核，则需多做些工作。首先，基本恒等式 $\chi\circ\varsigma(k)=\varsigma(\iota(\chi)\circ k)=0$ 成立。其次，$\big(\varsigma\big(\mathcal{K}er(\iota(\chi))\big),\varsigma(k)\big)$ 是 $\chi$ 的核，当且仅当对任意满足 $\chi\circ\psi=0$ 的 $\psi\in\text{Hom}_{\mathsf{Sh}(X;\mathsf{Ab})}(\mathcal{Z},\mathcal{F})$，都存在唯一的层态射 $h:\mathcal{Z}\rightarrow \varsigma\big(\mathcal{K}er(\iota(\chi))\big)$ 使得 $\varsigma(k)\circ h=\psi:\mathcal{Z}\rightarrow\mathcal{F}$（也就是说，图 \eqref{kercokerdiag} 的左三角形交换）。
+
+关于 $h$ 的唯一性，对任意 $s=[(U_i,s_i)_{i\in I}]\in\varsigma\big(\mathcal{K}er(\iota(\chi))\big)(U)$，条件 $0\overset{!}{=}\varsigma(k)_U(s)=[(U_i,k_{U_i}(s_i))_{i\in I}]$ 蕴含（按命题 \ref{biglemma} 中 $\sim$ 的定义）存在加细覆盖 $\{V_j\}_{j\in J}$ 使得对所有 $V_j\subset U_i$ 都有 $k_{V_j}(s_i|_{V_j})=0$，于是由 $k_{V_j}$ 的单射性得 $s_i|_{V_j}=0$。故 $s=[(V_j,s_i|_{V_j})_{i,j}]=0$，这意味着 $\varsigma(k)_U$ 是单射，特别地是一个包含，从而 $h_U=\psi_U$，这就证明了给定输入 $\psi$ 时 $h$ 的唯一性。
+
+现在显式构造 $h$。取 $t\in\mathcal{Z}(U)$，令 $r\coloneqq\psi_U(t)\in\mathcal{F}(U)$。于是 $\chi_U(r)=0$ 给出开覆盖 $\{U_i\}_{i\in I}$，使得 $0=(\chi_U\circ\psi_U)(t)|_{U_i}=(\chi_{U_i}\circ\psi_{U_i})(t|_{U_i})$。由群同态 $\chi_{U_i}:\mathcal{F}(U_i)\rightarrow\mathcal{G}(U_i)$ 的核 $k_{U_i}:\mathcal{K}er(\iota(\chi))(U_i)\rightarrow\mathcal{F}(U_i)$ 的泛性质，我们得到唯一的 $\bar{h}_i\in\mathcal{K}er(\iota(\chi))(U_i)$——即 $t|_{U_i}$ 在唯一的 $\mathcal{Z}(U_i)\rightarrow\mathcal{K}er(\iota(\chi))(U_i)$ 下的像——使得 $k_{U_i}(\bar{h}_i)=\psi_{U_i}(t|_{U_i})$（再次参看 \eqref{kercokerdiag}）。所有这些 $\bar{h}_i$ 都相容，于是确定一个类 $\bar{h}=[(U_i,\bar{h}_i)_{i\in I}]\in\varsigma\big(\mathcal{K}er(\iota(\chi))\big)(U)$。然后我们定义 $h_U(t)\coloneqq\bar{h}$（实际上与覆盖的选取无关），由此得到合理的层态射 $h:\mathcal{Z}\rightarrow\varsigma\big(\mathcal{K}er(\iota(\chi))\big)$，使得
+\begin{align*}
+	\varsigma(k)_U\circ h_U(t)=\varsigma(k)_U([(U_i,\bar{h}_i)_{i\in I}])&=[(U_i,k_{U_i}(\bar{h}_i))_{i\in I}]=[(U_i,\psi_{U_i}(t|_{U_i}))_{i\in I}] \\
+	&=\psi_U([(U_i,t|_{U_i})_{i\in I}])=\psi_U(t)\,,
+\end{align*} 
+如所要求。因此，按定义 \ref{monepicoker}，有 $\ker(\chi)\equiv\varsigma(k):\mathcal{K}er(\chi)=\varsigma\big(\mathcal{K}er(\iota(\chi))\big)\rightarrow~\mathcal{F}$。
+
+最后，对 $\varsigma(c)$ 与 $\varsigma(k)$ 施以完全类似的论证可得\footnote{这里我们省略了上一个命题中的自然同构 $\varepsilon:\mathsf{Id}_{\mathsf{PSh}(X;\mathsf{Ab})}\rightarrow\iota\circ\varsigma$。} $\mathcal{K}er(\varsigma(c))\!=\varsigma\big(\mathcal{K}er\big(\iota(\varsigma(c))\big)\big)\!=\varsigma(\mathcal{K}er(c))$ 与 $\mathcal{C}oker(\varsigma(k))\!=\varsigma(\mathcal{C}oker(k))$，从而 $\mathcal{K}er(\varsigma(c))=\varsigma(\mathcal{I})=\mathcal{C}oker(\varsigma(k))$。我们断定 \eqref{sheafcandecompo} 确实是 $\chi:\mathcal{F}\rightarrow\mathcal{G}$ 的典范分解，从而 $\mathsf{Sh}(X;\mathsf{Ab})$ 是阿贝尔范畴。
+\end{proof}
+
+\begin{Rem}
+一般地，正如 \cite[section 1.6]{[Wei94]} 与 \cite[Theorem 17.4.9]{[KS06]} 所述，拓扑空间 $X$ 上取值于任意阿贝尔范畴 $\mathsf{A}$ 的层范畴 $\mathsf{Sh}(X;\mathsf{A})$ 本身是阿贝尔范畴，但作为 $\mathsf{PSh}(X;\mathsf{A})$ 的子范畴未必是阿贝尔子范畴（因为后者的余核可能不同；参看定义 \ref{abeliansubcat}）。
+\end{Rem}
+
+
+\subsection{层的进一步性质}\label{ch5.2}
+
+
+我们刚刚证明了取值于阿贝尔范畴的预层/层范畴是阿贝尔范畴，于是有大量工具可供使用。例如，我们可以套用引理 \ref{aboutmonepi}，讨论正合序列。
+
+\begin{Lem}\label{aboutmonepisheaves}
+设 $\chi:\mathcal{F}\rightarrow\mathcal{G}$ 为取值于阿贝尔范畴 $\mathsf{A}$ 的层态射。则 $\chi$：
+\begin{itemize}[leftmargin=0.5cm]
+	\item 是单射\textup{（单态射）}当且仅当 $\mathcal{K}er(\chi)=0$，这也等价于对一切开集 $U\subset X$ 有 $\chi_U\in\textup{Hom}_\mathsf{A}(\mathcal{F}(U),\mathcal{G}(U))$ 满足 $\ker(\chi_U)=\{0\}$，而这又等价于对每个 $x\in X$，茎映射 $\chi_x:\mathcal{F}_x\rightarrow\mathcal{G}_x$ 满足 $\ker(\chi_x)=0\in\textup{obj}(\mathsf{A})$；
+	
+	\item 是满射\textup{（满态射）}当且仅当 $\mathcal{I}m(\chi)=\mathcal{G}$，这也等价于对每个 $x\in X$ 有 $\chi_x\in\textup{Hom}_\mathsf{A}(\mathcal{F}_x,\mathcal{G}_x)$ 满足 $\textup{im}(\chi_x)=\mathcal{G}_x\in\textup{obj}(\mathsf{A})$\textup{（但并不等价于每个 $\chi_U$ 都是满射！）}。
+\end{itemize}
+\vspace*{-0.1cm}
+此时，$\mathsf{Sh}(X;\mathsf{A})$ 中的序列 $0\rightarrow\mathcal{F}\xrightarrow{\chi}\mathcal{G}\xrightarrow{\psi}\mathcal{H}\rightarrow 0$ 称为\textup{短正合}的，若 $\chi$ 单射、$\psi$ 满射且 $\mathcal{K}er(\psi)=\mathcal{I}m(\chi)$。在此情形下，它典范同构于 $0\rightarrow\mathcal{K}er(\psi)\hookrightarrow\mathcal{G}\twoheadrightarrow\mathcal{C}oker(\chi)\rightarrow 0$。更一般地，$\mathsf{Sh}(X;\mathsf{A})$ 中的序列 $...\rightarrow\mathcal{F}^{n-1}\xrightarrow{\chi^{n-1}}\mathcal{F}^n\xrightarrow{\chi^n}\mathcal{F}^{n+1}\rightarrow...$ 称为\textup{长正合}的，若对所有 $n\in\mathbb{N}$ 有 $\mathcal{K}er(\chi^n)=\mathcal{I}m(\chi^{n-1})$。
+
+由上可知，这一条件可以等价地在 $\mathsf{A}$ 中逐茎 $x\in X$ 检验，因为 $\mathcal{K}er(\chi^n)_x\cong\ker(\chi_x^n)$ 且 $\mathcal{I}m(\chi^{n-1})_x\cong\textup{im}(\chi_x^{n-1})$。特别地，茎函子 $\square_x:\mathsf{Sh}(X;\mathsf{A})\rightarrow\mathsf{A}$ 是正合的。
+\end{Lem}  
+% [Tutor Note: 易错预警：满射性（满态射性）不能逐开集检验，只能逐茎检验；文本已明确区分：单射性的判据既有开集版本也有茎版本，而满射性只有茎版本。反例正是「像预层不是层」的现象，可参看 \cite[construction 13.12]{[Gat20]} 与 \cite[Proposition I.5.4.b]{[GM03]}。]
+
+我们也可以讨论涉及层的加性函子的正合性。例如：
+
+\begin{Lem}\label{sectfuncexact}
+设 $X$ 为拓扑空间，$U\subset X$ 为开集。则函子 $\Gamma(U,\square):\mathsf{Sh}(X;\mathsf{Ab})\rightarrow\mathsf{Ab}$，$\mathcal{F}\mapsto\mathcal{F}(U)\text{ and } \chi\mapsto\chi_U$，是左正合的。
+\end{Lem}
+
+\begin{proof}
+首先注意，$\Gamma(U,\square)$ 作为加性范畴之间的函子是加性的（定义 \ref{additiveexactfunc}），因为对任意 $\mathcal{F},\mathcal{G}\in\text{obj}(\mathsf{Sh}(X;\mathsf{Ab}))$，映射 $\Gamma(U,\square)_{\mathcal{F},\mathcal{G}}:\text{Hom}_{\mathsf{Sh}(X;\mathsf{Ab})}(\mathcal{F},\mathcal{G})\rightarrow\text{Hom}_\mathsf{Ab}(\mathcal{F}(U),\mathcal{G}(U)),\,\chi\mapsto\chi_U$ 显然是阿贝尔群同态。
+
+现在考虑 $\mathsf{Sh}(X;\mathsf{Ab})$ 中任意短正合序列 $0\rightarrow\mathcal{F}\rightarrow\mathcal{F}'\rightarrow\mathcal{F}''\rightarrow 0$。由命题 \ref{biglemma} 回忆，包含（遗忘）函子 $\iota:\mathsf{Sh}(X;\mathsf{Ab})\rightarrow\mathsf{PSh}(X;\mathsf{Ab})$ 是层化函子 $\varsigma:\mathsf{PSh}(X;\mathsf{Ab})\rightarrow\mathsf{Sh}(X;\mathsf{Ab})$ 的右伴随。于是由命题 \ref{adjointfunc}，$\iota$ 左正合（而 $\varsigma$ 右正合），这意味着 $0\rightarrow\iota(\mathcal{F})\rightarrow\iota(\mathcal{F}')\rightarrow\iota(\mathcal{F}'')$ 在 $\mathsf{PSh}(X;\mathsf{Ab})$ 中正合；而在其中按定义核与余核逐开集表现良好。于是对任意 $U\subset X$，$0\rightarrow\iota(\mathcal{F})(U)\rightarrow\iota(\mathcal{F}')(U)\rightarrow\iota(\mathcal{F}'')(U)$ 正合。当然 $\iota(\mathcal{F})(U)=\mathcal{F}(U)$，对 $\mathcal{F}',\mathcal{F}''$ 也是一样，这就确认了 $\Gamma(U,\square)$ 左正合。
+\end{proof}
+% [Tutor Note: 含糊点拨：$\Gamma(U,\square)$ 一般不右正合，障碍正是上个批注所说的「满射不必逐开集成立」。证明把正合性从层范畴搬回预层范畴，依赖命题 \ref{adjointfunc} 的一般结论「左伴随右正合、右伴随左正合」，而不是逐项验证核与余核。]
+
+为后续之用，稍微扩充一下词汇表是有益的。
+
+\begin{Def}\label{pushforwardShAb}
+设 $X,Y$ 为拓扑空间，$f:X\rightarrow Y$ 为连续映射，$\mathsf{C}$ 为任意范畴。
+\begin{itemize}[leftmargin=0.5cm]
+	\item 假设 $X$ 上赋有某个 $\mathcal{F}\in\text{obj}(\mathsf{Sh}(X;\mathsf{C}))$。则对任意开集 $V\subset Y$，对应
+	\begin{equation}\label{pushforwardsheaf}
+		V\mapsto f_*\mathcal{F}(V)\coloneqq\mathcal{F}(f^{-1}(V))
+	\end{equation}
+	定义了 $Y$ 上一个合理的层 $f_*\mathcal{F}$，称为\textbf{沿 $f$ 的推出层（pushforward sheaf）}\index{sheaf!pushforward}（或\textbf{直像层}\index{sheaf!direct image}），其限制映射由 $\mathcal{F}$ 在相应原像上的限制映射诱导。特别地，在茎上有 $(f_*\mathcal{F})_{f(x)}\cong\mathcal{F}_x$ 对任意 $x\in X$ 成立。
+	\newline 给定某个 $\chi\in\text{Hom}_{\mathsf{Sh}(X;\mathsf{C})}(\mathcal{F}_1,\mathcal{F}_2)$，我们还可定义态射 $f_*\chi\in\text{Hom}_{\mathsf{Sh}(Y;\mathsf{C})}(f_*\mathcal{F}_1,f_*\mathcal{F}_2)$ 为 $(f_*\chi)_V:s\in f_*\mathcal{F}_1(V)\mapsto\chi_{f^{-1}(V)}(s)\in f_*\mathcal{F}_2(V)$。这使推出成为一个函子 $f_*:\mathsf{Sh}(X;\mathsf{C})\rightarrow\mathsf{Sh}(Y;\mathsf{C})$。
+	
+	\item 假设 $Y$ 上赋有某个 $\mathcal{G}\in\text{obj}(\mathsf{Sh}(Y;\mathsf{C}))$。则对任意开集 $U\subset X$，对应\footnote{这里取极限是必要的，因为 $f(U)\subset Y$ 一般不是开子集！}
+	\begin{equation}
+		U\mapsto f^{-1}\mathcal{G}(U)\coloneqq\mkern-6mu\varinjlim_{V\supseteq f(U)}\mkern-6mu\mathcal{G}(V)
+	\end{equation}
+	定义了 $Y$ 上的一个预层，其相伴层记作 $f^{-1}\mathcal{G}$，称为\textbf{逆像层（inverse image sheaf）}\index{sheaf!inverse image}，其限制映射由 $\mathcal{G}$ 的限制映射诱导。特别地，在茎上有 $(f^{-1}\mathcal{G})_x\cong\mathcal{G}_{f(x)}$ 对任意 $x\in X$ 成立。
+	\newline 给定某个 $\psi\in\text{Hom}_{\mathsf{Sh}(Y;\mathsf{C})}(\mathcal{G}_1,\mathcal{G}_2)$，我们可以应用命题 \ref{biglemma} 的构造得到某个 $f^{-1}\psi\in\text{Hom}_{\mathsf{Sh}(X;\mathsf{C})}(f^{-1}\mathcal{G}_1,f^{-1}\mathcal{G}_2)$，从而得到函子 $f^{-1}:\mathsf{Sh}(Y;\mathsf{C})\rightarrow\mathsf{Sh}(X;\mathsf{C})$。
+\end{itemize}
+可以方便地把函子 $f^{-1}$ 刻画为 $f_*$ 的左伴随。即，逆像层 $f^{-1}\mathcal{G}$ 由双函子的同构 $\text{Hom}_{\mathsf{Sh}(X;\mathsf{C})}(f^{-1}\mathcal{G},\mathcal{F})\cong\text{Hom}_{\mathsf{Sh}(Y;\mathsf{C})}(\mathcal{G},f_*\mathcal{F})$ 隐式确定（证明见 \cite[Proposition II.6.17]{[GM03]}）。
+\end{Def}
+% [Tutor Note: 原文笔误与概念提醒：原文说所给对应「定义了 $Y$ 上的一个预层」，但 $U\subset X$ 是开集、$f^{-1}\mathcal{G}$ 是 $X$ 上的层，故应为「$X$ 上的预层」；译文已按原文保留并在此说明。另注意 $f^{-1}$ 必须「先取极限预层、再层化」，不能与极限预层本身等同。]
+
+\begin{Ex}\label{skyscrapersheaf}
+设 $X$ 为拓扑空间，$x\in X$ 固定，视作单点空间 $\{x\}$ 并通过 $\iota:\{x\}\hookrightarrow X$ 含入 $X$。设 $S\in\text{obj}(\mathsf{C})$，$\mathsf{C}$ 为任意范畴，并给 $\{x\}$ 配上层 $\mathcal{O}_x\in\text{obj}(\mathsf{Sh}(\{x\};\mathsf{C}))\equiv\text{obj}(\mathsf{C})$，使得 $\mathcal{O}_x(\{x\})=S$ 且 $\mathcal{O}_x(\emptyset)=0$。则\textbf{摩天楼层（skyscraper sheaf）}\index{sheaf!skyscraper} $\iota_*\mathcal{O}_x\in\text{obj}(\mathsf{Sh}(X;\mathsf{C}))$ 由下式给出
+\vspace*{-0.2cm}
+\begin{equation}
+	U\subset X\text{ open}\longmapsto\iota_*\mathcal{O}_x(U)=\mathcal{O}_x(\iota^{-1}(U))= 
+	\begin{cases}
+		S & $if $ x\in U \\ 
+		0 & $else $
+	\end{cases}\,. 
+	\vspace*{-0.4cm} 
+\end{equation}
+\hfill $\blacklozenge$
+\end{Ex}
+
+\begin{Lem}\label{inversepushforwardexact}
+设 $f:X\rightarrow Y$ 为拓扑空间的连续映射。则函子 $f_*:\mathsf{Sh}(X;\mathsf{Ab})\rightarrow\mathsf{Sh}(Y;\mathsf{Ab})$ 左正合，而函子 $f^{-1}:\mathsf{Sh}(Y;\mathsf{Ab})\rightarrow\mathsf{Sh}(X;\mathsf{Ab})$ 正合。
+\end{Lem}
+
+\begin{proof}
+由上可知，函子 $f^{-1}, f_*$ 是加性范畴之间的一对左、右伴随函子。命题 \ref{adjointfunc} 随即蕴含它们分别右正合、左正合。为看出 $f^{-1}$ 也左正合，按引理 \ref{aboutmonepisheaves} 的建议只需在茎上工作：$\mathsf{Sh}(Y;\mathsf{Ab})$ 中的短正合序列 $0\rightarrow\mathcal{G}\rightarrow\mathcal{G}'\rightarrow\mathcal{G}''\rightarrow 0$ 特别蕴含
+\[
+0\rightarrow\mathcal{G}_{f(x)}\cong(f^{-1}\mathcal{G})_x\rightarrow\mathcal{G'}_{f(x)}\cong(f^{-1}\mathcal{G'})_x\rightarrow\mathcal{G''}_{f(x)}\cong(f^{-1}\mathcal{G''})_x\rightarrow 0 
+\]
+在每个 $f(x)$ 处的茎上正合，对一切 $x\in X$。因此 $0\rightarrow f^{-1}\mathcal{G}\rightarrow f^{-1}\mathcal{G'}\rightarrow f^{-1}\mathcal{G''}\rightarrow 0$ 在 $\mathsf{Sh}(X;\mathsf{Ab})$ 中也正合。（注意：由于 $f$ 一般不是满射，同样的程序对 $f_*$ 会失败！）
+\end{proof}
+% [Tutor Note: 易错预警：$f_*$ 的左正合性不能照搬 $f^{-1}$ 的茎论证——$f$ 未必满射，$f(x)$ 只扫过像集。这里 $f_*$ 的左正合由「右伴随左正合」得到，而它一般不正合：较高的导出函子 $R^if_*$ 正是层上同调的来源。]
+
+\begin{Def}\label{localHomShAb}
+设 $X$ 为拓扑空间，$\mathcal{F},\mathcal{G}\in\text{obj}(\mathsf{Sh}(X;\mathsf{Ab}))$。对任意开集 $U\subset X$，对应\footnote{这里 $\mathcal{F}|_U,\mathcal{G}|_U\in\text{obj}(\mathsf{Sh}(U;\mathsf{Ab}))$ 是\textit{限制层}，其阿贝尔群只对开子集 $V\subset U$ 定义。}
+\begin{equation}
+	U\mapsto\text{Hom}_{\mathsf{Sh}(U;\mathsf{Ab})}(\mathcal{F}|_U,\mathcal{G}|_U)
+\end{equation}
+定义了 $X$ 上取值于 $\mathsf{Ab}$ 的一个层 $\mathcal{H}om(\mathcal{F},\mathcal{G})$（因为每个 $\mathsf{Sh}(U;\mathsf{Ab})$ 都是阿贝尔范畴），称为\textbf{局部 $\mathcal{H}om$-层}\index{sheaf!local $\mathcal{H}om$}（或\textit{局部态射层}）。
+\end{Def}
+
+
+
+\subsection{模层}\label{ch5.3}
+
+
+为继续我们的研究，需要让层具有更丰富的结构。
+
+\begin{Def}											% SHEAF OF MODULES
+设 $(X,\mathcal{S})$ 为环空间（见定义 \ref{ringedspace}）。则 $X$ 上的\textbf{$\mathcal{S}$-模层（sheaf of $\mathcal{S}$-modules）}\index{sheaf!of modules (or $\mathcal{S}$-module)}（也简称为\textbf{$\mathcal{S}$-模}）是一个层 $\mathcal{F}$，使得对每个开子集 $U\subset X$，$\mathcal{F}(U)$ 是一个 $\mathcal{S}(U)$-模\footnote{当然可以指明所讨论的是左模（此处默认如此）还是右模。对后者，所得范畴记作 $\mathsf{Sh}(X;\mathsf{Mod}_\mathcal{S})$。而若 $\mathcal{S}\in\text{obj}(\mathsf{Sh}(X;\mathsf{CommRings}))$（即\textit{交换}环的层），则与通常的模一样有 $\mathsf{Sh}(X;\mathsf{Mod}_\mathcal{S})=\mathsf{Sh}(X;{}_\mathcal{S}\mathsf{Mod})$。}，且相应的限制映射是 $\mathcal{S}(U)$-模同态：
+\[
+\rho^U_V(s_1+s_2)=\rho^U_V(s_1)+\rho^U_V(s_2)\quad\text{and}\quad \rho^U_V(\lambda\cdot s)=\rho^U_V(\lambda)\cdot\rho^U_V(s)\,,
+\]
+对一切开集 $V\subset U\subset X$ 与 $s,s_1,s_2\in\mathcal{F}(U)$、$\lambda\in\mathcal{S}(U)$ 成立。
+
+给定 $X$ 上另一个 $\mathcal{S}$-模层 $\mathcal{G}$，若每个同态 $\chi_U:\mathcal{F}(U)\rightarrow\mathcal{G}(U)$ 都是 $\mathcal{S}(U)$-线性的，则称 $\chi:\mathcal{F}\rightarrow\mathcal{G}$ 为\textbf{$\mathcal{S}$-模态射}\index{morphism!of sm@of $\mathcal{S}$-modules}。任意两个此类相容态射之间的复合取通常的复合，我们便得到 $\mathsf{Sh}(X;{}_\mathcal{S}\mathsf{Mod})$，即 $X$ 上的\textbf{$\mathcal{S}$-模范畴}\index{category!of sm@of $\mathcal{S}$-modules}。我们通常把它的 Hom 群记作 $\text{Hom}_\mathcal{S}(\mathcal{F},\mathcal{G})$。
+
+这些性质限制到茎上：对每个 $x\in X$，$\mathcal{F}_x$ 是 $\mathcal{S}_x$-模，且 $\chi_x:\mathcal{F}_x\rightarrow\mathcal{G}_x$ 是 $\mathcal{S}_x$-模态射，从而得到正合的\textbf{茎函子}\index{functor!stalk} $\square_x:\mathsf{Sh}(X;{}_\mathcal{S}\mathsf{Mod})\rightarrow{}_{\mathcal{S}_x}\!\mathsf{Mod}$。
+\end{Def}
+% [Tutor Note: 术语与笔误提醒：原文把 $\chi_U$ 称作「ring morphism（环同态）」，但 $\chi_U$ 是 $\mathcal{S}(U)$-模之间的映射，应为 $\mathcal{S}(U)$-模同态（译文取「同态」以免沿用错误术语）。另注意作者默认左模，右模范畴记作 $\mathsf{Sh}(X;\mathsf{Mod}_\mathcal{S})$。]
+
+\begin{Rem}\label{sheafmodulesrem}
+显然结构层是自身上的模，即 $\mathcal{S}\in\text{obj}(\mathsf{Sh}(X;{}_\mathcal{S}\mathsf{Mod}))$。此外我们还注意到：
+\renewcommand{\theenumi}{\alph{enumi}}
+\begin{enumerate}[leftmargin=0.5cm]
+	\item $\mathcal{S}$-模的直和/直积、限制与商仍是 $\mathcal{S}$-模，且 $\mathcal{S}$-模态射的核层、像层与余核层自然地继承 $\mathcal{S}$-模结构；这连同对定理 \ref{Sh(X,Ab)isabelian} 的适当推广一起告诉我们，$\mathsf{Sh}(X;{}_\mathcal{S}\mathsf{Mod})$ \textit{是阿贝尔范畴}。
+	
+	\item 正如通常的模是阿贝尔群的推广——阿贝尔群不过是 $\mathbb{Z}$-模——对 $\mathcal{S}\in\text{obj}(\mathsf{Sh}(X;\mathsf{Rings}))$，$\mathcal{S}$-模推广了阿贝尔群层：事实上任意 $\mathcal{F}\in\text{obj}(\mathsf{Sh}(X;\mathsf{Ab}))$ 都可看作 $\underline{\mathbb{Z}}$-模，其中 $\underline{\mathbb{Z}}$ 表示 $\mathbb{Z}$ 上的常值层\footnote{设 $A$ 为赋有离散拓扑的集合。则 $X$ 上的\textit{常值层} $\underline{A}\in\text{obj}(\mathsf{Sh}(X;\mathsf{Sets}))$ 定义为 $\underline{A}(U)\coloneqq\{c:U\rightarrow A\mid c\text{ continuous}\}\cong A$，对任意开集 $U\subset X$，并带有通常的限制映射。}。换言之，$\mathsf{Sh}(X;\mathsf{Ab})\cong\mathsf{Sh}(X;{}_\mathcal{\underline{\mathbb{Z}}}\mathsf{Mod})$。
+	
+	\item 更具体地注意到，对任意 $\mathcal{F}\in\textup{obj}(\mathsf{Sh}(X;{}_\mathcal{S}\mathsf{Mod}))$ 存在显然的 $\mathcal{S}$-模同构
+	\begin{equation}\label{Homglobalsectiso}
+		\text{Hom}_\mathcal{S}(\mathcal{S},\mathcal{F})\xrightarrow{\sim} \Gamma(X,\mathcal{F})=\mathcal{F}(X),\,\psi\mapsto \psi_X(1_{\mathcal{S}(X)})\,,
+	\end{equation}
+	其中 $1_{\mathcal{S}(X)}$ 表示模 $\mathcal{S}(X)$ 的单位元。类似地，$\text{Hom}_{\mathcal{S}|_U}(\mathcal{S}|_U,\mathcal{F}|_U)\cong \Gamma(U,\mathcal{F}|_U)$。这一观察在随后的理论中将反复有用。
+\end{enumerate}
+\end{Rem}
+% [Tutor Note: 关键技巧：\eqref{Homglobalsectiso} 把 $\mathcal{S}$-模的整体截面等同于结构层到该模的模同态；后文处理仿射概形上的拟凝聚层时，正是靠它把层的同态问题化为模的同态问题。注意右侧求值用的是 $\mathcal{S}(X)$ 的单位元，而不是某个茎里的单位。]
+
+既然引入了模层，我们就可以继续扩充工具库。在下面的定义中，我们仍用 $\mathcal{S}$ 表示 $X$ 的结构层；需要提醒读者，多数文献习惯采用记号 $\mathcal{O}_X$，而我们把它留给代数簇上正则函数的结构层（见下文定义 \ref{sheafregfcts}），以及后文讨论凝聚层的时候！\footnote{补充一点：对一般拓扑空间，我们可以假定任意环层 $\mathcal{S}$ 同时也是 $\mathbb{K}$-值函数的层，即对每个开集 $U\subset X$ 有 $\mathcal{S}(U)\subset\text{Hom}_\mathsf{Sets}(U,\mathbb{K})$。（这使得与 $\mathcal{S}(U)$ 中截面的复合有意义。）若进一步在 $\mathsf{Top}$ 中要求取\textit{连续}的 $\mathbb{K}$-值函数，我们就得到簇上 $\mathcal{O}_X$ 的合适对应物。}
+
+\begin{Def}\label{moresheafofmodules}
+设 $(X,\mathcal{S})$ 为环空间，$\mathcal{F},\mathcal{G}\in\text{obj}(\mathsf{Sh}(X;{}_\mathcal{S}\mathsf{Mod}))$。
+\begin{itemize}[leftmargin=0.5cm]
+	\item 定义 \ref{localHomShAb} 中的局部 $\mathcal{H}om$-层提升为模层 $\mathcal{H}om_{\mathcal{S}}(\mathcal{F},\mathcal{G})\in\text{obj}(\mathsf{Sh}(X;{}_{\mathcal{S}}\mathsf{Mod}))$，它对每个开集 $U\subset X$ 由 $U\mapsto\text{Hom}_{\mathcal{S}|_U}(\mathcal{F}|_U,\mathcal{G}|_U)$ 给出（限制层显然继承 $\mathcal{S}$-模结构）。特别地，由例 \ref{exactfuncexample} 的标准论证，我们得到两个左正合函子 $\mathcal{H}om_{\mathcal{S}}(\mathcal{F},\square)$、$\mathcal{H}om_{\mathcal{S}}(\square,\mathcal{G}):\mathsf{Sh}(X;{}_{\mathcal{S}}\mathsf{Mod})\rightarrow\mathsf{Sh}(X;{}_{\mathcal{S}}\mathsf{Mod})$（分别为共变与反变）。对 \eqref{Homglobalsectiso} 的推广则告诉我们 $\mathcal{H}om_{\mathcal{S}}(\mathcal{S},\square)\cong\mathsf{Id}_{\mathsf{Sh}(X;{}_{\mathcal{S}}\mathsf{Mod})}$。
+	
+	\item $\mathcal{F}$ 的\textbf{对偶层}\index{sheaf!dual}就是 \begin{equation}
+		\mathcal{F}^\vee\coloneqq \mathcal{H}om_{\mathcal{S}}(\mathcal{F},\mathcal{S})\in\text{obj}(\mathsf{Sh}(X;{}_{\mathcal{S}}\mathsf{Mod}))\,.
+	\end{equation} 
+	
+	\item 由对应
+	\begin{equation}
+		U\mapsto \mathcal{F}(U)\otimes_{\mathcal{S}(U)}\mathcal{G}(U)
+	\end{equation}
+	对任意开集 $U\subset X$ 给出的预层，经层化可得\textbf{张量层}\index{sheaf!tensor} $\mathcal{F}\otimes_{\mathcal{S}}\mathcal{G}\in\text{obj}(\mathsf{Sh}(X;{}_{\mathcal{S}}\mathsf{Mod}))$。连同对偶层的定义，它给出 $\mathcal{S}$-模的典范求值映射 $\mathcal{F}^\vee\otimes_{\mathcal{S}}\mathcal{F}\rightarrow\mathcal{S}$。
+\end{itemize}
+现在考虑如定义 \ref{ringedspace} 中的环空间态射 $(f,f^\#):(X,\mathcal{S}_X)\rightarrow (Y,\mathcal{S}_Y)$。
+\begin{itemize}[leftmargin=0.5cm]
+	\item 由 \eqref{pushforwardsheaf} 设定的推出层 $f_*\mathcal{F}$ 具有自然的 $\mathcal{S}_Y$-模结构：对每个开集 $V\subset Y$，$\mathcal{F}(f^{-1}(V))$ 是 $\mathcal{S}_X(f^{-1}(V))$-模，其作用由 $f^\#_V:\mathcal{S}_Y(V)\rightarrow\mathcal{S}_X(f^{-1}(V))$ 诱导，即 $\lambda\cdot s\coloneqq f^\#_V(\lambda)\cdot s\in\mathcal{F}(f^{-1}(V))$（这与限制映射相容）。因此 $f_*\mathcal{F}\in\text{obj}(\mathsf{Sh}(Y;{}_{\mathcal{S}_Y}\!\mathsf{Mod}))$，并且我们得到\textbf{推出函子}\index{functor!pushforward} \begin{equation}
+		f_*:\mathsf{Sh}(X;{}_{\mathcal{S}_X}\!\mathsf{Mod})\rightarrow\mathsf{Sh}(Y;{}_{\mathcal{S}_Y}\!\mathsf{Mod})\,.
+	\end{equation}
+	
+	\item 与之相对，逆像层 $f^{-1}\mathcal{G}$ 并不保持 $\mathcal{S}_X$-模结构（它只是 $f^{-1}\mathcal{S}_Y$-模）。为弥补这一点，我们借助上面的张量积作基变换，并令\footnote{若我们希望得到\textit{右} $\mathcal{S}_X$-模 $f^*\mathcal{G}\in\text{obj}(\mathsf{Sh}(X;\mathsf{Mod}_{\mathcal{S}_X}))$，则应改为定义 $f^*\mathcal{G}\coloneqq f^{-1}\mathcal{G}\otimes_{f^{\!-\!1}\!\mathcal{S}_Y}\!\mathcal{S}_X$。}
+	\begin{equation}
+		U\mapsto f^*\mathcal{G}(U)\coloneqq\mathcal{S}_X(U)\otimes_{f^{\!-\!1}\!\mathcal{S}_Y(U)}\!f^{-1}\mathcal{G}(U)
+	\end{equation}
+	对每个开集 $U\!\subset\! X$。这给出一个良定义的 $f^*\mathcal{G}\!=\!\mathcal{S}_X\!\otimes_{f^{\!-\!1}\!\mathcal{S}_Y}\! f^{-1}\mathcal{G}$ $\in\text{obj}(\mathsf{Sh}(X;{}_{\mathcal{S}_X}\!\mathsf{Mod}))$，称为\textbf{沿 $f$ 的拉回层}\index{sheaf!pullback}，而\textbf{拉回函子}\index{functor!pullback}
+	\begin{equation}
+		f^*:\mathsf{Sh}(Y;{}_{\mathcal{S}_Y}\!\mathsf{Mod})\rightarrow\mathsf{Sh}(X;{}_{\mathcal{S}_X}\!\mathsf{Mod})\,.
+	\end{equation}
+\end{itemize}
+我们注意到拉回层的行为符合预期：双函子的同构
+\begin{equation}\label{pullpushareadjoints}
+	\text{Hom}_{\mathcal{S}_X}(f^*\mathcal{G},\mathcal{F})\cong\text{Hom}_{\mathcal{S}_Y}(\mathcal{G},f_*\mathcal{F})
+\end{equation}
+仍然成立。另注意按构造有 $f^*(\mathcal{S}_Y)\cong\mathcal{S}_X$。
+\end{Def}
+% [Tutor Note: 易错预警：$f^*$ 的定义 $f^*\mathcal{G}=\mathcal{S}_X\otimes_{f^{-1}\mathcal{S}_Y}f^{-1}\mathcal{G}$ 是把 $f^{-1}\mathcal{G}$ 沿环层映射 $f^\#:f^{-1}\mathcal{S}_Y\to\mathcal{S}_X$ 作基变换后再视为 $\mathcal{S}_X$-模；本定义末尾的双函子同构则断言 $f^*\dashv f_*$。注意其中的 $\text{Hom}_{\mathcal{S}_X}$ 与 $\text{Hom}_{\mathcal{S}_Y}$ 是模同态群，不可与预层/层范畴的 Hom 混用。]
+
+引理 \ref{inversepushforwardexact} 特化为：
+
+\begin{Cor}\label{pullbackpushforwardexact}
+设 $f:(X,\mathcal{S}_X)\rightarrow (Y,\mathcal{S}_Y)$ 为环空间态射。则函子 $f_*:\mathsf{Sh}(X;{}_{\mathcal{S}_X}\!\mathsf{Mod})\rightarrow\mathsf{Sh}(Y;{}_{\mathcal{S}_Y}\!\mathsf{Mod})$ 左正合，而函子 $f^*:\mathsf{Sh}(Y;{}_{\mathcal{S}_Y}\!\mathsf{Mod})\rightarrow\mathsf{Sh}(X;{}_{\mathcal{S}_X}\!\mathsf{Mod})$ 右正合。
+\end{Cor}
+
+最后注意到，$\mathsf{Sh}(X;\mathsf{Ab})$ 与 $\mathsf{Sh}(X;{}_{\mathcal{S}}\mathsf{Mod})$ 是阿贝尔范畴，这使我们能够谈论 Ext 群与\textbf{Ext-模}\index{Ext-module}，\footnote{严格说，$\text{Ext}_{\mathcal{S}}^k(\mathcal{F},\mathcal{G})$ 只有在 $\mathcal{S}$ 是交换环层时才是模；否则它只是阿贝尔群。尽管这一措辞有些误导，但它意在把此类对象与来自 $\mathsf{Sh}(X;\mathsf{Ab})$ 的 Ext-群区分开。}我们再次（见 \eqref{Extgroup}）将其定义为
+\begin{equation}\label{Extmodules}
+\begin{aligned}
+	\text{Ext}^k(\mathcal{F},\mathcal{G})&\coloneqq\text{Hom}_{\mathsf{D}(\mathsf{Sh}(X;\mathsf{Ab}))}(\mathcal{F}[0]^\bullet,\mathcal{G}[k]^\bullet)\in\text{obj}(\mathsf{Ab})\quad\text{and} \\
+	\text{Ext}_{\mathcal{S}}^k(\mathcal{F},\mathcal{G})&\coloneqq\text{Hom}_{\mathsf{D}(\mathsf{Sh}(X;{}_{\mathcal{S}}\mathsf{Mod}))}(\mathcal{F}[0]^\bullet,\mathcal{G}[k]^\bullet)\in\text{obj}({}_{\mathcal{S}(\!X\!)}\!\mathsf{Mod})
+\end{aligned}
+\end{equation}
+其中 $k\in\mathbb{Z}$，而 $\mathcal{F},\mathcal{G}$ 取在 $\mathsf{Sh}(X;\mathsf{Ab})$ 中，或相应地取在 $\mathsf{Sh}(X;{}_{\mathcal{S}}\mathsf{Mod})$ 中。特别地，它们服从定理 \ref{Extprop}。我们将在第 6 章处理经典导出函子时回到它们。
+% [Tutor Note: 记号提醒：$\text{Ext}^k$ 来自 $\mathsf{Sh}(X;\mathsf{Ab})$，$\text{Ext}^k_{\mathcal{S}}$ 来自 $\mathsf{Sh}(X;{}_\mathcal{S}\mathsf{Mod})$，两者不可混用；后者只有在 $\mathcal{S}$ 为交换环层时才有模结构（见脚注）。此外 $[0]^\bullet$、$[k]^\bullet$ 表示把层视为集中在 $0$（或平移 $k$）次数的复形，这是把层嵌入导出范畴的标准方式。]
+
+
+\subsection{自由与局部自由层}\label{ch5.4}  
+
+
+我们希望用底环空间的结构层的若干副本表达模层。这使我们能够谈论\textit{自由}模。
+
+\begin{Def}
+设 $(X,\mathcal{S})$ 为环空间，$\mathcal{F}\in\text{obj}(\mathsf{Sh}(X;{}_\mathcal{S}\mathsf{Mod}))$ 为 $\mathcal{S}$-模。则：
+\begin{itemize}[leftmargin=0.5cm]
+	\item 若 $\mathcal{F}$ 具有形式 $\mathcal{F}\cong\bigoplus_{j\in J}\mathcal{S}\equiv\mathcal{S}^{\oplus n}$，其中 $n\coloneqq |J|$，则称 $\mathcal{F}$ 是\textbf{自由（free）}\index{sheaf!free}的、\textbf{秩}\index{rank (of a sheaf)}为 $n$；此时每个 $\mathcal{F}(U)\cong\mathcal{S}(U)^{\oplus n}$ 都是秩为 $n$ 的自由 $\mathcal{S}(U)$-模。
+	
+	\item 若存在 $X$ 的开覆盖 $\{U_i\}_{i\in I}$ 使得每个限制层 $\mathcal{F}|_{U_i}$ 都是自由 $\mathcal{S}|_{U_i}$-模，即
+	\[
+	\mathcal{F}|_{U_i}\cong\mathcal{S}|_{U_i}^{\oplus n_i}
+	\]
+	（等价地，若每个 $x\in X$ 都有邻域 $U_x\subset X$ 使 $\mathcal{F}|_{U_x}$ 是自由 $\mathcal{S}|_{U_x}$-模），则称 $\mathcal{F}$ 是\textbf{局部自由（locally free）}\index{sheaf!locally free}的；其中 $n_i$ 是 $\mathcal{F}$ 在 $U_i$ 上的秩，可能为无穷，且当 $X$ 连通时对所有 $U_i$ 相同——我们总是隐含地假定 $X$ 连通。
+\end{itemize}
+取（局部）自由 $\mathcal{S}$-模层之间的态射恰为底层的 $\mathcal{S}$-模态射，我们得到范畴 $\mathsf{Sh}^\mathsf{lf}_n(X;{}_\mathcal{S}\mathsf{Mod})$ 与 $\mathsf{Sh}^\mathsf{f}_n(X;{}_\mathcal{S}\mathsf{Mod})$（其中 $n$ 表示秩，除另行声明外 $<\infty$）。它们是 $\mathsf{Sh}(X;{}_\mathcal{S}\mathsf{Mod})$ 的全子范畴。
+\end{Def}
+% [Tutor Note: 术语提醒：$n$ 一般应理解为局部常值函数而非常数，作者在定义中「总是隐含地假定 $X$ 连通」正是为了让 $n_i$ 与 $i$ 无关，避免这一麻烦。$\mathcal{S}^{\oplus n}$ 中的 $n$ 可以是无穷基数（原文保留 $\bigoplus_{j\in J}$ 的写法即为此）。]
+
+\begin{Rem}\label{locallyfreeRem}
+有限秩局部自由层在某些运算下具有良好的性质。例如，它们对张量积、局部 $\mathcal{H}om(\cdot,\cdot)$-层与对偶化封闭。给定任意 $\mathcal{F}\in\text{obj}(\mathsf{Sh}^\mathsf{lf}_n(X;{}_\mathcal{S}\mathsf{Mod}))$ 与 $\mathcal{F}_1,\mathcal{F}_2\in\text{obj}(\mathsf{Sh}(X;{}_\mathcal{S}\mathsf{Mod}))$，我们还有：
+\begin{align*}
+	(\mathcal{F}^\vee)^\vee&\cong\mathcal{F}, \\ \mathcal{H}om_{\mathcal{S}}(\mathcal{F},\mathcal{F}_1)&\cong\mathcal{F}^\vee\otimes_{\mathcal{S}}\mathcal{F}_1, \\
+	\text{Hom}_{\mathcal{S}}(\mathcal{F}\otimes_{\mathcal{S}}\mathcal{F}_1,\mathcal{F}_2)&\cong\text{Hom}_{\mathcal{S}}(\mathcal{F}_1,\mathcal{H}om_{\mathcal{S}}(\mathcal{F},\mathcal{F}_2))\,.
+\end{align*}
+
+此外，给定环空间态射 $f:(X,\mathcal{S}_X)\rightarrow(Y,\mathcal{S}_Y)$ 以及某个 $\mathcal{F}\in\text{obj}(\mathsf{Sh}(X;{}_{\mathcal{S}_X}\!\mathsf{Mod}))$ 与 $\mathcal{G}\in\text{obj}(\mathsf{Sh}^\mathsf{lf}_n(Y;{}_{\mathcal{S}_Y}\mathsf{Mod}))$，\textit{投影公式}成立：
+\[
+f_*(\mathcal{F}\otimes_{\mathcal{S}_X}\!f^*\mathcal{G})\cong f_*\mathcal{F}\otimes_{\mathcal{S}_Y}\!\mathcal{G}\,. 
+\]  
+\end{Rem}
+% [Tutor Note: 易错预警：投影公式成立需要 $\mathcal{G}$（从而 $f^*\mathcal{G}$）局部自由，因此平坦；对一般的 $\mathcal{G}$ 只有自然映射 $f_*\mathcal{F}\otimes_{\mathcal{S}_Y}\mathcal{G}\to f_*(\mathcal{F}\otimes_{\mathcal{S}_X}f^*\mathcal{G})$，未必是同构。同理，双重对偶同构 $(\mathcal{F}^\vee)^\vee\cong\mathcal{F}$ 依赖于 $\mathcal{F}$ 有限秩局部自由。]
+
+\begin{Def}\label{Picardgroup}
+设 $(X,\mathcal{S})$ 为环空间。$X$ 上的\textbf{可逆层（invertible sheaf）}\index{sheaf!invertible}是任意 $\mathcal{F}\in\text{obj}(\mathsf{Sh}^\mathsf{lf}_1(X;{}_\mathcal{S}\mathsf{Mod}))$。显然，可逆层的张量积仍是可逆层；且对任意给定的 $\mathcal{F}\in\text{obj}(\mathsf{Sh}^\mathsf{lf}_1(X;{}_\mathcal{S}\mathsf{Mod}))$，至少存在一个 $\mathcal{G}\in\text{obj}(\mathsf{Sh}^\mathsf{lf}_1(X;{}_\mathcal{S}\mathsf{Mod}))$ 使得 $\mathcal{F}\otimes_\mathcal{S}\mathcal{G}\cong\mathcal{S}$（即 $\mathcal{G}=\mathcal{F}^\vee$）。此时记 $\mathcal{F}\sim\mathcal{G}$，我们便在秩 1 的局部自由层上得到良定义的等价关系 $\sim$，而商 $\text{Pic}(X)\coloneqq \mathsf{Sh}^\mathsf{lf}_1(X;{}_\mathcal{S}\mathsf{Mod})/\sim$ 称为\textbf{Picard 群}\index{Picard group}，它关于 $\otimes_\mathcal{S}$ 确实构成群，求逆由对偶化给出。
+\end{Def}
+
+我们还要陈述一个在引言中已提及的重要结果：
+
+\begin{Pro}\label{locfreeisvectorbundle}
+设 $(X,\mathcal{S})$ 为环空间。则 $X$ 上秩 $n$ 的局部自由层与 $X$ 上秩 $n$ 的向量丛之间存在一一对应。\textup{（例如，可逆层对应于线丛。）}
+\end{Pro}
+% [Tutor Note: 含糊点拨：命题对任意环空间陈述，但向量丛的纤维是 $\mathbb{K}$-向量空间，故隐含要求结构层是 $\mathbb{K}$-代数层（参看 \S5.3 中关于 $\mathcal{S}(U)\subset\text{Hom}_\mathsf{Sets}(U,\mathbb{K})$ 的脚注）。另外，证明是通过选取平凡化覆盖与转移函数实现对应的，故对应依赖于覆盖的选取，但在同构意义下与选取无关。]
+
+\begin{proof}
+回忆 $X$ 上秩 $n$ 的\textbf{向量丛（vector bundle）}\index{vector bundle}由以下数据组成：连续满射 $\pi:E\rightarrow X$，使得对每个 $x\in X$，纤维 $\pi^{-1}(x)\subset E$ 具有 $n$ 维向量空间的结构，且存在 $x$ 的邻域 $U\subset X$ 与同胚 $\phi_{U}:\pi^{-1}(U)\rightarrow U\times\mathbb{K}^n$ 满足 $\pi|_{\pi^{-1}(U)}=p_1\circ\phi_U:\pi^{-1}(U)\rightarrow U$（$p_1$ 为第一投影）；此外，对所有 $y\in U$，$\phi_{U}|_{\pi^{-1}(y)}:\pi^{-1}(y)\rightarrow \{y\}\times\mathbb{K}^n\cong\mathbb{K}^n$ 都是向量空间同构。等价地，必须存在 $X$ 的开覆盖 $\{U_i\}_{i\in I}$（\textit{平凡化覆盖}），且对每个 $U_i$ 存在如上同胚 $\phi_i\equiv\phi_{U_i}$。于是对每个 $U_i\cap U_j\neq\emptyset$，我们得到转移函数 $T_{ij}:U_i\cap U_j\rightarrow\text{GL}(n,\mathbb{K})$，满足 $(\phi_i\circ \phi_j^{-1})(x,v)=(x,T_{ij}(x)[v])$ 对一切 $(x,v)\in (U_i\cap U_j)\times\mathbb{K}^n$；它们还满足上链条件 $T_{jk}\circ T_{ij}=T_{ik}$，对每个满足 $U_i\cap U_j\cap U_k\neq \emptyset$ 的三元组成立。
+
+现在，一个固定的秩 $n$ 向量丛 $\pi:E\rightarrow X$ 自然地带有 $E$ 的截面层 $\mathcal{F}\coloneqq\Gamma(\square, E)$，它在任意开集 $U\subset X$ 上定义为 $\mathcal{F}(U)\coloneqq\{s:U\rightarrow E\mid \pi\circ s=\text{id}_U\}$，这显然是 $\mathcal{S}$-模；事实上 $\mathcal{F}\in\text{obj}(\mathsf{Sh}(X;{}_\mathcal{S}\mathsf{Mod}))$。考虑 $X$ 的平凡化覆盖 $\{U_i\}_{i\in I}$，任意 $s\in\mathcal{F}|_{U_i}(U\cap U_i)$ 自然地对应唯一的 $\phi_i\circ s:U\cap U_i\rightarrow (U\cap U_i)\times\mathbb{K}^n$，它可解释为 $\mathcal{S}|_{U_i}^{\oplus n}(U\cap U_i)$ 中的一个截面 $\vec{s}_i=(s_i^1,...,s_i^n)$。因此 $\mathcal{F}|_{U_i}\cong\mathcal{S}|_{U_i}^{\oplus n}$，这表明 $\mathcal{F}\in\text{obj}(\mathsf{Sh}_n^\mathsf{lf}(X;{}_\mathcal{S}\mathsf{Mod}))$。
+
+此外，对所有 $x\in U\cap U_i\cap U_j$ 有 $T_{ij}(x)[(p_2\circ\vec{s}_i)(x)]=[(p_2\circ\vec{s}_j)(x)]\in\mathbb{K}^n$（$p_2$ 表示第二投影），从而装备该向量丛的转移函数与附着在任何 $X$ 上局部自由层（相对于开覆盖 $\{U_i\}_{i\in I}$）上的自然函数 $T_{ij}:U_i\cap U_j\rightarrow\text{GL}(n,\mathbb{K})$ 恰好一致。这些函数本身满足上链条件。因此，某个具有转移函数 $\{T_{ij}\}_{i,j\in I}$ 的 $\mathcal{F}\in\text{obj}(\mathsf{Sh}_n^\mathsf{lf}(X;{}_\mathcal{S}\mathsf{Mod}))$ 的数据，足以唯一地（在同构意义下）重构 $X$ 上秩 $n$ 的向量丛——办法是「用 $T_{ij}$ 把 $U_i\times\mathbb{K}^n$ 沿 $U_i\cap U_j$ 粘起来」。这逆转了上一段的论证，从而证明了所断言的双射。
+\end{proof}
+
+尽管局部自由层（从而向量丛）有这么多优点，它们却缺少一个本质性质：它们不构成阿贝尔范畴！这使它们不适合我们的研究。我们必须扩大其范畴，把性质更好的模包含进来，即所谓的\textit{拟凝聚}层。
+
+\begin{Def}\label{coherentonringed}
+设 $(X,\mathcal{S})$ 为环空间，$\mathcal{Q}\in\text{obj}(\mathsf{Sh}(X;{}_\mathcal{S}\mathsf{Mod}))$。
+\begin{itemize}[leftmargin=0.5cm]
+	\item 若存在 $X$ 的开覆盖 $\{U_i\}_{i\in I}$ 与层的正合序列
+	\begin{equation}\label{qcohpresentation}
+		\mathcal{S}|_{U_i}^{\oplus n_i}\xrightarrow{\psi_i}\mathcal{S}|_{U_i}^{\oplus m_i}\xrightarrow{\chi_i}\mathcal{Q}|_{U_i}\rightarrow 0\,,
+	\end{equation}
+	其中 $n_i, m_i>0$ 可无穷，对每个 $i\in I$，则称 $\mathcal{Q}$ 为 $X$ 上 $\mathcal{S}$-模的\textbf{拟凝聚层（quasi-coherent sheaf）}\index{sheaf!quasi-coherent}。这等价于要求 $\mathcal{Q}$ 局部地是自由 $\mathcal{S}$-模之间态射的余核：$\mathcal{Q}|_{U_i}=\mathcal{I}m(\chi_i)\cong \big(\mathcal{S}|_{U_i}^{\oplus m_i}\big)/\mathcal{K}er(\chi_i)=\mathcal{C}oker(\psi_i)$（由正合性与层的同构定理的推广）。正合序列 \eqref{qcohpresentation} 称为 $\mathcal{Q}$ 的\textit{局部表示}。
+	
+	\item 若拟凝聚的 $\mathcal{Q}$ 还满足：
+	\renewcommand{\labelitemii}{\textendash}
+	\begin{itemize}[leftmargin=0.4cm]
+		\item 它是\textit{有限生成的}（或\textit{有限型的}），即对每个点 $x\in X$ 存在 $x$ 的某个开邻域 $U_x\subset X$ 与满层态射 $\chi(x):\mathcal{S}|_{U_x}^{\oplus n_x}\rightarrow \mathcal{Q}|_{U_x}$，其中 $n_x\in\mathbb{N}$（有限！）；
+		
+		\item 对所有开子集 $U\subset X$、$n\in\mathbb{N}$ 与 $\mathcal{S}$-模态射 $\chi:\mathcal{S}|_U^{\oplus n}\rightarrow \mathcal{Q}|_U$，$\mathcal{K}er(\chi)\in\text{obj}(\mathsf{Sh}(X;{}_\mathcal{S}\mathsf{Mod}))$ 都是按刚才所述意义有限生成的，
+	\end{itemize}	
+	则称 $\mathcal{Q}$ 为 $X$ 上 $\mathcal{S}$-模的\textbf{凝聚层（coherent sheaf）}\index{sheaf!coherent}。
+	注意若第一个条件中的满射 $\chi(x)$ 实际上是层的同构，则 $\mathcal{Q}$ 是局部自由的。
+\end{itemize} 
+把拟凝聚/凝聚 $\mathcal{S}$-模层之间的态射定义为底层的 $\mathcal{S}$-模态射，我们便得到 $X$ 上 $\mathcal{S}$-模的\textbf{拟凝聚层范畴}\index{category!of quasi-coherent sheaves} $\mathsf{QCoh}(X;{}_\mathcal{S}\mathsf{Mod})$ 与\textbf{凝聚层范畴}\index{category!of coherent sheaves} $\mathsf{Coh}(X;{}_\mathcal{S}\mathsf{Mod})$。按定义，它们是 $\mathsf{Sh}(X;{}_\mathcal{S}\mathsf{Mod})$ 的全子范畴。
+\end{Def}
+% [Tutor Note: 易错预警：拟凝聚只要求局部有自由层的满射（即局部表示），而凝聚还要求「任意自由层的态射的核有限生成」（第二个条件）以及生成元有限（第一个条件）；两种定义中的 $n_i,m_i$ 可无穷，而 $n_x$ 必须有限。不要把两个条件合并成「有限展示」，后者只在诺特概形上等价（见下一条注）。]
+
+\begin{Rem}
+早期文献中，凝聚层被简单地定义为有限生成的拟凝聚层，这在离开诺特概形时是无用的。而在诺特概形上，凝聚层与有限展示的 $\mathcal{S}$-模是同义词：若 $\mathcal{Q}\in\text{obj}(\mathsf{Sh}(X;{}_\mathcal{S}\mathsf{Mod}))$ 可嵌入正合序列 $\mathcal{S}^{\oplus n_i}\rightarrow\mathcal{S}^{\oplus n_j}\rightarrow \mathcal{Q}\rightarrow 0$，其中 $n_i, n_j<\infty$，则称其为\textit{有限展示}的，这蕴含它是有限生成的。\footnote{回到经典代数，诺特环上的模是有限生成的当且仅当它是有限展示的，当且仅当它是凝聚的。这里，模的凝聚性以类似方式定义，事实上启发了向层的推广。而凝聚 $R$-模的子范畴 ${}_R\mathsf{CohMod}\subset{}_R\mathsf{Mod}$ 是阿贝尔子范畴这一事实，则可作为一个有启发性的引子。}
+\end{Rem}
+
+显然，局部自由层是拟凝聚的；当其在 $X$ 上为有限秩且 $X$ 至少作为拓扑空间是\textit{局部诺特的}（即局部地，闭子集的下降链最终稳定）时，它们甚至是凝聚的。因此我们得到如下全包含的范畴链：\vspace*{0.1cm}
+\begin{center}
+\noindent\minibox[frame]{\begin{small}$
+		\mathsf{Sh}^\mathsf{f}_n(X;{}_\mathcal{S}\mathsf{Mod})\!\subset\!\mathsf{Sh}^\mathsf{lf}_n(X;{}_\mathcal{S}\mathsf{Mod})\!\subset\!\mathsf{Coh}(X;{}_\mathcal{S}\mathsf{Mod})\!\subset\!\mathsf{QCoh}(X;{}_\mathcal{S}\mathsf{Mod})\!\subset\!\mathsf{Sh}(X;{}_\mathcal{S}\mathsf{Mod})$
+\end{small}}
+\end{center}\vspace*{0.3cm}
+
+\noindent 我们知道前两个范畴不是阿贝尔范畴，而最后一个仍是。$\mathsf{Sh}^\mathsf{lf}_n(X;{}_\mathcal{S}\mathsf{Mod})$ 之所以不是阿贝尔范畴，恰在于它不含余核，而拟凝聚层的定义恰好以「最小方式」补上了这一缺陷。因此，$\mathsf{QCoh}(X;{}_\mathcal{S}\mathsf{Mod})$ 可解释为 $\mathsf{Sh}(X;{}_\mathcal{S}\mathsf{Mod})$ 中包含（任意秩的）局部自由层及其余核、且局部可定义的最小的阿贝尔子范畴；在局部诺特与有限秩的框架下，这一最小性角色由凝聚层承担。
+\vspace*{0.3cm}
+
+\noindent 不过，为了更形式化地证明 $\mathsf{QCoh}(X;{}_\mathcal{S}\mathsf{Mod})$ 与 $\mathsf{Coh}(X;{}_\mathcal{S}\mathsf{Mod})$ 的所谓阿贝尔性，我们宁可给出专门针对\textit{概形}（下一节引入）的拟凝聚/凝聚层的替代定义——概形才是我们最终关心对象 Calabi--Yau 流形的正确推广（我们将在第 \ref{ch6.5} 节论证这一点）。
+% [Tutor Note: 结构提醒：上述范畴链中的包含只在「$X$ 局部诺特、层为有限秩」的前提下成立；$\mathsf{Sh}^\mathsf{f}_n\subset\mathsf{Sh}^\mathsf{lf}_n$ 也不是阿贝尔范畴，前者的失败在于缺少余核（甚至不封闭于余核），后者的失败在于余核未必局部自由。作者在下节改用概形上的拟凝聚层定义来正式证明其阿贝尔性。]
+

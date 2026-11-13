@@ -1,0 +1,312 @@
+% ===== ch03 : 原文 main.tex 第 516--810 行（3a A∞-范畴与 dg-范畴 / 3b 模与完美模）=====
+% 本文件是原文 LaTeX 源码的逐行分片（去掉整段注释掉的旧稿），仅供翻译时对照；最终译文写到 src/chunks/ch03.tex。
+\section{Algebraic Preparations\label{sec:algebraic-preparations}}
+Before filling in the details, in this section we recall some of the basic definitions of $A_{\infty}$-categories. Throughout the whole paper, except otherwise mentioned, $\field$ would mean a field of characteristic $0$.
+\subsection{$A_{\infty}$-categories and dg-categories.} We start with a recollment of the definition of $A_{\infty}$-categories and functors between them.
+\begin{dfn}
+% ---- 原文行 520 ----
+A
+\emph{$\mathbb{Z}$-graded $A_{\infty}$-category $\mathcal{A}$
+over $\field$}
+is a category enriched in $A_{\infty}$-operads over cochain complexes of $\field$-vector spaces.
+Explicitly, it consists of the following:
+\begin{itemize}
+\item
+a class of \emph{objects} $\Ob(\mathcal{A})$.
+\item for each pair of objects $L,L'\in\Ob (\mathcal{A})$, a $\mathbb{Z}$-graded $\field$-vector space of morphisms
+$$
+\hom_{\mathcal{A}}(L,L')\coloneqq \bigoplus_{\bullet\in\mathbb{Z}} \hom_{\mathcal{A}}^{\bullet}(L,L').
+$$
+\item An \emph{$A_{\infty}$-structure} \[
+    \mu_{\mathcal{A}}^{\bullet} =\left(\mu_{\mathcal{A}}^k\colon\hom_{\mathcal{A}}^{\bullet} (L_{k-1},L_k)\otimes\dotsb\otimes\hom_{\mathcal{A}}^{\bullet} (L_0, L_1)\to\hom_{\mathcal{A}}^{\bullet +2-k} (L_0, L_k)\right)_{k\in\mathbb{Z}_{\geq 0}}
+\]that satisfies the \emph{Maurer-Cartan equation} $(\mu_{\mathcal{A}}^{\bullet})^2=0$, i.e. \[
+    \sum_{m,n}(-1)^{\maltese_n}\mu_{\mathcal{A}}^{d-m+1} (a_d,\dotsb, a_{n-m+1},\mu_{\mathcal{A}}^m (a_{n+m},\dotsb, a_{n+1}),a_n,\dotsb, a_1)=0,
+\]where $\maltese_n =\vert a_1\vert+\dotsb+\vert a_n\vert -n$. In particular,
+$\mu_{\mathcal{A}}^1$ is a \emph{differential},
+i.e.,
+$\mu_{\mathcal{A}}^1(\mu_{\mathcal{A}}^1(f))=0$
+% ---- 原文行 540 ----
+for any $f\in\hom_{\mathcal{A}}(L,L')$. \[
+\mu_{\mathcal{A}}^2\colon\hom_{\mathcal{A}}^{\bullet} (L_1,L_2)\otimes\hom_{\mathcal{A}}^{\bullet} (L_0,L_1)\to\hom_{\mathcal{A}}^{\bullet} (L_0, L_2)
+\]serves as the \emph{composition} of two morphisms, where the Maurer-Cartan equation turns into the Liebnitz rule $\mu_{\mathcal{A}}^2 (\mu_{\mathcal{A}}^1 (f),g)\pm\mu_{\mathcal{A}}^2 (f,\mu_{\mathcal{A}}^1 (g))\pm\mu_{\mathcal{A}}^1\mu_{\mathcal{A}}^2 (f,g)=0$ and the homotopy associativity \begin{equation}\label{eq:homotopy-associativity}
+\mu^1_{\mathcal{A}}\mu_{\mathcal{A}}^3 (f,g,h)=\pm\mu_{\mathcal{A}}^2 (\mu_{\mathcal{A}}^2 (f,g),h)\pm\mu_{\mathcal{A}}^2 (f,\mu_{\mathcal{A}}^2 (g,h)).
+\end{equation}
+For simplicity, we also write $(-1)^{-\vert f\vert}\mu_{\mathcal{A}}^2 (f',f)$ as
+$$
+\comp
+:
+\hom_{\mathcal{A}}^{\bullet}(L_0,L_1)\underset{\field}{\otimes}\hom_{\mathcal{A}}^{\bullet}(L_1,L_2)
+\rightarrow
+\hom_{\mathcal{A}}^{\bullet}(L_0,L_2),
+\quad
+f\otimes f'
+\mapsto
+f\comp f'
+$$
+for any objects $L_0$, $L_1$, $L_2\in\Ob(\mathcal{A})$.
+%for any $f\in\hom_{\mathcal{A}}^{\bullet}(L,L')$
+%and
+% ---- 原文行 560 ----
+%$f'\in\hom_{\mathcal{A}}(L',L'')$.
+% We require that
+% the composition
+% is \emph{associative},
+% i.e.,
+% $
+% (f\comp f')\comp f''
+% =
+% f\comp (f'\comp f'').
+% $
+%for any
+%$L$, $L'$, $L''$, $L'''\in\Ob(\mathcal{A})$
+%and
+%$f\in\hom_{\mathcal{A}}(L,L')$,
+%$f'\in\hom_{\mathcal{A}}(L',L'')$,
+%$f''\in\hom_{\mathcal{A}}(L'',L''')$.
+\end{itemize}
+When $\mu_{\mathcal{A}}^k=0$ for $k\geq 2$, we say $\mathcal{A}$ is a \emph{dg-category}, and the homotopy associativity \eqref{eq:homotopy-associativity} reduces to strict associativity, so that $\mathcal{A}$ is an honest $1$-category. In this situation, we sometimes simply write $d_{\mathcal{A}}\coloneqq\mu_{\mathcal{A}}^1$.
+\end{dfn}
+
+% ---- 原文行 580 ----
+
+\begin{defn}
+An \emph{$A_{\infty}$-functor}
+$\phi:\mathcal{A}\rightarrow\mathcal{B}$
+between two $A_{\infty}$-categories is a collection of maps \[
+    \left(\phi^d\colon\hom_{\mathcal{A}} (L_{d-1},L_d)\otimes\dotsb\otimes\hom_{\mathcal{A}} (L_0,L_1)\to\hom_{\mathcal{A}}^{\bullet +1-d} (\phi(L_0),\phi(L_d))\right)_{d\geq 1}
+\]and a map of objects $\phi\colon\Ob (\mathcal{A})\to\Ob (\mathcal{B})$ such that the compatibility equation
+\begin{align*}
+    \sum_r&\sum_{s_1+\dotsb+s_r=d}\mu_{\mathcal{B}}^r (\phi^{s_r}(a_d,\dotsb,a_{d-s_r+1}),\dotsb,\phi^{s_1} (a_{s_1},\dotsb, a_1))\\ 
+    &=\sum_{m,n}(-1)^{\maltese_n}\phi^{d-m+1}(a_d,\dotsb, a_{n+m+1},\mu_{\mathcal{A}}^m (a_{n+m},\dotsb, a_{n+1}),a_n,\dotsb, a_1).
+\end{align*}
+When $\mathcal{A}$ and $\mathcal{B}$ are dg categories, we say $(\phi^d)$ is a \emph{dg-functor} if $\phi^d\equiv 0$ for $d\geq 2$. In other words, we can regard a dg functor as a cochain map
+$
+\phi:
+\hom_{\mathcal{A}}(L,L')
+\rightarrow
+\hom_{\mathcal{B}}(\phi(L),\phi(L'))
+$
+for any objects $L,L'\in\Ob(\mathcal{A})$
+that preserves the composition,
+% ---- 原文行 600 ----
+i.e.,
+$
+\phi(f\comp f')
+=
+\phi(f)\comp \phi(f'),
+$
+and the units,
+i.e.,
+$
+\phi(e_L)
+=
+e_{\phi(L)}.
+$
+
+Compositions of $A_{\infty}$/dg functors can then be defined in an obvious way.
+%We denote by
+%$
+%\phi^r
+%:=
+%\underbrace{
+% ---- 原文行 620 ----
+%\phi\comp \cdots \comp \phi
+%}_{r
+%\textnormal{-times}
+%}
+%:
+%\mathcal{A}\rightarrow \mathcal{A}
+%$
+%for an auto-dg-functor $\phi:\mathcal{A}\rightarrow\mathcal{A}$.
+\end{defn}
+
+\begin{defn}
+For an $A_{\infty}$-category $\mathcal{A}$,
+its \emph{cohomology category}
+$H^{\bullet}(\mathcal{A})$
+is a category whose objects are the same as $\mathcal{A}$
+and the morphism space between two objects $L_0, L_1$ is given by
+$$
+\Hom_{H^{\bullet}(\mathcal{A})}(L,L')
+:=
+H^{\bullet}(\hom_{\mathcal{A}}(L,L'),\mu_{\mathcal{A}}^1).
+% ---- 原文行 640 ----
+$$
+An $A_{\infty}$-functor $(\phi^{\bullet}):\mathcal{A}\rightarrow\mathcal{B}$
+induces an ordinary functor
+$H^{\bullet}(\phi):H^{\bullet}(\mathcal{A})\rightarrow H^{\bullet}(\mathcal{B})$,
+whose mapping on objects is the same as $\phi$ and
+the mapping on morphisms is given by $[f]\mapsto [\phi^1(f)]$.
+
+A dg-functor $\phi:\mathcal{A}\rightarrow\mathcal{B}$ is called a
+\emph{quasi-embedding}
+(resp. \emph{quasi-equivalence}, \emph{quasi-isomorphism})
+if the induced functor
+$H^{\bullet}(\phi):H^{\bullet}(\mathcal{A})\rightarrow H^{\bullet}(\mathcal{B})$
+is an embedding
+(resp. equivalence, isomorphism)
+of categories.
+%An auto-dg-functor
+%$\phi:\mathcal{A}\rightarrow\mathcal{A}$
+%is called an \emph{auto-equivalence} if it is a quasi-equivalence.
+\end{defn}
+As an example, we describe a particular dg category constructed from a $\field$-linear category.
+% ---- 原文行 660 ----
+\begin{defn}
+Let $\mathcal{C}$ be a $\field$-linear category.
+The \emph{dg-category $\Ch(\mathcal{C})_{\dg}$ of cochain complexes in $\mathcal{C}$} is defined as follows:
+\begin{itemize}
+\item
+\emph{objects} are given by cochain complexes in $\mathcal{C}$
+$$
+M
+=
+\left(\left(M^{\bullet}\right)_{\bullet\in\mathbb{Z}},
+d_M:=\left(d_M^\bullet:M^{\bullet}\rightarrow M^{\bullet+1}\right)_{\bullet\in\mathbb{Z}}\right),
+$$
+where $M^{\bullet}$ is an object in $\mathcal{C}$ and
+$d_M^{\bullet}\in\Hom_{\mathcal{C}}(M^{\bullet},M^{\bullet+1})$
+is a morphism in $\mathcal{C}$
+satisfying
+$d_M^{\bullet}\comp d_M^{\bullet+1}=0$
+for each $\bullet\in\mathbb{Z}$.
+
+
+% ---- 原文行 680 ----
+\item
+a \emph{dg-morphism space}
+is a cochain complex of $\field$-modules
+whose degree $k$-component is given by
+$$
+\hom_{\Ch(\mathcal{C})_{\dg}}^k
+\left(
+M,M'
+\right)
+:=
+\prod_{\bullet\in\mathbb{Z}}
+\Hom_{\mathcal{C}}\left(M^{\bullet},M'^{\bullet+k}\right),
+$$
+and the differential is given by
+$$
+df:=d_M\comp f - (-1)^k f\comp d_{M'}
+$$
+for $f\in \hom_{\Ch(\mathcal{C})_{\dg}}^k(M,M')$.
+More precisely,
+the degree $\bullet$-component of $df$
+% ---- 原文行 700 ----
+is given by
+$$
+(df)^{\bullet}
+:=
+d_M^{\bullet}\circ f^{\bullet+1}
+-
+(-1)^k
+f^{\bullet}\circ d_{M'}^{\bullet+k}.
+$$
+\item
+the composition and the units are defined in an obvious way.
+
+\end{itemize}
+
+
+We denote by
+$\Ch^b(\mathcal{C})_{\dg}$
+the \emph{dg-category of bounded cochain complexes in $\mathcal{C}$},
+whose objects are cochain complexes
+$M=\left(\left(M^{\bullet}\right)_{\bullet\in\mathbb{Z}},d_M\right)$
+% ---- 原文行 720 ----
+in $\mathcal{C}$
+such that
+$M^{\bullet}=0$ except for finitely many $\bullet\in\mathbb{Z}$.
+The morphism spaces are defined in the same way as in $\Ch(\mathcal{C})_{\dg}$.
+\end{defn}
+\begin{rmk}\label{rmk:EmbeddingOfCochainComplexes}
+A functor
+$\mathcal{F}:\mathcal{C}\hookrightarrow\mathcal{D}$
+between $\field$-linear categories
+naturally induces a dg-functor between dg-categories
+$
+\mathcal{F}_{\dg}:
+\Ch(\mathcal{C})_{\dg}
+\hookrightarrow
+\Ch(\mathcal{D})_{\dg}
+$
+and
+$
+\Ch^b(\mathcal{C})_{\dg}
+\hookrightarrow
+% ---- 原文行 740 ----
+\Ch^b(\mathcal{D})_{\dg},
+$
+in an obvious way.
+If
+$\mathcal{F}$ is an embedding
+(resp., equivalence, isomorphism),
+then
+$\mathcal{F}_{\dg}$
+is a quasi-embedding
+(resp., quasi-equivalence, quasi-isomorphism).
+\end{rmk}
+\subsection[modules and perfect modules]{$A_{\infty}$-modules and perfect modules.} For an $A_{\infty}$-category $\mathcal{A}$, recall that an \emph{$\mathcal{A}$-module} is an $A_{\infty}$-functor $\mathcal{M}\colon\mathcal{A}\to\Ch_{\field}$ from $\mathcal{A}$ to the dg category of chain complexes over $\field$.
+\begin{dfn}\label{dfn:A-inf-module}
+     The $A_{\infty}$-module structure on $\mathcal{M}\in\Fun (\mathcal{A},\Ch_{\field})\eqqcolon\Mod (\mathcal{A})$ is a collection of $\field$-linear maps
+    \begin{align*}
+    \mu^{d\vert 1}&\colon\hom_{\mathcal{A}} (L_{d-1},L_d)\otimes\dotsb\otimes\hom_{\mathcal{A}} (L_0, L_1)\otimes\mathcal{M} (L_0)\to\mathcal{M} (L_d) [1-d]
+    \end{align*}
+    such that for each $d\geq 0$, \begin{equation}\label{eq:A-inf-bimodule-equation}\begin{aligned}
+        &\sum (-1)^{\maltese_{d-i}}\mu_{\mathcal{M}}^{d-i\vert 1}(v_d,\dotsb,v_{i+1},\mu_{\mathcal{M}}^{i\vert 1} (v_i,\dotsb, v_1,\mathbf{b}))\\ 
+        &+\sum (-1)^{\maltese_{d-k-i}}\mu_{\mathcal{M}}^{d-i+1\vert 1}(v_d,\dotsb, v_{k+i+1},\mu_{\mathcal{A}}^i (v_{k+i},\dotsb,v_{k+1}),v_k,\dotsb, v_1,\mathbf{b})=0.
+% ---- 原文行 760 ----
+    \end{aligned}\end{equation}
+    Let $\mathcal{M}$ and $\mathcal{N}$ be two $\mathcal{A}$-modules.
+    A \emph{premorphism} $s\colon\mathcal{M}\to\mathcal{N}$ of degree $k$ is a family of morphisms
+    $s^d\colon\hom_{\mathcal A}(L_{d-2},L_{d-1})\otimes\dotsb\otimes\hom_{\mathcal A}(L_0,L_1)\otimes\mathcal M(L_0)\longrightarrow\mathcal N(L_{d-1})[k-d+1]$
+    of chain complexes associated to tuples $(L_0,\dotsb, L_{d-1})$.\par
+    The set of premorphisms from $\mathcal{M}$ to $\mathcal{N}$ form a chain complex over $\Bbbk$, and the category of $\mathcal{A}$-modules $\Mod (\mathcal{A})$ is a dg category whose differentials are given explicitly in \cite[page 20]{Seidel08}. Pre-morphisms $s$ such that $\mu^1_{\Mod_{\mathcal{A}}} (s)=0$ are called \emph{morphisms} of $A_{\infty}$-modules. Two $\mathcal{A}$-modules $\mathcal{M}$ and $\mathcal{N}$ are \emph{isomorphic} if there exists a quasi-isomorphism $f\colon\mathcal{M}\to\mathcal{N}$, i.e. there is a morphism $g\colon\mathcal{N}\to\mathcal{M}$ so that both $f\circ g$ and $g\circ f$ are identities after taking cohomologies.
+\end{dfn}
+% When $\mathcal{A}$ and $\mathcal{B}$ are both dg categories, the $A_{\infty}$-bimodule structure on $\mathcal{M}$ satisfies $r,s\leq 2$, and therefore we are left with the following canonical bimodule structures: for $r=s=0$ a differential \[
+%     \mu^{0\vert 1\vert 0}_{\mathcal{M}}\colon\mathcal{M} (K,L)\to\mathcal{M} (K,L)[1],
+% \]for $(r,s)\in\{(0,1),(1,0),(1,1)\}$ the bimodule actions \begin{gather*}
+%     \mu^{1\vert 1\vert 0}_{\mathcal{M}}\colon\hom_{\mathcal{A}} (L_0,L_1)\otimes\mathcal{M} (K,L_0)\to\mathcal{M} (K,L_1);\\ 
+%     \mu_{\mathcal{M}}^{0\vert 1\vert 1}\colon\mathcal{M} (K_1,L)\otimes\hom_{\mathcal{B}} (K_0, K_1)\to\mathcal{M} (K_0, L);\\ 
+%     \mu_{\mathcal{M}}^{1\vert 1\vert 1}\colon\hom_{\mathcal{A}} (L_0, L_1)\otimes\mathcal{M} (K_1,L_0)\otimes\hom_{\mathcal{B}} (K_0, K_1)\to\mathcal{M} (K_0,L_0)[-1],
+% \end{gather*}
+% and for $r=2$ or $s=2$ the corresponding higher structures. The $A_{\infty}$-bimodule relation can then be read-off explicitly as \[
+%     \mu_{\mathcal{M}}^{0\vert 1\vert 0}\mu_{\mathcal{M}}^{1\vert 1\vert 0} (v,\mathbf{b})+(-1)^{\vert\mathbf{b}\vert}\mu_{\mathcal{M}}^{1\vert 1\vert 0} (d_{\mathcal{A}} (v),\mathbf{b})+\mu_{\mathcal{M}}^{1\vert 1\vert 0} (v,\mu_{\mathcal{M}}^{0\vert 1\vert 0} (\mathbf{b}))=0,
+% \]which is the Leibnitz law for the module action.\begin{align*}
+% &(-1)^{\vert w\vert}\mu_{\mathcal{M}}^{1\vert 1\vert 1} (v,\mu_{\mathcal{M}}^{0\vert 1\vert 0} (\mathbf{b}),w)
+% +(-1)^{\vert w\vert}\mu_{\mathcal{M}}^{0\vert 1\vert 1} (\mu_{\mathcal{M}}^{1\vert 1\vert 0} (v,\mathbf{b}),w) +\mu_{\mathcal{M}}^{1\vert 1\vert 0} (v,\mu_{\mathcal{M}}^{0\vert 1\vert 1} (\mathbf{b},w))\\ 
+% &+\mu_{\mathcal{M}}^{0\vert 1\vert 0}\mu_{\mathcal{M}}^{1\vert 1\vert 1} (v,\mathbf{b},w)+(-1)^{\vert \mathbf{b}\vert}\mu_{\mathcal{M}}^{1\vert 1\vert 1} (d_{\mathcal{A}}(v),\mathbf{b},w) +\mu_{\mathcal{M}}^{1\vert 1\vert 1} (v,\mathbf{b},d_{\mathcal{B}} (w))=0,
+% ---- 原文行 780 ----
+% \end{align*}so that $\mu_{\mathcal{M}}^{1\vert 1\vert 1}$ describes the failure of the associativity of the bimodule action. Similarly, $\mu_{\mathcal{M}}^{2\vert 1\vert s}$ describes the failure of the compatibility of the bimodule action with product actions. If $\mu^{r\vert 1\vert s}_{\mathcal{M}} =0$ for $r+s\geq 2$, then we call $\mathcal{M}$ \emph{strict}.\par
+For each object $X\in\Obj (\mathcal{A})$, the assignment $X\mapsto\hom_{\mathcal{A}} (X,-)$ defines an $A_{\infty}$-functor $\mathcal{A}^{op}\to\Mod_{\field} (\mathcal{A})$ in the way as described in \cite[section (1l)]{Seidel08}. This is the $A_{\infty}$-version of the \emph{Yoneda embedding}, denoted by $\yo_{-}\colon\mathcal{A}\to\Mod (\mathcal{A})$.
+\begin{dfn}
+    An $A_{\infty}$-module $\mathcal{M}\in\Mod_{\field} (\mathcal{A})$ is called \emph{representable} in $\mathcal{A}$ if there exists an object $X\in\Obj (\mathcal{A})$ and an isomorphism of $\mathcal{A}$-modules $\mathcal{M}\xrightarrow{\simeq}\yo_X$.\par
+    We define the category of \emph{perfect $\mathcal{A}$-modules} $\Perf\mathcal{A}\subseteq\Mod (\mathcal{A})$ to be the smallest pre-triangulated dg subcategory containing images of the Yoneda functors.
+    Equivalently, $\Perf\mathcal{A}$ is the idempotent completion of $\mathcal{A}^{op}$.
+\end{dfn}
+% \subsection{The K\"unneth bimodule.} Let $G,H$ be affine group schemes and $X$ and $Y$ be $G$- and $H$-varieties resp., i.e. separable schemes over $\Bbbk$ together with $G$ or $H$ acting on it. Assumes that there exists affine open covers $\mathfrak{U},\ \mathfrak{V}$ on $X$ and $Y$, resp. that are $G$-invariant, then the product $\mathfrak{U}\times\mathfrak{V}$ defines an affine open cover of $X\times Y$ by $G\times H$-invariant subschemes. The goal of this section is to construct the \emph{K\"unneth bimodule}\[
+%     \Ku\colon\QCoh_{G} (X)_{dg}\otimes\QCoh_H (Y)_{dg}\to\Mod\text{-}\QCoh_{G\times H} (X\times Y)
+% \]and show that $\Ku$ is representable by a quasi-embedding $\QCoh_G (X)_{dg}\otimes\QCoh_H (Y)_{dg}\to\QCoh (X\times Y)_{dg}$. We begin with the construction.
+% \begin{dfn}\label{dfn:Kunneth-bimodule-construction}
+%     Given $(\mathcal{F}^{\bullet},\theta^{\bullet})\otimes (\mathcal{G}^{\bullet},\eta^{\bullet})\in\Obj (\QCoh_G (X)_{dg}\otimes\QCoh_H (Y)_{dg})$ and $(\mathcal{H}^{\bullet},\vartheta^{\bullet})\in\Obj (\QCoh_{G\times H} (X\times Y)_{dg})$, define \[
+%         \Ku\left((\mathcal{H}^{\bullet},\vartheta^{\bullet}),(\mathcal{F}^{\bullet},\theta^{\bullet})\otimes (\mathcal{G}^{\bullet},\eta^{\bullet})\right)\coloneqq\hom^{\bullet}\left((\mathcal{H}^{\bullet},\vartheta^{\bullet}),(\mathcal{F}^{\bullet}\boxtimes \mathcal{G}^{\bullet},\theta^{\bullet}\boxtimes\eta^{\bullet})\right)_{dg}
+%     \]with higher structures given by differentials and compositions in $\QCoh_{G\times H} (X\times Y)_{dg}$, i.e. $\mu^{0\vert 1\vert 0}=d$ is the differential in $\QCoh_{G\times H} (X\times Y)_{dg}$ and $\mu_{\Ku}^{1\vert 1\vert 0}$ and $\mu_{\Ku}^{0\vert 1\vert 1}$ are compositions in $\QCoh_{G\times H} (X\times Y)_{dg}$, with the remaining higher structures trivial.
+% \end{dfn}
+% \begin{lmm}
+%     $\Ku$ is an $A_{\infty}$-bimodule, i.e. the defined bimodule strucure $\{\mu_{\Ku}^{r\vert 1\vert s}\}$ satisfies the relation \eqref{eq:A-inf-bimodule-equation}.
+% \end{lmm}
+% \begin{proof}
+%     This follows from the fact that compositions in $\QCoh_{G\times H} (X\times Y)_{dg}$ is associative. See the discussion after definition \ref{dfn:A-inf-bimodule}.
+% ---- 原文行 800 ----
+% \end{proof}
+% \begin{prp}
+%     For given objects $(\mathcal{F}^{\bullet},\theta^{\bullet})\otimes (\mathcal{G}^{\bullet},\eta^{\bullet})\in\Obj (\QCoh_G (X)_{dg}\otimes\QCoh_H (Y)_{dg})$, the image under the K\"unneth functor $\Ku (-,(\mathcal{F}^{\bullet},\theta^{\bullet})\otimes (\mathcal{G}^{\bullet},\eta^{\bullet}))$ is represented by $(\mathcal{F}^{\bullet}\boxtimes\mathcal{G}^{\bullet},\theta^{\bullet}\boxtimes\eta^{\bullet})$.
+% \end{prp}
+% \begin{proof}
+%     This follows directly from the definition of $\Ku$.
+% \end{proof}
+% Therefore the K\"unneth bimodule provides a dg functor $\QCoh_G (X)_{dg}\otimes\QCoh_H (Y)_{dg}\to\QCoh_{G\times H} (X\times Y)_{dg}$, and now it's clear from the definition that 
+% \begin{crl}
+%     The induced dg functor $\Ku\colon \QCoh_G (X)_{dg}\otimes\QCoh_H (Y)_{dg}\to\QCoh_{G\times H} (X\times Y)_{dg}$ is fully faithful, and so $\Ku$ is a quasi-embedding.
+% \end{crl}

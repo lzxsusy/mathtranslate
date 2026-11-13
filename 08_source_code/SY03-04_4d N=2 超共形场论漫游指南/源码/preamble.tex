@@ -1,0 +1,199 @@
+% =====================================================================
+%  4d N=2 超共形场论漫游指南 —— 中文译注本
+%  底本：M. Akhond, G. Arias-Tamargo, A. Mininno, H.-Y. Sun, Z. Sun,
+%        Y. Wang, F. Xu, "The Hitchhiker's Guide to 4d N=2 Superconformal
+%        Field Theories", arXiv:2112.14764v3 [hep-th], 122 页 (Letter 612x792)
+%
+%  编译：LuaLaTeX（三遍）；本机 xdvipdfmx 不稳定，统一用 lualatex。
+%  约定：
+%   * 公式编号一律用 \tag{} 复刻原文编号 (如 (3.13))，与原文一一对应；
+%   * 图 1--15 由原文矢量图按 450 dpi 截取，图注为译者所译；
+%   * % [Tutor Note: ...] 为译者批注，不进入排版，汇总见 译注汇总.md；
+%   * 定义/例/习题按原文的左边框与方框样式重排。
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[UTF8]{ctex}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage[a4paper,left=2.3cm,right=2.3cm,top=2.5cm,bottom=2.6cm]{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable,listingsutf8}
+\usepackage{etoolbox}
+\usepackage{footnote}
+\usepackage{tikz}
+\usepackage[hidelinks,unicode]{hyperref}
+\hypersetup{pdftitle={4d N=2 超共形场论漫游指南（中文译注本）},
+  pdfauthor={M. Akhond et al.; 中译/批注: 本译本}}
+
+\captionsetup{font=small,labelsep=quad}
+\setlength{\emergencystretch}{3em}
+\allowdisplaybreaks[1]
+\graphicspath{{figures/}{../figures/}}
+
+% ---------- 页眉 ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape The Hitchhiker's Guide to 4d $\mathcal{N}=2$ SCFTs}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ---------- 定理类环境（编号一律由原文手工给出） ----------
+\theoremstyle{plain}
+\newtheorem*{theorem*}{定理}
+\newtheorem*{proposition*}{命题}
+\newtheorem*{lemma*}{引理}
+\theoremstyle{definition}
+\newtheorem*{remark*}{注}
+
+% ---------- 框内脚注修正 ----------
+% tcolorbox 的框体是「被 boxed 的」内容，LaTeX 会用 mpfootnote（显示为 a,b,c）且脚注文字
+% 排在框内底部、不推进正文 footnote 计数器。这里：① 让 mpfootnote 与 footnote 共用同一个
+% 计数器并把显示改成阿拉伯数字；② 用 footnote 宏包的 \savenotes/\spewnotes 把脚注文字
+% 延迟到框之后再排（从而落回页面底部、接正文编号序列）。实测有效（见 work/tmp/fntest4）。
+\makeatletter
+\newcommand{\boxfnpatch}{%
+  \let\c@mpfootnote\c@footnote
+  \renewcommand{\thempfootnote}{\arabic{mpfootnote}}}
+\makeatother
+
+% ---------- 定义框：左侧酒红色竖线 + 酒红色粗体标题（原文 p.13 起） ----------
+\newtcolorbox{defboxx}{enhanced,breakable,frame hidden,colback=white,
+  borderline west={1.4pt}{0pt}{red!55!black},
+  left=9pt,right=5pt,top=2pt,bottom=2pt,
+  before skip=8pt,after skip=8pt}
+\newenvironment{definitionbox}[1]%
+  {\begin{defboxx}\boxfnpatch\noindent{\bfseries\color{red!55!black}#1}\par\smallskip}%
+  {\end{defboxx}}
+
+% ---------- 例框：左侧蓝色竖线 + 蓝色粗体标题（原文 p.41 起） ----------
+\newtcolorbox{exboxx}{enhanced,breakable,frame hidden,colback=white,
+  borderline west={1.4pt}{0pt}{blue!55!black},
+  left=9pt,right=5pt,top=2pt,bottom=2pt,
+  before skip=8pt,after skip=8pt}
+\newenvironment{examplebox}[1]%
+  {\begin{exboxx}\boxfnpatch\noindent{\bfseries\color{blue!55!black}#1}\par\smallskip}%
+  {\end{exboxx}}
+
+% ---------- 习题框：细黑全框（原文 p.58 等） ----------
+\newtcolorbox{exerbox}{colback=white,colframe=black,boxrule=0.6pt,arc=0pt,
+  left=6pt,right=6pt,top=3pt,bottom=3pt,
+  before skip=8pt,after skip=8pt}
+\newenvironment{exercisebox}[1]%
+  {\begin{exerbox}\boxfnpatch\noindent\textbf{#1}\hspace{0.6em}\ignorespaces}%
+  {\end{exerbox}}
+
+% 把框内脚注的「文字」延迟到框之后再排（落回页面底部）
+\BeforeBeginEnvironment{defboxx}{\savenotes}
+\AfterEndEnvironment{defboxx}{\spewnotes}
+\BeforeBeginEnvironment{exboxx}{\savenotes}
+\AfterEndEnvironment{exboxx}{\spewnotes}
+\BeforeBeginEnvironment{exerbox}{\savenotes}
+\AfterEndEnvironment{exerbox}{\spewnotes}
+
+% ---------- 原文的灰底要点框（保留备用；本底本未见，若遇则用） ----------
+\newtcolorbox{keybox}[1]{colback=black!5,colframe=black!55,colbacktitle=black!75,
+  coltitle=white,fonttitle=\bfseries\small,title={#1},boxrule=0.6pt,arc=2pt,
+  left=6pt,right=6pt,top=4pt,bottom=4pt,toptitle=2pt,bottomtitle=2pt,fontupper=\small}
+\newtcolorbox{keyboxplain}{colback=black!5,colframe=black!55,boxrule=0.6pt,arc=2pt,
+  left=6pt,right=6pt,top=4pt,bottom=4pt,fontupper=\small}
+
+% ---------- 章节标题：编号手工给定（与原文严格一致，不依赖自动计数器）----------
+% 用法：\SEC{2}{4d $\cN=2$ 超对称基础}   \SUB{2.1}{$\cN=2$ 超共形对称性与表示}
+\newcommand{\SEC}[2]{\section*{#1\quad #2}\addcontentsline{toc}{section}{\protect\numberline{#1}#2}}
+\newcommand{\SUB}[2]{\subsection*{#1\quad #2}\addcontentsline{toc}{subsection}{\protect\numberline{#1}#2}}
+\newcommand{\SUBSUB}[2]{\subsubsection*{#1\quad #2}\addcontentsline{toc}{subsubsection}{\protect\numberline{#1}#2}}
+
+% ---------- 原文作者用粗体行内小标题（如 "Discrete symmetries and anomalies"） ----------
+\newcommand{\para}[1]{\par\medskip\noindent\textbf{#1}\quad\ignorespaces}
+
+% ---------- 图/表标题（手工编号，不用自动编号） ----------
+\newcommand{\figtitle}[2]{\par\smallskip\centerline{%
+  \begin{minipage}{0.92\linewidth}\small\textbf{图 #1：}#2\end{minipage}}\par\smallskip}
+\newcommand{\tabtitle}[2]{\par\smallskip\centerline{%
+  \begin{minipage}{0.96\linewidth}\small\textbf{表 #1：}#2\end{minipage}}\par\smallskip}
+
+% ---------- 参考文献条目（生成脚本按 \refitem{编号}{内容} 输出） ----------
+\newcommand{\refitem}[2]{\par\hangindent=1.6em\hangafter=1\noindent [#1]~#2}
+
+% ---------- 常用记号（只能用这里定义过的宏，不要自造 \newcommand） ----------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fh}{\mathfrak{h}}
+\newcommand{\ft}{\mathfrak{t}}
+\newcommand{\fu}{\mathfrak{u}}
+\newcommand{\fsu}{\mathfrak{su}}
+\newcommand{\fso}{\mathfrak{so}}
+\newcommand{\fsp}{\mathfrak{sp}}
+\newcommand{\fgl}{\mathfrak{gl}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ee}{\mathrm{e}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\id}{\mathrm{id}}
+\renewcommand{\Re}{\operatorname{Re}}
+\renewcommand{\Im}{\operatorname{Im}}
+\newcommand{\rk}{\operatorname{rk}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\Pf}{\operatorname{Pf}}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\vol}{\operatorname{vol}}
+\newcommand{\SL}{\mathrm{SL}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\Sp}{\mathrm{Sp}}
+\newcommand{\PSL}{\mathrm{PSL}}
+\newcommand{\PSU}{\mathrm{PSU}}
+\newcommand{\PN}{\mathrm{PN}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\half}{\tfrac{1}{2}}
+\newcommand{\bQ}{\bar{Q}}
+\newcommand{\bq}{\bar{q}}
+\newcommand{\bepsilon}{\bar{\epsilon}}
+\newcommand{\btheta}{\bar{\theta}}
+\newcommand{\ie}{\textit{i.e.}}
+\newcommand{\eg}{\textit{e.g.}}
+\newcommand{\cf}{\textit{cf.}}

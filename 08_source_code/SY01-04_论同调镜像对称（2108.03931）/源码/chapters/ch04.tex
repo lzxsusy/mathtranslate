@@ -1,0 +1,831 @@
+% ============================================================================
+% 第 4 章  分裂生成与扭转  （原书 pp.51–60，PDF pp.54–63）
+% 底本：Alessandro Imparato, Towards Homological Mirror Symmetry, ETH Zürich
+% 说明：原书公式全书连续编号，本章恰为 (52)–(53) 共 2 个编号公式；main.tex 采用
+%       全局连续编号，故自动编号与原文一致。每个编号公式恰用一个 equation 环境
+%       （内含 tikzcd，只编号一次），其余公式一律 equation*/\[ \] 不编号；\label
+%       按原书编号命名（eq:4.52、eq:4.53）。
+% ============================================================================
+\section{分裂生成与扭转}\label{ch:04}
+
+\takeaway{%
+  核心图像：幂等态射的“像”在普通范畴里给出分裂封闭与 Karoubi 完备化，在
+  $A_\infty$ 世界里则对应同伦幂等与抽象像；补进一切幂等分裂，就得到分裂封闭导出范畴
+  $\mathsf D^\pi(\mathcal A)$，它是 Fukaya 范畴“分裂生成”讨论的舞台。\\
+  数学工具：幂等自同态与收缩—包含对、Karoubi 完备化、同伦幂等 $\wp$、抽象像模
+  $\hom_{\mathcal A}(X,Y)[q]$、三角包络 $\mathsf{Tw}\mathcal A$、抽象扭转函子
+  $\mathcal T_Y$ 及其伴随 $\mathcal T^\vee_{Y_0}$。\\
+  主要结论：每个 $A_\infty$-范畴都有分裂封闭（命题 4.13）；三角 $A_\infty$-范畴的分裂
+  封闭仍三角（引理 4.14）；扭转可迭代复合，其零性或平移性构成分裂生成的判据
+  （推论 4.24）。%
+}
+
+\subsection{范畴论预备}\label{sec:4.1}
+
+\begin{Def}\label{def:4.1}
+设 $\mathsf C$ 为 $\mathbb K$ 上的线性范畴。考虑某个 $Y\in\operatorname{obj}(\mathsf C)$
+的\emph{幂等自同态}（idempotent endomorphism）$p$，即满足 $p\circ p=p$ 的态射
+$p\in\Hom_{\mathsf C}(Y,Y)$。
+
+若三元组 $(Z,r,k)$（其中 $Z\in\operatorname{obj}(\mathsf C)$，
+$r\in\Hom_{\mathsf C}(Y,Z)$ 称为\emph{收缩}（retraction），
+$k\in\Hom_{\mathsf C}(Z,Y)$ 称为\emph{包含}（inclusion））满足
+\[
+  r\circ k=\mathrm{id}_Z
+  \qquad\text{且}\qquad
+  k\circ r=p,
+\]
+则称之为 $p$ 的\emph{像}（image）。相应地，若这样的三元组存在，则称 $p$
+\emph{分裂}（splits）。我们把上述数据编码为下图：
+\begin{equation}\label{eq:4.52}
+  \begin{tikzcd}
+    Z \arrow[loop left, "{\mathrm{id}_Z}"] \arrow[r, bend left=25, "k"]
+      & Y \arrow[l, bend left=25, "r"'] \arrow[loop right, "p"]
+  \end{tikzcd}
+\end{equation}
+若 $\mathsf C$ 的所有幂等自同态都分裂，则称 $\mathsf C$ 为\emph{分裂封闭的}
+（split-closed）。
+\end{Def}
+
+注意，幂等态射 $p$ 的像若存在则唯一：给定另一个合适的三元组 $(Z',r',k')$，
+$r'\circ k:Z\to Z'$ 是对象间的同构，其逆为 $r\circ k'$。
+% [Tutor Note: 【易错】这里的“像”不是核—余核意义下的像，而是把 $p$ 显式分解为“包含—收缩”
+% 的数据 $(Z,r,k)$；三条关系缺一不可，且方向极易写反：$r:Y\to Z$ 是收缩（先作用），
+% $k:Z\to Y$ 是包含。图中 $k$ 在上、$r$ 在下，与式 (52) 的编号约定一致。]
+
+还要注意，若 $\mathsf C$ 是加性范畴（例如三角范畴）且分裂封闭，则对幂等态射
+$p\in\Hom_{\mathsf C}(Y,Y)$，可以取对 $Z:=\operatorname{im}(p)$ 与
+$Z^{\perp}:=\operatorname{im}(\mathrm{id}_Y-p)$，得到分解 $Y=Z\oplus Z^{\perp}$。
+
+\begin{Def}\label{def:4.2}
+范畴 $\mathsf C$ 的\emph{分裂封闭}（split-closure）是一对 $(\mathsf D,F)$：$\mathsf D$
+为分裂封闭范畴，$F:\mathsf C\to\mathsf D$ 为全忠实嵌入，且 $\mathsf D$ 的任一对象
+$Z$ 都是某个幂等自同态 $p\in\Hom_{\mathsf D}(F(X),F(X))$ 的像，其中
+$X\in\operatorname{obj}(\mathsf C)$。
+\end{Def}
+
+\begin{Rem}\label{rem:4.3}
+任何范畴 $\mathsf C$ 都有一个自动给出的分裂封闭 $\overline{\mathsf C}$，称为
+\emph{Karoubi 完备化}（Karoubi completion），也称\emph{幂等完备化}（idempotent
+completion）。其定义如下：对象为二元组 $(Y,p)$，其中 $Y\in\operatorname{obj}(\mathsf C)$
+而 $p\in\Hom_{\mathsf C}(Y,Y)$ 为幂等自同态（$\mathsf C$ 的每个对象都至少有一个这样的
+幂等自同态，即 $\mathrm{id}_Y$）；态射为
+\[
+  \Hom_{\overline{\mathsf C}}\bigl((Y_0,p_0),(Y_1,p_1)\bigr)
+  :=p_1\circ\Hom_{\mathsf C}(Y_0,Y_1)\circ p_0,
+\]
+即满足 $f=p_1\circ f\circ p_0$ 的三元组 $(p_0,f,p_1):=p_1\circ f\circ p_0$，其中
+$f\in\Hom_{\mathsf C}(Y_0,Y_1)$。复合是由 $\mathsf C$ 诱导的显然复合，恒等态射均取
+\[
+  \mathrm{id}_{(Y,p)}:=(p,p,p)=p.
+\]
+全忠实嵌入为 $E:\mathsf C\to\overline{\mathsf C}$，
+$Y\mapsto(Y,\mathrm{id}_Y)$，$p\mapsto(\mathrm{id}_Y,p,\mathrm{id}_Y)$。
+
+确实，$\overline{\mathsf C}$ 分裂封闭：对任一幂等态射
+$\bar p=(p,s,p)\in\Hom_{\overline{\mathsf C}}\bigl((Y,p),(Y,p)\bigr)$（其中
+$s\in\Hom_{\mathsf C}(Y,Y)$ 必然满足 $s=p\circ s\circ p$ 与 $s=s\circ p\circ s$），取
+$Z:=(Y,\mathrm{id}_Y)$、$r:=(p,s,\mathrm{id}_Y):(Y,p)\to Z$ 与
+$k:=(\mathrm{id}_Y,s,p):Z\to(Y,p)$，便有
+\[
+  r\circ k=\mathrm{id}_Y\circ s\circ\mathrm{id}_Y=E(s),
+  \qquad
+  k\circ r=p\circ s\circ p=\bar p.
+\]
+事实上可以证明，$\mathsf C$ 的任意分裂封闭 $(\mathsf D,F)$ 都等价于 Karoubi 完备化
+$(\overline{\mathsf C},E)$。此外，若 $\mathsf C$ 是三角范畴，则 $\overline{\mathsf C}$
+连同嵌入 $E$ 也是三角范畴。下面给出一个更具体的结果。
+\end{Rem}
+% [Tutor Note: 【背景】Karoubi 完备化的对象应理解为“形式上补上 $p$ 的像”；把 $(Y,p)$ 看作
+% $\operatorname{im}(p)$，态射 $p_1\circ f\circ p_0$ 就是“先在 $\operatorname{im}(p_0)$ 上取值、
+% 再落到 $\operatorname{im}(p_1)$”的诱导映射。这是幂等完备化的标准构造；可参看
+% \cite{GM03} 第 II 章关于加性范畴的讨论。]
+
+\begin{Lem}\label{lem:4.4}
+设 $\mathsf B=(\mathsf B,T)$ 为分裂封闭的三角范畴，$\mathsf A\subset\mathsf B$ 为三角
+全子范畴（从而对平移与正合三角形封闭）。设 $\tilde{\mathsf A}\subset\mathsf B$ 为所有
+同构于 $\mathsf A$ 中某对象的直和项的对象构成的全子范畴（特别地，
+$\tilde{\mathsf A}\cong\overline{\mathsf A}$，因为后者分裂封闭）。则 $\tilde{\mathsf A}$
+是三角范畴。
+\end{Lem}
+
+\begin{proof}
+首先注意，我们处理的是加性范畴，因此谈论直和分解才有意义（参看上文）。按假设，任一
+$\tilde Y_i\in\operatorname{obj}(\tilde{\mathsf A})$ 都出现在某个
+$Y\cong\tilde Y_i\oplus\tilde Y_i^{\perp}\in\operatorname{obj}(\mathsf A)$ 中。于是可以
+取对应的收缩与包含 $r_i,k_i$，使得 $r_i\circ k_j=\mathrm{id}_{\tilde Y_i}$。
+% [Tutor Note: 【勘误】原文此处印作 $r_i\circ k_j=\mathrm{id}_{\tilde Y_i}$，下标 $j$
+% 显然应为 $i$：只有 $r_i$ 与 $k_i$ 才是一对相容的收缩—包含，$r_i\circ k_i=\mathrm{id}_{\tilde Y_i}$；
+% 若真按 $j\ne i$ 理解，该等式一般不成立。译文照印原式，不改动。]
+
+由三角范畴的公理 (T1)（见定义 \ref{def:3.2}），可以把态射
+$\tilde c:\tilde Y_0\to\tilde Y_1$ 与
+$c:=k_1\circ\tilde c\circ r_0:Y_0\to Y_1$ 分别补全为正合三角形，其中涉及某个第三对象
+$\tilde Y_2$ 与 $Y_2$。它们构成如引理 \ref{lem:3.3} 中的两个图（一个以包含
+$k_0,k_1$ 为竖直箭头，另一个以收缩 $r_0,r_1$ 为竖直箭头），其最左边的方块由 $c$ 的
+定义而交换。因此可以找到补充态射 $k_2:\tilde Y_2\to Y_2$ 与
+$r_2:Y_2\to\tilde Y_2$，使整个图交换。把它们复合，得到：
+\[
+  \begin{tikzcd}[row sep=large]
+    \tilde Y_0 \arrow[r, "\tilde c"] \arrow[d, "r_0\circ k_0"']
+      & \tilde Y_1 \arrow[r] \arrow[d, "r_1\circ k_1"']
+      & \tilde Y_2 \arrow[r] \arrow[d, dashed, "r_2\circ k_2"']
+      & T(\tilde Y_0) \arrow[d, "T(r_0\circ k_0)"'] \\
+    \tilde Y_0 \arrow[r, "\tilde c"']
+      & \tilde Y_1 \arrow[r]
+      & \tilde Y_2 \arrow[r]
+      & T(\tilde Y_0)
+  \end{tikzcd}
+\]
+由于前两个竖直箭头是同构（它们都是恒等态射），再次应用引理 \ref{lem:3.3} 可知
+$r_2\circ k_2$ 也是同构，从而可逆；此外图的交换性迫使它等于恒等态射
+$\mathrm{id}_{\tilde Y_2}$。于是取幂等自同态 $p:=k_2\circ r_2\in\Hom_{\mathsf A}(Y_2,Y_2)$（它显然幂等），便看出
+$p$ 经由 $(\tilde Y_2,r_2,k_2)$ 分裂，从而 $\tilde Y_2$
+同构于 $Y_2$ 的直和项。按定义，这意味着 $\tilde Y_2\in\operatorname{obj}(\tilde{\mathsf A})$，
+故 $\tilde{\mathsf A}$ 完全包含上图所示的正合三角形。因此 $\tilde{\mathsf A}$ 是三角
+范畴。
+\end{proof}
+% [Tutor Note: 【易错】图中第二行的三个对象仍是带波浪号的 $\tilde Y_i$，不是 $Y_i$：
+% 把“包含”$k_i$ 与“收缩”$r_i$ 复合后又回到了 $\tilde{\mathsf A}$ 一侧，竖直箭头
+% $r_i\circ k_i$ 是 $\tilde Y_i$ 的自同态；正是这一点让第二步引理 3.3 能给出
+% $r_2\circ k_2$ 的可逆性。]
+
+\subsection{抽象像}\label{sec:4.2}
+
+下面把刚刚得到的理论翻译成 $A_\infty$-模的语言。为此，把基域 $\mathbb K$ 视为平凡的
+$A_\infty$-范畴：$\operatorname{obj}(\mathbb K):=\{*\}$，
+$\hom_{\mathbb K}(*,*):=\{\mathrm{id}_*\}$，从而与它的上同调范畴一致，
+$H(\mathbb K)\cong\mathbb K$。
+
+\begin{Def}\label{def:4.5}
+设 $\mathcal A$ 为 $A_\infty$-范畴，$\mathcal Q=\mathrm{mod}(\mathcal A)$。
+$Y\in\operatorname{obj}(\mathcal A)$ 的\emph{同伦幂等}（idempotent up to homotopy）
+是指一个非幺 $A_\infty$-函子 $\wp:\mathbb K\to\mathcal A$，满足 $\wp(*)=Y$，且对
+$d\ge1$ 有
+\[
+  \wp^d\equiv\wp^d(\mathrm{id}_*,\dots,\mathrm{id}_*)\in\hom^{1-d}_{\mathcal A}(Y,Y),
+\]
+并满足相应的方程 \eqref{eq:2.10}：
+\[
+  \sum_{\substack{1\le r\le d\\ s_1+\dots+s_r=d}}
+    \mu^r_{\mathcal A}(\wp^{s_r},\dots,\wp^{s_1})
+  =
+  \begin{cases}
+    \wp^{d-1} & \text{若 $d$ 为偶数},\\
+    0 & \text{若 $d$ 为奇数},
+  \end{cases}
+\]
+其中的等式落在 $\hom^{2-d}_{\mathcal A}(Y,Y)$ 中。
+\end{Def}
+% [Tutor Note: 【易错】$\wp^d$ 的次数为 $1-d$：$\wp^1\in\hom^0$、$\wp^2\in\hom^{-1}$，
+% 依次递减。左端 $\mu^r_{\mathcal A}$ 把 $r$ 个次数为 $1-s_i$ 的元素相乘，总次数为
+% $r-d$，加上 $\mu^r$ 的 $2-r$ 次恰为 $2-d$，与右端 $\wp^{d-1}$ 的次数一致；
+% 这是检验符号约定是否抄对的最快办法。]
+
+可以证明幂等自同态与同伦幂等之间有如下关系（见 \cite{Sei08} 引理 4.2）。
+
+\begin{Lem}\label{lem:4.6}
+设 $p\in\Hom^0_{H(\mathcal A)}(Y,Y)$ 幂等，$Y\in\operatorname{obj}(\mathcal A)$。则
+存在 $Y$ 的一个同伦幂等 $\wp:\mathbb K\to\mathcal A$，使得 $\langle\wp^1\rangle=p$。
+\end{Lem}
+
+我们着手把 $\wp$ 描述为某个 $A_\infty$-模的像，做法与上一节处理幂等态射 $p$ 时类似。
+
+\begin{Def}\label{def:4.7}
+设 $\wp:\mathbb K\to\mathcal A$ 为某个 $Y\in\operatorname{obj}(\mathcal A)$ 的同伦幂等。
+定义 $\wp$ 的\emph{抽象像}（abstract image）为如下 $A_\infty$-模
+$\mathcal Z\in\operatorname{obj}(\mathcal Q)$：它对任一
+$X\in\operatorname{obj}(\mathcal A)$ 给出
+\[
+  \mathcal Z(X):=\hom_{\mathcal A}(X,Y)[q],
+\]
+即关于一个次数为 $-1$ 的变量 $q$ 的形式多项式的分次向量空间。记 $\delta_q$ 为形式
+微分算子，使得 $\delta_q(q^0)=0$、$\delta_q(q^k)=q^{k-1}$，则复合映射为
+\[
+  \mu^1_{\mathcal Z}\bigl(b(q)\bigr)
+  :=\sum_{\substack{r\ge2\\ s_2,\dots,s_r\ge1}}
+    \delta_q^{s_2+\dots+s_r}\mu^r_{\mathcal A}
+    (\wp^{s_r},\dots,\wp^{s_2},b(q))
+  +(-1)^{|b|}\frac{b(q)-b(-q)}{2q}
+  \in\mathcal Z(X_0)[1],
+\]
+\[
+  \begin{aligned}
+  \mu^d_{\mathcal Z}:{}&\mathcal Z(X_{d-1})\otimes
+    \hom_{\mathcal A}(X_{d-2},X_{d-1})\otimes\dots\otimes
+    \hom_{\mathcal A}(X_0,X_1)\longrightarrow\mathcal Z(X_0)[2-d],\\
+  &\bigl(b(q),a_{d-1},\dots,a_1\bigr)\longmapsto
+    \sum_{\substack{r\ge d+1\\ s_{d+1},\dots,s_r\ge1}}
+    \delta_q^{s_{d+1}+\dots+s_r}\mu^r_{\mathcal A}
+    (\wp^{s_r},\dots,\wp^{s_{d+1}},b(q),a_{d-1},\dots,a_1),
+  \end{aligned}
+\]
+对 $d>1$ 成立。
+\end{Def}
+% [Tutor Note: 【背景】$\mathcal Z(X)=\hom_{\mathcal A}(X,Y)[q]$ 把形式多项式 $q$ 当作
+% “把 $\wp$ 的各阶分量逐次插入复合”的记账工具：$\delta_q$ 每作用一次就消耗掉一个 $q$，
+% 从而把 $\mu^r_{\mathcal A}$ 的高阶项按 $s_2+\dots+s_r$ 分级。最后一项
+% $\frac{b(q)-b(-q)}{2q}$ 是投影到 $q$ 的偶次部分之外，保证 $\mu^1_{\mathcal Z}$ 在形式上
+% 只保留与 $b(q)$ 的“奇偶相容”部分；参见 \cite{Sei08} 第 (4c) 节。]
+
+借助 $\mathcal Z(X)$ 的滤过并研究相应的谱序列，最终可在上同调模层面得到如下刻画
+（回忆定义 \ref{def:2.22}）。
+
+\begin{Lem}\label{lem:4.8}
+考虑某个 $Y\in\operatorname{obj}(\mathcal A)$ 的同伦幂等 $\wp$ 的抽象像 $\mathcal Z$，
+并取 $p\in\Hom^0_{H(\mathcal A)}(Y,Y)$ 使 $\langle\wp^1\rangle=p$ 幂等（由引理
+\ref{lem:4.6} 可行）。
+\begin{enumerate}[label=\textup{\roman*}.,leftmargin=*]
+  \item 上同调模 $H(\mathcal Z)\in\operatorname{obj}\bigl(\mathrm{Mod}^0(H(\mathcal A))\bigr)$%
+        \footnote{由于我们隐含假设了 $\mathcal A$ 是 c-幺的，$H(\mathcal Z):
+        H(\mathcal A)^{opp}\to\mathrm{GradVect}$ 确实是反变幺函子，即
+        $\mathrm{Mod}^0(H(\mathcal A))$ 的对象（参看定义 \ref{def:2.22}）。}
+        描述如下：对任一 $X\in\operatorname{obj}(\mathcal A)$，
+        \[
+          H(\mathcal Z)(X)=H\bigl(\mathcal Z(X)\bigr)
+          \cong p\circ\Hom_{H(\mathcal A)}(X,Y)
+          \in\operatorname{obj}(\mathrm{GradVect}),
+        \]
+        特别地，$H(\mathcal Z)$ 是 $H(\Upsilon(Y))$ 的直和项；其模乘法为
+        \[
+          H(\mathcal Z)(X_1)\otimes\Hom_{H(\mathcal A)}(X_0,X_1)
+          \to H(\mathcal Z)(X_0),\qquad
+          (p\circ\langle a_1\rangle,\langle a_0\rangle)
+          \mapsto p\circ(\langle a_1\rangle\circ\langle a_0\rangle).
+        \]
+  \item 对任一 $\mathcal M\in\operatorname{obj}(\mathcal Q)$，存在分次群同构
+        \[
+          \Hom_{H(\mathcal Q)}(\mathcal Z,\mathcal M)\cong H(\mathcal M)(Y)\circ p,
+        \]
+        它关于与模同态的左侧复合是自然的。结合上一点可知
+        $\Hom_{H(\mathcal Q)}(\mathcal Z,\mathcal Z)
+        \cong p\circ\Hom_{H(\mathcal A)}(Y,Y)\circ p$。
+\end{enumerate}
+\end{Lem}
+% [Tutor Note: 【易错】第 (i) 点里的 $\circ p$ 是右乘 $p$：$p\circ\Hom(X,Y)$ 表示
+% “先由 $p$ 投影再取 $\Hom$”，即 $\Hom_{H(\mathcal A)}(X,Y)$ 中落在 $\operatorname{im}(p)$
+% 的那些元素；不要与左乘 $p$ 混为一谈。（ii）中的 $H(\mathcal M)(Y)\circ p$ 同理。
+% 这一约定是后文 $r\circ p$、$k$ 互为逆的关键。]
+
+\begin{Cor}\label{cor:4.9}
+考虑某个 $Y\in\operatorname{obj}(\mathcal A)$ 的同伦幂等 $\wp$ 的抽象像 $\mathcal Z$，
+并取 $p\in\Hom^0_{H(\mathcal A)}(Y,Y)$ 使 $\langle\wp^1\rangle=p$ 幂等。则 $\mathcal Z$
+是 $\langle\Upsilon^1(\wp^1)\rangle$ 在 $H^0(\mathcal Q)$ 中的像（按定义 \ref{def:4.1}
+的意义）。特别地，$\mathcal Z$ 在同构意义下只依赖于类 $p$，而与它的代表 $\wp^1$ 无关。
+\end{Cor}
+
+\begin{proof}
+记 $\mathcal Y=\Upsilon(Y)\in\operatorname{obj}(\mathcal Q)$ 为 Yoneda 模，注意
+$p\in H(\mathcal Y(Y))=H(\mathcal Y)(Y)$。我们验证类
+$\langle\Upsilon^1(\wp^1)\rangle=H(\Upsilon)\langle\wp^1\rangle=H(\Upsilon)(p)
+\in\Hom^0_{H(\mathcal Q)}(\mathcal Y,\mathcal Y)$ 是 $\mathcal Y$ 在 $H^0(\mathcal Q)$
+中的幂等自同态。
+
+这其实是 $H(\Upsilon)$ 的函子性与 $p$ 的幂等性的直接推论：
+$H(\Upsilon)(p)\circ H(\Upsilon)(p)=H(\Upsilon)(p\circ p)=H(\Upsilon)(p)$。把
+$H(\Upsilon)$ 作用于图 (52)，得到
+\begin{equation}\label{eq:4.53}
+  \begin{tikzcd}
+    \Upsilon(Z) \arrow[loop left, "{\mathrm{id}_{\Upsilon(Z)}}"]
+      \arrow[r, bend left=25, "\kappa"]
+      & \mathcal Y \arrow[l, bend left=25, "\rho"']
+      \arrow[loop right, "{\langle\Upsilon^1(\wp^1)\rangle}"]
+  \end{tikzcd}
+\end{equation}
+上述图位于 $H^0(\mathcal Q)$ 中，其中我们置 $\rho:=H(\Upsilon)(r)$ 与
+$\kappa:=H(\Upsilon)(k)$。回忆 $\mathrm{id}_{\Upsilon(Z)}$ 由严格单位
+$e_{\Upsilon(Z)}\in\hom_{\mathcal Q}(\Upsilon(Z),\Upsilon(Z))$ 诱导，如第
+\ref{sec:2.8} 节所述。像的两条刻画关系显然成立，这仍归功于 $H(\Upsilon)$ 的函子性。
+% [Tutor Note: 【勘误】原文此处引“Section 2.8”；但严格单位 $e_{\Upsilon(Z)}$ 的讨论
+% 在本书第 2.7 节“严格幺性与上同调幺性”，第 2.8 节是“拟等价”。疑为误引 2.7 为 2.8。
+% 译文照印 2.8。]
+
+还需说明 $\mathcal Z\cong\Upsilon(Z)$ 在 $H^0(\mathcal Q)$ 中成立。由引理 \ref{lem:4.8}，
+\[
+  \Hom_{H(\mathcal Q)}\bigl(\mathcal Z,\Upsilon(Z)\bigr)
+  \cong H\bigl(\Upsilon(Z)(Y)\bigr)\circ p
+  =\Hom^0_{H(\mathcal A)}(Y,Z)\circ p.
+\]
+于是只需右端存在同构：一个这样的同构由 $r\circ p$ 给出，其逆为
+$k\in\Hom^0_{H(\mathcal A)}(Z,Y)$。
+\end{proof}
+% [Tutor Note: 【含糊】此证明把 $H(\Upsilon)$ 作用于图 (52)，等于默认 $p$ 在
+% $H^0(\mathcal A)$ 中已经分裂（图中 $Z$ 是 $\mathcal A$ 的对象，$r,k$ 为该分裂的数据），
+% 而推论 4.9 的假设只要求 $p$ 幂等；引理 4.11 的证明正是先假设 $p$ 分裂、再引用本条。
+% 原文未声明这一附加假设，若要处理一般幂等，需直接验证 $(\mathcal Z,\rho,\kappa)$
+% 的两条关系。]
+
+作为推论，$H^0(\mathcal Q)$ 是分裂封闭的普通范畴：$H^0(\mathcal Q)$ 中的任一幂等
+自同态都（再次由 $H(\Upsilon)$ 的双射性与函子性）对应到 $H^0(\mathcal A)$ 中的一个幂等
+自同态，而后者在 $H^0(\mathcal Q)$ 中的像刚由推论 \ref{cor:4.9} 证明分裂。
+
+\subsection{分裂封闭导出范畴}\label{sec:4.3}
+
+\begin{Def}\label{def:4.10}
+称 $A_\infty$-范畴 $\mathcal A$ 为\emph{分裂封闭的}（split-closed），若任意同伦幂等的
+抽象像 $\mathcal Z$ 都被某个 $Y\in\operatorname{obj}(\mathcal A)$ 准表示，即可以找到
+$H^0(\mathcal Q)$ 中的同构 $\langle t\rangle:\Upsilon(Y)=\mathcal Y\xrightarrow{\ \sim\ }
+\mathcal Z$。
+
+$\mathcal A$ 的\emph{分裂封闭}（split-closure）是一对 $(\mathcal B,\mathcal F)$，其中
+$\mathcal B$ 为分裂封闭 $A_\infty$-范畴，$\mathcal F:\mathcal A\to\mathcal B$ 为上同调
+全忠实的 $A_\infty$-函子，且对任一 $Z\in\operatorname{obj}(\mathcal B)$，存在
+$Y\in\operatorname{obj}(\mathcal A)$，使 $Z$ 成为某个幂等自同态
+$p\in\Hom_{H(\mathcal B)}(\mathcal F(Y),\mathcal F(Y))$ 在 $H^0(\mathcal B)$ 中的像
+（经典意义下）。
+\end{Def}
+
+\begin{Lem}\label{lem:4.11}
+$A_\infty$-范畴 $\mathcal A$ 分裂封闭，当且仅当 $H^0(\mathcal A)$ 分裂封闭（经典意义下）。
+\end{Lem}
+
+\begin{proof}
+若 $H^0(\mathcal A)$ 分裂封闭，给定同伦幂等 $\wp:\mathbb K\to\mathcal A$，
+$\wp(*)=Y\in\operatorname{obj}(\mathcal A)$，先由引理 \ref{lem:4.6} 找到幂等
+$p=\langle\wp^1\rangle\in\Hom^0_{H(\mathcal A)}(Y,Y)$；按假设 $p$ 分裂。把
+$H(\Upsilon)$ 作用于相应的图 (52)，便知对象 $Z$ 是抽象像 $\mathcal Z$ 的合法
+准代表（所需的同构 $\langle t\rangle\in\Hom_{H(\mathcal Q)}(\Upsilon(Z),\mathcal Z)$
+正是推论 \ref{cor:4.9} 中构造的那个）。因此 $\mathcal A$ 分裂封闭。
+% [Tutor Note: 【易错】这里有两类“$Z$”：不带花体的 $Z\in\operatorname{obj}(\mathcal A)$
+% 是 $p$ 的分裂对象，带花体的 $\mathcal Z\in\operatorname{obj}(\mathcal Q)$ 是抽象像模。
+% “$\mathcal Z$ 被 $Z$ 准表示”指 $\Upsilon(Z)$ 与 $\mathcal Z$ 在 $H^0(\mathcal Q)$ 中同构。
+% 原文用同一字母排版不同字体，抄写时务必分清。]
+
+反过来，设 $\mathcal A$ 分裂封闭，考虑幂等元
+$p=\langle\wp^1\rangle\in\Hom_{H(\mathcal A)}(Y,Y)$（再次用到引理 \ref{lem:4.6}）。
+按假设，存在某个 $X\in\operatorname{obj}(\mathcal A)$，其 Yoneda 模
+$\mathcal X\in\operatorname{obj}(\mathcal Q)$ 准表示 $\wp$ 的抽象像 $\mathcal Z$。由引理
+\ref{lem:4.8}，
+\[
+  \Hom^0_{H(\mathcal Q)}(\mathcal Z,\mathcal X)
+  \cong H^0(\mathcal X)(Y)\circ p
+  =\Hom^0_{H(\mathcal A)}(Y,X)\circ p,
+\]
+故可找到 $H^0(\mathcal A)$ 中的同构 $r=\tilde r\circ p:Y\to X$。取
+$Z:=\operatorname{im}(r)$ 与 $k:=p\circ r^{-1}|_Z$，便有 $k\circ r=p$ 以及
+$r\circ k=\tilde r\circ p\circ r^{-1}|_Z=\mathrm{id}_Z$。因此任一 $p$ 都经由这样的
+三元组 $(Z,r,k)$ 分裂，这使 $H^0(\mathcal A)$ 分裂封闭。
+\end{proof}
+
+\begin{Cor}\label{cor:4.12}
+设 $\mathcal A$ 与 $\mathcal B$ 为 $A_\infty$-范畴，$\mathcal F:\mathcal A\to\mathcal B$
+为 $A_\infty$-函子。则 $(\mathcal B,\mathcal F)$ 是 $\mathcal A$ 的分裂封闭，当且仅当
+$(H^0(\mathcal B),H^0(\mathcal F))$ 是 $H^0(\mathcal A)$ 的分裂封闭。
+\end{Cor}
+
+由于 $H^0(\mathcal Q)$ 分裂封闭，立即可推出 $\mathcal Q$ 是分裂封闭的
+$A_\infty$-范畴。$\mathcal A$ 的唯一分裂封闭便由此得出：
+
+\begin{Pro}\label{pro:4.13}
+每个 $A_\infty$-范畴 $\mathcal A$ 都有分裂封闭 $(\widetilde{\mathcal B},\widetilde{\mathcal F})$。
+若另有分裂封闭 $(\mathcal B,\mathcal F)$，则存在拟等价
+$\mathcal G:\mathcal B\to\widetilde{\mathcal B}$，使得
+$\mathcal G\circ\mathcal F\cong\widetilde{\mathcal F}
+\in\operatorname{obj}\bigl(H^0(\mathrm{fun}(\mathcal A,\widetilde{\mathcal B}))\bigr)$。
+\end{Pro}
+
+\begin{proof}
+设 $\Pi\mathcal A\subset\mathcal Q$ 为对象集
+\[
+  \operatorname{obj}(\Pi\mathcal A):=\bigl\{\mathcal M\in\operatorname{obj}(\mathcal Q)
+  \bigm|\exists\wp\ \text{使}\ \mathcal Z\cong\mathcal M\ \text{于}\ H^0(\mathcal Q)\bigr\}
+\]
+的全 $A_\infty$-子范畴，其中 $\mathcal Z$ 跑遍同伦幂等的抽象像。注意每个 Yoneda 模
+$\mathcal Y=\Upsilon(Y)\in\operatorname{obj}(\mathcal Q)$ 都落在 $\Pi\mathcal A$ 中：
+由引理 \ref{lem:4.6}，对幂等自同态 $\mathrm{id}_Y$ 存在某个 $\wp$，使得
+$\mathrm{id}_Y=\langle\wp^1\rangle\in\Hom^0_{H(\mathcal A)}(Y,Y)$，而其抽象像
+$\mathcal Z$ 满足
+\[
+  \Hom^0_{H(\mathcal A)}(Y,Y)=H^0(\mathcal Y)(Y)\circ\mathrm{id}_Y
+  \cong\Hom^0_{H(\mathcal Q)}(\mathcal Z,\mathcal Y)
+\]
+（由引理 \ref{lem:4.8}）；在此同构下，$\mathrm{id}_Y$ 必然被送到 $H^0(\mathcal Q)$ 中的
+同构 $\mathcal Z\xrightarrow{\ \sim\ }\mathcal Y$，所以 $\mathcal Y\in
+\operatorname{obj}(\Pi\mathcal A)$，如所声称。
+
+由推论 \ref{cor:4.12}，$(\widetilde{\mathcal B},\widetilde{\mathcal F})
+:=(\Pi\mathcal A,\Upsilon)$ 是 $\mathcal A$ 的合法分裂封闭，因为
+$(H^0(\Pi\mathcal A),H^0(\Upsilon))$ 是 $H^0(\mathcal A)$ 的分裂封闭：$H^0(\Pi\mathcal A)$
+中任一幂等自同态都分裂（论证同引理 \ref{lem:4.11}），且 $H^0(\Upsilon)$ 是全忠实嵌入，
+使得任一 $\mathcal M\cong\mathcal Z\in\operatorname{obj}(H^0(\Pi\mathcal A))$ 都是形如
+$\langle\Upsilon^1(\wp^1)\rangle$ 的幂等自同态的像（如图 (53) 所示）。
+
+现在考虑 $\mathcal A$ 的另一个分裂封闭 $(\mathcal B,\mathcal F)$。按假设，$\mathcal F$ 是
+c-幺的，从而有（严格幺的）拉回函子 $\mathcal F^*:\mathrm{mod}(\mathcal B)\to\mathcal Q$，
+如定义 \ref{def:2.37} 所述。令
+$\mathcal G:=\mathcal F^*\circ\Upsilon_{\mathcal B}:\mathcal B\to\Pi\mathcal A
+\subset\mathcal Q$。考察注 \ref{rem:2.38} 中那个在同构意义下交换的图，可推出
+$\mathcal G\circ\mathcal F\cong\Upsilon_{\mathcal A}$ 于
+$H^0(\mathrm{fun}(\mathcal A,\Pi\mathcal A))$ 中。这又说明：限制在 $\mathcal F$ 的像对象上
+$\mathcal G$ 上同调全忠实（因为 $\Upsilon_{\mathcal A}$ 如此），从而由分裂封闭的定义，
+它在整个 $\mathcal B$ 上也上同调全忠实。按上面同样的论证，可证明 $\Pi\mathcal A$ 的任一
+对象都同构于 $\mathcal G$ 的某个像对象，这给出本质满性。于是 $\mathcal G$ 是拟等价，
+由定理 2.19 可逆，从而任意两个分裂封闭只差一个拟等价。
+% [Tutor Note: 【勘误】原文此处引“Theorem 2.19”，但本书并无定理 2.19；所述“拟等价可逆”
+% 的结果实为定理 2.31（第 2.8 节，见 ch02）：$\mathcal G$ 是拟等价而非拟同构，故不能
+% 用引理 2.19。译文照印 2.19。]
+\end{proof}
+
+\begin{Lem}\label{lem:4.14}
+三角 $A_\infty$-范畴 $\mathcal A$ 的分裂封闭是三角的。
+\end{Lem}
+
+\begin{proof}
+在第 \ref{sec:3.7} 节中我们论证了 $\mathcal Q$ 是三角 $A_\infty$-范畴，从而
+$H^0(\mathcal Q)$ 作为普通范畴也是三角的（由命题 \ref{pro:3.47}），并且由推论
+\ref{cor:4.9} 分裂封闭。在注 \ref{rem:3.55} 中我们把 $\mathcal A$ 与
+$\widetilde{\mathcal Q}\subset\mathcal Q$ 等同，后者是由所有 Yoneda 模
+$\mathcal Y=\Upsilon(Y)$ 生成的三角全 $A_\infty$-子范畴，其对象从而也是三角全子范畴
+$H^0(\mathcal A)\subset H^0(\mathcal Q)$ 的对象。此外按定义，
+$H^0(\Pi\mathcal A)\subset H^0(\mathcal Q)$ 是所有同构于某个
+$\mathcal Y\in\operatorname{obj}(H^0(\mathcal A))$ 的直和项的对象构成的全子范畴
+（由引理 \ref{lem:4.8}，任一抽象像的上同调模 $H(\mathcal Z)$ 都出现在某个
+$H(\mathcal Y)$ 的分解中）。应用引理 \ref{lem:4.4} 可知 $H^0(\Pi\mathcal A)$ 也是三角
+范畴。
+
+但由此容易推出 $\Pi\mathcal A$ 本身是三角 $A_\infty$-范畴：它当然非空；任一对象在
+$H^0(\Pi\mathcal A)$ 中都同构于某个平移对象（因为它位于 $H^0(\mathcal Q)$ 中，而后者以
+$H^0(\Pi\mathcal A)$ 为全子范畴）；$H^0(\Pi\mathcal A)$ 中任一态射都可补全为正合
+三角形（在 $H^0(\mathcal Q)$ 中可以，而其所有组成部分必属于三角范畴
+$H^0(\Pi\mathcal A)$；于是该正合三角形在 $\Pi\mathcal A\hookrightarrow\mathcal Q$
+下的原像在 $H^0(\Pi\mathcal A)$ 中仍正合，由推论 \ref{cor:3.44}）。
+\end{proof}
+
+\begin{Def}\label{def:4.15}
+设 $\mathcal B$ 为分裂封闭的三角 $A_\infty$-范畴，$\mathcal A\subset\mathcal B$ 为非空的
+全 $A_\infty$-子范畴。包含 $\mathcal A$、对同构封闭且分裂封闭的最小三角全
+$A_\infty$-子范畴 $\widetilde{\mathcal B}\subset\mathcal B$，称为 $\mathcal B$ 的由
+$\mathcal A$ \emph{分裂生成}（split-generated）的（三角）子范畴。
+
+具体而论，$\operatorname{obj}(\widetilde{\mathcal B})$ 可以从
+$\operatorname{obj}(\mathcal A)$ 出发构造：取所有可能的映射锥与平移，反复进行，最后取
+所有可能的幂等自同态的像。
+
+若 $\widetilde{\mathcal B}=\mathcal B$，则称 $\mathcal A$ \emph{分裂生成}
+$\mathcal B$（此时 $\mathcal B$ 是 $\mathcal A$ 的分裂封闭；而且 $\mathcal A$ 也按
+定义 \ref{def:3.22} 的意义\emph{生成} $\mathcal B$）。
+\end{Def}
+
+\begin{Def}\label{def:4.16}
+设 $\mathcal A$ 为 $A_\infty$-范畴，考虑 $\mathcal A$ 的标准三角包络
+$(\mathsf{Tw}\mathcal A,\iota)$ 的分裂封闭
+$(\Pi(\mathsf{Tw}\mathcal A),\Upsilon_{\mathsf{Tw}\mathcal A})$（按构造，
+$\Pi(\mathsf{Tw}\mathcal A)$ 由 $\mathcal A$ 分裂生成）。我们称
+\[
+  \mathsf D^\pi(\mathcal A):=H^0\bigl(\Pi(\mathsf{Tw}\mathcal A)\bigr)
+\]
+为 $\mathcal A$ 的\emph{分裂封闭导出范畴}（split-closed derived category）。
+\end{Def}
+% [Tutor Note: 【易错】$\mathsf D^\pi$ 的上标 $\pi$ 与基本群 $\pi_1$ 无关，它来自
+% “分裂封闭”所取的幂等完备化（幂等投影）；书写时不要把它误作
+% $D^{\pi_1}$。另一个常见混淆是 $\mathsf D^\pi(\mathcal A)$（分裂封闭）与
+% $\mathsf D^{\mathrm b}(\mathcal A)=H^0(\mathsf{Tw}\mathcal A)$（有界导出范畴）：
+% 后者不补幂等分裂。]
+
+\begin{Cor}\label{cor:4.17}
+设 $\mathcal B$ 为分裂封闭的三角 $A_\infty$-范畴，且由全 $A_\infty$-子范畴
+$\mathcal A\subset\mathcal B$ 分裂生成。则存在拟等价
+$\Pi(\mathsf{Tw}\mathcal A)\to\mathcal B$，从而 $H^0(\mathcal B)$ 与
+$\mathsf D^\pi(\mathcal A)$ 作为分裂封闭三角范畴等价。
+\end{Cor}
+
+\begin{proof}
+连同包含 $\mathcal A\hookrightarrow\mathcal B$，$\mathcal B$ 便是 $\mathcal A$ 的一个
+合法三角包络兼分裂封闭。相应的唯一性结论（命题 \ref{pro:3.50} 与 \ref{pro:4.13}）
+给出所需结果。
+\end{proof}
+
+由推论 \ref{cor:3.52} 直接可得：
+
+\begin{Cor}\label{cor:4.18}
+设 $\mathcal A$ 与 $\mathcal B$ 为拟等价的 c-幺 $A_\infty$-范畴。则
+$\mathsf D^\pi(\mathcal A)$ 与 $\mathsf D^\pi(\mathcal B)$ 是等价的分裂封闭三角范畴。
+\end{Cor}
+
+结合最后两条推论，得到：
+
+\begin{Cor}\label{cor:4.19}
+设 $\mathcal A$ 与 $\mathcal B$ 为 c-幺 $A_\infty$-范畴，分别由全 $A_\infty$-子范畴
+$\widetilde{\mathcal A}\subset\mathcal A$ 与 $\widetilde{\mathcal B}\subset\mathcal B$
+分裂生成，且 $\widetilde{\mathcal A}$ 与 $\widetilde{\mathcal B}$ 拟等价。则
+$\mathsf D^\pi(\mathcal A)$ 与 $\mathsf D^\pi(\mathcal B)$ 是等价的分裂封闭三角范畴。
+\end{Cor}
+
+\subsection{扭转}\label{sec:4.4}
+
+为总结关于三角化的讨论，并给分裂生成的理论多一点立足点——我们最终要在 Fukaya 范畴的
+语境中用到它——我们退后一步，抽象地讨论 $A_\infty$-模的映射锥。不过，我们选择较简略的
+叙述。关于扭转的更多内容可参看 \cite{Sei08} 第 5 章。
+
+\begin{Def}\label{def:4.20}
+设 $\mathcal A$ 为 $A_\infty$-范畴，$Y\in\operatorname{obj}(\mathcal A)$。定义沿 $Y$
+的\emph{抽象扭转函子}（abstract twist functor）
+$\mathcal T_Y:\mathcal Q\to\mathcal Q$ 为如下 $A_\infty$-函子：
+\begin{itemize}
+  \item 把 $\mathcal M\in\operatorname{obj}(\mathcal Q)$ 送到
+        $\mathcal C=\mathcal T_Y(\mathcal M)\in\operatorname{obj}(\mathcal Q)$，后者把
+        $X\in\operatorname{obj}(\mathcal A)$ 送到
+        \[
+          \mathcal C(X):=\bigl(\mathcal M(Y)\otimes\hom_{\mathcal A}(X,Y)\bigr)[1]
+          \oplus\mathcal M(X)\in\operatorname{obj}(\mathrm{GradVect}),
+        \]
+        其分次映射为
+        \[
+          \begin{aligned}
+            \mu^1_{\mathcal C}(c_0\otimes b,c_1)
+            :={}&\bigl((-1)^{|b|-1}\mu^1_{\mathcal M}(c_0)\otimes b
+              +c_0\otimes\mu^1_{\mathcal A}(b),\ 
+              \mu^1_{\mathcal M}(c_1)+\mu^2_{\mathcal M}(c_0,b)\bigr),\\
+            \mu^d_{\mathcal C}\bigl((c_0\otimes b,c_1),a_{d-1},\dots\bigr)
+            :={}&\bigl(c_0\otimes\mu^d_{\mathcal A}(b,a_{d-1},\dots),\ 
+              \mu^d_{\mathcal M}(c_1,a_{d-1},\dots)\\
+              &\quad+\mu^{d+1}_{\mathcal M}(c_0,b,a_{d-1},\dots)\bigr),
+          \end{aligned}
+        \]
+        对 $d>1$ 成立。
+  \item 把 $t\in\hom_{\mathcal Q}(\mathcal M_0,\mathcal M_1)$ 送到
+        $\tilde t=\mathcal T^1_Y(t)\in\hom_{\mathcal Q}\bigl(\mathcal T_Y(\mathcal M_0),
+        \mathcal T_Y(\mathcal M_1)\bigr)$，后者由
+        \[
+          \begin{aligned}
+            \tilde t^1(c_0\otimes b,c_1)
+            &:=\bigl((-1)^{|b|-1}t^1(c_0)\otimes b,\ t^1(c_1)+t^2(c_0,b)\bigr),\\
+            \tilde t^d\bigl((c_0\otimes b,c_1),a_{d-1},\dots\bigr)
+            &:=\bigl(0,\ t^d(c_1,a_{d-1},\dots)+t^{d+1}(c_0,b,a_{d-1},\dots)\bigr),
+          \end{aligned}
+        \]
+        对 $d>1$ 成立；而当 $d>1$ 时 $\mathcal T^d_Y:=0$。
+\end{itemize}
+给定两个 $Y_0,Y_1\in\operatorname{obj}(\mathcal A)$，我们用
+$T_{Y_0}(Y_1)\in\operatorname{obj}(\mathcal A)$ 表示
+$\mathcal T_{Y_0}(\mathcal Y_1)$ 的任一准代表，并称之为 $Y_1$ 沿 $Y_0$ 的
+\emph{扭转}（twist）。
+\end{Def}
+% [Tutor Note: 【易错】扭转模的底层分次空间是
+% $(\mathcal M(Y)\otimes\hom_{\mathcal A}(X,Y))[1]\oplus\mathcal M(X)$，第一个直和项被
+% 平移了一次，这正是 $\mu^1_{\mathcal C}$ 第一分量中 Koszul 符号 $(-1)^{|b|-1}$ 的来源
+% （把 $b$ 从 $\hom$ 中搬到 $\mathcal M(Y)$ 前面要付 $|b|$ 次，整体再乘 $-1$）。
+% 与定义 3.53 的抽象映射锥比较时，注意那里第一项是 $\hom_{\mathcal A}(X,Y_0)[1]$，
+% 而这里多了一个 $\mathcal M(Y)$ 因子。]
+
+\begin{Def}\label{def:4.21}
+设 $\mathcal M,\mathcal Y=\Upsilon(Y)\in\operatorname{obj}(\mathcal Q)$，其中
+$Y\in\operatorname{obj}(\mathcal A)$。
+% [Tutor Note: 【勘误】原文此处印作“for $Y\in\operatorname{obj}(\mathcal Q)$”，
+% 但 $\Upsilon$ 的定义域是 $\mathcal A$，故第二个 $\operatorname{obj}(\mathcal Q)$
+% 应为 $\operatorname{obj}(\mathcal A)$；否则 $\mathcal Y=\Upsilon(Y)$ 无从谈起。
+% 译文按 $\operatorname{obj}(\mathcal A)$ 处理，并在报告登记。]
+定义\emph{抽象求值态射}（abstract evaluation
+morphism）$\epsilon\in\hom^0_{\mathcal Q}\bigl(\mathcal M(Y)\otimes\mathcal Y,\mathcal M\bigr)$
+为如下模同态：
+\[
+  \epsilon^d(c_0\otimes b,a_{d-1},\dots,a_1)
+  :=\mu^{d+1}_{\mathcal M}(c_0,b,a_{d-1},\dots,a_1).
+\]
+则 $\mathcal T_Y(\mathcal M)=\mathrm{Cone}(\epsilon)$，如定义 \ref{def:3.53} 所示，且
+它落入 $H^0(\mathcal Q)$ 中的正合三角形
+\[
+  \begin{tikzcd}[row sep=large, column sep=large]
+    \mathcal M(Y)\otimes\mathcal Y \arrow[rr, "{\langle\epsilon\rangle}"]
+      & & \mathcal M \arrow[dl, "{\langle\iota\rangle}"] \\
+    & \mathcal T_Y\mathcal M \arrow[ul, "{\langle\pi\rangle{[}1{]}}"'] &
+  \end{tikzcd}
+\]
+假设 $H(\mathcal A)$ 对有限直和与平移封闭，并给定
+$Y_0,Y_1\in\operatorname{obj}(\mathcal A)$ 使
+$\Hom_{H(\mathcal A)}(Y_0,Y_1)$ 有限维（从而如第 \ref{sec:3.2} 节那样可以用它作张量），
+则有显然的求值态射
+$\langle\mathrm{ev}\rangle:\Hom_{H(\mathcal A)}(Y_0,Y_1)\otimes\mathcal Y_0
+\to\mathcal Y_1$，使得
+$H(\Upsilon)\langle\mathrm{ev}\rangle=\langle\epsilon\rangle$。若扭转
+$T_{Y_0}(Y_1)$ 存在，则三角形
+\[
+  \begin{tikzcd}[row sep=large, column sep=large]
+    \Hom_{H(\mathcal A)}(Y_0,Y_1)\otimes Y_0 \arrow[rr, "{\langle\mathrm{ev}\rangle}"]
+      & & Y_1 \arrow[dl, "{\langle i\rangle}"] \\
+    & T_{Y_0}(Y_1) \arrow[ul, "{\langle p\rangle{[}1{]}}"'] &
+  \end{tikzcd}
+\]
+在 $H(\Upsilon)$ 下（取 $\mathcal M=\mathcal Y_1$）映入前一三角形，故也正合（因为正合
+三角形的原像仍正合；见推论 \ref{cor:3.44}）。
+% [Tutor Note: 【勘误】第二个三角形中，原文把张量因子与靶对象印作对象 $Y_0,Y_1$，
+% 但按上下文它们应是 Yoneda 模 $\mathcal Y_0,\mathcal Y_1$：正文紧接着说“取
+% $\mathcal M=\mathcal Y_1$”，且第一分量 $\Hom_{H(\mathcal A)}(Y_0,Y_1)$ 才是纯对象性的。
+% 译文照印原文的 $Y_0,Y_1$，读者按 $\mathcal Y_0,\mathcal Y_1$ 理解即可。]
+\end{Def}
+
+\begin{Rem}\label{rem:4.22}
+\begin{itemize}
+  \item 若 $\mathcal A$ 是三角的且 $H(\mathcal A)$ 的 Hom 空间有限维，则
+        $\langle\mathrm{ev}\rangle$ 的标准映射锥为
+        $\mathbb S\bigl(H(\mathcal Y_1)(Y_0)\otimes\mathcal Y_0\bigr)\oplus\mathcal Y_1$。
+        以 $H(\Upsilon)$ 为竖直箭头应用引理 \ref{lem:3.3}，此锥映入
+        $\mathcal T_{Y_0}(\mathcal Y_1)$，而后者总是存在。因此
+        \[
+          T_{Y_0}(Y_1):=\mathbb S\bigl(H(\mathcal Y_1(Y_0))\otimes\mathcal Y_0\bigr)
+          \oplus\mathcal Y_1
+        \]
+        对所有 $Y_0,Y_1\in\operatorname{obj}(\mathcal A)$ 都有定义，从而可以把扭转函子
+        $T_Y:\mathcal A\to\mathcal A$ 确定为使下图
+        \[
+          \begin{tikzcd}[row sep=large, column sep=large]
+            \mathcal A \arrow[r, "T_Y"] \arrow[d, "\Upsilon"']
+              & \mathcal A \arrow[d, "\Upsilon"] \\
+            \mathcal Q \arrow[r, "\mathcal T_Y"']
+              & \mathcal Q
+          \end{tikzcd}
+        \]
+        在 $H^0(\mathrm{fun}(\mathcal A,\mathcal Q))$ 中（在同构意义下）交换的
+        $A_\infty$-函子。
+  \item 回忆注 \ref{rem:3.55} 中的映射
+        $\widetilde\Upsilon=\iota^*\circ\Upsilon_{\mathsf{Tw}\mathcal A}:
+        \mathsf{Tw}\mathcal A\to\mathcal Q$。上一个图告诉我们——在作替换
+        $\mathcal A\leftarrow\mathsf{Tw}\mathcal A$ 与
+        $\Upsilon\leftarrow\widetilde\Upsilon$ 之后——
+        \[
+          \widetilde\Upsilon\bigl(T_{Y_0}(Y_1)\bigr)
+          \cong\mathcal T_{Y_0}\bigl(\widetilde\Upsilon(Y_1)\bigr)
+          \in\operatorname{obj}\bigl(H^0(\mathcal Q)\bigr),
+        \]
+        对任意 $Y_0\in\operatorname{obj}(\mathcal A)$ 与
+        $Y_1\in\operatorname{obj}(\mathsf{Tw}\mathcal A)$ 成立。
+  \item 设 $\mathcal F:\mathcal A\to\mathcal B$ 为上同调全忠实的 $A_\infty$-函子，
+        $Y_0,Y_1\in\operatorname{obj}(\mathcal A)$ 使得 $T_{Y_0}(Y_1)$ 与
+        $T_{\mathcal F(Y_0)}(\mathcal F(Y_1))$ 都存在。则存在 $H^0(\mathcal B)$ 中的
+        典范同构
+        \[
+          \mathcal F\bigl(T_{Y_0}(Y_1)\bigr)
+          \cong T_{\mathcal F(Y_0)}\bigl(\mathcal F(Y_1)\bigr),
+        \]
+        而且它可延拓为
+        $\mathcal F\circ T_{Y_0}\cong T_{\mathcal F(Y_0)}\circ\mathcal F
+        \in\operatorname{obj}\bigl(H^0(\mathrm{fun}(\mathcal A,\mathcal B))\bigr)$。
+\end{itemize}
+\end{Rem}
+% [Tutor Note: 【易错】第一条中映射锥的写法前后不一：先作
+% $H(\mathcal Y_1)(Y_0)$，后作 $H(\mathcal Y_1(Y_0))$。二者按定义为同一个分次向量空间
+% （$H$ 与“在 $Y_0$ 处取值”可交换），此处是记号混用，并非两种不同对象；抄写时取其一
+% 即可，译文照印两处原样。]
+
+下面给出一个判别法，用来判断 $\mathcal A$ 中的对象是否准表示 $\mathcal Q$ 中给定的抽象
+扭转模。
+
+\begin{Lem}\label{lem:4.23}
+设 $\mathcal A$ 为 $A_\infty$-范畴，$Y_0,Y_1,Y_2\in\operatorname{obj}(\mathcal A)$。
+假设存在上闭链 $c\in\hom_{\mathcal A}(Y_1,Y_2)$ 以及映射
+$k:\hom_{\mathcal A}(Y_0,Y_1)\to\hom_{\mathcal A}(Y_0,Y_2)[-1]$，使得对一切
+$c_0\in\hom_{\mathcal A}(Y_0,Y_1)$ 有
+\[
+  \mu^1_{\mathcal A}(k(c_0))-k\bigl(\mu^1_{\mathcal A}(c_0)\bigr)
+  +\mu^2_{\mathcal A}(c,c_0)=0.
+\]
+则如下模同态 $t:\mathcal T_{Y_0}(\mathcal Y_1)\to\mathcal Y_2$ 良定义：
+\[
+  \begin{aligned}
+    t^d\bigl((c_0\otimes b,c_1),a_{d-1},\dots,a_1\bigr)
+    :={}&\mu^{d+1}_{\mathcal A}(c,c_1,a_{d-1},\dots)
+      +\mu^{d+1}_{\mathcal A}(k(c_0),b,a_{d-1},\dots)\\
+      &+\mu^{d+2}_{\mathcal A}(c,c_0,b,a_{d-1},\dots),
+  \end{aligned}
+\]
+它满足 $\langle\mu^2_{\mathcal Q}(t,\iota)\rangle=\langle\Upsilon^1(c)\rangle
+\in\Hom_{H(\mathcal Q)}(\mathcal Y_1,\mathcal Y_2)$；并且——在给定适当的附加数据时
+（见 \cite{Sei08} 引理 5.3）——它在 $H^0(\mathcal Q)$ 中诱导同构
+$\mathcal T_{Y_0}(\mathcal Y_1)\cong\mathcal Y_2$。
+\end{Lem}
+% [Tutor Note: 【易错】条件中的三项缺一不可：$\mu^1_{\mathcal A}(k(c_0))$ 是 $k(c_0)$
+% 的微分，$-k(\mu^1_{\mathcal A}(c_0))$ 是 $k$ 与 $c_0$ 的微分交换失败项，而
+% $\mu^2_{\mathcal A}(c,c_0)$ 记录 $c$ 与 $c_0$ 的乘法；把最后一项误写为
+% $\mu^2_{\mathcal A}(c_0,c)$ 会破坏 $t$ 的上闭链性。]
+
+当然，扭转运算可以迭代使用。考虑 Hom 空间全都有限维的三角 $A_\infty$-范畴
+$\mathcal A$。取集合 $\{Y_1,\dots,Y_m\}\subset\operatorname{obj}(\mathcal A)$，并从
+$X:=X_m\in\operatorname{obj}(\mathcal A)$ 出发，依次定义
+$X_{k-1}:=T_{Y_k}(X_k)\in\operatorname{obj}(\mathcal A)$，它们各自落入形如定义
+\ref{def:4.21} 的正合三角形。利用三角范畴的公理 (T3)，可以把这些三角形复合起来，
+得到另一个正合三角形
+\[
+  \begin{tikzcd}[row sep=large, column sep=large]
+    Y \arrow[rr] & & X \arrow[dl, "{\langle i_1\rangle\circ\dots\circ\langle i_m\rangle}"] \\
+    & (T_{Y_1}\circ\dots\circ T_{Y_m})(X) \arrow[ul, "{[}1{]}"'] &
+  \end{tikzcd}
+\]
+其中 $Y\in\mathcal A$ 由诸空间 $\Hom_{H(\mathcal A)}(Y_k,X_k)\otimes Y_k$ 适当构造，
+而 $\langle i_k\rangle:X_k\to X_{k-1}$ 是典范包含。正如注 \ref{rem:3.48} 中所见，
+$\langle i_1\rangle\circ\dots\circ\langle i_m\rangle$ 的消没蕴含
+$X\oplus(T_{Y_1}\circ\dots\circ T_{Y_m})(X)[-1]\cong Y$。以此为基础可以证明如下结果。
+
+\begin{Cor}\label{cor:4.24}
+设 $\mathcal A$ 为 Hom 空间全都有限维的三角 $A_\infty$-范畴。
+\begin{enumerate}[label=\textup{\roman*}.,leftmargin=*]
+  \item 假设存在 $Y_1,\dots,Y_m\in\operatorname{obj}(\mathcal A)$，使得对一切
+        $X\in\operatorname{obj}(\mathcal A)$ 有
+        $(T_{Y_1}\circ\dots\circ T_{Y_m})(X)\cong 0
+        \in\operatorname{obj}(H^0(\mathcal A))$（即 $H^0(\mathcal A)$ 的零对象）。
+        则 $\{Y_1,\dots,Y_m\}$ 生成 $\mathcal A$，而 $\mathcal A$ 其实是分裂封闭的。
+  \item 假设 $\mathcal A$ 已分裂封闭，且存在
+        $Y_1,\dots,Y_m\in\operatorname{obj}(\mathcal A)$ 与 $\sigma\neq0$，使得对一切
+        $X\in\operatorname{obj}(\mathcal A)$ 有
+        $(T_{Y_1}\circ\dots\circ T_{Y_m})(X)\cong S^\sigma X
+        \in\operatorname{obj}(H^0(\mathcal A))$。则 $\{Y_1,\dots,Y_m\}$ 分裂生成
+        $\mathcal A$。
+\end{enumerate}
+\end{Cor}
+% [Tutor Note: 【含糊】原文 (ii) 的假设写作“$\mathcal A$ is readily split-closed”，
+% “readily”在此语义不明；从证明用法看应读作“已经分裂封闭（already split-closed）”。
+% 译文按“已分裂封闭”处理，并在此说明原文措辞。若按字面“轻易地”理解，则该假设无法
+% 与推论 (i) 中的“$\mathcal A$ 其实是分裂封闭的”相区分。]
+
+\begin{Rem}\label{rem:4.25}
+在考虑 $\mathsf{Tw}\mathcal A$ 中的扭复形时（其中 $\mathcal A$ 取为严格幺的），我们其实
+可以改进对扭转函子的描述。
+
+取 $Y_0,Y_1\in\operatorname{obj}(\mathsf{Tw}\mathcal A)$，考虑
+$\bigl(\hom_{\mathsf{Tw}\mathcal A}(Y_0,Y_1),\partial:=\mu^1_{\mathsf{Tw}\mathcal A}\bigr)$，
+其对偶复形为
+$\hom_{\mathsf{Tw}\mathcal A}(Y_0,Y_1)^\vee:=
+\hom_{\mathsf{Tw}\mathcal A}\bigl(\hom_{\mathsf{Tw}\mathcal A}(Y_0,Y_1),Y_1\bigr)$，
+微分 $\partial^\vee$ 由
+$(\partial^\vee(a^\vee))(b):=(-1)^{|a^\vee|+1}a^\vee(\partial(b))$ 给出，其中
+$a^\vee\in\hom_{\mathsf{Tw}\mathcal A}(Y_0,Y_1)^\vee$、
+$b\in\hom_{\mathsf{Tw}\mathcal A}(Y_0,Y_1)$。可以如定义 \ref{def:3.33} 那样取张量积：
+\[
+  \begin{aligned}
+    \hom_{\mathsf{Tw}\mathcal A}\bigl(\hom_{\mathsf{Tw}\mathcal A}(Y_0,Y_1)
+      \otimes Y_0,Y_1\bigr)
+    &=\hom_{\mathsf{Tw}\mathcal A}(Y_0,Y_1)^\vee
+      \otimes\hom_{\mathsf{Tw}\mathcal A}(Y_0,Y_1)\\
+    &\cong\mathrm{End}_{\mathbb K}\bigl(\hom_{\mathsf{Tw}\mathcal A}(Y_0,Y_1)\bigr),
+  \end{aligned}
+\]
+其微分为 $D:a^\vee\otimes b\mapsto a^\vee(\cdot)b$，而
+$\mathrm{ev}\cong\mathrm{id}\in\mathrm{End}_{\mathbb K}
+\bigl(\hom_{\mathsf{Tw}\mathcal A}(Y_0,Y_1)\bigr)$ 是关于它的上闭链。因此可以考察扭
+映射锥 $\mathrm{Cone}(\mathrm{ev})$，它在 $H(\Upsilon)$ 下变成
+$\mathrm{Cone}(\epsilon)=\mathcal T_{Y_0}(\mathcal Y_1)$（参看定义 \ref{def:4.21}）。
+这促使我们置
+\[
+  T_{Y_0}(Y_1):=\mathrm{Cone}(\mathrm{ev})
+  =\bigoplus_{i\in I}S^{-|b^i|+1}Y_1\oplus Y_0,
+\]
+其中 $\{b^i\}_{i\in I}$ 是 $\hom_{\mathcal A}(Y_0,Y_1)$ 的一组基。
+% [Tutor Note: 【勘误】原文此处印作“basis of $\hom_{\mathcal A}(Y_0,Y_1)$”，
+% 但本注开头取的是 $Y_0,Y_1\in\operatorname{obj}(\mathsf{Tw}\mathcal A)$，故基应取自
+% $\hom_{\mathsf{Tw}\mathcal A}(Y_0,Y_1)$；只有回到 $\mathcal A\subset\mathsf{Tw}\mathcal A$
+% 时两者才一致。译文照印 $\hom_{\mathcal A}$。]
+\end{Rem}
+% [Tutor Note: 【背景】这里把扭复形中的“扭转函子”具体化为一个映射锥：对偶复形
+% $\hom(Y_0,Y_1)^\vee=\hom(\hom(Y_0,Y_1),Y_1)$ 把 $\hom$ 空间看作复形，
+% $\mathrm{ev}$ 是求值同态；于是 $T_{Y_0}(Y_1)$ 是 $\hom_{\mathcal A}(Y_0,Y_1)$
+% 的一组基对应的若干平移 $Y_1$ 与一个 $Y_0$ 的直和。这与定义 4.21 的抽象锥在
+% $H(\Upsilon)$ 下一致，见 \cite{Sei08} 第 5 章。]
+
+最后，我们提及扭转运算的伴随版本。
+
+\begin{Def}\label{def:4.26}
+设 $\mathcal A$ 为 $A_\infty$-范畴，$Y_0,Y_1\in\operatorname{obj}(\mathcal A)$。
+$A_\infty$-模 $\mathcal C^\vee\in\operatorname{obj}(\mathcal Q)$ 由下式给出：
+\[
+  \mathcal C^\vee(X):=\hom_{\mathcal A}(X,Y_1)
+  \oplus\Hom_{\mathbb K}\bigl(\hom_{\mathcal A}(Y_1,Y_0),
+  \hom_{\mathcal A}(X,Y_0)\bigr)[-1],
+\]
+\[
+  \begin{aligned}
+    \mu^1_{\mathcal C^\vee}(c,\beta)
+    &:=\bigl(\mu^1_{\mathcal A}(c),\
+      \mu^1_{\mathcal A}\circ\beta+(-1)^{|\beta|-1}\beta\circ\mu^1_{\mathcal A}
+      +\mu^2_{\mathcal A}(\cdot,c)\bigr),\\
+    \mu^d_{\mathcal C^\vee}\bigl((c,\beta),a_{d-1},\dots\bigr)
+    &:=\bigl(\mu^d_{\mathcal A}(c,a_{d-1},\dots),\
+      \mu^d_{\mathcal A}(\beta(\cdot),a_{d-1},\dots)
+      +\mu^{d+1}_{\mathcal A}(\cdot,c,a_{d-1},\dots)\bigr),
+  \end{aligned}
+\]
+对 $d>1$、$X\in\operatorname{obj}(\mathcal A)$ 成立。
+\end{Def}
+
+我们记 $\mathcal C^\vee$ 的任一准代表为 $T^\vee_{Y_0}(Y_1)$，并称之为 $Y_1$ 沿 $Y_0$ 的
+\emph{伴随扭转}（adjoint twist）。可以证明，对一切
+$Y\in\operatorname{obj}(\mathcal A)$ 有 $T_{Y_0}\bigl(T^\vee_{Y_0}(Y)\bigr)\cong Y$ 于
+$H^0(\mathcal A)$ 中（事实上，$T^\vee_{Y_0}$ 确实是 $T_{Y_0}$ 在
+$H^0(\mathrm{fun}(\mathcal A,\mathcal A))$ 中的逆，至多差同构）。
+
+与通常的扭转一样，取 $\mathcal A$ 为 Hom 空间有限维的三角范畴时，
+$T^\vee_{Y_0}(Y_1)$ 总有定义，从而落入“对偶化”后得到的正合三角形：
+\[
+  \begin{tikzcd}[row sep=large, column sep=large]
+    \Hom_{H(\mathcal A)}(Y_1,Y_0)^\vee\otimes Y_0
+      \arrow[dr, "{\langle p^\vee\rangle{[}1{]}}"']
+    & & Y_1 \arrow[ll, "{\langle\mathrm{ev}^\vee\rangle}"'] \\
+    & T^\vee_{Y_0}(Y_1) \arrow[ur, "{\langle i^\vee\rangle}"'] &
+  \end{tikzcd}
+\]
+% [Tutor Note: 【易错】此三角形与前文的正合三角形方向相反（对偶化使箭头反转）：
+% $\langle\mathrm{ev}^\vee\rangle$ 指向左、$\langle p^\vee\rangle[1]$ 从左上指向下、
+% $\langle i^\vee\rangle$ 从下指向右上。图中张量因子按原文印作对象 $Y_0$，理应按
+% Yoneda 模 $\mathcal Y_0$ 理解（与定义 4.21 第二个三角形的记号问题同源）。]
+
+再次取 $\mathcal A$ 为严格幺的，$T^\vee_{Y_0}(Y_1)$ 可以在 $\mathsf{Tw}\mathcal A$ 中
+等同于“对偶”求值态射 $\langle\mathrm{ev}^\vee\rangle$ 的映射锥（与上一注平行）。
+

@@ -1,0 +1,205 @@
+%=====================================================================
+% 1  量子场论的一般性讨论
+% 原文：Section 1. Generalities on quantum field theory
+%      （arXiv:2409.03117v1, p. 7--13）
+%=====================================================================
+\section{量子场论的一般性讨论}
+
+\begin{keytakeaways}
+\begin{itemize}
+  \item \textbf{物理图像：}经典粒子沿作用量的临界轨道运动；量子粒子则不再严格服从经典运动方程，而是由对全部路径的加权求和描述：布朗运动用指数权重压制非最优路径，量子情形则靠振荡相位的相消（量子干涉）在普朗克常数趋于零时恢复经典轨道。
+  \item \textbf{数学工具：}变分法与欧拉–拉格朗日方程把运动定律写成作用量泛函的驻定条件；布朗运动的严格版本是 Wiener 积分，即无穷维空间上的概率测度论；量子场论的路径积分一般只能形式地使用。
+  \item \textbf{关键结论：}把布朗运动中的扩散系数换成虚参数并把时间作 Wick 转动，形式上便得到量子力学的路径积分表述；把粒子换成场，便得到量子场论关联函数的形式定义。
+  \item \textbf{易错点：}布朗运动作用量中势能项的符号与经典力学相反，这是 Wick 转动的必然后果而非笔误；路径积分的“归一化”只是形式记号，不能当作真实的 Lebesgue 积分。
+\end{itemize}
+\end{keytakeaways}
+
+\bigskip
+\noindent\rule{\textwidth}{0.6pt}
+\bigskip
+
+\subsection{经典力学}
+
+在经典力学中，我们研究一个粒子（例如质量为 $1$）在欧氏空间 $V$ 中的运动。该运动由单变量函数 $q=q(t)\in V$ 描述，它表示粒子在时刻 $t$ 的位置。此函数必须满足\emph{Newton 运动方程}
+$$
+\ddot{q}=-U'(q),
+$$
+其中 $U$ 为势能。
+
+表述这一运动定律的另一种方式是：$q(t)$ 必须是某个变分问题的解。具体地说，引入\emph{拉格朗日量}
+$$
+{\mathcal L}(q):=\frac{{\dot{q}}^2}{2}-U(q)
+$$
+（即动能与势能之差），以及\emph{作用量}泛函
+$$
+S(q):=\int_{a}^{b}{\mathcal L}(q)dt
+$$
+（其中 $a<b$ 固定）。于是运动定律可表述为\emph{最小作用量原理}：$q(t)$ 必须是 $S$ 在所有满足给定 $q(a)$ 与 $q(b)$ 的函数构成的空间上的临界点；亦即，Newton 方程就是由 $S$ 定义的变分问题的解所满足的欧拉–拉格朗日方程。
+
+事实上，利用分部积分，对满足 $\varepsilon(a)=\varepsilon(b)=0$ 的 $\varepsilon \in C^1[a,b]$，有
+$$
+\tfrac{d}{ds}|_{s=0}\int_a^b{\mathcal L}(q+s\varepsilon)dt=
+\int_a^b(\tfrac{\partial \mathcal L}{\partial q}\varepsilon+
+\tfrac{\partial \mathcal L}{\partial \dot{q}}\dot{\varepsilon})dt=
+$$
+$$
+\int_a^b(-U'(q)\varepsilon+\dot{q}\dot{\varepsilon})dt=
+-\int_a^b(U'(q)+\ddot{q})\varepsilon dt,
+$$
+而这对一切 $\varepsilon$ 都为零，当且仅当 $q$ 满足 Newton 方程 $\ddot{q}=-U'(q)$。
+
+% [Tutor Note: 符号核对——原文作用量为 $S=\int_a^b(\tfrac{\dot q^2}{2}-U)dt$，其变分为 $\int_a^b(-U'\varepsilon+\dot q\dot\varepsilon)dt$；分部积分时边界项因 $\varepsilon(a)=\varepsilon(b)=0$ 而消失，得 $-\int_a^b(U'+\ddot q)\varepsilon dt$。要使变分对一切这样的 $\varepsilon$ 为零（变分法基本引理），须有 $U'+\ddot q=0$，即 $\ddot q=-U'$。注意 $\ddot q$ 项前的负号极易在抄写时丢掉，从而误写成 $\ddot q=U'$；可用 $U\equiv0$（自由粒子应为匀速直线运动）快速自检。]
+
+\begin{remark} “最小作用量原理”这一名称来源于如下事实：在某些情形（例如 $U''\le 0$ 时），作用量在解 $q(t)$ 处不仅取极值，而且取到最小值。然而一般来说并非如此，粒子的轨迹可能不是（局部）极小点，而只是作用量的临界点。因此，运动定律更恰当的说法是“极值（驻定）作用量原理”；今后我们将按这种方式理解它。
+\end{remark}
+
+\begin{exercise}\label{unii} (i) 考虑粒子在欧氏空间 $V$ 中的运动。证明：若势是凹的（$U''(q)\le 0$），则对任意 $\bold a,\bold b\in V$ 及 $a<b\in\Bbb R$，满足 $q(a)=\bold a$ 与 $q(b)=\bold b$ 的 Newton 方程的解至多有一个；并且（若存在）它是具有这些边界条件的作用量的严格全局极小点。
+
+(ii) 证明：若 $U''(q)<\frac{\pi^2}{(b-a)^2}$，则 (i) 的结论仍然成立（请证明并使用 Wirtinger 不等式：若 $\varepsilon\in C^1[a,b]$ 且 $\varepsilon(a)=\varepsilon(b)=0$，则 $\int_a^b \varepsilon'(t)^2dt\ge \frac{\pi^2}{(b-a)^2}\int_a^b \varepsilon(t)^2dt$）。
+
+(iii) 若 $U(q)=-\frac{1}{2}B(q,q)$，其中 $B$ 是 $V$ 上的半正定对称双线性型，求 (i) 中的唯一解。
+
+(iv) 证明：当 $\dim V=1$、$U(q)=\frac{1}{2}q^2$ 且 $b-a\ge \pi$ 时，(i) 的结论不成立。
+
+(v) 设 $\dim V=1$，$U$ 是 $\Bbb R$ 上的光滑势。假设 $\limsup_{|x|\to \infty}\frac{U(x)}{x^2}\le 0$。证明：对任意 $a,b,\bold a,\bold b$，均存在 (i) 中的解（可能不唯一）。试给出一个光滑势 $U$ 的例子，使得 (i) 中的解并非总存在。\footnote{利用变分法可以证明：对任意 $\dim V$，若对一切 $q$ 有 $U(q)\le 0$，则上述解总是存在。}
+\end{exercise}
+
+% [Tutor Note: 跳步点拨——习题 (ii) 省略的是二阶变分的计算：把 $S(q+\varepsilon)$ 展开到二阶，得 $S(q+\varepsilon)=S(q)+\delta S+\frac12\int(\dot\varepsilon^2-U''(q)\varepsilon^2)dt$（注意二阶项中 $U''$ 带负号）。Wirtinger 不等式给出 $\int\dot\varepsilon^2\ge\frac{\pi^2}{(b-a)^2}\int\varepsilon^2$，故当 $U''<\pi^2/(b-a)^2$ 时二阶变分正定，作用量在临界点处严格凸，从而临界点唯一、且（若存在）为全局极小。该 Wirtinger 常数是最优的，等号由 $\sin(\pi(t-a)/(b-a))$ 取得——这正是 (iv) 中谐振子 $U=q^2/2$（$U''\equiv1$）在 $b-a\ge\pi$ 时出现共轭点、解的唯一性失效的临界机制。(v) 的存在性用变分法的直接方法：$\limsup$ 条件保证强制性（coercivity），在适当的 Sobolev 空间（端点条件固定的 $H^1$ 类空间）中取极小化序列，再用弱紧性、下半连续性与 Arzel\`a–Ascoli 定理取极限。]
+
+\begin{remark}
+物理学家常常考虑 Newton 方程在整个实轴上的解，而非固定区间 $[a,b]$ 上的解。此时极值的朴素定义没有意义，因为作用量积分 $S(q)=\int_{\Bbb R}{\mathcal L}(q)dt$ 是反常积分，且一般发散。取而代之的是如下“修正后”的定义：$\Bbb R$ 上的函数 $q(t)$ 称为 $S$ 的极值，是指表达式
+$$
+\tfrac{d}{ds}|_{s=0}\int_{\Bbb R}{\mathcal L}(q+s\varepsilon)dt:=
+\int_{\Bbb R}(\tfrac{\partial \mathcal L}{\partial q}\varepsilon+
+\tfrac{\partial \mathcal L}{\partial \dot{q}}\dot{\varepsilon})dt,
+$$
+（其中 $\varepsilon(t)$ 为任意具紧支集的扰动）恒为零。按此定义，极值恰好就是 Newton 方程的解（和前面一样，由分部积分容易看出）。
+\end{remark}
+
+\begin{remark} 注意，若把 $n$ 个粒子在欧氏空间 $V$ 中的位置向量合成为一个 $V^{n}$ 中的向量，则这套形式同样描述该系统的运动。更一般地，我们可以考虑在 Riemann 流形 $M$ 上运动的粒子。此时 $q(t)$ 是 $M$ 上的道路，运动由同一方程描述，其中 $\ddot{q}$ 表示 $\dot{q}$ 关于 Levi-Civita 联络的协变导数（covariant derivative） $\nabla_{\dot q}\dot q$。例如若 $U=0$，这就是\emph{测地流}（geodesic flow），其轨道为 $M$ 上的测地线。同样的论证适用于 $M$ 上的 $n$ 粒子系统，此时 $q(t)$ 是构型空间（configuration space）$M^n$ 上的道路。最后，类似的分析也适用于更一般的拉格朗日量，即关于 $q$ 的（有限多个）导数的任意光滑函数。
+\end{remark}
+
+\subsection{经典场论}
+
+在经典场论中情形类似，但粒子的数目是无穷多。也就是说，此时我们不该设想单个粒子或有限个粒子组成的系统，而应设想“粒子的连续统”（例如弦、膜、流体射流）；于是在 $d+1$ 维经典场论中，运动由\emph{经典场}描述——它是同时依赖于空间与时间坐标（$x\in \Bbb R^d$，$t\in \Bbb R$）的（向量值）函数 $\phi(x,t)$。因而运动方程是偏微分方程。例如对弦或膜，运动方程是\emph{波动方程} $\square \phi=0$，其中 $\square$ 是\emph{D'Alembert 算子} $\partial_t^2-v^{2}\Delta$（这里 $\Delta$ 是关于空间坐标的 Laplacian，$v$ 是波的传播速度；例如对弦，$v^2$ 正比于弦的张力）。
+
+与经典力学一样，经典场论中存在拉格朗日量 ${\mathcal L}(\phi)$（关于 $\phi$ 的有限多个偏导数的光滑函数），它在\emph{时空} $\Bbb R^{d+1}$ 中紧区域 $D$ 上的积分
+$$
+S(\phi)=\int_{D}{\mathcal L}(\phi)dxdt
+$$
+称为\emph{作用量}。运动定律可表述为：对任意这样的区域 $D$ 及固定边界条件，作用量都必须取极值；于是运动方程（也称\emph{场方程}）就是该变分问题的欧拉–拉格朗日方程。例如对弦或膜，拉格朗日量为
+$$
+{\mathcal L}(\phi)=\tfrac{1}{2}(\phi_t^2-v^{2}(\nabla \phi)^2). 
+$$
+
+\begin{remark} 与力学中一样，场论中整个时空上（而非紧区域 $D$ 上）的运动方程的解是作用量的极值，其含义是
+$$
+\tfrac{d}{ds}|_{s=0}\int_{\Bbb R^{d+1}}{\mathcal L}(u+s\varepsilon)dxdt=0,
+$$
+其中 $\varepsilon$ 为具紧支集的扰动。
+\end{remark}
+
+\subsection{布朗运动}
+
+经典力学与量子力学的主要区别之一，粗略地说，在于量子粒子不必服从经典运动方程，而可以随机地偏离其经典轨道。因此，给定粒子在某一时刻的位置与速度，我们无法确定它在较晚时刻的位置，而只能确定该粒子在较晚时刻位于给定点的概率密度。在这个意义上，量子粒子类似于随机（布朗）粒子。布朗粒子在概念上稍易理解，因此我们先从它们谈起。
+
+布朗粒子在 $\Bbb R^k$ 中势场
+$$
+U:\Bbb R^k\to \Bbb R
+$$
+中的运动由随机过程 $q=q(t)$、$q=(q_1, \ldots ,q_k)\in \Bbb R^k$ 描述。也就是说，对每个实数 $t$，$q(t)\in \Bbb R^k$ 是随机变量（粒子在时刻 $t$ 的位置），且其对 $t$ 的依赖在某种意义下是正则的。具体地说，对 $\bold a,\bold b\in \Bbb R^k$，在条件 $q(a)=\bold a$、$q(b)=\bold b$ 下粒子的随机动力学“定义”如下：\footnote{我们给“定义”一词加上引号，是因为此定义显然是启发式的、不严格的；详见下文。}若 $y:[a,b]\to \Bbb R^k$ 是满足 $y(a)=\bold a,y(b)=\bold b$ 的连续可微函数，则 $q(t)=y(t)$ 对 $t\in [a,b]$ 的概率密度正比于 $e^{-S(y)/\kappa}$，其中
+$$
+S(y):=\int_a^b
+(\tfrac{1}{2}{y'}^2+U(y))dt
+$$
+为作用量，$\kappa>0$ 为扩散系数（diffusion coefficient）。于是，最可能的 $q(t)$ 是使 $S$ 取极小的那条路径（特别地，它解经典运动方程 $\ddot{q}=U'(q)$）；而其他路径的可能性随其作用量与最小可能值之偏差按指数衰减。
+
+\begin{remark} 1. 因此，上述讨论假定了 $S$ 在 $q$ 处的极值实际上取到极小；我们知道这并非总成立，但当 $U$ 为凸，即对一切 $q$ 有 $U''(q)\ge 0$ 时确实成立（见习题 \ref{unii}）。
+
+2. 读者必定注意到，与经典力学的讨论相比，势 $U$ 前面的符号已经反过来了。这不是笔误！它与下文要讨论的一个基本事实有关：统计力学通过\emph{Wick 转动} $t\mapsto it$ 与通常的（量子）力学相联系，其中 $i=\sqrt{-1}$。特别地，这意味着布朗运动在物理上重要的凸势情形中是良定义的，例如多维\emph{谐振子}势 $\frac{1}{2}B(q,q)$，其中 $B$ 是正定双线性型。
+\end{remark}
+
+% [Tutor Note: Wick 转动与符号——原文所说“统计力学经由 $t\mapsto it$ 与量子力学相联系”，反向写出即量子力学经 $t\mapsto -i\tau$（$\tau$ 为欧氏时间）到达统计力学：此时 $e^{iS/\hbar}$ 变为 $e^{-S_E/\hbar}$，欧氏作用量为 $S_E=\int(\tfrac12 q'^2+U)d\tau$。正是这一步把经典力学作用量中的 $-U$ 变成了布朗运动作用量中的 $+U$，所以原文的符号改动不是笔误。相应地，扩散系数 $\kappa$ 扮演普朗克常数的角色（质量取单位值时二者数值对应），但 Wick 转动只是形式操作：实时间量子力学的谱信息仍隐藏在向实时间解析延拓的过程中。]
+
+我们能期望得到的关于随机过程 $q(t)$ 的全部信息，都包含在\emph{关联函数}
+$$
+\langle q_{j_1}(t_1) \ldots q_{j_n}(t_n)\rangle,
+$$
+之中；按定义，它们是随机变量 $q_{j_1}(t_1), \ldots, q_{j_n}(t_n)$ 的乘积的期望值（更确切地说，由 Kolmogorov 定理，随机过程 $q(t)$ 完全由这些函数决定）。因此，应把这些函数视为布朗粒子理论的输出或答案。
+
+于是主要问题就是如何计算关联函数。物理学家受上述定义的启发，写下如下的“答案”：给定点 $t_1, \ldots ,t_n\in [a,b]$，
+\begin{equation}\label{brmo}
+\langle q_{j_1}(t_1) \ldots q_{j_n}(t_n)\rangle=
+\int_{P_{\bold a,\bold b}} q_{j_1}(t_1) \ldots q_{j_n}(t_n)e^{-\frac{S(q)}{\kappa}}Dq, 
+\end{equation}
+其中积分沿道路空间 $P_{\bold a,\bold b}$ 进行；该空间由如下道路构成：
+$$
+q: [a,b]\to \Bbb R^n,\ q(a)=\bold a,\ q(b)=\bold b,
+$$
+而 $Dq$ 是该空间上的 Lebesgue 测度，满足
+$$
+\int_{P_{\bold a,\bold b}} e^{-\frac{S(q)}{\kappa}}Dq=1.
+$$
+或者，当他们不想对 Lebesgue 测度作归一化时，就写成
+\begin{equation}\label{brmo1}
+\langle q_{j_1}(t_1) \ldots q_{j_n}(t_n)\rangle=
+\frac{1}{Z}\int_{P_{\bold a,\bold b}} q_{j_1}(t_1) \ldots q_{j_n}(t_n)e^{-\frac{S(q)}{\kappa}}Dq, 
+\end{equation}
+其中
+$$
+Z:=\int_{P_{\bold a,\bold b}} e^{-\frac{S(q)}{\kappa}}Dq
+$$
+称为\emph{配分函数}。这样的积分称为\emph{路径积分}，因为它是沿道路空间的积分。
+
+不过很明显，从数学观点看，这样的定义与答案先验地不能令人满意，因为无穷维积分需要辩护。在布朗运动的情形，这样的辩护实际上可以在 Lebesgue 测度论的框架内给出，相应的积分理论称为\emph{Wiener 积分}理论。（更确切地说，人们无法定义测度 $Dq$，但对足够好的势 $U(q)$，可以定义测度 $e^{-\frac{S(q)}{\kappa}}Dq$。）
+
+% [Tutor Note: 泛函积分与概率测度——关键区别在于：无穷维空间上不存在平移不变的 Lebesgue 测度，故 $Dq$ 绝不可当作真实测度；可严格定义的是“Wiener 测度乘密度”。$U\equiv0$ 时 $e^{-S/\kappa}Dq$ 就是布朗桥的 Wiener 测度（支撑在连续但处处不可微的路径上）；一般 $U$ 下用 Feynman–Kac 公式把它定义为 Wiener 测度关于权重 $e^{-\frac{1}{\kappa}\int U\,dt}$ 的正规化测度，需要 $U$ 有下界、局部可积等条件——原文所说“足够好的势”即指此。另：原文此处把道路空间写成 $\Bbb R^n$（见上式），而粒子所在空间前文明确为 $\Bbb R^k$（维数 $k$，点数 $n$）；疑为原文笔误，译文依原文逐字保留 $\Bbb R^n$，读者按 $\Bbb R^k$ 理解即可。]
+
+\begin{remark}\label{classlim} 当 $\kappa\to 0$ 时，相对于最优路径，非最优路径变得越来越不可能，因此在极限下我们恢复确定性系统：
+$$
+\langle q_{j_1}(t_1) \ldots q_{j_n}(t_n)\rangle\to \bold q_{j_1}(t_1) \ldots \bold q_{j_n}(t_n), 
+$$
+其中 $\bold q(t)$ 是满足 $\bold q(a)=\bold a,\bold q(b)=\bold b$ 的经典轨道（注意：若 $U\ge 0$，则由习题 \ref{unii} 该轨道唯一）。
+\end{remark}
+
+\subsection{量子力学}
+
+现在转向量子粒子。众所周知，量子力学极难直观想象，量子粒子行为的随机性比布朗粒子更不直观、更微妙；尽管如此，Feynman 指出：量子粒子在势场 $U(q)$ 中的行为可由同一模型正确描述，只需把实正参数 $\kappa$ 换成虚数 $-i\hbar$（其中 $\hbar>0$ 为\emph{普朗克常数}），并把时间 $t$ 换成 $it$。换言之，量子粒子的动力学可以通过\emph{关联函数}
+\begin{equation}\label{quantmech}
+\langle q_{j_1}(t_1) \dots q_{j_n}(t_n)\rangle=
+\int_{P_{\bold a,\bold b}} q_{j_1}(t_1) \ldots q_{j_n}(t_n)e^{\frac{iS(q)}{\hbar}}Dq, 
+\end{equation}
+表出（具体方式我们稍后讨论），其中 $Dq$ 的归一化使得
+\begin{equation}\label{nor}
+\int_{P_{\bold a,\bold b}} e^{\frac{iS(q)}{\hbar}}Dq=1,
+\end{equation}
+而 $S(q)$ 现在由与经典力学相同的公式给出（与布朗运动相差一个符号）：
+$$
+S(q)=\int_a^b (\tfrac{{\dot{q}}^2}{2}-U(q))dt.
+$$
+
+和前面一样，我们必须赋予这个路径积分以意义；但此时 Wiener 积分理论不幸不再适用：例如 \eqref{nor} 中被积函数的绝对值并不随路径 $q(t)$ 偏离经典轨道而衰减（事实上它恒等于 $1$！）。因此我们只能部分地赋予 \eqref{quantmech} 意义；而量子力学在数学上真正严格的有效进路，实际上基于不同的技巧（哈密顿形式），这将在下文详细讨论。尽管如此，公式 \eqref{quantmech} 对启发理解极为有用，且在适当谨慎的前提下可用于计算。
+
+% [Tutor Note: $e^{iS/\hbar}$ 的收敛性——与布朗情形的本质差别在于：被积函数的模长恒为 $1$，积分既非绝对收敛，也没有可按字面归一化的参考测度，故 $\int e^{iS/\hbar}Dq=1$ 只能当形式记号。数学上路径积分只能作为 $\hbar$ 的形式幂级数（微扰展开）来定义：先展开相互作用部分，逐项得到有限维 Gaussian 振荡积分（借助 $\pm i\epsilon$ 或解析延拓使其收敛），再按 $\hbar$ 的幂次形式求和；所得级数通常发散（渐近级数），需 Borel 求和等手段。原文脚注“把路径积分理解为 $\hbar$ 的幂级数”正是此意。]
+
+\begin{remark} 与布朗运动类似（参见注 \ref{classlim}），当 $\hbar\to 0$ 时我们应当恢复经典系统：
+$$
+\langle q_{j_1}(t_1) \ldots q_{j_n}(t_n)\rangle\to \bold q_{j_1}(t_1) \ldots \bold q_{j_n}(t_n). 
+$$
+然而，现在这一点不是靠单个非最优路径变得更不可能来实现，而是靠振荡积分（oscillatory integral）\eqref{quantmech} 中的相消，它对应\emph{量子干涉}这一物理现象。下文讨论驻相公式时，我们将看到这种相消在有限维振荡积分中如何发生。
+\end{remark}
+
+\subsection{量子场论}
+
+场论中的情形相同，只是粒子的数目无穷多。也就是说，若考虑关联函数
+\begin{equation}\label{quanft}
+\langle\phi_{j_1}(x_1,t_1) \ldots \phi_{j_n}(x_n,t_n)\rangle= 
+\int \phi_{j_1}(x_1,t_1) \ldots \phi_{j_n}(x_n,t_n)e^{\frac{iS(\phi)}{\hbar}}D\phi, 
+\end{equation}
+其中 $D\phi$ 的归一化使得 $\int e^{\frac{iS(\phi)}{\hbar}}D\phi=1$，便得到一个有用的量子场论（用于研究基本粒子的相互作用）。
+
+当然，从数学观点看，这个设定先验地比量子粒子的情形更不令人满意，因为它涉及关于 $\ge 2$ 个变量的函数的复值测度 $e^{\frac{iS(q)}{\hbar}}Dq$ 的积分，而没有人知道如何在一般情形下定义它（即便作了 Wick 转动之后也是如此）。尽管如此，物理学家设想这类积分中的某些确实存在，并由此得出正确而有趣的结论（既有物理的也有数学的）。因此，赋予这类积分以意义是数学家感兴趣的问题，也将是我们的主要工作之一。\footnote{更确切地说，我们将把路径积分理解为 $\hbar$ 的幂级数。}
+
+\bigskip
+\noindent\rule{\textwidth}{0.6pt}
+% [Tutor Note: 本章小结——全章逻辑链为：经典力学（作用量驻定）→ 经典场论（场的作用量）→ 布朗运动（正的指数权重给出随机路径，可严格化为 Wiener 积分）→ 量子力学（把 $\kappa$ 换成 $-i\hbar$、把 $t$ 换成 $it$，权重变成振荡的 $e^{iS/\hbar}$）→ 量子场论（对无穷多自由度重复同一形式操作）。三处数学要点须牢记：(1) 布朗情形有真实概率测度（Wiener 测度），量子与场论情形没有；(2) $e^{iS/\hbar}$ 的模恒为 $1$，$\hbar\to0$ 的极限靠驻相相消而非概率集中；(3) 严格意义只能取 $\hbar$ 的渐近展开——这正是第 2 章最速下降法及后续微扰展开的出发点。]

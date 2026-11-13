@@ -1,0 +1,135 @@
+﻿% ============================================================
+% preamble.tex —— 《SYZ 猜想综述集》导言区（Lead 独占；译者只读）
+% 编译：LuaLaTeX ×3（ctexbook，A4，11pt）
+% ============================================================
+
+% ---------- 数学 ----------
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{bm}
+\usepackage{mathrsfs}
+
+% ---------- 排版 ----------
+\usepackage[a4paper,top=2.40cm,bottom=2.40cm,left=2.60cm,right=2.60cm,headheight=15pt]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{array,booktabs,multirow,longtable,tabularx}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,cd,decorations.pathmorphing,decorations.markings,positioning,shapes.geometric,shapes.misc,shapes.arrows,patterns,intersections,through,backgrounds}
+\usepackage{caption}
+\usepackage[hidelinks,bookmarksnumbered]{hyperref}
+
+\allowdisplaybreaks
+\linespread{1.18}
+\setlength{\parskip}{0.25em}
+\setlength{\emergencystretch}{3em}% 降低 Overfull hbox（中文长行/公式混合）
+\setlist[itemize]{leftmargin=2.2em,topsep=0.35em,itemsep=0.15em,parsep=0.15em}
+\setlist[enumerate]{leftmargin=2.6em,topsep=0.35em,itemsep=0.15em,parsep=0.15em}
+
+% ---------- 中文标题样式 ----------
+\ctexset{
+  chapter/name   = {第,章},
+  chapter/format = \Large\bfseries,
+  section/format = \large\bfseries,
+  subsection/format = \normalsize\bfseries,
+  subsubsection/format = \normalsize\bfseries,
+}
+
+% ---------- 页眉页脚 ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize\leftmark}
+\fancyhead[R]{\footnotesize\rightmark}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\chaptermark}[1]{\markboth{第\thechapter\ 章\quad #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\quad #1}}
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyfoot[C]{\small\thepage}%
+  \renewcommand{\headrulewidth}{0pt}%
+}
+
+% ---------- 论文出处块（每章开头，Lead 写）----------
+\newcommand{\papersource}[4]{%
+  \par\medskip
+  \begin{flushleft}\small
+    {\bfseries 英文原题：}#1\\[2pt]
+    {\bfseries 作者：}#2\\[2pt]
+    {\bfseries 出处：}#3\\[2pt]
+    {\bfseries 底本页数：}#4
+  \end{flushleft}
+  \medskip
+}
+
+% ---------- 定理类环境（编号手工给定，如 \begin{theorem}{4.5.2}）----------
+% 可选第二参数为命名：\begin{theorem}{4.5.2}[Hein]
+\newcommand{\DeclareThmEnv}[2]{%
+  \NewDocumentEnvironment{#1}{m o}
+    {\par\medskip\noindent\textbf{#2 ##1\IfValueT{##2}{（##2）}}\hspace{0.5em}}
+    {\par\medskip}%
+}
+\DeclareThmEnv{theorem}{定理}
+\DeclareThmEnv{proposition}{命题}
+\DeclareThmEnv{lemma}{引理}
+\DeclareThmEnv{corollary}{推论}
+\DeclareThmEnv{definition}{定义}
+\DeclareThmEnv{conjecture}{猜想}
+\DeclareThmEnv{question}{问题}
+\DeclareThmEnv{remark}{注}
+\DeclareThmEnv{example}{例}
+\DeclareThmEnv{observation}{观察}
+\DeclareThmEnv{claim}{断言}
+\DeclareThmEnv{hypothesis}{假设}
+\DeclareThmEnv{construction}{构造}
+\DeclareThmEnv{fact}{事实}
+\DeclareThmEnv{notation}{记号}
+\DeclareThmEnv{setup}{约定}
+\DeclareThmEnv{exercise}{习题}
+\DeclareThmEnv{answer}{解答}
+
+\let\proof\relax
+\let\endproof\relax
+\newenvironment{proof}[1][证明]{\par\medskip\noindent\textit{#1}\ \ignorespaces}{\par\medskip}
+\newcommand{\proofend}{\hfill$\square$}
+
+% ---------- 行内小标题（原文 \textbf{Tame punctures.} 之类）----------
+\newcommand{\para}[1]{\par\medskip\noindent\textbf{#1}\ \ignorespaces}
+
+% ---------- 图 / 表 题注（手工编号；\figimg 自闭合，\figtitle 紧随其后）----------
+\newcommand{\figimg}[2][0.80]{%
+  \begin{center}\includegraphics[width=#1\textwidth]{#2}\end{center}\nopagebreak[4]}
+\newcommand{\figtitle}[2]{%
+  \par\nopagebreak[4]\vspace{2pt}\begin{center}\small\textbf{图 #1.}\quad #2\end{center}\par\smallskip}
+\newcommand{\tabtitle}[2]{%
+  \par\smallskip
+  \begin{center}\small\textbf{表 #1.}\quad #2\end{center}
+  \par\smallskip}
+
+% ---------- 要点框 ----------
+\newtcolorbox{keybox}[1]{%
+  colback=gray!6, colframe=gray!55, coltitle=black, colbacktitle=gray!20,
+  title={#1}, fonttitle=\bfseries, boxrule=0.4pt, arc=2pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt, before skip=6pt, after skip=6pt}
+\newtcolorbox{keyboxplain}{%
+  colback=gray!6, frame hidden, boxrule=0pt, arc=2pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt, before skip=6pt, after skip=6pt}
+
+% ---------- 参考文献条目（gen_refs.py 生成；英文原貌）----------
+\newcommand{\refitem}[2]{\par\hangindent=1.6em\hangafter=1\textbf{[#1]}\hspace{0.45em}#2\par}
+
+% ---------- 常用符号（按需增补；译者可直接用 \mathbb 等）----------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\ee}{\mathrm{e}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\Log}{\operatorname{Log}}
+\graphicspath{{figures/}}

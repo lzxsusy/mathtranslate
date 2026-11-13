@@ -1,0 +1,653 @@
+% ===== ch09 : 原文 main.tex 第 2671--3290 行（5d 限制到子群概形 / 5e 群概形作用的乘积）=====
+% 本文件是原文 LaTeX 源码的逐行分片（去掉整段注释掉的旧稿），仅供翻译时对照；最终译文写到 src/chunks/ch09.tex。
+\subsection{Restriction to subgroup schemes.}
+
+Let $G$ be a group scheme,
+and $H\subseteq G$ a closed subgroup scheme
+with the inclusion morphism $i_H : H \hookrightarrow G$.
+A $G$-action
+$\sigma_G : G \times X \rightarrow X$
+on a scheme $X$ naturally induces a $H$-action on $X$ defined by
+$$
+% ---- 原文行 2680 ----
+\sigma_H
+:=
+(i_H \times \id_X)
+\comp
+\sigma
+:
+H\times X\rightarrow X.
+$$
+
+
+\begin{defn}[Restriction of equivariant sheaves]\label{defn:RestrictionOfEquivariantSheaves}
+For any $G$-equivariant $\mathcal{O}_X$-module $(\mathcal{F}, \theta) \in \Mod_G(X)$, its \emph{restriction} to $H$ is defined to be the $H$-equivariant $\mathcal{O}_X$-module
+$$
+(\mathcal{F}, \theta)|_H := (\mathcal{F}, \theta|_H),
+$$
+where the restricted $H$-linearization
+is defined by the pullback of the $G$-linearization
+$$
+\theta|_H 
+:= 
+% ---- 原文行 2700 ----
+(i_H \times \id_X)^* \theta 
+: 
+\sigma_H^* \mathcal{F} 
+\xrightarrow{\cong} 
+\left(\pr_X^{H \times X}\right)^* \mathcal{F}
+$$
+
+This operation on objects, together with the identity map on morphisms, naturally defines a functor
+$$
+\Res_H^G : \Mod_G(X) \rightarrow \Mod_H(X),
+$$
+called the \emph{restriction functor}.
+This also induces restriction functors on the corresponding full subcategories:
+$$
+\QCoh_G(X) \rightarrow \QCoh_H(X),
+\quad
+\Coh_G(X) \rightarrow \Coh_H(X),
+\quad\text{and}\quad
+\VB_G(X) \rightarrow \VB_H(X).
+$$
+% ---- 原文行 2720 ----
+\end{defn}
+
+
+The following lemma is standard:
+
+\begin{lemma}\cite[Exercise 2.8]{Waterhouse}
+\label{lem:DiagonalizableSurjective}
+Let $G$ be a diagonalizable group scheme
+over a field $\field$,
+and let $H \subseteq G$ be a closed subgroup scheme.
+Then $H$ is also diagonalizable, and the restriction map on character groups
+$
+i_H^* : \widehat{G} \rightarrow \widehat{H}
+$
+is surjective with $\ker(i_H^*) = H^\perp$,
+where
+$$
+H^\perp
+:=
+\{ \cha \in \widehat{G} \mid \cha(h) = 1 \text{ for all } h \in H \}
+% ---- 原文行 2740 ----
+\subseteq
+\widehat{G}
+$$
+is the annihilator of $H$ in $\widehat{G}$.
+\end{lemma}
+
+\begin{proof}
+Since $H$ is a closed subgroup scheme of
+a diagonalizable group scheme
+$G\cong \Spec(\field[\widehat{G}])$,
+there is a Hopf ideal $I$ of $\field[\widehat{G}]$
+such that
+$H\cong\Spec(\field[\widehat{G}]/I)$
+and
+$\mathcal{O}_H(H)\cong\field[\widehat{G}]/I$.
+
+We claim that
+$$
+I=\left<\cha-1|\cha\in H^\perp\right>
+\subseteq
+% ---- 原文行 2760 ----
+\field[\widehat{G}].
+$$
+
+For any
+$\cha \in H^\perp\subseteq\field[\widehat{G}]\cong\mathcal{O}_G(G)$,
+we have
+$\cha|_H=1_{\mathcal{O}_H(H)}\in\mathcal{O}_H(H)$,
+and hence
+$(\cha-1)|_H=0\in \mathcal{O}_H(H)$.
+This implies
+$\langle \cha - 1 \mid \cha \in H^\perp \rangle \subseteq I$.
+
+Conversely,
+suppose
+$f = \sum_{\cha \in \widehat{G}} c_{\cha} \cha \in I\subseteq\field[\widehat{G}]\cong\mathcal{O}_G(G)$.
+Grouping the terms by their restricted images in $\mathcal{O}_H(H)$, we evaluate $f|_H$:
+$$
+0 = f|_H = \sum_{\mu} \left( \sum_{\cha|_H = \mu} c_{\cha} \right) \mu \quad \text{in } \mathcal{O}_H(H),
+$$
+where $\mu$ ranges over the distinct non-zero images of characters in $\mathcal{O}_H(H)$. Since each $\mu$ is a group-like element in the Hopf algebra $\mathcal{O}_H(H)$, these distinct elements $\mu$ are linearly independent over $\field$
+% ---- 原文行 2780 ----
+\cite[\S2.2]{Waterhouse}.
+Consequently, the coefficient of each $\mu$ must vanish; that is, $\sum_{\cha|_H = \mu} c_{\cha} = 0$ for all such $\mu$. 
+
+For each $\mu$ appearing in the sum, fix a representative $\cha_0 \in \widehat{G}$ such that $\cha_0|_H = \mu$. Any other character $\cha$ restricting to $\mu$ satisfies $(\cha \cha_0^{-1})|_H = 1$, meaning $\cha \cha_0^{-1} \in H^\perp$. Thus, we can write $\cha = h\cha_0$ for some $h \in H^\perp$. We can then rewrite the sub-sum corresponding to $\mu$ as follows:
+$$
+\sum_{h \in H^\perp} c_{h\cha_0} (h\cha_0) = \sum_{h \in H^\perp} c_{h\cha_0} (h - 1)\cha_0 + \left( \sum_{h \in H^\perp} c_{h\cha_0} \right) \cha_0.
+$$
+Since the sum of the coefficients $\sum c_{h\cha_0}$ is exactly zero, the second term vanishes. This leaves only a linear combination of elements of the form $h-1$ for $h \in H^\perp$. Summing over all such $\mu$, we conclude that $f \in \langle \cha - 1 \mid \cha \in H^\perp \rangle$.
+
+Thus, $I = \langle \cha - 1 \mid \cha \in H^\perp \rangle$. By the first isomorphism theorem for rings, this yields the natural isomorphism $\mathcal{O}_H(H) \cong \field[\widehat{G}]/I \cong \field[\widehat{G}/H^\perp]$,
+concluding that $H$ is diagonalizable
+with
+$\widehat{G}/H^\perp\cong\widehat{H}$.
+\end{proof}
+% \begin{proof}
+% Since $H$ is a closed subgroup scheme of
+% a diagonalizable group scheme
+% $G\cong \Spec(\field[\widehat{G}])$,
+% there is a Hopf ideal $I$ of $\field[\widehat{G}]$
+% such that
+% ---- 原文行 2800 ----
+% $H\cong\Spec(\field[\widehat{G}]/I)$
+% and
+% $\mathcal{O}_H(H)\cong\field[\widehat{G}]/I$.
+
+% Note that the natural inclusion
+% $\widehat{H} \hookrightarrow \mathcal{O}_H(H)$
+% extends by $\field$-linearity to an algebra homomorphism
+% $$
+% \phi:\field[\widehat{H}] \rightarrow \mathcal{O}_H(H),
+% \quad
+% \sum_{\cha\in\widehat{H}} c_{\cha}\cdot\cha \mapsto \sum_{\cha\in\widehat{H}} c_{\cha}\cha.
+% $$
+
+% On the other hand,
+% the
+% restriction map
+% $
+% i_H^* : \widehat{G} \rightarrow \widehat{H},
+% $
+% $
+% ---- 原文行 2820 ----
+% \cha\mapsto\cha|_H
+% $
+% induces a map of group algebras
+% $$
+% \field[i_H^*]:\field[\widehat{G}]\rightarrow\field[\widehat{H}],
+% \quad
+% \sum_{\cha\in\widehat{G}}c_{\cha}\cdot\cha
+% \mapsto
+% \sum_{\cha\in\widehat{G}}c_{\cha}\cdot\cha|_H.
+% $$
+% It factors through
+% $\field[\widehat{G}]/I$,
+% because
+% $
+% \sum_{\cha\in\widehat{G}}c_{\cha}\cdot\cha\in I\subseteq\mathcal{O}_G(G)
+% $
+% implies that it vanishes when it is restricted to $H$.
+% Therefore,
+% we have a natural map
+% $$
+% ---- 原文行 2840 ----
+% \psi:\mathcal{O}_H(H)\rightarrow\field[\widehat{H}].
+% $$
+
+% Consider the composition
+% $
+% \psi\comp\phi
+% :
+% \mathcal{O}_H(H)\rightarrow\field[\widehat{H}]
+% \rightarrow\mathcal{O}_H(H).
+% $
+% For any $\cha \in \widehat{G}$,
+% its image $\overline{\cha}$ in
+% $\mathcal{O}_H(H) \cong \field[\widehat{G}]/I$
+% is mapped by $\psi$ to $\cha|_H \in \field[\widehat{H}]$,
+% which $\phi$ then maps to $\cha|_H \in \mathcal{O}_H(H)$.
+% Since $\cha|_H$ is exactly the equivalence class $\overline{\cha}$ modulo $I$,
+% we have
+% $\phi(\psi(\overline{\cha})) = \overline{\cha}$.
+% Since the images of $\cha \in \widehat{G}$ span $\mathcal{O}_H(H)$,
+% the composition $\psi \comp \phi$ is the identity map on $\mathcal{O}_H(H)$,
+% ---- 原文行 2860 ----
+% implying that $\phi$ is surjective.
+
+
+% Furthermore, since distinct characters in $\widehat{H}$ are non-zero group-like elements in $\mathcal{O}_H(H)$, they are linearly independent over $\field$
+% \cite[\S2.2]{Waterhouse}.
+% This guarantees that $\phi$ is also injective. 
+% Therefore, it is an isomorphism,
+% concluding that $H$ is diagonalizable.
+
+
+
+% As $\psi$ is surjective,
+% the map
+% $
+% \field[i_H^*]
+% :
+% \field[\widehat{G}]\rightarrow\field[\widehat{H}]
+% $
+% is also surjective.
+% This forces the underlying group homomorphism
+% ---- 原文行 2880 ----
+% $i_H^* : \widehat{G} \rightarrow \widehat{H}$
+% to be surjective.
+% \end{proof}
+
+\begin{prop}[$H$-invariants of hom spaces]
+\label{prop:HInvariantsOfHomSpace}
+Let $G$ be a diagonalizable group scheme acting on a scheme $X$, and $H\subseteq G$ a closed subgroup scheme.
+For any
+$(\mathcal{F}, \theta)$,
+$(\mathcal{F}', \theta') \in \Mod_G(X)$
+such that
+$\mathcal{F}$
+is finitely presented,
+the hom space
+from
+$(\mathcal{F}, \theta|_H)$
+to
+$(\mathcal{F}', \theta'|_H)$
+in $\Mod_H(X)$
+admits a canonical decomposition
+% ---- 原文行 2900 ----
+$$
+\operatorname{Hom}_{\Mod_H(X)}\left( (\mathcal{F}, \theta|_H), (\mathcal{F}', \theta'|_H) \right)
+=
+\bigoplus_{\cha \in H^\perp} \operatorname{Hom}_{\Mod_G(X)}\left( (\mathcal{F}, \theta)(\cha), (\mathcal{F}', \theta') \right).
+$$
+\end{prop}
+
+
+
+
+\begin{proof}
+Note that $H$ is diagonalizable
+by Lemma \ref{lem:DiagonalizableSurjective}.
+Therefore,
+by Proposition \ref{prop:WeightSpaceDecompositionOfHomSpace},
+we have two decompositions
+\begin{align*}
+\operatorname{Hom}_{\Mod(X)}(\mathcal{F}, \mathcal{F}') 
+&=
+\bigoplus_{\cha \in \widehat{G}} \operatorname{Hom}_{\Mod_G(X)}\left( (\mathcal{F}, \theta)(\cha), (\mathcal{F}', \theta') \right)
+% ---- 原文行 2920 ----
+\\
+&=
+\bigoplus_{\chaa \in \widehat{H}} \operatorname{Hom}_{\Mod_H(X)}\left( (\mathcal{F}, \theta|_H)(\chaa), (\mathcal{F}', \theta'|_H) \right).
+\end{align*}
+
+
+
+We claim that
+the following holds for each $\cha\in\widehat{G}$:
+$$
+\operatorname{Hom}_{\Mod_G(X)}\left( (\mathcal{F}, \theta)(\cha), (\mathcal{F}', \theta') \right)
+\subseteq
+\operatorname{Hom}_{\Mod_H(X)}\left( (\mathcal{F}, \theta|_H)(i_H^*\cha), (\mathcal{F}', \theta'|_H) \right).
+$$
+Indeed,
+$
+f\in\operatorname{Hom}_{\Mod_G(X)}\left( (\mathcal{F}, \theta)(\cha), (\mathcal{F}', \theta') \right)
+$
+satisfies
+$$
+% ---- 原文行 2940 ----
+\sigma_G^* f\comp \theta'
+=
+\left(\left(\pr_G^{G\times X}\right)^*\cha \cdot \theta\right)
+\comp
+\left(\pr_X^{G\times X}\right)^* f
+$$
+Taking $(i_H^*\times \id_X)^*$
+on both sides yields
+$$
+\sigma_H^*f\comp\left(\theta'|_H\right)
+=
+\left(
+\left(\pr_H^{H\times X}\right)^*
+i_H^*\cha
+\cdot
+\theta|_H
+\right)
+\comp
+\left(\pr_X^{H\times X}\right)^*f,
+$$
+% ---- 原文行 2960 ----
+where
+$
+\theta|_H
+(i_H^*\cha)
+=
+\left(
+\left(\pr_H^{H\times X}\right)^*
+i_H^*\cha
+\cdot
+\theta|_H
+\right).
+$
+This implies
+$
+f\in
+\operatorname{Hom}_{\Mod_H(X)}\left( (\mathcal{F}, \theta|_H)(i_H^*\cha), (\mathcal{F}', \theta'|_H) \right),
+$
+establishing the claim.
+
+
+% ---- 原文行 2980 ----
+Therefore,
+we have the following sub-decomposition
+for each $\chaa\in\widehat{H}$:
+$$
+\operatorname{Hom}_{\Mod_H(X)}\left( (\mathcal{F}, \theta|_H)(\chaa), (\mathcal{F}', \theta'|_H) \right)
+=
+\bigoplus_{\substack{\cha \in \widehat{G} \\[1mm] i_H^*\cha = \chaa}} \operatorname{Hom}_{\Mod_G(X)}\left( (\mathcal{F}, \theta)(\cha), (\mathcal{F}', \theta') \right).
+$$
+Now the proposition is a special case when $\chaa=1$.
+\end{proof}
+Similar to corollary \ref{thm:EmbeddingOfTheOrbitCategory}, we have an embedding of orbit categories to restrict $G$-equivariant vector bundles to $H$-equivariant ones.
+\begin{crl}\label{crl:orbit-category-GH-restriction}
+    Let $G$ be a group scheme and $H\subseteq G$ be a subgroup scheme of $G$. Then there is an embedding of abelian categories \[
+        \QCoh_G (X)/H^{\perp}\hookrightarrow\QCoh_H (X).
+    \]
+\end{crl}
+\begin{proof}
+By definition, the hom space in the orbit category is given by
+$$
+\operatorname{Hom}_{\QCoh_G(X)/H^\perp}\left( (\mathcal{F}, \theta), (\mathcal{F}', \theta') \right)
+% ---- 原文行 3000 ----
+=
+\bigoplus_{\cha \in H^\perp} \operatorname{Hom}_{\QCoh_G(X)}\left( (\mathcal{F}, \theta)(\cha), (\mathcal{F}', \theta') \right).
+$$
+By Proposition \ref{prop:HInvariantsOfHomSpace},
+this direct sum exactly coincides with the hom space
+\[\operatorname{Hom}_{\QCoh_H(X)}
+\left((\mathcal{F}, \theta|_H), (\mathcal{F}', \theta'|_H) \right)\]
+in
+$\QCoh_H(X)\subseteq\Mod_H(X)$.
+Therefore, the functor $\QCoh_G(X)/H^\perp \hookrightarrow \QCoh_H(X)$ defined by $(\mathcal{F}, \theta) \mapsto (\mathcal{F},\theta|_H)$
+on objects and by the identity map on morphisms is fully faithful.
+\end{proof}
+
+\subsection{Product of group scheme actions.}
+
+
+Suppose that group schemes $G$ and $H$
+act on schemes $X$ and $Y$
+with action homomorphisms
+$\sigma_X : G \times X \rightarrow X$
+% ---- 原文行 3020 ----
+and
+$\sigma_Y : H \times Y \rightarrow Y$,
+respectively.
+They naturally induce an action of
+the product group scheme $G\times H$
+on the product scheme $X\times Y$
+given by the action morphism
+$$
+\sigma_{X\times Y}
+:=
+\sigma_X\times \sigma_Y
+:
+(G\times H)\times (X\times Y)
+\rightarrow
+X\times Y.
+$$
+\begin{defn}[External tensor product of equivariant sheaves]
+\label{defn:ExternalTensorProductOfEquivariantModules}
+%Let $G$ and $H$ be group schemes acting on schemes $X$ and $Y$,
+%respectively.
+% ---- 原文行 3040 ----
+Let $(\mathcal{F},\theta)\in\Mod_G(X)$ and
+$(\mathcal{G},\eta)\in\Mod_H(Y)$.
+The \emph{external tensor product} of
+$(\mathcal{F},\theta)$ and $(\mathcal{G},\eta)$
+$$
+(\mathcal{F},\theta)\boxtimes(\mathcal{G},\eta)
+:=
+\left(
+\mathcal{F}\boxtimes\mathcal{G},
+\
+\theta\boxtimes\eta
+\right)
+\in\Mod_{G\times H}(X\times Y)
+$$
+is defined as the
+$\mathcal{O}_{X\times Y}$-module
+$
+\mathcal{F}\boxtimes\mathcal{G}
+:=
+\pi_X^*\mathcal{F}
+% ---- 原文行 3060 ----
+\underset{\mathcal{O}_{X\times Y}}{\otimes}
+\pi_Y^*\mathcal{G}
+$
+together with the
+$G\times H$-linearization
+$$
+\theta\boxtimes\eta
+:=
+\tilde{\pi}_{G\times X}^*\theta\otimes\tilde{\pi}_{H\times Y}^*\eta
+:
+\sigma_{X\times Y}^*(\mathcal{F}\boxtimes\mathcal{G})
+\xrightarrow{\cong}
+\left(\pr_{X\times Y}^{(G\times H)\times(X\times Y)}\right)^*
+(\mathcal{F}\boxtimes\mathcal{G})
+$$
+where
+\begin{align*}
+\tilde{\pi}_{G\times X}^*\theta
+&:
+\tilde{\pi}_{G\times X}^*(\sigma_X^*\mathcal{F})
+% ---- 原文行 3080 ----
+\xrightarrow{\cong}
+\tilde{\pi}_{G\times X}^*\left(\left(\pr_X^{G\times X}\right)^{\ast}\mathcal{F}\right),
+\\[2mm]
+\tilde{\pi}_{H\times Y}^*\eta
+&:
+\tilde{\pi}_{H\times Y}^*(\sigma_Y^*\mathcal{G})
+\xrightarrow{\cong}
+\tilde{\pi}_{H\times Y}^*\left(\left(\pr_Y^{H\times Y}\right)^*\mathcal{G}\right)
+\end{align*}
+are pull-backs of $\theta$ and $\eta$
+by the natural projections
+\begin{align*}
+\tilde{\pi}_{G\times X}
+&:=
+\pr_{G\times X}^{(G\times H)\times(X\times Y)}
+:
+(G\times H)\times(X\times Y)
+\rightarrow
+G\times X,
+\\[2mm]
+% ---- 原文行 3100 ----
+\tilde{\pi}_{H\times Y}
+&:=
+\pr_{H\times Y}^{(G\times H)\times(X\times Y)}
+:
+(G\times H)\times(X\times Y)
+\rightarrow
+H\times Y,
+\end{align*}
+respectively,
+and
+the tensor product
+$
+\tilde{\pi}_{G\times X}^*\theta\otimes\tilde{\pi}_{H\times Y}^*\eta
+$
+is given under the canonical isomorphisms
+\begin{align*}
+\sigma_{X\times Y}^*(\mathcal{F}\boxtimes\mathcal{G})
+&=
+\sigma_{X\times Y}^*
+\Big(
+% ---- 原文行 3120 ----
+\pi_X^*\mathcal{F}
+\underset{\mathcal{O}_{X\times Y}}{\otimes}
+\pi_Y^*\mathcal{G}
+\Big)
+\\[2mm]
+&\cong
+(\sigma_{X\times Y}\comp\pi_X)^*\mathcal{F}
+\underset{\mathcal{O}_{(G\times H)\times(X\times Y)}}{\otimes}
+(\sigma_{X\times Y}\comp\pi_Y)^*\mathcal{G}
+\\[2mm]
+&=
+(\tilde{\pi}_{G\times X}\comp \sigma_X)^*\mathcal{F}
+\underset{\mathcal{O}_{(G\times H)\times(X\times Y)}}{\otimes}
+(\tilde{\pi}_{H\times Y}\comp \sigma_Y)^*\mathcal{G}
+\\[2mm]
+&\cong
+\tilde{\pi}_{G\times X}^*\left(\sigma_X^*\mathcal{F}\right)
+\underset{\mathcal{O}_{(G\times H)\times(X\times Y)}}{\otimes}
+\tilde{\pi}_{H\times Y}^*\left(\sigma_Y^*\mathcal{G}\right)
+\end{align*}
+% ---- 原文行 3140 ----
+and
+\begin{align*}
+\left(\pr_{X\times Y}^{(G\times H)\times(X\times Y)}\right)^*
+(\mathcal{F}\boxtimes\mathcal{G})
+&=
+\left(\pr_{X\times Y}^{(G\times H)\times(X\times Y)}\right)^*
+\Big(
+\pi_X^*\mathcal{F}
+\underset{\mathcal{O}_{X\times Y}}{\otimes}
+\pi_Y^*\mathcal{G}
+\Big)
+\\
+&\cong
+\left(\pr_{X\times Y}^{(G\times H)\times(X\times Y)}\comp\pi_X\right)^*\mathcal{F}
+\underset{\mathcal{O}_{(G\times H)\times(X\times Y)}}{\otimes}
+\left(\pr_{X\times Y}^{(G\times H)\times(X\times Y)}\comp\pi_Y\right)^*\mathcal{G}
+\\
+&\cong
+\left(\tilde{\pi}_{G\times X}\comp\pr_X^{G\times X}\right)^*\mathcal{F}
+\underset{\mathcal{O}_{(G\times H)\times(X\times Y)}}{\otimes}
+% ---- 原文行 3160 ----
+\left(\tilde{\pi}_{H\times Y}\comp\pr_Y^{H\times Y}\right)^*\mathcal{G}
+\\
+&\cong
+\tilde{\pi}_{G\times X}^*\left(\left(\pr_X^{G\times X}\right)^*\mathcal{F}\right)
+\underset{\mathcal{O}_{(G\times H)\times(X\times Y)}}{\otimes}
+\tilde{\pi}_{H\times Y}^*\left(\left(\pr_Y^{H\times Y}\right)^*\mathcal{G}\right).
+\end{align*}
+
+
+
+
+
+
+
+For morphisms
+$
+f
+\in
+\Hom_{\Mod_G(X)}
+((\mathcal{F},\theta),(\mathcal{F}',\theta'))
+% ---- 原文行 3180 ----
+$
+and
+$
+g
+\in
+\Hom_{\Mod_H(Y)}
+((\mathcal{G},\eta),(\mathcal{G}',\eta')),
+$
+define
+$$
+f\boxtimes g
+:=
+\pi_X^*f
+\otimes
+%\underset{\mathcal{O}_{X\times Y}}{\otimes}
+\pi_Y^*g
+\in
+\Hom_{\Mod_{G\times H}(X\times Y)}
+\big(
+\left(
+% ---- 原文行 3200 ----
+\mathcal{F}\boxtimes\mathcal{G},
+\
+\theta\boxtimes\eta
+\right),
+\left(
+\mathcal{F}'\boxtimes\mathcal{G}',
+\
+\theta'\boxtimes\eta'
+\right)
+\big).
+$$
+%The morphism $f\boxtimes g$ is $(G\times H)$-equivariant,
+%since its equivariance condition is obtained by pulling back
+%and tensoring the equivariance conditions for $f$ and $g$.
+
+%$$
+%f\boxtimes g
+%:=
+%\pi_X^*f
+%\otimes
+% ---- 原文行 3220 ----
+%%\underset{\mathcal{O}_{X\times Y}}{\otimes}
+%\pi_Y^*g
+%:
+%\mathcal{F}\boxtimes\mathcal{G}
+%=
+%\pi_X^*\mathcal{F}
+%\underset{\mathcal{O}_{X\times Y}}{\otimes}
+%\pi_Y^*\mathcal{G}
+%\
+%\rightarrow
+%\
+%\mathcal{F}'\boxtimes\mathcal{G}'
+%=
+%\pi_X^*\mathcal{F}'
+%\underset{\mathcal{O}_{X\times Y}}{\otimes}
+%\pi_Y^*\mathcal{G}'
+%$$
+
+
+This defines a bifunctor
+% ---- 原文行 3240 ----
+$$
+\boxtimes:
+\Mod_G(X)\times\Mod_H(Y)
+\rightarrow
+\Mod_{G\times H}(X\times Y),
+$$
+which restricts to equivariant (quasi-)coherent sheaves and
+equivariant vector bundles.
+\end{defn}
+
+
+
+\begin{prop}\label{prop:BoxTensorFunctorFullyFaithful}
+The functor
+$$
+\boxtimes:
+\Mod_G(X)\otimes\Mod_H(Y)
+\hookrightarrow
+\Mod_{G\times H}(X\times Y)
+$$
+% ---- 原文行 3260 ----
+is fully faithful,
+that is,
+\begin{align*}
+\boxtimes:
+\Hom_{\Mod_G(X)}&
+\big(
+(\mathcal{F},\theta),
+(\mathcal{F}',\theta')
+\big)
+\
+\otimes
+\
+\Hom_{\Mod_H(Y)}
+\big(
+(\mathcal{G},\eta),
+(\mathcal{G}',\eta')
+\big)
+\\ 
+&\xrightarrow{\cong}
+\Hom_{\Mod_{G\times H}(X\times Y)}
+% ---- 原文行 3280 ----
+\big(
+(\mathcal{F},\theta)\boxtimes(\mathcal{G},\eta),
+(\mathcal{F}',\theta')\boxtimes(\mathcal{G}',\eta')
+\big)
+\end{align*}
+\end{prop}
+
+
+
+
+

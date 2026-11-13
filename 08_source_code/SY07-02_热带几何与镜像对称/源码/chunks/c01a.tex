@@ -1,0 +1,684 @@
+% ===== 原文第 1 章 §1.1–1.3（印刷 pp.3–15 / PDF p.18–30，Lead）=====
+
+\part{第一篇\quad 三个世界}
+
+\section{热带几何}
+
+% [原文 p.3]
+我们从前述三个世界中最简单的一个——热带世界——开始。热带几何是一种分片线性的组合几何，
+它出现在人们开始考虑所谓热带半环上的代数几何之时。
+
+本章将对该主题作一个相当浅显的介绍。我们将从热带半环的定义、以及热带半环上的一些初等代数几何讲起。
+接着转到参数化热带曲线的概念，它出现在 Mikhalkin 的曲线计数结果之中。随后我们引入
+Gross--Siebert 纲领中出现的那类热带对象：带奇点的仿射流形。如果人们想在 Calabi--Yau 流形中
+考虑曲线计数，这类对象会自然地出现。最后，我们以 Legendre 变换给出的、这类对象之间的一个对偶作为结束。
+
+\subsection{热带超曲面}
+
+% [原文 p.3]
+我们从\emph{热带半环}开始：
+\[
+  \R^{\mathrm{trop}}=(\R,\oplus,\odot).
+\]
+这里 $\R$ 是实数集，但加法与乘法定义为
+\[
+  \begin{aligned}
+    a\oplus b &:= \min(a,b)\\
+    a\odot b &:= a+b .
+  \end{aligned}
+\]
+当然，这里没有加法逆元。这个半环后来被称作热带半环，以此纪念巴西数学家 Imre Simon。
+tropical 一词如今已迅速流传开来。
+
+% [Tutor Note: “tropical” 的命名与符号约定。Imre Simon 是巴西数学家，故取“热带”之名；
+%   此名与地理上的热带无关。另需注意本文采用 $(\min,+)$ 约定（$\oplus=\min$、$\odot=+$）；
+%   部分文献（如 Mikhalkin 的曲线计数论文）改用 $(\max,+)$ 约定，两者所得 $V(f)$ 相同，
+%   但系数 $a_n$ 的符号与 $\tilde\Delta_S$ 取“上凸包/下凸包”的说法会整体翻转。
+%   核对锚点：式 (1.1) 之前的 $\tilde\Delta_S=\{(n,a)\mid a\ge a'\}$ 与 $\varphi(n)=\min\{a\}$ 是
+%   $\min$ 约定的产物；若换成 $\max$，这里应改为 $a\le a'$ 与 $\max$。]
+
+我们希望在热带半环上、而不是在域上做代数几何。当然，由于这个半环没有加法单位元，
+一个多项式的零点轨迹应当是什么，并不是一眼就能看清的。正确——或者更确切地说，有用——的解释如下。设
+\[
+  \R^{\mathrm{trop}}[x_1,\dots,x_n]
+\]
+表示由热带多项式
+\[
+  f(x_1,\dots,x_n)=\sum_{(i_1,\dots,i_n)\in S}a_{i_1,\dots,i_n}x_1^{i_1}\cdots x_n^{i_n}
+\]
+给出的函数 $f:\R^n\to\R$ 所构成的空间，其中 $S\subseteq\Z^n$ 是有限指标集。这里一切运算都在
+$\R^{\mathrm{trop}}$ 中进行，所以这实际上是函数
+\[
+  f(x_1,\dots,x_n)=\min\Big\{a_{i_1,\dots,i_n}+\sum_{k=1}^{n}i_kx_k \;\Big|\; (i_1,\dots,i_n)\in S\Big\}.
+\]
+这是一个分片线性函数；而由 $f$ 定义的\emph{热带超曲面} $V(f)\subseteq\R^n$，作为集合，
+就是 $f$ 不是线性的轨迹。
+
+% [原文 p.4]
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{f1_1.png}
+\figtitle{1}{$0\oplus(0\odot x_1)$}
+\end{figure}
+
+为了以更内蕴的方式写出这些公式，下文我们将经常使用记号
+\[
+  M=\Z^n,\qquad M_\R=M\otimes_\Z\R,\qquad
+  N=\operatorname{Hom}_\Z(M,\Z),\qquad N_\R=N\otimes_\Z\R .
+\]
+我们用 $\langle n,m\rangle$ 表示 $n\in N$ 在 $m\in M$ 上的取值。我们还将经常用到元素
+$m\in M\setminus\{0\}$ 的\emph{指数}（index）这一概念：它是使得存在 $m'\in M$ 满足 $rm'=m$
+的最大正整数 $r$。若 $m$ 的指数为 $1$，则称 $m$ 是\emph{本原的}（primitive）。
+
+有了这套记号，我们可以把热带函数看作映射 $f:M_\R\to\R$；当 $S\subseteq N$ 为有限集时，它写成
+\[
+  f(z)=\sum_{n\in S}a_nz^n:=\min\{a_n+\langle n,z\rangle \mid n\in S\}.
+\]
+此时 $V(f)$ 将是 $\R^n$ 中余维数为一的多面体之并。这里所谓多面体，我们指的是：
+
+% [Tutor Note: 术语辨析。原文 polyhedron（可以不紧）与 polytope（紧）是两个不同的词，
+%   而中文常把二者都译作“多面体”，这样一来本页末句 “A polytope is a compact polyhedron”
+%   就会变成同义反复。本译本因此把 polyhedron 译“多面体”、polytope 译“多胞体”
+%   （lattice polytope = 格多胞体），以保留原文的区分。此条与 glossary.tsv 现有条目
+%   （polytope = 多面体）不一致，已列入回执请 Lead 裁定；后续各章凡遇 polytope 请沿用“多胞体”。]
+
+\begin{definition}
+$M_\R$ 中的\emph{多面体} $\sigma$ 是有限个闭半空间之交。多面体的一个\emph{面}，是指 $\sigma$
+与某个超平面 $H$ 的交，其中 $\sigma$ 包含在以 $H$ 为边界的某个半空间之内。
+$\sigma$ 的\emph{边界} $\partial\sigma$ 是 $\sigma$ 的所有真面之并，$\sigma$ 的\emph{内部}
+$\operatorname{Int}(\sigma)$ 是 $\sigma\setminus\partial\sigma$。
+
+若 $\sigma$ 是定义在 $\Q$ 上的半空间之交，且 $\sigma$ 的所有顶点都在 $M$ 中，则称多面体
+$\sigma$ 为\emph{格多面体}。
+
+\emph{多胞体}是紧的多面体。
+\end{definition}
+
+回到 $V(f)$：组成 $V(f)$ 的每个余维数为一的多面体都把 $f$ 的两个线性区域分隔开，
+在其中之一上 $f$ 由指数为 $n\in N$ 的单式给出，在另一个上则由指数为 $n'\in N$ 的单式给出。
+于是该多面体在 $V(f)$ 中的\emph{权}（weight）就是 $n'-n$ 的指数。我们进而把 $V(f)$
+看作一个带权的多面体复形。
+
+% [Tutor Note: 权的算法核对。图 5 中被加粗的那条边权为 $2$：它两侧的线性区域分别由单式 $1$
+%   （指数 $(0,0)$）与 $x_1^2x_2^2$（指数 $(2,2)$）给出，$(2,2)-(0,0)=(2,2)$ 的指数为 $2$，
+%   与图中标号一致；这也解释了为什么图 5 只有那一条边被加粗。图 3 的情形则处处权为 $1$，
+%   因为相邻两个线性区域上的单式指数之差（如 $(1,0)-(0,0)$）都是本原的。]
+
+\begin{examples}
+图 1 到图 5 给出了二元热带多项式及其相应的“零点轨迹”的例子。除非另有标注，所有边的权都是 $1$。
+我们还标出了在每个线性区域上确定该函数的单式，以及顶点的确切位置。
+\end{examples}
+
+% [原文 p.5]
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{f1_2.png}
+\figtitle{2}{$1\oplus(0\odot x_1)\oplus(0\odot x_2)$}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{f1_3.png}
+\figtitle{3}{$0\oplus(0\odot x_1)\oplus(0\odot x_2)\oplus(1\odot x_1\odot x_2)
+  \oplus(5\odot x_1\odot x_1)\oplus(5\odot x_2\odot x_2)$}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{f1_4.png}
+\figtitle{4}{$0\oplus(0\odot x_1)\oplus(0\odot x_2)\oplus(3\odot x_1\odot x_2)
+  \oplus(9\odot x_1\odot x_1)\oplus(1\odot x_2\odot x_2)$}
+\end{figure}
+
+我们现在解释一个看清 $V(f)$ 形状的简单办法。给定
+\[
+  f=\sum_{n\in S}a_nz^n,
+\]
+我们考虑 $S$ 的\emph{Newton 多胞体}
+\[
+  \Delta_S:=\operatorname{Conv}(S)\subseteq N_\R,
+\]
+
+% [原文 p.6]
+即 $S$ 在 $N_\R$ 中的凸包。系数 $a_n$ 于是定义出一个函数
+\[
+  \varphi:\Delta_S\to\R,
+\]
+其定义如下。我们考虑集合
+\[
+  \tilde S=\{(n,a_n)\mid n\in S\}\subseteq N_\R\times\R
+\]
+的\emph{上凸包} $\tilde\Delta_S$，即
+\[
+  \tilde\Delta_S=\{(n,a)\in N_\R\times\R \mid
+  \text{存在 }(n,a')\in\operatorname{Conv}(\tilde S)\text{ 使 }a\ge a'\}.
+\]
+然后我们定义
+\[
+  \varphi(n)=\min\{a\in\R \mid (n,a)\in\tilde\Delta_S\}.
+\]
+举例来说，考虑单变量热带多项式
+\[
+  f=1\oplus(0\odot x)\oplus(0\odot x^2)\oplus(2\odot x^3),
+\]
+我们得到如图 6 所示的 $\Delta_S$ 与 $\tilde\Delta_S$，其中 $\tilde\Delta_S$ 的下边界正是 $\varphi$ 的图像。
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{f1_5.png}
+\figtitle{5}{$0\oplus(0\odot x_1)\oplus(1\odot x_2)\oplus(0\odot x_1\odot x_1\odot x_2\odot x_2)$}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{f1_6.png}
+\figtitle{6}{}
+\end{figure}
+
+这幅图给出 $\Delta_S$ 的一个多面体分解：
+
+\begin{definition}
+（格）多面体 $\Delta\subseteq N_\R$ 的\emph{（格）多面体分解}，是指 $N_\R$ 中一族称为\emph{胞腔}
+（cell）的（格）多面体 $\cP$，使得
+
+(1) $\Delta=\bigcup_{\sigma\in\cP}\sigma$。
+
+(2) 若 $\sigma\in\cP$，且 $\tau\subseteq\sigma$ 是面，则 $\tau\in\cP$。
+
+(3) 若 $\sigma_1,\sigma_2\in\cP$，则 $\sigma_1\cap\sigma_2$ 同时是 $\sigma_1$ 与 $\sigma_2$ 的面。
+\end{definition}
+
+% [Tutor Note: 原文图 6 的图注只有 “Figure 6” 一行、没有任何文字说明，此处照录为空图注。
+%   该图刻画单变量例 $f=1\oplus(0\odot x)\oplus(0\odot x^2)\oplus(2\odot x^3)$：下方数轴是
+%   $\Delta_S=\operatorname{Conv}\{0,1,2,3\}$，上方灰色区域是 $\tilde\Delta_S$，其下边界在
+%   $n=1,2$ 处取 $0$、在 $n=0$ 处取 $1$、在 $n=3$ 处取 $2$，正是 $\varphi$ 的图像。
+%   注意 $\tilde\Delta_S$ 无界（按定义 $a$ 可任意增大），图中灰区在顶部被截断，
+%   这只是绘图的边界，并非 $\tilde\Delta_S$ 真的有上边界。]
+
+% [原文 p.7]
+对多面体分解 $\cP$，用 $\cP_{\max}$ 表示 $\cP$ 的极大胞腔之集。用 $\cP^{[k]}$ 表示 $\cP$ 的
+$k$ 维胞腔之集。
+
+确实，要得到 $\Delta_S$ 的一个多面体分解 $\cP$，只需取 $\cP$ 为 $\tilde\Delta_S$ 的真面在投影
+$N_\R\times\R\to N_\R$ 下的像之集。由某个凸分片线性函数的图像以这种方式得到的 $\Delta_S$ 的多面体分解，
+称为\emph{正则分解}（regular decomposition）；这类分解在凸多面体的组合学中起着重要作用，
+参见例如 [32]。
+
+我们现在可以定义三元组 $(\Delta_S,\cP,\varphi)$ 的\emph{离散 Legendre 变换}：
+
+\begin{definition}
+$(\Delta_S,\cP,\varphi)$ 的\emph{离散 Legendre 变换}是三元组 $(M_\R,\check\cP,\check\varphi)$，其中：
+
+(1) $\check\cP=\{\check\tau \mid \tau\in\cP\}$，而
+\[
+  \check\tau=\left\{m\in M_\R\ \middle|\
+  \begin{array}{l}
+    \text{存在 }a\in\R\text{，使得 }\langle -m,n\rangle+a\le\varphi(n)\\
+    \text{对一切 }n\in\Delta_S\text{ 成立，且当 }n\in\tau\text{ 时取等号}
+  \end{array}\right\}.
+\]
+
+(2) $\check\varphi(m)=\max\{a \mid \langle -m,n\rangle+a\le\varphi(n)\ \text{对一切 }n\in\Delta_S\}$。
+\end{definition}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{f1_7.png}
+\figtitle{7}{左图为 $\tilde\Delta_S$。右图显示 $x$ 轴上的 $\check\cP$ 以及 $\check\varphi$ 的图像。}
+\end{figure}
+
+让我们稍作解释。首先，若 $\sigma\in\cP_{\max}$，设 $m_\sigma\in M$ 是 $\varphi|_\sigma$ 的斜率，
+那么事实上
+\[
+  \check\sigma=\{-m_\sigma\},
+\]
+这可由 $\varphi$ 的凸性推出。其次，(2) 中的公式是描述 Legendre 变换后函数 $\check\varphi$ 的一种
+相当标准的方式。我们把 $\check\varphi(m)$ 看作这样得到的：在 $N_\R\times\R$ 中取 $N_\R$ 上斜率为
+$-m$ 的线性函数的图像，把它上下平移，直到它成为 $\tilde\Delta_S$ 的支撑超平面；这个仿射线性函数在
+$0$ 处的值就是 $\check\varphi(m)$；见图 7。注意，若 $m\in\operatorname{Int}(\check\tau)$，
+则 $\langle -m,\cdot\rangle+\check\varphi(m)$ 的图像就是 $\tilde\Delta_S$ 的某个面的支撑超平面，
+而该面同构地投影到 $\tau$ 上。
+
+% [Tutor Note: 定义 1.4 的两种描述须对照着读。$\check\tau$ 由不等式组刻画；而当
+%   $\tau=\sigma\in\cP_{\max}$ 时，$\langle -m,n\rangle+a\le\varphi(n)$ 在 $\sigma$ 上取等号的
+%   $m$ 唯一，即 $m=-m_\sigma$（$\sigma$ 上斜率的相反数），故 $\check\sigma$ 退化为一点。
+%   核对锚点（图 6 与图 7 用的是同一个单变量例）：$\varphi$ 在三段上的斜率为 $-1,\,0,\,2$，
+%   故 $\check\cP^{[0]}=\{1,\,0,\,-2\}$；这正是图 7 右图 $x$ 轴上标出的三个点 $-2,0,1$
+%   （只是从左到右的次序）。这也说明 $\check\cP$ 的 0 维胞腔个数等于 $\cP$ 的极大胞腔个数，
+%   而不是 $\cP^{[0]}$ 的个数——初学者常在此处数错。]
+
+% [原文 p.8]
+事实上，$\check\varphi$ 可以用更熟悉的方式描述。注意
+\[
+  \check\varphi(m)=\min\{\varphi(n)+\langle m,n\rangle \mid n\in\Delta_S\}.
+\]
+由此可知，$\check\cP_{\max}$ 由 $\check\varphi$ 的极大线性区域组成，并且对 $\cP$ 的顶点 $v$
+（即 $\cP^{[0]}$ 的元素），$\check\varphi|_{\check v}$ 的斜率为 $v$。确实，最小值总在某个顶点处取到；
+若该顶点为 $v$，则 $\check\varphi(m)=\varphi(v)+\langle m,v\rangle$。于是 $\check\varphi$
+在 $\check v$ 上线性、斜率为 $v$。此外，由于当 $m\in\check v$ 时必有
+$\varphi(v)+\langle m,v\rangle\le\varphi(v')+\langle m,v'\rangle$，可见 $\check\varphi$
+实际上是由热带多项式
+\[
+  \sum_{n\in\cP^{[0]}}\varphi(n)z^n
+\]
+给出的。
+
+这未必是原来定义函数 $f$ 的那个多项式。不过，$\tilde\Delta_S$ 的顶点显然形如 $(n,a_n)$，
+其中 $n\in\cP^{[0]}\subseteq S$，所以对 $n\in\cP^{[0]}$ 有 $\varphi(n)=a_n$；于是定义
+$\check\varphi$ 的热带多项式只是缺少了原来定义多项式 $f$ 的某些项。这些缺失的项恰好是形如
+$a_nz^n$、而 $(n,a_n)$ 不是 $\tilde\Delta_S$ 的顶点的那些项。可以看出，这样的项对计算 $f$
+无关紧要。确实，若对某个 $n\in N\cap\Delta_S$，$(n,a_n)$ 不是 $\tilde\Delta_S$ 的顶点，
+且对某个 $m\in M_\R$ 有 $f(m)=\langle m,n\rangle+a_n$，则
+\[
+  \langle m,n\rangle+a_n\le\langle m,n'\rangle+a_{n'}
+\]
+对一切 $n'\in S$ 成立。但此时由
+\[
+  \{(n',r)\in N_\R\times\R \mid \langle m,n'\rangle+r=\langle m,n\rangle+a_n\}
+\]
+给出的 $N_\R\times\R$ 中的超平面是 $\tilde\Delta_S$ 的支撑超平面，它包含 $(n,a_n)$，
+因而也必须包含 $\tilde\Delta_S$ 的某个顶点 $(n',a_{n'})$。于是 $f(m)$ 与
+$\langle m,n'\rangle+a_{n'}$ 一致，从而项 $a_nz^n$ 对计算 $f$ 无关紧要。这样我们看到
+\[
+  \check\varphi=f.
+\]
+由于 $\check\varphi$ 的线性区域正是 $\check\cP_{\max}$ 中的多面体，我们看到
+\[
+  V(f)=\bigcup_{\tau\in\cP^{[1]}}\check\tau .
+\]
+由于 $\check\cP$ 的 $0$ 维胞腔是 $\check\sigma=\{-m_\sigma\}$（$\sigma\in\cP_{\max}$），
+用这个描述来画 $V(f)$ 通常很容易。此外，权也容易确定：对 $\tau\in\cP^{[1]}$，$\check\tau$
+的权就是 $\tau$ 的仿射长度，即 $\tau$ 的两个端点之差的指数。
+
+总结起来：函数 $\varphi$ 决定了对偶分解 $\check\cP$，其顶点由 $\varphi$ 的斜率给出，
+而 $V(f)$ 是 $\check\cP$ 的余维数为一的骨架。
+
+\begin{examples}
+对图 1 到图 5 的例子，其 Newton 多胞体连同正则分解以及 $a_n$ 的取值，由图 8 到图 12 给出。
+\end{examples}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{f1_8.png}
+\figtitle{8}{图 1 的 Newton 多胞体及其细分。}
+\end{figure}
+
+% [原文 p.9]
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{f1_9.png}
+\figtitle{9}{图 2 的 Newton 多胞体及其细分。}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{f1_10.png}
+\figtitle{10}{图 3 的 Newton 多胞体及其细分。}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{f1_11.png}
+\figtitle{11}{图 4 的 Newton 多胞体及其细分。}
+\end{figure}
+
+对 $V(f)$ 的这一描述引出一个重要的条件，称为\emph{平衡条件}（balancing condition）。具体地说，
+对每个 $\check\omega\in\check\cP^{[n-2]}$，即余维数为二的胞腔，设
+$\check\tau_1,\dots,\check\tau_k\in\check\cP^{[n-1]}$ 是 $V(f)$ 中包含它的那些胞腔，权分别为
+$w_1,\dots,w_k$。注意 $\omega$ 是 $\cP$ 的一个二维胞腔，而 $\tau_1,\dots,\tau_k$ 是 $\omega$
+的边。设 $n_1,\dots,n_k\in N$ 是 $\tau_1,\dots,\tau_k$ 的本原切向量，其方向与 $\tau_1,\dots,\tau_k$
+上由 $\omega$ 的某个选定定向所诱导的定向一致。向量 $n_1,\dots,n_k$ 是
+$\check\tau_1,\dots,\check\tau_k$ 的本原法向量。确实，$\tau_i$ 的端点给出 $\check\varphi=f$
+在 $\check\tau_i$ 两侧 $f$ 的两个线性区域上的斜率，所以 $n_i$ 在 $\check\tau_i$ 上必为常数。显然有
+\begin{equation}
+  \sum_{i=1}^{k}w_in_i=0 . \tag{1.1}
+\end{equation}
+我们称此式为\emph{平衡条件}。
+
+% [原文 p.10]
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{f1_12.png}
+\figtitle{12}{图 5 的 Newton 多胞体及其细分。}
+\end{figure}
+
+当 $\dim M_\R=2$、从而 $V(f)$ 是一条曲线时，把上述条件改写成下面这样是有用的。设
+$V\in\check\cP^{[0]}$ 是 $V(f)$ 的一个顶点，它包含在 $V(f)$ 的边
+$E_1,\dots,E_k\in\check\cP^{[1]}$ 之中；设 $m_1,\dots,m_k\in M$ 是 $E_1,\dots,E_k$ 的本原切向量，
+方向背离 $V$。设 $E_i$ 的权为 $w_i$。则 (1.1) 等价于
+\begin{equation}
+  \sum_{i=1}^{k}w_im_i=0 . \tag{1.2}
+\end{equation}
+
+% [Tutor Note: (1.1) 与 (1.2) 的对应关系是初读时最易混的地方。在 (1.1) 中 $n_i\in N$ 是
+%   $\check\tau_i$ 的法向量（$\tau_i$ 是 $\cP$ 的边），方向由 $\omega$ 的定向诱导；在 (1.2) 中
+%   $m_i\in M$ 是 $\check\tau_i$ 的切向量（此时 $\check\tau_i=E_i$ 是 $V(f)$ 的边），方向“背离顶点 $V$”。
+%   两者相差一个 $90^\circ$ 旋转 $M\cong N$（$\dim M_\R=2$ 时 $\bigwedge^2M\cong\Z$ 给出这个同构），
+%   且 $\omega$ 的定向正好对应 $V$ 处各边向外的定向；所以两式的权完全相同、
+%   只是把“绕 $\omega$ 一圈”换成了“绕 $V$ 一圈”。核对锚点：图 2 的唯一顶点处三条边权均为 $1$、
+%   方向 $(0,1),(1,0),(-1,-1)$ 之和为 $0$，即 (1.2)。]
+
+\begin{example}
+\emph{热带 Bézout 定理。}设 $\dim M_\R=2$，$e_1,e_2$ 是 $M$ 的一组基。设 $\Delta_d$ 是
+$0$、$de_1$、$de_2$ 的凸包所构成的多胞体。若 $f=\sum_{n\in\Delta_d}a_nz^n$，则 $V(f)$ 是
+$M_\R$ 中的一条热带曲线，我们称它为热带射影平面中\emph{次数为 $d$ 的曲线}。例如，图 2 描绘的是
+一条次数 $1$ 的曲线，即一条\emph{热带直线}；图 3 与图 4 描绘的是次数 $2$ 的曲线，即
+\emph{热带二次曲线}。它们应被看作 $\PP^2$ 中通常的直线与二次曲线的热带类比。这些热带版本
+常常与通常的代数版本共有一些出人意料的性质。这里我们给出一个例子。
+
+设 $C,D\subseteq M_\R$ 是热带射影平面中次数分别为 $d$ 与 $e$ 的两条热带曲线。假设 $C$ 与 $D$
+只交于有限多个点；这总可以通过平移 $C$ 或 $D$ 来实现。事实上，我们同样可以假设这些交点中没有
+$C$ 或 $D$ 的顶点。我们可以为这两条曲线的交点定义一个重数（multiplicity）的概念。设点
+$P\in C\cap D$ 落在 $C$ 的边 $E$ 与 $D$ 的边 $F$ 上，二者的权分别为 $w(E)$ 与 $w(F)$。
+设 $m_1$ 是 $E$ 的一个本原切向量，$m_2$ 是 $F$ 的一个本原切向量。于是我们定义 $C$ 与 $D$
+在 $P$ 处的\emph{相交重数}为正整数
+\[
+  i_P(C,D):=w(E)w(F)|m_1\wedge m_2| .
+\]
+\end{example}
+
+% [原文 p.11]
+这里 $m_1,m_2\in M\cong\Z^2$，而 $\bigwedge^2M\cong\Z$，所以无论选取哪个同构，
+$|m_1\wedge m_2|$ 都有意义，是一个正数。于是我们有\emph{热带 Bézout 定理}，它断言
+\[
+  \sum_{P\in C\cap D}i_P(C,D)=d\cdot e .
+\]
+当然，这正是 $\PP^2$ 中通常代数曲线所预期的结果。证明见 [96]，§4。例子见图 13。
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{f1_13.png}
+\figtitle{13}{两条热带二次曲线交于四个点。}
+\end{figure}
+
+% [Tutor Note: 相交重数的定义要求交点 $P$ 不是任一条曲线的顶点（上一段已作此假设），
+%   否则 $P$ 处没有唯一的“边”可言。$|m_1\wedge m_2|$ 是 $m_1,m_2$ 在任意 $\Z^2$ 基下的
+%   行列式绝对值；因 $m_1\wedge m_2\in\bigwedge^2M\cong\Z$，换基只改变符号，故绝对值良定义。
+%   又：正文所引 [96] 是 Richter-Gebert--Sturmfels--Theobald 的入门综述
+%   “First steps in tropical geometry”，其 §4 给出该定理的证明，本书未展开。]
+
+\subsection{扇的一些背景}
+
+% [原文 p.11]
+这里我们汇集一些关于扇的标准概念。更多细节请读者参阅 [27]。
+
+\begin{definition}
+$M_\R$ 中的\emph{严格凸有理多面体锥}，是指 $M_\R$ 中恰有一个顶点、且该顶点为 $0\in M_\R$
+的格多面体。
+
+$M_\R$ 中的\emph{扇} $\Sigma$ 是一族严格凸有理多面体锥，使得
+
+(1) 若 $\sigma\in\Sigma$，且 $\tau\subseteq\sigma$ 是面，则 $\tau\in\Sigma$。
+
+(2) 若 $\sigma_1,\sigma_2\in\Sigma$，则 $\sigma_1\cap\sigma_2$ 是 $\sigma_1$ 与 $\sigma_2$ 的面。
+
+换言之，扇 $\Sigma$ 是某个集合 $|\Sigma|\subseteq M_\R$ 的多面体分解，其中多面体分解的所有元素
+都是严格凸有理多面体锥；$|\Sigma|$ 称为 $\Sigma$ 的\emph{支撑}（support）。
+
+若 $|\Sigma|=M_\R$，则称扇是\emph{完整的}（complete）。
+\end{definition}
+
+\begin{definition}
+设 $\Sigma$ 是 $M_\R$ 中的扇。$\Sigma$ 上的\emph{PL（分片线性）函数}是指连续函数
+$\varphi:|\Sigma|\to\R$，它在 $\Sigma$ 的每个锥上的限制都是线性的。
+
+若函数 $\varphi$ 满足
+
+(1) $|\Sigma|$ 是 $M_\R$ 中的凸集；
+
+(2) 对 $m,m'\in|\Sigma|$，有 $\varphi(m)+\varphi(m')\ge\varphi(m+m')$，且等号成立当且仅当
+$m,m'$ 落在 $\Sigma$ 的同一个锥中，
+
+则称 $\varphi$ 是\emph{严格凸的}。
+\end{definition}
+
+% [Tutor Note: 定义 1.7 的“恰有一个顶点、且该顶点为 $0$”是“严格凸”（strictly convex，亦称
+%   pointed／尖的）的几何内容：锥不含直线。等价说法是：存在 $m\in M_\R$ 使
+%   $\langle m,\cdot\rangle>0$ 在 $\sigma\setminus\{0\}$ 上成立。
+%   另：complete fan 本译本作“完整扇”（有的作者作“完备扇”），以便与 complete variety
+%   （完备簇）区分——第 3 章会同时用到这两个概念。]
+
+% [原文 p.12]
+若对每个 $\sigma\in\Sigma_{\max}$ 都存在 $n_\sigma\in N$，使 $n_\sigma$ 与 $\varphi$ 在
+$\sigma$ 上一致，则称函数 $\varphi$ 是\emph{整的}（integral）。
+
+严格凸 PL 函数 $\varphi:|\Sigma|\to\R$ 的\emph{Newton 多面体}是
+\[
+  \Delta_\varphi:=\{n\in N_\R \mid \varphi(m)+\langle n,m\rangle\ge 0
+  \text{ 对一切 }m\in|\Sigma|\}.
+\]
+函数 $\varphi$ 的 Newton 多面体无界，当且仅当 $\Sigma$ 不是完整扇。若 $\Sigma$ 是完整扇，
+则容易看出
+\[
+  \Delta_\varphi=\operatorname{Conv}(\{-n_\sigma \mid \sigma\in\Sigma_{\max}\}),
+\]
+其中 $n_\sigma\in N_\R$ 是线性函数 $\varphi|_\sigma$。注意 $\Sigma$ 中的锥与 $\Delta_\varphi$
+的面之间存在一一的、反包含的对应，其中 $\sigma\in\Sigma$ 对应于
+\[
+  \{n\in\Delta_\varphi \mid \varphi(m)+\langle n,m\rangle=0\text{ 对一切 }m\in\sigma\}.
+\]
+
+\begin{definition}
+若 $\Delta\subseteq N_\R$ 是多面体，$\sigma\subseteq\Delta$ 是面，则 $\Delta$ 沿 $\sigma$ 的
+\emph{法锥}是
+\[
+  N_\Delta(\sigma)=\{m\in M \mid m|_\sigma=\text{常数},\
+  \langle m,n\rangle\ge\langle m,n'\rangle\text{ 对一切 }n\in\Delta,\ n'\in\sigma\}.
+\]
+若 $\tau\subseteq\sigma$ 是子集，则 $T_\tau\sigma$ 表示 $\sigma$ 沿 $\tau$ 的\emph{切楔}
+（tangent wedge），定义为
+\[
+  T_\tau\sigma=\{r(m-m') \mid m\in\sigma,\ m'\in\tau,\ r\ge 0\}.
+\]
+$\Delta$ 的\emph{法扇}是
+\[
+  \check\Sigma_\Delta:=\{N_\Delta(\sigma) \mid \sigma\text{ 是 }\Delta\text{ 的面}\}.
+\]
+容易验证
+\begin{equation}
+  T_\sigma\Delta=(N_\Delta(\sigma))^\vee:=\{n\in N \mid \langle n,m\rangle\ge 0
+  \quad \forall m\in N_\Delta(\sigma)\}. \tag{1.3}
+\end{equation}
+$\Delta$ 的法扇 $\check\Sigma_\Delta$ 带有一个 PL 函数
+$\varphi_\Delta:|\check\Sigma_\Delta|\to\R$，定义为
+\[
+  \varphi_\Delta(m)=-\inf\{\langle n,m\rangle \mid n\in\Delta\}.
+\]
+容易看出，若 $\varphi:|\Sigma|\to\R$ 是严格凸的，则 $\Sigma$ 是 $\Delta_\varphi$ 的法扇。
+这实际上给出严格凸 PL 函数 $\varphi$（在扇 $\Sigma$ 上）与以 $\Sigma$ 为法扇的多面体 $\Delta$
+之间的一一对应。注意：给定 $\Delta$，有 $\Delta_{\varphi_\Delta}=\Delta$；给定
+$\varphi:|\Sigma|\to\R$，有 $\varphi_{\Delta_\varphi}=\varphi$。
+\end{definition}
+
+% [Tutor Note: (1.3) 中用的是对偶锥 $(\cdot)^\vee$（要求 $\langle n,m\rangle\ge 0$），
+%   不是极锥 $(\cdot)^\circ$（那会要求 $\le 0$）；两者相差一个整体符号，抄录时极易错。
+%   又：$\varphi_\Delta$ 定义中的负号 $-\inf$ 与 $\Delta_\varphi$ 定义中的 $\ge 0$ 必须配对，
+%   才能保证本段末的 $\Delta_{\varphi_\Delta}=\Delta$ 与 $\varphi_{\Delta_\varphi}=\varphi$ 同时成立；
+%   若把 $-\inf$ 写成 $+\inf$，则两个复合各差一个符号。
+%   核对锚点：取 $\Delta=[0,1]\subset\R$，则 $\varphi_\Delta(m)=-\inf_{0\le n\le 1}(nm)=\max(0,-m)$；
+%   代入 $\Delta_{\varphi_\Delta}$ 的定义，$m>0$ 要求 $n\ge 0$、$m<0$ 要求 $n\le 1$，
+%   恰得 $\Delta_{\varphi_\Delta}=[0,1]=\Delta$。]
+
+\begin{definition}
+若 $\Sigma$ 是 $M_\R$ 中的扇，$\tau\in\Sigma$，则定义 $\Sigma$ 沿 $\tau$ 的\emph{商扇}
+$\Sigma(\tau)$ 为 $M_\R/\R\tau$ 中的扇
+\[
+  \Sigma(\tau):=\{(\sigma+\R\tau)/\R\tau \mid \sigma\in\Sigma,\ \tau\subseteq\sigma\},
+\]
+其中 $\R\tau$ 是 $\tau$ 张成的线性空间。
+
+若 $\varphi:|\Sigma|\to\R$ 是 $\Sigma$ 上的 PL 函数，则 $\varphi$ 诱导出函数
+$\varphi(\tau):\Sigma(\tau)\to\R$，它在相差一个线性函数的意义下良定义，如下所示。选取
+$n\in N_\R$，使得 $m\in\tau$ 时 $\varphi(m)=\langle n,m\rangle$。于是对任何包含 $\tau$ 的
+$\sigma$，$\varphi|_\sigma-n$ 在 $\tau$ 上为零，因而下降为 $(\sigma+\R\tau)/\R\tau$ 上的
+线性函数。这些函数拼合起来给出 $\Sigma(\tau)$ 上的 PL 函数 $\varphi(\tau)$，它在相差一个
+线性函数（由 $n$ 的选取决定）的意义下良定义。
+
+注意，若 $\varphi$ 是严格凸的，则 $\varphi(\tau)$ 也是。若 $M'_\R=M_\R/\R\tau$、
+$N'_\R=\operatorname{Hom}(M'_\R,\R)$，则 $N'_\R=(\R\tau)^\perp$。于是容易看出，
+$\Delta_{\varphi(\tau)}$ 正是 $\Delta_\varphi$ 中对应于 $\tau$ 的那个面平移到 $n$ 之后的结果。
+\end{definition}
+
+% [Tutor Note: 定义 1.10 里的 $\R\tau$ 指 $\tau$ 张成的线性空间（$\tau$ 是锥，只含非负线性组合），
+%   而不是“$\tau$ 的实数倍数”这一字面读法；$\R\tau=\tau-\tau$。
+%   又：$\varphi(\tau)$ 只在“相差一个线性函数”的意义下确定，这是因为 $\tau$ 上的 $n$
+%   可以替换为 $n+n'$（$n'|_{M'_\R}=0$）。第 6 章讨论散射图时会反复用到这个“模线性函数”的约定。]
+
+\subsection{参数化热带曲线}
+
+% [原文 p.13]
+现在我们要利用 §1.1 中关于平衡条件的讨论，在更抽象的框架下定义热带曲线。理论上，
+对更高维的热带簇也可以给出类似的定义，但这里不这样做。
+
+设 $\overline\Gamma$ 是没有二价顶点的连通图。这样的图可以从两种角度看待。首先，它可以看作纯粹的
+组合对象，即一个顶点集 $\overline\Gamma^{[0]}$ 与一个边集 $\overline\Gamma^{[1]}$，后者由
+$\overline\Gamma^{[0]}$ 中元素的无序对构成，表示一条边的两个端点。
+
+我们也可以把 $\overline\Gamma$ 看作该图的拓扑实现，即由对应于各边的线段并成的拓扑空间。
+我们将随意混用这两种观点，但愿不至于引起混淆。
+
+设 $\overline\Gamma^{[0]}_\infty$ 是 $\overline\Gamma$ 的单价顶点之集，并记
+\[
+  \Gamma=\overline\Gamma\setminus\overline\Gamma^{[0]}_\infty .
+\]
+用 $\Gamma^{[0]},\Gamma^{[1]}$ 表示 $\Gamma$ 的顶点集与边集。这里我们把 $\Gamma$ 与
+$\overline\Gamma$ 都看作拓扑空间，所以 $\Gamma$ 现在带有一些非紧的边。设
+$\Gamma^{[1]}_\infty$ 是 $\Gamma$ 的非紧边之集。$\Gamma$ 的一个\emph{旗}（flag）是指一对
+$(V,E)$，其中 $V\in\Gamma^{[0]}$、$E\in\Gamma^{[1]}$ 且 $V\in E$。
+
+此外，所有图都将是带权图，即 $\overline\Gamma$ 附带一个权函数
+\[
+  w:\overline\Gamma^{[1]}\to\N=\{0,1,2,\dots\}.
+\]
+我们还将经常考虑\emph{带标记图} $(\Gamma,x_1,\dots,x_k)$，其中 $\Gamma$ 如上，而
+$x_1,\dots,x_k$ 是赋给权为 $0$ 的非紧边的标号，即给定一个包含映射
+\[
+  \begin{array}{rcl}
+    \{x_1,\dots,x_k\} & \hookrightarrow & \Gamma^{[1]}_\infty\\
+    x_i & \mapsto & E_{x_i}
+  \end{array}
+\]
+且 $w(E_{x_i})=0$。我们将采用本书的约定（它在热带文献中其实并不完全标准）：
+除非 $E=E_{x_i}$ 对某个 $x_i$ 成立，否则 $w(E)\neq 0$。
+
+现在我们可以定义 $M_\R$ 中的带标记参数化热带曲线了。这里照例 $M=\Z^n$、
+$M_\R=M\otimes_\Z\R$、$N=\operatorname{Hom}_\Z(M,\Z)$。
+
+\begin{definition}
+一条\emph{带标记参数化热带曲线}
+\[
+  h:(\Gamma,x_1,\dots,x_k)\to M_\R
+\]
+是满足下述两条性质的连续映射 $h$：
+
+(1) 若 $E\in\Gamma^{[1]}$ 且 $w(E)=0$，则 $h|_E$ 为常数；否则 $h|_E$ 是把 $E$ 真嵌入
+$M_\R$ 中某条有理斜率直线的一个嵌入。
+
+(2) \emph{平衡条件。}设 $V\in\Gamma^{[0]}$，$E_1,\dots,E_\ell\in\Gamma^{[1]}$ 是与 $V$
+相邻的边。设 $m_i\in M$ 是 $h(E_i)$ 的本原切向量，方向背离 $h(V)$。则
+\[
+  \sum_{i=1}^{\ell}w(E_i)m_i=0 .
+\]
+\end{definition}
+
+若 $h:(\Gamma,x_1,\dots,x_n)\to M_\R$ 是带标记参数化热带曲线，我们就把 $h(E_{x_i})$ 记作
+$h(x_i)$。
+
+% [Tutor Note: 记号 $\overline\Gamma$ 与 $\Gamma$ 的分工务必分清：$\overline\Gamma$ 是紧化的
+%   组合图（含单价顶点，故每条边都紧），权函数定义在 $\overline\Gamma^{[1]}$ 上；
+%   $\Gamma=\overline\Gamma\setminus\overline\Gamma^{[0]}_\infty$ 是去掉单价顶点后得到的
+%   拓扑空间，它的边可以是非紧的，$\Gamma^{[1]}_\infty$ 就是这些非紧边。
+%   因此定义 1.11 (1) 里的 $E$ 指的是 $\Gamma$ 的边；而“$h|_E$ 真嵌入”这一条对有非紧边的
+%   $\Gamma$ 才有意义（紧边上的真嵌入自动成立）。
+%   又：定义 1.11 之后那句原文作 $h:(\Gamma,x_1,\dots,x_n)\to M_\R$，与前后文一贯使用的
+%   $x_1,\dots,x_k$ 不一致，应系原书笔误；此处照录不改，读者按 $k$ 理解。]
+
+% [原文 p.14]
+若存在同胚 $\varphi:\Gamma\to\Gamma'$，使 $\varphi(E_{x_i})=E_{x'_i}$ 且 $h=h'\circ\varphi$，
+则称两条带标记参数化热带曲线 $h:(\Gamma,x_1,\dots,x_k)\to M_\R$ 与
+$h':(\Gamma',x'_1,\dots,x'_k)\to M_\R$ 是\emph{等价的}。我们定义\emph{带标记热带曲线}
+为带标记参数化热带曲线的一个等价类。
+
+$h$ 的\emph{亏格}是 $b_1(\Gamma)$。\hfill$\square$
+
+我们想谈论热带曲线的\emph{次数}，为此需要先固定一个扇 $\Sigma$。其实眼下我们只会用到 $\Sigma$
+中一维锥之集 $\Sigma^{[1]}$。用 $T_\Sigma$ 表示由 $\Sigma^{[1]}$ 生成的自由 Abel 群。
+对 $\rho\in\Sigma^{[1]}$，用 $t_\rho\in T_\Sigma$ 表示相应的生成元。我们有映射
+\[
+  \begin{array}{rcl}
+    r:T_\Sigma & \to & M\\
+    t_\rho & \mapsto & m_\rho
+  \end{array}
+\]
+其中 $m_\rho$ 是射线 $\rho$ 的本原生成元。
+
+\begin{definition}
+称带标记热带曲线 $h$ \emph{在 $X_\Sigma$ 中}，若对每条不是标记边的
+$E\in\Gamma^{[1]}_\infty$，$h(E)$ 都是某个 $\rho\in\Sigma^{[1]}$ 的平移。
+
+若 $h$ 是 $X_\Sigma$ 中的曲线，则 $h$ 的\emph{次数}是 $\Delta(h)\in T_\Sigma$，定义为
+\[
+  \Delta(h)=\sum_{\rho\in\Sigma^{[1]}}d_\rho t_\rho,
+\]
+其中 $d_\rho$ 是满足 $h(E)$ 为 $\rho$ 的平移的边 $E\in\Gamma^{[1]}_\infty$ 的数目，
+每条边按它的权 $w(E)$ 计重。
+
+对 $\Delta\in T_\Sigma$，$\Delta=\sum_{\rho\in\Sigma^{[1]}}d_\rho t_\rho$，定义
+\[
+  |\Delta|:=\sum_{\rho\in\Sigma^{[1]}}d_\rho .
+\]
+\end{definition}
+
+下面这个引理是平衡条件的一个直接应用，只需对 $\Gamma$ 的所有顶点求和即可得到：
+
+\begin{lemma}
+$r(\Delta(h))=0$。
+\end{lemma}
+
+\begin{example}
+设 $\Sigma$ 是 $\PP^2$ 的扇。这是 $M_\R=\R^2$ 中的完整扇，其一维射线为 $\rho_0,\rho_1,\rho_2$，
+分别由 $m_0=(-1,-1)$、$m_1=(1,0)$、$m_2=(0,1)$ 生成；见图 14。二维锥为 $\sigma_{i,i+1}$，
+下标模 $3$ 取值，其中 $\sigma_{i,i+1}$ 由 $m_i$ 与 $m_{i+1}$ 生成。我们将在第 3 章看到，
+这个扇把 $\PP^2$ 实现为一个环面簇（例 3.2）。特别地，我们将赋予符号“$X_\Sigma$”以意义
+——它其实是一个簇；而在这个特殊的 $\Sigma$ 的情形，$X_\Sigma=\PP^2$。于是图 2、图 3、图 4
+的例子都是 $X_\Sigma=\PP^2$ 中的热带曲线。图 2 的次数是 $t_{\rho_0}+t_{\rho_1}+t_{\rho_2}$，
+而图 3 与图 4 的次数是 $2(t_{\rho_0}+t_{\rho_1}+t_{\rho_2})$。一般而言，由上述引理，$\PP^2$
+中的热带曲线次数必为 $d(t_{\rho_0}+t_{\rho_1}+t_{\rho_2})$，此时我们说该曲线在 $\PP^2$ 中
+\emph{次数为 $d$}（比较例 1.6）。所以特别地，图 2 是一条热带直线，而 $\PP^2$ 中所有次数为
+$1$ 的曲线都只是这个例子的平移。图 3 与图 4 是热带二次曲线。
+\end{example}
+
+% [Tutor Note: 例 1.14 与引理 1.13 可以用图 2 直接核对：图 2 的三条非紧边分别平行于
+%   $\rho_0,\rho_1,\rho_2$（方向 $(-1,-1),(1,0),(0,1)$），权都是 $1$，故
+%   $\Delta(h)=t_{\rho_0}+t_{\rho_1}+t_{\rho_2}$；而
+%   $r(\Delta(h))=m_0+m_1+m_2=(-1,-1)+(1,0)+(0,1)=0$，正是引理 1.13。
+%   图 3、图 4 中每个方向各有两条非紧边，故次数为 $2(t_{\rho_0}+t_{\rho_1}+t_{\rho_2})$。]
+
+% [Tutor Note: 引理 1.13 的证明只用到“对顶点求和”：对每个 $V$ 取定义 1.11(2) 的式子
+%   $\sum_iw(E_i)m_i=0$ 再对 $V$ 求和。每条内部边在两端各出现一次、方向相反，故相消；
+%   剩下来的正是非紧边的贡献，按 $\Sigma^{[1]}$ 归并即得 $\sum_\rho d_\rho m_\rho=r(\Delta(h))$
+%   （带标记边权为 $0$，自动不出现）。这也解释了为什么 $r$ 的定义要与权求和配对。]
+
+% [原文 p.15]
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{f1_14.png}
+\figtitle{14}{$\PP^2$ 的扇。}
+\end{figure}
+
+现在很自然会问：这个新的热带曲线定义，与早先在 $\dim M_\R=2$ 时给出的 $M_\R$ 中热带超曲面
+的概念之间是什么关系？特别地，可以问 $h(\Gamma)$ 是否是 $M_\R$ 中的热带超曲面。当然，要提出
+这个问题，必须先为 $h(\Gamma)$ 定义权，因为 $h$ 一般不是嵌入。把 $h(\Gamma)$ 看作一维多面体复形，
+我们需要为 $h(\Gamma)$ 的每条边 $E$ 指定一个权 $w(E)$。我们这样定义。取一点 $m\in E$，
+它不是 $h(\Gamma)$ 的顶点，也不是 $\Gamma$ 的任何顶点的像，并定义
+\[
+  w(E)=\sum_{\substack{E'\in\Gamma^{[1]}\\ E'\cap h^{-1}(m)\neq\emptyset}}w(E'),
+\]
+也就是说，$E$ 的权等于那些在 $h$ 下的像包含 $m$ 的 $\Gamma$ 的边的权之和。容易验证：
+$h$ 上的平衡条件首先蕴涵这个权是良定义的，即不依赖于 $m$ 的选取；其次蕴涵 $h(\Gamma)$
+满足平衡条件。
+
+% [Tutor Note: $w(E)$ 的良定义性依赖 $h$ 的平衡条件（定义 1.11(2)）：若把 $m$ 沿 $E$ 移动到
+%   越过 $\Gamma$ 的某个顶点，则穿过该点的那些边的权向量和为零，故计数不变；而标记边权为 $0$
+%   且 $h$ 在其上为常数，因此不进入求和。这也说明“$h(\Gamma)$ 满足平衡条件”与
+%   “$h$ 满足平衡条件”是同一件事的两种说法，后者是前者的加细。]

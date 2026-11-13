@@ -1,0 +1,313 @@
+% ===== 原文 pp.82–89（PDF pp.89–96） =====
+% [原文 p.82]
+\section{阿贝尔范畴中成立的同调代数}
+
+3.7 节所讨论的关于阿贝尔群与 $R$-模成立的同调代数性质，在更一般的阿贝尔范畴中也成立。这里把其中基本的、且后面会用到的内容归纳一下。
+
+\begin{lemma}{4.52}[长正合列]
+给定阿贝尔范畴 $\cC$ 的复形的短正合列 $0\to X\xrightarrow{u}Y\xrightarrow{v}Z\to 0$ 时，存在态射 $\delta^i\colon H^i(Z)\to H^{i+1}(X)$，使得
+\[ \cdots\to H^i(X)\xrightarrow{H^i(u)}H^i(Y)\xrightarrow{H^i(v)}H^i(Z)\xrightarrow{\ \delta^i\ }H^{i+1}(X)\to\cdots \]
+构成正合列。
+\end{lemma}
+
+称它为从短正合列 $0\to X\xrightarrow{u}Y\xrightarrow{v}Z\to 0$ 所得到的\textbf{长正合列}（long exact sequence）。
+% [Tutor Note: 连接态射 $\delta^i$ 常称「边缘同态」或「连接映射」(connecting morphism)，其构造为蛇引理（snake lemma）的直接应用：在交换图表中取 $H^i(Z)$ 的元素、拉回到 $Z^i$、再沿 $v$ 拉回并沿 $u$ 下降 $i+1$ 次。可验证锚点：取阿贝尔群复形 $X=(0\to\mathbb{Z}\xrightarrow{2}\mathbb{Z}\to0)$、$Z=X[1]$ 的短正合列，则 $\delta^0$ 由乘以 $2$ 给出。]
+
+\begin{lemma}{4.53}[5 项引理（five lemma）]
+设阿贝尔范畴 $\cC$ 中如下交换图表
+\[\begin{tikzcd}[row sep=2.6em, column sep=2.6em]
+  A_1 \arrow[r,"a_1"] \arrow[d,"f_a"] & B_1 \arrow[r,"b_1"] \arrow[d,"f_b"] & C_1 \arrow[r,"c_1"] \arrow[d,"f_c"] & D_1 \arrow[r,"d_1"] \arrow[d,"f_d"] & E_1 \arrow[d,"f_e"] \\
+  A_2 \arrow[r,"a_2"] & B_2 \arrow[r,"b_2"] & C_2 \arrow[r,"c_2"] & D_2 \arrow[r,"d_2"] & E_2
+\end{tikzcd}\]
+满足：对每个 $i=1,2$，$A_i\xrightarrow{a_i}B_i\xrightarrow{b_i}C_i\xrightarrow{c_i}D_i\xrightarrow{d_i}E_i$ 都正合。此时以下成立。
+\begin{itemize}
+  \item 若 $f_a,f_b,f_d,f_e$ 是单射，则 $f_c$ 也是单射。
+  \item 若 $f_a,f_b,f_d,f_e$ 是满射，则 $f_c$ 也是满射。
+  \item 若 $f_a,f_b,f_d,f_e$ 是同构态射，则 $f_c$ 也是同构态射。
+\end{itemize}
+（当然，第 3 条事实由第 1、2 条事实可得。）
+\end{lemma}
+
+此外还有称为蛇引理（snake lemma）等者。这些在几乎所有的同调代数教科书中都有处理（[56, p13]，[36] 等）。
+% [Tutor Note: 5 项引理的「补出证明」要点：先对 $c\in\Ker f_c$ 用 $c_1$ 的交换性与 $b_2$ 的正合性找到 $b\in B_2$ 使 $b_2(b)=f_c(c)$（需 $f_c$ 与 $d_2$ 的关系保证 $d_2(b)=0$），再逐层拉回，最后用 $f_a$ 的单性得 $c=0$；满射部分对偶。蛇引理给出 $\Ker f_c\to\Coker f_a$ 的正合「蛇」序列。具体数例：在 $\Ab$ 中取 $A_i=B_i=\mathbb{Z}$、$C_i=\mathbb{Z}/2$，各行为 $0\to\mathbb{Z}\xrightarrow{2}\mathbb{Z}\to\mathbb{Z}/2\to0$，可核对 $f_c$ 的行为。]
+
+\section{范畴的局部化与导出范畴}
+
+设 $\cC$ 为范畴。通过与 $R$ 的局部化（2.2.6 节）平行的讨论，定义范畴的局部化。
+
+\begin{definition}{4.54}
+范畴 $\cC$ 的某一族态射 $S$ 在满足以下性质时，称为 $\cC$ 的\textbf{积闭系}（multiplicative system）。
+\begin{enumerate}[label=(S\arabic*)]
+  \item 对任意对象 $X\in\cC$，$\id_X\in S$。
+  \item 对任意的两个 $S$ 的元素 $f\colon X\to Y$、$g\colon Y\to Z$，有 $g\circ f\in S$。
+  \item 对任意 $\cC$ 的态射 $f\colon X\to Y$ 与 $S$ 的元素 $s\colon Y'\to Y$，存在 $\cC$ 的态射 $g\colon X'\to Y'$ 与 $S$ 的元素 $t\colon X'\to X$，使得
+        \begin{equation}
+          f\circ t=s\circ g \tag{4.14}
+        \end{equation}
+\end{enumerate}
+% [原文 p.83]
+反之，给定 $\cC$ 的态射 $g\colon X'\to Y'$ 与 $S$ 的元素 $t\colon X'\to X$ 时，存在满足 (4.14) 的 $\cC$ 的态射 $f\colon X\to Y$ 与 $S$ 的元素 $s\colon Y'\to Y$。
+\[\begin{tikzcd}[row sep=2.6em, column sep=3.2em]
+  X' \arrow[r,"g"] \arrow[d,"t"'] & Y' \arrow[d,"s"] \\
+  X \arrow[r,"f"'] & Y
+\end{tikzcd}\]
+\begin{enumerate}[label=(S\arabic*), start=4]
+  \item 对 $\cC$ 的两个态射 $f,g\colon X\to Y$，「存在 $s\in S$ 使 $s\circ f=s\circ g$」与「存在 $t\in S$ 使 $f\circ t=g\circ t$」等价。
+\end{enumerate}
+\end{definition}
+% [Tutor Note: 这里 (S3) 的两个方向被写成了「正反对应」：上半说「$f$ 与 $s$ 可补成方块」，下半说「$g$ 与 $t$ 也可补成方块」。这正是环的局部化里「右分母条件」与「左分母条件」的范畴化。]
+
+\begin{remark}{4.55}
+上述范畴的积闭系 $S$，对应于环的局部化（2.2.6 节）中的积闭集合 $S$ 同时满足右分母条件与左分母条件者。不过，由于 $\cC$ 未必是加法范畴，与环 $R$ 的加法相对应的结构在这里暂时不予考虑，而是这样来形式化的。也就是说，条件 (S4) 在 $\cC$ 是加法范畴时可以表述为「存在 $s$ 使 $s\circ(f-g)=0$」与「存在 $t$ 使 $(f-g)\circ t=0$」等价。
+\end{remark}
+
+\begin{definition}{4.56}
+对范畴 $\cC$ 与其积闭系 $S$，如下定义范畴 $\cC[S^{-1}]$。
+\begin{itemize}
+  \item $\Ob(\cC[S^{-1}]):=\Ob(\cC)$。
+  \item 各对象 $X,Y\in\cC[S^{-1}]$ 之间的态射集合定义为
+        \[ \Hom_{\cC[S^{-1}]}(X,Y):=\{(f,s)\mid f\colon X'\to Y,\ s\colon X'\to X,\ s\in S\}/\sim. \]
+        这里，等价关系 $\sim$ 是在 $(f,s)$ 与 $(g,t)$ 之间可由以下交换图表的存在而给出的关系。
+        \[\begin{tikzcd}[row sep=2.2em, column sep=3.4em]
+          & X_1 \arrow[dl,"s"'] \arrow[dr,"f"] & \\
+          X & \tilde{X} \arrow[l,"u"'] \arrow[u,"h"] \arrow[d,"h'"'] & Y \\
+          & X_2 \arrow[ul,"t"'] \arrow[ur,"g"] &
+        \end{tikzcd}\qquad u\in S\]
+        这里态射 $h,h'$ 未必是 $S$ 的元素。$\Hom_{\cC[S^{-1}]}(X,Y)$ 中由 $(f,s)$ 代表的元素记作 $[(f,s)]$。
+  \item 对态射 $[(f,s)]\in\Hom_{\cC[S^{-1}]}(X,Y)$、$[(g,t)]\in\Hom_{\cC[S^{-1}]}(Y,Z)$，合成 $[(g,t)]\circ[(f,s)]\in\Hom_{\cC[S^{-1}]}(X,Z)$ 如下定义。
+        取代表元 $(f,s)$、$(g,t)$，则由条件 (4.14)，存在 $X''\in\cC$、$u\colon X''\to X'$、$u\in S$、$h\colon X''\to Y'$ 使得 $u\circ f=h\circ t$。
+        \[\begin{tikzcd}[row sep=2.6em, column sep=2.8em]
+          & X'' \arrow[dl,"u"'] \arrow[dr,"h"] & \\
+          X' \arrow[d,"s"'] \arrow[dr,"f"'] & & Y' \arrow[dl,"t"'] \arrow[d,"g"] \\
+          X & Y & Z
+        \end{tikzcd}\]
+\end{itemize}
+
+% [原文 p.84]
+由此，定义 $[(g,t)]\circ[(f,s)]:=[(g\circ h,s\circ u)]$。
+\end{definition}
+
+以下，把态射 $[(f,s)]\in\Hom_{\cC[S^{-1}]}(X,Y)$ 与「由满足环 $R$ 的左分母条件的积闭集合 $S$ 所作局部化 $[S^{-1}]R$ 的元素 $[(a,s)]=s^{-1}a$」相对应，就比较易于看清。\footnote{把环中的乘法结构 $a\cdot b$ 与范畴中的合成相对应时，态射 $f\colon X\to Y$ 与 $g\colon Y\to Z$ 的合成写作 $g\circ f$，而作为图则是 $X\xrightarrow{f}Y\xrightarrow{g}Z$，故会想写成 $f\cdot g$。若把乘法结构与合成 $g\circ f$ 相对应，则按上述定义所得的 $\cC[S^{-1}]$ 应与由满足右分母条件的积闭集合 $S$ 所作的局部化 $R[S^{-1}]$ 相对应；在这个意义上我们记作 $\cC[S^{-1}]$。但这里是在与图 $X\xrightarrow{f}Y\xrightarrow{g}Z$ 相对应的意义上考虑 $[S^{-1}]R$ 的。这类事情是记号上常见的问题，按各人喜好用自己喜欢的方式考虑即可。总之，把环的局部化中的讨论图式化，以此来确认本章中省略的证明，是一个好的习题。}
+
+为了确认范畴 $\cC[S^{-1}]$ 确实是矛盾无误地定义了的，需要证明：$\sim$ 确实给出等价关系；积 $[(g,t)]\circ[(f,s)]$ 不依赖于 $u,h$ 的取法。而这些都可以通过与环的局部化 $[S^{-1}]R$ 的情形平行的讨论来证明。
+
+\begin{lemma}{4.57}
+当 $\cC$ 是加法范畴时，$\cC[S^{-1}]$ 也是加法范畴。
+\end{lemma}
+
+\begin{proof}
+只需定义 $[(f,s)],[(g,t)]\in\Hom_{\cC[S^{-1}]}(X,Y)$ 的和即可。这也与环的局部化的情形同样地定义。由条件 (4.14)，存在 $X'\in\cC$、$h,h'\colon X'\to X$ 使得 $s\circ h=t\circ h'=:u\in S$；取这样的一组，并令
+\[ [(f,s)]+[(g,t)]:=[(f\circ h+g\circ h',u)], \]
+即可确认它不依赖于代表元以及 $h,h'$ 的选法而确定。
+\end{proof}
+
+\begin{theorem}{4.58}[普遍性]
+设 $\cC$ 为范畴，$S$ 为其积闭系。此时，
+\begin{enumerate}[label=(\roman*)]
+  \item 存在范畴 $\cC_S$ 与函子 $\epsilon\colon\cC\to\cC_S$，且当存在范畴 $\cC'$ 与函子 $F\colon\cC\to\cC'$（使所有 $S$ 的元素在 $F$ 下的像都是同构态射）时，存在唯一的函子 $F'\colon\cC_S\to\cC'$ 满足 $F=F'\circ\epsilon$。
+  \item 这样的范畴 $\cC_S$ 必定与范畴 $\cC[S^{-1}]$ 同构。
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+令 $\cC_S=\cC[S^{-1}]$，$\epsilon\colon\cC\to\cC[S^{-1}]$ 为由对应 $f\mapsto[(f,\id_X)]$（$f\in\Hom_{\cC}(X,Y)$）所确定的函子，只需确认它们满足条件 (i)。这可以通过原样平行地追循环的局部化的情形（定理 2.43）的证明来得到。满足条件 (i) 的 $\cC_S$ 的（除同构外的）唯一性也由关于普遍性的通常讨论得到。
+\end{proof}
+
+在这一事实中，若 $\cC,\cC'$ 是加法范畴且 $F\colon\cC\to\cC'$ 是加性函子，则 $\cC_S$ 是加法范畴，且可知上面唯一确定的函子 $F'\colon\cC_S\to\cC'$ 也成为加性函子。
+
+\begin{remark}{4.59}
+在 $\cC[S^{-1}]$ 的定义中，只使用了环的局部化中所谓的右分母条件。类似地，使用与左分母条件相对应的东西，可以定义 $[S^{-1}]\cC$。此时，$\Hom_{[S^{-1}]\cC}(X,Y)$ 的元素作为 $(f,s)$、
+% [原文 p.85]
+\[\begin{tikzcd}[row sep=2.6em, column sep=3.2em]
+  X \arrow[dr,"f"] & & \\
+  & Y' & \\
+  & Y \arrow[u,"s"']
+\end{tikzcd}\]
+的适当定义的同值类而被确定。于是由普遍性（定理 4.58），存在范畴的同构 $[S^{-1}]\cC\simeq\cC_S\simeq\cC[S^{-1}]$。
+\end{remark}
+
+以下把 $\cC[S^{-1}]$ 记作 $\cC_S$，并称为 $\cC$ 的由 $S$ 所作的\textbf{局部化}。
+% [Tutor Note: 综上，$\cC[S^{-1}]$ 与 $[S^{-1}]\cC$ 是同一个范畴的两种「分母」写法（同构），本书统一取 $\cC_S$。记号上的取舍见 p84 的脚注。]
+
+\begin{lemma}{4.60}
+设 $\cC$ 为阿贝尔范畴，$K(\cC)$ 为其同伦范畴。设 $S$ 为 $K(\cC)$ 的拟同构的族。此时，$S$ 构成积闭系。类似地，在 $K^+(\cC)$、$K^-(\cC)$、$K^b(\cC)$ 中，其中的拟同构之族也构成积闭系。
+\end{lemma}
+
+这个证明通过关注进入 $K(\cC)$ 的三角范畴的结构而被简化，故将在 5.3 节（命题 5.28）中给出。
+% [Tutor Note: 积闭系 (S1)(S2) 是显然的（恒等是拟同构；拟同构的合成是拟同构）。(S3) 与 (S4) 的本质是「三角范畴中拟同构构成局部化系」：对态射 $f$ 与拟同构 $s$，需要在 $K(\cC)$ 中用写像锥的旋转构作出补全方块。作者把这一论证推迟到 5.3 节，是因为那里证明了同伦范畴是三角范畴)]
+
+\begin{definition}{4.61}
+设 $\cC$ 为阿贝尔范畴，$S$ 为 $K(\cC)$ 的拟同构之族所构成的积闭系。称 $D(\cC):=(K(\cC))_S$ 为 $\cC$ 的\textbf{导出范畴}（derived category）。类似地，可以定义下有界的导出范畴 $D^+(\cC)$、上有界的导出范畴 $D^-(\cC)$、有界的导出范畴 $D^b(\cC)$。
+\end{definition}
+
+\section{投射分解与导出范畴}
+
+\subsection{投射分解与同调维数}
+
+首先把 $R$-模情形的投射模等概念移植到一般阿贝尔范畴的设定中。
+
+\begin{definition}{4.62}
+设 $\cC$ 为阿贝尔范畴。对象 $P\in\cC$ 称为\textbf{投射的}（projective），是指对 $\cC$ 中所有的满射 $\pi\colon X\to Y$，存在态射 $f\colon P\to Y$ 的提升 $\tilde{f}\colon P\to X$，也就是说存在使 $f=\pi\circ\tilde{f}$ 的态射 $\tilde{f}\colon P\to X$。
+\end{definition}
+% [Tutor Note: 底本定義4.62 前半印作「提升 $\tilde{f}\colon P\to Y$ 存在」；据作者正誤表（2014-05-20 版）p85 条订正为 $\tilde{f}\colon P\to X$。译文按订正后书写（提升的目标为 $X$，这与原书同句后半所印的 $\tilde{f}\colon P\to X$ 一致）。]
+
+\begin{definition}{4.63}
+阿贝尔范畴 $\cC$ 的对象 $X\in\cC$ 的\textbf{投射分解}（projective resolution），是指某个正合列
+\[ 0\leftarrow X\xleftarrow{\ p_0\ }P_0\xleftarrow{\ p_1\ }P_1\xleftarrow{\ p_2\ }P_2\leftarrow\cdots, \]
+其中对象 $P_0,P_1,P_2,\dots\in\cC$ 都是投射的。
+\end{definition}
+
+\begin{definition}{4.64}
+若对阿贝尔范畴 $\cC$ 的所有对象 $X\in\cC$，都存在投射对象 $P\in\cC$ 与满射 $X\leftarrow P$，则称 $\cC$ \textbf{具有足够多的投射对象}（enough projective）。
+\end{definition}
+
+当阿贝尔范畴 $\cC$ 具有足够多的投射对象时，所有 $\cC$ 的对象都有投射分解。实际上，对 $X\in\cC$，存在从投射对象 $P_0\in\cC$ 出发的满射 $P_0\to X$，而 $\cC$ 是阿贝尔范畴，故得到短正合列
+\begin{equation}
+  0\leftarrow X\leftarrow P_0\leftarrow X_1\leftarrow 0 \tag{4.15}
+\end{equation}
+
+% [原文 p.86]
+存在。进而对 $X_1$，得到以 $P_1\in\cC$ 为投射对象的短正合列
+\begin{equation}
+  0\leftarrow X_1\leftarrow P_1\leftarrow X_2\leftarrow 0 \tag{4.16}
+\end{equation}
+反复这样做，便对 $i=1,2,\dots$ 得到以 $P_i\in\cC$ 为投射对象的短正合列
+\[ 0\leftarrow X_i\leftarrow P_i\leftarrow X_{i+1}\leftarrow 0, \]
+而把 (4.16) 的 $X_1$「代入」(4.15) 的 $X_1$，便得到正合列
+\[ 0\leftarrow X\leftarrow P_0\leftarrow P_1\leftarrow X_2\leftarrow 0 \]
+（这样得到的确实是正合列，这一点可以直接确认）；反复这样做，便得到正合列（投射分解）
+\[ 0\leftarrow X\leftarrow P_0\leftarrow P_1\leftarrow P_2\leftarrow\cdots. \]
+特别地，若在某个 $i=k$ 处 $X_{k+1}=0$，则得到投射分解
+\begin{equation}
+  0\leftarrow X\leftarrow P_0\leftarrow P_1\leftarrow\cdots\leftarrow P_k\leftarrow 0 \tag{4.17}
+\end{equation}
+此时，称这个投射分解 (4.17) 的\textbf{长度}（length）为 $k$。无限延续的投射分解的长度定为 $\infty$。
+% [Tutor Note: 这里「反复代入」的实质是：每一步取 $P_{i+1}\to X_{i+1}$ 为满射（$P_{i+1}$ 投射），把短正合列 $0\leftarrow X_i\leftarrow P_i\leftarrow X_{i+1}\leftarrow 0$ 与 $0\leftarrow X_{i+1}\leftarrow P_{i+1}\leftarrow X_{i+2}\leftarrow 0$ 拼接，得到 $0\leftarrow X_i\leftarrow P_i\leftarrow P_{i+1}\leftarrow X_{i+2}\leftarrow 0$；第 $i$ 处正合性由两个短正合列拼接保持。可验证锚点：$\cC=\Mod\text{-}\mathbb{Z}$ 时，$X=\mathbb{Z}/2$ 的投射分解为 $\cdots\to0\to\mathbb{Z}\xrightarrow{2}\mathbb{Z}\to\mathbb{Z}/2\to0$，长度为 $1$。]
+
+\begin{definition}{4.65}
+对对象 $X\in\cC$，把 $X$ 的（长度有限的）投射分解中长度的最小值记作 $\mathrm{pd}(X)$，并称为 $X$ 的\textbf{投射维数}（projective dimension）。若最小值不存在，则令 $\mathrm{pd}(X)=\infty$。
+\end{definition}
+
+\begin{definition}{4.66}
+当阿贝尔范畴 $\cC$ 具有足够多的投射对象时，称
+\[ \sup_{X\in\Ob(\cC)}\mathrm{pd}(X) \]
+为 $\cC$ 的\textbf{同调维数}（homological dimension）。\footnote{也称为大域维数（global dimension）。}若存在使 $\mathrm{pd}(X)=\infty$ 的对象 $X\in\cC$，则称同调维数为无穷大。
+\end{definition}
+
+\subsection{为什么是导出范畴？}
+
+在某个阿贝尔范畴 $\cC$ 中，设某个对象 $X\in\cC$ 具有投射分解。此时，得到以下复形之间的拟同构映射。
+\begin{equation}
+\begin{tikzcd}[row sep=2.6em, column sep=2.2em]
+  \cdots \arrow[r,"p_3"] & P_2 \arrow[r,"p_2"] \arrow[d,"0"] & P_1 \arrow[r,"p_1"] \arrow[d,"0"] & P_0 \arrow[r,"0"] \arrow[d,"p_0"] & 0 \arrow[r,"0"] \arrow[d,"0"] & 0 \arrow[r,"0"] \arrow[d,"0"] & \cdots \\
+  \cdots \arrow[r] & 0 \arrow[r] & 0 \arrow[r] & X \arrow[r,"0"] & 0 \arrow[r] & 0 \arrow[r] & \cdots
+\end{tikzcd} \tag{4.18}
+\end{equation}
+
+投射对象具有各种良好的性质，因此我们想把 $X\in\cC$ 与 (4.18) 下段的复形 $\cdots\to 0\to X\to 0\to\cdots$ 等同视之，并把该复形替换为上段由投射对象组成的复形 $P\colon\cdots\to P_2\to P_1\to P_0\to 0\to\cdots$。这样一来，
+% [Tutor Note: (4.18) 是本节的核心图：竖箭 $P_0\to X$ 是 $p_0$，其余竖箭皆为 $0$。上段复形 $P$ 与下段复形（只在一个位置有 $X$）之间的这个复形态射是拟同构（因为两者上同调都只在 $0$ 次处为 $X$，其余为 $0$）。这正是「用投射分解代替 $X$」的正式说法。]
+
+% [原文 p.87]
+首先必须把所考虑的范畴扩充为以原出发点阿贝尔范畴 $\cC$ 中的复形为对象的范畴 $\Comp(\cC)$。考虑全部复形态射过于庞大，因此考虑其同伦范畴 $K(\cC)$ 是自然的。然而，我们想把 $X\in K(\cC)$ 替换为与它等价的东西，而 $P$ 在 $K(\cC)$ 中一般并不与 $X$ 同构。实际上，拟同构映射一般不是 $\Comp(\cC)$ 的同伦等价映射，从而在 $K(\cC)$ 中不是同构映射。在 3.5.2 节中我们已经看过关于这一事实的具体例子。因此，我们想构造使拟同构映射成为同构映射的范畴。这就是通过局部化的操作从 $K(\cC)$ 所得到的导出范畴 $D(\cC)$。
+
+\subsection{阿贝尔范畴向导出范畴的嵌入}
+
+设 $\cC$ 为阿贝尔范畴，$D(\cC)$ 为其导出范畴。$\cC$ 的对象 $X$ 可以通过把它与复形 $\cdots\to 0\to X\to 0\to\cdots$ 等同视之，而视为 $D(\cC)$ 的对象 $X\in D(\cC)$。类似地，$\cC$ 的态射 $f\colon X\to Y$ 也可以通过考虑复形态射
+\[\begin{tikzcd}[row sep=2.4em, column sep=1.9em]
+  \cdots \arrow[r] & 0 \arrow[r] \arrow[d,"0"] & 0 \arrow[r] \arrow[d,"0"] & 0 \arrow[r] \arrow[d,"0"] & X \arrow[r] \arrow[d,"f"] & 0 \arrow[r] \arrow[d,"0"] & 0 \arrow[r] \arrow[d,"0"] & 0 \arrow[r] \arrow[d,"0"] & \cdots \\
+  \cdots \arrow[r] & 0 \arrow[r] & 0 \arrow[r] & 0 \arrow[r] & Y \arrow[r] & 0 \arrow[r] & 0 \arrow[r] & 0 \arrow[r] & \cdots
+\end{tikzcd}\]
+而视为 $D(\cC)$ 中的态射 $f\in\Hom_{D(\cC)}(X,Y)$。那么，$\Hom_{\cC}(X,Y)$ 与 $\Hom_{D(\cC)}(X,Y)$ 之间有什么样的对应呢？实际上，在良好的假设下以下成立。
+
+\begin{proposition}{4.67}
+设阿贝尔范畴 $\cC$ 具有足够多的投射对象。此时，$\cC$ 是 $D(\cC)$ 的全子范畴。
+\end{proposition}
+
+如果代替 $D(\cC)$ 而考虑有界导出范畴 $D^b(\cC)$，则类似的事实只要 $\cC$ 的同调维数有限便成立。
+% [Tutor Note: 「$\cC$ 是 $D(\cC)$ 的全子范畴」的意思是：自然函子 $\cC\to D(\cC)$（$X\mapsto$ 集中在 $0$ 次的复形）是全忠实的。证明见下。注意这需要「足够多的投射对象」；若没有该假设，$\cC$ 一般只是 $\cC\subset D(\cC)$ 的子范畴而非全子范畴。]
+
+\begin{proof}
+对 $X,Y\in\cC\subset D(\cC)$，证明由自然的等同视之可得 $\Hom_{\cC}(X,Y)=\Hom_{D(\cC)}(X,Y)$。
+
+如 (4.18) 那样取 $X\in\cC$ 的一个投射分解，把对应的复形记作 $P\in D(\cC)$。此时 $X\in D(\cC)$ 与复形 $P\in D(\cC)$ 同构，故 $\Hom_{D(\cC)}(X,Y)\simeq\Hom_{D(\cC)}(P,Y)$。
+
+另一方面，在 $\cC$ 的复形所构成的范畴的同伦范畴 $K(\cC)$ 中，$\Hom_{K(\cC)}(P,Y)$ 的元素是满足 $f'\circ p_1=0$ 的、下图式
+\begin{equation}
+\begin{tikzcd}[row sep=2.6em, column sep=2.4em]
+  \cdots \arrow[r,"p_3"] & P_2 \arrow[r,"p_2"] \arrow[d,"0"] & P_1 \arrow[r,"p_1"] \arrow[d,"0"] & P_0 \arrow[r,"0"] \arrow[d,"f'"] & 0 \arrow[r,"0"] \arrow[d,"0"] & 0 \arrow[r,"0"] \arrow[d,"0"] & \cdots \\
+  \cdots \arrow[r] & 0 \arrow[r] & 0 \arrow[r] & Y \arrow[r,"0"] & 0 \arrow[r] & 0 \arrow[r] & \cdots
+\end{tikzcd} \tag{4.19}
+\end{equation}
+中的射 $f'\colon P_0\to Y$。（注意从 $P_0$ 到 $Y$ 的零同伦态射只有 $0$。）由 $X\simeq\Coker(p_1)$，
+
+% [原文 p.88]
+因此，这样的态射 $f'$ 必定经过 $p_0\colon P_0\to X$ 分解。也就是说，存在唯一的态射 $f$ 使 $f'=f\circ p_0$。由此得 $\Hom_{K(\cC)}(P,Y)\simeq\Hom_{\cC}(X,Y)$，从而证明了对应
+\[ \Hom_{\cC}(X,Y)\longrightarrow\Hom_{K(\cC)}(X,Y) \]
+是同构。
+
+实际上，作为关于投射分解的事实，由后面将讨论的定理 5.36、系 5.43，此时有
+\[ \Hom_{D(\cC)}(P,Y)=\Hom_{D^-(\cC)}(P,Y)=\Hom_{K^-(\cC)}(P,Y)=\Hom_{K(\cC)}(P,Y) \]
+这一事实，由此完成证明。
+\end{proof}
+
+这样，通过取投射分解，便得到了阿贝尔范畴的态射与导出范畴的态射之间的对应；而利用投射分解，还可以在阿贝尔范畴的框架内定义导出范畴所拥有的信息。例如，在刚才的讨论中所得到的 $\Hom_{\cC}(X,Y)$ 与 $\Hom_{D(\cC)}(X,Y)$ 的等同视之中，$\Hom_{D(\cC)}(X,Y)=\Hom_{K(\cC)}(P,Y)$ 的元素是复形 (4.19) 的态射。类似地，对整数 $k\ge 0$，也可以考虑复形态射
+\[\begin{tikzcd}[row sep=2.6em, column sep=2.4em]
+  \cdots \arrow[r,"p_{k+3}"] & P_{k+2} \arrow[r,"p_{k+2}"] \arrow[d,"0"] & P_{k+1} \arrow[r,"p_{k+1}"] \arrow[d,"0"] & P_k \arrow[r,"p_k"] \arrow[d,"f'"] & P_{k-1} \arrow[r,"p_{k-1}"] \arrow[d,"0"] & \cdots \\
+  \cdots \arrow[r] & 0 \arrow[r] & 0 \arrow[r] & Y \arrow[r] & 0 \arrow[r] & \cdots
+\end{tikzcd}\]
+把同伦范畴中这样的态射空间表示为
+\begin{equation}
+  \Ext^k_{\cC}(X,Y):=\Hom_{K(\cC)}(P,Y[k]) \tag{4.20}
+\end{equation}
+这里，$Y[k]$ 是把复形 $Y$ 的次数平移 $k$、使 $-k$ 次项处出现 $Y\in\cC$ 而得到的复形。也就是说，它是把复形的\textbf{悬挂}（定义 3.23）施行 $k$ 次所得者。特别地，$k=0$ 的情形有 $\Ext^0_{\cC}(X,Y)\simeq\Hom_{\cC}(X,Y)$。这个 $\Ext^k_{\cC}(X,Y)$ 是下一章将说明的、称为导出函子者的主要例子。
+
+由导出范畴的定义，对 $k\ge 0$ 有
+\[ \Ext^k_{\cC}(X,Y)\simeq\Hom_{D(\cC)}(X,Y[k]). \]
+特别地，若 $X=P\in\cC$ 是投射对象，则作为投射分解可以取自身，故当 $k>0$ 时
+\begin{equation}
+  \Hom_{D(\cC)}(X,Y[k])\simeq\Ext^k_{\cC}(X,Y)=0 \tag{4.21}
+\end{equation}
+成立。
+% [Tutor Note: 式 (4.21) 是「投射对象没有高次 Ext」这一经典事实的导出范畴表述。可验证锚点：在 $\Mod\text{-}\mathbb{Z}$ 中取 $X=\mathbb{Z}$（投射）、$Y=\mathbb{Z}/2$，则对 $k>0$ 有 $\Ext^k_{\mathbb{Z}}(\mathbb{Z},\mathbb{Z}/2)=0$，而 $\Ext^1_{\mathbb{Z}}(\mathbb{Z}/2,\mathbb{Z}/2)\cong\mathbb{Z}/2\ne0$（此时 $X=\mathbb{Z}/2$ 不是投射的）。]
+
+\subsection{导出函子与上同调}
+
+上面的 $\Ext^r(X,Y)$ 是阿贝尔范畴中称为导出函子者的典型例子。导出函子是定义在阿贝尔范畴上的一类上同调，由以下步骤定义。
+% [Tutor Note: 底本此处印作「$\Ext^r(X,Y)$」（上标为 $r$），而本节前后均用 $\Ext^k(X,Y)$，故 $r$ 应为 $k$ 之误。作者正誤表未列此条，正文按底本照印，仅在此说明。]
+% [原文 p.89]
+\begin{definition}{4.68}
+设 $\cC,\cC'$ 为阿贝尔范畴。（共变）函子 $F\colon\cC\to\cC'$ 若对 $\cC$ 的所有短正合列
+\[ 0\to X\xrightarrow{u}Y\xrightarrow{v}Z\to 0 \]
+都使 $\cC'$ 中以下的序列 (L)、(R) 分别正合，则分别称为\textbf{左正合函子}（left exact functor）、\textbf{右正合函子}（right exact functor）。
+\begin{align*}
+  \text{(L)}\quad & 0\to F(X)\xrightarrow{F(u)}F(Y)\xrightarrow{F(v)}F(Z),\\
+  \text{(R)}\quad & F(X)\xrightarrow{F(u)}F(Y)\xrightarrow{F(v)}F(Z)\to 0.
+\end{align*}
+右正合且左正合时，称为\textbf{正合函子}（exact functor）。
+
+对反变函子 $F\colon\cC\to\cC'$，也在 (L)、(R) 中把态射的方向反转，从而分别定义右正合性、左正合性。
+\end{definition}
+
+\begin{definition}{4.69}
+设 $\cC$ 为阿贝尔范畴，$F\colon\cC\to\cC'$ 为反变左正合函子。当 $\cC$ 充分含有投射对象时，对 $X\in\cC$，取其一个投射分解
+\[ \cdots\xrightarrow{p_2}P_1\xrightarrow{p_1}P_0\xrightarrow{p_0}X\to 0, \]
+并取 $\cC'$ 中的复形
+\[ 0\xrightarrow{d^{-1}}F(P_0)\xrightarrow{d^0}F(P_1)\xrightarrow{d^1}\cdots,\qquad d^{-1}=0,\quad d^i:=F(p_{i+1}),\ i\ge 0 \]
+的 $n$ 次上同调
+\[ \mathrm{R}^nF(X):=\Ker(d^n)/\Img(d^{n-1}),\qquad n=0,1,2,\dots \]
+为 $F$ 的 $n$ 次\textbf{右导出函子}（derived functor）。
+\end{definition}
+% [Tutor Note: 底本定義4.69 的射影分解图式印作「$\cdots\xrightarrow{p_1}P_1\xrightarrow{p_1}P_0\xrightarrow{p_0}X\to0$」（前两个箭头都标 $p_1$）；据作者正誤表（2014-05-20 版）p89 条订正为「$\cdots\xrightarrow{p_2}P_1\xrightarrow{p_1}P_0\xrightarrow{p_0}X\to0$」。译文按订正后书写。]
+
+这个定义不依赖于 $X$ 的投射分解的取法一事，由后面将讨论的系 5.35 可得。
+
+类似地，对于内射分解与右正合函子，定义左导出函子。
+% [Tutor Note: 定义 4.69 的记号约定值得注意：$F$ 是反变函子，故 $F(p_{i+1})\colon F(P_{i+1})\to F(P_i)$，于是 $0\to F(P_0)\to F(P_1)\to\cdots$ 确实是复形；$d^{-1}=0$ 的约定使 $\mathrm{R}^0F(X)=\Ker(d^0)=F(X)$（当 $F$ 左正合时）。\mathrm{R}^n 的「R」来自 right derived。]
+
+可以确认反变函子 $F:=\Hom_{\cC}(\quad,Y)$ 是左正合的。此时可知 $\mathrm{R}^nF(X)=\Ext^n(X,Y)$ 成立。
+% [Tutor Note: 这里的核对：对短正合列 $0\to X\to Y'\to Z\to 0$，$\Hom(\quad,Y)$ 给出 $0\to\Hom(Z,Y)\to\Hom(Y',Y)\to\Hom(X,Y)$ 正合（左正合）；而取 $X$ 的投射分解 $P_\bullet$，$F(P_i)=\Hom(P_i,Y)$，其第 $n$ 次上同调正是 $\Ext^n(X,Y)$。可验证锚点：$X=\mathbb{Z}/2$、$Y=\mathbb{Z}$ 于 $\Mod\text{-}\mathbb{Z}$ 中，$\Ext^1(\mathbb{Z}/2,\mathbb{Z})=\mathbb{Z}/2$（用 $\mathbb{Z}\xrightarrow{2}\mathbb{Z}\to\mathbb{Z}/2\to0$ 的投射分解，对 $\Hom(\quad,\mathbb{Z})$ 取上同调）。]
+
+此外还有若干导出函子的典型例子（见 [17]、[23]、[34]、[36] 等）。导出函子对阿贝尔范畴 $\cC$ 的对象确定各种各样的上同调；而一旦构成导出范畴 $D(\cC)$，在以三角范畴的框架处理它时，其上同调函子（定义 5.10）便包含了导出函子的信息。
+% [Tutor Note: 这句是通向第 5 章的伏笔：$\mathrm{R}^nF$ 可表为 $D(\cC)$ 上的上同调函子 $H^n$ 与 $F$ 的导出函子之合成。第 5 章 定義5.10 给出三角范畴的上同调函子的公理化刻画。]
+
+\para{文献。}作为范畴论的基础，有 MacLane（三好/高木译）[39]、Iversen（前田译）[23]，小林 [36]、森田 [44] 中也有部分关于范畴论的解说。关于导出范畴，有 Gelfand-Manin [17]、Kashiwara-Schapira [34]、Weibel [56]；此外，作为日文书、日译书，Iversen（前田译）[23]、堀田·谷崎 [22]、柏原 [33] 中也有简明的解说。

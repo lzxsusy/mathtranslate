@@ -1,0 +1,437 @@
+% 原书 p.307–p.313（PDF p.315–p.321）
+\section{第 $i$ 个导出函子及其计算（$i$-th Derived Functor and Its Computation）}
+
+\begin{keytakeaways}
+\begin{itemize}
+  \item 几何图像：导出函子 $R^i f$ 把「正合三角」机械地变成「长正合列」，从而
+        弥补 $f$ 只是左正合、不能保持短正合列的缺陷。
+  \item 数学工具：$R^if:=H^i\circ Rf$（(10.23)）；内射对象与内射消解
+        （定义 10.5.2、(10.26)）；Tic-Tac-Toe 引理（引理 10.5.1）以及计算公式
+        $R^if(\mathcal F)=\ker f(\psi_i)/\operatorname{im}f(\psi_{i-1})$（(10.29)）。
+  \item 本节结论：层上同调 $H^i(X;\mathcal F)=R^i\Gamma(X,\mathcal F)$ 是导出函子
+        的具体实现；$\Op{Ext}$、$\Op{Tor}$ 分别是 $\Hom$、$\otimes$ 的导出函子；
+        导出函子的复合满足 Grothendieck 公式 $R\mathcal G\circ R\mathcal F
+        =R(\mathcal G\circ\mathcal F)$。
+\end{itemize}
+\end{keytakeaways}
+
+% >>> p315
+众所周知（见习题），在同伦范畴 $K(\mathcal A)$ 中，正合三角
+$C^{\bullet}\to D^{\bullet}\to E^{\bullet}\to C^{\bullet}[1]$
+只要取上同调群，就诱导出长正合列：
+\begin{equation}\tag{10.22}
+  \cdots\to H^{*}(C^{\bullet};\mathbf{k})
+  \to H^{*}(D^{\bullet};\mathbf{k})
+  \to H^{*}(E^{\bullet};\mathbf{k})
+  \to H^{*+1}(C^{\bullet};\mathbf{k})\to\cdots .
+\end{equation}
+$D(\mathcal A)$ 中出现同样的现象，因为 $D(\mathcal A)$ 中的正合三角来自
+$K(\mathcal A)$ 中的正合三角（见注 10.4.3）。这启发下述定义：它把 (10.20) 中的
+导出函子 $Rf$ 与取上同调群的操作结合起来。
+
+% >>> p316
+\begin{wdefn}{10.5.1}
+若 $f:\mathcal A\to\mathcal B$ 是左正合函子，则其\textbf{第 $i$ 个导出函子}
+（$i$-th derived functor）定义为
+\begin{equation}\tag{10.23}
+  R^if:=H^i\circ Rf:\ D^+(\mathcal A)\to\mathcal B,
+\end{equation}
+对每个 $i\in\Z$ 成立，其中 $H^i$ 表示对 $D^+(\mathcal B)$ 中的对象取第 $i$ 个
+上同调群的操作。
+\end{wdefn}
+
+% [Tutor Note: 易错预警——$R^if$ 的定义域是 $D^+(\mathcal A)$（下有界导出
+% 范畴），这正是为了保证 $Rf$ 可以通过内射消解来定义；若失去下有界性，$f$ 的
+% 导出函子可能不存在或不唯一。(10.23) 中的 $H^i$ 作用在 $D^+(\mathcal B)$ 的
+% 对象上，得到的 $R^if$ 落到 $\mathcal B$（而不是再一层导出范畴）。核对时注意
+% $Rf$（导出函子）与 $R^if$（其第 $i$ 个上同调）的层次差别。]
+
+\begin{wexam}{10.5.1}
+对左正合函子 $f:\mathcal A\to\mathcal B$，人们常把 $R^if$ 的定义域限制为
+$\mathcal A$ 嵌入 $D^+(\mathcal A)$ 中的像（见注 10.4.2）。于是对
+$X\in\Op{Ob}(\mathcal A)$——把它与复形
+$\cdots\to0\to X\to0\to\cdots\in\Op{Ob}(D^+(\mathcal A))$ 等同——由定义
+(10.23) 有
+\begin{align*}
+  R^if(X)&:=H^i\bigl(Rf(\cdots\to0\to X\to0\to\cdots)\bigr)\\
+  &=H^i(\cdots\to0\to Y_1\to Y_2\to\cdots)
+\end{align*}
+其中 $Y_1,Y_2,\cdots\in\Op{Ob}(\mathcal B)$，且从 $0$ 次开始。我们要强调：
+上面的第二个等号并不能由迄今为止讨论过的任何内容推出，因为我们尚未给出定理
+10.4.1 中导出函子 $Rf$（(10.20)）的任何计算公式。计算它的一个办法将在
+(10.28) 中详述。在假定第二个等号成立的前提下，可知 $R^if(X)=0$ 对所有
+$i<0$ 成立。\hfill$//$
+\end{wexam}
+
+% [Tutor Note: 含糊点拨——「第二个等号」的实质是把 $X$ 换成它的内射消解
+% $0\to X\to I_0\to I_1\to\cdots$ 后再对 $f$ 逐项作用；这正是本节后半部分
+% (10.28) 与 (10.29) 的内容，也是 $R^if(X)=0\ (i<0)$ 的来源：消解从 $0$ 次
+% 开始，故 $f(I_\bullet)$ 的负次数项为零。教材在此处只是「预设」该等式，
+% 真正的计算要等到内射对象引入之后。]
+
+借助第 $i$ 个导出函子 $R^if$，我们有如下重要观察：给定 $D(\mathcal A)$ 中的
+正合三角，例如
+$\mathcal F^{\bullet}\to\mathcal G^{\bullet}\to\mathcal H^{\bullet}
+\to\mathcal F^{\bullet}[1]$，作用函子
+$Rf:D(\mathcal A)\to D(\mathcal B)$，并由定理 10.4.1（只要 $\mathcal A$
+满足其所要求的条件）可得 $D(\mathcal B)$ 中的另一个正合三角
+$Rf(\mathcal F^{\bullet})\to Rf(\mathcal G^{\bullet})
+\to Rf(\mathcal H^{\bullet})\to Rf(\mathcal F^{\bullet})[1]$。取上同调群，
+便得到如下长正合列（参看 (10.22)）：
+\begin{equation}\tag{10.24}
+  \cdots\to R^if(\mathcal F^{\bullet})
+  \to R^if(\mathcal G^{\bullet})
+  \to R^if(\mathcal H^{\bullet})
+  \to R^{i+1}f(\mathcal F^{\bullet})\to\cdots,
+\end{equation}
+其中 $R^if(\mathcal F^{\bullet}[1])=R^{i+1}f(\mathcal F^{\bullet})$。这样，
+所有这些第 $i$ 个导出函子（$i\in\Z$）就被装配成 $\mathcal B$ 中的一个长正合
+列。这解决了函子 $f$ 的非正合性问题：半正合列
+$0\to f(\mathcal F^{\bullet})\to f(\mathcal G^{\bullet})
+\to f(\mathcal H^{\bullet})$ 通过补入那些由导出函子导出的项，完备为一个
+长正合列。
+
+\begin{wexam}{10.5.2}
+(i) 对范畴 $\Op{Sh}(\mathbf{k}_X)$ 与函子
+$\Gamma(X,\cdot):\Op{Sh}(\mathbf{k}_X)\to\Op{Mod}(\mathbf{k})$，其第 $i$ 个
+导出函子是
+$R^i\Gamma(X,\cdot):D^+(\Op{Sh}(\mathbf{k}_X))\to\Op{Mod}(\mathbf{k})$。
+现在限制到 $\Op{Sh}(\mathbf{k}_X)$ 嵌入
+$D^+(\Op{Sh}(\mathbf{k}_X))$ 的像上（见注 10.4.2），(10.24) 中的长正合列
+可具体写为
+\begin{equation}\tag{10.25}
+  0\to\Gamma(X,\mathcal F^{\bullet})
+  \to\Gamma(X,\mathcal G^{\bullet})
+  \to\Gamma(X,\mathcal H^{\bullet})
+  \to R^1\Gamma(X,\mathcal F^{\bullet})\to\cdots .
+\end{equation}
+事实上，限制到 $\Op{Sh}(\mathbf{k}_X)$ 上时，§10.3 中以计算方式引入的第 $i$
+个层上同调群 $H^i(X;\mathcal F)$ 恰等于 $R^i\Gamma(X,\mathcal F)$。因此，
+长正合列 (10.25) 不过是 (10.22) 的另一版本。
+\end{wexam}
+
+% >>> p317
+从这个角度看，层上同调群 $H^*(X;\cdot)=R^*\Gamma(X,\cdot)$ 反映着
+$\Op{Sh}(\mathbf{k}_X)$ 中层的复杂性，从而回答了问题 10.3.1。
+
+\begin{wrem}{10.5.1}
+$R^i\Gamma(X,\cdot)$ 的非平凡性如何反映拓扑空间 $X$ 的复杂性，是另一门称为
+\textbf{示性类}（characteristic classes）的课题所讨论的内容，本书不予涉及。
+标准参考文献是 [158]。
+\end{wrem}
+
+(ii) 对双函子 $\Hom_{\Op{Sh}(\mathbf{k}_X)}(\cdot,\cdot)$，其第 $i$ 个导出
+函子
+\[
+  R^i\Hom_{\Op{Sh}(\mathbf{k}_X)}(\cdot,\cdot)
+  :=\Op{Ext}^i_{\Op{Sh}(\mathbf{k}_X)}(\cdot,\cdot)
+\]
+称为第 $i$ 个 \textbf{Ext 函子}。类似地，张量积 $\cdot\otimes\cdot$ 的第 $i$
+个导出函子称为第 $i$ 个 \textbf{Tor 函子}，记为
+$\Op{Tor}_i^{\Op{Sh}(\mathbf{k}_X)}(\cdot,\cdot)$。\hfill$//$\hfill$//$
+
+接下来讨论第 $i$ 个导出函子 $R^if$ 的计算。若直接套用定义 (10.23)，实际上
+并无用处，因为我们并不知道如何计算 (10.20) 中的导出函子 $Rf$（定理 10.4.1
+只确认了它的存在性）。为继续推进，我们需要下面这一族特殊的对象。
+
+\begin{wdefn}{10.5.2}
+在范畴 $\mathcal A$ 中，对象 $I\in\Op{Ob}(\mathcal A)$ 称为\textbf{内射的}
+（injective），若函子 $\Hom_{\mathcal A}(\cdot,I)$ 正合。更具体地说，给定
+对象短正合列 $0\to X\to Y\to Z\to 0$，我们有如下短正合列：
+\[
+  0\to\Hom_{\mathcal A}(Z,I)\to\Hom_{\mathcal A}(Y,I)
+  \to\Hom_{\mathcal A}(X,I)\to0 .
+\]
+由于 $\Hom_{\mathcal A}(\cdot,I)$ 左正合（但是反变的），这个短正合列中唯一
+非平凡的部分是 $\Hom_{\mathcal A}(Y,I)\to\Hom_{\mathcal A}(X,I)$ 是满射。
+换言之，给定映射 $f:X\to Y$，对任意同态 $\varphi:X\to I$，总存在同态
+$\psi:Y\to I$ 使得 $\psi\circ f=\varphi$，即下图交换：
+\[
+\begin{array}{ccc}
+X & \xrightarrow{\ f\ } & Y\\[2pt]
+{\scriptstyle\forall\varphi}\Big\downarrow
+ & \swarrow{\scriptstyle\exists\psi} & \\[2pt]
+I & &
+\end{array}
+\]
+\end{wdefn}
+
+% [Tutor Note: 易错预警——内射对象的定义要求 $\Hom_{\mathcal A}(\cdot,I)$
+% 把\textbf{短}正合列变成短正合列；由 $\Hom$ 的左正合性，唯一需要验证的是
+% 「提升性质」（右下图中的 $\exists\psi$）。与投射对象对偶：$P$ 投射当且仅当
+% $\Hom_{\mathcal A}(P,\cdot)$ 正合。层范畴 $\Op{Sh}(\mathbf{k}_X)$ 中内射
+% 对象的存在性（「足够多内射对象」）正是习题 10.5.1 (i) 的内容，它是导出函子
+% 理论能落地的前提。]
+
+下面的习题是一个基本结果。
+
+\begin{wexer}{10.5.1}
+证明关于 $\Op{Sh}(\mathbf{k}_X)$ 中内射对象的如下性质。
+(i) $\Op{Sh}(\mathbf{k}_X)$ 中有足够多的内射对象，即：对任意
+$\mathcal F\in\Op{Ob}(\Op{Sh}(\mathbf{k}_X))$，总存在内射对象
+$I\in\Op{Ob}(\Op{Sh}(\mathbf{k}_X))$ 使得 $0\to\mathcal F\to I$ 正合。
+(ii) 对任意 $\mathcal F\in\Op{Ob}(\Op{Sh}(\mathbf{k}_X))$，存在长正合列
+\begin{equation}\tag{10.26}
+  0\to\mathcal F\to I_0\to I_1\to\cdots,
+\end{equation}
+其中所有 $I_{\bullet}$ 都是内射的。该正合列称为 $\mathcal F$ 的
+\textbf{内射消解}（injective resolution）。
+\end{wexer}
+
+% >>> p318
+习题 10.5.1 中的 (ii) 有如下有用的推论：给定态射
+$\varphi:\mathcal F\to\mathcal G$，存在一列态射
+$\{\psi_i:I_i\to J_i\}_{i\in\N_{\ge0}}$ 使下图交换：
+\[
+\begin{array}{c}
+0\to\mathcal F\to I_0\to I_1\to I_2\to\cdots\\[2pt]
+\quad{\scriptstyle\varphi}\Big\downarrow\qquad
+\nearrow\qquad
+\Big\downarrow{\scriptstyle\psi_0}\qquad
+\nearrow\qquad
+\Big\downarrow{\scriptstyle\psi_1}\ \nearrow\ \cdots\\[2pt]
+0\to\mathcal G\to J_0\to J_1\to J_2\to\cdots
+\end{array}
+\]
+其中从 $\mathcal G\to I_0$ 的箭头来自 $I_0$ 的内射性，从 $I_0\to J_0$ 的箭头
+来自 $J_0$ 的内射性。如此归纳，便得到所有想要的从 $I_i$ 到 $J_i$ 的态射
+（$i\in\N_{\ge0}$）。
+
+给定层的复形 $\mathcal F^{\bullet}$（其中存在从 $\mathcal F^i$ 到
+$\mathcal F^{i+1}$ 的态射），上面的推论便给出由内射对象构成的双复形，记为
+$I^{\bullet,\bullet}$。见下面的图 (10.27)。
+\begin{equation}\tag{10.27}
+\begin{array}{c}
+\vdots\qquad\vdots\qquad\vdots\qquad\vdots\\[2pt]
+0\to\mathcal F^{i-1}\to I^{i-1,0}\to I^{i-1,1}\to I^{i-1,2}\to\cdots\\[2pt]
+\big\downarrow\qquad\big\downarrow\qquad\big\downarrow\qquad\big\downarrow\\[2pt]
+0\to\mathcal F^{i}\to I^{i,0}\to I^{i,1}\to I^{i,2}\to\cdots\\[2pt]
+\big\downarrow\qquad\big\downarrow\qquad\big\downarrow\qquad\big\downarrow\\[2pt]
+0\to\mathcal F^{i+1}\to I^{i+1,0}\to I^{i+1,1}\to I^{i+1,2}\to\cdots\\[2pt]
+\vdots\qquad\vdots\qquad\vdots\qquad\vdots
+\end{array}
+\end{equation}
+
+下述结果颇为深刻，它表明可以放心地用只由内射对象构成的复形替换
+$\mathcal F^{\bullet}$。
+
+\begin{wlem}{10.5.1}（[32] 中 Tic-Tac-Toe 命题 12.1 与 [238] 中引理 8.8）
+给定由 $\Op{Sh}(\mathbf{k}_X)$ 中对象构成的层复形
+$\mathcal F^{\bullet}$，对 (10.27) 中相应的双复形
+$I^{\bullet,\bullet}$，有如下等同：
+\[
+  \mathcal F^{\bullet}\simeq\Op{Tot}(I^{\bullet,\bullet}),
+\]
+其中 $\simeq$ 表示 $\mathcal F^{\bullet}$ 与
+$\Op{Tot}(I^{\bullet,\bullet})$ 之间存在拟同构，而全复形
+$\Op{Tot}(I^{\bullet,\bullet})$ 按 (10.21) 中的方式定义。
+
+特别地，在 $D(\mathcal A)$ 中，可以放心地用
+$\Op{Tot}(I^{\bullet,\bullet})$ 替换 $\mathcal F^{\bullet}$。
+\end{wlem}
+
+% [Tutor Note: 含糊点拨——引理 10.5.1 的证明即所谓「Tic-Tac-Toe」（井字棋）
+% 论证：把双复形 $I^{\bullet,\bullet}$ 看成棋盘，先按行取上同调、再按列取
+% 上同调（或反过来），两种次序给出的谱序列都收敛到全复形
+% $\Op{Tot}(I^{\bullet,\bullet})$ 的上同调；由于每一行、每一列除首项外都是
+% 内射消解（正合），逐行逐列消去后只剩下 $\mathcal F^{\bullet}$ 本身，故得
+% 拟同构。教材把它归于 [32] 与 [238]，此处不必重做谱序列细节，但应记住
+% 「双复形 + 全复形 + 逐行内射消解」这一组合是导出函子可计算性的核心。]
+
+% >>> p319
+\begin{wexam}{10.5.3}
+若 $\mathcal F^{\bullet}=(\cdots\to0\to\mathcal F\to0\to\cdots)$，则双复形
+$I^{\bullet,\bullet}$ 只集中在一行上，即
+\[
+  0\to\mathcal F\to I^{0,0}\to I^{0,1}\to I^{0,2}\to\cdots .
+\]
+于是全复形
+\[
+  \Op{Tot}(I^{\bullet,\bullet})
+  =(0\to I^{0,0}\to I^{0,1}\to I^{0,2}\to\cdots),
+\]
+而引理 10.5.1 表明 $\mathcal F$（更确切地说，复形
+$\cdots\to0\to\mathcal F\to0\to\cdots$）拟同构于复形
+$0\to I^{0,0}\to I^{0,1}\to I^{0,2}\to\cdots$。下图显示了这一关系：
+\[
+\begin{array}{c}
+\cdots\to0\to\mathcal F\to0\to0\to\cdots\\[2pt]
+\qquad\qquad{\scriptstyle\varphi}\Big\downarrow\qquad
+\Big\downarrow{\scriptstyle\psi_0}\qquad
+\Big\downarrow{\scriptstyle\psi_1}\\[2pt]
+\cdots\to0\to I^{0,0}\to I^{0,1}\to I^{0,2}\to\cdots
+\end{array}
+\]
+其中唯一非平凡的竖直态射是 $\varphi:\mathcal F\to I^{0,0}$。按定义，拟同构
+在上同调群上诱导同构，故 $\varphi_*$ 给出
+$\mathcal F\cong\ker(\psi_0)$。这实际上是一个重要观察：对 $\mathcal F$ 如在
+(10.26) 中的内射消解，$\mathcal F$ 的信息可以从截断复形
+$0\to I_0\to I_1\to\cdots$ 中恢复出来。\hfill$//$
+\end{wexam}
+
+内射对象将用于计算第 $i$ 个导出函子 $R^if$。对
+$\mathcal F\in\Op{Ob}(\Op{Sh}(\mathbf{k}_X))$ 详细说明如下。给定 (10.26) 中的
+内射消解，由例 10.5.3 末尾的观察，我们直接考虑下面的截断复形（此时未必再
+正合）：
+$0\xrightarrow{0}I_0\xrightarrow{\psi_0}I_1\xrightarrow{\psi_1}I_2\to\cdots$。
+把左正合函子 $f$ 作用于该复形，得到
+\begin{equation}\tag{10.28}
+  0\xrightarrow{0}f(I_0)\xrightarrow{f(\psi_0)}f(I_1)
+  \xrightarrow{f(\psi_1)}f(I_2)\to\cdots .
+\end{equation}
+于是可以证明（最终可追溯到 [131] 中命题 2.40）：对 $i\in\N_{\ge1}$，有
+\begin{equation}\tag{10.29}
+  R^if(\mathcal F)=\frac{\ker\bigl(f(\psi_i)\bigr)}
+  {\operatorname{im}\bigl(f(\psi_{i-1})\bigr)} .
+\end{equation}
+这给出了计算 $R^if$ 的具体算法。
+
+% [Tutor Note: 易错预警——(10.29) 中的 $f(\psi_i):f(I_i)\to f(I_{i+1})$
+% 不是复形映射的像，而是函子 $f$ 作用后得到的态射；公式要求 $f$ 左正合
+% （保证 $R^0f(\mathcal F)=\ker(f(\psi_0))$ 与 $\mathcal F$ 的核一致），并
+% 且只在 $i\ge1$ 时写成商的形式。$i=0$ 的情形应理解为
+% $R^0f(\mathcal F)=\ker(f(\psi_0))$。把 $\mathcal F$ 换成一般复形
+% $\mathcal F^{\bullet}$ 时须改用 $\Op{Tot}(I^{\bullet,\bullet})$（引理
+% 10.5.1）。]
+
+\begin{wrem}{10.5.2}
+可以料想，若输入是 $\mathcal F^{\bullet}\in\Op{Ob}(D^+(\Op{Sh}(\mathbf{k}_X)))$
+这样的层复形，则可以对 $\Op{Tot}(I^{\bullet,\bullet})$ 施行同样的算法，即把
+$\mathcal F^{\bullet}$ 换为 $I^{\bullet,\bullet}$ 的全复形，拟同构替换由引理
+10.5.1 保证。
+\end{wrem}
+
+\begin{wque}{10.5.1}
+为按 (10.29) 计算 $R^if(\mathcal F)$，需要找到合适的内射消解。
+对 $\Op{Sh}(\mathbf{k}_X)$ 中的内射对象，我们了解多少？
+\end{wque}
+
+% >>> p320
+\begin{wexam}{10.5.4}
+在 $\Op{Sh}(\mathbf{k}_{\R})$ 中，对 $a\in\R\cup\{+\infty\}$，层
+$\mathbf{k}_{(-\infty,a)}$ 或 $\mathbf{k}_{(-\infty,a]}$ 都是内射对象（见
+[34] 中定理 1.2）。回忆由 (10.11)，我们有如下正合列：
+\begin{equation}\tag{10.30}
+  0\to\mathbf{k}_{(0,1]}\to\mathbf{k}_{(-\infty,1]}
+  \to\mathbf{k}_{(-\infty,0]}\to0\to\cdots .
+\end{equation}
+由于 $\mathbf{k}_{(-\infty,1]}$ 与 $\mathbf{k}_{(-\infty,0]}$ 都是内射对象，
+上述序列可作为 $\mathbf{k}_{(0,1]}$ 的内射消解。于是对函子
+$\Gamma(\R,\cdot)$，第 $i$ 个导出函子
+$R^i\Gamma(\R,\mathbf{k}_{(0,1]})$ 可按 (10.29) 计算。逐步把
+$\Gamma(\R,\cdot)$ 作用于截断复形
+$0\to\mathbf{k}_{(-\infty,1]}\to\mathbf{k}_{(-\infty,0]}\to0\to\cdots$，
+得到
+\[
+  0\to\Gamma(\R,\mathbf{k}_{(-\infty,1]})
+  \to\Gamma(\R,\mathbf{k}_{(-\infty,0]})\to0\to\cdots,
+\]
+即
+\[
+  0\to\mathbf{k}\xrightarrow{\mathbf{1}_{\mathbf{k}}}\mathbf{k}
+  \to0\to\cdots .
+\]
+因此由 (10.29)，$R^1\Gamma(\R,\mathbf{k}_{(0,1]})=0$，从而
+$R^{i\ge1}\Gamma(\R,\mathbf{k}_{(0,1]})=0$。此外，由例 10.2.11 末尾的计算，
+$R^0\Gamma(\R,\mathbf{k}_{(0,1]})=\Gamma(\R,\mathbf{k}_{(0,1]})
+=\mathbf{k}_{(0,1]}(\R)=0$。
+
+我们再来算几个情形，例如 $R^i\Gamma((a,\infty),\cdot)$，其中
+$a=-\epsilon,\,0,\,1-\epsilon,\,1$，而 $\epsilon$ 是取小的正数。容易验证：
+当 $a=-\epsilon$ 与 $a=1$ 时，$R^i\Gamma((a,\infty),\mathbf{k}_{(0,1]})=0$
+对一切 $i\in\N_{\ge0}$ 成立。当 $a=0$ 时，有
+\[
+  0\to\Gamma((0,\infty),\mathbf{k}_{(-\infty,1]})
+  \to\Gamma((0,\infty),\mathbf{k}_{(-\infty,0]})\to0\to\cdots,
+\]
+即
+\[
+  0\to\mathbf{k}\to0\to0\to\cdots .
+\]
+因此由 (10.29) 与例 10.2.11 可知
+$R^0\Gamma((0,\infty),\mathbf{k}_{(0,1]})=\mathbf{k}$，而
+$R^{i\ge1}\Gamma((0,\infty),\mathbf{k}_{(0,1]})=0$。类似地，当
+$a=1-\epsilon$ 时，
+\[
+  0\to\Gamma((1-\epsilon,\infty),\mathbf{k}_{(-\infty,1]})
+  \to\Gamma((1-\epsilon,\infty),\mathbf{k}_{(-\infty,0]})\to0\to\cdots,
+\]
+又得到
+\[
+  0\to\mathbf{k}\to0\to0\cdots .
+\]
+因此由 (10.29) 与例 10.2.11 中的计算结果可知
+$R^0\Gamma((1-\epsilon,\infty),\mathbf{k}_{(0,1]})=\mathbf{k}$，而
+$R^{i\ge1}\Gamma((1-\epsilon,\infty),\mathbf{k}_{(0,1]})=0$。这些计算结果将在
+下一节中派上用场。\hfill$//$
+\end{wexam}
+
+% [Tutor Note: 易错预警——例 10.5.4 中
+% $\mathbf{k}_{(0,1]}(\R)=0$ 容易看错：$\mathbf{k}_{(0,1]}$ 是沿
+% $(0,1]$ 的「零延拓」层，其全局截面要求截面的支撑在 $\R$ 上固有（proper），
+% 而 $(0,1]$ 的支撑不固有，故全局截面为零。另注意 (10.30) 的中间项是
+% $\mathbf{k}_{(-\infty,1]}$ 而非 $\mathbf{k}_{(0,1]}$ 的补——短正合列的
+% 商 $\mathbf{k}_{(-\infty,1]}/\mathbf{k}_{(0,1]}\cong
+% \mathbf{k}_{(-\infty,0]}$ 正是其正确性所在。]
+
+\begin{wexer}{10.5.2}
+对每个局部闭区间 $(a,b]\subset\R$，计算第 $i$ 个导出函子
+$R^i\Hom_{\Op{Sh}(\mathbf{k}_{\R})}
+(\mathbf{k}_{(a,b]},\mathbf{k}_{(0,1]})$。可以承认如下事实：对任意局部闭
+子集 $Z\subset X$，有同构
+\[
+  \Hom(\mathbf{k}_Z,\mathcal F)\simeq\Gamma_Z\mathcal F,
+\]
+其中函子 $\Gamma_Z$ 在 (10.38) 中定义，并适合一条半正合列 (10.39)。
+\end{wexer}
+
+% >>> p321
+为结束本节，我们陈述一个关于导出函子复合的重要定理。
+
+\begin{wthm}{10.5.1}（Grothendieck）
+设 $\mathcal F:\mathcal A\to\mathcal B$ 是从范畴 $\mathcal A$ 到范畴
+$\mathcal B$ 的函子，$\mathcal G:\mathcal B\to\mathcal C$ 是从范畴
+$\mathcal B$ 到范畴 $\mathcal C$ 的函子。若 $\mathcal F$ 把 $\mathcal A$ 中
+的内射对象映为 $\mathcal B$ 中的内射对象，则我们有如下复合公式：
+\begin{equation}\tag{10.31}
+  R\mathcal G\circ R\mathcal F=R(\mathcal G\circ\mathcal F).
+\end{equation}
+\end{wthm}
+
+% [Tutor Note: 含糊点拨——定理 10.5.1 是 Grothendieck 谱序列的退化情形：
+% 一般情况下 $R\mathcal G\circ R\mathcal F$ 与 $R(\mathcal G\circ\mathcal F)$
+% 之间由一个谱序列联系，当 $\mathcal F$ 把内射映为内射时谱序列退化，才得到
+% 等式 (10.31)。「$\mathcal F$ 保内射」这一条件不可省；在层的情形，像
+% $\Gamma(X,\cdot)$、$i_*$（闭嵌入）等函子都保内射或可验证相应条件。]
+
+下面这个例子展示了定理 10.5.1 的威力。
+
+\begin{wexam}{10.5.5}
+考虑层 $\mathcal F\in\Op{Ob}(\Op{Sh}(\mathbf{k}_X))$，并设
+$Z\xhookrightarrow{i}X$ 是闭子空间。则由 $\mathcal F_Z$ 的定义以及例
+10.5.2 (i) 中层上同调群的导出表述，有
+\begin{equation}\tag{10.32}
+  H^*(X;\mathcal F_Z)
+  =H^*R\Gamma\bigl(X,i_*(i^{-1}\mathcal F)\bigr).
+\end{equation}
+由于 $Z$ 在 $X$ 中闭，由习题 10.4.1 与定理 10.4.1 的第二个结论可知
+\[
+  R\Gamma\bigl(X,i_*(i^{-1}\mathcal F)\bigr)
+  =R\Gamma(X,\cdot)\circ i_*(i^{-1}\mathcal F),
+\]
+因为 $i_*=Ri_*$、$i^{-1}=Ri^{-1}$。现在回到 (10.32)，由定理 10.5.1 得
+\begin{align*}
+  H^*R\Gamma(X,\cdot)\circ i_*(i^{-1}\mathcal F)
+  &=H^*R\bigl(\Gamma(X,\cdot)\circ i_*(i^{-1}\mathcal F)\bigr)\\
+  &=H^*R\bigl(i_*(i^{-1}\mathcal F)(X)\bigr)
+   =H^*R\bigl((i^{-1}\mathcal F)(Z)\bigr)\\
+  &=H^*R\bigl(\Gamma(Z,i^{-1}\mathcal F)\bigr)
+   =H^*R\Gamma(Z,i^{-1}\mathcal F)\\
+  &=H^*(Z;i^{-1}\mathcal F).
+\end{align*}
+因此 $H^*(X;\mathcal F_Z)=H^*(Z;i^{-1}\mathcal F)$。特别地，若
+$\mathcal F=\mathbf{k}_X$，则得 $H^*(X;\mathbf{k}_Z)=H^*(Z;\mathbf{k}_Z)$，
+其中 $\mathbf{k}_Z$ 表示子空间 $Z$ 上的常值层。此外，
+$H^*(Z;\mathbf{k}_Z)$ 等于经典上同调群 $H^*(Z;\mathbf{k})$，后者可用多种
+方法计算。\hfill$//$
+\end{wexam}

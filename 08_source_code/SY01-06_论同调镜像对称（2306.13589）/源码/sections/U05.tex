@@ -1,0 +1,446 @@
+% 译自 arXiv:2306.13589v2 原 tex 第 1647–2074 行
+\section{三角范畴}
+\thispagestyle{plain}
+
+\takeaway{%
+  \textbf{物理图像：}把复形连同其映射锥这一基本图景抽象化，就得到三角范畴：每个态射都被补全成一个「三角形」，第三个对象承担锥的角色，而平移 $[1]$ 记录维数的一次上移。导出范畴之所以是便于计算的场所，正因为它保留了这种「锥的信息」，而不像上同调那样只记得正合性。\\
+  \textbf{数学工具：}平移函子、区分三角形及其态射、锥与扩张、上同调函子与三角函子；同伦范畴 $\mathsf{H^\#\!(A)}$ 中的复形锥与半分裂短正合序列，以及局部化类 $S$ 与三角结构的相容性。\\
+  \textbf{主要结论：}同伦范畴 $\mathsf{H^\#\!(A)}$ 与导出范畴 $\mathsf{D^\#\!(A)}$ 都是三角范畴；$\textup{Hom}$ 双函子以及上同调函子 $H^n$ 都是上同调函子，由此导出范畴上的 $\textup{Ext}$ 理论与长正合序列工具得以运转。%
+}
+
+
+\subsection{三角范畴的公理}\label{ch4.1}
+
+
+导出范畴有一个非常好的性质：它们是三角的。我们已经在 \cite[section 3.1]{[Imp21]} 中讨论过三角范畴的基础；当时我们看到，它们服从一组特定的公理。由于现在我们要在这个主题上多花一点时间，以便证明开头的那句论断，因此有必要再次提及它们的定义性特征。
+
+\begin{Def}\label{triangcat}
+	一个加性范畴 $\mathsf{D}$ 是\textbf{三角范畴}\index{triangulated category}，若它被赋予一个加性自等价 $T:\mathsf{D}\rightarrow\mathsf{D}$——即\textbf{平移函子}\index{functor!translation}（按与定义 \ref{translfunc} 类似的方式定义）——以及一族\textbf{区分三角形}\index{distinguished triangle}
+	\begin{equation}\label{triangtriangle}
+		X\xrightarrow{u}Y\xrightarrow{v}Z\xrightarrow{w}T(X)=X[1]
+		\qquad\equiv\qquad
+		\begin{tikzcd}
+			X\arrow[rr, "u"] & & Y\arrow[dl, "v"]\\
+			& Z\arrow[ul, "{w[1]}"]
+		\end{tikzcd}
+	\end{equation}
+	（在 $\mathsf{D}$ 中，简记为 $(u,v,w)$），以及\textbf{区分三角形的态射}\index{morphism!of distinguished triangles} $(f,g,h)$ 填入\vspace*{-0.2cm}
+	\begin{equation}
+		\begin{tikzcd}
+			X\arrow[r,"u"]\arrow[d,"f"'] & Y\arrow[r,"v"]\arrow[d,"g"'] & Z\arrow[r,"w"]\arrow[d,"h"] & {X[1]}\arrow[d,"{f[1]}"] \\
+			X'\arrow[r,"u'"'] & Y'\arrow[r,"v'"'] & Z'\arrow[r,"w'"'] & X'[1]
+		\end{tikzcd}
+	\end{equation}
+	——若 $f,g,h$ 是 $\mathsf{D}$ 中的同构，则它也是同构——它们满足以下诸公理：
+	\begin{itemize}[leftmargin=0.5cm]
+		\renewcommand{\labelitemi}{\textendash}
+		
+		\item (\textbf{T1})\renewcommand{\theenumi}{\alph{enumi}}\vspace*{-0.3cm} 
+		\begin{enumerate}[leftmargin=0.5cm] 
+			\item 对任意 $X\in\text{obj}(\mathsf{D})$，$X\xrightarrow{\textup{id}_X}X\rightarrow 0\rightarrow X[1]$ 是区分的；
+			
+			\item 任何与区分三角形同构的三角形（一般为 \eqref{triangtriangle} 的形式）本身也是区分的；
+			
+			\item 任何态射 $u\in\text{Hom}_\mathsf{D}(X,Y)$ 都可补全为形如 \eqref{triangtriangle} 的区分三角形。
+		\end{enumerate}
+		
+		\item (\textbf{T2}) 三角形 $X\xrightarrow{u}Y\xrightarrow{v}Z\xrightarrow{w}X[1]$ 是区分的，当且仅当 $Y\xrightarrow{v}Z\xrightarrow{w}X[1]\xrightarrow{-u[1]}Y[1]$ 是区分的（等价地，当且仅当 $Z[-1]\xrightarrow{-w[-1]}X\xrightarrow{u}Y\xrightarrow{v}Z$ 是区分的）。
+% [Tutor Note: 此处极易出现符号错误。(T2) 只允许对区分三角形作循环置换（cyclic permutation），且每次旋转后新出现的箭头要带一个负号：$Z[-1]\xrightarrow{-w[-1]}X$ 与 $X[1]\xrightarrow{-u[1]}Y[1]$ 都是如此。该负号来自锥的构造中有序直和的置换符号；若手算时漏掉它，长正合序列的符号会整体错位。]
+		
+		\item (\textbf{T3}) 辫图（见 \cite{[May01]}）：
+		\begin{equation}\label{commbraid}
+			\begin{tikzcd}
+				X \arrow[rr, orange, bend left = 45, "w" black]\arrow[dr, red, "u"' black] & \circlearrowleft & Z\arrow[rr, green, bend left = 45, "v'" black]\arrow[dr, orange, "w'" black] & & X' \arrow[rr, cyan, bend left = 45, "a''" black]\arrow[dr, green, "v''"' black] & \circlearrowleft & \mkern-6mu Z'[1] \\
+				& Y\arrow[ur, green, "v"' black]\arrow[dr, red, "u'"' black] & & Y' \arrow[ur, dashed, cyan, "a'" black]\arrow[dr, orange, "w''" black] & & \mkern-6mu Y[1]\arrow[ur, "{u'[1]}"'] \\
+				& & Z'\arrow[ur, dashed, cyan, "a" black]\arrow[rr, red, bend right = 45, "u''"' black] & & \mkern-6mu X[1]\arrow[ur, "{u[1]}"']
+			\end{tikzcd}
+		\end{equation}
+		它由红色 $(u,u',u'')$、绿色 $(v,v',v'')$ 与橙色 $(w,w',w'')$ 的区分三角形构成，其中 $w = v\circ u$、$a''= u'[1]\circ v''$；该图可以经虚线箭头 $a$ 与 $a'$ 补全为 $\mathsf{D}$ 中的交换图，而 $a,a',a''$ 构成一个蓝色的区分三角形 $(a,a',a'')$。
+	\end{itemize}
+\end{Def}  
+
+在文献中，视觉上不那么优雅（但仍保持三角形形状）的八面体图更常被用来描述 (T3)，它实际上也被称为\textit{八面体公理}：
+\begin{equation}\label{octahedraldiag}
+	\begin{tikzcd}
+		& Y\arrow[dr, green, "v" black] & \\
+		X'\arrow[d, cyan, "{a''[1]}"' black]\arrow[ur, green, "{v''[1]}" black] & & Z\arrow[ll, green, "v'"' black]\arrow[ddl, orange, "w'"' black] \\
+		Z'\arrow[from=uur, red, crossing over, "\!\!u'" black]\arrow[rr, red, crossing over, "{u''[1]}"' black]\arrow[dr, dashed, cyan, "a"' black] & & X\arrow[u, orange, "w"' black]\arrow[uul, red, crossing over, "\overset{}{u}" black] \\
+		& Y'\arrow[ur, orange, "{w''[1]}"' black]\arrow[uul, dashed, cyan, "a'"' black] &
+	\end{tikzcd}
+\end{equation}
+参照颜色，我们可以把上述条件重新表述为：给定上半棱锥——其正面为红色、背面为绿色的区分面，侧面为交换面——则可以构造出一个相容的下半棱锥，使其左侧为蓝色、右侧为橙色的区分面，正面与背面为交换面，从而整个八面体交换。
+
+我们省略了按 Verdier 的术语（见 \cite[section II.1]{[Ver96]}）通常标为公理 (TR3) 的那一条。这是因为如 \cite[Lemma 3.3]{[Imp21]} 所示，它实际上可由我们的 (T1)--(T3) 推出。尽管如此，我们仍把它重新陈述一遍，因为它在后续的证明中起着关键作用：
+
+\begin{Lem}[TR3]\label{tr3}								% (TR3)
+	假定图中的行
+	\begin{equation}\label{TR3diag}
+		\begin{tikzcd}
+			X\arrow[r,"u"]\arrow[d,"f"'] & Y \arrow[r,"v"]\arrow[d,"g"'] & Z \arrow[r,"w"]\arrow[d, dashed, "h"] & X[1]\arrow[d, "{f[1]}"] \\
+			X'\arrow[r, "u'"'] & Y'\arrow[r, "v'"'] & Z'\arrow[r, "w'"'] & X'[1]
+		\end{tikzcd}
+	\end{equation}
+	在 $\mathsf{D}$ 中是两个区分三角形，并假定左方块交换。则存在一条虚线箭头 $h\in\textup{Hom}_\mathsf{D}(Z,Z')$ 使整个图表交换，从而 $(f,g,h)$ 是区分三角形的态射；此外，若 $f$ 与 $g$ 是同构，则 $h$ 也是同构。
+\end{Lem}
+
+\begin{Rem}\label{consecindistitriang}
+	(TR3) 的几个虽小却值得注意的直接推论是：
+	\begin{itemize}[leftmargin=0.5cm]
+		\item 区分三角形中任意两个相邻态射的复合为零：只需在 \eqref{TR3diag} 中把上排取为三角形 $X'\xrightarrow{\textup{id}_{X'}}X'\rightarrow 0\rightarrow X'[1]$（由 (T1)a. 判定为区分），并取 $(f,g)=(\text{id}_{X'},u')$；于是使图表交换的唯一 $h:0\dashrightarrow Z'$ 是 $h=0$，从而如所称 $v'\circ u'=h\circ 0=0$。
+		
+		\item (T1)c. 中补全出的区分三角形在同构意义下唯一：对 \eqref{TR3diag} 中任意两个这样的三角形，只需取 $u'=u: X'=X\rightarrow Y'=Y$、$f=\text{id}_X$ 与 $g=\text{id}_Y$；则由引理存在同构 $h:Z\dashrightarrow Z'$。
+	\end{itemize}  
+\end{Rem}
+% [Tutor Note: 这两条推论作者只用一句话"just take…"打发，实际依赖 (TR3) 的两个不同侧面：第一条要把 (T1)a. 的三角形当作"起点"嵌入 (TR3)，第二条则用到 (TR3) 在 $f,g$ 为同构时 $h$ 也必为同构这一附加结论。此处省略的完整论证见 \cite[Lemma 3.3]{[Imp21]}，文献\cite{[Ver96]} 中对应 (TR3) 的公理表述。]
+
+第二个要点引出如下一个颇能唤起联想的定义。
+
+\begin{Def}\label{conesintriangulated}
+	设 $\mathsf{D}$ 为三角范畴。我们把按 (T1)c. 将 $u\in\text{Hom}_\mathsf{D}(X,Y)$ 补全为区分三角形的对象 $Z$ 称为 $u$ 的\textbf{锥}\index{cone}，并记作 $Z\equiv C(u)$。由上一个注，它仅在同构意义下唯一。
+	
+	反之，若对给定的 $Y\in\text{obj}(\mathsf{D})$ 存在 $X,Z\in\text{obj}(\mathsf{D})$ 及适当的态射，使得 $X\rightarrow Y\rightarrow Z\rightarrow X[1]$ 是 $\mathsf{D}$ 中的区分三角形，则 $Y$ 有时被称为 $Z$ 经由 $X$ 的\textbf{扩张}\index{extension (of objects)}。于是，全子范畴 $\mathsf{D}'\subset\mathsf{D}$ \textit{对扩张封闭}，若对 $\mathsf{D}$ 中任何这样的区分三角形都有 $\big(X,Z\in\text{obj}(\mathsf{D}')\implies Y\in\text{obj}(\mathsf{D}')\big)$。
+\end{Def}
+
+\begin{Rem}
+	人们或许会希望锥在态射复合下具有函子性，即对 $\mathsf{D}$ 中相容的态射有 $C(v\circ u)\cong C(v)\circ C(u)$。遗憾的是，事实并非如此。
+	
+	不过，我们可以利用公理 (T3) 来构造 $C(v\circ u)$。观察交换辫图 \eqref{commbraid}，我们可以不失一般性地取 $Z'=C(u)$、$X'=C(v)$ 与 $Y'=C(v\circ u)$。于是该公理要求的蓝色区分三角形为 $C(u)\xrightarrow{a} C(v\circ u)\xrightarrow{a'} C(v)\xrightarrow{a''} C(u)[1]$，这使我们能够把 $C(v\circ u)$ 解释为 $C(v\circ u)=C(a'')[-1]=C(u'[1]\circ v'')[-1]$。
+\end{Rem} 
+% [Tutor Note: 记号提醒：三角范畴中的"锥" $C(u)$ 是复形的映射锥 $C(u)^\bullet=X[1]^\bullet\oplus Y^\bullet$（本书定义 \ref{coneofcomplexes}）的公理化版本，二者在 $\mathsf{H^\#\!(A)}$ 中一致；但"$C(v)\circ C(u)$"并不意味着可复合的函子，只是借用符号表示"先取 $u$ 的锥、再取 $v$ 的锥"。这一步失败的原因正是 (T3) 只能给出 $C(v\circ u)$ 与 $C(v)$、$C(u)$ 构成的那个三角形，而不能给出等号。]
+
+\begin{Pro}\label{Homareexact}
+	设 $\mathsf{D}$ 为三角范畴，$X\xrightarrow{u} Y\xrightarrow{v} Z\xrightarrow{w} X[1]$ 为区分三角形，$D\in\textup{obj}(\mathsf{D})$ 固定。则\begin{normalsize}
+		\begin{align}\label{covHomexact}
+			...\rightarrow \textup{Hom}_\mathsf{D}(D,X[n])\xrightarrow{u_*[n]} \textup{Hom}_\mathsf{D}(D,Y[n])&\xrightarrow{v_*[n]}\textup{Hom}_\mathsf{D}(D,Z[n]) \\
+			&\xrightarrow{w_*[n]}\textup{Hom}_\mathsf{D}(D,X[n+1])\rightarrow...\,, \nonumber
+		\end{align}
+		\begin{align}\label{contraHomexact}
+			...\rightarrow \textup{Hom}_\mathsf{D}(X[n+1],D)\xrightarrow{w^*[n]} \textup{Hom}_\mathsf{D}(Z[n],D)&\xrightarrow{v^*[n]}\textup{Hom}_\mathsf{D}(Y[n],D) \\
+			&\xrightarrow{u^*[n]}\textup{Hom}_\mathsf{D}(X[n],D)\rightarrow...\,, \nonumber
+		\end{align}
+	\end{normalsize}是长正合序列，其中例如 $u_*[n]=\textup{Hom}_\mathsf{D}(D,u[n])=u[n]\circ\square$，而 $u^*[n]=\textup{Hom}_\mathsf{D}(u[n],D)=\square\circ u[n]$。
+\end{Pro}
+
+\begin{proof}
+	我们只证明第一个序列的正合性，第二个序列可循同样的思路。我们可以把分析限制在例如 $\text{Hom}_\mathsf{D}(D,Y)$ 处，因为其余 Hom 群处的正合性可由对生成三角形作平移得到，而由公理 (T2)，平移仍使其保持区分。因此，需要证明的只是 $\ker(v_*)=\text{im}(u_*)$。
+	
+	首先，设 $f=u_*(g)=u\circ g\in\text{im}(u_*)$，其中 $g\in\text{Hom}_\mathsf{D}(D,X)$。则注 \ref{consecindistitriang} 立即给出 $v_*(f)=v\circ u\circ g=0\circ g=0$，即 $f\in\ker(v_*)$。反之，设 $f\in\ker(v_*)$，并考察
+	\[
+	\begin{tikzcd}
+		D\arrow[r]\arrow[d,"f"'] & 0 \arrow[r]\arrow[d] & D[1] \arrow[rr, "-\text{id}_{D[1]}"]\arrow[d, dashed, "{g[1]}"] & & D[1]\arrow[d, "{f[1]}"] \\
+		Y\arrow[r, "v"'] & Z\arrow[r, "w"'] & X[1]\arrow[rr, "{-u[1]}"'] & & Y[1]
+	\end{tikzcd}\quad,
+	\]
+	其中两行由 (T1) 与 (T2) 都是区分三角形。由于左方块依关于 $f$ 的假设而交换，引理 \ref{tr3} 给出虚线箭头 $g[1]$，再借助 (T2) 所允许的平移，我们便重新得到 $g\in\text{Hom}_\mathsf{D}(D,X)$。这在图的左侧又构造出一个方块，其最左的竖直箭头为 $g$，它的交换性保证 $f=f\circ\text{id}_D=u\circ g=u_*(g)\in\text{im}(u_*)$。
+\end{proof}
+% [Tutor Note: 证明末尾"向左补一个方块"是三角范畴的标准操作：把 (T2) 旋转后的三角形 $Z[-1]\to D\to Y\to Z$（此处 $D$ 代替一般记号中的 $X$）与含 $g[1]$ 的三角形拼起来。注意最后一步用到了 $f\circ\text{id}_D=f$ 以及 $\text{id}_D$ 在交换图中的位置；若忽略 (T2) 的负号，$g$ 的符号容易算反。]
+
+三角范畴上的函子也可以是上同调的或正合的：
+
+\begin{Def}\label{cohomfuncontriangulated}
+	设 $(\mathsf{D}, T_\mathsf{D})$、$(\mathsf{D}', T_{\mathsf{D}'})$ 为三角范畴，$\mathsf{A}$ 为阿贝尔范畴。
+	\begin{itemize}[leftmargin=0.5cm]
+		\item 函子 $\mathsf{F}:\mathsf{D}\rightarrow\mathsf{A}$ 是\textbf{上同调的}\index{functor!cohomological (on a triangulated category)}，若它是加性的，且 $\mathsf{D}$ 中任何形如 \eqref{triangtriangle} 的区分三角形都在 $\mathsf{A}$ 中诱导出正合序列 $\mathsf{F}(X)\xrightarrow{\mathsf{F}(u)}\mathsf{F}(Y)\xrightarrow{\mathsf{F}(v)}\mathsf{F}(Z)$，即 $\ker({\mathsf{F}(v)})=\text{im}(\mathsf{F}(u))$。
+		
+		\item 函子 $\mathsf{F}:\mathsf{D}\rightarrow\mathsf{D}'$ 是\textbf{三角的}\index{functor!triangulated (or exact)}（或\textit{正合的}），若它与平移函子交换，即 $\mathsf{F}\circ T_\mathsf{D}=T_{\mathsf{D}'}\circ\mathsf{F}$，并把 $\mathsf{D}$ 中的区分三角形送到 $\mathsf{D}'$ 中的区分三角形。
+	\end{itemize}
+	
+\end{Def}
+
+我们稍加努力即可看出，上同调性条件与定义 \ref{cohomfunconabelian} 中的完全相同。然而，我们可以绕开对\textit{长}正合序列的要求，因为在三角范畴中这是免费得到的：若 $\mathsf{F}$ 是上同调的，则由公理 (T2)，把区分三角形向左、向右各平移一次所得的三角形，其相联系的序列也正合，于是它们与其他所有平移副本链接起来，构成所期望的长正合序列。
+
+由命题 \ref{Homareexact}，协变函子 $\textup{Hom}_\mathsf{D}(D,\square):\mathsf{D}\rightarrow\mathsf{Ab}$ 与反变函子 $\textup{Hom}_\mathsf{D}(\square,D):\mathsf{D}\rightarrow\mathsf{Ab}$ 都是上同调的。\footnote{从区分三角形的角度看，这意味着它们是正合的。$\mathsf{D}$ 中一个一般三角形被称为\textit{正合的}，若对每个 $D\in\text{obj}(\mathsf{D})$，在施加 $\textup{Hom}_\mathsf{D}(D,\square)$ 与 $\textup{Hom}_\mathsf{D}(\square,D)$ 之后它都诱导出长正合序列。}
+
+\vspace*{0.5cm}
+
+\noindent 作为最后一点，人们或许会问，公理 (T1)c. 的态射版本是否成立。也就是说，要构造两个由一条竖直箭头相连的给定区分三角形之间的态射，需要哪些数据？
+
+\begin{Cor}
+	设 $\mathsf{D}$ 为三角范畴，并假定给定两个区分三角形
+	\[
+	\begin{tikzcd}
+		X\arrow[r,"u"]\arrow[d, dashed, "f"'] & Y \arrow[r,"v"]\arrow[d,"g"'] & Z \arrow[r, "w"]\arrow[d, dashed, "h"] & X[1]\arrow[d, dashed, "{f[1]}"] \\
+		X'\arrow[r, "u'"'] & Y'\arrow[r, "v'"'] & Z'\arrow[r, "w'"'] & X'[1]
+	\end{tikzcd}
+	\]
+	它们仅由某个 $g:Y\rightarrow Y'$ 相连。若 $v'\circ g\circ u=0$，则可以把 $g$ 补全为如图所示的三角形态射 $(f,g,h)$；只要 $\textup{Hom}_\mathsf{D}(X,Z'[-1])=\{0\}$，它就是唯一的。
+	
+	\textup(逆命题是平凡成立的：由容易补全的交换图，依据注 \ref{consecindistitriang} 即得 $v'\circ g\circ u=v'\circ u'\circ f=0$。\textup) 
+\end{Cor}
+
+\begin{proof}
+	对带撇的区分三角形施加 $\text{Hom}_\mathsf{D}(X,\square)$，按命题 \ref{Homareexact} 得到形如 \eqref{covHomexact} 的长正合序列，其中含有
+	\begin{small}\[
+		...\mkern-6mu\rightarrow \!\textup{Hom}_\mathsf{D}(X,Z'[-1])\!\xrightarrow{w_*'[-1]}\! \textup{Hom}_\mathsf{D}(X,X')\!\xrightarrow{u_*'}\!\textup{Hom}_\mathsf{D}(X,Y')\!\xrightarrow{v_*'}\!\textup{Hom}_\mathsf{D}(X,Z')\!\rightarrow\mkern-6mu...\,.
+		\]\end{small}
+	任何满足 $u'\circ f= g\circ u\in\text{Hom}_\mathsf{D}(X,Y')$ 的 $f\in\textup{Hom}_\mathsf{D}(X,X')$ 必是形如 $f=(u_*')^{-1}(g\circ u)+\tilde{f}$ 的原像；而为了使 $\tilde{f}\in\text{Hom}_\mathsf{D}(X,X')$ 在 $u_*'$ 下消没，必须有 $\tilde{f}=w_*'[-1](l)\in\text{im}(w_*'[-1])$（由正合性，$=\ker(u_*')$）对某个 $l\in\text{Hom}_\mathsf{D}(X,Z'[-1])$ 成立。引理 \ref{tr3} 于是给出使整个图表交换的态射 $h\in\text{Hom}_\mathsf{D}(Z,Z')$。
+	
+	这样的 $h$ 被确定到相差某个 $\tilde{l}\in\text{Hom}_\mathsf{D}(X[1],Z')$ 的 $w^*$ 像为止（论证与上面相同，因为此时对第二个方块有 $(h+w^*(\tilde{l}))\circ v= h\circ v + \tilde{l}\circ \cancel{w\circ v}=v'\circ g$）。现在只需记得，平移函子 $T:\mathsf{D}\rightarrow\mathsf{D}$ 是等价，这意味着 $T_{X,Z'[-1]}:\text{Hom}_\mathsf{D}(X,Z'[-1])\rightarrow\text{Hom}_\mathsf{D}(X[1],Z')$ 是双射。因此，当 $\text{Hom}_\mathsf{D}(X,Z'[-1])=\{0\}$ 时 $h$ 唯一，这也唯一地确定 $f$ 以及三角形态射 $(f,g,h)$。
+\end{proof}
+
+
+\subsection{同伦范畴的三角性}
+
+
+本小节的目标是证明以下定理：
+
+\begin{Thm}\label{homotopycatistriangulated}
+	设 $\mathsf{A}$ 为阿贝尔范畴。则其同伦范畴 $\mathsf{H^\#\!(A)}$ \textup(对 $\#=\emptyset,+,-,\mathsf{b}$\textup)，配以定义 \ref{translfunc} 中的平移函子 $T=T[1]:\mathsf{H^\#\!(A)}\rightarrow\mathsf{H^\#\!(A)}$，并以定义 \ref{exacttriangles} 中复形的区分三角形作为区分三角形，是一个三角范畴。
+\end{Thm}
+
+我们逐条验证三角范畴的公理，并在过程中引入一些更多的理论要点。首先（再次）值得强调的一点是：
+
+\begin{Rem}
+	$\mathsf{H^\#\!(A)}$ 中复形的区分三角形，就是那些与形如 \eqref{distinguitriangle} 的某个图同构的三角形。我们此前（见注 \ref{alternadistinguitriang}）曾借助命题 \ref{shortexactaretriangles} 论证过，这等价于要求它们与形如 \eqref{conetriangle} 的三角形同构。而在 $\mathsf{H^\#\!(A)}$（当时尚未引入）中，我们可以直接证明存在复形三角形的同构
+	\[
+	\begin{tikzcd}
+		X^\bullet\arrow[r, "f^\bullet"]\arrow[d, "\text{id}_X^\bullet"'] & Y^\bullet\arrow[r, "i_2^\bullet"]\arrow[d, "i_3^\bullet"'] & C(f)^\bullet\arrow[r, "p_1^\bullet"]\arrow[d, "\text{id}_{C(f)}^\bullet"] & X[1]^\bullet\arrow[d, "\text{id}_{X[1]}^\bullet"] \\
+		X^\bullet\arrow[r, "i_1^\bullet"'] & Z(f)^\bullet\arrow[r, "p_{23}^\bullet"'] & C(f)^\bullet\arrow[r, "p_1^\bullet"'] & X[1]^\bullet
+	\end{tikzcd}\quad.
+	\]
+	唯一非平凡的验证是左方块的交换性。事实上，对由 $k^n(x^n)\coloneqq(0,x^n,0)$ 给出的同伦 $k^\bullet:X^\bullet\rightarrow Z(f)^{\bullet-1}$，有 $i_3^n\circ f^n - i_1^n= d_{Z(f)}^{n-1}\circ k^n-k^{n+1}\circ d_X^n$（所以交换性在 $\mathsf{Kom^\#\!(A)}$ 中破裂了！）。此外，由引理 \ref{p3i3quiso} 我们知道 $i_3^\bullet$ 是拟同构。
+\end{Rem}
+
+因此，我们宁愿把 $\mathsf{H^\#\!(A)}$ 中的区分三角形理解为那些与 \eqref{conetriangle} 同构的三角形——这是向一般三角范畴中锥（定义 \ref{conesintriangulated}）的一次致意。
+
+\begin{proof}[(\textup{T1}) 的证明]
+	第 (T1)b. 条直接来自复形的区分三角形的定义，而 (T1)c. 条则是通过用 $u^\bullet:X^\bullet\rightarrow Y^\bullet$ 的复形锥 $C(u)^\bullet=X[1]^\bullet\oplus Y^\bullet\in\text{obj}(\mathsf{H^\#\!(A)})$ 以及 $\mathsf{H^\#\!(A)}$ 中的自然映射 $i_2^\bullet$ 与 $p_1^\bullet$ 来补全该态射而得到。
+	
+	至于 (T1)a.，对任意 $X^\bullet\in\text{obj}(\mathsf{H^\#\!(A)})$，三角形 $X^\bullet\xrightarrow{\text{id}_X^\bullet}X^\bullet\rightarrow 0\rightarrow X[1]^\bullet$ 几乎就像那个区分的三角形 $X^\bullet\xrightarrow{\text{id}_X^\bullet}X^\bullet\xrightarrow{i_2^\bullet} C(\text{id}_X)^\bullet\xrightarrow{p_1^\bullet} X[1]^\bullet$。显然的三元组 $(\text{id}_X^\bullet,\text{id}_X^\bullet,0^\bullet)$ 是它们之间的三角形同构。事实上，对由 $k^n(x^{n+1},x^n)\coloneqq(x^n,0)$ 给出的同伦 $k^\bullet:C(\text{id}_X)^\bullet\rightarrow C(\text{id}_X)^{\bullet-1}$，有 $\text{id}_{C(\text{id}_X)}^n-0^n=k^{n+1}\circ d_{C(\text{id}_X)}^n+d_{C(\text{id}_X)}^{n-1}\circ k^n$，因此在 $\mathsf{H^\#\!(A)}$ 中我们可以用同构 $\text{id}_{C(\text{id}_X)}^\bullet$ 替换 $0^\bullet:0\rightarrow C(\text{id}_X)^\bullet$。
+\end{proof}
+% [Tutor Note: 本段是全节最容易出错的地方：作者用同伦 $k^n(x^{n+1},x^n)\coloneqq(x^n,0)$ 说明恒等映射与零映射在 $\mathsf{H^\#\!(A)}$ 中同伦，从而把"$0\to C(\text{id}_X)$"这个零映射换成恒等映射。请核对 $k^n$ 的输入分量顺序：$C(\text{id}_X)^n=X[1]^n\oplus X^n$，故 $k^n$ 取 $(x^{n+1},x^n)$；若把两个分量弄反，同伦公式会差一个符号。]
+
+\begin{proof}[(\textup{T2}) 的证明]
+	令 $\Delta_1\coloneqq\big(X^\bullet\xrightarrow{u^\bullet} Y^\bullet\xrightarrow{v^\bullet} Z^\bullet\xrightarrow{w^\bullet} X[1]^\bullet\big)$ 与 $\Delta_2\coloneqq\big(Y^\bullet\xrightarrow{v^\bullet} Z^\bullet\xrightarrow{w^\bullet} X[1]^\bullet\xrightarrow{-u[1]^\bullet}Y[1]^\bullet\big)$ 为 $\mathsf{H^\#\!(A)}$ 中的复形三角形。只需证明 $\Delta_1$ 区分蕴含 $\Delta_2$ 区分（反方向只需对 $\Delta_2$ 把下面的论证重复两次并作平移）。于是设 $\Delta_1$ 区分，从而（不失一般性地）$Z^\bullet=C(u)^\bullet$，自然映射为 $v^\bullet=i_2^\bullet$、$w^\bullet=p_1^\bullet$。接着考虑区分三角形 $\Delta_3\coloneqq\big(Y^\bullet\xrightarrow{v^\bullet} Z^\bullet\xrightarrow{i_2^\bullet} C(v)^\bullet\xrightarrow{p_1^\bullet}Y[1]^\bullet\big)$，其中按定义 $C(v)^\bullet=Y[1]^\bullet\oplus Z^\bullet=Y[1]^\bullet\oplus X[1]^\bullet\oplus Y^\bullet$，且 $d_{C(v)}^n(y^{n+1},x^{n+1},y^n)=(-d_Y^{n+1}(y^{n+1}),-d_X^{n+1}(x^{n+1}), y^{n+1}+u^{n+1}(x^{n+1})+d_Y^n(y^n))$。我们断言
+	\[
+	\begin{tikzcd}
+		Y^\bullet\arrow[r, "v^\bullet"]\arrow[d, "\text{id}_Y^\bullet"'] & Z^\bullet\arrow[r, "p_1^\bullet"]\arrow[d, "\text{id}_Z^\bullet"'] & X[1]^\bullet\arrow[r, "{-u[1]^\bullet}"]\arrow[d, "\theta^\bullet"] & Y[1]^\bullet\arrow[d, "\text{id}_{Y[1]}^\bullet"] \\
+		Y^\bullet\arrow[r, "v^\bullet"'] & Z^\bullet\arrow[r, "i_2^\bullet"'] & C(v)^\bullet\arrow[r, "p_1^\bullet"'] & Y[1]^\bullet
+	\end{tikzcd}\quad.
+	\]
+	是 $\mathsf{H^\#\!(A)}$ 中的三角形态射，其中 $\theta^n(x^{n+1})\coloneqq(-u^{n+1}(x^{n+1}),x^{n+1},0)$。右方块交换，因为 $p_1^n(\theta^n(x^{n+1}))=-u^{n+1}(x^{n+1})=-u[1]^n(x^{n+1})$；而中间方块在相差由 $k^n(x^{n+1},y^n)\coloneqq(y^n,0,0)$ 给出的同伦 $k^\bullet:Z^\bullet\rightarrow C(v)^{\bullet-1}$ 的意义下交换。最后，$p_2^\bullet:C(v)^\bullet\rightarrow X[1]^\bullet$ 是 $\theta^\bullet$ 的逆：事实上 $p_2^\bullet\circ\theta^\bullet=\text{id}_X^\bullet$，且通过同伦 $k^\bullet:C(v)^\bullet\rightarrow C(v)^{\bullet-1},\, k^n(y^{n+1},x^{n+1},y^n)\coloneqq(y^n,0,0)$ 有 $\text{id}_{C(v)}^n - \theta^n\circ p_2^n =k^{n+1}\circ d_{C(v)}^n+d_{C(v)}^{n-1}\circ k^n$。因此，$(\text{id}_Y^\bullet,\text{id}_Z^\bullet,\theta^\bullet)$ 是 $\Delta_2$ 与 $\Delta_3$ 之间的同构，这确认了前者也是区分的。
+\end{proof}
+
+\begin{Rem}
+	虽然 (T1)--(T3) 已经蕴含了它，但我们将用引理 \ref{tr3} 来证明剩下的公理 (T3)，因此为了避免循环论证，必须给出一个独立的证明。不过这只是一件小事：参照图 \eqref{TR3diag}，我们可以取 $Z^\bullet=C(u)^\bullet$、$Z'^\bullet=C(u')^\bullet$ 以及自然的相邻态射；于是使整个图表交换的虚线箭头就是 $h^\bullet\coloneqq f[1]^\bullet \oplus g^\bullet:Z^\bullet\rightarrow Z'^\bullet$。
+\end{Rem}
+% [Tutor Note: 这里的循环论证问题值得注意：(TR3) 本身是 (T1)--(T3) 的推论（\cite[Lemma 3.3]{[Imp21]}），而定理的证明顺序是先独立验证 (T1)、(T2)、半分裂引理，最后用半分裂引理验证 (T3)，所以不能在中途用引理 \ref{tr3} 来证 (T3)。作者用本注专门堵上这个逻辑漏洞。]
+
+\begin{Lem}\label{semisplit}
+	设 $\mathsf{A}$ 为阿贝尔范畴。则 $\mathsf{Kom^\#\!(A)}$ 中任何短正合序列 $0\rightarrow X^\bullet\xrightarrow{u^\bullet} Y^\bullet\xrightarrow{v^\bullet} Z^\bullet\rightarrow 0$ \textbf{半分裂}\index{short exact sequence!semisplit}——即存在一族 $\{w^n:Z^n\rightarrow Y^n\}_{n\in\mathbb{Z}}$ \textup(不必构成复形态射\textup)，使得对所有 $n\in\mathbb{Z}$ 都有 $v^n\circ w^n=\textup{id}_{Z^n}$——当且仅当它能在 $\mathsf{H^\#\!(A)}$ 中补全为区分三角形 $X^\bullet\xrightarrow{u^\bullet} Y^\bullet\xrightarrow{v^\bullet} Z^\bullet\rightarrow X[1]^\bullet$。
+\end{Lem}
+
+\begin{proof}
+	首先假定给定的短正合序列能补全为区分三角形，则按定义它与 \eqref{distinguitriangle} 同构。与之相联系的短正合序列 $0\rightarrow X^\bullet\xrightarrow{i_1^\bullet}Z(u)^\bullet\xrightarrow{p_{23}^\bullet}C(u)^\bullet\rightarrow 0$（见图 \eqref{distinguidiag} 的中间行）显然是半分裂的，取典范包含 $w^n\coloneqq i_{23}^n:C(u)^n\rightarrow Z(u)^n$ 即满足对所有 $n\in\mathbb{Z}$ 有 $p_{23}^n\circ w^n=\text{id}_{C(u)^n}$。由于原来的短正合序列与之同构，它也是半分裂的。
+	
+	反过来，设 $\mathsf{Kom^\#\!(A)}$ 中的 $0\rightarrow X^\bullet\xrightarrow{u^\bullet} Y^\bullet\xrightarrow{v^\bullet} Z^\bullet\rightarrow 0$ 半分裂，从而（不失一般性地）$Y^\bullet=X^\bullet\oplus Z^\bullet$，典范单射为 $u^\bullet=i_1^\bullet$、$w^\bullet=i_2^\bullet$，投影为 $v^\bullet=p_2^\bullet$。于是必定有 $d_Y^n(x^n,z^n)=(d_X^n(x^n)-f^n(z^n),d_Z^n(z^n))$，其中 $\{f^n:Z^n\rightarrow X^{n+1}\}_{n\in\mathbb{Z}}$ 是一族映射；而要使 $d_Y^\bullet$ 的平方为零，它们必须构成复形态射 $f^\bullet:Z^\bullet\rightarrow X[1]^\bullet$。有了这些准备，让我们考察图表
+	\[
+	\begin{tikzcd}
+		X^\bullet\arrow[r, "i_1^\bullet"]\arrow[d, "\text{id}_X^\bullet"'] & X^\bullet\oplus Z^\bullet\arrow[r, "p_2^\bullet"]\arrow[d, "\text{id}_Y^\bullet"'] & Z^\bullet\arrow[r, "f^\bullet"]\arrow[d, "g^\bullet"] & X[1]^\bullet\arrow[d, "\text{id}_{X[1]}^\bullet"] \\
+		X^\bullet\arrow[r, "i_1^\bullet"'] & X^\bullet\oplus Z^\bullet\arrow[r, "i_{23}^\bullet"'] & C(u)^\bullet\arrow[r, "p_1^\bullet"'] & X[1]^\bullet
+	\end{tikzcd}\quad,
+	\]
+	其中 $g^\bullet\coloneqq(f^\bullet,0,\text{id}_Z^\bullet)$ 是复形态射（容易验证），它映入 $C(u)^\bullet=X[1]^\bullet\oplus X^\bullet\oplus Z^\bullet$，其微分为 $d_{C(u)}^n(x^{n+1},x^n,z^n)=(-d_X^{n+1}(x^{n+1}),i_1^{n+1}(x^{n+1})+d_X^n(x^n)-f^n(z^n),d_Z^n(z^n))$。现在，两侧方块的交换性是显然的，而中间方块的交换性在相差同伦 $i_{23}^n-g^n\circ p_2^n=k^{n+1}\circ d_Y^n+d_{C(u)}^{n-1}\circ k^n$ 的意义下成立，其中 $k^\bullet:Y^\bullet\rightarrow C(u)^{\bullet-1},\, k^n(x^n,z^n)\coloneqq(x^n,0,0)$。最后，$p_3^\bullet:C(u)^\bullet\rightarrow Z^\bullet$ 是 $g^\bullet$ 的逆，因为 $p_3^\bullet\circ g^\bullet=\text{id}_Z^\bullet$，且对 $\bar{k}^n(x^{n+1},x^n,z^n)\coloneqq(x^n,0,0)$ 有 $\text{id}_{C(u)}^n-g^n\circ p_3^n=\bar{k}^{n+1}\circ d_{C(u)}^n + d_{C(u)}^{n-1}\circ \bar{k}^n$。我们断定 $(\text{id}_X^\bullet,\text{id}_Y^\bullet,g^\bullet)$ 是 $\mathsf{H^\#\!(A)}$ 中的三角形同构，于是上排是区分三角形。
+\end{proof}
+
+我们终于可以完成定理 \ref{homotopycatistriangulated} 的证明了。
+
+\begin{proof}[(\textup{T3}) 的证明]
+	考虑由红色、绿色与橙色区分三角形构成的初始辫图 \eqref{commbraid}；由引理 \ref{semisplit}，我们知道它们给出半分裂的短正合序列。因此，我们可以放心地假定 $Y^\bullet=X^\bullet\oplus Z'^\bullet$ 与 $Z^\bullet=Y^\bullet\oplus X'^\bullet=X^\bullet\oplus Z'^\bullet\oplus X'^\bullet$，并配以相应的自然单射与投影，以及分别进入 $Y^\bullet$ 与 $Z^\bullet$ 的微分中的半分裂映射 $f^\bullet:Z'^\bullet\rightarrow X[1]^\bullet$ 与 $(g^\bullet,h^\bullet):X'^\bullet\rightarrow Y[1]^\bullet$（与引理的证明作比较）。于是我们的辫图更新为
+	\[
+	\begin{tikzcd}[column sep=0.2cm]
+		X^\bullet \arrow[rr, orange, bend left = 45, "{i_1^\bullet}" black]\arrow[dr, red, "{i_1^\bullet}"' black] & \mkern-6mu\circlearrowleft & \mkern-24mu{X^\bullet\!\oplus\! {Z'^\bullet}\!\oplus\! {X'^\bullet}}\arrow[rr, green, bend left = 45, "{p_3^\bullet}" black]\arrow[dr, orange, end anchor={[xshift=-1.2ex, yshift=1.5ex]west}, "{w'^\bullet}" black] & & {X'^\bullet}\arrow[rr, cyan, bend left = 45, "{a''^\bullet}" black]\arrow[dr, green, end anchor={[xshift=1.3ex, yshift=1.5ex]west}, "{(g^\bullet,h^\bullet)}" black] & \mkern+12mu\circlearrowleft & {Z'[1]}^\bullet \\
+		& X^\bullet\oplus Z'^\bullet\arrow[ur, green, start anchor={[xshift=-0.5ex,yshift=1.5ex]east}, "i_{12}^\bullet"' black]\arrow[dr, red, start anchor={[xshift=2ex]south}, end anchor={[xshift=-5.5ex, yshift=1.5ex]west}, "p_2^\bullet"' black] & & \mkern-12mu Y'^\bullet \arrow[dr, orange, start anchor={[yshift=0ex]south}, "w''^\bullet" black] & & {(X\oplus Z')[1]}^\bullet\arrow[ur, "{p_2[1]}^\bullet"'] \\
+		& & \mkern-48mu Z'^\bullet\arrow[rr, red, bend right = 45, start anchor={[xshift=-2ex]south}, "f^\bullet"' black] & & {X[1]}^\bullet\arrow[ur, "{i_1[1]^\bullet}"']
+	\end{tikzcd}.
+	\]
+	现在我们很想取 $Y'^n=Z'^n\oplus X'^n$，微分取 $d_{Y'}^n(z'^n,x'^n)=(d_{Z'}^n(z'^n)-h^n(x'^n),d_{X'}^n(x'^n))$。这确实定义了 $\mathsf{H^\#\!(A)}$ 中的一个复形 $(Y'^\bullet,d_{Y'}^\bullet)$，并且它还尊重橙色区分三角形的半分裂。于是补全该图的蓝色虚线箭头就是自然态射 $a^\bullet\coloneqq i_1^\bullet:Z'^\bullet\rightarrow Y'^\bullet$ 与 $a'^\bullet\coloneqq p_2^\bullet: Y'^\bullet \rightarrow X'^\bullet$，而 $w'^\bullet= p_{23}^\bullet$、$w''^\bullet=(f^\bullet\oplus g^\bullet)$，故 $w''^n(z'^n,x'^n)=f^n(z'^n) + g^n(x'^n)$。对刚构造的半分裂短正合序列 $0\rightarrow Z'^\bullet\rightarrow Y'^\bullet\rightarrow X'^\bullet\rightarrow 0$ 应用引理 \ref{semisplit}，即确认 $Z'^\bullet\xrightarrow{a^\bullet} Y'^\bullet\xrightarrow{a'^\bullet} X'^\bullet\xrightarrow{a''^\bullet} Z'[1]^\bullet$ 是 $\mathsf{H^\#\!(A)}$ 中的区分三角形（特别地，$a''^\bullet$ 正是使右上三角形交换的那个态射）。
+	
+	我们仍需验证补全后的图确实交换。对其余两个三角形这是直接的。对左方块，我们容易看出 $a^\bullet\circ p_2^\bullet=p_{23}^\bullet\circ i_{12}^\bullet$。右方块则只在相差由 $k^n(z'^n,x'^n)\coloneqq(0,z'^n)$ 给出的同伦 $k^\bullet: Y'^\bullet\rightarrow Y[1]^{\bullet-1}=Y^\bullet$ 的意义下交换。事实上我们计算：
+	\begin{align*}
+		\big(k^{n+1}\!\circ\! d_{Y'}^n - d_Y^n\!\circ\! k^n\big)(z'^n,x'^n) \!&= k^{n+1}(d_{Z'}^n(z'^n)-h^n(x'^n),d_{X'}^n(x'^n))\!-\!d_Y^n(0,z'^n) \\
+		&= (0,d_{Z'}^n(z'^n)-h^n(x'^n))-(-f^n(z'^n),d_{Z'}^n(z'^n))\\
+		&= (f^n(z'^n)+g^n(x'^n),0) - (g^n(x'^n),h^n(x'^n)) \\
+		&= \big(i_1[1]^n\circ(f^n\oplus g^n)-(g^n,h^n)\circ a'^n\big)(z'^n,x'^n)
+	\end{align*}
+	因此，公理 (T3) 成立；结合先前的证明，我们断定 $\mathsf{H^\#\!(A)}$ 具有三角范畴的结构。
+\end{proof}
+
+
+\subsection{导出范畴的三角性}
+
+
+我们希望把「复形的同伦范畴是三角的」这一发现再推进一步。然而，要把这个结果传递到导出范畴，我们必须顾及局部化的过程。这会对所涉及的局部化态射类提出一些进一步的要求。我们先处理一般的三角范畴，稍后再聚焦于导出范畴。
+
+\begin{Def}
+	设 $\mathsf{D}=(\mathsf{D},T)$ 为三角范畴，$S$ 为其中一族局部化态射类（见定义 \ref{locclass}）。则称 $S$ \textbf{与三角结构相容}\index{localizing class of morphisms!compatible with triangulation}，若 $\big(s\in S \Leftrightarrow T(s)\in S\big)$ 与 $\big(f,g\in S\text{ in }\eqref{TR3diag}\implies h\in S\big)$ 成立。
+\end{Def}
+
+\begin{Thm}\label{derivedcatistriangulated}
+	设 $\mathsf{D}=(\mathsf{D},T)$ 为三角范畴，$S$ 为 $\mathsf{D}$ 中与三角结构相容的局部化态射类。令 $\mathsf{D}_S\coloneqq\mathsf{D}[S^{-1}]$ 表示相应的导出范畴，其局部化函子为 $\mathsf{L}:\mathsf{D}\rightarrow\mathsf{D}_S$，如命题 \ref{derivedexists} 的证明中所构造、并在命题 \ref{derivedstructure} 中所描述。为 $\mathsf{D}_S$ 赋予诱导的平移函子 $T_S:\mathsf{D}_S\rightarrow\mathsf{D}_S$，它在 $\textup{obj}(\mathsf{D}_S)=\textup{obj}(\mathsf{D})$ 上满足 $T=T_S$，且 $T_S\circ\mathsf{L}=\mathsf{L}\circ T$。
+	
+	于是 $\mathsf{D}_S$ 连同 $T_S$，并以所有与某个 $\mathsf{L}(\Delta)$（其中 $\Delta$ 为 $\mathsf{D}$ 中的区分三角形）同构的三角形为区分三角形，是一个三角范畴。
+\end{Thm}
+% [Tutor Note: 记号提醒：定理中的 $\mathsf{D}_S=\mathsf{D}[S^{-1}]$ 是对任意三角范畴沿相容局部化类 $S$ 作的形式局部化，作者把它也笼统称为"导出范畴"；下一推论里 $\mathsf{D^\#\!(A)}=\mathsf{H^\#\!(A)}[S^{-1}]$ 只是它的特例（$S$ 取拟同构）。阅读时务必分清这一般记号与具体 $\mathsf{D^\#\!(A)}$。此外 $T_S$ 的存在性依赖 $S$ 满足 $s\in S\Leftrightarrow T(s)\in S$。]
+
+由于篇幅较长，我们再次把证明切成几部分。首先回忆，任何 $u\in\text{Hom}_{\mathsf{D}_S}(X,Y)$ 都是一个等价类，由 $\mathsf{D}$ 中的屋顶 $X\xleftarrow{s} Z\xrightarrow{u'} Y$（其中 $s\in S$）代表。于是按 $T_S$ 的定义，$T_S(u)\in\text{Hom}_{\mathsf{D}_S}(T(X),T(Y))$ 由 $\mathsf{D}$ 中的屋顶 $T(X)\xleftarrow{T(s)} T(Z)\xrightarrow{T(u')} T(Y)$ 代表，其中 $T(s)\in S$（因为已假定 $S$ 相容），即 $T_S([(s,u')])=[(T(s),T(u'))]$。由 $T$ 的函子性，这一对应尊重屋顶之间的定义等价关系 \eqref{equivroofs}。
+
+\begin{proof}[(\textup{T1}) 的证明]
+	三角形 $\big(X\!\xrightarrow{[(\text{id}_X,\text{id}_X)]} \!X\!\xrightarrow{[(\text{id}_X,0)]} 0\xrightarrow{[(\text{id}_0,0)]} \!X[1]\!=\!T_S(X)\big)$ 对任意给定的 $X\in\text{obj}(\mathsf{D}_S)$ 是区分的，因为它与 $\mathsf{L}\big(X\xrightarrow{\text{id}_X} X\rightarrow 0\rightarrow X[1]\big)$ 同构，而后者正是 $\mathsf{D}$ 的 (T1)a. 中区分三角形（在局部化函子下）的像。
+	
+	b. 部分同样清楚：若 $\Delta_2$ 与 $\mathsf{D}_S$ 中的区分三角形 $\Delta_1\cong\mathsf{L}(\Delta)$ 同构（其中 $\Delta$ 在 $\mathsf{D}$ 中区分），则 $\Delta_2\cong\mathsf{L}(\Delta)$ 显然也是区分三角形。
+	
+	c. 部分则稍不那么平凡。考虑由 $X\xleftarrow{s} Z\xrightarrow{u'} Y$ 代表的 $u=[(s,u')]\in\text{Hom}_{\mathsf{D}_S}(X,Y)$，并把 $u'\in\text{Hom}_\mathsf{D}(Z,Y)$ 补全为 $\mathsf{D}$ 中的区分三角形 $\Delta=\big(Z\xrightarrow{u'} Y\xrightarrow{v} U\xrightarrow{w} Z[1]\big)$。于是 $\mathsf{L}(\Delta)$ 填入下图的上排：
+	\[
+	\begin{tikzcd}
+		Z\arrow[r, "u'"]\arrow[d, "s"'] & Y\arrow[r, "v"]\arrow[d, "\text{id}_Y"'] & U\arrow[r, "w"]\arrow[d, "\text{id}_U"] & Z[1]\arrow[d, "{s[1]}"] \\
+		X\arrow[r, "u"'] & Y\arrow[r, "v"'] & U\arrow[r, "{s[1]\circ w}"'] & X[1]
+	\end{tikzcd}
+	\]
+	该图位于 $\mathsf{D}_S$ 中，其中除 $u$ 之外的每个态射都应理解为形如 $[(\text{id},\square)]$ 的态射（例如 $u'\equiv[(\text{id}_Z,u')]\in\text{Hom}_{\mathsf{D}_S}(Z,Y)$）。利用屋顶的复合律 \eqref{roofcompo}，我们容易推出该图交换。因此 $(s,\text{id}_Y,\text{id}_U)$ 是三角形态射，并且由于 $s$ 在 $\mathsf{D}_S$ 中形式可逆，它还是同构。于是下排与 $\mathsf{L}(\Delta)$ 同构，正是把 $u$ 补全为 $\mathsf{D}_S$ 中区分图所需的补全。
+\end{proof}
+
+\begin{proof}[(\textup{T2}) 的证明]
+	这是显然的。只需利用 $T_S\circ\mathsf{L}=\mathsf{L}\circ T$，并穿过 $\mathsf{D}$ 中相应区分三角形的左/右平移即可。
+\end{proof}
+
+与上一节一样，公理 (TR3) 在 (T3) 的证明中起作用，因此我们必须先验证它。
+
+\begin{proof}[(\textup{TR3}) 的证明]
+	由于 \eqref{TR3diag} 在 $\mathsf{D}_S$ 中的每条下降箭头都对应一个代表屋顶，我们应当想象第三行对象与态射 $(s,X'',\tilde{f})\rightarrow(t,Y'',\tilde{g})\rightarrow(r,Z'',\tilde{h})\rightarrow(s[1],X''[1],\tilde{f}[1])$ 从图中竖直升起，在 $\mathsf{D}$ 中构成一个拉长的「三维」屋顶（见下图，其中 $\mathsf{D}_S$ 中的 $(f,g,h)$ 也一并画出，以便看清）。需要构造的正是代表 $h\in\text{Hom}_{\mathsf{D}_S}(Z,Z')$ 的那对虚线 $(r,\tilde{h})$。
+	
+	让我们搭建支撑整个大屋顶的「主梁」 $X''\xrightarrow{u''}Y''\xrightarrow{v''}Z''\xrightarrow{w''}X''[1]$。首先对 $X''\xrightarrow{u\circ s} Y\xleftarrow{t} Y''$ 使用定义 \ref{locclass} 的条件 b.，在 $\mathsf{D}$ 中构造两条互补箭头 $X''\xleftarrow{\tilde{t}}\tilde{X}\xrightarrow{\tilde{u}}Y''$，其中 $\tilde{t}\in S$，且满足 $(u\circ s)\circ\tilde{t}=t\circ\tilde{u}:\tilde{X}\rightarrow Y$（参见图 \eqref{localsquare} 左）。情形于是如下：
+	\[
+	\begin{tikzcd}[column sep=0.15cm]
+		& \tilde{X}\arrow[d, dashed, "\tilde{t}"']\arrow[drrrrr, dashed, "\tilde{u}"] & & & & & & & & & & & & & \\
+		& X''\arrow[rrrrr, dashed, "u''"]\arrow[dr, "s"]\arrow[ddl, near start, "\tilde{f}"'] & & & & & Y''\arrow[dr, "t"] & & & & & Z''\arrow[dr, dashed, "r"] & & & & & \mkern-18mu X''[1]\arrow[dr, start anchor={[xshift=-2ex, yshift=-1.5ex]east}, end anchor={[xshift=-0ex, yshift=2ex]west}, "{s[1]}"] & \\
+		& & X\arrow[rrrrr, near start, "u"]\arrow[dll, pos=0.5, "f"'] & & & & & Y\arrow[dll, pos=0.5, "g"']\arrow[rrrrr, near start, "v"] & & & & & Z\arrow[rrrrr, near start, end anchor={[xshift=-3.3ex]west}, "w"]\arrow[dll, dashed, pos=0.15, "h"] & & & & & \mkern-24mu X[1]\arrow[dll, pos=0.15, start anchor={[xshift=-2ex, yshift=-1.5ex]west}, end anchor={[xshift=-0.5ex, yshift=2ex]east}, "{f[1]}"]  \\
+		X'\arrow[rrrrr, "u'"'] & & & & & Y'\arrow[from=uur, near start, crossing over, "\tilde{g}"']\arrow[rrrrr, "v'"'] & & & & & Z'\arrow[from=uur, near start, dashed, crossing over, "\tilde{h}"']\arrow[rrrrr, "w'"'] & & & & & X'[1]\arrow[from=uur, crossing over, near start, start anchor={[xshift=-4ex, yshift=-1.5ex]east}, "{\tilde{f}[1]}"']  & &
+	\end{tikzcd}
+	\]
+	当 $\tilde{X}$ 位于 $X''$ 之上时，我们清楚地看到屋顶 $X\xleftarrow{s\circ\tilde{t}}\tilde{X}\xrightarrow{\tilde{f}\circ\tilde{t}} X'$ 同样代表 $f:X\rightarrow X'$（用 \eqref{equivroofs} 核对），因此我们可以用它替换 $(s,X'',\tilde{f})$。后方块按构造交换；至于前方块，注意
+	\[
+	u'\circ\tilde{f}\circ s^{-1}= u'\circ f=g\circ u=\tilde{g}\circ t^{-1}\circ u=\tilde{g}\circ\tilde{u}\circ (s\circ\tilde{t})^{-1}=\tilde{g}\circ\tilde{u}\circ\tilde{t}^{-1}\circ s^{-1}
+	\]
+	（第二个等号由假设得到），于是如愿有 $u'\circ\tilde{f}\circ\tilde{t}=\tilde{g}\circ\tilde{u}:\tilde{X}\rightarrow Y'$（形式上这只在 $\mathsf{D}_S$ 中成立，但此时存在公共的 $q\in S$，使得用它作前复合之后等式在 $\mathsf{D}$ 中也成立）。因此我们就把 $\tilde{X}$ 改名为 $X''$，并置 $u''\coloneqq\tilde{u}\in\text{Hom}_\mathsf{D}(X'',Y'')$。
+	
+	现在，$\mathsf{D}$ 的公理 (T1)c. 允许我们把 $u''$ 补全为 $\mathsf{D}$ 中的区分三角形 $X''\xrightarrow{u''}Y''\xrightarrow{v''}Z''\xrightarrow{w''}X''[1]$。接着对所得大屋顶的两条斜边分别应用引理 \ref{tr3}，得到虚线箭头 $r\in\text{Hom}_\mathsf{D}(Z'',Z)$ 与 $\tilde{h}\in\text{Hom}_\mathsf{D}(Z'',Z')$，其中因 $S$ 与三角结构相容而有 $r\in S$。我们断定 $h\coloneqq[(r,\tilde{h})]\in\text{Hom}_{\mathsf{D}_S}(Z,Z')$ 使三元组 $(f,g,h)$ 成为 $\mathsf{D}_S$ 中合法的区分三角形态射。
+\end{proof}
+% [Tutor Note: 本证明是全节最"技术"的一段，核心是屋顶演算：先在 $\mathsf{D}$ 中用 Ore 条件（定义 \ref{locclass} 的条件 b.）把两个屋顶的顶端对齐到同一个 $\tilde{X}$，再在 $\mathsf{D}$ 里作锥、用 (TR3) 补出两条斜边 $r,\tilde{h}$，且因 $S$ 与三角结构相容，$r$ 自动属于 $S$，从而 $(r,\tilde{h})$ 确实是 $\mathsf{D}_S$ 中合法的屋顶。注意"改名为 $X''$"这一步只用了 \eqref{equivroofs}，不是真正的等号。]
+
+\begin{proof}[(\textup{T3}) 的证明]
+	这一次我们更青睐八面体图 \eqref{octahedraldiag}，因为它使情形在视觉上更清楚。也就是说，我们将逐步构造下图：\footnote{请心怀感激……这图真是画得要命……}
+	\[
+	\begin{tikzcd}[column sep=0.5cm, row sep=0.3cm]
+		& & \mkern-6mu Y\arrow[ddddll, red, start anchor={[xshift=-1ex, yshift=-1ex]west}, end anchor={[xshift=0.5ex]north}, "f'"' ]\arrow[ddrr, green, "g"] & & \\
+		& & & & \\
+		& \mkern+12mu X'\arrow[uur, green, "{g''[1]}"]\arrow[ddl, cyan, start anchor={[xshift=2.5ex, yshift=-1ex]west}, end anchor={[xshift=-0.6ex, yshift=1.5ex]east}, "{a''[1]}"']\arrow[from=ddd, cyan, near end, "r'"'] & & & Z\arrow[lll, green, near start, "g'"'] \\
+		& & & & \\
+		Z'\arrow[rrr, red, crossing over, "{f''[1]}"'] & & & X\arrow[uuuul, red, crossing over, pos=0.2, "f"]\arrow[uur, orange, "h"'] \\
+		& X''\arrow[ddl, dashed, pos=0.2, "{\tilde{a}''[1]}"']\arrow[dr, dashed] & & & Z\arrow[uuu, orange, "\text{id}_Z"']\arrow[lll, dashed]\arrow[dddll, orange, pos=0.2, "\tilde{h}'"'] \\
+		& & Y''\arrow[urr, dashed, pos=0.2, "q"]\arrow[uuuuuu, dashed, pos=0.6, "t"] & & \\
+		Z''\arrow[uuu, cyan, "r"]\arrow[rrr, dashed, crossing over]\arrow[drr, cyan, dashed, "\tilde{a}"']\arrow[from=urr, dashed, crossing over] & & & \tilde{X}\arrow[uuu, orange, crossing over, pos=0.8, "s"']\arrow[uur, dashed, pos=0.2, "\tilde{h}"']\arrow[ul, dashed, pos=0.7, end anchor={[yshift=-1ex]east}, "p"] & \\
+		& & Y'\arrow[uuul, dashed, cyan, pos=0.85, "\tilde{a}'"]\arrow[ur, orange, "{\tilde{h}''[1]}"'] & & 
+	\end{tikzcd}
+	\]
+	出发点是 $\mathsf{D}_S$ 中的上半棱锥，它由区分三角形 $(f,f',f'')$ 与 $(g,g',g'')$ 构成，其中 $h=g\circ f$、$a''=f'\circ g''$；我们的目标是构造一个下半棱锥，它另有两个区分三角形（橙色与蓝色）以及交换的侧面。正如所暗示的，我们将通过一个中间层（虚线）来实现这一点。
+	
+	首先设 $f$、$g$ 分别由屋顶 $X\xleftarrow{s} U\xrightarrow{p} Y$ 与 $Y\xleftarrow{t}Y''\xrightarrow{q} Z$ 代表，$s,t\in S$。按图 \eqref{roofcompo}，$h=g\circ f$ 由 $X\xleftarrow{s\circ t'} \tilde{X}\xrightarrow{q\circ p'} Z$ 代表，其中 $U\xleftarrow{t'}\tilde{X}\xrightarrow{p'} Y''$ 是某个封顶，满足 $t'\in S$ 且 $p\circ t'=t\circ p'$。于是由于 $(s\circ t', \tilde{X}, p\circ t')$ 也代表 $f$，我们可以覆盖 $U\leftarrow\tilde{X}$、$s\circ t'\leftarrow s$、$p'\leftarrow p$，并置 $\tilde{h}\coloneqq q\circ p:\tilde{X}\rightarrow Z$，正如我们在八面体中所标注的那样。
+	
+	现在把 $p\in\text{Hom}_\mathsf{D}(\tilde{X},Y'')$ 与 $q\in\text{Hom}_\mathsf{D}(Y'',Z)$ 分别补全为 $\mathsf{D}$ 中的区分三角形 $\tilde{X}\xrightarrow{p} Y''\rightarrow Z''\rightarrow \tilde{X}[1]$ 与 $Y''\xrightarrow{q} Z\rightarrow X''\rightarrow Y''[1]$，并通过要求交换性来描出某个 $\tilde{a}''[1]: X''\rightarrow Z''$。这实际上给出了 $\mathsf{D}$ 中的一个上半棱锥（黑色虚线）。我们断言它在 $\mathsf{D}_S$ 中与原来的上半棱锥同构，而这当且仅当下列图表
+	\[
+	\begin{tikzcd}
+		\tilde{X}\arrow[r, "p"]\arrow[d, "s"'] & Y''\arrow[r]\arrow[d, "t"'] & Z''\arrow[r]\arrow[d, dashed, "r"] & \tilde{X}[1]\arrow[d, "{s[1]}"] \\
+		X\arrow[r, "f"'] & Y\arrow[r, "f'"'] & Z'\arrow[r, "f''"'] & X[1]
+	\end{tikzcd}\qquad
+	\begin{tikzcd}
+		Y''\arrow[r, "q"]\arrow[d, "t"'] & Z\arrow[r]\arrow[d, "\text{id}_Z"'] & X''\arrow[r]\arrow[d, dashed, "r'"] & Y''[1]\arrow[d, "{t[1]}"] \\
+		Y\arrow[r, "g"'] & Z\arrow[r, "g'"'] & X'\arrow[r, "g''"'] & Y[1]
+	\end{tikzcd}
+	\]
+	都是 $\mathsf{D}_S$ 中的区分三角形同构（和前面一样，$s\equiv[(\text{id}_{\tilde{X}},s)]\in\text{Hom}_{\mathsf{D}_S}(\tilde{X},X)$ 是默认理解的）。聚焦于第一个图，其左方块交换，我们看到 $\mathsf{D}_S$ 的公理 (TR3)（上面已证！）给出缺失的箭头 $r\in\text{Hom}_{\mathsf{D}_S}(Z'',Z')$。由于 $S$ 与三角结构相容，进一步有 $r\in S$，于是所有竖直箭头在 $\mathsf{D}_S$ 中都形式可逆。这使 $(s,t,r)$ 成为同构。对 $(t,\text{id}_Z,r')$ 的论证类似。
+	
+	因此我们可以只关注黑色虚线的上半棱锥。但它属于 $\mathsf{D}$，由公理 (T3) 立即给出如上所画的下半对应物。置 $a\coloneqq\tilde{a}\circ r^{-1}\in\text{Hom}_{\mathsf{D}_S}(Z',Y')$、$a'\coloneqq r'\circ\tilde{a}'\in\text{Hom}_{\mathsf{D}_S}(Y',X')$、$h'\coloneqq \tilde{h}'\circ\text{id}_Z\in\text{Hom}_{\mathsf{D}_S}(Z,Y')$ 与 $h''\coloneqq s[1]\circ \tilde{h}''\in\text{Hom}_{\mathsf{D}_S}(Y',X[1])$，我们便得到 $\mathsf{D}_S$ 中具有所需性质的下半棱锥：$(h,h',h'')$、$(a,a',a'')$ 在 $\mathsf{D}_S$ 中构成区分三角形（因为它们同构于 $\mathsf{D}$ 中区分三角形在局部化下的像），且相邻三角形按构造交换，$a'\circ h'=g'$ 与 $h''\circ a=f''$（参见最后那对图表）。
+	
+	这也结束了定理 \ref{derivedcatistriangulated} 的证明。    
+\end{proof}
+
+\begin{Cor}\label{D(A)istriangulated}
+	阿贝尔范畴 $\mathsf{A}$ 的导出范畴 $\mathsf{D^\#\!(A)}$ \textup(对 $\#=\emptyset,+,-,\mathsf{b}$\textup) 是三角的。
+\end{Cor}
+
+\begin{proof}
+	由定理 \ref{homotopycatistriangulated}，我们已经知道 $\mathsf{H^\#\!(A)}$ 连同平移函子 $T:\mathsf{H^\#\!(A)}\rightarrow\mathsf{H^\#\!(A)}$ 以及所有复形的区分三角形构成三角范畴。于是按定理 \ref{derivedcatistriangulated}，只需验证局部化类 $S\coloneqq\{\text{quasi-isomorphisms in }\mathsf{H^\#\!(A)}\}$ 与其三角结构相容。显然，$s^\bullet\in S$ 当且仅当 $T(s^\bullet)=s^{\bullet+1}\in S$。条件 $\big(f^\bullet,g^\bullet\in S\text{ in }\eqref{TR3diag}\implies h^\bullet\in S\big)$ 也容易验证：只需用引理 \ref{tr3} 得到某个 $h^\bullet\in\text{Hom}_\mathsf{H^\#\!(A)}(Z^\bullet,Z'^\bullet)$，再对连接定理 \ref{longexactcohomtriangles} 所给出的上同调长正合序列的每一组竖直箭头五元组 $\big(H^n(f^\bullet),H^n(g^\bullet),H^n(h^\bullet),H^{n+1}(f^\bullet), H^{n+1}(g^\bullet)\big)$ 应用五引理；于是每个 $H^n(h^\bullet):H^n(Z^\bullet)\rightarrow H^n(Z'^\bullet)$ 都是同构，从而 $h^\bullet\in S$。
+	
+	于是由定理 \ref{derivedcatistriangulated}，$\mathsf{D^\#\!(A)}=\mathsf{H^\#\!(A)}[S^{-1}]$ 在配以诱导平移函子 $T_S:\mathsf{D^\#\!(A)}\rightarrow\mathsf{D^\#\!(A)}$、并以所有与局部化函子 $\mathsf{L}:\mathsf{H^\#\!(A)}\rightarrow\mathsf{D^\#\!(A)}$ 下某个 $\mathsf{H^\#\!(A)}$ 中复形区分三角形的像同构的三角形为区分三角形时，成为一个三角范畴。
+\end{proof}
+% [Tutor Note: 这里"应用五引理"一句省略了细节：对每个 $n$，把 $H^n$ 作用于 \eqref{TR3diag} 所得的两个上同调长正合序列之间的竖直映射五元组排成一个 $3\times 5$ 的梯子，已知其中四个（$H^n(f),H^n(g),H^{n+1}(f),H^{n+1}(g)$）是同构，五引理即给出中间 $H^n(h)$ 也是同构。注意必须先有引理 \ref{tr3} 给出 $h^\bullet$ 的存在性，五引理才能用上。]
+
+既然刚刚证明了复形的导出范畴是三角的，从而关于 $\mathsf{D}=\mathsf{D^\#\!(A)}$ 的定义 \ref{cohomfuncontriangulated} 与定义 \ref{cohomfunconabelian} 相重合，命题 \ref{Homareexact} 立即蕴含下述推论。
+
+\begin{Cor}\label{Homarecohomological}
+	设 $\mathsf{A}$ 为阿贝尔范畴，$X^\bullet\in\textup{obj}(\mathsf{D^\#\!(A)})$。由命题 \ref{Homareexact}，协变函子 $\textup{Hom}_\mathsf{D^\#\!(A)}(X^\bullet,\square):\mathsf{D^\#\!(A)}\rightarrow\mathsf{A}$ 与反变函子 $\textup{Hom}_\mathsf{D^\#\!(A)}(\square,X^\bullet):\mathsf{D^\#\!(A)}\rightarrow\mathsf{A}$ 在阿贝尔意义下是上同调的。
+	
+	此外，由定理 \ref{longexactcohomtriangles}，上同调函子 $H^n:\mathsf{D^\#\!(A)}\rightarrow\mathsf{A}$ 在三角意义下也是上同调的。
+\end{Cor}
+
+回顾来看，我们注意到这一结果完成了定理 \ref{Extprop}a.\!\! 的证明。$\mathsf{D^\#\!(A)}$ 的三角性还使我们能够取锥 $C(u)^\bullet\in\text{obj}(\mathsf{D^\#\!(A)})$，把任意 $u^\bullet\in\text{Hom}_\mathsf{D^\#\!(A)}(X^\bullet, Y^\bullet)$ 补全（由定义 \ref{conesintriangulated}，在同构意义下唯一）；这个锥恰好就是定义 \ref{coneofcomplexes} 中的复形锥 $C(u)^\bullet=X[1]^\bullet\oplus Y^\bullet$。一切都严丝合缝地吻合。此外，我们有：
+
+\begin{Cor}
+	设 $\mathsf{A}$ 为阿贝尔范畴。则 $\mathsf{Kom^\#\!(A)}$ 中任何短正合序列 $0\rightarrow X^\bullet\xrightarrow{u^\bullet} Y^\bullet\xrightarrow{v^\bullet} Z^\bullet\rightarrow 0$ 都可通过适当选取 $w^\bullet$ 补全为 $\mathsf{D^\#\!(A)}$ 中的区分三角形 $X^\bullet\xrightarrow{u^\bullet} Y^\bullet\xrightarrow{v^\bullet} Z^\bullet\xrightarrow{w^\bullet} X[1]^\bullet$，而 $\mathsf{D^\#\!(A)}$ 中任何区分三角形都与这种形式之一同构。
+\end{Cor}
+
+\begin{proof}
+	注意，借助 $\mathsf{D^\#\!(A)}$ 的公理 {(T1)c.} 把 $u^\bullet$ 补全为复形的区分三角形并不能达到目的——那样会把数据 $(v^\bullet,Z^\bullet)$ 抹掉！然而，由命题 \ref{shortexactaretriangles}，我们知道 $0\rightarrow X^\bullet\rightarrow Y^\bullet\rightarrow Z^\bullet\rightarrow 0$ 与图 \eqref{distinguidiag} 的中间行 $0\rightarrow X^\bullet\xrightarrow{i_1^\bullet}Z(u)^\bullet\xrightarrow{p_{23}^\bullet}C(u)^\bullet\rightarrow 0$ 拟同构，而后者显然通过 $i_{23}^\bullet:C(u)^\bullet\rightarrow Z(u)^\bullet$ 半分裂。于是引理 \ref{semisplit} 给出所需的 $w^\bullet:Z^\bullet\rightarrow X[1]^\bullet$。
+	
+	同样由引理 \ref{semisplit}，$\mathsf{D^\#\!(A)}$ 中任何区分的 $X^\bullet\xrightarrow{u^\bullet} Y^\bullet\xrightarrow{v^\bullet} Z^\bullet\xrightarrow{w^\bullet} X[1]^\bullet$ 最终都与由如上所述的半分裂短正合序列导出的区分三角形同构。
+\end{proof}	
+
+
+
+
+
+
+\newpage
+
+
+
+
+
+\part{层的范畴理论}
+\markboth{II\quad 层的范畴理论}{II\quad 层的范畴理论}
+\thispagestyle{plain}
+
+\vspace*{2cm}
+
+
+层（sheaf）的概念约在 1930 年代开始缓慢发展，源出上同调理论；它最初由那个时代诸位代数拓扑学家针对非常特定的设定加以定型，其中包括 Leray、Cartan 与 Serre。到了 50 年代中期，也由于 Grothendieck 与 Zariski 的贡献，层对代数几何的相关性变得越来越明显，层论由此上升为一门独立的数学学科。它最终为代数几何学家提供了强有力的分析工具，例如凝聚层上同调，我们也将对此有所领略。
+% [Tutor Note: 术语提醒：本部分起，"sheaf" 一律译"层"、"presheaf" 译"预层"、"coherent sheaf" 译"凝聚层"，与全书词表一致；"scheme" 译"概形"，"variety" 译"簇"。注意作者在此处写 "coherent sheaf cohomology"（凝聚层上同调），这是第 6 章引入的层上同调在凝聚层上的特例，不是另一种上同调理论。]
+
+另一方面，概形（scheme）由 Grothendieck 在其 1960 年的《\textit{Éléments de Géométrie Algébrique}》（\textit{EGA}）中开创，为此后一门理论砌下第一块砖；这门理论如今有效地统一了代数几何与数论的大部分内容，并诉诸交换代数、拓扑学与同调代数的工具。他把仿射概形定义为带有环层的交换环的谱（这又反过来推动了层论的蓬勃发展），再把它们「粘合」起来，形成具有各种性质的概形。
+
+在这两段短文里，我们已经可以体会到塑造代数几何的诸多历史协同作用。得益于此，同调镜像对称的 B-侧所依赖的工具集，比那套曲折得多、也相对年轻的 Fukaya 范畴（它不早于 90 年代才出现）更为传统、更为坚实，从而使 B-侧成为镜像对偶中理解得更清楚的一面。相应地，我们将看到，接下来的理论比 \cite{[Imp21]} 后半部分所陈述的内容要稍易消化一些，尽管并非没有若干妥协，尤其是在涉及概形之时。
+% [Tutor Note: 这里是作者少见的直观比较：B-侧（凝聚层与导出范畴）建立在 1950 年代已成型的交换代数与层论之上，而 A-侧（Fukaya 范畴）在 1990 年代才出现，技术门槛更高。这一"一侧更成熟"的判断是全篇选择先讲 B-侧的动机，值得与第 7 章的低维情形对照阅读。]
+
+撇开这些考虑，第二篇的目标是双重的。一方面，我们希望了解层的代数几何，并逐步把注意力限制到概形上的凝聚层、从而 Calabi--Yau 簇的框架内；另一方面，我们给出同调镜像对称已知的最简单体现，这在道义上为我们的旅程画上句号。更具体地说：
+
+\begin{itemize}[leftmargin=0.5cm]
+\item 在第 5 章，我们引入拓扑空间上阿贝尔群的（预）层范畴，并证明它是阿贝尔范畴。随后我们把词汇扩充到基本的工作工具：前推、逆像、摩天楼层与局部 $\mathcal{H}om$-层。事实上，我们可以在环空间上的模层这一更宽广的语境中研究它们，在那里对偶层、张量层与拉回层也加入我们的行列。有时可以用赋予底环空间的结构层的若干副本表达层，此时我们谈的是自由层与局部自由层。遗憾的是，这些层不构成阿贝尔范畴，因此必须扩大范围，才能捕获（拟）凝聚层。
+\newline 但在此我们暂停一下，以重温关于簇与概形的记忆。特别地，以我们的基域 $\mathbb{K}$ 的谱作为固定的底，我们便看到概形给出一个范畴，$\mathbb{K}$ 上簇的范畴嵌入其中，因此我们受到鼓励，不失一般性地只看概形！在列举了它们所能容许的一切可以想见的装饰之后，我们回到（拟）凝聚层，此时是在（诺特）概形上考虑；在这一特定设定下，论证所出现的范畴确实是阿贝尔范畴就更容易了。最后，我们再次过一遍所有已知类型的层及它们诱导的函子，考察它们在凝聚性方面表现如何。
+
+\item 在第 6 章，我们暂时退回拓扑空间上的模层，循第一篇的配方，看看它们产生哪些左、右导出函子。在这个更宽广的语境中，我们引入层上同调，它可以更便捷地通过 \v{C}ech 上同调来计算；我们将看到这一比较是何等自然，以及在哪些空间上两种理论实际上是同构的（幸运的是，在我们关心的所有空间上都是如此）。随后我们回到概形上的凝聚层及其有界导出范畴 $\mathsf{D^b}(X)$，并在其上构造导出函子，借道性质更好的拟凝聚层范畴来绕过一切不受欢迎的障碍。
+\newline 我们还留出几页给光滑射影概形的两个著名研究工具，即 Serre 对偶与 Fourier--Mukai 理论。这部分暂且放下之后，我们最终说明如何把 Calabi--Yau 流形辨认为「解析化」的光滑射影簇，从而确信迄今讨论的所有良好性质与函子在同调镜像对称的 Calabi--Yau 设定中同样合法。事实上，我们借此机会总结 $\mathsf{D^b}(X)$ 的主要特征；它现在正是 Kontsevich 猜想中出现的那一对象，而我们最终按 \cite{[Imp21]} 中的形式重述该猜想。
+
+\item 在第 7 章，我们考察两篇学位论文分量的缜密工作在低维情形下如何急剧简化。我们先描述 Calabi--Yau 1-流形，即椭圆曲线，弄清其上的（不可分解）凝聚层可能取何种形状，从而弄清它们的 B-侧。其次，我们解释它们的 A-侧：它把它们仅仅看作 2-环面，并归结为 Fukaya--Kontsevich 范畴，即 Fukaya 构造的性态更好的演化版本。后者正是 1 维同调镜像对称陈述中所出现的对象，其证明随后给出概述。最后，我们就 $K3$ 曲面的 2 维情形说几句话。
+\end{itemize}
+% [Tutor Note: 原文 "the meticolous work of two theses' worth of theory" 一句含义含糊：直译是"两篇学位论文分量的理论的缜密工作"，推测指前文（作者本人的 [Imp21] 与本篇）两部分积累起来的大量一般理论，在第 7 章低维情形下大幅简化。此外 "meticolous" 是 "meticulous" 的拼写笔误，译文按正确拼写理解。]
+
+我们关于代数几何（从层到概形）一切内容的默认参考，是 Hartshorne 的名著 \cite{[Har77]}，并借助 \cite{[Vak17]} 的部分帮助。但更多仍属于导出范畴论的同调内容，则再次借用 \cite{[GM03]}。至于对诺特概形的 $\mathsf{D^b}(X)$ 及 Fourier--Mukai 变换的更聚焦刻画，我们转向 \cite{[Huy06]}。椭圆曲线的 1 维情形则依循 Polishchuk、Zaslow 与 Kreussler 的分析 \cite{[PZ00]} 与 \cite{[Kre00]}。
+
+然而我们要强调，这份文献选目只是巨大冰山的一角；其他一些著名数学家（如 Grothendieck、Serre 与 Mukai，仅举几例）的某些奠基性工作只被间接提及（甚至完全未被提及），但但愿可以从所引用的文献中回溯。当然，第一篇也可作如是说，实际上任何像同调镜像对称这样影响深远的数学理论都可作如是说。
+
+
+
+\newpage
+\pagestyle{fancy}
+

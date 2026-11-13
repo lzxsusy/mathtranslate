@@ -1,0 +1,622 @@
+% ============================================================
+%  part02.tex  |  原文 PDF p.7–14（页脚 p.6–13）
+%  内容：第 2 章 上同调与积分
+%        （2.1 de Rham 上同调；2.2 上同调与积分）
+% ============================================================
+
+% >>> p007
+\section{上同调与积分（Cohomology and Integration）}
+
+\begin{keypoints}
+  \item \textbf{核心物理图像}：“积分”可以与上同调类配对来理解：闭形式沿闭链的积分
+        只依赖于该链的同调类，这正是后文把路径积分视为“同调/上同调运算”的原型。
+  \item \textbf{数学工具}：上链复形与上同调 $(C^{\bullet},d)$、de Rham 复形
+        $(\Omega^{*}(U),d)$、Stokes 定理、Poincaré 引理，以及 Cartan 公式
+        $\mathcal{L}_V=\dd\iota_V+\iota_V\dd$ 与内积 $\iota_V$。
+  \item \textbf{主要结论}：Poincaré 引理给出 $H^{p}(\R^n)=0\ (p>0)$ 而
+        $H^{n}_{c}(\R^n)\cong\R$；由积分映射
+        $\int_{\R^n}:H^{n}_{c}(\R^n)\to\R$ 可知“积分”本质上是一种同调运算
+        （与紧支集上同调对偶）。
+  \item \textbf{译者评注}：本章是全书的代数与几何预备。2.2 节末尾“积分
+        $\Longleftrightarrow$ 上同调”的观点，是第 6、7 章在 BV 形式与微扰量子化中
+        把路径积分当作同调运算处理的雏形；Poincaré 引理的证明则示范了 Cartan 公式
+        的典型用法（构造同伦算子），建议与第 6 章的收缩同伦对照阅读。
+\end{keypoints}
+
+\subsection{de Rham 上同调（De Rham Cohomology）}
+
+我们讨论“积分”的一些代数与几何侧面，这些内容将有助于我们理解后文的量子场论构造。
+
+\begin{wdefn}{2.1}
+  环 $R$ 上的一个\emph{上链复形}（cochain complex）是一列 $R$-模映射
+  \[
+    \cdots\longrightarrow C^{n-1}\xrightarrow{\ d_{n-1}\ }C^{n}
+    \xrightarrow{\ d_{n}\ }C^{n+1}\longrightarrow\cdots
+  \]
+  使得 $d_{n}d_{n+1}=0$。我们将其记为 $(C^{\bullet},d)$，其中
+  $d_{n}=d|_{C^{n}}$ 且 $d^{2}=0$。
+\end{wdefn}
+
+% [Tutor Note: 原文 Definition 2.1 中条件印作 $d_nd_{n+1}=0$，但紧接下文用它推出
+% $\mathrm{Im}(d_{n-1})\subset\mathrm{Ker}(d_n)$，而上链复形的相邻映射是
+% $d_{n-1}:C^{n-1}\to C^n$ 与 $d_n:C^n\to C^{n+1}$，故该条件按复合次序应写作
+% $d_n\circ d_{n-1}=0$（等价地 $d^2=0$）。此处照录原文，读者按 $d^2=0$ 理解即可。]
+
+条件 $d_{n}d_{n+1}=0$ 蕴涵
+\[
+  \operatorname{Im}(d_{n-1})\subset\operatorname{Ker}(d_{n}).
+\]
+于是我们可以定义 $R$-模
+\[
+  H^{n}(C^{*},d):=\frac{\operatorname{Ker}(d_{n})}{\operatorname{Im}(d_{n-1})},
+\]
+它称为 $(C^{*},d)$ 的\emph{第 $n$ 个上同调群}。这是链复形与同调群的对偶概念。
+
+% [Tutor Note: 原文上标记号不统一：p.6 用 $(C^{\bullet},d)$（实心圆点）表示上链
+% 复形，随后又写 $H^{n}(C^{*},d)$、$(\Omega^{*}(U),d)$（星号），而 p.13 的命题
+% 2.11 又回到 $\Omega^{\bullet}(U)$；同理 p.7 的 Definition 2.2 把 de Rham 上同调
+% 写成 $H_{dR}^{P}(U)=H^{P}(\Omega^{*},d)$（大写 $P$），而紧随其后又写
+% $H^{p}(M)$、$H_{c}^{p}(M)$（小写 $p$）。这些都是原文记号不一致，并非排版笔误；
+% 本译本按原页照录，读者理解为同一复形、同一上标 $p$ 即可。]
+
+\paragraph{de Rham 复形（De Rham Complex）}
+
+下面考虑微积分中的一个几何例子。设 $U\subset\R^n$ 是开集，
+$\{x^{1},\ldots,x^{n}\}$ 是它的坐标。引入
+\[
+  \begin{aligned}
+    \Omega^{0}(U)&=\{\text{$U$ 上的光滑函数}\}=C^{\infty}(U),\\
+    \Omega^{1}(U)&=\{\text{$U$ 上的光滑 $1$-形式}\}.
+  \end{aligned}
+\]
+元素 $\alpha\in\Omega^{1}(U)$ 可以写成
+\[
+  \alpha=\sum_{i=1}^{n}\alpha_{i}(x)\dd x^{i}\in\Omega^{1}(U),
+  \qquad \alpha_{i}\in C^{\infty}(U).
+\]
+全微分给出一个映射
+\[
+  \begin{aligned}
+    \Omega^{0}(U)&\xrightarrow{\ \dd\ }\Omega^{1}(U)\\
+    f&\longmapsto \dd f=\sum_{i}\partial_{i}f\,\dd x^{i},
+  \end{aligned}
+\]
+它可以延拓为一个上链复形
+\[
+  \Omega^{0}(U)\xrightarrow{\ \dd\ }\Omega^{1}(U)\xrightarrow{\ \dd\ }
+  \Omega^{2}(U)\to\cdots\xrightarrow{\ \dd\ }\Omega^{n}(U),
+\]
+其中
+\[
+  \Omega^{p}(U)=\{\text{$U$ 上的光滑 $p$-形式}\}.
+\]
+元素 $\xi\in\Omega^{p}(U)$ 形如
+\[
+  \xi=\sum_{i_{1},\ldots,i_{p}}\xi_{i_{1}\cdots i_{p}}(x)\,
+  \dd x^{i_{1}}\wedge\cdots\wedge\dd x^{i_{p}}.
+\]
+
+% >>> p008
+其中 $\xi_{i_{1}\cdots i_{p}}(x)\in C^{\infty}(U)$，并满足反对称性质
+\[
+  \dd x^{i}\wedge\dd x^{j}=-\dd x^{j}\wedge\dd x^{i},\qquad \forall i,j.
+\]
+特别地，$\dd x^{i}\wedge\dd x^{i}=0$。因此我们也可以写成
+\[
+  \Omega^{p}(U)=\bigoplus_{1\le i_{1}<\cdots<i_{p}\le n}
+  C^{\infty}(U)\,\dd x^{i_{1}}\wedge\cdots\wedge\dd x^{i_{p}}.
+\]
+de Rham 微分 $d:\Omega^{p}(U)\to\Omega^{p+1}(U)$ 定义为
+\[
+  \dd(\xi)=\sum_{i_{1},\ldots,i_{p},k}
+  \partial_{x^{k}}\xi_{i_{1}\cdots i_{p}}\,
+  \dd x^{k}\wedge\dd x^{i_{1}}\wedge\cdots\wedge\dd x^{i_{p}}.
+\]
+验证：$d^{2}=0$。因此
+\[
+  \Omega^{0}(U)\xrightarrow{\ \dd\ }\Omega^{1}(U)\xrightarrow{\ \dd\ }
+  \Omega^{2}(U)\to\cdots\to\Omega^{n}(U)
+\]
+定义了一个上链复形，称为 \emph{de Rham 复形}，记为 $(\Omega^{*}(U),d)$。
+
+% [Tutor Note: 指标约定提醒——分解式中指标按 $1\le i_1<\cdots<i_p\le n$ 严格递增
+% 求和，故每个基元只出现一次；若改用无序的 $i_1,\ldots,i_p$ 求和再反对称化，则与
+% 上式相差一个 $p!$ 因子。这是微分形式计算中最常见的系数错误来源之一。]
+
+\begin{wdefn}{2.2}
+  $p$-形式 $\alpha\in\Omega^{p}$ 称为
+  \begin{itemize}[leftmargin=1.6em,itemsep=0.12em,topsep=0.2em]
+    \item \emph{闭的}（closed），若 $d\alpha=0$；
+    \item \emph{恰当的}（exact），若 $\alpha=d\beta$ 对某个 $p-1$ 形式 $\beta$ 成立。
+  \end{itemize}
+  商空间
+  \[
+    H^{P}_{dR}(U)=H^{P}(\Omega^{*},d)
+    =\frac{\text{闭的 }p\text{-形式}}{\text{恰当的 }p\text{-形式}}
+  \]
+  称为\emph{第 $p$ 个 de Rham 上同调}。
+\end{wdefn}
+
+de Rham 微分 $d$ 的一个重要性质是它是\emph{内蕴的}：它不依赖于坐标的选取。
+因此我们可以通过粘接上述局部构造，在光滑流形 $M$ 上定义 $(\Omega^{*}(M),d)$。
+于是流形上的 de Rham 上同调
+\[
+  H^{p}(M)=H^{p}_{dR}(M)
+\]
+是良定义的。我们也可以考虑 $(\Omega^{*}_{c}(M),d)$，其中
+\[
+  \Omega^{*}_{c}(M)=\{\text{$M$ 上具紧支集的 }p\text{-形式}\}.
+\]
+于是可以定义\emph{紧支集 de Rham 上同调}
+\[
+  H^{p}_{c}(M)=H^{p}(\Omega^{*}_{c}(M),d).
+\]
+
+\paragraph{Stokes 定理（Stokes' Theorem）}
+
+设 $\mathcal{K}\subset\R^{n}$ 是一个 $p$ 维曲面，$\partial\mathcal{K}$ 是
+$\mathcal{K}$ 的边界。$\mathcal{K}$ 的定向按下述方式决定 $\partial\mathcal{K}$ 的
+一个定向。设 $x\in\mathcal{K}$，$\vec{n}_{x}$ 是 $\partial\mathcal{K}$ 上的一个
+外法向量场，即 $\vec{n}_{x}$ 在 $\mathcal{K}$ 处相切，并指向 $\mathcal{K}$ 的外部。
+
+% >>> p009
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.46\linewidth]{fig_p009_1.png}
+  \caption*{曲面 $\mathcal{K}$、其边界 $\partial\mathcal{K}$ 与外法向量 $\vec{n}_x$（原文 PDF p.9 示意图，原文无编号）}
+\end{figure}
+
+于是 $\partial\mathcal{K}$ 的一个定向参数化 $\tau^{1},\cdots,\tau^{p-1}$
+满足：$\vec{n}_{x},\frac{\partial}{\partial\tau^{1}},\cdots,
+\frac{\partial}{\partial\tau^{p-1}}$ 给出 $T_{x}\mathcal{K}$ 的一个定向。
+按此诱导定向，我们有
+
+% [Tutor Note: 原文 "$\vec{n}_x$ is tangent at $\mathcal{K}$" 的说法含糊：外法向量
+% 应是 $\partial\mathcal{K}$ 的外法向（垂直于 $\partial\mathcal{K}$），而非
+% $\mathcal{K}$ 的切向量。这里作者想说的是“$\vec{n}_x$ 附着在（沿）$\mathcal{K}$
+% 的边界上”。按原文照录，读者按“外法向”理解即可。]
+
+\begin{wthm}{2.3}（Stokes 定理）
+  \[
+    \int_{\mathcal{K}}\dd\alpha=\int_{\partial\mathcal{K}}\alpha.
+  \]
+  这里 $\alpha$ 是一个光滑的 $(p-1)$-形式。
+\end{wthm}
+
+% [Tutor Note: 边界诱导定向的约定（把外法向 $\vec n_x$ 放在参数化切向量之前）
+% 直接决定 Stokes 公式的符号。Green 定理取 $n=p=2$、Gauss 定理取 $n=p=3$，
+% 两例中 $\dd\alpha$ 展开式前面的正负号都依赖这一约定；核对符号时请先确认
+% “外法向在前”还是“切向量在前”。这是本章最易出符号错误的地方。]
+
+\begin{wexam}{2.4}
+  考虑 $n=p=2$ 的情形。令
+  \[
+    \alpha=\alpha_{1}(x)\dd x^{1}+\alpha_{2}(x)\dd x^{2},
+    \qquad
+    \dd\alpha=\left(\frac{\partial\alpha_{2}}{\partial x^{1}}
+    -\frac{\partial\alpha_{1}}{\partial x^{2}}\right)\dd x^{1}\wedge\dd x^{2}.
+  \]
+  于是
+  \[
+    \iint_{\mathcal{K}}\left(\frac{\partial\alpha_{2}}{\partial x^{1}}
+    -\frac{\partial\alpha_{1}}{\partial x^{2}}\right)\dd x^{1}\wedge\dd x^{2}
+    =\int_{\partial\mathcal{K}}\alpha_{1}(x)\dd x^{1}+\alpha_{2}(x)\dd x^{2}.
+  \]
+  这给出 Green 定理。
+\end{wexam}
+
+\begin{wexam}{2.5}
+  考虑 $n=p=3$ 的情形。令
+  \[
+    \alpha=\alpha_{1}(x)\dd x^{2}\wedge\dd x^{3}
+    +\alpha_{2}(x)\dd x^{3}\wedge\dd x^{1}
+    +\alpha_{3}(x)\dd x^{1}\wedge\dd x^{2}.
+  \]
+  \[
+    \dd\alpha=\left(\frac{\partial\alpha_{1}}{\partial x^{1}}
+    +\frac{\partial\alpha_{2}}{\partial x^{2}}
+    +\frac{\partial\alpha_{3}}{\partial x^{3}}\right)
+    \dd x^{1}\wedge\dd x^{2}\wedge\dd x^{3}.
+  \]
+  于是
+  \[
+    \begin{aligned}
+      &\iiint_{K}\left(\frac{\partial\alpha_{1}}{\partial x^{1}}
+        +\frac{\partial\alpha_{2}}{\partial x^{2}}
+        +\frac{\partial\alpha_{3}}{\partial x^{3}}\right)
+        \dd x^{1}\wedge\dd x^{2}\wedge\dd x^{3}\\
+      &\qquad=\iint_{\partial\mathcal{K}}\alpha_{1}(x)\dd x^{2}\wedge\dd x^{3}
+        +\alpha_{2}(x)\dd x^{3}\wedge\dd x^{1}
+        +\alpha_{3}(x)\dd x^{1}\wedge\dd x^{2}.
+    \end{aligned}
+  \]
+  这就是 Gauss 积分定理。
+\end{wexam}
+
+% [Tutor Note: 例 2.5 中三重积分的下标原文作正体的 $K$（$\iiint_K$），而右边
+% 二重积分的下标作花体 $\partial\mathcal{K}$（$\iint_{\partial\mathcal{K}}$）；
+% 例 2.4 中则统一用花体 $\mathcal{K}$。这是原文同一页内的记号不一致，照录不改。]
+
+作为 Stokes 定理的一个应用，考虑两个区域 $\mathcal{K}_{1}$ 与 $\mathcal{K}_{2}$，
+它们作为下方图形所示区域 $\mathcal{M}$ 的边界。
+\[
+  \partial\mathcal{M}=\mathcal{K}_{2}-\mathcal{K}_{1}.
+\]
+这里的 $\pm$ 号由定向决定。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.48\linewidth]{fig_p009_2.png}
+  \caption*{区域 $\mathcal{M}$ 及其边界 $\mathcal{K}_1$、$\mathcal{K}_2$（原文 PDF p.9 示意图，原文无编号）}
+\end{figure}
+
+% >>> p010
+设 $\alpha$ 是一个闭形式
+\[
+  \dd\alpha=0.
+\]
+则
+\[
+  \int_{\mathcal{K}_{2}}\alpha-\int_{\mathcal{K}_{1}}\alpha
+  =\int_{\partial\mathcal{M}}\alpha=\int_{\mathcal{M}}\dd\alpha=0.
+\]
+所以
+\[
+  \int_{\mathcal{K}_{1}}\alpha=\int_{\mathcal{K}_{2}}\alpha.
+\]
+特别地，若 $d\alpha=0$，则 $\int_{\mathcal{K}}\alpha$ 在 $\mathcal{K}$ 的
+任何光滑形变下保持不变。
+
+% [Tutor Note: “any smooth deformation”应理解为保持边界（更一般地，保持同调类）
+% 的形变/同伦；若形变过程中扫过的区域包含奇点或使曲面穿过“洞”，积分可能改变，
+% 例 2.7 正是这种反例。严格表述见 de Rham 定理：闭形式沿链的积分只依赖同调类。]
+
+\begin{wexam}{2.6}
+  设 $\alpha\in\Omega^{1}(\R^{n})$ 且 $\dd\alpha=0$。设 $p,q\in\R^{n}$ 是两点。
+  定义
+  \[
+    \int_{p}^{q}\alpha=\int_{\gamma}\alpha
+  \]
+  其中 $\gamma$ 是连接 $p$ 与 $q$ 的任一条光滑路径。它不依赖于 $\gamma$ 的选取，
+  因为任一条这样的路径 $\gamma_{1}$ 都可以连续形变为另一条 $\gamma_{2}$。于是由
+  Stokes 定理，
+  \[
+    \int_{\gamma_{1}}\alpha=\int_{\gamma_{2}}\alpha.
+  \]
+\end{wexam}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.40\linewidth]{fig_p010_1.png}
+  \caption*{连接 $p$ 与 $q$ 的一族路径 $\gamma_1$、$\gamma_2$（原文 PDF p.10 示意图，原文无编号）}
+\end{figure}
+
+\begin{wexam}{2.7}
+  考虑 $\mathcal{U}=\R^{2}-\{0\}$ 以及
+  \[
+    \alpha=\frac{x\,\dd y-y\,\dd x}{x^{2}+y^{2}},
+    \qquad \dd\alpha=0.
+  \]
+  我们考虑从 $p=-1$ 到 $q=1$ 的两条路径，分别沿上半圆与下半圆。
+\end{wexam}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.31\linewidth]{fig_p010_2.png}
+  \caption*{绕原点的上、下半圆路径 $\gamma_2$、$\gamma_1$（原文 PDF p.10 示意图，原文无编号）}
+\end{figure}
+
+% [Tutor Note: 本例是 $H^{1}_{dR}(\R^{2}-\{0\})\cong\R$ 的标准生成元：$\alpha$ 在
+% $\mathcal{U}$ 上闭而不恰当。关键点是极坐标下 $\alpha=\dd\theta$，而 $\theta$
+% 在 $\mathcal{U}$ 上并非单值函数，故不能写成某个整体函数的微分。判断“闭而不恰当”
+% 时，务必先确认区域是否有洞（拓扑障碍），否则容易误判。]
+
+% >>> p011
+由于中间有一个洞，$\gamma_{1}$ 无法在区域 $\mathcal{U}$ 内形变为 $\gamma_{2}$。
+这也可以通过计算看出：
+\[
+  \int_{\gamma_{1}}\alpha-\int_{\gamma_{2}}\alpha=\oint_{C}\alpha.
+\]
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.31\linewidth]{fig_p011_1.png}
+  \caption*{环绕洞的闭曲线 C（原文 PDF p.11 示意图，原文无编号）}
+\end{figure}
+
+用极坐标 $x=r\cos\theta$，$y=r\sin\theta$，
+\[
+  \alpha=\dd\theta,\qquad
+  \oint_{C}\alpha=\int_{0}^{2\pi}\dd\theta=2\pi\ne 0.
+\]
+
+% [Tutor Note: 这里 $\oint_C\alpha=2\pi$ 是绕数（winding number）为 $1$ 的直接
+% 体现；若把 $C$ 换成绕原点 $k$ 圈的闭曲线，积分给出 $2k\pi$，这正是
+% $H^{1}_{dR}(\R^{2}-\{0\})\cong\R$ 的“周期”实现。原文此处的不等号印作
+% $2\pi\neq 0$，本译本照录。]
+
+\subsection{上同调与积分（Cohomology v.s. Integration）}
+
+\begin{wthm}{2.8}（Poincaré 引理）
+  \[
+    H^{p}(\R^{n})=
+    \begin{cases}
+      \R, & p=0\\
+      0,  & p>0
+    \end{cases},
+    \qquad
+    H^{p}_{c}(\R^{n})=
+    \begin{cases}
+      \R, & p=n\\
+      0,  & p\ne n
+    \end{cases}
+  \]
+  $H^{0}(\R^{n})$ 的一个生成元是常函数 $f\equiv 1$。$H^{n}_{c}(\R^{n})$ 的一个
+  生成元是一个紧支集形式 $\alpha=f(x)\dd^{n}x$，其中 $f\in C^{\infty}_{c}(\R^{n})$，
+  且满足 $\int_{\R^{n}}\alpha=1$。
+\end{wthm}
+
+观察到任意 $n$-形式 $\alpha\in\Omega^{n}_{c}(\R^{n})$ 都是闭的。另一方面，若
+$\alpha=\dd\beta$，其中 $\beta\in\Omega^{n-1}_{c}(\R^{n})$，则
+\[
+  \int_{\R^{n}}\dd\beta=\int_{K}\dd\beta=\int_{\partial K}\beta=0,
+\]
+其中 $K$ 是一个足够大的球。积分映射
+\[
+  \begin{aligned}
+    \int_{\R^{n}}:\ H^{n}_{c}(\R^{n})&\longrightarrow\R\\
+    \alpha&\longmapsto\int\alpha
+  \end{aligned}
+\]
+正是 Poincaré 引理中所述的同构。换个角度看，映射
+\[
+  \begin{aligned}
+    \Omega^{n}_{c}(\R^{n})&\longrightarrow H^{n}_{c}(\R^{n})
+    \overset{\text{Poincaré}}{\cong}\R,\\
+    \alpha&\longmapsto[\alpha]
+  \end{aligned}
+\]
+把最高次 $n$-形式送到它的上同调类，恰好确定了积分（相差一个重新标度的常数）。
+因此
+\[
+  \int_{\R^{n}}\quad\Longleftrightarrow\quad H^{n}_{c},
+\]
+也就是说，“积分”可以用一种同调运算来刻画。这一观点在我们后文关于微扰量子化的
+讨论中将起重要作用。
+
+本小节的其余部分用于证明 Poincaré 引理。
+
+% [Tutor Note: 这是本章的核心思想，也是全书的重要线索：积分不应只被看成“测度”，
+% 而应看成上同调类之间的配对 $\int_{\R^n}\leftrightarrow H^{n}_{c}$。第 6、7 章
+% 把路径积分 $\int_{\mathcal{E}}\ee^{\ii S/\hbar}(-)$ 解释为 BV 形式下的同调/上同调
+% 运算（Costello 的因子化代数与微扰量子化），其思想源头正是这里。]
+
+% >>> p012
+\paragraph{Cartan 公式（Cartan Formula）}
+
+我们先介绍微分几何中一些有用的概念。令
+\[
+  \Vect(M)=\text{流形 }M\text{ 上的光滑向量场}.
+\]
+向量场 $V\in\Vect(M)$ 可以按坐标表示为
+\[
+  V(x)=\sum_{i}V^{i}(x)\frac{\partial}{\partial x^{i}}.
+\]
+我们可以把 $V$ 看作一阶微分算子
+\[
+  \begin{aligned}
+    V:\ C^{\infty}(M)&\to C^{\infty}(M)\\
+    f&\mapsto V(f)=\sum_{i}V^{i}(x)\frac{\partial f}{\partial x^{i}},
+  \end{aligned}
+\]
+它满足 Leibniz 法则（即定义一个导子）：
+$V(fg)=V(f)g+fV(g)$。
+
+$\Vect(M)$ 在括号下构成一个 Lie 代数
+\[
+  \begin{aligned}
+    [-,-]:\ \Vect(M)\times\Vect(M)&\longrightarrow\Vect(M)\\
+    (V,W)&\longmapsto[V,W].
+  \end{aligned}
+\]
+这个括号满足以下性质：
+\begin{itemize}[leftmargin=1.6em,itemsep=0.25em,topsep=0.2em]
+  \item 作为微分算子
+        \[
+          [V,W](f):=V(W(f))-W(V(f)).
+        \]
+  \item 用坐标显式写出
+        \[
+          [V,W]=\sum_{i}\left(V(W^{i})-W(V^{i})\right)
+          \frac{\partial}{\partial x^{i}}.
+        \]
+  \item Jacobi 恒等式
+        \[
+          [V,[W,T]]+[W,[T,V]]+[T,[V,W]]=0.
+        \]
+\end{itemize}
+
+% [Tutor Note: 坐标公式 $[V,W]=\sum_i\big(V(W^i)-W(V^i)\big)\partial_i$ 中，
+% $V(W^i)$ 表示把 $V$ 作为方向导数作用在函数 $W^i$ 上，即
+% $\sum_j V^j\partial_j W^i$，而不是 $V^iW^i$ 之类的分量乘积。这是初学时最常见的
+% 混淆点；请与下一个 Jacobi 恒等式一起核对分量指标。]
+
+我们可以把 $\Vect(M)$ 形式地看作 $M$ 的微分同胚群 $\Diff(M)$ 的 Lie 代数。
+设 $V$ 在 $M$ 上生成一个流
+\[
+  \begin{aligned}
+    \varphi:\ (-\varepsilon,\varepsilon)\times M&\longrightarrow M\\
+    (t,x)&\longmapsto\varphi(t,x),
+  \end{aligned}
+\]
+满足 $\varphi(0,x)=x$ 以及
+$\frac{\partial\varphi(t,x)}{\partial t}=V(\varphi)$。记
+\[
+  \begin{aligned}
+    \varphi_{t}:\ M&\longrightarrow M\\
+    x&\longmapsto\varphi(t,x),
+  \end{aligned}
+\]
+它满足群性质：$\varphi_{0}=\mathrm{Id}$，$\varphi_{t}\varphi_{s}=\varphi_{t+s}$，
+$\varphi^{-1}=\varphi_{-t}$。于是
+\[
+  V(f)(x)=\left.\frac{\dd}{\dd t}\right|_{t=0}f(\varphi_{t}(x))
+\]
+表示 $f$ 沿 $V$ 所生成流的无穷小变化。
+
+% [Tutor Note: 原文 “$\varphi^{-1}=\varphi_{-t}$” 的记法不严谨，应理解为
+% $\varphi_t^{-1}=\varphi_{-t}$（对每个固定的 $t$，$\varphi_t$ 是 $M$ 的微分同胚，
+% 其逆为 $\varphi_{-t}$）。按原文照录，特此注明。]
+
+% >>> p013
+这一整套形式可以推广到微分形式。回忆一个光滑映射
+\[
+  \begin{aligned}
+    \phi:\ X&\longrightarrow Y\\
+    x&\longmapsto y^{i}=\phi^{i}(x)
+  \end{aligned}
+\]
+使我们能定义“拉回”（pull-back）映射
+\[
+  \phi^{*}:\ \Omega^{p}(Y)\longrightarrow\Omega^{p}(X),
+\]
+它把 $\alpha=\sum\alpha_{i_{1}\cdots i_{p}}(y)\dd y^{i_{1}}\wedge\cdots
+\wedge\dd y^{i_{p}}$ 送到
+\[
+  \phi^{*}(\alpha)=\sum\alpha_{i_{1}\cdots i_{p}}(\phi(x))
+  \dd\phi^{i_{1}}(x)\wedge\cdots\dd\phi^{i_{p}}(x).
+\]
+特别地，$V$ 生成的流 $\varphi_{t}$ 给出
+\[
+  \varphi_{t}^{*}:\ \Omega^{p}(M)\to\Omega^{p}(M).
+\]
+
+\begin{wdefn}{2.9}
+  我们通过下式定义微分形式上的 \emph{Lie 导数} $\mathcal{L}_{V}$：
+  \[
+    \begin{aligned}
+      \mathcal{L}_{V}:\ \Omega^{p}&\to\Omega^{p}\\
+      \alpha&\mapsto\mathcal{L}_{V}(\alpha):=
+      \left.\frac{\dd}{\dd t}\right|_{t=0}\partial_{t}^{*}(\alpha).
+    \end{aligned}
+  \]
+\end{wdefn}
+
+% [Tutor Note: 原文 Definition 2.9 的第二式印作 $\partial_t^*(\alpha)$，但按上下文
+% （对 $V$ 生成的流 $\varphi_t$ 的拉回求导），此处应为 $\varphi_t^*(\alpha)$；
+% 疑为原文笔误（把 $\varphi$ 误排成 $\partial$）。本译本照录原文的
+% $\partial_t^*(\alpha)$，请核对原书 p.12。]
+
+另一方面，向量场与 $1$-形式之间的自然配对引出内积（interior product）的概念。
+
+\begin{wdefn}{2.10}
+  我们定义微分形式上的\emph{内积} $\iota_{V}$：
+  \[
+    \begin{aligned}
+      \iota_{V}:\ \Omega^{p}&\to\Omega^{p-1}\\
+      \alpha&\mapsto\iota_{V}\alpha
+    \end{aligned}
+  \]
+  如下给出：
+  \[
+    \begin{aligned}
+      \iota_{V}\big(\alpha_{i_{1}\cdots i_{p}}(x)\dd x^{i_{1}}\wedge\cdots
+      \dd x^{i_{p}}\big)
+      :={}&\sum\alpha_{i_{1}\cdots i_{p}}\iota_{V}(\dd x^{i_{1}})
+      \wedge\cdots\wedge\dd x^{i_{p}}\\
+      &-\sum\alpha_{i_{1}\cdots i_{p}}\dd x^{i_{1}}
+      \wedge\iota_{V}(\dd x^{i_{2}})\wedge\cdots\wedge\dd x^{i_{p}}\\
+      &+\cdots+(-1)^{p-1}\sum\alpha_{i_{1}\cdots i_{p}}\dd x^{i_{1}}
+      \wedge\cdots\wedge\iota_{V}(\dd x^{i_{p}}).
+    \end{aligned}
+  \]
+  这里对 $V=\sum_{i}V^{i}(x)\frac{\partial}{\partial x^{i}}$，有
+  $\iota_{V}(\dd x^{i})=V^{i}(x)$。
+\end{wdefn}
+
+% [Tutor Note: 内积的第一行原文作 $\iota_V(\dd x^{i_1})\wedge\cdots\wedge\dd x^{i_p}$，
+% 按标准展开式应为 $\iota_V(\dd x^{i_1})\wedge\dd x^{i_2}\wedge\cdots\wedge\dd x^{i_p}$
+% （省略号中隐含 $\dd x^{i_2}$）；末项符号 $(-1)^{p-1}$ 与指标次序相关，逐项核对
+% 指标时极易出错，建议用 $p=2,3$ 的小例子验算。]
+
+现在我们有三个算子
+\[
+  \begin{aligned}
+    d&:\ \Omega^{p}\to\Omega^{p+1}\\
+    \mathcal{L}_{V}&:\ \Omega^{p}\to\Omega^{p}\\
+    \iota_{V}&:\ \Omega^{p}\to\Omega^{p-1}.
+  \end{aligned}
+\]
+它们之间由 \emph{Cartan 魔法公式}（Cartan's Magic Formula）相联系：
+\[
+  \mathcal{L}_{V}=d\iota_{V}+\iota_{V}d.
+\]
+上述关系还可以进一步推广如下。
+
+\begin{wprop}{2.11}
+  设 $V,W\in\Vect(U)$。则作为 $\Omega^{\bullet}(U)$ 上的算子，
+  \begin{itemize}[leftmargin=1.6em,itemsep=0.25em,topsep=0.2em]
+    \item $[\mathcal{L}_{V},\mathcal{L}_{W}]
+          :=\mathcal{L}_{V}\mathcal{L}_{W}-\mathcal{L}_{W}\mathcal{L}_{V}
+          =\mathcal{L}_{[V,W]}$。
+    \item $\iota_{V}\iota_{W}+\iota_{W}\iota_{V}=0$。
+    % >>> p014
+    \item $[\mathcal{L}_{V},d]:=\mathcal{L}_{V}d-d\mathcal{L}_{V}=0$。
+    \item $\iota_{V}d+d\iota_{V}=\mathcal{L}_{V}$。
+    \item $[\mathcal{L}_{V},\iota_{W}]
+          :=\mathcal{L}_{V}\iota_{W}-\iota_{W}\mathcal{L}_{V}
+          =\iota_{[V,W]}$。
+  \end{itemize}
+\end{wprop}
+
+\begin{proof}[Poincaré 引理的证明]
+  我们证明 $H^{p}(\R^{n})$ 的情形，紧支集的情形留给读者。考虑微分同胚
+  \[
+    \begin{aligned}
+      \varphi_{t}:\ \R^{n}&\longrightarrow\R^{n}\\
+      (x^{1},\ldots,x^{n})&\longmapsto(e^{t}x^{1},\ldots,e^{t}x^{n}),
+    \end{aligned}
+  \]
+  它是向量场 $V=\sum x^{i}\frac{\partial}{\partial x^{i}}$ 生成的流。注意
+  $\varphi_{0}=\mathrm{Id}$，而 $\varphi_{-\infty}$ 是常值映射
+  \[
+    \varphi_{-\infty}:\ \R^{n}\longrightarrow\{0\}\in\R^{n}.
+  \]
+  设 $p>0$，并设 $\alpha\in\Omega^{p}(\R^{n})$ 是闭形式：$d\alpha=0$。由于
+  \[
+    \varphi_{0}^{*}(\alpha)=\alpha,\qquad
+    \varphi_{-\infty}^{*}(\alpha)=0,
+  \]
+  我们有
+  \[
+    \begin{aligned}
+      \alpha&=\varphi_{0}^{*}(\alpha)-\varphi_{-\infty}^{*}(\alpha)\\
+      &=\int_{-\infty}^{0}\frac{\dd}{\dd t}\big(\varphi_{t}^{*}(\alpha)\big)\dd t\\
+      &=\int_{-\infty}^{0}\mathcal{L}_{V}\big(\varphi_{t}^{*}(\alpha)\big)\dd t\\
+      &=\int_{-\infty}^{0}(d\iota_{V}+\iota_{V}d)\big(\varphi_{t}^{*}(\alpha)\big)\dd t.
+    \end{aligned}
+  \]
+  这里我们用了 Cartan 公式。
+
+  由于 $\alpha$ 闭，$d\varphi_{t}^{*}(\alpha)=\varphi_{t}^{*}(d\alpha)=0$，
+  于是可以进一步化简为
+  \[
+    \alpha=d\left(\int_{-\infty}^{0}\iota_{V}\big(\varphi_{t}^{*}(\alpha)\big)
+    \dd t\right)=d\beta,
+  \]
+  其中 $\beta=\int_{-\infty}^{0}\iota_{V}\big(\varphi_{t}^{*}(\alpha)\big)\dd t$。
+  这说明当 $p>0$ 时 $H^{p}(\R^{n})=0$。对 $p=0$，
+  \[
+    f\in H^{0}(\R^{n})\quad\Longrightarrow\quad \dd f=0
+    \quad\Longrightarrow\quad f=\mathrm{const}.
+  \]
+  因此 $H^{0}(\R^{n})=\R$。
+\end{proof}
+
+% [Tutor Note: 本证明中有三处原文排印问题（照录并在正文中按可读形式复原）：
+% (i) $\varphi_{-\infty}:\R^n\to\{0\}\in\R^n$ 中的 “$\in$” 应为 “$\subset$”
+% （常值映射的像为单点集 $\{0\}\subset\R^n$）；(ii) 原文 “$H^p(\R^n)=0$ for
+% $p>0..$” 末尾多一个句点，(iii) 原文的 $\alpha=d\big(\int\iota_V(\varphi_t^*(\alpha)
+% \dd t)\big)$ 少一个右括号且 $\dd t$ 落在 $\iota_V$ 括号内；本译本按下一行 $\beta$
+% 的定义式（$\dd t$ 在 $\iota_V$ 之外）复原为
+% $\alpha=d\big(\int\iota_V(\varphi_t^*(\alpha))\dd t\big)$。三点均请核对原书 p.13。]

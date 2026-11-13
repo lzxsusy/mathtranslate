@@ -1,0 +1,193 @@
+% ============================================================================
+%  弦对偶的数学（TASI 2021 讲座）
+%  TASI Lectures on the Mathematics of String Dualities
+%  Niklas Garner, Natalie M. Paquette (University of Washington)
+%  arXiv:2204.01914v2 [hep-th], 12 Apr 2022, 85 pp.  (PoS proceedings)
+%
+%  中文学术译注本：语义级全译 + 公式逐式核对 + 图表剥离 + 学术审校批注
+%
+%  编译：xelatex main.tex   （连续两遍，以生成目录）
+%  中文支持使用 ctex 的 fandol 字库（无需系统字体）；
+%  在 Windows 上若希望改用系统宋体/黑体，将下行改为 fontset=windows。
+% ============================================================================
+
+% !TEX program = xelatex
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[UTF8,scheme=plain,fontset=fandol]{ctex}
+
+% ---------------------------------------------------------------------------
+% 数学与排版
+% ---------------------------------------------------------------------------
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{mathrsfs}
+\usepackage[a4paper,top=2.4cm,bottom=2.4cm,left=2.3cm,right=2.3cm]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage[hidelinks,bookmarksnumbered=true,bookmarksopen=true]{hyperref}
+
+\graphicspath{{figures/}{./}}
+
+\hypersetup{
+    hypertexnames=false,   % 显式 \tag 编号与自动计数器易产生重名锚点，故关闭
+    pdftitle={弦对偶的数学（TASI 2021 讲座，中文译注本）},
+    pdfauthor={Niklas Garner, Natalie M. Paquette（原著）；中文译注},
+    pdfsubject={arXiv:2204.01914v2 [hep-th]},
+    pdfkeywords={mirror symmetry, twisting, descent, higher algebra,
+                 topological string, A-model, B-model, TQFT}
+}
+
+% ---------------------------------------------------------------------------
+% 版式细节
+% ---------------------------------------------------------------------------
+\allowdisplaybreaks
+\renewcommand{\contentsname}{目\quad 录}
+\renewcommand{\abstractname}{摘\quad 要}
+\renewcommand{\refname}{参考文献}
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+\setlength{\emergencystretch}{2em}
+\setlength{\parskip}{0.2em}
+
+% 浮动体：放宽排版参数，避免大图被挤到文末
+\renewcommand{\topfraction}{0.92}
+\renewcommand{\bottomfraction}{0.85}
+\renewcommand{\textfraction}{0.06}
+\renewcommand{\floatpagefraction}{0.72}
+\setcounter{topnumber}{3}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{5}
+
+% 目录：一级条目也加引导点（与二级条目风格统一）
+\makeatletter
+\renewcommand*\l@section{\@dottedtocline{1}{0em}{1.6em}}
+\makeatother
+
+% 常用记号
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\ee}{\mathrm{e}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\Ext}{\operatorname{Ext}}
+\newcommand{\HH}{\mathrm{HH}}
+
+% 「本节重点」区块：上下细线 + 缩进，可跨页
+\newenvironment{keytakeaway}
+  {\par\medskip\begin{quote}\small\noindent
+   \rule{\linewidth}{0.6pt}\par\nopagebreak\smallskip\noindent
+   \textbf{本节重点}\par\nobreak\smallskip\noindent\ignorespaces}
+  {\par\smallskip\noindent\rule{\linewidth}{0.6pt}\end{quote}\medskip}
+
+% 「译者说明」区块
+\newenvironment{translatornote}
+  {\begin{quote}\small\noindent\ignorespaces}
+  {\end{quote}\medskip}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small 弦对偶的数学（TASI 2021 讲座）}
+\fancyhead[R]{\small Garner--Paquette（中文译注本）}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% \input 容错：分片尚未交付时不中断编译
+\newcommand{\frag}[1]{%
+  \IfFileExists{sections/#1.tex}{\input{sections/#1.tex}}{%
+    \par\noindent\textcolor{red}{[缺分片：#1]}\par}}
+
+% ---------------------------------------------------------------------------
+\begin{document}
+
+\title{\bfseries 弦对偶的数学\\[0.4em]
+       \large ——TASI 2021 讲座\\[0.6em]
+       \normalsize\mdseries TASI Lectures on the Mathematics of String Dualities}
+\author{Niklas Garner\thanks{University of Washington, Department of Physics.}
+        \quad 与 \quad
+        Natalie M. Paquette\thanks{$^*$报告人；University of Washington, Department of Physics.}\\[0.3em]
+        \small Department of Physics, University of Washington\\
+        \small Seattle, WA, 98195, USA\\
+        \small \texttt{[邮箱隐去]}, \texttt{[邮箱隐去]}}
+\date{\small Theoretical Advanced Study Institute 2021 (TASI 2021)，2021 年 6 月 7 日 -- 7 月 2 日\\
+      \small University of Colorado, Boulder CO 80309 USA\\[0.2em]
+      \small arXiv:2204.01914v2 [hep-th]（2022 年 4 月 12 日）}
+\maketitle
+
+\begin{abstract}
+\noindent
+本讲义阐述超对称弦论与超对称场论背后的一些基本数学概念，以及它们在描述与检验各种对偶中的作用。
+具体而言，我们对拓扑扭变与全纯扭变、下降（descent）以及高阶代数结构作教学式的介绍。
+主要例子是拓扑弦的世界面理论，即 $A$ 模型与 $B$ 模型，我们对之作简要回顾。
+本讲义基于第二作者在 TASI 2021 上所作的报告。
+\end{abstract}
+
+\begin{translatornote}
+\textbf{译者说明。}
+
+\textbf{（一）关于作者。}本 PDF 的实际作者是 Niklas Garner 与 Natalie M. Paquette，
+文章为 TASI 2021 的会议讲义，\emph{并非} Edward Witten 的论文；译注一律以此为准。
+
+\textbf{（二）译本的唯一目标是「无损」。}正文逐句对译，公式逐式对照原文页面图像核对，
+一切编号（公式 $(x.y)$、文献 $[n]$、章节号、图号）均保持原样。原文脚注在译文中保留为脚注，
+其编号由排版系统重新生成，故与原文编号不同，此为正常现象。
+
+\textbf{（三）图表。}原文共 14 幅插图（Figure 1--14）与 2 张表（Table 1--2），
+均为 PDF 内嵌矢量图形。译者按图注与矢量边界逐幅裁切、以 300 dpi 渲染为位图
+（\texttt{figures/fig01.png} 等），在正文对应位置用 \texttt{figure} 环境插入；
+图注逐条译为中文并标注原文页码。另有 5 处「公式内的示意图」（第 42、43、44、69 页的树图与阶梯图），
+为保证无损，按原图矢量裁切嵌入（\texttt{figures/inline/}），并在源码中注明。
+
+\textbf{（四）批注。}文中以下列标记形式插入审校批注（均为 \LaTeX{} 注释，不影响排版输出，
+可在源码中直接阅读）：
+
+\begin{itemize}[leftmargin=2em,itemsep=1pt,topsep=2pt]
+\item \texttt{\% [Tutor Note: \dots]} —— 推导补足、易错预警或物理图像说明；
+\item \texttt{\% [原文疑误: \dots]} —— 已判定为原文笔误处，附判断依据与建议；
+\item \texttt{\% [存疑: \dots]} —— 无法从图像确证、但疑有问题之处；
+\item \texttt{\% [背景补充: \dots]} —— 对中文读者构成实质门槛的术语或背景一句话说明。
+\end{itemize}
+
+\textbf{（五）文献。}参考文献表保留英文原貌（书目信息不可翻译），编号与原文字面一致。
+\end{translatornote}
+
+\clearpage
+\tableofcontents
+\clearpage
+
+% ---------------------------------------------------------------------------
+% 正文分片（按原文页序）
+% ---------------------------------------------------------------------------
+\frag{s01-intro}
+\frag{s02a}
+\frag{s02b}
+\frag{s02c}
+\frag{s02d}
+\frag{s02e}
+\frag{s02f}
+\frag{s02g}
+\frag{s02h}
+\frag{s03a}
+\frag{s03b}
+\frag{s03c}
+\frag{s03d}
+\frag{s03e}
+\frag{s03f}
+\frag{s03g}
+\frag{s04}
+\frag{s05}
+\frag{s06}
+\frag{s07}
+\frag{s08-refs}
+
+\end{document}

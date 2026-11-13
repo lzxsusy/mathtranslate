@@ -1,0 +1,759 @@
+%=====================================================================
+% 11  高维自由场论（后半，11.7--11.13）
+% 原文：Section 11. Free field theory in higher dimensions（后半）
+%       Wightman 公理、Wightman 函数、质量谱、自由标量玻色子、
+%       正规序与 OPE、QFT 中的对称性、流形上的场论
+%       （arXiv:2409.03117v1，第 154--170 页）
+%=====================================================================
+
+\begin{keytakeaways}
+\begin{itemize}
+  \item \textbf{物理图像：}Wightman 公理把场论从“路径积分”改写成“Hilbert 空间 + 算子值分布 +
+        真空向量”的框架：场只在抹平之后才有意义，正能量条件把谱限制在实心光锥内，
+        而自旋-统计定理则把场的协变性质与玻色／费米统计绑定。
+  \item \textbf{数学工具：}全部物理信息都编码在 Wightman 函数之中；反过来，Wightman 函数只要满足
+        不变性、正能量、Hermitian 性、空间局部性与正定性这五条，就能重建出整个 QFT。粒子则按 Mackey
+        的诱导表示理论分类：轨道给出质量壳，稳定子群的有限维酉表示给出“类型”。
+  \item \textbf{关键结论：}质量谱等于两点函数 Fourier 变换的支撑集与时间轴之交；自由标量玻色子的
+        两点函数是 Klein--Gordon 方程的正频解，其 Fourier 变换为集中在上半光锥支上的测度。
+        正规序消去两点函数的奇异性，从而给出复合算子；它们的乘积当两点靠近时由算子乘积展开
+        （OPE）控制：有限个奇异项（Wilson 系数乘局域算子）加正则余项。
+  \item \textbf{易错点：}场是分布而非函数，故场的平方若不先正规序则无意义；经典 Noether 荷在
+        量子化后可能只给出射影表示，其障碍是 李代数上的 2-上闭链（中心扩张），这正是量子反常的
+        几何来源；流形上的场论必须用 Levi-Civita 联络与自旋联络，才能保证动能项不依赖坐标选取。
+\end{itemize}
+\end{keytakeaways}
+
+\bigskip
+\noindent\rule{\textwidth}{0.6pt}
+\bigskip
+
+\subsection{QFT 的 哈密顿形式：Wightman 公理}
+
+为把这一图景量子化，我们需要定义 Hilbert 空间 $\mathcal H$，并把经典可观测量（局部泛函及其积分）
+提升为 $\mathcal H$ 上（稠定）的算子，尤其是把经典哈密顿量 $H$ 提升为依赖于 普朗克常数 $\hbar$
+的量子哈密顿量 $\widehat H$，后者应是 $\mathcal H$ 上的自伴（一般无界）算子。此外，这一提升应使
+对易子在 $\hbar=0$ 处消失，并在 $\hbar$ 的一阶项上还原 Poisson 括号。我们还应有 Poincar\'e 群的双重
+覆盖 $\widetilde{\bold P}$ 在空间 $\mathcal H$ 上的酉表示，使得时间平移的单参数子群按量子动力学
+单参数群 $e^{-it\widehat H}$ 作用。Hamilton 量子力学的这种推广可以通过所谓的\emph{Wightman 公理}
+来实现，下面我们加以描述。
+
+首先，为使量子理论具有良好性质，我们希望能量有下界。为此引入如下定义。固定把时空分为时间与
+空间的正交分解 $V= \Bbb R\oplus V_s$，并考虑自伴算子
+$$
+\widehat H_\pi:=i\tfrac{d}{dt}|_{t=0}\pi(t,0).
+$$
+
+\begin{definition} 称酉表示 $\pi: \widetilde {\bold P}\to {\rm Aut}\mathcal H$
+为\emph{正能量}的，若 $\widehat H_\pi$ 的谱有下界。
+\end{definition} 
+
+注意 $V$ 的每个酉表示 $\pi$ 都有谱 $\sigma(\pi)$，它是 $V^*\cong V$ 的闭子集；具体地说，$\sigma(\pi)$
+是在 $\pi$ 中（离散地或连续地）出现的 $V$ 的特征标之集（亦即：对任意 $w_1,w_2\in \mathcal H$，
+包含分布 $\la w_1,\pi(v)w_2\ra$（$v\in V$）的 Fourier 变换的支撑集的最小集合）。
+
+\begin{lemma} 设 $\dim V\ge 2$。则 $\pi$ 是正能量的，当且仅当 $\sigma(\pi)$ 含于实心光锥的正部分
+$\overline V_+$ 中。
+\end{lemma} 
+
+\begin{proof} 按定义，$\pi$ 具有正能量当且仅当 $\sigma(\pi)$ 到时间轴对偶上的正交投影有下界。
+由于 $\sigma(\pi)$ 在 $SO_+(V)$ 下不变，由此即得结论（$V$ 中一条 $SO_+(V)$-轨道的投影有下界，
+当且仅当该轨道含于 $\overline V_+$）。
+\end{proof} 
+
+注意当 $d=1$（量子力学）时这不再成立：此时哈密顿量可以整体平移一个常数而不影响理论。
+但在维数 $>1$ 的 Minkowski 空间上的量子场论中，情况不再如此。
+
+现在我们准备给出 Wightman 对 QFT 的定义。设 $\mathcal S=\mathcal S(V)$ 是 $V$ 的 Schwartz 空间。
+
+\begin{definition} Minkowski 空间 $V$ 上的一个\emph{Wightman QFT} 包含以下数据：
+
+1. ${\rm Spin}_+(V)$ 的一个有限维实超表示 $R=R_0\oplus R_1$（称为\emph{场空间}）。
+
+2. 一个超 Hilbert 空间 $\mathcal H=\mathcal H_0\oplus \mathcal H_1$，其上带有 Poincar\'e 群的双重覆盖
+$\widetilde{\bold P}={\rm Spin}_+(V)\ltimes V$ 的正能量酉表示
+$\pi: \widetilde{\bold P}\to {\rm Aut}\mathcal H$。
+
+3. 一个稠密且在 $\widetilde{\bold P}$ 下稳定的子空间 $\mathcal D\subset \mathcal H$。
+
+4. 一个 $\widetilde{\bold P}$-不变的单位向量 $\Omega\in \mathcal D$，称为\emph{真空向量}。
+
+5. 一个 $\widetilde{\bold P}$-不变的偶线性映射 $\mathcal S\otimes R^*\to {\rm End}\mathcal D$，
+称为\emph{场映射}。
+
+这些数据须满足以下公理。
+
+\textbf{A1.} 若 $f$ 为实，则 $\phi(f)$ 是 Hermite 对称的（超意义下）。
+
+\textbf{A2.} $\phi$ 弱连续，即对每个 $w_1,w_2\in \mathcal D$，由
+$f\mapsto \la w_1,\phi(f)w_2\ra$ 定义的泛函 $\mathcal S\otimes R^*\to \Bbb C$ 连续。
+
+\textbf{A3.} $\mathcal D$（代数地）由向量 $\phi(f_1)...\phi(f_n)\Omega$ 张成。
+
+\textbf{A4.} \emph{空间局部性}：若 $f_1,f_2$ 的支撑集类空分离，即对任意
+$v_1\in {\rm supp}f_1$、$v_2\in {\rm supp}f_2$ 都有 $|v_1-v_2|^2<0$，则
+$$
+[\phi(f_1),\phi(f_2)]=0
+$$ 
+（对易子按超意义理解）。
+\end{definition} 
+
+此外，若 $\mathcal H^{\widetilde{\bold P}}=\Bbb C\Omega$，则称该 Wightman QFT 具有\emph{唯一真空}。
+
+我们还将始终假定 QFT 是\emph{非退化}的，即对每个不可约子表示 $E\subset R^*_j$（$j=0,1$）都有
+$\phi|_{\mathcal S\otimes E}\ne 0$；否则可把该子表示直接删去而不影响理论。
+
+关于 Wightman QFT 的一个基本事实是如下定理，我们在此不予证明。设 $\zeta$ 是映射
+${\rm Spin}_+(V)\to {\rm SO}_+(V)$ 的核的生成元，故 $\zeta^2=1$。
+
+\begin{theorem}（自旋-统计定理）若 $E\subset R_j^*$ 是子表示，则 $\zeta|_E=(-1)^j$。
+\end{theorem} 
+
+换言之，量子场的\emph{自旋}（模整数）与其\emph{统计}（即它是玻色的（偶）还是费米的（奇））之间存在
+联系。具体地说，自旋就是 $\zeta$ 的本征值，而该定理表明：所有玻色场必须满足 $\zeta=1$
+（整数自旋），所有费米场必须满足 $\zeta=-1$（半整数自旋）。
+
+% [Tutor Note: 公理 A2 与 A4 是“分布表述”的核心。场 $\phi(f)$ 只对测试函数有定义，$\phi(x)$ 本身
+% 仅是形式记号（$\phi(f)=\int_V\phi(x)f(x)dx$）；因此 A4 中 $\phi(f_1),\phi(f_2)$ 的对易子是一个
+% 算子值分布，它的“类空为零”只能对 $f_1,f_2$ 的支撑集类空分离来陈述——若把两个分布在同一点相乘
+% （如 $\phi(x)^2$）则根本没有定义，这正是 11.11 节必须引入正规序的原因。另注意 A2 中“弱连续”
+% 是对每个矩阵元而言，这是把算子值分布与 Hilbert 空间结构对接的技术性条件。]
+
+\begin{remark} 我们将会看到，自由玻色子与费米子的理论可以自然地表述为 Wightman QFT。此外，
+若干非自由理论也是如此，这属于数学物理中一个困难的领域，称为\emph{构造性场论}
+（constructive field theory）。尽管如此，物理学家真正关心的大多数理论，要么尚未被证明是
+Wightman QFT，要么因种种原因（微扰理论、低能有效理论、非酉理论、欧氏理论、定义在紧流形上的
+理论等）根本不满足其要求。因此，我们把 Wightman 公理只视为我们以数学方式理解 QFT 的
+（颇为有限的）一个严格模型。
+\end{remark} 
+
+\subsection{Wightman 函数}
+
+\begin{proposition} 
+在 Minkowski 空间 $V$ 上的 Wightman QFT 中，对每个 $n\ge 1$ 都存在唯一的 $V^n$ 上取值于
+$R^{*\otimes n}$ 的缓增分布 $W_n$，使得
+$$
+W_n(f_1\boxtimes...\boxtimes f_n)=\la \Omega,\phi(f_1)...\phi(f_n)\Omega\ra.
+$$
+\end{proposition} 
+
+我们把该命题的证明留作习题。
+
+因此我们将把 $W_n$ 视为 $V^{\otimes n}$ 上取值于 $R^{*\otimes n}$ 的（广义）函数，记作
+$W_n(x_1,...,x_n)$，于是
+$$
+W_n(f_1\boxtimes...\boxtimes f_n)=\int_{V^n}W_n(x_1,...,x_n)f_1(x_1)...f_n(x_n)dx_1...dx_n
+$$
+其中右端的乘积涉及 $R$ 与 $R^*$ 的对应副本之间的缩并。
+于是，给定 $u_1,...,u_n\in R$，就得到标量值分布
+$$
+W_n^{u_1,...,u_n}(x_1,...,x_n):=(W_n(x_1,...,x_n),u_1\otimes...\otimes u_n).
+$$
+ 
+换言之，我们可以定义算子值分布 $\phi(x)$，使得
+$$
+\phi(f)=\int_V \phi(x)f(x)dx;
+$$
+此时
+$$
+W_n(x_1,...,x_n)=\la \Omega,\phi(x_1)...\phi(x_n)\Omega\ra.
+$$
+
+\begin{definition} 分布 $W_n(x_1,...,x_n)$ 称为该 Wightman QFT 的
+\emph{Wightman（关联）函数}。
+\end{definition} 
+
+
+
+注意 Wightman 函数完全决定了 Wightman QFT，方式如下。令
+$\widetilde{\mathcal D}:=T(\mathcal S\otimes R)$（张量代数），它由元素
+$f_1\otimes f_2\otimes...\otimes f_n$（$f_i\in \mathcal S\otimes R$）张成。
+在 $\widetilde{\mathcal D}$ 上定义内积
+$$
+\la f_1\otimes...\otimes f_n, g_1\otimes...\otimes g_m\ra:=(-1)^{\sum_{i<j}p(f_i)p(f_j)}W_{n+m}(\overline f_n\boxtimes...\boxtimes\overline f_1\boxtimes g_1\boxtimes...\boxtimes g_m).
+$$
+容易看出该内积是良定义的，并且
+$$
+\la f_1\otimes...\otimes f_n, g_1\otimes...\otimes g_m\ra=\la \phi(f_1)...\phi(f_n)\Omega, \phi(g_1)...\phi(g_m)\Omega\ra
+$$
+（其中 $f_i$ 为纯奇或纯偶）。
+于是 $\widetilde{\mathcal D}$ 上的内积 $\la,\ra$ 是半正定的，Hilbert 空间 $\mathcal H$ 可以恢复为
+$\widetilde{\mathcal D}$ 关于 $\la,\ra$ 的完备化，而 $\mathcal D$ 是 $\widetilde{\mathcal D}$ 在
+$\mathcal H$ 中的像（注意映射 $\widetilde{\mathcal D}\to \mathcal H$ 未必是单射）。
+此外，向量 $\Omega$ 是 $1\in \widetilde{\mathcal D}$ 在 $\mathcal D$ 中的像，而表示 $\pi$ 则由
+$\widetilde{\bold P}$ 在 $\mathcal D$ 上的作用（它来自 $\widetilde {\mathcal D}$ 上的作用）经连续性
+延拓而得到。
+
+于是可以问：Wightman 函数应满足什么条件，才能定义一个 Wightman QFT？我们列出一些必要条件，
+它们由上面的讨论得到。为此，记
+$$
+W: T(\mathcal S\otimes R)\to \Bbb C
+$$ 
+为自然的线性映射，并记 $*: T(\mathcal S\otimes R)\to T(\mathcal S\otimes R)$ 为由
+$(f_1\otimes...\otimes f_n)^*=(-1)^{\sum_{i<j}p(f_i)p(f_j)}\overline f_n\otimes...\otimes \overline f_1$
+给出的反线性映射。
+
+\begin{proposition}\label{cond15} Wightman QFT 的 Wightman 函数 $W_n$ 满足以下性质。
+
+1. $W_n$ 是 $\widetilde{\bold P}$-不变的。
+
+2. 正能量：$W_n$ 的 Fourier 变换的支撑集含于这样的 $(p_1,...,p_n)\in V^n$ 之集：其中
+$\sum_i p_i=0$ 且 $p_{i+1}-p_i\in \overline V_+$。
+
+3. $W_n(f^*)=\overline{W_n(f)}$。
+
+4. 空间局部性：
+$$
+W_n^{u_1,...,u_n}(x_1,...,x_i,x_{i+1},...,x_n)=(-1)^{p(u_i)p(u_{i+1})}W_n(x_1,...,x_{i+1},x_{i},...,x_n)
+$$
+ 若 $|x_i-x_{i+1}|^2<0$。
+
+5. 正定性：对任意 $f\in T(\mathcal S\otimes R)$ 有 $W(f^*\otimes f)\ge 0$。
+\end{proposition} 
+
+\begin{proof} (1) 由真空向量与场映射的不变性得到。(3) 由实 $f$ 的 $\phi(f)$ 是 Hermite 对称的这一
+事实得到。(4) 由空间局部性公理得到。(5) 由 $\mathcal H$ 上内积的正定性得到。于是只剩 (2) 需要
+证明。我们仅对 $n=2$ 证明，一般情形的证明类似。
+
+由平移不变性有
+$$
+W_2(v_1,v_2)=\Bbb W(v)
+$$ 
+其中 $v=v_2-v_1$。于是我们的任务是证明 $\Bbb W$ 的 Fourier 变换的支撑集含于 $\overline V_+$。
+我们有
+$$
+\Bbb W(v)=\la \Omega,\phi(0)\phi(v)\Omega\ra=
+$$
+$$
+=\la \Omega,\phi(0)\pi(v)\phi(0)\pi(-v)\Omega\ra=
+\la \phi(0)\Omega,\pi(v)\phi(0)\Omega\ra.
+$$
+于是结论可由如下事实得到：$\mathcal H$ 中出现的每个 $V$ 的特征标都属于 $\overline V_+$。
+\end{proof} 
+
+事实上，这些必要条件也是充分的；我们有如下定理，其证明可沿上述重建过程给出（但我们不给出证明）：
+
+\begin{theorem} 若一簇分布 $W_n$ 满足命题 \ref{cond15} 的条件 (1)--(5)，则它们定义一个
+Wightman QFT。
+\end{theorem} 
+
+\begin{remark} 由平移不变性，单点 Wightman 函数 $W_1(x)=\la \Omega,\phi(x)\Omega\ra$ 是常数 $c$，
+即它是 $R^*$ 中的一个元素；又由旋转不变性，它属于 $(R^*)^{{\rm Spin}_+(V)}$。
+因此我们可以（并将）不失一般性地假设 $c=0$（否则把 $\phi(x)$ 换成 $\phi(x)-c$ 即可）。
+所以可不妨设 $W_1=0$。
+\end{remark} 
+
+\begin{remark}\label{ft} 两点函数的正定性可写成
+$$
+\int_{V^2}\Bbb W(x_2-x_1)\overline{f(x_1)}f(x_2)dx_1dx_2\ge 0,
+$$
+其中 $\Bbb W(x)=W_2(0,x)$。于是作 Fourier 变换，得到
+$$
+\int_{V}\widehat{\Bbb W}(p)\overline {\widehat f(p)}\widehat f(p)dp\ge 0.
+$$
+这表明 $\widehat{\Bbb W}(p)dp$ 是集中于 $\overline V_+$ 上、取值于 $R_{\Bbb C}$ 上非负 Hermite 型的
+测度。
+\end{remark} 
+
+% [Tutor Note: 命题 \ref{cond15} 的第 (5) 条（正定性）是重建定理的心脏：它保证由 $W_n$ 定义的内积
+% 半正定，从而可以完备化成 Hilbert 空间，再按 GNS 型构造得到场算子与真空。第 (2) 条则是谱条件的
+% 分布版本——它比“能量有下界”更强，因为它同时刻画了各 $p_i$ 之间的次序（相邻动量差落在闭光锥内），
+% 这来自 $\phi(f_1)...\phi(f_n)\Omega$ 中每个因子都只添正能量。对 $n=2$ 即化为 $\widehat{\Bbb W}$
+% 支撑在 $\overline V_+$，见注 \ref{ft}；质量谱正是由这个支撑集读出的。]
+
+\subsection{Wightman QFT 的质量谱}
+
+设 $\mathcal H^{(1)}\subset \mathcal H$ 是向量 $\phi(x)\Omega$（$x\in V$）的张成集的闭包。
+它称为\emph{$1$-粒子态}空间，显然是 $\mathcal H$ 的一个 $\widetilde{\bold P}$-子表示。理论的
+\emph{质量谱}由该表示的结构决定。因此我们需要讨论 $\widetilde{\bold P}$ 的表示论。
+
+由于 $\widetilde{\bold P}$ 是半直积，其不可约酉表示都是酉诱导的。具体地说，设 $\mathcal O$ 是
+${\rm Spin}_+(V)$ 在 $V$ 上的一条轨道，$\rho$ 是点 $v_0\in \mathcal O$ 的稳定子
+$\widetilde{\bold P}_0$ 的不可约酉表示。于是 $\rho$ 定义了 $\mathcal O$ 上的一个等变 Hilbert 丛，
+其全空间为 $(\widetilde{\bold P}\times \mathcal \rho)/\widetilde{\bold P}_0$，其中
+$\widetilde{\bold P}_0$ 按对角方式作用。因此我们可以考虑 $\mathcal O$ 上取值于该丛的平方可积
+半密度空间 $\mathcal H_{\mathcal O,\rho}$。该空间带有 $\widetilde{\bold P}$ 的酉表示。
+Mackey 的定理指出：这个酉表示不可约，且 $\widetilde{\bold P}$ 的所有不可约酉表示都以此方式唯一地
+得到。例如，若 $\mathcal O=\lbrace 0\rbrace$，则 $\mathcal H_{0,\rho}$ 就是 ${\rm Spin}_+(V)$
+的一个酉不可约表示。
+
+现在可以讨论表示 $\mathcal H^{(1)}$ 的结构了。作 Fourier 变换（见注 \ref{ft}）可见：若
+$\mathcal H_{\mathcal O,\rho}$ 出现在 $\mathcal H^{(1)}$ 中，则 $\rho$ 必须是有限维的。例如，当
+$d\ge 3$ 且 $\mathcal O=\langle 0\rangle$ 时，唯一的选择是平凡表示，因为群 ${\rm Spin}_+(V)$ 是
+连通的半单非紧 Lie 群。此外，若理论具有唯一真空，则平凡表示以重数 $1$ 离散地出现在 $\mathcal H$ 中，
+即由真空向量 $\Omega$ 张成。由于 $\mathcal H^{(1)}$ 与 $\Omega$ 正交（因为 $W_1=0$），
+可见平凡表示不出现在 $\mathcal H^{(1)}$ 中。
+
+下面考察其他轨道的情形。由正能量条件，可能出现的轨道只有由 $E=\sqrt{p^2+m^2}$、$E>0$ 定义的
+$X_m^+$（其中当 $d=2$ 时，集合 $X_0^+$ 分裂为两个轨道 $X_0^{++}$ 与 $X_0^{+-}$，分别由
+$p=\pm E>0$ 定义）。当 $m>0$ 时它是双叶双曲面的上叶，当 $m=0$ 时它是光锥的上部
+（当 $d=2$ 时它是两条轨道之并）。
+
+当 $m>0$ 时，可取 $v_0=(m,0)$，此时 $\widetilde{\bold P}_0={\rm Spin}(d-1)$，故 $\rho$ 是该紧
+Lie 群的（必然是有限维的）酉表示。物理学家说，这个表示对应于一个\emph{质量为 $m$、类型为 $\rho$
+的大质量粒子}。在物理上有意义的量子场论中出现的粒子通常是\emph{标量}（$\rho=\Bbb C$）、
+\emph{旋量}（$\rho$ 是 ${\rm Spin}(d-1)$ 的旋量表示）与\emph{向量}（$\rho=\Bbb C^{d-1}$，即
+${\rm Spin}(d-1)$ 的向量表示）。注意由自旋-统计定理，标量与向量是玻色子，旋量是费米子。
+
+若 $m=0$、$d\ge 3$，则可取 $v_0=(1,1,0,...,0)$，其稳定子是非约化 Lie 群
+${\rm Spin}(d-2)\ltimes \Bbb R^{d-2}$。由于 $\rho$ 有限维，$\Bbb R^{d-2}$ 必须平凡地作用，
+故 $\rho$ 是紧 Lie 群 ${\rm Spin}(d-2)$ 的不可约表示。物理学家说，这个表示对应于一个
+\emph{类型为 $\rho$ 的无质量粒子}。无质量粒子的分类与有质量粒子相同；但要注意，对无质量粒子，
+$\rho$ 是 ${\rm Spin}(d-2)$ 而非 ${\rm Spin}(d-1)$ 的表示，因此它们一般比有质量粒子有更少的
+分量；例如无质量向量比有质量向量少一个分量。
+
+若 $m=0,d=2$，则 $v_0$ 有两种选择：$(1,1)$ 与 $(1,-1)$。它们的稳定子平凡，故 $\rho=\Bbb C$。
+于是我们有两类无质量粒子：\emph{右行}与\emph{左行}，分别对应于 $v_0$ 的两种选择。它们之所以这样
+称呼，是因为相应的算子 $\phi(x)$ 分别满足条件 $\phi(t,x)=\phi(0,x-t)$、
+$\phi(t,x)=\phi(0,x+t)$，而经典地看，这正是右行波与左行波。
+
+对应于出现在 $\mathcal H^{(1)}$ 中的表示 $\mathcal H_{X_m^+,\rho}$（当 $d=2$ 时为
+$\mathcal H_{X_0^{+\pm},\rho}$）的数 $m$ 之集 $M$，称为该理论的\emph{质量谱}。
+当 ${\rm inf} M=m>0$ 时，称理论具有\emph{质量间隙}。此时 $\widehat H$ 的谱为
+$\lbrace 0\rbrace\cup [m,+\infty]$，故在 $0$ 与 $m$ 之间存在间隙。
+为求质量谱，只需考察函数 $\widehat{\Bbb W}$：质量谱正是它的支撑集与时间轴之交
+（这由注 \ref{ft} 得到）。
+
+% [Tutor Note: 注 \ref{ft} 的测度表述可进一步写成 Källén--Lehmann 表示：对两点函数
+% $\widehat{\Bbb W}(p)=\int_0^\infty \rho(m^2)\,\delta(p^2-m^2)\theta(p^0)\,dm^2$（在标量情形），
+% 其中谱测度 $\rho(m^2)\ge 0$ 正是“质量谱”的精确含义——$M$ 就是 $\rho$ 的支撑集。这个表示由
+% 正定性 (5) 与 Poincar\'e 不变性直接推出，优点是它把“质量谱”从表示论的轨道分类翻译成一个测度问题。
+% 质量间隙 $m>0$ 等价于 $\rho$ 在 $(0,m)$ 上为零，等价于欧氏两点函数在距离 $r\to\infty$ 时按
+% $e^{-mr}$ 指数衰减（见 11.10 节对 $\Bbb W$ 支撑的讨论）。注意 $\rho$ 是矩阵值的（取值于
+% $R^*_{\Bbb C}$ 上的非负 Hermite 型），所以严格说来每个矩阵元都有各自的 Källén--Lehmann 表示。]
+
+\subsection{标量玻色子的自由理论}
+
+下面构造一个对应于质量 $m>0$ 的标量玻色子的 Wightman QFT。回忆在拉格朗日框架中我们有一个
+两点函数 $G_M(x_2-x_1)$，其中 $G_M(x)$ 是满足 Klein--Gordon 方程
+$$
+(\square+m^2)G_M=i\delta.
+$$  
+的分布。于是初看起来，对相应的 Wightman QFT 我们希望有 $\Bbb W(x)=G_M(x)$，从而拉格朗日
+框架与 Hamilton 框架一致。然而，函数 $G_M(x)$ 是偶的，而对 $\Bbb W(x)$ 我们应有
+$\Bbb W(-x)=\overline{\Bbb W(x)}$，故这一等式需要放宽。事实上，正确的条件是：恒等式
+$\Bbb W(x)=G_M(x)$ 只须在 $x$ 类空或 $x\in \overline V_+$ 时成立。当 $x\in \overline V_-$ 时，
+我们应当有 $\Bbb W(x)=\overline{G_M(x)}$。换言之，
+$$
+G_M(x_2-x_1)=W_2^T(x_1,x_2)
+$$ 
+即所谓的\emph{时序}两点函数，也就是把 $W_2(x_1,x_2)$ 中的 $x_1,x_2$ 按时间先后排列后得到的函数
+（在类空分离的情形，由空间局部性，次序无关紧要）。
+
+我们断言：按此定义，函数 $\Bbb W(x)$ 恰好满足 Klein--Gordon 方程
+$$
+(\square+m^2)\Bbb W=0
+$$
+（右端没有 delta 函数）。事实上，我们有 ${\rm Re}\Bbb W(x)={\rm Re}G(x)$，它满足 Klein--Gordon
+方程，故只需再证明 ${\rm Im}\Bbb W(x)$ 也满足它。但容易看出 $(\square+m^2){\rm Im}\Bbb W(x)$ 是
+支撑在原点、齐次次数为 $-d$ 的分布，故它是 $\delta$ 的倍数。由于 ${\rm Im}\Bbb W(x)$ 是奇函数，
+该分布必为零，此即所断言者。
+
+又由于 $G_M(x)$ 在 $x$ 类空时为实值，我们得到 $\Bbb W(-x)=\overline{\Bbb W(x)}$。于是 Fourier
+变换 $\widehat {\Bbb W}(p)$ 是实值的，支撑在双曲面 $X_m$ 上，且在 $SO_+(V)$ 下不变。由此可得
+$$
+\widehat {\Bbb W}(p)=c_+\delta_{X_m^+}+c_-\delta_{X_m^-}.
+$$ 
+其中 $c_\pm \in \Bbb R$。但事实上可以证明只会出现 $\delta_{X_m^+}$（这可由欧氏两点关联函数在
+无穷远处的指数衰减推出）。于是
+$$
+\widehat {\Bbb W}(p)=c\delta_{X_m^+}. 
+$$ 
+事实上可以证明 $c=2\pi$。
+
+类似地，我们用 Wick 公式对 $n>2$ 定义更高阶的 $W_n$；经过一些工作可以证明，这些函数定义一个
+Wightman QFT。
+
+此时 $\mathcal H^{(1)}=L^2(X_m^+)$，故我们得到单个质量为 $m$ 的粒子。
+
+自由无质量标量场，以及有质量与无质量的旋量场，其理论可类似地定义。
+
+% [Tutor Note: 这里的 $c=2\pi$ 是全部归一化约定的试金石。$\Bbb W$ 是传播子的“正频部分”：
+% 时序两点函数满足 $G_M(x_2-x_1)=\theta(x_2^0-x_1^0)\Bbb W(x_1-x_2)+\theta(x_1^0-x_2^0)\Bbb W(x_2-x_1)$，
+% 而 $\widehat{\Bbb W}(p)=2\pi\delta(p^2-m^2)\theta(p^0)$ 正是把 $\delta(p^2-m^2)$ 用 $dp$ 测度
+% 归一化后的结果（因子 $2\pi$ 来自 $d$ 维 Fourier 变换的 $(2\pi)$ 约定，与第 2 章 Lemma
+% “高斯积分”的酉归一化一致）。若把 $\Bbb W$ 记成 $\int e^{-i(p,x)}\delta(p^2-m^2)\theta(p^0)dp$，
+% 则 $c=2\pi$ 就来自 $dp$ 与 $dm^2$ 之间的 Jacobian。核对方法：由 $G_M$ 的 Klein--Gordon 方程
+% 与奇偶性直接验证 $\widehat{\Bbb W}=2\pi\delta(p^2-m^2)\theta(p^0)$，再用 $\delta$ 函数在光锥上的
+% 分解即可；注意 $G_M$ 的 $i\epsilon$ 处方决定了正频部分，而 $\Bbb W$ 本身不含 $i\epsilon$。]
+
+\subsection{自由 QFT 中的正规序、复合算子与算子乘积展开}\label{compop}
+
+在经典场论中，给定经典标量场 $\phi(x)$，我们可以考虑它的任意多项式，甚至 $\phi$ 的任意光滑函数。
+量子力学中也是如此：$\phi(t)$ 是量子态 Hilbert 空间 $\mathcal H$ 上的自伴（可能无界）算子，
+故利用其谱分解可以定义 $\phi$ 的函数。然而，在 $d\ge 1$ 的 $d+1$ 维量子场论中，情况更为复杂。
+事实上，此时 $\phi(x)$ 不是通常意义下关于 $x$ 的算子值函数，而是一个广义的对象——算子值分布；
+而我们知道，对奇异分布（如 $\delta(x)$）甚至连平方 $\delta(x)^2$ 都无法定义。
+
+确实，设 $\phi(x)$ 是量子标量玻色子。则两点关联函数
+$$
+\langle\phi(x)\phi(y)\rangle=\langle \Omega,\phi(x)\phi(y)\Omega\rangle=G(x-y)
+$$
+在 $|x-y|^2=0$ 时发散（在欧氏号差下即 $x=y$ 时），所以算子 $\phi^2(x)$ 根本不可能良定义。
+
+因此，若要量子化经典场 $\phi^2(x)$，就需要对相应的算子乘积作正规化。这可以通过一个标准的
+正规化手续来完成，称为\emph{正规序乘积}。\label{Normally ordered product} 
+
+例如，在欧氏号差下，当 $x\ne y$ 时算子乘积 $\phi(x)\phi(y)$ 是良定义的：事实上，由 Wick 公式
+$$
+\langle \phi(x)\phi(y)\phi(z_1)...\phi(z_k)\rangle=
+$$
+$$
+G(x-y)\langle \phi(z_1)...\phi(z_k)\rangle
++\sum_{i\ne j}G(x-z_i)G(y-z_j)\langle \phi(z_1)...\widehat \phi(z_i)...\widehat \phi(z_j)...\phi(z_k)\rangle,
+$$
+其中帽子表示略去的因子（这里 $x,y,z_1,...,z_k$ 互不相同）。当 $x\to y$ 时，该公式中的第一项发散，
+而第二项不发散。于是很自然地，通过“扔掉”奇异项来定义\emph{正规序乘积}
+$\colon \phi(x)\phi(y)\colon$，即要求它与 $\phi(z_1)...\phi(z_k)$ 的关联函数为
+ $$
+\langle \colon\phi(x)\phi(y)\colon\phi(z_1)...\phi(z_k)\rangle=
+\sum_{i\ne j}G(x-z_i)G(y-z_j)\langle \phi(z_1)...\widehat \phi(z_i)...\widehat \phi(z_j)...\phi(z_k)\rangle.
+$$
+这等价于直接说
+$$
+\colon\phi(x)\phi(y)\colon=\phi(x)\phi(y)-G(x-y).
+$$
+注意：$\phi(x)\phi(y)$ 在 $x=y$ 时发散，而正规序乘积 $\colon \phi(x)\phi(y)\colon$ 则不发散：
+$$
+\langle \colon\phi^2(x)\colon\phi(z_1)...\phi(z_k)\rangle=
+\sum_{i\ne j}G(x-z_i)G(x-z_j)\langle \phi(z_1)...\widehat \phi(z_i)...\widehat \phi(z_j)...\phi(z_k)\rangle.
+$$
+这就定义了\emph{复合算子} $\colon\phi^2(x)\colon$，它是一个良定义的算子值分布。
+
+类似地，可以通过从关联函数中消去所有奇异项，对任意多个因子定义正规序乘积
+$\colon \phi(x_1)...\phi(x_m)\colon$。例如，
+$$
+\colon \phi(x)\phi(y)\phi(z)\colon=\phi(x)\phi(y)\phi(z)-G(x-y)\phi(z)-G(y-z)\phi(x)-G(z-x)\phi(y).
+$$
+这样的乘积对一切 $x_1,...,x_k$ 都有定义，并且是可交换的（与因子的次序无关）与结合的。
+我们还可对 $x_j$ 任意次求导，以定义 $\phi$ 的任意导数的正规序乘积。把这类乘积在对角线上取值
+（即所有点重合时），就得到与 $\phi$ 的任意微分单项式（从而是多项式）相应的复合算子，例如
+$\colon\phi^3(x)\colon$、$:\phi_{x_i}\phi_{x_j}:$ 等等。
+
+\begin{exercise} 在标量玻色子理论中，推导若干个（在不同点处取值的）复合算子的关联函数的公式。
+\end{exercise} 
+
+特别地，现在可以考虑两个复合算子的乘积，例如 $\colon\phi^2(x)\colon \phi(y)$。当然，它在
+$x=y$ 处有奇异性，而一个重要问题就是理解这种奇异性的本质。这可以通过所谓\emph{算子乘积展开}
+的手续来实现，它取代了并不存在的复合算子乘法。
+
+为解释这一手续，先考虑算子乘积的最简单例子：
+$$
+\phi(x)\phi(y)=G(x-y)+\colon \phi(x)\phi(y)\colon.
+$$
+利用 Taylor 公式，可把它改写成右端只含 $\phi(y)$ 而不含 $\phi(x)$ 的形式：
+$$
+\phi(x)\phi(y)=G(x-y)+\sum_{\bold n}\frac{(x-y)^{\bold n}}{\bold n!}\colon \partial^{\bold n}\phi(y)\cdot \phi(y)\colon,
+$$
+其中 $\bold n:=(n_1,...,n_{d+1})$、$(x-y)^\bold n:=\prod_i (x_i-y_i)^{n_i}$、
+$\partial^{\bold n}:=\prod_i \partial_{x_i}^{n_i}$、$\bold n!:=\prod_i n_i!$。
+在这个和中，除去第一项以外，其余各项在 $x=y$ 处都是正则的（即连续的）。
+
+下面尝试对更复杂的算子乘积 $\colon\phi^2(x)\colon \phi(y)$ 写出类似的展开。我们有
+$$
+\langle \colon\phi^2(x)\colon \phi(y)\phi(z_1)...\phi(z_k)\rangle=2G(x-y)\langle \phi(x)\phi(z_1)...\widehat{\phi(z_j)}...\phi(z_k)\rangle+
+$$
+$$
+\sum_{j,m,n\text{ 两两不同}}G(x-z_j)G(x-z_m)G(y-z_n)\langle \phi(z_1)...\widehat{\phi(z_j)}...\widehat{\phi(z_m)}...\widehat{\phi(z_n)}...\phi(z_k)\rangle.
+$$
+于是得到
+$$
+\colon\phi^2(x)\colon \phi(y)=2G(x-y)\phi(y)+\colon \phi^2(x)\phi(y)\colon. 
+$$
+如前，利用 Taylor 公式可把它改写成右端只含 $\phi(y)$ 而不含 $\phi(x)$ 的形式：
+$$
+\colon\phi^2(x)\colon \phi(y)=2G(x-y)\phi(y)+\sum_{\bold n,\bold m}\frac{(x-y)^{\bold n+\bold m}}{\bold n!\bold m!}\colon \partial^{\bold n}\phi(y)\cdot \partial^{\bold m}\phi(y)\cdot \phi(y)\colon.
+$$
+同样，除去第一项以外，其余各项在 $x=y$ 处都是正则的。
+
+作为最后一个例子，考虑乘积 $\colon\phi^2(x)\colon \cdot \colon\phi^2(y)\colon$。类似的计算给出
+$$
+\colon\phi^2(x)\colon \cdot \colon\phi^2(y)\colon =
+2G^2(x-y)+4G(x-y)\colon \phi(x)\phi(y)\colon+\colon \phi^2(x)\phi^2(y)\colon, 
+$$
+并且如前，可利用 Taylor 公式展开以消去 $\phi(x)$。具体地说，展开第二项得到
+$$
+\colon\phi^2(x)\colon \cdot \colon\phi^2(y)\colon =
+$$
+$$
+2G^2(x-y)+4G(x-y)\sum_{\bold n}\frac{(x-y)^{\bold n}}{\bold n!}\colon \partial^{\bold n}\phi(y)\cdot \phi(y)\colon+\colon \phi^2(x)\phi^2(y)\colon, 
+$$
+最后一项也可类似地展开。现在可以看到有许多奇异项：当 $d>1$ 时 $G(x)$ 的行为如同
+$|x|^{1-d}$，当 $d=1$ 时如同 $\log|x|$，因此奇异项正是满足 $|\bold n|\le d-1$ 的那些项，
+其中 $|\bold n|:=\sum_i n_i$。例如，对 $d=2$ 的无质量玻色子有
+$$
+\colon\phi^2(x)\colon \cdot \colon\phi^2(y)\colon =
+$$
+$$
+\frac{2}{|x-y|^2}+\frac{4}{|x-y|}\colon \phi^2(y)\colon+\sum_{j=1}^3\frac{4}{|x-y|}(x_j-y_j)\colon \partial_{x_i}\phi(y)\cdot \phi(y)\colon+\text{ 正则项}.
+$$
+
+不过我们也可看出奇异项的数目是有限的。事实上，不难证明如下命题（见 \cite{QFS}，第 1 卷，
+第 449 页）。
+
+\begin{proposition}\label{ope} 设 $A,B$ 是标量玻色子理论中的两个复合算子。则存在唯一的一族函数
+$F_j(y)$ 与复合算子 $C_j(y)$，使得有渐近展开
+$$
+A(x)B(y)\sim \sum_j F_j(x-y)C_j(y),\ x\to y 
+$$
+并且对每个 $N$，除去有限多个 $j$ 之外都有当 $z\to 0$ 时 $|F_j(z)|=O(|z|^N)$。
+特别地，奇异项（在 $x=y$ 处不连续者）只有有限多个。
+\end{proposition}  
+
+命题 \ref{ope} 的展开称为\emph{算子乘积展开}。不难证明它在任何自由量子场论中都存在。
+
+% [Tutor Note: 命题 \ref{ope} 的表述里有两个容易读错的细节。第一，“对每个 $N$，除去有限多个
+% $j$ 之外有 $|F_j(z)|=O(|z|^N)$”意味着系数 $F_j$ 按 $z\to 0$ 的奇异性排序，真正的奇异项只有
+% 有限多个，其余都是 $O(|z|^N)$（对一切 $N$），因此展开在分布意义下成立。第二，$\{C_j(y)\}$ 是
+% 一组完整的局域复合算子基（即所谓 Wilson 系数乘局域算子），这正是 OPE 的现代形式；在自由场论中
+% 它可按 $\phi$ 的微分单项式取基。注意这里的“渐近展开”是作为 $x\to y$ 时算子的弱极限而言，不要
+% 与 Taylor 级数混淆：一般场论中它只是渐近级数（与第 2 章的 Borel 讨论同理），而自由场论情形
+% 由于只剩有限阶奇异性，展开的实际含义更简单。]
+
+\subsection{量子场论中的对称性}
+
+在研究任何物理系统时，找出其全部对称性并充分发挥它们的作用是至关重要的。例如，粒子在球对称
+势场中的运动方程，可以利用旋转对称性完全解出（见 \cite{A}）。
+
+经典力学或量子力学中关于对称性的最基本事实是：对系统的任何单参数对称群，都存在一个（本质唯一
+的）可观测量对该对称性负责，且它在该系统中守恒；也就是说，每个单参数对称性都对应一条守恒律，
+反之亦然。这一论断称为\emph{Noether 定理}。
+
+我们首先解释 Noether 定理在经典力学框架中的确切含义。设系统的相空间是辛流形 $(M,\omega)$
+（典型情形为 $M=T^*X$，其中 $X$ 是位形空间，$\omega=d\alpha$ 是 Liouville 形式的外微分），
+哈密顿量为 $H\in C^\infty(M)$。设 $g^t$ 是该系统的单参数对称群，即 $M$ 的保持 $H$ 的辛微分
+同胚的单参数群。令 $v:=\frac{d}{dt}|_{t=0}g^t$ 为生成流 $g^t$ 的向量场。则有
+$L_v \omega=0$（即 $v$ 是辛向量场，故 $\omega_v:=\omega(v,?)$ 是闭 1-形式），且 $L_v H=0$。
+
+设 $M$ 单连通（例如，我们可以只考虑 $M$ 或 $X$ 中某点的一个邻域）。此时 $\omega_v$ 是恰当的，
+故存在 $Q\in C^\infty(M)$（在相差一个常数的意义下唯一）使得 $\omega_v=dQ$。于是对任意可观测量
+$F\in C^\infty(M)$ 有 $L_vF=\lbrace Q,F\rbrace$。此外 $\lbrace Q,H\rbrace=L_vH=0$。
+因此可观测量 $Q$ 在 Hamilton 流下守恒，它就是对应于单参数群 $g^t$ 的守恒律。它（尤其在场论的
+框架中）被称为该对称性的\emph{Noether（守恒）荷}。
+
+一个平凡的例子是由哈密顿量 $H$ 本身定义的 Hamilton 流 $h^t$，即时间平移对称性；此时 $Q=H$，
+故相应的守恒量就是 $H$（能量）。其他例子包括对应于平移对称性的动量 $p_1,...,p_n$
+（对 $X=\Bbb R^n$），以及对应于绕余维 $2$ 超平面 $x_k=x_j=0$ 的旋转对称性的
+\emph{角动量} $M_{kj}:=x_kp_j-x_jp_k$。
+
+更一般地，设 $G$ 是（右）作用为系统对称性的 Lie 群，$\g={\rm Lie}G$ 是 $G$ 的 李代数。
+任何元素 $y\in \g$ 给出单参数子群 $e^{ty}\in G$，从而定义守恒量 $Q_y$，使得对每个
+$F\in C^\infty(M)$ 都有
+$$
+\lbrace Q_y,F\rbrace=y\cdot F:=\tfrac{d}{dt}|_{t=0} e^{ty}\cdot F
+$$
+其中 $(g\cdot F)(m)=F(mg)$，$m\in M$。更确切地说，$Q_y$ 只在相差一个常数的意义下确定，
+因此我们固定某个线性对应 $y\mapsto Q_y$。
+
+此外，显然对 $y,z\in \g$ 有
+$$
+\lbrace Q_y,Q_z\rbrace =Q_{[y,z]}+C(y,z),
+$$
+其中 $C(y,z)$ 是 $\g$ 上的反对称双线性型，它的出现是因为 $Q_y$ 仅由 $y$ 在相差一个常数的意义下
+唯一确定。进一步，由 Jacobi 恒等式，型 $C$ 是一个 2-上闭链：
+$$
+C([x,y],z)+C([y,z],x)+C([z,x],y)=0.
+$$
+由此可见，对应 $y\mapsto Q_y$ 几乎是同态 $\g\to C^\infty(M)$，但并不完全是：确切地说，它定义了
+同态
+$$
+\mu: \widehat \g\to C^\infty(M),
+$$ 
+其中 $\widehat \g:=\g\oplus \Bbb R$ 是 $\g$ 的一维中心扩张，其对易子为
+$$
+[(y,a),(z,b)]=([y,z],C(y,z)).
+$$
+即 $\mu(y,a)=Q_y+a$。
+
+映射 $\mu$ 可视为 $C^\infty(M)\otimes \widehat\g^*$ 中的一个元素，亦即几何上视为一个
+$C^\infty$-映射
+$$
+\mu: M\to \widehat\g^*.
+$$ 
+该映射称为\emph{矩映射}（moment map），它在辛几何中起基本作用。
+
+下面的例子表明 $C$ 的上同调类可以非零，这意味着我们或许无法选取 $Q_y$ 使 $C=0$。
+
+\begin{example} 群 $\Bbb R^{2n}$ 通过平移作用在 $M=T^*\Bbb R^n$ 上（取平凡哈密顿量 $H=0$）。
+于是 $\g=\Bbb R^{2n}$ 且 $C(y,z)=\omega(y,z)$。因此 $\widehat \g$ 就是\emph{Heisenberg 李代数}
+$\Bbb R^{2n}\oplus \Bbb R$，其对易关系为
+ $$
+[(y,a),(z,b)]=([y,z],C(y,z)),
+$$
+它是 $\g$ 的非平凡中心扩张。
+\end{example} 
+
+然而，在许多例子中上同调类 $[C]\in H^2(\g)$ 事实上为零，即作为 李代数有
+$\widehat \g=\g\oplus \Bbb R$。例如，当 $H^2(\g)=0$ 时（比如 $G$ 是紧 Lie 群）自动如此。
+此时可以选取 $Q_y$ 使 $C=0$，于是我们有矩映射
+$$
+\mu: M\to \g^*.
+$$
+例如，对自由粒子的平移对称性，$\mu$ 就是粒子的动量 $\bold p$，这也解释了“矩映射”这一术语。
+
+类似的讨论也适用于经典场论，只需利用第 \ref{hfcft} 小节的形式。也就是说，此时 Noether 荷由某个
+称为\emph{Noether 流}的局域场在空间上的积分给出。
+
+例如，考虑时空 $\Bbb R^d\times \Bbb R$ 上的自由大质量玻色子 $\phi$。哈密顿量为
+$$
+H=\frac{1}{2}\int_{X} (\phi_t^2+|d_x\phi|^2+m^2\phi^2)dx.
+$$
+于是 $H=\int_{\Bbb R^d} Jdx$，其中
+\begin{equation}\label{kertime}
+J=\frac{1}{2}(\phi_t^2+|d_x\phi|^2+m^2\phi^2)=\frac{1}{2}(:\phi_t^2:+\sum_{j=1}^d:\phi_{x_j}^2:+m^2:\phi^2:)
+\end{equation} 
+是对应于时间平移对称性的 Noether 流。
+
+类似地，沿第 $i$ 个坐标的空间平移所对应的 Noether 流为
+\begin{equation}\label{kerspace}
+J_k=\phi_t \phi_{x_k}. 
+\end{equation} 
+事实上，利用第 \ref{hfcft} 小节的公式，我们有
+$$
+\lbrace J_k(x),\phi(y)\rbrace=-\phi_{x_k}(x)\delta(x-y),\ 
+\lbrace J_k(x),\phi_t(y)\rbrace=\phi_t(x)\delta_{x_k}(x-y).
+$$
+于是定义荷
+$$
+P_k=\int_{\Bbb R^d} J_k(x)dx,
+$$ 
+利用分部积分得到
+$$
+\lbrace P_k,\phi(y)\rbrace=-\phi_{x_k}(y),\ \lbrace P_k,\phi_t(y)\rbrace=
+-\phi_{tx_k}(y),
+$$
+此即所需。
+
+进一步，这一讨论可推广到量子理论，只须如常把可观测量换成算子。也就是说，此时我们有对称性
+Lie 群 $G$ 在系统量子态 Hilbert 空间 $\mathcal H$ 上的酉射影表示
+$\pi: G\to {\rm Aut}(\mathcal H)$，使得 $[\pi(g),\widehat H]=0$，其中
+$\widehat H: \mathcal H\to \mathcal H$ 是哈密顿量（无界自伴算子）。对应于这些对称性的量子
+Noether 荷，直接给出相应的 李代数表示 $\pi_*: \g\to {\rm End}(\mathcal S)$，其中
+$\mathcal S$ 是 $\mathcal H$ 的某个稠密子空间（光滑向量空间），所有算子 $\pi_*(y)$ 都在其上
+有定义。例如，在量子力学中，与经典情形一样，时间平移对应哈密顿量 $\widehat H$，空间平移对应
+动量算子 $\widehat p_j:=-i\hbar \partial_{x_j}$，而绕 $x_k=x_j=0$ 的旋转对应角动量算子
+$$
+\widehat M_{kj}:=-i\hbar (x_k\partial_j-x_j\partial_k).
+$$
+
+最后，在量子场论中，与经典情形类似，量子 Noether 荷是如下形式的算子
+$$
+Q=\int_{\Bbb R^d}J(x)dx, 
+$$
+其中 $J(x)$ 是称为\emph{量子 Noether 流}的量子局域算子。例如，对自由大质量玻色子，时间平移与
+空间平移的流 $J(x)$ 与 $J_k(x)$ 由相同的公式 \eqref{kertime}、\eqref{kerspace} 给出，
+只不过现在 $\phi(x,t)$ 是对应于大质量玻色子的量子场（例如在 Wightman 公理的框架中），而非经典场，
+并且要用正规序乘积代替通常的乘积：
+$$
+J=\frac{1}{2}(\colon\phi_t^2\colon+\sum_{j=1}^d\colon\phi_{x_j}^2\colon+m^2\colon\phi^2\colon),
+$$
+$$
+J_k=\colon\phi_t \phi_{x_k}\colon,
+$$
+而相应的荷与经典情形一样，由流在空间上的积分给出。例如，对自由玻色子
+\begin{equation}\label{quanham}
+\widehat H=\int_{\Bbb R^d} J(x)dx
+\end{equation} 
+是量子哈密顿量，而
+$$
+\widehat P_k:=\int_{\Bbb R^d} J_k(x)dx 
+$$ 
+是量子动量算子。
+
+% [Tutor Note: 这里把经典 Noether 荷量子化的两个障碍点得最清楚，也最容易被略过。
+% (i) 经典荷 $Q_y$ 只在相差常数意义下确定，这一不确定性正是 2-上闭链 $C(y,z)$ 的来源；当
+% $[C]\in H^2(\g)$ 非零时，量子化只能得到射影表示而非真正的表示（Heisenberg 代数的例子即
+% $C(y,z)=\omega(y,z)\ne 0$），这就是量子力学中“对称性只能射影实现”的几何解释，也是场论中
+% 中心荷／反常的同一机制。(ii) 量子流必须取正规序：$\phi_t^2$ 等乘积若不正规序则发散，正规序
+% 相当于减去真空期望值（等价于把算符按产生、湮灭算子排序），如此得到的 $\widehat H$ 与经典
+% 哈密顿量只相差一个（可能发散的）常数，而这一常数正是零点能。核对时务必区分“经典荷 = 积分”
+% 与“量子荷 = 正规序积分”这两个层次。]
+
+\subsection{流形上的场论} \label{manif} 
+
+如上所述，经典场论与量子场论的一个重要特征是：它们不仅可以在欧氏空间或 Minkowski 空间上考虑，
+还可以更一般地在 Riemann 流形与 Lorentz 流形上考虑。主要的例子是 $X\times \Bbb R$ 上的理论，
+其中 $X$ 是 $d$ 维 Riemann 空间流形，度量为 $g_{ij}dx^i dx^j$（Einstein 求和约定），而 $\Bbb R$
+是时间轴，其 Lorentz 度量为
+$$
+|dx|^2:=(dt)^2-g_{ij}dx^i dx^j,
+$$ 
+以及 $d+1$ 维 Riemann 时空流形 $M$ 上的欧氏理论。
+
+这里我们只考虑流形上的经典场论。这些理论随后可以用拉格朗日或 Hamilton 方法量子化，但除了一些
+例子以外我们不再讨论。整个图景与上面考虑过的平坦空间情形平行，但我们必须确保拉格朗日量中的
+动能项与其他项都是按典范方式定义的（即不依赖于坐标的选取）。为简单起见，我们考虑欧氏情形
+（Lorentz 情形类似）。我们只回顾这类理论中最常见的经典场类型，以及它们拉格朗日量中相应的动能项
+与其他项。更完整的讨论可参见 \cite{QFS}。
+
+1. \textbf{标量（玻色）场。} 在最简单的情形下，标量场就是 $M$ 上的实函数（实标量）；但也可以考虑
+取值于带正定内积的有限维实向量空间的标量（例如复标量取值于 $\Bbb C$），或者更一般地，取值于
+$M$ 上某个实向量丛的标量。对取值于带内积的向量空间 $E\cong E^*$ 的标量 $\phi: M\to E$，动能项
+是 $|d\phi(x)|^2$，即向量 $d\phi\in T_{\phi(x)}M\otimes E$ 关于 $T_{\phi(x)}M$ 与 $E$ 上内积的
+范数平方。因此，若该向量在正交基下的分量为 $(d\phi)_{ij}$，则
+$$
+|d\phi|^2=\sum_{i,j}(d\phi)_{ij}^2.
+$$
+更一般地，若 $E$ 是 $M$ 上的向量丛，则我们需要固定 $E$ 上的内积（即 $E$ 应是正交丛），并固定
+一个保持该内积的联络 $A$，它给出协变导数算子 $\nabla_A$；若 $E$ 在局部坐标卡 $U\subset M$ 上
+平凡化，则 $A$ 成为 $U$ 上取值于 $\mathfrak{o}(E)$ 的 1-形式，此时 $\nabla_A=d+A$。在这种情形下，
+取值于 $E$ 的标量场 $\phi$ 是 $E$ 在 $M$ 上的截面，动能项为 $|\nabla_A \phi|^2$，它在局部平凡化下
+具有形式 $|d\phi+A\phi|^2$。
+
+注意对标量场 $\phi$，我们总可以在动能项之外加上质量项 $m^2|\phi|^2$，其中 $m^2$ 是实数。
+更一般地，可以加上质量项 $(\phi, Q\phi)$，其中 $Q$ 是 $E$ 的自伴自同态。
+
+2. \textbf{旋量（费米）场。} 旋量场可以定义在自旋流形 $M$ 上，即一个带有自旋结构的可定向流形
+（切丛从 $SO(n)$ 到 ${\rm Spin}(n)$ 的提升）。对这种流形，我们有典范定义的\emph{自旋丛} $S_M$，
+它是上述 ${\rm Spin}(n)$ 丛经由旋量表示 ${\rm Spin}(n)\to {\rm Aut}(S)$ 的相伴丛。
+该丛带有自然的内积，以及由 $M$ 的 Levi-Civita 联络诱导的、保持该内积的联络。此外，如第
+\ref{spinorssec1} 小节所述，在偶数维时我们有 $S=S_+\oplus S_-$，其中 $S_+,S_-$ 是
+${\rm Spin}(n)$ 的不可约表示，于是 $S_M=S_{M+}\oplus S_{M-}$，即 $S_M$ 分解为两个子丛的正交直和。
+
+在最基本的情形下，旋量场是自旋丛 $S_M$ 的截面。如第 \ref{ferlag} 小节所述，$S_{M+}$ 与 $S_{M-}$
+的截面称为\emph{手征旋量}。
+
+平坦空间上旋量场可能的动能项与质量项已在第 \ref{ferlag} 小节中描述过，弯曲流形上的图景类似。
+唯一的新特点在于：我们必须对任意自旋流形上的旋量场定义 Dirac 算子 $\bold D$。
+为此，只需把公式 \eqref{dirop} 中的通常偏导数换成关于 Levi-Civita 联络的协变导数：
+\begin{equation}\label{dirop1}
+\bold{D}=\sum_i \Gamma_i \nabla^{LC}_i.
+\end{equation}
+
+更一般地，与标量场的情形类似，我们可以考虑取值于带内积与正交联络 $A$ 的向量丛 $E$ 的旋量，
+即 $S_M\otimes E$ 的截面。该丛带有张量积联络
+$\nabla^{\rm total}=\nabla^{LC}\otimes \nabla_A$，而 Dirac 算子则由下式定义：
+$$
+\bold{D}=\sum_i \Gamma_i \nabla^{\rm total}_i.
+$$
+
+3. \textbf{规范场。} 设 $G$ 是紧 Lie 群，$\g={\rm Lie}G$ 带有正定的不变内积。
+规范场是 $M$ 上主 $G$-丛 $E$ 上的联络 $A$，故在局部平凡化下 $A$ 是 $M$ 上取值于 $\g$ 的
+1-形式，而关于 $A$ 的协变导数形如 $\nabla_A=d+A$。联络 $A$ 有曲率 $F_A$（物理术语中称为
+\emph{场强}），它是 $M$ 上取值于伴随丛 ${\rm ad}E$ 的 2-形式。在局部平凡化下，$A$ 的曲率就是
+Maurer--Cartan 形式
+$$
+F_A=dA+\frac{1}{2}[A,A].
+$$
+特别地，若 $G$ 交换，则只有 $F_A=dA$。
+规范场 $A$ 的动能项是 $|F_A|^2$，其中范数平方是关于 $(\wedge^2 T^*M\otimes {\rm ad}E)_x$ 上由
+$T_xM$ 与 $\g$ 上内积诱导的内积取的（注意这不依赖于 李代数等同 $({\rm ad}E)_x\cong \g$ 的
+选取，因为 $\g$ 上的型是不变的）。
+
+合理的做法是固定 $C^\infty$-丛 $E$ 的拓扑类型（它在形变下不变），并考虑 $E$ 上所有联络 $A$
+构成的空间 ${\rm Conn}(E)$。若 $A_1,A_2\in {\rm Conn}E$，则
+$\nabla_{A_1}-\nabla_{A_2}\in \Omega^1(M)\otimes {\rm ad} E$，故 ${\rm Conn}(E)$ 是以
+$\Omega^1(M)\otimes {\rm ad} E$ 为底向量空间的仿射空间。此外，该空间带有规范群
+$\mathcal G_E=C^\infty(M,E)$ 的自然右仿射线性作用，它在局部平凡化下形如
+$$
+A^g=g^{-1} dg+g^{-1}Ag.
+$$
+经典规范场论的位形空间于是为
+$$
+\mathcal M:=\sqcup_{\text{ 各种拓扑类型 $E$}}{\rm Conn}(E)/\mathcal G_E,
+$$ 
+而相空间是其余切丛 $T^*\mathcal M$。
+
+\bigskip
+\noindent\rule{\textwidth}{0.6pt}
+

@@ -1,0 +1,529 @@
+% ============================================================
+%  part10.tex  |  原文 PDF p.71–76（页脚 p.70–75）
+%  内容：第 8 章 因子化代数（8.1 预因子化代数；8.2 因子化代数）
+% ============================================================
+
+% >>> p071
+\section{因子化代数（Factorization Algebra）}
+
+\begin{keypoints}
+  \item \textbf{核心物理图像}：量子场论的可观测量并不附着于单个时空点，而是附着于
+        时空开集 $U$：$\mathcal{F}(U)$ 是“支撑在 $U$ 内”的可观测量全体。当若干个两两
+        不交的开集 $U_i$ 一同嵌入更大的开集 $V$ 时，可观测量的乘法（因子化乘积）给出
+        映射 $\bigotimes_i\mathcal{F}(U_i)\to\mathcal{F}(V)$，这正是算子乘积展开（OPE）
+        的公理化表述。
+  \item \textbf{数学工具}：开集范畴 $\operatorname{Open}(M)$ 上的函子与余极限
+        （$\operatorname{colim}$）、Weiss 覆盖与 Weiss 拓扑、余层（cosheaf）、
+        \v{C}ech 复形；同伦版本则以拟同构代替正合性。
+  \item \textbf{主要结论}：预因子化代数只要求因子化乘法的相容性；因子化代数则进一步
+        要求 $\mathcal{F}$ 关于 Weiss 拓扑是余层。$\operatorname{Sym}(\Gamma_c(-,E))$
+        给出最基本的因子化代数；微扰 BV 量子化产出（同伦）因子化代数，即“量子可观测量”。
+  \item \textbf{译者评注}：本章把 1.2 节引入的“因子化乘积”公理化，是全书由微扰展开
+        转向代数/拓扑观点的枢纽。8.2 节的 Weiss 覆盖解释了为何必须用比普通开覆盖更细的
+        覆盖，也是第 9 章拓扑量子力学中局部—整体对应（HKR）的框架。
+\end{keypoints}
+
+\subsection{预因子化代数（Prefactorization Algebra）}
+
+设 $M$ 是拓扑空间。记 $\operatorname{Open}(M)$ 为如下范畴：其对象是 $M$ 的开子集，
+态射是开嵌入
+\[
+  U\longrightarrow V.
+\]
+
+\begin{wdefn}{8.1}
+  取值于 $k$-向量空间范畴、定义在拓扑空间 $M$ 上的\emph{预因子化代数}
+  （prefactorization algebra）$\mathcal{F}$ 是指一个函子
+  \[
+    \begin{aligned}
+      \mathcal{F}:\ \operatorname{Open}(M)&\longrightarrow \Vect_k,\\
+      U&\longmapsto \mathcal{F}(U),
+    \end{aligned}
+  \]
+  连同对每一族两两不交的有限个开子集 $U_i\subset V$（即
+  $U_1\sqcup\cdots\sqcup U_n\subset V$）给出的映射
+  \[
+    m^{U_1,\cdots,U_n}_{V}:\
+    \mathcal{F}(U_1)\otimes\cdots\otimes\mathcal{F}(U_n)\longrightarrow\mathcal{F}(V),
+  \]
+  \begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.25\linewidth]{fig_p071_1.png}
+  \caption*{开集 $V$ 内互不相交的开子集 $U_1,\dots,U_n$（原文 PDF p.71 示意图，原文无编号）}
+\end{figure}
+  使得以下性质成立：
+  \begin{enumerate}[label=(\arabic*),leftmargin=2.2em,itemsep=0.25em]
+    \item 对 $U\subset V$，$m^{U}_{V}:\mathcal{F}(U)\to\mathcal{F}(V)$ 就是函子
+          $\mathcal{F}$ 的态射。
+    \item \textbf{相容性}：若 $U_{i,1}\sqcup\cdots\sqcup U_{i,n_i}\subset V_i$ 且
+          $V_1\sqcup\cdots\sqcup V_k\subset W$，则下图交换：
+          \[
+            \begin{array}{ccc}
+              \bigotimes_{i=1}^{k}\bigotimes_{j=1}^{n_i}\mathcal{F}(U_{i,j})
+                & \longrightarrow & \bigotimes_{i=1}^{k}\mathcal{F}(V_i)\\[1mm]
+              \searrow & & \big\downarrow\\[1mm]
+              \multicolumn{3}{c}{\mathcal{F}(W)}
+            \end{array}
+          \]
+          \begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.53\linewidth]{fig_p071_2.png}
+  \caption*{相容性条件所对应的嵌套开集（原文 PDF p.71 示意图，原文无编号）}
+\end{figure}
+  \end{enumerate}
+\end{wdefn}
+
+% [Tutor Note: 定义 8.1 中“函子 + 一族映射 $m^{U_1,\cdots,U_n}_V$”这两部分缺一不可：
+% 函子性只给出“把 $U$ 嵌入 $V$”时的限制/延拓映射 $m^{U}_V$，而真正的代数结构来自
+% 多变量的 $m^{U_1,\cdots,U_n}_V$。性质 (1) 只是说单变量情形与函子结构相容，
+% 性质 (2) 才是结合律/交换律在因子化情形的替身。另注：原文 "valued in k-vector sapce"
+% 中 "sapce" 显系 "space" 之笔误（PDF p.71），第 72 页 "unital commutative algerba"
+% 亦然，均照译其义并注明。]
+
+% >>> p072
+由定义，空集上的 $\mathcal{F}(\varnothing)$ 是一个交换代数。若 $\mathcal{F}(\varnothing)$
+是含幺交换代数，则称 $\mathcal{F}$ 为\emph{含幺预因子化代数}
+（unital prefactorization algebra）。
+
+% [Tutor Note: 为何 $\mathcal{F}(\varnothing)$ 自动是交换代数？空集只有唯一的分解——
+% 即“空族”，故 $m^{\varnothing}_{\varnothing}:\mathcal{F}(\varnothing)\otimes
+% \mathcal{F}(\varnothing)\to\mathcal{F}(\varnothing)$ 由公理给出；再把它与
+% $\varnothing\sqcup\varnothing=\varnothing$ 的两种嵌套方式结合用相容性 (2)，
+% 即得结合性与交换性。因此在例 8.2、例 8.4 中都有 $\mathcal{F}(\varnothing)=k$，
+% 这些预因子化代数自动是含幺的。]
+
+\begin{wexam}{8.2}
+  设 $A$ 是含幺结合代数。我们如下在 $\R$ 上定义一个预因子化代数 $A^{fact}$。
+  \begin{itemize}[leftmargin=1.8em,itemsep=0.35em]
+    \item 对开区间 $(a,b)$，置
+          \[
+            A^{fact}((a,b))=A.
+          \]
+    \item 对开集 $\mathcal{U}=\bigsqcup_{j\in J}I_j$，其中 $I_j$ 为开区间，置
+          \[
+            A^{fact}(\mathcal{U})
+              =\operatorname*{colim}_{\mathrm{finite}\,K\subset J}\ \bigotimes_{\alpha\in K}A.
+          \]
+          这里的余极限沿如下正向系统取：对任意有限指标集 $K\subset\tilde K$，
+          \[
+            \bigotimes_{K}A\longrightarrow\bigotimes_{\tilde K}A,
+          \]
+          该映射由张量上单位元 $1\in A$ 给出：
+          \[
+            \bigotimes_{\alpha\in K}a_k
+              \longmapsto
+            \Big(\bigotimes_{\alpha\in K}a_k\Big)\otimes
+            \Big(\bigotimes_{\beta\in\tilde K-K}1\Big).
+          \]
+    \item 结构映射 $\{m^{U_1,\cdots,U_n}_{V}\}$ 由 $A$ 中的乘法给出：
+          \begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.72\linewidth]{fig_p072_1.png}
+  \caption*{三个区间的逐次合并与结构映射（原文 PDF p.72 示意图，原文无编号）}
+\end{figure}
+          \[
+            a_1\otimes a_2\otimes a_3\in A\otimes A\otimes A
+            \ \longmapsto\
+            a_1a_2\otimes a_3\in A\otimes A
+            \ \longmapsto\
+            a_1a_2a_3\in A.
+          \]
+  \end{itemize}
+\end{wexam}
+
+% [Tutor Note: 例 8.2 中“有限指标集 $K\subset J$ 上取余极限”是关键技术手段：若直接取
+% 无穷张量积 $\bigotimes_{j\in J}A$，在 $J$ 无限时没有好定义；改为对有限子集取余极限，
+% 相当于只允许“有限个区间上非平凡”的元素，这与紧支集截断的精神一致。
+% 注意 $\bigotimes$ 取在 $k$ 上，故空张量积为 $k$，于是 $A^{fact}(\varnothing)=k$。
+% 本例的意义是把“结合代数的乘法”分配到区间的合并过程上，是因子化代数最朴素的例子；
+% 一般构造（因子化包络 factorization envelope）见 Costello--Gwilliam \textup{[11]}。
+% 原文给出的 $a_k$ 上指标与求和指标 $\alpha$ 不一致（应为 $a_\alpha$），照录并请核对
+% 原书 p.71（PDF p.72）。]
+
+\begin{wexam}{8.3}
+  设 $A$ 是含幺结合代数，$M$ 是左 $A$-模，$N$ 是右 $A$-模。我们可以如下在
+  \[
+    X=[0,1]
+  \]
+  上配置一个预因子化代数。
+  \begin{itemize}[leftmargin=1.8em,itemsep=0.35em]
+    \item 对 $U=\bigsqcup_{j\in J}I_j\subset(0,1)$，其中 $I_j$ 为开区间，对应
+          \[
+            \mathcal{F}(U)=\operatorname*{colim}_{\mathrm{finite}\,K\subset J}\
+            \bigotimes_{\alpha\in K}A.
+          \]
+    \item 对 $U=U_1\sqcup U_2$，其中 $U_1\subset(0,a)$、$U_2=(a,1]$，有
+          \begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.65\linewidth]{fig_p072_2.png}
+  \caption*{区间 $U_1\subset(0,a)$ 与 $U_2=(a,1]$ 的拼接（原文 PDF p.72 示意图，原文无编号）}
+\end{figure}
+          \[
+            \mathcal{F}(U)=\mathcal{F}(U_1)\otimes M.
+          \]
+    \item 对 $U=U_1\sqcup U_2$，其中 $U_2\subset(b,1)$、$U_1=[0,b)$，有
+          \begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.67\linewidth]{fig_p072_3.png}
+  \caption*{区间 $U_1=[0,b)$ 与 $U_2\subset(b,1)$ 的拼接（原文 PDF p.72 示意图，原文无编号）}
+\end{figure}
+          \[
+            \mathcal{F}(U)=N\otimes\mathcal{F}(U_2).
+          \]
+    % [Tutor Note: 例 8.3 的端点归属极易看错：$U_1\subset(0,a)$ 是开区间，而
+    % $U_2=(a,1]$ 含右端点 $1$；下一例中 $U_1=[0,b)$ 含左端点而 $U_2\subset(b,1)$
+    % 是开区间。端点处的半开区间分别承载边界态 $M$（右端）与 $N$（左端），因此 $M$
+    % 是左 $A$-模、$N$ 是右 $A$-模。这是“有边界的一维 QFT”中边界条件/边界可观测量
+    % 的代数化身，符号一旦弄反，得到的就不是模作用而是反模作用。]
+
+    % [Tutor Note: 原文 "We can associative a prefactorization on $X$" 中
+    % "associative" 应为动词 "associate"（原文 PDF p.72），属笔误，照译并注明。]
+
+% >>> p073
+    \item 对 $U=U_1\sqcup U_2\sqcup U_3$，其中 $U_1=[0,a)$、$U_2\subset(a,b)$、
+          $U_3=(b,1]$，有
+          \begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.57\linewidth]{fig_p073_1.png}
+  \caption*{三段区间 $U_1=[0,a)$、$U_2\subset(a,b)$、$U_3=(b,1]$ 的拼接（原文 PDF p.73 示意图，原文无编号）}
+\end{figure}
+          \[
+            \mathcal{F}(U)=N\otimes\mathcal{F}(U_2)\otimes M.
+          \]
+  \end{itemize}
+\end{wexam}
+
+
+\begin{wexam}{8.4}
+  设 $E\to X$ 是 $X$ 上的向量丛。对每个开集 $U\subset X$，对应
+  \[
+    \mathcal{F}(U)=\operatorname{Sym}\big(\Gamma_c(U,E)\big).
+  \]
+  这里 $\Gamma_c(U,E)$ 是 $E$ 在 $U$ 内的紧支集截面。利用零延拓，对 $U\subset V$ 有
+  \[
+    \Gamma_c(U,E)\hookrightarrow\Gamma_c(V,E),
+  \]
+  它诱导
+  \[
+    \mathcal{F}(U)\hookrightarrow\mathcal{F}(V).
+  \]
+  对有限个两两不交的 $U_1\sqcup\cdots\sqcup U_n$，有
+  \[
+    \Gamma_c\Big(\bigsqcup_i U_i,E\Big)=\bigoplus_{i=1}^{n}\Gamma_c(U_i,E),
+  \]
+  并且
+  \[
+    \operatorname{Sym}\Big(\Gamma_c\big(\bigsqcup_i U_i,E\big)\Big)
+    =\operatorname{Sym}\Big(\bigoplus_{i=1}^{n}\Gamma_c(U_i,E)\Big)
+    =\bigotimes_{i=1}^{n}\operatorname{Sym}\big(\Gamma_c(U_i,E)\big).
+  \]
+  这表明
+  \[
+    \mathcal{F}\Big(\bigsqcup_{i=1}^{n}U_i\Big)=\bigotimes_{i=1}^{n}\mathcal{F}(U_i),
+  \]
+  于是我们得到一个预因子化代数。
+\end{wexam}
+
+% [Tutor Note: 例 8.4 的关键在于“紧支集”：$\Gamma_c$ 把不交并变成直和
+% （$\Gamma_c(\bigsqcup U_i)=\bigoplus\Gamma_c(U_i)$），而 $\operatorname{Sym}$ 又把
+% 直和变成张量积（$\operatorname{Sym}(V\oplus W)=\operatorname{Sym}V\otimes
+% \operatorname{Sym}W$），两步合起来恰好给出因子化乘法的同构。若改用普通截面
+% $\Gamma$，不交并对应的是直积而非直和，得到的将是层（sheaf）而非余层（cosheaf），
+% 因子化性质随之失效。]
+
+\begin{wdefn}{8.5}
+  预因子化代数的态射
+  \[
+    \phi:\ \mathcal{F}\longrightarrow\mathcal{G}
+  \]
+  由一族映射 $\phi_U:\mathcal{F}(U)\to\mathcal{G}(U)$（对每个开集 $U\subset M$）组成，
+  它们与结构映射相容，即下图交换：
+  \[
+    \begin{array}{ccc}
+      \mathcal{F}(U_1)\otimes\cdots\otimes\mathcal{F}(U_n)
+        & \xrightarrow{\ \phi_{U_1}\otimes\cdots\otimes\phi_{U_n}\ }
+        & \mathcal{G}(U_1)\otimes\cdots\otimes\mathcal{G}(U_n)\\[1mm]
+      \big\downarrow & & \big\downarrow\\[1mm]
+      \mathcal{F}(V) & \xrightarrow{\ \phi_V\ } & \mathcal{G}(V)
+    \end{array}
+  \]
+\end{wdefn}
+
+于是预因子化代数构成一个范畴。
+
+\subsection{因子化代数（Factorization Algebra）}
+
+\begin{wdefn}{8.6}
+  设 $U$ 是 $M$ 中的开集。$U$ 的开覆盖
+  $\mathfrak{U}=\{U_i\subset U\}_{i\in I}$ 称为 \emph{Weiss 覆盖}（Weiss cover），
+  如果对 $U$ 中任意有限点集 $\{x_1,\dots,x_k\}$，存在开集 $U_j\in\mathfrak{U}$
+  使得 $\{x_1,\dots,x_k\}\subseteq U_j$。
+\end{wdefn}
+
+\begin{wprop}{8.7}
+  若 $\mathfrak{U}=\{U_i\}$ 是 $U$ 的 Weiss 覆盖，则对任意 $n>0$，
+  \[
+    \{U_i^{n}\}_{i\in I}
+  \]
+  是 $U^{n}=U\times\cdots\times U$ 的开覆盖。
+\end{wprop}
+
+% [Tutor Note: Weiss 覆盖的定义要点在“任意\emph{有限}点集”而非“任意一点”——后者只是
+% 普通开覆盖。取“能同时容纳任意有限个点”的开集，正是为了控制多点函数
+% （即 $U^n$ 上的对象，如关联函数/多算子插入）的局部性。例 8.8 说明
+% “$U$ 去掉有限个点”这种族已是 Weiss 覆盖，可见 Weiss 覆盖比普通开覆盖“更细、更灵活”。
+% 术语依据：Weiss 覆盖得名于 M. Weiss 关于 manifold calculus 的工作；
+% 中文文献多径直音译作“Weiss 覆盖”。]
+
+% >>> p074
+\begin{proof}
+  对任意 $(x_1,\cdots,x_n)\in U^{n}$，存在 $U_i$，使得
+  \[
+    \{x_1,\cdots,x_k\}\subset U_i
+    \ \Longrightarrow\
+    (x_1,\cdots,x_n)\in U_i^{n}.
+  \]
+\end{proof}
+
+% [Tutor Note: 命题 8.7 的证明中，原文把点集写成 $\{x_1,\cdots,x_k\}$，但按命题陈述与
+% 上下文应为 $\{x_1,\cdots,x_n\}$（$k$ 是定义 8.6 中的点数，此处应取 $k=n$）；
+% 这是原文的小失误，照录并请核对原书 p.73（PDF p.74）。]
+
+\begin{wexam}{8.8}
+  由“从 $U$ 中删去有限个点所得的集合”构成的族，是 $U$ 的一个 Weiss 覆盖。
+\end{wexam}
+
+\begin{wdefn}{8.9}
+  若对每个开集 $U\subset M$ 与 $U$ 的每个 Weiss 覆盖
+  $\mathfrak{U}=\{U_i\}_{i\in I}$，下述序列正合：
+  \[
+    \bigoplus_{i,j}\mathcal{F}(U_i\cap U_j)
+    \longrightarrow
+    \bigoplus_{k}\mathcal{F}(U_k)
+    \longrightarrow
+    \mathcal{F}(U)
+    \longrightarrow 0,
+  \]
+  则称 $M$ 上的预因子化代数 $\mathcal{F}$ 为\emph{因子化代数}
+  （factorization algebra）。
+\end{wdefn}
+
+回忆：$M$ 上 $k$-向量空间的层（sheaf）$\mathcal{E}$ 是函子
+\[
+  \mathcal{E}:\ \operatorname{Open}(M)^{op}\longrightarrow \Vect_k,
+\]
+满足粘接条件：对 $U$ 的任意开覆盖 $\mathfrak{U}=\{U_i\}_{i\in I}$，
+\[
+  0\longrightarrow\mathcal{E}(U)
+  \longrightarrow\bigoplus_{i\in I}\mathcal{E}(U_i)
+  \longrightarrow\bigoplus_{i,j}\mathcal{E}(U_i\cap U_j)
+\]
+构成正合序列。这意味着 $\mathcal{E}(U)$ 的一个截面 $s$ 可以唯一地由每个 $U_i$ 上的
+截面 $s_i$ 指定，只要它们在重叠处相符：
+$s_i|_{U_i\cap U_j}=s_j|_{U_i\cap U_j}$。把箭头对偶化，我们就得到\emph{余层}
+（cosheaf）的概念。
+
+因此，预因子化代数 $\mathcal{F}$ 是因子化代数，当且仅当它是关于 Weiss 拓扑的余层。
+
+% [Tutor Note: 层与余层的差别只在箭头方向：层的粘接是“限制映射”+ 左端正合，
+% 余层的粘接是“延拓映射”+ 右端以 $0$ 收尾。定义 8.9 的序列以 $\to 0$ 结尾、
+% 开头没有 $0$，正是“余层”的特征；判断正合列该在哪一端加 $0$ 是本章最易出错处。
+% 另注：$\bigoplus_{i,j}$ 是否包含 $i=j$ 项各文献约定不同，包含与否只差一些可缩项，
+% 不影响正合性；此处按原文取遍所有 $i,j$。
+% 又，“Weiss 拓扑”的严格含义是把 Weiss 覆盖取作 Grothendieck 拓扑的覆盖族
+% （需验证 Weiss 覆盖对拉回与局部化封闭，构成预拓扑）。因此“关于 Weiss 拓扑的余层”
+% 是一个标准的层论陈述，可与普通拓扑（开覆盖）下的层论逐条对照，差别只在覆盖族的大小。]
+
+\begin{wexam}{8.10}
+  设 $E\to X$ 是 $X$ 上的向量丛。记 $\mathcal{E}_c$ 为余层
+  \[
+    \mathcal{E}_c(U)=\Gamma_c(U,E),
+  \]
+  它把开集 $U$ 对应到其上的紧支集截面。记
+  \[
+    \mathcal{F}=\operatorname{Sym}(\mathcal{E}_c)
+  \]
+  为预因子化代数，其中
+  \[
+    \mathcal{F}(U)=\operatorname{Sym}(\mathcal{E}_c(U)).
+  \]
+  我们来证明 $\mathcal{F}$ 是因子化代数。设 $U\subset M$ 是开集，
+  \[
+    \mathfrak{U}=\{U_i\subset U\}_{i\in I}
+  \]
+  是 $U$ 的 Weiss 覆盖。我们需要证明
+  \[
+    \bigoplus_{i,j\in I}\operatorname{Sym}\big(\mathcal{E}_c(U_i\cap U_j)\big)
+    \longrightarrow
+    \bigoplus_{i\in I}\operatorname{Sym}\big(\mathcal{E}_c(U_i)\big)
+    \longrightarrow
+    \operatorname{Sym}\big(\mathcal{E}_c(U)\big)
+    \longrightarrow 0
+  \]
+  正合。注意到
+  \[
+    \mathcal{E}_c(U)^{\hat\otimes m}=\mathcal{E}_c^{\boxtimes m}(U^{m}),
+  \]
+  其中 $\mathcal{E}_c^{\boxtimes m}$ 是 $U^{m}$ 上紧支集截面所成的余层 $E^{\boxtimes m}$。
+  按每个张量分量分解，我们需要证明
+  \[
+    \bigoplus_{i,j\in I}\mathcal{E}_c^{\boxtimes m}(U_i\cap U_j))
+    \longrightarrow
+    \bigoplus_{i\in I}\mathcal{E}_c^{\boxtimes m}(U_i))
+    \longrightarrow
+    \mathcal{E}_c^{\boxtimes}(U)
+    \longrightarrow 0
+  \]
+  正合。由于 $\{U_i\}_{i\in I}$ 是 Weiss 覆盖，$\{U_i^{m}\}_{i\in I}$ 构成 $U$ 的
+  开覆盖，并且
+  \[
+    (U_i\cap U_j)^{m}=U_i^{m}\cap U_j^{m}.
+  \]
+  于是正合性由 $\mathcal{E}_c^{\boxtimes m}$ 在 $U^{m}$ 上的余层性质推出。
+\end{wexam}
+
+% [Tutor Note: 原文 "which assigns compactly sections on U" 应为 "compactly supported
+% sections"（原文 PDF p.74）；另本段末尾两个求和中各多出一个右括号
+% （原作 $\mathcal{E}_c^{\boxtimes m}(U_i\cap U_j))$、$\mathcal{E}_c^{\boxtimes m}(U_i))$），
+% 且末项上标只印作 $\boxtimes$（疑漏 $m$，前两项均为 $\boxtimes m$）。三处均照录原文，
+% 请核对原书 p.73（PDF p.74）。
+% 又，这里 $\hat\otimes$ 表示张量积的完备化（在通常的拓扑/准完备设定下），
+% 等式 $\mathcal{E}_c(U)^{\hat\otimes m}=\mathcal{E}_c^{\boxtimes m}(U^m)$ 说明
+% “$U$ 上 $m$ 重张量幂”等于“$U^m$ 上的外积余层”；这一步是把 $m$ 次对称张量的问题
+% 化到 $U^m$ 上、从而用命题 8.7 的关键。符号上 $\boxtimes$（外张量积）与
+% $\otimes$（内张量积）不可混用。]
+
+% >>> p075
+更一般地，我们可以定义取值于上链复形的预因子化代数。于是对每个 $U\subset M$，
+$\mathcal{F}(U)$ 是一个上链复形。对任意覆盖
+$\mathfrak{U}=\{U_i\subset U\}_{i\in I}$，我们可以类似地定义 \v{C}ech 上链
+\[
+  C^{p}(\mathfrak{U},\mathcal{F})
+  :=\bigoplus_{j_0,\dots,j_p\ \mathrm{distinct}}
+  \mathcal{F}(U_{j_0}\cap\cdots\cap U_{j_p}),
+\]
+以及作为
+\[
+  \check{C}(\mathfrak{U},\mathcal{F})
+  :=\bigoplus_{p=0}^{\infty}C^{p}(\mathfrak{U},\mathcal{F})
+\]
+的总复形的 \v{C}ech 复形。
+
+\begin{wdefn}{8.11}
+  \emph{同伦因子化代数}（homotopy factorization algebra）是指 $M$ 上的预因子化代数
+  $\mathcal{F}$，使得对每个开集 $U\subset X$ 与 $U$ 的 Weiss 覆盖 $\mathfrak{U}$，
+  自然映射
+  \[
+    \check{C}(\mathfrak{U},\mathcal{F})\longrightarrow\mathcal{F}(U)
+  \]
+  是拟同构。从而 $\mathcal{F}$ 是关于 Weiss 拓扑的同伦余层。
+\end{wdefn}
+
+% [Tutor Note: 同伦版本把定义 8.9 的“序列正合”升级为“\v{C}ech 复形与 $\mathcal{F}(U)$
+% 拟同构”。实际计算时 $\check{C}(\mathfrak{U},\mathcal{F})$ 取总复形，其微分同时包含
+% \v{C}ech 微分与 $\mathcal{F}(U_i)$ 自身的内部微分（例如 BV 算子 $Q$）；正因为如此，
+% 对拟同构取同调后才得到物理上正确的“量子可观测量”。原文此处写 $U\subset X$，
+% 而上下文底流形记为 $M$，属记号不一致，照录并请核对原书 p.74（PDF p.75）。]
+
+在 Costello--Gwilliam \textup{[11]} 中证明了：微扰 BV 量子化导出（同伦）因子化代数。
+这样的因子化代数描述“量子可观测量”，而因子化性质正是局部—整体性质。
+
+% [Tutor Note: 原文作 "Costello-Gwillian"，应为 "Costello–Gwilliam"（Kevin Costello
+% 与 Owen Gwilliam，原文 PDF p.75），属笔误，照译并注明。文献 [11] 即其两卷本
+% \emph{Factorization Algebras in Quantum Field Theory}。]
+
+\begin{wexam}{8.12}
+  作为例子，考虑相空间 $\R^{2n}$ 上的拓扑量子力学（详见第 9 章）。场空间为
+  \[
+    \mathcal{E}=\Omega^{\bullet}(S^{1})\otimes\R^{2n}.
+  \]
+  给定 $U\subset S^{1}$，$U$ 内部的可观测量 $\Obs(U)$ 是
+  \[
+    \mathcal{E}(U)=\Omega^{\bullet}(U)\otimes\R^{2n}
+  \]
+  上的函数。
+  \begin{itemize}[leftmargin=1.8em,itemsep=0.35em]
+    \item \textbf{局部可观测量}：设 $U$ 是小开区间。
+          \begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.22\linewidth]{fig_p075_1.png}
+  \caption*{圆周 $S^1$ 上标出小开区间 $U$（原文 PDF p.75 示意图，原文无编号）}
+\end{figure}
+          由 Poincaré 引理，$\Omega^{\bullet}(U)\simeq\R$ 是拟同构的。于是
+          \[
+            \Obs(U)=O(\mathcal{E}(U))\simeq\mathcal{O}(\R^{2n})
+            =\R[x^{i},p_i].
+          \]
+    \item \textbf{整体可观测量}：对 $U=S^{1}$，其同调非平凡：
+          \[
+            \Omega(S^{1})\simeq H^{\bullet}(S^{1})=\R\oplus\R[-1].
+          \]
+          于是 $S^{1}$ 上的整体可观测量可模型化为
+          \[
+            \Obs(S^{1})\simeq\mathcal{O}\big(\Omega(S^{1})\otimes\R^{2n}\big)
+            \simeq\mathcal{O}\big(\R^{2n}\oplus\R^{2n}[-1]\big)
+            \simeq\R[x^{i},p_i,\dd x^{i},\dd p_i].
+          \]
+  \end{itemize}
+  局部可观测量 $\Obs(U)=\R[x^{i},p_i]$ 与整体可观测量
+  $\Obs(S^{1})=\R[x^{i},p_i,\dd x^{i},\dd p_i]$ 之间的关系，恰是 Hochschild 同调
+  （由 Hochschild--Kostant--Rosenberg（HKR）定理）。
+  \[
+    S^{1}\text{-factorization Homology}=\text{Hochschild Homology}.
+  \]
+\end{wexam}
+
+% [Tutor Note: 例 8.12 中 $\R[x^i,p_i]$ 取的是\emph{多项式}函数而非光滑函数，
+% 原因是 $\Omega^{\bullet}(U)\simeq\R$ 的拟同构把复形层面的信息压成同调，
+% 可观测量复形因此与多项式函数环拟同构；这在 BV/形变量子化的代数框架中更便于计算。
+% 另注意 $\R[-1]$ 表示同调次数下移一位（degree shift），故
+% $\R^{2n}\oplus\R^{2n}[-1]$ 的两个直和项分别对应坐标 $x^i,p_i$ 与其微分
+% $\dd x^i,\dd p_i$，这正是“整体可观测量比局部多出一倍生成元”的含义。
+% 末行的 HKR 定理指：对光滑仿射代数（或其上的多项式代数），Hochschild 同调同构于
+% 微分形式代数（Hochschild--Kostant--Rosenberg）；本例把它几何化为
+% “$S^1$ 上的整体可观测量 = 局部可观测量的 Hochschild 同调”，亦即
+% “因子化同调 = Hochschild 同调”。]
+
+% >>> p076
+在量子层面，局部可观测量成为 Weyl 代数
+\[
+  \mathcal{A}^{\hbar}=(\mathcal{A}[[\hbar]],\star),
+\]
+其中 $\star$ 是 Moyal 积。于是该模型中的量子关联函数（见定义 9.10）
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.22\linewidth]{fig_p076_1.png}
+  \caption*{量子关联函数 $\langle f_0\cdots f_1\rangle$ 的圆环表示（原文 PDF p.76 示意图，原文无编号）}
+\end{figure}
+给出一个显式的链映射（Gui--Li--Xu \textup{[24]} 与 Li--Wang--Yang \textup{[32]}）
+\[
+  (C_{\bullet}((\mathcal{A}[[\hbar]],b)
+  \longrightarrow(\Omega^{\bullet}_{\mathcal{A}}[[\hbar]],\hbar\Delta).
+\]
+这里 $(C_{\bullet}((\mathcal{A}[[\hbar]],b)$ 是 Weyl 代数 $\mathcal{A}^{\hbar}$ 的
+Hochschild 链复形。$\Delta=\mathcal{L}_{\omega^{-1}}$ 是关于 Poisson 双向量
+\[
+  \omega^{-1}=\sum_i\frac{\partial}{\partial x^{i}}\wedge
+  \frac{\partial}{\partial p_i}
+\]
+的 Lie 导数。若将 $\hbar$ 可逆化，该链映射成为拟同构
+\[
+  (C_{\bullet}((\mathcal{A}((\hbar)),b)
+  \longrightarrow(\Omega^{\bullet}_{\mathcal{A}}((\hbar)),\hbar\Delta),
+\]
+它可以看作量子 HKR 映射。
+
+% [Tutor Note: 公式 $(C_{\bullet}((\mathcal{A}[[\hbar]],b)\to
+% (\Omega^{\bullet}_{\mathcal{A}}[[\hbar]],\hbar\Delta)$ 中，$C_{\bullet}$ 后多出的一个
+% 左括号是原文排版遗留（原文 PDF p.76），照录；右端 $(\Omega^{\bullet}_{\mathcal{A}}
+% [[\hbar]],\hbar\Delta)$ 则是一个整体。核对时请勿把多余的括号当作函数复合。
+% 另注意 Weyl 代数的上标记作 $\mathcal{A}^{\hbar}$（$\hbar$ 在上标），
+% 而系数环写作 $\mathcal{A}[[\hbar]]$（形式幂级数），两者不是同一对象。
+% 又，$\Delta=\mathcal{L}_{\omega^{-1}}$ 的符号约定是本节最易出错处：这里 $\Delta$
+% 是沿 Poisson 双向量 $\omega^{-1}=\sum_i\partial_{x^i}\wedge\partial_{p_i}$ 的
+% Lie 导数，而非 BV 意义下的“Laplacian”；它使
+% $(\Omega^{\bullet}_{\mathcal{A}}[[\hbar]],\hbar\Delta)$ 成为上链复形，且
+% $\hbar\Delta$ 中显式保留 $\hbar$ 以便做 $\hbar$-进展开。不同文献可能把 $\Delta$
+% 定义为 $[\omega^{-1},-]$（差一个符号或 $1/2$ 因子），跨文献比较时务必先核对约定。
+% 该链映射在 $\hbar$ 可逆后成为拟同构，即“量子 HKR 映射”，这是形变量子化与
+% Hochschild 同调理论之间的核心桥梁，也预告了第 9 章 Fedosov 量子化的结论。]

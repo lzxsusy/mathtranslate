@@ -1,0 +1,941 @@
+% ============================================================================
+%  第 8 章  谱分解 2.0：Tannakian 重构（原文 pp.~95--114）
+% ============================================================================
+\chapter{谱分解 2.0：Tannakian 重构}\label{ch:08}
+
+\begin{keytakeaways}
+本章把“见交换性即见几何”这一格言提升一个范畴层级。核心想法是：把交换环$R$的模范畴$R$-mod连同$\otimes_R$看成一个“范畴化的交换环”，于是可以问它的“谱”是什么。由此得到一个函子$\QC\colon\mathrm{Stacks}\to(\otimes\text{-}\mathrm{Cat})^{\mathrm{op}}$的右伴随$\Spec$，即\term{Tannakian 重构}{Tannakian reconstruction}；对几何栈有$X\simeq\Spec\QC(X)$（1-仿射化）。
+作为另一类来源，群表示范畴带有\term{纤维函子}{fiber functor}，其自同构群把$\Spec\Rep(G)$还原为$BG$及其 pro-代数完备化；$\Z$-分次向量空间、局部系统、域扩张都是其例。
+把 Pontrjagin 对偶范畴化即得\term{Fourier--Mukai 对偶}{Fourier--Mukai duality}：$\Shv(G)$上的卷积给出 1-移位 Cartier 对偶$G^{\vee}[1]$；对 Abel 簇它退化为 Mukai 的导出等价，并给出秩 1 的 Betti 与 de Rham 几何类域论。de Rham 空间把平坦联络翻译成$\QC(X_{dR})$，最终得到$\mathcal D_{\mathrm{Jac}}$-mod$\simeq\QC(\mathrm{Conn}^{\flat}_1 C)$以及 Hitchin 系统的秩 1 自对偶——这正是第 9 章非阿贝尔推广的起点。
+\end{keytakeaways}
+
+% ---------------------------------------------------------------- 原文 p.95
+基本主题是：只要你看到交换性，它就指示着几何。现在我们把这个主题再提升一档。若$R$交换，则可以考虑范畴$R$-mod。这个范畴本身在运算
+\begin{equation}\tag{8.1}
+(M,N)\longmapsto M\otimes_{R}N
+\end{equation}
+下就是交换的。这使$R$-mod成为一个\term{对称幺半范畴}{symmetric monoidal category}（或$\otimes$-范畴）。粗略地说，这是一个 Abel 范畴，并带有某些“良好性质”，例如我们可能要求它对任意直和封闭。我们心中主要的例子，也是一定满足任何良好性质的例子，就是$R$-mod。于是我们有张量积
+\begin{equation}\tag{8.2}
+\otimes\colon \cC\times\cC\longrightarrow \cC
+\end{equation}
+以及单位对象$1\in\cC$，而后它们须满足若干公理：恒等公理
+\begin{equation}\tag{8.3}
+1\otimes(-)\simeq(-)\otimes 1,
+\end{equation}
+若交换两次就回到恒等：
+\diageq{8.4}{0.42\textwidth}{p095_d1.png}
+此外还有关于$\otimes$的结合性（五边形公理）与交换性（六边形公理）条件。
+
+此前我们只是用$R$-模来做谱分解。现在我们则把$R$-mod本身看成某种（范畴化的）交换环。对仿射概形$X=\Spec R$，基本上可以定义
+\begin{equation}\tag{8.5}
+\QC(X)=R\text{-mod},
+\end{equation}
+而且张量积也匹配。但并非许多概形都是仿射的。在某种意义上，这正是代数几何与微分拓扑的主要差别：在微分拓扑中$C^{\infty}$函数可以捕捉任何空间，而在代数几何中（代数）函数只能捕捉很小一类簇。不过，在代数几何中一旦用层替换函数，我们就获得大得多的灵活性。对任何概形$X$都有
+\begin{equation}\tag{8.6}
+X=\varinjlim_{i}\Spec R_{i},
+\end{equation}
+即$X$由仿射概形拼成。类似地
+\begin{equation}\tag{8.7}
+\QC(X)=\varprojlim_{i}R_{i}\text{-mod}.
+\end{equation}
+要点在于：若有一个映射
+\begin{equation}\tag{8.8}
+\Spec S=Y\xrightarrow{\ f\ }X=\Spec R,
+\end{equation}
+即环映射$R\to S$，则得到函子
+\begin{equation}\tag{8.9}
+(-)\otimes_{R}S\colon R\text{-mod}\xrightarrow{\ f^{*}\ }S\text{-mod},
+\end{equation}
+也就是函子
+\begin{equation}\tag{8.10}
+f^{*}\colon \QC(X)\to\QC(Y).
+\end{equation}
+关键事实是$f^{*}$实际上是幺半函子：张量积送到张量积，单位$R$送到单位$S$，并保持所有额外结构。也就是说，我们可以把$\QC(X)$作为对称幺半范畴由局部片段$R_i$-mod拼出来：$R_i$-mod的张量积在整体上诱导出正确的张量积。
+
+这一切是说，$\QC(X)$具有如下泛性质：每当有一个仿射映射$f\colon\Spec R\to X$，就得到函子$f^{*}\colon\QC(X)\to R$-mod，并且它保持张量积。换言之，我们有一个运算
+\begin{equation}\tag{8.11}
+\QC\colon\mathrm{Sch}\to(\otimes\text{-}\mathrm{Cat})^{\mathrm{op}}.
+\end{equation}
+这是如下运算的范畴化类比：
+\begin{equation}\tag{8.12}
+\cO\colon\mathrm{Spaces}\to(\mathrm{cRing})^{\mathrm{op}}.
+\end{equation}
+
+\begin{srcrem}{32}
+我们可以把$\QC$定义在更大的源范畴上，例如栈的范畴$\mathrm{Stacks}$，甚至前栈（prestack）的范畴。要点只在于：对象可以形式地写成仿射概形的余极限。
+\end{srcrem}
+
+于是从代数几何得到了$\otimes$-范畴的一大来源。可以把它视为$\otimes$-范畴的几何来源。这是我们的“大本营”。对我们而言，当一个$\otimes$-范畴是某个空间的层时，我们才算“理解”了它。我们将把任意的“交换环”与这些形如$R$-mod的“基本”几何例子作比较来检验它们。这意味着我们所提的“问题”会带有几何偏好。我们有函子
+\begin{equation}\tag{8.13}
+\QC\colon\mathrm{Stacks}\to(\otimes\text{-}\mathrm{Cat})^{\mathrm{op}},
+\end{equation}
+并想构造它的右伴随
+\begin{equation}\tag{8.14}
+\Spec\colon(\otimes\text{-}\mathrm{Cat})^{\mathrm{op}}\to\mathrm{Stacks}.
+\end{equation}
+所以我们从一个$\otimes$-范畴$\cC$出发，想构造某个代数几何空间（例如栈）$\Spec\cC$。这是$\cC$在代数几何世界中的最佳逼近。技术上，该伴随性说$\Spec(\cC,\otimes,1)$由如下性质刻画：
+\begin{equation}\tag{8.15}
+\Hom_{\mathrm{Stacks}}(X,\Spec\cC)=\Hom_{\otimes\text{-}\mathrm{Cat}}(\cC,\QC(X)).
+\end{equation}
+这类似于我们在 2.1 节式 (2.1) 中刻画环的$\Spec$的方式。它归结为
+\begin{equation}\tag{8.16}
+\Hom_{\mathrm{Stacks}}(\Spec R,\Spec\cC)=\Hom_{\otimes\text{-}\mathrm{Cat}}(\cC,R\text{-mod}),
+\end{equation}
+于是我们把它定义成环上的函子
+\begin{equation}\tag{8.17}
+\mathrm{cRing}\to\mathrm{Grpd},
+\end{equation}
+其定义为
+\begin{equation}\tag{8.18}
+R\longmapsto \Spec\cC(R),
+\end{equation}
+其中
+\begin{equation}\tag{8.19}
+\Spec\cC(R):=\Hom_{\otimes\text{-}\mathrm{Cat}}(\cC,R\text{-mod}).
+\end{equation}
+参考文献见 [Lur04] 与 [BHL17]。\footnote{原文此处右侧有橙色批注“cite”，即作者提示应在此补入引文。}
+
+该伴随性蕴涵：对任何$X$都有典范映射
+\begin{equation}\tag{8.20}
+X\to\Spec\QC(X).
+\end{equation}
+可以把这看成$X$的某种 1-仿射化（或“Tannakization”）。这正像我们总有一个到通常仿射化的映射
+\begin{equation}\tag{8.21}
+X\to\Spec\cO(X),
+\end{equation}
+后者曾是$X$的最佳仿射逼近。
+
+现在让我们检验这确实还原了旧的$\Spec$概念。设$\cC=S$-mod，$S\in\mathrm{cRing}$，并考虑$\otimes$-函子
+\begin{equation}\tag{8.22}
+F\colon \cC\to R\text{-mod}.
+\end{equation}
+它告诉我们$1\in\cC$被送到$R\in R$-mod。因为$F$是函子，我们得到映射
+\begin{equation}\tag{8.23}
+\End(1)\to\End_{R\text{-mod}}(R)=R.
+\end{equation}
+可以把$\End(1)$看作附着于$\cC$的交换环。也就是说，有一个映射
+\begin{equation}\tag{8.24}
+\Hom_{\otimes}(\cC,R\text{-mod})\to\Hom_{\mathrm{cRing}}(\End(1),R),
+\end{equation}
+而目标中的元素更容易理解。若$\cC=S$-mod，则$\cC$由$1=S$生成。这意味着任何$S$-模都可以从$S$出发用消解构造。换个说法：$\Hom_{S\text{-mod}}(S,-)$就是底层的 Abel 群。结论是，任何$\otimes$-函子$S$-mod$\to R$-mod都来自环映射$S\to R$，因此
+\begin{equation}\tag{8.25}
+\Spec S\text{-mod}=\Spec S.
+\end{equation}
+也就是说，在$\cC=S$-mod上，我们的新$\Spec$还原了旧的$\Spec$概念。
+
+% ---------------------------------------------------------------- 原文 p.98
+\medskip
+\noindent 要点在于：大多数概形/栈没有足够的函数，所以
+\begin{equation}\tag{8.26}
+\Spec\cO(X)\neq X.
+\end{equation}
+于是我们要问：在范畴层面上一层，我们是否更走运？答案是我们确实更走运：我们确实有足够的拟凝聚层来“看见”大多数栈。主要问题在于函数不能推前，只有分布/测度才能推前；但一旦范畴化，我们就有推前函子。
+
+\begin{srcthm}{4}
+若$X$是几何栈，则
+\begin{equation}\tag{8.27}
+X\xrightarrow{\ \sim\ }\Spec\QC(X)
+\end{equation}
+是同构。也就是说，$X$是 Tannakian 的/范畴仿射的。
+\end{srcthm}
+
+几何栈的概念包含我们在实践中遇到的一切，特别地包含任何拟紧概形。我们将采用的定义是：\term{几何栈}{geometric stack}是具有仿射对角的拟紧栈。在实践中这意味着我们可以把$X$显式地写成某个仿射$U$的商，即模去某个仿射群胚$G$的作用。其想法是：只要我们允许来自群胚$G$的某些关系，就能用仿射概形把它拼出来。
+
+\begin{srcex}{32}
+若$X$是概形，则映射$f\colon\Spec R\to X$与映射$f^{*}\colon\QC(X)\to R$-mod是同一回事。
+\end{srcex}
+
+\begin{srcex}{33}
+设$f\colon\Spec k\to X$是$X$的一个点。则它对应于映射
+\begin{equation}\tag{8.28}
+f^{*}\colon\QC(X)\to\Vect_{k}.
+\end{equation}
+\end{srcex}
+
+% ================================================================
+\section{表示范畴}\label{sec:8.1}
+\begin{sectionkey}
+除$\cC=\QC(X)$之外，群的表示范畴是 Tannakian 对偶的典型例子：\term{纤维函子}{fiber functor}$\Rep_k(G)\to\Vect_k$使$\Spec\Rep_k(G)$为一个“点模去群胚作用”的空间。本节给出若干自然带有纤维函子的$\otimes$-范畴，并说明它们分别重构出$\GG_m$、基本群与绝对 Galois 群。
+\end{sectionkey}
+
+除$\cC=\QC(X)$之外，群的表示范畴是 Tannakian 对偶最典型的例子。设$G$是群，则范畴$\Rep_k(G)$是$\otimes$-范畴：对象是带有$G$-作用的$k$-向量空间，态射是保持$G$-作用的线性映射。单位是平凡表示$1=k$，张量积是向量空间通常的张量积配上对角的$G$-作用。
+
+为计算$\Spec(\Rep(G))$，我们要考虑这个范畴上的额外结构。我们有一个忠实$\otimes$-函子
+\begin{equation}\tag{8.29}
+\Rep_k G\to\Vect_k,
+\end{equation}
+即源范畴中的映射单射地进入目标范畴中的映射。这称为\term{纤维函子}{fiber functor}：对任何幺半范畴$(\cC,\otimes,1)$，从$\cC\to\Vect_k$的忠实$\otimes$-函子都称为纤维函子。拥有纤维函子实际上是在说$\Spec\cC$被一个点覆盖，即我们有一个忠实平坦映射
+\begin{equation}\tag{8.30}
+\mathrm{pt}\to\Spec\cC,
+\end{equation}
+也就是说，作为空间它是“一个点模去某个群胚的作用”。
+
+\begin{srcrem}{33}
+拥有纤维函子与例子$\cC=\QC(X)$在某种意义上是正交的。这里我们得到函子
+\begin{equation}\tag{8.31}
+i^{*}\colon\cC=\QC(X)\to\Vect_k,
+\end{equation}
+其中$i\colon\Spec k\to X$，但它们杀掉大部分对象。这说得通：$\Spec(\QC(X))$一般不应被一个点覆盖。
+\end{srcrem}
+
+% ---------------------------------------------------------------- 原文 p.99
+设$G$是仿射代数群，即$G$是仿射簇。这意味着
+\begin{equation}\tag{8.32}
+\Spec(\Rep(G))=BG=\mathrm{pt}/G.
+\end{equation}
+它确实被一个点覆盖：
+\begin{equation}\tag{8.33}
+G\rightrightarrows \mathrm{pt}\to \mathrm{pt}/G.
+\end{equation}
+对带有某个纤维函子$F$的一般$\cC$，我们得到群$G=\Aut(F)$，并且
+\begin{equation}\tag{8.34}
+\Spec\cC=BG^{\mathrm{proalg}},
+\end{equation}
+其中$G^{\mathrm{proalg}}$是$G$的 pro-代数完备化。这是通过研究代数表示能从$G$中看到的东西。
+
+下面我们要寻找（自然界中）自然带有纤维函子的$\otimes$-范畴。由此可以产生群。这听起来有点抽象，直到我们意识到它无处不在。
+
+\begin{srcex}{34}
+再次考虑带有额外结构的向量空间。考虑$\Vect^{\Z\text{-}\mathrm{gr}}$，即$\Z$-分次向量空间的范畴。张量积由下式给出：
+\begin{equation}\tag{8.35}
+(M^{\bullet}\otimes N^{\bullet})_k=\bigoplus_i M^{i}\otimes N^{k-i}.
+\end{equation}
+它带有函子
+\begin{equation}\tag{8.36}
+\Vect^{\Z\text{-}\mathrm{gr}}\xrightarrow{\ F\ }\Vect,
+\end{equation}
+这是一个纤维函子。这意味着我们得到群$G$使得$\Vect^{\Z\text{-}\mathrm{gr}}\simeq\Rep G$。此时$G=\GG_m$：
+\begin{equation}\tag{8.37}
+\Vect^{\Z\text{-}\mathrm{gr}}\simeq\Rep\GG_m\simeq\QC(B\GG_m),
+\end{equation}
+这是我们以前见过的等价。
+
+这是$\Z$与$\GG_m$之间 Fourier 对偶的范畴版本。类似地，格分次表示与$T^{\vee}$的表示之间有等价：
+\begin{equation}\tag{8.38}
+\Vect^{\Lambda\text{-}\mathrm{gr}}\simeq\QC(BT^{\vee}).
+\end{equation}
+Pontrjagin 对偶告诉我们：$G$紧致对偶于$G^{\vee}$离散。现在$\Z$的离散性体现在$\Vect^{\Z\text{-}\mathrm{gr}}$的半单性上。这等价于$G$约化。在特征$0$中，“约化”甚至可以被定义为要求
+\[
+\QC(\mathrm{pt}/G)=\Rep G\quad\text{半单}.
+\]
+% [Tutor Note: 这里“半单 $\Leftrightarrow$ 约化”的判据只在特征 0（更一般地，在约化群的表示完全可约的设定）下成立；正特征时$\Rep G$的半单性对应更强的条件（$G$的约化性不足以保证完全可约，例如$\mathrm{SL}_2$在特征 2 下的表示）。作者此处以特征 0 为前提，读者勿将其当作一般定理。]
+\end{srcex}
+
+\begin{srcex}{35}
+“纤维函子”这个名字就来源于此。设$X$是连通拓扑空间。由此我们将构造一个带纤维函子的$\otimes$-范畴。该范畴是$\Loc(X)$，即$X$上\term{局部系统}{local system}的范畴。它有点式张量给出的张量结构。现在取基点$x\in X$，这给出函子
+\begin{equation}\tag{8.39}
+F_x\colon\Loc(X)\xrightarrow{\ \text{在 }x\text{ 处取纤维}\ }\Vect_k.
+\end{equation}
+我们定义张量积的方式使它成为张量函子。$X$（合宜且）连通意味着$F_x$忠实（即若一个局部系统在$x$处为$0$，则它处处为$0$）。
+
+这告诉我们得到 Tannakian 群$G$，使得$\Loc(X)=\Rep(G)$。$G$本质上就是以$x$为基点的基本群$\pi_1(X,x)$。其想法是：$\pi_1$在$k$-向量空间上的表示，与$X$上的$k$-局部系统是同一回事，只要把局部系统送到它的单值化。形式陈述是
+\begin{equation}\tag{8.40}
+G=\pi_1^{\mathrm{pro}\text{-}\mathrm{alg}}(X,x),
+\end{equation}
+即只通过研究有限维表示所能看到的$\pi_1$的那一部分。
+\end{srcex}
+
+% ---------------------------------------------------------------- 原文 p.100
+\begin{srcex}{36}
+设$\cC=\Vect_k$，其中$k\neq\bar k$。则我们可以与$\bar k$作张量，得到函子
+\begin{equation}\tag{8.41}
+\Vect_k\xrightarrow{\ (-)\otimes_k\bar k\ }\Vect_{\bar k}.
+\end{equation}
+这是纤维函子，并且
+\begin{equation}\tag{8.42}
+\Vect_k\simeq\Rep\bigl(\Gal_{\bar k/k}\bigr).
+\end{equation}
+\end{srcex}
+
+% ================================================================
+\section{Fourier--Mukai 理论}\label{sec:8.2}
+\begin{sectionkey}
+把 Tannakian 机器用在“范畴化的群代数”$\Shv(G)$（以卷积为乘法）上，就得到 1-移位的 Cartier/Fourier--Mukai 对偶$G^{\vee}[1]$。对$\Z$它给出$B\GG_m$，对 Abel 簇它给出 Mukai 的导出等价$\QC(A)\simeq\QC(A^{\vee}[1])$；de Rham 化之后，Jac 的自对偶升级为 Betti 与 de Rham 两种几何 CFT。
+\end{sectionkey}
+
+我们下一批例子来自“Fourier--Mukai”理论。我们将沿用 Pontrjagin 对偶的同一逻辑。要点是：交换环的一个好来源是 Abel 群的群代数。同样地，对特定的张量范畴我们可以玩 Tannakian 游戏。设$G$交换，乘法为$\mu\colon G\times G\to G$。那么我们总可以推前层，于是得到函子
+\begin{equation}\tag{8.43}
+\Shv(G)\times\Shv(G)\xrightarrow{\ \mu_{*}\ }\Shv(G).
+\end{equation}
+它把层$\cF$与$\cG$送到\term{卷积}{convolution}积$\cF*\cG$。这个运算对任何群都有意义，但当$G$交换时它使$\Shv(G)$成为$\otimes$-范畴（即卷积交换）。
+
+\begin{srcrem}{34}
+我们有意对$\Shv$的含义含糊其辞。例如在拓扑中可取局部系统，在代数几何中可取$\QC$，等等；但在任何设定下这仍是$\otimes$-范畴。
+\end{srcrem}
+
+我们可以定义$G$的\term{1-移位 Cartier/Fourier--Mukai 对偶}{1-shifted Cartier/Fourier--Mukai dual}为
+\begin{equation}\tag{8.44}
+G^{\vee}[1]:=\Spec(\Shv(G),*).
+\end{equation}
+现在我们处于更像“Fourier 变换”的境地：从$G$出发，过渡到$\Shv(G)$——某种范畴化的群代数——再借 Tannakian 机器得到新的空间/群。
+
+\begin{srcex}{37}
+设$G=\Z$。则$\Shv(\Z)=\Vect^{\Z\text{-}\mathrm{gr}}$，而卷积运算就是分次向量空间的张量积：
+\begin{equation}\tag{8.45}
+(M\otimes N)_n=\bigoplus_i M_i\otimes N_{n-i}.
+\end{equation}
+于是
+\begin{equation}\tag{8.46}
+\Spec(\Shv(\Z),*)=B\GG_m=\Z^{\vee}[1].
+\end{equation}
+回忆通常的对偶是$\Z^{\vee}\simeq\GG_m$。
+\end{srcex}
+
+\begin{flushright}\small 第 15 讲；2021 年 3 月 23 日\end{flushright}
+
+\subsection{Cartier}
+\begin{sectionkey}
+在 Cartier 对偶成立的设定中，$G^{\vee}=\Spec(\C G,*)$；范畴化后，$\QC(G^{\vee})\simeq\QC(BG)$，于是$G$与“其通常 Cartier 对偶的$B$”互换，这正是“1-移位 Cartier 对偶”名称的由来。
+\end{sectionkey}
+
+考虑 Cartier 对偶成立的设定，例如$G$是有限群概形。回忆 3.6 节：$G$的 Cartier 对偶是
+\begin{equation}\tag{8.47}
+G^{\vee}=\Spec(\C G,*).
+\end{equation}
+要点是：以$*$为乘法的$G$上的函数，与以$\cdot$为乘法的$G^{\vee}$上的函数等同。过渡到模，我们得到
+\begin{equation}\tag{8.48}
+\Rep(G)\simeq\QC(G^{\vee}).
+\end{equation}
+但我们也可把$\Rep(G)$理解为分类空间上的层：
+\begin{equation}\tag{8.49}
+\Rep(G)\simeq\QC(BG).
+\end{equation}
+若我们真的想要层的等价（就像我们有函数的等价那样），那么得到：结论是我们得到层的等价
+\begin{equation}\tag{8.50}
+\QC(G^{\vee})\simeq\QC(BG),
+\end{equation}
+所以这个 Fourier--Mukai 对偶把$G$与“其通常 Cartier 对偶的$B$”互换；这就是我们把 Fourier--Mukai 对偶称为 1-移位 Cartier 对偶的原因。这正是例 37 中所见：$\Z$与$B\GG_m$互换。
+
+让我们更有条理地说明这一点。我们想更好地理解$G^{\vee}[1]$。它的$k$-点是$\otimes$-函子，从$G$上的层（带卷积）到$k$-向量空间：
+\begin{equation}\tag{8.51}
+(\QC(G),*)\to(\Vect_k,\otimes).
+\end{equation}
+现在我们要看这告诉了我们关于群本身的什么。我们把$\Vect_k$看成
+\begin{equation}\tag{8.52}
+\Vect_k=\End(\Vect_k).
+\end{equation}
+其想法是：映射 (8.51) 是$(\QC(G),*)$的“范畴化一维表示”，类比于一维表示$G\to\mathrm{GL}(k)\simeq k^{\times}$，或等价地
+\begin{equation}\tag{8.53}
+\C G\to\End(k)\simeq k.
+\end{equation}
+所以一个$k$-点是
+\begin{equation}\tag{8.54}
+\QC(G)\to\End(\Vect_k),
+\end{equation}
+而我们可以把它限制到可逆元$G$上，得到映射
+\begin{equation}\tag{8.55}
+G\to\Aut(\Vect_k).
+\end{equation}
+注意这些自同构正是“与线作张量”给出的：
+\begin{equation}\tag{8.56}
+\Aut(\Vect_k)=(\text{线},\otimes)=B\GG_m.
+\end{equation}
+$B\GG_m$是栈世界中的群对象，即作为函子它取值于 Picard 群胚（对象可逆的对称幺半群胚）。它的$R$-点由下式给出：
+\begin{equation}\tag{8.57}
+B\GG_m(R)=(R\text{-线},\otimes).
+\end{equation}
+
+% ---------------------------------------------------------------- 原文 p.102
+上述讨论的结论是：$G^{\vee}[1]$的$k$-点相当于映射
+\begin{equation}\tag{8.58}
+G\to B\GG_m.
+\end{equation}
+回忆$B\GG_m$在例 37 中作为$\Z$的 1-移位 Cartier 对偶出现；现在我们说$B\GG_m$一般地扮演重要角色。
+
+回忆$\Spec(\C G,*)$的点是$G$的特征：
+\begin{equation}\tag{8.59}
+G\to\GG_m=\Aut(k).
+\end{equation}
+断言是：同样的分析在上一层也成立，即$\Spec(\Shv(G),*)$的点是范畴特征/特征层：
+\begin{equation}\tag{8.60}
+G\to B\GG_m=(\text{线},\otimes).
+\end{equation}
+这与我们在 7.4 节讨论过的概念相同。其想法是：它把线$L_g$一致地附着到元素$g\in G$上，即这是$G$上的线丛$L$。这个映射实际上是同态，所以该线丛是乘性的；我们以前把它写成条件
+\begin{equation}\tag{8.61}
+\mu^{*}L\simeq L\boxtimes L.
+\end{equation}
+这只是把$L_{gh}=L_g\otimes L_h$以族的形式写出。于是断言是
+\begin{align}
+G^{\vee}[1]&\cong\Hom_{\mathrm{Grp}}(G,B\GG_m)\tag{8.62}\\
+&=\text{乘性线丛}.\tag{8.63}
+\end{align}
+而乘性线丛由到$\GG_m$的$\mathrm{Ext}^1$给出：
+\begin{align}
+G^{\vee}[1]&=\mathrm{Ext}^{1}_{\mathrm{GrpAb}}(G,\GG_m)\tag{8.64}\\
+&=\text{$G$被$\GG_m$的扩张}.\tag{8.65}
+\end{align}
+
+\begin{srcrem}{35}
+通常的交换群概形与交换群栈生活在$\mathrm{Sch}^{\mathrm{Aff}}=\mathrm{Ring}^{\mathrm{op}}$上 Abel 群层的导出范畴中。Fourier--Mukai 对偶记号里的这个移位，字面上就是该导出范畴中的一次移位。
+\end{srcrem}
+
+\subsection{Fourier}
+\begin{sectionkey}
+在乘积$G\times G^{\vee}[1]$上存在万有线丛$\mathcal L$，由它可写出 Fourier--Mukai 变换$\cF\mapsto\pi_{2*}(\pi_1^{*}\cF\otimes\mathcal L)$，这是 3.2、3.4 节 Fourier 变换的层论类比。
+\end{sectionkey}
+
+有了这套设置，我们现在可以写出一个版本的 Fourier 变换。在乘积$G\times G^{\vee}[1]$上存在一个万有线丛$\mathcal L$，因为$G^{\vee}[1]$中的一个点指定了$G$上的一个线丛：
+% 注：原文此处有裁剪图 figures/inline/p102_d1.png（仅含中间对象与箭头，两端对象被裁掉）；为信息完整起见，本处按原版面以 LaTeX 重排该交换图。
+\begin{equation}\tag{8.66}
+\begin{array}{ccc}
+ & \mathcal L &\\[-4pt]
+ & \downarrow &\\[-6pt]
+ & G\times G^{\vee}[1] &\\[-2pt]
+ \pi_1\swarrow & & \searrow\pi_2\\[-2pt]
+ G & & G^{\vee}[1].
+\end{array}
+\end{equation}
+现在，对合宜的\footnote{见注 36。}$G$，我们可以写出 \term{Fourier--Mukai 变换}{Fourier--Mukai transform}：
+\begin{equation}\tag{8.67}
+\begin{array}{ccc}
+\QC(G) & \longrightarrow & \QC(G^{\vee}[1])\\
+\cF & \longmapsto & \pi_{2*}(\pi_1^{*}\cF\otimes\mathcal L).
+\end{array}
+\end{equation}
+这是 3.2 与 3.4 节 Fourier 变换的层论类比。
+
+\begin{srcrem}{36}（何谓“合宜的$G$”？）
+回忆 3.6 节：通常的 Cartier 对偶需要相当严格的条件，例如我们可能要求有限群概形（有限维$k$-代数的$\Spec$）才能真正奏效。而现在这个对偶在远为一般的设定中成立。这是因为层比函数稳健得多：层多得多，且行为好得多。
+\end{srcrem}
+
+\subsection{Mukai}
+\begin{sectionkey}
+Mukai 的原始例子取$G=A$为 Abel 簇：此时$A^{*}\simeq A^{\vee}[1]$，Fourier--Mukai 变换是导出范畴的等价$\mathcal D(A)\xrightarrow{\sim}\mathcal D(A^{*})$；由于纤维是环面（非仿射），必须把一切导出化。
+\end{sectionkey}
+
+Mukai 引入的原始例子取$G=A$为\term{Abel 簇}{abelian variety}，即紧连通射影代数群，例如椭圆曲线（带代数结构的紧复环面）。例如我们可以取 Riemann 面的 Jacobian$\mathrm{Jac}(C)$。对偶 Abel 簇记作$A^{*}$，是对偶的紧环面。结果是
+\begin{equation}\tag{8.68}
+A^{*}\simeq A^{\vee}[1],
+\end{equation}
+即$A^{*}$是$A$上乘性线丛的汇集。这意味着我们有一个 Fourier--Mukai 变换，它是导出范畴的等价
+\begin{equation}\tag{8.69}
+\mathcal D(A)\xrightarrow{\ \sim\ }\mathcal D(A^{*}),
+\end{equation}
+但从现在起我们就把$\QC$写成拟凝聚层的导出范畴。基本问题在于：公式 (8.67) 中的推前不是正合函子，因为纤维是环面，不是仿射的。所以若$G$非仿射，公式 (8.67) 不能天真地写，但把一切导出化就能修正。
+于是得到等价
+\begin{equation}\tag{8.70}
+\QC(A)\xrightarrow{\ \sim\ }\QC(A^{\vee}[1]).
+\end{equation}
+所以这比低一层的情形稳健得多。我们不需要有限、不需要仿射、不需要任何东西。这对我们将遇到的一切都成立。Laumon 有一篇很好的文章 [Lau91]，从这一观点在很大的一般性下算出了大量例子。
+
+\begin{srcrem}{37}
+注意我们只是在说 Fourier--Mukai 变换是某一类特殊的积分变换。文献中有些地方把“Fourier--Mukai 变换”用来指任意积分变换。问题在于：导出范畴上所有合理的函子都可以表示成积分变换，所以把它们都叫作 Fourier--Mukai 就没有意义了。我们只用 Fourier--Mukai 变换指如上所述的变换，特别地它应像通常的 Fourier 变换那样把乘法与卷积互换。
+\end{srcrem}
+
+\begin{srcrem}{38}（谱分解）
+对$(\cC,*)$作用在$\mathcal M$上，我们得到$\QC(\Spec\cC)$的模范畴
+\begin{equation}\tag{8.71}
+\QC(\Spec\cC).
+\end{equation}
+这给出$\Spec\cC$上的范畴层。由 Gaitsgory 的 1-仿射性，这实际上是$\QC(\Spec\cC)$上的模与$\Spec\cC$上的范畴层之间的等价。
+\end{srcrem}
+
+% ---------------------------------------------------------------- 原文 p.104
+\begin{srcex}{38}
+设$C$是 Riemann 面。Riemann、Abel 与 Jacobi 证明了$\mathrm{Jac}$是自对偶的：
+\begin{equation}\tag{8.72}
+\mathrm{Jac}(C)\simeq(\mathrm{Jac}(C))^{*}.
+\end{equation}
+这是$H_1$与$H^1$之间 Poincar\'e 对偶的一个版本。
+
+我们用$\mathrm{Pic}(C)$记$C$上线丛的栈，即
+\begin{equation}\tag{8.73}
+\mathrm{Pic}(C)=|\mathrm{Pic}(C)|\times B\GG_m,
+\end{equation}
+其中$|\mathrm{Pic}(C)|$是通常的 Picard 概形。可以把$\mathrm{Pic}(C)$描述为三部分：次数、次数$0$的线丛、以及自同构：
+\begin{equation}\tag{8.74}
+\mathrm{Pic}\,C\cong\Z\times\mathrm{Jac}\times B\GG_m.
+\end{equation}
+取对偶得到
+\begin{equation}\tag{8.75}
+(\mathrm{Pic}(C))^{*}=\mathrm{Pic}(C)^{\vee}[1]\simeq B\GG_m\times\mathrm{Jac}\times\Z,
+\end{equation}
+即$\mathrm{Pic}$像$\mathrm{Jac}$一样自对偶，但以一种更有趣的方式：自同构与次数互换。于是$\mathrm{Pic}\,C$上的层与它自身之间有 Fourier--Mukai 变换，其中不同的次数对应这个稳定化子$\GG_m$的不同作用。
+这个例子与类域论有关。讨论在 8.2.4 节继续。
+\end{srcex}
+
+\subsection{Betti CFT}
+\begin{sectionkey}
+Betti 几何类域论研究$\mathrm{Pic}$的拓扑：带卷积的局部系统范畴$(\Loc(\mathrm{Pic}),*)$的谱是秩$1$局部系统的栈$\Loc_1 C$，于是$(\Loc(\mathrm{Pic}),*)\simeq(\QC(\Loc_1 C),\otimes)$；这是$\mathrm{Pic}$的 1-移位 Cartier 对偶。
+\end{sectionkey}
+
+上一个例子与类域论有关。到目前为止（例如第 7 章），我们讨论的是可称为 \term{Betti 类域论}{Betti class field theory}（CFT）的东西。我们研究作为交换群的$\mathrm{Pic}$，并附着以带卷积的局部系统范畴
+\begin{equation}\tag{8.76}
+(\Loc(\mathrm{Pic}),*),
+\end{equation}
+它是$\otimes$-范畴。取$\Spec$得到
+\begin{equation}\tag{8.77}
+\Spec(\Loc(\mathrm{Pic}),*)\simeq\Loc_1 C,
+\end{equation}
+即$C$上秩$1$局部系统的栈。\footnote{原文此处右侧有橙色批注框：“From here on, Loc denotes the category and $\underline{\mathrm{Loc}}$ denotes the stack. Need to fix earlier.”（“从这里起，Loc 表示范畴，Loc 表示栈。需要修正前面。”）按：本译本以$\Loc$记范畴、以$\underline{\Loc}$记相应的栈，与原文正文一致。}
+
+也许更有启发性地说，这是在说
+\begin{equation}\tag{8.78}
+(\Loc(\mathrm{Pic}),*)\simeq(\QC(\Loc_1 C),\otimes).
+\end{equation}
+我们没有陈述过这一点，但在第 7 章我们陈述过：给定局部系统$L$，它对应一个特征局部系统$\chi_L$。这延拓为 Fourier--Mukai 变换，即上面的等价。所以我们可以把这理解为：$\mathrm{Pic}$的 1-移位 Cartier 对偶是$\Loc$。
+
+我们可以更富启发性地写出如下。在$\mathrm{Pic}\times\Loc_1$上存在万有特征局部系统$\chi$：
+% 注：原文此处有裁剪图 figures/inline/p104_d2.png（仅含中间对象与箭头）；本处按原版面以 LaTeX 重排该交换图。另，同页的橙色批注框 p104_d1.png 已译入脚注。
+\begin{equation}\tag{8.79}
+\begin{array}{ccc}
+ & \chi &\\[-4pt]
+ & \downarrow &\\[-6pt]
+ & \mathrm{Pic}\times\Loc_1 &\\[-2pt]
+ \swarrow & & \searrow\\[-2pt]
+ \mathrm{Pic} & & \Loc_1.
+\end{array}
+\end{equation}
+
+% ---------------------------------------------------------------- 原文 p.105
+这意味着$\chi$在$\mathrm{Pic}$“方向”上是局部系统，而在$\Loc_1$方向上是拟凝聚层。
+
+\begin{srcrem}{39}
+这就是 Betti 图景不如 de Rham 图景对称的意义所在。在 Betti 世界，我们把$\mathrm{Pic}$当作纯拓扑对象，而把$\Loc_1$当作代数几何对象。在 de Rham 版本中，两侧会对称得多，但两侧也都更复杂。
+\end{srcrem}
+
+无论如何，由同样的积分变换形式，我们得到等同
+\begin{equation}\tag{8.80}
+\Loc(\mathrm{Pic})\simeq\QC(\Loc_1),
+\end{equation}
+其特点之一如下。对$x\in C$，由该点的倍数得到同态$\Z\to\mathrm{Pic}$。相应地另一侧有同态$\Loc_1 C\to B\GG_m$，由$L\mapsto L|_x$给出。所以上述等同的实现方式使“从$\Z$出发的映射”对偶于“到$B\GG_m$的映射”。更一般地，我们可以用$\Z x$作用在局部系统上，即对线丛$L$作 Hecke 修正$L\mapsto L(x)$。在对偶下它们等同于与$\Loc_1$上的线丛$W_x$作张量。这个线丛正是映射$W_x\colon\Loc_1\to B\GG_m$，因为到$B\GG_m$的映射等同于源上的线丛。
+% [Tutor Note: 这里把“次数”与“自同构”互换的做法（(8.75)）是理解本段的关键：$\mathrm{Pic}$上的 Hecke 修正（改变次数，即乘以$\Z x$）在对偶侧变成与$W_x$作张量（改变$\GG_m$-稳定化子的作用），二者互为 Fourier--Mukai 对应。核对符号时注意$W_x$是到分类栈$B\GG_m$的映射而非函数。]
+
+\subsection{de Rham CFT}
+\begin{sectionkey}
+用 de Rham 空间$X_{dR}=X/\widehat\Delta$把平坦联络纳入几何：$\QC(X_{dR})=\mathcal D_X$-mod。对向量空间得到优美的自对偶$V^{\vee}_{dR}[1]\simeq V^{*}_{dR}$，从而$\mathcal D(V)\simeq\mathcal D(V^{*})$；对 Abel 簇则给出$\mathcal D_{\mathrm{Jac}}$-mod$\simeq\QC(\mathrm{Conn}^{\flat}_1(C))$。
+\end{sectionkey}
+
+现在我们将基于 Laumon [Lau91] 与 Rothstein [Rot96] 对 1-移位 Cartier 对偶玩一些漂亮的技巧。想法是：从$\mathrm{Jac}$的这个自对偶出发，搭建出看起来像类域论的东西。
+
+\subsection*{de Rham 空间}
+为此我们需要找到新的 Abel 簇，办法是引入所谓的 de Rham 空间/函子。对簇$X$（或概形、栈等等），有伴随的对象$X_{dR}$，称为\term{de Rham 空间}{de Rham space}。可以把它想成$X$按“无穷小接近”这一等价关系取的商。更形式地，
+\begin{equation}\tag{8.81}
+X_{dR}=X/\widehat\Delta,
+\end{equation}
+其中$\widehat\Delta$是对角的形式邻域。它不能表示为概形，但作为点函子仍有意义，即我们至少可以在它上面做代数几何。不过对我们而言，它其实只是 D-模的替身，理由如下。由于它是代数几何的对象，我们可以考虑它上面的层，即$X$上对这一等价关系等变的层：
+\begin{equation}\tag{8.82}
+\QC(X_{dR})=\QC(X)^{\widehat\Delta}.
+\end{equation}
+换言之，它的对象是$\cF\in\QC(X)$，以及对所有无穷小接近的$x,y$给出的等同
+\begin{equation}\tag{8.83}
+\cF_x\xrightarrow{\ \sim\ }\cF_y.
+\end{equation}
+这令人想起平坦联络：它恰好给出这类数据。所以这是“带平坦联络的$X$上的层”的一个版本。结果它等同于$X$上 D-模的范畴：
+\begin{equation}\tag{8.84}
+\QC(X_{dR})=\mathcal D_X\text{-mod}.
+\end{equation}
+
+% ---------------------------------------------------------------- 原文 p.106
+$\mathcal D_X$-mod是$\QC(X)$中带环作用的拟凝聚层$\cF$的范畴：
+\begin{equation}\tag{8.85}
+\mathcal D(U)\circlearrowleft\cF(U),
+\end{equation}
+对仿射开集$U$。这只是在说我们有一个映射
+\begin{equation}\tag{8.86}
+T_X\to\End(\cF),
+\end{equation}
+满足 Leibniz 法则：对任意两个向量场$\xi_1$与$\xi_2$，$[\xi_1,\xi_2]$以$\xi_1$与$\xi_2$的交换子作用（平坦性），并且它们满足
+\begin{equation}\tag{8.87}
+\xi f=f\xi+f^{\prime}.
+\end{equation}
+换言之，$\cF$是带平坦联络的拟凝聚层：
+\begin{equation}\tag{8.88}
+\nabla\colon\cF\to\cF\otimes\Omega^{1},
+\end{equation}
+其中$\nabla^{2}=0$。
+
+\subsection*{回到 Fourier--Mukai 理论}
+设$G$是 Abel 群。则$G_{dR}$可写成商
+\begin{equation}\tag{8.89}
+G_{dR}=G/\widehat G,
+\end{equation}
+其中$\widehat G$是$G$的\term{形式群}{formal group}，即单位元的形式邻域。这是说：在群的情形，$x$无穷小接近$y$当且仅当$xy^{-1}\in\widehat G$，即$xy^{-1}$无穷小接近单位元。这使我们能给 3.6 节所有喜爱的 Cartier 对偶例子加一点“风味”（de Rham 风味）。
+
+回忆例 19：$\bA^{1}$的 Cartier 对偶由$\bA^{1}$的形式完备化给出：
+\begin{equation}\tag{8.90}
+(\bA^{1})^{\vee}=\widehat{\bA^{1}},
+\end{equation}
+更一般地
+\begin{equation}\tag{8.91}
+V^{\vee}=\widehat{(V^{*})}.
+\end{equation}
+这意味着 Fourier--Mukai 对偶是
+\begin{equation}\tag{8.92}
+V^{\vee}[1]=B\widehat{(V^{*})}.
+\end{equation}
+同样地
+\begin{equation}\tag{8.93}
+\widehat{V}^{\vee}[1]=BV^{*}.
+\end{equation}
+当我们玩下面这个技巧时事情就有趣了。设$V$是某个向量空间。$V$是 Abel 群，所以$V_{dR}$是商
+\begin{equation}\tag{8.94}
+V_{dR}=V/\widehat V,
+\end{equation}
+或者我们可以把它想成链复形
+\begin{equation}\tag{8.95}
+V_{dR}=\big[\widehat V\to V\big].
+\end{equation}
+
+% ---------------------------------------------------------------- 原文 p.107
+于是我们得到美妙的自对偶：
+\begin{align}
+V^{\vee}_{dR}[1]&=\big[\widehat V\to V\big]^{\vee}[1]\tag{8.96}\\
+&=\big[\widehat{V^{*}}\to V^{*}\big]\tag{8.97}\\
+&=V^{*}_{dR}.\tag{8.98}
+\end{align}
+换一种写法：
+\begin{equation}\tag{8.99}
+\bigl(V/\widehat V\bigr)^{\vee}[1]=V^{*}/\widehat{V^{*}}.
+\end{equation}
+这告诉我们$V$与$V^{*}$上的 D-模被等同：
+\begin{equation}\tag{8.100}
+\mathcal D(V)\simeq\mathcal D(V^{*}).
+\end{equation}
+% [Tutor Note: (8.96)–(8.98) 的对偶计算用到了“对偶把复形反向并移位”的约定：$\widehat V\to V$的导出对偶是$V^{*}\to\widehat{V^{*}}$，再加上$[1]$恰好把它移回正向。若采用相反的同调/上同调约定，中间一步的$[1]$位置会移动；这是核对此处符号时最易出错之处。]
+
+\begin{srcex}{39}
+例如
+\begin{equation}\tag{8.101}
+\mathcal D_{\bA^{1}}=\C\langle x,\partial_x\rangle/(\partial_x x-x\partial_x=1),
+\end{equation}
+而另一方面
+\begin{equation}\tag{8.102}
+\mathcal D_{\bA^{1*}}=\C\langle y,\partial_y\rangle/(\partial_y y-y\partial_y=1).
+\end{equation}
+但$\mathcal D_{\bA^{1}}$有一个有趣的自同构：
+\begin{equation}\tag{8.103}
+x\longmapsto\partial_x,\qquad \partial_x\longmapsto -x,
+\end{equation}
+这恰是 Fourier 变换下发生的事。这个自同构给出模范畴之间的等价
+\begin{equation}\tag{8.104}
+\mathbb F\colon\mathcal D_{\bA^{1}}\text{-mod}\to\mathcal D_{\bA^{1}}\text{-mod},
+\end{equation}
+称为\term{Fourier 变换}{Fourier transform}，它在对象上作为向量空间是恒等，但通过交换（带符号地）$x$与$\partial_x$的作用来改变作用。
+
+一般地我们得到 Fourier 变换
+\begin{equation}\tag{8.105}
+\mathcal D_V\text{-mod}\simeq\mathcal D_{V^{*}}\text{-mod}.
+\end{equation}
+\end{srcex}
+
+\begin{srcex}{40}（与$\R$上通常 Fourier 变换的关系）
+设$\varphi$是广义函数，它给出$\bA^{1}$的一个模$M_{\varphi}\in\mathcal D_{\bA^{1}}$-mod，即
+\begin{equation}\tag{8.106}
+\mathcal D_{\bA^{1}}\text{-mod}=\{L\varphi\mid L\in\mathcal D_{\bA^{1}}\}\subset\R\ \text{上的广义函数}.
+\end{equation}
+断言是
+\begin{equation}\tag{8.107}
+\mathbb F(M_{\varphi})=M_{\mathbb F(\varphi)}.
+\end{equation}
+所以这确实是向量空间通常的 Fourier 变换。
+\end{srcex}
+% [Tutor Note: (8.106) 原文写作“$\mathcal D_{\bA^1}$-mod $=\{L\varphi\mid L\in\mathcal D_{\bA^1}\}$”，左右两端并不真正相等（左边是整个模范畴），应理解为“$M_\varphi$是由$\varphi$生成的循环模，即$\mathcal D_{\bA^1}\varphi$”。此外原文“for $\bA_{\bA^1}$”亦为笔误，应为“for the Weyl algebra $\mathcal D_{\bA^1}$”。此处照译并加注。]
+
+% ---------------------------------------------------------------- 原文 p.108
+Laumon 与 Rothstein [Lau91, Rot96] 指出，在任何 Abel 簇上都可以做同样的事，特别地可在$\mathrm{Jac}(C)$上做。于是令$A=\mathrm{Jac}(C)$。则如通常那样$A_{dR}=A/\widehat A$，而断言是
+\begin{equation}\tag{8.108}
+A^{\vee}_{dR}[1]\simeq\mathrm{Conn}_{1}(C),
+\end{equation}
+即$C$上秩$1$平坦联络的空间。事实上，我们已看到的内容足以说明
+\begin{equation}\tag{8.109}
+A_{dR}=\bigl(\mathrm{Jac}/\widehat{\bA^{1}}\bigr),
+\end{equation}
+所以其对偶是$\mathrm{Jac}$上的$\bA^{1}$-丛，这正是$\mathrm{Conn}_{1}(C)$。于是从 Jacobian 的自对偶出发，形式地应用这个 Cartier 对偶，就得到陈述$A^{\vee}_{dR}[1]\simeq\mathrm{Conn}_{1}(C)$，它看起来与 Betti 设定中的非常相似。这意味着（取$\QC$之后）有
+\begin{equation}\tag{8.110}
+\mathcal D_{\mathrm{Jac}}\text{-mod}\simeq\QC(\mathrm{Conn}_{1}(C)),
+\end{equation}
+其中同样地左端有某个$\chi_L$对应于右端任意$L$。这就是 de Rham 几何 CFT。
+% [Tutor Note: (8.109) 原文把$\mathrm{Jac}$按形式群取商，但严格地说$\mathrm{Jac}$在单位元处的形式群是$(\widehat{\bA^1})^{g}$（$g$为亏格），原文记号从简。此处照译，读者应按$A_{dR}=A/\widehat A$理解。]
+
+\begin{flushright}\small 第 16 讲；2021 年 3 月 25 日\end{flushright}
+
+% ================================================================
+\section{Betti 与 de Rham 的过渡}\label{sec:8.3}
+\begin{sectionkey}
+A-模型研究拓扑而 B-模型研究代数几何。余维 1 的缺陷附着以场空间上的函数，A-侧需在 Betti、de Rham、辛三种“局部常值”概念中作选择；余维 2 则附着以层范畴，A-侧需在局部常值层、平坦向量丛、Fukaya 范畴之间作选择。Betti 与 de Rham 的区别正是“改变层论”。
+\end{sectionkey}
+
+回忆我们的总体范型是两类场论（或两类“计算”）之间的对偶。一侧称为 \term{A-模型}{A-model}，研究拓扑；另一侧称为 \term{B-模型}{B-model}，研究代数几何。
+
+要把它精确化涉及许多选择，而这些选择在 A-侧与 B-侧表现得非常不同。对余维$1$的东西我们附着以场空间上的函数。在 B-侧这些将是代数函数，所以我们需要选择如何把场空间看成代数簇（或代数几何世界中的其他东西）。在 A-侧我们处理的是局部常值函数，所以需要选择某种方式把“局部常值函数”形式化。我们可以用三种方式形式化这一概念：
+
+\begin{enumerate}
+\item Betti：沿道路常值的函数。过渡到导出版本就得到$H^{*}_{B}$，即通常的拓扑上同调。
+\item de Rham：导数为零的函数。过渡到导出版本就得到$H^{*}_{dR}$，即通常的 de Rham 上同调。这等价于相伴 de Rham 空间上的函数。
+\item 辛：与其研究$X$的拓扑，我们可以研究$T^{*}X$的辛拓扑（Floer 理论等）。
+\end{enumerate}
+
+要点是：在 A-侧我们不需要选择场空间上的结构，但确实需要选择所考虑函数的类型。在 B-侧我们确实需要选择场空间上的结构，但函数的概念没有歧义。
+
+在余维$2$，我们附着以场空间上的某个层范畴。同样地，在 B-侧我们需要把场空间看成代数簇。所以这又是一个选择，但所考虑的层概念没有歧义\footnote{还有$\IndCoh$，但它其实只是$\QC$的一个版本，在其中我们更小心地处理空间的奇点。}：我们只取场空间的$\QC$。在 A-侧我们不需要选择场空间上的任何结构，但确实需要指定所考虑的层论类型。同样地，A-侧上的层论有三个版本：
+
+\begin{enumerate}
+\item[3.] 辛：$T^{*}X$的 Fukaya 范畴的某个版本。
+\item[1.] Betti：局部常值有限秩层，即局部看起来像$U\times\C^{r}$。这说明我们可以沿道路作平行移动。
+\item[2.] de Rham：平坦向量丛，即局部有$V\simeq U\times\C^{r}$并带 de Rham 联络。也就是说，Betti 情形我们看常值截面，而现在我们看带 de Rham 微分的截面。平坦性是“导数为$0$”的一种说法，即对“无穷小接近”这一等价关系等变。
+\end{enumerate}
+
+局部常值有限秩层与平坦向量丛之间有对应：对平坦向量丛可以附着以单值化。这是 \term{Riemann--Hilbert 对应}{Riemann--Hilbert correspondence} 的平凡情形。
+我们把有限维局部系统的范畴与平坦联络的范畴分别写作
+\begin{equation}\tag{8.111}
+\Loc^{\mathrm{fd}}(X)\simeq\mathrm{Conn}^{\flat}(X).
+\end{equation}
+这里一个要点是：这两个层概念各自坐落在非常不同的更大范畴中。在 de Rham 侧它坐落在
+\begin{equation}\tag{8.112}
+\mathrm{Conn}^{\flat}(X)\subset\mathcal D_X\text{-mod}=\QC(X_{dR}),
+\end{equation}
+我们回忆后者是$X$上带平坦联络的拟凝聚层范畴，这是一种要求导数消失的方式。在 Betti 侧它坐落在
+\begin{equation}\tag{8.113}
+\Loc^{\mathrm{fd}}(X)\hookrightarrow\Loc(X)=\Rep(\pi_1(X)),
+\end{equation}
+即我们要求沿道路常值的东西。
+
+\begin{srcrem}{40}
+$\Loc$坐落在更大的可构造层范畴中，后者是带“奇点”的局部系统。
+\end{srcrem}
+
+\subsection{$\C^{\times}$的 Betti 与 de Rham}
+\subsection*{Betti 版本}
+\begin{sectionkey}
+对$X=\C^{\times}$，Betti A-侧是$\Loc(\C^{\times})=\Rep(\Z)\simeq\QC(\GG_m)$；小对象（秩 1 局部系统$L_\mu$）对应天穹层$O_\mu$，而大对象（如万有覆盖的推前）则不对应。
+\end{sectionkey}
+
+为展示$D$-mod与$\Loc$有多么不同，我们考虑最简单的例子：$X=\C^{\times}$。A-侧的 Betti 版本是
+\begin{align}
+\Loc\bigl(\C^{\times}\bigr)&=\Loc\bigl(S^{1}\bigr)\tag{8.114}\\
+&=\Loc(B\Z)\tag{8.115}\\
+&=\Rep(\Z).\tag{8.116}
+\end{align}
+注意我们没有加任何有限性条件。现在可以通过写
+\begin{align}
+\Rep(\Z)&=\C\Z\text{-mod}\tag{8.117}\\
+&=\C[z,z^{-1}]\text{-mod}\tag{8.118}\\
+&=\QC(\GG_m)\tag{8.119}
+\end{align}
+来做 Cartier 对偶。
+
+% ---------------------------------------------------------------- 原文 p.110
+我们写$\GG_m$是因为这其实是我们出发时的$\C^{\times}$的对偶环面，即这里真正出现的是$\Z$与$\GG_m$之间的 Cartier 对偶。所以 Betti A-侧是范畴$\Loc(\C^{\times})$，而 B-侧是范畴$\QC(\GG_m)$。现在我们可以写出一些基本对象：对任何$\mu\in\GG_m$得到天穹层$O_\mu\in\QC(\GG_m)$。它对应于单值化为$\mu$的秩一局部系统，记作$L_\mu\in\Loc(\C^{\times})$。这些是$\C^{\times}$上的特征层。所以这两个范畴的等价使得这些“小”对象相匹配：
+\begin{equation}\tag{8.120}
+\begin{array}{ccc}
+\Loc(\C^{\times}) & \simeq & \QC(\GG_m)\\
+\{L_\mu\} & & \{O_\mu\}.
+\end{array}
+\end{equation}
+也有一些非常不同的、“大”的对象。例如我们还可以考虑“万有覆盖”层。考虑万有覆盖
+\begin{equation}\tag{8.121}
+\C\xrightarrow{\ \exp\ }\C^{\times},
+\end{equation}
+并推前常值层，得到$\exp_{*}\C$，它是对应于另一侧$O_{\GG_m}$的自由秩$1$$\Z$-模：
+\begin{equation}\tag{8.122}
+\exp_{*}\C\leftrightarrow O_{\GG_m}.
+\end{equation}
+% [Tutor Note: 注意此处 Betti 与 de Rham 的对照点：Betti 侧允许无限秩对象（如$\exp_*\C$），而 de Rham 侧的 D-模都是“小”的、由有限数据生成；反之 de Rham 侧有支撑在点上的对象（如$\delta_1$），Betti 侧看不到。两类范畴只在“有限秩/天穹层”这一公共部分上一致，见 (8.131)。]
+
+\subsection{de Rham 版本}
+\begin{sectionkey}
+de Rham 故事是 Mellin 变换的版本：$\mathcal D_{\C^{\times}}$-mod$\simeq\Delta_{\C}$-mod$=\QC(\C/\Z)$，而 Betti 侧是$\Loc(\C^{\times})\simeq\QC(\C^{\times})$。二者只在有限秩局部系统与点处天穹层这一公共部分一致。
+\end{sectionkey}
+
+de Rham 故事是 \term{Mellin 变换}{Mellin transform} 的一个版本。经典的 Mellin 变换是群$\R_{+}$的 Fourier 变换。当然$\R_{+}$在$\exp$下同构于$\R$，所以可以把这看作以加法记号对$\R$作 Fourier 变换。于是对$\R_{+}$上的函数$f$，Mellin 变换是
+\begin{equation}\tag{8.123}
+\widehat f(s)=\int f(z)z^{s}\,\frac{dz}{z}.
+\end{equation}
+其想法是：对$s\in\C$，$z^{s}$是$\R_{+}$的特征；若写$z=e^{x}$，则$z^{s}=e^{sx}$，这是$\R$的 Fourier 变换中出现过的$\R$的特征。
+
+正如我们把 Fourier 变换改写成 D-模的语言，我们想对 Mellin 变换做同样的事。考虑$\C^{\times}$上的微分算子环
+\begin{equation}\tag{8.124}
+\mathcal D_{\C^{\times}}=\C\bigl\langle t,t^{-1},\partial\bigr\rangle/(\partial t=t\partial+t),
+\end{equation}
+其中可以把$\partial$想成$t\partial/\partial t$。我们可以换生成元，把它写成
+\begin{equation}\tag{8.125}
+\mathcal D_{\C^{\times}}\simeq\C\bigl\langle s,\sigma,\sigma^{-1}\bigr\rangle/(s\sigma=\sigma s+\sigma).
+\end{equation}
+可以把$\C\langle t,t^{-1},\partial\rangle$看成由$\C[t,t^{-1}]$（即$\C^{\times}$上的函数）添加微分$\partial$构成；可以把$\C\langle s,\sigma,\sigma^{-1}\rangle$看成由$\C[s]$（即$\C$上的函数）添加移位$\sigma$与$\sigma^{-1}$构成。所以在第二种情形我们研究的是$\Z$通过平移在$\C$上的作用。这些被称为$\C$上的\term{差分算子}{difference operator}。
+
+现在过渡到模：
+\begin{align}
+\mathcal D_{\C^{\times}}\text{-mod}&\simeq\Delta_{\C}\text{-mod}\tag{8.126}\\
+&=\QC(\C)^{\Z}\tag{8.127}\\
+&=\QC(\C/\Z),\tag{8.128}
+\end{align}
+
+% ---------------------------------------------------------------- 原文 p.111
+其中$\Delta_{\C}$-mod表示差分算子。总之，A-侧的 de Rham 版本纳入等价
+\begin{equation}\tag{8.129}
+\mathcal D_{\C^{\times}}\text{-mod}\simeq\QC(\C/\Z),
+\end{equation}
+对比之下 Betti 版本是等价
+\begin{equation}\tag{8.130}
+\Loc\C^{\times}\simeq\QC(\C^{\times}).
+\end{equation}
+在复分析中$\C/\Z$与$\C^{\times}$是同一个东西，但在代数几何中它们本性完全不同（因为指数映射不是代数的）。
+
+有一个公共部分，由有限秩局部系统与点处天穹层组成：
+\begin{equation}\tag{8.131}
+\begin{array}{ccc}
+\mathcal D_{\C^{\times}}\text{-mod} & \simeq & \QC(\C/\Z)\\
+\uparrow & & \uparrow\\
+\text{有限秩} & & \text{点}\\
+\downarrow & & \downarrow\\
+\Loc(\C^{\times}) & \simeq & \QC(\C^{\times}).
+\end{array}
+\end{equation}
+我们在 Betti 版本中见过这个对应，现在认定它的 de Rham 版本。对$\lambda\in\C^{\times}$，可以试着解微分方程$(t\partial-\lambda)f=0$。从 D-模的观点，这定义了
+\begin{equation}\tag{8.132}
+M_{\lambda}=\mathcal D_{\C^{\times}}/(t\partial-\lambda)\in\mathcal D_{\C^{\times}}\text{-mod}.
+\end{equation}
+$M_{\lambda}$是$\C^{\times}$上的平凡线丛，但它带有平坦联络
+\begin{equation}\tag{8.133}
+\nabla=d-\lambda\,\frac{dt}{t},
+\end{equation}
+其中$\partial=t\partial/\partial t$以$\lambda$作用。$t\partial/\partial t\,f=\lambda f$是说$f$是$\lambda$次齐次的，即$z^{\lambda}$是解这个方程的解析函数。
+
+所以对任何$\lambda$我们都有这个平坦联络，但结果对任何$n\in\Z$有$M_{\lambda}\simeq M_{\lambda+n}$。事实上，同构意义下$M_{\lambda}$只依赖于$\mu=\exp(\lambda)$，即单值化。对$[\lambda]\in\C/\Z$，或等价地对$\mu\in\C^{\times}$，我们以前有天穹层$O_{[\lambda]}$，现在它被等同于这个$M_{\lambda}$。结果是$M_{\lambda}\simeq L_\mu$（同前）。
+
+回忆 Betti 故事中我们有这个万有覆盖层。D-模世界中没有类似的东西。例如
+\begin{equation}\tag{8.134}
+O_{\C/\Z}=\C[s]\ \circlearrowleft\ \Z\ \text{通过平移},
+\end{equation}
+对应于$1\in\C^{\times}$处 delta 函数的 D-模
+\begin{equation}\tag{8.135}
+\C[\partial]\cdot\delta_1.
+\end{equation}
+这看起来一点也不像万有覆盖层。这只是为了说明：小片段（天穹层）在两个故事中是一致的，但大对象并不匹配。$\C^{\times}$上的 D-模有所有这些奇怪的、支撑在有限多个点上或带奇点的对象；另一方面，$\C^{\times}$上的局部系统可能有无限秩，但看不出两个点的区别，因为它们是局部常值的。
+
+这些只是这个对偶的两种风味。在 B-侧我们有$\C/\Z$对$\C^{\times}$，它们在解析上相同，但在代数上不同，所以我们改变了簇。在 A-侧我们改变层论，即这一改变对应于把$\C^{\times}$上的$\mathcal D$换成$\Loc$。
+
+% ================================================================
+\section{几何 CFT}\label{sec:8.4}
+\begin{sectionkey}
+在 A-侧底层空间始终是$\mathrm{Pic}(C)$，但有两种线性化方式：Betti 侧$\Loc(\mathrm{Pic})$与 de Rham 侧$\mathcal D_{\mathrm{Pic}}$-mod。前者给出$(\Loc(\mathrm{Pic}),*)\simeq(\QC(\Loc_1 C),\otimes)$，后者给出导出等价$\mathcal D_{\mathrm{Pic}}$-mod$\simeq\QC(\mathrm{Conn}^{\flat}_1(C))$。把 Jac 换成$T^{*}\mathrm{Jac}$并作形变量子化，就得到 Hitchin 系统的秩 1 自对偶。
+\end{sectionkey}
+
+主要陈述是：$C$上的 Abel 局部系统与$\mathrm{Jac}$上的局部系统相对应。或者更强的版本：$C$上秩一局部系统对应于$\mathrm{Pic}$上的特征局部系统。
+
+在 A-侧，底层空间始终是$\mathrm{Pic}(C)$。我们研究它的拓扑，所以这大致是$\Z\times\mathrm{Jac}$，还带一个我们忽略的$B\GG_m$因子。但我们有两种把它线性化的方式：
+\begin{equation}\tag{8.136}
+\Loc(\mathrm{Pic})\qquad\text{与}\qquad \mathcal D_{\mathrm{Pic}}\text{-mod}.
+\end{equation}
+Betti 侧是$\Loc(\mathrm{Pic})$，它由$\pi_1(\mathrm{Jac})$的$\Z$-分次表示组成：
+\begin{equation}\tag{8.137}
+\pi_1(\mathrm{Jac})=H_1(C,\Z)\simeq\Z^{2g}.
+\end{equation}
+
+\begin{srcrem}{41}
+这里有一个轻微的导出修正，来自$\mathrm{Pic}$中的$B\GG_m$因子，并不很有趣。
+\end{srcrem}
+
+现在做 de Rham 版本。由于$\mathrm{Jac}$不是仿射的，这一侧较难写下。$\mathcal D_{\mathrm{Pic}}$是$\QC(\mathrm{Pic})$连同向量场的作用。这是个 Abel 群，所以这等同于单位元处切空间的作用：
+\begin{equation}\tag{8.138}
+T_e\mathrm{Jac}=H^{1}(C,\cO).
+\end{equation}
+这些范畴看起来不同，但包含相同的基本对象。我们得到几何 CFT 的两个对应陈述，即两个 Fourier--Mukai 对偶。第一个是 Betti CFT：
+\begin{equation}\tag{8.139}
+\Loc(\mathrm{Pic})\simeq\QC(\Loc_1 C).
+\end{equation}
+$\QC(\Loc_1 C)$由$\C[\Loc_1]$的$\Rep(\GG_m)$-值模组成。
+\begin{equation}\tag{8.140}
+\Loc_1=\bigl\{\pi_1\to\C^{\times}\bigr\}=H^{1}(C,\Z)\otimes\C^{\times},
+\end{equation}
+所以其上的函数是
+\begin{equation}\tag{8.141}
+H_1(C,\Z)\otimes\C[z,z^{-1}].
+\end{equation}
+我们已经看到 A-侧有$H_1(X,\Z)$的表示，所以这些 Abel 范畴匹配。在$\QC(\Loc_1 C)$内部我们有$L$处的天穹层$O_L$，它们对应于特征层/几何特征$\chi_L$。
+
+de Rham CFT 看起来类似，但某种意义上困难得多。现在等价只是导出等价：
+\begin{equation}\tag{8.142}
+\mathcal D_{\mathrm{Pic}}\text{-mod}\simeq\QC\bigl(\mathrm{Conn}^{\flat}_1 C\bigr).
+\end{equation}
+$\mathrm{Conn}^{\flat}_1 C$不是仿射的，而$\mathcal D_{\mathrm{Pic}}$-mod不是整体生成的，所以我们不能像 Betti 情形那样把同构具体写成环的同构。
+% [Tutor Note: “不能写成环的同构”的障碍在于$\mathrm{Conn}^{\flat}_1 C\to\mathrm{Jac}$只是仿射丛而非仿射簇，因此两侧都不是仿射的；这正是 Betti 情形（$\Loc_1 C$为仿射簇）与 de Rham 情形的本质差别。作者在 (8.146)–(8.147) 之后用纤维维数$g$再次强调了这一点。]
+
+回忆$\mathrm{Jac}$自对偶，故有导出等价
+\begin{equation}\tag{8.143}
+(\QC(\mathrm{Jac}),*)\simeq(\QC(\mathrm{Jac}),\otimes).
+\end{equation}
+然后我们想把两侧分别增强：左边从$\QC$到 D-模，右边从$\mathrm{Jac}$（即线丛）到平坦线丛。幸运的是，这可以由抽象废话相当容易地做到。有一个忠实遗忘函子
+\begin{equation}\tag{8.144}
+\mathcal D_{\mathrm{Jac}}\text{-mod}\to\QC(\mathrm{Jac}),
+\end{equation}
+
+% ---------------------------------------------------------------- 原文 p.113
+因为 D-模是拟凝聚层，且对$d\mathrm{Jac}$等变，即对$\mathrm{Jac}$上向量场的作用等变。另一侧有遗忘函子
+\begin{equation}\tag{8.145}
+\QC\bigl(\mathrm{Jac}^{\flat}=\mathrm{Conn}^{\flat}_1\bigr)\to\QC(\mathrm{Jac}),
+\end{equation}
+我们只是忘掉联络，因为$\QC(\mathrm{Conn}^{\flat}_1)$的元素是$\mathrm{Jac}$上的拟凝聚层，并带纤维上函数的作用。所以我们只需检验：在这个等价下这两者被等同。
+
+于是我们有映射$\mathrm{Conn}^{\flat}_1 C\to\mathrm{Jac}$，其纤维为$\Gamma(\mathrm{Jac},\Omega^{1})$：
+% 注：原文此处有裁剪图 figures/inline/p113_d1.png（仅为遗忘函子箭头的一小段，无法独立成图）；本处按原版面以 LaTeX 重排该三角图。
+\begin{equation}\tag{8.146}
+\begin{array}{ccc}
+\Gamma(\mathrm{Jac},\Omega^{1}) & \longrightarrow & \mathrm{Conn}^{\flat}_1 C\\[2pt]
+& \downarrow{\scriptstyle\text{Forget}} &\\[2pt]
+& \mathrm{Jac}\simeq(S^{1})^{2g}, &
+\end{array}
+\end{equation}
+以及
+\begin{equation}\tag{8.147}
+\Gamma(\mathrm{Jac},\Omega^{1})=T^{*}_e\mathrm{Jac}\simeq H^{0}\bigl(C,\Omega^{1}\bigr),
+\end{equation}
+所以这是纤维维数为$g$（$C$的亏格）的仿射丛。这与$\Loc_1(C)\simeq(\C^{\times})^{g}$看起来非常不同。这里$\mathrm{Conn}^{\flat}_1$是$\mathrm{Jac}\simeq(S^{1})^{2g}$上的仿射丛，纤维看起来像$\C^{g}$，即环面上的仿射丛；而$\Loc_1(C)\simeq(\C^{\times})^{g}$是仿射簇。
+% [Tutor Note: 注意$\mathrm{Conn}^{\flat}_1 C$与$\Loc_1(C)$虽然作为实流形都同胚于$(S^1)^{2g}\times$纤维，但前者是$\C^g$上的仿射丛（复结构、代数几何对象），后者是$(\C^\times)^g$（仿射簇）。作者借此说明 de Rham 与 Betti 两侧的几何性质相反。]
+
+\begin{srcrem}{42}
+Betti 故事在某些方面更初等，例如它是 Abel 等价，但你会失去 de Rham 故事中的美妙之处：两侧都处于代数几何的世界。
+\end{srcrem}
+
+再次回忆$\mathrm{Jac}$自对偶，故有导出等价
+\begin{equation}\tag{8.148}
+(\QC(\mathrm{Jac}),*)\simeq(\QC(\mathrm{Jac}),\otimes).
+\end{equation}
+我们可以通过从$\mathrm{Jac}$过渡到
+\begin{equation}\tag{8.149}
+T^{*}\mathrm{Jac}=\mathrm{Jac}\times H^{0}(C,\Omega)
+\end{equation}
+来增强它。称
+\begin{equation}\tag{8.150}
+H^{0}(C,\Omega)=\mathrm{Hitch}_1
+\end{equation}
+为秩$1$ Hitchin 空间。这给出所谓的 \term{Hitchin 系统的自对偶}{self-duality of the Hitchin system}（秩$1$情形）：
+\begin{equation}\tag{8.151}
+\QC(T^{*}\mathrm{Jac})\simeq\QC(T^{*}\mathrm{Jac}).
+\end{equation}
+从此出发，我们可以用保持对偶的方式形变两侧。在左边，我们将作形变量子化。有一个从$T^{*}X$上的函数到$X$上微分算子的自然形变：
+\begin{equation}\tag{8.152}
+\begin{array}{rcl}
+\hbar=0 & & \cO(T^{*}X)=\C[x_i,\xi_i]\\[2pt]
+& \downarrow &\\[2pt]
+\hbar=1 & & \mathcal D_X=\C\langle x_i,\partial_{x_i}\rangle/(\partial_{x_i}x_i-x_i\partial_{x_i}=\delta_{ij}\hbar).
+\end{array}
+\end{equation}
+% [Tutor Note: (8.152) 的交换关系指标不自洽：左边只有$x_i,\partial_{x_i}$，右边却出现$\delta_{ij}$。正确写法应为$\partial_{x_i}x_j-x_j\partial_{x_i}=\delta_{ij}\hbar$（$i,j$独立取值），这是 Weyl 代数的标准关系；照译并加注。]
+
+% ---------------------------------------------------------------- 原文 p.114
+换言之，我们可以从$\QC(T^{*}\mathrm{Jac})$过渡到
+\begin{equation}\tag{8.153}
+\mathcal D_{\mathrm{Jac}}\text{-mod}.
+\end{equation}
+在右边我们则改为形变空间，从
+\begin{equation}\tag{8.154}
+\QC(T^{*}\mathrm{Jac})\ \rightsquigarrow\ \QC\bigl(\mathrm{Conn}^{\flat}_1\bigr)
+\end{equation}
+过渡。所以我们从$\QC(T^{*}\mathrm{Jac})$出发，可以用两种不同方式形变它：
+\begin{equation}\tag{8.155}
+\begin{array}{ccc}
+\QC(T^{*}\mathrm{Jac}) & \simeq & \QC(T^{*}\mathrm{Jac})\\[2pt]
+\downarrow{\scriptstyle\text{形变量子化}} & & \downarrow{\scriptstyle\text{形变空间}}\\[2pt]
+\mathcal D_{\mathrm{Jac}}\text{-mod} & \simeq & \QC\bigl(\mathrm{Conn}^{\flat}_1\bigr).
+\end{array}
+\end{equation}
+
+\begin{srcrem}{43}
+在形变空间之后，我们还可以再作形变量子化，这就给出$\mathrm{Jac}$上的扭曲 D-模。在形变量子化之后，我们也可以把$D$-模形变为扭曲 D-模，所以若再走一步就回到等价。
+\end{srcrem}
+
+\begin{srcrem}{44}
+D-模是带额外结构的拟凝聚层：在拟凝聚层范畴上有一个 monad，其模恰是 D-模。这一额外结构实际上由某个代数关于卷积的作用给出。一旦这样表述，就很清楚：在对偶的另一侧，我们会得到拟凝聚层连同某个代数关于张量积的作用。这只是在说我们考虑的是基上某个仿射对象上的层，而$\mathrm{Conn}^{\flat}_1$确实是$\mathrm{Jac}$上的仿射丛。
+\end{srcrem}

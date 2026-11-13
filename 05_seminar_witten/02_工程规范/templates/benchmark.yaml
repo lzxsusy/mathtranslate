@@ -1,0 +1,23 @@
+# Tier-1 benchmark 任务模板 —— 复制到 bench/tasks/Bx.yaml
+id: B0
+name: 任务名
+version: 1
+owner: bench-steward
+input:
+  paper: bench/papers/REPLACE.pdf
+  extra: []
+expected:
+  must_hit: []          # 必含概念/缺陷，逐条可核
+  traps: []             # 预埋陷阱
+  golden: bench/golden/B0_expected.md
+scoring:
+  formula: "(hits / len(must_hit)) - 0.5 * (false_positives / max(1, len(traps)))"
+  scale: 0-100
+  notes: "误报要扣分；只数命中会被『全列一遍』刷分"
+pass:
+  vs_previous: ">= -2*sigma"   # sigma 未测前用 -5 分
+  min_improve: ">= 2*sigma on at least one task"
+leak_control:
+  never_in_seminars: true
+  mentor_blind: true
+  rotate_after_quarters: 2

@@ -1,0 +1,1840 @@
+% ============================================================================
+% 第 3 章  三角化  （原书 pp.28–50，PDF pp.31–53）
+% 底本：Alessandro Imparato, Towards Homological Mirror Symmetry, ETH Zürich
+% 说明：原书公式全书连续编号，本章恰为 (34)–(51) 共 18 个编号公式；main.tex
+%       亦为全局连续编号，故自动编号与原文一致。每个编号公式恰用一个 equation
+%       环境（多行用 equation+aligned，只编号一次），\label 按原文编号命名
+%       （如 eq:3.34）。
+% ============================================================================
+\section{三角化}\label{ch:03}
+
+\takeaway{%
+  核心图像：三角化把同调代数中“短正合列给出长正合列”的现象提升为公理：平移函子
+  让对象可以逐次旋转，区分三角形记录映射锥，而八面体公理表达锥的“结合律”。\\
+  数学工具：区分三角形 (T1)–(T3)、导出范畴的局部化、$A_\infty$-模的直和与张量积、
+  扭复形 $\mathsf{Tw}\mathcal A$、同调微扰引理。\\
+  主要结论：$\mathsf{Tw}\mathcal A$ 是 $\mathcal A$ 的三角包络，$H^0(\mathsf{Tw}\mathcal A)
+  =\mathsf D^{\mathrm b}(\mathcal A)$ 是经典三角范畴；$\mathcal A$ 三角当且仅当
+  $\iota:\mathcal A\hookrightarrow\mathsf{Tw}\mathcal A$ 是拟等价；$\mathrm{mod}(\mathcal A)$
+  恒为三角 $A_\infty$-范畴。%
+}
+
+\subsection{范畴论预备}\label{sec:3.1}
+
+本小节回顾三角范畴的定义，采用 \cite{May01} 第 1 节的简洁版本，随后定性介绍
+导出范畴的构造。先交代一些基本概念。
+
+\begin{Def}\label{def:3.1}
+\begin{itemize}
+  \item 称（线性）范畴 $\mathsf C$ 为\emph{加性的}（additive），若它具有零对象，
+        记作 $0\in\operatorname{obj}(\mathsf C)$，并且包含一切有限积与有限余积，
+        使得对任意两个 $X,Y\in\operatorname{obj}(\mathsf C)$，标准映射
+        $X\sqcup Y\to X\sqcap Y$ 是同构，且 $\Hom_{\mathsf C}(X,Y)$ 是阿贝尔群；
+  \item 加性范畴之间的函子 $F:\mathsf C\to\mathsf D$ 称为\emph{加性的}，若它把
+        $\mathsf C$ 的零对象送到 $\mathsf D$ 的零对象，并且对任意
+        $X,Y\in\operatorname{obj}(\mathsf C)$ 存在同构
+        $F(X\oplus Y)\cong F(X)\oplus F(Y)$，且这些同构与各直和项的包含、投影相容。
+\end{itemize}
+\end{Def}
+% [Tutor Note: 【易错】加性范畴的第一条把“有限积与有限余积”和“Hom 集是阿贝尔群”一并要求，等价于“存在有限双积且 Hom 集富化于 $\mathsf{Ab}$”；零对象既初始又终对象这一条不能漏，否则 $\mathsf C$ 可能只有空积而没有零对象。]
+
+回忆：$\mathsf C$ 的对象 $0$ 是\emph{零对象}（从而在同构意义下唯一），若它既是
+初始对象又是终对象，即对一切 $X\in\operatorname{obj}(\mathsf C)$，
+$\Hom_{\mathsf C}(0,X)=\{\alpha_X\}$ 与 $\Hom_{\mathsf C}(X,0)=\{\omega_X\}$
+各自只含一个态射。
+
+\begin{Def}\label{def:3.2}
+设 $\mathsf C$ 为加性范畴。$\mathsf C$ 上的一个\emph{三角化}（triangulation）
+是一个加性等价 $T:\mathsf C\to\mathsf C$（逆为 $T^{-1}$），称为\emph{平移函子}，
+连同一族图形，称为\emph{区分三角形}，形如
+\[
+  X\xrightarrow{f}Y\xrightarrow{g}Z\xrightarrow{h}T(X),
+\]
+其中 $X,Y,Z\in\operatorname{obj}(\mathsf C)$，$f,g,h$ 为态射（$h$ 的靶对象是
+“平移”了的 $T(X)\equiv X[1]\in\operatorname{obj}(\mathsf C)$）。当对象在上下文中
+已明确时，简记作 $(f,g,h)$。它们给出周期的三角形图——名称即由此而来——形如
+\[
+  \begin{tikzcd}
+    X \arrow[rr, "{f}"] & & Y \arrow[dl, "{g}"] \\
+    & Z \arrow[ul, "{h{[}1{]}}"'] &
+  \end{tikzcd}
+\]
+其中 $h[1]$ 表示 $h$ 实际上是态射 $Z\to T(X)$。区分三角形必须满足如下公理：
+
+\begin{itemize}
+  \item (T1) 对任意 $X,Y\in\operatorname{obj}(\mathsf C)$ 与态射 $f:X\to Y$：
+  \begin{enumerate}
+    \item $X\xrightarrow{\mathrm{id}_X}X\xrightarrow{\omega_X}0
+          \xrightarrow{\alpha_X}T(X)$ 是区分的（注意 $\alpha_X$ 与 $\omega_X$
+          唯一）；
+    \item $f$ 是某个如上形式的区分三角形 $(f,g,h)$ 的一部分（此时称 $Y$ 为
+          $Z$ 被 $X$ 的\emph{扩张}（extension），$Z$ 为 $f$ 的\emph{锥}（cone））；
+    \item 与区分三角形 $(f,g,h)$ 同构的任意三角形仍是区分的：若
+          $X\cong X'$、$Y\cong Y'$、$Z\cong Z'$ 分别经由 $u,v,w$ 实现，则
+          $X'\xrightarrow{v\circ f\circ u^{-1}}Y'\xrightarrow{w\circ g\circ v^{-1}}
+          Z'\xrightarrow{T(v)\circ h\circ w^{-1}}T(X')$ 是区分的。
+  \end{enumerate}
+  \item (T2) 若 $(f,g,h)$ 区分，则 $(g,h,-T(f))$ 与 $(-T^{-1}(h),f,g)$ 也区分。
+        它们对应于“逆时针与顺时针旋转”的三角形：
+        \[
+          \begin{tikzcd}
+            Y \arrow[rr, "{g}"] & & Z \arrow[dl, "{h}"] \\
+            & T(X) \arrow[ul, "{-T(f){[}1{]}}"'] &
+          \end{tikzcd}
+          \quad\text{与}\quad
+          \begin{tikzcd}
+            T^{-1}(Z) \arrow[rr, "{-T^{-1}(h)}"] & & X \arrow[dl, "{f}"] \\
+            & Y \arrow[ul, "{g{[}1{]}}"'] &
+          \end{tikzcd}
+        \]
+        （这也解释了上文所说的周期性：反复施加 $T$ 与 $T^{-1}$，可以绕三角形
+        无限次地转圈，得到无限链
+        $\dots\to T^{-1}(X)\to T^{-1}(Y)\to T^{-1}(Z)\to X\to Y\to Z\to T(X)
+        \to T(Y)\to T(Z)\to\dots$。）
+  \item (T3) 由区分三角形 $(f,f',f'')$、$(g,g',g'')$、$(h,h',h'')$ 构成的下图，
+        其中 $h=g\circ f$ 且 $j''=T(f')\circ g''$，可用虚线箭头 $j$ 与 $j'$
+        补充为交换图，使得 $(j,j',j'')$ 成为区分三角形：
+        \[
+          \begin{tikzcd}[column sep=small, row sep=small]
+            X \arrow[rr, "{h}"] \arrow[rd, "{f}"'] & & Z \arrow[rr, "{g'}"]
+              \arrow[rd, "{h'}"] & & W \arrow[rr, "{j''}"] \arrow[rd, "{g''}"] & & T(U) \\
+            & Y \arrow[ur, "{g}"] \arrow[d, "{f'}"'] & & V \arrow[ur, dashed, "{j'}"']
+              \arrow[dr, "{h''}"] & & T(Y) \arrow[ur, "{T(f')}"'] & \\
+            & U \arrow[urr, dashed, "{j}"] \arrow[rrr, "{f''}", bend right=35] & & &
+              T(X) \arrow[ur, "{T(f)}"] & &
+          \end{tikzcd}
+        \]
+\end{itemize}
+此时称 $\mathsf C=(\mathsf C,T_{\mathsf C})$ 为\emph{三角范畴}（triangulated
+category）。
+\end{Def}
+% [Tutor Note: 【易错】(T2) 中的第三个箭头是 $-T(f)$（以及另一个旋转里的 $-T^{-1}(h)$），不是 $T(f)$：若丢掉符号，旋转后的三角形一般不再区分；符号来自“绕三角形一周的复合为零”这一Koszul 约定。]
+% [Tutor Note: 【背景】八面体公理即 Verdier 的 (TR4)：图中 $f:X\to Y$、$g:Y\to Z$、$h=g\circ f:X\to Z$ 固定后，完成箭头 $j:U\to V$、$j':V\to W$ 一般并不唯一，公理只断言存在；标准叙述见 \cite{May01} 第 1 节与 \cite{Ver96} 第 II.1 节。]
+% [Tutor Note: 【易错】八面体图中箭头 $j''=T(f')\circ g''$ 的方向：$g'':W\to T(Y)$、$T(f'):T(Y)\to T(U)$，故 $j'':W\to T(U)$，与三角形 $(j,j',j'')$ 的第三个箭头一致；抄写时容易把 $T(f')$ 误作 $T(f'')$。]
+
+Verdier 最初为三角范畴列出四条公理，记作 (TR1)–(TR4)（见 \cite{Ver96}
+第 II.1 节）。他的 (TR1) 即上文的 (T1)，(TR2) 即 (T2)，(TR4) 即 (T3)。后者称为
+\emph{Verdier 公理}，或称\emph{八面体公理}（得名于我们所画交换辫形的一种变形）。
+(TR3) 其实可由其余公理推出；后文需要它的 $A_\infty$-范畴表述，故在此给出推导。
+
+\begin{Lem}\label{lem:3.3}
+设下图在 $\mathsf C$ 中的两行都是区分三角形，且左方块交换：
+\[
+  \begin{tikzcd}
+    X \arrow[r, "{f}"] \arrow[d, "{i}"] & Y \arrow[r, "{g}"] \arrow[d, "{j}"]
+      & Z \arrow[r, "{h}"] \arrow[d, dashed, "{k}"] & T(X) \arrow[d, "{T(i)}"] \\
+    X' \arrow[r, "{f'}"] & Y' \arrow[r, "{g'}"] & Z' \arrow[r, "{h'}"] & T(X')
+  \end{tikzcd}
+\]
+则存在虚线箭头 $k$ 使整个图交换；此外，若 $i$ 与 $j$ 都是同构，则 $k$ 也是。
+\end{Lem}
+
+\begin{proof}
+对态射 $i$、$j$、$j\circ f$ 应用公理 (T1) 第 2 条，得到区分三角形
+$X\xrightarrow{i}X'\xrightarrow{i'}X''\xrightarrow{i''}T(X)$、
+$Y\xrightarrow{j}Y'\xrightarrow{j'}Y''\xrightarrow{j''}T(Y)$ 与
+$X\xrightarrow{j\circ f}Y'\xrightarrow{p}V\xrightarrow{q}T(X)$。然后对输入数据
+$(f,g,h)$、$(j,j',j'')$、$(j\circ f,p,q)$ 与 $(i,i',i'')$、$(f',g',h')$、
+$(f'\circ i,p,q)$ 分别使用两次 (T3)，得到区分三角形
+\[
+  Z\xrightarrow{s}V\xrightarrow{t}Y''\xrightarrow{T(g)\circ j''}T(Z)
+  \qquad\text{与}\qquad
+  X''\xrightarrow{s'}V\xrightarrow{t'}Z'\xrightarrow{T(i')\circ h'}T(X'').
+\]
+现在只须利用所得两个辫形的交换性，即可看出 $k:=t'\circ s:Z\to Z'$ 满足要求：
+$k\circ g=t'\circ(s\circ g)=t'\circ(p\circ j)=g'\circ j$，且
+$h'\circ k=(h'\circ t')\circ s=(T(i)\circ q)\circ s=T(i)\circ h$。
+
+此外，若 $i$ 与 $j$ 都是同构，则等价 $T$ 保持同构。由公理 (T2) 可合法地把两行
+分别经 $-T(f)$ 与 $-T(f')$ 向右延拓到 $T(Y)$ 与 $T(Y')$。由于如上所证，竖向箭头
+$i$、$j$、$T(i)$ 与 $T(j):T(Y)\to T(Y')$ 都是同构，五引理即给出所需结论。
+\end{proof}
+% [Tutor Note: 【含糊】证明中“只须利用两个辫形的交换性”省略了如下事实：$j\circ f=p\circ i$ 与 $f'\circ i=j\circ f$ 给出 $p\circ i=j\circ f$，从而 $t'\circ p=g'\circ j$ 可由第二个八面体的交换性读出；此外把行延拓到 $T(Y)$ 时用到的 $T(0)\cong 0$ 来自 $T$ 是加性等价。]
+
+事实上，(T2) 中“顺时针旋转”的三角形本身也可由其余公理推出，于是剩下几条便是
+一个范畴成为三角范畴的充分要求（详见 \cite{May01}）。最后，我们引入一些后文
+会用到的术语。
+
+\begin{Def}\label{def:3.4}
+设 $(\mathsf C,T_{\mathsf C})$ 与 $(\mathsf D,T_{\mathsf D})$ 为三角范畴。
+\begin{itemize}
+  \item 函子 $F:\mathsf C\to\mathsf D$ 称为\emph{三角的}（或\emph{正合的}），若它与
+        平移交换，并把 $\mathsf C$ 中的区分三角形
+        $X\xrightarrow{f}Y\xrightarrow{g}Z\xrightarrow{h}T_{\mathsf C}(X)$ 送到
+        $\mathsf D$ 中的区分三角形
+        $F(X)\xrightarrow{F(f)}F(Y)\xrightarrow{F(g)}F(Z)
+        \xrightarrow{F(h)}F(T_{\mathsf C}(X))=T_{\mathsf D}(F(X))$；
+  \item 称 $\mathsf C$ 中的三角形 $(f,g,h)$ 为\emph{正合的}（exact），若对每个
+        $C\in\operatorname{obj}(\mathsf C)$，施加函子 $\Hom_{\mathsf C}(\cdot,C)$
+        与 $\Hom_{\mathsf C}(C,\cdot)$ 后它都诱导（阿贝尔群的）长正合列。
+\end{itemize}
+\end{Def}
+
+下一个引理仍是对 (T1)–(T3) 的练习；Verdier 给出了证明（参看 \cite{Ver96}
+第 II.1.2.1 节）。
+
+\begin{Lem}\label{lem:3.5}
+每个区分三角形 $(f,g,h)$ 都是正合的，从而给出长正合列；写成周期的三角形图，
+它们形如：
+\[
+  \begin{tikzcd}
+    \Hom_{\mathsf C}(C,X) \arrow[rr, "{\Hom_{\mathsf C}(C,f)}"] & &
+      \Hom_{\mathsf C}(C,Y) \arrow[dl, "{\Hom_{\mathsf C}(C,g)}"] \\
+    & \Hom_{\mathsf C}(C,Z) \arrow[ul, "{\Hom_{\mathsf C}(C,h){[}1{]}}"'] &
+  \end{tikzcd}
+  \qquad
+  \begin{tikzcd}
+    \Hom_{\mathsf C}(X,C) \arrow[dr, "{\Hom_{\mathsf C}(h,C){[}1{]}}"'] & &
+      \Hom_{\mathsf C}(Y,C) \arrow[ll, "{\Hom_{\mathsf C}(f,C)}"'] \\
+    & \Hom_{\mathsf C}(Z,C) \arrow[ur, "{\Hom_{\mathsf C}(g,C)}"'] &
+  \end{tikzcd}
+\]
+\end{Lem}
+% [Tutor Note: 【易错】第二幅图中箭头方向与第一幅相反：$\Hom_{\mathsf C}(\cdot,C)$ 反变，故 $\Hom_{\mathsf C}(f,C)$ 指 $Y\to X$、$\Hom_{\mathsf C}(g,C)$ 指 $Z\to Y$，而 $\Hom_{\mathsf C}(h,C)[1]$ 的靶是 $\Hom_{\mathsf C}(Z,C)[1]$；把反变箭头的方向画成同向是常见错误。]
+
+在回到 $A_\infty$-范畴之前，我们——在非常表面的层面上——说明导出范畴的构造，
+它是三角范畴的特别实例。参考文献仍是 \cite{Kel01} 第 4.1、4.2 节。不过，下述
+过程\emph{不会}被推广到 $A_\infty$-范畴；它只是为下文的定理 \ref{thm:3.8} 作铺垫。
+
+在最基本的层面上，给定结合幺 $\mathbb K$-代数 $A$，我们用其上链复形的范畴
+$\mathsf{Kom}(A)$ 来构造同伦范畴 $\mathsf H(A)$ 如下：
+$\operatorname{obj}(\mathsf H(A)):=\operatorname{obj}(\mathsf{Kom}(A))$，
+而 $\mathsf H(A)$ 的态射集是 $\mathsf{Kom}(A)$ 的态射集对所有零伦态射（即与
+平凡态射链同伦的态射）取商。由此，我们把导出范畴 $\mathsf D(A)$ 定义为
+$\mathsf H(A)$ 关于其所有拟同构的“局部化”，可通过对它们“形式地求逆”实现。
+
+现在，像第 \ref{sec:1.2} 节那样定义复形的悬挂（即：给定任意
+$K\in\operatorname{obj}(\mathsf D(A))=\operatorname{obj}(\mathsf{Kom}(A))$，
+令 $(SK)^p:=K^{p+1}$ 且 $d_{SK}:=-d_K$），便可发现复形的任意短正合列
+$\{0\}\to K\to L\to M\to\{0\}$ 都诱导三角形 $K\to L\to M\to SK$，它满足公理
+(T1)–(T3)；而 $\mathsf D(A)$ 中所有三角形都与这样的三角形同构。于是
+$\mathsf D(A)$ 成为三角范畴。
+
+下面看一个涉及第 \ref{sec:1.3} 节中 $A_\infty$-模范畴
+$\mathsf C_\infty(A)$ 的具体例子。
+
+\begin{Ex}\label{ex:3.6}
+设 $A$ 为 $A_\infty$-代数。给定 $A$ 上两个 $A_\infty$-模 $M,N$，回忆：
+$A_\infty$-模的态射 $f:M\to N$ 是一列分次映射
+$f_n:M\otimes A^{\otimes n-1}\to N[1-n]$（$n\ge 1$）；它是拟同构当且仅当
+$f_1:M\to N$ 是拟同构。由定义 \ref{def:1.9}，$f$ 是零伦的当且仅当存在一列
+分次映射 $h_n:M\otimes A^{\otimes n-1}\to N[-n]$，使得
+\[
+  f_n=\sum_{s+t=n}(-1)^{st}m^N_{1+t}(h_s\otimes\mathrm{id}_A^{\otimes t})
+  +\sum_{r+s+t=n}(-1)^{r+st}h_{r+1+t}
+  \bigl(\mathrm{id}_A^{\otimes r}\otimes m^M_s\otimes\mathrm{id}_A^{\otimes t}\bigr).
+\]
+可以验证这定义了一个等价关系 $\sim$。如上所述，$A$ 的同伦范畴
+$\mathsf H_\infty(A)$ 由 $\operatorname{obj}(\mathsf H_\infty(A)):=
+\operatorname{obj}(\mathsf C_\infty(A))$ 与
+$\Hom_{\mathsf H_\infty(A)}(M,N):=\Hom_{\mathsf C_\infty(A)}(M,N)/\sim$
+（对每个 $M,N\in\operatorname{obj}(\mathsf C_\infty(A))$）给出。结果表明
+（例如见 \cite{Lef03} 第 2.4.2 节），$\mathsf H_\infty(A)$ 的所有拟同构都已可逆，
+故 $\mathsf D_\infty(A):=\mathsf H_\infty(A)$ 直接就是 $A$ 的导出范畴。
+
+此外，定义悬挂函子 $S:\mathsf D_\infty(A)\to\mathsf D_\infty(A)$ 为
+$(SM)^d:=M^{d+1}$ 与 $(m_{SM})_n:=(-1)^n(m_M)_n$，可以证明每个短正合列
+\[
+  \{0\}\to K\xrightarrow{i}L\xrightarrow{p}M\to\{0\}
+\]
+（其中态射 $i,p$ 满足 $n>1$ 时 $i_n=p_n=0$）都在 $\mathsf D_\infty(A)$ 中给出
+标准三角形，并且 $\mathsf D_\infty(A)$ 中所有三角形都与这样的三角形同构（仍请
+参看 \cite{Lef03}）。这表明 $\mathsf D_\infty(A)$ 是三角范畴。\hfill$\blacklozenge$
+\end{Ex}
+\footnote{事实：若 $A$ 只是结合代数，则可构造忠实函子
+$\mathsf{Kom}(A)\to\mathsf C_\infty(A)$。}
+% [Tutor Note: 【易错】零伦公式中第一个求和的符号是 $(-1)^{st}$、第二个是 $(-1)^{r+st}$，两处的 $st$ 来自 $h_s$ 与 $t$ 个 $A$ 因子的 Koszul 交换；而 $m^N_{1+t}(h_s\otimes\mathrm{id}^{\otimes t})$ 里 $h_s$ 必须放在最左边，因为 $M\otimes A^{\otimes n-1}$ 的第一个因子是 $M$。]
+
+试图把这一过程形式化到一般的（$A_\infty$-）范畴会走得太远。我们只给出阿贝尔范畴的
+主要步骤：阿贝尔范畴粗略地说就是含任意态射的核与余核的加性范畴（见 \cite{GM03}
+第 II.5 节；原型是阿贝尔群范畴 $\mathsf{Ab}$），从而使正合列与上同调的概念有定义。
+更严格的论述见 \cite{GM03} 第 III 章。
+
+\begin{Def}\label{def:3.7}
+设 $\mathsf A$ 为阿贝尔范畴。它的\emph{导出范畴}按如下方式构造：
+\begin{enumerate}
+  \item 取 $\mathsf A$ 中上链复形的范畴 $\mathsf{Kom}(\mathsf A)$，其对象是形如
+        \[
+          \dots\to X^{-1}\xrightarrow{d^{-1}}X^0\xrightarrow{d^0}X^1
+          \xrightarrow{d^1}X^2\to\dots
+        \]
+        的上链复形 $X^\bullet$，其中 $\{X^k\}_{k\in\mathbb Z}\subset
+        \operatorname{obj}(\mathsf A)$、$\{d^k\}_{k\in\mathbb Z}$ 是 $\mathsf A$
+        中的态射且 $d^{k+1}\circ d^k=0$；其态射是上链复形之间的标准链映射；
+  \item 定义上链复形的\emph{同伦范畴} $\mathsf H(\mathsf A)$：对任意两个
+        $X^\bullet,Y^\bullet\in\operatorname{obj}(\mathsf H(\mathsf A))$，令
+        $\operatorname{obj}(\mathsf H(\mathsf A)):=\operatorname{obj}(\mathsf{Kom}(\mathsf A))$、
+        $\Hom_{\mathsf H(\mathsf A)}(X^\bullet,Y^\bullet):=
+        \Hom_{\mathsf{Kom}(\mathsf A)}(X^\bullet,Y^\bullet)/\sim$，其中两个链映射
+        $f,g$ 满足 $f\sim g$ 当且仅当它们链同伦（同调代数的标准意义下）；
+  \item 把 $\mathsf A$ 的\emph{导出范畴} $\mathsf D(\mathsf A)$ 刻画为如下
+        泛问题的解：
+  \begin{enumerate}
+    \item[(a)] 取 $\mathsf H(\mathsf A)$ 中所有拟同构构成的类 $S$：链映射
+          $f:X^\bullet\to Y^\bullet$ 是拟同构，若它对所有 $n\in\mathbb Z$ 都在
+          上同调中诱导同构 $H^n(X^\bullet)\cong H^n(Y^\bullet)$；
+    \item[(b)] 注意到 $S$ 是 $\mathsf H(\mathsf A)$ 态射的一个\emph{局部化类}：
+          \[
+            \begin{gathered}
+              \mathrm{id}_{X^\bullet}\in S\ \ \text{对一切 }
+              X^\bullet\in\operatorname{obj}(\mathsf H(\mathsf A)),\qquad
+              (s,t\in S\Rightarrow s\circ t\in S)\ \text{（只要可复合）},\\
+              (\forall\, X^\bullet\xrightarrow{f}Y^\bullet\ \text{in}\ 
+              \mathsf H(\mathsf A),\ Z^\bullet\xrightarrow{s}Y^\bullet\ \text{in}\ S\
+              \exists\, W^\bullet\xrightarrow{g}Z^\bullet\ \text{in}\ 
+              \mathsf H(\mathsf A),\\
+              W^\bullet\xrightarrow{t}X^\bullet\ \text{in}\ S
+              \ \text{s.t.}\ f\circ t=s\circ g)
+            \end{gathered}
+          \]
+          以及
+          \[
+            (\forall f,g:X^\bullet\to Y^\bullet\ \text{in}\ \mathsf H(\mathsf A):\
+            \exists s\in S\ \text{s.t.}\ s\circ f=s\circ g
+            \iff \exists t\in S\ \text{s.t.}\ f\circ t=g\circ t);
+          \]
+    \item[(c)] 定义一个范畴 $\mathsf H(\mathsf A)[S^{-1}]$：其对象集为
+          $\operatorname{obj}(\mathsf H(\mathsf A)[S^{-1}]):=
+          \operatorname{obj}(\mathsf H(\mathsf A))$，态射按 $S$ 的态射为模型定义；
+          再定义函子 $L:\mathsf H(\mathsf A)\to\mathsf H(\mathsf A)[S^{-1}]$
+          （称为“$S$ 的局部化”），满足 $L|_{\mathsf H(\mathsf A)}=
+          \mathrm{Id}_{\mathsf H(\mathsf A)}$（见 \cite{GM03} 第 III.2.2 小节）；
+    \item[(d)] 令 $\mathsf D(\mathsf A):=\mathsf H(\mathsf A)[S^{-1}]$，则它满足
+          \[
+            \bigl(f:X^\bullet\to Y^\bullet\ \text{是}\ \mathsf H(\mathsf A)\ \text{中的拟同构}
+            \Longrightarrow L(f):X^\bullet\to Y^\bullet\ \text{是}\ 
+            \mathsf D(\mathsf A)\ \text{中的同构}\bigr),
+          \]
+          并具有泛性质：对任何其他具有同一性质的 $\bigl(\mathsf B,
+          L':\mathsf H(\mathsf A)\to\mathsf B\bigr)$，存在唯一函子
+          $F:\mathsf D(\mathsf A)\to\mathsf B$ 使得 $F\circ L=L'$。
+  \end{enumerate}
+\end{enumerate}
+在实际操作中，$\operatorname{obj}(\mathsf D(\mathsf A))=
+\operatorname{obj}(\mathsf{Kom}(\mathsf A))$，而 $\mathsf D(\mathsf A)$ 中的
+态射 $X^\bullet\to Y^\bullet$ 是“屋顶”(roof) $(s,f)$ 的（等价）类，即图形
+$\tilde X^\bullet\xleftarrow{s}X^\bullet\xrightarrow{f}Y^\bullet$，其中
+$f\in\Hom_{\mathsf H(\mathsf A)}(X^\bullet,Y^\bullet)$ 且 $s\in S$。
+
+若只考虑 $\mathsf{Kom}(\mathsf A)$ 中的有界上链复形，便得到 $\mathsf A$ 的
+\emph{有界导出范畴} $\mathsf D^{\mathrm b}(\mathsf A)$。
+\end{Def}
+% [Tutor Note: 【易错】屋顶 $(s,f)$ 的方向：$s$ 的箭头指向 $\tilde X^\bullet$，即把拟同构 $s$ “反转”后才是 $\mathsf D(\mathsf A)$ 中的态射；写成 $X^\bullet\xleftarrow{s}\tilde X^\bullet\xrightarrow{f}Y^\bullet$ 会得到反向复合，务必按原文的 $\tilde X^\bullet\leftarrow X^\bullet\to Y^\bullet$ 记忆。]
+% [Tutor Note: 【背景】(b) 中第三条与第四条分别是“右 Ore 条件”与“右可消性”；它们保证屋顶的复合与等价关系良定义，即局部化不会把 Hom 集变成真类。参见 \cite{Kel01} 第 4.1 节。]
+
+接下来，我们着手把区分三角形的概念搬到 $\mathsf D(\mathsf A)$ 上。正合性这一性质
+更难重塑，因为 $\mathsf D(\mathsf A)$ 其实只是加性范畴，而非阿贝尔范畴。相反，
+锥与平移的对应定义可以立即写出，由此可证明 $\mathsf H(\mathsf A)$ 总是三角范畴
+（证明见 \cite{GM03} 定理 IV.1.9）。我们最关心的是下述结果（见 \cite{GM03}
+推论 IV.2.7）。
+
+\begin{Thm}\label{thm:3.8}
+设 $\mathsf A$ 为加性范畴，其同伦范畴 $(\mathsf H(\mathsf A),T)$ 已三角化。
+定义其导出范畴 $\mathsf D(\mathsf A)=\mathsf H(\mathsf A)[S^{-1}]$ 的局部化类
+$S$ 与三角化相容，即满足（$s\in S\iff T(s)\in S$）以及（引理 \ref{lem:3.3} 中
+的 $i,j\in S\Rightarrow k\in S$）。若把 $\mathsf D(\mathsf A)$ 中的区分三角形
+定义为在局部化 $L:\mathsf H(\mathsf A)\to\mathsf H(\mathsf A)[S^{-1}]$ 下与
+$\mathsf H(\mathsf A)$ 中区分三角形的像同构的三角形，则 $(\mathsf D(\mathsf A),T)$
+是三角范畴（对 $\mathsf D^{\mathrm b}(\mathsf A)$ 同样成立）。
+\end{Thm}
+% [Tutor Note: 【含糊】定理 3.8 的陈述称 $\mathsf A$ 为“加性范畴”，但定义 3.7 中复形、拟同构与导出范畴的构造需要 $\mathsf A$ 是阿贝尔范畴（至少要能取上同调）；原文此处的“加性”应理解为对定义 3.7 所设阿贝尔范畴的宽松表述，引用时以定义 3.7 为准，此点已记入报告。]
+
+\subsection{$A_\infty$-模上的运算}\label{sec:3.2}
+
+在 $A_\infty$-范畴的框架里，我们将要构造的映射锥与“平移”对象，依赖于通过直和、
+张量积等基本运算来操作 $A_\infty$-模的能力。先给出一个重要定义。
+
+\begin{Def}\label{def:3.9}
+设 $\mathcal A$ 为 $A_\infty$-范畴，$\mathcal Q=\mathrm{mod}(\mathcal A)
+=\mathrm{fun}(\mathcal A^{\mathrm{opp}},\mathsf{Ch})$。设对给定的
+$A_\infty$-模 $\mathcal M\in\operatorname{obj}(\mathcal Q)$，存在某个
+$Y\in\operatorname{obj}(\mathcal A)$，使得
+$\mathcal Y=\Upsilon(Y)\in\operatorname{obj}(\mathcal Q)$ 在 $H^0(\mathcal Q)$
+中同构于 $\mathcal M$，比如说经由同构
+$\langle t\rangle\in\Hom^0_{H(\mathcal Q)}(\mathcal Y,\mathcal M)$。此时称
+$(Y,\langle t\rangle)$ \emph{准表示}（quasi-represents）$\mathcal M$
+（或称它是 $\mathcal M$ 的\emph{准代表}；有时从记号中省略 $\langle t\rangle$）。
+\end{Def}
+% [Tutor Note: 【易错】准表示要求同构 $\langle t\rangle$ 存在于上同调范畴 $H^0(\mathcal Q)$ 中，而不是 $\mathcal Q$ 本身；若 $\mathcal Y$ 与 $\mathcal M$ 只在 $\mathcal Q$ 中同构，条件会强得多，且当 $Y$ 只是“差一个高阶同伦”地表示 $\mathcal M$ 时会失效。]
+
+\begin{Rem}\label{rem:3.10}
+设 $\mathcal M$ 同时被 $(Y,\langle t\rangle)$ 与 $(Y',\langle t'\rangle)$ 准表示，
+于是给出同构 $\langle t'\rangle^{-1}\circ\langle t\rangle\in
+\Hom^0_{H(\mathcal Q)}(\mathcal Y,\mathcal Y')$。由于如第 \ref{sec:2.9} 节所述，
+Yoneda 嵌入在上同调意义下全忠实（即 $H(\Upsilon)$ 在态射上是双射），存在唯一
+同构 $\langle a\rangle\in\Hom^0_{H(\mathcal A)}(Y,Y')$ 使得
+$H(\Upsilon)\langle a\rangle=\langle\Upsilon^1(a)\rangle=
+\langle t'\rangle^{-1}\circ\langle t\rangle$，从而满足
+$\langle t'\rangle\circ\langle\Upsilon^1(a)\rangle=\langle t\rangle$。
+\end{Rem}
+
+准表示性有如下显式判别法（证明参看 \cite{Sei08} 引理 2.1）。
+
+\begin{Lem}\label{lem:3.11}
+$(Y,\langle t\rangle)$ 准表示 $\mathcal M$ 当且仅当存在 0 次上闭链
+$c\in\mathcal M(Y)^0$，使得 $\langle t\rangle=\langle\lambda(c)\rangle$，且
+\[
+  t^1_X:\mathcal Y(X)\to\mathcal M(X),\qquad b\longmapsto(-1)^{|b|}
+  \mu^2_{\mathcal M}(c,b)
+\]
+对一切 $X\in\operatorname{obj}(\mathcal A)$ 都是 $\mathsf{Ch}$ 中的拟同构。
+这里 $\lambda=\lambda_{\mathcal M}:\mathcal M(Y)\to
+\hom_{\mathcal Q}(\mathcal Y,\mathcal M)$ 是式 \eqref{eq:2.31} 中的映射。
+由 $c$ 的选取，$\lambda(c)$ 是模同态。
+\end{Lem}
+% [Tutor Note: 【易错】$t^1_X$ 的符号 $(-1)^{|b|}$ 来自把 $c$ 从 $\mathcal M$ 搬到 $\hom_{\mathcal Q}(\mathcal Y,\mathcal M)$ 时的 Koszul 约定；判别它的拟同构性只需看 $t^1$，因为 $t$ 的更高阶分量由 $\lambda$ 的 $A_\infty$-函子性自动决定。]
+
+下面说明前文允诺的 $A_\infty$-模运算。
+
+\begin{Def}\label{def:3.12}
+给定两个 $\mathcal M_0,\mathcal M_1\in\operatorname{obj}(\mathcal Q)$，
+\emph{直和} $A_\infty$-模 $\mathcal M_0\oplus\mathcal M_1\in
+\operatorname{obj}(\mathcal Q)$ 由平凡的设定得到：
+\[
+  (\mathcal M_0\oplus\mathcal M_1)(X):=\mathcal M_0(X)\oplus\mathcal M_1(X),
+  \qquad
+  \mu^d_{\mathcal M_0\oplus\mathcal M_1}:=\mu^d_{\mathcal M_0}
+  \oplus\mu^d_{\mathcal M_1},
+\]
+其中 $X\in\operatorname{obj}(\mathcal A)$、$d\ge 1$。对任意准表示
+$\mathcal Y_0\oplus\mathcal Y_1\in\operatorname{obj}(\mathcal Q)$ 的对象
+$Y_0\oplus Y_1\in\operatorname{obj}(\mathcal A)$，我们沿用记号
+$Y_0\oplus Y_1$。\footnote{因此这\emph{不可}误解为对象之间的某种运算！
+张量积也有同样的警告。}
+\end{Def}
+% [Tutor Note: 【易错】$Y_0\oplus Y_1$ 并不是 $\mathcal A$ 中一个预先给定的直和，而是“准表示 $\mathcal Y_0\oplus\mathcal Y_1$ 的某个对象”；它只在 $H^0(\mathcal A)$ 中与直和同构意义下确定。原文脚注正是提醒：不要把它当成对象层面的运算。]
+
+由引理 \ref{lem:3.11} 与 $\Upsilon$ 的定义，对任意
+$X\in\operatorname{obj}(\mathcal A)$，我们得到同构
+\[
+  \Hom_{H(\mathcal A)}(X,Y_0\oplus Y_1)
+  =H\bigl(\Upsilon(Y_0\oplus Y_1)(X)\bigr)\cong
+  H\bigl((\mathcal Y_0\oplus\mathcal Y_1)(X)\bigr)\cong
+  \Hom_{H(\mathcal A)}(X,Y_0)\oplus\Hom_{H(\mathcal A)}(X,Y_1).
+\]
+
+\begin{Def}\label{def:3.13}
+设 $\mathcal M\in\operatorname{obj}(\mathcal Q)$，$Z=(Z,\partial_Z)\in
+\operatorname{obj}(\mathsf{Ch})$。则\emph{张量积} $A_\infty$-模
+$Z\otimes\mathcal M\in\operatorname{obj}(\mathcal Q)$ 由以下设定得到：
+\[
+  \begin{aligned}
+    (Z\otimes\mathcal M)(X_0)&:=Z\otimes\mathcal M(X_0)
+    &&\text{（确实是分次向量空间）},\\
+    \mu^1_{Z\otimes\mathcal M}(z\otimes b)&:=(-1)^{|b|-1}\partial_Z(z)\otimes b
+    +z\otimes\mu^1_{\mathcal M}(b)\in(Z\otimes\mathcal M)(X_0)[1],\\
+    \mu^d_{Z\otimes\mathcal M}(z\otimes b,a_{d-1},\dots,a_1)&:=
+    z\otimes\mu^d_{\mathcal M}(b,a_{d-1},\dots,a_1)\in
+    (Z\otimes\mathcal M)(X_0)[2-d],
+  \end{aligned}
+\]
+其中 $X_0\in\operatorname{obj}(\mathcal A)$、$d>1$。对任意准表示
+$Z\otimes\mathcal Y\in\operatorname{obj}(\mathcal Q)$ 的对象
+$Z\otimes Y\in\operatorname{obj}(\mathcal A)$，我们沿用记号
+$Z\otimes Y$。
+\end{Def}
+% [Tutor Note: 【易错】$\mu^1$ 中第一项的符号是 $(-1)^{|b|-1}$ 而非 $(-1)^{|b|}$：$z$ 的微分要被移到 $b$ 的右边，Koszul 符号是 $(-1)^{|b|\cdot|\partial_Z|}=(-1)^{|b|}$，再乘上“$z$ 本身作为算子”的约定符号 $(-1)^{1}$，合计 $(-1)^{|b|-1}$。可对照 \cite{Sei08} 第 (2.5)–(2.6) 节核对。]
+
+由引理 \ref{lem:3.11} 与 $\Upsilon$ 的定义，对任意
+$X\in\operatorname{obj}(\mathcal A)$，我们得到同构
+\[
+  \Hom_{H(\mathcal A)}(X,Z\otimes Y)=H\bigl(\Upsilon(Z\otimes Y)(X)\bigr)
+  \cong H\bigl((Z\otimes\mathcal Y)(X)\bigr)\cong H(Z)\otimes
+  \Hom_{H(\mathcal A)}(X,Y).
+\]
+
+\begin{Def}\label{def:3.14}
+在上一定义中取 $Z=\mathbb K[\sigma]$（$\sigma\in\mathbb Z$），即把一维向量空间
+$\mathbb K$ 放在次数 $-\sigma$ 处。给定准表示
+$\mathcal M\in\operatorname{obj}(\mathcal Q)$ 的对象
+$Y\in\operatorname{obj}(\mathcal A)$，我们写 $S^\sigma Y:=
+\mathbb K[\sigma]\otimes Y$，作为 $\mathbb S^\sigma\mathcal M:=
+\mathbb K[\sigma]\otimes\mathcal M$ 的准代表；两者都称为 \emph{$\sigma$ 次平移}，
+当 $\sigma=1$ 时分别简记作 $SY$ 与 $\mathbb S\mathcal M$。
+\end{Def}
+
+注意 $Z\otimes\Box:\mathcal Q\to\mathcal Q$ 定义了 $A_\infty$-函子，它把预模同态
+$t\in\hom_{\mathcal Q}(\mathcal M_0,\mathcal M_1)$ 送到
+$\mathrm{id}_Z\otimes t\in\hom_{\mathcal Q}(Z\otimes\mathcal M_0,
+Z\otimes\mathcal M_1)$：
+\[
+  (\mathrm{id}_Z\otimes t)^d(z\otimes b,a_{d-1},\dots):=
+  (-1)^{|z|(|t|-1)}z\otimes t^d(b,a_{d-1},\dots),
+\]
+并且当 $d>1$ 时 $(Z\otimes\Box)^d=0$。特别地，
+$\mathbb S^\sigma:=\mathbb K[\sigma]\otimes\Box:\mathcal Q\to\mathcal Q$ 本身也是
+$A_\infty$-函子。
+
+定义 \ref{def:3.14} 的平移（当存在时）带有标准同构：
+\begin{equation}\label{eq:3.34}
+  \begin{aligned}
+    \Hom_{H(\mathcal A)}(Y_0,S^\sigma Y_1)&\cong
+    \mathbb K[\sigma]\otimes\Hom_{H(\mathcal A)}(Y_0,Y_1)
+    \cong\Hom_{H(\mathcal A)}(Y_0,Y_1)[\sigma],\\
+    \Hom_{H(\mathcal A)}(S^\sigma Y_0,S^\sigma Y_1)&\cong
+    \Hom_{H(\mathcal A)}(Y_0,Y_1),\\
+    \Hom_{H(\mathcal A)}(S^\sigma Y_0,Y_1)[\sigma]&\cong
+    \Hom_{H(\mathcal A)}(S^\sigma Y_0,S^\sigma Y_1)\cong
+    \Hom_{H(\mathcal A)}(Y_0,Y_1).
+  \end{aligned}
+\end{equation}
+对第二个同构，我们用了 $H(\mathbb S^\sigma)$ 的函子性。
+% [Tutor Note: 【易错】三行里的平移方向各不相同：第一个把 $S^\sigma$ 从第二变量移到 $\mathbb K[\sigma]$，第二个说明 $S^\sigma$ 在两侧同时作用时相互抵消，第三个则把左侧的 $[\sigma]$ 与 $S^\sigma$ 对消；套用 (34) 时必须逐行核对 $\sigma$ 的符号。]
+
+\begin{Def}\label{def:3.15}
+设 $\mathcal A$ 为 $A_\infty$-范畴，且对 $\mathcal A$ 的所有对象 $Y$ 都有
+$SY\in\operatorname{obj}(\mathcal A)$。则定义 \emph{$A_\infty$-平移函子}
+$S:\mathcal A\to\mathcal A$ 为使下图交换（在同构意义下，$H^0(\mathrm{fun}
+(\mathcal A,\mathcal Q))$ 中）的唯一（在 $H^0(\mathrm{fun}(\mathcal A,
+\mathcal A))$ 的同构意义下）$A_\infty$-函子：
+\[
+  \begin{tikzcd}
+    \mathcal A \arrow[r, "{\Upsilon}"] \arrow[d, "{S}"'] & \mathcal Q
+      \arrow[d, "{\mathbb S}"] \\
+    \mathcal A & \mathcal Q \arrow[l, "{\mathcal K}"']
+  \end{tikzcd}
+\]
+\end{Def}
+
+事实上我们可以写得更具体：取 $\tilde{\mathcal A}\subset\mathcal A$ 为一切
+“平移”对象 $SY$ 构成的全 $A_\infty$-子范畴，$\tilde{\mathcal Q}\subset
+\mathcal Q$ 为同构于“平移”$\mathcal Y$ 的 $\mathbb S\mathcal Y$ 的那些
+$A_\infty$-模构成的子范畴。则
+$\Upsilon|_{\tilde{\mathcal A}}:\tilde{\mathcal A}\to\tilde{\mathcal Q}$
+在上同调意义下本质满、全且忠实，从而是拟等价；由定理 \ref{thm:2.31}，它可以被
+反向到某个 $\mathcal K$，即上图中的函子。于是我们置
+$S:=\mathcal K\circ\mathbb S\circ\Upsilon$。
+% [Tutor Note: 【背景】这里 $\mathcal K$ 是 $\Upsilon|_{\tilde{\mathcal A}}$ 的拟逆，由定理 2.31 只在同构意义下唯一，故 $S$ 也只在 $H^0(\mathrm{fun}(\mathcal A,\mathcal A))$ 中唯一；$\mathcal A$ 未必含所有平移对象，所以先退到 $\tilde{\mathcal A}$，再沿全忠实嵌入延拓。]
+
+\subsection{映射锥与正合三角形}\label{sec:3.3}
+
+现在仿照同调代数中标准映射锥的构造。这里 $\mathcal A$ 与 $\mathcal Q$ 如常。
+
+\begin{Def}\label{def:3.16}
+设 $Y_0,Y_1\in\operatorname{obj}(\mathcal A)$，
+$c\in\hom^0_{\mathcal A}(Y_0,Y_1)$ 为 0 次上闭链。$c$ 的\emph{抽象映射锥}是
+$A_\infty$-模 $\mathcal C=\mathrm{Cone}(c)\in\operatorname{obj}(\mathcal Q)$，
+定义为：对 $X\in\operatorname{obj}(\mathcal A)$，
+\[
+  \mathcal C(X):=\hom_{\mathcal A}(X,Y_0)[1]\oplus\hom_{\mathcal A}(X,Y_1)
+  \in\operatorname{obj}(\mathsf{Ch}),
+\]
+其分次映射为
+\begin{equation}\label{eq:3.35}
+  \begin{aligned}
+    \mu^d_{\mathcal C}:{}&\mathcal C(X_{d-1})\otimes
+    \hom_{\mathcal A}(X_{d-2},X_{d-1})\otimes\dots\otimes
+    \hom_{\mathcal A}(X_0,X_1)\longrightarrow\mathcal C(X_0)[2-d],\\
+    &\bigl((b_0,b_1),a_{d-1},\dots\bigr)\longmapsto
+    \bigl(\mu^d_{\mathcal A}(b_0,a_{d-1},\dots),\ 
+    \mu^d_{\mathcal A}(b_1,a_{d-1},\dots)+
+    \mu^{d+1}_{\mathcal A}(c,b_0,a_{d-1},\dots)\bigr),
+  \end{aligned}
+\end{equation}
+其中 $d\ge 1$、$X_0,\dots,X_{d-1}\in\operatorname{obj}(\mathcal A)$。特别地，
+$\mathcal C(X)$ 是上链复形，其微分为
+\[
+  \mu^1_{\mathcal C}=
+  \begin{pmatrix}
+    \mu^1_{\mathcal A} & 0\\
+    \mu^2_{\mathcal A}(c,\cdot) & \mu^1_{\mathcal A}
+  \end{pmatrix}.
+\]
+我们用 $\mathrm{Cone}(c)\in\operatorname{obj}(\mathcal A)$ 表示 $\mathcal C$
+的任意准代表，并称之为 $c$ 的\emph{映射锥}。
+\end{Def}
+% [Tutor Note: 【易错】(35) 的第二分量是 $\mu^d_{\mathcal A}(b_1,\dots)+\mu^{d+1}_{\mathcal A}(c,b_0,\dots)$：$c$ 与 $b_0$ 都位于第一个直和项，故第二分量只通过 $\mu^{d+1}_{\mathcal A}$ 感受到 $b_0$；把 $c$ 与 $b_1$ 组合是常见错误。]
+% [Tutor Note: 【易错】$\mu^1_{\mathcal C}$ 的矩阵按“列向量 $(b_0,b_1)^{\mathsf T}$”作用，因此非对角元 $\mu^2_{\mathcal A}(c,\cdot)$ 位于左下角而非右上角；这与 $b_0\in\hom(X,Y_0)[1]$、$b_1\in\hom(X,Y_1)$ 的次数差 1 相符。]
+
+我们验证 $\mathcal C$ 确实是 $\mathcal Q$ 的对象。首先，结合性方程
+\eqref{eq:2.24} 满足（这又是一个非平凡的事实）。其次，按定义 \ref{def:2.34}，
+$\mathcal C$ 是 c-幺的：给定 c-单位 $e_X\in\hom^0_{\mathcal A}(X,X)$，映射
+$(b_0,b_1)\mapsto\mu^2_{\mathcal C}((b_0,b_1),e_X)=
+\bigl(\mu^2_{\mathcal A}(b_0,e_X),\mu^2_{\mathcal A}(b_1,e_X)+
+\mu^3_{\mathcal A}(c,b_0,e_X)\bigr)=(b_0,b_1)$ 显然在上同调中诱导恒等。
+因此 $\mathcal C\in\operatorname{obj}(\mathcal Q)$。
+
+可以证明 $\mathrm{Cone}(c)$（从而 $\mathrm{Cone}(c)$）仅由类 $\langle c\rangle$
+决定，至多差一个非标准同构。最值得注意的是，$\mathrm{Cone}(0)$ 准表示
+$\mathbb S\mathcal Y_0\oplus\mathcal Y_1$，从而
+$\mathrm{Cone}(0)\cong\mathbb S\mathcal Y_0\oplus\mathcal Y_1$，这与映射锥的
+标准定义类似。
+
+\begin{Def}\label{def:3.17}
+某个 0 次上闭链 $c\in\hom^0_{\mathcal A}(Y_0,Y_1)$ 的任意抽象映射锥
+$\mathcal C$ 都带有两个标准的模同态：
+\begin{itemize}
+  \item 到第二个直和项的“包含”$\iota\in\hom^0_{\mathcal Q}
+        (\mathcal Y_1,\mathcal C)$，它由
+        $\iota^1:\mathcal Y_1(X_0)\to\mathcal C(X_0)$、
+        $b_1\mapsto(0,(-1)^{|b_1|}b_1)$（$X_0\in\operatorname{obj}
+        (\mathcal A)$）给出，且当 $d>1$ 时 $\iota^d:=0$；
+  \item 到第一个直和项的“投影”$\pi\in\hom^1_{\mathcal Q}
+        (\mathcal C,\mathcal Y_0)$，它由
+        $\pi^1:\mathcal C(X_0)\to\mathcal Y_0(X_0)[1]$、
+        $(b_0,b_1)\mapsto(-1)^{|b_0|-1}b_0$（$X_0\in\operatorname{obj}
+        (\mathcal A)$）给出，且当 $d>1$ 时 $\pi^d:=0$。
+\end{itemize}
+它们合起来构成 $H(\mathcal Q)$ 中的周期三角形图
+\begin{equation}\label{eq:3.36}
+  \begin{tikzcd}
+    \mathcal Y_0 \arrow[rr, "{\langle\Upsilon^1(c)\rangle}"] & &
+      \mathcal Y_1 \arrow[dl, "{\langle\iota\rangle}"] \\
+    & \mathcal C \arrow[ul, "{\langle\pi\rangle{[}1{]}}"'] &
+  \end{tikzcd}
+\end{equation}
+这里我们采用与第 \ref{sec:3.1} 节相同的记号（在此情形，$[1]$ 实际上只表明
+$\pi$ 的次数为 1）。
+\end{Def}
+% [Tutor Note: 【易错】$\iota$ 与 $\pi$ 的符号 $(-1)^{|b_1|}$、$(-1)^{|b_0|-1}$ 不可互换成 $(-1)^{|b_0|}$：前者来自“把 $e_{Y_1}$ 搬到 $\mu^2$ 中”的 Koszul 约定，后者则来自 $\pi$ 的次数为 1（目标平移一次）；可对照引理 3.18 的证明逐项核对。]
+
+\begin{Lem}\label{lem:3.18}
+设 $e_{Y_0}\in\hom^0_{\mathcal A}(Y_0,Y_0)$、$e_{Y_1}\in\hom^0_{\mathcal A}
+(Y_1,Y_1)$ 为 c-单位。则如下模同态
+\[
+  \tilde\iota\in\hom^0_{\mathcal Q}(\mathcal Y_1,\mathcal C),\qquad
+  \tilde\iota^d(b,a_{d-1},\dots,a_1):=
+  \bigl(0,\mu^{d+1}_{\mathcal A}(e_{Y_1},b,a_{d-1},\dots,a_1)\bigr)\in
+  \mathcal C(X_0)
+\]
+与
+\[
+  \tilde\pi\in\hom^1_{\mathcal Q}(\mathcal C,\mathcal Y_0),\qquad
+  \tilde\pi^d\bigl((b_0,b_1),a_{d-1},\dots,a_1\bigr):=
+  -\mu^{d+1}_{\mathcal A}(e_{Y_0},b_0,a_{d-1},\dots,a_1)\in
+  \mathcal Y_0(X_0)
+\]
+（其中 $d\ge 1$、$X_0\in\operatorname{obj}(\mathcal A)$）在 $H(\mathcal Q)$ 中
+满足 $\langle\tilde\iota\rangle=\langle\iota\rangle$ 与
+$\langle\tilde\pi\rangle=\langle\pi\rangle$。
+\end{Lem}
+
+\begin{proof}
+先考虑 $\iota$。设 $e_{Y_1}\in\hom^0_{\mathcal Q}(\mathcal Y_1,\mathcal Y_1)$
+是 $\mathcal Y_1\in\operatorname{obj}(\mathcal Q)$ 的 c-单位。由于 $\Upsilon$
+是 c-幺的，必有 $\langle e_{Y_1}\rangle=H(\Upsilon)\langle e_{Y_1}\rangle=
+\langle\Upsilon^1(e_{Y_1})\rangle$，于是存在
+$h\in\hom^{-1}_{\mathcal Q}(\mathcal Y_1,\mathcal Y_1)$ 使得
+$e_{Y_1}-\Upsilon^1(e_{Y_1})=\mu^1_{\mathcal Q}(h)$。置
+$k:=(0,h)\in\hom^{-1}_{\mathcal Q}(\mathcal Y_1,\mathcal C)$，则由方程
+\eqref{eq:2.30} 有
+\[
+  \begin{aligned}
+    \mu^1_{\mathcal Q}(k)^d(b,a_{d-1},\dots,a_1)
+    &=\bigl(0,\mu^1_{\mathcal Q}(h)^d(b,a_{d-1},\dots,a_1)\bigr)\\
+    &=\bigl(0,e^d_{Y_1}(b,a_{d-1},\dots,a_1)-
+    \Upsilon^1(e_{Y_1})^d(b,a_{d-1},\dots,a_1)\bigr)\\
+    &=\bigl(0,0-\mu^{d+1}_{\mathcal A}(e_{Y_1},b,a_{d-1},\dots,a_1)\bigr)\\
+    &=(\iota^d-\tilde\iota^d)(b,a_{d-1},\dots,a_1),
+  \end{aligned}
+\]
+对 $d>1$ 成立；而
+$\mu^1_{\mathcal Q}(k)^1(b)=\bigl(0,e^1_{Y_1}(b)-\Upsilon^1(e_{Y_1})^1(b)\bigr)
+=\bigl(0,(-1)^{|b|}b-\mu^2_{\mathcal A}(e_{Y_1},b)\bigr)=\iota^1(b)-
+\tilde\iota^1(b)$（由 $A_\infty$-模严格单位的定义 \eqref{eq:2.29}）。因此
+$\mu^1_{\mathcal Q}(k)=\iota-\tilde\iota$，即 $\tilde\iota$ 与 $\iota$ 上同调。
+
+$\pi$ 的论证类似：存在 $h\in\hom^{-1}_{\mathcal Q}(\mathcal Y_0,\mathcal Y_0)$
+使得 $\mu^1_{\mathcal Q}(h)=-e_{Y_0}+\Upsilon^1(e_{Y_0})$，于是
+\[
+  \begin{aligned}
+    \mu^1_{\mathcal Q}(h)^d(b_0,a_{d-1},\dots,a_1)
+    &=-e^d_{Y_0}(b_0,a_{d-1},\dots,a_1)+
+    \mu^{d+1}_{\mathcal A}(e_{Y_0},b_0,a_{d-1},\dots,a_1)\\
+    &=0-\tilde\pi^d\bigl((b_0,b_1),a_{d-1},\dots,a_1\bigr)\\
+    &=(\pi^d-\tilde\pi^d)\bigl((b_0,b_1),a_{d-1},\dots,a_1\bigr),
+  \end{aligned}
+\]
+对 $d>1$ 成立；而
+$\mu^1_{\mathcal Q}(h)^1(b_0)=-e^1_{Y_0}(b_0)+\Upsilon^1(e_{Y_0})^1(b_0)
+=(-1)^{|b_0|-1}b_0+\mu^2_{\mathcal A}(e_{Y_0},b_0)=\pi^1(b_0,b_1)-
+\tilde\pi^1(b_0,b_1)$，即 $\tilde\pi$ 与 $\pi$ 上同调。
+\end{proof}
+
+\begin{Def}\label{def:3.19}
+$H(\mathcal A)$ 中的\emph{正合三角形}是任一图形
+\begin{equation}\label{eq:3.37}
+  \begin{tikzcd}
+    \mathcal Y_0 \arrow[rr, "{\langle c_1\rangle}"] & &
+      \mathcal Y_1 \arrow[dl, "{\langle c_2\rangle}"] \\
+    & \mathcal Y_2 \arrow[ul, "{\langle c_3\rangle{[}1{]}}"'] &
+  \end{tikzcd}
+\end{equation}
+它在施加 Yoneda 嵌入 $\Upsilon:\mathcal A\to\mathcal Q$ 后同构于三角形图
+\eqref{eq:3.36}。等价地，\eqref{eq:3.37} 正合当且仅当存在同构
+$\langle t\rangle\in\Hom^0_{H(\mathcal Q)}(\mathcal Y_2,
+\mathrm{Cone}(c_1))$（即 $\mathrm{Cone}(c_1)$ 的准代表
+$(\mathcal Y_2,\langle t\rangle)$），使下图在 $H(\mathcal Q)$ 中交换：
+\begin{equation}\label{eq:3.38}
+  \begin{tikzcd}[column sep=large, row sep=large]
+    \mathcal Y_0 \arrow[rr, "{\langle\Upsilon^1(c_1)\rangle}"] & &
+      \mathcal Y_1 \arrow[dl, "{\langle\Upsilon^1(c_2)\rangle}"]
+      \arrow[ddl, "{\langle\iota\rangle}"', bend left=25] \\
+    & \mathcal Y_2 \arrow[d, dashed, "{\wr\langle t\rangle}"']
+      \arrow[ul, "{\langle\Upsilon^1(c_3)\rangle{[}1{]}}"', bend left=20] & & \\
+    & \mathrm{Cone}(c_1) \arrow[uul, "{\langle\pi\rangle{[}1{]}}"', bend left=25] & &
+  \end{tikzcd}
+\end{equation}
+（注：$\langle t\rangle$ 的存在性与 $\langle c_1\rangle$ 的代表的选取无关。）
+\end{Def}
+% [Tutor Note: 【易错】(38) 中虚线箭头旁的 $\wr$ 表示“同构”，即 $\langle t\rangle$ 可逆；两条左弧与一条右弧分别给出 $\langle\Upsilon^1(c_3)\rangle[1]=\langle\pi\rangle[1]\circ\langle t\rangle$ 与 $\langle\iota\rangle=\langle t\rangle\circ\langle\Upsilon^1(c_2)\rangle$，缺一不可，否则图 (38) 不能表达 (37) 的正合性。]
+
+\begin{Lem}\label{lem:3.20}
+三角形 \eqref{eq:3.37} 正合，当且仅当存在 $h_1\in\hom^0_{\mathcal A}(Y_1,Y_0)$、
+$h_2\in\hom^0_{\mathcal A}(Y_2,Y_1)$ 与 $k\in\hom^{-1}_{\mathcal A}(Y_1,Y_1)$
+使得
+\begin{equation}\label{eq:3.39}
+  \begin{aligned}
+    \mu^1_{\mathcal A}(h_1)&=\mu^2_{\mathcal A}(c_3,c_2)
+    \in\hom^1_{\mathcal A}(Y_1,Y_0)\\
+    \mu^1_{\mathcal A}(h_2)&=-\mu^2_{\mathcal A}(c_1,c_3)
+    \in\hom^1_{\mathcal A}(Y_2,Y_1)\\
+    \mu^1_{\mathcal A}(k)&=-\mu^2_{\mathcal A}(c_1,h_1)+
+    \mu^2_{\mathcal A}(h_2,c_2)+\mu^3_{\mathcal A}(c_1,c_3,c_2)-e_{Y_1}
+    \in\hom^0_{\mathcal A}(Y_1,Y_1)
+  \end{aligned}
+\end{equation}
+（其中 $e_{Y_1}$ 是 c-单位），并且对一切 $X\in\operatorname{obj}(\mathcal A)$，
+上链复形 $\mathcal Y_2(X)[1]\oplus\mathcal Y_0(X)[1]\oplus\mathcal Y_1(X)$
+（边界算子为
+\[
+  \partial:=
+  \begin{pmatrix}
+    \mu^1_{\mathcal A} & 0 & 0\\
+    \mu^2_{\mathcal A}(c_3,\cdot) & \mu^1_{\mathcal A} & 0\\
+    \mu^2_{\mathcal A}(h_2,\cdot)+\mu^3_{\mathcal A}(c_1,c_3,\cdot)
+    & \mu^2_{\mathcal A}(c_1,\cdot) & \mu^1_{\mathcal A}
+  \end{pmatrix}
+\]）
+是无环的。
+\end{Lem}
+% [Tutor Note: 【易错】(39) 三条方程的右端符号交错：第二条是 $-\mu^2_{\mathcal A}(c_1,c_3)$（而非 $+\mu^2_{\mathcal A}(c_1,c_3)$），第三条含 $-e_{Y_1}$；这正是使 $(c_3,h_2)$ 成为 $\mathcal C(Y_2)$ 中上闭链、并让 $b=(c_3,h_2)$ 可用的符号配置，不可“对称化”。]
+
+\begin{proof}
+“$\Leftarrow$” 令 $\mathcal C=\mathrm{Cone}(c_1)$。则 $b:=(c_3,h_2)$ 是
+$\mathcal C(Y_2)$ 的 0 次上闭链（确实，
+$\mu^1_{\mathcal C}(b)=\bigl(\mu^1_{\mathcal A}(c_3),
+\mu^1_{\mathcal A}(h_2)+\mu^2_{\mathcal A}(c_1,c_3)\bigr)=0$，由 \eqref{eq:3.39} 的第二式），
+从而给出模同态 $t:=\lambda_{\mathcal C}(b)\in\hom^0_{\mathcal Q}
+(\mathcal Y_2,\mathcal C)$（其中 $\lambda_{\mathcal C}$ 如式 \eqref{eq:2.31}）。
+对 $X\in\operatorname{obj}(\mathcal A)$，$t^1_X$ 恰是分次（链）映射
+$\mathcal Y_2(X)\to\mathcal C(X)$，
+\[
+  a\longmapsto(-1)^{|a|}\mu^2_{\mathcal C}(b,a)=
+  (-1)^{|a|}\bigl(\mu^2_{\mathcal A}(c_3,a),
+  \mu^2_{\mathcal A}(h_2,a)+\mu^3_{\mathcal A}(c_1,c_3,a)\bigr),
+\]
+它来自引理 \ref{lem:3.11}；而按定义它的映射锥为
+\[
+  \partial^{t^1_X}=
+  \begin{pmatrix}
+    \partial_{\mathcal Y_2(X)} & 0\\
+    t^1_X & \partial_{\mathcal C(X)}
+  \end{pmatrix}.
+\]
+$\mathcal Y_2(X)=\hom_{\mathcal A}(X,Y_2)$ 的微分是 $\mu^1_{\mathcal A}$，
+$\mathcal C(X)$ 的微分则在定义 \ref{def:3.16} 中给出。因此
+$\partial^{t^1_X}=\partial$，按假设它是无环的。基本的同调代数告诉我们，
+这使 $t^1_X$ 成为链等价，进而蕴含 $\langle t\rangle$ 在 $H^0(\mathcal Q)$ 中
+是同构，从而是图 \eqref{eq:3.38} 中合法的竖向箭头。
+
+还需说明 \eqref{eq:3.38} 交换。我们有：
+\[
+  \begin{aligned}
+    \langle\iota\rangle
+    &=\langle\tilde\iota\rangle
+    &&\text{（由引理 \ref{lem:3.18}）}\\
+    &=\bigl\langle\lambda_{\mathcal C}\bigl((0,e_{Y_1})\bigr)\bigr\rangle
+    &&\text{（由 $\lambda$ 与 $\tilde\iota$ 的定义）}\\
+    &=\bigl\langle\lambda_{\mathcal C}\bigl(\mu^2_{\mathcal C}(b,c_2)
+    \bigr)\bigr\rangle
+    &&\text{（因 $(0,e_{Y_1})$ 与 $\mu^2_{\mathcal C}(b,c_2)$ 上同调，见 \eqref{eq:3.39}）}\\
+    &=\bigl\langle\mu^2_{\mathcal Q}\bigl(t,\Upsilon^1(c_2)\bigr)\bigr\rangle
+    &&\text{（由 (32) 的第一式）}\\
+    &=\langle t\rangle\circ\langle\Upsilon^1(c_2)\rangle
+    &&\text{（按定义，且 $|\Upsilon^1(c_2)|=|c_2|=0$）}
+  \end{aligned}
+\]
+以及
+\[
+  \begin{aligned}
+    \langle\Upsilon^1(c_3)\rangle
+    &=\bigl\langle\lambda_{\mathcal Y_0}(c_3)\bigr\rangle
+    &&\text{（由 $\lambda$ 的定义）}\\
+    &=\bigl\langle\lambda_{\mathcal Y_0}\bigl(\pi^1(b)\bigr)\bigr\rangle
+    &&\text{（由 $\pi$ 的定义，且 $|c_3|=1$）}\\
+    &=\bigl\langle\mu^2_{\mathcal Q}(\pi,t)\bigr\rangle
+    &&\text{（由 (32) 的第二式）}\\
+    &=\langle\pi\rangle\circ\langle t\rangle
+    &&\text{（按定义，且 $|t|=0$）。}
+  \end{aligned}
+\]
+于是 \eqref{eq:3.37} 正合的一切条件都满足。
+
+“$\Rightarrow$” 我们倒推：使 \eqref{eq:3.38} 交换的任一原因同构 $\langle t\rangle$ 都由引理
+\ref{lem:3.11} 具有形式 $\langle\lambda_{\mathcal C}(b)\rangle$，其中
+$b=(b_0,h_2)\in\mathcal C(Y_2)^0$ 是上闭链。由 $H(\Upsilon)$ 的双射性，
+$H(\Upsilon)\langle b_0\rangle=\langle\Upsilon^1(\pi^1(b))\rangle=
+H(\Upsilon)\langle c_3\rangle$ 蕴含 $\langle b_0\rangle=\langle c_3\rangle$
+（这里用了最后一串等式以及 \eqref{eq:3.38} 的交换性）。因此可以取
+$b=(c_3,h_2)$，$h_2$ 仍待定。
+
+另一方面，$\bigl\langle\lambda_{\mathcal C}((0,e_Y))\bigr\rangle=
+\langle\iota\rangle=\bigl\langle\mu^2_{\mathcal Q}(t,\Upsilon^1(c_2))\bigr\rangle
+=\bigl\langle\lambda_{\mathcal C}(\mu^2_{\mathcal C}(b,c_2))\bigr\rangle$
+（再次利用交换性与 (32) 的第一式），故两个输入上同调，从而给出某个 $h_1$ 与
+$k$ 的上边缘。按构造，三元组 $(h_1,h_2,k)$ 满足方程 \eqref{eq:3.39}。
+$\mathcal Y_2(X)[1]\oplus\mathcal Y_0(X)[1]\oplus\mathcal Y_1$ 的无环性可通过
+写出收缩同伦得到；此处从略。
+\end{proof}
+% [Tutor Note: 【含糊】原文明确省略了最后“写出收缩同伦”的一步。可这样补：把 $\partial$ 视为三项复形，用 $\mathcal Y_2\to\mathcal Y_0$ 方向的 $h_2$ 与 $\mathcal Y_0\to\mathcal Y_1$ 方向的 $h_1$ 逐次消去上同调，$k$ 则修正在 $\mathcal Y_1$ 上的失败项；这与同调微扰引理（\cite{Sei08} 第 (1e) 节）的构造一致。]
+
+虽然显式，引理 \ref{lem:3.20} 的判别法极为繁重。我们希望借助结构上更简单的
+$A_\infty$-范畴来判断三角形的正合性。这确实是可行的（见命题 \ref{pro:3.43}），
+但要等我们发展出合适的工具后才能证明。
+
+\subsection{三角 $A_\infty$-范畴与导出范畴}\label{sec:3.4}
+
+我们把第 \ref{sec:3.1} 节研究过的三角化概念推广到 $A_\infty$-范畴。
+
+\begin{Def}\label{def:3.21}
+$A_\infty$-范畴 $\mathcal A$ 称为\emph{三角的}（triangulated），若：
+\begin{itemize}
+  \item $\operatorname{obj}(\mathcal A)\neq\varnothing$；
+  \item 对任意 $Y_0,Y_1\in\operatorname{obj}(\mathcal A)$，每个 0 次态射
+        $\langle c_1\rangle\in\Hom^0_{H(\mathcal A)}(Y_0,Y_1)$ 都可以补全为
+        $H(\mathcal A)$ 中形如 \eqref{eq:3.37} 的正合三角形；
+  \item 对任意 $Y\in\operatorname{obj}(\mathcal A)$，存在某个
+        $\tilde Y\in\operatorname{obj}(\mathcal A)$ 使得
+        $S\tilde Y\cong Y$ 在 $H^0(\mathcal A)$ 中成立，即每个对象都同构于
+        某个平移对象。
+\end{itemize}
+\end{Def}
+
+最后两个条件蕴含我们可以像定义 \ref{def:3.15} 那样构造 $A_\infty$-平移函子
+$S:\mathcal A\to\mathcal A$，且它是拟等价（因为要求它在上同调意义下全、忠实且
+本质满）。
+
+后文将证明 $\mathcal Q=\mathrm{mod}(\mathcal A)$ 总是三角的。更重要的是，若
+$\mathcal A$ 是三角 $A_\infty$-范畴，则其零阶上同调范畴 $H^0(\mathcal A)$ 是
+标准三角范畴，平移函子为 $T:=H^0(S)$，区分三角形对应于 $H^0(\mathcal A)\subset
+H(\mathcal A)$ 中的正合三角形（见命题 \ref{pro:3.47}）；这里可以先把
+$\langle c_3\rangle$ 认定为 $\Hom_{H(\mathcal A)}(Y_2,SY_0)$ 中的 0 次态射
+（由 \eqref{eq:3.34} 第一式，它 $\cong\Hom_{H(\mathcal A)}(Y_2,Y_0)[1]$）。
+
+\begin{Def}\label{def:3.22}
+设 $\mathcal B$ 为三角 $A_\infty$-范畴，$\mathcal A\subset\mathcal B$ 为全的、
+非空的 $A_\infty$-子范畴。包含 $\mathcal A$、并在同构下封闭（即
+$X_0\cong X_1$ 于 $H(\mathcal B)$ 且 $X_0\in\operatorname{obj}(\tilde{\mathcal B})$
+蕴含 $X_1\in\operatorname{obj}(\tilde{\mathcal B})$）的最小三角全
+$A_\infty$-子范畴 $\tilde{\mathcal B}\subset\mathcal B$，称为 $\mathcal B$ 中
+\emph{由 $\mathcal A$ 生成的三角子范畴}。
+\end{Def}
+
+具体地说，$\operatorname{obj}(\tilde{\mathcal B})$ 可以从
+$\operatorname{obj}(\mathcal A)$ 出发，取一切可能的映射锥与平移并迭代得到。
+若 $\tilde{\mathcal B}=\mathcal B$，则称 $\mathcal A$ \emph{生成} $\mathcal B$。
+
+$A_\infty$-范畴 $\mathcal A$ 的\emph{三角包络}（triangulated envelope）是一个
+二元组 $(\mathcal B,\mathcal F)$，其中 $\mathcal B$ 是三角 $A_\infty$-范畴，
+$\mathcal F:\mathcal A\to\mathcal B$ 是上同调全忠实函子，且其像对象生成
+$\mathcal B$。按定义，若 $\mathcal A$ 生成 $\mathcal B$，则 $\mathcal B$ 就是
+$\mathcal A$ 的三角包络（取 $\mathcal F$ 为包含函子）。
+
+我们将证明三角包络 $(\mathcal B,\mathcal F)$ 总是存在，且在拟等价意义下唯一
+（参看命题 \ref{pro:3.50}），从而 $H^0(\mathcal B)$ 在等价意义下被唯一确定。
+
+\begin{Def}\label{def:3.23}
+设 $\mathcal B$ 为 $A_\infty$-范畴 $\mathcal A$ 的三角包络。则称
+$\mathsf D(\mathcal A):=H^0(\mathcal B)$ 为 $\mathcal A$ 的\emph{导出范畴}。%
+\footnote{这一术语并不十分恰当：我们构造三角包络的过程并不涉及定义
+\ref{def:3.7} 中强调的局部化程序，但在考察扭复形时会发现两者有确切的联系
+（参看命题 \ref{pro:3.39}）。对定义 \ref{def:3.51} 中的有界导出范畴也有同样
+的说明。}
+\end{Def}
+
+\subsection{扭复形的 $A_\infty$-范畴}\label{sec:3.5}
+
+为了一般性，我们暂时放弃“每个 $A_\infty$-范畴与函子都是 c-幺的”这一假设。
+
+\begin{Def}\label{def:3.24}
+设 $\mathcal A$ 为非幺 $A_\infty$-范畴。我们定义其\emph{加性扩张}
+$\Sigma\mathcal A$ 为非幺 $A_\infty$-范畴，具有：
+\begin{itemize}
+  \item 对象：一切形式和
+        $X\equiv(I,\{X^i\}_{i\in I},\{V^i\}_{i\in I}):=
+        \bigoplus_{i\in I}V^i\otimes X^i$，其中 $I$ 为有限指标集，
+        $X^i\in\operatorname{obj}(\mathcal A)$，$V^i$ 为有限维分次向量空间
+        （称为\emph{重数空间}）；
+  \item 对任意 $X_0,X_1\in\operatorname{obj}(\Sigma\mathcal A)$，分次向量空间
+        \begin{equation}\label{eq:3.40}
+          \begin{aligned}
+            \hom_{\Sigma\mathcal A}(X_0,X_1)
+            &=\hom_{\Sigma\mathcal A}\Bigl(\bigoplus_{i_0\in I_0}
+            V_0^{i_0}\otimes X_0^{i_0},\bigoplus_{i_1\in I_1}
+            V_1^{i_1}\otimes X_1^{i_1}\Bigr)\\
+            &:=\bigoplus_{i_0\in I_0,\,i_1\in I_1}
+            \Hom_{\mathbb K}(V_0^{i_0},V_1^{i_1})\otimes
+            \hom_{\mathcal A}(X_0^{i_0},X_1^{i_1})
+          \end{aligned}
+        \end{equation}
+        （分次，因为每个直和项都分次），其中
+        \[
+          \hom^n_{\Sigma\mathcal A}(X_0,X_1)=
+          \bigoplus_{l+m=n}\ \bigoplus_{i_0\in I_0,\,i_1\in I_1}
+          \Hom^l_{\mathbb K}(V_0^{i_0},V_1^{i_1})\otimes
+          \hom^m_{\mathcal A}(X_0^{i_0},X_1^{i_1});
+        \]
+        我们把态射 $a_1\in\hom_{\Sigma\mathcal A}(X_0,X_1)$ 写成矩阵形式
+        $(a_1^{i_1,i_0})$（$i_0\in I_0$，$i_1\in I_1$），其中每个元素是形如
+        $a_1^{i_1,i_0}=\sum_k\varphi_1^{k,i_1,i_0}\otimes x_1^{k,i_1,i_0}
+        \in\Hom_{\mathbb K}(V_0^{i_0},V_1^{i_1})\otimes
+        \hom_{\mathcal A}(X_0^{i_0},X_1^{i_1})$ 的有限线性组合（但为实用起见，
+        我们默认线性性，直接写
+        $a_1^{i_1,i_0}=\varphi_1^{i_1,i_0}\otimes x_1^{i_1,i_0}$）；
+  \item 复合映射 $\mu^d_{\Sigma\mathcal A}$ 如 \eqref{eq:2.5} 中那样，其中对
+        $a_k\in\hom_{\Sigma\mathcal A}(X_{k-1},X_k)$，输出态射
+        $\mu^d_{\Sigma\mathcal A}(a_d,\dots,a_1)\in
+        \hom_{\Sigma\mathcal A}(X_d,X_0)$ 按分量定义为
+        \begin{equation}\label{eq:3.41}
+          \begin{aligned}
+            \mu^d_{\Sigma\mathcal A}(a_d,\dots,a_1)^{i_d,i_0}
+            &:=\sum_{i_1\in I_1,\dots,i_{d-1}\in I_{d-1}}(-1)^{\star}
+            \bigl(\varphi_d^{i_d,i_{d-1}}\circ\dots\circ
+            \varphi_1^{i_1,i_0}\bigr)\otimes
+            \mu^d_{\mathcal A}\bigl(x_d^{i_d,i_{d-1}},\dots,
+            x_1^{i_1,i_0}\bigr),
+          \end{aligned}
+        \end{equation}
+        其中 $i_0\in I_0$、$i_d\in I_d$，且
+        $\star:=\sum_{1\le p<q\le d}\bigl|\varphi_p^{i_p,i_{p-1}}\bigr|
+        \cdot\bigl(\bigl|x_q^{i_q,i_{q-1}}\bigr|-1\bigr)$。
+\end{itemize}
+\end{Def}
+% [Tutor Note: 【易错】$\star$ 中乘的是 $(|x_q|-1)$ 而不是 $|x_q|$：因为 $\mu^d_{\mathcal A}$ 的靶带平移 $[2-d]$，求符号时必须用“$x_q$ 的平移次数”$|x_q|-1$；这与第 2 章 $\dagger_n$ 的约定一致。]
+% [Tutor Note: 【背景】重数空间 $V^i$ 与 $\Hom_{\mathbb K}(V^i,V^j)$ 的引入，相当于把 $\mathcal A$ 形式的矩阵范畴；若把所有 $V^i$ 取成 $\mathbb K$ 的平移，就得到注 3.25 中记号更简单的版本，两者仅相差拟等价。]
+
+取 $I:=\{*\}$、$X^*:=X$、$V^*:=\mathbb K[0]=\mathbb K$（对一切
+$X\in\operatorname{obj}(\mathcal A)$），便使
+$\mathcal A\subset\Sigma\mathcal A$ 成为全 $A_\infty$-子范畴。
+
+\begin{Rem}\label{rem:3.25}
+在继续之前，值得提一下加性扩张的另一种构造：它与上述构造只在拟等价意义下相容，
+但记号更友好（确切表述参看 \cite{Sei13} 第 2b 节；更简洁的版本见 \cite{Kel01}
+第 7.6 节）。即：我们只允许 $\mathbb K$ 的平移副本作为重数空间。此时对象形如
+$\bigoplus_i S^{-\sigma_i}X^i$（$\sigma_i\in\mathbb Z$），即第 \ref{sec:3.2} 节
+中 $\mathcal A$ 的平移对象的形式和。态射空间成为
+$\bigoplus_{i_0,i_1}\hom_{\mathcal A}(X_0^{i_0},X_1^{i_1})
+[\sigma_{1,i_1}-\sigma_{0,i_0}]$，而复合为
+\[
+  \mu^d_{\Sigma\mathcal A}(a_d,\dots,a_1)^{i_d,i_0}
+  :=(-1)^{\sigma_{0,i_0}}\sum_{i_1,\dots,i_{d-1}}
+  \mu^d_{\mathcal A}\bigl(a_d^{i_d,i_{d-1}},\dots,a_1^{i_1,i_0}\bigr).
+\]
+这简化了讨论，尤其在符号方面，但我们仍忠于主要文献 \cite{Sei08} 更一般的表述。
+\end{Rem}
+
+\begin{Def}\label{def:3.26}
+设 $\mathcal A$ 与 $\mathcal B$ 为非幺 $A_\infty$-范畴。非幺 $A_\infty$-函子
+$\mathcal F:\mathcal A\to\mathcal B$ 诱导 $A_\infty$-函子
+$\Sigma\mathcal F:\Sigma\mathcal A\to\Sigma\mathcal B$，定义为
+\begin{equation}\label{eq:3.42}
+  (\Sigma\mathcal F)(X)=(\Sigma\mathcal F)\Bigl(\bigoplus_{i\in I}
+  V^i\otimes X^i\Bigr):=\bigoplus_{i\in I}V^i\otimes\mathcal F(X^i),
+\end{equation}
+\[
+  (\Sigma\mathcal F)^d(a_d,\dots,a_1)^{i_d,i_0}:=
+  \sum_{i_1\in I_1,\dots,i_{d-1}\in I_{d-1}}(-1)^{\star}
+  \bigl(\varphi_d^{i_d,i_{d-1}}\circ\dots\circ\varphi_1^{i_1,i_0}\bigr)
+  \otimes\mathcal F^d\bigl(x_d^{i_d,i_{d-1}},\dots,x_1^{i_1,i_0}\bigr),
+\]
+其中 $X\in\operatorname{obj}(\Sigma\mathcal A)$、
+$a_k\in\hom_{\Sigma\mathcal A}(X_{k-1},X_k)$。
+
+此外有非幺 $A_\infty$-函子
+$\Sigma:\mathrm{nu\text{-}fun}(\mathcal A,\mathcal B)\to
+\mathrm{nu\text{-}fun}(\Sigma\mathcal A,\Sigma\mathcal B)$，它把
+$T\in\hom_{\mathrm{nu\text{-}fun}(\mathcal A,\mathcal B)}(\mathcal F_0,
+\mathcal F_1)$ 送到
+$\Sigma^1(T)\in\hom_{\mathrm{nu\text{-}fun}(\Sigma\mathcal A,\Sigma\mathcal B)}
+(\Sigma\mathcal F_0,\Sigma\mathcal F_1)$，由下式给出：
+\begin{equation}\label{eq:3.43}
+  \Sigma^1(T)^d(a_d,\dots,a_1)^{i_d,i_0}:=
+  \sum_{i_1\in I_1,\dots,i_{d-1}\in I_{d-1}}(-1)^{\star}
+  \bigl(\varphi_d^{i_d,i_{d-1}}\circ\dots\circ\varphi_1^{i_1,i_0}\bigr)
+  \otimes T^d\bigl(x_d^{i_d,i_{d-1}},\dots,x_1^{i_1,i_0}\bigr),
+\end{equation}
+并且当 $d>1$ 时 $\Sigma^d:=0$。
+\end{Def}
+
+\begin{Def}\label{def:3.27}
+设 $\mathcal A$ 为非幺 $A_\infty$-范畴。$\mathcal A$ 中的\emph{预扭复形}
+是一个二元组 $(X,\delta_X)$，其中
+$X=(I,\{X^i\},\{V^i\})\in\operatorname{obj}(\Sigma\mathcal A)$ 且
+$\delta_X=(\delta_X^{j,i})\in\hom^1_{\Sigma\mathcal A}(X,X)$（于是每个
+$\delta_X^{j,i}$ 都是若干个次数为 1 的张量的线性组合）。
+
+$\mathcal A$ 中的\emph{扭复形}是满足如下条件的预扭复形 $(X,\delta_X)$：
+$\delta_X$ “严格下三角”（即适当重排 $I$ 后，$j\le i$ 时
+$\delta_X^{j,i}=0$），并且满足广义 Maurer–Cartan 方程
+\begin{equation}\label{eq:3.44}
+  \sum_{r=1}^{\infty}\mu^r_{\Sigma\mathcal A}(\delta_X,\dots,\delta_X)=0.
+\end{equation}
+（由下三角性，最后一个和实际上是有限的，因为 \eqref{eq:3.41} 中 $\varphi$ 的复合最终会
+消失。）\footnote{办法是利用子复形给出的滤过；见 \cite{Sei08} 第 (3l) 节。}
+\end{Def}
+% [Tutor Note: 【易错】$\delta_X$ 的次数必须是 1（使 $\mu^1$ 项与 $\mu^2(\delta,\cdot)$ 项次数一致），且“严格下三角”是对某个重排后的指标序而言的；若 $\delta_X$ 不满足 Maurer–Cartan 方程，(46) 定义的 $\mu^1_{\mathsf{Tw}\mathcal A}$ 不会平方为零。]
+
+\begin{Def}\label{def:3.28}
+设 $\mathcal A$ 为非幺 $A_\infty$-范畴。我们定义 $\mathcal A$ 中扭复形的范畴
+$\mathsf{Tw}\mathcal A$ 为非幺 $A_\infty$-范畴，具有：
+\begin{itemize}
+  \item 对象：$\mathcal A$ 中一切扭复形 $X=(X,\delta_X)$；
+  \item 对任意 $X_0,X_1\in\operatorname{obj}(\mathsf{Tw}\mathcal A)$，态射空间
+        \begin{equation}\label{eq:3.45}
+          \hom_{\mathsf{Tw}\mathcal A}(X_0,X_1):=
+          \hom_{\Sigma\mathcal A}(X_0,X_1);
+        \end{equation}
+  \item 复合映射 $\mu^d_{\mathsf{Tw}\mathcal A}$ 由下式给出：
+        \begin{equation}\label{eq:3.46}
+          \mu^d_{\mathsf{Tw}\mathcal A}(a_d,\dots,a_1):=
+          \sum_{s_0,\dots,s_d\ge 0}\mu^{d+s_0+\dots+s_d}_{\Sigma\mathcal A}
+          (\underbrace{\delta_{X_d},\dots,\delta_{X_d}}_{s_d},
+          a_d,\dots,a_1,\underbrace{\delta_{X_0},\dots,\delta_{X_0}}_{s_0}),
+        \end{equation}
+        其中 $d\ge 1$、$a_k\in\hom_{\mathsf{Tw}\mathcal A}(X_{k-1},X_k)$
+        （和同样是有限的）。
+\end{itemize}
+\end{Def}
+$\mathsf{Tw}\mathcal A$ 确实构成 $A_\infty$-范畴，例如可在 \cite{Kel01} 第 8.6 节
+找到证明（该作者在那里使用的是由注 \ref{rem:3.25} 导出的简化定义）。对一切
+$X\in\operatorname{obj}(\Sigma\mathcal A)$ 置 $\delta_X:=0$，便使
+$\Sigma\mathcal A\subset\mathsf{Tw}\mathcal A$ 成为全 $A_\infty$-子范畴。于是
+结合上述等同，$\mathcal A\subset\mathsf{Tw}\mathcal A$ 也是全
+$A_\infty$-子范畴。
+% [Tutor Note: 【含糊】原文把“$\mathsf{Tw}\mathcal A$ 确实是 $A_\infty$-范畴”的验证外引到 \cite{Kel01} 第 8.6 节，且该处作者用的是注 3.25 的简化定义；两种定义只差拟等价，故结论可迁移，但逐项验算 $\mu^1\mu^1=0$ 需要 Maurer–Cartan 方程与 (41) 的符号配合，详见 \cite{Sei08} 第 (3l) 节。]
+
+\begin{Def}\label{def:3.29}
+设 $\mathcal A$ 与 $\mathcal B$ 为非幺 $A_\infty$-范畴。非幺 $A_\infty$-函子
+$\mathcal F:\mathcal A\to\mathcal B$ 诱导 $A_\infty$-函子
+$\mathsf{Tw}\mathcal F:\mathsf{Tw}\mathcal A\to\mathsf{Tw}\mathcal B$，定义为
+\begin{equation}\label{eq:3.47}
+  (\mathsf{Tw}\mathcal F)(X,\delta_X):=
+  \Bigl(\Sigma\mathcal F(X),\sum_{d\ge 1}(\Sigma\mathcal F)^d
+  (\delta_X,\dots,\delta_X)\Bigr),
+\end{equation}
+\[
+  (\mathsf{Tw}\mathcal F)^d(a_d,\dots,a_1):=
+  \sum_{s_0,\dots,s_d\ge 0}(\Sigma\mathcal F)^{d+s_0+\dots+s_d}
+  (\underbrace{\delta_{X_d},\dots,\delta_{X_d}}_{s_d},a_d,\dots,a_1,
+  \underbrace{\delta_{X_0},\dots,\delta_{X_0}}_{s_0}),
+\]
+其中 $X=(X,\delta_X)\in\operatorname{obj}(\mathsf{Tw}\mathcal A)$、
+$a_k\in\hom_{\Sigma\mathcal A}(X_{k-1},X_k)$。
+
+此外有非幺 $A_\infty$-函子
+$\mathsf{Tw}:\mathrm{nu\text{-}fun}(\mathcal A,\mathcal B)\to
+\mathrm{nu\text{-}fun}(\mathsf{Tw}\mathcal A,\mathsf{Tw}\mathcal B)$，
+$T\in\hom_{\mathrm{nu\text{-}fun}(\mathcal A,\mathcal B)}(\mathcal F_0,
+\mathcal F_1)\mapsto\mathsf{Tw}^1(T)\in
+\hom_{\mathrm{nu\text{-}fun}(\mathsf{Tw}\mathcal A,\mathsf{Tw}\mathcal B)}
+(\mathsf{Tw}\mathcal F_0,\mathsf{Tw}\mathcal F_1)$，由下式给出：
+\[
+  \mathsf{Tw}^1(T)^d(a_d,\dots,a_1):=
+  \sum_{s_0,\dots,s_d\ge 0}\Sigma^1(T)^{d+s_0+\dots+s_d}
+  (\underbrace{\delta_{X_d},\dots,\delta_{X_d}}_{s_d},a_d,\dots,a_1,
+  \underbrace{\delta_{X_0},\dots,\delta_{X_0}}_{s_0}),
+\]
+并且当 $d>1$ 时 $\mathsf{Tw}^d:=0$。
+\end{Def}
+
+\begin{Lem}\label{lem:3.30}
+若 $F:\mathcal A\to\mathcal B$ 是上同调全忠实的非幺 $A_\infty$-函子，则
+$\mathsf{Tw}F:\mathsf{Tw}\mathcal A\to\mathsf{Tw}\mathcal B$ 也是。
+\end{Lem}
+
+\begin{proof}
+对空间 $\hom_{\mathsf{Tw}\mathcal A}(X_0,X_1)$ 与
+$\hom_{\mathsf{Tw}\mathcal B}(\mathsf{Tw}F(X_0),\mathsf{Tw}F(X_1))$ 的滤过所
+关联的谱序列 \eqref{eq:2.21} 作比较论证，问题归结为 $\Sigma F$。但对任意两个固定对象
+$X,Y\in\operatorname{obj}(\Sigma\mathcal A)$，$H(\Sigma F)_{X,Y}:
+\Hom_{H(\Sigma\mathcal A)}(X,Y)\to\Hom_{H(\Sigma\mathcal B)}
+((\Sigma F)(X),(\Sigma F)(Y))$ 把 $\langle a\rangle$ 送到
+$\langle(\Sigma F)^1(a)\rangle$；按方程 \eqref{eq:3.42}，后者的 $(i_1,i_0)$ 元等于
+$\varphi_1^{i_1,i_0}\otimes H(F)\langle x_1^{i_1,i_0}\rangle$。因此
+$H(\Sigma F)$ 在态射上的双射性可由 $H(F)$ 的相应性质推出。
+\end{proof}
+% [Tutor Note: 【含糊】谱序列 (21) 的比较是本章反复使用的核心工具：两边滤过的分次块分别同构于 $\bigoplus\Hom(V_0,V_1)\otimes\hom_{\mathcal A}(X_0,X_1)$（或其在 $\mathcal B$ 中的像），逐块由 $H(F)$ 双射，再用滤过谱序列的 $E_1$ 页同构推出 $E_\infty$ 页同构。原文未展开逐页论证。]
+
+我们回到幺性的讨论。若 $\mathcal A$ 严格幺，即对所有 $Y\in\operatorname{obj}
+(\mathcal A)$ 都能找到严格单位 $e_Y\in\hom^0_{\mathcal A}(Y,Y)$，则我们定义
+扭复形 $X=(I,\{X^i\},\{V^i\})$ 的严格单位
+$E_X\in\hom_{\mathsf{Tw}\mathcal A}(X,X)$ 为对角矩阵形式
+\[
+  E_X^{j,i}=\varphi^{j,i}\otimes x^{j,i}:=\delta_{ji}\cdot\mathrm{id}_{V^i}
+  \otimes e_{X^i}
+\]
+（把 \eqref{eq:3.46} 看作矩阵乘法，由 $\delta_{X_k}$ 的严格下三角性，严格幺性的要求
+\eqref{eq:2.28} 显然满足）。
+
+也可证明严格幺 $A_\infty$-函子 $\mathcal F:\mathcal A\to\mathcal B$ 诱导严格幺
+的 $\mathsf{Tw}\mathcal F$，且 $\mathsf{Tw}$ 本身在严格幺 $A_\infty$-范畴
+$\mathrm{nu\text{-}fun}(\mathcal C,\mathcal A)$ 上是严格幺的（对任意
+$\mathcal C$）。那么 c-幺性如何？
+
+\begin{Lem}\label{lem:3.31}
+若 $\mathcal A$ 是 c-幺的，则 $\mathsf{Tw}\mathcal A$ 也是。此外，c-幺范畴之间
+的 c-幺函子 $\mathcal F:\mathcal A\to\mathcal B$ 给出 c-幺的
+$\mathsf{Tw}\mathcal F$。最后，$A_\infty$-函子
+$\mathsf{Tw}:\mathrm{nu\text{-}fun}(\mathcal C,\mathcal A)\to
+\mathrm{nu\text{-}fun}(\mathsf{Tw}\mathcal C,\mathsf{Tw}\mathcal A)$ 对任意
+$\mathcal C$ 与 c-幺的 $\mathcal A$ 都是 c-幺的。
+\end{Lem}
+
+\begin{proof}
+我们采取与命题 2.26.ii 的证明类似的策略：借助形式微分同胚
+$\Phi:\mathcal A\to\tilde{\mathcal A}$（$\Phi^1=\mathrm{id}$，上同调全忠实；
+由引理 \ref{lem:2.24} 给出）化归到严格幺情形 $\tilde{\mathcal A}$。于是引理
+\ref{lem:3.30} 可用，使
+$\mathsf{Tw}\Phi:\mathsf{Tw}\mathcal A\to\mathsf{Tw}\tilde{\mathcal A}$ 上同调
+全忠实，而其靶 $\mathsf{Tw}\tilde{\mathcal A}$ 由上一段是严格幺的。因此
+$\mathsf{Tw}\mathcal A$ 也必为 c-幺的。
+
+$\mathsf{Tw}\mathcal F$ 的 c-幺性论证更复杂；我们相信它为真，证明可参看
+\cite{Sei08} 引理 3.24。
+
+至于 $\mathsf{Tw}$，从一个非幺 $A_\infty$-函子
+$\mathcal G:\mathcal C\to\mathcal A$ 出发，定义
+$\tilde{\mathcal G}:=\Phi\circ\mathcal G:\mathcal C\to\tilde{\mathcal A}$。
+直接计算表明 $\mathsf{Tw}$ 对左复合
+$L_\Phi:\mathrm{nu\text{-}fun}(\mathcal C,\mathcal A)\to
+\mathrm{nu\text{-}fun}(\mathcal C,\tilde{\mathcal A})$ 表现良好，而后者由引理
+\ref{lem:2.27} 是 c-幺的 $A_\infty$-函子（$L_{\mathsf{Tw}\Phi^{-1}}$ 也是，
+因为由前面跳过的一点 $\mathsf{Tw}\Phi^{-1}$ 是 c-幺的）。这意味着在态射上
+\[
+  \mathsf{Tw}^1=L^1_{\mathsf{Tw}\Phi^{-1}}\circ\mathsf{Tw}^1\circ
+  L^1_\Phi:\hom_{\mathrm{nu\text{-}fun}(\mathcal C,\mathcal A)}
+  (\mathcal G,\mathcal G)\to\hom_{\mathrm{nu\text{-}fun}
+  (\mathsf{Tw}\mathcal C,\mathsf{Tw}\mathcal A)}
+  (\mathsf{Tw}\mathcal G,\mathsf{Tw}\mathcal G),
+\]
+其中右端的 $\mathsf{Tw}^1:\hom_{\mathrm{nu\text{-}fun}(\mathcal C,
+\tilde{\mathcal A})}(\tilde{\mathcal G},\tilde{\mathcal G})\to
+\hom_{\mathrm{nu\text{-}fun}(\mathsf{Tw}\mathcal C,\mathsf{Tw}
+\tilde{\mathcal A})}(\mathsf{Tw}\tilde{\mathcal G},
+\mathsf{Tw}\tilde{\mathcal G})$ 由上一段是严格幺的。综合起来，$\mathsf{Tw}$
+必是 c-幺的，如所断言。
+\end{proof}
+% [Tutor Note: 【含糊】原文对“$\mathsf{Tw}\mathcal F$ 的 c-幺性”明确表示“take it on faith”，只给出 \cite{Sei08} 引理 3.24 作为出处；这是本章少数未在正文证明的引理之一，引用时不要误以为已证。]
+
+结合 $\mathsf{Tw}\mathcal F$ 的 c-幺性、定理 \ref{thm:2.31} 与引理
+\ref{lem:3.30}，我们还得到：
+
+\begin{Cor}\label{cor:3.32}
+设 $\mathcal A$ 与 $\mathcal B$ 为 c-幺 $A_\infty$-范畴，
+$\mathcal F:\mathcal A\to\mathcal B$ 为拟等价。则
+$\mathsf{Tw}\mathcal F:\mathsf{Tw}\mathcal A\to\mathsf{Tw}\mathcal B$ 也是
+拟等价。
+\end{Cor}
+
+现在研究第 \ref{sec:3.2}、\ref{sec:3.3} 节的构造在
+$\mathsf{Tw}\mathcal A$ 上的情形；这里 $\mathcal A$ 及其关联的一切
+$A_\infty$-函子重新假定为 c-幺的。
+
+\begin{Def}\label{def:3.33}
+设 $\mathcal A$ 为（c-幺）$A_\infty$-范畴。
+\begin{itemize}
+  \item 对 $Y_0=(I_0,\{Y_0^{i_0}\},\{V_0^{i_0}\})$、
+        $Y_1=(I_1,\{Y_1^{i_1}\},\{V_1^{i_1}\})\in\operatorname{obj}
+        (\Sigma\mathcal A)$，我们把 $Y_0\oplus Y_1\in\operatorname{obj}
+        (\Sigma\mathcal A)$ 定义为显然的直和，其指标现在跑遍集合
+        $I_0\times I_1$。
+
+        把 $Y_0\oplus Y_1$ 解释为 $\mathsf{Tw}\mathcal A$ 的对象（其定义相同），
+        则 $\Upsilon(Y_0\oplus Y_1)=\mathcal Y_0\oplus\mathcal Y_1\in
+        \operatorname{obj}(\mathrm{mod}(\mathsf{Tw}\mathcal A))$（确实，对任意
+        $X\in\operatorname{obj}(\mathsf{Tw}\mathcal A)$ 有
+        $\Upsilon(Y_0\oplus Y_1)(X)=\hom_{\mathsf{Tw}\mathcal A}
+        (X,Y_0\oplus Y_1)=\hom_{\mathsf{Tw}\mathcal A}(X,Y_0)\oplus
+        \hom_{\mathsf{Tw}\mathcal A}(X,Y_1)=\mathcal Y_0(X)\oplus
+        \mathcal Y_1(X)$）。
+  \item 对有限维分次向量空间 $Z$，定义非幺 $A_\infty$-函子
+        $Z\otimes\Box:\Sigma\mathcal A\to\Sigma\mathcal A$：它把对象
+        $Y=(I,\{Y^i\},\{V^i\})$ 送到
+        $Z\otimes Y:=(I,\{Y^i\},\{Z\otimes V^i\})$，把态射
+        $a=(\varphi^{j,i}\otimes x^{j,i})$ 送到
+        $\mathrm{id}_Z\otimes a:=(\mathrm{id}_Z\otimes\varphi^{j,i}\otimes
+        x^{j,i})$，且当 $d>1$ 时 $(Z\otimes\Box)^d:=0$。
+
+        类似地，有非幺 $A_\infty$-函子
+        $Z\otimes\Box:\mathsf{Tw}\mathcal A\to\mathsf{Tw}\mathcal A$，把
+        $(Y,\delta_Y)$ 送到 $(Z\otimes Y,\mathrm{id}_Z\otimes\delta_Y)$；
+        在 $\mathrm{mod}(\mathsf{Tw}\mathcal A)$ 上，它恰对应于第
+        \ref{sec:3.2} 节的张量函子（施加 $\Upsilon$ 之后）。
+  \item 取 $Z:=\mathbb K[\sigma]$（$\partial_Z:=0$），我们再次置
+        $S^\sigma Y:=\mathbb K[\sigma]\otimes Y\cong\bigoplus_{i\in I}
+        V^i[\sigma]\otimes Y^i\in\operatorname{obj}(\Sigma\mathcal A)$，以
+        表示 $\sigma$ 次平移对象，其态射为
+        $\delta_{S^\sigma Y}:=S^\sigma(\delta_Y)=
+        S^\sigma\bigl((\varphi^{j,i}\otimes x^{j,i})\bigr)=
+        \bigl((-1)^{\sigma\cdot|\varphi^{j,i}|}\varphi^{j,i}\otimes
+        x^{j,i}\bigr)$。于是得到非幺 $A_\infty$-函子
+        $S^\sigma:\mathsf{Tw}\mathcal A\to\mathsf{Tw}\mathcal A$，它与定义
+        \ref{def:3.15} 中给出的那个一致，并在对象上表示
+        $\mathbb S^\sigma$。
+\end{itemize}
+同构 \eqref{eq:3.34} 仍然成立，即便在非上同调层面也是如此。最重要的是，按构造
+$S:\mathsf{Tw}\mathcal A\to\mathsf{Tw}\mathcal A$ 是拟等价（参看下面的注
+\ref{rem:3.35}）。
+\end{Def}
+
+\begin{Def}\label{def:3.34}
+设 $c\in\hom^0_{\mathsf{Tw}\mathcal A}(Y_0,Y_1)$ 为上闭链。\emph{扭映射锥}
+$\mathrm{Cone}(c)=(C,\delta_C)\in\operatorname{obj}(\mathsf{Tw}\mathcal A)$
+由下式给出：
+\begin{equation}\label{eq:3.48}
+  \mathrm{Cone}(c):=\Bigl(SY_0\oplus Y_1,
+  \begin{pmatrix}
+    S(\delta_{Y_0}) & 0\\
+    -S(c) & \delta_{Y_1}
+  \end{pmatrix}\Bigr),
+\end{equation}
+其中 $\delta_C\in\hom^1_{\mathsf{Tw}\mathcal A}(C,C)$ 良定义，因为
+$S(\delta_{Y_0})\in\hom^1_{\mathsf{Tw}\mathcal A}(SY_0,SY_0)$ 且
+$S(c)\in\hom^0_{\mathsf{Tw}\mathcal A}(SY_0,SY_1)\cong
+\hom^0_{\mathsf{Tw}\mathcal A}(Y_0,Y_1)\cong\hom^1_{\mathsf{Tw}\mathcal A}
+(SY_0,Y_1)$（由于 \eqref{eq:3.34} 的非上同调对应物）。于是 $C$ 满足
+\begin{equation}\label{eq:3.49}
+  \begin{aligned}
+    \Upsilon(C)(X)&=\hom_{\mathsf{Tw}\mathcal A}(X,C)=
+    \hom_{\mathsf{Tw}\mathcal A}(X,SY_0)\oplus\hom_{\mathsf{Tw}\mathcal A}
+    (X,Y_1)\\
+    &\cong\hom_{\mathsf{Tw}\mathcal A}(X,Y_0)[1]\oplus
+    \hom_{\mathsf{Tw}\mathcal A}(X,Y_1)=\mathcal C(X),
+  \end{aligned}
+\end{equation}
+即我们可以把 $\Upsilon(C)$ 与定义 \ref{def:3.16} 中的抽象映射锥
+$\mathcal C=\mathrm{Cone}(c)$ 等同。
+\end{Def}
+% [Tutor Note: 【易错】(48) 中左下角是 $-S(c)$ 而非 $S(c)$：符号来自 $\delta_C$ 必须是 1 次且 $\mu^1_{\mathsf{Tw}}$ 的矩阵乘法要与 (49) 的直和分解相容；在注 3.35 的简化构造中该符号消失，两者不可混用。]
+
+\begin{Rem}\label{rem:3.35}
+回忆注 \ref{rem:3.25} 中 $\Sigma\mathcal A$ 的另一种构造，它容易推广而得到
+$\mathsf{Tw}\mathcal A$ 的类似版本。相应的扭映射锥
+$C=\mathrm{Cone}(c)$ 被证明具有
+\[
+  \delta_C=
+  \begin{pmatrix}
+    \delta_{Y_0} & 0\\
+    c & \delta_{Y_1}
+  \end{pmatrix}.
+\]
+如已所见，符号恰到好处地不再出现。这是因为这里 $S$ 的作用是
+$a\in\hom^k_{\mathsf{Tw}\mathcal A}(X_0,X_1)\mapsto
+(-1)^{k-1}a\in\hom^k_{\mathsf{Tw}\mathcal A}(X_0,X_1)$（由此我们显然推出它的
+上同调全忠实性）。
+\end{Rem}
+% [Tutor Note: 【背景】两种构造的符号差异不是笔误：在注 3.25 的“只取 $\mathbb K$ 的平移副本”版本中，$S$ 在态射上等于 $(-1)^{k-1}$，故 $\delta_C$ 的 $(2,1)$ 元为 $c$；在定义 3.34 的一般构造中 $S$ 还带有重数空间上的作用，故出现 $-S(c)$。]
+
+\begin{Def}\label{def:3.36}
+设 $\mathcal A$ 为 c-幺 $A_\infty$-范畴。给定
+$c\in\hom^0_{\mathsf{Tw}\mathcal A}(Y_0,Y_1)$，扭映射锥
+$C=\mathrm{Cone}(c)=SY_0\oplus Y_1\in\operatorname{obj}(\mathsf{Tw}\mathcal A)$
+带有两个标准态射（$e_{Y_k}$ 为 c-单位）：
+\begin{itemize}
+  \item 到第二个直和项的包含
+        $i:=\binom{0}{e_{Y_1}}\in\hom^0_{\mathsf{Tw}\mathcal A}(Y_1,C)
+        \cong\mathcal C(Y_1)$；由于
+        \[
+          \Upsilon^1(i)(b,a_{d-1},\dots)=\mu^{d+1}_{\mathsf{Tw}\mathcal A}
+          (i,b,a_{d-1},\dots)=
+          \begin{pmatrix}0\\ \mu^{d+1}_{\mathsf{Tw}\mathcal A}
+          (e_{Y_1},b,a_{d-1},\dots)\end{pmatrix}
+          =\tilde\iota^d(b,a_{d-1},\dots),
+        \]
+        我们有 $H(\Upsilon)\langle i\rangle=\langle\tilde\iota\rangle=
+        \langle\iota\rangle$（见定义 \ref{def:3.17} 与引理 \ref{lem:3.18}）；
+  \item 到第一个直和项的投影
+        $p:=(S(e_{Y_0}),0)\in\hom^1_{\mathsf{Tw}\mathcal A}(C,Y_0)\cong
+        \mathcal Y_0(C)$；由于
+        \[
+          \begin{aligned}
+            \Upsilon^1(p)^d\bigl((b_0,b_1),a_{d-1},\dots\bigr)
+            &=\mu^{d+1}_{\mathsf{Tw}\mathcal A}\bigl(p,(b_0,b_1),
+            a_{d-1},\dots\bigr)\\
+            &=\mu^{d+1}_{\mathsf{Tw}\mathcal A}\bigl(S(e_{Y_0}),b_0,
+            a_{d-1},\dots\bigr)+0\\
+            &=\mu^{d+1}_{\mathsf{Tw}\mathcal A}\bigl(-e_{Y_0},b_0,
+            a_{d-1},\dots\bigr)=\tilde\pi^d\bigl((b_0,b_1),
+            a_{d-1},\dots\bigr),
+          \end{aligned}
+        \]
+        我们有 $H(\Upsilon)\langle p\rangle=\langle\tilde\pi\rangle=
+        \langle\pi\rangle$（倒数第二个等式中用了注 \ref{rem:3.35} 所解释的
+        $S$ 的作用）。
+\end{itemize}
+\end{Def}
+
+\begin{Lem}\label{lem:3.37}
+$H^0(\mathsf{Tw}\mathcal A)$ 中形如 \eqref{eq:3.37} 的三角形
+$(\langle c_1\rangle,\langle c_2\rangle,\langle c_3\rangle)$ 正合，当且仅当
+存在同构 $\langle b\rangle\in\Hom^0_{H(\mathsf{Tw}\mathcal A)}(Y_2,
+\mathrm{Cone}(c_1))$，使下图在 $H^0(\mathsf{Tw}\mathcal A)$ 中交换：
+\begin{equation}\label{eq:3.50}
+  \begin{tikzcd}[column sep=large, row sep=large]
+    Y_0 \arrow[rr, "{\langle c_1\rangle}"] & &
+      Y_1 \arrow[dl, "{\langle c_2\rangle}"]
+      \arrow[ddl, "{\langle\iota\rangle}"', bend left=25] \\
+    & Y_2 \arrow[d, dashed, "{\wr\langle b\rangle}"']
+      \arrow[ul, "{\langle c_3\rangle{[}1{]}}"', bend left=20] & & \\
+    & \mathrm{Cone}(c_1) \arrow[uul, "{\langle p\rangle{[}1{]}}"',
+      bend left=25] & &
+  \end{tikzcd}
+\end{equation}
+\end{Lem}
+
+\begin{proof}
+照例记 $\mathcal Q=\mathrm{mod}(\mathsf{Tw}\mathcal A)$、
+$C=\mathrm{Cone}(c_1)$，并经由同构 \eqref{eq:3.49} 把 $\mathcal C$ 与
+$\Upsilon(C)$ 等同。图 \eqref{eq:3.50} 交换意味着
+$\langle p\rangle\circ\langle b\rangle=
+\langle\mu^2_{\mathsf{Tw}\mathcal A}(p,b)\rangle=\langle c_3\rangle$ 以及
+$\langle b\rangle\circ\langle c_2\rangle=
+\langle\mu_{\mathsf{Tw}\mathcal A}(b,c_2)\rangle=\langle i\rangle$（注意 $b$
+与 $c_2$ 的次数都是 0）。
+
+三角形 \eqref{eq:3.37} 在 $H^0(\mathsf{Tw}\mathcal A)$ 中正合，等价于存在同构
+$\langle t\rangle\in\Hom^0_{H(\mathcal Q)}(Y_2,C)$ 使图 \eqref{eq:3.38} 在
+$H(\mathcal Q)$ 中交换。也就是说，由引理 \ref{lem:3.11}，我们有准代表
+$\langle t\rangle=\langle\lambda_C(b)\rangle=H(\Upsilon)\langle b\rangle$，
+其中 $\langle b\rangle\in H(C(Y_2))^0=\Hom^0_{H(\mathsf{Tw}\mathcal A)}
+(Y_2,C)$ 是唯一确定的同构（再次使用 \eqref{eq:3.49}），使得
+\[
+  H(\Upsilon)\langle p\rangle\circ H(\Upsilon)\langle b\rangle=
+  \langle\pi\rangle\circ\langle t\rangle=H(\Upsilon)\langle c_3\rangle
+\]
+以及
+\[
+  H(\Upsilon)\langle b\rangle\circ H(\Upsilon)\langle c_2\rangle=
+  \langle t\rangle\circ H(\Upsilon)\langle c_2\rangle=\langle\iota\rangle=
+  H(\Upsilon)\langle i\rangle.
+\]
+$H(\Upsilon)$ 在态射上的双射性给出结论。
+\end{proof}
+
+\begin{Cor}\label{cor:3.38}
+设 $\mathcal A$ 为 c-幺 $A_\infty$-范畴。则 $A_\infty$-范畴
+$\mathsf{Tw}\mathcal A$ 是三角的。
+\end{Cor}
+
+\begin{proof}
+我们总（隐含地）假定 $\mathcal A$ 是非平凡的 $A_\infty$-范畴，故按构造
+$\mathsf{Tw}\mathcal A$ 也是：$\operatorname{obj}(\mathsf{Tw}\mathcal A)
+\neq\varnothing$。此外，任意 0 次态射
+$\langle c_1\rangle\in\Hom^0_{H(\mathsf{Tw}\mathcal A)}(Y_0,Y_1)$ 都是
+$H^0(\mathsf{Tw}\mathcal A)$ 中正合三角形 \eqref{eq:3.37} 的一部分，其中
+$Y_2:=\mathrm{Cone}(c_1)$、$c_2:=i$、$c_3:=p$（在引理 \ref{lem:3.37} 中取
+$b$ 等于 $\mathsf{Tw}\mathcal A$ 中的 c-单位 $e_{Y_2}$）。最后，我们在定义
+\ref{def:3.33} 中看到 $S:\mathsf{Tw}\mathcal A\to\mathsf{Tw}\mathcal A$ 是
+拟等价，因此 $\mathsf{Tw}\mathcal A$ 的每个扭复形 $Y$ 都在
+$H^0(\mathsf{Tw}\mathcal A)$ 中同构于某个平移
+$S\tilde Y\in\operatorname{obj}(\mathsf{Tw}\mathcal A)$。
+\end{proof}
+
+\begin{Pro}\label{pro:3.39}
+设 $\mathcal A$ 为 c-幺 $A_\infty$-范畴。若以
+$T:=H^0(S):H^0(\mathsf{Tw}\mathcal A)\to H^0(\mathsf{Tw}\mathcal A)$ 为平移
+函子、以正合三角形为区分三角形，则零阶上同调范畴
+$H^0(\mathsf{Tw}\mathcal A)$ 是经典的三角范畴。
+
+此外，由任意 c-幺 $A_\infty$-函子 $\mathcal F:\mathcal A\to\mathcal B$ 诱导的
+函子 $H^0(\mathsf{Tw}\mathcal F):H^0(\mathsf{Tw}\mathcal A)\to
+H^0(\mathsf{Tw}\mathcal B)$ 是三角的（参看定义 \ref{def:3.4}）。
+\end{Pro}
+
+\begin{proof}（概要）
+由推论 \ref{cor:3.38}，$\mathsf{Tw}\mathcal A$ 是三角 $A_\infty$-范畴。它的扭
+映射锥表现得与上链复形的经典映射锥一样，这使我们能模仿定理 \ref{thm:3.8} 的
+证明来证明本命题，其中 $\mathsf A$ 扮演定理 \ref{thm:3.8} 中范畴
+$\mathsf A$ 的角色，而 $\mathsf{Tw}\mathcal A$ 扮演同伦范畴
+$\mathsf H(\mathsf A)$ 的角色。于是
+$\mathsf D(\mathcal A):=H^0(\mathsf{Tw}\mathcal A)$ 是经典三角范畴。%
+\footnote{这一 $A_\infty$-范畴的记号在定义 \ref{def:3.23} 中引入，当我们证明
+$\mathsf{Tw}\mathcal A$ 确实是 $\mathcal A$ 的三角包络时（见命题
+\ref{pro:3.50}），它在此情境下便会名副其实。}
+
+现在可以证明 c-幺 $A_\infty$-函子
+$\mathsf{Tw}\mathcal F:\mathsf{Tw}\mathcal A\to\mathsf{Tw}\mathcal B$ 与 $S$
+交换，并给出锥之间的等同
+$\mathsf{Tw}\mathcal F(\mathrm{Cone}(c))\cong
+\mathrm{Cone}((\mathsf{Tw}\mathcal F)^1(c))$，此等同与其标准态射 $i$、$p$
+相容。因此 $H^0(\mathsf{Tw}\mathcal F):H^0(\mathsf{Tw}\mathcal A)\to
+H^0(\mathsf{Tw}\mathcal B)$ 把正合三角形送到正合三角形，即它是三角的。
+\end{proof}
+
+\subsection{有界导出范畴}\label{sec:3.6}
+
+本节把关于 $\mathsf{Tw}\mathcal A$ 所得的结果用来证明：只要 $\mathcal A$ 是
+三角的，$H^0(\mathcal A)$ 就是三角的。此外，我们证明
+$\mathsf{Tw}\mathcal A$ 是三角包络的一个有效选择，由此给出有界导出范畴的定义。
+
+\begin{Lem}\label{lem:3.40}
+$H(\mathcal A)$ 中的三角形 \eqref{eq:3.37} 正合，当且仅当它在嵌入
+$H(\mathcal A)\hookrightarrow H(\mathsf{Tw}\mathcal A)$ 下的像在
+$H(\mathsf{Tw}\mathcal A)$ 中正合。
+\end{Lem}
+
+\begin{proof}
+我们在第 \ref{sec:3.5} 节说明了如何构造上同调全忠实的嵌入
+$\imath:\mathcal A\hookrightarrow\mathsf{Tw}\mathcal A$：在对象上
+$\imath(X):=(X,0)\equiv\bigl((\{*\},\{X\},\{\mathbb K\}),0\bigr)$，且它保持态射。由引理
+\ref{lem:3.20}，若 \eqref{eq:3.37} 在 $H(\mathcal A)$ 中正合，则可以找到
+$H(\mathcal A)$ 中的态射 $h_1,h_2$ 与 $k$ 满足方程 \eqref{eq:3.39}。由于 $H(\imath)$
+的双射性，$H(\mathsf{Tw}\mathcal A)$ 中存在具有同一性质的对应物，反之亦然；
+因此把 \eqref{eq:3.37} 看作位于 $H(\mathcal A)$ 还是 $H(\mathsf{Tw}\mathcal A)$ 中，
+其实并无区别。
+
+我们还需证明 $K(X):=Y_2(X)[1]\oplus Y_0(X)[1]\oplus Y_1(X)$ 对一切对象
+$X$ 无环。一个方向是显然的。对另一方向，我们可以把任意
+$X\in\operatorname{obj}(\mathsf{Tw}\mathcal A)$ 作滤过，使得 $K(X)$ 相应的
+递增滤过中所有子复形都无环：它们是若干个平移了的有环复形
+$K(\tilde X)$（$\tilde X\in\operatorname{obj}(\mathcal A)$）的有限直和。
+\end{proof}
+
+\begin{Cor}\label{cor:3.41}
+设 $\mathcal F:\mathcal A\to\mathcal B$ 为任意 $A_\infty$-函子。则
+$H(\mathcal F)$ 把 $H(\mathcal A)$ 中的正合三角形送到 $H(\mathcal B)$ 中的
+正合三角形。
+\end{Cor}
+
+\begin{proof}
+考察 $H(\mathcal A)$ 中通常的正合三角形 \eqref{eq:3.37}；由引理 \ref{lem:3.40}，它在
+$H(\mathsf{Tw}\mathcal A)\supset H(\mathcal A)$ 中也正合。它在
+$H(\mathsf{Tw}\mathcal F)$ 下的像（把 $\langle c_3\rangle$ 认定为 0 次态射后，
+与 $H^0(\mathsf{Tw}\mathcal F)$ 下的像一致）由命题 \ref{pro:3.39} 仍在
+$H(\mathsf{Tw}\mathcal B)$ 中正合。显然
+$H(\mathsf{Tw}\mathcal F)|_{H(\mathcal A)}:H(\mathcal A)\to H(\mathcal B)$
+与 $H(\mathcal F)$ 一致，从而把 \eqref{eq:3.37} 送到 $H(\mathcal B)\subset
+H(\mathsf{Tw}\mathcal B)$ 中的正合三角形。再次应用引理 \ref{lem:3.40}，
+后者等价于在范畴 $H(\mathcal B)$ 本身中正合。
+\end{proof}
+
+现在终于可以陈述并证明一个更有效的三角形正合性判别法。先给出一个表面上
+任意的定义。
+
+\begin{Def}\label{def:3.42}
+我们定义 $\mathcal D$ 为严格幺的 $A_\infty$-范畴，其
+$\operatorname{obj}(\mathcal D):=\{Z_0,Z_1,Z_2\}$，且
+\begin{itemize}
+  \item 只有如下非平凡态射空间：
+        \[
+          \hom_{\mathcal D}(Z_k,Z_k):=\mathbb K\cdot e_{Z_k}\equiv
+          \{k\cdot e_{Z_k}\mid k\in\mathbb K\},
+        \]
+        \[
+          \hom_{\mathcal D}(Z_0,Z_1):=\mathbb K\cdot x_1,\qquad
+          \hom_{\mathcal D}(Z_1,Z_2):=\mathbb K\cdot x_2,\qquad
+          \hom_{\mathcal D}(Z_2,Z_0):=\mathbb K\cdot x_3,
+        \]
+        其中 $x_i$ 是固定的（必然不可逆的）态射，满足
+        $|x_1|=|x_2|=0$ 且 $|x_3|=1$；
+  \item 只有如下非平凡复合：$\mu^3_{\mathcal D}(x_3,x_2,x_1):=e_{Z_0}$、
+        $\mu^3_{\mathcal D}(x_1,x_3,x_2):=e_{Z_1}$ 与
+        $\mu^3_{\mathcal D}(x_2,x_1,x_3):=e_{Z_2}$。
+\end{itemize}
+\end{Def}
+
+\begin{Pro}\label{pro:3.43}
+设 $\mathcal A$ 为 c-幺 $A_\infty$-范畴，$\mathcal D$ 如上。$H(\mathcal A)$
+中的三角形 \eqref{eq:3.37} 正合，当且仅当存在 $A_\infty$-函子
+$\mathcal F:\mathcal D\to\mathcal A$，使得
+$\mathcal F(Z_k)=Y_k$（$k=0,1,2$）且 $H(\mathcal F)\langle x_k\rangle=
+\langle c_k\rangle$（$k=1,2,3$）。
+\end{Pro}
+
+\begin{proof}
+“$\Leftarrow$” 对象 $Z_0,Z_1,Z_2$ 在 $H(\mathcal D)$ 中构成三角形
+$(\langle x_1\rangle,\langle x_2\rangle,\langle x_3\rangle)$，它是正合的，因为
+取 $h_1=h_2=k=0$ 便满足引理 \ref{lem:3.20} 的全部要求（确实：二元复合为零，
+$\mu^3_{\mathcal D}(x_1,x_3,x_2)=e_{Z_1}$，且复形
+$\hom_{\mathcal D}(Z,Z_2)[1]\oplus\hom_{\mathcal D}(Z,Z_0)[1]\oplus
+\hom_{\mathcal D}(Z,Z_1)=\{0\}$ 对每个 $Z\in\operatorname{obj}(\mathcal D)$
+无环）。由推论 \ref{cor:3.41}，对象 $Y_k:=\mathcal F(Z_k)\in
+\operatorname{obj}(\mathcal A)$ 与态射
+$\langle c_k\rangle:=H(\mathcal F)\langle x_k\rangle$ 在 $H(\mathcal A)$ 中构成
+正合三角形 $(\langle c_1\rangle,\langle c_2\rangle,\langle c_3\rangle)$。
+
+“$\Rightarrow$” 先考虑 $\mathcal A$ 严格幺的情形（于是
+$\mathsf{Tw}\mathcal A$ 也严格幺，严格单位如第 \ref{sec:3.5} 节所述）。固定
+某个上闭链 $c\in\hom^0_{\mathcal A}(Y_0,Y_1)$，其锥带有标准态射 $i$ 与 $p$；
+定义 $A_\infty$-子范畴 $\tilde{\mathcal D}\subset\mathsf{Tw}\mathcal A$，
+其对象为 $\tilde Z_0:=Y_0$、$\tilde Z_1:=Y_1$、
+$\tilde Z_2:=\mathrm{Cone}(c)=SY_0\oplus Y_1$，态射空间为
+\[
+  \begin{aligned}
+    \hom_{\tilde{\mathcal D}}(\tilde Z_0,\tilde Z_0)&:=\mathbb K\cdot e_{Y_0},
+    &\hom_{\tilde{\mathcal D}}(\tilde Z_1,\tilde Z_1)&:=\mathbb K\cdot e_{Y_1},\\
+    \hom_{\tilde{\mathcal D}}(\tilde Z_2,\tilde Z_2)&:=
+    \Bigl\{\begin{pmatrix}\lambda_{00}\cdot S(e_{Y_0}) & 0\\
+    \lambda_{10}\cdot S(c) & \lambda_{11}\cdot e_{Y_1}\end{pmatrix}\Bigr\},
+    &\hom_{\tilde{\mathcal D}}(\tilde Z_1,\tilde Z_0)&:=0,\\
+    \hom_{\tilde{\mathcal D}}(\tilde Z_0,\tilde Z_1)&:=\mathbb K\cdot c,
+    &\hom_{\tilde{\mathcal D}}(\tilde Z_2,\tilde Z_1)&:=
+    \bigl\{(\nu_{10}\cdot S(c),\nu_{11}\cdot e_{Y_1})\bigr\},\\
+    \hom_{\tilde{\mathcal D}}(\tilde Z_1,\tilde Z_2)&:=\mathbb K\cdot i
+    =\mathbb K\cdot\binom{0}{e_{Y_1}},
+    &\hom_{\tilde{\mathcal D}}(\tilde Z_2,\tilde Z_0)&:=\mathbb K\cdot p
+    =\mathbb K\cdot(S(e_{Y_0}),0),\\
+    \hom_{\tilde{\mathcal D}}(\tilde Z_0,\tilde Z_2)&:=
+    \Bigl\{\begin{pmatrix}\sigma_{00}\cdot e_{Y_0}\\
+    \sigma_{10}\cdot c\end{pmatrix}\Bigr\},&&
+  \end{aligned}
+\]
+其中所有 $\lambda_{ij}$、$\nu_{ij}$ 与 $\sigma_{ij}$ 都跑遍 $\mathbb K$。
+
+我们的目标是像引理 \ref{lem:2.19} 的证明那样，用同调微扰引理构造
+$\mathcal D$。定义 $T^1\in\mathrm{End}\bigl(\hom_{\tilde{\mathcal D}}
+(\tilde Z_i,\tilde Z_j)\bigr)$，使得在
+$\hom_{\tilde{\mathcal D}}(\tilde Z_2,\tilde Z_2)$ 上
+$T^1(\lambda_{00},\lambda_{10},\lambda_{11})=(0,0,-\lambda_{10})$，在
+$\hom_{\tilde{\mathcal D}}(\tilde Z_2,\tilde Z_1)$ 上
+$T^1(\nu_{10},\nu_{11})=(0,-\nu_{10})$，在
+$\hom_{\tilde{\mathcal D}}(\tilde Z_0,\tilde Z_2)$ 上
+$T^1(\sigma_{00},\sigma_{10})=(-\sigma_{10},0)$，其余情形 $T^1=0$。按构造，
+$E^1:=\mathrm{id}+\mu^1_{\tilde{\mathcal D}}\circ T^1+T^1\circ
+\mu^1_{\tilde{\mathcal D}}$ 是
+$\hom_{\tilde{\mathcal D}}(\tilde Z_i,\tilde Z_j)$ 到某个微分消失的子复形
+$\hom_{\mathcal B}(\tilde Z_i,\tilde Z_j)$ 上的严格幺投影。取 $G^1$ 为相应的
+包含，则图 \eqref{eq:2.22} 成为
+\[
+  \begin{tikzcd}
+    \hom_{\mathcal B}(\tilde Z_i,\tilde Z_j) \arrow[rr, "{G^1}"] & &
+    \hom_{\tilde{\mathcal D}}(\tilde Z_i,\tilde Z_j)
+    \arrow[ll, "{E^1}"'] \arrow[loop right, "{T^1}"]
+  \end{tikzcd}
+\]
+
+命题 \ref{pro:2.18} 构造出与 $\tilde{\mathcal D}$ 拟同构的 $A_\infty$-范畴
+$\mathcal B$。但更细致的检查表明 $\mathcal B=\mathcal D$。确实，定义
+$Z_k:=E(\tilde Z_k)$、$x_1:=c$、$x_2:=i$、$x_3:=p$，我们得到：
+\[
+  \begin{aligned}
+    \hom_{\mathcal B}(Z_k,Z_k)&=E^1\bigl(\hom_{\tilde{\mathcal D}}
+    (\tilde Z_k,\tilde Z_k)\bigr)=\mathbb K\cdot e_{E(Y_k)}
+    =\mathbb K\cdot e_{Z_k}\quad(k=0,1),\\
+    \hom_{\mathcal B}(Z_0,Z_1)&=E^1\bigl(\hom_{\tilde{\mathcal D}}
+    (\tilde Z_0,\tilde Z_1)\bigr)=\mathbb K\cdot\bigl(c+\mu^1_{\tilde{\mathcal D}}
+    (0)+T^1(0)\bigr)=\mathbb K\cdot x_1,\\
+    \hom_{\mathcal B}(Z_1,Z_2)&=E^1\bigl(\hom_{\tilde{\mathcal D}}
+    (\tilde Z_1,\tilde Z_2)\bigr)=\mathbb K\cdot\bigl(i+\mu^1_{\tilde{\mathcal D}}
+    (0)+T^1(\mu^1_{\tilde{\mathcal D}}(i))\bigr)=\mathbb K\cdot x_2,\\
+    \hom_{\mathcal B}(Z_2,Z_0)&=E^1\bigl(\hom_{\tilde{\mathcal D}}
+    (\tilde Z_2,\tilde Z_0)\bigr)=\mathbb K\cdot\bigl(p+\mu^1_{\tilde{\mathcal D}}
+    (0)+T^1(\mu^1_{\tilde{\mathcal D}}(p))\bigr)=\mathbb K\cdot x_3,
+  \end{aligned}
+\]
+而其余态射空间可证明都映入 $\{0\}$，唯一例外是
+$\hom_{\mathcal B}(Z_2,Z_2)=E^1\bigl(\hom_{\tilde{\mathcal D}}
+(\tilde Z_k,\tilde Z_k)\bigr)=\mathbb K\cdot e_{Z_2}$（这里的计算更繁，因为
+这一次 $T^1$ 非平凡地作用）。因此，我们有拟同构
+$G:\mathcal D\to\tilde{\mathcal D}\subset\mathsf{Tw}\mathcal A$，满足
+$G(Z_k)=\tilde Z_k$、$H(G)\langle x_1\rangle=\langle c\rangle$、
+$H(G)\langle x_2\rangle=\langle i\rangle$ 与
+$H(G)\langle x_3\rangle=\langle p\rangle$。
+% [Tutor Note: 【勘误】原文上述四式中 $T^1(\mu^1_{\tilde{\mathcal D}}(i))$ 与 $T^1(\mu^1_{\tilde{\mathcal D}}(p))$ 两处被划掉（横线在底本上表示它们为零项），译本按普通项排出；另原文写 $\hom_{\mathcal B}(Z_2,Z_2)=E^1(\hom_{\tilde{\mathcal D}}(\tilde Z_k,\tilde Z_k))$ 时下标仍作 $k$，按上下文应为 $\tilde Z_2$，属笔误，译文照印并在此说明。]
+
+现在取正合三角形 \eqref{eq:3.37} 中的 $c=c_1$，并定义全 $A_\infty$-子范畴
+$\mathcal C\subset\mathcal A$，其
+$\operatorname{obj}(\mathcal C):=\{Y_0,Y_1,Y_2\}$；相应地
+$\tilde{\mathcal C}\subset\mathsf{Tw}\mathcal A$，其
+$\operatorname{obj}(\tilde{\mathcal C}):=\{\imath(Y_0),\imath(Y_1),
+\imath(Y_2),\mathrm{Cone}(c_1)\}$，其中
+$\imath:\mathcal A\hookrightarrow\mathsf{Tw}\mathcal A$ 是引理 \ref{lem:3.40}
+中的嵌入。后者说明 \eqref{eq:3.37} 在 $H(\mathsf{Tw}\mathcal A)$ 中有正合的像，从而
+$Y_2\cong\mathrm{Cone}(c_1)$（由引理 \ref{lem:3.37}），于是平凡的嵌入
+$\imath|_{\mathcal C}:\mathcal C\to\tilde{\mathcal C}$ 是拟等价。定理
+\ref{thm:2.31} 给出拟逆 $\mathcal K:\tilde{\mathcal C}\to\mathcal C$，使得
+$k=0,1$ 时 $\mathcal K(Y_k)=Y_k$、
+$\mathcal K(\mathrm{Cone}(c_1))\cong\mathcal K(Y_2)=Y_2$、
+$H(\mathcal K)\langle c_1\rangle=\langle c_1\rangle$、
+$H(\mathcal K)\langle i\rangle=\langle c_2\rangle$ 且
+$H(\mathcal K)\langle p\rangle=\langle c_3\rangle$。结合上一段的构造，
+$A_\infty$-函子
+$\mathcal F:=\mathcal K\circ G:\mathcal D\to\mathcal C\subset\mathcal A$
+显然具有所需性质。
+
+为了推广到只 c-幺的 $A_\infty$-范畴 $\mathcal A$，我们取出引理 \ref{lem:2.24}
+中常用的形式微分同胚 $\Phi:\mathcal A\to\tilde{\mathcal A}$，由推论
+\ref{cor:3.41}，它保持 \eqref{eq:3.37} 的正合性。对严格幺的 $\tilde{\mathcal A}$ 代替
+$\mathcal A$ 重复上述构造，便得到如命题所述的
+$\tilde{\mathcal F}:\mathcal D\to\tilde{\mathcal A}$。最后，
+$A_\infty$-函子
+$\mathcal F:=\Phi^{-1}\circ\tilde{\mathcal F}:\mathcal D\to\mathcal A$ 满足
+一切要求。
+\end{proof}
+
+\begin{Cor}\label{cor:3.44}
+设 $\mathcal F:\mathcal A\to\mathcal B$ 为上同调全忠实的 $A_\infty$-函子，
+并设 $H(\mathcal B)$ 中存在由 $\mathcal F$ 的像中对象构成的正合三角形。
+则该三角形的原像在 $H(\mathcal A)$ 中也是正合三角形。
+\end{Cor}
+
+尽管证明繁琐，命题 \ref{pro:3.43} 充分运用了我们在这两章中发展起来的机器。
+更重要的是，它大大简化了对正合三角形的研究，把焦点移到像 $\mathcal D$ 这样
+“更精简”的 $A_\infty$-范畴上。下面是另一个基本结果。
+
+\begin{Lem}\label{lem:3.45}
+$\mathsf{Tw}\mathcal A$ 由其全子范畴 $\mathcal A$ 生成。
+\end{Lem}
+
+其证明本质上是从 $\mathsf{Tw}\mathcal A$ 中扭复形的滤过所得子复形出发构造
+正合三角形，表明后者不过是 $\mathcal A$ 的对象经平移与锥作用得到的（见
+\cite{Sei08} 引理 3.32）。按定义，这意味着 $\mathcal A$ 生成
+$\mathsf{Tw}\mathcal A$（不过与定义 \ref{def:3.22} 不同，这里尚未对三角化作
+任何假设——$\mathcal A$ 不必是三角的！）。
+% [Tutor Note: 【含糊】引理 3.45 的证明被整段略去，只说“本质上由滤过构造正合三角形”。可参考 \cite{Sei08} 引理 3.32：对扭复形的下三角滤过逐层作锥，每层是 $\mathcal A$ 中若干对象的平移直和，从而归纳地说明任意扭复形由 $\mathcal A$ 的对象经平移与锥生成。]
+
+\begin{Lem}\label{lem:3.46}
+c-幺 $A_\infty$-范畴 $\mathcal A$ 是三角的，当且仅当嵌入
+$\imath:\mathcal A\hookrightarrow\mathsf{Tw}\mathcal A$ 是拟等价。
+\end{Lem}
+
+\begin{proof}
+设 $\imath$ 是拟等价。对任意上闭链
+$c\in\hom^0_{\mathsf{Tw}\mathcal A}(Y_0,Y_1)$，抽象映射锥
+$\mathcal C=\mathrm{Cone}(c)\in\operatorname{obj}
+(\mathrm{mod}(\mathsf{Tw}\mathcal A))$ 经由 \eqref{eq:3.49} 被
+$\mathrm{Cone}(c)\in\operatorname{obj}(\mathsf{Tw}\mathcal A)$ 准表示。由于
+$\mathsf{Tw}\mathcal A$ 由 $\mathcal A$ 生成，$\mathrm{Cone}(c)$ 也被
+$\mathcal A$ 的某个对象准表示（这里 $H(\imath)$ 的双射性至关重要）。向上与
+向下的平移也同样如此。因此，三角 $A_\infty$-范畴的各项性质可由
+$\mathsf{Tw}\mathcal A$ 的相应性质推出，而由推论 \ref{cor:3.38} 已知后者是
+三角的。
+
+反之，设 $\mathcal A$ 是三角的，从而对取映射锥与平移封闭。由于 $\mathcal A$
+生成 $\mathsf{Tw}\mathcal A$，$H^0(\mathsf{Tw}\mathcal A)$ 的任意对象都可由
+$H^0(\mathcal A)$ 中的对象经反复施加仍属于 $H^0(\mathcal A)$ 的锥与平移
+构造出来（按假设）。因此 $H^0(\imath):H^0(\mathcal A)\to
+H^0(\mathsf{Tw}\mathcal A)$ 必是范畴的等价，从而 $\imath$ 是拟等价。
+\end{proof}
+
+现在可以证明本章的主要结果：
+
+\begin{Pro}\label{pro:3.47}
+若 $\mathcal A$ 是三角 c-幺 $A_\infty$-范畴，则 $H^0(\mathcal A)$ 是经典
+三角范畴。此外，若 $\mathcal A,\mathcal B$ 是三角 c-幺 $A_\infty$-范畴，
+$\mathcal F:\mathcal A\to\mathcal B$ 是任意 c-幺 $A_\infty$-函子，则诱导函子
+$H^0(\mathcal F):H^0(\mathcal A)\to H^0(\mathcal B)$ 是正合的。
+\end{Pro}
+
+\begin{proof}
+由命题 \ref{pro:3.39}，我们已知 $H^0(\mathsf{Tw}\mathcal A)$ 是三角范畴；
+由引理 \ref{lem:3.46}，$\imath:\mathcal A\hookrightarrow\mathsf{Tw}\mathcal A$
+是拟等价。因此，经典三角范畴的公理 (T1)–(T3) 可由
+$H^0(\mathsf{Tw}\mathcal A)$ 的相应公理推出，只需利用 $H(\imath)$ 的全性、
+忠实性与本质满性。特别地，全子范畴 $H^0(\mathcal A)\subset
+H^0(\mathsf{Tw}\mathcal A)$ 与 $H^0(\mathsf{Tw}\mathcal A)$ 有相同的平移函子
+$T:=H^0(S):H^0(\mathcal A)\to H^0(\mathcal A)$，其区分三角形正是
+$H^0(\mathsf{Tw}\mathcal A)$ 中的区分三角形（按选择，即正合三角形）。
+
+此外，给定任意两个这样的三角范畴 $H^0(\mathcal A)$、$H^0(\mathcal B)$，
+$H^0(\mathcal F):H^0(\mathcal A)\to H^0(\mathcal B)$ 的正合性可由
+$H^0(\mathsf{Tw}\mathcal F)$ 的正合性（再次参看命题 \ref{pro:3.39}）以及
+各自的上同调嵌入函子推出，而我们刚看到这些嵌入保持区分三角形。
+\end{proof}
+
+\begin{Rem}\label{rem:3.48}
+例如，让我们把公理 (T2) 写清楚。设 $\mathcal A$ 为三角 $A_\infty$-范畴。
+若 \eqref{eq:3.37} 是 $H^0(\mathcal A)$ 中的区分三角形，按我们的约定记作
+$(\langle c_1\rangle,\langle c_2\rangle,\langle c_3\rangle)$，则“旋转”的
+三角形 $(\langle c_2\rangle,\langle c_3\rangle,-\langle S^1(c_1)\rangle)$ 与
+$(-\langle(S^{-1})^1(c_3)\rangle,\langle c_1\rangle,\langle c_2\rangle)$
+在 $H^0(\mathcal A)$ 中也是区分三角形，对应于图形
+\begin{equation}\label{eq:3.51}
+  \begin{tikzcd}
+    Y_1 \arrow[rr, "{\langle c_2\rangle}"] & & Y_2 \arrow[dl, "{\langle c_3\rangle}"] \\
+    & SY_0 \arrow[ul, "{-\langle S^1(c_1)\rangle{[}1{]}}"'] &
+  \end{tikzcd}
+  \qquad\text{与}\qquad
+  \begin{tikzcd}
+    S^{-1}Y_2 \arrow[rr, "{-\langle(S^{-1})^1(c_3)\rangle}"] & &
+    Y_0 \arrow[dl, "{\langle c_1\rangle}"] \\
+    & Y_1 \arrow[ul, "{\langle c_2\rangle{[}1{]}}"'] &
+  \end{tikzcd}
+\end{equation}
+其中 $S^{-1}$ 在 $H^0(\mathcal A)$ 中诱导拟逆平移
+$T^{-1}=H^0(S^{-1})$。借助同构 \eqref{eq:3.34}，我们已把
+$\langle c_3\rangle\in\Hom_{H^0(\mathcal A)}(Y_2,Y_0)[1]\cong
+\Hom_{H^0(\mathcal A)}(Y_2,SY_0)$ 以及
+$\langle S^1(c_1)\rangle\in\Hom_{H^0(\mathcal A)}(SY_0,SY_1)\cong
+\Hom_{H^0(\mathcal A)}(Y_0,Y_1)\cong
+\Hom_{H^0(\mathcal A)}(SY_0,Y_1)[1]$ 分别作了认定，另外还有
+$\langle(S^{-1})^1(c_3)\rangle\in
+\Hom_{H^0(\mathcal A)}(S^{-1}Y_2,S^{-1}Y_0)[1]\cong
+\Hom_{H^0(\mathcal A)}(Y_2,Y_0)[1]\cong
+\Hom_{H^0(\mathcal A)}(S^{-1}Y_2,Y_0)$ 与
+$\langle c_2\rangle\in\Hom_{H^0(\mathcal A)}(Y_1,Y_2)\cong
+\Hom_{H^0(\mathcal A)}(Y_1,S^{-1}Y_2)[1]$。
+\end{Rem}
+% [Tutor Note: 【易错】(51) 第一图中 $-\langle S^1(c_1)\rangle$ 的负号在括号外、$[1]$ 在括号外：旋转后的第三个箭头是 $-\langle S^1(c_1)\rangle[1]:SY_0\to T(Y_1)$，若把负号并入 $c_1$ 或把 $[1]$ 移到 $S^1$ 上，都会与 (T2) 的符号约定不符。]
+
+正如我们在定义 \ref{def:3.16} 之后所述，\eqref{eq:3.36} 中 $c=c_1$ 的消失蕴含
+$Y_2\cong\mathrm{Cone}(c_1)\cong\mathbb S\mathcal Y_0\oplus\mathcal Y_1$
+（在 $H(\mathcal Q)$ 中）。利用 $S$ 准表示 $\mathbb S$，我们得到如下有趣的
+推论（后两条可类似地从图 \eqref{eq:3.51} 与 \eqref{eq:3.37} 推出）：
+\[
+  \langle c_1\rangle=0\ \Longrightarrow\ Y_2\cong SY_0\oplus Y_1,
+\]
+\[
+  \langle c_2\rangle=0\ \Longrightarrow\ Y_0\cong Y_1\oplus S^{-1}Y_2,
+\]
+\[
+  \langle c_3\rangle=0\ \Longrightarrow\ Y_1\cong Y_2\oplus Y_0.
+\]
+
+最后，我们回到三角包络与 $A_\infty$-范畴的导出范畴这两个概念，证明其存在性
+以及在等价意义下的唯一性。
+
+\begin{Lem}\label{lem:3.49}
+设 $\mathcal F:\mathcal A\to\mathcal B$ 为上同调全忠实的 $A_\infty$-函子，
+$\mathcal B$ 是由 $\mathcal F$ 的像对象生成的三角 c-幺 $A_\infty$-范畴。
+则存在拟等价 $\tilde{\mathcal F}:\mathsf{Tw}\mathcal A\to\mathcal B$，使得
+$\tilde{\mathcal F}|_{\mathcal A}\cong\mathcal F$ 于
+$H^0(\mathrm{fun}(\mathcal A,\mathcal B))$ 中。
+\end{Lem}
+
+\begin{proof}
+由引理 \ref{lem:3.46}，$\mathcal B\hookrightarrow\mathsf{Tw}\mathcal B$ 是
+拟等价，于是我们可以找到拟逆
+$\mathcal K:\mathsf{Tw}\mathcal B\to\mathcal B$（如同定理 \ref{thm:2.31}）。
+定义 $A_\infty$-函子
+$\tilde{\mathcal F}:=\mathcal K\circ\mathsf{Tw}\mathcal F:
+\mathsf{Tw}\mathcal A\to\mathcal B$，它显然满足
+$\tilde{\mathcal F}|_{\mathcal A}\cong\mathcal K\circ\mathcal F=\mathcal F$。
+由引理 \ref{lem:3.30}，$\mathsf{Tw}\mathcal F$ 上同调全忠实，从而
+$\tilde{\mathcal F}$ 也是。
+
+至于上同调本质满性：按假设，任意 $Y\in\operatorname{obj}(\mathcal B)$ 在
+$\operatorname{obj}(H^0(\mathcal B))$ 中都同构于某个像对象
+$\mathcal F(X)=\tilde{\mathcal F}(X)$（$X\in\operatorname{obj}(\mathcal A)$），
+可能还要施加映射锥与平移，而这些仍留在 $\tilde{\mathcal F}$ 的像中，因为
+$H(\mathsf{Tw}\mathcal F)$ 保持正合三角形（见推论 \ref{cor:3.41}）。这相当于说
+$\tilde{\mathcal F}$ 在上同调意义下本质满。因此它是拟等价，且作为
+$H^0(\mathrm{fun}(\mathcal A,\mathcal B))$ 的对象限制为 $\mathcal F$。
+\end{proof}
+
+\begin{Pro}\label{pro:3.50}
+每个（非空的）c-幺 $A_\infty$-范畴 $\mathcal A$ 都有三角包络
+$(\tilde{\mathcal B},\mathcal G)$。给定另一个这样的包络，比如
+$(\mathcal B,\mathcal F)$，存在拟等价
+$\tilde{\mathcal F}:\tilde{\mathcal B}\to\mathcal B$，使得
+$\tilde{\mathcal F}\circ\mathcal G\cong\mathcal F\in\operatorname{obj}
+\bigl(H^0(\mathrm{fun}(\mathcal A,\mathcal B))\bigr)$。
+\end{Pro}
+
+\begin{proof}
+二元组 $(\tilde{\mathcal B},\mathcal G):=(\mathsf{Tw}\mathcal A,\imath)$ 是
+$\mathcal A$ 的三角包络的一个有效选择：$\mathsf{Tw}\mathcal A$ 是三角的，
+$\mathcal A\equiv\imath(\mathcal A)$ 生成它，且嵌入
+$\imath:\mathcal A\hookrightarrow\mathsf{Tw}\mathcal A$ 上同调全忠实（按构造）。
+
+此外，给定另一个包络 $(\mathcal B,\mathcal F)$，由引理 \ref{lem:3.49} 存在
+拟等价 $\tilde{\mathcal F}:\mathsf{Tw}\mathcal A\to\mathcal B$，使得
+$\tilde{\mathcal F}|_{\mathcal A}=\tilde{\mathcal F}\circ\imath:
+\mathcal A\to\mathcal B$ 确实同构于 $\mathcal F$ 于
+$H^0(\mathrm{fun}(\mathcal A,\mathcal B))$ 中。
+\end{proof}
+
+\begin{Def}\label{def:3.51}
+设 $\mathcal A$ 为 c-幺 $A_\infty$-范畴。我们称导出范畴
+$\mathsf D^{\mathrm b}(\mathcal A):=H^0(\mathsf{Tw}\mathcal A)$ 为
+$\mathcal A$ 的\emph{有界导出范畴}。%
+\footnote{这一记号与术语纯属策略性的：如同定义 \ref{def:3.7} 中所说，
+“有界”只是指我们在局部化构造中从有界上链复形出发，而这里绕过了该构造！}
+\end{Def}
+
+把推论 \ref{cor:3.32} 与命题 \ref{pro:3.39} 结合起来，容易推出（另见
+\cite{Sei13} 引理 2.4）：
+
+\begin{Cor}\label{cor:3.52}
+设 $\mathcal A$ 与 $\mathcal B$ 为拟等价的 c-幺 $A_\infty$-范畴。则
+$\mathsf D^{\mathrm b}(\mathcal A)$ 与 $\mathsf D^{\mathrm b}(\mathcal B)$
+是等价的三角范畴。
+\end{Cor}
+
+\subsection{三角 $A_\infty$-范畴的例子：$\mathrm{mod}(\mathcal A)$}\label{sec:3.7}
+
+三角 $A_\infty$-范畴的一个突出例子，是 c-幺 $A_\infty$-范畴上 c-幺
+$A_\infty$-模构成的范畴 $\mathcal Q=\mathrm{mod}(\mathcal A)$。我们简要说明
+其理由，先推广抽象映射锥的定义。
+
+\begin{Def}\label{def:3.53}
+设 $\mathcal M_0,\mathcal M_1\in\operatorname{obj}(\mathcal Q)$，并设
+$t\in\hom^0_{\mathcal Q}(\mathcal M_0,\mathcal M_1)$ 为 0 次上闭链（即模
+同态）。其\emph{抽象映射锥}
+$\mathcal C=\mathrm{Cone}(t)\in\operatorname{obj}(\mathcal Q)$ 由
+$\mathcal C(X):=\mathcal M_0(X)[1]\oplus\mathcal M_1(X)\in
+\operatorname{obj}(\mathsf{Ch})$（$X\in\operatorname{obj}(\mathcal A)$）给出，
+分次映射为
+\[
+  \begin{aligned}
+    \mu^d_{\mathcal C}:{}&\mathcal C(X_{d-1})\otimes
+    \hom_{\mathcal A}(X_{d-2},X_{d-1})\otimes\dots\otimes
+    \hom_{\mathcal A}(X_0,X_1)\longrightarrow\mathcal C(X_0)[2-d],\\
+    &\bigl((b_0,b_1),a_{d-1},\dots\bigr)\longmapsto
+    \bigl(\mu^d_{\mathcal M_0}(b_0,a_{d-1},\dots),\ 
+    \mu^d_{\mathcal M_1}(b_1,a_{d-1},\dots)+t^d(b_0,a_{d-1},\dots)\bigr),
+  \end{aligned}
+\]
+其中 $d\ge 1$、$X_0,\dots,X_{d-1}\in\operatorname{obj}(\mathcal A)$。
+\end{Def}
+
+取 $\mathcal M_k:=\Upsilon(Y_k)=\mathcal Y_k$ 与
+$t:=\Upsilon^1(c)\in\hom^0_{\mathcal Q}(\mathcal Y_0,\mathcal Y_1)$，便还原
+出定义 \ref{def:3.16}。类似地，把我们对 $\mathcal A$ 与
+$\mathsf{Tw}\mathcal A$ 所看到的内容稍作改动，便可证明（参看 \cite{Sei08}
+引理 3.35）：
+
+\begin{Lem}\label{lem:3.54}
+给定模同态 $t\in\hom^0_{\mathcal Q}(\mathcal M_0,\mathcal M_1)$，相应的抽象
+映射锥 $\mathcal C=\mathrm{Cone}(t)$ 带有标准包含
+$\iota\in\hom^0_{\mathcal Q}(\mathcal M_1,\mathcal C)$ 与投影
+$\pi\in\hom^1_{\mathcal Q}(\mathcal C,\mathcal M_0)$，使得三角形
+\[
+  \begin{tikzcd}
+    \mathcal M_0 \arrow[rr, "{\langle t\rangle}"] & &
+    \mathcal M_1 \arrow[dl, "{\langle\iota\rangle}"] \\
+    & \mathcal C \arrow[ul, "{\langle\pi\rangle{[}1{]}}"'] &
+  \end{tikzcd}
+\]
+在 $H^0(\mathcal Q)$ 中正合。特别地，$H^0(\mathcal Q)$ 中的任意态射
+$\langle t\rangle$ 都可补全为如上正合三角形。
+\end{Lem}
+
+存在平移函子 $\mathbb S:\mathcal Q\to\mathcal Q$（它特别是拟等价），这已在
+第 \ref{sec:3.2} 节证明。结合上一个引理，便表明
+$\mathcal Q=\mathrm{mod}(\mathcal A)$ 是三角 $A_\infty$-范畴。
+
+\begin{Rem}\label{rem:3.55}
+考虑 $\mathcal F=\Upsilon_{\mathcal A}:\mathcal A\to\tilde{\mathcal Q}$
+（上同调全忠实），其中 $\tilde{\mathcal Q}\subset\mathcal Q$ 是由
+$\Upsilon_{\mathcal A}$ 的像对象生成的三角全 $A_\infty$-子范畴，我们便得到
+$\mathcal A$ 的另一个标准三角包络。确实，由命题 \ref{pro:3.50}，存在拟等价
+$\tilde\Upsilon:\mathsf{Tw}\mathcal A\to\tilde{\mathcal Q}$，使得
+$\tilde\Upsilon\circ\imath\cong\Upsilon_{\mathcal A}$ 于
+$H^0(\mathrm{fun}(\mathcal A,\tilde{\mathcal Q}))$ 中。可以证明它恰好就是
+$\tilde\Upsilon=\imath^*\circ\Upsilon_{\mathsf{Tw}\mathcal A}$（其中拉回
+$\imath^*:\mathrm{mod}(\mathsf{Tw}\mathcal A)\to\mathrm{mod}(\mathcal A)$
+如定义 \ref{def:2.37} 中那样）。于是得到交换（在同构意义下）图
+\[
+  \begin{tikzcd}
+    \mathcal A \arrow[r, "{\imath}"] \arrow[d, "{\Upsilon_{\mathcal A}}"']
+    & \mathsf{Tw}\mathcal A \arrow[d, "{\Upsilon_{\mathsf{Tw}\mathcal A}}"]
+    \arrow[dl, "{\tilde\Upsilon}"'] \\
+    \tilde{\mathcal Q} & \mathrm{mod}(\mathsf{Tw}\mathcal A)
+    \arrow[l, "{\imath^*}"']
+  \end{tikzcd}
+\]
+它正是注 \ref{rem:2.38} 中给出的图。（见 \cite{Kel01} 第 7.5 节，作者建议
+这可用来以泛性质刻画 $\mathsf{Tw}\mathcal A$。）
+\end{Rem}
