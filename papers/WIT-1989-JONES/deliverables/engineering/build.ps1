@@ -1,4 +1,4 @@
-# =============================================================================
+﻿# =============================================================================
 #  WIT-1989-JONES 一键构建
 #  用法（项目根目录）： powershell -NoProfile -ExecutionPolicy Bypass -File deliverables\engineering\build.ps1
 #  可选参数： -SkipPdf  -SkipHtml
