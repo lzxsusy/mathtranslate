@@ -31,7 +31,7 @@ def main() -> int:
     want = {e["path"]: (e["bytes"], e["sha256_16"]) for e in man["files"]}
 
     tracked = subprocess.check_output(
-        ["git", "ls-tree", "-r", "--name-only", rev], cwd=REPO
+        ["git", "-c", "core.quotepath=false", "ls-tree", "-r", "--name-only", rev], cwd=REPO
     ).decode("utf-8").splitlines()
     tracked = [p for p in tracked if p.startswith("git:" ) is False]
     tracked_set = set(tracked)

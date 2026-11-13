@@ -33,7 +33,7 @@ def main():
         rev = sys.argv[sys.argv.index("--rev") + 1]
 
     names = [n for n in subprocess.check_output(
-        ["git", "ls-tree", "-r", "--name-only", rev], cwd=REPO
+        ["git", "-c", "core.quotepath=false", "ls-tree", "-r", "--name-only", rev], cwd=REPO
     ).decode("utf-8").splitlines() if n and n not in SKIP]
 
     specs = ["%s:%s" % (rev, n) for n in names]
