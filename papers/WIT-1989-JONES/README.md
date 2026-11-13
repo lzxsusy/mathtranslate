@@ -51,7 +51,7 @@ WIT-1989-JONES/
 
 ---
 
-## 现状（2026-11-13，v0.4：六场跑完；研读讲义 v2 已扩为 97 页）
+## 现状（2026-11-13，v0.5：六场跑完；两版讲义定稿——49 页连续叙事 + 97 页逐句注疏）
 
 | 项 | 状态 |
 |---|---|
@@ -69,7 +69,10 @@ WIT-1989-JONES/
 | S6 两种对偶 + 范畴化 | **完成**（T 自评 87；claims 13 / questions 6） |
 | 数据整改 | **完成**（`sessions/_schema_fix_log.md`：37 条 schema 归一 + 4 条内容错误；check_claims 0 错误） |
 | 团队与阅读计划 | **完成**（`seminar/团队与阅读计划.md`：4 人编制、分角色阅读、S3–S6 问题集） |
-| **交付①读书笔记** | **21 页 PDF 已成型**（`deliverables/reading_note/main.pdf`；ch0–ch9 + 两个附录；22 页含封面） |
+| **交付①讲义（主文本）** | **49 页 PDF 定稿**（`deliverables/lecture/main.pdf`）：前言 + 八讲（问题→作用量→相空间→量子化→Wilson 线→WZW→计算→边界）+ 附录（符号、练习提示、原文对照表、术语表、练习选解、复现指南） |
+| **交付②注疏版（查证手册）** | **97 页 PDF 定稿**（`deliverables/reading_note/main.pdf`）：十二讲 + 附录 A–E，按原文节序逐句对照，含 G-x 缺口与 D-x 推导 |
+| **交付③协作流程** | `deliverables/workflow/`：WORKFLOW.md（数据流与复现）、agents.json（角色与产物）、tasks_summary.md（31 个任务的台账与评分） |
+| **交付④打包下载** | `WIT-1989-JONES-v1.0.zip`（2.55 MB，125 个文件：两版 PDF + LaTeX 源码 + 工程脚本 + sessions 交互数据） |
 | **交付②工程+源码** | **已跑通**（`deliverables/engineering/`：build.ps1、check_claims.py、check_anchors.py、make_manifest.py、export_html.py、manifest.json） |
 | **交付③开源仓库** | 推送 AtomGit：`lzxSUSUY/mathtranslate` 的 `papers/WIT-1989-JONES/`（本目录精简副本，不含第三方 PDF） |
 
