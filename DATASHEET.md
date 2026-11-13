@@ -1,6 +1,6 @@
 # Dataset Card · 数译中文数学译注语料
 
-> 版本 `v1.0.0`（2026-11-13）· 维护者：超对称梦想家（chaoduicheng）
+> 版本 `v1.0.1`（2026-11-13；仓库瘦身更新 2026-11-14）· 维护者：超对称梦想家（chaoduicheng）
 > 仓库：<https://atomgit.com/lzxSUSUY/mathtranslate> · 镜像：<https://gitee.com/supersymmetry-dream-home/shuyi>
 
 ## 1. 这是什么
@@ -13,7 +13,7 @@
 | 层 | 目录 | 说明 |
 |---|---|---|
 | 权威层 | `08_source_code/` | 89 部工程的 LaTeX 源码 + 工程文档（其中 72 部带完整可编译源码） |
-| 衍生层 | `01_corpus_zh/`、`02_trajectories/`、`06_sessions_raw/`、`03_translations_meta/` | 语料、轨迹、会话、元数据与术语 |
+| 衍生层 | `01_corpus_zh/`、`02_trajectories/`、`06_sessions_raw/`（分片在 Release 附件）、`03_translations_meta/` | 语料、轨迹、会话、元数据与术语 |
 | 过程层 | `04_playbook/`、`05_seminar_witten/` | 翻译纪律、审校报告、研讨班组织资料 |
 
 ## 2. 来源与授权
@@ -51,7 +51,7 @@
 | 脱敏 | `tools/scrub_publish.py` | **JSON 感知**：先 `json.loads` 再清洗字符串值，最后重新序列化（早版直接在字节上跑正则会写坏 JSON） |
 | 清单 | `build_manifest.py` + `tools/check_manifest.py` | 从 `HEAD:<path>` 的 blob 计算字节数与 sha256 前 16 位；`check_manifest.py` 单进程流式复算（6818 文件约 10 秒） |
 | 统计 | `make_stats.py` | 生成 README 的规模表，杜绝手写数字漂移 |
-| 会话抽取 | `06_sessions_raw/_extract_sessions.py` | 读 `session.v4.jsonl.zstd`，按 `callId` 配对 tool/call 与 tool/result |
+| 会话抽取 | `06_sessions_raw/_extract_sessions.py` | 读 `session.v4.jsonl.zstd`，按 `callId` 配对 tool/call 与 tool/result；分片从 Release `v1.0.1` 附件下载，拼接与校验见同目录 `_分片说明.md` |
 
 ## 5. 已知缺陷（诚实清单）
 
@@ -64,14 +64,14 @@
 | 术语基 657 条，覆盖 89 个工程 | 其余 89 个工程未产出机器可读术语表 | 术语一致性只能局部校验 |
 | 原文对齐（EN↔ZH）尚未发布 | 需原文与分页 OCR 文本，本次未做 | 尚无 `align.jsonl` |
 | 会话包未做第三方审计 | 只有自述数字与脱敏脚本 | 建议使用者自行抽样审计 |
-| 03 与 08 有 1337 个同名 `.tex` | blob 级 100% 一致（已验），但属人工同步 | 约定「08 为源、03 为派生」 |
+| ~~03 与 08 有 1337 个同名 `.tex`~~ | 已于 2026-11-14 删除 `03_translations_meta` 下的重复 `源码/` 与 `工程文件/`（约 45 MB，与 08 逐字节相同）；统一以 `08_source_code/` 为唯一来源 | 已消除 |
 
 ## 6. 推荐用途
 
-- **模型预训练 / 微调 / 蒸馏**：`01_corpus_zh`（中文数学文本 + 保真 LaTeX 公式）、`02_trajectories`（工具调用示范）、`06_sessions_raw`（长会话与 agent 轨迹）。
+- **模型预训练 / 微调 / 蒸馏**：`01_corpus_zh`（中文数学文本 + 保真 LaTeX 公式）、`02_trajectories`（工具调用示范）、`06_sessions_raw`（长会话与 agent 轨迹，Release 附件）。
 - **学术研究**：术语一致性研究、数学文本抽取、翻译流水线复现（`04_playbook` + `08_source_code`）。
-- **教学与精读**：`03_translations_meta/*/成品/` 的 41 部成品 PDF；`site/index.html` 是离线可开的检索站点。
-- **Agent 训练**：`02_trajectories` 的四段式（意图→动作→证据→结论 + 评分 6.07–9.99）+ `06_sessions_raw` 的未截断 I/O。
+- **教学与精读**：Release `v1.0.1` 附件里的 41 部成品 PDF（逐部直链见 `03_translations_meta/_PDF清单.tsv`）；`site/index.html` 是离线可开的检索站点。
+- **Agent 训练**：`02_trajectories` 的四段式（意图→动作→证据→结论 + 评分 6.07–9.99）+ `06_sessions_raw` 的未截断 I/O（Release 附件）。
 
 我们不主张对使用方式设额外限制：**把这份语料用于训练是它的目标之一**。唯一要求是遵守第 2 节的署名与非商业条款（译文层）。
 
@@ -80,7 +80,7 @@
 ```bibtex
 @misc{shuyi2026,
   author       = {超对称梦想家 (chaoduicheng)},
-  title        = {数译：中文数学译注文献库（v1.0.0）},
+  title        = {数译：中文数学译注文献库（v1.0.1）},
   year         = {2026},
   howpublished = {\url{https://atomgit.com/lzxSUSUY/mathtranslate}},
   note         = {83 部译注 / 89 个工程 / 41{,}186 段中文数学语料 / 400 条 agent 轨迹}

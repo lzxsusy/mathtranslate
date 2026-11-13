@@ -57,13 +57,21 @@ def main():
         if t:
             with_src += 1
 
-    # 成品 PDF
-    pdfs = []
-    for dp, dn, fn in os.walk(d03):
-        for f in fn:
-            if f.lower().endswith(".pdf"):
-                pdfs.append(os.path.join(dp, f))
-    pdf_bytes = sum(os.path.getsize(p) for p in pdfs)
+    # 成品 PDF（2026-11-14 起在 Release 附件，字节数从 _PDF清单.tsv 读取）
+    pdf_rows = 0
+    pdf_bytes = 0
+    tsv = os.path.join(d03, "_PDF清单.tsv")
+    if os.path.isfile(tsv):
+        with io.open(tsv, encoding="utf-8") as f:
+            head = f.readline().rstrip("\n").split("\t")
+            i_file, i_bytes = head.index("成品文件"), head.index("成品字节")
+            for line in f:
+                cells = line.rstrip("\n").split("\t")
+                if len(cells) <= max(i_file, i_bytes):
+                    continue
+                if cells[i_file].strip():
+                    pdf_rows += 1
+                    pdf_bytes += int(cells[i_bytes] or 0)
 
     # 语料
     zp = os.path.join(REPO, "01_corpus_zh", "zh_paragraphs.jsonl")
@@ -93,11 +101,14 @@ def main():
     tj = os.path.join(REPO, "02_trajectories", "traj_selected.jsonl")
     traj = sum(1 for _ in io.open(tj, encoding="utf-8")) if os.path.isfile(tj) else 0
 
-    # 会话分片
-    sdir = os.path.join(REPO, "06_sessions_raw")
-    shards = [f for f in os.listdir(sdir)] if os.path.isdir(sdir) else []
-    sbytes = sum(os.path.getsize(os.path.join(sdir, f)) for f in shards
-                 if os.path.isfile(os.path.join(sdir, f)))
+    # 会话分片（2026-11-14 起在 Release 附件，元数据见 _attachments.json）
+    att = os.path.join(REPO, "06_sessions_raw", "_attachments.json")
+    shards_n = 0
+    sbytes = 0
+    if os.path.isfile(att):
+        am = json.load(io.open(att, encoding="utf-8"))
+        shards_n = sum(len(p.get("parts", [])) for p in am.get("packages", []))
+        sbytes = int(am.get("total_bytes") or 0)
 
     nfiles, nbytes = count_tree(REPO)
 
@@ -109,13 +120,13 @@ def main():
         "| 译注工程 | **%d** 部（其中 **%d** 部带完整 LaTeX 源码） |" % (len(projs), with_src),
         "| 仓库文件 | %d 个 / **%s** |" % (nfiles, mb(nbytes)),
         "| LaTeX 源文件 / 插图 | %d 个 `.tex` / %d 张图 |" % (tex, img),
-        "| 成品 PDF（预印本类） | %d 部 / **%s** |" % (len(pdfs), mb(pdf_bytes)),
+        "| 成品 PDF（预印本类） | %d 部 / **%s**（Release 附件） |" % (pdf_rows, mb(pdf_bytes)),
         "| 中文段落语料 | **%d** 段（唯一 %d），其中 **%d** 段含公式（%.0f%%）；汉字 %s 字 |"
         % (paras, uniq, with_math, 100.0 * with_math / max(1, paras), format(zhsum, ",")),
         "| 近重复标注 | %d 段（保留，标 `near_dup_of`） |" % near,
         "| 术语基 | %d 条 |" % terms,
         "| 精选轨迹 | %d 条 |" % traj,
-        "| 原始会话分片 | %d 片 / **%s** |" % (len([f for f in shards if ".part" in f]), mb(sbytes)),
+        "| 原始会话分片 | %d 片 / **%s**（Release 附件） |" % (shards_n, mb(sbytes)),
         "",
         END,
     ]

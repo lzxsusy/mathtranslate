@@ -14,6 +14,16 @@
 - 最终：**41,186 段 / 唯一 39,619 / 含公式 35,468（86.1%）**；新增 `QA_REPORT.md` 质检报告。
 - 重建脚本升级为 `_build_corpus_v3.py`（v2 已删）。
 
+### 仓库瘦身（2026-11-14）
+- **消除 03/08 重复**：删除 `03_translations_meta/<编号>/源码/` 与 `工程文件/`（1511 + 518 个文件，约 45 MB）——
+  与 `08_source_code/` 逐字节相同；源码与工程文档统一以 08 为唯一来源。两份 03 独有小文件（`smoke/o.txt`、`_tmp_rules.txt`）
+  已转存到 08 对应目录并加 `-from-03meta` 后缀。
+- **大体积资产外置**：`06_sessions_raw/` 的 4 个 `.zst` 分片（145 MB）与 41 部成品 PDF（50.8 MB）移到
+  Release `v1.0.1` 附件；仓库内保留 `06_sessions_raw/_分片说明.md`、`_attachments.json` 与
+  `03_translations_meta/_PDF清单.tsv`（含附件直链）。
+- **历史重写**：被移出的文件已从全部历史清除并 force push；检出体积 524 MB → 约 280 MB，clone 不再下载这些二进制。
+- **文档同步**：README、`00_README.md`、`DATASHEET.md`、`_PDF清单.tsv`、`MANIFEST.json` 全部重算。
+
 ### 说明
 - 本版**历史已压缩为单提交**：v1.0.0 中带残渣的语料不再能从本仓库历 clone 到，避免下游误用。
 

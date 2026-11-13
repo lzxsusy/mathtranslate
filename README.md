@@ -17,14 +17,14 @@ AI 辅助翻译的过程轨迹、以及威腾文章研讨班的组织资料整�
 | 指标 | 数值 |
 |---|---|
 | 译注工程 | **89** 部（其中 **75** 部带完整 LaTeX 源码） |
-| 仓库文件 | 7481 个 / **504.5 MB** |
+| 仓库文件 | 5407 个 / **263.8 MB** |
 | LaTeX 源文件 / 插图 | 1442 个 `.tex` / 1893 张图 |
-| 成品 PDF（预印本类） | 41 部 / **50.8 MB** |
+| 成品 PDF（预印本类） | 41 部 / **50.8 MB**（Release 附件） |
 | 中文段落语料 | **41186** 段（唯一 39619），其中 **35468** 段含公式（86%）；汉字 3,354,874 字 |
 | 近重复标注 | 1418 段（保留，标 `near_dup_of`） |
 | 术语基 | 657 条 |
 | 精选轨迹 | 400 条 |
-| 原始会话分片 | 4 片 / **144.6 MB** |
+| 原始会话分片 | 4 片 / **144.6 MB**（Release 附件） |
 
 <!-- STATS:END -->
 
@@ -116,10 +116,10 @@ Bourbaki 报告、Astérisque 专辑、arXiv 预印本、论文集（proceedings
 | `MANIFEST.json` | 全部文件的路径 / 字节数 / sha256 前 16 位（提交后重算，见「校验」） |
 | `01_corpus_zh/` | **中文段落语料**（保真保留 LaTeX 公式）+ 术语基 `termbase.jsonl` + 去重报告 |
 | `02_trajectories/` | AI 辅助工作的精选工具调用轨迹（意图→动作→证据→结论，含评分） |
-| `03_translations_meta/` | 每部书的元数据、投稿信息、术语表、交付文档；41 部预印本类另有**成品 PDF**（`<编号>/成品/`） |
+| `03_translations_meta/` | 每部书的元数据、投稿信息、术语表；41 部预印本类的**成品 PDF** 已移到 Release `v1.0.1` 附件（清单见 `_PDF清单.tsv`） |
 | `04_playbook/` | 翻译总纲、施工纪律（v2.0）、文献引进标准、待完成清单、环境备忘 |
 | `05_seminar_witten/` | 威腾（Witten）文章研讨班的索引、阅读路线、经验教训 |
-| `06_sessions_raw/` | 原始对话事件流（已脱敏、zstd 压缩、按 45MB 分片） |
+| `06_sessions_raw/` | 原始对话事件流（已脱敏、zstd 压缩）；145 MB 分片已移到 Release `v1.0.1` 附件，仓库只留抽取脚本与分片说明 |
 | `papers/WIT-1989-JONES/` | **威腾 1989 CS/Jones 论文研讨班**（第二轮解经试点）：六场研讨记录、claims/questions 数据、教材核查；交付两版讲义——**49 页连续叙事讲义**（`deliverables/lecture/`，可作课程主文本）与 **97 页逐句注疏版**（`deliverables/reading_note/`），均含 LaTeX 源码、一键构建工程、协作流程记录，并有打包下载 `WIT-1989-JONES-v1.0.zip` |
 | `08_source_code/` | **每部译本的完整工程**：`工程文件/`（BRIEF、构建脚本、交付清单、术语表、校对记录、逐章报告）+ `源码/`（LaTeX 源与插图） |
 | `site/` | 静态站点（`site/index.html` 双击即开，无需服务器） |
@@ -148,14 +148,18 @@ Bourbaki 报告、Astérisque 专辑、arXiv 预印本、论文集（proceedings
   少数工程的根文件叫 `main.tex` 之外的名称，见该工程 `工程文件/编译说明.md`。
 - **14 部当初只留了成品 PDF、没有 LaTeX 工程**（`SY01-18 / 01-19 / 02-08 / 03-02 / 03-16 / 03-17 / 03-18 / 03-20 / 03-21 / 05-10 / 05-19 / 05-20 / 05-21 / 05-22`），
   这些目录只有 `投稿信息.md`；其余 **72 部**有完整可编译源码。
+- **自 2026-11-14 起，`03_translations_meta/<编号>/` 不再重复保存 `源码/` 与 `工程文件/`**：
+  它们此前与 `08_source_code/<编号>_<中文名>/` 下的同名目录逐字节相同（约 45 MB 重复）。
+  源码、工程文档与术语表统一以 `08_source_code/` 为唯一来源。
 - 用途：学习、研究、复用翻译流水线。
 
 ## 成品 PDF 与原文 PDF（给不使用 LaTeX 的读者）
 
-- **成品 PDF（中文译注本）**：41 部以 arXiv 预印本为底本的译本，成品 PDF 放在 `03_translations_meta/<编号>/成品/`，点开即读；逐部清单（页数、字节、arXiv 号、文件名、下载直链）见 [`03_translations_meta/_PDF清单.tsv`](03_translations_meta/_PDF清单.tsv)。
+- **成品 PDF（中文译注本）**：41 部以 arXiv 预印本为底本的译本，成品 PDF 已移到 Release [`v1.0.1`](https://atomgit.com/lzxSUSUY/mathtranslate/releases/tag/v1.0.1) 的附件，点开即读；逐部清单（页数、字节、arXiv 号、文件名、下载直链）见 [`03_translations_meta/_PDF清单.tsv`](03_translations_meta/_PDF清单.tsv)。
 - **原文 PDF 不发布**：本库只发布译文、工程源码、元数据与自建语料；原文（无论 arXiv 版还是出版书）请按书目信息自行获取。
-- **直链怎么用**：清单里的直链形如 `https://raw.gitcode.com/lzxSUSUY/mathtranslate/blobs/<blob>/<URL 编码的文件名>`，浏览器打开即下载文件本体。AtomGit 网页的 `/raw/<分支>/<路径>` 对 PDF 只返回预览壳，所以清单给的是 blob 直链；链接失效时用 `git clone` 取文件。
+- **直链怎么用**：成品直链形如 `https://atomgit.com/lzxSUSUY/mathtranslate/releases/download/v1.0.1/<URL 编码的文件名>`，浏览器打开即下载；原文直链仍指向 `originals` 分支的 blob（`https://raw.gitcode.com/...`）。
 - **为什么只有 41 部**：其余 45 部以正式出版的书籍（日文/英文专著、Springer 丛书等）为底本，成品 PDF 不发布；它们的元数据、工程文档与源码照常公开。
+- **为什么移到 Release**：成品 PDF 是二进制大文件，留在 Git 历史里会让每次 clone 都下载全部版本；改由 Release 附件分发后，仓库检出体积从 524 MB 降到约 280 MB。
 
 ## 校验（`MANIFEST.json`）
 
@@ -165,8 +169,8 @@ Bourbaki 报告、Astérisque 专辑、arXiv 预印本、论文集（proceedings
 
 ## 分片还原
 
-`06_sessions_raw/` 里两个 `.zst` 因超过平台单文件上限被切成多片，
-拼接与校验命令写在 `06_sessions_raw/_分片说明.md`（含整包 sha256）。
+`06_sessions_raw/` 的 145 MB 会话分片已移到 Release `v1.0.1` 附件（Git 仓库不再保存）。
+下载、拼接与 sha256 校验命令写在 [`06_sessions_raw/_分片说明.md`](06_sessions_raw/_分片说明.md)，机器可读元数据见同目录 `_attachments.json`。
 
 ## 脱敏
 
@@ -177,7 +181,7 @@ Bourbaki 报告、Astérisque 专辑、arXiv 预印本、论文集（proceedings
 - `ghp_ / github_pat_ / sk- / AKIA / ssh-ed25519` 等凭据与密钥模式 → `[已脱敏]`
 - 真实密码、账号名等由 `package_upload.py` 在打包阶段剔除
 
-`06_sessions_raw/` 的 zstd 分片是用同一套规则（含新增两类模式）重新脱敏后压缩的。
+`06_sessions_raw/` 的 zstd 分片（现为 Release 附件）是用同一套规则（含新增两类模式）重新脱敏后压缩的。
 
 ## 使用许可
 
@@ -191,5 +195,5 @@ Bourbaki 报告、Astérisque 专辑、arXiv 预印本、论文集（proceedings
 ## 相关
 
 - 站点：`site/index.html`
-- 术语表：`03_translations_meta/*/工程文件/deliverable/术语表_*.csv`，汇总见 `01_corpus_zh/termbase.jsonl`
+- 术语表：`08_source_code/*/工程文件/deliverable/术语表_*.csv`，汇总见 `01_corpus_zh/termbase.jsonl`
 - 统计与一致性：`make_stats.py`（生成上面的统计块）、`tools/check_manifest.py`
