@@ -1,0 +1,72 @@
+# 术语表（内部一致性记录）
+
+- homological mirror symmetry — 同调镜像对称
+- category — 范畴
+- morphism — 态射
+- Hom-set / hom-space — Hom 集合 / Hom 空间（依语境）
+- covariant functor — 协变函子
+- contravariant functor — 反变函子
+- fully faithful — 全忠实
+- essentially surjective — 本质满
+- representation theory — 表示论
+- quiver — 箭图
+- cohomology — 上同调
+- cohomology ring — 上同调环
+- complex — 复形
+- cochain complex / chain complex — 上链复形 / 链复形
+- quasi-isomorphism — 拟同构
+- null-homotopic / homotopic — 零同伦 / 同伦
+- contractible / minimal — 可缩 / 极小
+- shift — 移位
+- dg-category — 微分分次范畴
+- simplex / simplex category — 单形 / 单形范畴
+- Delta-set / simplicial set — $\Delta$-集 / 单纯集
+- cup product — 杯积
+- singular cohomology — 奇异上同调
+- de Rham cohomology — 德拉姆上同调
+- Massey product — Massey 积
+- free resolution / projective resolution — 自由分解 / 投射分解
+- extension — 扩张
+- exterior algebra — 外代数
+- dual numbers — 对偶数环
+- Koszul resolution — Koszul 分解
+- Ext group / Ext ring — Ext 群 / Ext 环
+- A-infinity morphism / functor / category — $A_\infty$ 态射 / 函子 / 范畴
+- minimal model — 极小模型
+- dg-model — dg-模型
+- homological perturbation lemma — 同调扰动引理
+- twisted complex — 扭曲复形
+- Maurer–Cartan equation — Maurer--Cartan 方程
+- strict / weak unit — 强单位 / 弱单位
+- quasi-equivalence — 拟等价
+- twisted completion — 扭曲完备化
+- derived category / derived equivalence — 导出范畴 / 导出等价
+- mapping cone — 锥
+- generator — 生成元
+- A-infinity algebra/category — A∞ 代数 / A∞ 范畴
+- module — 模
+- presheaf — 预层
+- additive completion — 加法完备化
+- split closure / Karoubi completion — 分裂闭包 / Karoubi 完备化
+- Morita equivalence — Morita 等价
+- Fukaya category — Fukaya 范畴
+- Lagrangian submanifold — 拉格朗日子流形
+- Lagrangian brane — 拉格朗日膜
+- thimble — Lefschetz thimble（保留英文；勿作“帐篷”）
+- vanishing cycle — 消失圈
+- wrapped / partially wrapped Fukaya category — wrapped / partially wrapped Fukaya 范畴（保留英文）
+- stop — stop（保留英文；指截断 Reeb 流的超曲面）
+- cotangent fiber — 余切纤维
+- Reeb chord / orbit — Reeb 弦 / 轨道
+- symplectic homology — 辛同调
+- open--closed map — 开闭映射
+- tame representation type — 温和型
+- toric variety / toric divisor — 环簇 / 环簇除子（v2.0 由“托里克簇”改）
+- ample / very ample line bundle — 丰富 / 极丰富线丛（v2.0 由“充足/非常充足”改）
+- exact Lagrangian / exact symplectic — 正合拉格朗日子流形 / 正合辛流形
+- line field — 线场
+- isotopy / isotopic — 同位变形
+- stability — 稳定性
+- deformation theory — 变形理论
+
+本文件是内部术语记录，随章节翻译校订；最终压缩包保留此文件，便于复译和维护。

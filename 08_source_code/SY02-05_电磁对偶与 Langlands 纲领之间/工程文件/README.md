@@ -1,0 +1,103 @@
+# 《电磁对偶与 Langlands 纲领之间》中译本 · 学术注疏版
+
+**Between Electric-Magnetic Duality and the Langlands Program**
+David Ben-Zvi（UT Austin，2021 年春季课程）
+笔记：Jackson Van Dyke
+
+---
+
+## 一、先说明文献事实
+
+本书**不是 Edward Witten 的论文**。它是 **David Ben-Zvi** 教授 2021 年春季在德克萨斯大学
+奥斯汀分校（UT Austin）讲授的几何 Langlands 课程讲义，由 Jackson Van Dyke 现场记录，
+原文共 17 章、304 页。书名主题与 Kapustin–Witten 2007 年的长文
+*Electric-Magnetic Duality and the Geometric Langlands Program*（参考文献 `[KW07]`）
+直接相关，但作者、文体与内容均属 Ben-Zvi 的讲义传统。
+
+中译本按“逐段全译 + 公式保留原编号 + 图表剥离 + 学术批注”的标准完成。
+
+## 二、交付内容
+
+| 文件/目录 | 说明 |
+|---|---|
+| `main.tex` | 主文件（封面、译者说明、目录、17 章、附录、参考文献） |
+| `preamble.tex` | 导言区：ctexbook + amsmath + graphicx + hyperref + 自定义环境/宏 |
+| `chapters/ch01.tex … ch17.tex` | 17 章中文译文源码 |
+| `figures/` | 27 幅编号图、7 张表、290 张正文内嵌交换图/配边图裁剪件 |
+| `appendix_notes.tex` | 附录 A：226 条 `% [Tutor Note: ...]` 审校批注汇编（自动生成） |
+| `appendix_glossary.tex` | 附录 B：术语对照表（约 90 条） |
+| `bibliography.tex` | 参考文献（保留英文原条目） |
+| `Between electric-magnetic duality and the Langlands program_中译本.pdf` | 已编译成品（314 页） |
+
+## 三、编译方法
+
+需要 **XeLaTeX**（因使用 `ctexbook` 与中文字体）。在本目录下执行两遍：
+
+```bash
+xelatex main.tex
+xelatex main.tex
+```
+
+要求：TeX Live 2023 及以上（或 MiKTeX），含 `ctex`、`xecjk`、`fandol` 或 Windows 中文字体。
+当前 PDF 使用 `fontset=windows`（宋体/黑体）编译；若在无 Windows 字体的系统上编译，
+可把 `preamble.tex` 中的 `fontset=windows` 改为 `fontset=fandol`（需要安装 `fandol` 字体包）。
+
+图片路径已通过 `\graphicspath` 设为 `figures/` 与 `figures/inline/`，请保持相对路径。
+
+## 四、规模统计
+
+- 17 章全部译出，正文约 **13.7 万汉字**；
+- **1848** 个编号公式，全部保留原书编号（如 `(10.13)`），多行公式逐行编号；
+- **27** 幅编号图（Figure 1.1–17.1）：其中 **Figure 10.4 原 PDF 只有图题、图形缺失**，
+  译本照译图题并以批注说明，未伪造图形；其余 26 幅均以 `figure` 环境插入裁剪图；
+- **7** 张表：表 1.1、1.2、3.1、4.1、14.1 已用 LaTeX 重排；表 1.3、12.1 以原图保留；
+- 正文内嵌交换图/配边图：提供 **290** 个原图裁剪件；对裁剪碎片不可用者，按原版面用
+  LaTeX 数组重排，并在源码注释中标注对应裁剪文件名；
+- **225** 条 `% [Tutor Note: ...]` 批注：易错预警、作者省略的证明、原文校勘、物理图像；
+- 附录 A 为批注汇编，附录 B 为术语表。
+
+## 五、翻译与审校体例
+
+1. **术语**：以中文学界通行译法为准，首次出现给英文；人名、群名、定理名保留英文。
+2. **公式**：按原 PDF 页面逐符号核对；源文本中 `\x00/\x01` 等括号字形、上下标抽取伪影已还原。
+3. **图表**：图题译为中文，并标注“原文 p.~N”。**该页码指原 PDF 文件页码**
+   （含封面与目录，比书内印刷页码大 1–2 页），便于按 PDF 阅读器定位。
+4. **批注**：源码内为 LaTeX 注释；附录 A 以纯文本汇编，便于单独阅读。
+5. **原文错误**：一律照译并在紧邻处加批注，不擅自改动正文；重要校勘见附录 A。
+
+## 六、原文主要缺陷（已在正文批注，摘录）
+
+- **Figure 10.4**（p.151）：只有图题、没有图形，疑为原稿遗漏。
+- 第 1 章：表 1.2 上方小表中 `Spec F_t[[t]]` 应为 `Spec F_q[[t]]`（笔误）；
+  p.19 “The B-wide” 应为 “The B-side”；p.17 有残句 “there is For p=1...”。
+- 第 2 章：(2.14) 末尾多印一个 `w`；(2.39) 应为 `C*(U)`；(2.43) 右端漏模长。
+- 第 3 章：(3.2) `Aut(X)` 应为 `Aut(V)`；(3.35) 积分变量不一致；(3.43) 应为 `L²(G∨)`；
+  (3.53)/(3.54) 同写 `T∨`。
+- 第 4 章：(4.13)/(4.14) 用 `#` 占位常数；(4.19) 积分域 σ 应为 Σ；(4.43) `B H¹(M,Z)` 记号未定义。
+- 第 5 章：(5.3) `Cℓ(f)` 应为 `Cℓ(F)`；(5.19) “pricipal” 拼写错误；(5.76) 排作 “=≃”。
+- 第 6 章：(6.18) 方框图残缺；(6.74) M/M₀ 混用；(6.81)–(6.86) 重复排版；(6.98) `Loc₁(C)` 应为 `Loc₁(D_x^×)`。
+- 第 7 章：(7.31) 以 `→` 代 `⊗`；(7.42) `S ⊂ σ` 应为 `S ⊂ C`；(7.2) `H¹` 应为 `H₁`。
+- 第 8 章：(8.106) 左右式不等；(8.109) `Jac / Â¹` 记号从简；(8.152) 指标不自洽。
+- 第 9 章：9.1.2 `Bun_g` 应为 `Bun_G`；(9.51) 多印 `⊗`；(9.128) `T_p n` 应为 `T_{p^n}`。
+- 第 10 章：多处 `A`↔`Z`、`∂σ`→`∂Σ`、`Σ^G`→`Σ^g`、`S^{m−1}`→`S^{n−1}`、`A(S¹)`→`A(S²)` 等。
+- 第 11 章：(11.14) `Hecke_X` 应为 `Hecke_x`；11.7.2 `Rep(G*)` 应为 `Rep(G∨)`。
+- 第 12 章：(12.17) 只写一条 zig-zag 恒等式；(12.22) `Hom(V,)` 缺第二变元。
+- 第 13 章：p.222 `S²×S²` 应为 `S²×S¹`；(13.21) `∏_{x∈S}` 应为 `∏_{x∉S}`；
+  (13.90)/(13.91) 缺指标；(13.107) character lattice 应为 cocharacter lattice。
+- 第 14 章：Theorem 15 “Hochschild-Konstant-Rosenburg” 应为 Rosenberg。
+- 第 15 章：`shifted sign symplectic`、`:et Z`、`automorphisms→endomorphisms`、
+  `automorphism forms→automorphic forms`、`T^*[1]` 漏底空间。
+- 第 17 章：(17.148) `X(O)` 应为 `G(O)`；(17.112) `π_{s/2}` 应为 `π^{s/2}`；
+  (17.124) 缺 `d*x`；(17.127) `F_v` 下标错位。
+
+## 七、已知限制
+
+- 原书是现场笔记，本身可能存在错误；译本只做校勘标注，不对数学内容作系统性重写。
+- 少数内嵌交换图（原 PDF 中由若干箭头碎片构成）采用 LaTeX 数组重排，未逐像素贴图；
+  原裁剪件仍保留在 `figures/inline/` 供对照。
+- 附录 A 以纯文本呈现公式片段（为保证任何 TeX 环境可编译）；完整 LaTeX 形式见各章注释。
+- 表 1.3、12.1 以原图保留，若需可编辑表格可据原图重排。
+
+---
+
+*译者：DeepSeek 学术助手 · 2026 年 10 月*
