@@ -1,0 +1,313 @@
+% =====================================================================
+%  preamble.tex —— Orlov《凝聚层的导出范畴及其之间的等价》中文译注本
+%  导言区 · Lead 独占，译者只读
+%  宏包与骨架沿用本库房规（SY08-01 体例），仅替换与本稿相关的部分
+% =====================================================================
+\usepackage[b5paper,top=21mm,bottom=21mm,left=19mm,right=19mm,headheight=14pt,headsep=5mm,footskip=9mm]{geometry}
+\usepackage{amsmath,amssymb,mathrsfs,bm}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{booktabs,array,multirow,longtable,multicol}
+\usepackage{newunicodechar}% 兜底：正文偶发的 Unicode 符号也能排版
+\newunicodechar{■}{\ensuremath{\blacksquare}}
+\newunicodechar{□}{\ensuremath{\square}}
+\newunicodechar{≥}{\ensuremath{\geq}}
+\newunicodechar{≤}{\ensuremath{\leq}}
+\newunicodechar{≠}{\ensuremath{\neq}}
+\newunicodechar{≡}{\ensuremath{\equiv}}
+\newunicodechar{≅}{\ensuremath{\cong}}
+\newunicodechar{∼}{\ensuremath{\sim}}
+\newunicodechar{≈}{\ensuremath{\approx}}
+\newunicodechar{≃}{\ensuremath{\simeq}}
+\newunicodechar{±}{\ensuremath{\pm}}
+\newunicodechar{×}{\ensuremath{\times}}
+\newunicodechar{⋅}{\ensuremath{\cdot}}
+\newunicodechar{⊗}{\ensuremath{\otimes}}
+\newunicodechar{⊕}{\ensuremath{\oplus}}
+\newunicodechar{⊠}{\ensuremath{\boxtimes}}
+\newunicodechar{⌈}{\ensuremath{\lceil}}
+\newunicodechar{⌉}{\ensuremath{\rceil}}
+\newunicodechar{⌊}{\ensuremath{\lfloor}}
+\newunicodechar{⌋}{\ensuremath{\rfloor}}
+\newunicodechar{∞}{\ensuremath{\infty}}
+\newunicodechar{→}{\ensuremath{\to}}
+\newunicodechar{↦}{\ensuremath{\mapsto}}
+\newunicodechar{↪}{\ensuremath{\hookrightarrow}}
+\newunicodechar{⊂}{\ensuremath{\subset}}
+\newunicodechar{⊆}{\ensuremath{\subseteq}}
+\newunicodechar{∈}{\ensuremath{\in}}
+\newunicodechar{≺}{\ensuremath{\prec}}
+\newunicodechar{⩽}{\ensuremath{\leqslant}}
+\newunicodechar{Δ}{\ensuremath{\Delta}}
+\newunicodechar{Σ}{\ensuremath{\Sigma}}
+\newunicodechar{Γ}{\ensuremath{\Gamma}}
+\newunicodechar{Λ}{\ensuremath{\Lambda}}
+\newunicodechar{Φ}{\ensuremath{\Phi}}
+\newunicodechar{Ψ}{\ensuremath{\Psi}}
+\newunicodechar{ξ}{\ensuremath{\xi}}
+\newunicodechar{η}{\ensuremath{\eta}}
+\newunicodechar{λ}{\ensuremath{\lambda}}
+\newunicodechar{μ}{\ensuremath{\mu}}
+\newunicodechar{ν}{\ensuremath{\nu}}
+\newunicodechar{ω}{\ensuremath{\omega}}
+\newunicodechar{φ}{\ensuremath{\varphi}}
+\newunicodechar{ψ}{\ensuremath{\psi}}
+\newunicodechar{・}{\textperiodcentered}
+% 西里尔字母（俄文书名）：latin modern 无西里尔字形，借系统 Times New Roman 兜底
+\IfFontExistsTF{Times New Roman}
+  {\newfontfamily\cyrfont{Times New Roman}}
+  {\IfFontExistsTF{DejaVu Serif}
+     {\newfontfamily\cyrfont{DejaVu Serif}}
+     {\newcommand{\cyrfont}{}}}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage{tcolorbox}
+\tcbuselibrary{most}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue!45!black,
+            bookmarksnumbered=true,
+            pdftitle={凝聚层的导出范畴及其之间的等价（Orlov 著，中文译注本）},
+            pdfauthor={D. O. Orlov}}
+
+\setlength{\parindent}{2em}
+\linespread{1.12}
+\allowdisplaybreaks[2]
+\setlength{\emergencystretch}{6em}
+\tolerance=3000
+\hbadness=10000
+
+% ---------- 页眉页脚 ----------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.3pt}
+\fancyhead[LE]{\small\thepage}
+\fancyhead[RE]{\small\leftmark}
+\fancyhead[RO]{\small\thepage}
+\fancyhead[LO]{\small\rightmark}
+\fancyfoot{}
+\renewcommand{\chaptermark}[1]{\markboth{\CTEXthechapter\quad #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\quad #1}}
+
+% ---------- 章节标题格式 ----------
+\ctexset{
+  chapter = {
+    format = \centering\Large\bfseries,
+    name = {第,章},
+    number = \arabic{chapter},
+    beforeskip = 18pt,
+    afterskip = 22pt,
+  },
+  section = {
+    format = \large\bfseries,
+    beforeskip = 14pt,
+    afterskip = 10pt,
+  },
+  subsection = {
+    format = \normalsize\bfseries,
+    beforeskip = 11pt,
+    afterskip = 6pt,
+  },
+}
+
+% ---------- 公式编号 ----------
+% 原书公式按章连续编号 (1)–(31)，跨章不重起。此处一律手工 \tag{原编号}，
+% 故不安排 equation 自动计数；\numberwithin 仅作兜底。
+\numberwithin{equation}{chapter}
+
+% ---------- 陈述环境 ----------
+% 原书（RMS 2003 英文版）定理类陈述末尾**不带任何符号**，证明末尾亦不带；
+% 本译本照此不加尾符，以存原貌。
+% 用法：\begin{theorem}{2.1.3} 正文…… \end{theorem}
+% 可选参数 [附加名]：\begin{theorem}[Orlov]{3.2.1}
+% 编号是**必选第一参数**，一律照抄原书编号（形如 1.1.1、2.2.8），不用自动编号。
+\newcommand{\fkstmt}[3][]{\par\medskip\noindent\textbf{#2~#3}%
+  \if\relax\detokenize{#1}\relax\else\textbf{（#1）}\fi\ \ignorespaces}
+\newenvironment{theorem}[2][]{\fkstmt[#1]{定理}{#2}}{\par\medskip}
+\newenvironment{proposition}[2][]{\fkstmt[#1]{命题}{#2}}{\par\medskip}
+\newenvironment{lemma}[2][]{\fkstmt[#1]{引理}{#2}}{\par\medskip}
+\newenvironment{corollary}[2][]{\fkstmt[#1]{推论}{#2}}{\par\medskip}
+\newenvironment{definition}[2][]{\fkstmt[#1]{定义}{#2}}{\par\medskip}
+\newenvironment{example}[2][]{\fkstmt[#1]{例}{#2}}{\par\medskip}
+\newenvironment{remark}[2][]{\fkstmt[#1]{注}{#2}}{\par\medskip}
+\newenvironment{notation}[2][]{\fkstmt[#1]{记号}{#2}}{\par\medskip}
+\newenvironment{conjecture}[2][]{\fkstmt[#1]{猜想}{#2}}{\par\medskip}
+\newenvironment{question}[2][]{\fkstmt[#1]{问题}{#2}}{\par\medskip}
+\newenvironment{problem}[2][]{\fkstmt[#1]{问题}{#2}}{\par\medskip}
+\newenvironment{assumption}[2][]{\fkstmt[#1]{假设}{#2}}{\par\medskip}
+% 兼容房规旧习惯：带 p 后缀 = 证明紧跟（与原书无尾符的实情一致）
+\newenvironment{theoremp}[2][]{\fkstmt[#1]{定理}{#2}}{\par\medskip}
+\newenvironment{propositionp}[2][]{\fkstmt[#1]{命题}{#2}}{\par\medskip}
+\newenvironment{lemmap}[2][]{\fkstmt[#1]{引理}{#2}}{\par\medskip}
+\newenvironment{corollaryp}[2][]{\fkstmt[#1]{推论}{#2}}{\par\medskip}
+\newenvironment{definitionp}[2][]{\fkstmt[#1]{定义}{#2}}{\par\medskip}
+\newenvironment{examplep}[2][]{\fkstmt[#1]{例}{#2}}{\par\medskip}
+
+% 证明：原书“Proof.”起首，末尾无符号（个别处有 “The proof is complete.” 之类的话）
+\newenvironment{proof}[1][证明]{\par\medskip\noindent\textbf{#1}\ \ignorespaces}{\par\medskip}
+
+% ---------- 译注（可见）----------
+% 概念性批注用 \yizhu{…}：左侧细竖线 + 小字号，随文排，读者可见。
+% 校勘性批注（笔误、页图与文字层不一致、术语取舍理由）用 LaTeX 注释
+%   % [Tutor Note: …]  正文不印，由 work/tools/gen_notes.py 汇总进附录 B。
+% 两类都进附录 B；见 STYLE_GUIDE.md §6。
+\newtcolorbox{yizhubox}{
+  enhanced, breakable, blanker,
+  borderline west={1.4pt}{0pt}{gray!55},
+  left=9pt, right=3pt, top=2pt, bottom=2pt,
+}
+\newcommand{\yizhu}[1]{\begin{yizhubox}\small\textbf{〔译注〕}\hspace{0.3em}#1\end{yizhubox}}
+
+% ---------- 图 ----------
+\newcommand{\figtitle}[2]{\par\smallskip\noindent{\centering\small 图~#1\quad #2\par}\smallskip}
+\newcommand{\tabtitle}[2]{\par\smallskip\noindent{\centering\small 表~#1\quad #2\par}\smallskip}
+
+% 交换图 / 示意图占位：\figdiag{原书页码}{该页第几个字母}
+% 例：\figdiag{545}{a} → figures/dg_545_a.pdf（由 Lead 从 200dpi 页图裁切并核对）
+% 文件未就位时印一个占位框，保证编译不中断。
+\newcommand{\figdiag}[2]{%
+  \begin{center}%
+  \IfFileExists{figures/dg_#1_#2.pdf}%
+    {\includegraphics[width=0.92\linewidth]{figures/dg_#1_#2.pdf}}%
+    {\fbox{\parbox{0.55\linewidth}{\centering\small ［交换图：原文 p.#1（#2）待裁切］}}}%
+  \end{center}}
+% 单独排版的小图（原书无编号者）：
+\newcommand{\figraw}[2]{%
+  \begin{center}%
+  \IfFileExists{figures/dg_#1_#2.pdf}%
+    {\includegraphics[width=0.7\linewidth]{figures/dg_#1_#2.pdf}}%
+    {\fbox{\parbox{0.45\linewidth}{\centering\small ［图：原文 p.#1（#2）待裁切］}}}%
+  \end{center}}
+
+% 内部 tikzcd 图（译者自己排的交换图；仅在原图简单到可无损重排时使用）
+\newcommand{\diag}[1]{\begin{center}\begin{tikzcd}[row sep=2.2em,column sep=2.6em,ampersand replacement=\&]#1\end{tikzcd}\end{center}}
+
+% ---------- 节首/章末（房规）----------
+\newif\ifshowtakeaway     \showtakeawaytrue
+\newif\ifshowchapterreview \showchapterreviewtrue
+\newtcolorbox{takeawaybox}{
+  enhanced, breakable, colback=blue!4!white, colframe=blue!55!black,
+  boxrule=0.4pt, arc=1.5pt, left=5pt, right=5pt, top=3pt, bottom=3pt,
+  parskip=0.4em,
+  title={\small\bfseries 本节重点}, fonttitle=\small\bfseries,
+  coltitle=white, colbacktitle=blue!55!black,
+  attach boxed title to top left={xshift=4pt,yshift=-2pt},
+}
+\newtcolorbox{reviewbox}{
+  enhanced, breakable, colback=orange!3!white, colframe=orange!65!black,
+  boxrule=0.4pt, arc=1.5pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  parskip=0.6em,
+  title={\small\bfseries 本章回顾与评注}, fonttitle=\small\bfseries,
+  coltitle=white, colbacktitle=orange!65!black,
+  attach boxed title to top left={xshift=4pt,yshift=-2pt},
+}
+\newcommand{\takeaway}[1]{\ifshowtakeaway\begin{takeawaybox}\small #1\end{takeawaybox}\fi}
+\newcommand{\chapterreview}[1]{\ifshowchapterreview\begin{reviewbox}\small #1\end{reviewbox}\fi}
+
+% ---------- 常用记号 ----------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\bA}{\mathbb{A}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\Proj}{Proj}
+\DeclareMathOperator{\Pic}{Pic}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\Tor}{Tor}
+\DeclareMathOperator{\RHom}{\mathbf{R}Hom}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Auteq}{Auteq}
+\DeclareMathOperator{\Tot}{Tot}
+\DeclareMathOperator{\Cone}{Cone}
+\DeclareMathOperator{\Cyl}{Cyl}
+\DeclareMathOperator{\ch}{ch}
+\DeclareMathOperator{\td}{td}
+\DeclareMathOperator{\Td}{Td}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Coker}{Coker}
+\DeclareMathOperator{\Supp}{Supp}
+\DeclareMathOperator{\codim}{codim}
+\DeclareMathOperator{\coker}{coker}
+\DeclareMathOperator{\Ob}{Ob}
+\DeclareMathOperator{\Mor}{Mor}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
+% 原书用粗体 D、R、L：\mathbf{D}^{b}(X)、\mathbf{R}f_*、\mathbf{L}f^{*}、\otimes^{\mathbf{L}}
+\newcommand{\otL}{\otimes^{\mathbf{L}}}
+\newcommand{\Rf}{\mathbf{R}}
+\newcommand{\Lf}{\mathbf{L}}
+\newcommand{\Rb}{\mathbf{R}^{\bullet}}
+\newcommand{\Db}{\mathbf{D}^{b}}
+\newcommand{\Dm}{\mathbf{D}^{-}}
+\newcommand{\Dp}{\mathbf{D}^{+}}
+\newcommand{\Du}{\mathbf{D}}
+\newcommand{\db}{\mathbf{D}^{b}}
+\newcommand{\dminus}{\mathbf{D}^{-}}
+\newcommand{\dplus}{\mathbf{D}^{+}}
+\newcommand{\dunb}{\mathbf{D}}
+\newcommand{\coh}{\mathrm{coh}}
+\newcommand{\Qcoh}{\mathrm{Qcoh}}
+\newcommand{\Mod}{\mathrm{Mod}}
+\newcommand{\Dcat}{\mathcal{D}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\adj}{\dashv}
+\newcommand{\iso}{\xrightarrow{\ \sim\ }}
+\newcommand{\into}{\hookrightarrow}
+\newcommand{\onto}{\twoheadrightarrow}
+\newcommand{\sr}[1]{\mathrm{#1}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\vp}{\varphi}
+\newcommand{\figfont}{\small}
+
+% ---------- 参考文献（原书式：[编号] 或 [作者年]）----------
+\newenvironment{biblist}{\begin{list}{}{\leftmargin=3.6em\itemindent=-3.6em
+  \itemsep=0.6pt\parsep=0pt\topsep=2pt}}{\end{list}}
+\newcommand{\bibentry}[2]{\item[\textnormal{[#1]}] #2\par}
+
+% ---------- 术语表 / 索引 ----------
+\newenvironment{termlist}{\begin{list}{}{\leftmargin=2.2em\itemindent=0pt
+  \itemsep=0.4pt\parsep=0pt\topsep=2pt}}{\end{list}}
+\newcommand{\termitem}[2]{\item #1\hfill{\small #2}}
+\newenvironment{conceptlist}{\begin{list}{}{\leftmargin=0pt\itemindent=0pt
+  \itemsep=2pt\parsep=0pt\topsep=2pt}}{\end{list}}
+\newcommand{\concept}[4]{\item\textbf{#1}\quad{\small（#2）}\par\nopagebreak
+  \hangindent=2em #3\par
+  \hangindent=2em {\small\textbf{出处：}#4}\par}
+% ---------- 分页 ----------
+% openany 应让章首接排，但 ctexbook 仍会因 \cleardoublepage 产生空白页；
+% 直接把它降级为 \clearpage，避免书里出现只带页眉的空白页。
+\let\cleardoublepage\clearpage

@@ -1,0 +1,328 @@
+% =====================================================================
+%  ch03c.tex —— 3.4 主定理的证明（原书 p.555–563）
+%  D. O. Orlov, Derived categories of coherent sheaves and equivalences
+%  between them, Russian Math. Surveys 58:3 (2003) 511–591.
+%  本块不写 \chapter，只写本节 \section；终点为 p.563 末（3.5 标题前）。
+% =====================================================================
+% [Tutor Note: 本块自 p.555 中部起。p.555 上半页为命题 3.3.5 的证明结尾与其陈述，归 ch03b；本块仍标 p.555 页标，以便页码覆盖连续。]
+% [原文 p.555]
+\section{主定理的证明}
+\takeaway{本节补全定理 3.2.1 的证明：先在丰富序列上建立几条消没引理与延拓命题（命题 3.4.6），再把上一节在丰富线丛序列上给出的自然变换延拓为整个导出范畴上的同构，最后用映射锥验证 $F\cong\Phi_{\cE}$，并证明代表对象的唯一性。}
+
+上一节中，我们从簇 $M$ 与 $X$ 上凝聚层导出范畴之间的一个全忠实函子 $F$ 出发，在积 $M\times X$ 上构造了对象 $\cE$，从而得到新的函子 $\Phi_{\cE}$。本节的主要目标是证明这两个函子 $F$ 与 $\Phi_{\cE}$ 同构。为此必须在这两个函子之间构造一个作为同构的自然变换。按构造，该变换已经在 $M$ 上的一列丰富线丛上给出。我们的任务是把这一变换延拓到整个导出范畴。
+
+我们先证明下面要用到的几条关于阿贝尔范畴的断言。设 $\cA$ 是 $k$-线性阿贝尔范畴（以下我们总考虑 $k$-线性阿贝尔范畴）。
+
+\begin{definition}{3.4.1}
+设 $\cA$ 是阿贝尔范畴。若对每个对象 $X\in\cA$ 都存在整数 $N$，使得对任意指标 $i<N$ 下列条件都成立，则称 $\cA$ 中指标取负值的对象序列 $\{P_i\mid i\in\Z_{\leqslant 0}\}$ 是\emph{丰富}的（ample）：
+\begin{enumerate}[label=\alph*),leftmargin=2.4em,itemsep=1pt,topsep=2pt]
+\item 典范态射 $\Hom(P_i,X)\otimes P_i\longrightarrow X$ 是满的，
+\item 对所有 $j\neq 0$ 都有 $\Ext^{j}(P_i,X)=0$，
+\item $\Hom(X,P_i)=0$。
+\end{enumerate}
+\end{definition}
+
+\yizhu{丰富序列（ample sequence）是这里的技术核心：它把“导出范畴中的对象为零”这一整体性断言，化归为“在一列可数对象上所有阶的 $\Hom$ 全为零”这一逐项可检验的条件（引理 3.4.3、3.4.4）。条件 a) 与 b) 保证序列中的对象能“生成”任意对象 $X$ 并给出消解，条件 c) 则保证 $\Hom(X,P_i)$ 一侧的消没；三者合起来使 $P_i$ 在指标充分负时表现得像 $\PP^n$ 上的 $\cO(-N)$ 那样“足够负”。【来源：原书 §3.4 定义 3.4.1 及紧随其后的例 3.4.2（A 级）】}
+
+% [原文 p.556]
+\begin{example}{3.4.2}
+设 $\cL$ 是射影簇上的丰富线丛。则序列 $\{\cL^{i}\mid i\in\Z_{\leqslant 0}\}$ 在凝聚层阿贝尔范畴中是丰富的。
+\end{example}
+
+\begin{lemma}{3.4.3}
+设 $\{P_i\}$ 是阿贝尔范畴 $\cA$ 中的丰富序列。若范畴 $\Db(\cA)$ 中的对象 $X$ 满足等式
+\begin{equation*}
+\Hom^{\bullet}(P_i,X)=0\qquad\text{对所有 } i\ll 0,
+\end{equation*}
+则 $X$ 是零对象。
+\end{lemma}
+
+\begin{proof}
+由丰富性的定义，对 $i\ll 0$ 有
+\begin{equation*}
+\Hom(P_i,H^{k}(X))\cong\Hom^{k}(P_i,X)=0.
+\end{equation*}
+然而对 $i\ll 0$，态射 $\Hom(P_i,H^{k}(X))\otimes P_i\longrightarrow H^{k}(X)$ 必须是满的。因此对所有 $k$ 都有 $H^{k}(X)=0$。这就是说，$X$ 是零对象。
+\end{proof}
+
+\yizhu{这里 $\Hom^{\bullet}$ 指分次 $\Hom$，即 $\Hom^{\bullet}(E,F)=\bigoplus_{k\in\Z}\Hom^{k}(E,F)$；等式 $\Hom^{\bullet}(P_i,X)=0$ 的意思是所有阶的 $\Hom$ 同时为零，而非某一阶为零。页图把上标印成一个小圆点（$\Hom^{\cdot}$），本译本统一记作 $\Hom^{\bullet}$。【来源：原书 p.556 引理 3.4.3 及其后各处的用法（A 级）】}
+
+% [Tutor Note: 页图把分次 Hom 的上标印作小圆点（Hom$^{\cdot}$），文字层抽作“Hom·”；本译本统一记作 $\Hom^{\bullet}$，语义不变。]
+
+\begin{lemma}{3.4.4}
+设 $\cA$ 是有限同调维数的阿贝尔范畴，$\{P_i\}$ 是 $\cA$ 中的丰富序列。若对象 $X\in\Db(\cA)$ 满足：对任意 $i\ll 0$ 都有 $\Hom^{\bullet}(X,P_i)=0$，则 $X$ 是零对象。
+\end{lemma}
+
+\begin{proof}
+假设对象 $X$ 非平凡。必要时在导出范畴中平移 $X$，可设 $X$ 最右的非零上同调为 $H^{0}(X)$。考虑典范态射 $X\longrightarrow H^{0}(X)$。对某个 $i_1$，存在满射 $P_{i_1}^{\oplus k_1}\longrightarrow H^{0}(X)$；记 $Y_1$ 为其核。按假设 $\Hom^{\bullet}(X,P_{i_1})=0$，因此也有 $\Hom^{1}(X,Y_1)\neq 0$。接着取满射 $P_{i_2}^{\oplus k_2}\longrightarrow Y_1$，它对某个 $i_2\ll 0$ 存在；记 $Y_2$ 为其核。条件 $\Hom^{\bullet}(X,P_{i_2})=0$ 再次给出 $\Hom^{2}(X,Y_2)\neq 0$。继续这一过程，便与 $\cA$ 的有限同调维数矛盾。
+\end{proof}
+
+\begin{lemma}{3.4.5}
+设 $\cA$ 与 $\cB$ 是阿贝尔范畴，并设 $\cA$ 具有有限同调维数。设 $\{P_i\}$ 是 $\cA$ 中的丰富序列。设 $F$ 是从 $\Db(\cA)$ 到 $\Db(\cB)$ 的正合函子，它分别具有右伴随函子与左伴随函子 $F^{!}$ 与 $F^{*}$。若映射
+\begin{equation*}
+\Hom^{k}(P_j,P_i)\iso\Hom^{k}(F(P_j),F(P_i))
+\end{equation*}
+对 $j<i$ 以及所有 $k$ 都是同构，则 $F$ 是全忠实的。
+\end{lemma}
+
+\begin{proof}
+考虑典范态射 $f_i:P_i\longrightarrow F^{!}F(P_i)$ 与特异三角
+\begin{equation*}
+P_i\xrightarrow{\ f_i\ }F^{!}F(P_i)\longrightarrow C_i\longrightarrow P_i[1].
+\end{equation*}
+按假设，对 $j<i$ 有同构
+\begin{equation*}
+\Hom^{k}(P_j,P_i)\iso\Hom^{k}(F(P_j),F(P_i))\cong\Hom^{k}(P_j,F^{!}F(P_i)).
+\end{equation*}
+因此对 $j<i$ 有 $\Hom^{\bullet}(P_j,C_i)=0$。由引理 3.4.3，$C_i=0$。于是 $f_i$ 是同构。
+
+% [原文 p.557]
+对任意对象 $X$，现在考虑典范映射 $g_X:F^{*}F(X)\longrightarrow X$ 与特异三角
+\begin{equation*}
+F^{*}F(X)\xrightarrow{\ g_X\ }X\longrightarrow C_X\longrightarrow F^{*}F(X)[1].
+\end{equation*}
+有一列同构
+\begin{equation*}
+\Hom^{k}(X,P_i)\iso\Hom^{k}(X,F^{!}F(P_i))\cong\Hom^{k}(F^{*}F(X),P_i).
+\end{equation*}
+这表明对所有 $i$ 都有 $\Hom^{\bullet}(C_X,P_i)=0$。由引理 3.4.4 得到 $C_X=0$。于是 $g_X$ 是同构。因此 $F$ 是全忠实的。
+\end{proof}
+
+现在我们陈述并证明本节的主要命题，定理 3.2.1（本章的主要结果）的证明需要用到它。这个命题本身也具有独立的意义。
+
+设 $\cA$ 是具有丰富序列 $\{P_i\mid i\in\Z_{\leqslant 0}\}$ 的阿贝尔范畴。用 $j$ 记对象集为 $\Ob\cC:=\{P_i\mid i\in\Z_{\leqslant 0}\}$ 的全子范畴 $\cC$ 到 $\Db(\cA)$ 的嵌入。在这一情形下可以证明：给定函子 $F:\Db(\cA)\longrightarrow\Db(\cA)$，若 $F|_{\cC}$ 与 $\cC$ 上的恒等函子之间存在同构，则这一变换可延拓为整个范畴 $\Db(\cA)$ 上的同构。
+
+\begin{proposition}{3.4.6}
+设 $\cA$ 是阿贝尔范畴，$\{P_i\mid i\in\Z_{\leqslant 0}\}$ 是 $\cA$ 中的丰富序列。用 $j$ 记对象集为 $\Ob\cC:=\{P_i\mid i\in\Z_{\leqslant 0}\}$ 的全子范畴 $\cC$ 到 $\Db(\cA)$ 的嵌入。设 $F:\Db(\cA)\longrightarrow\Db(\cA)$ 是某个自等价。假设存在函子同构 $f:j\iso F|_{\cC}$。则 $f$ 可延拓为整个范畴 $\Db(\cA)$ 上的同构 $\id\iso F$。
+\end{proposition}
+
+\begin{proof}
+首先，由于 $F$ 与直和交换，变换 $f$ 可以逐分量延拓到范畴 $\cC$ 中对象的直和上。注意：对象 $X\in\Db(\cA)$ 同构于 $\cA$ 中的某个对象，当且仅当对 $j\neq 0$ 与所有 $i\ll 0$ 都有 $\Hom^{j}(P_i,X)=0$。由此可知，在这种情况下对象 $F(X)$ 也同构于 $\cA$ 中的某个对象，因为对 $j\neq 0$ 与所有 $i\ll 0$ 有
+\begin{equation*}
+\Hom^{j}(P_i,F(X))\cong\Hom^{j}(F(P_i),F(X))\cong\Hom^{j}(P_i,X)=0.
+\end{equation*}
+
+\textbf{第 1 步.} 设 $X$ 是范畴 $\cA$ 的对象。固定满态射 $v:P_i^{\oplus k}\longrightarrow X$。存在同构 $f_i:P_i^{\oplus k}\iso F(P_i^{\oplus k})$，连同两个特异三角
+\begin{center}
+\begin{tikzcd}[row sep=2em,column sep=1.4em]
+Y \arrow[r,"u"] & P_i^{\oplus k} \arrow[r,"v"] \arrow[d,"f_i"] & X \arrow[r] & Y[1] \\
+F(Y) \arrow[r,"F(u)"] & F(P_i^{\oplus k}) \arrow[r,"F(v)"] & F(X) \arrow[r] & F(Y)[1]
+\end{tikzcd}
+\end{center}
+我们来证明 $F(v)\circ f_i\circ u=0$。为此考虑满态射 $w:P_j^{\oplus l}\longrightarrow Y$；只需证明 $F(v)\circ f_i\circ u\circ w=0$。设 $f_j:P_j^{\oplus l}\iso F(P_j^{\oplus l})$ 是典范同构。
+
+% [原文 p.558]
+利用 $f_i$ 与 $f_j$ 的交换关系，得到等式
+\begin{equation*}
+F(v)\circ f_i\circ u\circ w=F(v)\circ F(u\circ w)\circ f_j=F(v\circ u\circ w)\circ f_j=0.
+\end{equation*}
+由于 $\Hom(Y[1],F(X))=0$，由引理 3.1.1 存在唯一的态射 $f_X:X\longrightarrow F(X)$，它与 $f_i$ 交换。
+
+现在考虑 $f_X$ 的映射锥 $C_X$。利用同构
+\begin{equation*}
+\Hom(P_i,X)\cong\Hom(F(P_i),F(X))\cong\Hom(P_i,F(X)),
+\end{equation*}
+可见对所有 $j$ 与 $i\ll 0$ 都有 $\Hom^{j}(P_i,C_X)=0$。于是由引理 3.4.3 得 $C_X=0$，而 $f_X$ 是同构。
+
+\textbf{第 2 步.} 现在证明 $f_X$ 不依赖于覆盖 $v:P_i^{\oplus k}\longrightarrow X$ 的选取。考虑两个这样的满态射 $v_1:P_{i_1}^{\oplus k_1}\longrightarrow X$ 与 $v_2:P_{i_2}^{\oplus k_2}\longrightarrow X$。我们总能取到两个满态射 $w_1:P_j^{\oplus l}\longrightarrow P_{i_1}^{\oplus k_1}$ 与 $w_2:P_j^{\oplus l}\longrightarrow P_{i_2}^{\oplus k_2}$，使下图交换：
+\diag{P_j^{\oplus l} \arrow[r,"w_2"] \arrow[d,"w_1"] \& P_{i_2}^{\oplus k_2} \arrow[d,"v_2"] \\
+P_{i_1}^{\oplus k_1} \arrow[r,"v_1"] \& X}
+显然只需验证由 $v_1$ 构造的变换 $f_X$ 与由 $v_1\circ w_1$ 构造的相同。为此考虑交换图
+\diag{P_j^{\oplus l} \arrow[r,"w_1"] \arrow[d,"f_j"] \& P_{i_1}^{\oplus k_1} \arrow[r,"v_1"] \arrow[d,"v_2"] \& X \arrow[d,"f_X"] \\
+F(P_j^{\oplus l}) \arrow[r,"F(w_1)"] \& F(P_{i_1}^{\oplus k_1}) \arrow[r,"F(v_1)"] \& F(X)}
+% [Tutor Note: 页图此处中间一条竖直箭头的标签印作 $v_2$；按上下文，它是同构 $f_{i_1}:P_{i_1}^{\oplus k_1}\iso F(P_{i_1}^{\oplus k_1})$，与 $f_j$、$f_X$ 并列，页图误排为 $v_2$。此处照录。]
+其中同构 $f_X$ 由 $v_1$ 构造。图中两个方块都交换。由于从 $X$ 到 $F(X)$ 且与 $f_j$ 交换的态射只有一个，故由 $v_1$ 构造的态射 $f_X$ 与由 $v_1\circ w_1$ 构造的相合。
+
+\textbf{第 3 步.} 现在要验证态射 $f_X$ 定义了 $\cA$ 上函子的自然变换。也就是说，对任意态射 $X\xrightarrow{\ \varphi\ }Y$，必须证明
+\begin{equation*}
+f_Y\circ\varphi=F(\varphi)\circ f_X.
+\end{equation*}
+考虑满态射 $P_j^{\oplus l}\xrightarrow{\ v\ }Y$。选取指标 $i\ll 0$ 与满态射 $P_i^{\oplus k}\xrightarrow{\ u\ }X$，使得复合 $\varphi\circ u$ 可提升为态射 $\psi:P_i^{\oplus k}\longrightarrow P_j^{\oplus l}$。这是可能的，因为当 $i\ll 0$ 时映射 $\Hom(P_i^{\oplus k},P_j^{\oplus l})\longrightarrow\Hom(P_i^{\oplus k},Y)$ 是满的。我们得到交换方块
+\diag{P_i^{\oplus k} \arrow[r,"u"] \arrow[d,"\psi"] \& X \arrow[d,"\varphi"] \\
+P_j^{\oplus l} \arrow[r,"v"] \& Y}
+
+% [原文 p.559]
+用 $h_1$ 与 $h_2$ 分别记复合 $f_Y\circ\varphi$ 与 $F(\varphi)\circ f_X$。有等式
+\begin{equation*}
+h_1\circ u=f_Y\circ\varphi\circ u=f_Y\circ v\circ\psi=F(v)\circ f_j\circ\psi=F(v)\circ F(\psi)\circ f_i
+\end{equation*}
+与
+\begin{equation*}
+h_2\circ u=F(\varphi)\circ f_X\circ u=F(\varphi)\circ F(u)\circ f_i=F(\varphi\circ u)\circ f_i=F(v\circ\psi)\circ f_i=F(v)\circ F(\psi)\circ f_i.
+\end{equation*}
+于是，对 $t=1,2$，态射 $h_t$ 使下图交换：
+\begin{center}
+\begin{tikzcd}[row sep=2em,column sep=1.2em]
+Z \arrow[r] & P_i^{\oplus k} \arrow[r,"u"] \arrow[d,"{F(\psi)\circ f_i}"'] & X \arrow[r] \arrow[d,"h_t"] & Z[1] \\
+F(W) \arrow[r] & F(P_j^{\oplus l}) \arrow[r,"F(v)"] & F(Y) \arrow[r] & F(W)[1]
+\end{tikzcd}
+\end{center}
+由于 $\Hom(Z[1],F(Y))=0$，由引理 3.1.1 推得 $h_1=h_2$。于是 $f_Y\circ\varphi=F(\varphi)\circ f_X$。
+
+\textbf{第 4 步.} 对任意 $X\in\cA$，用公式
+\begin{equation*}
+f_{X[n]}=f_X[n]
+\end{equation*}
+定义变换 $f_{X[n]}:X[n]\longrightarrow F(X[n])\cong F(X)[n]$。
+
+容易验证这样定义的变换与任何态射 $u\in\Ext^{k}(X,Y)$ 交换。事实上，每个元素 $u\in\Ext^{k}(X,Y)$ 都可表示为某些元素 $u_i\in\Ext^{1}(Z_i,Z_{i+1})$ 的复合 $u=u_0u_1\cdots u_k$，其中 $Z_0=X$、$Z_k=Y$。因此只需验证 $f_{X[n]}$ 与元素 $u\in\Ext^{1}(X,Y)$ 交换。为此考虑下图：
+\begin{center}
+\begin{tikzcd}[row sep=2em,column sep=1.2em]
+Y \arrow[r] \arrow[d,"f_Y"'] & Z \arrow[r] \arrow[d,"f_Z"] & X \arrow[r,"u"] & Y[1] \arrow[d,"{f_Y[1]}"] \\
+F(Y) \arrow[r] & F(Z) \arrow[r] & F(X) \arrow[r,"F(u)"] & F(Y)[1]
+\end{tikzcd}
+\end{center}
+由三角范畴的某条公理，存在态射 $h:X\longrightarrow F(X)$，使 $(f_Y,f_Z,h)$ 是三角态射。另一方面，由于 $\Hom(Y[1],F(X))=0$，由引理 3.1.1 知态射 $h$ 由它与 $f_Z$ 交换这一条件唯一确定。然而 $f_X$ 也与 $f_Z$ 交换。因此 $h=f_X$，从而
+\begin{equation*}
+f_Y[1]\circ u=F(u)\circ f_X.
+\end{equation*}
+
+\textbf{第 5 步.} 我们按对象非平凡上同调所在区间的长度作归纳，完成证明的最后一部分。为此考虑 $\Db(\cA)$ 的全子范畴 $j_n:\cD_n\longrightarrow\Db(\cA)$，它由在某个长度为 $n$ 的区间上有非平凡上同调的对象组成（该区间不固定）。现在证明：自然变换 $f$ 可唯一延拓为自然函子同构 $f_n:j_n\longrightarrow F|_{\cD_n}$。
+
+% [原文 p.560]
+上面已对 $n=1$ 证得这一点，作为归纳的基础。
+
+现在证明归纳步骤。设断言已对某个 $n=a\geqslant 1$ 得证。设 $X$ 是 $\cD_{a+1}$ 的对象，并设（为确定起见）上同调 $H^{p}(X)$ 对 $p\in[-a,0]$ 非平凡。在丰富序列中取 $P_i$，其中 $i$ 是充分负的指标，使得
+\begin{equation}
+\begin{aligned}
+&\text{a)}\quad \Hom^{j}(P_i,H^{p}(X))=0\quad\text{对所有 } p \text{ 与 } j\neq 0,\\
+&\text{b)}\quad \text{存在满态射 } u:P_i^{\oplus k}\longrightarrow H^{0}(X),\\
+&\text{c)}\quad \Hom(H^{0}(X),P_i)=0.
+\end{aligned}\tag{38}
+\end{equation}
+由 a) 与标准谱序列可知有同构 $\Hom(P_i,X)\iso\Hom(P_i,H^{0}(X))$。于是存在态射 $v:P_i^{\oplus k}\longrightarrow X$，它与典范态射 $X\longrightarrow H^{0}(X)$ 的复合等于 $u$。考虑特异三角
+\begin{equation*}
+Y[-1]\longrightarrow P_i^{\oplus k}\xrightarrow{\ v\ }X\longrightarrow Y.
+\end{equation*}
+由于对象 $Y$ 属于 $\cD_a$，由归纳假设，同构 $f_Y$ 已经存在，并且与 $f_i$ 交换。我们有交换图 (39)：
+\begin{equation}
+\begin{tikzcd}[row sep=2em,column sep=1.2em]
+P_i^{\oplus k} \arrow[r,"v"] \arrow[d,"f_i"] & X \arrow[r] \arrow[d,dashed,"f_X"] & Y \arrow[r] \arrow[d,"f_Y"] & P_i^{\oplus k}[1] \arrow[d,"{f_i[1]}"] \\
+F(P_i^{\oplus k}) \arrow[r,"F(v)"] & F(X) \arrow[r] & F(Y) \arrow[r] & F(P_i^{\oplus k})[1]
+\end{tikzcd}\tag{39}
+\end{equation}
+
+其次，同构序列
+\begin{equation*}
+\Hom(X,F(P_i^{\oplus k}))\cong\Hom(X,P_i^{\oplus k})\cong\Hom(H^{0}(X),P_i^{\oplus k})=0
+\end{equation*}
+使我们能以 $g=f_Y$ 应用引理 3.1.1，由此可知存在唯一的态射 $f_X:X\longrightarrow F(X)$，把该图补成三角态射。显然 $f_X$ 实际上是同构，因为 $f_i$ 与 $f_Y$ 都是同构。
+
+\textbf{第 6 步.} 现在要证明同构 $f_X$ 不依赖于 $i$ 与 $u$ 的选取。设给定两个满足 a)、b)、c) 的满态射 $u_1:P_{i_1}^{\oplus k_1}\longrightarrow H^{0}(X)$ 与 $u_2:P_{i_2}^{\oplus k_2}\longrightarrow H^{0}(X)$。则可取充分负的指标 $j$ 与满态射 $w_1$、$w_2$，使下图交换：
+\diag{P_j^{\oplus l} \arrow[r,"w_2"] \arrow[d,"w_1"] \& P_{i_2}^{\oplus k_2} \arrow[d,"u_2"] \\
+P_{i_1}^{\oplus k_1} \arrow[r,"u_1"] \& H^{0}(X)}
+记 $v_1:P_{i_1}^{\oplus k_1}\longrightarrow X$ 与 $v_2:P_{i_2}^{\oplus k_2}\longrightarrow X$ 为分别对应于 $u_1$ 与 $u_2$ 的态射。由于 $\Hom(P_j,X)\iso\Hom(P_j,H^{0}(X))$，可见 $v_2w_2=v_1w_1$。
+
+% [原文 p.561]
+存在态射 $\varphi:Y_j\longrightarrow Y_{i_1}$，使三元组 $(w_1,\id,\varphi)$ 是三角态射
+\begin{center}
+\begin{tikzcd}[row sep=2em,column sep=1.3em]
+P_j^{\oplus l} \arrow[r,"v_1w_1"] \arrow[d,"w_1"] & X \arrow[r,"y"] \arrow[d,"\id"] & Y_j \arrow[r] \arrow[d,"\varphi"] & P_j^{\oplus l}[1] \arrow[d,"{w_1[1]}"] \\
+P_{i_1}^{\oplus k_1} \arrow[r,"v_1"] & X \arrow[r,"y_1"] & Y_{i_1} \arrow[r] & P_{i_1}^{\oplus k_1}[1]
+\end{tikzcd}
+\end{center}
+也就是说，$\varphi y=y_1$。
+
+由于 $Y_j$ 与 $Y_{i_1}$ 只在区间 $[-a,-1]$ 上有非平凡上同调，由归纳得到下面的交换方块：
+\diag{Y_j \arrow[r,"\varphi"] \arrow[d,"f_{Y_j}"] \& Y_{i_1} \arrow[d,"f_{Y_{i_1}}"] \\
+F(Y_j) \arrow[r,"F(\varphi)"] \& F(Y_{i_1})}
+记 $f_X^{j}$、$f_X^{i_1}$ 与 $f_X^{i_2}$ 为按上述规则构造的态射；它们可分别对 $v=v_1w_1$、$v=v_1$ 与 $v=v_2$ 补成交换图 (39)。上面已在引理 3.1.1 中证明，态射 $f_X^{i_1}$ 由条件
+\begin{equation*}
+F(y_1)f_X^{i_1}=f_{Y_{i_1}}y_1
+\end{equation*}
+唯一确定。另一方面，有等式
+\begin{equation*}
+F(y_1)f_X^{j}=F(\varphi y)f_X^{j}=F(\varphi)F(y)f_X^{j}=F(\varphi)F_{Y_j}y=f_{Y_{i_1}}\varphi y=f_{Y_{i_1}}y_1,
+\end{equation*}
+由此立即得到 $f_X^{j}=f_X^{i_1}$。同理可得 $f_X^{j}=f_X^{i_2}$。因此态射 $f_X$ 不依赖于指标 $i$ 与态射 $u:P_i^{\oplus k}\longrightarrow H^{0}(X)$ 的选取，从而是绝对唯一确定的。
+
+% [Tutor Note: 页图此式第四项印作 $F(\varphi)F_{Y_j}y$；按上下文，此处应是 $F(\varphi)f_{Y_j}y$（$f_{Y_j}$ 为归纳假设给出的同构），页图漏掉了下标小写 $f$ 而误排为 $F_{Y_j}$。此处照录。]
+
+\textbf{第 7 步.} 这样我们已得到 $f_a$ 到 $\cD_{a+1}$ 的延拓。还需证明这一延拓仍是 $j_{a+1}$ 到 $F|_{\cD_{a+1}}$ 的自然变换；也就是说，对任意态射 $\varphi:X\longrightarrow Y$（$X$ 与 $Y$ 都属于 $\cD_{a+1}$），所得方块 (40) 交换：
+\begin{equation}
+\begin{tikzcd}[row sep=2em,column sep=2.6em]
+X \arrow[r,"\varphi"] \arrow[d,"f_X"'] & Y \arrow[d,"f_Y"] \\
+F(X) \arrow[r,"F(\varphi)"] & F(Y)
+\end{tikzcd}\tag{40}
+\end{equation}
+我们将把问题化归到 $X$ 与 $Y$ 都属于 $\cD_a$ 的情形。有两种情形。
+
+\textbf{情形 1.} 考虑对象 $X$ 的最高非平凡上同调（不失一般性可设其为 $H^{0}(X)$）的指标严格大于 $Y$ 的相应指标的情形。同上，取满足 a)、b)、c) 的满态射 $u:P_i^{\oplus k}\longrightarrow H^{0}(X)$，并把 $u$ 提升为态射 $v:P_i^{\oplus k}\longrightarrow X$。有特异三角
+\begin{equation*}
+P_i^{\oplus k}\xrightarrow{\ v_1\ }X\xrightarrow{\ \alpha\ }Z\longrightarrow P_i^{\oplus k}[1].
+\end{equation*}
+
+% [原文 p.562]
+若 $i$ 充分负，则 $\Hom(P_i^{\oplus k},Y)=0$。把 $\Hom(-,Y)$ 作用于该三角，可见存在态射 $\psi:Z\longrightarrow Y$，使 $\varphi=\psi\alpha$。已知上面构造的同构 $f_X$ 满足关系
+\begin{equation*}
+F(\alpha)f_X=f_Z\alpha.
+\end{equation*}
+若再假设
+\begin{equation*}
+F(\psi)f_Z=f_Y\psi,
+\end{equation*}
+便得到
+\begin{equation*}
+F(\varphi)f_X=F(\psi)F(\alpha)f_X=F(\psi)f_Z\alpha=f_Y\psi\alpha=f_Y\varphi.
+\end{equation*}
+这意味着，为验证方块 (40) 交换，可以把 $X$ 换成 $Z$。但 $Z$ 的非平凡上同调的上界比 $X$ 的小 $1$。此外可以看出：若 $X$ 属于 $\cD_k$（$k>1$），则 $Z$ 属于 $\cD_{k-1}$；而若 $X$ 属于 $\cD_1$，则 $Z$ 也属于 $\cD_1$，但其非平凡上同调的指标比 $X$ 的小 $1$。
+
+\textbf{情形 2.} 现在考虑另一种情形：$Y$ 的最高非平凡上同调（同样可设其为 $H^{0}(Y)$）的指标大于或等于 $X$ 的相应指标。取满足条件 a)、b)、c) 的满态射 $u:P_i^{\oplus k}\longrightarrow H^{0}(Y)$，并构造态射 $v:P_i^{\oplus k}\longrightarrow Y$，它由 $u$ 唯一确定。考虑特异三角
+\begin{equation}
+P_i^{\oplus k}\xrightarrow{\ v\ }Y\xrightarrow{\ \beta\ }W\longrightarrow P_i^{\oplus k}.\tag{41}
+\end{equation}
+记 $\psi$ 为复合 $\beta\circ\varphi$。若再假设
+\begin{equation*}
+F(\psi)f_X=f_W\psi,
+\end{equation*}
+则由于 $F(\beta)f_Y=f_W\beta$，得到
+\begin{equation}
+F(\beta)(f_Y\varphi-F(\varphi)f_X)=f_W\beta\varphi-f(\beta\varphi)f_X=f_W\psi-F(\psi)f_X=0.\tag{42}
+\end{equation}
+
+% [Tutor Note: 页图 (41) 末项印作 $P_i^{\oplus k}$；按特异三角的写法，第三支的终点应是 $P_i^{\oplus k}[1]$。此处照录。]
+% [Tutor Note: 页图 (42) 中间一项印作 $f(\beta\varphi)f_X$（小写正体 $f$ 后直接接括号），据上下文应为 $F(\beta\varphi)f_X$。此处照录。]
+
+我们再次取 $i$ 充分负，使消没条件 $\Hom(X,P_i^{\oplus k})=0$ 成立。由于 $F(P_i^{\oplus k})$ 同构于 $P_i^{\oplus k}$，有等式 $\Hom(X,F(P_i^{\oplus k}))=0$。现在把 $\Hom(X,F(-))$ 作用于三角 (41)，可见 $F(\beta)$ 给出 $\Hom(X,F(Y))$ 到 $\Hom(X,F(W))$ 的嵌入。由 (42) 立即推出 $f_Y\varphi=F(\varphi)f_X$。
+
+于是，为验证方块 (40) 交换，可以把 $Y$ 换成非平凡上同调的上界比 $Y$ 小 $1$ 的对象 $W$。若 $Y$ 属于 $\cD_k$（$k>1$），则 $W$ 属于 $\cD_{k-1}$；若 $Y$ 属于 $\cD_1$，则 $W$ 也属于 $\cD_1$，但其非平凡上同调的指标比 $Y$ 的小 $1$。
+
+现在设 $X$ 与 $Y$ 都属于范畴 $\cD_{a+1}$，其中 $a>1$。视情形 1) 或 2) 何者适用，我们可以把 $X$ 或 $Y$ 换成已属于 $\cD_a$ 的对象。必要时重复这一过程，把该对象上同调的上界一直降到另一情形适用为止。这时又可以把另一个对象的非平凡上同调的长度降低，最终到达两个对象都已属于 $\cD_a$ 的局面。这就是我们的归纳步骤。
+
+% [原文 p.563]
+最后指出，在我们的构造过程中，同构 $f_X$ 在每一步都唯一确定。因此，我们构造的从 $\id$ 到 $F$ 的自然变换是唯一的。命题证毕。
+\end{proof}
+
+\begin{proof}[定理 3.2.1 的证明]
+\textbf{1) 存在性.} 从函子 $F$ 出发，利用命题 3.3.5 与引理 3.3.1 可构造对象 $\cE\in\Db(M\times X)$，使得在对象集为 $\Ob\cC=\{\cL^{i}\mid i\in\Z\}$ 的全子范畴 $\cC\subset\Db(M)$ 上存在函子同构 $\overline{f}:F|_{\cC}\iso\Phi_{\cE}|_{\cC}$，其中 $\cL$ 是 $M$ 上满足 $H^{i}(M,\cL^{k})=0$（对 $k>0$ 与 $i\neq 0$）的极丰富丛。
+
+由引理 3.4.5，$\Phi_{\cE}$ 是全忠实的。此外，由于存在同构
+\begin{equation*}
+F^{!}(\overline{f}):F^{!}\circ F|_{\cC}\cong\id_{\cC}\iso F^{!}\circ\Phi_{\cE}|_{\cC},
+\end{equation*}
+\begin{equation*}
+\Phi_{\cE}^{*}(\overline{f}):\Phi_{\cE}^{*}\circ F|_{\cC}\iso\Phi_{\cE}^{*}\circ\Phi_{\cE}|_{\cC}\cong\id_{\cC},
+\end{equation*}
+再次由引理 3.4.5 可知，函子 $F^{!}\circ\Phi_{\cE}$ 与 $\Phi_{\cE}^{*}\circ F$ 也是全忠实的。由于它们互为伴随，故实际上都是等价。
+
+再次考虑子范畴 $\cC$ 上的同构 $F^{!}(\overline{f}):F^{!}\circ F|_{\cC}\cong\id_{\cC}\iso F^{!}\circ\Phi_{\cE}|_{\cC}$。由命题 3.4.6，它可延拓为整个范畴 $\Db(M)$ 上的同构，即 $\id\iso F^{!}\circ\Phi_{\cE}$。
+
+由于 $F^{!}$ 是 $F$ 的右伴随，我们得到函子态射 $f:F\longrightarrow\Phi_{\cE}$，且 $f|_{\cC}=\overline{f}$。剩下要证明 $f$ 是同构。事实上，取典范态射 $f_Z:F(Z)\longrightarrow\Phi_{\cE}(Z)$ 的映射锥 $C_Z$。由于 $F^{!}(f_Z)$ 是同构，可见 $F^{!}(Z)=0$。于是对任意对象 $Y$ 都有 $\Hom(F(Y),C_Z)=0$。此外，由于对所有 $k$ 都有 $F(\cL^{k})\cong\Phi_{\cE}(\cL^{k})$，得到同构序列
+\begin{equation*}
+\Hom^{i}(\cL^{k},\Phi_{\cE}^{!}(C_Z))=\Hom^{i}(\Phi_{\cE}(\cL^{k}),C_Z)=\Hom^{i}(F(\cL^{k}),C_Z)=0
+\end{equation*}
+对所有 $k$ 与 $i$ 成立。应用引理 3.6 立即得到等式 $\Phi_{\cE}^{!}(C_Z)=0$。由此推出 $\Hom(\Phi_{\cE}(Z),C_Z)=0$。因此关于态射 $f_Z$ 的三角必须分裂，即 $F(Z)=C_Z[-1]\oplus\Phi_{\cE}(Z)$。然而上面已证对任意 $Y$ 都有 $\Hom(F(Y),C_Z)=0$，故对 $Z[1]$ 也有此式。但这一情形只有在 $C_Z=0$ 时才可能，而 $f_Z$ 是同构。
+
+% [Tutor Note: 页图此处印作“应用引理 3.6”；本章并无编号为 3.6 的引理，所指应是引理 3.4.3（丰富序列上 $\Hom^{\bullet}$ 全为零则对象为零）。原文照录，未改编号。]
+% [Tutor Note: 页图此段印作 $F^{!}(Z)=0$；按上下文，$F^{!}(f_Z)$ 是同构只能推出映射锥满足 $F^{!}(C_Z)=0$（随即用于 $\Hom(F(Y),C_Z)=0$），故原式应为 $F^{!}(C_Z)=0$。此处照录。]
+
+\yizhu{这里用了两次“三角分裂”：映射锥给出特异三角 $F(Z)\longrightarrow\Phi_{\cE}(Z)\longrightarrow C_Z\longrightarrow F(Z)[1]$。由 $\Hom(\Phi_{\cE}(Z),C_Z)=0$，该三角分裂，于是 $F(Z)\cong C_Z[-1]\oplus\Phi_{\cE}(Z)$，平移得 $F(Z[1])\cong C_Z\oplus\Phi_{\cE}(Z)[1]$；原文随即把 $Y=Z[1]$ 代入已证的 $\Hom(F(Y),C_Z)=0$，而该直和项含 $\id_{C_Z}$，故 $C_Z=0$。〔译者按（上下文推断，无外部依据）：分裂后的直和分解与代入 $Y=Z[1]$ 这一步，原书未写出，为译者补出。〕}
+
+\textbf{2) 唯一性.} 代表 $F$ 的对象的唯一性实际上由我们的构造得出，因为每次构造某个对象时它都是唯一的。不过我们再把这一点过一遍。设 $\Db(M\times X)$ 中存在两个对象 $\cE_1$ 与 $\cE_2$，使得 $\Phi_{\cE_1}\cong F\cong\Phi_{\cE_2}$。考虑函子 $F'=\Lf j^{*}\circ F$，其中 $j:M\longrightarrow\PP^{N}$ 如前是沿某个适当的极丰富线丛的嵌入。对象 $\Rf J_{*}\cE_i$（$i=1,2$）都必须是复形 (32)
+\begin{equation*}
+C^{\bullet}:=\bigl\{\cO(-N)\boxtimes F'(\Omega^{N}(N))\xrightarrow{\ d'_{-N}\ }\cdots\longrightarrow\cO(-1)\boxtimes F'(\Omega^{1}(1))\xrightarrow{\ d'_{-1}\ }\cO\boxtimes F'(\cO)\bigr\}
+\end{equation*}
+的卷积。然而如上所证，该复形的所有卷积由引理 3.1.2 彼此同构。于是 $\Rf J_{*}\cE_1\cong\Rf J_{*}\cE_2$。再由命题 3.3.5 可见，对象 $\cE_1$ 与 $\cE_2$ 本身也同构。
+\end{proof}
+
+\yizhu{“复形 (32) 的卷积”指把该复形各阶项按 Postnikov 系统逐步拼接成单个对象；同一复形的不同卷积之间一般并不同构，此处的关键恰是引理 3.1.2 断言本复形的所有卷积彼此同构（这正是 §3.1 中 Postnikov 图技术的用途）。【来源：原书 §3.1 引理 3.1.1–3.1.2 与 §3.3 命题 3.3.5（A 级）】}

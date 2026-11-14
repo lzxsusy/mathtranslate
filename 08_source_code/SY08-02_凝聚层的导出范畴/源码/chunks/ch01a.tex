@@ -1,0 +1,280 @@
+% =====================================================================
+%  ch01a.tex —— 第 1 章 预备知识 · §1.1 三角范畴与正合函子
+%  原书 p.517–523 前（止于 §1.2 “Derived categories and derived functors” 标题之前）
+% =====================================================================
+% [原文 p.517]
+\chapter{预备知识}
+\section{三角范畴与正合函子}
+\takeaway{本节从三角范畴的公理 T1--T4 出发，定义正合函子，引入 Serre 函子、局部化与左分式演算、右共尾子范畴，再按 Deligne 的构造把导出函子定义为可表函子，并以 F-分裂对象给出其处处有定义的判别。}
+
+本章汇集的诸事实，其详细论述可参看 [14]、[24]、[25] 与 [44]。三角范畴这一概念由 Verdier 在 [44] 中首次引入。设 $\cD$ 是某个加性范畴。我们通过给出下述数据，在 $\cD$ 上定义一个\emph{三角范畴}结构：
+\begin{enumerate}[label=\alph*),leftmargin=2.4em,itemsep=1pt,topsep=2pt]
+\item 一个加性平移函子 $[1]:\cD\to\cD$，它是自等价；
+% [Tutor Note: 原文此处以括号给出同义名 exact triangle（“特异（或正合）三角”）；术语表规定全稿一律作“特异三角”，此处按原文保留括注，下文一律用“特异三角”。]
+\item 一族\emph{特异}（或\emph{正合}）三角
+\begin{equation*}
+X\xrightarrow{\ u\ }Y\xrightarrow{\ v\ }Z\xrightarrow{\ w\ }X[1]
+\end{equation*}
+它们必须满足如下公理组 T1--T4。
+\end{enumerate}
+
+\noindent\textbf{T1.}\ a) 对任意对象 $X$，三角 $X\xrightarrow{\id}X\to 0\to X[1]$ 是特异的。
+
+\noindent\hspace*{1.6em}b) 若一个三角是特异的，则与它同构的三角也是特异的。
+
+% [原文 p.518]
+\noindent\hspace*{1.6em}c) $\cD$ 中任一态射 $X\xrightarrow{u}Y$ 都可补全为一个特异三角 $X\xrightarrow{u}Y\xrightarrow{v}Z\xrightarrow{w}X[1]$。
+
+\noindent\textbf{T2.}\ 三角 $X\xrightarrow{u}Y\xrightarrow{v}Z\xrightarrow{w}X[1]$ 特异，当且仅当三角
+\begin{equation*}
+Y\xrightarrow{\ v\ }Z\xrightarrow{\ w\ }X[1]\xrightarrow{-u[1]}Y[1]
+\end{equation*}
+特异。
+
+\noindent\textbf{T3.}\ 给定两个特异三角，以及它们第一项与第二项之间构成交换方块的两个态射，该图可补全为三角的态射：
+% 本块 6 张交换图（p.518 a/b、p.519 a、p.520 a/b、p.521 a）均按原书页图以 TikZ 重排，节点、箭头与标签方位逐一对图核对；详见 work/reports/ch01a.md §2。
+\diag{
+  X \arrow[r,"u"] \arrow[dd,"f"'] \&
+  Y \arrow[r,"v"] \arrow[dd,"g"] \&
+  Z \arrow[r,"w"] \arrow[dd,dashed,"h"] \&
+  X[1] \arrow[dd,"f{[}1{]}"] \\
+  \hspace*{1em}\square \& \& \& \\
+  X' \arrow[r,"u'"'] \&
+  Y' \arrow[r,"v'"'] \&
+  Z' \arrow[r,"w'"'] \&
+  X'[1]
+}
+
+\noindent\textbf{T4.}\ 对任意一对态射 $X\xrightarrow{u}Y\xrightarrow{v}Z$，存在交换图
+\diag{
+  X \arrow[r,"u"] \arrow[d,equal] \&
+  Y \arrow[r,"x"] \arrow[d,"v"] \&
+  Z' \arrow[r] \arrow[d,"w"] \&
+  X[1] \arrow[d,equal] \\
+  X \arrow[r] \&
+  Z \arrow[r,"y"] \arrow[d] \&
+  Y' \arrow[r,"w'"] \arrow[d,"t"] \&
+  X[1] \arrow[d,"u{[}1{]}"] \\
+  \&
+  X' \arrow[r,equal] \arrow[d,"r"] \&
+  X' \arrow[r,"r"] \arrow[d] \&
+  Y[1] \\
+  \&
+  Y[1] \arrow[r,"x{[}1{]}"] \&
+  Z'[1] \&
+}
+其中上两行与中间两列都是特异三角。
+
+\yizhu{公理 T1--T4 中，T1 保证恒等态射与同构不破坏特异性，T2 是旋转三角的规则，T3 使三角之间的态射可以补全，T4 通常称为八面体公理（octahedral axiom），它把两个可复合态射的锥、以及这两个锥再取的锥联系起来。本稿沿用原书编号 T1--T4，不把 T4 改称八面体公理。【来源：原书 p.517--518 的公理表述；章璞《三角范畴与导出范畴》关于八面体公理的论述（A 级）】}
+
+设 $\cD$ 是三角范畴。若全加性子范畴（full additive subcategory）$\cN\subset\cD$ 对平移函子封闭，并且对取态射的映射锥封闭，则称它为\emph{三角子范畴}；也就是说，若某个三角 $X\to Y\to Z\to X[1]$ 中有两个对象属于 $\cN$，则第三个对象也属于 $\cN$。下面描述三角范畴之间值得考虑的那类函子。
+
+\begin{definition}{1.1.1}
+称两个三角范畴 $\cD$ 与 $\cD'$ 之间的加性函子 $F:\cD\to\cD'$ 为\emph{正合}的，如果它满足下述两条：
+\begin{enumerate}[label=\alph*),leftmargin=2.4em,itemsep=1pt,topsep=2pt]
+\item $F$ 与平移函子交换，即给定函子的同构
+\begin{equation*}
+t_F:F\circ[1]\iso[1]\circ F,
+\end{equation*}
+\item $F$ 把 $\cD$ 中每个特异三角送到 $\cD'$ 中的特异三角（这里用同构 $t_F$ 把 $F(X[1])$ 换成 $F(X)[1]$）。
+\end{enumerate}
+\end{definition}
+
+% [原文 p.519]
+由定义立即可知，两个正合函子的复合仍正合。我们需要的另一条性质与伴随函子有关。
+
+\begin{lemma}[{{[}6{]}、{[}8{]}}]{1.1.2}
+若函子 $G:\cD'\to\cD$ 是正合函子 $F:\cD\to\cD'$ 的左（或右）伴随，则 $G$ 也正合。
+\end{lemma}
+
+下面定义 Serre 函子并描述其主要性质；其抽象定义已由 [6] 给出（另见 [8]）。
+
+\begin{definition}{1.1.3}
+设 $\cD$ 是 $k$-线性范畴，其对象之间的 $\Hom$ 空间有限维。若协变函子 $S:\cD\to\cD$ 是范畴等价，且存在双函子同构（bifunctorial isomorphism）
+\begin{equation*}
+\varphi_{A,B}:\Hom_{\cD}(A,B)\iso\Hom_{\cD}(B,SA)^{*}\qquad\text{对任意对象}\ A,B\in\cD.
+\end{equation*}
+则称 $S$ 为\emph{Serre 函子}（Serre functor）。
+\end{definition}
+
+\yizhu{Serre 函子的名字来自 Serre 对偶：在光滑射影簇 $X$ 上，$\Db(\coh X)$ 的 Serre 函子由 $S(-)=(-)\otL\omega_X[\dim X]$ 给出，定义中的双函子同构正是 Serre 对偶的范畴化形式。有了它，$\Hom(A,B)$ 与反方向的 $\Hom(B,SA)$ 的对偶才能自然等同；引理 1.1.5 则说明三角范畴的 Serre 函子自动正合。【来源：原书定义 1.1.3、引理 1.1.5 及所引 [6]；章璞《三角范畴与导出范畴》中 Serre 函子与 Serre 对偶的章节（A 级）】}
+
+\begin{lemma}[{{[}8{]}}]{1.1.4}
+任何范畴等价 $\Phi:\cD\to\cD'$ 都与 Serre 函子交换；也就是说，存在函子的自然同构 $\Phi\circ S\iso S'\circ\Phi$，其中 $S$ 与 $S'$ 分别是范畴 $\cD$ 与 $\cD'$ 的 Serre 函子。
+\end{lemma}
+
+若同一范畴有两个 Serre 函子，则它们同构，且这个同构与 Serre 函子定义中的双函子同构 $\varphi_{A,B}$ 交换。事实上，设 $S$ 与 $S'$ 是范畴 $\cD$ 的两个 Serre 函子，则对 $\cD$ 中任一对象 $A$ 有自然同构
+\begin{equation*}
+\Hom(A,A)\cong\Hom(A,SA)^{*}\cong\Hom(SA,S'A).
+\end{equation*}
+考察恒等态射 $\id_A$ 在此等同下的像，得到一个态射 $SA\to S'A$，它给出同构 \mbox{$S\iso S'$}。
+
+因此，范畴 $\cD$ 的 Serre 函子（若存在）在同构意义下唯一确定。下文我们关心三角范畴的 Serre 函子。
+
+\begin{lemma}[{{[}6{]}}]{1.1.5}
+三角范畴的 Serre 函子正合。
+\end{lemma}
+
+回忆范畴的局部化，特别是三角范畴关于全三角子范畴的局部化（见 [13]）。设 $\cC$ 是范畴，$\Sigma$ 是 $\cC$ 中一族态射；若 $\Sigma$ 具有\emph{左分式演算}，则 $\cC$ 关于 $\Sigma$ 的局部化有很好的描述；所谓左分式演算，是指下述性质成立：
+
+L1. 范畴中所有恒等态射都属于 $\Sigma$。
+
+L2. $\Sigma$ 中任意两个态射的复合仍属于 $\Sigma$。
+
+L3. 形如 $X'\xleftarrow{\ s\ }X\xrightarrow{\ u\ }Y$（$s\in\Sigma$）的每个图都可补全为一个交换方块
+\diag{
+  X \arrow[r,"u"] \arrow[d,"s"'] \&
+  Y \arrow[d,dashed,"t"] \\
+  X' \arrow[r,dashed,"u'"'] \&
+  Y'
+}
+其中 $t\in\Sigma$。
+
+L4. 若 $f$ 与 $g$ 是两个态射，且存在 $s\in\Sigma$ 使 $fs=gs$，则也存在 $t\in\Sigma$ 使 $tf=tg$。
+
+% [原文 p.520]
+若 $\Sigma$ 具有左分式演算，则范畴 $\cC[\Sigma^{-1}]$ 可如下描述。$\cC[\Sigma^{-1}]$ 的对象就是 $\cC$ 的对象。从 $X$ 到 $Y$ 的态射，是 $\cC$ 中形如
+\begin{equation*}
+X\xrightarrow{\ f\ }Y'\xleftarrow{\ s\ }Y\qquad\text{其中}\ s\in\Sigma
+\end{equation*}
+的图 $(s,f)$ 的等价类；其中两个图 $(f,s)$ 与 $(g,t)$ 等价，是指它们能嵌入一个交换图
+\diag{
+  \& Y'' \arrow[d] \& \\
+  X \arrow[ur,"f"] \arrow[r,"h"] \arrow[dr,"g"'] \&
+  Y''' \&
+  Y \arrow[ul,"s"'] \arrow[l,"r"] \\
+  \& Y' \arrow[u] \&
+}
+其中 $r\in\Sigma$。
+
+% [Tutor Note: 页图此处把等价类的代表先写作 $(s,f)$，随即写作 $(f,s)$（原书 p.520 第 2–6 行），两处次序不一致；本译本两处均照录原文次序，未统一。]
+
+两个态射 $(f,s)$ 与 $(g,t)$ 的复合是态射 $(g'f,s't)$，它由公理 L3 的方块构造：
+\diag{
+  \& Z'' \& \\
+  Y' \arrow[ur,dashed,"g'"] \& \& Z' \arrow[ul,dashed,"s'"] \\
+  X \arrow[u,"f"'] \&
+  Y \arrow[ul,"s"] \arrow[ur,"g"] \&
+  Z \arrow[u,"t"]
+}
+
+容易看出，如此构造的 $\cC[\Sigma^{-1}]$ 确实是范畴（对象之间的态射构成集合），且由
+\begin{equation*}
+Q:\cC\to\cC[\Sigma^{-1}]\qquad\text{定义为}\quad X\mapsto X,\ \ f\mapsto(f,1)
+\end{equation*}
+给出的典范函子使 $\Sigma$ 中所有态射成为可逆，并在这一意义下是泛的（见 [13]）。
+
+考虑全子范畴（full subcategory）$\cB\subset\cC$，并用 $\Sigma\cap\cB$ 记 $\cB$ 中同时也属于 $\Sigma$ 的那族态射。若对 $\Sigma$ 中任一 $s:X\to X'$（$X\in\cB$）都存在态射 $f:X'\to Y$ 使 $fs\in\Sigma\cap\cB$，则称 $\cB$ 关于 $\Sigma$ 在 $\cC$ 中是\emph{右共尾}的。
+
+\begin{lemma}[{{[}17{]}、{[}25{]}}]{1.1.6}
+态射族 $\Sigma\cap\cB$ 也具有左分式演算；并且，若 $\cB$ 关于 $\Sigma$ 在 $\cC$ 中右共尾，则典范函子
+\begin{equation*}
+\cB[(\Sigma\cap\cB)^{-1}]\to\cC[\Sigma^{-1}]
+\end{equation*}
+全忠实。
+\end{lemma}
+
+回忆全忠实函子的定义。
+
+% [原文 p.521]
+\begin{definition}{1.3}
+若自然映射
+\begin{equation*}
+\Hom(X,Y)\to\Hom(FX,FY)
+\end{equation*}
+对任意两个对象 $X,Y\in\cC$ 都是双射，则称函子 $F:\cC\to\cD$ 为\emph{全忠实}的。
+\end{definition}
+
+% [Tutor Note: 此处原书编号印作 Definition 1.3，而非按本节编号应得的 1.1.7（本节紧接其后的命题编号为 1.1.8，可见 1.1.7 被跳过）。页图与文字层一致，均为 1.3。本译本照录原编号 1.3，未改作 1.1.7。]
+
+现设 $\cD$ 是三角范畴，$\cN$ 是全三角子范畴。用 $\Sigma$ 记 $\cD$ 中能嵌入特异三角
+\begin{equation*}
+N\to X\xrightarrow{\ s\ }X'\to N[1]
+\end{equation*}
+的那族态射 $s$，其中 $N\in\cN$；并称 $\Sigma$ 为与子范畴 $\cN$ 相伴的\emph{乘法系}（multiplicative system）。由局部化的一般理论，存在加性范畴 $\cD[\Sigma^{-1}]$ 与加性局部化函子 $Q:\cD\to\cD[\Sigma^{-1}]$。可以给范畴 $\cD[\Sigma^{-1}]$ 赋予由 $[1]:\cD\to\cD$ 诱导的平移函子。此外，我们把 $\cD[\Sigma^{-1}]$ 中的特异三角定义为与 $\cD$ 中特异三角在局部化下的像同构的三角。令
+\begin{equation*}
+\cD/\cN:=\cD[\Sigma^{-1}].
+\end{equation*}
+
+\begin{proposition}{1.1.8}
+按上述方式赋予 $\cD/\cN$ 结构，就使它成为三角范畴，并使 $Q:\cD\to\cD/\cN$ 成为正合函子。
+\end{proposition}
+
+注意，在我们的情形下，乘法系 $\Sigma$ 具有左（与右）分式演算，因此范畴 $\cD/\cN$ 有如上给出的良好描述。
+
+\yizhu{$\cD/\cN$ 即 Verdier 商：对象与 $\cD$ 相同，态射由“屋顶” $X\leftarrow X'\to Y$（其锥属于 $\cN$）的等价类给出。由 $\Sigma$ 的定义，特异三角 $N\xrightarrow{\id}N\to 0\to N[1]$ 表明 $N\to 0$ 属于 $\Sigma$，故 $\cN$ 中对象在商范畴中同构于零；反之，在商范畴中同构于零的对象必属于 $\cN$。因此 $\cN$ 正是局部化函子 $Q$ 的核。【来源：原书 p.521 命题 1.1.8 前后的构造；章璞《三角范畴与导出范畴》中关于 Verdier 商的章节（A 级）】}
+
+仿照 Deligne [12]（另见 [25]），下面描述三角范畴局部化的导出函子的一般构造。设 $\cC$ 与 $\cD$ 是三角范畴，$F:\cC\to\cD$ 是正合函子。设 $\cM\subset\cC$ 与 $\cN\subset\cD$ 是全三角子范畴。由于并不假定 $F\cM\subset\cN$，函子 $F$ 并不诱导从 $\cC/\cM$ 到 $\cD/\cN$ 的任何函子。不过，可能存在对诱导函子的某种典范逼近，即一个正合函子 $\Rf F:\cC/\cM\to\cD/\cN$，以及正合函子的态射 $\mathrm{can}:QF\to(\Rf F)Q$。构造如下。用 $\Sigma$ 记与子范畴 $\cM$ 相伴的乘法系。设 $Y$ 是 $\cC/\cM$ 的对象。按如下规则定义一个反变函子 $\mathbf{r}F_Y$，它从 $\cD/\cN$ 到阿贝尔群范畴：$\mathbf{r}F_Y(X)$ 在对象 $X\in\cD/\cN$ 处的值，是满足 $s\in\Sigma$、$f$ 为 $\cD/\cN$ 中态射的偶 $(s,f)$
+\begin{equation*}
+Y\xrightarrow{\ s\ }Y',\qquad X\xrightarrow{\ f\ }FY'
+\end{equation*}
+的等价类。两个这样的偶 $(s,f)$ 与 $(t,g)$ 等价，是指存在 $\cC$ 与 $\cD/\cN$ 中的交换图，形如
+\diag{
+  \& Y' \arrow[d,"u"] \& \& \& \& FY' \arrow[d,"Fu"] \& \\
+  Y \arrow[ur,"s"] \arrow[r,"r"] \arrow[dr,"t"'] \&
+  Y''' \& \& \&
+  X \arrow[ur,"f"] \arrow[r,"h"] \arrow[dr,"g"'] \&
+  FY''' \& \\
+  \& Y'' \arrow[u,"v"] \& \& \& \& FY'' \arrow[u,"Fv"] \&
+}
+
+% [原文 p.522]
+其中 $r\in\Sigma$。若函子 $\mathbf{r}F_Y$ 可表，则把表示它的对象定义为 $\Rf FY$，并说右导出函子 $\Rf F$ 在 $Y$ 上有定义。此时有同构
+\begin{equation*}
+\Hom(X,\Rf FY)\cong\mathbf{r}F_Y(X).
+\end{equation*}
+
+% [Tutor Note: 页图在此处把该函子印作 $\mathbf{r}FY$（$Y$ 未作下标），而在 p.521 定义处印作 $\mathbf{r}F_Y$（$Y$ 为下标）；两处同指一物。本译本统一作 $\mathbf{r}F_Y$。]
+
+容易看出，对 $\cC/\cM$ 中任一态射 $\alpha:Y\to Z$，都定义了函子的态射 $\mathbf{r}F_\alpha:\mathbf{r}F_Y\to\mathbf{r}F_Z$。又若导出函子 $\Rf F$ 在 $Y$ 与 $Z$ 上都有定义，则态射 $\Rf F\alpha$ 也有定义。于是 $\Rf F$ 成为某个全子范畴 $\cW\subset\cC/\cM$ 上的函子 $\cW\to\cD/\cN$，其中 $\cW$ 由 $\Rf F$ 有定义的那些对象组成。
+
+\begin{proposition}[{{[}12{]}}]{1.1.9}
+设
+\begin{equation*}
+X\to Y\to Z\to X[1]
+\end{equation*}
+是 $\cC/\cM$ 中的特异三角，且 $\Rf F$ 在 $X$ 与 $Z$ 上有定义。则它在 $Y$ 上也有定义，并把该三角变为 $\cD/\cN$ 中的特异三角。于是 $\cW$ 是 $\cC/\cM$ 的三角子范畴，而 $\Rf F:\cW\to\cD/\cN$ 是正合函子。
+\end{proposition}
+
+\yizhu{Deligne 的构造把导出函子定义为可表性：$\Rf FY$ 不由消解算出，而由反变函子 $\mathbf{r}F_Y$ 是否可表决定；等价地说，$\Rf F$ 是 $QF$ 沿局部化函子 $Q$ 的右 Kan 扩张。如此定义的导出函子对任何正合函子都有意义，既不要求 $\cC$、$\cD$ 来自阿贝尔范畴，也不要求对象有内射消解；命题 1.1.9 说明它只要在三角的两端有定义，就在整个三角上有定义。【来源：原书 p.521--522 的构造与所引 Deligne [12]（原始论文，A 级）】}
+
+由导出函子的构造立即可知，对任一对象 $Y\in\cC$ 都有典范态射 $\mathrm{can}:QFY\to(\Rf F)QY$（当然，前提是 $\Rf F$ 在 $QY\in\cC/\cM$ 上有定义）。所有这些态射给出三角函子的自然变换 $\mathrm{can}:QF|_{\cW}\to(\Rf F)Q|_{\cW}$。
+
+左导出函子 $\Lf F$ 按对偶方式定义：对 $Y\in\cC/\cM$，定义协变函子 $\mathbf{l}F_Y$，它在 $X\in\cD/\cN$ 处的值是偶 $(s,f)$
+\begin{equation*}
+Y'\xrightarrow{\ s\ }Y,\qquad FX'\xrightarrow{\ f\ }Y
+\end{equation*}
+的等价类，其中 $s\in\Sigma$、$f$ 为 $\cD/\cN$ 中的态射。于是 $\Lf FY$（若存在）是表示函子 $\mathbf{l}F_Y$ 的对象，即 $\Hom(\Lf FY,X)\cong\mathbf{l}F_Y(X)$。存在典范态射 $\mathrm{can}:\Lf FQY\to QFY$。
+
+设函子 $F:\cC\to\cD$ 把子范畴 $\cM$ 映入 $\cN$。此时导出函子 $\Rf F$ 与 $\Lf F$ 都同构于 $F$ 诱导的典范函子 $\cC/\cM\to\cD/\cN$。
+
+设 $j:\cV\into\cC$ 是全三角子范畴的含入，且该子范畴关于 $\Sigma$ 右共尾。由引理 1.1.6，诱导函子 $\cV/(\cV\cap\cM)\to\cC/\cM$ 全忠实。把它记为 $\Rf j$。
+
+\begin{lemma}{1.1.10}
+对任一对象 $V\in\cV$，函子 $\Rf F$ 在 $V$ 上有定义，当且仅当 $\Rf(Fj)$ 在 $V$ 上有定义；并且有函子的同构 $\Rf(Fj)V\iso\Rf F\Rf jV$。
+\end{lemma}
+
+下面描述右导出函子在整个范畴 $\cC$ 上有定义的条件。
+
+\begin{definition}{1.1.11}
+若 $\Rf F$ 在 $Y$ 上有定义，且典范态射 $QFY\to(\Rf F)QY$ 是同构，则称对象 $Y\in\cC$ 关于 $\cM$ 与 $\cN$ 是（右）\emph{F-分裂}（F-split）的。
+\end{definition}
+
+\yizhu{F-分裂的直观是“$F$ 在这个对象上已经算对”：典范态射 $QFY\to(\Rf F)QY$ 本身已是同构，无需再沿 $\Sigma$ 中的态射把 $Y$ 换成更好的代表。因此导出函子若要在整个范畴上有定义，每个对象都应能沿 $\Sigma$ 中的态射换成 F-分裂对象；这正是下文“足够多的 F-分裂对象”的含义，而引理 1.1.12 把 F-分裂性化归为纯可裂条件：$\Sigma$ 中任一 $s:Y\to Y'$ 的像 $QFs$ 都有收缩。【来源：原书 p.522--523 定义 1.1.11 与引理 1.1.12（A 级）】}
+
+下面的引理给出 F-分裂对象的判别准则。
+
+% [原文 p.523]
+\begin{lemma}{1.1.12}
+对象 $Y\in\cC$ 是 F-分裂的，当且仅当对 $\Sigma$ 中任一态射 $s:Y\to Y'$，态射 $QFs$ 都有收缩（retraction），即存在 $p:QFY'\to QFY$ 使 $p\circ QFs=\id$。
+\end{lemma}
+
+若对任一 $Y\in\cC$ 都存在 $\Sigma$ 中的态射 $s:Y\to Y_0$ 使 $Y_0$ 是 F-分裂的，则称 $\cC$（关于 $\cM$ 与 $\cN$）有\emph{足够多的 F-分裂对象}（enough F-split objects）。此时 $\Rf F$ 在整个范畴 $\cC/\cM$ 上有定义，且有同构
+\begin{equation*}
+\Rf FY\iso\Rf FY_0\xleftarrow{\ \sim\ }FY_0.
+\end{equation*}
+
+为结束本节，我们略谈伴随函子。设函子 $F$ 有左伴随 $G:\cD\to\cC$，并假定导出函子 $\Rf F$ 与 $\Lf G$ 存在（即处处有定义）。则 $\Lf G$ 又是 $\Rf F$ 的左伴随，因此有函子性的同构
+\begin{equation}
+\Hom(\Lf GX,Y)\cong\Hom(X,\Rf FY)\qquad\text{对}\ X\in\cD/\cN\ \text{与}\ Y\in\cC/\cM. \tag{2}
+\end{equation}
