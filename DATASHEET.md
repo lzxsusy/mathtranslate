@@ -1,6 +1,6 @@
 # Dataset Card · 数译中文数学译注语料
 
-> 版本 `v1.0.1`（2026-11-13；仓库瘦身更新 2026-11-14）· 维护者：超对称梦想家（chaoduicheng）
+> 版本 `v1.1.0`（2026-11-14；v1.0.1 瘦身版之后新增 SY01-23）· 维护者：超对称梦想家（chaoduicheng）
 > 仓库：<https://atomgit.com/lzxSUSUY/mathtranslate> · 镜像：<https://gitee.com/supersymmetry-dream-home/shuyi>
 
 ## 1. 这是什么
@@ -12,7 +12,7 @@
 
 | 层 | 目录 | 说明 |
 |---|---|---|
-| 权威层 | `08_source_code/` | 89 部工程的 LaTeX 源码 + 工程文档（其中 72 部带完整可编译源码） |
+| 权威层 | `08_source_code/` | 91 部工程的 LaTeX 源码 + 工程文档（其中 77 部带完整可编译源码） |
 | 衍生层 | `01_corpus_zh/`、`02_trajectories/`、`06_sessions_raw/`（分片在 Release 附件）、`03_translations_meta/` | 语料、轨迹、会话、元数据与术语 |
 | 过程层 | `04_playbook/`、`05_seminar_witten/` | 翻译纪律、审校报告、研讨班组织资料 |
 
@@ -31,22 +31,23 @@
 | `file` | str | 来源 `.tex` 相对路径 |
 | `para` | int | 段序 |
 | `para_id` | str | 内容 sha1 前 16 位，**全库唯一稳定**，可做去重键 / 引用键 / 增量更新的锚点 |
-| `page_orig` | int\|null | 原书页码（解析 TeX 里 `% ===== PDF p.NNN (原书 p.N) =====`；仅 89 个工程带此标记，覆盖 694 段） |
+| `page_orig` | int\|null | 原书页码（解析 TeX 里 `% ===== PDF p.NNN (原书 p.N) =====` 或 `\SourceParagraph{id}{PDF页}`；共 3,642 段带此锚点，SY01-23 一次贡献 2,950 段） |
 | `env` | str | `text` / `theorem` / `definition` / `proof` / `remark` / `example` |
 | `tier` | str | 工程评级 A/B/C |
 | `text` | str | **保真文本**：`$...$`、`\[...\]`、`equation/align` 等数学环境原样保留 |
 | `dup_of` / `dup_pkg` | str\|null | 与前面某段文本完全重复时指向首次出现（重复段保留，便于下游按需过滤） |
 
-统计：**41,186 段 / 89 个工程 / 唯一 39,619（96.2%）/ 含公式 35,468（86.1%）/ 汉字 3,354,874 字**。
-另标 `near_dup_of`（MinHash-LSH，Jaccard≥0.8，1,421 段，保留不删）。
+统计：**44,138 段 / 70 个工程有语料 / 唯一 42,570（96.4%）/ 含公式 38,027（86.15%）/ 汉字 3,625,154 字**。
+另标 `near_dup_of`（MinHash-LSH，Jaccard≥0.8，1,418 段，保留不删；SY01-23 之后未重算，为下界）。
 `flags` 记录质检动作：`junk_trimmed`（440 段切掉目录/图注残渣）、`placeholder_in_math`（4 段）、`unbalanced_math`（5 段）。
-去重策略与理由见 `01_corpus_zh/DEDUP_REPORT.md`。
+去重策略与理由见 `01_corpus_zh/DEDUP_REPORT.md`，质检记录见 `01_corpus_zh/QA_REPORT.md`。
 
 ## 4. 清洗管线（精确到脚本）
 
 | 步骤 | 脚本 | 说明 |
 |---|---|---|
 | 段落抽取 | `01_corpus_zh/_build_corpus_v3.py` | 去 LaTeX 命令但**保留公式**；只删 `\cite/\ref/\label` 等引用类参数；unwrap 仅格式命令 |
+| 增量入库 | `01_corpus_zh/_append_pkg.py` + `_tex_clean.py` | 按 `\SourceParagraph{id}{页}` 锚点切段（一段一个 `page_orig`）；花括号平衡的宏展开器把 `\BookCite/\BookEqRef/\BookSectionRef/\BookChapterRef/\BookRef/\footnote/\emph` 转纯文本，`\Book*` 残留验收为 0 |
 | 术语抽取 | 同上 | 三种来源：`术语表_*.csv`、`deliverable/*.md`、`.tex` 里的术语对照；合并成 `termbase.jsonl` |
 | 脱敏 | `tools/scrub_publish.py` | **JSON 感知**：先 `json.loads` 再清洗字符串值，最后重新序列化（早版直接在字节上跑正则会写坏 JSON） |
 | 清单 | `build_manifest.py` + `tools/check_manifest.py` | 从 `HEAD:<path>` 的 blob 计算字节数与 sha256 前 16 位；`check_manifest.py` 单进程流式复算（6818 文件约 10 秒） |
@@ -59,9 +60,10 @@
 |---|---|---|
 | 2 张插图在库中缺失（`SY01-08/fig1-1.png`、`SY05-08/fig_p012_a.png`） | 已补 342 张，这两张本机与各源目录均无 | 这两部整书编译会缺这 2 张图，其余可编 |
 | 14 部工程只有成品 PDF、无 LaTeX 源码 | `SY01-18 / 01-19 / 02-08 / 03-02 / 03-16 / 03-17 / 03-18 / 03-20 / 03-21 / 05-10 / 05-19 / 05-20 / 05-21 / 05-22` | 无法从源码重建，只能读成品 |
-| 语料重复 3.85% | 保留并标注 `dup_of`，不静默删除 | 训练前建议按 `para_id` 去重 |
-| 页码覆盖仅 694 段 | 仅 89 个工程的 TeX 带页码标记 | 其余段落无原书页码锚点 |
-| 术语基 657 条，覆盖 89 个工程 | 其余 89 个工程未产出机器可读术语表 | 术语一致性只能局部校验 |
+| 语料重复 3.55% | 保留并标注 `dup_of`，不静默删除 | 训练前建议按 `para_id` 去重 |
+| `near_dup_of` 未覆盖 SY01-23 | 该包按页锚点增量入库、未跑 MinHash | 近重复统计（1,418）是下界 |
+| 页码覆盖 3,642 段 | 仅部分工程的 TeX 带页锚点；SY01-23 用 `\SourceParagraph` 全量覆盖 | 其余段落无原书页码锚点 |
+| 术语基 1,412 条，非全部工程产出 | 其余工程未产出机器可读术语表 | 术语一致性只能局部校验 |
 | 原文对齐（EN↔ZH）尚未发布 | 需原文与分页 OCR 文本，本次未做 | 尚无 `align.jsonl` |
 | 会话包未做第三方审计 | 只有自述数字与脱敏脚本 | 建议使用者自行抽样审计 |
 | ~~03 与 08 有 1337 个同名 `.tex`~~ | 已于 2026-11-14 删除 `03_translations_meta` 下的重复 `源码/` 与 `工程文件/`（约 45 MB，与 08 逐字节相同）；统一以 `08_source_code/` 为唯一来源 | 已消除 |
@@ -80,10 +82,10 @@
 ```bibtex
 @misc{shuyi2026,
   author       = {超对称梦想家 (chaoduicheng)},
-  title        = {数译：中文数学译注文献库（v1.0.1）},
+  title        = {数译：中文数学译注文献库（v1.1.0）},
   year         = {2026},
   howpublished = {\url{https://atomgit.com/lzxSUSUY/mathtranslate}},
-  note         = {83 部译注 / 89 个工程 / 41{,}186 段中文数学语料 / 400 条 agent 轨迹}
+  note         = {91 部译注 / 44{,}138 段中文数学语料 / 1{,}412 条术语 / 402 条 agent 轨迹}
 }
 ```
 

@@ -1,15 +1,29 @@
-# 语料质检报告（v3）
+# 语料质检报告（v3 + 2026-11-14 增量）
 
 | 指标 | 数值 |
 |---|---|
-| 总段数 | 41186 |
-| 含公式 | 35468（86.1%） |
-| 唯一 para_id | 39619 |
+| 总段数 | 44138 |
+| 含公式 | 38027（86.15%） |
+| 唯一 para_id | 42571 |
 | 精确重复（保留 + 标 `dup_of`） | 1567 |
-| 近重复（Jaccard≥0.8，保留 + 标 `near_dup_of`） | 1418 |
-| 汉字总数 | 3354874 |
+| 近重复（Jaccard≥0.8，保留 + 标 `near_dup_of`） | 1418（未对新增包重算，为下界） |
+| 带原书页锚点 `page_orig` | 3642 |
+| 汉字总数 | 3625154 |
+| 包（pkg）数 | 70 |
 
-## 本次清掉的排版残渣（230 段）
+> 上表是 2026-11-14 追加 SY01-23 之后的**实测值**；下文 v3 一节保留首次生成时的记录。
+
+## 增量入库（2026-11-14，SY01-23《Dirichlet 膜与镜像对称》）
+
+- 入口：`01_corpus_zh/_append_pkg.py`（切段器 `_tex_clean.py`），数据源是发布仓 `08_source_code/SY01-23_…/源码`。
+- 切段单位 = `\SourceParagraph{id}{原书PDF页}` 锚点，一段带一个 `page_orig`；新增 **2952 段**（含公式 2559，带页锚点 2950）。
+- 清洗：宏展开后再落文本——`\BookCite{ref393,ref461}`→`[393, 461]`、`\BookEqRef`→`(2.1)`、`\BookSectionRef`→`第 3.1 节`、`\BookChapterRef`→`第 2 章`、`\BookRef`→显示串、`\footnote{…}`→`（…）`、`\emph` 类只留内容；`\BookStatementNumber`/`\label`/`\BookImage` 等连同参数删除；`figure`/`table` 环境整块丢弃。
+- 验收：`leftover_macro = 0`（无 `\Book*`、`\cite`、`\ref` 残留）、孤立花括号 0、精确重复 0；`para_id = sha1(text)[:16]`。
+- 术语：`glossary.csv`（762 行）合并进 `termbase.jsonl`，新增 **755** 条（`status=candidate`，`pkg=SY01-23`，去重键 `(foreign, zh)`）。
+- 边界：本包的 `near_dup_of` 未计算（未跑 MinHash）；`with_page_orig` 的大幅提升来自本包（其余 69 包基本以空行切段）。
+
+## 本次清掉的排版残渣（230 段，v3 阶段）
+
 
 判定规则：出现 `tocsection`/`figures/*.png`/环境名表；或汉字 ≤6 且整段几乎是数字与点线；或整段无汉字。
 

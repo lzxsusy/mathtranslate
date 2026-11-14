@@ -1,0 +1,933 @@
+\subsection{热带 Morse 树}\label{sec:8.4.3}
+
+\SourceParagraph{ch08-8.4.3-001}{638}
+Fukaya 与 Oh 的一篇重要论文\BookCite{ref167}，将流形余切丛中截面的 Floer 同调，与该流形的 Morse 同调联系起来。粗略地说，其思想是用梯度流线产生的结构来逼近全纯圆盘。Kontsevich 与 Soibelman 在\BookCite{ref311}中利用这一思想，证明了 Abel 簇同调镜像对称的一个版本。对于椭圆曲线，这一步尤其简单；我们将采用这一思想的一个变体，定义所谓的\emph{热带 Morse 树}。以下叙述遵循 Abouzaid、Gross 与 Siebert 的合作工作\BookCite{ref001}。
+
+\SourceParagraph{ch08-8.4.3-002}{638}
+\BookStatementNumber{19}
+\begin{definition}\label{def:8.19}
+设 $B$ 为整仿射流形。给定一列互不相同的整数 $n_0,\ldots,n_d\in\mathbb Z$，以及任意度量带状树 $S$，可以如下用整数 $n_e$ 标记 $S$ 的各条边 $e$。若 $e$ 为与第 $i$ 个外部顶点相接的外部入边，则 $n_e=n_i-n_{i-1}$；否则，若 $e$ 从顶点 $v$ 出发，则 $n_e$ 为所有进入 $v$ 的边的标记之和。再给定点
+\[
+p_{i,i+1}\in B\left(\frac1{n_{i+1}-n_i}\mathbb Z\right),
+\qquad
+p_{0,d}\in B\left(\frac1{n_d-n_0}\mathbb Z\right),
+\]
+定义
+\[
+S_d^{\mathrm{trop}}(p_{0,d};p_{0,1},\ldots,p_{d-1,d})
+\]
+为 $B$ 上\emph{热带 Morse 树}的模空间。所谓热带 Morse 树，是从带状树出发的连续映射 $\phi\colon S\to B$，附带一组\emph{仿射位移向量}：即对 $S$ 的每条边 $e$，有截面 $v_e\in\Gamma(e,(\phi|_e)^*TB)$，满足下列性质。
+\begin{enumerate}
+\item 若 $v$ 为第 $i$ 个外部入顶点，则 $\phi(v)=p_{i-1,i}$；若 $v$ 为外部出顶点，则 $\phi(v)=p_{0,d}$。
+\item 若 $e$ 为 $S$ 的一条边，则 $\phi(e)$ 在 $B$ 上局部为仿射线段。这条线段的斜率可以是无理数。若 $e$ 为外部边，也允许 $\phi(e)$ 为一点。
+\SourceParagraph{ch08-8.4.3-003}{639}
+\item 若 $v$ 为外部顶点，而 $e$ 为 $S$ 中唯一包含 $v$ 的边，则 $v_e(v)=0$。
+\item 将 $S$ 的一条边 $e$ 与坐标为 $s$ 的 $[0,1]$ 识别，并将 $e$ 定向为从零到一。则 $v_e(s)$ 在 $\phi(s)$ 处与 $\phi(e)$ 相切，并且指向由 $e$ 的定向在 $\phi(e)$ 上诱导的方向。此外，利用仿射结构将 $(\phi|_e)^*TB$ 与 $e$ 上的平凡丛识别后，有
+\[
+\frac{d}{ds}v_e(s)=n_e\phi_*(\partial/\partial s).
+\]
+\item 若 $v$ 为 $S$ 的内部顶点，入边为 $e_1,\ldots,e_p$，出边为 $e_{\mathrm{out}}$，则
+\[
+v_{e_{\mathrm{out}}}(v)=\sum_{i=1}^p v_{e_i}(v).
+\]
+\item $S$ 中边 $e$ 的长度，等于
+\[
+\frac1{n_e}\log\left(\frac{v_e(1)}{v_e(0)}\right).
+\]
+这里应记住，带状树的每条边都带有长度，外部边的长度为无穷。由于 $v_e(0)$ 与 $v_e(1)$ 是同方向的成比例向量，所以其比值具有意义，是一个正数。有一种特殊情形：若 $e$ 为被 $\phi$ 收缩的外部边，则 $v_e(0)=v_e(1)=0$，但仍将其长度取为无穷。
+\end{enumerate}
+\end{definition}
+
+\SourceParagraph{ch08-8.4.3-004}{639}
+\BookStatementNumber{20}
+\begin{note}[numbered]\label{note:8.20}
+在 $B=\mathbb R^n$ 的情形，可以更清楚地解释条件(4)的含义：它告诉我们
+\[
+v_e(s)=v_e(0)+n_e\bigl(\phi(s)-\phi(0)\bigr).
+\]
+\SourceParagraph{ch08-8.4.3-005}{639}
+条件(6)在这一定义中实际上没有发挥重要作用，只是给出从 $S_d^{\mathrm{trop}}(p_{0,d};p_{0,1},\ldots,p_{d-1,d})$ 到 $S_d$ 的映射。不过，稍后构造范畴的拟同构时，它将发挥更重要的作用。
+\end{note}
+
+\SourceParagraph{ch08-8.4.3-006}{639}
+\BookStatementNumber{21}
+\begin{exercise}\label{exer:8.21}
+可以通过以下练习理解这一定义的各个条件；练习将说明，热带 Morse 树的概念本质上只是梯度树概念的 Legendre 变换。假设 $B$ 是由 $(\check B,\check K)$ 作 Legendre 变换得到的，如\BookSectionRef{sec:6.1.2}{6.1.2}所述。将 $\check K$ 看作 $\check B$ 的万有覆盖上的函数。给定 $n_0,\ldots,n_d\in\mathbb Z$，证明：$B$ 上的热带 Morse 树，恰好对应于 $\check B$ 上函数
+\[
+(n_0\check K+l_0,\ldots,n_d\check K+l_d)
+\]
+的一棵梯度树，其中度量由 $\check K$ 诱导，$l_0,\ldots,l_d$ 为 $\check B$ 的万有覆盖上某些斜率为整向量的仿射线性函数。此外，每条边上梯度流所经历的时间长度，恰好由定义的条件(6)给出。
+\end{exercise}
+
+\SourceParagraph{ch08-8.4.3-007}{640}
+\BookStatementNumber{22}
+\begin{example}\label{ex:8.22}
+前面关于 theta 函数乘法的描述，已经给出了热带 Morse 树的例子。设 $B=\mathbb R/d\mathbb Z$，$T$ 为具有两条入边的带状树，且 $n_1,n_2>0$。则\BookRef{fig:8.30}{图30}给出一棵热带 Morse 树，表示 $\vartheta_{n_1,p_{0,1}}$ 与 $\vartheta_{n_2,p_{1,2}}$ 的乘积对 $\vartheta_{n_3,p_{0,2}}$ 的一项贡献，其中 $n_3=n_1+n_2$。注意，外部出边必须收缩为一点，否则仿射位移向量不可能在出顶点处为零。
+
+\SourceParagraph{ch08-8.4.3-008}{640}
+另一方面，若 $n_1>0$、$n_2<0$，且 $n_3=n_1+n_2<0$，则\BookRef{fig:8.31}{图31}给出了热带 Morse 树的另一个例子。此时，根据条件(4)，带负权的入边必须收缩为一点。注意，两种情形中的树映射，都可以看作经由万有覆盖分解；所以 $p_{0,1}$、$p_{1,2}$ 与 $p_{0,2}$ 可以是 $B$ 中相应点在 $\mathbb R$ 中的任意提升。
+\setcounter{figure}{29}
+\begin{figure}[H]
+\centering
+\BookImage{01_Numbered_Figures/Chapter_08/Ch08_Fig30_PDFp640_Bookp630.pdf}
+\caption{一棵热带 Morse 树。定义中条件(3)与(5)要求 $n_1(p_{0,2}-p_{0,1})+n_2(p_{0,2}-p_{1,2})=0$；等价地，$p_{0,2}=(n_1p_{0,1}+n_2p_{1,2})/(n_1+n_2)$。}\label{fig:8.30}
+\end{figure}
+\begin{figure}[H]
+\centering
+\BookImage{01_Numbered_Figures/Chapter_08/Ch08_Fig31_PDFp640_Bookp630.pdf}
+\caption{$v_e$ 在 $p_{0,2}$ 处为零的条件，同样推出 $p_{0,2}=(n_1p_{0,1}+n_2p_{1,2})/(n_1+n_2)$。}\label{fig:8.31}
+\end{figure}
+\end{example}
+
+\subsection{全纯多边形与热带 Morse 树}\label{sec:8.4.4}
+
+\SourceParagraph{ch08-8.4.4-001}{640}
+现在解释，一棵热带 Morse 树如何产生 $X(B)$ 中若干多边形的并。若 $\dim B\geq2$，这个并未必是真正的全纯子流形，因为它是分段线性对象；但若 $\dim B=1$，它总是一个全纯多边形。
+
+\SourceParagraph{ch08-8.4.4-002}{640}
+当 $B=\mathbb R/d\mathbb Z$ 时，$X(B)\to B$ 的 Lagrange 子流形 $L_n$，可以推广到任意 $r$ 维整仿射流形 $B$。取 $B$ 上的局部整仿射坐标 $y_1,\ldots,y_r$，以及 $TB$ 上如\BookSectionRef{sec:6.2.1}{6.2.1}所述的纤维坐标 $x_1,\ldots,x_r$，便可以用局部公式
+\[
+\sigma_n(y_1,\ldots,y_r)=(y_1,\ldots,y_r,-ny_1,\ldots,-ny_r)
+\]
+定义截面 $\sigma_n\colon B\to X(B)$。
+\SourceParagraph{ch08-8.4.4-003}{641}
+容易验证，在整仿射坐标变换下，这一定义是良定义的。令
+\[
+L_n=\sigma_n(B).
+\]
+在这个一般情形下，我们实际上并未在 $X(B)$ 上赋予辛结构，因而谈论 $L_n$ 是否为 Lagrange 子流形并无意义。
+
+\SourceParagraph{ch08-8.4.4-004}{641}
+下面说明，热带 Morse 树 $\phi\colon S\to B$ 如何定义一个分段线性圆盘。$S$ 的任意边 $e$，都标记为某个 $j>i$ 对应的 $n_e=n_j-n_i$。考虑映射
+\[
+R_e\colon e\times[0,1]\longrightarrow X(B),
+\qquad
+R_e(s,t)=\sigma_{n_i}(\phi(s))-t\,v_e(s),
+\]
+其中 $t\,v_e(s)$ 看作 $\phi(s)$ 处的切向量。将 $e$ 的两个顶点记为 $v_{\mathrm{in}}$ 与 $v_{\mathrm{out}}$。根据定义，有
+\[
+R_e(e\times\{0\})\subseteq L_{n_i}.
+\]
+若
+\[
+R_e(v_{\mathrm{in}}\times\{1\})\subseteq L_{n_j},
+\]
+即
+\[
+-v_e(v_{\mathrm{in}})
+=\sigma_{n_j}(\phi(v_{\mathrm{in}}))
+-\sigma_{n_i}(\phi(v_{\mathrm{in}}))\pmod\Lambda,
+\]
+则由\BookRef{def:8.19}{定义8.19}的条件(4)，模 $\Lambda$ 有
+\[
+\begin{aligned}
+-\frac{d}{ds}v_e(s)
+&=-(n_j-n_i)(\phi|_e)_*\frac\partial{\partial s}\\
+&=\frac{d}{ds}\bigl(\sigma_{n_j}(\phi(s))-\sigma_{n_i}(\phi(s))\bigr).
+\end{aligned}
+\]
+因此，$R_e(v_{\mathrm{in}}\times\{1\})\subseteq L_{n_j}$ 推出 $R_e(e\times\{1\})\subseteq L_{n_j}$。
+
+\SourceParagraph{ch08-8.4.4-005}{641}
+再考察 $S$ 的一个顶点 $v$。若 $v$ 为外部入顶点 $v_i$，则
+\[
+\phi(v_i)\in B\left(\frac1{n_i-n_{i-1}}\mathbb Z\right),
+\]
+所以
+\[
+\sigma_{n_i}(\phi(v_i))=\sigma_{n_{i-1}}(\phi(v_i))
+\in L_{n_{i-1}}\cap L_{n_i}.
+\]
+特别地，$R_e(v_i\times\{1\})\subseteq L_{n_i}$，从而对于与 $v_i$ 相接的唯一一条边 $e$，有
+\[
+R_e(e\times\{0\})\subseteq L_{n_{i-1}},
+\qquad
+R_e(e\times\{1\})\subseteq L_{n_i}.
+\]
+
+\SourceParagraph{ch08-8.4.4-006}{641}
+若 $v$ 为任意内部顶点，入边为 $e_1,\ldots,e_p$，出边为 $e_{\mathrm{out}}$，且 $e_j$ 的权为 $n_{i_j}-n_{i_{j-1}}$，其中 $i_0<\cdots<i_p$，则可以归纳地假设
+\[
+R_{e_j}(e_j\times\{0\})\subseteq L_{n_{i_{j-1}}},
+\qquad
+R_{e_j}(e_j\times\{1\})\subseteq L_{n_{i_j}}.
+\]
+\SourceParagraph{ch08-8.4.4-007}{642}
+\BookRef{def:8.19}{定义8.19}的条件(5)告诉我们，实际上
+\[
+\begin{aligned}
+R_{e_{\mathrm{out}}}(v\times\{1\})
+&=\sigma_{n_{i_0}}(\phi(v))-v_{e_{\mathrm{out}}}(v)\\
+&=\sigma_{n_{i_0}}(\phi(v))-\sum_{j=1}^p v_{e_j}(v)\\
+&=\sigma_{n_{i_p}}(\phi(v))\in L_{n_{i_p}}.
+\end{aligned}
+\]
+因此
+\[
+R_{e_{\mathrm{out}}}(e_{\mathrm{out}}\times\{0\})\subseteq L_{n_{i_0}},
+\qquad
+R_{e_{\mathrm{out}}}(e_{\mathrm{out}}\times\{1\})\subseteq L_{n_{i_p}}.
+\]
+在顶点 $v$ 处，矩形 $R_{e_i}(e_i\times[0,1])$（$1\leq i\leq p$）与 $R_{e_{\mathrm{out}}}(e_{\mathrm{out}}\times[0,1])$ 未必恰好拼接在一起。不过，在 $T_{\phi(v)}B$ 中，有一个多边形 $P_v$，其依次定向的边向量为 $-v_{e_1}(v),\ldots,-v_{e_p}(v)$ 与 $v_{e_{\mathrm{out}}}(v)$，如\BookRef{fig:8.32}{图32}所示。
+
+\SourceParagraph{ch08-8.4.4-008}{642}
+将矩形 $e\times[0,1]$ 与多边形区域 $P_v$ 拼接起来，形成树 $S$ 的一个加厚，便得到拓扑圆盘 $\operatorname{Fat}(S)$，见\BookRef{fig:8.33}{图33}。对于外部边，用三角形代替矩形可能更直观，因为这样的矩形中，对应于外部顶点的那条边总是被收缩。也可以略去被收缩的外部边。将映射 $R_e$ 拼接起来，就得到连续映射 $R\colon\operatorname{Fat}(S)\to X(B)$，也就是从圆盘到 $X(B)$ 的映射；这里不拘泥于拼接的具体细节。根据\BookSectionRef{sec:6.3}{6.3}中的观察，$R$ 的像由全纯三角形、全纯四边形，以及位于 $X(B)\to B$ 的纤维中的非全纯多边形组成。
+\begin{figure}[H]
+\centering
+\BookImage{01_Numbered_Figures/Chapter_08/Ch08_Fig32_PDFp642_Bookp632.pdf}
+\BookNumberOnlyCaption\label{fig:8.32}
+\end{figure}
+\begin{figure}[H]
+\centering
+\BookImage{01_Numbered_Figures/Chapter_08/Ch08_Fig33_PDFp643_Bookp633.pdf}
+\BookNumberOnlyCaption\label{fig:8.33}
+\end{figure}
+
+\SourceParagraph{ch08-8.4.4-009}{642}
+\BookStatementNumber{23}
+\begin{example}\label{ex:8.23}
+在椭圆曲线上应用上述构造，总能得到真正的全纯多边形，并将其表示为三角形与四边形的并。此时不存在二维的 $P_v$。例如，\BookRef{fig:8.30}{图30}与\BookRef{fig:8.31}{图31}都给出三角形，前者对应于\BookRef{fig:8.29}{图29}中的三角形。
+
+\SourceParagraph{ch08-8.4.4-010}{643}
+反过来，在椭圆曲线的情形，给定任意以 Lagrange 子流形 $L_{n_{i_0}},\ldots,L_{n_{i_d}}$ 为边界的全纯多边形，都能构造一棵产生该多边形的热带 Morse 树。具体细节留给读者，\BookRef{fig:8.34}{图34}与\BookRef{fig:8.35}{图35}给出了一些例子。
+\begin{figure}[H]
+\centering
+\BookImage{01_Numbered_Figures/Chapter_08/Ch08_Fig34_PDFp644_Bookp634.pdf}
+\caption{以 $p_{0,1}$ 与 $p_{1,2}$ 为顶点的外部边，其映像长度为零。}\label{fig:8.34}
+\end{figure}
+\begin{figure}[H]
+\centering
+\BookImage{01_Numbered_Figures/Chapter_08/Ch08_Fig35_PDFp644_Bookp634.pdf}
+\caption{左图中，$S$ 有一个四价顶点，从 $p_{1,2}$ 出发的边被收缩。Morse 树只作示意性绘制，因为这些边在 $B$ 上彼此重叠。这棵 Morse 树是一族单参数树中的一个元素；右图给出另一个元素，以及相应的全纯多边形。}\label{fig:8.35}
+\end{figure}
+\end{example}
+
+\subsection{\v{C}ech 计算}\label{sec:8.4.5}
+
+\SourceParagraph{ch08-8.4.5-001}{643}
+现在可以陈述本节的主要结果。考虑如下定义的 $A_\infty$ 预范畴 $D(\widehat X)$ 与 $\check D(X(B))$。$D(\widehat X)$ 的对象，是 $\widehat X$ 上线丛 $\widehat{\mathcal L}$ 的任意张量幂。若对任意 $i\ne j$ 都有 $n_i\ne n_j$，则称线丛列 $(\widehat{\mathcal L}^{\otimes n_1},\ldots,\widehat{\mathcal L}^{\otimes n_d})$ 为横截的。$\operatorname{Hom}_{D(\widehat X)}(\widehat{\mathcal L}^{\otimes n_1},\widehat{\mathcal L}^{\otimes n_2})$ 取为计算 $\widehat{\mathcal L}^{\otimes(n_2-n_1)}$ 上同调的一个 \v{C}ech 复形。因此，$m_1^{D(\widehat X)}$ 为 \v{C}ech 微分，$m_2^{D(\widehat X)}$ 则为\BookSectionRef{sec:8.2.1}{8.2.1}所述的复合；所有高阶乘法映射都为零。
+
+\SourceParagraph{ch08-8.4.5-002}{643}
+$\check D(X(B))$ 的对象，为 Lagrange 子流形 $L_i$（$i\in\mathbb Z$），按\BookSectionRef{sec:8.3.3}{8.3.3}中的讨论赋予定向与分次，并带有非平凡的自旋结构。态射与高阶乘法映射仍按\BookSectionRef{sec:8.3.3}{8.3.3}中的通常方式给出；横截序列同样是满足任意 $i\ne j$ 都有 $n_i\ne n_j$ 的 $(L_{n_1},\ldots,L_{n_d})$。
+
+\SourceParagraph{ch08-8.4.5-003}{643}
+本节的目标是证明：
+\BookStatementNumber{24}
+\begin{theorem}\label{thm:8.24}
+$D(\widehat X)\otimes_{\mathbb C[[q]]}\Lambda_{\mathrm{nov}}$ 与 $\check D(X(B))$ 拟等价。这里的张量积，只是指将所有态射空间与 $\Lambda_{\mathrm{nov}}$ 作张量积。
+\end{theorem}
+
+\SourceParagraph{ch08-8.4.5-004}{645}
+先说明所选的 \v{C}ech 开覆盖，从而描述 $D(\widehat X)$ 的态射空间。
+
+\SourceParagraph{ch08-8.4.5-005}{645}
+已经看到，$X_\Sigma$ 有自然的开覆盖 $\{U_w\mid w\text{ 为 }\Delta\text{ 的顶点}\}$。每个 $U_w$ 限制为 $f^{-1}(0)$ 的一个开子集，从而定义 $\widehat X_\Sigma$ 的开集 $\widehat U_w$。如前所述，这是一个赋环空间，其底拓扑空间与
+\[
+\operatorname{Spec}\mathbb C[\check w^\vee\cap\mathbb Z^2]/(q)
+\]
+的底拓扑空间相同，而结构层则由环
+\[
+\varprojlim_n\mathbb C[\check w^\vee\cap\mathbb Z^2]/(q^n)
+=\mathbb C[\check w^\vee\cap\mathbb Z^2]
+\widehat\otimes_{\mathbb C[q]}\mathbb C[[q]]
+\]
+所对应的层给出。开集 $\widehat U_w$ 下降为商 $\widehat X=\widehat X_\Sigma/\mathbb Z$ 的开集，因此得到 $\widehat X$ 的一个开覆盖，其指标可以取为 $\Delta$ 的顶点模 $\mathbb Z$ 作用的一组代表元，等价地，也可以用 $B(\mathbb Z)$ 的元素标记。此外，若 $w_1,w_2$ 为 $\Delta$ 的一条边 $\sigma$ 的两个顶点，则
+\[
+\widehat U_{w_1}\cap\widehat U_{w_2}=\widehat U_\sigma;
+\]
+若 $w_1,w_2$ 对应于 $B(\mathbb Z)$ 中不相邻的点，则 $\widehat U_{w_1}\cap\widehat U_{w_2}=\varnothing$。见\BookRef{fig:8.36}{图36}。
+\begin{figure}[H]
+\centering
+\BookImage{01_Numbered_Figures/Chapter_08/Ch08_Fig36_PDFp645_Bookp635.pdf}
+\BookNumberOnlyCaption\label{fig:8.36}
+\end{figure}
+
+\SourceParagraph{ch08-8.4.5-006}{645}
+现在必须作一些选择。需要为这些开集选择一组具体代表元，并用有序指标集标记。取具有通常次序的指标集 $I=\{0,\ldots,d-1\}$，并记
+\[
+\widehat U_i:=\widehat U_{w_i},
+\qquad w_i:=(i,\varphi(i)).
+\]
+于是，对于 $i<j$，除非 $j=i+1$，或 $i=0$ 且 $j=d-1$，否则 $\widehat U_{i,j}:=\widehat U_i\cap\widehat U_j=\varnothing$。
+
+\SourceParagraph{ch08-8.4.5-007}{646}
+如下描述 \v{C}ech 复形。回忆，在典范识别下有
+\[
+\widehat{\mathcal L}^{\otimes n}|_{\widehat U_w}
+=\mathcal O_{\widehat U_w}\cdot z^{nw},
+\]
+这对于正的或负的 $n$ 都成立。因此
+\[
+\Gamma(\widehat U_w,\widehat{\mathcal L}^{\otimes n})
+=\Gamma_w^n
+:=\bigl(\mathbb C[\check w^\vee\cap\mathbb Z^2]
+\widehat\otimes_{\mathbb C[q]}\mathbb C[[q]]\bigr)\cdot z^{nw}.
+\]
+特别地，有识别
+\setcounter{equation}{19}
+\begin{equation}\label{eq:8.20}
+\Gamma(\widehat U_i,\widehat{\mathcal L}^{\otimes n})=\Gamma_{w_i}^n.
+\end{equation}
+若 $\sigma$ 为 $\Delta$ 中以 $w_i,w_j$ 为端点的一条边，则
+\[
+\begin{aligned}
+\Gamma(\widehat U_\sigma,\widehat{\mathcal L}^{\otimes n})
+&=\Gamma(\widehat U_{w_i}\cap\widehat U_{w_j},\widehat{\mathcal L}^{\otimes n})\\
+&=\Gamma_\sigma^n
+:=\bigl(\mathbb C[\check\sigma^\vee\cap\mathbb Z^2]
+\widehat\otimes_{\mathbb C[q]}\mathbb C[[q]]\bigr)\cdot z^{nw_i}\\
+&=\bigl(\mathbb C[\check\sigma^\vee\cap\mathbb Z^2]
+\widehat\otimes_{\mathbb C[q]}\mathbb C[[q]]\bigr)\cdot z^{nw_j}.
+\end{aligned}
+\]
+所以，若 $\sigma_i$ 为端点是 $w_i,w_{i+1}$ 的区间，则对 $0\leq i<d-1$，典范地有
+\begin{equation}\label{eq:8.21}
+\Gamma(\widehat U_{i,i+1},\widehat{\mathcal L}^{\otimes n})=\Gamma_{\sigma_i}^n,
+\end{equation}
+而
+\begin{equation}\label{eq:8.22}
+\Gamma(\widehat U_{0,d-1},\widehat{\mathcal L}^{\otimes n})=\Gamma_{\sigma_{d-1}}^n.
+\end{equation}
+
+\SourceParagraph{ch08-8.4.5-008}{646}
+这造成了一种不对称，以下将反复遇到。具体地，对于 $0\leq i<d-1$，限制映射
+\[
+\Gamma(\widehat U_i,\widehat{\mathcal L}^{\otimes n})
+\longrightarrow\Gamma(\widehat U_{i,i+1},\widehat{\mathcal L}^{\otimes n}),
+\]
+\[
+\Gamma(\widehat U_{i+1},\widehat{\mathcal L}^{\otimes n})
+\longrightarrow\Gamma(\widehat U_{i,i+1},\widehat{\mathcal L}^{\otimes n})
+\]
+就是显然的包含 $\Gamma_{w_i}^n,\Gamma_{w_{i+1}}^n\subseteq\Gamma_{\sigma_i}^n$；限制映射
+\[
+\Gamma(\widehat U_{d-1},\widehat{\mathcal L}^{\otimes n})
+\longrightarrow\Gamma(\widehat U_{0,d-1},\widehat{\mathcal L}^{\otimes n})
+\]
+也是如此。另一方面，限制映射
+\[
+\Gamma(\widehat U_0,\widehat{\mathcal L}^{\otimes n})
+\longrightarrow\Gamma(\widehat U_{0,d-1},\widehat{\mathcal L}^{\otimes n})
+\]
+由复合
+\[
+\Gamma_{w_0}^n\xrightarrow{T_n}\Gamma_{w_d}^n
+\subseteq\Gamma_{\sigma_{d-1}}^n
+\]
+给出。
+
+\SourceParagraph{ch08-8.4.5-009}{646}
+于是，\v{C}ech 复形为
+\[
+\begin{aligned}
+C^0(\widehat{\mathcal L}^{\otimes n})
+&=\bigoplus_{i\in I}\Gamma(\widehat U_i,\widehat{\mathcal L}^{\otimes n})\\
+&\longrightarrow C^1(\widehat{\mathcal L}^{\otimes n})\\
+&=\left(\bigoplus_{0\leq i<d-1}
+\Gamma(\widehat U_{i,i+1},\widehat{\mathcal L}^{\otimes n})\right)
+\oplus\Gamma(\widehat U_{0,d-1},\widehat{\mathcal L}^{\otimes n}).
+\end{aligned}
+\]
+将 \v{C}ech 复形的元素写作 $\sum_i(\tau_i,f_i)$，其中
+\[
+\tau_i\in\{w_j,\sigma_j\mid0\leq j\leq d-1\},
+\qquad
+f_i\in\Gamma(\widehat U_{\tau_i},\widehat{\mathcal L}^{\otimes n}).
+\]
+\SourceParagraph{ch08-8.4.5-010}{647}
+具体地，有
+\begin{equation}\label{eq:8.23}
+\begin{aligned}
+m_1^{D(\widehat X)}\left(\sum_{i=0}^{d-1}(w_i,z^{m_i})\right)
+&=\sum_{i=0}^{d-2}(\sigma_i,z^{m_{i+1}}-z^{m_i})\\
+&\quad +(\sigma_{d-1},z^{m_{d-1}}-z^{T_n(m_0)}).
+\end{aligned}
+\end{equation}
+另一方面，可以如下列出 $m_2^{D(\widehat X)}$ 的全部情形；其中第二与第四行中 $0\leq j<d-1$：
+\begin{equation}\label{eq:8.24}
+\begin{aligned}
+m_2\bigl((w_j,z^{m_j}),(w_i,z^{m_i})\bigr)
+&=\begin{cases}(w_i,z^{m_i+m_j}),&i=j,\\0,&\text{其他情形};\end{cases}\\[2pt]
+m_2\bigl((w_i,z^{m_i}),(\sigma_j,z^{m_j})\bigr)
+&=\begin{cases}(\sigma_i,-z^{m_i+m_j}),&i=j,\\0,&\text{其他情形};\end{cases}\\[2pt]
+m_2\bigl((w_i,z^{m_i}),(\sigma_{d-1},z^{m_j})\bigr)
+&=\begin{cases}(\sigma_{d-1},-z^{T_n(m_i)+m_j}),&i=0,\\0,&\text{其他情形};\end{cases}\\[2pt]
+m_2\bigl((\sigma_j,z^{m_j}),(w_i,z^{m_i})\bigr)
+&=\begin{cases}(\sigma_j,z^{m_i+m_j}),&i=j+1,\\0,&\text{其他情形};\end{cases}\\[2pt]
+m_2\bigl((\sigma_{d-1},z^{m_j}),(w_i,z^{m_i})\bigr)
+&=\begin{cases}(\sigma_{d-1},z^{m_i+m_j}),&i=d-1,\\0,&\text{其他情形}.
+\end{cases}
+\end{aligned}
+\end{equation}
+
+\SourceParagraph{ch08-8.4.5-011}{647}
+描述了 $A_\infty$ 预范畴 $D(\widehat X)$ 中态射空间的结构后，接着注意，$\check D(X(B))$ 可以与\emph{热带 Morse 范畴}识别。
+
+\SourceParagraph{ch08-8.4.5-012}{647}
+\BookStatementNumber{25}
+\begin{definition}\label{def:8.25}
+设 $B$ 为一维整仿射流形。\emph{热带 Morse 范畴} $\operatorname{TMC}(B)$ 的对象集就是整数集；横截序列为满足任意 $i\ne j$ 都有 $n_i\ne n_j$ 的 $(n_1,\ldots,n_d)$。当 $n_2>n_1$ 时，$\operatorname{Hom}_{\operatorname{TMC}(B)}(n_1,n_2)$ 为
+\[
+\bigoplus_{p\in B(\frac1{n_2-n_1}\mathbb Z)}[p]\cdot\Lambda_{\mathrm{nov}}
+\longrightarrow0;
+\]
+当 $n_2<n_1$ 时，它为
+\[
+0\longrightarrow
+\bigoplus_{p\in B(\frac1{n_2-n_1}\mathbb Z)}[p]\cdot\Lambda_{\mathrm{nov}}.
+\]
+高阶乘法映射由计数热带 Morse 树给出：给定横截序列 $(n_0,\ldots,n_d)$ 及
+\[
+p_{i-1,i}\in B\left(\frac1{n_i-n_{i-1}}\mathbb Z\right),
+\]
+则 $m_d(p_{d-1,d},\ldots,p_{0,1})$ 中
+\[
+p_{0,d}\in B\left(\frac1{n_d-n_0}\mathbb Z\right)
+\]
+对应的项为
+\[
+\sum_\phi(-1)^{s(\phi)}q^{\deg(\phi)}[p_{0,d}],
+\]
+\SourceParagraph{ch08-8.4.5-013}{648}
+其中 $\phi$ 遍历 $S_d^{\mathrm{trop}}(p_{0,d};p_{0,1},\ldots,p_{d-1,d})$ 中需要计数的孤立元素。
+
+\SourceParagraph{ch08-8.4.5-014}{648}
+对于符号 $s(\phi)$，就这里的目的而言，只需赋予热带 Morse 树所定义的全纯圆盘相应的符号即可。这在二维情形中可行；若在更高维工作，显然需要更精细的处理。
+
+\SourceParagraph{ch08-8.4.5-015}{648}
+注意，定义中特意要求 $\dim B=1$。确实，可以在任意维数下写出这一定义，但在高维，它是否定义了 $A_\infty$（预）范畴，并不清楚。问题在于，热带 Morse 树的模空间未必具有正确维数，需要某种虚计数或扰动技术，才能把上述描述转化为一个 $A_\infty$ 范畴。问题本质上来自：我们使用了非常特殊的函数的梯度流线，而非一般选择的函数。然而，在一维中，不必担心这些问题；上一小节已经看到，此时热带 Morse 树等价于 $X(B)$ 中的全纯圆盘，而在实二维中计数圆盘，即使不假设将 Lagrange 子流形作一般位置的扰动，也确实给出 $A_\infty$ 结构，参见例如\BookCite{ref003}。
+
+\SourceParagraph{ch08-8.4.5-016}{648}
+为了定义次数，将 $\phi\colon S\to B$ 提升到万有覆盖，得到 $\widetilde\phi\colon S\to\widetilde B=\mathbb R$。令
+\[
+\deg(\phi)=\sum_{i=1}^d(n_i-n_{i-1})
+\varphi(\widetilde\phi(v_{i-1,i}))
+-(n_d-n_0)\varphi(\widetilde\phi(v_{0,d})).
+\]
+\end{definition}
+
+\SourceParagraph{ch08-8.4.5-017}{648}
+\BookStatementNumber{26}
+\begin{proposition}\label{prop:8.26}
+$\check D(X(B))$ 与 $\operatorname{TMC}(B)$ 拟同构。
+\end{proposition}
+
+\SourceParagraph{ch08-8.4.5-018}{648}
+\begin{proof}
+当然，$\check D(X(B))$ 的对象 $L_n$ 对应于 $\operatorname{TMC}(B)$ 的对象 $n$。定义映射
+\[
+F_1\colon\operatorname{Hom}_{\check D(X(B))}(L_{n_0},L_{n_1})
+\longrightarrow\operatorname{Hom}_{\operatorname{TMC}(B)}(n_0,n_1)
+\]
+为
+\begin{equation}\label{eq:8.25}
+F_1([x])=[x]q^{(n_1-n_0)A(x)},
+\end{equation}
+其中 $A(x)$ 由\BookEqRef{eq:8.18}{8.18}定义。所有高阶映射 $F_d$ 都取为零。容易验证
+\[
+m_d^{\operatorname{TMC}(B)}(F_1(x_d),\ldots,F_1(x_1))
+=F_1\bigl(m_d^{\check D(X(B))}(x_d,\ldots,x_1)\bigr).
+\]
+事实上，这些映射分别通过计数热带 Morse 树与全纯圆盘定义，而我们已经看到，两种计数是一回事。此外，符号的定义也一致，唯一需要比较的是全纯圆盘的面积与热带 Morse 树的次数。由\BookRef{lem:8.27}{引理8.27}，在\BookEqRef{eq:8.25}{8.25}之下，热带 Morse 树的次数转化为相应圆盘的面积。
+\end{proof}
+
+\SourceParagraph{ch08-8.4.5-019}{649}
+\BookStatementNumber{27}
+\begin{lemma}\label{lem:8.27}
+设 $\phi\colon S\to B$ 为 $B=\mathbb R/d\mathbb Z$ 上的热带 Morse 树，入顶点为 $v_{i-1,i}$，出顶点为 $v_{0,d}$；取提升 $\widetilde\phi\colon S\to\widetilde B=\mathbb R$，以及\BookSectionRef{sec:8.4.4}{8.4.4}给出的 $R\colon\operatorname{Fat}(S)\to X(B)$。假设 $\phi$ 是此类树的零维模空间中的一点。则
+\[
+\int_{\operatorname{Fat}(S)}R^*\omega
+=\sum_{i=1}^d(n_i-n_{i-1})\psi(\widetilde\phi(v_{i-1,i}))
+-(n_d-n_0)\psi(\widetilde\phi(v_{0,d})),
+\]
+其中 $\psi$ 如\BookEqRef{eq:8.17}{8.17}所定义。
+\end{lemma}
+
+\SourceParagraph{ch08-8.4.5-020}{649}
+\begin{proof}
+$\phi$ 属于零维模空间这一事实，意味着将 $R\colon\operatorname{Fat}(S)\to X(B)$ 提升到万有覆盖，得到 $\widetilde R\colon\operatorname{Fat}(S)\to\mathbb C$ 后，$\operatorname{Fat}(S)$ 的像是凸的。否则，如\BookRef{fig:8.22}{图22}那样，可以使此像在一族单参数圆盘中变化，而边界仍位于相应的 Lagrange 子流形中。因此，特别地，$\widetilde R$ 是单射，可以应用平面多边形面积的标准公式。若各顶点坐标为 $(y_i,x_i)$（$0\leq i\leq d$），则其面积为
+\[
+\frac12\sum_{i=0}^d(y_ix_{i+1}-y_{i+1}x_i),
+\qquad (y_{d+1},x_{d+1})=(y_0,x_0).
+\]
+
+\SourceParagraph{ch08-8.4.5-021}{649}
+现在，多边形各边都是线段，分别位于 $L_0,\ldots,L_d$ 的提升 $\widetilde L_0,\ldots,\widetilde L_d$ 中。假设 $\widetilde L_i$ 的方程为 $x=-n_iy+a_i$，其中 $a_i\in\mathbb Z$。若 $\widetilde\phi(v_{i-1,i})=p_{i-1,i}$，则 $p_{i-1,i}$ 是交点 $\widetilde L_{i-1}\cap\widetilde L_i$ 的第一坐标，因此
+\[
+-n_{i-1}p_{i-1,i}+a_{i-1}=-n_ip_{i-1,i}+a_i.
+\]
+同样，若 $\widetilde\phi(v_{0,d})=p_{0,d}$，则它为 $\widetilde L_0\cap\widetilde L_d$ 的第一坐标，所以
+\[
+-n_0p_{0,d}+a_0=-n_dp_{0,d}+a_d.
+\]
+不妨取 $a_0=0$。于是对于 $1\leq i\leq d$，可知
+\[
+a_i=\sum_{j=1}^i(n_j-n_{j-1})p_{j-1,j},
+\qquad
+a_d=(n_d-n_0)p_{0,d}.
+\]
+
+\SourceParagraph{ch08-8.4.5-022}{650}
+令 $p_{d,d+1}:=p_{0,d}$，面积公式便给出
+\[
+\begin{aligned}
+&\frac12\sum_{i=1}^d
+\bigl(p_{i-1,i}(-n_ip_{i,i+1}+a_i)
+-p_{i,i+1}(-n_ip_{i-1,i}+a_i)\bigr)\\
+&\quad=\frac12\sum_{i=1}^d(p_{i-1,i}-p_{i,i+1})a_i\\
+&\quad=\frac12\sum_{i=1}^d\sum_{j=1}^i
+(n_j-n_{j-1})p_{j-1,j}(p_{i-1,i}-p_{i,i+1})\\
+&\quad=\frac12\sum_{j=1}^d
+(n_j-n_{j-1})p_{j-1,j}(p_{j-1,j}-p_{0,d})\\
+&\quad=\sum_{j=1}^d\left(
+(n_j-n_{j-1})\frac{p_{j-1,j}(p_{j-1,j}-1)}2
+-(n_j-n_{j-1})\frac{p_{j-1,j}(p_{0,d}-1)}2\right)\\
+&\quad=\sum_{j=1}^d(n_j-n_{j-1})\psi(p_{j-1,j})
+-(n_d-n_0)\psi(p_{0,d}).
+\end{aligned}
+\]
+最后一个等式，使用了 $a_d$ 的两种表达式相等这一事实。
+\end{proof}
+
+\SourceParagraph{ch08-8.4.5-023}{650}
+很自然地会想，直接比较热带 Morse 范畴给出的 $A_\infty$ 结构，与\BookSectionRef{sec:8.2.1}{8.2.1}的构造在 $D(\widehat X)$ 上给出的 $A_\infty$ 结构。这需要写出 \v{C}ech 复形的投影与同伦。然而，这样得到的线丛一侧的描述，虽然在某种程度上类似于热带 Morse 一侧的图景，却不能完全吻合。问题本质上在于，\v{C}ech 覆盖的离散性，使我们无法细致看清热带 Morse 树在 $B$ 的线段 $[i,i+1]$ 内发生的变化。因此，最方便的办法，是更直接地写出一个给出拟同构的 $A_\infty$ 函子。这仍是对\BookCite{ref002}中思想的改编。
+
+\SourceParagraph{ch08-8.4.5-024}{650}
+首先，定义一点额外结构。设 $\mathcal P$ 为将 $B$ 分解成长度为一的线段的多面体分解；即 $\mathcal P$ 由单位区间 $[i,i+1]$ 及顶点 $\{i\}$ 组成。沿用一个略有滥用的记法，将区间 $[d-1,d]$ 在 $B$ 中的像记为 $[0,d-1]$；写成 $[d-1,0]$ 可能更合理，但希望把较小的指标放在左边。对每个 $0\leq i<d$，选取一般位置的点 $\alpha_i\in(i,i+1)$。于是可以定义对偶胞腔复形 $\check{\mathcal P}$，由顶点 $\{\alpha_i\}$、区间 $[\alpha_i,\alpha_{i+1}]$（$0\leq i<d-1$），以及 $[\alpha_{d-1},d+\alpha_0]$ 组成；记住，这些区间都按模 $d\mathbb Z$ 来看。$\mathcal P$ 的胞腔与 $\check{\mathcal P}$ 的胞腔之间，显然存在一个反转包含关系的一一对应，记为 $\sigma\mapsto\sigma^\vee$。例如，对于 $0<i\leq d-1$，有 $i^\vee=[\alpha_{i-1},\alpha_i]$。
+
+\SourceParagraph{ch08-8.4.5-025}{651}
+对任意充分小的 $\epsilon>0$，将构造 $\check{\mathcal P}$ 的一个微小变形 $\check{\mathcal P}_\epsilon$。其一维胞腔为
+\[
+\begin{gathered}
+\{[\alpha_i-\epsilon,\alpha_{i+1}-\epsilon]\mid0\leq i<d-2\}\\
+\cup\{[\alpha_{d-2}-\epsilon,\alpha_{d-1}+\epsilon],
+[\alpha_{d-1}+\epsilon,\alpha_0+d-\epsilon]\},
+\end{gathered}
+\]
+零维胞腔当然就是这些区间的端点。见\BookRef{fig:8.37}{图37}。给定胞腔 $\sigma\in\mathcal P$，将其在 $\check{\mathcal P}_\epsilon$ 中的对偶胞腔的内部记为 $\sigma_\epsilon^\vee$。
+\begin{figure}[H]
+\centering
+\BookImage{01_Numbered_Figures/Chapter_08/Ch08_Fig37_PDFp651_Bookp641.pdf}
+\caption{内圈同时表示 $\mathcal P$ 与 $\check{\mathcal P}$；外圈表示 $\check{\mathcal P}_{\epsilon_1}$ 与 $\check{\mathcal P}_{\epsilon_2}$，其中 $\epsilon_2>\epsilon_1$。}\label{fig:8.37}
+\end{figure}
+
+\SourceParagraph{ch08-8.4.5-026}{651}
+这些分解具有如下性质。若 $\epsilon_1<\epsilon_2$，则对于 $0\leq j<d-1$，
+\[
+i_{\epsilon_1}^\vee\cap[j,j+1]_{\epsilon_2}^\vee\ne\varnothing
+\quad\Longleftrightarrow\quad i=j,
+\]
+而
+\[
+i_{\epsilon_1}^\vee\cap[0,d-1]_{\epsilon_2}^\vee\ne\varnothing
+\quad\Longleftrightarrow\quad i=0.
+\]
+同时，对于 $0\leq j<d-1$，
+\[
+[j,j+1]_{\epsilon_1}^\vee\cap i_{\epsilon_2}^\vee\ne\varnothing
+\quad\Longleftrightarrow\quad i=j+1,
+\]
+而
+\[
+[0,d-1]_{\epsilon_1}^\vee\cap i_{\epsilon_2}^\vee\ne\varnothing
+\quad\Longleftrightarrow\quad i=d-1.
+\]
+将这些关系与 $m_2^{D(\widehat X)}$ 的公式\BookEqRef{eq:8.24}{8.24}比较，就会看到，这一组看起来颇为古怪的多面体分解，是为了在进行乘法时强制遵守 \v{C}ech 开覆盖指标集的次序。
+
+\SourceParagraph{ch08-8.4.5-027}{652}
+接着，在 $B=\mathbb R/d\mathbb Z$ 上定义热带 Morse 树的一个变体。
+\BookStatementNumber{28}
+\begin{definition}\label{def:8.28}
+$T_d$ 是\emph{灌木树}的模空间。灌木树是带状树，其所有边都被赋予有限长度，唯有出边的长度仍为无穷；并且满足：若 $v_{\mathrm{adj}}$ 为与出顶点相邻的唯一顶点，则从 $v_{\mathrm{adj}}$ 到任意入顶点的距离，都与所选入顶点无关。称此条件为\emph{长度条件}。
+
+\SourceParagraph{ch08-8.4.5-028}{652}
+$T_1$ 只有一个点，对应于一条长度为无穷的线段，也就是出边。
+\end{definition}
+
+\SourceParagraph{ch08-8.4.5-029}{652}
+以下设 $\widetilde B=\mathbb R\to B$ 为 $B$ 的万有覆盖，$\pi_1\colon\mathbb Z^2\to\mathbb Z$ 为到第一坐标的投影。
+
+\SourceParagraph{ch08-8.4.5-030}{652}
+\BookStatementNumber{29}
+\begin{definition}\label{def:8.29}
+假设给定数据
+\[
+\begin{gathered}
+r\geq1,\qquad n_0,\ldots,n_r\in\mathbb Z,\\
+\tau_{i-1,i}\subsetneq B\quad(1\leq i\leq r),\\
+\widetilde\tau_{i-1,i}\subset\widetilde B
+\text{ 为 }\tau_{i-1,i}\text{ 的一个提升},\\
+m_{i-1,i}\in\mathbb Z^2\quad(1\leq i\leq r),\\
+p_{0,r}\in B\left(\frac1{n_r-n_0}\mathbb Z\right).
+\end{gathered}
+\]
+定义
+\[
+T_r^{\mathrm{trop}}\bigl(p_{0,r};(\tau_{0,1},m_{0,1}),\ldots,
+(\tau_{r-1,r},m_{r-1,r})\bigr)
+\]
+为如下数据的模空间：从灌木树 $S\in T_r$ 出发的连续映射 $\phi\colon S\to B$，以及 $S$ 各边 $e$ 上的一组仿射位移向量 $v_e\in\Gamma(e,(\phi|_e)^*TB)$，满足以下性质。
+\begin{enumerate}
+\item 若 $v_i$ 为第 $i$ 个入顶点，则 $\phi(v_i)\in\tau_{i-1,i}$。若 $v_{\mathrm{out}}$ 为外部出顶点，则 $\phi(v_{\mathrm{out}})=p_{0,r}$。
+\item 满足\BookRef{def:8.19}{定义8.19}中的公理(2)。
+\item 若 $e_i$ 为 $S$ 中唯一包含 $v_i$ 的边，设 $\widetilde v_i\in\widetilde B$ 为 $\phi(v_i)$ 在 $\widetilde\tau_{i-1,i}$ 中的提升，则
+\[
+v_{e_i}(v_i)=(n_i-n_{i-1})\widetilde v_i-\pi_1(m_{i-1,i}).
+\]
+若 $e_{\mathrm{out}}$ 为 $S$ 中唯一包含 $v_{\mathrm{out}}$ 的边，则 $v_{e_{\mathrm{out}}}(v_{\mathrm{out}})=0$。
+\item 满足\BookRef{def:8.19}{定义8.19}中的公理(4)。
+\item 满足\BookRef{def:8.19}{定义8.19}中的公理(5)。
+\item 满足\BookRef{def:8.19}{定义8.19}中的公理(6)。
+\end{enumerate}
+\end{definition}
+
+\SourceParagraph{ch08-8.4.5-031}{653}
+\BookStatementNumber{30}
+\begin{note}[numbered]\label{note:8.30}
+\begin{enumerate}
+\item 这些树与先前定义的热带 Morse 树的主要区别，在于入顶点不再是对应于 Lagrange 子流形交点的指定点，而是被要求位于某些胞腔中；初始仿射位移向量也不再为零，而是由提升 $\widetilde\tau_{i-1,i}$ 与 $m_{i-1,i}$ 这些附加数据指定。注意，从第 $i$ 个入顶点出发，若 $n_i-n_{i-1}>0$，就远离 $\pi_1(m_{i-1,i})/(n_i-n_{i-1})$；若 $n_i-n_{i-1}<0$，则朝向这个点。
+\SourceParagraph{ch08-8.4.5-032}{653}
+\item 尽管记号中没有写出提升 $\widetilde\tau_{i-1,i}$，模空间确实依赖于这些提升。若将 $\widetilde\tau_{i-1,i}$ 换成 $\widetilde\tau_{i-1,i}+d$，则须同时将 $m_{i-1,i}$ 换成 $T_{n_i-n_{i-1}}(m_{i-1,i})$。请验证，这一变换给出相同的模空间。
+\SourceParagraph{ch08-8.4.5-033}{653}
+\item 按(2)所述改变提升 $\widetilde\tau_{i-1,i}$ 及 $m_{i-1,i}$ 后，对于给定的 $\phi\colon S\to B$，可以找到提升 $\widetilde\phi\colon S\to\widetilde B$，使第 $i$ 个入顶点的像总是位于 $\widetilde\tau_{i-1,i}$ 中。于是，若 $S$ 的边 $e$ 标记为 $n_j-n_{i-1}$，其中 $j>i$，则对于任意 $p\in e$，实际上有
+\[
+v_e(p)=(n_j-n_{i-1})\widetilde\phi(p)
+-\pi_1\left(\sum_{s=i}^jm_{s-1,s}\right).
+\]
+根据定义，这在起始处成立，随后可归纳证明。由于仿射位移向量在出顶点 $v_{\mathrm{out}}$ 处必须为零，实际上得到
+\[
+\widetilde\phi(v_{\mathrm{out}})
+=\frac{\pi_1(\sum_{i=1}^rm_{i-1,i})}{n_r-n_0},
+\]
+它模 $d\mathbb Z$ 后就是 $p_{0,r}$。
+\end{enumerate}
+\end{note}
+
+\SourceParagraph{ch08-8.4.5-034}{653}
+\BookStatementNumber{31}
+\begin{definition}\label{def:8.31}
+给定
+\[
+\phi\in T_r^{\mathrm{trop}}\bigl(p_{0,r};(\tau_{0,1},m_{0,1}),\ldots,
+(\tau_{r-1,r},m_{r-1,r})\bigr),
+\]
+取\BookRef{note:8.30}{笔记8.30}(3)中的提升 $\widetilde\phi\colon S\to\widetilde B$；这可能需要改变各个 $\widetilde\tau_{i-1,i}$ 与 $m_{i-1,i}$。于是可以将 $\phi$ 的次数定义为
+\[
+\deg\phi=\operatorname{ord}_{n_r-n_0}
+\left(\sum_{i=1}^rm_{i-1,i}\right).
+\]
+\end{definition}
+
+\SourceParagraph{ch08-8.4.5-035}{653}
+\BookStatementNumber{32}
+\begin{proposition}\label{prop:8.32}
+设 $\sigma_{0,1},\ldots,\sigma_{d-1,d}\in\mathcal P$，$\epsilon_1,\ldots,\epsilon_d$ 充分小，且
+\[
+\phi\in T_d^{\mathrm{trop}}\bigl(p_{0,d};
+((\sigma_{0,1})_{\epsilon_1}^\vee,m_{0,1}),\ldots,
+((\sigma_{d-1,d})_{\epsilon_d}^\vee,m_{d-1,d})\bigr),
+\]
+并且对每个 $i$，都有
+\[
+z^{m_{i-1,i}}\in
+\Gamma(\widehat U_{\sigma_{i-1,i}},
+\widehat{\mathcal L}^{\otimes(n_i-n_{i-1})}).
+\]
+则 $\deg\phi\geq0$。
+\end{proposition}
+
+\SourceParagraph{ch08-8.4.5-036}{653}
+\begin{proof}
+取\BookRef{note:8.30}{笔记8.30}(3)中的提升 $\widetilde\phi\colon S\to\widetilde B$。由关于 $z^{m_{i-1,i}}$ 的假设，若第 $i$ 个入顶点在 $\widetilde B$ 中的像为 $\widetilde v_i$，则 $m_{i-1,i}$ 位于某条直线上方：该直线由 $(n_i-n_{i-1})\Delta$ 的一条边张成，且这条边包含点
+\[
+\bigl((n_i-n_{i-1})\widetilde v_i,
+(n_i-n_{i-1})\varphi(\widetilde v_i)\bigr).
+\]
+视 $\widetilde v_i$ 而定，这样的直线有一条或两条；后一情形中，$m_{i-1,i}$ 位于一个楔形区域内。将归纳证明：对于 $S$ 中标记为 $n_e=n_j-n_{i-1}$ 的边上的任意点 $p$，$\sum_{s=i}^jm_{s-1,s}$ 位于某条直线上方，该直线由 $(n_j-n_{i-1})\Delta$ 的一条边张成，且这条边包含点
+\[
+\bigl((n_j-n_{i-1})\widetilde\phi(p),
+(n_j-n_{i-1})\varphi(\widetilde\phi(p))\bigr).
+\]
+
+\SourceParagraph{ch08-8.4.5-037}{654}
+先假设这在 $S$ 的某条边 $e$ 的起始顶点 $v_{\mathrm{in}}$ 处成立。由\BookRef{note:8.30}{笔记8.30}(3)，仿射位移向量为
+\[
+v_e(v_{\mathrm{in}})=(n_j-n_{i-1})\widetilde\phi(v_{\mathrm{in}})
+-\pi_1\left(\sum_{s=i}^jm_{s-1,s}\right).
+\]
+令
+\[
+x:=(n_j-n_{i-1})^{-1}\pi_1\left(\sum_{s=i}^jm_{s-1,s}\right).
+\]
+若 $n_j-n_{i-1}>0$，该向量指向远离 $x$ 的方向；若 $n_j-n_{i-1}<0$，则指向 $x$。前一情形中，$\widetilde\phi(e)$ 必须远离 $x$，所以由 $v_{\mathrm{in}}$ 处的归纳假设及\BookRef{fig:8.38}{图38}，显然归纳假设继续在任意 $p\in e$ 处成立。若 $n_j-n_{i-1}<0$，$\widetilde\phi(e)$ 朝向 $x$，但永不越过它。由\BookRef{fig:8.39}{图39}，同样可见归纳假设继续在任意 $p\in e$ 处成立。
+
+\SourceParagraph{ch08-8.4.5-038}{654}
+最后，为说明归纳假设在 $v_{\mathrm{in}}$ 处成立，注意 $\sum_{s=i}^jm_{s-1,s}$，正是所有进入 $v_{\mathrm{in}}$ 的边上相应的和的总和。既然归纳假设在每条入边的 $v_{\mathrm{in}}$ 处成立，它也就在边 $e$ 上成立。
+
+\SourceParagraph{ch08-8.4.5-039}{654}
+再考察 $S$ 的最后一个顶点经 $\widetilde\phi$ 的像 $\widetilde v_{\mathrm{out}}$。由于
+\[
+(n_d-n_0)\widetilde v_{\mathrm{out}}
+=\pi_1\left(\sum_{i=1}^dm_{i-1,i}\right),
+\]
+归纳假设意味着 $\sum_{i=1}^dm_{i-1,i}$ 恰好位于
+\[
+\bigl((n_d-n_0)\widetilde v_{\mathrm{out}},
+(n_d-n_0)\varphi(\widetilde v_{\mathrm{out}})\bigr)
+\]
+的正上方。而 $\operatorname{ord}_{n_d-n_0}(\sum_{i=1}^dm_{i-1,i})$，恰好是这两点之间的竖直距离，因此非负。
+\end{proof}
+
+\SourceParagraph{ch08-8.4.5-040}{654}
+可以启发式地计算
+\[
+\dim T_r^{\mathrm{trop}}\bigl(p_{0,r};(\tau_{0,1},m_{0,1}),\ldots,
+(\tau_{r-1,r},m_{r-1,r})\bigr).
+\]
+取该空间中内部顶点均为三价的一个元素，考察允许怎样使它变化。不难看到，在施加长度条件之前，除 $v_{\mathrm{adj}}$ 以外，每个内部顶点的像都可以自由移动；而 $v_{\mathrm{adj}}$ 的像可以自由移动，当且仅当 $\deg p_{0,r}=1$。此外，第 $i$ 个入顶点的像可以在 $\tau_{i-1,i}$ 内变化。移动这些顶点，会改变各边的长度，并希望这些长度的变化彼此独立；随后施加长度条件，就增加了 $r-1$ 个约束。因此总维数为
+\[
+\begin{aligned}
+&\text{内部顶点数}-1+\deg p_{0,r}
++\sum_{i=1}^r\dim\tau_{i-1,i}-(r-1)\\
+&\qquad=\deg p_{0,r}-1+\sum_{i=1}^r\dim\tau_{i-1,i}.
+\end{aligned}
+\]
+\begin{figure}[H]
+\centering
+\BookImage{01_Numbered_Figures/Chapter_08/Ch08_Fig38_PDFp655_Bookp645.pdf}
+\caption{$n>0$。虚线表示 $\Gamma_\sigma^n$ 与 $\Gamma_w^n$。注意，左图中若 $m\in\Gamma_\sigma^n$ 位于 $nv$ 的左侧，则对于 $v$ 右侧的 $w$，还有 $m\in\Gamma_w^n$。右图中若 $m\in\Gamma_\sigma^n$ 位于 $nv$ 的右侧，则对于 $v$ 左侧的 $w$，还有 $m\in\Gamma_w^n$。}\label{fig:8.38}
+\end{figure}
+\begin{figure}[H]
+\centering
+\BookImage{01_Numbered_Figures/Chapter_08/Ch08_Fig39_PDFp655_Bookp645.pdf}
+\caption{$n<0$。}\label{fig:8.39}
+\end{figure}
+
+\SourceParagraph{ch08-8.4.5-041}{655}
+事实上，若对每个 $i$ 都有 $\dim\tau_{i-1,i}=1$，则这个公式总是正确的：一旦第一个顶点及所有内部顶点的位置固定，长度条件就确定了其余所有入顶点的位置。
+
+\SourceParagraph{ch08-8.4.5-042}{655}
+以下关心的是模空间
+\[
+T_d^{\mathrm{trop}}
+:=T_d^{\mathrm{trop}}\bigl(p_{0,d};
+((\sigma_{0,1})_{\epsilon_1}^\vee,m_{0,1}),\ldots,
+((\sigma_{d-1,d})_{\epsilon_d}^\vee,m_{d-1,d})\bigr),
+\]
+其中给定任意一列 $\sigma_{i-1,i}\in\mathcal P$、$m_{i-1,i}\in\mathbb Z^2$（$i=1,\ldots,d$），并且 $0<\epsilon_1<\cdots<\epsilon_d$。始终约定，集合 $(\sigma_{i-1,i})_{\epsilon_i}^\vee$ 的提升，是以下集合之一：
+\SourceParagraph{ch08-8.4.5-043}{656}
+\[
+\begin{aligned}
+&(\alpha_j-\epsilon_i,\alpha_{j+1}-\epsilon_i),
+&&0\leq j<d-2,\\
+&(\alpha_{d-2}-\epsilon_i,\alpha_{d-1}+\epsilon_i),\\
+&(\alpha_{d-1}+\epsilon_i,\alpha_0+d-\epsilon_i),\\
+&\{\alpha_j-\epsilon_i\},&&0\leq j\leq d-2,\\
+&\{\alpha_{d-1}+\epsilon_i\}.
+\end{aligned}
+\]
+
+\SourceParagraph{ch08-8.4.5-044}{656}
+总可以找到 $0<\epsilon_1<\cdots<\epsilon_d$，使 $T_d^{\mathrm{trop}}$ 具有预期维数。事实上，令 $I=\{i\mid\dim\sigma_{i-1,i}^\vee=0\}$，并令 $T_d'$ 为上述模空间的变体：对每个 $i\in I$，将 $(\sigma_{i-1,i})_{\epsilon_i}^\vee$ 换成其附近的一个区间。有取值映射
+\[
+\operatorname{ev}\colon T_d'\longrightarrow B^{\#I},
+\]
+在 $I$ 所标记的入顶点处对 $\phi\in T_d'$ 取值。于是
+\[
+T_d^{\mathrm{trop}}=
+\operatorname{ev}^{-1}\left(\prod_{i\in I}(\sigma_{i-1,i})_{\epsilon_i}^\vee\right).
+\]
+根据前面的论证，$T_d'$ 具有预期维数。如果 $\operatorname{ev}$ 的像的维数不等于 $\#I$，则对于一般选择的 $\epsilon_i$，$T_d^{\mathrm{trop}}$ 为空；否则，对于充分一般的 $\epsilon_i$，纤维的维数就是预期维数。
+
+\SourceParagraph{ch08-8.4.5-045}{656}
+实际上，不难看到，当这个模空间为零维时，还可以得到稍强的结论：随着 $\epsilon_i$ 变化，$T_d^{\mathrm{trop}}$ 中的树连续变化，只是在某些一维模空间的边界点出现时，可能发生跳跃。特别地，对任意给定的上述数据 $(\sigma_{i-1,i},m_{i-1,i})$，可以找到某个 $\epsilon$，使任意 $0<\epsilon_1<\cdots<\epsilon_d<\epsilon$ 所对应的模空间 $T_d^{\mathrm{trop}}$ 都自然同构。将用这些模空间定义所需的 $A_\infty$ 函子。实际上，这里有一个微妙之处，在本次叙述中希望暂且避开：这些模空间即使为零维，也可能是无限的，并且无论 $\epsilon$ 多小，都可能出现跳跃。不过，若将 $\phi$ 的次数限制在某个给定上界内，零维模空间就是有限的。这使我们能将下文的映射 $F_d$ 定义到 $q$ 的任意给定幂次，从而在 $\mathbb C[[q]]$ 上定义 $F_d$。以下不再讨论这一细节。关于更自然的解决办法，见\BookCite{ref002}。
+
+\SourceParagraph{ch08-8.4.5-046}{656}
+如下定义 $A_\infty$ 函子 $F\colon D(\widehat X)\to\operatorname{TMC}(B)$。在对象层面，$F(\widehat{\mathcal L}^{\otimes n})=n$。对每个 $d\geq1$ 及横截序列 $(\widehat{\mathcal L}^{\otimes n_0},\ldots,\widehat{\mathcal L}^{\otimes n_d})$，定义映射
+\[
+\begin{gathered}
+F_d\colon C^*(\widehat{\mathcal L}^{\otimes(n_d-n_{d-1})})
+\otimes\cdots\otimes C^*(\widehat{\mathcal L}^{\otimes(n_1-n_0)})\\
+\longrightarrow\operatorname{Hom}_{\operatorname{TMC}(B)}^*(n_0,n_d)
+\end{gathered}
+\]
+如下。
+
+\SourceParagraph{ch08-8.4.5-047}{657}
+选取胞腔 $\sigma_{0,1},\ldots,\sigma_{d-1,d}\in\mathcal P$，以及 $m_{i-1,i}\in\mathbb Z^2$，使得在识别\BookEqRef{eq:8.20}{8.20}、\BookEqRef{eq:8.21}{8.21}或\BookEqRef{eq:8.22}{8.22}之下，有
+\[
+z^{m_{i-1,i}}\in\Gamma(\widehat U_{\sigma_{i-1,i}},
+\widehat{\mathcal L}^{\otimes(n_i-n_{i-1})}).
+\]
+这定义了
+\[
+C^*(\widehat{\mathcal L}^{\otimes(n_d-n_{d-1})})
+\otimes\cdots\otimes C^*(\widehat{\mathcal L}^{\otimes(n_1-n_0)})
+\]
+中的元素
+\[
+(\sigma_{d-1,d},z^{m_{d-1,d}})\otimes\cdots\otimes
+(\sigma_{0,1},z^{m_{0,1}}).
+\]
+给定 $p_{0,d}\in B(\frac1{n_d-n_0}\mathbb Z)$，此元素在 $\operatorname{Hom}_{\operatorname{TMC}(B)}^*(n_0,n_d)$ 中的像，其 $[p_{0,d}]$ 的系数为
+\[
+\begin{cases}
+\displaystyle\sum_\phi(-1)^{s'(\phi)}q^{\deg\phi},
+&\displaystyle\deg p_{0,d}-1+\sum_i\dim\sigma_{i-1,i}^\vee=0,\\[4pt]
+0,&\displaystyle\deg p_{0,d}-1+\sum_i\dim\sigma_{i-1,i}^\vee\ne0,
+\end{cases}
+\]
+其中求和遍历
+\[
+T_d^{\mathrm{trop}}\bigl(p_{0,d};
+((\sigma_{0,1})_{\epsilon_1}^\vee,m_{0,1}),\ldots,
+((\sigma_{d-1,d})_{\epsilon_d}^\vee,m_{d-1,d})\bigr)
+\]
+中的所有 $\phi$。这里 $0<\epsilon_1<\cdots<\epsilon_d<\epsilon$，而 $\epsilon$ 按上一段选取，使该模空间不依赖于各个 $\epsilon_i$ 的具体选择。此处略去符号 $s'(\phi)$ 的定义，因为它相当复杂。\BookCite{ref002}的附录 B 给出了如何处理这一符号的线索。
+
+\SourceParagraph{ch08-8.4.5-048}{657}
+为了理解 $F_d$ 的作用，先考察 $d=1$ 的情形。给定胞腔 $\sigma\in\mathcal P$ 及 $z^m\in\Gamma(\widehat U_\sigma,\widehat{\mathcal L}^{\otimes(n_1-n_0)})$，分为 $n_1>n_0$ 与 $n_1<n_0$ 两种情形。考虑可能出现的树时，用提升 $\widetilde\phi\colon S\to\widetilde B$ 来理解最方便。此时，这些树只是从 $\sigma_\epsilon^\vee$ 出发，远离或朝向 $\pi_1(m)/(n_1-n_0)$ 的线段。不过，若 $n_1>n_0$，仿射位移向量的长度递增，因而永远不能达到零，除非起始顶点 $v$ 满足 $\widetilde\phi(v)=\pi_1(m)/(n_1-n_0)$。此时得到一棵退化树，唯一的边映到点 $\pi_1(m)/(n_1-n_0)$。这只可能在
+\[
+p_{0,1}=\pi_1(m)/(n_1-n_0)\pmod{d\mathbb Z},
+\qquad p_{0,1}\in\sigma_\epsilon^\vee
+\]
+时出现，而且是唯一的贡献。它给出
+\[
+q^{\operatorname{ord}_{n_1-n_0}(m)}[p_{0,1}].
+\]
+$q$ 的指数，表示 $z^m$ 在 $\Gamma(\widehat U_\sigma,\widehat{\mathcal L}^{\otimes(n_1-n_0)})$ 中能被 $q$ 整除的最高次数。注意，这只可能在 $\dim\sigma=0$ 时发生；因为若 $\sigma_\epsilon^\vee$ 为一点，所选的 $\epsilon$ 已充分小，使该点不可能是分母为 $n_1-n_0$ 的有理点。
+
+\SourceParagraph{ch08-8.4.5-049}{657}
+若 $n_1<n_0$，仿射位移向量递减，并恰好在线段到达 $\pi_1(m)/(n_1-n_0)$ 时为零。因此，总存在这样的树。此类树的模空间维数为 $\dim\sigma_\epsilon^\vee$；若这个维数为一，则 $F_1$ 在该 \v{C}ech 上链上为零。否则 $\dim\sigma=1$，得到与 $n_1>n_0$ 情形相同的贡献公式。不过，规定
+\SourceParagraph{ch08-8.4.5-050}{658}
+\[
+s'(\phi)=\begin{cases}
+1,&\sigma=[0,d-1],\\
+0,&\sigma\ne[0,d-1].
+\end{cases}
+\]
+
+\SourceParagraph{ch08-8.4.5-051}{658}
+\begin{proof}[定理8.24的证明梗概]
+$A_\infty$ 函子的次数一关系为
+\[
+m_1^{\operatorname{TMC}(B)}\circ F_1
+=F_1\circ m_1^{D(\widehat X)}.
+\]
+当然，$m_1^{\operatorname{TMC}(B)}=0$。所以，只需在 $n_1<n_0$ 的情形，对上述 $(\{i\},z^m)$ 验证 $F_1\circ m_1^{D(\widehat X)}=0$。$m_1^{D(\widehat X)}$ 的结果有两项，并取决于 $i$：
+\[
+\begin{aligned}
+&m_1^{D(\widehat X)}\bigl((\{i\},z^m)\bigr)\\
+&\quad=\begin{cases}
+([i-1,i],z^m)+([i,i+1],-z^m),&0<i<d-1,\\
+([0,d-1],-z^{T_n(m)})+([0,1],-z^m),&i=0,\\
+([d-2,d-1],z^m)+([0,d-1],z^m),&i=d-1.
+\end{cases}
+\end{aligned}
+\]
+容易看到，对这些结果应用 $F_1$，总得到零。同样容易看出，$F_1$ 诱导链复形的拟同构，因此只要 $F$ 是 $A_\infty$ 函子，它就是一个拟同构。
+
+\SourceParagraph{ch08-8.4.5-052}{658}
+下面简述 $F$ 为 $A_\infty$ 函子的论证。记住，$D(\widehat X)$ 中只有 $m_1$ 与 $m_2$ 非零。对每个 $d$，需验证如下关系：
+\[
+\begin{aligned}
+&\sum_r\sum_{\substack{s_1,\ldots,s_r\geq1\\s_1+\cdots+s_r=d}}
+m_r^{\operatorname{TMC}(B)}
+\bigl(F_{s_r}(\cdots),\ldots,F_{s_1}(\cdots)\bigr)\\
+&\quad=\sum_q(-1)^{\deg a_1+\cdots+\deg a_q-q}
+F_d\bigl(a_d,\ldots,a_{q+2},m_1^{D(\widehat X)}(a_{q+1}),
+a_q,\ldots,a_1\bigr)\\
+&\qquad+\sum_q(-1)^{\deg a_1+\cdots+\deg a_q-q}
+F_{d-1}\bigl(a_d,\ldots,a_{q+3},m_2^{D(\widehat X)}(a_{q+2},a_{q+1}),
+a_q,\ldots,a_1\bigr).
+\end{aligned}
+\]
+固定 $(n_0,\ldots,n_d)$、$a_i=(\sigma_{i-1,i},z^{m_{i-1,i}})$（$i=1,\ldots,d$），以及 $p_{0,d}\in B(\frac1{n_d-n_0}\mathbb Z)$，希望证明上述关系。选取充分小的 $0<\epsilon_1<\cdots<\epsilon_d<\epsilon$；究竟需要多小，将在以下论证中明确。
+
+\SourceParagraph{ch08-8.4.5-053}{658}
+由于次数的限制，除非模空间
+\[
+T_d^{\mathrm{trop}}\bigl(p_{0,d};
+((\sigma_{0,1})_{\epsilon_1}^\vee,m_{0,1}),\ldots,
+((\sigma_{d-1,d})_{\epsilon_d}^\vee,m_{d-1,d})\bigr)
+\]
+为一维，否则 $A_\infty$ 函子关系中 $[p_{0,d}]$ 的所有系数都为零。考察这个模空间的边界。自然，带上正确符号后，边界的总计数为零。下面考察该模空间的元素可能怎样退化。
+
+\SourceParagraph{ch08-8.4.5-054}{658}
+(1) 某些边的长度可以趋于 $\infty$。这意味着，在出边以外的某条边上，仿射位移向量趋于零。由于从顶点 $v_{\mathrm{adj}}$ 到任意入顶点的长度都相同，只有当每条从 $v_{\mathrm{adj}}$ 到入顶点的路径，都包含一条长度趋于无穷的边时，这种情形才会发生。若 $\epsilon_i$ 选得充分一般，容易验证，每条这样的路径上恰有一条此类边。因此，可以将极限树看作若干棵\BookRef{def:8.29}{定义8.29}中那种树的出顶点，粘接到一棵热带 Morse 树的入顶点上。这样的退化对第一个项作出贡献。
+
+\SourceParagraph{ch08-8.4.5-055}{659}
+(2) 某个入顶点移动到其所在胞腔的边界。选择的一般性同样保证，这只会发生在一个胞腔上。这样的退化对第二个项作出贡献。
+
+\SourceParagraph{ch08-8.4.5-056}{659}
+(3) 某条入边的长度可以趋于零。为了使从 $v_{\mathrm{adj}}$ 回到任意入顶点的长度都相同，至少两条相邻入边的长度必须同时趋于零。一般选择又保证，这种情形只会成对发生。因此，存在某个 $i$，使第 $i$ 与第 $i+1$ 个入顶点 $v_i,v_{i+1}$ 满足 $\phi(v_i)=\phi(v_{i+1})$；从而可以将 $\phi$ 看作以下模空间中的树：
+\[
+\begin{aligned}
+T_{d-1}^{\mathrm{trop}}\bigl(&p_{0,d};
+((\sigma_{0,1})_{\epsilon_1}^\vee,m_{0,1}),\ldots,\\
+&((\sigma_{i-1,i})_{\epsilon_i}^\vee
+\cap(\sigma_{i,i+1})_{\epsilon_{i+1}}^\vee,
+m_{i-1,i}+m_{i,i+1}),\\
+&\ldots,((\sigma_{d-1,d})_{\epsilon_d}^\vee,m_{d-1,d})\bigr).
+\end{aligned}
+\]
+事实上，若 $v'$ 为与 $v_i,v_{i+1}$ 相邻的顶点，$e$ 为从 $v'$ 出发的出边，则可选择提升 $\widetilde\phi\colon S\to\widetilde B$，使 $\widetilde\phi(v')=\widetilde\phi(v_i)=\widetilde\phi(v_{i+1})$，并且
+\[
+v_e(v')=(n_{i+1}-n_{i-1})\widetilde\phi(v')
+-\pi_1(m_{i-1,i}+m_{i,i+1}).
+\]
+这就解释了为什么出现 $m_{i-1,i}+m_{i,i+1}$。若交集为空，这种退化当然不可能发生。若交集非空，而 $(\sigma_{i-1,i})_{\epsilon_i}^\vee$ 或 $(\sigma_{i,i+1})_{\epsilon_{i+1}}^\vee$ 中有一个是零维的，则交集就是这个零维胞腔，此时的贡献恰好对应于\BookEqRef{eq:8.24}{8.24}后四种情形所描述的 $m_2$。注意，条件 $\epsilon_i<\epsilon_{i+1}$ 强制遵守 \v{C}ech 开覆盖指标集的次序。
+
+\SourceParagraph{ch08-8.4.5-057}{659}
+另一方面，若交集为一维，有两种可能。首先，可以有 $\sigma_{i-1,i}\ne\sigma_{i,i+1}$，此时交集非常小，大小约为 $\epsilon$。可以假设 $\epsilon$ 充分小，使这个模空间实际上为空，因而没有贡献。若 $\sigma_{i-1,i}=\sigma_{i,i+1}$，则
+\[
+(\sigma_{i-1,i})_{\epsilon_i}^\vee
+\cap(\sigma_{i,i+1})_{\epsilon_{i+1}}^\vee
+\]
+非常接近 $(\sigma_{i-1,i})_{\epsilon_i}^\vee$，因此可以用后者代替该交集，而不影响模空间。注意，此时 $\dim\sigma_{i-1,i}=\dim\sigma_{i,i+1}=0$，给出的正是\BookEqRef{eq:8.24}{8.24}的第一种情形。所以，这些退化对 $A_\infty$ 函子关系的第三个项作出贡献。
+
+\SourceParagraph{ch08-8.4.5-058}{659}
+仔细处理所有符号后，便得到 $F$ 是 $A_\infty$ 函子，从而证明\BookRef{thm:8.24}{定理8.24}。
+\end{proof}
+
+\SourceParagraph{ch08-8.4.5-059}{660}
+为说明这个证明，考虑涉及 $F_2$ 的关系中可能出现的一种情形。该关系为
+\begin{equation}\label{eq:8.26}
+\begin{aligned}
+&m_2^{\operatorname{TMC}}\bigl(F_1(\sigma_{1,2},z^{m_{1,2}}),
+F_1(\sigma_{0,1},z^{m_{0,1}})\bigr)\\
+&\quad=F_2\bigl((\sigma_{1,2},z^{m_{1,2}}),
+m_1^{D(\widehat X)}(\sigma_{0,1},z^{m_{0,1}})\bigr)\\
+&\qquad+(-1)^{\dim\sigma_{0,1}-1}
+F_2\bigl(m_1^{D(\widehat X)}(\sigma_{1,2},z^{m_{1,2}}),
+(\sigma_{0,1},z^{m_{0,1}})\bigr)\\
+&\qquad+F_1\bigl(m_2^{D(\widehat X)}
+((\sigma_{1,2},z^{m_{1,2}}),(\sigma_{0,1},z^{m_{0,1}}))\bigr).
+\end{aligned}
+\end{equation}
+考虑 $n_1-n_0$ 与 $n_2-n_1$ 都为正，且 $\dim\sigma_{1,2}=\dim\sigma_{0,1}=0$ 的情形，此时模空间 $T_2^{\mathrm{trop}}$ 为一维。\BookRef{fig:8.40}{图40}表示树可能退化的若干方式。
+\begin{figure}[H]
+\centering
+\BookImage{01_Numbered_Figures/Chapter_08/Ch08_Fig40_PDFp660_Bookp650.pdf}
+\BookNumberOnlyCaption\label{fig:8.40}
+\end{figure}
+
+\SourceParagraph{ch08-8.4.5-060}{660}
+树(1)表示单参数族中一棵一般树的一个具体情形，其中起始点 $\phi(v_{0,1})$ 与 $\phi(v_{1,2})$ 位于
+\[
+p_{0,1}:=\frac{\pi_1(m_{0,1})}{n_1-n_0},
+\qquad
+p_{1,2}:=\frac{\pi_1(m_{1,2})}{n_2-n_1}
+\]
+之间。这些点彼此排斥，两条线段在 $p_{0,2}$ 处相遇。可以改变两个端点，但不能独立地改变它们。当一个端点趋向例如 $p_{0,1}$ 时，另一个端点必须趋向 $p_{1,2}$，从而得到\BookRef{fig:8.40}{图40}中(2)所示的退化情形。此时得到一棵通常的热带 Morse 树，对乘积 $m_2^{\operatorname{TMC}}([p_{1,2}],[p_{0,1}])$ 作出贡献；而对于 $i=1,2$，
+\[
+F_1(\sigma_{i-1,i},z^{m_{i-1,i}})
+=q^{\operatorname{ord}_{n_i-n_{i-1}}(m_{i-1,i})}[p_{i-1,i}].
+\]
+这对 $F_2$ 关系的左侧作出贡献。若反过来，使端点远离 $p_{0,1}$ 与 $p_{1,2}$，则到某一时刻，一个端点会位于相应胞腔的边界，如\BookRef{fig:8.40}{图40}的(3)所示。视首先到达 $(\sigma_{0,1})_{\epsilon_1}^\vee$ 还是 $(\sigma_{1,2})_{\epsilon_2}^\vee$ 的边界而定，所得贡献对应于 $F_2$ 关系右侧的第一项或第二项。
+
+\SourceParagraph{ch08-8.4.5-061}{661}
+当 $(\sigma_{0,1})_{\epsilon_1}^\vee$ 与 $(\sigma_{1,2})_{\epsilon_2}^\vee$ 有交集时，还可能出现另一种行为。此时，重叠部分或者很小，或者很大；后一情形发生于 $\sigma_{0,1}=\sigma_{1,2}$。在后一情形中，若 $p_{0,1},p_{1,2}\in(\sigma_{0,1})_{\epsilon_1}^\vee\cap(\sigma_{1,2})_{\epsilon_2}^\vee$，则\BookRef{fig:8.40}{图40}(4)所示的树族有两种退化方式：(5)端点趋向 $p_{0,1}$ 与 $p_{1,2}$，再次对\BookEqRef{eq:8.26}{8.26}的左侧作出贡献；或者(6)端点趋向 $p_{0,2}$，使这些边的长度趋于零，对\BookEqRef{eq:8.26}{8.26}的最后一项作出贡献。
+
+\SourceParagraph{ch08-8.4.5-062}{661}
+当然，还有许多其他可能情形，也需要一定工作来保证符号正确；这里略去这一论证。

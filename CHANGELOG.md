@@ -1,5 +1,32 @@
 # CHANGELOG
 
+## v1.1.0 — 2026-11-14
+
+新增一部**正式出版专著**的完整工程（Clay 数学研究所《Dirichlet Branes and Mirror Symmetry》中文校订版），
+首次用「原书页锚点」做语料增量入库，并把整书对照校订的流水线沉淀成 playbook 与一条精选轨迹。
+本版基于 v1.0.1 的**瘦身后**仓库（03 不再重复存源码、会话分片与成品 PDF 在 Release 附件）。
+
+### 新工程（`08_source_code/SY01-23_Dirichlet 膜与镜像对称（Clay 专著）/`、`03_translations_meta/SY01-23/`）
+- 530 页译本，逐段对照 Clay 官方 PDF（697 页，底本与成品 SHA256 均已钉死）校订：**正文 201 处 + 术语/记号 90 处 + 文献 18 条**。
+- 08 带完整可编译源码（250 文件：main.tex / book-adapt.sty / elegantbook.cls / 15 个章节 tex / 222 张矢量图 / references.bib 476 条 / index-zh.tex）。
+- `工程文件/`：BRIEF、README、编译说明、build.ps1、校对标准、14 个流水线脚本、`reports/`（11 份分章日志 + 术语审计 + 落地回查 201/201 + 完整性审计）、`deliverable/`（校订报告 + 术语对照表）。
+- 按「正式出版书籍底本不发布成品 PDF」的约定，本工程**不含成品 PDF**；03 只留 `投稿信息.md`（瘦身后规矩）。
+
+### 语料（`01_corpus_zh/`）
+- 新增入库脚本 `_append_pkg.py` + 宏展开器 `_tex_clean.py`：按 `\SourceParagraph{id}{PDF页}` 锚点切段，**一段一个 `page_orig`**。
+- **+2,952 段**（含公式 2,559；带页锚点 2,950），全库 → **44,138 段 / 唯一 42,570 / 含公式 38,027（86.15%）/ 汉字 3,625,154**；`with_page_orig` 692 → **3,642**。
+- 验收 `leftover_macro = 0`（`\BookCite/\BookEqRef/\BookSectionRef/\BookChapterRef/\BookRef/\footnote` 全部转纯文本）、孤立花括号 0、精确重复 0。
+- 术语基 657 → **1,412**（+755，`status=candidate`，去重键 `(foreign, zh)`）。
+- `DEDUP_REPORT.md` / `QA_REPORT.md` 更新为增量后实测值；SY01-23 未跑 MinHash，近重复 1,418 记为下界。
+
+### 过程层（`04_playbook/`、`02_trajectories/`）
+- 新增 `04_playbook/07_整书对照校订流水线.md`（11 节：锚点对齐 → 分块 → 判据 → 断言式批改 → 落地回查 → 完整性审计 → 合并重建 → 交付装配，附七个坑），必读顺序表加第 6、7 行。
+- `04_playbook/tools/review_pipeline/` 收录本次 14 个脚本；`02_trajectories/SY01-23_精选片段.md` 记录 11 条判定链。
+- 轨迹 401 → **402 条**（新增 score 9.90）；`traj_stats.json` 同步（扫描 1007 / 候选 952 / 入选 402 / 均分 7.32）。
+
+### 统计
+- `make_stats.py --write` 刷新 README：**91 部（77 部带完整源码）/ 5,819 文件 294.1 MB / 1,505 tex + 2,115 图 / 41 部成品 PDF 50.8 MB（Release）/ 语料 44,138 段 / 术语 1,412 / 轨迹 402**。
+
 ## v1.0.1 — 2026-11-13
 
 语料质检版：v1.0.0 的语料虽然保住了公式，但仍混有大量**排版残渣**（目录条目、环境名表、

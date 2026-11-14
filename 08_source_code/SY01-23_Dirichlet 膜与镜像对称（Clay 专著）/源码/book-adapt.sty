@@ -1,0 +1,63 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{book-adapt}[2026/10/07 Source-faithful ElegantBook adaptation]
+\RequirePackage{amsmath,amssymb,mathtools}
+\RequirePackage{xurl,bookmark,float,needspace}
+\RequirePackage{newunicodechar}
+\newunicodechar{′}{\ensuremath{^{\prime}}}
+% Restore the native normal title family when a boxed statement is nested in a proof.
+\tcbset{common/.append style={fonttitle=\normalfont\bfseries}}
+\setcounter{tocdepth}{1}
+\setcounter{secnumdepth}{4}
+\bookmarksetup{depth=4}
+\hypersetup{pdftitle={Dirichlet 膜与镜像对称},pdfauthor={Paul S. Aspinwall et al.},pdfkeywords={Dirichlet 膜,镜像对称},linktoc=all}
+\renewcommand{\solutionname}{解答}
+\DeclareSortingTemplate{sourceorder}{\sort{\field{sortkey}}}
+\ExecuteBibliographyOptions{sorting=sourceorder,sortcites=false,giveninits=false,maxbibnames=99}
+\DeclareBibliographyDriver{misc}{\printfield{note}\finentry}
+\DeclareFieldFormat{note}{#1}
+\setlength{\bibitemsep}{0.35\baselineskip}
+\setlength{\emergencystretch}{2em}
+\widowpenalty=10000
+\clubpenalty=10000
+\displaywidowpenalty=10000
+\AtBeginBibliography{\raggedright}
+\newcommand{\BookCite}[1]{\cite{#1}}
+\newcommand{\BookBibText}[2]{\hyperlink{cite.0@#1}{#2}}
+\newcommand{\SourceParagraph}[2]{\par\phantomsection\label{src:#1}\ignorespaces}
+\newcommand{\SourceAnchor}[1]{\phantomsection\label{src:#1}}
+\newcommand{\BookStatementNumber}[1]{\setcounter{ELEGANT@samecnt}{\numexpr#1-1\relax}}
+\renewenvironment{example}[1][]{\refstepcounter{ELEGANT@samecnt}\par\noindent\textbf{\color{main}\examplename\space\theexam\space#1}\rmfamily}{\par\ignorespacesafterend}
+\newenvironment{example*}[1][]{\par\noindent{\normalfont\bfseries\color{main}\examplename\space#1}\quad\rmfamily\ignorespaces}{\par\ignorespacesafterend}
+\newenvironment{exercise*}[1][]{\par\noindent\makebox[-3pt][r]{\scriptsize\color{red!90}\HandPencilLeft\quad}{\normalfont\bfseries\color{main}\exercisename\space#1}\quad\rmfamily\ignorespaces}{\par\ignorespacesafterend}
+\elegantnewtheorem{axiom}{公理}{thmstyle}{axiom}
+\newenvironment{letteraxiom}[1]{\begingroup\renewcommand{\axiomname}{公理\space#1}\begin{axiom*}\phantomsection\def\@currentlabel{#1}}{\end{axiom*}\endgroup}
+\renewenvironment{exercise}[1][]{\refstepcounter{ELEGANT@samecnt}\par\noindent\makebox[-3pt][r]{\scriptsize\color{red!90}\HandPencilLeft\quad}\textbf{\color{main}\exercisename\space\theexer\space#1}\rmfamily}{\par\ignorespacesafterend}
+\renewenvironment{problem}[1][]{\refstepcounter{ELEGANT@samecnt}\par\noindent\textbf{\color{main}\problemname\space\theprob\space#1}\rmfamily}{\par\ignorespacesafterend}
+\renewcommand{\theexam}{\csname theELEGANT@samecnt\endcsname}
+\renewcommand{\theexer}{\csname theELEGANT@samecnt\endcsname}
+\renewcommand{\theprob}{\csname theELEGANT@samecnt\endcsname}
+\let\BookNativeNote\note
+\let\BookNativeEndNote\endnote
+\renewenvironment{note}[1][]{\begingroup\ifblank{#1}{}{\refstepcounter{ELEGANT@samecnt}\edef\notename{笔记\space\csname theELEGANT@samecnt\endcsname}}\BookNativeNote}{\BookNativeEndNote\endgroup}
+\elegantnewtheorem{conjecture}{猜想}{thmstyle}{conj}
+\elegantnewtheorem{claim}{断言}{thmstyle}{claim}
+\elegantnewtheorem{principle}{原理}{thmstyle}{principle}
+\elegantnewtheorem{property}{性质}{thmstyle}{pty}
+\elegantnewtheorem{construction}{构造}{thmstyle}{constr}
+\newenvironment{lettertheorem}[1]{\begingroup\renewcommand{\theoremname}{定理\space#1}\begin{theorem*}\phantomsection\def\@currentlabel{#1}}{\end{theorem*}\endgroup}
+\newenvironment{problem*}[1][]{\par\noindent\textbf{\color{main}\problemname\space#1}\rmfamily}{\par\ignorespacesafterend}
+\newcommand{\BookUnsectionedSubsection}[2]{\subsection*{#1\quad#2}\pdfbookmark[1]{#1\space#2}{bookmark:#1}\def\@currentlabel{#1}}
+\newcommand{\BookQED}{\hfill\ensuremath{\square}}
+\newcommand{\BookNumberOnlyCaption}{\captionsetup{labelsep=none}\caption{}}
+\renewcommand{\thefigure}{\arabic{figure}}
+\renewcommand{\theHfigure}{\arabic{chapter}.\arabic{figure}}
+\renewcommand{\thetable}{\arabic{table}}
+\renewcommand{\theHtable}{\arabic{chapter}.\arabic{table}}
+\newcommand{\BookImage}[1]{\ifmmode\vcenter{\hbox{\includegraphics[width=\csname BookFigureWidth:#1\endcsname]{figures/#1}}}\else\includegraphics[width=\csname BookFigureWidth:#1\endcsname]{figures/#1}\fi}
+\input{figure-dimensions.tex}
+% Drafts can be compiled before later chapters exist. Final validation rejects every pending target.
+\newcommand{\BookRef}[2]{\ifcsname r@#1\endcsname\hyperref[#1]{#2}\else#2\PackageWarning{book-adapt}{Pending source reference: #1}\fi}
+\newcommand{\BookEqRef}[2]{\BookRef{#1}{(#2)}}
+\newcommand{\BookSectionRef}[2]{\BookRef{#1}{第#2节}}
+\newcommand{\BookChapterRef}[1]{\BookRef{chap:#1}{第#1章}}
+\newcommand{\BookIndexPage}[1]{\hyperref[src:#1]{\pageref*{src:#1}}}
