@@ -12,7 +12,7 @@
 
 | 层 | 目录 | 说明 |
 |---|---|---|
-| 权威层 | `08_source_code/` | 90 部工程的 LaTeX 源码 + 工程文档（其中 77 部带完整可编译源码） |
+| 权威层 | `08_source_code/` | 90 部工程的 LaTeX 源码 + 工程文档（其中 79 部带完整可编译源码） |
 | 衍生层 | `01_corpus_zh/`、`02_trajectories/`、`06_sessions_raw/`（分片在 Release 附件）、`03_translations_meta/` | 语料、轨迹、会话、元数据与术语 |
 | 过程层 | `04_playbook/`、`05_seminar_witten/` | 翻译纪律、审校报告、研讨班组织资料 |
 
@@ -40,7 +40,7 @@
 | `text` | str | **保真文本**：`$...$`、`\[...\]`、`equation/align` 等数学环境原样保留 |
 | `dup_of` / `dup_pkg` | str\|null | 与前面某段文本完全重复时指向首次出现（重复段保留，便于下游按需过滤） |
 
-统计：**44,138 段 / 90 个工程有语料 / 唯一 42,570（96.4%）/ 含公式 38,027（86.15%）/ 汉字 3,625,154 字**。
+统计：**44,522 段 / 71 个工程有语料 / 唯一 42,955（96.4%）/ 含公式 38,393（86.23%）/ 汉字 3,668,359 字**。
 另标 `near_dup_of`（MinHash-LSH，Jaccard≥0.8，1,418 段，保留不删；SY01-23 之后未重算，为下界）。
 `flags` 记录质检动作：`junk_trimmed`（440 段切掉目录/图注残渣）、`placeholder_in_math`（4 段）、`unbalanced_math`（5 段）。
 去重策略与理由见 `01_corpus_zh/DEDUP_REPORT.md`，质检记录见 `01_corpus_zh/QA_REPORT.md`。
