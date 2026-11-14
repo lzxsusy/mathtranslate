@@ -43,3 +43,9 @@ powershell -ExecutionPolicy Bypass -File 工程文件\tools\build.ps1
 - `源码/gen/` 与两个 `appendix_*.tex` 是生成物，改动会被下次 `gen_tables.py` 覆盖；要改译注请改 `工程文件/tools/notes_data.py`。
 - 正文中 `\zhnt{4.5}` 只写 id，注文与来源由宏注入；**新增译注必须同时改 `notes_data.py` 与正文 id**，否则编译缺宏。
 - 本工程不含底本 PDF；底本见投稿信息中的 arXiv 编号。
+
+## 记录
+
+- `记录/通读笔记.md`：结构、逐节功能、写作风格、落笔前风险清单。
+- `记录/疑点清单.tsv`：17 条疑点（体例 / 字符 / 内容 / 术语 / 边界），全部「已解」后才开译。
+- `记录/校核记录.md`：编译日志 7 处修复、逐页目视、46 = 46 = 46 数据一致性。
