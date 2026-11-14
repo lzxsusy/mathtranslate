@@ -2,8 +2,10 @@
 
 本目录是翻译《Langlands 纲领导论》（SY02-09）时建的 **nLab 条目摘要缓存 + 替代来源卡**，随仓发布，
 供后续几何 Langlands 相关文献的翻译、校订与讲注直接复用——不必每次重新抓取、重新判断某个词条是否可用。
+2026-11-15 又为《几何朗兰兹对偶是什么？》（SY02-10，Ben-Zvi 2026 综述）补抓 16 条，清单见
+`tools/list_BenZvi2026.tsv`。
 
-## 一、`pages/`：nLab 条目摘要（120 条）
+## 一、`pages/`：nLab 条目摘要（136 条）
 
 - 每条对应 `https://ncatlab.org/nlab/show/<slug>`，抓的是该页的 **Instiki 源码**（`/nlab/source/<slug>`），
   比渲染后的 HTML 干净约 5 倍；保留标题、URL、`last_revised` 与正文前 6000 字符。
@@ -65,10 +67,19 @@ nLab 的条目名常常比我们要的义项更宽或另有所指，直接引会
 | `artin map` | 只有 `Artin reciprocity law`（互反律本身），没有"Artin 映射"这个词条的独立条目 | 引 `Artin reciprocity law` 页并在译注里点明，或用本讲参考文献 |
 | `root system` | 重定向到 `root (in representation theory)`，是表示论意义的根系 | 根系与根数据改引 Springer《Reductive groups》（本讲 [S]，A 级） |
 
+2026-11-15 为 SY02-10 核词条时又踩到四个，都是**重定向**（`/nlab/show/` 返回 200，`/nlab/source/` 却没有 textarea，抓取脚本报 NOTFOUND）：
+
+| 条目 | 重定向到 | 处理 |
+|---|---|---|
+| `singular support` | `support of a distribution`（分布的支集），义项完全不同 | 不作链接，改引 `characteristic variety`（2017-08-29），并在译注里写明原因 |
+| `moduli stack of G-principal bundles` | `moduli space of bundles` | 统一引 `moduli stack`（合并为一行的「$G$-主丛／向量丛模栈」） |
+| `moduli stack of vector bundles` | 同上 | 同上 |
+| `geometric Langlands program` | `geometric Langlands correspondence` | 只保留 `geometric Langlands correspondence` 一行，不重复列 |
+
 **不要引存根页**：只有一两行文字、正文 200 字符以内的 nLab 页（本库 `pages/` 里 `chars` 很小的那些）不构成"定义展开"的依据，按 A 级教材处理。
 
 ## 六、抓取日期与维护
 
-- 全部条目抓取/核对于 **2026-11-14**；`last_revised` 是各条目在 nLab 上的最后修订日期，随条目一同记录。
+- 全部条目抓取/核对于 **2026-11-14**（SY02-10 补充的 16 条于 **2026-11-15** 抓取）；`last_revised` 是各条目在 nLab 上的最后修订日期，随条目一同记录。
 - nLab 条目会继续修订：若某条 `last_revised` 已明显早于当前日期而结论又被新文献推翻，重抓该条并更新
   `INDEX.tsv` 与引用它的译注。
