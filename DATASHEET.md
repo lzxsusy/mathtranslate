@@ -12,14 +12,14 @@
 
 | 层 | 目录 | 说明 |
 |---|---|---|
-| 权威层 | `08_source_code/` | 90 部工程的 LaTeX 源码 + 工程文档（其中 79 部带完整可编译源码） |
+| 权威层 | `08_source_code/` | 93 部工程的 LaTeX 源码 + 工程文档（其中 80 部带完整可编译源码） |
 | 衍生层 | `01_corpus_zh/`、`02_trajectories/`、`06_sessions_raw/`（分片在 Release 附件）、`03_translations_meta/` | 语料、轨迹、会话、元数据与术语 |
 | 过程层 | `04_playbook/`、`05_seminar_witten/` | 翻译纪律、审校报告、研讨班组织资料 |
 | 参考层 | `07_refs_nlab/` | nLab 条目摘要 120 条 + 替代来源卡 37 份 + 110 条来源真实性抽查；几何 Langlands 线的术语与引文底账 |
 
 ## 2. 来源与授权
 
-- 底本分两类：**arXiv 预印本**（41 部，可公开引用与对照）与**正式出版书籍**（45 部，日文/英文专著、Springer/AMS 丛书）。
+- 底本分两类：**arXiv 预印本**（42 部，可公开引用与对照）与**正式出版书籍**（45 部，日文/英文专著、Springer/AMS 丛书）。
 - 发布物**不含任何原文**（不发布原文 PDF）；只发布译文、工程源码、元数据与自建语料。
 - 译文与工程文档：CC BY-NC-SA 4.0。语料、轨迹、会话：CC BY 4.0。
 - 逐部底本信息（书名、作者、出版年、arXiv 号）见 `03_translations_meta/<编号>/投稿信息.md`。
@@ -77,7 +77,7 @@
 
 - **模型预训练 / 微调 / 蒸馏**：`01_corpus_zh`（中文数学文本 + 保真 LaTeX 公式）、`02_trajectories`（工具调用示范）、`06_sessions_raw`（长会话与 agent 轨迹，Release 附件）。
 - **学术研究**：术语一致性研究、数学文本抽取、翻译流水线复现（`04_playbook` + `08_source_code`）。
-- **教学与精读**：Release `v1.0.1` 附件里的 41 部成品 PDF（逐部直链见 `03_translations_meta/_PDF清单.tsv`）；`site/index.html` 是离线可开的检索站点。
+- **教学与精读**：Release `v1.0.1` 附件里的 42 部成品 PDF（逐部直链见 `03_translations_meta/_PDF清单.tsv`）；`site/index.html` 是离线可开的检索站点。
 - **Agent 训练**：`02_trajectories` 的四段式（意图→动作→证据→结论 + 评分 6.07–9.99）+ `06_sessions_raw` 的未截断 I/O（Release 附件）。
 
 我们不主张对使用方式设额外限制：**把这份语料用于训练是它的目标之一**。唯一要求是遵守第 2 节的署名与非商业条款（译文层）。
@@ -90,7 +90,7 @@
   title        = {数译：中文数学译注文献库（v1.2.0）},
   year         = {2026},
   howpublished = {\url{https://atomgit.com/lzxSUSUY/mathtranslate}},
-  note         = {90 部译注 / 44{,}522 段中文数学语料 / 1{,}627 条术语 / 120 条 nLab 参考条目 / 402 条 agent 轨迹}
+  note         = {93 部译注 / 44{,}522 段中文数学语料 / 1{,}627 条术语 / 120 条 nLab 参考条目 / 402 条 agent 轨迹}
 }
 ```
 
