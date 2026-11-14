@@ -159,6 +159,7 @@ Bourbaki 报告、Astérisque 专辑、arXiv 预印本、论文集（proceedings
 - **原文 PDF 不发布**：本库只发布译文、工程源码、元数据与自建语料；原文（无论 arXiv 版还是出版书）请按书目信息自行获取。
 - **直链怎么用**：成品直链形如 `https://atomgit.com/lzxSUSUY/mathtranslate/releases/download/v1.0.1/<URL 编码的文件名>`，浏览器打开即下载；原文直链仍指向 `originals` 分支的 blob（`https://raw.gitcode.com/...`）。
 - **为什么只有 41 部**：其余 45 部以正式出版的书籍（日文/英文专著、Springer 丛书等）为底本，成品 PDF 不发布；它们的元数据、工程文档与源码照常公开。
+- **唯一例外：SY07-08**：扶磊《代数几何》（第二版）虽属书籍底本，其成品 PDF（209 页 / 1.18 MB）经仓主指定随仓发布，位置 `08_source_code/SY07-08_代数几何（第二版）/成品/SY07-08_代数几何_中文译注本.pdf`；如需恢复「书籍类成品一律不入仓」的惯例，删除该文件并同步 `投稿信息.md` 即可。
 - **为什么移到 Release**：成品 PDF 是二进制大文件，留在 Git 历史里会让每次 clone 都下载全部版本；改由 Release 附件分发后，仓库检出体积从 524 MB 降到约 280 MB。
 
 ## 校验（`MANIFEST.json`）
