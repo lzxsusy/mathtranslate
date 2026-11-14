@@ -4,9 +4,9 @@
 
 | 目录 | 内容 | 说明 |
 |---|---|---|
-| `01_corpus_zh/` | 中文段落语料 `zh_paragraphs.jsonl`（44,522 段）、术语表 `termbase.jsonl`（1,627 条） | 从 90 部译本的 TeX 源码抽出的正文段落（已去 LaTeX 命令）与人工冻结术语 |
+| `01_corpus_zh/` | 中文段落语料 `zh_paragraphs.jsonl`（44,522 段）、术语表 `termbase.jsonl`（1,627 条） | 从 92 部译本的 TeX 源码抽出的正文段落（已去 LaTeX 命令）与人工冻结术语 |
 | `02_trajectories/` | 精选 agent 任务轨迹 402 条 | 任务意图 → 关键动作（工具调用序列）→ 验证证据 → 结论，四段式 |
-| `03_translations_meta/` | 90 部译本的元数据、投稿信息与术语索引；预印本类成品 PDF 清单见 `_PDF清单.tsv` | 源码与工程文档统一放在 `08_source_code/`，本目录不重复保存；成品 PDF 已移到 Release 附件 |
+| `03_translations_meta/` | 92 部译本的元数据、投稿信息与术语索引；预印本类成品 PDF 清单见 `_PDF清单.tsv` | 源码与工程文档统一放在 `08_source_code/`，本目录不重复保存；成品 PDF 已移到 Release 附件 |
 | `04_playbook/` | 翻译总纲、施工纪律、文献引进标准、待完成清单、环境改造 | 这套工程「怎么干」的规范 |
 | `05_seminar_witten/` | 威腾（Witten）文章研讨班产出与文献索引 | 研讨班任务书、errata、notes、one-pager、253 篇索引 |
 | `06_sessions_raw/` | 全量会话语料（脱敏、zst 压缩） | 118,278 条消息 / 2.61 亿字符 ≈ 1.7 亿 token；工具轨迹 17 万条。145 MB 分片已移到 Release `v1.0.1` 附件，仓库只留抽取脚本与分片说明 |
