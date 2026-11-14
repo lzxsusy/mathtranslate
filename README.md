@@ -157,6 +157,7 @@ Bourbaki 报告、Astérisque 专辑、arXiv 预印本、论文集（proceedings
 
 - **成品 PDF（中文译注本）**：41 部以 arXiv 预印本为底本的译本，成品 PDF 已移到 Release [`v1.0.1`](https://atomgit.com/lzxSUSUY/mathtranslate/releases/tag/v1.0.1) 的附件，点开即读；逐部清单（页数、字节、arXiv 号、文件名、下载直链）见 [`03_translations_meta/_PDF清单.tsv`](03_translations_meta/_PDF清单.tsv)。
 - **原文 PDF 不发布**：本库只发布译文、工程源码、元数据与自建语料；原文（无论 arXiv 版还是出版书）请按书目信息自行获取。
+- **原文 PDF 的例外：SY02-09**：Yao YUAN（袁瑶）2020 年春季课程《Langlands Program: an introduction》的讲义合并本（23 讲 / 198 页 / 4.71 MB）是**作者公开授课、未正式出版**的讲义，经仓主 2026-11-14 指定随仓发布，位置 `08_source_code/SY02-09_Langlands纲领导论/原本/`（附 SHA256 与页映射说明）；这是本库唯一随仓保存的原文，供逐页对照校订与读者核对译文。
 - **直链怎么用**：成品直链形如 `https://atomgit.com/lzxSUSUY/mathtranslate/releases/download/v1.0.1/<URL 编码的文件名>`，浏览器打开即下载；原文直链仍指向 `originals` 分支的 blob（`https://raw.gitcode.com/...`）。
 - **为什么只有 41 部**：其余 45 部以正式出版的书籍（日文/英文专著、Springer 丛书等）为底本，成品 PDF 不发布；它们的元数据、工程文档与源码照常公开。
 - **唯一例外：SY07-08**：扶磊《代数几何》（第二版）虽属书籍底本，其成品 PDF（209 页 / 1.18 MB）经仓主指定随仓发布，位置 `08_source_code/SY07-08_代数几何（第二版）/成品/SY07-08_代数几何_中文译注本.pdf`；如需恢复「书籍类成品一律不入仓」的惯例，删除该文件并同步 `投稿信息.md` 即可。
@@ -190,7 +191,7 @@ Bourbaki 报告、Astérisque 专辑、arXiv 预印本、论文集（proceedings
   欢迎用于学术研究、教学、**模型预训练 / 微调 / 蒸馏**，请注明来源「数译（chaoduicheng）」。
 - **译文与工程文档（`03_translations_meta/`、`08_source_code/`、`04_playbook/`）**：CC BY-NC-SA 4.0（署名—非商业性使用—相同方式共享）。
 - **成品 PDF**：与译文同许可（CC BY-NC-SA 4.0），可直接下载阅读。
-- **原文 PDF**：仅发布 41 部 arXiv 预印本的 arXiv 版本，版权归原作者，按 arXiv 许可用于对照研究；正式出版的书籍类原本不发布。原作者要求撤下时随时移除。
+- **原文 PDF**：仅发布 41 部 arXiv 预印本的 arXiv 版本，版权归原作者，按 arXiv 许可用于对照研究；正式出版的书籍类原本不发布。原作者要求撤下时随时移除。**例外**：`08_source_code/SY02-09_Langlands纲领导论/原本/` 下随仓保存一份作者公开授课的讲义（未正式出版），版权归原作者 Yao YUAN，用于逐页对照校订与读者核对译文；原作者要求即撤。
 - **原始文献版权**归原作者与出版方所有；本仓库发布的是译文、工程源码、元数据与自建语料。
 
 ## 相关
