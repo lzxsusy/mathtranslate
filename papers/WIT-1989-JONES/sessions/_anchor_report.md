@@ -9,7 +9,7 @@
 
 ```
 python deliverables/engineering/scripts/check_anchors.py <项目根> \
-  --tex "C:\Users\admin\Documents\deepseek-harness\default-workspace\witten1989\deliver\witten.tex"
+  --tex "<本地路径>"
 python deliverables/engineering/scripts/check_claims.py <项目根>
 ```
 

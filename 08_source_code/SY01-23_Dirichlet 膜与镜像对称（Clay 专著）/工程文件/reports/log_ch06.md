@@ -1,6 +1,6 @@
 # ch06 校订日志（rv-ch06）
 
-负责文件：`C:\Users\admin\Downloads\DBMS_work\Dirichlet-Mirror-Symmetry-zh\chapters\ch06.tex`
+负责文件：`<本地路径>`
 负责页码：PDF 431–518（第6章），对照块 `review\chunks\ch06\` 共 9 块。
 
 ## 已核对范围

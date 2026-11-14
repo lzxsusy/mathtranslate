@@ -2,11 +2,11 @@
 import io, os, re, subprocess
 import pymupdf
 
-ROOT = r'C:\Users\admin\Desktop\数译发布\shuyi\translations\SY05-10\工程文件\v2\olsen_szabo'
+ROOT = r'<本地路径>'
 SRC = os.path.join(ROOT, 'src')
-MD = r'C:\Users\admin\Desktop\数译投稿_2026-11-11\投稿包\SY05-10\工程文件\build\olsen_szabo.md'
-PANDOC = r'C:\Users\admin\AppData\Local\Pandoc\pandoc.exe'
-PDF = r'C:\Users\admin\Downloads\hep-th_9907140.pdf'
+MD = r'<本地路径>'
+PANDOC = r'<本地路径>'
+PDF = r'<本地路径>'
 os.makedirs(SRC, exist_ok=True)
 
 s = io.open(MD, encoding='utf-8').read()

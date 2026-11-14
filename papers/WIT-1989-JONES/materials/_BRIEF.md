@@ -4,17 +4,17 @@
 
 ## 0. 项目与对象
 
-- 项目：威腾文章解经计划（Witten Exegesis Project），仓库 `C:\Users\admin\Desktop\witten-exegesis`。
+- 项目：威腾文章解经计划（Witten Exegesis Project），仓库 `<本地路径>`。
 - 本轮：新一轮 AI 研讨班，对象是
   **Edward Witten, “Quantum Field Theory and the Jones Polynomial”, Commun. Math. Phys. 121 (1989) 351–399**。
   收稿 1988-09-12，修改稿 1988-09-27，49 个印刷页。
-- 本论文的工作目录：`C:\Users\admin\Desktop\witten-exegesis\papers\WIT-1989-JONES\`。
+- 本论文的工作目录：`<本地路径>`。
 - 中文全译本（已逐节校勘、带译者批注）：
-  `C:\Users\admin\Documents\deepseek-harness\default-workspace\witten1989\`
+  `<本地路径>`
   - 主文件 `main.tex`，分节 `sections/s00-front.tex` … `s10-references.tex`，成品 `deliver/witten.pdf`。
   - 每个 section 文件头部有：覆盖的**印刷页码**、公式编号范围、图号；批注用 `% [Tutor Note: ...]` 标记，含易错点、原文笔误、归一化约定。
   - 页边码约定：译文正文中“原文 p. n”= 印刷页码；「PDF 页 = n − 350」只适用于原文页图/OCR（49 张），译本 PDF 为 40 页重排，须用页边注定位。
-- 已发布译本：`C:\Users\admin\Desktop\数译发布\gitee_shuyi\08_source_code\SY05-18_量子场论与 Jones 多项式\源码\witten.tex`（247KB）与 `figures/fig01–18.png`；打包件 `C:\Users\admin\Downloads\_mt\pack2\SY05-18_量子场论与 Jones 多项式.zip`。
+- 已发布译本：`<本地路径> Jones 多项式\源码\witten.tex`（247KB）与 `figures/fig01–18.png`；打包件 `<本地路径> Jones 多项式.zip`。
 
 ## 1. 论文骨架（印刷页码，供锚点用）
 
@@ -45,7 +45,7 @@
 ## 2.5 阅读策略（2026-11-13 二次修订：原文是核心，教材补前置）
 
 - **Witten 本文必须逐节读**（中译 40 页重排 + 英文页图）：这是研讨班的对象，不许拿二手综述代替。
-- **前置知识用现代教材**：T1 几何量子化 → 李思《量子力学与几何》第 5 章（中译，`C:\Users\admin\Desktop\数译发布\shuyi\translations\SY07-03\成品\量子力学与几何_李思_中文译注本.pdf`，印刷页 = PDF − 12；5.4.3 预量子化、5.4.4 极化，PDF 313–321 / 印刷 301–309）；T2–T4 → 河野俊丈《场论与拓扑学》中译（126 页，见 `本地教材核查_河野拓扑场论.md`）；细节手册 → 上野健爾 CFT 中译 `C:\Users\admin\Downloads\cft_gauge\`。
+- **前置知识用现代教材**：T1 几何量子化 → 李思《量子力学与几何》第 5 章（中译，`<本地路径>`，印刷页 = PDF − 12；5.4.3 预量子化、5.4.4 极化，PDF 313–321 / 印刷 301–309）；T2–T4 → 河野俊丈《场论与拓扑学》中译（126 页，见 `本地教材核查_河野拓扑场论.md`）；细节手册 → 上野健爾 CFT 中译 `<本地路径>`。
 - **不必找 1960–80 年代其他原始文献**（Atiyah/Verlinde/ADPW 等），找不到就用教材代偿；原文只用于核对断言、核对符号、追问“当时证到哪一步”。
 - 覆盖矩阵与分工见 `本地教材核查_河野拓扑场论.md`、`教材核查_李思几何量子化.md`。T5（全息对偶辨析）与 T6（Khovanov）教材不覆盖，仍须新写。
 

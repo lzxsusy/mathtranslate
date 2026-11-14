@@ -67,7 +67,7 @@ chunk 再改动后重跑即可刷新。脚本只读 `src/chunks/ch*.tex`，`appe
 
 ```
 ENV  = \\begin\{(def|thm|prop|lem|cor|ex|rem|not|...)(\*|p)?\}\s*(?:\[((?:[^\[\]]|\[[^\]]*\])*?)\])?\s*\{(\d+\.\d+)\}
-HAND = ^\s*(?:\\par\\medskip)?\s*(?:\\noindent)?\s*\\textbf\{标签? N.N 尾部?\}
+HAND = ^\s*(?:<本地路径>)?\s*(?:\\noindent)?\s*\\textbf\{标签? N.N 尾部?\}
 PRF  = \\begin\{proof\}\[(\d+\.\d+)（([^）]*)）\]
 ```
 

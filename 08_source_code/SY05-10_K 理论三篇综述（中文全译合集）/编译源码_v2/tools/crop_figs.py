@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pymupdf, re, os
-src = pymupdf.open(r'C:\Users\admin\Downloads\hep-th_0304018.pdf')
-outdir = r'C:\Users\admin\Desktop\数译发布\shuyi\translations\SY05-10\工程文件\v2\moore\src'
+src = pymupdf.open(r'<本地路径>')
+outdir = r'<本地路径>'
 os.makedirs(outdir, exist_ok=True)
 caps = []
 for pno, page in enumerate(src):

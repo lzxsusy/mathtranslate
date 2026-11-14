@@ -5,7 +5,7 @@ Writes review/_split_map.txt documenting the mapping.
 """
 import os, io
 
-ROOT = r"C:\Users\admin\Downloads\DBMS_work\Dirichlet-Mirror-Symmetry-zh"
+ROOT = r"<本地路径>"
 CH = os.path.join(ROOT, "chapters")
 os.makedirs(os.path.join(ROOT, "review"), exist_ok=True)
 os.makedirs(os.path.join(ROOT, "review", "orig_backup"), exist_ok=True)

@@ -53,12 +53,12 @@ backmatter: 参考文献 bib（p.299–310，168 条）
 本机（MiKTeX + lualatex）不能写中文路径，故采用镜像编译：
 
 ```powershell
-cd "C:\Users\admin\Desktop\归档\08_教材与参考书\JPB07_Kollár・森重文_双有理几何_中文译注"
+cd "<本地路径>"
 powershell -ExecutionPolicy Bypass -File build.ps1              # 整书 → src/main.pdf
 powershell -ExecutionPolicy Bypass -File build.ps1 -Chunk ch02a # 单块草稿 → tmp_ch02a.pdf
 ```
 
-流程：把 `src/` 镜像到 `C:\Users\admin\Documents\deepseek-harness\default-workspace\birbuild` → lualatex ×3 → 回拷 `src/main.pdf` 与日志（另存 `src/compile.log`）。日志统计 `file:line / fatal / undefined / missingchar / overfull`，另单列 `[benign-glue]`（longtable 分页时内核的无害警告，已实测无排版影响）。最终编译：`file:line=0 fatal=0 undefined=0 missingchar=0 overfull=0`，`[benign-glue=42]`，**BUILD OK**，成书 **325 页**、2,595,279 字节。
+流程：把 `src/` 镜像到 `<本地路径>` → lualatex ×3 → 回拷 `src/main.pdf` 与日志（另存 `src/compile.log`）。日志统计 `file:line / fatal / undefined / missingchar / overfull`，另单列 `[benign-glue]`（longtable 分页时内核的无害警告，已实测无排版影响）。最终编译：`file:line=0 fatal=0 undefined=0 missingchar=0 overfull=0`，`[benign-glue=42]`，**BUILD OK**，成书 **325 页**、2,595,279 字节。
 
 自检工具（`work/tools/`）：`check.py`（页标记单调性、`\tag` 重号、假名残留、禁用命令、环境配对、括号与 `$` 平衡、各类计数）、`fix_chunks.py`（机械修补）、`finalize_text.py`（编码统一 + 术语 sweep）、`term_scan.py`（术语终检门禁）、`stats.py`（统计与交叉校验）、`gen_glossary.py` / `gen_notes.py` / `gen_index.py`（重生成附录 A/B/D）、`md2tex.py`（札记 → 附录 C）、`export_deliverables2.py`（导出交付件）、`merge_glossary.py`（提案并表）、`qa_final.py`（终态复扫）、`crop.py`（页图裁切）。
 

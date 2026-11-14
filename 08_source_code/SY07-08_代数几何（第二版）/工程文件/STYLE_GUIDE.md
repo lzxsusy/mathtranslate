@@ -156,8 +156,8 @@ Y' \arrow[r] & Y
 ## 7. 自检编译
 
 ```powershell
-$env:PATH="C:\Users\admin\AppData\Local\Programs\MiKTeX\miktex\bin\x64\;$env:PATH"
-cd "C:\Users\admin\Desktop\数译发布\shuyi\translations\SY07-08\源码"
+$env:PATH="<本地路径>;$env:PATH"
+cd "<本地路径>"
 xelatex -interaction=nonstopmode _check_c01b.tex
 ```
 判据：0 个 `!` 错误；允许 Overfull/Underfull 警告但需记录；若报 `Undefined control sequence` 说明用了未定义宏（报告给 Lead，别自己定义）。

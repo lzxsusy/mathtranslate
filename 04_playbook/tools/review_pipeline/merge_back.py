@@ -5,9 +5,9 @@ done.  The split files are archived under review/split_final/.
 """
 import os, shutil
 
-PROJ = r"C:\Users\admin\Downloads\DBMS_work\Dirichlet-Mirror-Symmetry-zh"
+PROJ = r"<本地路径>"
 CH = os.path.join(PROJ, "chapters")
-ARC = r"C:\Users\admin\Downloads\DBMS_work\review\split_final"
+ARC = r"<本地路径>"
 os.makedirs(ARC, exist_ok=True)
 
 pairs = [("ch03a.tex", "ch03b.tex", "ch03.tex"),

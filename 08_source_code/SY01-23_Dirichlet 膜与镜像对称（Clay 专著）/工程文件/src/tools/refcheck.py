@@ -8,7 +8,7 @@ silently.  main.aux records what was actually printed, so compare.
 """
 import re, os, collections, io
 
-AUX = r"C:\Users\admin\Downloads\DBMS_work\Dirichlet-Mirror-Symmetry-zh\build\main.aux"
+AUX = r"<本地路径>"
 text = open(AUX, encoding="utf-8", errors="replace").read()
 
 # \newlabel{key}{{printed}{page}...}
@@ -50,7 +50,7 @@ out = io.StringIO()
 out.write("key | expected | printed\n")
 for key, expected, got in bad:
     out.write("%s | %s | %s\n" % (key, expected, got))
-open(r"C:\Users\admin\Downloads\DBMS_work\review\refcheck_report.txt", "w", encoding="utf-8").write(out.getvalue())
+open(r"<本地路径>", "w", encoding="utf-8").write(out.getvalue())
 print(out.getvalue()[:3000])
 if skipped[:10]:
     print("skipped sample:", skipped[:10])

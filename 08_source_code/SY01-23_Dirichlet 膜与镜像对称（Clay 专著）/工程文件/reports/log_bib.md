@@ -1,7 +1,7 @@
 # references.bib 校对日志（rv-ch03b / task-11）
 
-校对对象：`C:\Users\admin\Downloads\DBMS_work\Dirichlet-Mirror-Symmetry-zh\references.bib`（476 条，`@misc{refNNN,` + `sortkey` + `note`）
-对照源：`C:\Users\admin\Downloads\DBMS_work\review\bib_orig.txt`（Clay 原书 PDF 665–685 抽取，476 条，`=== [N] ===`）
+校对对象：`<本地路径>`（476 条，`@misc{refNNN,` + `sortkey` + `note`）
+对照源：`<本地路径>`（Clay 原书 PDF 665–685 抽取，476 条，`=== [N] ===`）
 日期：2025-11-14
 
 ## 一、方法

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import os, re, glob
-root = r"C:\Users\admin\Downloads\DBMS_work\review"
+root = r"<本地路径>"
 tot = {}
 for d in sorted(os.listdir(os.path.join(root, "chunks"))):
     p = os.path.join(root, "chunks", d)

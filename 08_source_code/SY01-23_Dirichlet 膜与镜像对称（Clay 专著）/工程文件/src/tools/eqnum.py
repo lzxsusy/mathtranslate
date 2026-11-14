@@ -7,7 +7,7 @@ equation number used in our labels eq:N.M.
 """
 import re, os, collections
 
-ROOT = r"C:\Users\admin\Downloads\DBMS_work"
+ROOT = r"<本地路径>"
 pages = open(os.path.join(ROOT, "original", "full.txt"), encoding="utf-8").read().split("\f")
 
 CH_PAGES = {"1": (11, 36), "2": (37, 118), "3": (119, 225), "4": (227, 302),

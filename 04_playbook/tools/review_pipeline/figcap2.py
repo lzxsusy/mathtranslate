@@ -7,7 +7,7 @@ diagram crops named ChNN_Diagram_PDFpXXX_II_BookpYYY.pdf.
 """
 import os, re, io
 
-ROOT = r"C:\Users\admin\Downloads\DBMS_work"
+ROOT = r"<本地路径>"
 PROJ = os.path.join(ROOT, "Dirichlet-Mirror-Symmetry-zh")
 FIGS = os.path.join(PROJ, "figures")
 FULL = os.path.join(ROOT, "original", "full.txt")

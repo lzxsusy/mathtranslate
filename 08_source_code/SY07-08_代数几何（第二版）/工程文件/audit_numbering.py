@@ -3,7 +3,7 @@
 import re, sys, collections
 import pymupdf
 
-pdf = r"C:\Users\admin\Desktop\数译发布\shuyi\translations\SY07-08\源码\main.pdf"
+pdf = r"<本地路径>"
 doc = pymupdf.open(pdf)
 kind = r"(定义|命题|定理|引理|推论|例|注|构造|习题)"
 pat = re.compile(rf"^{kind}\s*(\d+)\.(\d+)\.(\d+)\s*[\.．]?\s*(.*)$")

@@ -3,7 +3,7 @@
 """Split each *_align.txt by source-page blocks into readable chunks."""
 import re, pathlib
 
-REV = pathlib.Path(r"C:\Users\admin\Downloads\DBMS_work\review")
+REV = pathlib.Path(r"<本地路径>")
 OUT = REV / "chunks"
 OUT.mkdir(exist_ok=True)
 

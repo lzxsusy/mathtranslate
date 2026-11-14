@@ -8,8 +8,8 @@
 ## 快速开始（5 分钟）
 
 ```powershell
-$py  = "C:\Users\admin\.dsh\dsh-runtimes\dsh-primary-runtime\dependencies\python\python.exe"
-$ann = "C:\Users\admin\Desktop\数译发布\gitee_shuyi\04_playbook\annotation"
+$py  = "<本地路径>"
+$ann = "<本地路径>"
 
 # 1) 跑通示例（应为 units=6 inferences=4 chains=1 concepts=3，RESULT PASS）
 & $py "$ann\tools\validate_annotations.py"

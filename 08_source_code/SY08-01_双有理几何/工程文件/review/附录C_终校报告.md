@@ -118,8 +118,8 @@
 
 ```powershell
 $env:PYTHONIOENCODING='utf-8'
-python C:\Users\admin\Desktop\t03_tmp\mdcheck.py        # md 结构 + 206 处引用全查
-python C:\Users\admin\Desktop\t03_tmp\md_vs_digest.py   # 标题/列表/公式/表格对照
-python C:\Users\admin\Desktop\t03_tmp\md_vs_digest2.py  # CJK 多重集逐节查丢失
-python C:\Users\admin\Desktop\t03_tmp\showstmt2.py "1.10,2.71,3.19,..."  # 打印正文陈述首句
+python <本地路径>        # md 结构 + 206 处引用全查
+python <本地路径>   # 标题/列表/公式/表格对照
+python <本地路径>  # CJK 多重集逐节查丢失
+python <本地路径> "1.10,2.71,3.19,..."  # 打印正文陈述首句
 ```

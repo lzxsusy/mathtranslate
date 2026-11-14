@@ -5,8 +5,8 @@
 把 Lei Fu, *Algebraic Geometry (Second Edition)*(现代数学基础 81，高等教育出版社) 全文译为中文，
 产出可编译的 LaTeX 中文译注本（xelatex，ctexart），逐符号与底本扫描图像核对，术语统一，疑难处加带来源的译注。
 
-- 底本：`C:\Users\admin\Desktop\Algebraic Geometry Second Edition 代数几何(英文版，第二版) (扶磊  Lei Fu) (z-library.sk  1lib.sk  z-lib.sk).pdf`（265 页扫描图像，无文本层）
-- 工程根目录：`C:\Users\admin\Desktop\数译发布\shuyi\translations\SY07-08`
+- 底本：`<本地路径> Geometry Second Edition 代数几何(英文版，第二版) (扶磊  Lei Fu) (z-library.sk  1lib.sk  z-lib.sk).pdf`（265 页扫描图像，无文本层）
+- 工程根目录：`<本地路径>`
 - 页面图像：`工程文件/pages/pNNN.png`（200 dpi，**公式只信这个**）
 - OCR 文本：`工程文件/work/en/pNNN.txt`（正文可信、公式不可信）
 - **页映射：原书页 = PDF 页 − 7**（原书 p.1 = p008.png；前置罗马页：iii=p004，v=p005，vi=p006，vii=p007）

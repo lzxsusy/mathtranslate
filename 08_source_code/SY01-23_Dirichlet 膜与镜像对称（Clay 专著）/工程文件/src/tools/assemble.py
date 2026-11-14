@@ -2,11 +2,11 @@
 """Assemble the delivery folder on the Desktop."""
 import os, shutil, sys
 
-PROJ = r"C:\Users\admin\Downloads\DBMS_work\Dirichlet-Mirror-Symmetry-zh"
-REVIEW = r"C:\Users\admin\Downloads\DBMS_work\review"
-FINAL = r"C:\Users\admin\Downloads\DBMS_work\final"
-ORIG = r"C:\Users\admin\Downloads\DBMS_work\original\DirichletBranes_MirrorSymmetry_Clay_cmim04.pdf"
-OUT = r"C:\Users\admin\Desktop\Dirichlet膜与镜像对称_校订版"
+PROJ = r"<本地路径>"
+REVIEW = r"<本地路径>"
+FINAL = r"<本地路径>"
+ORIG = r"<本地路径>"
+OUT = r"<本地路径>"
 
 SRC_EXCLUDE = {"build", "review", ".git"}
 SRC_EXCLUDE_FILES = {"build_split_check.log", "main.bbl", "main.aux", "main.log", "main.pdf"}

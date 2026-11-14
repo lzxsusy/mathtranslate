@@ -1,0 +1,198 @@
+\chapter{Galois表示之一：椭圆曲线的\texorpdfstring{$\ell$}{ℓ}进表示}\label{L7}
+\lecturedate{2020/03/09}
+\sourcepage{53}
+本讲讨论$\Gal(\overline{\Q}/\Q)$的Galois表示。域$F$上的椭圆曲线$E$的Tate模，给出了$\Gal(\overline F/F)$的一个$\ell$进表示，其中$\ell$为与$\operatorname{char}(F)$互素的素数。借助Hasse--Weil $L$函数，可以把这些$\ell$进表示与模形式联系起来。不过，要充分揭示模形式在这里的作用，需要把某个Hecke代数上的秩2自由模实现为椭圆曲线的模空间——模曲线——上的某些上同调群，由此得到Galois表示。
+\section{椭圆曲线}\label{L7S1}
+先简要介绍椭圆曲线。
+
+\textbf{域上的椭圆曲线。}在特征不为2、3的域$F$上，可以先用仿射平面中的下列非奇异曲线来介绍椭圆曲线\znote{「椭圆曲线」指亏格为 $1$ 的射影代数曲线，并指定一个有理点 $O$ 作为基点；下面的 Weierstrass 形式是它在特征不为 $2$、$3$ 时的仿射写法。特征 $2$、$3$ 时不能化成书中这种短的 Weierstrass 形式，需要一般的 $y^2+a_1xy+a_3y=x^3+a_2x^2+a_4x+a_6$；无论采用哪种写法，「椭圆曲线」都要求判别式 $\Delta\ne0$，即曲线非奇异。[来源：J. H. Silverman, \textit{The arithmetic of elliptic curves}, 2nd ed., GTM 106, 第 III 章（本讲参考文献 [S]）；并见 nLab "elliptic curve"，\url{https://ncatlab.org/nlab/show/elliptic+curve}（Last revised 2025-05-11；2026-11-14 访问）。]}$E$：
+\begin{align*}
+y^2&=x^3+ax^2+bx+c\\
+&=\left(x+\frac a3\right)^3+\left(b-\frac{a^2}3\right)\left(x+\frac a3\right)+\left(c-\frac{ab}3+\frac{2a^3}{27}\right),\qquad a,b,c\in F.
+\end{align*}
+作保持$F$有理点的变量代换，也可以采用Weierstrass形式
+\[y^2=x^3+ax+b,\qquad a,b\in F.\]
+令$f(x,y)=x^3+ax^2+bx+c-y^2$。曲线$E$非奇异，当且仅当下列方程组在$\overline F$中无解：
+\[f(x,y)=0,\qquad \frac{\partial f}{\partial x}(x,y)=0,\qquad \frac{\partial f}{\partial y}(x,y)=0.\]
+仿射曲线$E$不是完备的；添加无穷远点$\infty$可得到其射影完备化。
+\sourcepage{54}
+完备化$\overline E$上的群结构定义如下：
+\begin{itemize}
+\item 对于$P\ne Q\in E$，过$P,Q$的直线$\ell(P,Q)$与曲线的第三个交点记为$R'$。将$R'$关于$x$轴对称，得到点$R$，定义$P+Q=R$。
+\item 当$P=Q$时，采用曲线在$P$处的切线，并按上述第三交点及对称规则定义$P+P$。
+% [Tutor Note: 原书 p54 作 "If P = Q, then we define P + P = ∞"；但 $P+P=\infty$ 只在 $y(P)=0$ 时成立，译文按 $P$ 处切线的第三交点处理。]
+\item 对每个$P\in\overline E$，都有$\infty+P=P$。
+\end{itemize}
+上述运算确实给出良定义的群法则，这一点并不显然，因为结合律并不能从定义中直接看出。
+\originalnumber{1}
+\begin{definition}{$j$不变量}\label{L7S1O1}\idx{j不变量}
+以Weierstrass形式$y^2=x^3+ax+b$给出的椭圆曲线$E$的\textbf{$j$不变量}\znote{$j$ 的模性可以这样看：$\C/\Lambda$ 的 $j$ 只取决于格 $\Lambda$ 的相似类，所以它是上半平面在上半平面模群作用下的函数。两个特殊值值得记住：$j=0$ 时 $g_2=0$，对应格 $\Z+\Z e^{2\pi i/3}$，自同构群为 $\Z/6$；$j=1728$ 时 $g_3=0$，对应 Gauss 格 $\Z+\Z i$，自同构群为 $\Z/4$；其余复椭圆曲线的自同构群都只有 $\{\pm1\}$。$j\to\infty$（即 $\Delta\to0$）对应结点曲线，是紧化模空间时补上的尖点。[来源：nLab "j-invariant"，\url{https://ncatlab.org/nlab/show/j-invariant}（Last revised 2015-12-09；2026-11-14 访问）。]}为
+\[j(E)=1728\frac{4a^3}{4a^3+27b^2}.\]
+\end{definition}
+\originalnumber{2}
+\begin{theorem}\label{L7S1O2}
+设$E,E'$是$F$上的椭圆曲线，则$E$与$E'$在$\overline F$上同构，当且仅当$j(E)=j(E')$。
+\end{theorem}
+\originalnumber{3}
+\begin{note}[L7S1O3]
+$j(E)=j(E')$未必意味着$E$与$E'$在$F$上同构。例如，
+\[E/\Q:\ y^2=x^3+x;\qquad E'/\Q:\ y'^2=x'^3+49x'.\]
+这里$j(E)=j(E')=1728$，然而$E(\Q)$是有限的，$E'(\Q)$则是无限的。它们实际上在$\Q(\sqrt7)$上同构，换元为
+\[x=\frac{x'}7,\qquad y=\frac{y'}{7\sqrt7}.\]
+% [Tutor Note: 原书 p54 的换元印作 $x=x'/\sqrt7$、$y=y'/(7\sqrt7)$；代入 $y'^2=x'^3+49x'$ 只能得到 $y^2=\frac{\sqrt7}{49}(x^3+7x)$，故 $x$ 应为 $x'/7$，译文按此处理。]
+\end{note}
+\textbf{复椭圆曲线。}定义在$\C$上的椭圆曲线可以看成一维复环面。
+
+设$\Lambda\subset\C$为格，$\Lambda\cong\Z^2$。商$\C/\Lambda$自然具有紧复流形和加法群的结构。
+\originalnumber{4}
+\begin{theorem}\label{L7S1O4}
+给定格$\Z^2\cong\Lambda\subset\C$，存在与之对应的椭圆曲线$E_\Lambda$，使$\C/\Lambda\cong E_\Lambda(\C)$为复Lie群同构。反过来，给定$F\subset\C$上的椭圆曲线$E$，存在格$\Lambda_E$，使$E(\C)\cong\C/\Lambda_E$为群同构。
+\end{theorem}
+\sourcepage{55}
+给定格$\Z^2\cong\Lambda\subset\C$，与$\Lambda$对应的椭圆函数，亦即Weierstrass $\wp$函数，是
+\begin{equation}\tag{1.1}\label{L7eq11}
+\wp_\Lambda(z)=\frac1{z^2}+\sum_{\omega\in\Lambda\setminus\{0\}}\left(\frac1{(z-\omega)^2}-\frac1{\omega^2}\right).
+\end{equation}
+用下列方程定义曲线$E_\Lambda$：
+\[y^2=4x^3-g_2(\Lambda)x-g_3(\Lambda),\]
+其中
+\[g_2(\Lambda)=60\sum_{\omega\in\Lambda\setminus\{0\}}\omega^{-4},\qquad g_3(\Lambda)=140\sum_{\omega\in\Lambda\setminus\{0\}}\omega^{-6}.\]
+同构$\C/\Lambda\cong E_\Lambda(\C)$由下列映射给出：
+\[z\longmapsto(\wp_\Lambda(z),\wp'_\Lambda(z))\quad(z\notin\Lambda),\qquad z\longmapsto\infty\quad(z\in\Lambda).\]
+从椭圆曲线$E$可以得到格$\Lambda=\omega_1\Z\oplus\omega_2\Z$，其中
+\[\omega_j=\int_{\alpha_j}\frac{dx}{y},\quad j=1,2,\]
+而$\alpha_1,\alpha_2$生成$H_1(E(\C),\Z)$。
+
+若存在$\tau\in\C^\times$使$\Lambda=\tau\Lambda'$，就称$\Lambda$与$\Lambda'$\textbf{位似}。
+\originalnumber{5}
+\begin{theorem}\label{L7S1O5}
+$E_\Lambda(\C)$与$E_{\Lambda'}(\C)$作为复椭圆曲线同构，当且仅当$\Lambda$与$\Lambda'$位似。
+\end{theorem}
+\originalnumber{6}
+\begin{note}[L7S1O6]
+任意域上的椭圆曲线，也可以定义为带有一个指定有理点、光滑、射影且几何不可约的亏格 $1$ 曲线，或等价地定义为一维阿贝尔簇。
+\end{note}
+\section{Tate模与Hasse--Weil \texorpdfstring{$L$}{L}函数}\label{L7S2}\idx{Tate模}\idx{Hasse--Weil L函数}
+可以为基概形$S$上的阿贝尔簇$A_S$定义Tate模。它在构造Galois表示时起着关键作用。先讨论域$K$上阿贝尔簇的Tate模\znote{Tate 模可以看成「$\ell$ 进奇异同调」：它把挠点 $A[\ell^n]$ 按 $\ell$ 的幂排成逆向系再取极限，于是群 $A(K^{\mathrm{sep}})$ 的挠部分被线性化成 $\Z_\ell$ 模，Galois 作用也随之变成连续的矩阵作用。Tate 猜想（Faltings 1983 对 Abel 簇证明）断言：两个 Abel 簇之间的同源，恰由它们 Tate 模上 Galois 表示之间的同构给出，可见这个构造不会丢掉几何信息。[来源：J. H. Silverman, \textit{The arithmetic of elliptic curves}, 2nd ed., GTM 106, 第 III 章与第 VII 章（本讲参考文献 [S]）。]}；其中一维阿贝尔簇就是椭圆曲线。
+
+两个阿贝尔簇之间的\textbf{同源}\znote{同源允许丢掉有限核，因此它比同构粗一层。复情形最直观：两个复环面之间的同源，就是满足 $\alpha\Lambda_1\subset\Lambda_2$ 的复数 $\alpha$，于是同源类只由格张量 $\Q$ 之后的结果决定。反过来也有深刻结论：Tate 模上 $\ell$ 进表示的同构必来自同源，这正是 Faltings 证明 Tate 猜想的推论。[来源：J. H. Silverman, \textit{The arithmetic of elliptic curves}, Springer, 2009（本讲参考文献）。]}$A\to A'$，是核有限的满同态。因此，同源只能发生在维数相同的阿贝尔簇之间。同源$\varphi:A\to A'$的次数记为$\deg(\varphi)$，是它作为正则映射的次数，
+\sourcepage{56}
+即$[k(a):\varphi^*k(a')]$，其中$k(a)$、$k(a')$分别为$A$、$A'$的泛点$a$、$a'$处的剩余域。若$\varphi$可分，则由于群结构的齐性，它是平展的。若$K$进一步为代数闭域，则$\varphi$的每个纤维恰有$\deg(\varphi)$个点。对每个正整数$n$，都有同源
+\[n_A:A\longrightarrow A,\qquad x\longmapsto nx.\]
+\idx{同源}
+\originalnumber{1}
+\begin{theorem}\label{L7S2O1}
+设$A/K$为$g$维阿贝尔簇，则$\deg(n_A)=n^{2g}$。当$\operatorname{char}(K)=0$时，$n_A$总是平展的；当$\operatorname{char}(K)=p>0$时，它平展当且仅当$p\nmid n$。
+\end{theorem}
+取$A$上的甚丰沛线丛$\mathcal L$，利用立方定理考察$[n_A]^*\mathcal L$的次数，可以证明\eref{定理}{L7S2O1}。
+
+记$A[n]$为$n_A$的核。由\eref{定理}{L7S2O1}，若$K$可分闭，且$n$与$\operatorname{char}(K)$互素，则$A[n](K)\cong(\Z/n\Z)^{2g}$。
+
+设$\ell\ne\operatorname{char}(K)$为素数，$K^{\mathrm{sep}}$为$K$的可分闭包。于是$A[\ell](K^{\mathrm{sep}})\cong(\Z/\ell\Z)^{2g}$。$A$的Tate模是
+\[T_\ell A:=\varprojlim_n A[\ell^n](K^{\mathrm{sep}})\cong\Z_\ell^{2g},\]
+$\End(A)$和$\Gal(K^{\mathrm{sep}}/K)$都连续作用于$T_\ell A$。表示
+\[\sigma_\ell:\Gal(K^{\mathrm{sep}}/K)\longrightarrow\GL(T_\ell A\otimes_{\Z_\ell}\Q_\ell)\cong\GL_{2g}(\Q_\ell)\]
+称为$A$的\textbf{$\ell$进表示}\znote{严格说，$\ell$ 进表示指取 $\Q_\ell$ 系数的连续同态 $G_K\to\GL_n(\Q_\ell)$，故书中真正用作表示的其实是 $V_\ell A:=T_\ell A\otimes_{\Z_\ell}\Q_\ell$；$T_\ell A$ 本身只是 $\Z_\ell$ 模，取 $\Q_\ell$ 系数是为了让迹、行列式与同源都有好的函子性。同理，「$\ell$ 进」与「$\ell$ 可除」是两套语言：$A[\ell^\infty]$ 与 $V_\ell A$ 互为对偶。[来源：J. H. Silverman, \textit{The arithmetic of elliptic curves}, Springer, 2009（本讲参考文献）；并见 nLab "Galois representation"，\url{https://ncatlab.org/nlab/show/Galois+representation}（Last revised 2023-04-21；2026-11-14 访问）。]}。
+\originalnumber{2}
+\begin{note}[L7S2O2]
+若$\varphi:A\to A'$为同源，且$\deg(\varphi)$同时与$\ell$及$\operatorname{char}(K)$互素，则$\varphi$诱导同构$A[\ell^n]\xrightarrow{\sim}A'[\ell^n]$，从而$T_\ell A\cong T_\ell A'$。
+\end{note}
+\originalnumber{3}
+\begin{note}[L7S2O3]
+若$A(\C)\cong\C^g/\Lambda_{2g}$为复环面，其中$\Lambda_{2g}\cong\Z^{2g}$，则$A[n]\cong\frac1n\Lambda_{2g}/\Lambda_{2g}$。另一方面，$\Lambda_{2g}\cong H_1(A(\C),\Z)$。因此，$A[\ell^n]\cong H_1(A(\C),\Z/\ell^n\Z)$，且$T_\ell A\cong H_1(A(\C),\Z)\otimes\Z_\ell$。
+\end{note}
+对任意$\alpha\in\End(A)$，存在一个次数为$2g$的多项式$f_\alpha\in\Z[t]$，称为$\alpha$的\textbf{特征多项式}。它的定义性质是：对所有$n\in\Z$，有$f_\alpha(n)=\deg(n_A-\alpha)$。若
+\sourcepage{57}
+$\beta:A\to A$不是满射，约定$\deg(\beta)=0$。任意$\alpha\in\End(A)$也作用于$T_\ell A\cong\Z_\ell^{2g}$，因此$\alpha$在$T_\ell A$上诱导矩阵$T_\ell(\alpha)\in M_{2g}(\Z_\ell)$。有如下定理。
+\originalnumber{4}
+\begin{theorem}\label{L7S2O4}
+对任意$\alpha\in\End(A)$，有$\det T_\ell(\alpha)=\deg(\alpha)$。特别地，
+\[f_\alpha(t)=\det(tI_{2g}-T_\ell(\alpha)).\]
+\end{theorem}
+\originalnumber{5}
+\begin{note}[L7S2O5]
+先验地，$\det(tI_{2g}-T_\ell(\alpha))\in\Z_\ell[t]$。\eref{定理}{L7S2O4}说明，它实际上属于$\Z[t]$，并且只要$\ell$与$\operatorname{char}(K)$互素，就不依赖于$\ell$。
+\end{note}
+设$p=\operatorname{char}(K)>0$。则$|A[p](\overline K)|=p^r$，其中$0\leq r\leq g$，对一般的$A$有$r=g$。特别地，对$K$上的椭圆曲线$E$，Tate模$T_pE$或者为$\{0\}$，此时称$E$为\textbf{超奇异}\znote{超奇异与普通的区别只在特征 $p$ 上出现，且只依赖 $j$ 不变量。等价刻画是：形式群 $\widehat E$ 的高度为 $2$（超奇异）或 $1$（普通）；也等价于 $E[p](\overline K)=0$（超奇异）或 $E[p](\overline K)\cong\Z/p$（普通）；还等价于 Frobenius 的迹 $a_p\equiv0\pmod p$。对固定的 $p$，超奇异的 $j$ 只有有限多个（$p\ge5$ 时都属于 $\F_{p^2}$）。这个名字容易误导：超奇异曲线本身并不奇异，光滑性一如既往。 [来源：nLab "elliptic curve"，\url{https://ncatlab.org/nlab/show/elliptic+curve}（Last revised 2025-05-11；2026-11-14 访问）。]}椭圆曲线；或者同构于$\Z_p$，此时称$E$为\textbf{普通}椭圆曲线。在代数闭包上，超奇异椭圆曲线的同构类只有有限多个。
+\idx{超奇异椭圆曲线}\idx{普通椭圆曲线}
+$\Q$上椭圆曲线$E$的Tate模$T_\ell E$给出了$\Gal(\overline{\Q}/\Q)$的一个Galois表示。不过，到目前为止，它似乎还与模形式无关。下面将看到，Hasse--Weil $L$函数以及如今已经成为定理的Shimura--Taniyama--Weil猜想，把二者联系起来。
+
+设$E$为$\Q$上的椭圆曲线。若存在局部环$\Z_{(p)}$上的椭圆曲线$\mathcal E$，其泛纤维$\mathcal E\times_{\Z_{(p)}}\Q$为$E$，就称$E$在素数$p$处具有\textbf{良约化}\znote{「好」与「坏」是相对某个整模型说的：取 $E$ 在 $\Z_{(p)}$ 上的最小 Weierstrass 模型，则好约化当且仅当 $p\nmid\Delta_{\min}$，此时约化曲线仍非奇异。坏约化处导子的指数有明确含义：约化为结点时指数为 $1$，退化为尖点时指数 $\ge2$——这是「坏约化素数只有有限多个」的定量版本。[来源：J. H. Silverman, \textit{The arithmetic of elliptic curves}, Springer, 2009（本讲参考文献）。]}。一般环$R$上的椭圆曲线，是$\Spec R$上一维阿贝尔簇的光滑族$\mathcal E$，并带有零截面$o:\Spec R\hookrightarrow\mathcal E$。特殊纤维$\mathcal E\times_{\Z_{(p)}}\F_p$称为$E$模$p$的约化，记作$E_p$。若$E$在$p$处不具有良约化，就说它具有\textbf{坏约化}。在坏约化素数处，也可以取一个模型，使特殊纤维只有较为“温和”的奇点。$E$只有有限多个坏约化素数。可以给$E/\Q$赋予导子$N_E$，使$p\nmid N_E$当且仅当$E$在$p$处具有良约化。
+\idx{良约化}\idx{坏约化}
+回忆，对每个素数$p$，都有分解子群$G_{\overline p}\subset\Gal(\overline{\Q}/\Q)$，其中$\overline p$表示$\Q$的所有有限扩张中位于$p$上方的一组相容素理想。惯性群$I_p$是映射
+\sourcepage{58}
+$G_{\overline p}\cong\Gal(\overline{\Q}_p/\Q_p)\to\Gal(\overline{\F}_p/\F_p)$的核。若$I_p\subset\ker\sigma$，称Galois表示$\sigma$在$p$处\textbf{非分歧}；否则称它在$p$处\textbf{分歧}。
+\originalnumber{6}
+\begin{theorem}{Ogg--Néron--Shafarevich判别法}\label{L7S2O6}
+对$p\ne\ell$，表示$\sigma_\ell:\Gal(\overline{\Q}/\Q)\to\GL(T_\ell E\otimes\Q_\ell)$在$p$处分歧，当且仅当$E$在$p$处不具有良约化。
+\end{theorem}
+\originalnumber{7}
+\begin{note}[L7S2O7]
+由\eref{定理}{L7S2O6}可见，只要$\ell\ne p$，$\sigma_\ell$在$p$处是否分歧就不依赖于$\ell$的选择。
+\end{note}
+\originalnumber{8}
+\begin{definition}{Hasse--Weil $L$函数}\label{L7S2O8}
+$E/\Q$的Hasse--Weil $L$函数是Euler乘积
+\[L(E,s)=\prod_p L_p(E,s),\qquad L_p(E,s)=\det\left(1-p^{-s}\sigma_\ell(\mathrm{Fr}_p)\bigm|(T_\ell E\otimes\Q_\ell)^{I_p}\right)^{-1},\]
+其中任取$\ell\ne p$。
+\end{definition}
+若$E$在$p$处具有良约化，则模$p$约化诱导同构$T_\ell E\cong T_\ell E_p$。此外，算术Frobenius的共轭类$\mathrm{Fr}_p\in\Gal(\overline{\Q}/\Q)$在$T_\ell E_p$上的作用，与曲线的$p$次幂Frobenius态射$F_p:E_p\to E_p$的作用一致，即$T_\ell(F_p)=\sigma_\ell(\mathrm{Fr}_p)$。有
+% [Tutor Note: 原书 p58 称 $p$ 次幂态射 $F_p$ 为 "geometric Frobenius"；若取几何 Frobenius（算术 Frobenius 之逆），$T_\ell(F_p)^{-1}$ 的迹为 $a_p/p$，与 $L$ 因子不符，故这里的 $\mathrm{Fr}_p$ 应理解为算术 Frobenius，译文按此处理。]
+\[L_p(E,s)=\frac{p^{2s}}{f(p^s)},\qquad f(t)=\det(tI-T_\ell(F_p))=t^2-\Tr(T_\ell(F_p))t+\det(T_\ell(F_p)).\]
+% [Tutor Note: 原书 p58 作 $t^2-\operatorname{tr}(T_\ell(F_p)t+\det(T_\ell(F_p)))$，括号位置有误；译文按 $t^2-\operatorname{tr}(T_\ell(F_p))t+\det(T_\ell(F_p))$ 处理。]
+记$T_\ell(F_p)$在$\overline{\Q}_\ell$中的两个特征值为$\lambda_p,\lambda'_p$，则$f(t)=t^2-(\lambda_p+\lambda'_p)t+\lambda_p\lambda'_p$，并且
+% [Tutor Note: 原书 p58 作 "the two eigenvalue in $\mathbb{Z}_p$"；特征值应在 $\overline{\mathbb{Q}}_\ell$ 中（且应为复数 eigenvalues），译文按此处理。]
+\[L_p(E,s)=\bigl(1-(\lambda_p+\lambda'_p)p^{-s}+p^{1-2s}\bigr)^{-1}.\]
+由\eref{定理}{L7S2O4}，有$\lambda_p\lambda'_p=\deg(F_p)=p$；由有限域上的Galois理论，还得到
+\begin{equation}\tag{2.1}\label{L7eq21}
+|E_p(\F_{p^n})|=\deg(1-F_p^n)=1-(\lambda_p^n+\lambda_p'^n)+p^n.
+\end{equation}
+考察约化曲线的$\zeta$函数
+\[Z(E_p,t):=\exp\left(-\sum_{n=1}^\infty\frac{|E_p(\F_{p^n})|}{n}t^n\right).\]
+由\eqref{L7eq21}，有
+\[Z(E_p,t)=\frac{(1-t)(1-pt)}{1-(\lambda_p+\lambda'_p)t+pt^2},\qquad Z(E_p,p^{-s})=(1-p^{-s})(1-p^{1-s})L_p(E,s).\]
+% [Tutor Note: 原书 p58 把 $Z(E_p,p^{-s})$ 印作 $(1-p^{-s})(1-p^{1-s})/L_p(E,s)$，与上一式 $Z(E_p,t)=(1-t)(1-pt)/(1-(\lambda_p+\lambda'_p)t+pt^2)$ 不自洽；按该分式应为相乘，译文按此处理。又：原书把 $\zeta$ 函数定义为 $\exp(-\sum|E_p(\F_{p^n})|t^n/n)$，即通常 Hasse--Weil $\zeta$ 的倒数（用 $t$ 而非 $q^{-s}$ 的形式），与 L8、L9 及通用文献互为倒数，引用时须换算。]
+\sourcepage{59}
+若$E$在$p$处具有坏约化，$L_p(E,s)$也可以显式写出，共有下列三种情形：
+\[L_p(E,s)=\begin{cases}(1-p^{-s})^{-1},&\text{在$p$处具有分裂乘法约化；}\\(1+p^{-s})^{-1},&\text{在$p$处具有非分裂乘法约化；}\\1,&\text{在$p$处具有加法约化。}\end{cases}\]
+注意，$L_p(E,s)$不依赖于$\ell$。因此，若$E$与$E'$同源，则由\eref{笔记}{L7S2O2}，有$L(E,s)=L(E',s)$。$L$函数$L(E,s)$有展开
+\[L(E,s)=\sum_{n=1}^\infty a_n n^{-s}.\]
+定义
+\[f_E(q):=\sum_{n=1}^\infty a_nq^n.\]
+注意，$a_1=1$，且对几乎所有素数$p$，有$a_p=p+1-|E_p(\F_p)|$。
+\originalnumber{9}
+\begin{theorem}\label{L7S2O9}
+$f_E(q)$是一个权 $2$、级 $N_E$ 的模新形式的 $q$ 展开。
+\end{theorem}
+\idx{模性定理}
+Shimura--Taniyama--Weil猜想还可以表述为比\eref{定理}{L7S2O9}更强的几何命题。我们将看到，在某个参数空间上的椭圆曲线族的Tate模中，这些新形式给出了显式的Galois表示。主要定理如下。
+\originalnumber{10}
+\begin{theorem}{Eichler--Shimura、Deligne}\label{L7S2O10}
+设$N,k$为正整数，$\chi_N:(\Z/N\Z)^\times\to\C^\times$为特征标，$f=\sum_{n\geq1}a_n(f)q^n$是$S_k(N,\chi_N)$中归一化的新形式，即$a_1(f)=1$。则$L_f:=\Q(a_1(f),a_2(f),\ldots)$为$\Q$的有限扩张。对每个素数$\ell$，存在在同构意义下唯一的、在各系数域因子上不可约的连续表示
+\[\sigma_{f,\ell}:\Gal(\overline{\Q}/\Q)\longrightarrow\GL_2(\Q_\ell\otimes_{\Q} L_f),\]
+它在所有$p\nmid\ell N$处非分歧，并且对每个这样的$p$，有
+\[\det\sigma_{f,\ell}(\mathrm{Fr}_p)=\chi_N(p)p^{k-1},\qquad \Tr\sigma_{f,\ell}(\mathrm{Fr}_p)=a_p(f).\]
+\end{theorem}
+\sourcepage{60}
+\hyperref[L8]{下一讲}将概述\eref{定理}{L7S2O10}的证明，其中Hecke算子起着重要作用。记为$T(n)$（$n\geq1$）的Hecke算子，是$\End(\bigoplus_\chi S_k(N,\chi))$中的元素。Hecke与Weil给出了如下结论。
+\originalnumber{11}
+\begin{theorem}\label{L7S2O11}
+设$f(z)=\sum_{n=1}^\infty a_ne^{2\pi inz}\in\bigoplus_\chi S_k(N,\chi)$，且$a_1=1$。则系数满足Hecke乘法关系（因而$L(s):=\sum_{n=1}^\infty a_nn^{-s}$具有Euler乘积展开$L(s)=\prod_pL_p(s)$），当且仅当$f$是所有Hecke算子$T(n)$的共同特征函数。在此情形，若$f\in S_k(N,\chi_N)$，则
+\[L(s)=\prod_p(1-a_pp^{-s}+\chi_N(p)p^{k-1-2s})^{-1},\]
+% [Tutor Note: 原书 p60 的 Euler 乘积印作 $\prod_p(1-a_pp^{-s}+p^{k-1-2s})^{-1}$，漏了特征标；对 $f\in S_k(N,\chi_N)$ 应为 $\prod_p(1-a_pp^{-s}+\chi_N(p)p^{k-1-2s})^{-1}$，译文按此处理。]
+其中$T(p)f=a_pf$。
+\end{theorem}
+\needspace{5\baselineskip}\section{第7讲参考文献}\label{L7S3}
+\needspace{4\baselineskip}\textbf{关于椭圆曲线。}
+\begin{references}
+\refitem{L7bibS}{S} J. H Silverman, \emph{The arithmetic of elliptic curves}, vol. 106, Springer Science \& Business Media, 2009.
+\refitem{L7bibST}{ST} J. H. Silverman and J. T. Tate, \emph{Rational points on elliptic curves}, vol. 9, Springer, 1992.
+\end{references}
+\needspace{4\baselineskip}\textbf{关于阿贝尔簇的Tate模。}
+\begin{references}
+\refitem{L7bibCS}{CS} G. Cornell, J. H. Silverman (Editors), \emph{Arithmetic geometry}, Springer, Verlag 1986, pp125.
+\end{references}
+\needspace{4\baselineskip}\textbf{关于$L$函数。}
+\begin{references}
+\refitem{L7bibBG}{BG} J. Bernstein and S. Gelbart, eds, \emph{An introduction to the Langlands Program}, Birkhäuser, 2004, Chapter 5 written by Ehud de Shalit.
+\end{references}

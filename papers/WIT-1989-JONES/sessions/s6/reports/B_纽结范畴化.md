@@ -40,7 +40,7 @@
 
 ## 六、本地线索：Seidel–Smith 与 Abouzaid–Smith
 
-- `C:\Users\admin\Downloads\functoriality_work\work\通读笔记.md:55`（lead 给的 Desktop 路径不存在，实际在 Downloads 下）§5.2 记：Seidel–Smith 引理 44、`thm:Skh=Kh` = Abouzaid–Smith 2019（Kh_symp 与 Jones 的 Khovanov 范畴化一致）。该笔记对应的综述是 Wehrheim–Woodward, arXiv:2210.11159（已核）。
+- `<本地路径>`（lead 给的 Desktop 路径不存在，实际在 Downloads 下）§5.2 记：Seidel–Smith 引理 44、`thm:Skh=Kh` = Abouzaid–Smith 2019（Kh_symp 与 Jones 的 Khovanov 范畴化一致）。该笔记对应的综述是 Wehrheim–Woodward, arXiv:2210.11159（已核）。
 - 含义：Kh_symp 由辛几何独立构造（nilpotent slice / 曲线 Hilbert 概型的 Fukaya 范畴、Lagrangian 对应）；Seidel–Smith 证它是链环不变量（引理 44），Abouzaid–Smith 证它与 Khovanov 同调同构（arXiv:1504.01230 已核；期刊卷页未核）。这是**纯数学**的范畴化路线，不过 CS 路径积分、不过 4d 超对称。
 - 对研讨班：1989 的"CS→Jones"与"Kh_symp→Kh"之间，目前没有一条已知定理把 CS 的 Wilson 线直接变成 Kh 的链复形；T6 的真空就在这里。
 

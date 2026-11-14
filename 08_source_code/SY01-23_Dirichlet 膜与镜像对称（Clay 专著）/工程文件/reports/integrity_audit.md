@@ -1,10 +1,10 @@
 # 工程完整性审计报告（只读，rv-ch06 / task-15）
 
-- 审计对象：`C:\Users\admin\Downloads\DBMS_work\Dirichlet-Mirror-Symmetry-zh`
+- 审计对象：`<本地路径>`
 - 基线：`9f29f4f baseline: original uploaded package`（Lead 指定）；当前 `HEAD = 435f81d baseline: drop build cache from index`（比基线多一个"清索引里的构建缓存"提交，无正文改动）
 - 快照时间：**2026-11-14 12:39:41**（工作区在审计期间变动过 3 次，见 §八；本报告所有数字都属于该快照）
 - 方式：只读。`git diff --unified=0` 逐 hunk 分析、`git show 9f29f4f:*` 对照、脚本机械检查、与 `review/log_*.md` 交叉比对。**未运行 LaTeX 编译，未修改任何工程文件。**
-- 脚本与原始输出：`C:\Users\admin\AppData\Local\Temp\ch_audit10.py` / `ch_audit10.txt`（快照、hunk、机械、引用）、`ch_audit12.py` / `ch_audit12.txt`（结构宏计数）、`ch_audit14.py` / `ch_audit14.txt`（hunk 性质分类）。
+- 脚本与原始输出：`<本地路径>` / `ch_audit10.txt`（快照、hunk、机械、引用）、`ch_audit12.py` / `ch_audit12.txt`（结构宏计数）、`ch_audit14.py` / `ch_audit14.txt`（hunk 性质分类）。
 
 ## 结论
 
@@ -105,10 +105,10 @@
 ## 八、复现方式
 
 ```powershell
-$py = "C:\Users\admin\.dsh\dsh-runtimes\dsh-primary-runtime\dependencies\python\python.exe"
-& $py "C:\Users\admin\AppData\Local\Temp\ch_audit10.py"   # 快照/hunk/机械/引用
-& $py "C:\Users\admin\AppData\Local\Temp\ch_audit12.py"   # 结构宏计数 HEAD vs 当前
-& $py "C:\Users\admin\AppData\Local\Temp\ch_audit14.py"   # hunk 性质分类
+$py = "<本地路径>"
+& $py "<本地路径>"   # 快照/hunk/机械/引用
+& $py "<本地路径>"   # 结构宏计数 HEAD vs 当前
+& $py "<本地路径>"   # hunk 性质分类
 ```
 
 三个脚本都是只读的（只调用 `git` 与读文件），输出分别写到同目录 `ch_audit10.txt`、`ch_audit12.txt`、`ch_audit14.txt`。

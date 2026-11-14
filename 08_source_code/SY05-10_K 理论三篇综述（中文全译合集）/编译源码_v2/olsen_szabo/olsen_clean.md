@@ -1053,7 +1053,7 @@ $$
 E\oplus G&\stackrel{h}{\longrightarrow}&G'\\&
 &\\{\scriptstyle\alpha\oplus\gamma}\downarrow& &
 \downarrow{\scriptstyle\gamma'}\\&
-&\\E\oplus G&\stackrel{h}{\longrightarrow}&G'\end{array}}
+&<本地路径> G&\stackrel{h}{\longrightarrow}&G'\end{array}}
 $$
 
 于是 $\alpha\oplus {\mathrm Id}_G$ 同伦于 $\alpha\oplus\gamma=h^{-1}\circ\gamma'\circ h$。后者又同伦于 $h^{-1}\circ{\mathrm Id}_{G'}\circ h={\mathrm Id}_{E\oplus G}$，这就证明了该断言。逆命题是显然的。回到原来的断言，我们考虑满足 $[(E,\alpha)]=[(F,\beta)]$ 的两个类。那么 $[(E,\alpha)]-[(F,\beta)]=[(E\oplus F,\alpha\oplus\beta^{-1})]=0$，并且正如刚才所论证的，存在向量丛 $G$ 使 $\alpha\oplus\beta^{-1}\oplus {\mathrm Id}_G$ 同伦于 ${\mathrm Id}_{E\oplus F\oplus G}$。把这一同伦等价与 ${\mathrm Id}_E\oplus\beta\oplus{\mathrm Id}_G$ 复合，即可看出 $\alpha\oplus{\mathrm Id}_F\oplus{\mathrm Id}_G$ 与 ${\mathrm Id}_E\oplus\beta\oplus{\mathrm Id}_G$ 同伦。逆命题同样是显然的。
@@ -2317,7 +2317,7 @@ $$
 {\begin{array}{ccccc}
 H^1(X,{\mathbf S}^1)&\stackrel{\sigma}{\longrightarrow}&H^1(X,{\mathbf S}^1)
 &\stackrel{\varphi'}{\longrightarrow}&H^2(X,{\mathbb{Z}}_2)\\&
-&\\\downarrow\approx& &\downarrow\approx& &\parallel \\&
+&\<本地路径>& &\downarrow\approx& &\parallel \\&
 &\\H^2(X,{\mathbb{Z}})&\stackrel{\times2}{\longrightarrow}&H^2(X,{\mathbb{Z}})
 &\stackrel{\rho}{\longrightarrow}&H^2(X,{\mathbb{Z}}_2)\end{array}}
 $$

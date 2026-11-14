@@ -5,7 +5,7 @@ the script aborts if a count differs, so a stale line number cannot silently
 corrupt the text."""
 import os, re, sys
 
-CH = r"C:\Users\admin\Downloads\DBMS_work\Dirichlet-Mirror-Symmetry-zh\chapters"
+CH = r"<本地路径>"
 files = {}
 for fn in ["ch01.tex", "ch03.tex", "ch04.tex", "ch05.tex", "ch06.tex",
            "ch07.tex", "ch08-sec82.tex", "ch02.tex", "ch08.tex",

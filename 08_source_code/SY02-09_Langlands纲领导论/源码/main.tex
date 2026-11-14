@@ -1,0 +1,138 @@
+\documentclass[11pt,lang=cn,math=cm,thmcnt=section,usesamecnt]{elegantbook}
+\usepackage{unicode-math}
+\setmathfont{NewCMMath-Regular.otf}
+\IfFontExistsTF{KaiTi}{\setCJKfamilyfont{zhkai}[AutoFakeBold=true]{KaiTi}}{}
+\IfFontExistsTF{FangSong}{\setCJKfamilyfont{zhfs}[AutoFakeBold=true]{FangSong}}{}
+\usepackage[noautomatic]{imakeidx}
+\makeindex[title=中文索引,intoc,columns=2]
+\indexsetup{othercode=\small\setstretch{1.03}\renewcommand{\indexspace}{\par\vspace{3pt}}}
+\usepackage{tikz-cd}
+\usepackage{needspace}
+\usepackage{float}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xurl}
+\elegantnewtheorem{conjecture}{猜想}{thmstyle}{conj}
+\hypersetup{unicode=true,colorlinks=true,linkcolor=structurecolor,urlcolor=structurecolor,citecolor=structurecolor,bookmarksnumbered=true,pdftitle={Langlands纲领导论：全23讲},pdfauthor={Yao YUAN}}
+\setcounter{tocdepth}{1}
+\setcounter{secnumdepth}{1}
+\setlength{\emergencystretch}{1em}
+\setlength{\intextsep}{8pt plus 2pt minus 2pt}
+\tcbset{common/.append style={before skip=4pt,after skip=4pt}}
+\renewcommand{\xchaptertitle}{第\thechapter{}讲}
+\title{Langlands纲领导论}
+\subtitle{课程介绍与全23讲}
+\author{Yao YUAN}
+\date{2020年春季课程}
+\cover{images/cover.png}
+\makeatletter
+\renewcommand{\theELEGANT@samecnt}{\arabic{section}.\arabic{ELEGANT@samecnt}}
+\newcommand{\originalnumber}[1]{\setcounter{ELEGANT@samecnt}{\numexpr#1-1\relax}}
+\let\nativeNormalsize\normalsize
+\renewcommand{\normalsize}{\nativeNormalsize\fontsize{11pt}{13.6pt}\selectfont\setlength{\abovedisplayskip}{8pt plus 2pt minus 2pt}\setlength{\belowdisplayskip}{8pt plus 2pt minus 2pt}\setlength{\abovedisplayshortskip}{4pt plus 2pt minus 1pt}\setlength{\belowdisplayshortskip}{6pt plus 2pt minus 2pt}}
+\let\c@exam\c@ELEGANT@samecnt
+\let\c@exer\c@ELEGANT@samecnt
+\let\c@prob\c@ELEGANT@samecnt
+\renewcommand{\theexam}{\theELEGANT@samecnt}
+\renewcommand{\theexer}{\theELEGANT@samecnt}
+\renewcommand{\theprob}{\theELEGANT@samecnt}
+\let\nativeNote\note
+\let\endnativeNote\endnote
+\RenewDocumentEnvironment{note}{o}{\nativeNote\IfValueT{#1}{\refstepcounter{ELEGANT@samecnt}\textbf{\theELEGANT@samecnt}\label{#1}\quad}}{\endnativeNote}
+\let\nativeProof\proof
+\let\endnativeProof\endproof
+\RenewDocumentEnvironment{proof}{o}{\nativeProof\IfValueT{#1}{{\heiti（#1）}\quad}}{\endnativeProof}
+\let\nativeExercise\exercise
+\let\endnativeExercise\endexercise
+\newcounter{unnumexer}
+\NewDocumentEnvironment{exercise*}{o}{\begingroup\stepcounter{unnumexer}\renewcommand{\theexer}{}\renewcommand{\theHexer}{unnumbered.\arabic{unnumexer}}\IfValueTF{#1}{\nativeExercise[#1]}{\nativeExercise}\addtocounter{ELEGANT@samecnt}{-1}}{\endnativeExercise\endgroup}
+\makeatother
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\SL}{SL}
+\DeclareMathOperator{\SO}{SO}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\Res}{Res}
+\DeclareMathOperator{\Ind}{Ind}
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\Impart}{Im}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\A}{\mathbb{A}}
+\newcommand{\OO}{\mathcal O}
+\newcommand{\g}{\mathfrak{g}}
+\newcommand{\p}{\mathfrak{p}}
+\newcommand{\Pp}{\mathfrak{P}}
+\newcommand{\sref}[1]{第\ref{#1}节}
+\newcommand{\lref}[1]{第\ref{#1}讲}
+\ExplSyntaxOn
+\NewDocumentCommand{\eref}{mm}{
+  \group_begin:
+  \regex_extract_once:nnNT {\A L(\d+)S}{#2}\l_tmpa_seq {
+    \int_compare:nNnF {\seq_item:Nn\l_tmpa_seq{2}}={\value{chapter}}
+      {第\seq_item:Nn\l_tmpa_seq{2}讲}
+  }
+  \hyperref[#2]{#1~\ref*{#2}}
+  \group_end:
+}
+\ExplSyntaxOff
+\newcommand{\xleftrightarrow}[1]{\mathrel{\overset{#1}{\longleftrightarrow}}}
+\newcommand{\bref}[2]{\hyperlink{#1}{[#2]}}
+\newcommand{\sourcepage}[1]{\par\phantomsection\label{src:#1}} % 原PDF页的对照锚点；正文不显示
+\newcommand{\idx}[1]{\index{#1|hyperpage}}
+\newcommand{\lecturedate}[1]{\begin{center}\small #1\end{center}}
+% ===== 本轮新增：学生向译注（nLab 参考）=====
+% 用法：术语\znote{解释文字……[来源：nLab "entry"，\url{...}（Last revised YYYY-MM-DD；2026-11-14 访问）。]}
+\newcommand{\znote}[1]{\footnote{\textbf{【译注】}#1}}
+% 无外部依据时只能这样写：
+\newcommand{\znoteplain}[1]{\footnote{\textbf{【译者按】}#1}}
+\setlength{\skip\footins}{10pt plus 4pt minus 2pt}
+\newenvironment{references}{\begin{description}[leftmargin=3em,labelwidth=2.5em,itemsep=3pt]}{\end{description}}
+\newcommand{\refitem}[2]{\item[\hypertarget{#1}{[#2]}]}
+\begin{document}
+\maketitle
+\hypersetup{pageanchor=true}
+\frontmatter
+\tableofcontents
+\input{chapters/preface}
+\mainmatter
+\input{chapters/lecture01}
+\input{chapters/lecture02}
+\input{chapters/lecture03}
+\input{chapters/lecture04}
+\input{chapters/lecture05}
+\input{chapters/lecture06}
+\addtocontents{toc}{\protect\newpage}
+\input{chapters/lecture07}
+\input{chapters/lecture08}
+\input{chapters/lecture09}
+\input{chapters/lecture10}
+\input{chapters/lecture11}
+\input{chapters/lecture12}
+\addtocontents{toc}{\protect\newpage}
+\input{chapters/lecture13}
+\input{chapters/lecture14}
+\input{chapters/lecture15}
+\input{chapters/lecture16}
+\input{chapters/lecture17}
+\input{chapters/lecture18}
+\addtocontents{toc}{\protect\newpage}
+\input{chapters/lecture19}
+\input{chapters/lecture20}
+\input{chapters/lecture21}
+\input{chapters/lecture22}
+\input{chapters/lecture23}
+\appendix
+\input{chapters/appendix_zhusi}
+\backmatter
+\printindex
+\end{document}
+

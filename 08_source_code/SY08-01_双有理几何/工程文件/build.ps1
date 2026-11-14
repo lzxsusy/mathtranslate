@@ -9,12 +9,12 @@ param(
 $ErrorActionPreference = "Continue"
 $here = $PSScriptRoot
 $src  = Join-Path $here "src"
-$root = "C:\Users\admin\Documents\deepseek-harness\default-workspace\birbuild"
+$root = "<本地路径>"
 
 # --- 1. 找 TeX bin ---
 $binCands = @(
-  "C:\Users\admin\AppData\Local\Programs\MiKTeX\miktex\bin\x64",
-  "C:\Users\admin\Documents\deepseek-harness\default-workspace\.texlive\2026\bin\windows",
+  "<本地路径>",
+  "<本地路径>",
   "C:\texlive\2026\bin\windows"
 )
 $bin = $null

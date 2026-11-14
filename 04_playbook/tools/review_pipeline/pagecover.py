@@ -3,7 +3,7 @@
 and count paragraphs per page (to spot skipped pages)."""
 import re, io, glob, os, collections
 
-root = r"C:\Users\admin\Downloads\DBMS_work\Dirichlet-Mirror-Symmetry-zh\chapters"
+root = r"<本地路径>"
 ranges = {
     "preface": (7, 9, ["preface.tex"]),
     "ch01": (11, 36, ["ch01.tex"]),

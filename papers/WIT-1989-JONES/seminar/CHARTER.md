@@ -1,8 +1,8 @@
 # CHARTER：WIT-1989-JONES 研讨班章程（v0.1）
 
 对象：Witten, *Quantum Field Theory and the Jones Polynomial*, CMP 121 (1989) 351–399
-底本：`C:\Users\admin\Documents\deepseek-harness\default-workspace\witten1989\`（中译全稿）
-父章程：`C:\Users\admin\Desktop\AI研讨班工程\00_制度与模板\研讨班宪章_v0.2.md`（15 条，本文件只写本轮增量，冲突时父章程优先）
+底本：`<本地路径>`（中译全稿）
+父章程：`<本地路径>`（15 条，本文件只写本轮增量，冲突时父章程优先）
 
 ---
 

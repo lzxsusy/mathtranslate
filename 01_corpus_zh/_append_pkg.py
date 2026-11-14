@@ -22,7 +22,7 @@ import time
 
 sys.stdout.reconfigure(encoding="utf-8")
 
-REPO = r"C:\Users\admin\Desktop\数译发布\gitee_shuyi"
+REPO = r"<本地路径>"
 CORPUS = os.path.join(REPO, "01_corpus_zh", "zh_paragraphs.jsonl")
 STATS = os.path.join(REPO, "01_corpus_zh", "zh_paragraphs_stats.json")
 TERMBASE = os.path.join(REPO, "01_corpus_zh", "termbase.jsonl")

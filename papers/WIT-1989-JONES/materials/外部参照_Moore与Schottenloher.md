@@ -7,8 +7,8 @@
 
 ## 1. Moore, *Introduction to Chern–Simons Theory*（TASI 2019）中译
 
-**路径**：`C:\Users\admin\Desktop\归档\03_量子场论与规范理论\ChernSimons_TASI2019_中文译注\Chern-Simons理论导论_TASI2019_中文译注.pdf`
-（同文件另在 `C:\Users\admin\Desktop\数译发布\shuyi\translations\SY03-08\成品\`）
+**路径**：`<本地路径>`
+（同文件另在 `<本地路径>`）
 **规模**：234 页。**引用规则：一律用页脚页（= PDF 第 N 页），标「中译 p.N」；不要引 `chunks/*.tex` 头注的「原印刷页 / PDF」两列。**
 
 **页码校准（2026-11-13 实测，task-15；方法：pypdf 提取全文 + 标题行扫描）**：
@@ -39,7 +39,7 @@
 
 ## 2. Schottenloher, *A Mathematical Introduction to Conformal Field Theory* 第 11 章（中译）
 
-**路径**：`C:\Users\admin\Desktop\归档\03_量子场论与规范理论\共形场论的数学导引_中文译注本.pdf`
+**路径**：`<本地路径>`
 **规模**：216 页（第二版）。**PDF 页 = 书页 + 12**。
 
 第 11 章「Verlinde 公式的数学方面」，书 p.172–189（PDF 184–201）：
@@ -62,7 +62,7 @@
 
 ## 3. Yuchen Wang, *Notes on Chern–Simons Theory*（2024-09-10）
 
-**路径**：`C:\Users\admin\Desktop\平板导入_2026-11-05\03_量子场论与规范理论\chernsimons.pdf`
+**路径**：`<本地路径>`
 **规模**：22 页；自述基于 Witten 1989。
 
 **用途**：紧凑骨架。适合在写读书笔记 §2（CS 作用量与 k 量子化）前 10 分钟过一遍，检查自己有没有漏步骤。

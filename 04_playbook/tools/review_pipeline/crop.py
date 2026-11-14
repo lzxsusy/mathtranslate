@@ -3,8 +3,8 @@
 import subprocess, re, os, sys
 from PIL import Image
 
-pdftoppm = r"C:\Users\admin\AppData\Local\Programs\MiKTeX\miktex\bin\x64\pdftoppm.exe"
-pdftotext = r"C:\Users\admin\AppData\Local\Programs\MiKTeX\miktex\bin\x64\pdftotext.exe"
+pdftoppm = r"<本地路径>"
+pdftotext = r"<本地路径>"
 
 pdf, page, word, out = sys.argv[1], int(sys.argv[2]), sys.argv[3], sys.argv[4]
 dpi = int(sys.argv[5]) if len(sys.argv) > 5 else 300

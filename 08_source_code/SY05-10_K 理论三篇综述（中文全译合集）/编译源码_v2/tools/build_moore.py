@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 import io, os, re, subprocess, sys
 
-ROOT = r'C:\Users\admin\Desktop\数译发布\shuyi\translations\SY05-10\工程文件\v2\moore'
+ROOT = r'<本地路径>'
 SRC = os.path.join(ROOT, 'src')
-MD = r'C:\Users\admin\Desktop\数译投稿_2026-11-11\投稿包\SY05-10\工程文件\build\moore.md'
-EPS = r'C:\Users\admin\Desktop\数译投稿_2026-11-11\投稿包\SY05-10\源码\moore'
-PANDOC = r'C:\Users\admin\AppData\Local\Pandoc\pandoc.exe'
+MD = r'<本地路径>'
+EPS = r'<本地路径>'
+PANDOC = r'<本地路径>'
 os.makedirs(SRC, exist_ok=True)
 
 s = io.open(MD, encoding='utf-8').read()

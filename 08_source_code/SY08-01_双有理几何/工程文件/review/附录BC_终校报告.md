@@ -78,7 +78,7 @@
 
 ## 3. 生成器改动清单
 
-备份：`C:\Users\admin\Desktop\t03_tmp\gen_notes.py.bak`、`md2tex.py.bak`（改动可用备份整体回退）。
+备份：`<本地路径>`、`md2tex.py.bak`（改动可用备份整体回退）。
 
 ### 3.1 `work/tools/gen_notes.py`
 
@@ -150,14 +150,14 @@ python work/tools/md2tex.py        # 附录 C：8 节
 
 ```
 # 条数/分章/长度/转义统计
-python C:\Users\admin\Desktop\t03_tmp\bc_stats.py
+python <本地路径>
 # 附录 B 全量转写核查（$...$ 源匹配、页码、长度）
-python C:\Users\admin\Desktop\t03_tmp\bc_trace2.py
+python <本地路径>
 # 40 条抽样 + 源定位 + Overfull 定位
-python C:\Users\admin\Desktop\t03_tmp\bc_final.py
-python C:\Users\admin\Desktop\t03_tmp\bc_final2.py
+python <本地路径>
+python <本地路径>
 # 附录 C 结构对账（标题/列表/表格/公式/编号）
-python C:\Users\admin\Desktop\t03_tmp\bc_final5.py
+python <本地路径>
 # 生成器试跑（输出到临时目录，不覆盖仓库文件）
-python C:\Users\admin\Desktop\t03_tmp\bc_testgen.py
+python <本地路径>
 ```

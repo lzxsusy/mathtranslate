@@ -3,7 +3,7 @@
 against the label's own number."""
 import re, io, glob, os, collections
 
-root = r"C:\Users\admin\Downloads\DBMS_work\Dirichlet-Mirror-Symmetry-zh\chapters"
+root = r"<本地路径>"
 files = sorted(glob.glob(os.path.join(root, "*.tex")))
 
 pat_ref = re.compile(r"\\BookRef\{([^{}]+)\}\{([^{}]*)\}")

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import io, os, re
 
-SRC = r'C:\Users\admin\Desktop\数译发布\shuyi\translations\SY05-10\工程文件\v2\witten\src\witten_body.tex'
+SRC = r'<本地路径>'
 b = io.open(SRC, encoding='utf-8').read()
 orig = b
 

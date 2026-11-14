@@ -41,11 +41,11 @@
 ## 三、怎么复跑
 
 ```powershell
-$py = "C:\Users\admin\.dsh\dsh-runtimes\dsh-primary-runtime\dependencies\python\python.exe"
-$ann = "C:\Users\admin\Desktop\数译发布\gitee_shuyi\04_playbook\annotation"
+$py = "<本地路径>"
+$ann = "<本地路径>"
 
 & $py "$ann\tools\build_structure_index.py" `
-  --root "C:\Users\admin\Desktop\数译发布\gitee_shuyi\08_source_code\SY07-08_代数几何（第二版）\源码" `
+  --root "<本地路径>" `
   --paper-id SY07-08 --out "$ann\index"
 ```
 

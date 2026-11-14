@@ -6,7 +6,7 @@ import os
 import re
 import sys
 
-ROOT = r"C:\Users\admin\Desktop\数译发布\shuyi\translations\SY07-08\源码\chunks"
+ROOT = r"<本地路径>"
 APPLY = "--apply" in sys.argv
 SKIP = {"c16", "c17", "c18", "c19"}  # 仍在翻译/重写中的块
 

@@ -53,7 +53,7 @@ src/tools/                14 个流水线脚本（见下表）
 | `assemble.py` | 装配桌面交付目录（PDF+源码+原文+校对记录） |
 | `crop.py` / `pagecover.py` | 按 `pdftotext -bbox` 定位并裁切 PDF 片段，用于核对原书页面 |
 
-脚本里的路径写的是当时的工作目录（`C:\Users\admin\Downloads\DBMS_work`），复用时改 `PROJ`/`REVIEW` 两个常量即可。
+脚本里的路径写的是当时的工作目录（`<本地路径>`），复用时改 `PROJ`/`REVIEW` 两个常量即可。
 
 ## 复现校订结论的最小步骤
 

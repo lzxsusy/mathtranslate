@@ -13,13 +13,13 @@ $ErrorActionPreference = 'Stop'
 $root = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
 $note = Join-Path $root 'deliverables\reading_note'
 $eng  = Join-Path $root 'deliverables\engineering'
-$wittenDefault = 'C:\Users\admin\Documents\deepseek-harness\default-workspace\witten1989\deliver\witten.tex'
+$wittenDefault = '<本地路径>'
 $wittenTex = if ($env:WITTEN_TEX) { $env:WITTEN_TEX } else { $wittenDefault }
 
 function Find-Python {
     if ($env:PYTHON) { return $env:PYTHON }
     $candidates = @(
-        'C:\Users\admin\.dsh\dsh-runtimes\dsh-primary-runtime\dependencies\python\python.exe',
+        '<本地路径>',
         'python', 'python3'
     )
     foreach ($c in $candidates) {

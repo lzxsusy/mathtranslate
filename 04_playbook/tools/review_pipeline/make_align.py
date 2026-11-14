@@ -9,9 +9,9 @@ For each chapter, for each source page:
 """
 import re, os, sys, pathlib, json
 
-ROOT = pathlib.Path(r"C:\Users\admin\Downloads\DBMS_work\Dirichlet-Mirror-Symmetry-zh")
-ORIG = pathlib.Path(r"C:\Users\admin\Downloads\DBMS_work\original")
-OUT = pathlib.Path(r"C:\Users\admin\Downloads\DBMS_work\review")
+ROOT = pathlib.Path(r"<本地路径>")
+ORIG = pathlib.Path(r"<本地路径>")
+OUT = pathlib.Path(r"<本地路径>")
 OUT.mkdir(exist_ok=True)
 
 full = (ORIG / "full.txt").read_text(encoding="utf-8", errors="replace")
