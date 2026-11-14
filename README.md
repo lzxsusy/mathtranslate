@@ -122,6 +122,7 @@ Bourbaki 报告、Astérisque 专辑、arXiv 预印本、论文集（proceedings
 | `06_sessions_raw/` | 原始对话事件流（已脱敏、zstd 压缩）；145 MB 分片已移到 Release `v1.0.1` 附件，仓库只留抽取脚本与分片说明 |
 | `papers/WIT-1989-JONES/` | **威腾 1989 CS/Jones 论文研讨班**（第二轮解经试点）：六场研讨记录、claims/questions 数据、教材核查；交付两版讲义——**49 页连续叙事讲义**（`deliverables/lecture/`，可作课程主文本）与 **97 页逐句注疏版**（`deliverables/reading_note/`），均含 LaTeX 源码、一键构建工程、协作流程记录，并有打包下载 `WIT-1989-JONES-v1.0.zip` |
 | `08_source_code/` | **每部译本的完整工程**：`工程文件/`（BRIEF、构建脚本、交付清单、术语表、校对记录、逐章报告）+ `源码/`（LaTeX 源与插图） |
+| `07_refs_nlab/` | **nLab 参考资料库**（几何 Langlands 线专用）：120 条 nLab 条目摘要（含 `last_revised`，可直接写进译注来源行）+ 37 份替代来源卡（nLab 只有存根时改引 A 级教材 / MathWorld / Stacks）+ 110 条来源真实性抽查记录 |
 | `site/` | 静态站点（`site/index.html` 双击即开，无需服务器） |
 
 ## `01_corpus_zh/`：语料的形态
@@ -139,7 +140,13 @@ Bourbaki 报告、Astérisque 专辑、arXiv 预印本、论文集（proceedings
 | `dup_of` / `dup_pkg` | 若与前面某段文本完全相同，指向首个出现位置；重复段**不删除**，便于按需过滤 |
 
 去重统计与理由见 `01_corpus_zh/DEDUP_REPORT.md`；术语基 `termbase.jsonl` 字段为
-`foreign / lang(en|ja|other) / zh / status / pkg / src_format`。
+`foreign / lang(en|ja|other) / zh / status / pkg / src_format`，SY02-09 的 215 行另有
+`level`（A/B/I）/ `source`（依据）/ `lecture`（首次出现讲次）三字段，`status=confirmed`。
+
+**术语定案表**：[`01_corpus_zh/terms_frozen_SY02-09.tsv`](01_corpus_zh/terms_frozen_SY02-09.tsv)（223 条，
+列：英文 / 中文 / 等级 / 依据 / 首次出现 / 本轮校订备注）。这是《Langlands 纲领导论》逐页校订后的
+冻结术语表——`B` 级条目都能在 `07_refs_nlab/pages/` 找到对应 nLab 页，`A` 级条目指向本讲参考文献的
+具体章节。以后翻译几何 Langlands 的文献先查这张表，避免同词异译。
 
 ## `08_source_code/`：工程源码
 

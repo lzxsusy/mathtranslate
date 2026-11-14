@@ -24,6 +24,17 @@
   附 SHA256 与「原稿页 = 印刷页」的页映射说明）。这是本库唯一随仓保存的原文——作者公开授课、未正式出版，
   经仓主指定发布，供逐页对照与读者核对；`_PDF清单.tsv` 增一行指向该文件（成品列仍留空，本库不发布书籍/讲义类成品）。
 
+### 术语与参考资源入库（新增 `07_refs_nlab/`、`01_corpus_zh/terms_frozen_SY02-09.tsv`）
+- **术语定案表** `01_corpus_zh/terms_frozen_SY02-09.tsv`（223 条）：英文 / 中文 / 等级 A·B·I / 依据 / 首次出现讲次 /
+  本轮校订备注。这是第一份**冻结**术语表——23 讲逐页校订后的统一口径（含「分圆域」替换「圆分域」、
+  「射有限」替换「投有限」、「零调消解」「忠实平坦有限表现」「阿基米德素位」「范映射」等定名），
+  以后翻几何 Langlands 的文献先查它，避免同词异译。
+- **术语基升级**：`termbase.jsonl` 中 `pkg=SY02-09` 的 215 行由 `candidate` 升为 `confirmed`，
+  并补 `level`（A/B/I）/`source`（依据，nLab URL 或教材版次章节）/`lecture`（首次出现讲次）三字段。
+- **nLab 参考资料库** `07_refs_nlab/`：`pages/` 120 条 nLab 条目摘要（抓 Instiki 源码，保留 `last_revised`，
+  可直接写进译注来源行）；`alt/` 37 份替代来源卡（nLab 只有存根/404 的经典数论与表示论概念改引 A 级教材、
+  MathWorld、Stacks）+ 书目底账 `_BIB.tsv` + 110 条来源真实性抽查记录；`tools/` 抓取与索引脚本 + 示例清单，
+  并附 `README.md` 说明「先查缓存 → 补抓 → 降级到 A 级教材 → 才写译者按」的取源顺序与红线。
 ### 语料（`01_corpus_zh/`）
 - 新增入库脚本 `_append_pkg_sy0209.py` + 预清洗器 `_tex_clean_sy0209.py`：本工程用 `\sourcepage{原书页}`
   做页锚点（无段落 id），故按页锚点切段；`\znote/\znoteplain/\idx/\lref/\refitem` 等自有宏在清洗阶段剥除。
