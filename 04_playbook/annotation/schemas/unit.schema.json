@@ -1,0 +1,101 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://shuyi.local/schemas/unit.schema.json",
+  "title": "Unit（标注原子：定义/定理/证明步骤/断言/问题）",
+  "type": "object",
+  "required": ["unit_id", "paper_id", "kind", "statement", "locator", "role", "difficulty", "review", "provenance"],
+  "additionalProperties": false,
+  "properties": {
+    "unit_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_.-]+:[a-z]+-[A-Za-z0-9_.:-]+$",
+      "description": "稳定 ID：paper_id:kind-局部名（LaTeX label 或内容哈希前 8 位）"
+    },
+    "paper_id": {"type": "string", "minLength": 2},
+    "kind": {
+      "enum": ["definition", "theorem", "lemma", "proposition", "corollary", "construction", "example", "remark", "proof", "step", "claim", "question", "method"]
+    },
+    "display_no": {"type": "string", "description": "人读编号，如「定理 2.4.1」「(3.4)」"},
+    "title": {"type": "string"},
+    "statement": {"type": "string", "minLength": 8, "description": "中文一句话；必须能被单独引用而不失真"},
+    "statement_orig": {"type": "string", "description": "原文（英/日/德），可选"},
+    "locator": {
+      "type": "object",
+      "description": "至少一个可回跳定位；优先 TeX 行号，其次印刷页，其次 PDF 页 + bbox",
+      "properties": {
+        "page_orig": {"type": "integer", "minimum": 1},
+        "page_pdf": {"type": "integer", "minimum": 1},
+        "bbox": {"type": "array", "items": {"type": "number"}, "minItems": 4, "maxItems": 4},
+        "tex_file": {"type": "string"},
+        "tex_lines": {"type": "array", "items": {"type": "integer"}, "minItems": 2, "maxItems": 2},
+        "env": {"type": "string"},
+        "label": {"type": "string"},
+        "para_id": {"type": "string"},
+        "source_sha256": {"type": "string"}
+      },
+      "anyOf": [
+        {"required": ["page_orig"]},
+        {"required": ["page_pdf", "bbox"]},
+        {"required": ["tex_file", "tex_lines"]},
+        {"required": ["para_id"]}
+      ]
+    },
+    "role": {
+      "enum": ["spine", "key", "routine", "gap", "background"],
+      "description": "spine=主线必经；key=不平凡但可绕过；routine=常规可略读；gap=原文未证/黑箱引用；background=标准背景"
+    },
+    "difficulty": {
+      "type": "object",
+      "required": ["score", "dims", "why_hard", "check"],
+      "properties": {
+        "score": {"type": "integer", "minimum": 1, "maximum": 5},
+        "dims": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": ["D1_conceptual", "D2_gap", "D3_technical", "D4_notation", "D5_transfer", "D6_verification", "D7_loadbearing", "D8_expository"]
+          }
+        },
+        "why_hard": {"type": "string", "minLength": 10, "description": "为什么这一步不平凡（1–2 句）"},
+        "reader_trap": {"type": "string", "description": "读者具体会在哪里卡住或误读"},
+        "unlock": {"type": "string", "description": "补哪段、查哪条、算什么例子可以通过"},
+        "check": {"type": "string", "minLength": 6, "description": "30 分钟内可执行的验证动作"},
+        "jump": {
+          "type": "object",
+          "properties": {
+            "missing": {"type": "array", "items": {"type": "string"}, "description": "推理中缺失的中间事实"},
+            "severity": {"enum": ["small", "medium", "large"]}
+          }
+        },
+        "confidence": {"enum": ["low", "medium", "high"]}
+      }
+    },
+    "uses": {"type": "array", "items": {"type": "string"}, "description": "本步依赖的 unit_id"},
+    "used_by": {"type": "array", "items": {"type": "string"}},
+    "proves": {"type": "array", "items": {"type": "string"}, "description": "本步证明的 unit_id 或 concept_id"},
+    "concepts": {"type": "array", "items": {"type": "string"}, "description": "concept_id 列表"},
+    "review": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {"enum": ["proposed", "accepted", "rejected", "needs_review", "unresolved"]},
+        "reviewers": {"type": "array", "items": {"type": "string"}},
+        "notes": {"type": "string"}
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["annotator"],
+      "properties": {
+        "annotator": {"type": "string"},
+        "model": {"type": "string"},
+        "prompt_version": {"type": "string"},
+        "date": {"type": "string"},
+        "source": {"enum": ["paper", "reading_note", "translation", "reconstruction", "external", "claim"]}
+      }
+    },
+    "status": {"enum": ["active", "superseded", "withdrawn"], "default": "active"},
+    "tags": {"type": "array", "items": {"type": "string"}}
+  }
+}

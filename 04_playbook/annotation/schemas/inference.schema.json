@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://shuyi.local/schemas/inference.schema.json",
+  "title": "Inference（一条推理记录，替代裸边）",
+  "type": "object",
+  "required": ["inference_id", "paper_id", "premises", "conclusion", "relation", "and_or", "warrant", "rule", "evidence", "review"],
+  "additionalProperties": false,
+  "properties": {
+    "inference_id": {"type": "string", "pattern": "^[A-Za-z0-9_.-]+:inf-[A-Za-z0-9_.:-]+$"},
+    "paper_id": {"type": "string"},
+    "premises": {"type": "array", "minItems": 1, "items": {"type": "string"}, "description": "前提 unit_id"},
+    "conclusion": {"type": "string", "description": "结论 unit_id 或 concept_id"},
+    "relation": {
+      "enum": ["uses", "proves", "generalizes", "specializes", "analogous", "contradicts", "equivalent", "defines"],
+      "description": "第一版只允许这 8 种；新增需过评审"
+    },
+    "and_or": {"enum": ["and", "or", "single"], "description": "多前提是合取、析取，还是单前提"},
+    "warrant": {"type": "string", "minLength": 8, "description": "为什么这些前提足以/部分支持结论；缺 warrant 的边一律不发布"},
+    "rule": {
+      "enum": ["SUB", "APPLY", "EXPAND", "COLLECT", "COMPONENT", "CONSTRUCT", "COMPAT", "COMBINE", "OPAQUE"],
+      "description": "操作类型，用来锁住「一步」的粒度：SUB=代入/特化，APPLY=引用定理，EXPAND=展开定义，COLLECT=汇总/积分，COMPONENT=取分量，CONSTRUCT=构造对象，COMPAT=验证相容/交换，COMBINE=合并多步，OPAQUE=黑箱引用"
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["quote", "locator"],
+      "properties": {
+        "quote": {"type": "string", "maxLength": 400, "description": "支撑这条推理的原文短引（≤200 汉字）"},
+        "locator": {"type": "object", "description": "同 unit.locator 结构"}
+      }
+    },
+    "confidence": {"enum": ["low", "medium", "high"]},
+    "review": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {"enum": ["proposed", "accepted", "rejected", "unresolved"]},
+        "reviewers": {"type": "array", "items": {"type": "string"}},
+        "notes": {"type": "string"}
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "annotator": {"type": "string"},
+        "model": {"type": "string"},
+        "date": {"type": "string"},
+        "source": {"enum": ["paper", "reading_note", "reconstruction", "external"]}
+      }
+    }
+  }
+}

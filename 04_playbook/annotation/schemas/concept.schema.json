@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://shuyi.local/schemas/concept.schema.json",
+  "title": "Concept（知识网络节点：概念/定理/方法/问题；ID 与名字分离）",
+  "type": "object",
+  "required": ["concept_id", "slug", "type", "name_zh", "one_line", "status", "entry_unit", "related"],
+  "additionalProperties": false,
+  "properties": {
+    "concept_id": {
+      "type": "string",
+      "pattern": "^kn_[0-9a-f]{12}$",
+      "description": "内容哈希主键：sha1(type|msc|normalized_name) 前 12 位；永不变，改名只改 slug/alias"
+    },
+    "slug": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]{1,63}$", "description": "可读 URL 段，可随命名调整"},
+    "type": {"enum": ["object", "property", "construction", "theorem", "method", "problem"]},
+    "name_zh": {"type": "string"},
+    "name_en": {"type": "string"},
+    "one_line": {"type": "string", "minLength": 8, "description": "一句话定义/定位，用于卡片与检索"},
+    "aliases": {"type": "array", "items": {"type": "string"}},
+    "field_msc": {"type": "string", "description": "MSC 分类，可多值用 ; 分隔"},
+    "entry_unit": {"type": "string", "description": "最佳入口 unit_id：优先定义，其次关键定理"},
+    "key_units": {"type": "array", "items": {"type": "string"}, "description": "体现该概念的关键定理/证明"},
+    "prerequisites": {"type": "array", "items": {"type": "string"}, "description": "concept_id"},
+    "related": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["to", "type", "evidence"],
+        "properties": {
+          "to": {"type": "string", "description": "concept_id"},
+          "type": {"enum": ["generalizes", "specializes", "analogous", "contradicts", "equivalent", "applies_to", "refines"]},
+          "evidence": {"type": "array", "items": {"type": "string"}, "minItems": 1, "description": "unit_id / inference_id"}
+        }
+      }
+    },
+    "external_ids": {
+      "type": "object",
+      "properties": {
+        "zbmath": {"type": "string"},
+        "msc": {"type": "string"},
+        "nlab": {"type": "string"},
+        "mathlib": {"type": "string"},
+        "wikidata": {"type": "string"},
+        "arxiv": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "papers": {"type": "array", "items": {"type": "string"}},
+    "status": {"enum": ["draft", "reviewed", "canonical", "merged", "deprecated"]},
+    "merged_from": {"type": "array", "items": {"type": "string"}},
+    "review": {
+      "type": "object",
+      "properties": {
+        "status": {"enum": ["proposed", "accepted", "needs_review", "rejected"]},
+        "reviewers": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "created_by": {"type": "string"},
+    "created_at": {"type": "string"}
+  }
+}

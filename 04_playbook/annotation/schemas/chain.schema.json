@@ -1,0 +1,87 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://shuyi.local/schemas/chain.schema.json",
+  "title": "ArgumentChain（一篇论文的思考逻辑链）",
+  "type": "object",
+  "required": ["paper_id", "chain_id", "thread", "problem_state", "move", "chain", "closure", "boundaries"],
+  "additionalProperties": false,
+  "properties": {
+    "paper_id": {"type": "string"},
+    "chain_id": {"type": "string"},
+    "thread": {"type": "string", "minLength": 10, "description": "这篇论文要回答的总问题（一句话）"},
+    "problem_state": {
+      "type": "object",
+      "required": ["known", "blocked", "naive_fails"],
+      "properties": {
+        "known": {"type": "array", "items": {"type": "string"}, "description": "此前已知/已有工具"},
+        "blocked": {"type": "string", "description": "卡在哪里"},
+        "naive_fails": {"type": "string", "description": "为什么直接/显然的做法不行"}
+      }
+    },
+    "move": {
+      "type": "object",
+      "required": ["unit_id", "type", "statement"],
+      "properties": {
+        "unit_id": {"type": "string"},
+        "type": {"enum": ["new_representation", "new_definition", "analogy", "reduction", "technical_device", "new_invariant"]},
+        "statement": {"type": "string", "description": "关键一转，一句话"}
+      }
+    },
+    "chain": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["seq", "unit_id", "because", "enables"],
+        "properties": {
+          "seq": {"type": "integer", "minimum": 1},
+          "unit_id": {"type": "string"},
+          "because": {"type": "string", "description": "为什么这一步从前一步/前提成立"},
+          "enables": {"type": "array", "items": {"type": "string"}, "description": "这一步打开了什么"}
+        }
+      }
+    },
+    "closure": {
+      "type": "object",
+      "required": ["unit_id", "what_it_settles"],
+      "properties": {
+        "unit_id": {"type": "string"},
+        "what_it_settles": {"type": "string"},
+        "what_it_leaves": {"type": "string"}
+      }
+    },
+    "boundaries": {
+      "type": "object",
+      "required": ["hypotheses", "fails_when"],
+      "properties": {
+        "hypotheses": {"type": "array", "items": {"type": "string"}},
+        "fails_when": {"type": "string"},
+        "generalizes_to": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "counterfactual": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["remove", "breaks"],
+        "properties": {
+          "remove": {"type": "string"},
+          "breaks": {"type": "array", "items": {"type": "string"}}
+        }
+      },
+      "description": "移除测试：删掉某步，链上哪些结论失效；删了不坏 → 降级为 routine"
+    },
+    "routes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "chain"],
+        "properties": {
+          "name": {"type": "string"},
+          "note": {"type": "string"},
+          "chain": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    }
+  }
+}
