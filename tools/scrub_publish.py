@@ -28,9 +28,30 @@ PATTERNS = [
     (re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----"), "[已脱敏]"),
     (re.compile(r"ssh-ed25519 AAAA[A-Za-z0-9+/=]+"), "[已脱敏]"),
     (re.compile(r"[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}"), "[邮箱隐去]"),
-    (re.compile(r"(?i)\b[A-Za-z]:[\\/]+Users[\\/][^\s\"'<>|]*"), "<本地路径>"),
-    (re.compile(r"\\\\[A-Za-z0-9._\-]+\\[^\s\"'<>|]*"), "<本地路径>"),
 ]
+
+# 路径类单独处理（2026-11-15 修）：旧版直接 `r"\\\\[A-Za-z0-9._\-]+\\[^\s\"'<>|]*"`，
+# 在 .tex 里碰到公式换行 `\\`（如 pmatrix 的 `y_0\\y_1`）也会匹配，把 36 个源文件与 22 段
+# 语料里的 `\\` 替换成了 `<本地路径>`。现在要求：
+#   1) 至少 `\\server\share` 三段结构，且整串后面紧跟空白/引号/行尾（TeX 里 `\\x\y{...}`
+#      后面通常紧跟 `{`、`(`、`$`，不会被误吃）；
+#   2) 候选串里只要出现 TeX 元字符（{}[]$^_&%~#）就原样保留。
+PATH_RX = re.compile(r"(?i)\b[A-Za-z]:[\\/]+Users[\\/][^\s\"'<>|]*")
+UNC_RX = re.compile(r"\\\\[A-Za-z0-9][\w.\-]*\\[A-Za-z0-9][\w.\-\\]*(?=$|[\s\"'>)\]，。、；])")
+TEX_META = set("{}[]$^_&%~#")
+
+
+def _keep_tex(m: re.Match) -> str:
+    seg = m.group(0)
+    if any(ch in TEX_META for ch in seg):
+        return seg
+    return "<本地路径>"
+
+
+def scrub_paths(s: str) -> tuple[str, int]:
+    out, n1 = PATH_RX.subn("<本地路径>", s)
+    out, n2 = UNC_RX.subn(_keep_tex, out)
+    return out, n1 + n2
 
 TEXT_EXT = {".md", ".txt", ".tsv", ".csv", ".tex", ".json", ".jsonl", ".yaml", ".yml",
             ".py", ".ps1", ".js", ".html", ".css", ".gitignore", ".gitattributes", ""}
@@ -42,7 +63,8 @@ def scrub_text(s: str) -> tuple[str, int]:
     for rx, rep in PATTERNS:
         s, n = rx.subn(rep, s)
         hits += n
-    return s, hits
+    s, n = scrub_paths(s)
+    return s, hits + n
 
 
 def scrub_obj(o, counter) -> object:

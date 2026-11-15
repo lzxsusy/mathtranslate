@@ -76,6 +76,7 @@ def main():
     # 语料
     zp = os.path.join(REPO, "01_corpus_zh", "zh_paragraphs.jsonl")
     paras = uniq = with_math = near = zhsum = 0
+    pkgs = set()
     if os.path.isfile(zp):
         seen = set()
         for line in io.open(zp, encoding="utf-8"):
@@ -84,6 +85,7 @@ def main():
                 continue
             d = json.loads(line)
             paras += 1
+            pkgs.add(d.get("pkg"))
             t = d.get("text", "")
             if "$" in t or "\\begin{" in t:
                 with_math += 1
@@ -123,6 +125,7 @@ def main():
         "| 成品 PDF（预印本类） | %d 部 / **%s**（Release 附件） |" % (pdf_rows, mb(pdf_bytes)),
         "| 中文段落语料 | **%d** 段（唯一 %d），其中 **%d** 段含公式（%.0f%%）；汉字 %s 字 |"
         % (paras, uniq, with_math, 100.0 * with_math / max(1, paras), format(zhsum, ",")),
+        "| 语料覆盖 | **%d** 个工程有段落入库（其余为仅成品 PDF / 无正文的工程） |" % len(pkgs),
         "| 近重复标注 | %d 段（保留，标 `near_dup_of`） |" % near,
         "| 术语基 | %d 条 |" % terms,
         "| 精选轨迹 | %d 条 |" % traj,

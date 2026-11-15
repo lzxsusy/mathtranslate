@@ -17,7 +17,11 @@ from __future__ import annotations
 import re
 
 UNWRAP = {"emph", "textbf", "textit", "textrm", "textsf", "texttt", "text",
-          "underline", "mbox", "mathrm", "operatorname", "hbox"}
+          "underline", "mbox", "transnote", "note", "remarkbox"}
+# 2026-11-15 修：`mathrm` / `operatorname` / `hbox` 原来在 UNWRAP 里，被剥成裸文本后
+# `\mathrm{d}x` → `dx`、`\operatorname{Spec}` → `Spec`，数学语料里丢了「正体/算子」语义，
+# 且与保留 `\mathbb`/`\mathcal` 的做法自相矛盾（全库实测 `\mathrm{` 存活 0 处）。
+# 这三个是**合法且可解析的 LaTeX**，下游 KaTeX/MathJax 能直接渲染，应当原样保留。
 DROP = {"BookStatementNumber", "label", "SourceParagraph", "SourceAnchor",
         "BookImage", "BookIndexPage", "index", "addcontentsline", "nocite",
         "BookNumberOnlyCaption", "caption", "vspace", "hspace", "centering",

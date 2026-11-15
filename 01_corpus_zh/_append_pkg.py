@@ -22,7 +22,7 @@ import time
 
 sys.stdout.reconfigure(encoding="utf-8")
 
-REPO = r"<本地路径>"
+REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CORPUS = os.path.join(REPO, "01_corpus_zh", "zh_paragraphs.jsonl")
 STATS = os.path.join(REPO, "01_corpus_zh", "zh_paragraphs_stats.json")
 TERMBASE = os.path.join(REPO, "01_corpus_zh", "termbase.jsonl")
@@ -83,13 +83,10 @@ JUNK_TAIL = re.compile(r"[\s\d.ptemex]{6,}$", re.I)
 
 
 def unwrap_all(s: str) -> str:
-    for _ in range(3):
-        new = UNWRAP.sub("", s)
-        new = new.replace("}", "}", 1) if False else new
-        if new == s:
-            break
-        s = new
-    return s
+    r"""下行兼容用。旧实现用 `UNWRAP.sub("", s)` 直接删 `\cmd{`，
+    会把 `\mathrm{e}^{2\pi i}` 剥成 `e}^{2\pi i}`（闭合括号留在外面），
+    这里是不可配平的坏公式来源之一，已改为走 _tex_clean 的配平展开。"""
+    return _expand(s)
 
 
 def clean_text(t: str) -> str:

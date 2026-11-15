@@ -1,5 +1,30 @@
 # CHANGELOG
 
+## v1.4.1 — 2026-11-15（语料整改，第三方评审后）
+
+首次由外部第三方对本库做质量评审（报告：`AUDIT_2026-11-15.md` / `site/audit-2026-11-15.html`，
+判定 **B+ 有条件通过**），并按评审结论修掉可修项。**语料口径因此全部更新**，旧数字（44,522 段 / 71 包 / 3,668,359 汉字）作废。
+
+### 修了什么
+
+- **补包**：此前有译文却没进语料的 10 个工程入库（新增 `01_corpus_zh/_append_pkg_generic.py`）——
+  SY01-20、SY01-21、SY01-22、SY02-10、SY05-23、SY05-24、SY05-25、SY07-08、SY08-01、SY08-02，
+  **+4,516 段 / +367,525 汉字**（原语料 +10.0%）。语料现为 **49,038 段 / 81 个工程 / 4,035,712 汉字**。
+  每行新增 `seg="blank"`（切分口径）与 `tier="B"`（未经人工评级）。`SY02-11` 无可用 `.tex`，仍缺。
+- **路径误伤**（`tools/scrub_publish.py`）：脱敏正则曾把 TeX 换行 `\\` 当成 UNC 路径吞掉/替换成 `<本地路径>`；
+  改为保 TeX 元字符、只认真盘符/UNC 路径，并回填 **36 个 `.tex` 的 99 处**与语料 22 行（重算 `para_id`）。
+- **数学语义**（`01_corpus_zh/_tex_clean.py`）：`UNWRAP` 不再吞 `\mathrm` / `\operatorname` / `\hbox`。
+- **宏展开**（`01_corpus_zh/_append_pkg.py`）：`unwrap_all()` 改用配平展开器，不再用裸正则（会把 `\mathrm{e}^{2\pi i}` 剥成 `e}^{2\pi i}`）。
+- **可移植**：`_append_pkg.py` / `_build_corpus_v3.py` 里硬编码的绝对路径改为基于 `__file__`。
+- **缺陷可见**（新增 `_repair_2026-11-15.py`，只加 `flags` 不改正文）：`empty_ref` 481、`layout_residue` 90、
+  `orphan_number` 2,621、`meta_block` 10、`overlong` 12、`junk_trimmed` 214、`placeholder_in_math` 4、`unbalanced_math` 7。
+- **统计口径**：`make_stats.py` 新增「语料覆盖」行；README / DATASHEET / QA_REPORT / `00_README.md` / 欠账台账全部回填实测值。
+
+### 没修（已写进诚实缺陷表）
+
+工程自定义宏未展开（7,816 段 / 21,923 处，需重跑抽取器并喂 `\newcommand` 表）；历史清洗吞掉的
+`\mathbb/\mathcal` 参数无法还原；近重复未对新增 10 包重算（1,418 仍是下界）；EN↔ZH 对齐仍缺。
+
 ## v1.4.0 — 2026-11-15
 
 新增 Elliott 2016 年西北大学博士论文《几何朗兰兹对应的规范场论面向》（228 页）的**全本重译注本**，

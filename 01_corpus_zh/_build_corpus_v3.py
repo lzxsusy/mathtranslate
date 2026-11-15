@@ -23,7 +23,9 @@ from collections import defaultdict
 
 sys.stdout.reconfigure(encoding="utf-8")
 
-SRC = r"<本地路径>"
+HERE = os.path.dirname(os.path.abspath(__file__))
+REPO = os.path.dirname(HERE)
+SRC = os.path.join(HERE, "zh_paragraphs.jsonl")
 ZH = re.compile(r"[\u4e00-\u9fff]")
 
 # 排版残渣特征：这些字符串出现在正文里说明抽到的是目录/表格/环境定义，不是内容
@@ -116,7 +118,7 @@ def main():
     ap.add_argument("--src", default=SRC)
     ap.add_argument("--thresh", type=float, default=0.8)
     args = ap.parse_args()
-    root = r"<本地路径>"
+    root = REPO
     out = os.path.join(root, args.out)
     os.makedirs(out, exist_ok=True)
 
