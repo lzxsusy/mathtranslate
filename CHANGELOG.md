@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## datasets v0.4 — 2026-11-16（第一批 L0 修正与三张跨工程精读卡）
+
+按"先修余料、再补理解"的顺序做了第一批实活，并把成本记下来，作为是否上量的依据。
+
+- 新增 `tools/ds_fix_l0.py`：读 `harvest_queue.jsonl`，按 `para_id` 回改 `01_corpus_zh/zh_paragraphs.jsonl`；
+  默认只 `--dry-run`，`--apply` 才落盘；删除 `meta_block`/`template` 段，去尺寸残渣、合并空白、展开未定义宏；
+  改动留档 `datasets/fixes/l0_batch01.jsonl`（before/after 各截 2,000 字）。
+- 关键实现：宏**不能全局展开**。`SY01-17` 的导言把 `\R`、`\C` 定义为 `\mathcal{R}`、`\mathcal{C}`，全局换成
+  `\mathbb{R}` 会改错语义；改为按工程扫 `源码/**/*.tex|sty` 的 `\newcommand`/`\DeclareMathOperator` 建表，逐工程展开。
+- 第一批（队列前 50 条）：44 条修正、3 条删除、3 条无改动；语料 49,038 → 49,035 段，4,035,712 → 4,035,682 汉字。
+- 新增 3 张跨工程 L2 精读卡：`SY01-01` 谱流（分次自同构的显式作用，补原文一句带过的构造）、
+  `SY01-09` SYZ 猜想的启发式推导（A-膜模空间 = X̌、逐纤维 T 对偶、两处 resp. 的交叉对应）、
+  `SY03-08` Chern–Simons 形式在规范变换下的全导数项（符号与左右作用约定绑定）。
+- `datasets/PUBLISH.json` 重生成：10 个可发布文件、0 条被阻；`candidates/` 与 `fixes/` 属内部台账，不参与发布清单。
+- 成本：L0 约 0.5 人时/50 条；L2 单卡 AI 起草 2–3 分钟、人工复核 8–12 分钟。
+
 ## datasets v0.3 — 2026-11-16（存量回收：`ds_harvest.py` 与五级标注）
 
 不追 Lean，不追"再译几篇"；把库里已经译过、但价值没榨干的"余料"找出来，补成可训练的中文数学推理数据。

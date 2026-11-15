@@ -46,7 +46,7 @@ def main():
     allowed, blocked = [], []
     for base, _, files in os.walk(DS):
         parts = base.replace("\\", "/").split("/")
-        if "_internal" in parts:
+        if "_internal" in parts or "candidates" in parts or "fixes" in parts:
             continue
         for name in sorted(files):
             if not name.endswith(".jsonl"):
