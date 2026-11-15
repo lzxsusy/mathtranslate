@@ -4,7 +4,7 @@
 
 | 目录 | 内容 | 说明 |
 |---|---|---|
-| `01_corpus_zh/` | 中文段落语料 `zh_paragraphs.jsonl`（49,038 段，81 个工程）、术语表 `termbase.jsonl`（1,627 条） | 从 92 部译本的 TeX 源码抽出的正文段落（已去 LaTeX 命令）与人工冻结术语 |
+| `01_corpus_zh/` | 中文段落语料 `zh_paragraphs.jsonl`（49,038 段，92 个工程）、术语表 `termbase.jsonl`（1,627 条） | 从 92 部译本的 TeX 源码抽出的正文段落（已去 LaTeX 命令）与人工冻结术语 |
 | `02_trajectories/` | 精选 agent 任务轨迹 402 条 | 任务意图 → 关键动作（工具调用序列）→ 验证证据 → 结论，四段式 |
 | `03_translations_meta/` | 92 部译本的元数据、投稿信息与术语索引；预印本类成品 PDF 清单见 `_PDF清单.tsv` | 源码与工程文档统一放在 `08_source_code/`，本目录不重复保存；成品 PDF 已移到 Release 附件 |
 | `04_playbook/` | 翻译总纲、施工纪律、文献引进标准、待完成清单、环境改造 | 这套工程「怎么干」的规范 |
