@@ -11,7 +11,7 @@
 | `05_seminar_witten/` | 威腾（Witten）文章研讨班产出与文献索引 | 研讨班任务书、errata、notes、one-pager、253 篇索引 |
 | `06_sessions_raw/` | 全量会话语料（脱敏、zst 压缩） | 118,278 条消息 / 2.61 亿字符 ≈ 1.7 亿 token；工具轨迹 17 万条。145 MB 分片已移到 Release `v1.0.1` 附件，仓库只留抽取脚本与分片说明 |
 | `07_originals/` | 原文获取指引与书目信息（**不含原文 PDF**） | 本库不发布、不托管、不给原文直链；arXiv 原文请到 arXiv 按编号获取，图书请走出版社/图书馆 |
-| `datasets/` | 可训练数据集：`parallel/`（原文片段↔译文↔译法理由）、`deepread/`（精读卡）、`highlights/`（高光/难证标注）、`traces/`（事件级工作流）、`kg/`（概念图谱）、`bench/`（held-out 评测） | 规则见 `datasets/README.md`；权利分 `self / arxiv / book` 三层，`book` 派生只进 `datasets/_internal/`，永不发布 |
+| `datasets/` | 可训练数据集：`math/`（数学推理条目：命题+证明步骤+缺口+校验）、`parallel/`（原文片段↔译文↔译法理由）、`deepread/`（精读卡）、`highlights/`（高光/难证标注）、`traces/`（事件级工作流）、`kg/`（概念图谱）、`bench/`（held-out 评测） | 规则见 `datasets/README.md`；权利分 `self / arxiv / book` 三层，`book` 派生只进 `datasets/_internal/`，永不发布 |
 
 ## 大体积资产：Release 附件
 

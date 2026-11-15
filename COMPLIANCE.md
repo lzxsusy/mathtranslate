@@ -159,15 +159,16 @@ python tools/check_manifest.py             # 清单一致性
 
 ## 11. 数据集与派生数据（2026-11-16 起）
 
-`datasets/` 是与译本并列的第五类资产，规则见 [`datasets/README.md`](datasets/README.md) 与 [`datasets/workflow/生产协议.md`](datasets/workflow/生产协议.md)。本章只列**硬约束**：
+`datasets/` 是与译本并列的第五类资产，规则见 [`datasets/README.md`](datasets/README.md)、[`datasets/math/README.md`](datasets/math/README.md) 与 [`datasets/workflow/生产协议.md`](datasets/workflow/生产协议.md)。本章只列**硬约束**：
 
-1. **权利三分**：`self`（自产：理由、精读、图谱、评测题）可 CC BY 4.0；`arxiv:<id>` 逐篇核许可，未确认时只允许 ≤300 字引用；`book` 只进 `datasets/_internal/`，永不发布、不进公开训练集、不随权重发布。
-2. **引用上限**：`parallel` 每条原文 ≤600 字、单条记录 ≤1,400 字；`deepread` 单条 ≤6,000 字。不得把整节/整章译文或原文粘进一条记录。
+1. **权利三分**：`self`（自产：中文表述、证明整理、理由、精读、图谱、评测题）可 CC BY 4.0；`arxiv:<id>` 逐篇核许可，未确认时只允许 ≤300 字引用；`book` 只进 `datasets/_internal/`，永不发布、不进公开训练集、不随权重发布。数学事实本身不受版权保护，`math/` 记录的权利只涉及其中的中文表述与结构。
+2. **引用上限**：`parallel` 每条原文 ≤600 字、单条记录 ≤1,400 字；`deepread` 单条 ≤6,000 字；`math` 陈述 ≤4,000 字、证明 ≤12,000 字、单条 ≤24,000 字。不得把整节/整章译文或原文粘进一条记录。
 3. **不得新增 L4**：数据集里不得出现扫描页图、书页裁图、OCR 全文、出版社封面；引用只保留"够说明译法"的短句。
-4. **可追溯**：每条记录必须能指回 `08_source_code/<pkg>/源码/` 的具体文件与行号（`evidence` 或 `zh_ref`），行号必须真实存在。
+4. **可追溯**：每条记录必须能指回 `08_source_code/<pkg>/源码/` 的具体文件与行号（`evidence` 或 `zh_ref`），行号必须真实存在；`math/` 用 `source.ref` + `source.locator` 或 `dependencies.ref` 追溯。
 5. **发布过滤**：`python tools/ds_publish.py --check` 必须 0 blocked 才能发布；`datasets/PUBLISH.json` 是发布清单，记录每个文件的 sha256。
 6. **门禁**：`.githooks/pre-commit` 同时跑 `check_compliance.py` 与 `ds_lint.py`；任一失败不得提交。
 7. **轨迹脱敏**：`traces/` 中的本机路径写作 `<path>`，邮箱、口令、私钥一律删除；`fidelity=reconstructed` 的重建轨迹必须写明依据。
+8. **数学校验诚实**：`math/` 的 `verification.kind` 只能是 `lean` / `human` / `none`，标 `lean` 必须给编译过的 `artifact`；标 `human` 须写明审校人；难题（`difficulty>=4`）不得标 `checked` 而只做单人复核。
 
-数据集不改变 §2 的 L1–L4 模型：它只是把 L2 的"译文"拆成更细的、可授权的颗粒度——理由与精读是自产（L1），译文片段仍是 L2。
+数据集不改变 §2 的 L1–L4 模型：它只是把 L2 的"译文"拆成更细的、可授权的颗粒度——理由、精读与中文证明整理是自产（L1），译文片段仍是 L2。
 

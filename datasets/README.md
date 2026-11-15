@@ -7,10 +7,20 @@
 
 一段原文、一段译文、一条「为什么这么译」的理由，三样齐了才算数据；缺了理由，就只是文本。
 
-## 1. 五类数据
+**2026-11-16 方向调整**：训练价值的主体从「翻译对齐」转向「数学与推理」——模型缺的不是译法，而是数学理解、证明能力和**中文推理链**。因此：
+
+- `math/`（数学推理条目）成为主力：命题、自足上下文、证明步骤、缺口、难度、校验状态；
+- `parallel/` 保留但降为术语与表达的小样本，不再扩量；
+- `deepread/`、`highlights/` 继续作为 `math/` 的素材池；
+- `traces/` 记录「怎么想、怎么验」，不是「怎么译」。
+
+设计依据见 [math/README.md](math/README.md)（北大 AI4Math 的命题级检索、层级展开、形式化反馈三条经验）。
+
+## 1. 七类数据
 
 | 目录 | 内容 | 一条记录 = 什么 | 单条上限 |
 |---|---|---|---|
+| `math/` | 定义/定理/断言 + 自足上下文 + 证明步骤 + 依赖 + 校验状态 | 一个可独立检验的数学单元（中文优先） | 陈述 4,000 字、证明 12,000 字 |
 | `parallel/` | 原文片段 ↔ 译文片段 ↔ 译法理由 | 一个句群/公式块的对齐单元 | 原文 600 字、译文 600 字 |
 | `deepread/` | 精读卡：命题、证明骨架、补步、易错点、前置知识 | 一个可独立复述的数学单元 | 正文 4,000 字 |
 | `highlights/` | 高光标注：哪段论述精彩、哪段证明难、难在哪、怎么破 | 一处「值得单独讲」的位置 | 正文 1,500 字 |
@@ -22,7 +32,7 @@
 
 ## 2. 权利分层（写进每条记录）
 
-- `rights: "self"` — 自产（导读、术语裁决、精读卡、图谱边、评测题）。可 CC BY 4.0，可商用训练。
+- `rights: "self"` — 自产（导读、术语裁决、精读卡、图谱边、评测题、中文证明与结构化）。可 CC BY 4.0，可商用训练。数学事实本身不受版权保护；`math/` 记录的版权只涉及其中的中文表述与结构。
 - `rights: "arxiv:<id>"` — 原文来自 arXiv。**逐篇**核对 arXiv 许可（`https://arxiv.org/abs/<id>` 页脚）；只有 CC BY / CC0 的原文片段可随数据集公开，其余只存 `src_ref` 链接与不超过 300 字的引用。
 - `rights: "book"` — 在版图书（含扫描件、出版社 PDF）。**只进 `_internal/`，不发布、不进公开数据集、不随权重发布**；片段引用 ≤ 200 字，且只用于本机训练与人工研读。
 
@@ -33,7 +43,8 @@
 ```
 datasets/
 ├── README.md                  # 本文件
-├── schema/                    # 五类记录的 JSON Schema
+├── schema/                    # 七类记录的 JSON Schema
+├── math/<pkg>.<split>.jsonl   # 数学推理条目（主力）
 ├── parallel/<pkg>.<split>.jsonl
 ├── deepread/<pkg>.<split>.jsonl
 ├── highlights/<pkg>.<split>.jsonl
@@ -54,7 +65,7 @@ datasets/
 4. **自检**：`python tools/ds_lint.py datasets/` 零错误；引用行号必须存在。
 5. **双人复核**：`reviewed_by` 至少两人（生产 + 审校），`status` 从 `draft` → `reviewed` → `published`。
 
-生产提示词与审校清单一律放 `workflow/`，不散落在会话里。
+生产提示词与审校清单一律放 `workflow/`，不散落在会话里。`math/` 的专门流程（选点、自足化、证明步骤、依赖、Lean 校验）见 [math/README.md](math/README.md)。
 
 ## 5. 质量门禁
 
@@ -65,7 +76,10 @@ datasets/
 - `src_ref` 的 arXiv 号能被 `^[a-z-]+(\.[A-Z]{2})?/\d{7}$|^\d{4}\.\d{4,5}$` 解析；
 - `evidence[].file` 必须存在于仓库且行号不超过文件行数；
 - 文本中不得出现本机绝对路径（`C:\Users\...`）、口令、邮箱；
-- 记录不得是整章/整节全文粘贴（单条 ≤ 6,000 字）。
+- 记录不得是整章/整节全文粘贴（单条 ≤ 6,000 字，`math/` ≤ 24,000 字）；
+- `math/` 的 `verification.kind` ∈ {`lean`,`human`,`none`}、`verification.status` ∈ {`checked`,`sketch`,`unchecked`}；标 `lean` 必须给 `artifact`（编译过的文件路径）。
+
+`tools/ds_publish.py` 是发布过滤器：`book` 一律拦；`arxiv:*` 未确认 CC BY 的整条拦、只留 ≤300 字引用；`self` 需 `status=reviewed/published`。
 
 ## 6. 引用与署名
 
@@ -76,9 +90,10 @@ datasets/
 https://atomgit.com/lzxSUSUY/mathtranslate/blob/main/datasets/<...>.jsonl
 ```
 
-原文权利归原作者与出版方；数据集只主张自产部分（理由、精读、图谱、评测题）的 CC BY 4.0。
+原文权利归原作者与出版方；数学事实本身不受版权保护；数据集只主张自产部分（中文表述、译法理由、精读、证明整理、图谱、评测题）的 CC BY 4.0。
 
 ## 7. 版本
 
 - `v0.1`（2026-11-16）：五类 schema + SY05-25 试点 + 校验器。
+- `v0.2`（2026-11-16）：新增 `math/`（数学推理条目）与 `math.schema.json`，SY05-25 6 条；`parallel/` 降为术语样本；发布过滤器与门禁支持 `math/`。
 - 后续见 [CHANGELOG.md](../CHANGELOG.md)。

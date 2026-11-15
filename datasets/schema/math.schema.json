@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://mathtranslate.local/schema/math.schema.json",
+  "title": "数学推理条目（datasets/math）",
+  "type": "object",
+  "required": [
+    "id", "kind", "lang", "statement", "context", "difficulty",
+    "verification", "rights", "status", "reviewed_by"
+  ],
+  "properties": {
+    "id": {"type": "string", "pattern": "^[A-Z0-9-]+\\.[a-z][0-9]{3}$"},
+    "kind": {
+      "type": "string",
+      "enum": ["definition", "theorem", "claim", "construction", "example", "counterexample", "gap"]
+    },
+    "lang": {"type": "string", "enum": ["zh", "en"]},
+    "topic": {"type": "array", "items": {"type": "string"}},
+    "statement": {"type": "string", "minLength": 20, "maxLength": 4000},
+    "context": {"type": "string", "maxLength": 3000},
+    "proof": {"type": "string", "maxLength": 12000},
+    "proof_steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["step", "justification"],
+        "properties": {
+          "step": {"type": "string"},
+          "justification": {"type": "string"},
+          "gap": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "why"],
+        "properties": {
+          "name": {"type": "string"},
+          "why": {"type": "string"},
+          "ref": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "difficulty": {"type": "integer", "minimum": 1, "maximum": 5},
+    "source": {
+      "type": "object",
+      "properties": {
+        "type": {"enum": ["arxiv", "book", "lecture", "thesis", "self"]},
+        "ref": {"type": "string"},
+        "locator": {"type": "string"},
+        "quote": {"type": "string", "maxLength": 300}
+      },
+      "additionalProperties": false
+    },
+    "verification": {
+      "type": "object",
+      "required": ["kind", "status"],
+      "properties": {
+        "kind": {"enum": ["lean", "human", "none"]},
+        "status": {"enum": ["checked", "sketch", "unchecked"]},
+        "artifact": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "rights": {"type": "string", "enum": ["self", "arxiv:0802.0999"]},
+    "confidence": {"type": "string", "enum": ["high", "medium", "low"]},
+    "status": {"type": "string", "enum": ["draft", "reviewed", "published"]},
+    "reviewed_by": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "notes": {"type": "string", "maxLength": 2000}
+  },
+  "additionalProperties": false
+}

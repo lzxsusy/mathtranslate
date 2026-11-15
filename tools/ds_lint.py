@@ -22,6 +22,13 @@ LIMITS = {
     "highlights": {"what": 500, "why_hard": 600, "strategy": 600, "total": 3000},
     "kg": {"definition": 500, "total": 1500},
     "bench": {"question": 800, "reference_answer": 2000, "total": 4000},
+    "math": {"statement": 4000, "context": 3000, "proof": 12000, "total": 24000},
+}
+
+MATH_KINDS = {"definition", "theorem", "claim", "construction", "example", "counterexample", "gap"}
+MATH_VERIFY = {
+    "kind": {"lean", "human", "none"},
+    "status": {"checked", "sketch", "unchecked"},
 }
 
 REQUIRED = {
@@ -36,6 +43,8 @@ REQUIRED = {
     "kg": ["id", "pkg", "rights", "type", "evidence"],
     "bench": ["id", "pkg", "rights", "question", "kind", "rubric", "must_include",
               "difficulty", "evidence", "status", "reviewed_by"],
+    "math": ["id", "kind", "lang", "statement", "context", "difficulty",
+             "verification", "rights", "status", "reviewed_by"],
 }
 
 ID_RE = {
@@ -45,6 +54,7 @@ ID_RE = {
     "kg": r"^[A-Z]{2}\d{2}-\d{2}\.[a-z]\d{3,4}$",
     "bench": r"^[A-Z]{2}\d{2}-\d{2}\.b\d{3}$",
     "traces": r"^[A-Z]{2}\d{2}-\d{2}\.[a-z0-9-]+$",
+    "math": r"^[A-Z]{2}\d{2}-\d{2}\.[a-z]\d{3}$",
 }
 PKG_RE = re.compile(r"^SY\d{2}-\d{2}$")
 ARXIV_RE = re.compile(r"^(\d{4}\.\d{4,5}|[a-z-]+(\.[A-Z]{2})?/\d{7})(v\d+)?$")
@@ -126,7 +136,7 @@ def lint_file(fp, kind, seen_ids, repo_root, errors, warnings):
                 if rid in seen_ids:
                     die("%s id 重复：%s" % (where, rid), errors)
                 seen_ids.add(rid)
-                if not PKG_RE.match(str(rec.get("pkg", ""))):
+                if kind != "traces" and kind != "math" and not PKG_RE.match(str(rec.get("pkg", ""))):
                     die("%s pkg 不合规：%s" % (where, rec.get("pkg")), errors)
                 rights = str(rec.get("rights", ""))
                 if not (rights == "self" or rights == "book" or rights.startswith("arxiv:")):
@@ -141,6 +151,21 @@ def lint_file(fp, kind, seen_ids, repo_root, errors, warnings):
                     check_ref(rec, where, errors, repo_root)
                 elif kind in ("deepread", "highlights", "bench"):
                     check_evidence(rec, where, errors, repo_root)
+                elif kind == "math":
+                    if rec.get("kind") not in MATH_KINDS:
+                        die("%s math.kind 非法：%s" % (where, rec.get("kind")), errors)
+                    if rec.get("lang") not in ("zh", "en"):
+                        die("%s math.lang 非法：%s" % (where, rec.get("lang")), errors)
+                    v = rec.get("verification")
+                    if not isinstance(v, dict):
+                        die("%s math.verification 不是对象" % where, errors)
+                    else:
+                        if v.get("kind") not in MATH_VERIFY["kind"]:
+                            die("%s verification.kind 非法：%s" % (where, v.get("kind")), errors)
+                        if v.get("status") not in MATH_VERIFY["status"]:
+                            die("%s verification.status 非法：%s" % (where, v.get("status")), errors)
+                        if v.get("kind") == "lean" and not v.get("artifact"):
+                            die("%s verification.kind=lean 但缺 artifact" % where, errors)
             total = len(line)
             lim = LIMITS.get(kind, {}).get("total", 6000)
             if total > lim:
@@ -168,7 +193,7 @@ def main():
     if args:
         datasets = os.path.abspath(args[0])
     kinds = {"parallel": "parallel", "deepread": "deepread", "highlights": "highlights",
-             "traces": "traces", "kg": "kg", "bench": "bench"}
+             "traces": "traces", "kg": "kg", "bench": "bench", "math": "math"}
     errors, warnings = [], []
     seen_ids = set()
     total = 0

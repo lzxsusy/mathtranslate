@@ -17,7 +17,7 @@ AI 辅助翻译的过程轨迹、以及威腾文章研讨班的组织资料整�
 | 指标 | 数值 |
 |---|---|
 | 译注工程 | **96** 部（其中 **82** 部带完整 LaTeX 源码） |
-| 仓库文件 | 6781 个 / **321.2 MB** |
+| 仓库文件 | 6784 个 / **321.3 MB** |
 | LaTeX 源文件 / 插图 | 1581 个 `.tex` / 2118 张图 |
 | 成品 PDF（预印本类） | 41 部 / **50.8 MB**（Release 附件） |
 | 中文段落语料 | **49038** 段（唯一 47471），其中 **42153** 段含公式（86%）；汉字 4,035,712 字 |
@@ -124,7 +124,7 @@ Bourbaki 报告、Astérisque 专辑、arXiv 预印本、论文集（proceedings
 | `papers/WIT-1989-JONES/` | **威腾 1989 CS/Jones 论文研讨班**（第二轮解经试点）：六场研讨记录、claims/questions 数据、教材核查；交付两版讲义——**49 页连续叙事讲义**（`deliverables/lecture/`，可作课程主文本）与 **97 页逐句注疏版**（`deliverables/reading_note/`），均含 LaTeX 源码、一键构建工程、协作流程记录，并有打包下载 `WIT-1989-JONES-v1.0.zip` |
 | `08_source_code/` | **每部译本的完整工程**：`工程文件/`（BRIEF、构建脚本、交付清单、术语表、校对记录、逐章报告）+ `源码/`（LaTeX 源与插图） |
 | `07_refs_nlab/` | **nLab 参考资料库**（几何 Langlands 线专用）：120 条 nLab 条目摘要（含 `last_revised`，可直接写进译注来源行）+ 37 份替代来源卡（nLab 只有存根时改引 A 级教材 / MathWorld / Stacks）+ 110 条来源真实性抽查记录 |
-| `datasets/` | **可训练数据集**：原文片段↔译文↔译法理由（`parallel/`）、精读卡（`deepread/`）、高光与难证标注（`highlights/`）、事件级工作流（`traces/`）、概念图谱（`kg/`）、held-out 评测（`bench/`）；规则见 `datasets/README.md`，权利分 `self / arxiv / book` 三层，`book` 只进 `_internal/` |
+| `datasets/` | **可训练数据集**：数学推理条目（`math/`，命题+证明步骤+缺口+校验）、原文片段↔译文↔译法理由（`parallel/`）、精读卡（`deepread/`）、高光与难证标注（`highlights/`）、事件级工作流（`traces/`）、概念图谱（`kg/`）、held-out 评测（`bench/`）；规则见 `datasets/README.md`，权利分 `self / arxiv / book` 三层，`book` 只进 `_internal/` |
 | `site/` | 静态站点（`site/index.html` 双击即开，无需服务器） |
 
 ## `01_corpus_zh/`：语料的形态
@@ -166,10 +166,13 @@ Bourbaki 报告、Astérisque 专辑、arXiv 预印本、论文集（proceedings
 
 ## `datasets/`：把译本变成可训练数据
 
-语料只给"译文"，`datasets/` 补上训练真正缺的三样东西：**原文片段、译法理由、工作过程**。
+语料只给"译文"，`datasets/` 补上训练真正缺的东西：**原文片段、译法理由、工作过程、数学推理**。
+
+**2026-11-16 方向调整**：模型缺的不是译法，而是数学理解与**中文推理链**（研究级中文推理语料几乎空白；现有数学语料以英文为主）。因此数据集重心转向 `math/`：命题、自足上下文、证明步骤、缺口、依赖、校验状态；`parallel/` 保留但降为术语与表达的小样本。设计依据见 [`datasets/math/README.md`](datasets/math/README.md)。
 
 | 子目录 | 一条记录是什么 | 单条上限 |
 |---|---|---|
+| `math/` | 定义/定理/断言 + 自足上下文 + 证明步骤（含 `gap`）+ 依赖 + `verification`（lean/human/none）| 陈述 ≤4,000 字 / 证明 ≤12,000 字 |
 | `parallel/` | 原文片段 → 译文 → 为什么这样译（术语选择、语序、脚注处理）| 原文 ≤600 字 / 单条 ≤1,400 字 |
 | `deepread/` | 精读卡：主张、证明骨架、跳步补全、前置知识、易错点、证据行号 | ≤6,000 字 |
 | `highlights/` | 论文里最精彩/最难的一段：为什么难、关键动作、可复用套路 | ≤3,000 字 |
@@ -179,19 +182,19 @@ Bourbaki 报告、Astérisque 专辑、arXiv 预印本、论文集（proceedings
 
 **权利三层**（与 `COMPLIANCE.md` §11 一致）：
 
-- `rights:self` → 自产（理由、精读、图谱、评测），CC BY 4.0，可用于训练；
+- `rights:self` → 自产（中文表述、理由、精读、证明整理、图谱、评测），CC BY 4.0，可用于训练；数学事实本身不受版权保护；
 - `rights:arxiv:<id>` → 逐篇核许可；许可未确认时原文只作 ≤300 字引用；
 - `rights:book` → 只进 `datasets/_internal/`（已被 `.gitignore` 忽略），**永不发布**，也不进公开训练集。
 
-工作流与提示词模板见 [`datasets/workflow/生产协议.md`](datasets/workflow/生产协议.md)。新增一个单元：
+工作流与提示词模板见 [`datasets/workflow/生产协议.md`](datasets/workflow/生产协议.md)，`math/` 的专门协议见 [`datasets/math/README.md`](datasets/math/README.md)。新增一个单元：
 
 ```bash
-python tools/ds_lint.py                  # 结构、id、行号、字数、权利
+python tools/ds_lint.py                  # 结构、id、行号、字数、权利、math 校验状态
 python tools/ds_publish.py --check       # 发布前权利过滤，0 blocked 才能发
 python tools/ds_publish.py --write       # 重写 datasets/PUBLISH.json
 ```
 
-当前试点：`SY05-25`（Witten, arXiv:0802.0999）第 1 节，7 条平行片段、4 张精读卡、3 条高光、3 道评测、1 张 6 节点图谱、1 段 12 事件工作流，共 41 条记录，`ds_lint` 0 错。扩量先做 37 部 arXiv 底本，再做 22 部讲义；图书底本只做 `_internal/`。
+当前试点：`SY05-25`（Witten, arXiv:0802.0999）第 1 节，6 条数学推理条目、7 条平行片段、4 张精读卡、3 条高光、3 道评测、1 张 6 节点图谱、1 段 12 事件工作流，共 47 条记录，`ds_lint` 0 错。扩量先做 37 部 arXiv 底本（每部 3–5 个技术引理），再做 22 部讲义；图书底本只做 `_internal/`；形式化对（NL↔Lean）单独起步，先做 20 条能编译的。
 
 ## 成品 PDF 与原文（合规说明）
 

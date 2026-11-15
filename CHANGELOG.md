@@ -1,5 +1,25 @@
 # CHANGELOG
 
+## datasets v0.2 — 2026-11-16（转向数学与推理：`datasets/math/`）
+
+方向调整：模型缺的不是「译法」，而是数学理解、证明能力与**中文推理链**——研究级中文数学语料近乎空白，
+现有数学语料以英文为主（NuminaMath 86 万条英文 CoT），中文数据集中在 K-12 题库。据此把数据集主力从
+`parallel/`（翻译对齐）转到 `math/`（数学推理条目），`parallel/` 降为术语与表达的小样本。
+
+- 新增 `datasets/math/README.md`：记录定义（`kind/statement/context/proof/proof_steps/dependencies/
+  difficulty/verification/rights`）、生产流程（选点→自足化→写证明→挂依赖→校验→门禁）、扩量顺序、
+  反面清单；设计参照北大 AI4Math 的三条经验（命题级检索、层级展开、形式化反馈）。
+- 新增 `datasets/schema/math.schema.json`（draft-07）；`verification.kind ∈ {lean,human,none}`，
+  `status ∈ {checked,sketch,unchecked}`，标 `lean` 必须给编译过的 `artifact`。
+- 试点 `datasets/math/SY05-25.sec1.jsonl`：6 条中文数学记录——复辛流形定义、Riemann–Hilbert 对应、
+  Y(G,C) 的复辛结构（含非退化性的 gap）、A/B 模型的几何前提、广义复结构形变、量子几何 Langlands；
+  每条带 `proof_steps`（含 `gap`）与 `dependencies`，难题标 `sketch` 而非 `checked`。
+- `tools/ds_lint.py` 支持 `math/`：字段、id、`kind/lang` 枚举、`verification` 结构、字数上限
+  （陈述 ≤4,000 / 证明 ≤12,000 / 单条 ≤24,000）；`ds_lint` 47 条 0 错，`ds_publish --check` 7 文件 0 blocked。
+- `COMPLIANCE.md` §11 增第 8 条「数学校验诚实」；`datasets/README.md` 改为七类数据并写明方向调整；
+  `README.md` 的 `datasets/` 小节与结构表同步。
+- 下一步（P1）：每部 arXiv 工程挑 3–5 个技术引理，目标 150 条；形式化对（NL↔Lean）先做 20 条能编译的。
+
 ## datasets v0.1 — 2026-11-16（P0 试点：把译本变成可训练数据）
 
 v1.5.0 解决了"什么能发"，这一轮解决"发了以后怎么让模型真的学到东西"：只给译文不够，训练缺的是
