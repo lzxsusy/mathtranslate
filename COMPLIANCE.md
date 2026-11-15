@@ -137,6 +137,12 @@ python tools/check_manifest.py             # 清单一致性
 - 处理顺序：先清工作区 → 再评估历史重写（`git filter-repo`）→ 最后强推所有镜像（AtomGit / Gitee / GitHub / GitCode）。
 - 历史重写属于破坏性操作，须仓主书面确认后执行；脚本与演练记录见 `tools/purge_history.md`（待建）。
 - **镜像清单**：AtomGit（主）、Gitee、GitHub、GitCode。任何一处未清，视为未完成。
+- **2026-11-16 决定**：仓主选择**暂不重写历史**，先接受残留风险。据此记录现状：
+  - AtomGit `main` 与 Gitee `master` 已核实 6,764 条路径、无 `原本/`、无 `成品/*.pdf`；
+  - Git 历史仍可检出 113 条「原本/成品」路径——这是已知且被接受的缺口；
+  - GitCode 镜像仍可下载 arXiv 原文 PDF（`raw.gitcode.com` 实测 200 / 715,672 字节），需仓主登录删除 `originals` 分支或私有化该镜像；
+  - GitHub 镜像因本机密钥未被接受而未更新（`Permission denied (publickey)`）。
+- 重新启动历史重写时，先做整仓备份（`.git` + 工作区快照），再 `git filter-repo`，最后四镜像强推；评估报告 `ASSESSMENT_2026-11-16.md` §5.1 记有当时的取证。
 
 ---
 

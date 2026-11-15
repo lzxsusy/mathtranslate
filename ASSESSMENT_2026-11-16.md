@@ -118,6 +118,8 @@
 
 这是破坏性操作，且会让 tag `v1.0.1` 指向的提交哈希改变。**本报告不擅自执行，等仓主书面确认。**
 
+> **2026-11-16 决定：暂不执行，接受残留风险。** 现状已记入 `COMPLIANCE.md` §9：工作区与两个主镜像（AtomGit/Gitee）已清，历史 blob、GitCode 原文、GitHub 未更新三处缺口保留，等后续统一处理。
+
 ### 5.2 GitCode 镜像的 `originals` 分支（已实测，仍在）
 
 AtomGit/Gitee 两个 remote 都查不到 `originals` 分支，但用**改动前台账里的真实链接**实测：
