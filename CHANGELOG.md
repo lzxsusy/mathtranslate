@@ -1,5 +1,26 @@
 # CHANGELOG
 
+## datasets v0.1 — 2026-11-16（P0 试点：把译本变成可训练数据）
+
+v1.5.0 解决了"什么能发"，这一轮解决"发了以后怎么让模型真的学到东西"：只给译文不够，训练缺的是
+**原文片段、译法理由、工作过程**。新增与译本并列的第五类资产 `datasets/`，先以 SY05-25（Witten,
+arXiv:0802.0999）第 1 节为试点跑通全链路。
+
+- 新增 `datasets/README.md` 与 `datasets/schema/*.schema.json`（6 个 draft-07 schema）：平行片段、
+  精读卡、高光、工作流事件、概念图谱、评测题；id 形如 `SY05-25.p0001`。
+- 试点 41 条记录：`parallel/` 7 条（原文↔译文↔为什么这样译）、`deepread/` 4 张（含证明骨架与跳步补全）、
+  `highlights/` 3 条（C* 作用论证、Im Ω 上同调平凡、形变枢纽）、`bench/` 3 题（带 rubric 与 must_not_include）、
+  `kg/` 6 节点 6 边、`traces/` 12 事件（含一次 lint 报错→修复的真实过程）。
+- 权利三分：`self` CC BY 4.0 可训练；`arxiv:<id>` 逐篇核许可、未确认只留 ≤300 字引用；`book` 只进
+  `datasets/_internal/`（`.gitignore` 已忽略），永不发布、不进公开训练集。
+- 新增 `tools/ds_lint.py`（结构、id、行号、字数、权利、敏感路径）与 `tools/ds_publish.py`
+  （发布前过滤，生成 `datasets/PUBLISH.json`）；`ds_lint` 41 条 0 错，`ds_publish --check` 6 文件 0 blocked。
+- `COMPLIANCE.md` 新增 §11：引用上限（原文 ≤600 字/条、单条 ≤1,400 字；精读卡 ≤6,000 字）、
+  不得新增 L4、行号可追溯、发布过滤、trace 脱敏。
+- `.githooks/pre-commit` 同时跑 `check_compliance.py` 与 `ds_lint.py`；`README.md`、`00_README.md` 增
+  `datasets/` 说明。
+- 下一步（P1）：把同一协议推到其余 36 部 arXiv 工程，再做 22 部讲义；图书底本只做 `_internal/`。
+
 ## v1.4.3 — 2026-11-15（《纪律》v2.1：社区类来源白名单扩为 nLab / Stacks Project / ProofWiki）
 
 作者决定：**社区类来源不再只认 nLab**。Stacks Project 与 ProofWiki 与 nLab 并列进入 B 级白名单，

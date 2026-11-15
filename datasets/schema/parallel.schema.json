@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://atomgit.com/lzxSUSUY/mathtranslate/datasets/schema/parallel.schema.json",
+  "title": "parallel fragment",
+  "type": "object",
+  "required": ["id", "pkg", "rights", "src_ref", "zh_ref", "src_text", "zh_text", "why", "alignment", "status", "reviewed_by"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {"type": "string", "pattern": "^[A-Z]{2}\\d{2}-\\d{2}\\.p\\d{4}$"},
+    "pkg": {"type": "string", "pattern": "^SY\\d{2}-\\d{2}$"},
+    "rights": {"type": "string"},
+    "license": {"enum": ["CC-BY-4.0", "arXiv-default", "arXiv-CC-BY", "internal-only"]},
+    "src_ref": {
+      "type": "object",
+      "required": ["arxiv", "pages", "url"],
+      "properties": {
+        "arxiv": {"type": "string"},
+        "pages": {"type": "array", "items": {"type": "integer"}, "minItems": 2, "maxItems": 2},
+        "file": {"type": "string"},
+        "line": {"type": "integer"},
+        "url": {"type": "string", "format": "uri"}
+      }
+    },
+    "zh_ref": {
+      "type": "object",
+      "required": ["file", "line"],
+      "properties": {"file": {"type": "string"}, "line": {"type": "integer"}}
+    },
+    "src_text": {"type": "string", "maxLength": 600},
+    "zh_text": {"type": "string", "maxLength": 600},
+    "alignment": {"enum": ["sentence", "paragraph", "block"]},
+    "terms": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["foreign", "zh"],
+        "properties": {"foreign": {"type": "string"}, "zh": {"type": "string"}, "alternatives": {"type": "array", "items": {"type": "string"}}}
+      }
+    },
+    "why": {"type": "string", "minLength": 20, "maxLength": 600},
+    "choices": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["src", "zh"],
+        "properties": {"src": {"type": "string"}, "zh": {"type": "string"}, "rejected": {"type": "string"}, "reason": {"type": "string"}}
+      }
+    },
+    "confidence": {"enum": ["high", "medium", "low"]},
+    "status": {"enum": ["draft", "reviewed", "published"]},
+    "reviewed_by": {"type": "array", "items": {"type": "string"}, "minItems": 2},
+    "notes": {"type": "string", "maxLength": 300}
+  }
+}

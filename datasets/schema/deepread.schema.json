@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://atomgit.com/lzxSUSUY/mathtranslate/datasets/schema/deepread.schema.json",
+  "title": "deepread card",
+  "type": "object",
+  "required": ["id", "pkg", "rights", "claim", "claim_type", "context", "proof_skeleton", "gap_filling", "why_this_matters", "prerequisites", "pitfalls", "evidence", "difficulty", "confidence", "status", "reviewed_by"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {"type": "string", "pattern": "^[A-Z]{2}\\d{2}-\\d{2}\\.d\\d{3}$"},
+    "pkg": {"type": "string", "pattern": "^SY\\d{2}-\\d{2}$"},
+    "rights": {"type": "string"},
+    "title": {"type": "string", "maxLength": 120},
+    "claim": {"type": "string", "maxLength": 400},
+    "claim_type": {"enum": ["theorem", "proposition", "lemma", "definition", "construction", "argument", "conjecture"]},
+    "context": {"type": "string", "maxLength": 800},
+    "proof_skeleton": {"type": "array", "items": {"type": "string", "maxLength": 300}, "minItems": 2, "maxItems": 12},
+    "gap_filling": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["gap", "fill"],
+        "properties": {"gap": {"type": "string"}, "fill": {"type": "string"}, "how_verified": {"type": "string"}}
+      }
+    },
+    "why_this_matters": {"type": "string", "maxLength": 600},
+    "prerequisites": {"type": "array", "items": {"type": "string"}},
+    "pitfalls": {"type": "array", "items": {"type": "string"}},
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["kind", "ref"],
+        "properties": {
+          "kind": {"enum": ["file", "arxiv", "book", "external"]},
+          "ref": {"type": "string"},
+          "quote": {"type": "string", "maxLength": 300}
+        }
+      }
+    },
+    "difficulty": {"type": "integer", "minimum": 1, "maximum": 5},
+    "confidence": {"enum": ["high", "medium", "low"]},
+    "status": {"enum": ["draft", "reviewed", "published"]},
+    "reviewed_by": {"type": "array", "items": {"type": "string"}, "minItems": 2},
+    "notes": {"type": "string", "maxLength": 300}
+  }
+}
