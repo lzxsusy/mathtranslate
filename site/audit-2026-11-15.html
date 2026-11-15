@@ -1,0 +1,242 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>语料库第三方质量评审报告 · 2026-11-15 · 数译</title>
+<link rel="stylesheet" href="./assets/style.css">
+<style>
+  .verdict{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:26px 0 8px}
+  .vcard{border:1px solid var(--line);border-radius:16px;padding:16px 18px;
+    background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.015))}
+  .vcard b{display:block;font-size:26px;letter-spacing:-.5px;color:#fff}
+  .vcard span{color:var(--txt3);font-size:12.5px}
+  .vcard.warn b{color:#ffb454}
+  .vcard.ok b{color:var(--a)}
+  h2.sec{font-size:19px;margin:44px 0 6px;letter-spacing:.3px}
+  h2.sec .no{color:var(--brand2);font-size:14px;margin-right:8px;font-family:ui-monospace,Consolas,monospace}
+  h3.sub{font-size:15.5px;margin:26px 0 8px;color:#fff}
+  p.lead{color:var(--txt2);font-size:14.5px;margin:8px 0}
+  table{width:100%;border-collapse:collapse;margin:14px 0 6px;font-size:13px;
+    background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:rgba(255,255,255,.035);color:var(--txt3);font-weight:600;font-size:12px;letter-spacing:.5px}
+  tr:last-child td{border-bottom:none}
+  td.num{font-family:ui-monospace,Consolas,monospace;color:#fff;white-space:nowrap}
+  .sev{display:inline-block;font-size:11px;padding:2px 8px;border-radius:999px;white-space:nowrap;border:1px solid}
+  .sev.p0{border-color:rgba(255,120,120,.5);color:#ff9c9c;background:rgba(255,80,80,.10)}
+  .sev.p1{border-color:rgba(255,180,84,.5);color:#ffc078;background:rgba(255,160,60,.10)}
+  .sev.p2{border-color:rgba(77,124,254,.5);color:#adc6ff;background:rgba(77,124,254,.10)}
+  .sev.p3{border-color:rgba(155,140,255,.45);color:#cfc4ff;background:rgba(155,140,255,.10)}
+  code{font-family:ui-monospace,Consolas,monospace;font-size:12.5px;background:rgba(255,255,255,.06);
+    padding:1px 6px;border-radius:6px;color:#dfe8f6}
+  pre{background:#0d1117;border:1px solid var(--line);border-radius:12px;padding:14px 16px;
+    overflow:auto;font-size:12.5px;line-height:1.75;color:#c9d6e8}
+  pre code{background:none;padding:0}
+  ul.tight{margin:10px 0 10px 18px;padding:0;color:var(--txt2);font-size:14px}
+  ul.tight li{margin:5px 0}
+  .callout{border-left:3px solid var(--brand);background:rgba(77,124,254,.07);
+    padding:14px 18px;border-radius:0 12px 12px 0;margin:16px 0;color:var(--txt2);font-size:14px}
+  .callout.bad{border-left-color:#ff7878;background:rgba(255,90,90,.07)}
+  .callout.good{border-left-color:var(--a);background:rgba(61,218,208,.07)}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:900px){.two,.verdict{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+</style></head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">
+    <div class="logo">审</div>
+    <div><h1>语料库第三方质量评审报告</h1>
+    <div class="sub">受评对象：数译 · 中文数学译注文献库（仓库 v1.0.1，96 个译本工程）</div></div>
+    <nav class="meta">独立评审 · 2026-11-15<br><a href="./index.html">← 返回文献库</a></nav>
+  </div>
+  <div class="verdict">
+    <div class="vcard"><b>44,522</b><span>入库文段（唯一 42,955）</span></div>
+    <div class="vcard ok"><b>99.9%</b><span>汉字占比 ≥50% 的文段</span></div>
+    <div class="vcard warn"><b>12.8%</b><span>已有译文却未入库的份额</span></div>
+    <div class="vcard warn"><b>B+</b><span>综合判定：有条件通过</span></div>
+  </div>
+</div></header>
+
+<div class="wrap">
+
+<h2 class="sec"><span class="no">01</span>结论先行</h2>
+<p class="lead">
+这份语料的主体质量高于我对一个个人项目库的预期：<b>正文中文可读、术语前后一致、公式以原文 LaTeX 保真保留</b>，
+44,522 段里只有 11 段配方失衡（纯公式块或英文文献表），1.9%（836 段）带可定位的清洗缺陷；另有 17.6% 的段落含未展开的工程宏——后者可机械修复，不影响可读性。
+它现在就能作为「中文数学‑物理」子集用于继续预训练或指令微调，<b>前提是先修掉三项结构性缺陷</b>。
+</p>
+<table>
+  <tr><th style="width:150px">模块</th><th style="width:110px">判定</th><th>依据</th></tr>
+  <tr><td>正文语料（zh_paragraphs）</td><td><span class="sev p1">可用·先修</span></td>
+      <td>98.1% 段落无结构性缺陷；但未展开的工程宏覆盖 17.6% 段落、465 段引用编号为空、22 段混入 <code>&lt;本地路径&gt;</code> 占位符、10 部已有译文的书整本缺席</td></tr>
+  <tr><td>术语库（termbase）</td><td><span class="sev p2">可用·字段残</span></td>
+      <td>1,627 条中仅 215 条（13.2%）带 <code>level/source/lecture</code>，其余只有三语对照；10 条同一外文词存在多译并存（<code>cocycle</code> 余循环/上闭链等），111 条中文对应多个外文</td></tr>
+  <tr><td>译注（annotation）</td><td><span class="sev p0">不达标</span></td>
+      <td>829 条译注中仅 41 条标注了来源（5.0%），788 条无出处；作为「可信推理标注」不满足可审计要求</td></tr>
+  <tr><td>知识图谱（index）</td><td><span class="sev p3">试点级</span></td>
+      <td>3/71 个包有标注，其中 SY01-11 的 <code>edges.jsonl</code> 为 0 字节；不足以下任何结论</td></tr>
+  <tr><td>文档与元数据</td><td><span class="sev p2">需统一</span></td>
+      <td>同一个「多少部、多少段、多少字」在 README / DATASHEET / QA_REPORT / stats.json / 站点 / 欠账台账之间给出了 6 套互不相同的数字；许可条款自相矛盾</td></tr>
+</table>
+
+<h2 class="sec"><span class="no">02</span>评审方法（全部可复现）</h2>
+<ul class="tight">
+  <li><b>全量机器审计</b>：8 组脚本直接读 <code>01_corpus_zh/zh_paragraphs.jsonl</code>（28.5 MB，44,522 行）与 <code>08_source_code</code> 下 1,581 个 <code>.tex</code>，做字段完整性、长度分布、重复、公式完整性、清洗残留、覆盖率的交叉统计。</li>
+  <li><b>复跑被评方自有工具</b>：<code>04_playbook/tools/quality_sweep.py --root . --out sweep_now.tsv</code> 原样执行，用它的口径验证它自己的报告（这是本次评审唯一能确认「作者说的数字还在不在」的手段）。</li>
+  <li><b>抽样人读</b>：随机 40 段 + 全部 11 段疑似异常段逐字读，判断「机器指标」是否等于「读起来坏了」。</li>
+  <li><b>双向对账</b>：语料包集合 ↔ 工程目录集合 ↔ 巡检 TSV 三向做差，定位「有译文但没入库」。</li>
+  <li>未做的事（据实声明）：没有逐段回译原文核对翻译忠实度；没有评估 LaTeX 是否可编译（那是工程问题，另有 43 部成品 PDF 为证）；会话轨迹（144.6 MB）仅做体量与格式检查，未做隐私与许可逐条审。</li>
+</ul>
+
+<h2 class="sec"><span class="no">03</span>语料画像</h2>
+<table>
+  <tr><th>指标</th><th>实测值</th><th>说明</th></tr>
+  <tr><td>文段数 / 唯一 para_id / 唯一文本</td><td class="num">44,522 / 42,955 / 42,954</td><td>唯一文本比唯一 id 少 1 → 去重键与内容键不完全等价</td></tr>
+  <tr><td>汉字总量</td><td class="num">3,668,359</td><td>平均 82 字/段（含公式与标点）</td></tr>
+  <tr><td>含公式文段</td><td class="num">38,393（86.2%）</td><td>数学密度极好，是这份语料最有价值的部分</td></tr>
+  <tr><td>段长 p50 / p90 / p99 / max</td><td class="num">193 / 520 / 1,022 / 65,068</td><td>p99 以内健康；尾部 7 段 ≥ 9,000 字（附录/索引未切分）</td></tr>
+  <tr><td>覆盖工程数</td><td class="num">71 包</td><td>工程目录 96 个，其中 81 个有译文，15 个仅成品 PDF</td></tr>
+  <tr><td>分级 tier</td><td class="num">A 27,344 / B 17,178</td><td>只有 A、B 两级；<b>没有 C 级，也没有任何人工复核状态字段</b>（站点上却展示了 C 级卡片）</td></tr>
+  <tr><td>环境 env 分布</td><td class="num">text 42,306 / proof 970 / theorem 294 / definition 287 / example 475 / remark 175</td><td>结构标记可用，但 95% 落在 text，证明「定理‑证明」骨架几乎没被利用</td></tr>
+  <tr><td>页码回溯 page_orig</td><td class="num">4,023（9.0%）</td><td>可作为溯源锚点，覆盖率偏低（DATASHEET 自己写 3,642，与实际不符）</td></tr>
+  <tr><td>重复</td><td class="num">1,567 段有 dup_of（3.5%）；近重复 1,418（下界）</td><td>跨包重复仅 6 对，重复几乎全在包内（同一本书的内部交叉引用/术语表）</td></tr>
+  <tr><td>清洗标记</td><td class="num">junk_trimmed 440、unbalanced_math 5、placeholder_in_math 4</td><td>标记体系存在，但只覆盖了它自己认识的 3 类问题，见第 05 节</td></tr>
+</table>
+
+<h2 class="sec"><span class="no">04</span>质量亮点（应保留的部分）</h2>
+<ul class="tight">
+  <li><b>正文是真中文，不是「机翻感」。</b>剥掉 LaTeX 后统计：44,031 段汉字占比 ≥80%，456 段 50–80%，只有 11 段低于 50%，且这 11 段经逐段核对全部是「纯公式块（<code>\begin{array}</code> / <code>\begin{tikzcd}</code>）」或「英文参考文献照排」，不是翻译失败。</li>
+  <li><b>公式保真策略正确。</b>没有把公式渲染成图片、也没有转成 Unicode 乱码，而是保留 LaTeX 源（479 处分行公式环境、<code>\tag{}</code> 4,928 段仍在），这对数学语料是唯一正确的选择——下游可以直接学到可解析的表达式。</li>
+  <li><b>术语一致性有工程约束。</b>1,627 条术语库带 ja/en/zh 三语与 <code>SY02-09</code> 的行级 <code>source</code> 字段，正文里「镜像对称」「同调镜像对称」「Fukaya 范畴」等高频词前后统一；抽样未发现同段内术语漂移。</li>
+  <li><b>工程规范度罕见。</b>有 MANIFEST、CHANGELOG、DATASHEET、许可文件、46 KB 的翻译纪律硬标准、可复跑的质检脚本。多数个人语料库交不出「第三方能独立跑一遍」的东西，这个能。</li>
+  <li><b>重复率控制得当。</b>3.5% 的重复几乎全部来自包内（目录、术语表、交叉引用复述），跨包仅 6 对——说明入库时有去重环节在工作。</li>
+</ul>
+
+<h2 class="sec"><span class="no">05</span>缺陷清单（按可交付性排序）</h2>
+<p class="lead">严重度：<span class="sev p0">P0 阻塞</span> 影响语料可用性或对外承诺；<span class="sev p1">P1 必修</span> 直接降低训练价值；<span class="sev p2">P2 一致性</span> 影响可信度与可复现；<span class="sev p3">P3 欠账</span> 属未完成项，非错误。</p>
+<table>
+  <tr><th style="width:60px">级别</th><th style="width:230px">问题</th><th style="width:150px">命中量</th><th>证据与影响</th></tr>
+  <tr><td><span class="sev p0">P0</span></td><td>已有译文的 10 部整本不在语料里</td><td class="num">470,060 汉字<br>= 现有全库的 12.8%</td>
+    <td>SY08-01 双有理几何（142,419 字）、SY07-08 代数几何（65,151）、SY08-02（57,688）、SY01-21（51,798）、SY01-22（40,140）、SY02-10、SY01-20、SY05-23/24/25。它们全在 <code>08_source_code</code> 里、能被作者自己的巡检工具数到汉字，却没有进 <code>zh_paragraphs.jsonl</code>。丢的恰好是译注密度最高的两部（SY01-21 117 条、SY01-22 181 条译注）。</td></tr>
+  <tr><td><span class="sev p0">P0</span></td><td>译注来源覆盖率仅 5.0%</td><td class="num">41/829 条</td>
+    <td>788 条译注无法追溯依据。台账自己定了 A1（语境型，可批量补「依据：原文上下文 p.NN」）/A2（外部型，须逐条核）两条路，但没执行。若这 829 条被当作「推理／引证标注」发布，属不可审计数据。</td></tr>
+  <tr><td><span class="sev p1">P1</span></td><td>工程自定义宏从未展开</td><td class="num">7,816 段（17.6%）<br>21,923 处</td>
+    <td><code>\R</code> 5,949、<code>\C</code> 5,277、<code>\Z</code> 4,839、<code>\dd</code> 1,924、<code>\Hom</code> 946、<code>\Q</code> 880、<code>\cF</code> 477、<code>\Spec</code> 327、<code>\QC</code> 228、<code>\ainf</code> 230…… 这些是作者导言区里 <code>\newcommand</code> 的缩写，语料里既没展开成 ℝ/ℂ/ℤ，也没标注，下游模型看到的是无语义的 <code>\R</code>。这不是「LaTeX 残留」的一般问题，是<b>未知控制序列</b>。</td></tr>
+  <tr><td><span class="sev p1">P1</span></td><td>文本包裹命令被「开括号剥掉、闭括号留下」</td><td class="num"><code>\mathrm{</code> 存活 0<br><code>\mbox{</code> 存活 0<br><code>\text{</code> 存活 4</td>
+    <td>源 tex 里 <code>\mathrm{</code> 有近 2 万处，语料里一处不剩；而剥法把 <code>\mathrm{e}^{2\pi i}</code> 变成 <code>e}^{2\pi i}</code>——<b>多出一个闭括号</b>。已定位到 <code>01_corpus_zh/_append_pkg.py:87</code> 的 <code>UNWRAP.sub("", s)</code>：正则只匹配「命令名 + 左花括号」，替换为空，右括号原地留下。样例（SY01-01/sections/s02-sca.tex）：源 <code>G^{\pm}(\mathrm{e}^{2\pi i}z)=-\mathrm{e}^{\mp 2\pi ia}G^{\pm}(z)</code> → 语料 <code>e}^{2\pi i}z</code>。</td></tr>
+  <tr><td><span class="sev p1">P1</span></td><td>引用编号被整体删除，只剩空括号</td><td class="num">465 段</td>
+    <td>「电荷用高斯定律（即 ( ) 的第一个方程）」「见 ( )」这类句子直接出现在语料里。<code>\tag{}</code> 为空者 0 段，说明不是编号丢失，而是 <code>\ref/\eqref</code> 在抽取阶段被丢弃、而外层括号保留。SY02-04 一个包里就有 62 段（占该包 24.5%）。</td></tr>
+  <tr><td><span class="sev p1">P1</span></td><td><code>&lt;本地路径&gt;</code> 占位符污染公式</td><td class="num">22 段<br>源 tex 36 个文件</td>
+    <td>不只语料，<b>已发布的源 tex 里也有</b>：<code>\begin{pmatrix}y_0&lt;本地路径&gt;</code>、<code>\substack{i\leq u\leq j&lt;本地路径&gt; u\leq l}</code>。原本是 LaTeX 换行 <code>\\</code>，被发布前的路径脱敏脚本（<code>tools/scrub_publish.py</code>）当成路径替换掉了。这是「工具反向污染」，比清洗不彻底更严重。</td></tr>
+  <tr><td><span class="sev p1">P1</span></td><td>切分器在附录/索引/术语表上失效</td><td class="num">7 段 ≥9,000 字<br>max 65,068</td>
+    <td>65,068 字的段是 SY02-04 的 <code>notes_index.tex</code>（译注索引，本质是元数据）；其后是 4 个 <code>appendix_glossary</code>/<code>terms.tex</code>（日中术语表）。这类超长段会把训练样本长度打爆，且内容是清单不是正文。</td></tr>
+  <tr><td><span class="sev p1">P1</span></td><td>元数据与排版残渣混入正文</td><td class="num">backmatter 401 段<br>模板 57 段·尺寸 292 段</td>
+    <td>文件名含 index/glossary/terms/bib/refs/cover/toc 的 401 段被当作正文入库；<code>[6pt]</code>/<code>[2pt]</code>/<code>2.2cm</code> 等字号残渣 292 段；「中文译注本」字样 37 段、日期行 92 段、<code>% [Tutor Note: ]</code> 前导注释成段。首段甚至是「1.15 / 3em / 图 / 表 / name参考文献 / 目录 / 附录」这种目录残片。</td></tr>
+  <tr><td><span class="sev p2">P2</span></td><td>同一个统计有 6 套口径</td><td class="num">见下表</td>
+    <td>对外站点的 92 部与 README 的 96 部、DATASHEET 的 92 部、巡检的 96 部互相打架；QA_REPORT 的 44,138 段停留在一次增量之前。任何审稿人第一件事就是查这个。</td></tr>
+  <tr><td><span class="sev p2">P2</span></td><td>许可条款自相矛盾</td><td class="num">2 处一致冲突</td>
+    <td><code>00_README.md</code> 写「默认不用于任何模型训练」，而 <code>README.md</code> 与 <code>LICENSE-*</code> 声明语料/轨迹为 CC BY 4.0（明确允许训练）。DATASHEET 称 2026-11-14 已全库替换 279 个文件、旧表述作废——但替换后的文件里仍留有该句。</td></tr>
+  <tr><td><span class="sev p2">P2</span></td><td>台账比实测旧一轮</td><td class="num">91→96 部</td>
+    <td><code>12_质量欠账台账_v1.md</code> 记 91 工程/77 带源码/4,529,949 汉字/817 译注；今天复跑同一口径是 96/81/4,700,612/829。台账没跟着新工程更新，等于「欠账清单」本身也在欠账。</td></tr>
+  <tr><td><span class="sev p2">P2</span></td><td>悬空 <code>\ref</code> 49 处</td><td class="num">SY01-17 41 / SY04-02 5 / SY03-09 2 / SY05-05 1</td>
+    <td>编译会产生 <code>??</code>，影响 43 部成品 PDF 里相应页码的可信度。</td></tr>
+  <tr><td><span class="sev p2">P2</span></td><td>术语库字段残缺 + 多译并存</td><td class="num">1,412/1,627 条无等级</td>
+    <td>只有 SY02-09 的 215 行有 <code>level/source/lecture</code>。同一外文词多译：<code>spin structure</code> 旋量结构／自旋结构、<code>D-brane</code> D-膜／D 膜、<code>cocycle</code> 余循环／上闭链、<code>skyscraper sheaf</code> 摩天层／摩天楼层。下游做术语对齐时会打架。</td></tr>
+  <tr><td><span class="sev p3">P3</span></td><td>知识图谱 3/71 包，含空边集</td><td class="num">覆盖率 4.2%</td>
+    <td>SY01-11 的 <code>edges.jsonl</code> 为 0 字节却与 nodes 一起提交；规模上它是试点，但目录层级（index/ claims/ schemas/）会让人误以为已全量。</td></tr>
+  <tr><td><span class="sev p3">P3</span></td><td>重复入包</td><td class="num">1.3 MB</td>
+    <td>SY02-10 的源码/工程/PDF 在 <code>03_translations_meta</code> 下又存了一整套，与 <code>08_source_code</code> 重复。</td></tr>
+</table>
+
+<h3 class="sub">6 套口径对照（同一批数据，不同文件的说法）</h3>
+<table>
+  <tr><th>来源文件</th><th>部数</th><th>段数</th><th>汉字</th><th>包数 / 页数</th></tr>
+  <tr><td><code>README.md</code></td><td class="num">96（82 带源码）</td><td class="num">44,522</td><td class="num">3,668,359</td><td>主题表合计 83 部 / 10,303 页</td></tr>
+  <tr><td><code>DATASHEET.md</code></td><td class="num">92（80 可编译）</td><td class="num">44,522</td><td class="num">3,668,359</td><td>page_orig 3,642（实际 4,023）</td></tr>
+  <tr><td><code>01_corpus_zh/QA_REPORT.md</code></td><td class="num">—</td><td class="num">44,138</td><td class="num">3,625,154</td><td>70 包</td></tr>
+  <tr><td><code>zh_paragraphs_stats.json</code></td><td class="num">—</td><td class="num">44,522</td><td class="num">3,668,359</td><td>71 包</td></tr>
+  <tr><td><code>site/index.html</code></td><td class="num">92</td><td class="num">—</td><td class="num">—</td><td>11,218 页、27 A 级（共 91 部）</td></tr>
+  <tr><td><code>12_质量欠账台账_v1.md</code></td><td class="num">91（77 源码）</td><td class="num">—</td><td class="num">4,529,949</td><td>817 译注</td></tr>
+  <tr><td><b>本次复跑实测</b></td><td class="num"><b>96 目录 / 81 有译文 / 71 入库</b></td><td class="num"><b>44,522</b></td><td class="num"><b>3,668,359 入库，4,700,612 全工程</b></td><td class="num"><b>71 包</b></td></tr>
+</table>
+<div class="callout">
+  这 6 套数字没有一套是「错的」——它们分别对应不同切面（全部工程 / 有源码 / 可编译 / 已入库 / 已交付 PDF）。
+  问题在于<b>没有任何一处把这个切面写清楚</b>，读者只能拿最显眼的那一个（96 部）去核对最不显眼的那一个（71 包），然后得出「数据注水」的结论。修法不是改数字，是给每个数字配一句「口径」。
+</div>
+
+<p class="lead" style="margin-top:10px">
+  <b>口径是怎么裂开的（可复原的链路）：</b><code>shuyi/site</code>（本地工程仓里那版旧站点）首页写着「全库 83 部 · 10,303 页」，
+  与 <code>README.md</code> 主题表的合计 83 部 / 10,303 页完全吻合，而与现行站点（<code>site/</code>，92 部 / 11,218 页）不符。
+  也就是说：README 的统计表是从旧站点复制来的，站点改版后没有回流到 README。这不是笔误，是一次没有闭环的发布。
+</p>
+
+<h2 class="sec"><span class="no">06</span>改进方案</h2>
+
+<h3 class="sub">阶段一：止血（1–2 人日，收益最大）</h3>
+<ul class="tight">
+  <li><b>补入 10 部缺失工程</b>：跑一遍 <code>_build_corpus_v3.py</code> 覆盖 <code>08_source_code</code> 全部 81 个有源码工程，重建 jsonl 与 stats。验收：<code>pkg</code> 集合 ⊇ 81，汉字总量 ≥ 4,100,000。</li>
+  <li><b>修 <code>_append_pkg.py:87</code> 的 UNWRAP</b>：改为「命令名 + 成对花括号」整体替换（<code>re.sub(r"\\(?:mathrm|text|mbox|operatorname)\{([^{}]*)\}", r"\1", s)</code> 并循环到不动点），或直接复用 <code>_tex_clean.py</code> 里已有 <code>_arg/expand</code> 的正确实现。验收：语料中 <code>[A-Za-z]}^{</code> 孤立闭括号归零；<code>\mathrm{e}^{2\pi i}</code> 段落复查为 <code>e^{2\pi i}</code>。</li>
+  <li><b>展开工程自定义宏</b>：从每包导言区提取 <code>\newcommand</code> 表，做 <code>\R→\mathbb{R}</code>、<code>\C→\mathbb{C}</code>、<code>\Z→\mathbb{Z}</code>、<code>\dd→\mathrm{d}</code>、<code>\Spec</code>、<code>\QC</code>、<code>\ainf</code>、<code>\cF</code> 等的映射，未识别的宏统一标 <code>flags=unknown_macro</code>。验收：17.6% 降到 0，且 flags 里能看到全部未识别项。</li>
+  <li><b>回填引用编号</b>：抽取阶段不丢 <code>\ref/\eqref</code>，改为按其指向的 <code>\label</code> 生成「式 (8.20)」样式；无法解析的段落打 <code>flags=empty_ref</code> 并从训练集剔除。验收：空括号 465 → 0（或全部带标记）。</li>
+  <li><b>撤回 <code>&lt;本地路径&gt;</code> 污染</b>：对语料与已发布 tex 同时跑一次反向修复（该占位符在原位恒为 <code>\\</code>），修完复查 <code>placeholders=0</code>。这是发布工具引入的，必须在源头（<code>scrub_publish.py</code>）加白名单，排除 <code>\\</code> 与数学环境。</li>
+</ul>
+
+<h3 class="sub">阶段二：切分与结构（2–3 人日）</h3>
+<ul class="tight">
+  <li><b>切分器加硬上限</b>：单段 ≤ 3,000 字，超长时按段落/条目/label 边界再切；<code>appendix_glossary</code>/<code>notes_index</code>/<code>terms.tex</code> 归入 <code>env=glossary|index|bib</code> 而不是 <code>text</code>，并默认不进训练集。</li>
+  <li><b>补 STRUCT 字段</b>：<code>env</code> 已有 6 类，实际 95% 是 text，说明识别没生效；建议改为按「<code>\begin{theorem}|lemma|proposition|corollary|definition|remark|proof|example</code> 块」显式切片，并在段级记录 <code>parent_env</code>。验收：非 text 占比从 5% 提到 ≥25%（数学书的真实构成）。</li>
+  <li><b>分级重做</b>：<code>tier</code> 只有 A/B 而站点展示 A/B/C，两边必须收口。建议 A=人工校读、B=机器质检通过、C=有已知缺陷；并新增 <code>reviewed_by</code> / <code>review_date</code> 字段，让「A 级」变成可审计结论而不是作者的自我评价。</li>
+  <li><b>去重键对齐</b>：把 <code>para_id</code> 与内容哈希统一（当前唯一文本 42,954 < 唯一 id 42,955，说明同文本被算成两段），并把 near_dup 对 SY01-23 增量重算（DATASHEET 自己承认 1,418 是下界）。</li>
+</ul>
+
+<h3 class="sub">阶段三：可信度（1 周，与数据修改并行）</h3>
+<ul class="tight">
+  <li><b>单一真源</b>：只保留 <code>zh_paragraphs_stats.json</code> 作为唯一数字来源，README/DATASHEET/站点/台账全部由脚本从它渲染；每处数字后面强制带口径短语（「已入库 71 包 / 有译文 81 部 / 工程目录 96 个」）。验收：6 套口径合并为 1 套 + 1 条脚注。</li>
+  <li><b>许可收口</b>：删除「默认不用于任何模型训练」，或改为「语料 CC BY 4.0；成品 PDF 因底本版权不随库发布」。两者只能留一个，且要在 LICENSE 与 README 同时一致。</li>
+  <li><b>译注来源</b>：按台账自己的 A1/A2 分流，A1 批量补页码锚点（可自动化，预计覆盖 600+ 条），A2（外部定理/文献）逐条人工核并允许留空但标 <code>source=none</code>。验收：有来源比例 ≥80%，且 <code>source=none</code> 项在发布时可见。</li>
+  <li><b>知识图谱要么补到 10 包以上、要么在文档里显式标「3 包试点，勿当全量」</b>，并删掉 0 字节的 <code>edges.jsonl</code> 或补内容。</li>
+</ul>
+
+<h2 class="sec"><span class="no">07</span>不建议做的事</h2>
+<ul class="tight">
+  <li><b>不要为了把「96 部」做实而把 15 个仅 PDF 的工程硬算进语料。</b>它们没有源码，抽不出可靠文本；正确的做法是在站点和 README 上把「96 个工程 = 81 有译文 + 15 仅成品」写清楚。</li>
+  <li><b>不要按段删「疑似重复」。</b>3.5% 的重复绝大多数是包内的目录/术语表，删掉会破坏书的完整性；应该在<b>采样层</b>去重（训练时按内容哈希抽样），语料层只标记。</li>
+  <li><b>不要把 A2 类译注批量标成「原文上下文」。</b>台账已经写明这是作弊路径，评审时我按这条标准核对过：41 条带来源的译注中未见此类伪造，这一点值得保持。</li>
+  <li><b>不要用「汉字占比」当唯一质量指标。</b>我最初用 ASCII 占比测英文残留，得到 12,167 段的荒谬结果（LaTeX 命令全是 ASCII），弃用后才看清真实情况：99.9% 段落是正常中文。</li>
+</ul>
+
+<h2 class="sec"><span class="no">08</span>复现命令</h2>
+<pre><code># 1. 复跑被评方自有巡检（验证它自己的数字）
+python 04_playbook/tools/quality_sweep.py --root . --out sweep.tsv
+#    → 96 工程 / 81 有源码 / 4,700,612 汉字 / 829 译注 / 788 缺来源（4.9%）/ 悬空 ref 49
+
+# 2. 语料字段与分布
+python - &lt;&lt;'PY'
+import json
+rows=[json.loads(l) for l in open("01_corpus_zh/zh_paragraphs.jsonl",encoding="utf-8")]
+print(len(rows), len({r["para_id"] for r in rows}), sum(r["zh_chars"] for r in rows))
+PY
+
+# 3. 覆盖率三向对账（语料 pkg ↔ 巡检 TSV ↔ 工程目录）
+#    结果：语料 71 包，有译文 81 部，缺口 10 部 = 470,060 汉字 = 12.8%
+
+# 4. 宏存活率（源 tex vs 语料）
+grep -c '\\mathrm{' 08_source_code/*/源码/**/*.tex   # 近 2 万处
+grep -c '\\mathrm{' 01_corpus_zh/zh_paragraphs.jsonl  # 0</code></pre>
+
+<h2 class="sec"><span class="no">09</span>签署</h2>
+<p class="lead">
+本报告由第三方评审员独立完成，未参与该库的建设。所有结论均可由第 08 节的命令复现；
+数字取自 2026-11-15 的仓库快照（<code>master</code> @ v1.0.1）。评审范围不含翻译忠实度的逐句回译核对，
+也不含对会话轨迹（<code>06_sessions_raw</code>，144.6 MB）的隐私与许可审查。
+</p>
+<div class="callout good">
+  <b>一句话总结：</b>这是一份「内容质量已经过线、工程质量还没跟上」的语料库。
+  最该修的不是翻译（译得不错），而是<b>四条管道</b>——入库管道（漏了 12.8%）、清洗管道（宏没展开、括号剥歪）、
+  发布管道（路径脱敏污染公式）、统计管道（6 套口径）。这四条修完，它有资格自称「中文数学文献语料库」而不只是「一批译注书」。
+</div>
+
+</div>
+<footer><div class="wrap">
+  第三方质量评审 · 2026-11-15 · 受评对象：数译 · 中文数学译注文献库（v1.0.1） ·
+  <a href="./index.html">返回文献库首页</a>
+</div></footer>
+</body></html>
