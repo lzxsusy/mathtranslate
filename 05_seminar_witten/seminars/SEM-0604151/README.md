@@ -64,6 +64,19 @@ Kapustin–Witten (2006) 做的事情可以压成一句话：**四维 N=4 超杨
 
 ---
 
+## 配套数据流（在仓库 datasets/ 下）
+
+本工程的“怎么做出来的”也作为数据发布，供训练与复用：
+
+| 文件 | 内容 |
+|---|---|
+| `datasets/traces/KW06-04.lead.jsonl` | 导的决策流 52 条：清点→定底本→定四层结构→派工→整合→审计→发布→v1.1 改版 |
+| `datasets/traces/KW06-04.units.jsonl` | 15 个写作单元的回执 17 条：交付统计、自编译结果、最弱两处 |
+| `datasets/workflow/KW06-04_讲义生产协议.md` | 提示词模板、验收门、13 条环境坑与对策 |
+| `derivation/dialogue.jsonl` | 附录 D 的机器可读版 60 条（A 级、带原文短引与页锚） |
+
+---
+
 ## 复现
 
 工程文件在本目录：`manuscript/`（LaTeX 源）、`plan/`（写作规范）、`derivation/`（语料 JSONL）、

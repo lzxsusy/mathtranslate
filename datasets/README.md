@@ -72,6 +72,11 @@ datasets/
 **第一批 L0（2026-11-16）**：取队列前 50 条，44 条修正（按工程导言逐工程展开 `\R`、`\C`、`\id` 等宏，去尺寸残渣，合并空白）、3 条删除（`meta_block`）、3 条无改动；改动留档 `datasets/fixes/l0_batch01.jsonl`，语料从 49,038 段变为 49,035 段。同日补 3 张跨工程 L2 卡：`SY01-01` 谱流、`SY01-09` SYZ 启发式、`SY03-08` Chern–Simons 形式的规范变换。成本：L0 约 0.5 人时/50 条（AI 起草 + 抽检），L2 单卡 AI 起草 2–3 分钟、人工复核 8–12 分钟。
 
 
+**首批 event-level trace（2026-11-16）**：`traces/KW06-04.lead.jsonl`（52 条决策流）与
+`traces/KW06-04.units.jsonl`（17 条单元回执）来自 SEM-0604151 讲义工程；配套协议
+[`workflow/KW06-04_讲义生产协议.md`](workflow/KW06-04_讲义生产协议.md)。这类 trace 的训练价值在
+「报错 → 修法」与验收判定，不在成品文字，故保留 `error` 与 `outcome=partial` 的记录。
+
 ## 5. 质量门禁
 
 `tools/ds_lint.py` 强制：

@@ -1,5 +1,27 @@
 # CHANGELOG
 
+## datasets v0.5 — 2026-11-16（SEM-0604151 讲义生产的数据流）
+
+把「K–W 2006 分层解经本」的制作过程本身作为数据发布：不只是成品，还有**怎么一步步做出来的**。
+
+- 新增 `datasets/traces/KW06-04.lead.jsonl`（52 条）：决策流。清点 421 份材料 → 确认底本无中文全译本 →
+  定四层结构与 S1–S8 编号 → 派 12 个写作单元（并发上限 8，4 个被拒后补派）→ 整合修（重复 label、
+  私有宏、伪引用）→ 机器审计 → 首版 207 页 → 用户反馈 → 四张交换图 + 附录 D 60 条 → v1.1 219 页。
+  每条带 `action`（read/tool/write/check/fix/decide/think/report）、`observation`、`decision`、`error`；
+  `fidelity="reconstructed"` 标明是从会话摘要重建，不是原始事件导出。
+- 新增 `datasets/traces/KW06-04.units.jsonl`（17 条）：15 个写作单元（lead + 2 结构层 + 4 骨血 + 2 细度 +
+  1 对照 + 1 语料 + 1 讨论班 + 3 问答录）的回执：交付统计（页数/锚点/A-B-C/图表）、自编译结果、
+  **最弱两处**。弱项不是装饰：它们被原样写进书的前言「已知薄弱处」。
+- 新增 `datasets/workflow/KW06-04_讲义生产协议.md`：可复用协议——分层产品定义、并发分工模型、
+  writer 提示词模板、共享约定（页码映射 / 公式号核对 / A-B-C 三级标注）、5 道验收门、
+  **13 条环境坑与对策**（Windows PowerShell 无 pwsh、.ps1 无 BOM、xeCJK `\colorbox` 崩溃、
+  tikz-cd 文本模式、`\shortstack`、圈号缺字、Poppler 缺 Adobe-GB1、CRLF 文件、Select-String 忽略大小写等）。
+- 语料侧：该工程 `derivation/dialogue.jsonl` 60 条（附录 D 的机器可读版，A 级、带原文短引与页锚）
+  与既有 308 条推导链一并发布在 `05_seminar_witten/seminars/SEM-0604151/`。
+- `ds_publish --write`：12 个可发布文件、0 条被阻（trace 记录无 rights 字段，按规则视为可发布）。
+- 训练视角：这批数据的价值在「错误 → 修复」的配对（报错文本 + 修法）与「验收门」的判定过程，
+  不是成品文字的又一次誊写；因此 trace 保留 `error`/`outcome=partial` 的记录，不做美化。
+
 ## datasets v0.4 — 2026-11-16（第一批 L0 修正与三张跨工程精读卡）
 
 按"先修余料、再补理解"的顺序做了第一批实活，并把成本记下来，作为是否上量的依据。
