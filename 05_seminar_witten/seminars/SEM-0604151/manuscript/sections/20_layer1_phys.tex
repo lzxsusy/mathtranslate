@@ -1,0 +1,1013 @@
+% ======================================================================
+%  L1 结构层（物理侧）：\S2--\S5 的结构卡
+%  作者：phys-arch；目标 18--25 页；只依赖 preamble 已定义的宏与环境
+% ======================================================================
+
+\section{\S2--\S5：从超对称规范理论到 Hitchin 模空间上的二维模型}
+\label{l1:sec}
+
+\S2--\S5 不是四篇并列的综述，而是一条单向链的四段。设 $G$ 紧致、$\Ldual$ 为其 Langlands 对偶，这四节依次完成主链 S1--S4：S1（\S2）指出 $G$ 的 $\mathcal N=4$ 超对称规范理论在量子层面有电磁对偶，它交换 $G\leftrightarrow\Ldual$、交换电/磁荷、反演复参数 $\tau$；S2（\S3）把该理论扭化，得到一族定义在任意四维流形上的拓扑场论（TFT），其唯一参数是 $\Psi$，而其拓扑超荷 $Q$ 满足 $Q^2=0$；S3（\S4）在 $\Sigma\times C$ 上紧化，把 4d 理论变成 $\Sigma$ 上 target 为 Hitchin 模空间 $\MH(G,C)$ 的二维拓扑 sigma 模型；S4（\S5）用二维 TFT 的语言重写这个 sigma 模型，产出"膜"与"镜像对称"两个工具，S-对偶在此显现为 $\MH(G,C)$ 与 $\MH(\Ldual,C)$ 的镜像对称（表 \ref{l1:tab:chain}）。\pA\anchor{src p.4}
+
+\begin{table}[htbp]
+\centering\small
+\caption{\S2--\S5 与主链 S1--S4 的对应。}\label{l1:tab:chain}
+\begin{tabular}{@{}llp{4.1cm}p{5.0cm}@{}}
+\toprule
+\tabhead{主链} & \tabhead{原文} & \tabhead{该步的产出} & \tabhead{下一步如何消费它} \\
+\midrule
+S1 & \S2（pp.6--17） & 对偶群同构 $G\leftrightarrow\Ldual$，$S:\tau\mapsto-1/(n_g\tau)$ & \S3 用它在超荷族上产生非平凡等价 \\
+S2 & \S3（pp.16--38） & GL 扭化、$Q^2=0$、参数 $\Psi$、4d TFT 族 & \S4 把这个族在 $\Sigma\times C$ 上紧化 \\
+S3 & \S4（pp.38--56） & 超凯勒流形 $\MH$ 为 target 的 2d sigma 模型 & \S5 研究它的扭化 TFT、膜与镜像 \\
+S4 & \S5（pp.56--78） & $(J_+,J_-)$ 族、广义复几何、$S$-对偶$=$镜像对称 & \S6 起：线算子成为膜上的算子 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{为什么必须是这个顺序。}S1 先讲，因为全文要比较的是两个群的理论；若对偶群没有以"电磁对偶"的物理形式出现，后面所有"膜范畴与 D-模范畴等价"就缺了对手方。S2 是技术地基：没有 GL 扭化就没有在任意四维流形上的 TFT 族，也就没有唯一贯穿全文的参数 $\Psi$；"拓扑"二字的全部内容是 $Q^2=0$，而 $Q$ 的构造依赖 S1 留下的超荷代数。S3 把问题几何化：4d 规范场在 $C$ 上紧化后，超对称位形被消失定理逼成 $C$ 上的平坦联络，其模空间正是 $\MH$；Langlands 的"自守侧"与"伽罗瓦侧"由此在同一几何对象上相遇。S4 提供工具而不是结论：二维 TFT 的 $(J_+,J_-)$ 语言把 \S6 起的线算子翻译成作用在膜上的算子，把 4d S-对偶翻译成二维镜像对称。\pC\anchor{src p.78}
+
+\textbf{读法。}四节共 16 个小节，每个小节一张六栏卡片：这一节的任务、输入、关键构造、结论、出口、锚点索引。卡片后附一条"卡住点"和一条"注意"。每条实质断言句末标 provenance：\pA 是原文明确陈述，\pB 是原文暗示而由我们重建（附重建依据），\pC 是我们的判断或延伸。方括号中的锚点 \texttt{[src p.$N$]} 指印刷页 $N$，对应 \texttt{source/text/p\{$N+1$:03d\}.txt}。本文件中标号形如 (3.50) 的公式是原文公式的重述，编号与原文一致，正文用 \verb|\eqref| 引用；未标原文号者为我们的改写。\pC
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[every node/.style={font=\footnotesize},
+  cb/.style={draw=kwblue!65,fill=kwboxbg,rounded corners=1.5pt,align=center,inner sep=3.5pt,text width=92mm}]
+\node[cb] (s1) {\textbf{S1}（\S2）：$G\leftrightarrow\Ldual$——电磁对偶就是 Langlands 对偶};
+\node[cb,below=5mm of s1] (s2) {\textbf{S2}（\S3）：GL 扭化，得到参数为 $\Psi$ 的 4d TFT 族};
+\node[cb,below=5mm of s2] (s3) {\textbf{S3}（\S4）：在 $\Sigma\times C$ 上紧化，target 是 $\MH$ 的 2d sigma 模型};
+\node[cb,below=5mm of s3] (s4) {\textbf{S4}（\S5）：2d TFT 语言——膜与镜像对称};
+\foreach \a/\b in {s1/s2,s2/s3,s3/s4}{\draw[-{Stealth},kwblue!70] (\a) -- (\b);}
+\end{tikzpicture}
+\caption{\S2--\S5 的主链。每一步消费上一步的产出；几何 Langlands 的舞台由 S3 搭好，S4 提供在上面演戏的语言。}
+\label{l1:fig:chain}
+\end{figure}
+
+\subsection*{\S2 电磁对偶：S1 的物理表述（pp.6--17）}
+
+\S2 只有两个小节，却承担 S1 的两半：\S2.1 建立物理语言（场、超荷、$\tau$），\S2.2 陈述 S-对偶并精确说明它如何作用在超荷上。前者是后者的字典，后者是全文的对手方。读 \S2 时不必记住全部旋量约定，只需盯住三件事：$\tau$ 的变换、$G$ 与 $\Ldual$ 的交换、以及 S-对偶不是经典对称而是量子对称。\pC\anchor{src p.6}
+
+\begin{kcard}{§2.1 回顾：$\mathcal N=4$ 超对称规范理论（pp.6--11）}
+\anchor{src p.6}
+
+\noindent\textbf{① 这一节的任务}\quad 用十维超对称 Yang--Mills 的降维，把 $\mathcal N=4$ 的场内容、超荷代数与复参数 $\tau$ 一次摆清，为"电磁对偶"提供精确的物理载体。\pA\anchor{src p.6}
+
+\noindent\textbf{② 输入}\quad 总问题 G0（\S1）；S1 的目标。本节不消费任何前节技术结果，是整条链的出发点。
+
+\noindent\textbf{③ 关键构造}\quad
+\begin{itemize}
+\item 十维手征超荷与作用量。$\Gamma\equiv\Gamma^0\Gamma^1\cdots\Gamma^9$ 在 $S_\pm$ 上取 $\pm1$；取 $\epsilon\in S_+$ 满足 $\Gamma\epsilon=\epsilon$，则
+\begin{equation}\label{l1:i10}\tag{2.6}
+I_{10}=\frac{1}{e^2}\int \dd^{10}x\,\Tr\Bigl(\tfrac12 F_{IJ}F^{IJ}-\ii\lambda\Gamma^I D_I\lambda\Bigr).
+\end{equation}
+其中 $A,\lambda$ 取值于 $G$ 的实李代数、在酉表示中反厄米，$\Tr$ 是不变负定二次型，归一化使 $\frac1{8\pi^2}\int_{S^4}\Tr F\wedge F\in\ZZ$。\pA\anchor{src p.7}
+\item 降维。$A_I$（$I\ge4$）的六个分量给出 6 个标量 $\varphi_i$，$I_4$ 与 $\theta$ 项为
+\[
+I_4=\frac1{e^2}\int\dd^4x\,\Tr\Bigl(\tfrac12F_{\mu\nu}F^{\mu\nu}+D_\mu\varphi_iD^\mu\varphi_i+\tfrac12[\varphi_i,\varphi_j]^2\Bigr),\qquad
+I_\theta=-\frac{\theta}{8\pi^2}\int\Tr F\wedge F ,
+\]
+即原文式 (2.10) 与 (2.11)。\pA\anchor{src p.9}
+\item 复参数与超代数：
+\begin{equation}\label{l1:tau}\tag{2.12}
+\tau=\frac{\theta}{2\pi}+\frac{4\pi\ii}{e^2}\in\mathbb H ,
+\end{equation}
+\begin{equation}\label{l1:susy}\tag{2.15}
+\{Q^{AX},Q^{Y}_{\dot A}\}=\delta^X_Y\sum_\mu\Gamma^\mu_{A\dot A}P_\mu,\qquad
+\{Q,Q\}=\{\bar Q,\bar Q\}=0 .
+\end{equation}
+$X,Y=1,\dots,4$ 是 $SU(4)_R$ 的指标；在非紧流形上右端允许加中心荷项。\pA\anchor{src p.11}
+\end{itemize}
+
+\noindent\textbf{④ 结论}\quad
+\begin{itemize}
+\item 十维是超对称 Yang--Mills 所允许的最高维（Nahm），故 $\mathcal N=4$ 是"最大"的超对称规范理论，其低能物理只由 $e$ 与 $\theta$ 两个参数刻画。\pA\anchor{src p.6}
+\item $\tau\mapsto\tau+1$（即 $\theta\mapsto\theta+2\pi$）对任意 $G$ 都是经典对称。\pA\anchor{src p.10}
+\item 超荷落在 $SU(4)_R$ 的 $\mathbf 4$（$Q^{AX}$）与 $\bar{\mathbf 4}$（$Q^{Y}_{\dot A}$）中；式 \eqref{l1:susy} 是下文证明 $Q^2=0$ 的唯一代数依据。\pA\anchor{src p.11}
+\end{itemize}
+
+\noindent\textbf{⑤ 出口}\quad \S2.2 马上用 $\tau$ 的变换与 $G\leftrightarrow\Ldual$；而 \S3.1 证明扭化后超荷平方为零，依据正是"式 \eqref{l1:susy} 右端没有 $\mathrm{Spin}'(4)$ 不变的算子"。若只知道"$\mathcal N=4$ 有 16 个超荷"而不知道式 \eqref{l1:susy} 的形状，\S3.1 的 $Q^2=0$ 就只能是形式断言。\pB\anchor{src p.19}
+
+\noindent\textbf{⑥ 锚点索引}\quad
+\begin{itemize}
+\item p.6：$\mathcal N=4$ 由十维降维得到；十维是 SYM 的最高维
+\item p.7--8：$\Gamma$、手征条件、$A$ 与 $\lambda$ 的反厄米约定
+\item p.9：降维后的 $I_4$ 与 $\theta$ 项（原文 (2.10)--(2.11)）
+\item p.10--11：$\tau$ 的定义、$SU(4)_R$ 与超代数（原文 (2.12)--(2.15)）
+\end{itemize}
+\end{kcard}
+
+\noindent\stuck{为什么 $\tau$ 的虚部是 $4\pi/e^2$ 而非 $1/e^2$？这是两处归一化的并置：$\Tr$ 的拓扑归一化定住了 $\frac1{8\pi^2}\int\Tr F\wedge F$ 的整性，而作用量 (2.6) 前置 $1/e^2$；合并后 $\Im\tau=4\pi/e^2$。记住 $\tau$ 的唯一物理内容：$\Im\tau$ 是耦合常数的倒数，$\Re\tau$ 是 $\theta$ 角。\pB\anchor{src p.8}}
+
+\noindent\caveat{不要把 \S2.1 当作可以跳过的"复习"。全文只有这里给出式 \eqref{l1:susy}，也只有 \S2.2 讨论 S-对偶如何作用在超荷上；这两处都是 \S3 与 \S5 的硬输入，而不是背景知识。\pC\anchor{src p.6}}
+
+\medskip
+\S2.1 给定了"谁在变换"，\S2.2 说明"变换是什么"。注意从 \S2.1 到 \S2.2 有一个口径变化：\S2.1 的对称性是经典拉氏量的对称性，而 \S2.2 的 S 只作为量子对称存在。这个差别正是 S1 的全部困难。\pC
+
+\begin{kcard}{§2.2 S-对偶：对偶群同构（pp.11--17）}
+\anchor{src p.11}
+
+\noindent\textbf{① 这一节的任务}\quad 陈述 S-对偶猜想：$\tau\mapsto-1/(n_g\tau)$ 的量子对称同时交换 $G\leftrightarrow\Ldual$ 与电/磁荷；并精确给出它在超荷上诱导的 $U(1)$ 手征旋转。\pA\anchor{src p.11}
+
+\noindent\textbf{② 输入}\quad \S2.1 的 $\tau$、超荷 $\mathbf 4/\bar{\mathbf 4}$、式 \eqref{l1:susy}；主链 S1。
+
+\noindent\textbf{③ 关键构造}\quad
+\begin{itemize}
+\item 对单连通（simply-laced）$G$，$S$ 与 $T$ 生成 $\Gamma=SL(2,\ZZ)$，其中
+\begin{equation}\label{l1:smat}\tag{2.16}
+S=\begin{pmatrix}0&1\\-1&0\end{pmatrix}:\quad \tau\longmapsto-\frac1\tau ;
+\end{equation}
+非单连通时 $S:\tau\mapsto-1/(n_g\tau)$，$n_g=2$（$F_4$）、$3$（$G_2$），矩阵见原文 (2.17)。\pA\anchor{src p.11}
+\item 中心荷与电/磁荷的变换。取 $N=2$ 子代数，设复标量 $\tilde\varphi$ 在 Cartan 中，电/磁荷 $(\tilde m,\tilde n)$ 在权/余权格，则
+\begin{equation}\label{l1:Z}\tag{2.22}
+Z=\sqrt{\frac{2}{\Im\tau}}\,(\tilde m+\tau\tilde n)\cdot\tilde\varphi,
+\end{equation}
+$M=\begin{pmatrix}a&b\\c&d\end{pmatrix}\in SL(2,\ZZ)$ 作用为 $\tau\mapsto(a\tau+b)/(c\tau+d)$、$(\tilde m,\tilde n)\mapsto(\tilde m,\tilde n)M^{-1}$，且 $Z\mapsto\frac{|c\tau+d|}{c\tau+d}Z$（原文 (2.23)--(2.24)）。\pA\anchor{src p.15}
+\item 对超荷的作用是手征旋转。由 $Z$ 的变换定出
+\begin{equation}\label{l1:phase}\tag{2.25}
+\ee^{-\ii\hat\varphi(\gamma)}=\Bigl(\frac{|c\tau+d|}{c\tau+d}\Bigr)^{1/2},
+\end{equation}
+平方根意味着作用在超荷上的是 $\Gamma$ 的双覆盖，扩张由 $(-1)^F$ 给出；$\gamma$ 在 $\mathbf 4$ 上乘 $\ee^{\ii\hat\varphi}$、在 $\bar{\mathbf 4}$ 上乘 $\ee^{-\ii\hat\varphi}$。\pA\anchor{src p.13}
+\end{itemize}
+
+\noindent\textbf{④ 结论}\quad
+\begin{itemize}
+\item S-对偶不是经典对称：除 $T$ 外 $\Gamma$ 的元素不保持经典拉氏量，只能作为量子对称陈述。这正是它能交换 $G$ 与 $\Ldual$（而非只重标参数）的原因。\pA\anchor{src p.13}
+\item $\hat\varphi$ 定义到 $\hat\varphi\mapsto\hat\varphi+\pi/2$（$SU(4)_R$ 的中心 $I$）；在 Coulomb 分支上它由 BPS 质量公式唯一确定。\pA\anchor{src p.14}
+\item 几何 Langlands 只需要"基本"情形：$S$ 交换 $\Psi=\infty$ 与 $\Psi=0$，与 $n_g$ 无关；比较任意 $\Psi$ 时 $n_g$ 才进入（\S11.3）。\pA\anchor{src p.14}
+\end{itemize}
+
+\noindent\textbf{⑤ 出口}\quad \S3.5 把式 \eqref{l1:phase} 翻译成 $t\mapsto\ee^{2\ii\hat\varphi}t$（原文 (3.13)），进而 $\Psi\mapsto-1/(n_g\Psi)$；\S5.3 再用 $\Psi=0,\infty$ 的交换得到镜像对称。若漏掉 $\hat\varphi$ 的平方根与双覆盖，就无法解释为什么 4d 的量子对称在 2d 侧表现为几何对称，而不是仅仅把参数重标。\pB\anchor{src p.16}
+
+\noindent\textbf{⑥ 锚点索引}\quad
+\begin{itemize}
+\item p.11：S-对偶猜想、$SL(2,\ZZ)$、$S$ 矩阵（原文 (2.16)）
+\item p.12--13：$n_g$、Hecke 群、对偶群的例外情形
+\item p.14：$\hat\varphi$ 的来源；基本情形 $\Psi=0$ 与 $\Psi=\infty$ 的交换
+\item p.15--16：中心荷变换与相位公式（原文 (2.22)--(2.25)）
+\end{itemize}
+\end{kcard}
+
+\noindent\stuck{为什么 S 在超荷上的作用"必须"是 $\mathbf 4$ 与 $\bar{\mathbf 4}$ 上的相反相位？因为 $S$ 与庞加莱群交换，故它必须与 $SU(4)_R$ 交换，即落在 $SU(4)_R$ 的中心化子里；而中心 $I$ 在 $\mathbf 4$ 与 $\bar{\mathbf 4}$ 上本征值相反，所以任何这样的手征旋转都会给两者相反相位。经典拉氏量看不出这个相位，必须用 BPS 质量公式在 Coulomb 分支上读。\pA\anchor{src p.13}}
+
+\noindent\caveat{不要只把 S-对偶记成"$\tau\mapsto-1/\tau$"。S 同时交换（i）规范群 $G\leftrightarrow\Ldual$、（ii）电/磁荷、（iii）超荷的相位。漏掉任何一项，\S5.3 的镜像对称都无法陈述。\pC\anchor{src p.11}}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[every node/.style={font=\footnotesize}]
+\node (g) at (0,0) {$(G,\tau)$，电荷 $\tilde n$};
+\node (lg) at (5.4,0) {$(\Ldual,-1/(n_g\tau))$，磁荷 $\tilde m$};
+\draw[-{Stealth},kwblue!70] (g) to[bend left=28] node[above] {$S$} (lg);
+\draw[-{Stealth},kwblue!70] (lg) to[bend left=28] node[below] {$S^{-1}$} (g);
+\node[below=7mm of g,text width=52mm,align=center] {$\mathbf 4\mapsto \ee^{\ii\hat\varphi}\mathbf 4$};
+\node[below=7mm of lg,text width=52mm,align=center] {$\bar{\mathbf 4}\mapsto \ee^{-\ii\hat\varphi}\bar{\mathbf 4}$};
+\end{tikzpicture}
+\caption{S-对偶同时交换群、电荷与超荷相位。相位是 S1 到 S2 的唯一接口。}
+\label{l1:fig:sdual}
+\end{figure}
+
+\subsection*{\S3 扭化：S2 的三件产出（pp.16--38）}
+
+\S3 是全文最长、技术密度最高的一节。五个小节各有明确分工：\S3.1 定义 GL 扭化并给出超荷族；\S3.2 写出该族的场方程，认出两个特殊点；\S3.3 用恒等式证明解与参数无关；\S3.4 把前面的方程提升为一个显式的、对全部参数定义的拓扑拉氏量；\S3.5 从拉氏量中抽出唯一参数 $\Psi$。若只能读一节，读 \S3.5：它给出全文其余部分真正使用的参数；若想知道"为什么这一族值得造"，读 \S3.1 的 K-本征值讨论。\pC
+
+\begin{kcard}{§3.1 GL 扭化：超荷的 $\mathbb{CP}^1$ 族（pp.17--24）}
+\anchor{src p.17}
+
+\noindent\textbf{① 这一节的任务}\quad 定义第三种扭化（GL twist），使 16 个超荷中恰留下由 $\epsilon=u\epsilon_\ell+v\epsilon_r$ 参数化的 $\mathbb{CP}^1$ 族，且每个 $\epsilon$ 给出的超荷满足 $Q^2=0$。\pA\anchor{src p.17}
+
+\noindent\textbf{② 输入}\quad \S2.1 的旋量约定与式 \eqref{l1:susy}；N3；S2。
+
+\noindent\textbf{③ 关键构造}\quad
+\begin{itemize}
+\item 扭化的定义。取同态 $\kappa:\mathrm{Spin}(4)\to\mathrm{Spin}(6)$，把 $\mathrm{Spin}(4)$ 换成 $\mathrm{Spin}'(4)\subset\mathrm{Spin}(4)\times\mathrm{Spin}(6)$；在 GL twist 中 $\kappa$ 使 $SU(4)_R$ 的 $\mathbf 4$ 按 $\mathrm{Spin}(4)=SU(2)_\ell\times SU(2)_r$ 分解为 $\mathbf 4=(\mathbf 2,\mathbf 1)_1\oplus(\mathbf 1,\mathbf 2)_{-1}$，$\mathbf 6=\wedge^2\mathbf 4=(\mathbf 2,\mathbf 2)_0\oplus(\mathbf 1,\mathbf 1)_2\oplus(\mathbf 1,\mathbf 1)_{-2}$。\pA\anchor{src p.18}
+\item 不变超荷与 $K$。扭化后保持的超荷是 $\epsilon_\ell$（右手）与 $\epsilon_r$（左手），且 $K=\Gamma_{89}$ 在两者上本征值同为 $-1$：
+\begin{equation}\label{l1:k89}\tag{3.11}
+\Gamma_{0145}\epsilon=\epsilon,\quad \Gamma_{2367}\epsilon=\epsilon,\quad \Gamma_{89}\epsilon=-\ii\epsilon .
+\end{equation}
+任意非零复组合 $\epsilon=u\epsilon_\ell+v\epsilon_r$ 给出拓扑超荷，$\mathbb{CP}^1$ 的仿射参数为 $t=v/u$。\pA\anchor{src p.21}
+\item 两个等价关系与 S-对偶作用：
+\begin{equation}\label{l1:tact}\tag{3.13}
+t\longmapsto\frac{c\tau+d}{|c\tau+d|}\,t ,
+\end{equation}
+\begin{equation}\label{l1:tneg}\tag{3.14}
+I(t)=-t ,
+\end{equation}
+其中 $I$ 是 $SU(4)_R$ 的中心。$I$ 的作用是经典等价 $t\sim-t$，也是这个族中唯一的平凡等价。\pA\anchor{src p.22}
+\end{itemize}
+
+\noindent\textbf{④ 结论}\quad
+\begin{itemize}
+\item $Q^2=0$ 自动成立：式 \eqref{l1:susy} 右端无 $\mathrm{Spin}'(4)$ 不变算子，而 $Q^2=\frac12\{Q,Q\}$ 作为不变算子必须为零。于是拓扑态/算子取 $Q$-上同调，$Q$-正合视为平凡。\pA\anchor{src p.19}
+\item 玻色场只有 $A$（规范场）、$\varphi$（扭化后的第二个 adjoint 一形式）、$\sigma,\bar\sigma$（未扭化标量的组合，$K=\pm2$）；正是 $\sigma$ 的存在使 \S3.2 的方程出现代数约束。\pA\anchor{src p.19}
+\item 若 $\epsilon_\ell,\epsilon_r$ 的 $K$ 本征值不同，$K$ 生成的 $\CC^*$ 会平凡化整个 $\mathbb{CP}^1$ 族；正因两者本征值相同，S-对偶的非平凡等价才能存活，并生成几何 Langlands。\pA\anchor{src p.22}
+\end{itemize}
+
+\noindent\textbf{⑤ 出口}\quad \S3.2 用这支 $Q$ 写出 $Q$-不变方程；\S3.4 用它定义 $\delta_t$ 与拓扑拉氏量；\S5.1 的二维 $(J_+,J_-)$ 族正是 $\mathbb{CP}^1_g$ 经紧化后的像。没有 $t$ 与 $K$-分级，后文无法把"模型"参数化成族。\pB\anchor{src p.23}
+
+\noindent\textbf{⑥ 锚点索引}\quad
+\begin{itemize}
+\item p.17：扭化的动机与定义（三种扭化）
+\item p.18--20：$\kappa$、$\mathbf 4$ 与 $\mathbf 6$ 的分解、$K$ 的引入
+\item p.21：不变超荷、$K=\Gamma_{89}$ 的本征值（原文 (3.11)）
+\item p.22--23：$t$ 的参数化、$t\sim-t$、$Q=uQ_\ell+vQ_r$
+\end{itemize}
+\end{kcard}
+
+\noindent\stuck{$K$ 的本征值怎么读？$K=\Gamma_{89}$ 是 $\mathrm{Spin}(6)$ 中 $SO(2)_R$ 的生成元；扭化后它成为拓扑理论的整体对称，其本征值就是场的 $U(1)$ 荷。$\varphi_4,\varphi_5$ 组合成 $\sigma$ 带 $K=2$，因此 $\delta_T\sigma$ 需要 $K=3$ 的场，而表示论中没有——于是 $\delta_T\sigma=0$。这不是"忽略"，而是分解的强制结果。\pA\anchor{src p.19}}
+
+\noindent\caveat{不要把 GL twist 与 Donaldson--Witten 扭化混为一谈。$\mathcal N=4$ 可作三种扭化，前两种类比 Donaldson 理论；GL twist 的特殊之处在于保留的是一整族超荷而非一个，且它的 $\kappa$ 是使 $\mathbf 4$ 按 $(\mathbf 2,\mathbf 1)\oplus(\mathbf 1,\mathbf 2)$ 分解的那一个。\pA\anchor{src p.17}}
+
+\begin{kcard}{§3.2 一族 A-模型：$Q$-不变方程（pp.25--28）}
+\anchor{src p.25}
+
+\noindent\textbf{① 这一节的任务}\quad 写出 $Q$-不变场方程，认出 $t=\pm\ii$ 时解是平坦 $\gC$ 联络（同态 $\pi_1(M)\to G_{\CC}$），并说明实 $t$ 时方程是椭圆族。\pA\anchor{src p.25}
+
+\noindent\textbf{② 输入}\quad \S3.1 的变换律（原文 (3.27)--(3.28)）；N3。
+
+\noindent\textbf{③ 关键构造}\quad
+\begin{itemize}
+\item $Q$-不变方程（即 $\delta_T$ 作用在费米子上的像为零）：
+\begin{equation}\label{l1:eq29}\tag{3.29}
+(F-\varphi\wedge\varphi+tD\varphi)^+=0,\qquad
+(F-\varphi\wedge\varphi-t^{-1}D\varphi)^-=0,\qquad D^*\varphi=0 .
+\end{equation}
+它只依赖 $t=v/u$。\pA\anchor{src p.26}
+\item $t=\pm\ii$。令 $\mathcal A=A+\ii\varphi$ 为 $\gC$ 值联络，前两式等价于 $F(\mathcal A)=0$；解给出复平坦联络，除规范等价后即同态模空间 $Y_M(G)$（Corlette 定理；二维情形见 Donaldson 在 [20] 附录中的证明）。\pA\anchor{src p.26}
+\item 非实 $t$ 时式 \eqref{l1:eq29} 超定，实则给出 $F=0$；实 $t$ 时是实椭圆方程族，$t\ne0,\infty$ 正则，可连续延拓到 $t=0$（第二式换成 $(D\varphi)^-=0$）与 $t=\infty$（第一式换成 $(D\varphi)^+=0$）。此外 $\sigma$ 满足
+\[
+D\bar\sigma+t[\varphi,\sigma]=0,\qquad D\sigma-t^{-1}[\varphi,\sigma]=0,\qquad[\sigma,\bar\sigma]=0 ;
+\]
+$t\ne\pm\ii$ 时推出 $D\sigma=[\varphi,\sigma]=0$，不可约解只能有 $\sigma=0$。\pA\anchor{src p.26}
+\end{itemize}
+
+\noindent\textbf{④ 结论}\quad
+\begin{itemize}
+\item 解空间只依赖 $t$，不依赖 $u,v$ 的其它组合；实 $t$ 时理论是上同调场论（如 Donaldson 理论、二维 A-模型），无插入时配分函数是带符号的解数，并对 $t$ 的连续形变不变。\pA\anchor{src p.27}
+\item 两个极端：$t=\pm\ii$ 是"超定 + 复结构显然"的 B-模型型，实 $t$ 是"椭圆"的 A-模型型。这是 \S5 二维分类的 4d 预演。\pA\anchor{src p.28}
+\item $t=0,\infty$ 是退化极限，也恰是 \S3.3 消失定理的例外点。\pA\anchor{src p.26}
+\end{itemize}
+
+\noindent\textbf{⑤ 出口}\quad \S3.3 要证明"解与 $t$ 无关"，先得有式 \eqref{l1:eq29}；\S4 的紧化取 $t=\pm\ii$ 的平坦联络图像，才能把 4d 场解释为 $C$ 上平坦丛、即 $\MH$ 的点。若 $t=\pm\ii$ 的解不是平坦 $\gC$ 联络，S3 的 target 无从确定。\pB\anchor{src p.30}
+
+\noindent\textbf{⑥ 锚点索引}\quad
+\begin{itemize}
+\item p.25--26：$Q$-不变方程（原文 (3.29)）；$t=\pm\ii$ 的平坦性
+\item p.26--27：$t=0,\infty$ 的极限；$\sigma$ 的方程与不可约性
+\item p.27--28：上同调场论的解释；与 B-模型的类比
+\end{itemize}
+\end{kcard}
+
+\noindent\stuck{为什么 $t=\pm\ii$ 时前两式会"合并"成 $F(\mathcal A)=0$？把 $F-\varphi\wedge\varphi$ 与 $D\varphi$ 分别看成 $F(A+\ii\varphi)$ 的实部与虚部：$F(A+\ii\varphi)=F-\varphi\wedge\varphi+\ii D\varphi$。取 $t=\ii$ 时式 \eqref{l1:eq29} 的两个方程恰好是这个复方程的实部与虚部，故等价于一个复方程。\pB\anchor{src p.26}}
+
+\noindent\caveat{不要把式 \eqref{l1:eq29} 读成"某个模型的定义"——它是 $Q$-不变条件。模型（A-型或 B-型）由 $t$ 是否实以及 $\Sigma$ 的维数决定，见 \S5.1。混淆二者会导致把 $t=\pm\ii$ 当成"理论退化"，其实它是 B-模型型的非退化点。\pC\anchor{src p.28}}
+
+\medskip
+\S3.2 写出的方程依赖于参数 $t$，这本身不构成拓扑场论：若不同 $t$ 给出不同物理，\S5 的"参数族"就只是名义上的。\S3.3 用两个恒等式证明解空间与 $t$ 无关，\S3.4 再把这个"无关性"提升为拉氏量层面的精确陈述。\pC
+
+\begin{kcard}{§3.3 消失定理：解与 $t$ 无关（pp.28--31）}
+\anchor{src p.28}
+
+\noindent\textbf{① 这一节的任务}\quad 证明：除 $t=0,\infty$ 外，式 \eqref{l1:eq29} 的解集不随 $t$ 变；特别地，在一个 $t$ 处的解对所有 $t$ 都成立，从而必是平坦 $\gC$ 联络。\pA\anchor{src p.28}
+
+\noindent\textbf{② 输入}\quad \S3.2 的方程 \eqref{l1:eq29}；$V^\pm(t)$ 的定义 $V^+(t)=(F-\varphi\wedge\varphi+tD\varphi)^+$、$V^-(t)=(F-\varphi\wedge\varphi-t^{-1}D\varphi)^-$、$V_0=D^*\varphi$。
+
+\noindent\textbf{③ 关键构造}\quad
+\begin{itemize}
+\item 第一恒等式（原文 (3.32)），对任意 $t\ne0,\infty$：
+\begin{equation}\label{l1:vt1}\tag{3.32}
+\int\Tr F\wedge F=\int\Tr\bigl[V^+(t)\wedge V^+(-t^{-1})+V^-(t)\wedge V^-(-t^{-1})\bigr].
+\end{equation}
+\pA\anchor{src p.29}
+\item 第二恒等式，把作用量拆成"平方和 $+$ 拓扑项"。对 $t>0$ 令 $f(t)=(t-t^{-1})/(t+t^{-1})$，则
+\begin{equation}\label{l1:vt2}\tag{3.34}
+B(u)-B(t)=\bigl(f(u)-f(t)\bigr)\int\Tr F\wedge F ,
+\end{equation}
+其中 $B(t)$ 是 $V^\pm(t)$ 与 $V_0$ 的正系数平方和（原文 (3.33) 的左端），而
+\[
+B(t)=-\int\dd^4x\sqrt g\,\Tr\Bigl[\tfrac12F_{\mu\nu}F^{\mu\nu}+D_\mu\varphi_\nu D^\mu\varphi^\nu+R_{\mu\nu}\varphi^\mu\varphi^\nu+\tfrac12[\varphi_\mu,\varphi_\nu]^2\Bigr]+f(t)\int\Tr F\wedge F .
+\]
+\pA\anchor{src p.30}
+\item 消失定理. 定理 1：$M$ 紧致无边、$\int\Tr F\wedge F\ne0$ 时，$t\ne0,\infty$ 无解；定理 1$'$：$\int\Tr F\wedge F>0$ 时除 $t=0$ 外无解，$<0$ 时除 $t=\infty$ 外无解；定理 2：在一个 $t\ne0,\infty$ 处有解 $\Rightarrow$ 对所有 $t$ 有解，且该解是平坦 $\gC$ 联络。\pA\anchor{src p.28}
+\end{itemize}
+
+\noindent\textbf{④ 结论}\quad
+\begin{itemize}
+\item 由定理 1$'$，非平凡瞬子数禁止 $t\ne0,\infty$ 的解；$t=0,\infty$ 是唯一两类允许非零拓扑荷的极限，这解释了 \S3.2 为何要特别延拓到这两点。\pA\anchor{src p.29}
+\item 定理 2 的推论：在 $\Sigma\times C$ 上，拓扑超对称的场就是映射 $\Sigma\to\MH(G,C)$，$x\in\Sigma$ 映到 $C$ 上平坦丛 $\mathcal E_x$ 对应的点。这是 S3 的几何化步骤，也是 \S4 全部内容的前提。\pA\anchor{src p.30}
+\item 证明要点：$B(u)$ 对全部 $u$ 是带正系数的平方和，故 $B(u)\le0$；而式 \eqref{l1:vt2} 给出 $B(u)-B(t)=(f(u)-f(t))\int\Tr F\wedge F$。若在某 $t$ 处有解（$B(t)=0$）且 $\int\Tr F\wedge F\ne0$，取 $u$ 使 $f(u)$ 与 $f(t)$ 分居两侧便得 $B(u)>0$，矛盾；故 $\int\Tr F\wedge F=0$，且 $B(u)=0$ 对所有 $u$ 成立，即解集与 $t$ 无关。\pA\anchor{src p.30}
+\end{itemize}
+
+\noindent\textbf{⑤ 出口}\quad \S4.1 的紧化图像、\S4.1 中"用拓扑不变性把 $F$ 变形到 $F|_C=0$"的操作、以及 \S5.3 中"$\Psi=0$ 与 $\Psi=\infty$ 是同一理论的对偶两端"都依赖本节。若没有定理 2，$\MH$ 只是 $t=\pm\ii$ 处的一个巧合，而非整族理论的共同 target。\pB\anchor{src p.31}
+
+\noindent\textbf{⑥ 锚点索引}\quad
+\begin{itemize}
+\item p.28：三个消失定理的陈述；$t=0,\infty$ 的例外
+\item p.29：第一恒等式（原文 (3.32)）
+\item p.30：第二恒等式与 $f(t)$（原文 (3.33)--(3.34)）；$t$ 须为极值点
+\item p.31：$\Sigma\times C$ 上的推论：场 $=$ 映射到 $\MH$
+\end{itemize}
+\end{kcard}
+
+\noindent\stuck{为什么 $t=0,\infty$ 能逃过消失定理？因为恒等式 \eqref{l1:vt2} 的平方和系数是 $t^{-1}/(t+t^{-1})$ 与 $t/(t+t^{-1})$，在 $t=0$ 或 $\infty$ 时其中一个系数退化（对应的 $V$ 不进入恒等式），论证不再约束那一支——而那正是瞬子（$t=0$）与反瞬子（$t=\infty$）栖身之处。所以两点不是漏洞，而是物理上必须有非平凡解的极限。\pA\anchor{src p.29}}
+
+\noindent\caveat{"解与 $t$ 无关"只对 $t\ne0,\infty$ 成立，且是就解集而言，不是就作用量数值而言。$\Sigma\times C$ 上的作用量显含 $\Im\tau$ 与 $\theta$，只是对拓扑超对称位形取常数值。\pB\anchor{src p.31}}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[every node/.style={font=\footnotesize},scale=1.0]
+\draw[->] (-2.6,0) -- (2.8,0) node[right] {$\mathrm{Re}\,t$};
+\draw[->] (0,-1.3) -- (0,1.5) node[above] {$\mathrm{Im}\,t$};
+\foreach \x/\lab in {-1/{$t=-1$},1/{$t=1$}}{\fill (\x,0) circle (1.6pt); \node[below=2pt] at (\x,0) {\lab};}
+\fill (0,1) circle (1.6pt); \node[right=2pt] at (0,1) {$t=\ii$};
+\fill (0,-1) circle (1.6pt); \node[right=2pt] at (0,-1) {$t=-\ii$};
+\node[below left=1pt] at (-2.35,0) {$t=0$};
+\node[below right=1pt] at (2.35,0) {$t=\infty$};
+\node[align=center,text width=34mm] at (0,2.3) {$\mathbb{CP}^1$：$t=\pm\ii$ 是 B-模型点，$t\in\RR$ 是 A-模型点};
+\end{tikzpicture}
+\caption{参数 $t$ 的 $\mathbb{CP}^1$。S-对偶把它按相位旋转再反演，$\Psi$ 是这个作用的"好坐标"（\S3.5）。}
+\label{l1:fig:tplane}
+\end{figure}
+
+\medskip
+$Q^2=0$ 与方程 \eqref{l1:eq29} 还只是"经典"层面的陈述。要把它们变成可在任意四维流形上定义、且对全部 $t$ 成立的量子场论，需要写出一个被 $\delta_t$ 湮灭的拉氏量——这是 \S3.4 的工作，也是全文技术上最陡的一段。读这段时建议先接受"它存在"，再看 \S3.5 抽出的参数，回头再核对细节。\pC
+
+\begin{kcard}{§3.4 拓扑拉氏量（pp.31--35）}
+\anchor{src p.31}
+
+\noindent\textbf{① 这一节的任务}\quad 构造一个对每个 $t$ 都被 $\delta_t$ 湮灭（故有拓扑对称）、且在 $M=\mathbb R^4$ 时回到式 \eqref{l1:i10} 的四维拉氏量，从而把 \S3.2--\S3.3 的方程提升为真正的场论。\pA\anchor{src p.31}
+
+\noindent\textbf{② 输入}\quad \S3.1 的变换律（原文 (3.23)--(3.28)）；\S3.2 的方程；\S3.3 的恒等式 \eqref{l1:vt2}（用来识别并消去 $t$ 依赖）。
+
+\noindent\textbf{③ 关键构造}\quad
+\begin{itemize}
+\item 闭合性。$\delta_t=\delta_\ell+t\delta_r$ 满足
+\begin{equation}\label{l1:dt2}\tag{3.42}
+\delta_t^2\Phi=-\ii(1+t^2)\mathcal L_\sigma(\Phi),
+\end{equation}
+即平方为（虚数倍的）规范变换；$\eta,\tilde\eta$ 的代数需引入辅助场 $P$ 才闭合（原文 (3.37)），而 $\chi$ 的闭合需辅助二形式 $H$（原文 (3.41)）。\pA\anchor{src p.33}
+\item 三项分解。取
+\[
+I_0=\delta_\ell\delta_r V,\qquad I_1=\delta_t V_1,\qquad
+I_2=-\Bigl(\frac{t-t^{-1}}{e^2(t+t^{-1})}-\frac{\ii\theta}{8\pi^2}\Bigr)\int\Tr F\wedge F,
+\]
+其中 $V$ 与 $V_1$ 见原文 (3.38)、(3.43)。第三项正是原文 (3.49)。
+\begin{equation}\label{l1:i2}\tag{3.49}
+I_2=-\Bigl(\frac{t-t^{-1}}{e^2(t+t^{-1})}-\frac{\ii\theta}{8\pi^2}\Bigr)\int\Tr F\wedge F .
+\end{equation}
+总作用量 $I=I_0+I_1+I_2$。\pA\anchor{src p.35}
+\end{itemize}
+
+\noindent\textbf{④ 结论}\quad
+\begin{itemize}
+\item $I$ 被 $\delta_t$ 湮灭对全部 $t$ 成立；度规变化也是 $\delta_t$-恰当的（因每一项形如 $\delta_t(\cdots)$），故 $I$ 是拓扑场论，配分函数与 $M$ 的度规无关。\pA\anchor{src p.35}
+\item 在 $M=\mathbb R^4$ 上玻色部分化为式 \eqref{l1:i10} 的 $\mathcal N=4$ 作用量，故 $I$ 是 $\mathcal N=4$ 超对称 Yang--Mills 到弯曲四维流形的推广，而非新理论。\pA\anchor{src p.35}
+\item $I_0$ 单独已对任意 $t$ 有拓扑对称但退化（无规范场动能）；$I_1$ 补上动能与费米子项，$I_2$ 的选取恰使全部 $t$ 依赖抵消。\pA\anchor{src p.34}
+\end{itemize}
+
+\noindent\textbf{⑤ 出口}\quad \S3.5 从 $I_2$ 的系数直接读出参数 $\Psi$；\S4.1 用 $I$ 的二次项读出 $\MH$ 上的度规 $(4.2)$ 与 $B$-场 $(4.19)$；\S5.2 的 $(5.30)$ 中出现的 $\Im\tau$ 因子也来自这里。若没有显式拉氏量，"$\mathcal N=4$ 的扭化"就只是超荷层面的陈述，无法谈论膜与配分函数。\pB\anchor{src p.36}
+
+\noindent\textbf{⑥ 锚点索引}\quad
+\begin{itemize}
+\item p.31--32：$\delta_t$ 的代数与辅助场 $P$
+\item p.33：辅助二形式 $H$；$I_0,I_1$ 的构造
+\item p.34--35：$I_2$ 与总作用量；$\mathbb R^4$ 上的还原
+\end{itemize}
+\end{kcard}
+
+\noindent\stuck{为什么非要引入辅助场？因为 $\delta_t$ 在 $\eta,\tilde\eta$（以及 $\chi$）上不闭合：$\{\delta_\ell,\delta_r\}$ 含规范变换项，而"平方为零"到"平方为规范变换"之间差的正是辅助场。辅助场的作用是把"只在运动方程下成立"的代数变成严格成立的代数；积掉它们后回到 \S3.1 的变换律。这是上同调场论的标准技术，不是这里的特殊发明。\pA\anchor{src p.33}}
+
+\noindent\caveat{不要把 $I=I_0+I_1+I_2$ 当成"猜出来的拉氏量"。它是对每个 $t$ 唯一地被 $\delta_t$-闭性与 $\mathbb R^4$ 极限钉住的（在给定归一化下）；$I_2$ 中的 $\theta$ 项系数 $-\ii\theta/8\pi^2$ 来自 $\theta$ 角，不是可调参数。\pB\anchor{src p.35}}
+
+\begin{kcard}{§3.5 典范参数 $\Psi$（pp.35--38）}
+\anchor{src p.35}
+
+\noindent\textbf{① 这一节的任务}\quad 证明 \S3.4 的理论只依赖 $\tau$ 与 $t$ 的一个组合
+\begin{equation}\label{l1:psi}\tag{3.50}
+\Psi=\frac{\tau+\bar\tau}{2}+\frac{\tau-\bar\tau}{2}\cdot\frac{t-t^{-1}}{t+t^{-1}} ,
+\end{equation}
+并确定 S-对偶对 $\Psi$ 的作用，从而得到二维侧唯一的参数。\pA\anchor{src p.35}
+
+\noindent\textbf{② 输入}\quad \S3.4 的 $I_2$（原文 (3.49)）；\S2.2 的 $t\mapsto\ee^{2\ii\hat\varphi}t$（原文 (3.13)）。
+
+\noindent\textbf{③ 关键构造}\quad
+\begin{itemize}
+\item 把 $I_2$ 的拓扑项写成 $-\frac{\Psi}{4\pi\ii}\int\Tr F\wedge F$，即得上式；$\Psi$ 只依赖 $(t,\tau)$。\pA\anchor{src p.35}
+\item 消去表面 $t$ 依赖。把超荷重标为 $\delta'_t=\delta_t/\sqrt{1+t^2}$（$t\ne\pm\ii$），则 $(\delta'_t)^2=-\ii\mathcal L_\sigma$，变换律与 $t$ 无关，各多重态成 $\delta'_tU=V,\ \delta'_tV=-\ii\mathcal L_\sigma U$ 的 Cartan 模型；结合 $(3.51)$ 型的 $\delta_t$-恰当项，得可观测量只依赖 $\Psi$。\pA\anchor{src p.37}
+\item S-对偶的作用。由式 \eqref{l1:tact} 与 $S:\tau\mapsto-1/(n_g\tau)$ 得
+\begin{equation}\label{l1:spsi}\tag{3.54}
+\Psi\longmapsto-\frac{1}{n_g\Psi} ;
+\end{equation}
+更一般地，$\tau\mapsto(a\tau+b)/(c\tau+d)$ 给出 $\Psi\mapsto(a\Psi+b)/(c\Psi+d)$（原文 (3.53)）。\pA\anchor{src p.38}
+\end{itemize}
+
+\noindent\textbf{④ 结论}\quad
+\begin{itemize}
+\item 特殊点：$t=\pm1\Rightarrow\Psi=\Re\tau$（任意实 $\Psi$ 可实现）；$t=\pm\ii\Rightarrow\Psi=\infty$，与 $\tau$ 完全无关；对任意 $\Psi$ 可在弱耦合（$\Im\tau\to\infty$）实现，$t^2=-(\Psi-\tau)/(\Psi-\bar\tau)$（原文 (3.52)）。\pA\anchor{src p.37}
+\item $\Psi$ 取值于 $\mathbb{CP}^1$ 而非上半平面：定向反转（存在反定向等距时）可把 $SL(2,\ZZ)$ 扩为 $GL(2,\ZZ)$，$\Psi\mapsto-\Psi$，$t\mapsto1/t$（原文 (3.55)--(3.56)）。\pA\anchor{src p.38}
+\item 因而"理论族"的参数空间是 $\mathbb{CP}^1_\Psi$，$\tau$ 与 $t$ 只是它的坐标；这正是 S-对偶能把 $G$ 与 $\Ldual$ 的理论视为同一族中不同点的原因。\pA\anchor{src p.38}
+\end{itemize}
+
+\noindent\textbf{⑤ 出口}\quad \S5.3 只讨论 $\Psi=\infty$（$t=\ii$，$J$ 的 B-模型）与 $\Psi=0$（其 S-对偶像，$K$ 的 A-模型）；\S5.2 用广义复几何把 $\Psi$ 解释为 $\MH$ 上 $[B+\ii\omega]$ 的复化 Kähler 类；\S11.3 讨论一般 $\Psi$。若没有 $\Psi$，全文的"对偶两端"就只能是两个孤立理论，而不是同一族的两个点。\pB\anchor{src p.69}
+
+\noindent\textbf{⑥ 锚点索引}\quad
+\begin{itemize}
+\item p.35--36：$\Psi$ 的定义（原文 (3.50)--(3.51)）
+\item p.37：$\delta'_t$ 重标、$\Psi$ 的特殊值与弱耦合实现（原文 (3.52)）
+\item p.38：S-对偶作用（原文 (3.53)--(3.54)）、定向反转
+\end{itemize}
+\end{kcard}
+
+\noindent\stuck{"只依赖 $\Psi$"为什么不显然？作用量 \eqref{l1:i2} 显含 $t$ 与 $\tau$；证明分两步：先把 $\delta_t$ 重标为 $\delta'_t$（吸收 $\sqrt{1+t^2}$），此时变换律与 $t$ 无关，但作用量多出 $\delta_t(\cdots)$ 项；再用 $\int\Tr F\wedge F$ 的拓扑性把这些项写成 $\delta_t$-恰当项。剩下不能消去的只有 $\int\Tr F\wedge F$ 的系数，那恰是 $\Psi$。\pA\anchor{src p.37}}
+
+\noindent\caveat{$\Psi$ 不是 $\tau$ 的函数：固定 $\tau$ 时 $\Psi$ 随 $t$ 跑遍 $\mathbb{CP}^1$；固定 $\Psi$ 时 $\tau$ 仍可变（弱耦合极限下 $\tau$ 与 $\Psi$ 的关系见原文 (3.52)）。另外 $t=\pm\ii$ 时 $\Psi=\infty$ 与 $\tau$ 无关——此时 $\Re\tau$ 的 $B$-场贡献虽存在但在 $B$-模型中不可见（原文 p.70 的讨论）。\pA\anchor{src p.69}}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[every node/.style={font=\footnotesize},
+  b/.style={draw=kwblue!60,fill=kwboxbg,rounded corners=1.5pt,inner sep=3pt}]
+\node[b] (tau) at (0,0) {$\tau=\theta/2\pi+4\pi\ii/e^2$};
+\node[b] (t) at (3.2,0) {$t=v/u\in\mathbb{CP}^1$};
+\node[b,fill=kwblue!12] (psi) at (6.6,0) {$\Psi\in\mathbb{CP}^1_\Psi$};
+\draw[-{Stealth}] (tau) -- (psi) node[midway,above,font=\scriptsize] {$\frac{\tau+\bar\tau}{2}$};
+\draw[-{Stealth}] (t) -- (psi) node[midway,above,font=\scriptsize] {$\frac{\tau-\bar\tau}{2}f(t)$};
+\node[below=5mm of psi,align=center,text width=40mm] {$\Psi=0$ 与 $\Psi=\infty$ 被 $S$ 交换};
+\node[below=5mm of t,align=center,text width=30mm] {$t=\pm\ii\Rightarrow\Psi=\infty$\\ $t=\pm1\Rightarrow\Psi=\Re\tau$};
+\end{tikzpicture}
+\caption{$\Psi$ 是 $(\tau,t)$ 的组合，也是唯一进入可观测量的参数。$\mathbb{CP}^1_\Psi$ 是全文的参数空间。}
+\label{l1:fig:psi}
+\end{figure}
+
+\subsection*{\S4 紧化：从四维规范理论到 $\MH$ 上的 sigma 模型（pp.38--56）}
+
+\S4 把 4d 问题变成几何问题，做法只有一步但需要三步准备：先取 $M=\Sigma\times C$（$C$ 紧、亏格 $g>1$，$\Sigma$ 是远大于 $C$ 的曲面），再用 \S3.3 的定理 2 把超对称场压成"$C$ 上的平坦丛随 $x\in\Sigma$ 变化"，最后用 \S3.4 的拉氏量读出这个变化的低能有效作用量。$C$ 上的方程是 Hitchin 方程
+\begin{equation}\label{l1:hitchin}\tag{4.1}
+F-\varphi\wedge\varphi=0,\qquad D\varphi=D^*\varphi=0 ,
+\end{equation}
+它是复平坦性 $F(A+\ii\varphi)=0$ 的实虚部，也是 \S4.1 矩映射与 \S4.3 纤维化的共同起点。三个小节分别给出 target 的超凯勒结构（\S4.1）、它的两种复结构解读（\S4.2）、以及它的纤维化（\S4.3）。\pA\anchor{src p.40}
+
+\begin{kcard}{§4.1 $\MH$ 作为超凯勒商（pp.40--49）}
+\anchor{src p.40}
+
+\noindent\textbf{① 这一节的任务}\quad 把 Hitchin 方程的解模空间写成无穷维仿射空间 $W$ 的超凯勒商，并算出物理理论诱导的度规与 $B$-场。\pA\anchor{src p.40}
+
+\noindent\textbf{② 输入}\quad \S3.3 定理 2（S2 的核心结论：超对称场 $=$ 映射 $\Sigma\to\MH$——没有它，本节只是在 $C$ 上重写 Hitchin 方程，无法说明 $\MH$ 为何是四维理论的低能 target）；\S3.4 的拉氏量（读出二次项）；\S3.5 的 $\Psi$ 与 $\tau$。
+
+\noindent\textbf{③ 关键构造}\quad
+\begin{itemize}
+\item $W$ 上的超凯勒结构。$W$ 是 $C$ 上 $(A,\varphi)$ 的仿射空间，度规
+\begin{equation}\label{l1:ds}\tag{4.2}
+\dd s^2=\frac{1}{4\pi}\int_C|\dd^2z|\,\Tr\bigl(\delta A_z\otimes\delta A_{\bar z}+\delta A_{\bar z}\otimes\delta A_z+\delta\varphi_z\otimes\delta\varphi_{\bar z}+\delta\varphi_{\bar z}\otimes\delta\varphi_z\bigr),
+\end{equation}
+三个复结构 $I,J,K$ 平移不变、满足四元数关系；$\mathbb{CP}^1$ 族为
+\begin{equation}\label{l1:iw}\tag{4.6}
+I_w=\frac{1-|w|^2}{1+|w|^2}I+\frac{\ii(\bar w-w)}{1+|w|^2}J+\frac{w+\bar w}{1+|w|^2}K,\qquad |w|\in[0,\infty] .
+\end{equation}
+$I_w$ 下全纯的变量是 $A_z-w\varphi_z$ 与 $A_{\bar z}+w^{-1}\varphi_{\bar z}$（$w\ne0,\infty$）。\pA\anchor{src p.42}
+\item 矩映射与商。规范变换 $\delta A=-D\epsilon,\ \delta\varphi=[\epsilon,\varphi]$ 保持三个辛形式，Hitchin 方程 \eqref{l1:hitchin} 等价于三个矩映射为零（原文 (4.11)）：
+\[
+\begin{aligned}
+\mu_I&=-\frac{1}{2\pi}\int_C\Tr\epsilon(F-\varphi\wedge\varphi),\\
+\mu_J&=-\frac{1}{2\pi}\int|\dd^2z|\Tr\epsilon(D_z\varphi_z+D_{\bar z}\varphi_{\bar z}),\\
+\mu_K&=-\frac{\ii}{2\pi}\int|\dd^2z|\Tr\epsilon(D_z\varphi_z-D_{\bar z}\varphi_{\bar z}).
+\end{aligned}
+\]
+故 $\MH=W/\!/\!/G$ 是超凯勒商。\pA\anchor{src p.46}
+\item 度规与 $B$-场。比较 \S3.4 拉氏量的二次项与一般 sigma 模型，得
+\[
+\dd s^2_g=\frac{4\pi^2}{e^2}\dd s^2=(\Im\tau)\,\dd s^2 ,
+\]
+而 $\theta$ 项化为 $\frac{\ii\theta}{2\pi}\int_\Sigma\Phi^*\omega_I$，即
+\begin{equation}\label{l1:bfield}\tag{4.19}
+B=-\frac{\theta}{2\pi}\omega_I=-\Re\tau\,\omega_I .
+\end{equation}
+\pA\anchor{src p.48}
+\end{itemize}
+
+\noindent\textbf{④ 结论}\quad
+\begin{itemize}
+\item $\MH$ 是复维数 $(2g-2)\dim G$ 的超凯勒流形；$\omega_J,\omega_K$ 正合，$\omega_I$ 的上同调类非平凡，由 determinant line bundle $L$ 的曲率代表（$\frac{\omega_I}{2\pi}$ 是 $H^2(\MH,\ZZ)$ 生成元）。\pA\anchor{src p.46}
+\item 物理上 $\MH$ 的 Kähler 类由 $\Im\tau$ 控制、$B$-场由 $\Re\tau$ 控制；这解释了为什么二维模型只依赖复化的 Kähler 类 $[B+\ii\omega]$。\pA\anchor{src p.48}
+\item 超对称场对应的正是 $C$ 上 Hitchin 方程的解；$\MH$ 的奇点对应可约解，全文避开。\pA\anchor{src p.40}
+\end{itemize}
+
+\noindent\textbf{⑤ 出口}\quad \S4.2 用 $I$ 与 $J$ 分别给出 $\MH$ 的两种描述；\S4.3 用 $I$ 的复结构定义 Hitchin 纤维化；\S5.2 用 $\omega_I,\omega_K,\Omega_J$ 写出广义复结构 $(5.30)$；\S5.4 用 $\omega_I$ 的整性论证底 $B$ 与纤维的环面结构。$\omega_I$ 的非平凡性贯穿 \S11 的 D-模构造。\pB\anchor{src p.69}
+
+\noindent\textbf{⑥ 锚点索引}\quad
+\begin{itemize}
+\item p.40--41：$W$ 的度规与三个复结构（原文 (4.2)--(4.5)）
+\item p.42--44：$\mathbb{CP}^1$ 族 $I_w$（原文 (4.6)--(4.7)）；$U(1)$ 作用
+\item p.45--46：辛形式、determinant line bundle、矩映射（原文 (4.8)--(4.11)）
+\item p.47--49：度规与 $B$-场（原文 (4.13)--(4.19)）
+\end{itemize}
+\end{kcard}
+
+\noindent\stuck{为什么 $W$ 上的三个复结构可以直接写下、不必验证可积性？因为 $W$ 是向量空间，任何常系数线性复结构都自动可积；真正的困难在群作用与矩映射：规范群是无穷维的，矩映射要逐点积分。另一个易错点是 $I_w$ 的 $w$ 与 $\mathbb{CP}^1_\Psi$ 的 $\Psi$ 不是一回事：$w$ 是 $\MH$ 上复结构族 $\mathbb{CP}^1_h$ 的坐标（属于 \S4），$\Psi$ 是理论参数（属于 \S3.5）；二者在 \S5.2 才通过 $(5.30)$ 联系起来。\pA\anchor{src p.44}}
+
+\noindent\caveat{$\dd s^2$ 与物理度规差因子 $\Im\tau$：式 \eqref{l1:ds} 是 $W$ 的形式度规（拓扑归一化），物理 sigma 模型度规是 $(\Im\tau)\dd s^2$。漏掉这个因子会算错 $A$-模型的辛形式与镜像对称的复化 Kähler 类。\pA\anchor{src p.48}}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[every node/.style={font=\footnotesize}]
+\draw[thick] (0,0) circle (1.5);
+\foreach \a/\lab/\pos in {0/{$I$}/right,60/{$J$}/right,120/{$K$}/left,180/{$-I$}/left,240/{$-J$}/left,300/{$-K$}/right}{
+  \fill (\a:1.5) circle (1.8pt);
+  \node[\pos=2pt] at (\a:1.5) {\lab};}
+\node[align=center] at (0,0) {$\mathbb{CP}^1_h$};
+\draw[-{Stealth},kwred!80] (1.1,1.0) arc (40:20:1.9) node[right=3pt,font=\scriptsize] {$w\mapsto\lambda^{-1}w$};
+\node[below=8mm of current bounding box.south,align=center,text width=80mm,font=\scriptsize]
+ {$I$：$A_z,\varphi_z$ 全纯；$J$：$A_z+\ii\varphi_z$ 全纯；$K$：$A_z-\varphi_z$ 全纯};
+\end{tikzpicture}
+\caption{$\MH$ 的复结构球 $\mathbb{CP}^1_h$。不同复结构给出同一超凯勒流形的不同复几何描述，\S4.2 与 \S5 反复用到这点。}
+\label{l1:fig:cp1h}
+\end{figure}
+
+\begin{kcard}{§4.2 $\MH$ 的复结构：Hitchin 对与平坦联络（pp.49--52）}
+\anchor{src p.49}
+
+\noindent\textbf{① 这一节的任务}\quad 在复结构 $I$ 与 $J$ 下分别把 $\MH$ 实现为（i）“稳定 Hitchin 对”的模空间、（ii）“稳定同态 $\pi_1(C)\to G_{\CC}$”的模空间，并给出稳定性条件。\pA\anchor{src p.49}
+
+\noindent\textbf{② 输入}\quad \S4.1 的超凯勒商与 $I_w$；\S3.2 的 $t=\pm\ii$ 平坦联络图像。
+
+\noindent\textbf{③ 关键构造}\quad
+\begin{itemize}
+\item 复结构 $I$。$A$ 自动给全纯 $G$-丛（$\bar\partial=D_{\bar z}$）；$\MH$ 在 $I$ 中的全纯方程是 $\nu_I=\mu_J+\ii\mu_K=0$：
+\begin{equation}\label{l1:nuI}\tag{4.20}
+\nu_I=\frac{1}{\pi}\int|\dd^2z|\,\Tr\epsilon\,D_z\varphi_z=0
+\ \Longleftrightarrow\ \bar D\varphi=0 ,
+\end{equation}
+即 $\varphi=\varphi_z\,\dd z$ 是 $K_C\otimes\mathfrak{ad}E$ 的全纯截面（Higgs 场），$(E,\varphi)$ 称 Hitchin 对。\pA\anchor{src p.50}
+\item 复结构 $J$。$\nu_J=\mu_K+\ii\mu_I=0$ 化为
+\begin{equation}\label{l1:nuJ}\tag{4.21}
+\nu_J=-\frac{\ii}{2\pi}\int_C\Tr\epsilon\,F=0
+\ \Longleftrightarrow\ F(A+\ii\varphi)=0 ,
+\end{equation}
+即 $A+\ii\varphi$ 是平坦 $G_{\CC}$ 联络；除 $G_{\CC}$ 规范后得同态模空间 $Y=\operatorname{Hom}(\pi_1(C),G_{\CC})/G_{\CC}$。\pA\anchor{src p.52}
+\item 稳定性与 $U(1)$ 作用。$I$ 中稳定条件：对 $G=SU(2)$，所有 $\varphi$-不变线丛 $L\subset E$ 满足 $\deg L<0$（半稳定 $\le0$）；$J$ 中用抛物子群给出的三角形式类比。$I$ 中有 $U\cong\CC^*$ 作用 $(E,\varphi)\mapsto(E,\lambda\varphi)$；$|\lambda|=1$ 部分即 $U(1)$，它使 $I_w\mapsto I_{\lambda^{-1}w}$：
+\begin{equation}\label{l1:u1c}\tag{4.23}
+(E,\varphi)\longmapsto(E,\lambda\varphi),\qquad |\lambda|=1 .
+\end{equation}
+\pA\anchor{src p.53}
+\end{itemize}
+
+\noindent\textbf{④ 结论}\quad
+\begin{itemize}
+\item 在 $I$ 中：$\MH=$稳定 Hitchin 对的模空间（$\S4.1$ 的矩映射零点除以 $G$，等价于直接除以 $G_{\CC}$ 再加稳定性）；严格半稳定点给出奇点。\pA\anchor{src p.51}
+\item 在 $J$ 中：$\MH=$稳定同态 $\vartheta:\pi_1(C)\to G_{\CC}$ 的模空间（Corlette--Donaldson 对应）；"稳定"对 $SU(2)$ 就是单值不能同时化为三角形式。\pA\anchor{src p.52}
+\item 所有 $I_w$（$w\ne0,\infty$）给出同一个 $Y$，即这些复结构下的全纯描述互相等价；只有 $I$、$J$ 与 $K$ 在 \S5 中承担不同角色（$B(I)$、$B(J)$、$A(K)$）。\pA\anchor{src p.53}
+\end{itemize}
+
+\noindent\textbf{⑤ 出口}\quad \S4.3 用 $I$ 的全纯性把 $\mathcal M$（稳定丛）嵌入 $\MH$；\S5.2 用 $\nu_I,\nu_J$ 写出 $(5.27)$ 的广义复结构；\S5.4 在 $I$ 的 $B$-模型里算 chiral ring（故需要"Hitchin 对 + 稳定性"的描述）；\S8 起把 $J$ 侧的同态与 electric eigenbrane 对应。\pB\anchor{src p.73}
+
+\noindent\textbf{⑥ 锚点索引}\quad
+\begin{itemize}
+\item p.49--50：$I$ 中的 Hitchin 对与 $\nu_I=0$（原文 (4.20)）
+\item p.51：$SU(2)$ 的稳定性定义；操作 (I) 与 (II)
+\item p.52：$J$ 中的平坦 $\gC$ 联络与同态（原文 (4.21)--(4.22)）
+\item p.53：$I_w$ 的等价性与 $U(1)$ 作用（原文 (4.23)）
+\end{itemize}
+\end{kcard}
+
+\noindent\stuck{为什么"矩映射为零再除以 $G$"与"直接除以 $G_{\CC}$"几乎一样？这是 Kempf--Ness 型定理的内容：每个（半）稳定 $G_{\CC}$-轨道含唯一的矩映射零点轨道。差别只在严格半稳定点（那里零点不唯一），而这些点恰是 $\MH$ 的奇点。所以"避开奇点"与"只用稳定对象"是同一件事。\pA\anchor{src p.51}}
+
+\noindent\caveat{不要以为 $I$ 与 $J$ 给出"两个不同的空间"。它们是同一个超凯勒流形的两个复结构；$\MH$ 作为实流形只有一个，但在 $I$ 中是 Hitchin 对的模空间，在 $J$ 中却是平坦联络的模空间。\S5 的全部内容就是比较这两个描述下的 A-膜与 B-膜。\pC\anchor{src p.53}}
+
+\begin{kcard}{§4.3 Hitchin 纤维化与完全可积性（pp.52--56）}
+\anchor{src p.52}
+
+\noindent\textbf{① 这一节的任务}\quad 给出 $\MH$ 的两个纤维化：$T^*\mathcal M\subset\MH$（"第二纤维化"）与 $\pi:\MH\to B$（Hitchin 纤维化），并证明后者是完全可积系统。\pA\anchor{src p.53}
+
+\noindent\textbf{② 输入}\quad \S4.1 的辛形式与复结构；\S4.2 中 $I$ 的全纯描述。
+
+\noindent\textbf{③ 关键构造}\quad
+\begin{itemize}
+\item $T^*\mathcal M\subset\MH$。稳定丛 $E$ 给出稳定 Hitchin 对 $(E,0)$，故 $\mathcal M\hookrightarrow\MH$ 是复子流形（$I$ 中全纯），在 $J,K$ 中 Lagrangian；$T_E\mathcal M=H^1(C,\mathfrak{ad}E)$，Serre 对偶给出余切 $H^0(C,K_C\otimes\mathfrak{ad}E)$，故 $(E,\varphi)$ 的空间恰是 $T^*\mathcal M$。\pA\anchor{src p.54}
+\item Hitchin 纤维化。取 $\varphi$ 的规范不变多项式（$SU(N)$：$w_n=\Tr\varphi^n$，$n=2,\dots,N$，次数 $d_n=n$），得 $\pi:\MH\to B=\bigoplus_i H^0(C,K_C^{d_i})$，且
+\begin{equation}\label{l1:dimB}\tag{4.24}
+\sum_i(2d_i-1)=\dim G ,
+\end{equation}
+而 $\dim H^0(C,K^n)=(2n-1)(g-1)$，故 $\dim B=\sum_i(2d_i-1)(g-1)=(g-1)\dim G=\tfrac12\dim\MH$（原文 (4.25)）。
+\pA\anchor{src p.54}
+\item 完全可积性。$B$ 上线性函数拉回为交换 Hamilton 量
+\begin{equation}\label{l1:hpa}\tag{4.26}
+H_{P,\alpha}=\int_C\alpha\,P(\varphi),\qquad \deg P=n,\ \alpha\in H^1(C,K_C^{1-n}) ;
+\end{equation}
+一般纤维是复环面（谱覆盖），并是 $\omega_I$（从而 $\omega_J,\omega_K$）的 Lagrangian 子流形。\pA\anchor{src p.55}
+\end{itemize}
+
+\noindent\textbf{④ 结论}\quad
+\begin{itemize}
+\item $\pi$ 满射，一般纤维维数 $=\dim B=\frac12\dim\MH$；$SU(2)$ 情形一般有 $2^{3g-3}$ 个解（$3g-3$ 个二次方程的贝祖数）。\pA\anchor{src p.55}
+\item 完全可积性给出 $\frac12\dim\MH$ 个全纯、代数独立、Poisson 交换的函数；纤维紧致，均为复环面。\pA\anchor{src p.55}
+\item $\mathcal M\hookrightarrow\MH$ 的像不是全部（$E$ 不稳定时也可有稳定 Hitchin 对），但补集余维很高；Hitchin 第二纤维化是忘掉 $\varphi$ 的映射 $\MH\to\mathcal M$。\pA\anchor{src p.54}
+\end{itemize}
+
+\noindent\textbf{⑤ 出口}\quad \S5.4 证明 S-对偶在底 $B$ 上经典地作用、在纤维上给 T-对偶；\S5.5 由此得到 SYZ 图像；\S9--\S10 的 Hecke 算子在 Hitchin 纤维化上表现为谱曲线之间的对应。没有"纤维 $=$ 环面"，SYZ 图像无从建立。\pB\anchor{src p.76}
+
+\noindent\textbf{⑥ 锚点索引}\quad
+\begin{itemize}
+\item p.52--53：$T^*\mathcal M\subset\MH$、两个纤维化的命名
+\item p.54：$B$ 与 $d_i$（原文 (4.24)）；$\dim B=\tfrac12\dim\MH$（原文 (4.25)）
+\item p.55：交换 Hamilton 量（原文 (4.26)）；纤维为复环面、Lagrangian
+\item p.55--56：完全可积性与谱覆盖
+\end{itemize}
+\end{kcard}
+
+\noindent\stuck{为什么"$\dim B=\frac12\dim\MH$"就能推出完全可积？完全可积需要"半个维数"的独立交换 Hamilton 量；$B$ 的全纯函数拉回给出这些量，而 $\dim B$ 恰是一半，说明不能再多（否则纤维是点）。但"独立"与"Poisson 交换"仍需验证：独立性来自 $\varphi$ 的多项式在一般点生成整个不变环，交换性来自 $H_{P,\alpha}$ 只依赖 $\varphi_z$。\pA\anchor{src p.55}}
+
+\noindent\caveat{Hitchin 纤维化不是 $T^*\mathcal M\to\mathcal M$！论文把 $\MH\to B$ 称"第一纤维化/Hitchin 纤维化"，把 $\MH\to\mathcal M$（忘掉 $\varphi$）称"第二纤维化"。两者常被混称；本解经本一律用"$B$-纤维化"与"$\mathcal M$-纤维化"以避免歧义。\pB\anchor{src p.54}}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[every node/.style={font=\footnotesize}]
+\node (mh) at (0,1.5) {$\MH$（复维 $(2g-2)\dim G$）};
+\node (b) at (0,-1.5) {$B=\bigoplus_i H^0(C,K^{d_i})$（复维 $(g-1)\dim G$）};
+\node (m) at (5.2,1.5) {$\mathcal M$（稳定 $G$-丛）};
+\draw[-{Stealth}] (mh) -- node[right] {$\pi$} (b);
+\draw[-{Stealth}] (mh) -- node[above] {忘掉 $\varphi$} (m);
+\draw[-{Stealth},dashed] (m) -- node[right] {$\varphi=0$} (mh);
+\foreach \x in {-2.4,-1.2,0,1.2,2.4}{\draw[kwred!70] (\x,0.55) ellipse (0.28 and 0.32);}
+\node[kwred!80] at (2.9,0.55) {纤维 $=$ 复环面};
+\node[align=center,text width=40mm] at (-3.6,0.55) {$\pi^{-1}(b)$};
+\end{tikzpicture}
+\caption{两个纤维化。$\pi:\MH\to B$ 的纤维是 Lagrangian 复环面，这是 \S5.4--\S5.5 的 SYZ 对偶的几何基础。}
+\label{l1:fig:fib}
+\end{figure}
+
+\subsection*{\S5 二维拓扑场论：从扭化到镜像对称（pp.56--78）}
+
+\S5 把 \S4 的 sigma 模型放进二维 TFT 的语言。六个小节可分三组：\S5.1--\S5.2 建立语言（$(J_+,J_-)$ 族与广义复几何），\S5.3--\S5.4 给出 S-对偶的二维翻译（镜像对称与 Hitchin 纤维化），\S5.5--\S5.6 用膜与 SYZ 图像解释它。若 \S3 的产出是"参数 $\Psi$"，\S5 的产出就是"$\Psi=0$ 与 $\Psi=\infty$ 是两个互为镜像的理论"以及"MH 上的膜"这套词典。\pC
+
+\begin{kcard}{§5.1 扭化 TFT：$(J_+,J_-)$ 族与 A/B 判据（pp.58--65）}
+\anchor{src p.58}
+
+\noindent\textbf{① 这一节的任务}\quad 定义由一对复结构 $(J_+,J_-)$ 给出的二维扭化 TFT，写出其超对称方程，并确定何时为 A-模型、何时为 B-模型；最后算出 4d 参数 $t$ 在二维的像。\pA\anchor{src p.58}
+
+\noindent\textbf{② 输入}\quad \S3.1 的 $\mathbb{CP}^1$ 族与 S-对偶式 \eqref{l1:tact}；\S4.1 的 $\mathbb{CP}^1_h$；\S4.2 的 $I,J,K$。
+
+\noindent\textbf{③ 关键构造}\quad
+\begin{itemize}
+\item 超对称方程。玻色场 $\Phi:\Sigma\to\MH$，拓扑超荷来自费米子 $\chi_\pm$：
+\begin{align}
+(1-\ii J_+)\partial\Phi&=0,\tag{5.5}\label{l1:j1}\\
+(1-\ii J_-)\bar\partial\Phi&=0.\tag{5.6}\label{l1:j2}
+\end{align}
+$J_+$ 全纯、$J_-$ 反全纯；一般 $(J_+,J_-)$ 在 Euclidean $\Sigma$ 上迫使 $\Phi$ 为常映射。\pA\anchor{src p.60}
+\item 判据。$J_+=J_-=\hat J$ 时 $J_+$ 条件化为 $\dd\Phi=0$，即 B-模型；$J_+=-J_-=\hat J$ 时为 A-模型（依赖 $\omega_{\hat J}$）；$J_-\ne\pm J_+$ 时两者都不是，但可经广义复几何化归带 $B$-场的 A-模型（\S5.2）。\pA\anchor{src p.60}
+\item 4d 参数在二维的像。把式 \eqref{l1:eq29} 对阿贝尔化（$G$ 破缺到极大环）在 $\Sigma\times C$ 上约化，取 $y\in\Sigma$、$z\in C$，得
+\[
+(F+t\,\dd\varphi)^+=0,\qquad(F-t^{-1}\dd\varphi)^-=0 ,
+\]
+进而 $\partial_y(A_z+t\varphi_z)=0$、$\partial_y(A_{\bar z}-t^{-1}\varphi_{\bar z})=0$，与式 \eqref{l1:j1}--\eqref{l1:j2} 比较读出
+\begin{equation}\label{l1:wpm}\tag{5.11}
+w_+=-t,\qquad w_-=t^{-1} .
+\end{equation}
+\pA\anchor{src p.62}
+\item 不变量。$U(1)\cong\CC^*$ 把 $(w_+,w_-)\mapsto(\lambda^{-1}w_+,\lambda^{-1}w_-)$，唯一不变量是
+\begin{equation}\label{l1:qinv}\tag{5.12}
+q=\frac{w_+}{w_-}=-t^2 ;
+\end{equation}
+$t$ 与 $-t$ 给出同一个二维理论。S-对偶对 $(w_+,w_-)$ 的作用是乘相位（原文 (5.22)）。\pA\anchor{src p.62}
+\end{itemize}
+
+\noindent\textbf{④ 结论}\quad
+\begin{itemize}
+\item B-模型 $\iff w_+=w_-\iff t=\pm\ii\iff\Psi=\infty$；A-模型 $\iff w_-=-1/w_+\iff t\in\RR\iff\Psi\in\RR$。$t=\pm1$ 给 $K$ 或 $-K$ 的 A-模型，$t=0,\infty$ 给 $I$ 或 $-I$ 的极限。\pA\anchor{src p.61}
+\item 4d 的 $\mathbb{CP}^1_g$ 是二维参数空间 $\mathbb{CP}^1_h\times\mathbb{CP}^1_h$ 中的一条曲线；它不含 $(0,0)$、$(\infty,\infty)$ 及只有一支为 $0$ 或 $\infty$ 的轨道，但 $(0,0)$（$I$ 的 B-模型）可扰动 $(\alpha,\beta)$ 得到任意 $q$。\pA\anchor{src p.63}
+\item 因而"4d 的 $t$"与"二维的 $(w_+,w_-)$"是同一族理论的两种坐标；$\mathbb{CP}^1_g$ 是子族这一事实将在 \S5.2 用广义复几何解释。\pB\anchor{src p.63}
+\end{itemize}
+
+\noindent\textbf{⑤ 出口}\quad \S5.2 解释为什么 $\mathbb{CP}^1_g$ 与 $C$ 的复结构无关、$\Psi$ 从何而来；\S5.3 只取 $\Psi=0,\infty$ 两点；\S6 起把膜作为 $(J_+,J_-)$ 的边界条件。没有 $(5.11)$--$(5.12)$，就无法把 4d 的 $t$ 与二维模型对上号。\pB\anchor{src p.65}
+
+\noindent\textbf{⑥ 锚点索引}\quad
+\begin{itemize}
+\item p.58--60：$(J_+,J_-)$ 与方程 (5.5)--(5.6)；A/B 判据
+\item p.61--62：4d 方程的阿贝尔化；$(w_+,w_-)=(-t,t^{-1})$（原文 (5.11)）；$q=-t^2$
+\item p.63--65：$\mathbb{CP}^1_g$ 作为子族；缺失轨道；S-对偶的相位作用
+\end{itemize}
+\end{kcard}
+
+\noindent\stuck{为什么 4d 的式 \eqref{l1:eq29} 会化成二维的式 \eqref{l1:j1}--\eqref{l1:j2}？关键是 $(p,q)$ 型的重新分配：$M=\Sigma\times C$ 上 $F$ 的自对偶分量 $\dd y\wedge\dd z$ 只含 $\partial_y$ 与 $\partial_z$，故 4d 方程在低能极限下退化为"沿 $y$ 的平移不变性"条件；把 $\dd y$ 分量认出 $\partial$、$\dd z$ 分量认出 $\bar\partial$，即得二维方程，而 $w_\pm$ 就是 $A\pm\dd\varphi$ 的两支。\pA\anchor{src p.61}}
+
+\noindent\caveat{$J_-\ne\pm J_+$ 不等于"没有理论"：它仍是 TFT，只是既非 A 也非 B；\S5.2 会说明它等价于带 $B$-场的 A-模型。另外 $t\sim-t$ 是经典等价（$SU(4)_R$ 中心），不要与 S-对偶混为一谈。\pB\anchor{src p.62}}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[every node/.style={font=\footnotesize}]
+\draw[->] (-2.2,0) -- (2.6,0) node[right] {$w_+$};
+\draw[->] (0,-2.2) -- (0,2.4) node[above] {$w_-$};
+\fill (0,0) circle (1.8pt); \node[below left] at (0,0) {$(0,0)$};
+\fill (1.4,1.4) circle (1.8pt); \node[right] at (1.4,1.4) {$(-t,t^{-1})$};
+\fill (-1.4,-1.4) circle (1.8pt);
+\fill (1.4,-1.4) circle (1.8pt); \node[right] at (1.4,-1.4) {$t=-1$};
+\fill (-1.4,1.4) circle (1.8pt);
+\draw[kwblue!70,thick] (-1.7,-1.7) .. controls (-0.4,-0.4) and (0.4,0.4) .. (1.7,1.7);
+\draw[kwred!70,dashed] (1.7,-1.7) -- (-1.7,1.7);
+\node[font=\scriptsize,kwblue!80] at (0.1,-1.15) {$\mathbb{CP}^1_g$};
+\node[font=\scriptsize,kwred!80] at (1.95,1.05) {$w_-=-1/w_+$};
+\end{tikzpicture}
+\caption{$\mathbb{CP}^1_g$（蓝曲线）落在二维参数空间 $\mathbb{CP}^1_h\times\mathbb{CP}^1_h$ 中；红虚线是 A-模型条件 $w_-=-1/w_+$，两者只在 $t$ 实（即 $w_-=-1/w_+$ 且 $w_+=-t$）时相交。}
+\label{l1:fig:cpg}
+\end{figure}
+
+\begin{kcard}{§5.2 广义复几何：$\mathbb{CP}^1_g$ 与 $\Psi$（pp.65--70）}
+\anchor{src p.65}
+
+\noindent\textbf{① 这一节的任务}\quad 用广义复几何回答三个问题：$\mathbb{CP}^1_g$ 是什么、为什么它与 $C$ 的复结构无关、以及二维模型里 $\Psi$ 从哪来。\pA\anchor{src p.65}
+
+\noindent\textbf{② 输入}\quad \S5.1 的 $(J_+,J_-)$；\S4.1 的 $\omega_I,\omega_J,\omega_K$ 与 $\Omega_J=\omega_K+\ii\omega_I$；\S3.5 的 $\Psi$。
+
+\noindent\textbf{③ 关键构造}\quad
+\begin{itemize}
+\item 广义（殆）复结构。在 $TX\oplus T^*X$ 上取保持自然不定度规、平方为 $-1$ 的线性变换；可积者称广义复结构。两个基本例子：
+\begin{equation}\tag{5.23--5.24}\label{l1:gb}
+I_{\hat J}=\begin{pmatrix}\hat J&0\\0&-\hat J^t\end{pmatrix}\ (B\text{-模型}),\qquad
+I_\omega=\begin{pmatrix}0&-\omega^{-1}\\ \omega&0\end{pmatrix}\ (A\text{-模型}) .
+\end{equation}
+$B$-场变换为 $I(B_0)=M(B_0)IM(B_0)^{-1}$，$M(B_0)=\begin{pmatrix}1&0\\B_0&1\end{pmatrix}$（原文 (5.25)--(5.26)）。\pA\anchor{src p.67}
+\item 超凯勒情形。由 $(J_+,J_-)$ 给出的 $I_t$ 算得只依赖 $J$、$\omega_I$、$\omega_K$，等价地只依赖 $(J,\Omega_J)$；而 \S4.1 已证明这些与 $C$ 的度规/复结构无关，故 $\mathbb{CP}^1_g$ 族与 $C$ 的复结构无关。\pA\anchor{src p.68}
+\item $\Psi$ 的二维解释。$I_t$（$t\ne\pm\ii$）等价于辛结构的 $B$-场变换，其复化 Kähler 类为
+\begin{equation}\label{l1:bk}\tag{5.33}
+[B_0+\ii\omega_0]=\frac{1}{\ii}\Im\tau\,\frac{t-t^{-1}}{t+t^{-1}}\,[\omega_I] ;
+\end{equation}
+加入 $\theta$ 项的贡献 $B'=-\Re\tau\,\omega_I$ 后
+\begin{equation}\label{l1:psi2d}\tag{5.34}
+[B+\ii\omega]=-[\omega_I]\,\Psi,\qquad
+\Psi=\Re\tau+\ii\Im\tau\,\frac{t-t^{-1}}{t+t^{-1}} .
+\end{equation}
+\pA\anchor{src p.69}
+\end{itemize}
+
+\noindent\textbf{④ 结论}\quad
+\begin{itemize}
+\item $\Psi$ 在二维就是复化 Kähler 类 $[B+\ii\omega]$ 的系数；A-模型只依赖这个类，故理论只依赖 $\Psi$——这是 \S3.5 结论的二维重述。\pA\anchor{src p.69}
+\item $t=\pm\ii$ 时上述分析失效（$B$-模型，$\Psi=\infty$），需单独论证与 $\tau$ 无关：$\Im\tau$ 控制 Kähler 类而 B-模型不看 Kähler 类，$\Re\tau$ 给 $B$-场加 $\omega_I$ 的倍数，但在 $B$-模型中 $(1,1)$ 与 $(2,0)$ 型 $B$-场的贡献可写成 $\{Q,\cdot\}$（$(0,2)$ 分量例外，它影响 B-膜范畴）。\pA\anchor{src p.70}
+\item $B$-场含 $(2,0)\oplus(0,2)$ 分量时，纯全纯映射看不见它，但带膜时 A-膜条件 $F+B|_N=0$ 对全部分量敏感——这为 \S5.6 与 \S11 的膜讨论埋下伏笔。\pA\anchor{src p.70}
+\end{itemize}
+
+\noindent\textbf{⑤ 出口}\quad \S5.3 用 $\Psi=0,\infty$ 两点；\S5.4 在 $B(I)$ 模型中算 chiral ring；\S11.3 讨论一般 $\Psi$；\S11 的 D-模构造依赖 $\omega_I$ 的整性（\S4.1）。若没有 "$\Psi=[B+\ii\omega]$"，二维侧就只有一个抽象参数，无法与四维的 $\tau,t$ 对上。\pB\anchor{src p.70}
+
+\noindent\textbf{⑥ 锚点索引}\quad
+\begin{itemize}
+\item p.65--67：广义复结构的定义、两个基本例子、$B$-场变换（原文 (5.23)--(5.26)）
+\item p.68：$I_t$ 只依赖 $J,\omega_I,\omega_K$；$\mathbb{CP}^1_g$ 与 $C$ 的复结构无关
+\item p.69：$\Psi$ 作为复化 Kähler 类（原文 (5.33)--(5.34)）
+\item p.70：$t=\pm\ii$ 的 $\tau$ 无关性；$(0,2)$ 分量的作用
+\end{itemize}
+\end{kcard}
+
+\noindent\stuck{为什么超凯勒流形上不必验证 $(2,2)$ 超对称的相容条件？因为超凯勒流形上任意一对 $(J_+,J_-)\in\mathbb{CP}^1_h\times\mathbb{CP}^1_h$ 给出的广义复结构都自动可积——Kähler 形式的封闭性提供了可积性。一般 target 上才需要 $[67]$ 的 $(2,2)$ 条件；本文只用到超凯勒情形，故"条件自动满足"。\pA\anchor{src p.68}}
+
+\noindent\caveat{广义复几何在这一节是"语言"而非"定理"：作者明说"扭化 TFT 由其中一个广义复结构决定、另一个无关"是一个 belief（尚无完整证明，原文 p.66 的脚注语气）。不要把式 \eqref{l1:gb} 的对应当成已证等价；本解经本仅把它用作组织语言。\pA\anchor{src p.66}}
+
+\begin{kcard}{§5.3 特殊化：$\Psi=0,\infty$ 与镜像对称（pp.70--72）}
+\anchor{src p.70}
+
+\noindent\textbf{① 这一节的任务}\quad 只取 $\Psi=\infty$（$t=\ii$，$J$ 的 B-模型）与 $\Psi=0$（其 S-对偶像，$K$ 的 A-模型），证明 S-对偶在这两点之间给出镜像对称，并列出所有模型的变换。\pA\anchor{src p.70}
+
+\noindent\textbf{② 输入}\quad \S5.1 的 A/B 判据；\S5.2 的 $\Psi$；\S2.2 的 S 矩阵与相位。
+
+\noindent\textbf{③ 关键构造}\quad
+\begin{itemize}
+\item 对偶群元素
+\begin{equation}\label{l1:s2d}\tag{5.35}
+S=\begin{pmatrix}0&1/\sqrt{n_g}\\-\sqrt{n_g}&0\end{pmatrix}:\quad \Psi\longmapsto-\frac{1}{n_g\Psi},
+\end{equation}
+交换 $\Psi=0$ 与 $\Psi=\infty$；$T$ 见原文 (5.36)。\pA\anchor{src p.71}
+\item $\Psi=\infty$：$t=\ii\Rightarrow(w_+,w_-)=(-\ii,-\ii)$，即 $J$ 的 B-模型。施加 $S$（$\tau$ 仍取虚）得 $t'=1\Rightarrow(w_+,w_-)=(-1,1)$，即 $K$ 的 A-模型。故 S-对偶给出
+\[
+\MH(G,C)\text{ 的 }B(J)\ \Longleftrightarrow\ \MH(\Ldual,C)\text{ 的 }A(K).
+\]
+\pA\anchor{src p.71}
+\item 复合 $I:\varphi\mapsto\ii\varphi$（把 $K$ 转回 $J$）得 $B(J)\leftrightarrow A(J)$，即 $\MH(G,C)$ 与 $\MH(\Ldual,C)$ 在复结构 $J$ 下互为镜像。但 $I$ 把 $A(J)$ 移出 $\mathbb{CP}^1_g$ 族，故这个"镜像"陈述需要额外一步。\pA\anchor{src p.71}
+\item 全部模型的变换（原文 Table 2）：
+\begin{center}\small
+\begin{tabular}{@{}llll@{}}
+\toprule
+\tabhead{源模型} & \tabhead{像} & \tabhead{源模型} & \tabhead{像} \\
+\midrule
+$I$ 的 B & $I$ 的 B & $J$ 的 B & $K$ 的 A \\
+$I$ 的 A & $I$ 的 A & $J$ 的 A & $K$ 的 B \\
+$K$ 的 B & $J$ 的 A & $K$ 的 A & $J$ 的 B \\
+\bottomrule
+\end{tabular}
+\end{center}
+\pA\anchor{src p.72}
+\end{itemize}
+
+\noindent\textbf{④ 结论}\quad
+\begin{itemize}
+\item S-对偶保持 $B(I)$ 与 $A(I)$（由 $I$ 的 $U(1)_R$ 平庸性），交换 $B(J)\leftrightarrow A(K)$、$A(J)\leftrightarrow B(K)$。\pA\anchor{src p.72}
+\item 镜像对称陈述：$\MH(G,C)$ 的 $B(J)$ 与 $\MH(\Ldual,C)$ 的 $A(J)$ 等价——这是几何 Langlands 的"物理半边"，其严格化（导出范畴等价）是 \S11 的内容。\pB\anchor{src p.71}
+\item $\mathbb{CP}^1_g$ 内的对偶对是 $B(J)\leftrightarrow A(K)$；把它改写成 $B(J)\leftrightarrow A(J)$ 需要不自然的 $I$，这说明镜像对称的"自然"形式涉及 $K$ 而非 $J$。\pC\anchor{src p.72}
+\end{itemize}
+
+\noindent\textbf{⑤ 出口}\quad \S5.4 解释 S 为什么保持 Hitchin 纤维化（在 $B(I)$ 中论证、结论用于 $B(J)$ 与 $A(K)$）；\S5.5 用 SYZ 解释纤维上的 T-对偶；\S6 起所有线算子的词典都建立在这张表上。\pB\anchor{src p.73}
+
+\noindent\textbf{⑥ 锚点索引}\quad
+\begin{itemize}
+\item p.70--71：$\Psi=\infty$ 与 $\Psi=0$ 的模型识别；$S$ 的作用（原文 (5.35)）
+\item p.71--72：$I$ 的作用；$B(J)\leftrightarrow A(K)$ 与镜像陈述
+\item p.72：Table 2 的六种变换
+\end{itemize}
+\end{kcard}
+
+\noindent\stuck{为什么 $\Psi=\infty$ 取 $t=\ii$ 而不取 $t=-\ii$？二者给出同一理论（$t\sim-t$），取 $t=\ii$ 只是为使 $(w_+,w_-)=(-\ii,-\ii)$ 恰是 $J$ 的 B-模型；取 $-\ii$ 得到 $-J$ 的 B-模型，而 $\pm J$ 在 $\MH$ 上是同一个复结构。\pA\anchor{src p.62}}
+
+\noindent\caveat{镜像对称的完整陈述是"$\MH(G,C)$ 与 $\MH(\Ldual,C)$ 的派生范畴等价"，本文只在 sigma 模型/膜的层面使用；且 $n_g=1$（simply-laced）时 $S$ 才精确是 $SL(2,\ZZ)$ 的 $S$，非单连通时 $\Gamma$ 是 Hecke 群，需用式 \eqref{l1:s2d} 的 $n_g$ 修正。\pB\anchor{src p.71}}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[every node/.style={font=\footnotesize},
+  bx/.style={draw=kwblue!65,fill=kwboxbg,rounded corners=2pt,align=center,inner sep=4pt,text width=40mm}]
+\node[bx] (g) {$\MH(G,C)$\\ $B(J)$（$\Psi=\infty$）};
+\node[bx,right=22mm of g] (lg) {$\MH(\Ldual,C)$\\ $A(K)$（$\Psi=0$）};
+\draw[<->,thick,kwred!80] (g) -- node[above] {$S$-对偶} node[below,font=\scriptsize] {镜像} (lg);
+\node[bx,below=12mm of g] (gj) {$\MH(G,C)$\\ $A(J)$};
+\node[bx,below=12mm of lg] (lgj) {$\MH(\Ldual,C)$\\ $B(K)$};
+\draw[<->,thick,kwblue!80] (gj) -- node[above,font=\scriptsize] {$S$} (lgj);
+\draw[-{Stealth},dashed] (g) -- node[right,font=\scriptsize] {$I$} (gj);
+\draw[-{Stealth},dashed] (lg) -- node[right,font=\scriptsize] {$I$} (lgj);
+\end{tikzpicture}
+\caption{$\Psi=\infty$ 与 $\Psi=0$ 两点及 S-对偶。实线 $S$ 交换 $B(J)\leftrightarrow A(K)$；虚线 $I:\varphi\mapsto\ii\varphi$ 把它改写成镜像对称形式。}
+\label{l1:fig:mirror}
+\end{figure}
+
+\begin{kcard}{§5.4 S-对偶与 Hitchin 纤维化（pp.72--75）}
+\anchor{src p.72}
+
+\noindent\textbf{① 这一节的任务}\quad 证明 S-对偶保持 Hitchin 纤维化：在底 $B$ 上给出经典的分级环同构，从而为"纤维上 T-对偶"的 SYZ 图像做准备。\pA\anchor{src p.72}
+
+\noindent\textbf{② 输入}\quad \S4.3 的 $\pi:\MH\to B$ 与维数公式；\S5.2 的 $B(I)$ 模型；\S5.3 的 Table 2 与 \S3.5 的 canonical parameter——S-对偶在 $\Psi$ 上只是 $\Psi\mapsto-1/(n_g\Psi)$（式 \eqref{l1:s2d}），本节要证明它在整个底 $B$ 上是一个分级环同构，从而把"两个特殊点的对偶"提升为"整族对偶"。
+
+\noindent\textbf{③ 关键构造}\quad
+\begin{itemize}
+\item 底 $B$ 上的函数。$\varphi$ 的基本齐次不变多项式 $P$ 与 $\alpha\in H^1(C,K_C^{1-\deg P})$ 给出交换 Hamilton 量
+\begin{equation}\label{l1:hpa37}\tag{5.37}
+H_{P,\alpha}=\int_C\alpha\,P(\varphi),
+\end{equation}
+它们在 $B$ 上给出全纯函数；$U\cong\CC^*$ 作用 $\varphi\mapsto\lambda\varphi$ 使其带权 $n=\deg P$。\pA\anchor{src p.72}
+\item $B(I)$ 中的证明。$I$ 的 B-模型的 chiral ring 是 $\bigoplus H^q(\MH,\wedge^p T\MH)$，其 $(p,q)=(0,0)$ 部分即全纯函数环；$I$ 中紧 Hitchin 纤维上的全纯函数必为常数，故全纯函数环来自底 $B$。S 保持 $I$ 的 B-模型，故 S 诱导 $B(G)\to B(\Ldual)$ 的分级同构，并与两侧 $U(1)$ 作用相容。\pA\anchor{src p.73}
+\item 4d 显式版本。在 $\RR^4$ 上定义 $D_n$：规范不变、在 $\varphi$ 中 $n$ 次齐次、且属 $SU(4)_R$ 的 $\mathrm{Sym}^n\mathbf 6$ 的多项式，即维数 $n$ 的半 BPS 局部算子；限制到 Weyl 腔最高权得 $D'_n$，其直和 $D'=\bigoplus D'_n$ 是规范理论的 chiral ring。S 与 $SU(4)_R$ 交换，故保持 $D'$，从而保持由它经 $\alpha$ 积分得到的 $H_{P,\alpha}$。\pA\anchor{src p.74}
+\end{itemize}
+
+\noindent\textbf{④ 结论}\quad
+\begin{itemize}
+\item S 把 $G$ 的 Hitchin 底映到 $\Ldual$ 的 Hitchin 底，并保持分级环结构与 $U(1)$ 作用；即 S 在底上是经典可计算的。\pA\anchor{src p.75}
+\item S 不能由局部算子测得在纤维上的作用：局部算子只能"在 $z\in\Sigma$ 处求值"$H_{P,\alpha}$，即只看到底 $B$ 的信息；若 S 经典地作用在纤维上，就与"纤维上应为 T-对偶"矛盾——这正是 \S5.5 用 SYZ 补足的地方。\pA\anchor{src p.73}
+\item 这个证明是"利用 $\MH$ 超凯勒性"的典型：论证在 $I$ 的 B-模型中进行，结论却用于 $J$ 的 B-模型与 $K$ 的 A-模型。\pA\anchor{src p.74}
+\end{itemize}
+
+\noindent\textbf{⑤ 出口}\quad \S5.5 的 SYZ 论证需要一个"底映射 $\Xi:B\to{}^LB$"与"纤维环面"的框架，本节提供前者；\S9--\S10 的 Hecke 算子在 Hitchin 纤维化上表现为谱曲线对应。若没有"底上经典、纤维上量子"的分工，镜像对称的 SYZ 陈述无从写出。\pB\anchor{src p.76}
+
+\noindent\textbf{⑥ 锚点索引}\quad
+\begin{itemize}
+\item p.72：$H_{P,\alpha}$ 与 $B$ 的分级（原文 (5.37)）
+\item p.73：$B(I)$ 中的 chiral ring 论证；局部算子只测底
+\item p.74--75：$D_n$、$D'_n$ 与 4d 显式版本；S 保分级
+\end{itemize}
+\end{kcard}
+
+\noindent\stuck{为什么"局部算子不能测纤维"是优点而非缺陷？因为若能用局部算子测纤维，S 就会经典地作用在纤维上，而 SYZ 镜像对称要求纤维上是 T-对偶（一种量子操作，翻转半径/复结构）。原文明确指出这一点，并把它与 \S5.5 的 SYZ 图像联系起来：底上经典、纤维上量子，正是镜像对称的标志。\pA\anchor{src p.73}}
+
+\noindent\caveat{"S 在纤维上 T-对偶"不是本节证明的，本节只证底上的作用；纤维上的陈述由 \S5.5 的 SYZ 论证与数学结果（Hausel--Thaddeus 对 $U(N)$、Hitchin 对 $G_2$、Donagi--Pantev 对一般半单群）支持。不要把两者混成同一定理。\pB\anchor{src p.77}}
+
+\begin{kcard}{§5.5 S-对偶的二维解释：SYZ（pp.75--78）}
+\anchor{src p.75}
+
+\noindent\textbf{① 这一节的任务}\quad 把 S-对偶解释为 Strominger--Yau--Zaslow 镜像对称：底上给映射 $\Xi:B\to{}^LB$，纤维上给环面 T-对偶。\pA\anchor{src p.75}
+
+\noindent\textbf{② 输入}\quad \S5.3 的镜像对称；\S4.3 的纤维是复环面；\S5.2 的膜与 $(J_+,J_-)$。
+
+\noindent\textbf{③ 关键构造}\quad
+\begin{itemize}
+\item 从 zerobrane 出发。$B_p$ 是支撑在 $p\in\MH(G,C)$ 的 zerobrane，对应边界条件"$\Phi$ 把边界映到 $p$"；点在任何复结构下都是复子流形，故 $B_p$ 是 $(B,B,B)$ 型。\pA\anchor{src p.76}
+\item S-对偶像。Table 2 给出 $(B,B,B)\mapsto(B,A,A)$，故 $B_p$ 的对偶 $\tilde B_p$ 是 $I$ 中 B-膜、$J,K$ 中 A-膜。一般 A-膜至少中维，而 $\tilde B_p$ 的支撑至多中维，故它恰支撑在某条 Hitchin 纤维 $\tilde F=\Xi(F)$ 上；$I$ 中全纯、对 $\omega_J,\omega_K$ Lagrangian，加平坦酉 Chan--Paton 丛 $L$ 后正是 $(B,A,A)$ 型。\pA\anchor{src p.76}
+\item 模空间比较。$B_p$ 的模空间是 $F$（$p$ 可在 $F$ 上变）；$\tilde B_p$ 的模空间是参数化 $\tilde F$ 上 rank-1 平坦 Chan--Paton 丛的复环面 $J_{\tilde F}$。rank 必须为 $1$（否则维数超出），且 $\dim J_{\tilde F}=\dim F$，故 $F\cong J_{\tilde F}$。\pA\anchor{src p.77}
+\end{itemize}
+
+\noindent\textbf{④ 结论}\quad
+\begin{itemize}
+\item S 作用 $=$ 底映射 $\Xi$（$\Ldual$ 与 $G$ 的 Hitchin 底之间的经典映射，simply-laced 时 $\Xi=\mathrm{id}$）$+$ 对应环面纤维上的 T-对偶。这正是 SYZ 镜像对称图像。\pA\anchor{src p.77}
+\item 因而 $G$ 与 $\Ldual$ 的 Hitchin 纤维互为对偶复环面：$U(N)$ 由 Hausel--Thaddeus，$G_2$ 由 Hitchin，一般半单 $G$ 由 Donagi--Pantev（谱覆盖）。\pA\anchor{src p.78}
+\item 省略的微妙处：$G$ 的中心与基本群（\S7 略述）、$C$ 上 spin 结构的作用（本文不分析）。\pA\anchor{src p.78}
+\end{itemize}
+
+\noindent\textbf{⑤ 出口}\quad \S5.6 用这套语言列出 MH 上的膜；\S6--\S8 把 Wilson/'t Hooft 线算子翻译成膜上的算子；\S9--\S10 的 Hecke 对应在纤维化上表现为谱曲线之间的对应。没有 SYZ 图像，"纤维上 T-对偶"就只是口头承诺。\pB\anchor{src p.78}
+
+\noindent\textbf{⑥ 锚点索引}\quad
+\begin{itemize}
+\item p.75--76：zerobrane 与 $(B,B,B)$；S-对偶像为 $(B,A,A)$
+\item p.77：支撑在纤维上；模空间比较给出 $F\cong J_{\tilde F}$
+\item p.78：SYZ 结论；各群情形的数学出处；省略的微妙处
+\end{itemize}
+\end{kcard}
+
+\noindent\stuck{为什么 rank 必须为 $1$？若 $\tilde B_p$ 携带 rank $r>1$ 的平坦 Chan--Paton 丛，其模空间维数至少是 $\dim\tilde F+(r^2-1)$，超过 $B_p$ 的模空间 $F$；而 S 是对合等价，两边的边界条件模空间必须逐点匹配，故只能 $r=1$。\pB\anchor{src p.77}}
+
+\noindent\caveat{SYZ 图像通常假设底映射 $\Xi$ 平凡；这里 $\Xi$ 一般非平凡（simply-laced 时才是恒等）。因此本文的陈述是"$\Xi$ + 纤维 T-对偶"，比教科书版 SYZ 多一个底上的经典映射。\pA\anchor{src p.77}}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[every node/.style={font=\footnotesize}]
+\node (bg) at (0,2.2) {$B$（$G$ 的 Hitchin 底）};
+\node (bl) at (6.2,2.2) {${}^LB$（$\Ldual$ 的 Hitchin 底）};
+\draw[-{Stealth}] (bg) -- node[above] {$\Xi$（经典）} (bl);
+\node (fg) at (0,0) {$F$（复环面）};
+\node (fl) at (6.2,0) {$\tilde F$（对偶复环面）};
+\draw[-{Stealth}] (fg) -- node[above] {$T$-对偶（量子）} (fl);
+\draw[-{Stealth},dashed] (fg) -- (bg); \draw[-{Stealth},dashed] (fl) -- (bl);
+\draw[-{Stealth},dashed] (bg) -- node[left,font=\scriptsize] {$\pi$} (fg);
+\end{tikzpicture}
+\caption{SYZ 图像：底上 $\Xi$ 是经典映射，纤维上是环面 T-对偶。S-对偶 $=$ 这两部分的复合。}
+\label{l1:fig:syz}
+\end{figure}
+
+\begin{kcard}{§5.6 MH 上的膜：类型与例子（pp.78--79）}
+\anchor{src p.78}
+
+\noindent\textbf{① 这一节的任务}\quad 系统列出 $\MH$ 上对各复结构 $I,J,K$ 有超对称性质的膜的类型与例子，为 \S6 起的"线算子 $=$ 膜算子"词典提供对象。\pA\anchor{src p.78}
+
+\noindent\textbf{② 输入}\quad \S5.1 的 A/B 判据；\S5.3 的 Table 2；\S4.2 的复结构与稳定性。
+
+\noindent\textbf{③ 关键构造}\quad
+\begin{itemize}
+\item 膜型。一个膜对每个复结构可以分别是 A 型或 B 型；最有趣者保留二维 sigma 模型的一半超对称（即四维理论的四分之一）。四类基本型：
+\begin{center}\small
+\begin{tabular}{@{}llll@{}}
+\toprule
+\tabhead{类型} & \tabhead{$I$} & \tabhead{$J$} & \tabhead{$K$} \\
+\midrule
+$(B,B,B)$ & B & B & B \\
+$(B,A,A)$ & B & A & A \\
+$(A,B,A)$ & A & B & A \\
+$(A,A,B)$ & A & A & B \\
+\bottomrule
+\end{tabular}
+\end{center}
+\pA\anchor{src p.78}
+\item 例子。zerobrane 是最显然的 $(B,B,B)$；空间填充膜（target 全 $\MH$，Chan--Paton 丛对三个复结构全纯）也是 $(B,B,B)$。$(B,A,A)$：$N$ 为 $I$ 中复子流形且对 $\Omega_I$（从而对 $\omega_J,\omega_K$）Lagrangian，加平凡 Chan--Paton 丛；例：Hitchin 纤维、固定 $E$ 而让 $\varphi$ 变的族。$(A,B,A)$/$(A,A,B)$：$J$ 或 $K$ 中的复 Lagrangian，例：固定 $A_z$（$J$ 情形）或固定 $A_z-\varphi_z$（$K$ 情形）而让另一支变的族。\pA\anchor{src p.79}
+\end{itemize}
+
+\noindent\textbf{④ 结论}\quad
+\begin{itemize}
+\item S 交换 $(B,B,B)\leftrightarrow(B,A,A)$，而 $(A,B,A)$ 与 $(A,A,B)$ 各自映到同型（Table 2）。\pA\anchor{src p.78}
+\item 不存在 $(B,B,A)$ 型膜（$I,J$ 都全纯的子簇自动 $K$ 全纯），也不存在 $(A,A,A)$ 型。\pA\anchor{src p.79}
+\item 更一般的膜：对 $I,J,K$ 的某个线性组合为 B 型、对与它正交的两个复结构为 A 型；\S11 的 coisotropic A-膜属于这一类，但支撑维数可高于中维。\pA\anchor{src p.79}
+\end{itemize}
+
+\noindent\textbf{⑤ 出口}\quad \S6 把 Wilson 与 't Hooft 线算子解释为作用在这四类膜上的算子；\S7--\S8 的 electric eigenbrane 是 $(B,A,A)$ 型；\S11 的 coisotropic A-膜构造 D-模范畴。若没有这张类型表，\S6 起的"词典"就无从编码。\pB\anchor{src p.79}
+
+\noindent\textbf{⑥ 锚点索引}\quad
+\begin{itemize}
+\item p.78：四类基本膜型与超对称性质
+\item p.79：各类例子；$(B,B,B)$ 的 zerobrane 与空间填充膜
+\item p.79：不存在 $(B,B,A)$、$(A,A,A)$；coisotropic 膜的预告
+\end{itemize}
+\end{kcard}
+
+\noindent\stuck{为什么 $(B,A,A)$ 的支撑必须既是 $I$-复子流形、又对 $\Omega_I$ Lagrangian？"$I$ 中 B-膜"要求支撑 $N$ 在 $I$ 下复；"$J,K$ 中 A-膜"要求 $N$ 对 $\omega_J,\omega_K$ Lagrangian。而 $\Omega_I=\omega_J+\ii\omega_K$ 是 $I$ 的全纯辛形式，在复子流形 $N$ 上 $\Omega_I|_N$ 的消失恰等价于两个实辛形式同时拉回为零。所以三个条件其实是"$N$ 是 $\Omega_I$-Lagrangian"的分解表述。\pA\anchor{src p.79}}
+
+\noindent\caveat{四类基本型不是全部膜。更一般的膜对 $I,J,K$ 的某个线性组合是 B 型；\S11 的 coisotropic A-膜支撑维数可高于中维，不能塞进这张表。本表只覆盖"保留一半 2d 超对称"的重要膜。\pA\anchor{src p.79}}
+
+\subsection*{本节锚点索引}
+
+下表汇总本文件用到的全部原文锚点（印刷页 $N$ 对应 \texttt{p\{$N+1$:03d\}.txt}），第三列是一句话内容。
+
+\begin{longtable}{@{}llp{9.4cm}@{}}
+\toprule
+\tabhead{锚点} & \tabhead{印刷页} & \tabhead{内容} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\S2 开篇 & p.6 & $\mathcal N=4$ 由十维降维；G 取紧致、$G_{\CC}$ 为其复化 \\
+十维场内容 & p.7--8 & $\Gamma$、手征条件、$A$ 与 $\lambda$ 的反厄米约定 \\
+$I_4$ 与 $\theta$ 项 & p.9 & 降维后的四维作用量（原文 (2.10)--(2.11)）\\
+$\tau$ 与超代数 & p.10--11 & $\tau$ 的定义（2.12）、$SU(4)_R$、式 (2.15) \\
+S-对偶 & p.11--12 & 猜想、$SL(2,\ZZ)$、$S$ 矩阵 (2.16)、$n_g$ \\
+手征相位 & p.13--14 & S 与超荷的相位；$\hat\varphi$ 在 Coulomb 分支确定 \\
+中心荷 & p.15 & $Z$ 的变换（2.22）与 $SL(2,\ZZ)$ 作用 \\
+相位平方根 & p.16 & $\ee^{-\ii\hat\varphi}$ 的双覆盖（2.25）\\
+扭化 & p.17--19 & 三种扭化、$\kappa$、$\mathbf 4$ 与 $\mathbf 6$ 的分解、$K$ 与 $\sigma$ \\
+超荷族 & p.21--23 & 不变超荷、$K=\Gamma_{89}$（3.11）、$t$ 与 $t\sim-t$（3.13)--(3.14) \\
+一族 A-模型 & p.25--27 & $Q$-不变方程 (3.29)；$t=\pm\ii$ 的平坦性；上同调场论解释 \\
+消失定理 & p.28--31 & 定理 1、1$'$、2；恒等式 (3.32)--(3.34)；$\Sigma\times C$ 推论 \\
+拓扑拉氏量 & p.31--35 & $\delta_t$ 代数、辅助场、$I_0,I_1,I_2$（3.49）\\
+典范参数 & p.35--38 & $\Psi$ 的定义 (3.50)；特殊值 (3.52)；S-对偶作用 (3.53)--(3.54)；定向反转 \\
+紧化与 Hitchin 方程 & p.38--40 & $M=\Sigma\times C$；Hitchin 方程 (4.1) \\
+$\MH$ 的超凯勒商 & p.40--46 & $W$ 的度规 (4.2)、$I_w$ (4.6)--(4.7)、辛形式 (4.8)--(4.10)、矩映射 (4.11) \\
+度规与 $B$-场 & p.47--49 & 物理诱导度规 (4.15)、$B=-\Re\tau\,\omega_I$ (4.19) \\
+复结构 $I$ & p.49--51 & $I$ 中的 Hitchin 对 (4.20)；稳定性 \\
+复结构 $J$ & p.51--53 & 平坦 $\gC$ 联络与同态 (4.21)--(4.22)；$I_w$ 等价性；$U(1)$ 作用 (4.23) \\
+纤维化与可积性 & p.53--56 & $T^*\mathcal M\subset\MH$、$B$ 与 $d_i$ (4.24)--(4.25)、Hamilton 量 (4.26)、复环面纤维 \\
+二维 TFT 开篇 & p.56--58 & (5.1)--(5.4)；(4,4) 超对称的二维结构 \\
+扭化 TFT & p.58--61 & $(J_+,J_-)$ 与 (5.5)--(5.6)；A/B 判据 \\
+4d 参数的二维像 & p.61--63 & $(w_+,w_-)=(-t,t^{-1})$ (5.11)、$q=-t^2$ (5.12)、$\mathbb{CP}^1_g$ 为子族 \\
+4d 解释与 S-对偶 & p.63--65 & $(\hat u',\hat v')$ 分解；S 对 $w_\pm$ 的相位作用 (5.22) \\
+广义复几何 & p.65--67 & 定义；(5.23)--(5.26)；$(2,2)$ 条件与扭化 TFT 的对应（belief）\\
+$\mathbb{CP}^1_g$ 的无关性 & p.67--68 & $I_t$ 只依赖 $J,\omega_I,\omega_K$ \\
+$\Psi$ 的二维解释 & p.69--70 & (5.33)--(5.34)；$B$-场 $(0,2)$ 分量与 A-膜条件 \\
+$\Psi=0,\infty$ & p.71--72 & $S$ 矩阵 (5.35)、$T$ (5.36)；$B(J)\leftrightarrow A(K)$；Table 2 \\
+S 与纤维化 & p.72--75 & $H_{P,\alpha}$ (5.37)；$B(I)$ 中的 chiral ring；$D_n$ 与 $D'_n$ \\
+SYZ & p.75--78 & zerobrane 到 $(B,A,A)$；$F\cong J_{\tilde F}$；各群情形的数学结果 \\
+膜的分类 & p.78--79 & 四类基本膜型；例子；不存在 $(B,B,A)$、$(A,A,A)$ \\
+\end{longtable}
+
+

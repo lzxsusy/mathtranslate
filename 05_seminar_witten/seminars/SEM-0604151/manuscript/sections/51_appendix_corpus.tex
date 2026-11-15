@@ -1,0 +1,190 @@
+% ======================================================================
+%  附录 B：语料说明
+%  四类推导链语料（derivation/*.jsonl）的字段、统计、用法与局限
+% ======================================================================
+
+\section{语料说明：解经过程的机器可读记录}
+
+本附录说明 \texttt{derivation/} 目录下的四类 JSONL 语料：它们记录的不是原文与译文的逐句对齐，
+而是\emph{解经过程本身}——每一步的「问题 $\to$ 想法 $\to$ 技术手段 $\to$ 结论 $\to$ 依赖 $\to$ 失败模式」。
+四类文件与正文骨架层、结构层、骨血层、细度层的编号共享同一套骨架编号（S1--S8 主链、N1--N12 章节节点、M1--M5 奇迹），
+因此任何一条语料都能回溯到正文卡片与原文锚点。\pA
+本附录只描述语料，不重复正文论证；所有计数均为生成时的实测值。
+
+\subsection{为什么单独做一套语料}
+
+解经本的正文是给人读的长文本，直接拿来做训练数据有两个问题：一是推理链被散文包装后，步骤边界消失；
+二是缺失「若走错会怎样」的负样本，模型学到的是陈述而非判断。四类文件分别解决这两个问题：
+
+\begin{itemize}
+\item \textbf{步骤化}：\texttt{skeleton.jsonl} 把整条主链切成 119 个可独立阅读的论证步，每步只回答一个问题；
+\item \textbf{负样本}：\texttt{branches.jsonl} 显式记录死路、未采用的路线、常见误解与技术陷阱；
+\item \textbf{可核验}：每条语料都带 \texttt{anchor}（原文印刷页、公式号或节号），可回到底本逐条核对；
+\item \textbf{分级}：\texttt{provenance} 区分「原文明确」\pA、「原文暗示我们重建」\pB、「我们判断」\pC，
+  避免把重建读成定理。
+\end{itemize}
+
+\subsection{四类文件及其字段}
+
+\begin{kcard}{skeleton.jsonl：论证骨架步（119 条）}
+\anchor{derivation/skeleton.jsonl}
+每条记录一个论证步，字段为 \texttt{id}、\texttt{node}（S1--S8）、\texttt{section}（\S x.y）、\texttt{step}、
+\texttt{title}、\texttt{question}（这一步要回答什么）、\texttt{idea}（核心想法）、\texttt{technique}（技术手段）、
+\texttt{claim}（结论陈述）、\texttt{anchor}、\texttt{provenance}、\texttt{depends\_on}（前驱步）、
+\texttt{why\_it\_matters}、\texttt{failure\_mode}（不这样会怎样）、\texttt{next}（后继步）。
+实测：8 个节点每节点 13--18 条，覆盖 37 个小节、98 个不同锚点，依赖边 154 条，
+119 条全部填写了 \texttt{failure\_mode}。\pA
+\end{kcard}
+
+\begin{kcard}{qa.jsonl：自检问答（66 条）}
+\anchor{derivation/qa.jsonl}
+字段为 \texttt{id}、\texttt{section}、\texttt{type}（概念/推导/动机/陷阱）、\texttt{level}（核心/细节/进阶）、
+\texttt{question}、\texttt{answer}（$\le 400$ 字、自足）、\texttt{anchor}、\texttt{provenance}、\texttt{related}。
+分布：概念 26、推导 20、动机 10、陷阱 10；核心 29、细节 25、进阶 12；覆盖 29 个小节。
+问答按「不看正文也能读懂」的标准写，\texttt{related} 指向对应骨架步。\pA
+\end{kcard}
+
+\begin{kcard}{concepts.jsonl：概念图（85 个节点）}
+\anchor{derivation/concepts.jsonl}
+字段为 \texttt{id}、\texttt{name\_zh}、\texttt{name\_en}、\texttt{kind}（几何/物理/代数/工具）、
+\texttt{definition\_our}（$\le 200$ 字，我们自己的话）、\texttt{why\_needed}、\texttt{physical\_reading}、
+\texttt{math\_reading}、\texttt{nlab}、\texttt{stacks}、\texttt{edges}（有向边）。
+分布：物理 31、几何 25、代数 19、工具 10；共 103 条边，其中 \texttt{depends\_on} 93、
+\texttt{specializes\_to} 8、\texttt{dual\_to} 1、\texttt{categorifies} 1。\pA
+\end{kcard}
+
+\begin{kcard}{branches.jsonl：分支、死路与失败模式（38 条）}
+\anchor{derivation/branches.jsonl}
+字段为 \texttt{id}、\texttt{kind}（死路/未被采用的路线/常见误解/技术陷阱）、\texttt{where}、\texttt{statement}、
+\texttt{why\_fails}、\texttt{what\_it\_teaches}、\texttt{anchor}、\texttt{recoverable}。
+分布：常见误解 25、技术陷阱 10、死路 2、未被采用的路线 1，覆盖 21 处正文位置；
+38 条均标为可修复（\texttt{recoverable: true}），即错误路径都能被后文的正确图像纠正。\pC
+\end{kcard}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{@{}llp{7.6cm}@{}}
+\toprule
+\tabhead{文件} & \tabhead{关键字段} & \tabhead{读法}\\
+\midrule
+skeleton & question, idea, technique, claim & 一步一问题；idea 是「为什么这样想」，claim 是「得到什么」\\
+qa       & type, level, answer             & 自检题；answer 必须在无上下文时仍成立\\
+concepts & definition\_our, nlab, edges    & 概念节点与图结构；边是有向的依赖/特化关系\\
+branches & kind, why\_fails, what\_it\_teaches & 负样本；why\_fails 给失败机制，what\_it\_teaches 给纠正\\
+\bottomrule
+\end{tabular}
+\caption{四类文件的关键字段与读法。所有文件均为 UTF-8 无 BOM、一行一个 JSON 对象。}
+\end{table}
+
+\subsection{统计与覆盖}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+\tabhead{文件} & \tabhead{条数} & \tabhead{目标区间} & \tabhead{覆盖} & \tabhead{校验}\\
+\midrule
+skeleton.jsonl & 119 & 90--120 & S1--S8 全部 8 节点 & 0 非法\\
+qa.jsonl       & 66  & 60--70  & 29 个小节            & 0 非法\\
+concepts.jsonl & 85  & 70--85  & 4 类 kind、103 边    & 0 非法\\
+branches.jsonl & 38  & 30--40  & 21 处正文位置        & 0 非法\\
+\bottomrule
+\end{tabular}
+\caption{四类语料的条数与覆盖。校验脚本逐行解析 JSON、检查字段齐全、锚点页区间与绝对路径。}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+\tabhead{来源} & \tabhead{A（原文明确）} & \tabhead{B（我们重建）} & \tabhead{C（我们判断）} & \tabhead{合计}\\
+\midrule
+skeleton & 89 & 21 & 9  & 119\\
+qa       & 55 & 9  & 2  & 66\\
+\midrule
+合计     & 144 (77.8\%) & 30 (16.2\%) & 11 (5.9\%) & 185\\
+\bottomrule
+\end{tabular}
+\caption{provenance 分布。设计目标是 A 约 55\%、B 约 30\%、C 约 15\%；实际 A 明显偏高，
+这是本语料第一批的已知偏差（见 \S\ref{sec:corpus-limit}）。}
+\end{table}
+
+节点覆盖：S1 13 条、S2 18 条、S3 15 条、S4 15 条、S5 15 条、S6 13 条、S7 15 条、S8 15 条，
+每个节点都超过每节点 8 条的下限，S2（扭化）与 S5（线算子）给得最厚，因为它们是词表与对象定义所在。
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{@{}llrl@{}}
+\toprule
+\tabhead{节点} & \tabhead{主题} & \tabhead{条数} & \tabhead{原文页段}\\
+\midrule
+S1 & 对偶群同构：电磁对偶 $=$ Langlands 对偶 & 13 & pp.6--15\\
+S2 & 拓扑扭化：$\mathcal N=4\to$ 4d TFT 族        & 18 & pp.16--37\\
+S3 & 紧化：$\MH$ 上二维拓扑 sigma 模型          & 15 & pp.38--55\\
+S4 & 二维 TFT 与 S-对偶：广义 B-模型与镜像      & 15 & pp.56--77\\
+S5 & 线算子 $=$ 膜算子：特征膜的定义            & 15 & pp.78--102\\
+S6 & 电特征膜 $=$ 局部系统（含 flux 修正）      & 13 & pp.103--122\\
+S7 & 't Hooft 算子 $=$ Hecke 修改               & 15 & pp.123--183\\
+S8 & 典范余各向同性 A-膜把特征膜翻成 D-模       & 15 & pp.184--222\\
+\bottomrule
+\end{tabular}
+\caption{骨架语料对 S1--S8 主链的覆盖。页段为原文印刷页区间，与 \texttt{source/meta.md} 一致。}
+\end{table}
+
+格式规范（四类文件相同）：UTF-8 无 BOM、一行一个 JSON 对象、不写本机绝对路径、
+中文用全角标点、数学一律用行内 \verb|$...$|；引用原文每处不超过 200 字符。
+
+nLab 链接核验：概念图共 79 个非空 nLab 链接（去重后 78 个，因 Hitchin 模空间与 Hitchin 纤维化共用一页），
+另有 6 个概念在 nLab 上没有对应页，按规定写 \texttt{null}（GNO 对偶群、$\mathcal N=4$ 超杨--米尔斯、
+超凯勒商、典范余各向同性膜、特征膜、单极子冒泡）。核验分两步：先对 123 个候选 URL 做 HTTP 探测，
+104 个返回 200 且页面标题与概念匹配（19 个失败者未采用）；再对 4 个核心页做逐页人工核验
+（D-模、Langlands 对偶群、Hecke 特征层、仿射 Grassmann 变体），确认正文确实讲该概念。
+Stacks Project 链接全部留空：未能稳定核验 tag，故不写。
+
+\subsection{训练与评测用法}
+
+\textbf{SFT（监督微调）}：把 \texttt{skeleton} 的 \texttt{question} 作为输入、\texttt{idea}+\texttt{technique}+\texttt{claim}
+作为目标，逐步训练；用 \texttt{depends\_on} 把单步拼成多轮，每轮只给下一步，避免整链泄露。
+\texttt{qa} 适合做短答案指令微调，按 \texttt{level} 分层采样可控制难度。
+
+\textbf{PRM（过程奖励）}：每个骨架步天然是一个过程步。可用三重信号给步骤打分：
+(i) \texttt{claim} 与锚点原文的蕴涵关系；(ii) \texttt{depends\_on} 给出步骤图，顺序错误可判负；
+(iii) \texttt{failure\_mode} 描述「这一步走错」的样子，可作反例。建议先用 A 级步骤做种子，再逐步加入 B/C。
+
+\textbf{DPO（偏好优化）}：\texttt{branches} 的 38 条可直接构造偏好对：\texttt{statement}（错误路径）作 rejected，
+由 \texttt{why\_fails} 与 \texttt{what\_it\_teaches} 组成正确图像作 chosen。同一节点的 \texttt{failure\_mode}
+也可用来生成「错误 claim / 正确 claim」对，规模可扩到每条骨架步一个偏好对。
+
+\textbf{评测}：四类文件各对应一种任务：(i) 链重建——给问题序列预测下一步 claim，指标为锚点命中率；
+(ii) 概念图——给定义预测边类型，指标为 macro-F1；(iii) 陷阱识别——判断 branches 的陈述真假，指标为准确率；
+(iv) 引用定位——给锚点预测所属节点，指标为 top-1 命中率。
+
+\subsection{局限与使用限制}\label{sec:corpus-limit}
+
+\begin{warn}
+\textbf{本语料由模型辅助生成，未经人类逐条认证。}按本工程的 witten-exegesis 闸门，它只能标为
+\texttt{dev} 级，\textbf{不得标为 \texttt{train} 级}直接进入训练集；任何使用都必须先经人工抽检与锚点复核。
+具体偏差有五处：
+\begin{enumerate}[label=(\arabic*)]
+\item \textbf{A 级偏高}：合计 A 144 / B 30 / C 11（77.8\% / 16.2\% / 5.9\%），远高于设计的 55/30/15。
+  原因是第一批骨架步优先写了原文明确陈述的步骤，B/C 类判断（尤其 \S\ref{sec:corpus-limit} 之前未覆盖的
+  §10--§12 部分）写得偏少；
+\item \textbf{锚点为页级/节级}：119 条骨架步只有 98 个不同锚点，个别步骤共用同一页，不能当作逐句对齐；
+\item \textbf{概念边不完整}：只实现了 9 种允许边类型中的 4 种，且 85 个节点中 1 个孤立点；
+\item \textbf{stacks 全空}、6 个 nLab 为 null：外部链接的覆盖不完整；
+\item \textbf{§12 之后语料较薄}：四维边界条件部分的骨架步多为 B 级重建，原文明说「实现不唯一」。
+\end{enumerate}
+\end{warn}
+
+一条短引示例（全文引用均不超过 200 字符）：
+
+\begin{origquote}
+``We will show that every A-brane in complex structure $K$ on $\MH(G,C)$ automatically gives rise to, roughly speaking, a D-module on $\MC$.''
+\end{origquote}
+\anchor{src p.184}
+
+末了说明：附录本身也用 \pA/\pB/\pC 标注断言等级；凡未标注处均为工程内部约定（字段名、计数），不涉及原文内容。
