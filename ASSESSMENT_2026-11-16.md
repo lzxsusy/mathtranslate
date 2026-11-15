@@ -85,7 +85,13 @@
 | `.githooks/pre-commit` | 提交前自动跑门禁（`git config core.hooksPath .githooks` 启用） |
 | `.gitignore` 合规章节 | 原本/扫描件/页面图/成品 PDF/编译产物/私有工作区一律不入库 |
 
-**当前门禁结果：6,763 个文件，0 违规，0 告警。**
+**当前门禁结果：6,764 个文件，0 违规，0 告警。**
+
+**推送后实测（2026-11-16 21:52）**：
+
+- AtomGit `main`：6,764 条路径，`原本/`、`成品/*.pdf` 均为 0，`COMPLIANCE.md`、`RELEASE_REGISTER.csv` 已在（200）。
+- Gitee `master`：同样 6,764 条路径，已删文件 0。
+- 用 AtomGit 的 raw 地址访问已删 PDF，返回的是 6 KB 的 HTML 错误页（`<!DOCTYP…`），不是 PDF 字节——删除有效。
 
 ---
 
@@ -112,9 +118,20 @@
 
 这是破坏性操作，且会让 tag `v1.0.1` 指向的提交哈希改变。**本报告不擅自执行，等仓主书面确认。**
 
-### 5.2 GitCode 镜像的 `originals` 分支
+### 5.2 GitCode 镜像的 `originals` 分支（已实测，仍在）
 
-AtomGit/Gitee 两个 remote 都查不到 `originals` 分支，但 `raw.gitcode.com` 上的 blob 仍返回 200。说明 GitCode 侧有一个不同步的镜像分支。需要仓主登录 GitCode 删分支/删仓，或确认其归属。
+AtomGit/Gitee 两个 remote 都查不到 `originals` 分支，但用**改动前台账里的真实链接**实测：
+
+```
+https://raw.gitcode.com/lzxSUSUY/mathtranslate/blobs/d9c8a0a5…/SY01-01_…_arXiv_1207.0496v1.pdf
+→ HTTP 200, application/octet-stream, 715,672 字节
+```
+
+即 GitCode 侧仍可公开下载 arXiv 原文 PDF。这需要仓主登录 GitCode 删分支/删仓，或至少清掉 `originals` ref——**命令行拿不到权限，本轮未处理**。
+
+### 5.2b GitHub 镜像未更新
+
+`git push github` 报 `Permission denied (publickey)`：本机 `id_ed25519_shuyi` 未被 GitHub 接受。`raw.githubusercontent.com/lzxsusy/mathtranslate/main/COMPLIANCE.md` 返回 404，说明该镜像还停在整改前。补一把 GitHub 公钥后重推即可。
 
 ### 5.3 书页裁图（R1 的灰区）
 
@@ -142,7 +159,7 @@ AtomGit/Gitee 两个 remote 都查不到 `originals` 分支，但 `raw.gitcode.c
 | 本地路径脱敏 | 323 处 / 143 个文件 |
 | 删除临时垃圾 | 13 个 UTF-16 输出 + 2 个过期迁移脚本 |
 | 台账 | 96 行，全部「合规」 |
-| 门禁 | 6,763 文件，0 违规 |
+| 门禁 | 6,764 文件，0 违规 |
 
 ---
 
