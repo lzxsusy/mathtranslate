@@ -65,7 +65,9 @@ datasets/
 4. **自检**：`python tools/ds_lint.py datasets/` 零错误；引用行号必须存在。
 5. **双人复核**：`reviewed_by` 至少两人（生产 + 审校），`status` 从 `draft` → `reviewed` → `published`。
 
-生产提示词与审校清单一律放 `workflow/`，不散落在会话里。`math/` 的专门流程（选点、自足化、证明步骤、依赖、Lean 校验）见 [math/README.md](math/README.md)。
+生产提示词与审校清单一律放 `workflow/`，不散落在会话里。`math/` 的专门流程（选点、自足化、证明步骤、依赖、形式化校验）见 [math/README.md](math/README.md)。
+
+**存量回收（2026-11-16 起）**：除了生产新单元，还要把库里已有的翻译"余料"榨出来——`tools/ds_harvest.py` 按 flags、未展开宏、悬空引用、超长/碎片段、尚无精读卡等规则给段落打分，生成 `datasets/candidates/harvest_queue.jsonl`；五级标注（L0 修正 / L1 术语裁决 / L2 精读卡 / L3 数学条目 / L4 对话流与评测）与抽检比例见 [workflow/余料回收.md](workflow/余料回收.md)。
 
 ## 5. 质量门禁
 

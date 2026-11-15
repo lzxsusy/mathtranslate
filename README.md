@@ -17,7 +17,7 @@ AI 辅助翻译的过程轨迹、以及威腾文章研讨班的组织资料整�
 | 指标 | 数值 |
 |---|---|
 | 译注工程 | **96** 部（其中 **82** 部带完整 LaTeX 源码） |
-| 仓库文件 | 6784 个 / **321.3 MB** |
+| 仓库文件 | 6787 个 / **321.6 MB** |
 | LaTeX 源文件 / 插图 | 1581 个 `.tex` / 2118 张图 |
 | 成品 PDF（预印本类） | 41 部 / **50.8 MB**（Release 附件） |
 | 中文段落语料 | **49038** 段（唯一 47471），其中 **42153** 段含公式（86%）；汉字 4,035,712 字 |
@@ -189,6 +189,7 @@ Bourbaki 报告、Astérisque 专辑、arXiv 预印本、论文集（proceedings
 工作流与提示词模板见 [`datasets/workflow/生产协议.md`](datasets/workflow/生产协议.md)，`math/` 的专门协议见 [`datasets/math/README.md`](datasets/math/README.md)。新增一个单元：
 
 ```bash
+python tools/ds_harvest.py               # 存量回收：给语料段落打分，写 datasets/candidates/harvest_queue.jsonl
 python tools/ds_lint.py                  # 结构、id、行号、字数、权利、math 校验状态
 python tools/ds_publish.py --check       # 发布前权利过滤，0 blocked 才能发
 python tools/ds_publish.py --write       # 重写 datasets/PUBLISH.json

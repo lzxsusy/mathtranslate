@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## datasets v0.3 — 2026-11-16（存量回收：`ds_harvest.py` 与五级标注）
+
+不追 Lean，不追"再译几篇"；把库里已经译过、但价值没榨干的"余料"找出来，补成可训练的中文数学推理数据。
+
+- 新增 `tools/ds_harvest.py`：确定性打分（不调用模型），规则为 `flags`（meta_block / orphan_number / empty_ref /
+  overlong / junk_trimmed / layout_residue）、未展开宏（`\R \C \Z \Hom \dd \mathrm \ref` 等）、悬空引用、碎片/超长段、
+  本机路径残留、工程尚无精读卡；输出 `datasets/candidates/harvest_queue.jsonl`（每工程上限 25 条 + 术语候选 200 条）。
+- 首跑：2,009 个段落候选、1,412 条 `status=candidate` 术语；选定 700 条入队。最高频信号是"工程尚无精读卡"（1,985 段），
+  其次是未展开宏（374）、碎片段（321）——说明存量里最大的一块价值是"还没被理解"，不是"还要再译"。
+- 新增 `datasets/workflow/余料回收.md`：三种采样（审计/主动/覆盖）、五级标注（L0 修正→L1 术语→L2 精读→L3 数学条目→L4 对话流）、
+  "AI 提议 + 规则校验 + 人工抽检"流程、质量指标；明确不做 Lean 形式化，校验靠可复核的证明步骤与依赖。
+- `datasets/README.md`、`README.md`、`datasets/math/README.md` 同步：`math/` 的校验以人工复核为主，形式化有现成产物才收录。
+
 ## datasets v0.2 — 2026-11-16（转向数学与推理：`datasets/math/`）
 
 方向调整：模型缺的不是「译法」，而是数学理解、证明能力与**中文推理链**——研究级中文数学语料近乎空白，
