@@ -413,87 +413,135 @@ A-膜与 $\mathcal{D}$-模是两类完全不同的对象（一个是辛几何的
 \end{keyidea}
 
 % --------------------------------------------------------------
-\section{概念是怎么互相缠接的}
+\section{概念是怎么互相缠接的：四张交换图}
 
-如果把全文的概念画成一张图（而不是一条线），会发现它们分成四个簇，簇之间的“接口概念”只有四个。理解这四个接口，就理解了整篇论文的概念结构。
+上一节把八步画成一条链。但全文的概念不是链，而是一张网：四维物理、二维几何、代数几何与表示论、
+翻译器四个簇互相咬合。把整张网画在一张图上（本书 v1.0 就是这么做的）信息密度过高、连线互相遮挡，
+读者反而抓不住结构。所以这里把它拆成四张\textbf{小交换图}，每张只讲一件事：哪两个世界在哪一步
+被证明是同一个。
 
-\begin{figure}[t]
+读法是：每张图都是一个“方块”，\textbf{两条路径给出同一个结果}——这正是论文每一节真正证明的东西。
+四个方块拼起来，就是整篇论文的概念骨架。
+
+% ----------------------------------------------------------------
+\subsection{第一张：对偶与扭化（S1 + S2）}
+
+\begin{figure}[htbp]
 \centering
-\resizebox{0.96\textwidth}{!}{%
-\begin{tikzpicture}[font=\scriptsize, every node/.style={align=center},
-  hub/.style={draw=kwred, very thick, fill=red!8, rounded corners=2pt, inner sep=3pt},
-  n/.style={inner sep=2pt},
-  arr/.style={-{Stealth[length=1.6mm]}, thick, kwgray},
-  lab/.style={font=\tiny, fill=white, inner sep=1pt, text=black!65}]
-
-% ---- 四个簇的框 -------------------------------------------------
-\draw[blue!45, fill=blue!3, rounded corners=4pt] (-2.9,-2.4) rectangle (2.5,2.1);
-\node[font=\scriptsize\bfseries, color=blue!50!black] at (-0.2,2.42) {① 四维物理};
-\draw[orange!70, fill=orange!4, rounded corners=4pt] (3.2,-2.4) rectangle (8.8,2.1);
-\node[font=\scriptsize\bfseries, color=orange!60!black] at (6.0,2.42) {② 二维几何};
-\draw[green!45!black, fill=green!3, rounded corners=4pt] (3.2,-6.3) rectangle (8.8,-2.9);
-\node[font=\scriptsize\bfseries, color=green!40!black] at (6.0,-6.62) {③ 代数几何 / 表示论};
-\draw[red!50, fill=red!3, rounded corners=4pt] (-2.9,-6.3) rectangle (2.5,-2.9);
-\node[font=\scriptsize\bfseries, color=red!55!black] at (-0.2,-6.62) {④ 翻译器};
-
-% ---- 簇 ①：四维物理 ---------------------------------------------
-\node[hub] (psi) at (0,0.55) {$\Psi$};
-\node[n]  (tau) at (-1.6,1.35) {$\tau$};
-\node[n]  (tw)  at (-1.6,-0.25) {扭化 $t$};
-\node[n]  (n4)  at (-0.3,-1.65) {$\mathcal{N}=4$ SYM};
-\node[n]  (lop) at (1.55,1.35) {线算子};
-
-% ---- 簇 ②：二维几何 ---------------------------------------------
-\node[hub] (mh)    at (5.4,0.55) {$\MH$};
-\node[n]   (cs)    at (7.5,1.5) {复结构 $I,J,K$};
-\node[n]   (hitch) at (7.5,-0.3) {Hitchin 纤维化};
-\node[n]   (br)    at (5.4,-1.6) {膜（A/B 型）};
-
-% ---- 簇 ③：代数几何 / 表示论 ------------------------------------
-\node[hub] (lg)   at (5.4,-4.0) {$\Ldual$};
-\node[n]   (heck) at (7.5,-3.3) {Hecke 算子};
-\node[n]   (gr)   at (5.4,-5.55) {仿射 Grassmann};
-\node[n]   (ls)   at (7.6,-5.55) {局部系统};
-
-% ---- 簇 ④：翻译器 -----------------------------------------------
-\node[hub] (cc) at (-1.3,-4.0) {c.c.\ A-膜};
-\node[n]   (dm) at (1.4,-4.0)  {$\mathcal{D}$-模};
-
-% ---- 边：簇内 ----------------------------------------------------
-\draw[arr] (tau) -- node[lab, above right=-1pt]{耦合} (psi);
-\draw[arr] (tw)  -- node[lab, below right=-1pt]{扭化参数} (psi);
-\draw[arr] (n4)  -- node[lab, left=1pt]{扭化} (psi);
-\draw[arr] (mh)  -- (cs);
-\draw[arr] (mh)  -- (hitch);
-\draw[arr] (mh)  -- (br);
-\draw[arr] (lg)  -- node[lab, above]{标记} (heck);
-\draw[arr] (heck)-- node[lab, below left=-1pt]{几何实现} (gr);
-\draw[arr] (lg)  -- node[lab, right=1pt]{作为目标群} (ls);
-\draw[arr] (cc)  -- node[lab, above]{开弦 BRST} (dm);
-
-% ---- 边：跨簇 ----------------------------------------------------
-\draw[arr] (psi) -- node[lab, above=1.5pt]{选复结构} (mh);
-\draw[arr] (lop) -- node[lab, above right]{作用于} (br);
-\draw[arr] (br)  -- node[lab, above right=-1pt]{本征性} (heck);
-\draw[arr] (br)  -- node[lab, left=2pt, pos=0.42]{电特征膜} (lg);
-\draw[arr] (br)  -- node[lab, above=1.5pt, pos=0.35]{A-膜 $\leftrightarrow$ $\mathcal{D}$-模} (dm);
-\end{tikzpicture}%
-}
-\caption{概念缠绕图：四个簇与四个接口。红色粗框是接口概念（$\Psi$、$\MH$、$\Ldual$、c.c.\ A-膜）；四个簇分别对应 \S3 的六个想法与 \S4 的八步主链，接口概念是这两张图之间唯一需要额外解释的东西。}
-\label{fig:concepts}
+\begin{tikzcd}[column sep=5.6em, row sep=3.2em, font=\small,
+  cells={nodes={align=center}}]
+  $\mathcal{N}=4\ \mathrm{SYM}(G)$ \arrow[r, "{\text{扭化 }t}"] \arrow[d, "{S\text{-对偶}}"']
+    & $\text{4d 拓扑场论}_{\Psi}(G)$ \arrow[d, "{S\text{-对偶}}"] \\
+  $\mathcal{N}=4\ \mathrm{SYM}(\Ldual)$ \arrow[r, "{\text{扭化 }1/t}"]
+    & $\text{4d 拓扑场论}_{1/\Psi}(\Ldual)$
+\end{tikzcd}
+\caption{第一张交换图：扭化把 $\mathcal{N}=4$ 超对称 Yang--Mills 变成一族以 $\Psi$ 为标签的拓扑场论；
+$S$-对偶同时作用在两边，并且把 $\Psi$ 换成 $1/\Psi$。\textbf{方块的意义}：先扭化再对偶 $=$ 先对偶再扭化。}
+\label{fig:concept-1}
 \end{figure}
 
-四个接口概念，各用一句话说明它为什么是“接口”：
+竖边（$S$-对偶）是物理输入：$G$ 与 $\Ldual$ 的理论互为强弱耦合，$\tau\mapsto-1/\tau$。
+横边（扭化）是技术动作：把超对称代数里的一部分超荷重新解释成标量，从而挑出一个拓扑超荷。
+$\Psi$ 是横边的“副产品”，但原文 \S3.5 证明它其实由 $\tau$ 与 $t$ 唯一决定
+（$\Psi=\frac{\tau+\bar\tau}{2}+\frac{\tau-\bar\tau}{2}\cdot\frac{t-t^{-1}}{t+t^{-1}}$，\anchor{src p.35}），
+并且在 $S$-对偶下变成 $1/\Psi$\pA（\anchor{src p.38}）。\textbf{这就是为什么第二、三张图里只有 $\Psi$ 而没有 $t$}：
+$t$ 的全部物理效应都被吸收进 $\Psi$ 了。
+
+% ----------------------------------------------------------------
+\subsection{第二张：紧化与镜像（S3 + S4）——全文的心脏}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzcd}[column sep=4.6em, row sep=3.2em, font=\small,
+  cells={nodes={align=center}}]
+  |[align=center]| \shortstack{4d 拓扑场论$_{\Psi}(G)$\\[1pt]在 $\Sigma\times C$ 上}
+    \arrow[r, "{\text{紧化 }C}"] \arrow[d, "{S\text{-对偶}}"']
+    & |[align=center]| \shortstack{2d $\sigma$-模型\\[1pt]目标 $(\MH(G),J)$} \arrow[d, "{\text{镜像}}"] \\
+  |[align=center]| \shortstack{4d 拓扑场论$_{1/\Psi}(\Ldual)$\\[1pt]在 $\Sigma\times C$ 上}
+    \arrow[r, "{\text{紧化 }C}"']
+    & |[align=center]| \shortstack{2d $\sigma$-模型\\[1pt]目标 $(\MH(\Ldual),K)$}
+\end{tikzcd}
+\caption{第二张交换图（全文的心脏）：四维 $S$-对偶在紧化到二维后，变成 Hitchin 模空间上两个不同复结构之间的\textbf{镜像对称}。
+\textbf{方块的意义}：左下路径（先 $S$-对偶再紧化）与右上路径（先紧化再镜像）给出同一个二维理论。}
+\label{fig:concept-2}
+\end{figure}
+
+这张图是 $S2$（舞台 $\MH$）、$S3$（紧化）与 $S4$（对偶 $=$ 镜像）三件事的合成。
+原文的表述是：在 $\Psi=i$ 这一特殊值上，对 $J$ 的 B-模型等价于对 $K$ 的 A-模型，而
+$\MH(\Ldual)$ 正是 $\MH(G)$ 在复结构 $K$ 下的同一个流形\pA（\S5.4--5.5，\anchor{src p.71}）。
+请注意方块的\textbf{方向}：横边不涉及对偶，只是把四维理论沿 $C$ 紧化；竖边才是对偶。
+方块可交换，就等于说“物理对偶在几何上表现为换一个复结构看同一个流形”——这是整篇论文最值钱的一句话。
+
+% ----------------------------------------------------------------
+\subsection{第三张：线算子、膜与局部系统（S5 + S6）}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzcd}[column sep=2em, row sep=3.2em, font=\small,
+  cells={nodes={align=center}}]
+  线算子 $L$ \arrow[d, "{\text{作用在膜上}}"'] \\
+  |[align=center]| \shortstack{膜范畴\\[1pt]的自函子}
+    \arrow[d, "{\text{本征对象}}"'] \\
+  |[align=center]| \shortstack{局部系统\\[1pt]$\rho:\pi_1(C)\to\LdualC$}
+\end{tikzcd}
+\caption{第三张交换图：线算子在二维看成“膜上的算子”；若一个膜在某个线算子下只被乘以一个向量空间，
+就称它为\textbf{特征膜}（eigenbrane）。全体的特征膜合起来，恰好是 $C$ 上取值在 $\LdualC$ 里的局部系统。}
+\label{fig:concept-3}
+\end{figure}
+
+这一步把“四维的算子”翻译成“二维的对象”，再把“二维的对象”翻译成“代数几何的对象”。三列各属于一个世界：
+最左是量子场论，中间是二维拓扑场论，最右是几何 Langlands 的目标物（局部系统 = Hecke 特征层）。
+原文 \S6 定义 Wilson 与 't~Hooft 线算子并说明它们如何作用在膜上（\anchor{src p.79}），
+\S8.2 证明零膜是 Wilson 算子的特征膜（\anchor{src p.121}），
+\S7--\S8 则把“电特征膜”与“$\pi_1(C)$ 的表示”对应起来（\anchor{src p.104}）。
+\textbf{注意}：这一步只对“电”特征膜干净；磁侧（'t~Hooft）要到第四张图才接上。
+
+% ----------------------------------------------------------------
+\subsection{第四张：'t Hooft 算子 = Hecke 算子（S7），以及翻译器（S8）}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzcd}[column sep=5.2em, row sep=2.9em, font=\small,
+  cells={nodes={align=center}}]
+  |[align=center]| 't Hooft 算子 $T_a$
+    \arrow[r, "{\S9.1}"] \arrow[d, "{\text{作用}}"']
+    & |[align=center]| Hecke 算子 $H_a$ \arrow[d, "{\text{作用}}"] \\
+  |[align=center]| \shortstack{电特征膜 $B$\\[1pt]（二维对象）}
+    \arrow[r, "{\text{c.c.\ A-膜}\Rightarrow\mathcal{D}\text{-模}}"']
+    & |[align=center]| \shortstack{Hecke 特征\\[1pt]$\mathcal{D}$-模}
+\end{tikzcd}
+\caption{第四张交换图：上横边是几何 Langlands 的“物理论文核心等式”（'t~Hooft 算子的作用 $=$ Hecke 修改）；
+下横边是翻译器（典范余各向同性 A-膜 $\Rightarrow$ $\mathcal{D}$-模）。\textbf{方块的意义}：先在二维作用再翻译，
+与先翻译再让 Hecke 算子作用，得到同一个 $\mathcal{D}$-模——这就是 Hecke 特征层的物理来源。}
+\label{fig:concept-4}
+\end{figure}
+
+两张横边分别对应 $M3$ 与 $M5$：$M3$ 说 't~Hooft 算子的奇点就是 Hecke 修改（\S9.1，\anchor{src p.128}）；
+$M5$ 说在 $\MH$ 上存在一个典范的余各向同性 A-膜，它的开弦代数恰好是微分算子代数，
+于是 A-膜范畴与 $\mathcal{D}$-模范畴等价（\S11.1--11.2，\anchor{src p.185}）。
+右竖边是 Hecke 算子在 $\mathcal{D}$-模上的标准作用。方块交换，就是“Hecke 特征层 $=$ 特征膜的翻译”。
+
+% ----------------------------------------------------------------
+\subsection{四张图怎么拼起来}
+
+四张图的接口只有四个概念，每个一句话：
 
 \begin{description}[leftmargin=1.6em]
-\item[$\MH$（Hitchin 模空间）。] 它是唯一同时属于“四维物理”（作为紧化后的目标空间）与“二维几何”（作为膜的目标空间）与“代数几何”（作为 Higgs 丛模空间）三个世界的对象。\textbf{全文所有东西都在 $\MH$ 上会合}。
-\item[$\Psi$（典范参数）。] 它是唯一能同时控制“四维理论是哪一族的一员”与“二维模型是 A 还是 B”的旋钮。\textbf{它不是物理耦合，而是理论的身份标签}。
-\item[$\Ldual$（对偶群）。] 它出现两次，而这两次含义不同：S1 里它是 GNO 的磁对偶群；S6 里它是特征值的群（局部系统的目标）。\textbf{正是这两次出现的重合，才让整篇论文成立}——这是一个需要读者自己去确认、原文没有强调的事实 \pC。
-\item[膜（brane）。] 它是唯一同时属于“四维物理”（边界条件）与“二维几何”（$\sigma$-模型的 A/B 型对象）与“代数几何”（层、$\mathcal{D}$-模的物理化身）的对象。\textbf{膜就是这台机器的“翻译器类别”}。
+\item[$\Psi$（在第一张与第二张之间）。] 它是第一张图的输出、第二张图的输入，同时也决定第二张图里
+“取 $J$ 还是取 $K$”。\textbf{它不是耦合常数，而是“这个理论属于哪一族”的身份标签}。
+\item[$\MH$（在第二张与第三、四章之间）。] 它是唯一同时属于三个世界的对象：四维理论紧化后的目标空间、
+二维膜的舞台、代数几何里的 Higgs 丛模空间。\textbf{全文所有东西都在 $\MH$ 上会合}。
+\item[$\Ldual$（在第一、二、三章之间）。] 它出现两次而含义不同：第一张图里是 GNO 的磁对偶群；
+第三张图里是局部系统的结构群。\textbf{这两次出现必须是同一个群，整篇论文才成立}——
+这一点原文没有强调，是我们指出的 \pC。
+\item[膜（贯穿后三张图）。] 它同时是四维的边界条件、二维的 A/B 型对象、代数几何的层/$\mathcal{D}$-模。
+\textbf{膜就是这台机器的“翻译器类别”}。
 \end{description}
 
 \begin{keyidea}
-\textbf{最短理解路径}：$\MH\to$ 膜 $\to$ 线算子的本征性 $\to$ Hecke 算子 $\to$ $\mathcal{D}$-模。四个箭头，每个箭头对应一个 miracle。其余所有概念都是这五个词的解释或技术支撑。
+\textbf{最短理解路径}：$\MH\to$ 膜 $\to$ 线算子的本征性 $\to$ Hecke 算子 $\to$ $\mathcal{D}$-模。
+四个箭头，每个箭头对应一个 miracle，正好是上面四张图的下横边与右竖边。其余所有概念都是这五个词的
+解释或技术支撑。
 \end{keyidea}
 
 % --------------------------------------------------------------
