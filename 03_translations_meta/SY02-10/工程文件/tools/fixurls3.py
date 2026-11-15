@@ -11,7 +11,7 @@ def fix_url(u):
 
 pat = re.compile(r'\\url\{(https://ncatlab\.org/nlab/show/[^}]+)\}')
 
-for p in sorted(pathlib.Path(r'C:\Users\admin\Downloads\GL_work\源码\chunks').glob('*.tex')):
+for p in sorted(pathlib.Path(r'<HOME>\Downloads\GL_work\源码\chunks').glob('*.tex')):
     t = p.read_text(encoding='utf-8')
     n = pat.sub(lambda m: fix_url(m.group(1)), t)
     if n != t:

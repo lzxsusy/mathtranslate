@@ -1,6 +1,6 @@
 from pathlib import Path
 import re
-p = Path(r'C:\Users\admin\Downloads\GL_work\源码\chunks\notes.tex')
+p = Path(r'<HOME>\Downloads\GL_work\源码\chunks\notes.tex')
 s = p.read_text(encoding='utf-8')
 out = []
 for line in s.split('\n'):

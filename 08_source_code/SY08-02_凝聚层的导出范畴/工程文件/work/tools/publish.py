@@ -1,9 +1,9 @@
 # 拉取本工程到发布仓 08_source_code/SY08-02_凝聚层的导出范畴
 import io, os, shutil
 
-SRC = r'C:\Users\admin\Downloads\orlov_derived_work'
-DST = r'C:\Users\admin\Desktop\数译发布\gitee_shuyi\08_source_code\SY08-02_凝聚层的导出范畴'
-META = r'C:\Users\admin\Desktop\数译发布\gitee_shuyi\03_translations_meta\SY08-02'
+SRC = r'<HOME>\Downloads\orlov_derived_work'
+DST = r'<HOME>\Desktop\数译发布\gitee_shuyi\08_source_code\SY08-02_凝聚层的导出范畴'
+META = r'<HOME>\Desktop\数译发布\gitee_shuyi\03_translations_meta\SY08-02'
 
 def ensure(p):
     os.makedirs(p, exist_ok=True)

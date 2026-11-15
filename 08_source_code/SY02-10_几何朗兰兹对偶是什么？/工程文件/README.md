@@ -58,8 +58,8 @@ GL_work/
 
 ```powershell
 cd 源码
-& "C:\Users\admin\AppData\Local\Programs\MiKTeX\miktex\bin\x64\xelatex.exe" -interaction=nonstopmode main.tex
-& "C:\Users\admin\AppData\Local\Programs\MiKTeX\miktex\bin\x64\xelatex.exe" -interaction=nonstopmode main.tex
+& "<HOME>\AppData\Local\Programs\MiKTeX\miktex\bin\x64\xelatex.exe" -interaction=nonstopmode main.tex
+& "<HOME>\AppData\Local\Programs\MiKTeX\miktex\bin\x64\xelatex.exe" -interaction=nonstopmode main.tex
 ```
 
 需要 MiKTeX（含 ctex、xurl、booktabs、longtable、fancyhdr）。两趟即可定稿目录与交叉引用。

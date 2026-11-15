@@ -17,7 +17,7 @@ import urllib.parse
 HERE = os.path.dirname(os.path.abspath(__file__))            # 工程文件\tools
 PKG = os.path.dirname(os.path.dirname(HERE))                 # SY05-25
 SRC = os.path.join(PKG, "源码")
-WORK = r"C:\Users\admin\Desktop\数译发布\_pilot_0802\work\nlab_index.tsv"
+WORK = r"<HOME>\Desktop\数译发布\_pilot_0802\work\nlab_index.tsv"
 VISIT = "2026-11-15"
 
 sys.path.insert(0, HERE)

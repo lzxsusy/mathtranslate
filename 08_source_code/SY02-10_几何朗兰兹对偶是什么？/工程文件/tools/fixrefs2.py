@@ -1,7 +1,7 @@
 from pathlib import Path
 import re
 
-p = Path(r'C:\Users\admin\Downloads\GL_work\源码\chunks\refs.tex')
+p = Path(r'<HOME>\Downloads\GL_work\源码\chunks\refs.tex')
 s = p.read_text(encoding='utf-8')
 
 # 1) 撇号后多余空格：Jong’ s → Jong’s

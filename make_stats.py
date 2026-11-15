@@ -58,18 +58,21 @@ def main():
             with_src += 1
 
     # 成品 PDF（2026-11-14 起在 Release 附件，字节数从 _PDF清单.tsv 读取）
+    # 2026-11-16 起仓库内不留成品 PDF：只统计有 Release 外链的行。
     pdf_rows = 0
     pdf_bytes = 0
     tsv = os.path.join(d03, "_PDF清单.tsv")
     if os.path.isfile(tsv):
-        with io.open(tsv, encoding="utf-8") as f:
+        with io.open(tsv, encoding="utf-8-sig") as f:
             head = f.readline().rstrip("\n").split("\t")
             i_file, i_bytes = head.index("成品文件"), head.index("成品字节")
+            i_link = next((i for i, h in enumerate(head) if h.startswith("成品直链")), None)
             for line in f:
                 cells = line.rstrip("\n").split("\t")
                 if len(cells) <= max(i_file, i_bytes):
                     continue
-                if cells[i_file].strip():
+                link_ok = i_link is not None and len(cells) > i_link and cells[i_link].strip().startswith("http")
+                if cells[i_file].strip() and link_ok:
                     pdf_rows += 1
                     pdf_bytes += int(cells[i_bytes] or 0)
 

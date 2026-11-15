@@ -15,7 +15,7 @@ import argparse, glob, os, sys
 import pymupdf
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PDF_DIR = r"C:\Users\admin\xwechat_files\wxid_x0ix6rgox7aq22_4797\msg\file\2026-11"
+PDF_DIR = r"<HOME>\xwechat_files\wxid_x0ix6rgox7aq22_4797\msg\file\2026-11"
 OFFSET = 510
 DPI = 200
 

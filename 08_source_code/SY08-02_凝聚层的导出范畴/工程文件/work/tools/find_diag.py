@@ -14,7 +14,7 @@
 import sys, glob, os, re
 import pymupdf as fitz
 
-PDF_DIR = r"C:\Users\admin\xwechat_files\wxid_x0ix6rgox7aq22_4797\msg\file\2026-11"
+PDF_DIR = r"<HOME>\xwechat_files\wxid_x0ix6rgox7aq22_4797\msg\file\2026-11"
 PDF = [q for q in glob.glob(os.path.join(PDF_DIR, '*.pdf')) if 'rlov' in q][0]
 
 WIDE = 300.0

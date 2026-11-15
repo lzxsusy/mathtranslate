@@ -1,6 +1,6 @@
 import fitz, sys
 
-doc = fitz.open(r'C:\Users\admin\Downloads\GL_work\源码\main.pdf')
+doc = fitz.open(r'<HOME>\Downloads\GL_work\源码\main.pdf')
 for i, page in enumerate(doc, 1):
     h = page.rect.height
     blocks = [b for b in page.get_text('blocks') if b[4].strip()]

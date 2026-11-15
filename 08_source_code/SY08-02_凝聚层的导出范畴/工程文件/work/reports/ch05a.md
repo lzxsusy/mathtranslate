@@ -135,8 +135,8 @@
 编译命令（独立输出目录）：
 
 ```
-cd C:\Users\admin\Downloads\orlov_derived_work\src
-lualatex -interaction=nonstopmode -output-directory=C:\Users\admin\Downloads\orlov_derived_work\build_ch05a main.tex
+cd <HOME>\Downloads\orlov_derived_work\src
+lualatex -interaction=nonstopmode -output-directory=<HOME>\Downloads\orlov_derived_work\build_ch05a main.tex
 ```
 
 全書 `main.log`（139 页）：

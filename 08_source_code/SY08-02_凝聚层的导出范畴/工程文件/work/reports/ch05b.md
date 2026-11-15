@@ -138,9 +138,9 @@
 命令（独立 output-directory，绝对路径）：
 
 ```
-cd C:\Users\admin\Downloads\orlov_derived_work\src
-lualatex -interaction=nonstopmode -output-directory=C:\Users\admin\Downloads\orlov_derived_work\build_ch05b main.tex
-lualatex -interaction=nonstopmode -output-directory=C:\Users\admin\Downloads\orlov_derived_work\build_ch05b_smoke _smoke_ch05b.tex
+cd <HOME>\Downloads\orlov_derived_work\src
+lualatex -interaction=nonstopmode -output-directory=<HOME>\Downloads\orlov_derived_work\build_ch05b main.tex
+lualatex -interaction=nonstopmode -output-directory=<HOME>\Downloads\orlov_derived_work\build_ch05b_smoke _smoke_ch05b.tex
 ```
 
 （lualatex 返回 exit code 1 是 MiKTeX 更新提示，按说明忽略；PDF 正常写出。）

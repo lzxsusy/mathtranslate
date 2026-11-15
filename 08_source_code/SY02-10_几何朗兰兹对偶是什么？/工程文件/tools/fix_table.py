@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """修 notes.tex 附录对照表：删重复/重定向行，替换不可用词条。"""
-p = r'C:\Users\admin\Downloads\GL_work\源码\chunks\notes.tex'
+p = r'<HOME>\Downloads\GL_work\源码\chunks\notes.tex'
 lines = open(p, encoding='utf-8').read().split('\n')
 
 ZW = '\u200b'

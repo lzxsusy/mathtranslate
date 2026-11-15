@@ -10,7 +10,7 @@ def disp_of(u):
 
 pat = re.compile(r'\\href\{(https://ncatlab\.org/nlab/show/[^}]+)\}\{\\texttt\{.*?\}\}', re.S)
 
-for p in sorted(pathlib.Path(r'C:\Users\admin\Downloads\GL_work\源码\chunks').glob('*.tex')):
+for p in sorted(pathlib.Path(r'<HOME>\Downloads\GL_work\源码\chunks').glob('*.tex')):
     t = p.read_text(encoding='utf-8')
     n = pat.sub(lambda m: '\\href{%s}{\\texttt{%s}}' % (m.group(1), disp_of(m.group(1).replace('\\_', '_'))), t)
     if n != t:

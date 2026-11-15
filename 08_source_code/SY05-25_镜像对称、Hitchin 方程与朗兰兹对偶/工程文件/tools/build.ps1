@@ -7,10 +7,10 @@ $tools = Join-Path $root '工程文件\tools'
 $src = Join-Path $root '源码'
 $out = Join-Path $root '成品'
 
-$py = 'C:\Users\admin\.dsh\dsh-runtimes\dsh-primary-runtime\dependencies\python\python.exe'
+$py = '<HOME>\.dsh\dsh-runtimes\dsh-primary-runtime\dependencies\python\python.exe'
 if (-not (Test-Path $py)) { $py = 'python' }
 
-$xelatex = 'C:\Users\admin\AppData\Local\Programs\MiKTeX\miktex\bin\x64\xelatex.exe'
+$xelatex = '<HOME>\AppData\Local\Programs\MiKTeX\miktex\bin\x64\xelatex.exe'
 if (-not (Test-Path $xelatex)) { $xelatex = 'xelatex' }
 
 Write-Host '[1/3] 生成译注宏与附录 ...'

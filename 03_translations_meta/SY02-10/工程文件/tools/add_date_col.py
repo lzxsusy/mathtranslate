@@ -2,7 +2,7 @@
 """给 nLab 对照表加“最后修订”一列；并把 S-duality 段落里误插的一句撤掉。"""
 import re
 
-p = r'C:\Users\admin\Downloads\GL_work\源码\chunks\notes.tex'
+p = r'<HOME>\Downloads\GL_work\源码\chunks\notes.tex'
 s = open(p, encoding='utf-8').read()
 
 # 1) 撤掉误插

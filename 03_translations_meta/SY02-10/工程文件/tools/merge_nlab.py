@@ -2,7 +2,7 @@
 """把 tools/nlab 抓到的新页并入 pages/ 并重建 INDEX.tsv（file slug url last_revised title）。"""
 import os, re, shutil
 
-ROOT = r'C:\Users\admin\Desktop\数译发布\gitee_shuyi\07_refs_nlab'
+ROOT = r'<HOME>\Desktop\数译发布\gitee_shuyi\07_refs_nlab'
 SRC = os.path.join(ROOT, 'tools', 'nlab')
 PAGES = os.path.join(ROOT, 'pages')
 IDX = os.path.join(ROOT, 'INDEX.tsv')

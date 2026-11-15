@@ -5,7 +5,7 @@ cd /d "%~dp0src"
 set TMP=%~dp0tmp
 set TEMP=%TMP%
 if not exist "%TMP%" mkdir "%TMP%"
-set XELATEX=C:\Users\admin\Documents\deepseek-harness\default-workspace\texlive\bin\windows\xelatex.exe
+set XELATEX=<HOME>\Documents\deepseek-harness\default-workspace\texlive\bin\windows\xelatex.exe
 "%XELATEX%" -interaction=nonstopmode -file-line-error main.tex
 "%XELATEX%" -interaction=nonstopmode -file-line-error main.tex
 echo.

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
-p = r'C:\Users\admin\Downloads\GL_work\源码\chunks\notes.tex'
+p = r'<HOME>\Downloads\GL_work\源码\chunks\notes.tex'
 s = open(p, encoding='utf-8').read()
 
 old_spec = (r'p{0.28\linewidth}>{\raggedright\arraybackslash}p{0.26\linewidth}'

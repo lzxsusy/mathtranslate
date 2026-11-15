@@ -12,7 +12,7 @@ DOI 10.1070/RM2003v058n03ABEH000629。英文，81 页（PDF 第 1 页 = 书页 5
 ## 1. 工作目录（全 ASCII，可直接编译）
 
 ```
-C:\Users\admin\Downloads\orlov_derived_work\
+<HOME>\Downloads\orlov_derived_work\
 ├── src\                     # 可编译工程（lualatex）
 │   ├── main.tex             # Lead 独占
 │   ├── preamble.tex         # Lead 独占

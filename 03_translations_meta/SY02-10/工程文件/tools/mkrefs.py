@@ -2,7 +2,7 @@
 """Parse the reference list out of full.txt and emit refs.tex (plain list, labels as in original)."""
 import re
 
-src = open(r"C:\Users\admin\Downloads\GL_work\full.txt", encoding="utf-8").read()
+src = open(r"<HOME>\Downloads\GL_work\full.txt", encoding="utf-8").read()
 i = src.index("References\n[AB83]")
 tail = src[i:]
 tail = re.sub(r"===== PAGE \d+ =====", "", tail)
@@ -52,5 +52,5 @@ out = [r"\section*{参考文献}", r"\addcontentsline{toc}{section}{参考文献
 for k, b in entries:
     out.append(r"\item[{%s}] %s" % (k, esc(b)))
 out.append(r"\end{list}")
-open(r"C:\Users\admin\Downloads\GL_work\源码\chunks\refs.tex", "w", encoding="utf-8").write("\n".join(out))
+open(r"<HOME>\Downloads\GL_work\源码\chunks\refs.tex", "w", encoding="utf-8").write("\n".join(out))
 print("entries:", len(entries))

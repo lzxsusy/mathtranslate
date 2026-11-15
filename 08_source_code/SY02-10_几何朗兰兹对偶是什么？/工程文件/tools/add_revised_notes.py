@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """notes.tex：给附录 12 条译注补 last_revised；更新对照表说明句。"""
-p = r'C:\Users\admin\Downloads\GL_work\源码\chunks\notes.tex'
+p = r'<HOME>\Downloads\GL_work\源码\chunks\notes.tex'
 s = open(p, encoding='utf-8').read()
 
 DATES = {

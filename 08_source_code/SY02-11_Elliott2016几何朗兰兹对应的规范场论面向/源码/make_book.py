@@ -7,7 +7,7 @@ Usage:
 """
 import io, os, re, sys, subprocess
 
-BASE = r'C:\Users\admin\Desktop\待翻译\译注_Elliott2016'
+BASE = r'<HOME>\Desktop\待翻译\译注_Elliott2016'
 V2 = os.path.join(BASE, 'v2')
 
 YAML = """---
@@ -24,7 +24,7 @@ ORDER = ['01_前置.md', '02_第1章.md', '03_第1部分.md', '04_第2部分.md'
 
 # Figures: the Markdown embeds a PNG so it shows up in ordinary viewers, but the PDF gets
 # the vector TikZ (traced from the source paths) in its place.
-TIKZ_DIR = r'C:\Users\admin\Desktop\待翻译\_work\tikz'
+TIKZ_DIR = r'<HOME>\Desktop\待翻译\_work\tikz'
 FIG_SCALE = {'fig-5-1': 0.96, 'fig-6-1': 1.0, 'fig-6-2': 1.12, 'fig-6-3': 0.98}
 IMG_RE = re.compile(r'^!\[\]\(images/(fig-[0-9-]+)\.png\)\s*$', re.M)
 
@@ -89,7 +89,7 @@ def main():
                '--toc', '-V', 'toc-title=目录',
                '-V', r'header-includes=\usepackage{mathtools}\usepackage{tikz}']
         env = dict(os.environ)
-        env['PATH'] = r'C:\Users\admin\AppData\Local\Programs\MiKTeX\miktex\bin\x64;' + env.get('PATH', '')
+        env['PATH'] = r'<HOME>\AppData\Local\Programs\MiKTeX\miktex\bin\x64;' + env.get('PATH', '')
         print('running pandoc ->', os.path.basename(pdf))
         r = subprocess.run(cmd, cwd=V2, env=env, capture_output=True, text=True, encoding='utf-8', errors='replace')
         if os.path.exists(pdf):

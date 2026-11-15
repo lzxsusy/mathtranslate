@@ -1,6 +1,6 @@
 import pymupdf, os
-p = r"C:\Users\admin\xwechat_files\wxid_x0ix6rgox7aq22_4797\msg\file\2026-11\Ben-Zvi-几何朗兰兹对偶是什么-2026综述.pdf"
-out = r"C:\Users\admin\Downloads\GL_work\figures"
+p = r"<HOME>\xwechat_files\wxid_x0ix6rgox7aq22_4797\msg\file\2026-11\Ben-Zvi-几何朗兰兹对偶是什么-2026综述.pdf"
+out = r"<HOME>\Downloads\GL_work\figures"
 os.makedirs(out, exist_ok=True)
 doc = pymupdf.open(p)
 names = {6: "fig1", 10: "fig2", 19: "fig3"}

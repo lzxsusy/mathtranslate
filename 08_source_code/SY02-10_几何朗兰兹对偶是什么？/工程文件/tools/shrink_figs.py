@@ -1,6 +1,6 @@
 from PIL import Image
 import os
-out = r"C:\Users\admin\Downloads\GL_work\figures"
+out = r"<HOME>\Downloads\GL_work\figures"
 for name in ["fig1", "fig2", "fig3"]:
     p = os.path.join(out, name + ".png")
     im = Image.open(p).convert("RGB")

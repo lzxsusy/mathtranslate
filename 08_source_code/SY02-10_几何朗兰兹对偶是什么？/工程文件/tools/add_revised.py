@@ -2,7 +2,7 @@
 """给 12 条 nLab 译注补上词条的 last_revised（取自 07_refs_nlab 缓存抓取结果）。"""
 import os, re, sys
 
-CH = r'C:\Users\admin\Downloads\GL_work\源码\chunks'
+CH = r'<HOME>\Downloads\GL_work\源码\chunks'
 DATES = {
     'Tannaka+duality': '2025-07-28',
     'Langlands+dual+group': '2014-09-07',

@@ -11,8 +11,8 @@
 Russian Math. Surveys **58**:3 (2003) 511–591（= Uspekhi Mat. Nauk 58:3 89–172）。
 英文版，81 页。译者只负责分配给你的那一块（chunk）。
 
-**你只写一个文件**：`C:\Users\admin\Downloads\orlov_derived_work\src\chunks\<chunk>.tex`
-**你只写一份报告**：`C:\Users\admin\Downloads\orlov_derived_work\work\reports\<chunk>.md`
+**你只写一个文件**：`<HOME>\Downloads\orlov_derived_work\src\chunks\<chunk>.tex`
+**你只写一份报告**：`<HOME>\Downloads\orlov_derived_work\work\reports\<chunk>.md`
 
 不得改动 `src/preamble.tex`、`src/main.tex`，不得改动别人的 chunk，不得动 `src/chunks/ch00a.tex`（Lead 的样板块）。
 
@@ -297,8 +297,8 @@ Russian Math. Surveys **58**:3 (2003) 511–591（= Uspekhi Mat. Nauk 58:3 89–
 ## 9. 编译与自检
 
 ```powershell
-$py = "C:\Users\admin\.dsh\dsh-runtimes\dsh-primary-runtime\dependencies\python\python.exe"
-cd C:\Users\admin\Downloads\orlov_derived_work\src
+$py = "<HOME>\.dsh\dsh-runtimes\dsh-primary-runtime\dependencies\python\python.exe"
+cd <HOME>\Downloads\orlov_derived_work\src
 lualatex -interaction=nonstopmode main.tex
 ```
 

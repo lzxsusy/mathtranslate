@@ -1,0 +1,21 @@
+#!/bin/sh
+# 提交前合规门禁：见 COMPLIANCE.md §3 R6 / §6。
+# 安装：git config core.hooksPath .githooks
+# 绕过（不建议，仅紧急）：git commit --no-verify
+set -e
+cd "$(git rev-parse --show-toplevel)"
+
+# 逐个试候选解释器：Windows 的 python.exe 常是 Microsoft Store 的占位程序，
+# 存在但一执行就静默失败，所以必须用 -c 实测，而不是 command -v 就算数。
+PY=""
+for c in python3 python py; do
+  if command -v "$c" >/dev/null 2>&1 && "$c" -c "import sys" >/dev/null 2>&1; then
+    PY="$c"; break
+  fi
+done
+if [ -z "$PY" ]; then
+  echo "check-compliance: 未找到可用的 Python，跳过门禁（装好 Python 后重试；CI 会再查一次）" >&2
+  exit 0
+fi
+
+exec "$PY" tools/check_compliance.py --quiet
