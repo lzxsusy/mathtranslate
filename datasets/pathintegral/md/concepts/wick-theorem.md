@@ -1,0 +1,100 @@
+# 威克定理与高斯矩的配对
+
+> `pi/concept/wick-theorem` · 轨道 E · 微扰与代数结构 · 状态 draft
+
+> **先自测**：为什么 $2m$ 次单项式的高斯期望等于全部完全配对的求和，而不是某一个配对的贡献？
+
+## 一句话
+
+正定二次型给出一族高斯矩：奇次矩为零，偶次矩等于把指标两两配对的求和，每条配对贡献 $\hbar(Q^{-1})^{ij}$，全部矩打包在生成函数 $e^{\frac{\hbar}{2}Q^{-1}(J)}$ 里。
+
+## 定义
+
+设 $Q(x)=\sum_{i,j=1}^{n}Q_{ij}x^{i}x^{j}$ 是 $\mathbb{R}^{n}$ 上的正定二次型，$\hbar>0$，则
+$$\Omega=\sqrt{\det Q}\prod_{i=1}^{n}\frac{dx^{i}}{\sqrt{2\pi\hbar}}\,e^{-\frac{1}{2\hbar}Q(x)}$$
+的总积分为 $1$，可当作概率密度。对多项式 $f$ 定义 $\langle f\rangle_{x}=\int_{\mathbb{R}^{n}}\Omega\,f$，下标 $x$ 提醒积分变量是谁。威克定理（Wick's theorem）断言：奇次单项式的期望为零；对偶数次 $2m$，用 $P(2m)$ 记把 $1,\dots,2m$ 这 $2m$ 个位置两两配对的全部方式，则
+$$\langle x^{i_{1}}\cdots x^{i_{2m}}\rangle_{x}=\hbar^{m}\sum_{\sigma\in P(2m)}(Q^{-1})^{\sigma(1)\sigma(2)}\cdots(Q^{-1})^{\sigma(2m-1)\sigma(2m)}.$$
+换成图形语言：每个指标画成一个点，一个配对画成连接两点的线，则每条线带因子 $\hbar(Q^{-1})^{ij}$，期望就是对所有完全连线方式的贡献求和。
+
+**记号约定**：$Q_{ij}$ 正定对称；$(Q^{-1})^{ij}$ 为逆矩阵元，$\sum_{k}Q_{ik}(Q^{-1})^{kj}=\delta_{i}{}^{j}$；$P(2m)$ 是完全配对之集，$|P(2m)|=(2m-1)!!$；$\langle-\rangle_{x}$ 表示对 $x$ 积分。
+
+## 要点
+
+- 生成函数 $Z[J]=\langle e^{\sum_{i}x^{i}J_{i}}\rangle_{x}=e^{\frac{\hbar}{2}Q^{-1}(J)}$ 打包了全部矩：对 $J$ 求 $k$ 次导再令 $J=0$ 即得 $k$ 阶矩。
+- 二阶矩 $\langle x^{i}x^{j}\rangle_{x}=\hbar(Q^{-1})^{ij}$ 是唯一的基本构件，高阶矩全部由它两两相乘再求和得到。
+- 配对只数位置、不看指标取值：即使 $i=j=k=l$，四个位置仍有三种配对方式，系数与取值无关。
+- $2m$ 个位置共有 $(2m-1)!!$ 种完全配对，故高斯矩的项数随阶数按双阶乘增长。
+- 把 $x$ 平移成 $x+a$ 后允许出现部分配对：未配对的每个指标换成背景 $a^{i}$，这正是费曼图顶点的雏形。
+
+## 关键公式
+
+$$
+Z[J]=\left\langle e^{\sum_{i}x^{i}J_{i}}\right\rangle_{x}=\exp\left(\frac{\hbar}{2}\sum_{i,j}(Q^{-1})^{ij}J_{i}J_{j}\right)
+$$
+
+$$
+\langle f(x)\rangle_{x}=\left.e^{\frac{\hbar}{2}\sum_{i,j}(Q^{-1})^{ij}\frac{\partial}{\partial a^{i}}\frac{\partial}{\partial a^{j}}}f(a)\right|_{a=0}
+$$
+
+$$
+\langle x^{i_{1}}\cdots x^{i_{2m}}\rangle_{x}=\hbar^{m}\sum_{\sigma\in P(2m)}\prod_{k=1}^{m}(Q^{-1})^{\sigma(2k-1)\sigma(2k)}
+$$
+
+$$
+\langle x^{i_{1}}\cdots x^{i_{2m+1}}\rangle_{x}=0
+$$
+
+$$
+\langle x^{i}x^{j}\rangle_{x}=\hbar(Q^{-1})^{ij}
+$$
+
+## 定理与证明
+
+### 威克定理（完全配对展开）
+
+对任意 $m\ge0$ 与指标 $i_{1},\dots,i_{2m}$，有 $\langle x^{i_{1}}\cdots x^{i_{2m}}\rangle_{x}=\hbar^{m}\sum_{\sigma\in P(2m)}(Q^{-1})^{\sigma(1)\sigma(2)}\cdots(Q^{-1})^{\sigma(2m-1)\sigma(2m)}$；奇数个因子时期望为零。
+
+**完整证明**
+
+1. 把单项式写成对参数 $a$ 的平移：$f(x)=\left.e^{\sum_{i}x^{i}\partial_{a^{i}}}f(a)\right|_{a=0}$，于是 $\langle f\rangle_{x}=\left.Z[\partial_{a}]f(a)\right|_{a=0}=\left.e^{\frac{\hbar}{2}Q^{-1}(\partial_{a})}f(a)\right|_{a=0}$。
+   - *为什么*：生成函数在 $J=\partial_{a}$ 处取值，等于把每个 $x^{i}$ 换成一次求导；求导后再取 $a=0$，就把 $x$ 的幂次读成了系数。
+2. 把指数展成 $\sum_{m\ge0}\frac{1}{m!}\left(\frac{\hbar}{2}\sum_{i,j}(Q^{-1})^{ij}\partial_{a^{i}}\partial_{a^{j}}\right)^{m}$ 作用在 $2m$ 次单项式上。
+   - *为什么*：指数函数的泰勒级数；只有恰好 $m$ 个二阶算子（合起来 $2m$ 次求导）才能把全部 $a$ 因子消掉，其余阶在 $a=0$ 处取值为零。
+3. 数系数：$m$ 个算子给 $2m$ 个位置各指定一个有序对，共有 $(2m)!$ 种写法；按 $m!$（算子次序）与 $2^{m}$（对内次序）除掉重复后，每种完全配对恰好出现一次，得到 $\hbar^{m}\sum_{\sigma\in P(2m)}\prod_{k}(Q^{-1})^{\sigma(2k-1)\sigma(2k)}$。
+   - *为什么*：求导算子彼此可交换，故有序写法与无序配对只差 $m!$ 与每对的 $2$ 次重复；把这些重复除掉，剩下的正是完全配对之集，而每配对的权就是逆矩阵元之积。
+
+来源：ch02c.tex:149-202（原书 p.140）
+
+### 带背景的威克定理（部分配对）
+
+对任意多项式 $f$ 与 $a\in\mathbb{R}^{n}$，有 $\langle f(x+a)\rangle_{x}=e^{\frac{\hbar}{2}Q^{-1}(\partial_{a})}f(a)$。当 $f$ 是单项式时，右端等于对全部部分配对的求和：每个已配对的指标对给 $\hbar(Q^{-1})^{ij}$，每个未配对的指标保留 $a^{i}$。
+
+**完整证明**
+
+1. 对 $a$ 作泰勒展开：$f(x+a)=\sum_{\alpha}\frac{x^{\alpha}}{\alpha!}\partial_{a}^{\alpha}f(a)$。
+   - *为什么*：把 $a$ 当展开点、$x$ 当增量；$f$ 是多项式，求和只有有限项，不必讨论收敛。
+2. 逐项取期望并用 $\langle x^{\alpha}\rangle=\left.\partial_{J}^{\alpha}Z\right|_{J=0}$，得 $\langle f(x+a)\rangle_{x}=\left.Z[\partial_{a}]f(a)\right.$。
+   - *为什么*：期望对 $x$ 线性，而 $f(a)$ 与 $\partial_{a}$ 都不受 $x$ 积分影响，于是 $\sum_{\alpha}\frac{\langle x^{\alpha}\rangle}{\alpha!}\partial_{a}^{\alpha}$ 正好是 $Z[\partial_{a}]$ 的展开。
+3. 代入 $Z[J]=e^{\frac{\hbar}{2}Q^{-1}(J)}$ 得 $e^{\frac{\hbar}{2}Q^{-1}(\partial_{a})}f(a)$；把指数展开，$m$ 对导数收缩 $m$ 对 $x$，剩下的因子原样留下 $a$，即部分配对求和。
+   - *为什么*：每条收缩给 $\hbar(Q^{-1})^{ij}$，未收缩的因子不被求导，直接换成背景 $a^{i}$，与图形上「未连线的半边接背景」一致。
+
+来源：ch02c.tex:236-249（原书 p.141）
+
+## 易错点
+
+- 奇次单项式期望为零，但乘上背景平移后奇次项与偶次项会混在一起，别把「奇次为零」直接搬到 $\langle f(x+a)\rangle$ 上。
+- 传播子带因子 $\hbar$：$\langle x^{i}x^{j}\rangle_{x}=\hbar(Q^{-1})^{ij}$，漏掉 $\hbar$ 会让整条微扰级数的量纲错位。
+- 配对的对象是位置的编号，不是指标的取值；指标重复不会减少配对数，只会让若干项数值相等。
+- $Q$ 必须正定，否则 $\Omega$ 既不是概率密度，高斯积分也不收敛，配对公式无从谈起。
+
+## 相关卡
+
+- [费曼图的组合定义与展开公式](../concepts/feynman-diagrams.md)
+- [两点函数与逆矩阵传播子](../examples/two-point-function.md)
+- [四点函数与三种完全配对](../examples/four-point-function.md)
+- [平移后的四次多项式与部分配对](../examples/wick-shift.md)
+- [有限维高斯积分](../concepts/gaussian-integral.md)
+
+## 出处
+
+- §2.8.1 威克定理，p.138–142（PDF p.139–143），源码 `ch02c.tex:81-273`

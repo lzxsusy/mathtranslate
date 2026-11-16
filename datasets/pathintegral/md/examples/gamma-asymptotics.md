@@ -1,0 +1,61 @@
+# Gamma 函数的拉普拉斯渐近
+
+> `pi/example/gamma-asymptotics` · 轨道 C · 渐近方法与半经典 · 状态 draft
+
+> **这张卡练什么**：如何用拉普拉斯方法得到 $\Gamma(s)\sim\sqrt{2\pi/s}(s/e)^s$？
+
+## 一句话
+
+用拉普拉斯方法从 $\Gamma(s)$ 的积分表示导出斯特林公式，练习找极小、算二阶导与配平方。
+
+## 设定
+
+设 $\Gamma(s)=\int_0^\infty x^{s-1}e^{-x}\,dx$，令 $\lambda=s-1$，把被积函数写成 $e^{-\lambda f(x)}$ 的形式，求 $s\to\infty$ 的首阶渐近。
+
+## 计算
+
+**第 1 步**：作变量替换 $x=\lambda y$（$\lambda=s-1$），则 $\Gamma(s)=\lambda^{s}\int_0^\infty e^{-\lambda(y-\ln y)}\,\mathrm{d}y$；把被积函数写成 $e^{-\lambda f(y)}$，故 $f(y)=y-\ln y$。
+
+> 为什么：提取 $\lambda^{s}$ 是变量替换的雅可比；被积函数只剩指数，才能套拉普拉斯公式。
+
+**第 2 步**：求驻点：$f'(y)=1-1/y=0$，得 $y_0=1$；且 $f''(y)=1/y^2$，$f''(1)=1>0$，是极小。
+
+> 为什么：拉普拉斯方法要求 $f$ 在内部取唯一极小且二阶导正。
+
+**第 3 步**：计算 $f(y_0)=1$、$f''(y_0)=1$；在 $y_0$ 附近指数为 $e^{-\lambda}e^{-\lambda(y-1)^2/2+\cdots}$。
+
+> 为什么：首阶只用到极小值与二阶导，指数前的因子取 $y_0$ 处值 $1$。
+
+**第 4 步**：套公式 $\int e^{-\lambda f}g\simeq g(y_0)e^{-\lambda f(y_0)}\sqrt{2\pi/(\lambda f''(y_0))}$，此处 $g=1$，得 $\Gamma(s)\simeq\lambda^{s}e^{-\lambda}\sqrt{2\pi/\lambda}=\lambda^{s-1/2}e^{-\lambda}\sqrt{2\pi}$。
+
+> 为什么：这是拉普拉斯方法的首阶公式；$\lambda=s-1$。
+
+**第 5 步**：代回 $\lambda=s-1$：$\Gamma(s)\simeq\sqrt{2\pi/(s-1)}\,(s-1)^{s-1}e^{-(s-1)}$；再用 $(1-1/s)^{s}\to e^{-1}$ 与 $(1-1/s)^{-1/2}\to1$ 化成 $\sqrt{2\pi/s}(s/e)^{s}$。
+
+> 为什么：把结果写成只含 $s$ 的斯特林形式，并核对常数因子。
+
+## 结果
+
+$\Gamma(s)\sim\sqrt{\dfrac{2\pi}{s}}\left(\dfrac{s}{e}\right)^s$，$s\to+\infty$。
+
+## 复核
+
+取 $s=10$：$\Gamma(10)=9!=362880$，而 $\sqrt{2\pi/10}(10/e)^{10}\approx362880$ 量级一致；或对 $\ln\Gamma(s)$ 用 $\Gamma(s+1)=s\Gamma(s)$ 检验递推误差为 $O(1/s)$。
+
+## 易错点
+
+- 不要漏掉 $x^{s-1}=e^{(s-1)\ln x}$ 中的 $(s-1)$，否则 $f$ 会写成 $x$ 而不是 $x-\ln x$。
+- 极值是极小不是极大，指数符号为 $e^{-\lambda f}$；若写成 $e^{+\lambda f}$ 会得到发散。
+- 首阶公式只给相对误差 $O(1/\lambda)$，不能用来判断绝对误差。
+
+## 用到哪些概念
+
+- [拉普拉斯方法](../concepts/laplace-method.md)
+
+## 相关卡
+
+- [有限维高斯积分](../concepts/gaussian-integral.md)
+
+## 出处
+
+- §2.5.1 拉普拉斯方法（例 2.5.1），p.97（PDF p.98），源码 `ch02a.tex:963-992`

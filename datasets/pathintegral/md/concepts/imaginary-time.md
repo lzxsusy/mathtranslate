@@ -1,0 +1,98 @@
+# 虚时间与欧氏路径积分
+
+> `pi/concept/imaginary-time` · 轨道 A · 基础与时间切片 · 状态 draft
+
+> **先自测**：威克转动为什么能让路径积分变严格，欧氏核与密度矩阵、配分函数是什么关系？
+
+## 一句话
+
+令 $t=-i\tau$ 后振荡权重变成实衰减权重，欧氏核有了条件维纳测度，并等同于统计力学的密度矩阵。
+
+## 定义
+
+把时间解析延拓为 $t=-i\tau$，$\tau\in\mathbb{R}$，这一操作称为威克转动（Wick rotation）。实时核随之变为欧氏核 $K_E(\mathbf{x}'',\tau'';\mathbf{x}',\tau')=\langle\mathbf{x}''|e^{-\hat H(\tau''-\tau')/\hbar}|\mathbf{x}'\rangle$，权重由 $e^{iS/\hbar}$ 换成 $e^{-S_E/\hbar}$，其中 $S_E=\int\left(\frac m2\dot{\mathbf{x}}^2+V(\mathbf{x})\right)d\tau$。此时 $[D_E\mathbf{x}]$ 可用条件维纳测度定义，所得表示即费曼–卡茨公式（Feynman–Kac formula）。
+
+**记号约定**：$\tau$ 为虚时间；$\beta=\tau''-\tau'$ 常记作逆温度；$S_E$ 为欧氏作用量；$[D_E\mathbf{x}]$ 为欧氏测度。
+
+## 要点
+
+- $e^{-i\hat Ht/\hbar}$ 在 $t=-i\tau$ 下成为 $e^{-\hat H\tau/\hbar}$：不再是幺正算子，而是有下界的正算子。
+- 权重由相因子 $e^{iS/\hbar}$ 变为实指数 $e^{-S_E/\hbar}$，被积函数非负且衰减，才谈得上测度。
+- 欧氏作用量中动能与势能同号相加，不再是「动能减势能」，变分原理也随之改变。
+- 欧氏核 $\rho(\mathbf{x}'',\mathbf{x}';\beta)=\langle\mathbf{x}''|e^{-\beta\hat H}|\mathbf{x}'\rangle$ 就是统计力学的密度矩阵，$\beta$ 扮演逆温度。
+- 取迹即得配分函数 $Z(\beta)=\operatorname{tr}e^{-\beta\hat H}=\int d^n\mathbf{x}\,\rho(\mathbf{x},\mathbf{x};\beta)$，这是 §2.4 计算谐振子热力学量的入口。
+
+## 关键公式
+
+$$
+t=-i\tau,\qquad \tau\in\mathbb{R}
+$$
+
+$$
+K_E(\mathbf{x}'',\tau'';\mathbf{x}',\tau')=\langle\mathbf{x}''|e^{-\hat H(\tau''-\tau')/\hbar}|\mathbf{x}'\rangle
+$$
+
+$$
+S_E[\mathbf{x}(\tau)]=\int_{\tau'}^{\tau''}\left(\frac m2\dot{\mathbf{x}}^2+V(\mathbf{x})\right)d\tau
+$$
+
+$$
+K_E=\int_{\mathbf{x}(\tau')=\mathbf{x}'}^{\mathbf{x}(\tau'')=\mathbf{x}''}[D_E\mathbf{x}(\tau)]\,e^{-\frac{1}{\hbar}S_E[\mathbf{x}(\tau)]}
+$$
+
+$$
+\rho(\mathbf{x}'',\mathbf{x}';\beta)=\langle\mathbf{x}''|e^{-\beta\hat H}|\mathbf{x}'\rangle
+$$
+
+## 定理与证明
+
+### 威克转动下的作用量变换
+
+在 $t=-i\tau$ 下，实时作用量 $S=\int\left(\frac m2\dot{\mathbf{x}}^2-V\right)dt$ 满足 $S=iS_E$，故 $e^{iS/\hbar}=e^{-S_E/\hbar}$。
+
+**完整证明**
+
+1. 由 $t=-i\tau$ 得 $dt=-i\,d\tau$；记 $\mathbf{u}=\mathrm{d}\mathbf{x}/\mathrm{d}\tau$，则 $\dot{\mathbf{x}}=\mathrm{d}\mathbf{x}/\mathrm{d}t=\mathbf{u}/(-i)=i\,\mathbf{u}$。
+   - *为什么*：这里另起记号 $\mathbf{u}$，避免与端点记号 $\mathbf{x}'$ 混淆。
+2. 代入动能项：$\frac m2\dot{\mathbf{x}}^2dt=\frac m2(i\mathbf{u})^2(-i\,d\tau)=i\frac m2|\mathbf{u}|^2d\tau$。
+   - *为什么*：$(i)^2(-i)=i$，两次符号相乘后动能项保持正号。
+3. 代入势能项：$-Vdt=-V(-i\,d\tau)=iV\,d\tau$，与动能项合并得 $S=i\int\left(\frac m2|\mathbf{u}|^2+V\right)d\tau=iS_E$。
+   - *为什么*：两项都提出公因子 $i$，这正是欧氏作用量中动能与势能同号的来源。
+4. 于是 $e^{iS/\hbar}=e^{i\cdot iS_E/\hbar}=e^{-S_E/\hbar}$，权重变为实的指数衰减。
+   - *为什么*：$i^2=-1$ 把振荡相位转成衰减因子，这是欧氏积分可控的根本原因。
+
+来源：ch02a.tex:447-472（原书 p.88）
+
+### 欧氏核的半群性与密度矩阵
+
+对 $\beta_1,\beta_2>0$ 有 $\rho(\mathbf{x}'',\mathbf{x}';\beta_1+\beta_2)=\int d^n\mathbf{y}\,\rho(\mathbf{x}'',\mathbf{y};\beta_2)\rho(\mathbf{y},\mathbf{x}';\beta_1)$，且 $\rho$ 是热核型正定核。
+
+**完整证明**
+
+1. 写 $e^{-\hat H(\beta_1+\beta_2)}=e^{-\hat H\beta_2}e^{-\hat H\beta_1}$，在中间插入位置完备性。
+   - *为什么*：两个指数同底且对易，可直接相乘；插入恒等算子把矩阵元拆开。
+2. 把两个因子认成 $\rho(\mathbf{x}'',\mathbf{y};\beta_2)$ 与 $\rho(\mathbf{y},\mathbf{x}';\beta_1)$，对 $\mathbf{y}$ 积分。
+   - *为什么*：这正是虚时间方向的复合律，与实时复合律形式一致。
+3. 由 $\langle\psi|e^{-\beta\hat H}|\psi\rangle=\|e^{-\beta\hat H/2}\psi\|^2\ge0$ 得正定性。
+   - *为什么*：指数算子自伴且有下界，其二次型非负，保证 $\rho$ 可作概率型权重。
+
+来源：ch02a.tex:452-478（原书 p.88）
+
+## 易错点
+
+- 威克转动要同时换 $dt$ 与速度：只把 $dt$ 换成 $-i\,d\tau$ 而不改 $\dot{\mathbf{x}}$，会得到 $S_E$ 一个整体符号的错误。
+- 欧氏权重中势能项是 $+V$，不是 $-V$；照搬实时作用量的减号会让权重随 $V$ 增大而发散。
+- $e^{-\beta\hat H}$ 不保范数，欧氏「演化」不是量子演化；把欧氏核当振幅做干涉、谈相位，都是无意义的。
+- $V$ 需有下界，迹才有限；对无下界的势，$Z(\beta)$ 发散，威克转动不能盲目做。
+- 配分函数是取迹：两端取同一点 $\rho(\mathbf{x},\mathbf{x};\beta)$ 再积分；用非对角元 $\mathbf{x}''\ne\mathbf{x}'$ 求和得到的是别的东西。
+
+## 相关卡
+
+- [时间切片与复合律](../concepts/time-slicing.md)
+- [路径积分的定义与形式测度](../concepts/path-integral-definition.md)
+- [自由粒子的精确核 $K_0$](../concepts/free-particle-kernel.md)
+- [谐振子配分函数](../concepts/harmonic-oscillator-partition.md)
+
+## 出处
+
+- §2.2.5 虚时间，p.88–89（PDF p.89–90），源码 `ch02a.tex:445-482`

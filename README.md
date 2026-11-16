@@ -17,7 +17,7 @@ AI 辅助翻译的过程轨迹、以及威腾文章研讨班的组织资料整�
 | 指标 | 数值 |
 |---|---|
 | 译注工程 | **96** 部（其中 **82** 部带完整 LaTeX 源码） |
-| 仓库文件 | 7002 个 / **326.9 MB** |
+| 仓库文件 | 7120 个 / **327.9 MB** |
 | LaTeX 源文件 / 插图 | 1581 个 `.tex` / 2118 张图 |
 | 成品 PDF（预印本类） | 41 部 / **50.8 MB**（Release 附件） |
 | 中文段落语料 | **49035** 段（唯一 47469），其中 **42153** 段含公式（86%）；汉字 4,035,682 字 |
@@ -124,7 +124,7 @@ Bourbaki 报告、Astérisque 专辑、arXiv 预印本、论文集（proceedings
 | `papers/WIT-1989-JONES/` | **威腾 1989 CS/Jones 论文研讨班**（第二轮解经试点）：六场研讨记录、claims/questions 数据、教材核查；交付两版讲义——**49 页连续叙事讲义**（`deliverables/lecture/`，可作课程主文本）与 **97 页逐句注疏版**（`deliverables/reading_note/`），均含 LaTeX 源码、一键构建工程、协作流程记录，并有打包下载 `WIT-1989-JONES-v1.0.zip` |
 | `08_source_code/` | **每部译本的完整工程**：`工程文件/`（BRIEF、构建脚本、交付清单、术语表、校对记录、逐章报告）+ `源码/`（LaTeX 源与插图） |
 | `07_refs_nlab/` | **nLab 参考资料库**（几何 Langlands 线专用）：120 条 nLab 条目摘要（含 `last_revised`，可直接写进译注来源行）+ 37 份替代来源卡（nLab 只有存根时改引 A 级教材 / MathWorld / Stacks）+ 110 条来源真实性抽查记录 |
-| `datasets/` | **可训练数据集**：数学推理条目（`math/`，命题+证明步骤+缺口+校验）、原文片段↔译文↔译法理由（`parallel/`）、精读卡（`deepread/`）、高光与难证标注（`highlights/`）、事件级工作流（`traces/`）、概念图谱（`kg/`）、held-out 评测（`bench/`）、按概念组织的词条库（`encyclopedia/`）、单章资料卡（`geoq/`）；规则见 `datasets/README.md`，权利分 `self / arxiv / book` 三层，`book` 只进 `_internal/` |
+| `datasets/` | **可训练数据集**：数学推理条目（`math/`，命题+证明步骤+缺口+校验）、原文片段↔译文↔译法理由（`parallel/`）、精读卡（`deepread/`）、高光与难证标注（`highlights/`）、事件级工作流（`traces/`）、概念图谱（`kg/`）、held-out 评测（`bench/`）、按概念组织的词条库（`encyclopedia/`）、单章资料卡（`geoq/`、`pathintegral/`）；规则见 `datasets/README.md`，权利分 `self / arxiv / book / rewritten` 四层，`book` 只进 `_internal/` |
 | `site/` | 静态站点（`site/index.html` 双击即开，无需服务器） |
 
 ## `01_corpus_zh/`：语料的形态
@@ -216,6 +216,26 @@ python tools/build_index.py && python tools/render_md.py
 卡片为改写（`rights: rewritten`），公式照录、出处逐条标原书印刷页；与底本无连续 20 字相同片段。
 
 ![几何量子化框架地图](datasets/geoq/map.png)
+
+### 资料卡试点：路径积分（`datasets/pathintegral/`）
+
+把李思《量子力学与几何》第 2 章「路径积分形式」拆成 **50 张可以单独拿起来用的卡**：1 张总览、29 张概念卡、20 张例子卡（书中 20 个编号例子各一张）。五条轨道依次是：A 定义与时间切片 → B 高斯与谐振子（精确答案）→ C 渐近方法与半经典 → D 格林函数、WKB 与隧穿 → E 威克图、Moyal 与量子 HKR。共 65 条定理、219 个证明步骤、109 个例子计算步骤。
+
+- [`README.md`](datasets/pathintegral/README.md)：资料卡怎么用（概念卡 7 步、例子卡 4 步、Anki、打印）、目录与页码约定
+- [`MAP.md`](datasets/pathintegral/MAP.md) / [`map.png`](datasets/pathintegral/map.png)：框架脉络图，五轨如何汇成「精确定义 → 近似 → 物理输出 → 代数输出」
+- [`taxonomy.md`](datasets/pathintegral/taxonomy.md)：50 张卡总表，逐卡标原书印刷页与 §2 源码行
+- [`workflow/PRODUCTION.md`](datasets/pathintegral/workflow/PRODUCTION.md)：从勘察到入仓的完整协议（七路并行、lint、页码审计、两轮独立审校）
+
+```bash
+cd datasets/pathintegral
+python tools/lint_pi.py cards
+python tools/audit_pages.py --src /path/to/SY07-03/chunks   # 底本源码不随数据集发布
+python tools/build_index.py && python tools/render_md.py
+```
+
+卡片为改写（`rights: rewritten`），公式照录、出处逐条标原书印刷页（80–160）；与底本无连续 20 字相同片段。
+
+![路径积分框架地图](datasets/pathintegral/map.png)
 
 ## 成品 PDF 与原文（合规说明）
 

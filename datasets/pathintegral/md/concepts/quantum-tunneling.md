@@ -1,0 +1,98 @@
+# 量子隧穿
+
+> `pi/concept/quantum-tunneling` · 轨道 D · 格林函数与 WKB · 状态 draft
+
+> **先自测**：经典粒子不能越过的势垒，为什么在路径积分里由复时间轨道贡献，并给出与 WKB 相同的指数压低透射率？
+
+## 一句话
+
+势垒内 $E<V$，经典轨道要沿复时间走，$\int p\,\mathrm{d}x$ 的势垒段变成虚数；与散射渐近式比较即得透射概率 $e^{-\frac{2}{\hbar}\int_a^b\sqrt{2m(V-E)}\mathrm{d}x}$。
+
+## 定义
+
+设势垒区为 $a<x<b$，在 $x'<a$ 与 $x''>b$ 处 $E>V(x)$，势垒内 $E<V$。经典粒子在 $a$ 处折返，不能从 $x'$ 到 $x''$。路径积分不排斥禁区：半经典轨道 $(x_{cl},T_s)$ 仍由驻定条件选出，只是势垒段的 $\sqrt{2(E-V)/m}=i\sqrt{2(V-E)/m}$ 变为纯虚，飞行时间因此含一个负虚部，$$T_s=\int_{x'}^{a}\sqrt{\frac{m}{2(E-V)}}\,\mathrm{d}x+\int_{b}^{x''}\sqrt{\frac{m}{2(E-V)}}\,\mathrm{d}x-i\int_{a}^{b}\sqrt{\frac{m}{2(V-E)}}\,\mathrm{d}x.$$ 这样的轨道在复时间上走，路径积分仍算出有限振幅，只是比允许区的小 $e^{-(1/\hbar)\int_a^b\sqrt{2m(V-E)}\mathrm{d}x}$ 量级。
+
+**记号约定**：转折点 $a,b$ 满足 $V(a)=V(b)=E$；$V_0$ 为势垒峰值、$b-a$ 为宽度；$A$ 为散射渐近式中的透射振幅；$T_s$ 为复旅行时间。
+
+## 要点
+
+- 势垒内 $E<V$，动量 $p=\sqrt{2m(E-V)}$ 为纯虚，所以 $\int p\,\mathrm{d}x$ 的势垒段贡献一个虚数。
+- 飞行时间 $T_s$ 的势垒段取负虚部：$T_s=\int\mathrm{d}x/\sqrt{2(E-V)/m}$ 中 $E<V$ 段被积函数为 $1/(i\cdot \text{实数})=-i\cdot\text{实数}$。
+- 复时间轨道（瞬子）不是非物理的：它是最速下降围道上的鞍点，对应欧几里得时间的经典解。
+- 与散射渐近式 $G=\frac{m}{ik\hbar^2}Ae^{ik(x''-x')}$ 比较，振幅的模给出透射概率 $|A|^2=e^{-\frac{2}{\hbar}\int_a^b\sqrt{2m(V-E)}\mathrm{d}x}$。
+- 结果与第 1.10.5 节 WKB 的隧穿因子相同：路径积分的复时间图像与定态 WKB 的指数衰减一致。
+
+## 关键公式
+
+$$
+p(x)=i\sqrt{2m(V(x)-E)},\qquad E<V(x)
+$$
+
+$$
+T_s=\displaystyle\int_{x'}^{a}\frac{m\,\mathrm{d}x}{p}+\int_{b}^{x''}\frac{m\,\mathrm{d}x}{p}-i\int_{a}^{b}\frac{m\,\mathrm{d}x}{\sqrt{2m(V-E)}}
+$$
+
+$$
+W_{cl}=\displaystyle\int_{x'}^{a}\sqrt{2m(E-V)}\,\mathrm{d}x+i\int_{a}^{b}\sqrt{2m(V-E)}\,\mathrm{d}x+\int_{b}^{x''}\sqrt{2m(E-V)}\,\mathrm{d}x
+$$
+
+$$
+|A|^2=\exp\left(-\frac{2}{\hbar}\displaystyle\int_{a}^{b}\sqrt{2m(V-E)}\,\mathrm{d}x\right)
+$$
+
+$$
+G(x'',x';E)=\dfrac{m}{ik\hbar^2}A\,e^{ik(x''-x')}\quad(x'\to-\infty,\ x''\to+\infty)
+$$
+
+## 定理与证明
+
+### 禁区段贡献虚数作用量
+
+若 $E<V(x)$ 在 $(a,b)$ 上成立，则 $W_{cl}$ 在势垒上的积分为 $i\int_a^b\sqrt{2m(V-E)}\mathrm{d}x$，实部为零，故 $\exp(iW_{cl}/\hbar)$ 给出指数压低因子 $e^{-(1/\hbar)\int_a^b\sqrt{2m(V-E)}\mathrm{d}x}$。
+
+**完整证明**
+
+1. 势垒内 $E-V<0$，故 $\sqrt{2m(E-V)}=i\sqrt{2m(V-E)}$。
+   - *为什么*：负数的平方根取正虚部是沿上半平面的分支，与最速下降方向一致。
+2. 在 $[a,b]$ 上积分：$\int_a^b\sqrt{2m(E-V)}\,\mathrm{d}x=i\int_a^b\sqrt{2m(V-E)}\,\mathrm{d}x$。
+   - *为什么*：被积函数在整段上都取同一个分支，积分号内可以直接提出 $i$。
+3. 乘 $i/\hbar$ 得 $-\frac{1}{\hbar}\int_a^b\sqrt{2m(V-E)}\mathrm{d}x$，为实数且为负，故 $|e^{iW/\hbar}|=e^{-\frac{1}{\hbar}\int_a^b\sqrt{2m(V-E)}\mathrm{d}x}$。
+   - *为什么*：$i\cdot i=-1$ 把相位变成实指数衰减，这正是隧穿的指数压制。
+
+来源：ch02b.tex:1316-1345（原书 p.132–133）
+
+### 复时间给出与 WKB 相同的透射概率
+
+把半经典 $G$ 写成 $\frac{m}{i\hbar^2k}Ae^{ik(x''-x')}$（$x'\to-\infty$，$x''\to+\infty$，$k=\sqrt{2mE}/\hbar$），则 $|A|^2=\exp(-\frac2\hbar\int_a^b\sqrt{2m(V-E)}\mathrm{d}x)$。
+
+**完整证明**
+
+1. 在自由区两端，经典速率都等于 $\dot x=\sqrt{2E/m}=\hbar k/m$，故振幅因子 $(-\dot x(0)\dot x(T_s))^{-1/2}=\left(-(\hbar k/m)^2\right)^{-1/2}=-i\,m/(\hbar k)$。
+   - *为什么*：两端都在 $V=0$，速率相等，振幅只剩一个与 $E$ 有关的常数。
+2. 代入 $G\simeq\frac1\hbar(-\dot x(0)\dot x(T_s))^{-1/2}e^{iW_{cl}/\hbar}$，前因子为 $\frac{1}{\hbar}\cdot(-im/(\hbar k))=\frac{m}{i\hbar^2k}$。
+   - *为什么*：$-i/\hbar\cdot(-i)=i^2\cdot\ldots$ 的符号整理后与自由粒子精确解同形，这正是与散射公式比较的基础。
+3. 由定理“禁区段贡献虚数作用量”，$e^{iW_{cl}/\hbar}$ 含因子 $e^{-\frac{1}{\hbar}\int_a^b\sqrt{2m(V-E)}\mathrm{d}x}$，其余部分为纯相位模 1。
+   - *为什么*：只有势垒段贡献模长，允许区只改相位，因此指数压制的来源唯一。
+4. 与 $G=\frac{m}{ik\hbar^2}Ae^{ik(x''-x')}$ 逐项对比得 $A=|A|e^{i\varphi}$、$|A|=e^{-\frac{1}{\hbar}\int_a^b\sqrt{2m(V-E)}\mathrm{d}x}$，即 $|A|^2=e^{-\frac{2}{\hbar}\int_a^b\sqrt{2m(V-E)}\mathrm{d}x}$。
+   - *为什么*：对比时只取模长，$A$ 的相位由允许区的 $\int p\,\mathrm{d}x$ 给出，此处不必算出。
+
+来源：ch02b.tex:1346-1365（原书 p.133）
+
+## 易错点
+
+- 把禁区里的 $\sqrt{2(E-V)/m}$ 写错分支（取 $-i$ 而不是 $i$），会得到指数增长而不是衰减。
+- $T_s$ 的势垒段是负虚部；符号反了就变成超前（增长）解。
+- 只算模长就以为得到了完整的 $A$：指数因子之外还有允许区的相位与前置因子。
+- 书中用字母 $T$ 同时表示时间与透射系数（$T\simeq|A|^2$），读公式时要分清。
+- 把复时间轨道当成“粒子真的花了复时间”：它是围道形变后的鞍点，物理读出只有模长（概率）与相位。
+
+## 相关卡
+
+- [半经典格林函数](../concepts/semiclassical-green-function.md)
+- [经由路径积分的 WKB](../concepts/wkb-path-integral.md)
+- [连接公式再探](../concepts/connection-formula.md)
+- [散射态的渐近行为](../examples/scattering-asymptotics.md)
+
+## 出处
+
+- §2.7.4 量子隧穿，p.132–133（PDF p.133–134），源码 `ch02b.tex:1294-1365`

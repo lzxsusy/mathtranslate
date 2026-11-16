@@ -1,0 +1,111 @@
+# 量子 HKR 映射
+
+> `pi/concept/quantum-hkr` · 轨道 E · 微扰与代数结构 · 状态 draft
+
+> **先自测**：非交换代数上没有 de Rham 复形，量子 HKR 映射凭什么还能把霍赫希尔德边界变成右边的微分？
+
+## 一句话
+
+把霍赫希尔德边界换成 BV 算子 $\mathrm{i}\hbar\Delta$：给每个元素配一条圆周路径积分，量子 HKR 映射便成为链映射，外尔代数的高阶同调最后集中在 $2n$ 次。
+
+## 定义
+
+不把每个元素直接映成形式，而是让它在圆周上随量子涨落取值：取 $O_f(\theta)=f(x+X(\theta),p+P(\theta))$，对 $f$ 的偏导数同样处理，再把 $f_0$ 与 $\mathrm{d}f_1,\dots,\mathrm{d}f_m$ 的像按循环序提成一列，沿循环序积分。右端是 $A[\hbar]$ 上的微分形式，其微分取为 $\mathrm{i}\hbar\Delta$，其中 $\Delta$ 是把反对称双向量与形式缩并得到的算子。定义 2.8.18 正是说：这一列圆周关联函数给出 $(C_\bullet(A^\hbar),b)$ 与 $(\Omega^\bullet_{A[\hbar]},\mathrm{i}\hbar\Delta)$ 之间的链映射；它的存在就是量子化版本的霍赫希尔德–科斯唐–罗森伯格定理，经典 HKR 是它在 $\hbar\to0$ 处的影子。
+
+**记号约定**：$A=\mathbb{C}[x^i,p_i]$，$A^\hbar=(A[\hbar],*)$（$*$ 为 Moyal 乘积）；$O_f(\theta)=f(x+X(\theta),p+P(\theta))$；$\omega^{-1}=\sum_i\partial/\partial x^i\wedge\partial/\partial p_i$；$\Delta=L_{\omega^{-1}}$；$\mathrm{d}=\mathrm{i}\hbar\Delta$；$C_p(A^\hbar)=(A^\hbar)^{\otimes p+1}$。
+
+## 要点
+
+- 目标是让「元素映成微分形式」成为链映射：经典 HKR 的微分是 de Rham 算子，量子版本必须把微分换成 $\mathrm{i}\hbar\Delta$。
+- 链映射由四样东西组装：左边界 $b$、右微分 $\mathrm{i}\hbar\Delta$、圆上关联作积分核、循环序体积把多重积分配平。
+- $\Delta$ 是反对称双向量与形式的缩并：$\Delta=\sum_i(\partial_{x^i}\iota_{\partial_{p_i}}-\partial_{p_i}\iota_{\partial_{x^i}})$，满足 $\Delta^2=0$，是 BV 算子的原型。
+- 链映射的条件写成 $\rho^\hbar(b(-))=\mathrm{i}\hbar\Delta(\rho^\hbar(-))$；它把霍赫希尔德同调送到「$\Delta$-上同调」，$\hbar\to0$ 时退化为经典映射。
+- 局部化 $\hbar$ 后两边同调集中在 $2n$ 次，给出 Feigin–Felder–Shoikhet 迹型公式——高阶同调全被压进一个对象。
+
+## 关键公式
+
+$$
+(f*g)(x,p)=f(x,p)\,\exp\Bigl(\tfrac{\mathrm{i}\hbar}{2}(\overleftarrow{\partial}_{x^i}\overrightarrow{\partial}_{p_i}-\overleftarrow{\partial}_{p_i}\overrightarrow{\partial}_{x^i})\Bigr)g(x,p)
+$$
+
+$$
+O_f(\theta)=f(x+X(\theta),p+P(\theta)),\qquad O_{\mathrm{d}f}(\theta)=\sum_i\Bigl(O_{\partial_{x^i}f}(\theta)\,\mathrm{d}x^i+O_{\partial_{p_i}f}(\theta)\,\mathrm{d}p_i\Bigr)
+$$
+
+$$
+\rho^\hbar(f_0\otimes f_1\otimes\cdots\otimes f_m)=\int_{\mathrm{Cyc}_{m+1}}\mathrm{d}\theta_0\cdots\mathrm{d}\theta_m\,\bigl\langle O_{f_0}(\theta_0)O_{\mathrm{d}f_1}(\theta_1)\cdots O_{\mathrm{d}f_m}(\theta_m)\bigr\rangle=\frac{1}{m!}\bigl\langle f_0\otimes\mathrm{d}f_1\otimes\cdots\otimes\mathrm{d}f_m\bigr\rangle_{S^1}
+$$
+
+$$
+\omega^{-1}=\sum_i\frac{\partial}{\partial x^i}\wedge\frac{\partial}{\partial p_i},\qquad \Delta=L_{\omega^{-1}}=\sum_i\Bigl(\frac{\partial}{\partial x^i}\iota_{\partial_{p_i}}-\frac{\partial}{\partial p_i}\iota_{\partial_{x^i}}\Bigr),\qquad \Delta^2=0
+$$
+
+$$
+\rho^\hbar\bigl(b(f_0\otimes\cdots\otimes f_m)\bigr)=\mathrm{i}\hbar\Delta\bigl(\rho^\hbar(f_0\otimes\cdots\otimes f_m)\bigr)
+$$
+
+## 定理与证明
+
+### 量子 HKR 映射是链映射
+
+设 $\rho^\hbar$ 由定义 2.8.18 给出，$b$ 为霍赫希尔德边界，$\Delta$ 为缩并算子，则对任意 $f_0,\dots,f_m$ 有 $\rho^\hbar(b(f_0\otimes\cdots\otimes f_m))=\mathrm{i}\hbar\Delta(\rho^\hbar(f_0\otimes\cdots\otimes f_m))$；故 $\rho^\hbar$ 是 $(C_\bullet(A^\hbar),b)\to(\Omega^\bullet_{A[\hbar]},\mathrm{i}\hbar\Delta)$ 的链映射。
+
+**完整证明**
+
+1. 把 $\rho^\hbar(b(-))$ 看成对 $(m+1)$ 个循环序积分的交错和：$b$ 的每一项把相邻两槽乘起来，对应的正是对某一槽的积分变量求导。
+   - *为什么*：只有先认出「边界作用 = 对某一积分变量求偏导」，才能用微积分基本定理把两边接上。
+2. 把每个单项的积分写成全导数 $\partial_{\theta_k}$ 的积分；由循环序区域的边界结构，全导数项的积分化为边界项，即相邻两槽重合时的取值（$\theta_k\to\theta_{k-1}^-$ 与 $\theta_k\to\theta_{k+1}^+$）。
+   - *为什么*：循环序区域 $\mathrm{Cyc}_{m+1}$ 的边界恰好是「两槽相撞」，求全导数后只剩这些碰撞点，积分降一维。
+3. 在两槽相撞的极限里，两个算子的乘积按定义收敛为量子化乘积：$\langle\cdots O_fO_g\cdots\rangle\to\langle\cdots O_{f*g}\cdots\rangle$（一侧取 $-\hbar$ 的相位，另一侧取 $+\hbar$）；于是边界项重组成 $\rho^\hbar$ 作用在 $b$ 的像上。
+   - *为什么*：这是全证明中量子化唯一真正入场的地方：经典证明里相撞只是普通乘法，这里换成了 Moyal 乘积。
+4. 另一方面直接对 $\theta_k$ 显式求导：被积函数里只有相邻的 $G(\theta_k,\theta_{k\pm1})$ 依赖 $\theta_k$，用 $\partial_{\theta_k}G(\theta_k,\theta_j)=-1$（$j\ne k$）先给出一项 $\partial_{x^k}\partial_{p_k}$ 型的贡献；把这些贡献按槽求和正是 $\mathrm{i}\hbar\Delta(\rho^\hbar(-))$。
+   - *为什么*：$G$ 的导数在循环序上取常数 $-1$，所以这项显式计算是干净的、不含额外的 $\theta$ 依赖。
+5. 比较两条路线得到的同一积分，即得 $\rho^\hbar\circ b=\mathrm{i}\hbar\Delta\circ\rho^\hbar$；由 $(C_\bullet,b)$ 与 $\Delta^2=0$ 的复形结构，$\rho^\hbar$ 是链映射。
+   - *为什么*：两条路线算的是同一个积分，比较即得；链映射性又保证它诱导同调间的映射。
+
+来源：ch02c.tex:1218-1343（原书 p.158–159）
+
+### $\Delta$ 是微分（$\Delta^2=0$）
+
+对 $\Delta=L_{\omega^{-1}}$，$\omega^{-1}=\sum_i\partial/\partial x^i\wedge\partial/\partial p_i$，有 $\Delta^2=0$。
+
+**完整证明**
+
+1. 把 $\Delta$ 看成「先对一个坐标求偏导、再与对偶向量缩并」的两类操作之和；$\Delta^2$ 于是分成三块：两个 $\partial_x\iota_{p}$ 型算子之间、两个 $\partial_p\iota_{x}$ 型算子之间、以及混合项。
+   - *为什么*：平方为零的验证必须逐块看，漏掉混合项会以为它只是平凡地抵消。
+2. 同类之间：$\partial_{x^i}$ 与 $\partial_{x^j}$ 交换、$\iota_{\partial_{p_i}}$ 与 $\iota_{\partial_{p_j}}$ 反交换，缩并对的对称性使这两块为零；混合项里 $\partial_x\partial_p=\partial_p\partial_x$，而 $\iota_p\iota_x=-\iota_x\iota_p$，两个混合项符号相反。
+   - *为什么*：这正是「反对称双向量」的定义所在：双向量 $\omega^{-1}$ 的反对称性把缩并算子平方压成零。
+3. 于是所有块相消，$\Delta^2=0$；乘以常数 $\mathrm{i}\hbar$ 不改变此结论。
+   - *为什么*：常数不影响平方为零，故 $\mathrm{d}=\mathrm{i}\hbar\Delta$ 也是微分，$\Delta$-复形有意义。
+
+来源：ch02c.tex:1300-1343（原书 p.159）
+
+### 定义 2.8.18 与圆上关联的换算
+
+$\rho^\hbar(f_0\otimes\cdots\otimes f_m)=\dfrac{1}{m!}\langle f_0\otimes\mathrm{d}f_1\otimes\cdots\otimes\mathrm{d}f_m\rangle_{S^1}$。
+
+**完整证明**
+
+1. 由定义 2.8.12，圆上关联把循环序积分乘了 $m!$：$\langle g_0\otimes\cdots\otimes g_m\rangle_{S^1}=m!\int_{\mathrm{Cyc}_{m+1}}\langle g_0(\theta_0)\cdots g_m(\theta_m)\rangle$。
+   - *为什么*：这是定义 2.8.12 里已经固定的归一化，换算时不能丢这个 $m!$。
+2. 取 $g_0=f_0$、$g_r=\mathrm{d}f_r$（$r\ge1$），把上式的 $m!$ 除过来即得 $\int_{\mathrm{Cyc}}=\frac{1}{m!}\langle\cdots\rangle_{S^1}$，与定义 2.8.18 右端一致。
+   - *为什么*：循环序区域的体积是 $1/m!$，它与定义 2.8.12 的 $m!$ 恰好互逆，这就是两个公式能对齐、且 $\hbar\to0$ 极限给 $f_0\cdots f_m$ 的原因。
+
+来源：ch02c.tex:1188-1216（原书 p.158）
+
+## 易错点
+
+- 定义 2.8.18 的被积函数是量子化的 $\mathrm{d}f_r$（即 $O_{\mathrm{d}f_r}$），不是普通的 $\mathrm{d}f_r$；漏掉这层量子化，右边就只是经典微分形式。
+- 链映射条件里的 $\mathrm{i}\hbar$ 不能省：即使把微分取成 $\Delta$，$\rho^\hbar\circ b=\mathrm{i}\hbar\Delta\circ\rho^\hbar$ 的常数也把左边的组合学与右边的微积分配平。
+- $\Delta^2=0$ 用的是双向量 $\omega^{-1}$ 的反对称性，与 $G$ 的具体表达式无关；但构造 $\rho^\hbar$ 时 $\partial_{\theta_k}G=-1$ 只在循环序上成立，换积分区域要重算。
+- 原书 1344 行 tutornote 指出 $\rho^\hbar$ 有一处被误印成 $\sigma^\hbar$；引用公式时应按上下文取 $\rho^\hbar$。
+
+## 相关卡
+
+- [霍赫希尔德同调](../concepts/hochschild-homology.md)
+- [外尔量子化与 Moyal 乘积](../concepts/weyl-quantization-moyal.md)
+- [$S^1$ 上的传播子与关联函数](../concepts/s1-correlators.md)
+
+## 出处
+
+- §2.8.6 量子 HKR 与量子化乘法，p.157–160（PDF p.158–161），源码 `ch02c.tex:1152-1374`
