@@ -1,0 +1,83 @@
+# 斯通–冯·诺依曼定理
+
+> `geoq/concept/stone-von-neumann` · 轨道 C · 海森堡群与表示 · 状态 draft
+
+> **先自测**：为什么「不可约」加上「固定 $\hbar$」这两条，就能把海森堡群的酉表示钉死成一个模型？
+
+## 一句话
+
+固定中心特征 $\rho(e^{\lambda K})=e^{\frac{i\lambda}{\hbar}}$ 后，海森堡群的不可约酉表示在酉等价意义下唯一，就是 $T_\hbar$；等价算子只在差一个模 $1$ 相位时唯一。
+
+## 定义
+
+设 $\rho$ 是 $H_n$ 在复希尔伯特空间 $\mathbb{H}$ 上的酉表示，即群同态 $\rho:H_n\to U(\mathbb{H})$，并设它不可约：$\mathbb{H}$ 中没有既闭又在 $\rho(H_n)$ 下不变的子空间，除 $\{0\}$ 与 $\mathbb{H}$ 本身。再设中心特征固定为 $\rho(e^{K})=e^{\frac{i}{\hbar}}\mathbf{1}$，等价地 $\rho(e^{\lambda K})=e^{\frac{i\lambda}{\hbar}}\mathbf{1}$。斯通–冯·诺依曼定理（Stone–von Neumann theorem）断言：这样的 $\rho$ 必酉等价于薛定谔表示，即存在酉算子 $U:\mathbb{H}\to L^2(\mathbb{R}^n)$ 使 $U\rho U^{-1}=T_\hbar$；并且这样的 $U$ 只到相位：若 $U'$ 也满足，则 $U'=\xi U$，$|\xi|=1$。
+
+**记号约定**：$U(\mathbb{H})$ 是 $\mathbb{H}$ 的酉群；$\rho(e^{K})=e^{\frac{i}{\hbar}}$ 意指该算子等于 $e^{\frac{i}{\hbar}}$ 乘单位算子；$\hbar>0$ 固定，换 $\hbar$ 就得到另一族表示。
+
+## 要点
+
+- 定理有两条假设：不可约 + 中心特征固定。去掉任一条结论都不成立：$T_\hbar\oplus T_\hbar$ 的中心特征一样但可约；$\hbar'\neq\hbar$ 的中心相位不同，两族表示彼此不等价。
+- 结论是酉等价而不是相等：$\rho$ 可以看起来完全不像 $T_\hbar$（例如巴格曼–福克表示），只要存在一个酉交织算子就够。
+- 唯一性只到相位：两个等价算子相差模 $1$ 常数，因为能与不可约表示 $T_\hbar$ 交换的有界算子只有纯量（舒尔引理，Schur's lemma）。
+- 这条定理把「正则对易关系的实现」归约成一个模型：任何满足 $[\hat x^i,\hat p_j]=i\hbar\delta^i_j$ 的不可约实现都与位置表象酉等价，这是量子力学里「表象自由」的群论根据。
+- 书中把证明转引到定理 4.4.1，本节只把它当黑箱使用；真正构造性的内容是下一节 Segal–Bargmann 变换给出的具体 $U$。
+
+## 关键公式
+
+$$
+$U\rho U^{-1}=T_\hbar,\qquad U:\mathbb{H}\longrightarrow L^2(\mathbb{R}^n)$
+$$
+
+$$
+$\rho(e^{\lambda K})=e^{\frac{i\lambda}{\hbar}}\mathbf{1}\qquad(\lambda\in\mathbb{R})$
+$$
+
+$$
+$\operatorname{Hom}_{H_n}\!\left(\mathbb{H},L^2(\mathbb{R}^n)\right)=\mathbb{C}\,U$
+$$
+
+$$
+$U'=\xi U,\qquad |\xi|=1$
+$$
+
+$$
+$\hbar'\neq\hbar\ \Longrightarrow\ T_{\hbar'}\not\cong T_\hbar$
+$$
+
+## 定理与证明
+
+### 定理 5.3.3（斯通–冯·诺依曼）
+
+任取 $H_n$ 在希尔伯特空间 $\mathbb H$ 上的不可约酉表示 $\rho$，并设中心元作用为 $\rho(e^{K})=e^{\frac{i}{\hbar}}$。此时必存在酉算子 $U:\mathbb H\to L^2(\mathbb R^n)$，把 $\rho$ 共轭成标准模型 $T_\hbar$：$U\rho U^{-1}=T_\hbar$；这样的 $U$ 只差一个模长 1 的相位。
+
+**证明提纲**
+
+1. 把存在性化归为交织算子：记 $\operatorname{Hom}_{H_n}(L^2(\mathbb{R}^n),\mathbb{H})$ 为满足 $AT_\hbar(g)=\rho(g)A$ 的有界算子构成的空间。若 $A\neq0$，由 $T_\hbar$ 不可约知 $\ker A$ 是闭不变子空间，只能为 $\{0\}$，故 $A$ 单射；由 $\rho$ 不可约知 $\overline{\operatorname{im}A}=\mathbb{H}$。对 $A$ 取极分解 $A=U|A|$，其中 $U$ 为酉算子。
+   - *为什么*：不可约表示之间的非零交织算子必为同构，这是舒尔引理的直接推论；这一步把「找 $U$」换成「找一个非零交织算子」。
+2. 唯一性：若 $U_1,U_2$ 都实现等价，则 $U_2U_1^{-1}$ 与 $T_\hbar$ 交换。由 $T_\hbar$ 不可约与舒尔引理，$U_2U_1^{-1}=\xi\mathbf{1}$，酉性给出 $|\xi|=1$。
+   - *为什么*：与不可约表示交换的有界算子必为纯量；相位自由度正来自这个一维交换子空间，所以不能把结论说成「$U$ 唯一」。
+3. 存在性的关键一步——构造非零交织算子，从而把任意满足中心特征的 $\rho$ 与 $T_\hbar$ 对上——书中写作「证明见定理 4.4.1」，即外尔关系（Weyl relations）版本的斯通–冯·诺依曼定理，本节没有复述。
+   - *为什么*：没有这一步，前面的舒尔引理只能说明「若有等价则唯一」，并不能保证等价存在；这正是本卡把证明标为 sketch 的原因。
+
+> **缺口**：缺口在存在性：需要定理 4.4.1（外尔关系版本的斯通–冯·诺依曼定理）的完整论证，书中只给了一句引用，本节未展开。本卡把「不可约 ⇒ 等价唯一到相位」这一段写全，构造 $U$ 的一段留作引用。
+
+
+来源：ch05b.tex:206-214（原书 p.275）
+
+## 易错点
+
+- 「不可约」不能省：$T_\hbar\oplus T_\hbar$ 与 $T_\hbar$ 的中心特征相同，但可约且不与 $T_\hbar$ 酉等价。
+- 中心特征不能省，也不能「近似相等」：$K$ 在表示里可以取任意 $i/\hbar'$；若 $\hbar'\neq\hbar$，任何交织算子都得把 $e^{\frac{i\lambda}{\hbar'}}$ 送到 $e^{\frac{i\lambda}{\hbar}}$，对一切 $\lambda$ 都不可能。
+- 唯一性只到相位，不要写成「$U$ 唯一」：$e^{i\theta}U$ 同样合格，这是量子力学中整体相位无意义的群论版本。
+- 有限维空间上不存在满足 $[\hat x,\hat p]=i\hbar$ 的不可约表示：取迹得 $0=i\hbar\dim\mathbb{H}$，矛盾。套定理前先确认 $\mathbb{H}$ 是无限维的。
+
+## 相关卡
+
+- [薛定谔表示 $T_\hbar$](../concepts/schrodinger-representation.md)
+- [Segal–Bargmann 空间](../concepts/segal-bargmann-space.md)
+- [海森堡群 $H_V$ 与中心扩张](../concepts/heisenberg-group.md)
+- [海森堡李代数 $h_V$](../concepts/heisenberg-lie-algebra.md)
+
+## 出处
+
+- §5.3.3 定理 5.3.3（斯通–冯·诺依曼），p.275（PDF p.276），源码 `ch05b.tex:204-214`

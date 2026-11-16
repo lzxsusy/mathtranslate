@@ -1,0 +1,59 @@
+# 余切丛总可量子化
+
+> `geoq/example/cotangent-bundle-quantizable` · 轨道 D · 几何量子化机器 · 状态 draft
+
+> **这张卡练什么**：为什么余切丛上的标准辛形式总满足预量子化条件，而球面上的面积形式却不行？
+
+## 一句话
+
+余切丛上的刘维尔形式给出恰当的辛形式，陈类自动为零，因此任意余切丛都可预量子化，线丛取平凡丛即可。
+
+## 设定
+
+设 $X$ 是 $n$ 维光滑流形，$M=T^*X$ 为其余切丛，$\pi:M\to X$ 是投影。$M$ 上有刘维尔形式（Liouville form）$\theta$，在局部坐标 $(x^1,\dots,x^n,p_1,\dots,p_n)$ 下写作 $\theta=\sum_i p_i\,dx^i$，标准辛形式为 $\omega=d\theta=\sum_i dp_i\wedge dx^i$。问题是：$(M,\omega)$ 是否可预量子化？
+
+## 计算
+
+**第 1 步**：先看 $\omega$ 恰当带来的后果。取 $M$ 中任意无边闭曲面 $\Sigma$，有 $\int_\Sigma\omega=\int_\Sigma d\theta=\int_{\partial\Sigma}\theta=0$。
+
+> 为什么：斯托克斯定理把闭链上的积分化为边界积分，$\Sigma$ 无边界时右端为零。
+
+**第 2 步**：于是上同调类 $[\omega]=[d\theta]=0$。按可量子化判据 $c_1=\frac{1}{2\pi\hbar}[\omega]$，陈类必为零，这个条件在此自动满足，故预量子化线丛可以取平凡丛 $L=M\times\mathbb{C}$。
+
+> 为什么：判据只要求 $[\omega]$ 落在 $2\pi\hbar H^2(M;\mathbb{Z})$ 中，零元素当然在其中。
+
+**第 3 步**：在平凡丛上取联络 $\nabla=d-\frac{i}{\hbar}\theta$，即联络 1-形式 $A=-\frac{i}{\hbar}\theta$。其曲率为 $F_\nabla=dA=-\frac{i}{\hbar}d\theta=-\frac{i}{\hbar}\omega$。
+
+> 为什么：平凡丛上任意 1-形式都可充当联络，曲率就是它的外微分。
+
+**第 4 步**：这正是预量子化联络要求的 $F_\nabla=-\frac{i}{\hbar}\omega$，配上有 Hermitian 度量 $\langle f,g\rangle=\bar f g$ 的平凡丛，$(L,\nabla,\langle\cdot,\cdot\rangle)$ 就是 $(M,\omega)$ 的一个预量子化线丛。
+
+> 为什么：预量子化条件只有曲率与辛形式成比例这一条，比例常数固定为 $-i/\hbar$。
+
+## 结果
+
+任意余切丛 $T^*X$ 都可预量子化：取平凡线丛与联络 $\nabla=d-\frac{i}{\hbar}\theta$ 即可，与 $X$ 的拓扑无关。
+
+## 复核
+
+(i) 代回：$d\left(-\frac{i}{\hbar}\sum_i p_i\,dx^i\right)=-\frac{i}{\hbar}\sum_i dp_i\wedge dx^i=-\frac{i}{\hbar}\omega$。(ii) 特例 $X=\mathbb{R}^n$：$\theta=\sum_i p_i\,dx^i$ 就是模仿模型的刘维尔形式，与位置表象的例子一致。(iii) 对照失败案例：$S^2$ 上用球坐标写出的面积形式满足 $\int_{S^2}\omega=4\pi A\ne0$，它不是恰当形式，上面的论证在那里失效。
+
+## 易错点
+
+- 「$T^*X$ 可缩」不是正确的理由：余切丛只形变收缩到 $X$，当 $X=S^2$ 时 $H^2(T^*X)\cong H^2(S^2)=\mathbb{R}$ 并不为零。结论成立靠的是 $\omega$ 恰当，而不是底空间上同调消失。
+- 恰当不等于零：$d\theta$ 作为 2-形式处处非退化，$\theta$ 也真的依赖动量。把「上同调类为零」误读成「形式为零」，后面的计算会全部失去意义。
+- 平凡丛上的联络不唯一，选 $\nabla=d-\frac{i}{\hbar}\theta$ 是因为曲率恰好等于 $-\frac{i}{\hbar}\omega$；换成 $\sum_i x^i dp_i$ 之类会得到别的曲率，差一个闭形式，预量子化条件不成立。
+
+## 用到哪些概念
+
+- [预量子化线丛](../concepts/prequantization.md)
+- [可量子化条件（陈类整性）](../concepts/quantization-condition.md)
+
+## 相关卡
+
+- [$\mathbb{R}^{2n}$ 的实极化与位置波函数](../examples/real-polarization-r2n.md)
+- [余切丛的典范辛结构与刘维尔形式](../concepts/cotangent-bundle.md)
+
+## 出处
+
+- §5.4.3 例 5.4.4，p.287（PDF p.288），源码 `ch05b.tex:981-995`

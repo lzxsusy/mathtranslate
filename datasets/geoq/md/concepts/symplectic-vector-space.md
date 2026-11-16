@@ -1,0 +1,99 @@
+# 辛向量空间与辛基
+
+> `geoq/concept/symplectic-vector-space` · 轨道 A · 相空间的辛几何 · 状态 draft
+
+> **先自测**：为什么辛向量空间的维数必然是偶数，而辛基又为什么能把 $\omega$ 化成常值矩阵？
+
+## 一句话
+
+实向量空间配一个非退化斜对称双线性形式；非退化即零空间平凡，此时维数必为偶数，且总能取到把形式化为标准矩阵的辛基。
+
+## 定义
+
+设 $V$ 是有限维实向量空间，$\omega:V\times V\to\mathbb R$ 双线性且斜对称。把所有与 $V$ 中向量都 $\omega$-正交的向量收集起来，记作 $N$，称为 $\omega$ 的零空间。若 $N$ 只含零向量，则 $\omega$ 非退化，也称辛配对；此时 $(V,\omega)$ 叫辛向量空间。等价判据是：任取基 $c_1,\dots,c_m$，矩阵 $(\omega(c_i,c_j))$ 的行列式不为零。
+
+**记号约定**：$V$ 恒指有限维实向量空间；$e_i$ 与 $f_i$ 分别是辛基里的「位置」方向与「动量」方向；$\omega_n=\begin{pmatrix}0&I_n\\-I_n&0\end{pmatrix}$ 是标准矩阵，矩阵元约定为 $\omega_{ij}=\omega(c_i,c_j)$，与内积矩阵的写法相差一个转置，不要混用。
+
+## 要点
+
+- 非退化有三种等价说法：零空间平凡、$\tilde\omega:v\mapsto\omega(v,-)$ 是同构、矩阵 $(\omega_{ij})$ 可逆；做题时任选最方便的一条。
+- 斜对称矩阵在奇数阶必奇异（$\det M=\det M^T=\det(-M)=(-1)^m\det M$），所以非退化立刻逼出 $\dim V$ 为偶数，这是命题 5.1.2 的一半内容。
+- 辛基把 $\omega$ 化成常值矩阵 $\omega_n$，于是同维的辛空间全都辛同构：$(V,\omega)\cong(\mathbb{R}^{2n},\omega_n)$，维数是唯一的不变量。
+- 辛形式没有度量含义：$\omega(u,u)=0$ 对一切 $u$ 成立，所以「长度」「夹角」必须另行引入相容复结构（$g_J=\omega(-,J-)$）。
+- 辛基不唯一；把一组辛基送到另一组辛基的过渡矩阵恰好是辛矩阵，这给出 $\operatorname{Sp}(2n)$ 在辛基集合上的可迁作用。
+
+## 关键公式
+
+$$
+$\omega(u,v)=-\omega(v,u),\qquad N=\{u\in V\mid\omega(u,v)=0,\ \forall v\in V\}$
+$$
+
+$$
+$\omega\ \text{非退化}\iff N=\{0\}\iff\det(\omega_{ij})\neq0$
+$$
+
+$$
+$\omega(e_i,e_j)=\omega(f_i,f_j)=0,\qquad \omega(e_i,f_j)=\delta_{ij}=-\omega(f_j,e_i)$
+$$
+
+$$
+$\omega_n=\begin{pmatrix}0&I_n\\-I_n&0\end{pmatrix},\qquad \dim V=2n$
+$$
+
+$$
+$\tilde\omega:V\longrightarrow V^*,\quad v\longmapsto\omega(v,-)\quad\text{是同构}$
+$$
+
+## 定理与证明
+
+### 命题 5.1.2（辛基的存在性）
+
+设 $\omega$ 是实向量空间 $V$ 上的辛配对。则存在 $V$ 的一组基 $\{e_1,\dots,e_n,f_1,\dots,f_n\}$，使得 $\omega(e_i,e_j)=\omega(f_i,f_j)=0$ 且 $\omega(e_i,f_j)=\delta_{ij}$ 对一切 $i,j$ 成立。特别地 $\dim V=2n$ 为偶数。
+
+**完整证明**
+
+1. 取 $e_1\neq0$。线性泛函 $\omega(e_1,-)$ 不恒为零（否则 $e_1$ 落在零空间里），故存在 $v$ 使 $\omega(e_1,v)\neq0$；把 $v$ 换成 $v/\omega(e_1,v)$ 得 $f_1$，使 $\omega(e_1,f_1)=1$。
+   - *为什么*：非退化就是「任何非零向量都配得上伙伴」，这一步给出第一对标准基向量。
+2. 令 $W=\operatorname{span}\{e_1,f_1\}$，$W^{\perp}=\{u\mid\omega(u,w)=0,\ \forall w\in W\}$。则 $W\cap W^{\perp}=0$：若 $u=ae_1+bf_1$ 且 $u\in W^{\perp}$，由 $0=\omega(u,f_1)=a$、$0=\omega(u,e_1)=-b$ 得 $u=0$。又 $v\mapsto\omega(v,-)|_W$ 是 $V\to W^*$ 的满射（限制映射 $V^*\to W^*$ 满），其核为 $W^{\perp}$，故 $\dim W^{\perp}=\dim V-2$。于是 $V=W\oplus W^{\perp}$。
+   - *为什么*：先把大空间拆成已配好对的二维块与它的 $\omega$-正交补；满射性保证维数账目对得上。
+3. $\omega$ 限制在 $W^{\perp}$ 上仍非退化：若 $u\in W^{\perp}$ 且 $\omega(u,W^{\perp})=0$，则 $\omega(u,W)=0$ 且 $\omega(u,W^{\perp})=0$，即 $\omega(u,V)=0$，故 $u=0$。
+   - *为什么*：直和 $V=W\oplus W^{\perp}$ 说明「与两块都正交」等于「与全空间正交」，于是归纳可以继续往下走。
+4. 对 $W^{\perp}$ 重复步骤 1–3 得 $e_2,f_2,\dots,e_n,f_n$。新向量与前面的向量两两 $\omega$-正交、且配对取值恰为 $\delta_{ij}$，合起来就是所求辛基；每步维数减 $2$，故 $\dim V=2n$。
+   - *为什么*：归纳在零空间处终止，因此维数只能按 $2$ 递减，偶数性是自动结论而不是额外假设。
+
+来源：ch05a.tex:40-50（原书 p.250）
+
+### 标准形与维数唯一性
+
+在辛基下 $\omega$ 的矩阵恰为 $\omega_n$；因此任意两个维数相同的辛向量空间之间存在保形式的线性同构，即 $(V,\omega)\cong(\mathbb{R}^{2n},\omega_n)$。
+
+**完整证明**
+
+1. 按基下矩阵的定义 $\omega_{ij}=\omega(c_i,c_j)$ 逐块读出：$e$–$e$ 块与 $f$–$f$ 块为零，$e$–$f$ 块为 $I_n$，$f$–$e$ 块为 $-I_n$，故矩阵为 $\omega_n$。
+   - *为什么*：矩阵元就是形式在基向量对上的取值，辛基的定义逐条对应到分块。
+2. 设 $(V,\omega)$ 与 $(V',\omega')$ 都是 $2n$ 维，各取一组辛基，令线性映射 $\phi$ 把第 $i$ 个基向量送到第 $i$ 个基向量。$\phi$ 把基送到基，故是同构。
+   - *为什么*：维数相同才能让两组 $2n$ 个基向量一一对应。
+3. 写 $u=\sum a_i c_i$、$v=\sum b_j c_j$，则 $\omega(u,v)=a^T\omega_n b$；同样 $\omega'(\phi u,\phi v)=a^T\omega_n b$。两者相等，故 $\phi$ 保形式。
+   - *为什么*：双线性形式由它在基向量对上的取值唯一决定，矩阵相同就意味着形式相同。
+
+来源：ch05a.tex:53-58（原书 p.251）
+
+## 易错点
+
+- 「斜对称」不等于「非退化」：零形式是斜对称的，但零空间是整个 $V$。必须先验证 $N=\{0\}$（或 $\det(\omega_{ij})\neq0$）才能称辛空间。
+- $\omega(u,u)=0$ 恒成立，不能由此推出 $u=0$，也不能用 $\omega$ 定义长度；正定内积要等相容复结构 $J$ 出场后由 $g_J=\omega(-,J-)$ 提供。
+- 辛基的矩阵写成 $\begin{pmatrix}0&I_n\\-I_n&0\end{pmatrix}$，不是 $\begin{pmatrix}0&I_n\\I_n&0\end{pmatrix}$：后者不对称，不可能等于任何斜对称形式的矩阵；写 $\omega(f_j,e_i)=-\delta_{ij}$ 时也别丢负号。
+
+## 相关卡
+
+- [辛群 $\operatorname{Sp}(V)$](../concepts/symplectic-group.md)
+- [相容复结构与可缩性](../concepts/compatible-complex-structure.md)
+- [拉格朗日子空间与格拉斯曼流形](../concepts/lagrangian-grassmannian.md)
+- [$n=1$ 时 $\operatorname{Sp}(2)=\operatorname{SL}(2)$](../examples/sp2-equals-sl2.md)
+- [标准辛基下的相容复结构](../examples/standard-compatible-complex-structure.md)
+- [标准辛基给出的两张拉格朗日子空间](../examples/standard-lagrangian-subspaces.md)
+
+## 出处
+
+- §5.1.1 辛向量空间（定义 5.1.1、命题 5.1.2），p.250（PDF p.251），源码 `ch05a.tex:20-50`
+- §5.1.1 标准辛形式与偶数维，p.251（PDF p.252），源码 `ch05a.tex:51-58`

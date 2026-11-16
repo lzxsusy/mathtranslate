@@ -16,7 +16,7 @@
 
 设计依据见 [math/README.md](math/README.md)（北大 AI4Math 的命题级检索、层级展开、形式化反馈三条经验）。
 
-## 1. 八类数据
+## 1. 九类数据
 
 | 目录 | 内容 | 一条记录 = 什么 | 单条上限 |
 |---|---|---|---|
@@ -28,6 +28,7 @@
 | `kg/` | 概念/定理/证明/人物/文献节点与带证据的边 | 一个节点或一条边 | 正文 500 字 |
 | `bench/` | 带评分细则的 held-out 评测题 | 一道题 | 题目 800 字 |
 | `encyclopedia/` | 按概念词条组织的自足数学单元：定义+定理+完整证明+可算例子+物理联系+坑 | 一个可独立阅读的词条（JSON） | 正文 20,000 字 |
+| `geoq/` | 单章资料卡：概念卡 + 例子卡 + 框架地图 + 使用说明 + 生产工作流 | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
 
 `bench/` 与训练集严格隔离：出题时不得使用 `parallel/`、`deepread/` 中已出现的同一段落。
 
@@ -36,7 +37,7 @@
 - `rights: "self"` — 自产（导读、术语裁决、精读卡、图谱边、评测题、中文证明与结构化）。可 CC BY 4.0，可商用训练。数学事实本身不受版权保护；`math/` 记录的版权只涉及其中的中文表述与结构。
 - `rights: "arxiv:<id>"` — 原文来自 arXiv。**逐篇**核对 arXiv 许可（`https://arxiv.org/abs/<id>` 页脚）；只有 CC BY / CC0 的原文片段可随数据集公开，其余只存 `src_ref` 链接与不超过 300 字的引用。
 - `rights: "book"` — 在版图书（含扫描件、出版社 PDF）。**只进 `_internal/`，不发布、不进公开数据集、不随权重发布**；片段引用 ≤ 200 字，且只用于本机训练与人工研读。
-- `rights: "rewritten"` — `encyclopedia/` 的词条：用自己的话重写的事实与结构，不复制原书表达与图；可 CC BY 4.0。单处引文 ≤ 60 字并注出处，累计不超过词条 10%。
+- `rights: "rewritten"` — `encyclopedia/` 的词条与 `geoq/` 的资料卡：用自己的话重写的事实与结构，不复制原书表达与图；可 CC BY 4.0。单处引文 ≤ 60 字并注出处，累计不超过单条 10%。
 
 发布前用 `tools/ds_publish.py --check` 过滤：`rights: "book"` 与未确认许可的 `arxiv:*` 记录一律不出现在公开目录。
 
@@ -47,6 +48,7 @@ datasets/
 ├── README.md                  # 本文件
 ├── schema/                    # 数据集的 JSON Schema
 ├── encyclopedia/              # 词条库（entries/<category>/<slug>.json + taxonomy.md）
+├── geoq/                      # 单章资料卡（cards/ + md/ + map.png/svg + workflow/ + tools/）
 ├── math/<pkg>.<split>.jsonl   # 数学推理条目（主力）
 ├── parallel/<pkg>.<split>.jsonl
 ├── deepread/<pkg>.<split>.jsonl
@@ -111,4 +113,5 @@ https://atomgit.com/lzxSUSUY/mathtranslate/blob/main/datasets/<...>.jsonl
 - `v0.2`（2026-11-16）：新增 `math/`（数学推理条目）与 `math.schema.json`，SY05-25 6 条；`parallel/` 降为术语样本；发布过滤器与门禁支持 `math/`。
 - `v0.6`（2026-11-16）：新增 `encyclopedia/`（按概念组织的词条库，17 条、74 定理、50 例）与 `tools/entry_lint.py`；`datasets/README.md` 升为八类。
 - `v0.7`（2026-11-16）：第一本书拆完——`encyclopedia/` 扩到 43 条、187 定理、130 例（128 complete / 59 sketch），覆盖拓扑、几何、数学物理、凝聚态、QFT。
+- `v0.8`（2026-11-16）：新增 `geoq/`——李思《量子力学与几何》第 5 章「几何量子化」的 48 张资料卡（1 总览 + 27 概念 + 20 例），附框架地图、读者版总表、渲染版 Markdown 与六路并行生产协议；`lint_geoq.py` / `audit_pages.py` 0 错。
 - 后续见 [CHANGELOG.md](../CHANGELOG.md)。

@@ -1,0 +1,100 @@
+# 密度、半密度与刘维尔测度
+
+> `geoq/concept/half-density` · 轨道 B · 几何半经典量子化 · 状态 draft
+
+> **先自测**：为什么 WKB 的振幅必须看成半密度而不是标量函数？半密度的哪条性质给出了沿哈密顿流的刘维尔型守恒律？
+
+## 一句话
+
+密度按雅可比行列式的绝对值变换，因此不依赖定向就能积分；把指数取成 1/2 得半密度，它的模方是测度，WKB 振幅与刘维尔型守恒律都写在它身上。
+
+## 定义
+
+流形 $M$ 上的密度线丛 $\mathrm{Dens}_M$，其截面在局部坐标 $\{x^i\}$ 下写作 $\rho(x)|d^nx|$（$\rho$ 光滑）；换到坐标 $\{y^i\}$ 时按 $\rho_x=\rho_y\left|\det\frac{\partial y}{\partial x}\right|$ 变换，也就是转移函数取雅可比行列式的绝对值。正因为这个绝对值，$\int_M\rho$ 才有意义且与坐标无关。把转移函数换成 $\left|\det\frac{\partial y}{\partial x}\right|^{\alpha}$（$\alpha>0$），就得到 $\alpha$-密度线丛 $\mathrm{Dens}_M^{\alpha}$，局部写作 $\rho|d^nx|^{\alpha}$；$\alpha=\frac12$ 时称半密度（half-density）。
+
+**记号约定**：$|d^nx|=|dx^1\wedge\cdots\wedge dx^n|$ 为 $\mathbb R^n$ 的典范体积密度；$\Gamma(M,\mathrm{Dens}_M)$ 记密度的光滑截面空间；$L$ 上的半密度记 $\Omega$，在可投影情形写 $\pi_*(\Omega)=a_0(\mathbf x)|d^n\mathbf x|^{1/2}$，其中 $\pi:L\to\mathbb R^n$ 是余切丛投影。
+
+## 要点
+
+- 要害在绝对值：$n$-形式按 $\det$ 变换，密度按 $|\det|$ 变换，所以不可定向流形上密度照样能积分，而 $n$-形式不能。
+- 指数可加：$\alpha$-密度乘 $\beta$-密度得 $(\alpha+\beta)$-密度。特别地 $\Omega_1\Omega_2$ 是密度，故 $\langle\Omega_1,\Omega_2\rangle=\int\Omega_1\overline{\Omega_2}$ 不需要额外挑体积形式或定向——这就是半密度适合承载量子态的原因。
+- $M$ 可定向时 $\mathrm{Dens}_M\simeq\Lambda^nT^*M$（注 5.2.1）；不可定向时二者不同构，但密度仍可积分。
+- WKB 的振幅不能当标量：要让 $e^{\frac{i}{\hbar}S}a_0$ 在换坐标后保持同一形式，$a_0$ 必须按半密度变换。
+- 齐次输运方程 $\nabla\cdot(a_0^2\nabla S)=0$ 就是 $\mathcal L_{V_{\mathcal H}}(\pi^*\Omega)=0$：半密度沿哈密顿流不变，这是概率守恒的几何说法。
+- 半密度的模方 $|\Omega|^2$ 是 $L$ 上的密度，充当测度；辛体积 $\omega^n/n!$ 限制在拉格朗日 $L$ 上恒为零（$TL$ 各向同性），所以 $L$ 上的测度只能由半密度提供。
+
+## 关键公式
+
+$$
+$\rho_x=\rho_y\left|\det\frac{\partial y}{\partial x}\right|$
+$$
+
+$$
+$\rho_x|d^nx|^{\alpha}=\rho_y|d^ny|^{\alpha}$
+$$
+
+$$
+$\Omega=a_0(\mathbf x)\,|d^n\mathbf x|^{1/2}$
+$$
+
+$$
+$\mathcal L_X\Omega=\left(X(a)+\frac12a\,\nabla\cdot X\right)|d^nx|^{1/2}$
+$$
+
+$$
+$\mathcal L_{V_{\mathcal H}|_L}\left(\pi^*\Omega\right)=0\iff\nabla\cdot\left(a_0^2\nabla S\right)=0$
+$$
+
+## 定理与证明
+
+### 命题（输运方程就是半密度的哈密顿不变性）
+
+设 $L=L_{dS}$ 恰当可投影，$\pi:L\to\mathbb R^n$ 为投影，$\Omega=a_0|d^nx|^{1/2}$ 是 $L$ 上的非零半密度，且 $V_{\mathcal H}$ 与 $L$ 相切。则 $\mathcal L_{V_{\mathcal H}|_L}(\pi^*\Omega)=0$ 当且仅当 $a_0\nabla^2S+2\nabla S\cdot\nabla a_0=0$。
+
+**完整证明**
+
+1. 在 $T^*\mathbb R^n$ 上写出显式哈密顿向量场 $V_{\mathcal H}=\sum_i\left(\partial_iV\,\partial_{p_i}-\frac1mp_i\,\partial_{x^i}\right)$，沿 $L$（此时 $p_i=\partial_iS$）投影到位形空间，得 $\pi_*(V_{\mathcal H}|_L)=-\frac1m\sum_i\partial_iS\,\partial_{x^i}=-\frac1m\nabla S$。
+   - *为什么*：只有投影后的向量场才在 $\mathbb R^n$ 上推动半密度；$\partial_{p_i}$ 方向的份量被 $\pi_*$ 直接杀掉。
+2. 对任意向量场 $X$ 与半密度 $\Omega=a|d^nx|^{1/2}$ 有 $\mathcal L_X\Omega=\left(X(a)+\frac12a\nabla\cdot X\right)|d^nx|^{1/2}$：把 $\Omega$ 看成 $\sqrt{a^2|d^nx|}$，对密度 $\rho=a^2$ 用 $\mathcal L_X(\rho|d^nx|)=\nabla\cdot(\rho X)|d^nx|$，再对 $t$ 求导开方即可。
+   - *为什么*：半密度是线丛截面而非张量场，直接套张量李导数会漏掉体积伸缩那一项；先用平方化成密度是最稳的路子。
+3. 取 $X=-\frac1m\nabla S$（非零常数倍不影响不变性），条件 $\mathcal L_X\Omega=0$ 化为 $X(a_0)+\frac12a_0\nabla\cdot X=0$；两边乘 $2a_0$ 得 $2a_0X(a_0)+a_0^2\nabla\cdot X=\nabla\cdot(a_0^2X)=0$。
+   - *为什么*：这一乘正好把两半合成全散度，于是「相位/振幅条件」被翻译成「密度守恒」。
+4. 展开 $\nabla\cdot(a_0^2\nabla S)=a_0\left(a_0\nabla^2S+2\nabla S\cdot\nabla a_0\right)$；因 $a_0\ne0$，全散度为零当且仅当齐次输运方程成立。
+   - *为什么*：这最后一步把几何表述与 WKB 的解析表述对齐，说明两种说法确实等价。
+
+来源：ch05a.tex:907-1004（原书 p.265–268）
+
+### 命题（可定向时密度与 $n$-形式同构，注 5.2.1）
+
+若 $M$ 可定向，则 $\mathrm{Dens}_M\simeq\Lambda^nT^*M$；若 $M$ 不可定向，则这两个线丛不同构。
+
+**完整证明**
+
+1. 取 $M$ 的一个定向后，可把坐标卡选成两两定向相容，于是坐标变换的雅可比行列式为正：$\det\frac{\partial y}{\partial x}>0$，从而 $\left|\det\frac{\partial y}{\partial x}\right|=\det\frac{\partial y}{\partial x}$。
+   - *为什么*：定向的唯一作用就是去掉绝对值；这一步说明可定向时两种转移函数在数值上相同。
+2. $n$-形式 $\rho\,dx^1\wedge\cdots\wedge dx^n$ 的转移函数是 $\det\frac{\partial y}{\partial x}$，与步骤 1 的密度转移函数一致；线丛由转移函数决定，故存在整体同构，局部配对为 $dx^1\wedge\cdots\wedge dx^n\leftrightarrow|d^nx|$。
+   - *为什么*：线丛的分类只依赖转移函数的上同调类，逐点配对能拼成整体同构。
+3. 若 $M$ 不可定向，则存在一条环路使坐标变换的雅可比行列式为负；沿它绕一圈，$n$-形式必须变号，因而不存在处处非零的整体 $n$-形式，而密度截面不会变号，两个丛不同构。
+   - *为什么*：这是拓扑阻碍而非局部计算：不可定向正是「$\Lambda^nT^*M$ 非平凡」的同义语。
+
+来源：ch05a.tex:971-977（原书 p.267）
+
+## 易错点
+
+- 半密度的指数是 $\frac12$ 不是 $2$：$\Omega=a_0|d^nx|^{1/2}$，$\Omega^2=a_0^2|d^nx|$ 才是密度。若把 $a_0^2|d^nx|$ 当半密度，后面 $\Omega^4$ 的指数会算成 $4$ 而不是 $2$，马斯洛夫相位就整体差一倍。
+- 转移函数别丢绝对值。写成 $\det$ 得到的是 $n$-形式，只在可定向流形上合法；不可定向时它连积分都不成立。
+- 半密度的李导数多一项 $\frac12\nabla\cdot X$：只算 $X(a)$ 等于把半密度当标量函数，漏掉体积伸缩的贡献，输运方程会退化成 $X(a_0)=0$。
+
+## 相关卡
+
+- [WKB 半经典解与哈密顿–雅可比方程](../concepts/wkb-approximation.md)
+- [几何半经典定态](../concepts/geometric-semiclassical-state.md)
+- [马斯洛夫修正与 EBK 条件](../concepts/maslov-correction.md)
+- [拉格朗日子流形、可投影与相函数](../concepts/lagrangian-submanifold.md)
+- [量子希尔伯特空间与半形式修正](../concepts/quantum-hilbert-space.md)
+- [一维谐振子的水平集与焦散](../examples/harmonic-oscillator-level-set.md)
+
+## 出处
+
+- §5.2.2 密度与半密度，p.266–267（PDF p.267–268），源码 `ch05a.tex:950-1021`
+- §5.2.2 注 5.2.1（密度与 $n$-形式），p.267（PDF p.268），源码 `ch05a.tex:971-977`

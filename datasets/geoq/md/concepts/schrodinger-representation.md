@@ -1,0 +1,86 @@
+# 薛定谔表示 $T_\hbar$
+
+> `geoq/concept/schrodinger-representation` · 轨道 C · 海森堡群与表示 · 状态 draft
+
+> **先自测**：$T_\hbar$ 的相位里为什么必须有 $-\frac12\mathbf r\cdot\mathbf s$ 这一项，$\hbar$ 又为什么只能待在分母上？
+
+## 一句话
+
+海森堡群在 $L^2(\mathbb{R}^n)$ 上的酉表示：先平移 $\mathbf x\mapsto\mathbf x-\mathbf s$，再乘相位 $e^{\frac{i}{\hbar}(\mathbf r\cdot\mathbf x-\frac12\mathbf r\cdot\mathbf s+\lambda)}$；$\hbar$ 只在相位里出现，标记中心作用 $K\mapsto\frac{i}{\hbar}$。
+
+## 定义
+
+在 $V=\mathbb R^{2n}$ 上固定标准辛基，并把 $\mathbb R^n$ 上复值 Schwartz 函数全体记作 $\mathcal S(\mathbb R^n)$。对每个 $(\mathbf r,\mathbf s,\lambda)\in\mathbb R^{2n+1}$，令 $(T_\hbar(\mathbf r,\mathbf s,\lambda)\psi)(\mathbf x)=e^{\frac{i}{\hbar}\left(\mathbf r\cdot\mathbf x-\frac12\mathbf r\cdot\mathbf s+\lambda\right)}\psi(\mathbf x-\mathbf s)$。这族算子来自李代数生成元 $e_i\mapsto\frac{i}{\hbar}x^i$、$f_i\mapsto-\frac{\partial}{\partial x^i}$、$K\mapsto\frac{i}{\hbar}$ 的指数映射；由于每个 $T_\hbar$ 保 $L^2$ 内积，它可唯一延拓成 $L^2(\mathbb R^n)$ 上的酉算子，且 $T_\hbar$ 给出群同态 $H_n\to U(L^2(\mathbb R^n))$。这就是参数为 $\hbar$ 的薛定谔表示。
+
+**记号约定**：$\mathbf r=(r_1,\dots,r_n)$ 是由 $e_i$ 方向给出的参数，$\mathbf s=(s_1,\dots,s_n)$ 是平移量，$\mathbf r\cdot\mathbf s=\sum_i r_is_i$；$x^i$ 是乘法算子，$p_i=-i\hbar\partial_{x^i}$；$U(\mathcal{H})$ 记希尔伯特空间 $\mathcal{H}$ 的酉群。
+
+## 要点
+
+- 结构是三块相乘：平移 $\psi(\mathbf x-\mathbf s)$、线性相位 $e^{\frac{i}{\hbar}\mathbf r\cdot\mathbf x}$、常数相位 $e^{\frac{i}{\hbar}(\lambda-\frac12\mathbf r\cdot\mathbf s)}$；最后一块专门补偿群律里的 $\frac12\omega$。
+- 复合律的修正项 $\frac12(\mathbf r_1\cdot\mathbf s_2-\mathbf r_2\cdot\mathbf s_1)$ 正是标准辛形式 $\omega=\sum_i\mathrm{d}r_i\wedge\mathrm{d}s_i$ 在 $(\mathbf r_1,\mathbf s_1),(\mathbf r_2,\mathbf s_2)$ 上的值，与海森堡群乘法逐字对应。
+- 酉性：相位的模恒为 $1$，平移不改变 $\int|\psi|^2$，故 $\|T_\hbar\psi\|_2=\|\psi\|_2$，表示可延拓到整个 $L^2(\mathbb{R}^n)$。
+- $\hbar$ 不是可随意改的归一化，而是中心特征：$K\mapsto\frac{i}{\hbar}$ 决定了一族互不等价的表示；$\hbar\to0$ 时中心作用发散，所以不能在这一族表示里直接取经典极限。
+- 共轭（$\operatorname{Ad}$）作用把量子算子整体平移：$\hat x^i\mapsto\hat x^i-s_i$、$\hat p_i\mapsto\hat p_i-r_i$，这是「位置表象里群作用就是平移加相位」的算子版本。
+- $T_\hbar$ 在 $L^2(\mathbb{R}^n)$ 上不可约：不变的闭子空间只有 $\{0\}$ 与全体（书在 §5.3.3 末断言，完整论证并入斯通–冯·诺依曼定理）。
+
+## 关键公式
+
+$$
+$(T_\hbar(\mathbf r,\mathbf s,\lambda)\psi)(\mathbf x)=e^{\frac{i}{\hbar}\left(\mathbf r\cdot\mathbf x-\frac12\mathbf r\cdot\mathbf s+\lambda\right)}\psi(\mathbf x-\mathbf s)$
+$$
+
+$$
+$T_\hbar(\mathbf r_1,\mathbf s_1,\lambda_1)\,T_\hbar(\mathbf r_2,\mathbf s_2,\lambda_2)=T_\hbar\!\left(\mathbf r_1+\mathbf r_2,\ \mathbf s_1+\mathbf s_2,\ \lambda_1+\lambda_2+\tfrac12(\mathbf r_1\cdot\mathbf s_2-\mathbf r_2\cdot\mathbf s_1)\right)$
+$$
+
+$$
+$e_i\mapsto\frac{i}{\hbar}x^i,\qquad f_i\mapsto-\frac{i}{\hbar}\hat p_i=-\frac{\partial}{\partial x^i},\qquad K\mapsto\frac{i}{\hbar}$
+$$
+
+$$
+$\operatorname{Ad}_{T_\hbar(\mathbf r,\mathbf s,\lambda)}(\hat x^i)=\hat x^i-s_i,\qquad \operatorname{Ad}_{T_\hbar(\mathbf r,\mathbf s,\lambda)}(\hat p_i)=\hat p_i-r_i$
+$$
+
+$$
+$T_\hbar:H_n\longrightarrow U\!\left(L^2(\mathbb{R}^n)\right)$
+$$
+
+## 定理与证明
+
+### 命题 5.3.2（薛定谔表示的复合法则）
+
+对任意 $(\mathbf r_k,\mathbf s_k,\lambda_k)\in\mathbb{R}^{2n+1}$（$k=1,2$）有 $T_\hbar(\mathbf r_1,\mathbf s_1,\lambda_1)T_\hbar(\mathbf r_2,\mathbf s_2,\lambda_2)=T_\hbar\left(\mathbf r_1+\mathbf r_2,\ \mathbf s_1+\mathbf s_2,\ \lambda_1+\lambda_2+\frac12(\mathbf r_1\cdot\mathbf s_2-\mathbf r_2\cdot\mathbf s_1)\right)$。因此 $T_\hbar$ 是 $H_n$ 的表示。
+
+**完整证明**
+
+1. 算内层：$(T_\hbar(\mathbf r_2,\mathbf s_2,\lambda_2)\psi)(\mathbf x)=e^{\frac{i}{\hbar}\left(\mathbf r_2\cdot\mathbf x-\frac12\mathbf r_2\cdot\mathbf s_2+\lambda_2\right)}\psi(\mathbf x-\mathbf s_2)$。
+   - *为什么*：直接套定义，把 $(\mathbf r_2,\mathbf s_2,\lambda_2)$ 代入相位与自变量即可。
+2. 再让 $T_\hbar(\mathbf r_1,\mathbf s_1,\lambda_1)$ 作用：自变量整体换成 $\mathbf x-\mathbf s_1$，得 $e^{\frac{i}{\hbar}\left(\mathbf r_1\cdot\mathbf x-\frac12\mathbf r_1\cdot\mathbf s_1+\lambda_1\right)}e^{\frac{i}{\hbar}\left(\mathbf r_2\cdot(\mathbf x-\mathbf s_1)-\frac12\mathbf r_2\cdot\mathbf s_2+\lambda_2\right)}\psi(\mathbf x-\mathbf s_1-\mathbf s_2)$。
+   - *为什么*：复合算子按「右先左后」作用；关键是把内层的 $\mathbf x$ 整体替换为 $\mathbf x-\mathbf s_1$，这一步是唯一容易漏掉 $\mathbf r_2\cdot\mathbf s_1$ 的地方。
+3. 合并相位：$\mathbf r_1\cdot\mathbf x+\mathbf r_2\cdot(\mathbf x-\mathbf s_1)=(\mathbf r_1+\mathbf r_2)\cdot\mathbf x-\mathbf r_2\cdot\mathbf s_1$，常数部分为 $-\frac12\mathbf r_1\cdot\mathbf s_1-\frac12\mathbf r_2\cdot\mathbf s_2+\lambda_1+\lambda_2$，平移量为 $\mathbf s_1+\mathbf s_2$。
+   - *为什么*：只用 $\mathbf r\cdot(\mathbf x-\mathbf s_1)=\mathbf r\cdot\mathbf x-\mathbf r\cdot\mathbf s_1$ 的线性性，不需要别的假设。
+4. 与目标式比较：目标的常数是 $-\frac12(\mathbf r_1+\mathbf r_2)\cdot(\mathbf s_1+\mathbf s_2)+\lambda_1+\lambda_2+\frac12(\mathbf r_1\cdot\mathbf s_2-\mathbf r_2\cdot\mathbf s_1)$。把它摊开，交叉项 $-\frac12\mathbf r_1\cdot\mathbf s_2$ 与 $+\frac12\mathbf r_1\cdot\mathbf s_2$ 相消，$-\frac12\mathbf r_2\cdot\mathbf s_1-\frac12\mathbf r_2\cdot\mathbf s_1=-\mathbf r_2\cdot\mathbf s_1$，结果恰为 $-\frac12\mathbf r_1\cdot\mathbf s_1-\mathbf r_2\cdot\mathbf s_1-\frac12\mathbf r_2\cdot\mathbf s_2+\lambda_1+\lambda_2$，与步骤 3 一致。
+   - *为什么*：这就是命题的全部内容：两个相位被写成同一个以 $(\mathbf r_1+\mathbf r_2,\mathbf s_1+\mathbf s_2)$ 为参数的相位，多出的常数正好被群律中的 $\frac12(\mathbf r_1\cdot\mathbf s_2-\mathbf r_2\cdot\mathbf s_1)$ 吸收。
+5. 因此 $T_\hbar(g_1g_2)=T_\hbar(g_1)T_\hbar(g_2)$，且 $T_\hbar(0,0,0)=\mathrm{id}$，故 $g\mapsto T_\hbar(g)$ 是 $H_n$ 的表示。
+   - *为什么*：同态的定义就是把群乘法送到算子乘法；步骤 4 正是把 $g_1g_2$ 的坐标代入 $T_\hbar$ 后与算子乘积逐项相等。
+
+来源：ch05b.tex:166-173（原书 p.274）
+
+## 易错点
+
+- 相位里的 $-\frac12\mathbf r\cdot\mathbf s$ 不能省：省掉后复合律会多出 $\frac12(\mathbf r_1\cdot\mathbf s_2+\mathbf r_2\cdot\mathbf s_1)$ 的偏差，$T_\hbar$ 只剩「投影表示」（多一个 2-上同调类）。
+- 平移方向与相位符号必须配套：$\psi(\mathbf x-\mathbf s)$ 配 $e^{+\frac{i}{\hbar}\mathbf r\cdot\mathbf x}$。若改用 $\psi(\mathbf x+\mathbf s)$ 而不改相位符号，复合律不成立——那样得到的是 $T_\hbar^{-1}$。
+- $\hbar$ 在相位的分母上：写成 $e^{i\hbar(\cdots)}$ 会让 $K\mapsto i\hbar$，与 $[\hat x^i,\hat p_j]=i\hbar\delta^i_j$ 的约定冲突，$\hbar\to0$ 时相位也不再快速震荡。
+- $T_\hbar$ 不是忠实表示：$T_\hbar(0,0,2\pi\hbar)=e^{2\pi i}\,\mathrm{id}=\mathrm{id}$，核含 $\{(0,0,2\pi\hbar k)\mid k\in\mathbb{Z}\}$；「群同态」不等于「单射」。
+
+## 相关卡
+
+- [海森堡群 $H_V$ 与中心扩张](../concepts/heisenberg-group.md)
+- [海森堡李代数 $h_V$](../concepts/heisenberg-lie-algebra.md)
+- [斯通–冯·诺依曼定理](../concepts/stone-von-neumann.md)
+- [Segal–Bargmann 空间](../concepts/segal-bargmann-space.md)
+
+## 出处
+
+- §5.3.3 薛定谔表示，p.273–275（PDF p.274–276），源码 `ch05b.tex:102-205`
+- §5.3.3 定义 5.3.1 与命题 5.3.2，p.274（PDF p.275），源码 `ch05b.tex:153-173`

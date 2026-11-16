@@ -1,0 +1,108 @@
+# 相容复结构与可缩性
+
+> `geoq/concept/compatible-complex-structure` · 轨道 A · 相空间的辛几何 · 状态 draft
+
+> **先自测**：为什么「保持 $\omega$」还不足以挑出一个复结构，必须再加正性条件 $\omega(u,Ju)>0$？
+
+## 一句话
+
+与辛形式相容的复结构使辛空间同时具备凯勒结构：二者合成对称正定内积；而全体相容复结构构成可缩空间。
+
+## 定义
+
+在有限维实向量空间 $V$ 上，满足 $J^2=-\operatorname{id}$ 的线性映射 $J$ 叫复结构。若 $V$ 还配有辛形式 $\omega$，并且 $J$ 同时满足两条：保持 $\omega$（$\omega(Ju,Jv)=\omega(u,v)$）以及使 $\omega(u,Ju)$ 正定，则称 $J$ 与 $\omega$ 相容。此时 $g_J(u,v)=\omega(u,Jv)$ 给出对称正定内积；把 $g_J$ 与 $\omega$ 合起来看成厄米结构，并令 $(a+ib)u=au+bJu$，$V$ 就成为 $\frac12\dim V$ 维复空间。所有相容复结构的集合记作 $\mathcal J$，所有对称正定内积的集合记作 $\mathcal P$。
+
+**记号约定**：$g_J(u,v)=\omega(u,Jv)$ 的次序不能颠倒；$\langle-,-\rangle$ 对第二变量复线性、对第一变量共轭线性。$\mathcal P$ 是「所有内积」的集合，与某个固定的 $(V,g)$ 中的 $g$ 用法不同；$j:\mathcal J\to\mathcal P$ 与 $r:\mathcal P\to\mathcal J$ 见命题 5.1.9。
+
+## 要点
+
+- 相容的两条各管一件事：保 $\omega$ 管「辛」，正性管「度量」；只保 $\omega$ 不能给出内积，只要求 $J^2=-1$ 又连辛结构都不保。
+- $g_J$ 与 $\omega$ 互相决定：$\omega(u,v)=-g_J(u,Jv)=g_J(Ju,v)$，$g_J(u,v)=\omega(u,Jv)$；由 $J^2=-1$ 和 $J$ 保 $\omega$ 才能推出 $g_J$ 对称。
+- $(V,\omega,J,g_J)$ 是一份凯勒（Kähler）数据：$\omega$ 关于 $J$ 是 $(1,1)$ 型，$g_J$ 是黎曼度量，$V$ 的复结构由 $J$ 给出。
+- 每个拉格朗日子空间 $L$ 都带出 $g_J$-正交分解 $V=L\oplus J(L)$，两个直和项都是拉格朗日，所以「选 $J$」等价于给每个 $L$ 配一个互补的拉格朗日伙伴。
+- $\mathcal J$ 可缩（命题 5.1.9）：选 $J$ 没有拓扑障碍，拓扑不变量也不会随 $J$ 改变，这是马斯洛夫指标良定义的前提。
+- 反向构造：任给对称正定内积 $g$，由 $\omega(u,v)=g(Ku,v)$ 定出斜伴随的 $K$，极分解 $K=RJ$ 中的转动部分 $J$ 自动相容。
+
+## 关键公式
+
+$$
+$J^2=-\mathrm{id},\qquad \omega(Ju,Jv)=\omega(u,v),\qquad \omega(u,Ju)>0\quad(u\neq0)$
+$$
+
+$$
+$g_J(u,v)=\omega(u,Jv)=\omega(Ju,J^2v)=-\omega(Ju,v)=\omega(v,Ju)=g_J(v,u)$
+$$
+
+$$
+$\langle u,v\rangle=g_J(u,v)+i\,\omega(u,v),\qquad \langle Ju,v\rangle=-i\langle u,v\rangle,\qquad \langle u,Jv\rangle=i\langle u,v\rangle$
+$$
+
+$$
+$(a+ib)u=au+bJu,\qquad \omega(u,v)=-g_J(u,Jv)=g_J(Ju,v),\qquad V=L\oplus J(L)$
+$$
+
+$$
+$r\circ j=\mathrm{id}_{\mathcal J},\qquad j\circ r\simeq\mathrm{id}_{\mathcal P}\ \Rightarrow\ \mathcal J\ \text{可缩}$
+$$
+
+## 定理与证明
+
+### 相容复结构给出凯勒结构
+
+若 $J$ 是 $(V,\omega)$ 的 $\omega$-相容复结构，则 $g_J=\omega(-,J-)$ 是 $V$ 上的对称正定内积，$\langle-,-\rangle=g_J+i\omega$ 是厄米内积；特别地 $V$ 借此成为 $n$ 维复向量空间。
+
+**完整证明**
+
+1. 对称性：$g_J(u,v)=\omega(u,Jv)=\omega(Ju,J^2v)=-\omega(Ju,v)=\omega(v,Ju)=g_J(v,u)$。第一步用 $J$ 保 $\omega$（在 $Ju,Jv$ 处取值的反向使用），第二步用 $J^2=-1$。
+   - *为什么*：两条相容性条件缺一不可：保 $\omega$ 提供 $\omega(u,Jv)=\omega(Ju,J^2v)$，$J^2=-1$ 提供 $\omega(Ju,-v)=-\omega(Ju,v)$。
+2. 非退化：若 $g_J(u,v)=0$ 对一切 $v$ 成立，则 $\omega(u,Jv)=0$ 对一切 $v$ 成立；$J$ 可逆故 $Jv$ 跑遍 $V$，于是 $\omega(u,-)\equiv0$，由 $\omega$ 非退化得 $u=0$。
+   - *为什么*：这里只用 $J$ 的满射性与 $\omega$ 的非退化性，尚未用到正性。
+3. 正定：$g_J(u,u)=\omega(u,Ju)>0$ 对一切 $u\neq0$ 成立，这正是相容性条件 (ii)。
+   - *为什么*：条件 (ii) 就是为这一条准备的；若无它，$g_J$ 只能保证非退化。
+4. 厄米性：$\langle Ju,v\rangle=g_J(Ju,v)+i\omega(Ju,v)=\omega(Ju,Jv)-i\omega(u,Jv)=\omega(u,v)-ig_J(u,v)=-i\langle u,v\rangle$；同理 $\langle u,Jv\rangle=g_J(u,Jv)+i\omega(u,Jv)=\omega(u,J^2v)+i\omega(u,Jv)=-\omega(u,v)+ig_J(u,v)=i\langle u,v\rangle$。
+   - *为什么*：把 $J$ 在 $g_J$ 与 $\omega$ 两处分别搬进搬出，最后凑成 $g_J+i\omega$ 的组合；$i$ 前的负号来自 $\omega(Ju,v)=-\omega(u,Jv)$。
+5. 正性：$\langle u,u\rangle=g_J(u,u)>0$ 对 $u\neq0$。于是 $\langle-,-\rangle$ 是复内积，$J$ 恰是「乘 $i$」，$V$ 成为 $n$ 维复空间。
+   - *为什么*：复内积 = 厄米 + 正定；$\mathbb C$ 的数乘由 $(a+ib)u=au+bJu$ 给出，$J$ 的角色就是虚数单位。
+
+来源：ch05a.tex:118-176（原书 pp.251-252）
+
+### 命题 5.1.9（相容复结构空间可缩）
+
+$(V,\omega)$ 上全体 $\omega$-相容复结构之集 $\mathcal J$ 作为 $\operatorname{End}(V)\cong\mathbb R^{4n^2}$ 的子集是可缩的。
+
+**完整证明**
+
+1. 定义 $j:\mathcal J\to\mathcal P$，$J\mapsto g_J=\omega(-,J-)$。它是单射：给定 $g_J$ 后，对每个 $u$，$v\mapsto g_J(u,v)$ 是线性泛函，而 $\omega(u,-)$ 非退化，故存在唯一 $Jv$ 使 $\omega(u,Jv)=g_J(u,v)$。
+   - *为什么*：$\omega$ 的非退化性让「用 $\omega$ 解出 $J$」总是可行，这保证了收缩映射的合法性。
+2. $\mathcal P$ 凸：若 $g,g'$ 对称正定、$0\le t\le1$，则 $tg+(1-t)g'$ 仍对称，且对 $u\neq0$ 取值 $t\,g(u,u)+(1-t)g'(u,u)>0$。取定 $g_0$，$\varphi_t(g)=tg+(1-t)g_0$ 把 $\mathcal P$ 收缩到 $g_0$。
+   - *为什么*：正定性的定义是逐点不等式，正系数组合保持它；凸集显然可缩。
+3. 对 $g\in\mathcal P$ 令 $K$ 由 $\omega(u,v)=g(Ku,v)$ 定义。由 $\omega$ 非退化、$g$ 正定，$K$ 可逆；又 $g(Ku,v)=\omega(u,v)=-\omega(v,u)=-g(Kv,u)=-g(u,Kv)$，故 $K$ 关于 $g$ 斜伴随。于是 $K$ 正规。
+   - *为什么*：斜伴随等价于 $K^T=-K$（关于 $g$），而 $K$ 与 $K^T$ 交换意味着正规，正规矩阵才有多项式演算可用。
+4. 取极分解 $K=RJ$，$R$ 对称正定、$J$ 正交。因 $K$ 正规，$R=(-K^2)^{1/2}$ 是 $K$ 的多项式，故 $RK=KR$，进而 $RJ=JR$。于是 $J^T=-J$：由 $K^T=J^TR=-K=-RJ$ 与 $RJ=JR$ 得 $J^T=-J$；再由 $J$ 正交得 $J^TJ=I$，故 $J^2=-I$。
+   - *为什么*：这是整段证明的技术核心：$K$ 的斜伴随性被转嫁给 $J$，$J$ 的正交性把 $J^T$ 换成 $J^{-1}$。
+5. 验证相容：$\omega(Ju,Jv)=g(KJu,Jv)=g(JKu,Jv)=g(Ku,v)=\omega(u,v)$，其中用了 $KJ=JK$ 与 $J$ 正交；$\omega(u,Ju)=g(Ku,Ju)=g(RJu,Ju)>0$（$u\neq0$，因 $R$ 正定、$J$ 可逆）。故 $J\in\mathcal J$，$r:g\mapsto J$ 满足 $r\circ j=\mathrm{id}_{\mathcal J}$。于是 $G:=r\circ\varphi_t\circ j:\mathcal J\times[0,1]\to\mathcal J$ 满足 $G_0$ 常值、$G_1=\mathrm{id}_{\mathcal J}$，故 $\mathcal J$ 可缩。
+   - *为什么*：相容性保证 $r$ 真的落在 $\mathcal J$ 里；$\mathcal P$ 的收缩同伦先经 $j$ 拉回、再经 $r$ 送回 $\mathcal J$，端点上正好是恒等与常值，可缩性就此传递。
+
+来源：ch05a.tex:233-278（原书 pp.253-254）
+
+## 易错点
+
+- 次序陷阱：$g_J(u,v)=\omega(u,Jv)$。若误写成 $\omega(Ju,v)$，得到的是 $-g_J$，正定性立刻变成负定性，命题 5.1.7 的证明也会全盘反向。
+- 正性条件不能省：把相容的 $J$ 换成 $-J$，仍有 $(-J)^2=-1$ 且保 $\omega$，但 $\omega(u,-Ju)=-\omega(u,Ju)<0$，此时 $g_{-J}$ 负定。所以「与 $\omega$ 相容」严格强于「$J$ 保 $\omega$」。
+- 不要把 $\omega$ 当内积用：$\omega(u,u)=0$ 恒成立，长度与夹角只能由 $g_J$ 提供；$\omega$ 与 $g_J$ 共享一个 $J$，但不是同一个对象。
+- 可缩的是 $\mathcal J$ 这个集合，不是单个 $J$；说「$J$ 可缩」是错误表述，正确说法是 $\mathcal J$ 可缩（同伦等价于一点）。
+
+## 相关卡
+
+- [辛向量空间与辛基](../concepts/symplectic-vector-space.md)
+- [辛群 $\operatorname{Sp}(V)$](../concepts/symplectic-group.md)
+- [拉格朗日子空间与格拉斯曼流形](../concepts/lagrangian-grassmannian.md)
+- [标准辛基下的相容复结构](../examples/standard-compatible-complex-structure.md)
+- [$\operatorname{Sp}(2n)\cap\operatorname{O}(2n)=\operatorname{U}(n)$ 的显式实现](../examples/unitary-symplectic-intersection.md)
+- [$\mathbb R^2$ 上相容复结构的参数化](../examples/compatible-complex-structures-on-r2.md)
+- [极化：实极化与凯勒极化](../concepts/polarization.md)
+
+## 出处
+
+- §5.1.1 定义 5.1.5 与 $g_J$、厄米结构，p.251–252（PDF p.252–253），源码 `ch05a.tex:106-176`
+- §5.1.1 $\mathcal J$ 与 $\mathcal P$ 的收缩、命题 5.1.9，p.253–254（PDF p.254–255），源码 `ch05a.tex:233-278`
