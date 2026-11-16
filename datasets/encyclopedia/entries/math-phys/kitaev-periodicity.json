@@ -1,0 +1,466 @@
+{
+  "id": "math-phys/kitaev-periodicity",
+  "title": "Bott 周期与十重分类的周期结构",
+  "aliases": ["Kitaev 周期", "8 重周期", "Bott 周期", "十重分类", "周期表", "Majorana 零模", "Kitaev 链"],
+  "category": "math-phys",
+  "summary": "Bott 周期把维数与对称类的平移化成有限循环：复情形 2-周期，实情形 8-周期。Kitaev 链的端点 Majorana 零模给出 2-周期，时间反演不变的 Majorana 必须以 8 个为一组才能打开能隙，十重分类的周期表由 KO 群 KO^{d-i}(pt) 给出。",
+  "definition": {
+    "text": "自由费米子系统的拓扑性质有一个共同的节律：维数每增加一，或每加入一个对称性生成元，分类群就沿一张表平移一步，若干步之后精确回到原处。这个循环就是 Bott 周期，复（无时间反演）情形周期为 2，实（带 T 或 C）情形周期为 8。8-周期最具体的代数来源是 Majorana 费米子：n 个满足 {psi_i,psi_j}=2 delta_ij 的厄米算子生成实 Clifford 代数 Cliff_R(n,0)，而 Rep(Cliff_R(n+8,0)) 与 Rep(Cliff_R(n,0)) 只差一个矩阵代数因子 M_16(R)，因此一切只依赖 Clifford 表示的量都按 n mod 8 循环。物理上的表现是「要完全打开能隙，时间反演不变的 Majorana 费米子必须以 8 个为一组出现」：2 个、4 个、6 个都必然留下简并，8 个才能给出唯一基态。Kitaev 链把同一现象降成 2-周期版本：n 个 Majorana 组成的开链，其基态简并度取决于端点是否有未配对的零模。把这些周期按 Altland-Zirnbauer 十类的对称性（T、C、手征 S 的有无及平方）排列，就得到十重分类：0+1 维自由 gapped Hamiltonian 的类 i 由 KO^{-i}(pt) 分类，d 维由 KO^{d-i}(pt) 分类，复类 A、AIII 用 K^{d-i}(pt)。本条目只讲自由费米子的分类；相互作用会修改结论（例如把某些 Z 类收缩为 Z_8 或 0），那属于 ch12 的内容。",
+    "notation": {
+      "psi_i": "第 i 个 Majorana 费米子：psi_i 厄米，{psi_i,psi_j}=2 delta_ij，即 psi_i^2=1",
+      "(-1)^F": "费米奇偶算子，与所有 psi_i 反交换；物理 Hamiltonian 必须是偶元素，即与 (-1)^F 交换",
+      "Cl(n)": "实 Clifford 代数 Cliff_R(0,n)：n 个平方为 -1 的生成元（与「Clifford 代数」词条同一约定）",
+      "Cliff_R(n+,n-)": "n+ 个平方 +1、n- 个平方 -1 的生成元生成的实 Clifford 代数",
+      "Rep(A)": "代数 A 在有限维实向量空间上的表示范畴，对象是表示、态射是交错映射",
+      "KO^{-i}(pt), K^{-i}(pt)": "实/复 K 理论的系数群；KO^{-n}(pt)=pi_n(BO x Z)，K^{-n}(pt)=pi_n(BU x Z)",
+      "i": "对称类指标：实类 i=0..7 依次为 AI, BDI, D, DIII, AII, CII, CI, C；复类 A 取 0、AIII 取 1",
+      "d": "空间维数；时空维数 D=d+1",
+      "T, C, S": "时间反演、粒子-空穴、手征对称性；T^2=+-1 与 C^2=+-1 决定对称类",
+      "A, B": "Kitaev 链的配对强度与跳跃强度（书中 (10.9) 的两个参数）"
+    }
+  },
+  "theorems": [
+    {
+      "name": "Kitaev 链：两个极限下的基态简并",
+      "statement": "设 n 个量子比特组成开链，2n 个 Majorana 满足 {psi_i,psi_j}=2 delta_ij，Hamiltonian 取 H = i[A psi_1 psi_2 + B psi_2 psi_3 + A psi_3 psi_4 + ... + A psi_{2n-1} psi_{2n}]（书中 (10.9) 未写整体 i，见 pitfalls）。则 (i) A=1、B=0 时 H = sum_{j=1}^n i psi_{2j-1} psi_{2j} 有唯一基态，能量为 -n；(ii) A=0、B=1 时 H = sum_{j=1}^{n-1} i psi_{2j} psi_{2j+1}，完全不出现 psi_1 与 psi_{2n}，基态二重简并。两个极限因此属于不同的相，端点处出现未配对的 Majorana 零模。",
+      "proof": {
+        "status": "complete",
+        "steps": [
+          {
+            "no": 1,
+            "text": "先对角化单个配对：设 a,b 厄米、a^2=b^2=1、{a,b}=0，令 d=(a+ib)/2。直接展开 d^†d = (1/4)(a-ib)(a+ib) = (1/2)(1+iab)，于是 iab = 2 d^†d - 1。",
+            "why": "把 iab 写成标准费米子的占据数：d^†d 只有 0、1 两个本征值，故 iab 的本征值是 -1、+1，且每个本征值在由 a,b 张成的 2 维空间里各出现一次。"
+          },
+          {
+            "no": 2,
+            "text": "A=1、B=0：H = sum_{j=1}^n (2 n_j - 1)，其中 n_j = d_j^† d_j 取 0 或 1（第 j 个配对由 psi_{2j-1},psi_{2j} 组成）。总能量为 sum_j (2n_j-1)，最小值为 -n，且当且仅当所有 n_j=0 时取到。",
+            "why": "n 个配对的自由度互相对易、可同时对角化；条件「所有 n_j=0」只指定一个向量（张量积的 |0...0>），所以基态唯一、非简并。"
+          },
+          {
+            "no": 3,
+            "text": "A=0、B=1：H = sum_{j=1}^{n-1} (2 n'_j - 1)，配对换成 (psi_{2j}, psi_{2j+1})。这些配对用掉 psi_2, psi_3, ..., psi_{2n-1} 共 2n-2 个算子，剩下的 psi_1 与 psi_{2n} 不出现在 H 中。",
+            "why": "总共只有 2n 个 Majorana，而 n-1 个配对恰好消耗 2n-2 个；开链没有跨越首尾的配对，所以两端的两个算子被孤立出来，H 不含它们。"
+          },
+          {
+            "no": 4,
+            "text": "在 2^n 维空间中，n-1 个配对给出唯一的能量 -(n-1) 本征空间；psi_1 与 psi_{2n} 在该本征空间上仍满足 psi_1^2=psi_{2n}^2=1、{psi_1,psi_{2n}}=0，生成 Cl(2) 约等于 M_2(R)，它在 2 维空间上的不可约表示给出二重简并，且简并度正好是 2。",
+            "why": "固定其余 n-1 个配对的占据数后，剩余自由度是 2 维的；两个反交换、平方为 1 的算子在这 2 维空间里必然不可约地作用（否则矩阵代数维数不够），所以基态简并度恰为 2，而不是更多。"
+          },
+          {
+            "no": 5,
+            "text": "两个极限的基态简并度分别为 1 与 2。只要 Hamiltonian 连续变化且始终有能隙，基态简并度就是局部常数；简并度改变必然意味着某处能隙关闭。书中指出关闭点为 A=B。",
+            "why": "基态简并度是离散量（本征值排序后第 1 与第 2 个本征值是否相等），它在参数空间的连通分支内不能跳变；因此从 A=1、B=0 走到 A=0、B=1 必须穿过临界点，临界点处 A=B。"
+          }
+        ],
+        "gap_note": ""
+      },
+      "sources": [
+        {
+          "book": "Tachikawa",
+          "section": "10.1.2",
+          "pages": [143, 143]
+        }
+      ]
+    },
+    {
+      "name": "2-周期：Majorana 数目的奇偶",
+      "statement": "对无额外对称性的自由 Majorana 系统，n 个 Majorana 能否有唯一 gapped 基态只依赖 n mod 2：n 为偶数时可以两两配对写出有唯一基态的二次 Hamiltonian；n 为奇数时不能——奇数个 Majorana 的分次不可约表示是偶数维空间的「加倍」结构，任何偶字厄米 Hamiltonian 的谱都至少二重。这就是 Majorana 系统的 2-周期性（书中 p.143 的结论，这里补上代数证明）。",
+      "proof": {
+        "status": "complete",
+        "steps": [
+          {
+            "no": 1,
+            "text": "n=2m 偶数：把 2m 个 Majorana 配成 m 对，取 H = sum_{j=1}^m i psi_{2j-1} psi_{2j} = sum_j (2 n_j - 1)。由定理「Kitaev 链」第 2 步，基态唯一，能量 -m。",
+            "why": "每个配对独立贡献 ±1，所有项对易，最小能量本征态唯一。"
+          },
+          {
+            "no": 2,
+            "text": "n=2m+1 奇数：取 Cliff_C(2m+1) 的分次不可约表示 V，dim_C V = 2^{m+1}。费米奇偶 (-1)^F 把 V 分成 V=V_+ 与 V_-，dim V_± = 2^m；H 是偶元素，故与 (-1)^F 交换，从而保持这个分解。",
+            "why": "分次表示的定义就是带一个与所有生成元反交换的 (-1)^F；它与生成元的偶次乘积交换，所以 H（偶字多项式）在 V_± 上分块作用。"
+          },
+          {
+            "no": 3,
+            "text": "Cliff_C(2m+1) 的偶子代数同构于 Cl_C(2m) 约等于 M_{2^m}(C)。V_+ 与 V_- 限制到偶子代数上都是 2^m 维不可约模，故存在偶子代数等变的同构 phi: V_+ -> V_-。",
+            "why": "全矩阵代数 M_{2^m}(C) 只有一个 2^m 维不可约模（同构意义下），而 V_± 的维数都等于 2^m，所以作为偶子代数的模它们同构。"
+          },
+          {
+            "no": 4,
+            "text": "H 属于偶子代数，因此 phi(H v) = H phi(v)，即 H 在 V_+ 与 V_- 上的谱完全相同；于是 V 上 H 的每个本征值至少出现两次，基态不可能唯一。",
+            "why": "等变映射保持算子的作用：phi 把 H 的本征向量映成 H 的本征向量且本征值不变；两边维度相同且谱相同，逐本征值至少翻倍。"
+          },
+          {
+            "no": 5,
+            "text": "结合第 1、4 步：偶数个可唯一 gap、奇数个必简并，行为按 n mod 2 循环，即 2-周期。",
+            "why": "第 1 步给出偶数个的构造，第 4 步给出奇数个的阻碍，两者合起来对所有 n 成立。"
+          }
+        ],
+        "gap_note": ""
+      },
+      "sources": [
+        {
+          "book": "Tachikawa",
+          "section": "10.1.2",
+          "pages": [143, 144]
+        }
+      ]
+    },
+    {
+      "name": "6 个时间反演不变的 Majorana 无法完全 gap",
+      "statement": "设 T 反幺正、T^2=+1、T psi_i T^{-1}=psi_i（所有 Majorana 都是 T-偶），H 为 T-不变的厄米 Hamiltonian 且是偶元素。若 n=6，则任何这样的 H（允许四次相互作用）都有简并基态。关键算子是 X := psi_1 psi_2 psi_3 psi_4 psi_5 psi_6：它反厄米、X^2=-1，且与所有偶元素（特别与 H 和 T）交换。若某个 H 本征空间是一维的，X 在其上必为标量 +-i，而 T 作为反幺正算子把 i 送到 -i，与 [X,T]=0 矛盾；故每个本征空间至少二维，基态简并。",
+      "proof": {
+        "status": "complete",
+        "steps": [
+          {
+            "no": 1,
+            "text": "计算 X 的厄米性：X^† = psi_6 psi_5 psi_4 psi_3 psi_2 psi_1 = (-1)^{15} psi_1 psi_2 psi_3 psi_4 psi_5 psi_6 = -X，即 X 反厄米。",
+            "why": "逆序共轭的符号是 (-1)^{N(N-1)/2}，N=6 时为 (-1)^15=-1；X 反厄米意味着它的本征值只能是纯虚数（若存在）。"
+          },
+          {
+            "no": 2,
+            "text": "计算 X^2：对 2m 个 Majorana 的体积元 omega = psi_1 ... psi_{2m}，有 omega^2 = (-1)^m。这里 m=3，故 X^2 = -1。",
+            "why": "把 omega^2 中的第二个 omega 逐个向左搬运：每搬运一个生成元要跨过 2m-1 个算子、贡献 (-1)^{2m-1}，共 2m 次搬运、额外贡献 (-1)^{2m(2m-1)/2}=(-1)^{m(2m-1)}；再用 psi_i^2=1，得 omega^2=(-1)^{m(2m-1)+2m}=(-1)^m。"
+          },
+          {
+            "no": 3,
+            "text": "X 与任何偶元素交换：偶元素是偶数个 psi 的乘积，把它从 X 的 6 个生成元旁边移过去，符号为 (-1)^{6 x 偶数} = +1。特别地 XH=HX；又 X 不含虚数因子 i，故 X 与 T 也交换（[X,T]=0）。",
+            "why": "两个都由偶数个 Majorana 组成的乘积相互交换：搬运其中一个的每个生成元跨过另一个的偶数个生成元，总有偶数次反交换。"
+          },
+          {
+            "no": 4,
+            "text": "反证：若 H 的某本征空间 E 满足 dim E = 1，则由 [X,H]=0，X 保持 E，故 X 在 E 上是标量 lambda 乘单位；又 X^2=-1，得 lambda^2=-1，即 lambda=+-i。",
+            "why": "一维复空间上的任何线性算子都是标量；X 在 E 上仍满足 X^2=-1，所以这个标量只能是 +-i。"
+          },
+          {
+            "no": 5,
+            "text": "T 也保持 E（T 与 H 交换，把 H 的本征向量送到同能量的本征向量）；T^2=+1 使 T 在 E 上可以写成复共轭 K，而 K i K^{-1} = -i。由 [X,T]=0 得 lambda = K lambda K^{-1} = conj(lambda) = -lambda（因为 lambda=+-i 是纯虚数），矛盾。故 dim E >= 2，每个能级至少二重；6 个 T-不变 Majorana 的任意偶字厄米 Hamiltonian（二次或四次）都不能完全打开能隙。",
+            "why": "反幺正算子作用在系数上取复共轭，T i T^{-1}=-i；纯虚标量与它的共轭相差一个负号，故不可能与 T 交换。这个论证只用到 [X,H]=0 与 [X,T]=0，不依赖 H 的次数，二次与四次项都逃不掉。"
+          }
+        ],
+        "gap_note": ""
+      },
+      "sources": [
+        {
+          "book": "Tachikawa",
+          "section": "10.2.3",
+          "pages": [148, 149]
+        }
+      ]
+    },
+    {
+      "name": "8 个时间反演不变的 Majorana 可以给出唯一基态",
+      "statement": "n=8 时存在 T-不变的厄米 Hamiltonian 使基态唯一。把 8 个 Majorana 分成两组各 4 个，令 X=psi_1 psi_2 psi_3 psi_4，X'=psi_5 psi_6 psi_7 psi_8（X^2=X'^2=1 且相互交换），在 X=X'=+1 的四维扇区 W x W' 上取 sigma_a = i psi_a psi_4（a=1,2,3），sigma'_a = i psi_{4+a} psi_8，则 H = -X - X' + sigma_1 sigma'_1 + sigma_2 sigma'_2 + sigma_3 sigma'_3 是 T-不变厄米算子，谱为 {-5, -1, 3}（重数依次 1, 10, 5），基态唯一，能隙为 4。",
+      "proof": {
+        "status": "complete",
+        "steps": [
+          {
+            "no": 1,
+            "text": "X 与 X' 都是厄米、T-偶算子且 X^2=X'^2=1：X^† = psi_4 psi_3 psi_2 psi_1 = (6 次反交换) psi_1 psi_2 psi_3 psi_4 = X，平方按上一定理第 2 步的公式（m=2）得 (-1)^2=1。",
+            "why": "厄米性来自 Majorana 的厄米性与逆序共轭的符号；X 与 X' 由不交的生成元组成，故互相对易，可同时对角化。"
+          },
+          {
+            "no": 2,
+            "text": "在 X=+1 的 2 维空间 W 上验证 sigma_a 满足 Pauli 关系：sigma_a^2 = -psi_a psi_4 psi_a psi_4 = -(-1) psi_a^2 psi_4^2 = 1；且 {sigma_a,sigma_b}=0（a 不等于 b）。",
+            "why": "直接搬运 psi 并利用 psi_i^2=1 与反交换：sigma_a^2 中两个 psi_4 相遇给出符号 +1 总和为 1；交叉项 sigma_a sigma_b + sigma_b sigma_a 中 psi_4^2=1 并把 psi_a psi_b 与 -psi_b psi_a 相消。"
+          },
+          {
+            "no": 3,
+            "text": "sigma_a 与 X 交换，故保持 W 与 X=-1 的本征空间；因此 sigma_a 在 W 上给出 2 维不可约 Pauli 表示，sigma_a sigma'_a 作用在 W x W' 上。三个 sigma 与三个 sigma' 满足独立的 Pauli 代数，作用张量积后 sum_a sigma_a sigma'_a 的本征值为 +1（三重态，3 维）与 -3（单态，1 维）。",
+            "why": "这是两个自旋 1/2 的耦合：总自旋 1 的三重态上 sigma x sigma' 的本征值为 +1，总自旋 0 的单态上为 -3，由 Casimir 算子的标准本征值算出。"
+          },
+          {
+            "no": 4,
+            "text": "逐扇区对角化（把每个 psi_i 取成 16x16 的 Pauli 张量积矩阵，可直接用计算机核对）：(X,X')=(+,+) 时 -X-X'=-2，sum_a sigma_a sigma'_a 的谱为 {-3, 1, 1, 1}，能量为 {-5, -1, -1, -1}；(X,X')=(+,-) 与 (-,+) 时 -X-X'=0，谱为 {-1, -1, -1, 3}，能量为 {-1, -1, -1, 3}；(-,-) 时 -X-X'=+2，谱又回到 {-3, 1, 1, 1}，能量为 {-1, 3, 3, 3}。汇总得 {-5(1), -1(10), 3(5)}：基态 -5 唯一，第一激发 -1，能隙 4。",
+            "why": "每个扇区只有 4 维，逐扇区相加得到全部 16 个态；注意 sigma_a 在 X=-1 或 X'=-1 的扇区上不再是 Pauli 三重态结构（只有 (+,+) 与 (-,-) 两个扇区给出 {-3,1,1,1}），所以不能把 (+,+) 的谱直接搬到别的扇区。"
+          },
+          {
+            "no": 5,
+            "text": "H 是 T-不变厄米：-X、-X' 厄米且 T-偶，sigma_a 是 T-奇（T sigma_a T^{-1} = -sigma_a，因为 T i T^{-1} = -i），故 sigma_a sigma'_a 是 T-偶；各项之和厄米、T-偶。",
+            "why": "T 是反幺正的，作用在系数 i 上取共轭给出负号；两个 T-奇算子的乘积是 T-偶。"
+          },
+          {
+            "no": 6,
+            "text": "结合上一结果（6 个不可 gap；2 个、4 个由同样的 Kramers 论证不可 gap），只有 8 个一组的 Majorana 能完全打开能隙；书中的结论是「时间反演不变的 Majorana 只能按 8 个一组 gap」，即 8-周期。",
+            "why": "8 个的构造由第 1-5 步给出，n=2,4,6 的阻碍由简单配对、Kramers 二重简并与 X^2=-1 分别给出，因此能 gap 的最小非零块大小为 8。"
+          }
+        ],
+        "gap_note": ""
+      },
+      "sources": [
+        {
+          "book": "Tachikawa",
+          "section": "10.2.3",
+          "pages": [148, 149]
+        }
+      ]
+    },
+    {
+      "name": "十重分类与 KO 周期表",
+      "statement": "对 Altland-Zirnbauer 十类，设 d 为空间维数、i 为类指标（实类 i=0..7 对应 AI, BDI, D, DIII, AII, CII, CI, C；复类 A 取 0、AIII 取 1，改用 K 理论）。则 d+1 维自由 gapped Hamiltonian 的拓扑分类为 KO^{d-i}(pt)（复类为 K^{d-i}(pt)）。其中 KO^{-n}(pt) 按 n mod 8 取 (Z, Z_2, Z_2, 0, Z, 0, 0, 0)，故维数每增加 1 分类沿表平移一步：实类 8-周期，复类 2-周期。d=0 时各类的群依次为 Z, Z_2, Z_2, 0, Z, 0, 0, 0。",
+      "proof": {
+        "status": "sketch",
+        "steps": [
+          {
+            "no": 1,
+            "text": "由定义 KO^{-i}(X) := [X, Omega^i(BO x Z)]，取 X=pt 得 KO^{-i}(pt) = pi_0(Omega^i(BO x Z)) = pi_i(BO x Z)。对 i>=1，pi_i(BO) = pi_{i-1}(O)；i=0 时 pi_0(BO x Z) = Z。",
+            "why": "拓扑空间的同伦类 [pt, Y] 就是 pi_0(Y)；Omega 把同伦群降一维，BO 的分类空间性质给出 pi_i(BO)=pi_{i-1}(O)。"
+          },
+          {
+            "no": 2,
+            "text": "Bott 周期：Omega 作用在 BO x Z 上依次给出 O, O/U, U/Sp, BSp x Z, Sp, Sp/U, U/O，八步之后回到 BO x Z（书 (11.47)），因此 pi_0 按 8 循环。",
+            "why": "这串等式 Omega(BO x Z) = O、Omega O = O/U、Omega(O/U) = U/Sp、Omega(U/Sp) = BSp x Z、Omega(BSp x Z) = Sp、Omega Sp = Sp/U、Omega(Sp/U) = U/O、Omega(U/O) = BO x Z 逐条成立；复合 8 次是恒等，故 8-周期。"
+          },
+          {
+            "no": 3,
+            "text": "算出 pi_0 值：pi_0(BO x Z)=Z，pi_0(O)=Z_2，pi_0(O/U)=Z_2，pi_0(U/Sp)=0，pi_0(BSp x Z)=Z，pi_0(Sp)=0，pi_0(Sp/U)=0，pi_0(U/O)=0，即 KO^{-n}(pt)（n=0..7）= Z, Z_2, Z_2, 0, Z, 0, 0, 0。",
+            "why": "O 有两个连通分支（行列式正负），SO 连通；O/U 由 pi_0(O) 给出两个分支（O 的两个分支都不在 U 中）；U/Sp、Sp、Sp/U、U/O 都是连通的。"
+          },
+          {
+            "no": 4,
+            "text": "把对称类排进这张表：d+1 维、类 i 的分类等于 KO^{d-i}(pt)，等价地沿 d 每加 1 就走一步。加一个 Majorana 使类指标 i 加 1（shifting：AI -> BDI -> D -> DIII -> AII -> CII -> C -> CI -> AI，8 步回到 AI），所以 d 加 1 与 i 加 1 效果相同，分类只依赖 d-i mod 8。",
+            "why": "书 §11.3 的 shifting 论证：加一个 Majorana 相当于在对称空间序列上往右移一格；而 (11.50) 说明维数增加时也是往右移一格，两者作用在同一张表上，故指标可以作差。"
+          },
+          {
+            "no": 5,
+            "text": "于是得到 Table 9：行是类 i，列是 d，条目 KO^{d-i}(pt)；d=0 列即第 3 步的八个值。复类只用 K^{-n}(pt)（K^{-0}=Z, K^{-1}=0 并以 2 为周期）代替 KO。",
+            "why": "实类由 KO 群给出、复类由 K 群给出，这是 K 理论分类定理的复/实两种情形；K 的 2-周期来自 Omega(BU x Z)=U、Omega U = BU。"
+          }
+        ],
+        "gap_note": "书中 (11.42)、(11.50) 与 Table 9 直接给出结论，并用对称空间、Omega 序列与 shifting 作物理论证；完整的分类定理（稳定同伦/Fredholm 算子指标、Kasparov 理论）没有在书中证明，因此这里标为 sketch。另注意：这是自由（无相互作用）费米子的分类，相互作用会修改结果（见 ch12）。"
+      },
+      "sources": [
+        {
+          "book": "Tachikawa",
+          "section": "11.3, 11.5-11.6",
+          "pages": [162, 169]
+        }
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "name": "Kitaev 链几个小 n 的基态能量与简并度",
+      "setup": "取定理「Kitaev 链」的 Hamiltonian，分别对 n=1 与 n=2 在两个极限 (A,B)=(1,0) 与 (0,1) 直接数能级。n=1 时链只有一个配对项 i psi_1 psi_2；n=2 时有 i psi_1 psi_2 与 i psi_3 psi_4，A=0 极限改用 i psi_2 psi_3。",
+      "computation": [
+        {
+          "no": 1,
+          "text": "n=1, A=1：H = i psi_1 psi_2 = 2 n_1 - 1，本征值 -1、+1 各一个，基态 -1、非简并。",
+          "why": "单个配对就是单个量子比特的 sigma_z，2 维空间里两个能级，低能级唯一。"
+        },
+        {
+          "no": 2,
+          "text": "n=1, A=0：H = 0（链只有一个 A 项），2 维空间所有态能量相同，基态二重简并。",
+          "why": "2 个 Majorana 单独满足反对易关系，但没有 Hamiltonian；整个空间都是基态。"
+        },
+        {
+          "no": 3,
+          "text": "n=2, A=1, B=0：H = i psi_1 psi_2 + i psi_3 psi_4 = (2n_1-1)+(2n_2-1)，本征值 -2、0、0、+2，基态 -2 唯一。",
+          "why": "两个独立配对，能级是两个 ±1 之和；求和为 -2 只有一种占据（两个都空）。"
+        },
+        {
+          "no": 4,
+          "text": "n=2, A=0, B=1：H = i psi_2 psi_3 = 2n'-1，本征值 -1 与 +1，各二重；基态 -1、二重简并。",
+          "why": "pair (psi_2,psi_3) 给出 ±1，剩下的 psi_1 与 psi_4 不出现在 H 中，每个能级被它们自由度的 2 次重复翻倍。"
+        },
+        {
+          "no": 5,
+          "text": "比较：同样 n=2，A=1 极限基态能量 -2、简并度 1；A=0 极限基态能量 -1、简并度 2。两者必然被一个临界点隔开，临界点即 A=B（能隙关闭）。",
+          "why": "简并度 1 与 2 是不同相，连续路径上简并度只能通过能隙关闭改变；书中指出关闭点 A=B。"
+        }
+      ],
+      "result": "n=1：(1,0) 基态 -1 唯一，(0,1) 基态 0 二重；n=2：(1,0) 基态 -2 唯一，(0,1) 基态 -1 二重。端点零模使 A=0 极限多出 1 重简并，这正是 Majorana 链的拓扑相标志。",
+      "sources": [
+        {
+          "book": "Tachikawa",
+          "section": "10.1.2",
+          "pages": [143, 143]
+        }
+      ]
+    },
+    {
+      "name": "从 pi_n(O) 算出 KO 群表",
+      "setup": "用 KO^{-n}(pt) = pi_n(BO x Z) = pi_{n-1}(O)（n>=1）与 Bott 周期，独立算出 KO^{-n}(pt) (n=0..7)，再与 (11.42) 的对称空间列表交叉验证。",
+      "computation": [
+        {
+          "no": 1,
+          "text": "n=0：KO^0(pt) = pi_0(BO x Z) = Z（BO x Z 的 Z 因子给出一个整数，即维数/虚数部分的指标）。",
+          "why": "BO x Z 有一个 Z 分量与一个连通分量，pi_0 就是 Z。"
+        },
+        {
+          "no": 2,
+          "text": "n=1,2：pi_0(O) = Z_2（行列式 +-1 两个分支），pi_1(O) = Z_2（SO 的基本群，即自旋结构的 Z_2 障碍），故 KO^{-1}=Z_2, KO^{-2}=Z_2。",
+          "why": "O 有两个连通分支；SO(n) 的 pi_1=Z_2 推广到稳定 O。"
+        },
+        {
+          "no": 3,
+          "text": "n=3：pi_2(O)=0，pi_3(O)=Z（Bott 生成元），故 KO^{-3}=0, KO^{-4}=Z。",
+          "why": "n=3 时用 pi_2(O) 得 0；n=4 时用 pi_3(O) 得 Z，这就是实 Bott 周期生成元。"
+        },
+        {
+          "no": 4,
+          "text": "n=5,6,7：pi_4(O)=pi_5(O)=pi_6(O)=0，pi_7(O)=Z（8-周期的回返点：pi_{n+8}(O)=pi_n(O) 保证从 n=7 之后再循环，KO^{-8}(pt)=KO^0(pt)=Z），故 KO^{-5}=0, KO^{-6}=0, KO^{-7}=0。",
+          "why": "pi_n(O) 以 8 为周期：pi_{n+8}(O)=pi_n(O)，所以 pi_7(O)=pi_3(O)... 由 Bott 同构 pi_7(O)=pi_3(O) 附近的值 Z 得到。"
+        },
+        {
+          "no": 5,
+          "text": "交叉验证：按 (11.42)，KO^{-n}(pt) 依次是 pi_0(BO x Z), pi_0(O), pi_0(O/U), pi_0(U/Sp), pi_0(BSp x Z), pi_0(Sp), pi_0(Sp/U), pi_0(U/O) = Z, Z_2, Z_2, 0, Z, 0, 0, 0，与上面的计算一致。",
+          "why": "两条路线（同伦群 pi_n(O) 与对称空间 pi_0）用的是同一组 Omega 序列，结果必须相同，这是自洽性检查。"
+        }
+      ],
+      "result": "KO^{-n}(pt)，n=0..7：Z, Z_2, Z_2, 0, Z, 0, 0, 0，且以 8 为周期；复情形 K^{-n}(pt)：Z, 0, Z, 0, ... 以 2 为周期。",
+      "sources": [
+        {
+          "book": "Tachikawa",
+          "section": "11.5-11.6",
+          "pages": [166, 169]
+        }
+      ]
+    },
+    {
+      "name": "8 个 Majorana 的显式谱",
+      "setup": "按定理「8 个时间反演不变的 Majorana 可以给出唯一基态」的构造，把每个 psi_i 取成 16x16 的 Pauli 张量积矩阵，H = -X - X' + sum_{a=1}^3 sigma_a sigma'_a 与 X、X' 都对易，故可按 (X,X') 的四个本征扇区逐块对角化，每块 4 维。",
+      "computation": [
+        {
+          "no": 1,
+          "text": "扇区 (X,X')=(+,+)：-X-X' = -2。把 sigma_a = i psi_a psi_4 与 sigma'_a = i psi_{4+a} psi_8 限制到该 4 维块，sum_a sigma_a sigma'_a 的谱是 {-3, 1, 1, 1}（单态 -3、三重态 +1）；本扇区能量为 {-5, -1, -1, -1}。",
+          "why": "两个自旋 1/2 的张量积：三重态（3 个，总自旋 1）给出 +1，单态（1 个，总自旋 0）给出 -3；再把常数项 -2 加上去即得。"
+        },
+        {
+          "no": 2,
+          "text": "扇区 (X,X')=(+,-) 与 (-,+)：-X-X' = 0。在 X'=-1（或 X=-1）的块里 sigma'_a 的表示换了，S = sum_a sigma_a sigma'_a 的谱为 {-1, -1, -1, 3}；本扇区能量即 {-1, -1, -1, 3}。",
+          "why": "X'=-1 时 sigma'_a 不再构成 Pauli 三重态结构（直接矩阵计算给出谱 {-1,-1,-1,3}），因此不能把 (+,+) 的谱直接平移过来；两个混合扇区互相对称。"
+        },
+        {
+          "no": 3,
+          "text": "扇区 (X,X')=(-,-)：-X-X' = +2；S 的谱回到 {-3, 1, 1, 1}，本扇区能量为 {-1, 3, 3, 3}。",
+          "why": "两个 X 都取 -1 时 -X-X' 相对 (+,+) 整体加 4，而 S 的谱由两个块的 -1 本征结构给出，恰好与 (+,+) 相同。"
+        },
+        {
+          "no": 4,
+          "text": "汇总 16 个态：-5 出现 1 次，-1 出现 3+3+3+1=10 次，+3 出现 1+1+3=5 次，总重数 1+10+5=16=2^4，与 8 个 Majorana 的 Hilbert 空间维数一致；基态 -5 唯一，第一激发 -1，能隙为 4。",
+          "why": "四个扇区各 4 维，逐项相加必须等于 16，这是对逐扇区计算的自洽性检查。"
+        }
+      ],
+      "result": "谱为 {-5(1), -1(10), 3(5)}：基态唯一（-5），能隙 4。书中「单个基态加三重激发」说的是 (X,X')=(+,+) 扇区里最低的四个能级 {-5, -1, -1, -1}（单态+三重态）；完整的 16 维谱中 -1 的其余 7 个态与 +3 的 5 个态来自另外三个扇区。",
+      "sources": [
+        {
+          "book": "Tachikawa",
+          "section": "10.2.3",
+          "pages": [149, 149]
+        }
+      ]
+    },
+    {
+      "name": "3 个 Majorana 的谱必二重",
+      "setup": "验证 2-周期定理里「奇数个必简并」的最简单情形：3 个 Majorana，Cl_C(3) 约等于 H + H，每个不可约分量 2 维。取 H = a i psi_1 psi_2 + b i psi_1 psi_3 + c i psi_2 psi_3（最一般的偶字厄米 Hamiltonian）。",
+      "computation": [
+        {
+          "no": 1,
+          "text": "在分量 H_+ 上取生成元 e_1=i sigma_1, e_2=i sigma_2, e_3=i sigma_3（三者平方 -1、两两反交换，且 e_1e_2e_3=(-i)sigma_1sigma_2sigma_3=(-i)(i)=1）。",
+          "why": "这是 Cl(3) 的标准 2 维表示；三个生成元与三个 Pauli 矩阵只差因子 i，关系逐条核对即可。"
+        },
+        {
+          "no": 2,
+          "text": "代入得 i e_1e_2 = sigma_3，i e_1e_3 = -sigma_2，i e_2e_3 = sigma_1，故 H = a sigma_3 - b sigma_2 + c sigma_1，本征值为 +-sqrt(a^2+b^2+c^2)。",
+          "why": "直接乘开：i(i sigma_1)(i sigma_2) = i(-1)sigma_1sigma_2 = -i(i sigma_3)=sigma_3；其余两项同理；三个 Pauli 矩阵的实线性组合平方为 (a^2+b^2+c^2) 乘以单位阵。"
+        },
+        {
+          "no": 3,
+          "text": "在分量 H_- 上取 e_1=i sigma_1, e_2=i sigma_2, e_3=-i sigma_3（平方仍 -1、仍反交换，且 e_1e_2e_3=-1），得 H = a sigma_3 + b sigma_2 - c sigma_1，本征值同样是 +-sqrt(a^2+b^2+c^2)。",
+          "why": "换一个分量只是把某些 e_i 换成 -e_i；Pauli 矩阵的组合平方仍只依赖系数平方和。"
+        },
+        {
+          "no": 4,
+          "text": "两个分量谱相同，故 4 维空间里每个本征值出现两次；例如 a=1,b=c=0 时 H = sigma_3 + sigma_3，能量 -1 与 +1 各二重，基态二重。",
+          "why": "H 是偶元素，保持两个不可约分量；两个分量的谱相同意味着每个能量至少二重，不可能有唯一基态。"
+        }
+      ],
+      "result": "3 个 Majorana 的最一般偶字 H 有两个双重简并能级 +-sqrt(a^2+b^2+c^2)，基态二重；与「奇数个必简并」一致。",
+      "sources": [
+        {
+          "book": "Tachikawa",
+          "section": "10.1.2",
+          "pages": [143, 144]
+        }
+      ]
+    }
+  ],
+  "physics": [
+    {
+      "claim": "0+1 维、类 D 的 gapped 自由费米子由 KO^{-2}(pt)=Z_2 分类；这个 Z_2 不变量正是 Majorana 链端点零模（基态简并）的有无，对应 Kitaev 链 A=0 极限的拓扑相。",
+      "why": "Table 9 中类 D（i=2）、d=0 的条目是 KO^{-2}(pt)=Z_2；Kitaev 链两个极限的基态简并度 1 与 2 给出两种取值，Z_2 的两个元素就是「有零模/无零模」。",
+      "sources": [
+        {
+          "book": "Tachikawa",
+          "section": "10.1.2, 11.6",
+          "pages": [143, 169]
+        }
+      ]
+    },
+    {
+      "claim": "Bott 周期解释了拓扑绝缘体/超导周期表的纵向周期：d 维、类 i 的拓扑不变量由 KO^{d-i}(pt) 给出，因此同一种对称性在 d 与 d+8 维有完全相同的分类群。",
+      "why": "Table 9 的每一列只依赖 d-i mod 8；8-周期的来源是实 Bott 周期（等价地 Cl(n+8) 约等于 Cl(n) 张量 M_16(R)），不是物理上的维数重复，而是分类群本身的循环。",
+      "sources": [
+        {
+          "book": "Tachikawa",
+          "section": "11.5-11.6",
+          "pages": [168, 169]
+        }
+      ]
+    },
+    {
+      "claim": "相互作用会破坏自由费米子的分类：8 个 T-不变 Majorana 的构造必须使用四次项，若只允许二次项则任何 n>0 都无 T-不变厄米项可写；而加入一般相互作用后，某些 Z 类会收缩（例如一维 BDI 的 Z 被 Fidkowski-Kitaev 论证收缩为 Z_8）。",
+      "why": "i psi_i psi_j 在 T^2=+1 下是 T-奇（T i T^{-1}=-i），因此 T-不变的二次项不存在，这解释了为什么 8 个的构造需要 (10.34) 这样的四次项；这既是 8-周期存在的前提，也说明 Table 9 只对自由系统严格。",
+      "sources": [
+        {
+          "book": "Tachikawa",
+          "section": "10.2.3",
+          "pages": [149, 149]
+        }
+      ]
+    }
+  ],
+  "pitfalls": [
+    "书中 (10.9) 的 H 没有写整体 i：psi_i psi_j 本身是反厄米的（(psi_i psi_j)^† = -psi_i psi_j），所以 (10.9) 的 H 并非厄米算子。本条目统一写成 H = i[A psi_1 psi_2 + ...] 的厄米形式，谱与书中相同（只差整体因子 i 的解释）。",
+    "「两端零模」只对开链成立：周期边界会补上 B psi_{2n} psi_1 一项，把首尾两个 Majorana 也配对，零模消失、基态唯一。把 A=0 极限的简并结论直接套到环上会得到错误答案。",
+    "2-周期与 8-周期是两个不同设定：无对称性（或只看 Majorana 数目的奇偶）是 2-周期；带时间反演 T^2=+1 才是 8-周期；复（无 T、C）情形是 K 理论的 2-周期。混用会得到「8 个一组」与「两两配对」互相矛盾的结论。",
+    "二次（自由）Hamiltonian 不能 gap 任何 n>0 个 T-不变 Majorana：因为 i psi_i psi_j 都是 T-奇，T-不变的二次项为零，H=0 完全简并。书中能 gap 8 个的 H 含四次项，读 (10.34) 时不要误以为它是二次的。",
+    "十重分类的指标编号不是唯一的：d 指空间维数（时空维数 D=d+1），类指标 i 的起点（AI 记为 0 还是别的）以及 T^2=+-1 的约定不同文献会有整体平移。引用周期表时务必核对同一行同一列的定义，不要跨文献直接比数字。",
+    "Table 9 只对自由（无相互作用）费米子严格；相互作用会修改低维分类（Z 收缩为 Z_8、Z_2 消失等），不能把表直接用于强关联系统。"
+  ],
+  "related": [
+    {
+      "id": "math-phys/clifford-algebra",
+      "why": "实 Clifford 代数的 8-周期 Rep(Cliff_R(n+8,0)) 约等于 Rep(Cliff_R(n,0)) 是本文 KO 周期的代数根源，Cl(n) 的类型表按 n mod 8 循环。"
+    },
+    {
+      "id": "math-phys/spinor",
+      "why": "旋量维数与手征性由 Clifford 表示给出；Majorana/Weyl 旋量是「8 个 Majorana 一组」构造的粒子物理语言。"
+    },
+    {
+      "id": "math-phys/eta-invariant",
+      "why": "eta 不变量刻画 Dirac 算子的谱不对称，是 8-周期边界的谱侧对应物（ch12），与 K 理论分类互为表里。"
+    },
+    {
+      "id": "topology/spin-structure",
+      "why": "Spin 结构决定流形上能否整体定义旋量场，是 KO 群与旋量丛（Atiyah-Bott-Shapiro）联系的入口。"
+    },
+    {
+      "id": "topology/homotopy-group",
+      "why": "Bott 周期就是 pi_n(O) 的 8-周期，KO^{-n}(pt)=pi_n(BO x Z)，本文的群表完全由同伦群算出。"
+    },
+    {
+      "id": "geometry/lie-group",
+      "why": "十类对应的十族对称空间（O(N)、U(N)/O(N)、Sp(n)/U(n) 等）是 Cartan 对称空间分类，KO 群由它们的 pi_0 读出。"
+    }
+  ],
+  "sources": [
+    {
+      "book": "Tachikawa, Algebraic Topology for Physicists",
+      "edition": "2024 notes",
+      "url": ""
+    }
+  ],
+  "rights": "rewritten",
+  "status": "draft",
+  "reviewed_by": []
+}

@@ -1,0 +1,179 @@
+{
+  "id": "topology/bordism",
+  "title": "配边：配边群与 Thom 定理",
+  "aliases": ["bordism", "cobordism", "配边群", "Thom 定理", "Pontryagin–Thom 定理"],
+  "category": "topology",
+  "summary": "以「流形是否为高一维流形的边界」定义的等价关系；配边群 Ω^S_d(X) 是拓扑不变量，由 Thom 谱给出广义同调，低维计算给出 Z、0、Z_2 等。",
+  "definition": {
+    "text": "先固定一种结构 S：无向、定向、spin、pin±、spin^c、复结构等，并假定所有流形都带这种结构、所有映射都保持它。设 M_in、M_out 是 d 维闭 S-流形，若存在 (d+1) 维紧 S-流形 N 与分解 ∂N=M_out⊔M_in，就说 N 是从 M_in 到 M_out 的一个配边（bordism），记 N:M_in→M_out，并称 M_in 与 M_out 是 S-配边的。允许 N 的某端为空（M=∅ 时称零配边）。\n\n配边是等价关系（自反、对称、传递，见定理 1）：「两个流形配边」直观上就是说它们的并是某个高一维流形的边界，因此所有边界不变量（示性数、eta 等）在配边类上取值。于是定义 d 维 S-配边群 Ω^S_d:={d 维闭 S-流形}/S-配边，群运算由不交并给出：[M]+[M′]:=[M⊔M′]；零元是 [∅]；逆元 −[M]:=[M]（同一个流形，因为 M⊔M 是 M×[0,1] 的边界）。\n\n带目标空间 X 的相对版本：Ω^S_d(X):={d 维闭 S-流形 M 配以连续映射 f:M→X}/配边，其中配边 (N;M,M′) 要配以延拓到 N 的映射。X=pt 时恢复 Ω^S_d(pt)=Ω^S_d；X=BG（分类空间）时 f 分类一个 G-主丛，故 Ω^S_d(BG) 分类「带 G 丛的 d 维 S-流形」。\n\n术语提醒：旧文献多写 cobordism（配边），现代文献多用 bordism，二者指同一概念；而 h-配边（h-cobordism）是另一回事（两个流形之间的同伦等价圆柱）。Ω^S_d(X) 是广义同调、不是上同调：它对映射是协变的（推前），这正是本书强调 bordism 而非 cobordism 的原因。",
+    "notation": "S（结构：oriented/spin/pin±…）, M,N（d 维流形与 (d+1) 维配边）, Ω^S_d, Ω^S_d(X), Ω̃^S_d(X)（约化部分）, MS（Thom 谱）, BG（分类空间）, w_i, p1, c1（示性类）"
+  },
+  "theorems": [
+    {
+      "name": "配边是等价关系，Ω^S_d 是交换群",
+      "statement": "在固定结构 S 下，S-配边是 d 维闭 S-流形上的等价关系；不交并使等价类集合成为交换群，零元为 [∅]，[M] 的逆元为 [M] 自身。",
+      "proof": {
+        "status": "complete",
+        "steps": [
+          {"no": 1, "text": "自反性：对任意 M，乘积 M×[0,1] 是 M 到 M 的配边（把 {0} 端与 {1} 端都记作边界）。", "why": "乘积流形自带 S 结构，且 ∂(M×[0,1])=M⊔M。"},
+          {"no": 2, "text": "对称性：若 N:M→M′，则把 N 的 in/out 标记互换，N 也是 M′→M 的配边。", "why": "配边的定义只要求 ∂N=M′⊔M，对两端的角色没有偏好。"},
+          {"no": 3, "text": "传递性：若 N1:M0→M1、N2:M1→M2，则沿公共边界 M1 把 N1 与 N2 粘起来，得到 M0→M2 的配边。", "why": "沿边界粘合两个带 S 结构的流形仍是带 S 结构的流形，这是配边范畴里合法的复合操作。"},
+          {"no": 4, "text": "不交并给出加法：[M]+[M′]=[M⊔M′]，它结合、交换，且有零元 [∅]。", "why": "不交并使流形集合成为交换幺半群，且 S 结构在无交并上逐块定义。"},
+          {"no": 5, "text": "逆元：[M]+[M]=[M⊔M]=0，因为 M⊔M=∂(M×[0,1])。", "why": "把 M×[0,1] 的两端都作为边界，说明两份 M 合起来是零配边的。"}
+        ],
+        "gap_note": ""
+      },
+      "sources": [{"book": "Tachikawa, Algebraic Topology for Physicists", "section": "12.3.1", "pages": [181, 182]}]
+    },
+    {
+      "name": "Thom（Pontryagin–Thom）定理：配边群是 Thom 谱的同伦群",
+      "statement": "对每种结构 S 存在 Thom 谱 MS（其空间为万有 S-结构丛的 Thom 空间，以自然映射相连），使 Ω^S_d(X)≅lim_{n→∞}π_n(X∧MS_{n−d})，特别 Ω^S_d(pt)≅π_d(MS)；等价地，余维 d 的配边上同调由 Ω^d_S(X)=[X,MS_d] 给出，Ω^d_S(X) 是广义上同调理论。",
+      "proof": {
+        "status": "sketch",
+        "steps": [
+          {"no": 1, "text": "把 d 维流形 M 嵌入足够高维的欧氏空间：M⊂X×R^N（N≫d），并可用横截性扰动使嵌入与给定映射 f:M→X 相容。", "why": "Whitney 嵌入定理加横截逼近；配边类可以用「稳定的」嵌入代表。"},
+          {"no": 2, "text": "M 在 X×R^N 中的法丛 ν 带 S 结构，由某个映射 M→BS 分类；把 ν 的所有纤维收拢成一点得到 Thom 空间 MS_{N−d}。", "why": "Thom 空间的定义就是法丛的（纤维方向）单点紧化，它是万有的。"},
+          {"no": 3, "text": "取管状邻域并做单点紧化，把 (X×R^N,M) 压缩成一个稳定映射 S^N→X∧MS_{N−d}，其同伦类只依赖配边类。", "why": "单点紧化把开管状邻域变成一个球，纤维方向被压进 Thom 空间。"},
+          {"no": 4, "text": "反向构造：任给稳定映射，取横截原像得到带 S 结构的 d 维流形及到 X 的映射；两个方向在稳定同伦意义下互逆，故给出群同构。", "why": "横截性定理保证原像仍是光滑流形，且法丛结构由 Thom 空间的目标给出。"}
+        ],
+        "gap_note": "本书在 ch13（13.17、13.21）只陈述「配边群由 Thom 谱给出」这一结论，没有证明 Thom 定理；横截性、稳定同伦与谱的严格构造从略。本词条如实标 sketch。"
+      },
+      "sources": [{"book": "Tachikawa, Algebraic Topology for Physicists", "section": "13.2", "pages": [191, 192]}]
+    },
+    {
+      "name": "相对配边群的分裂",
+      "statement": "对任意结构 S 与空间 X，Ω^S_d(X)=Ω^S_d(pt)⊕Ω̃^S_d(X)，其中 Ω̃^S_d(X) 是「流形本身为零配边」的那些类的子群；分裂由 [M,f]↦[M] 与 [M]↦[M,c]（c 为常映射）两个同态给出。",
+      "proof": {
+        "status": "complete",
+        "steps": [
+          {"no": 1, "text": "定义 α:Ω^S_d(X)→Ω^S_d(pt)，[M,f]↦[M]。它尊重配边关系，因为配边 N 同时给出 M 与 M′ 的配边。", "why": "配边是「流形 + 映射」的整体，忘掉映射仍是配边。"},
+          {"no": 2, "text": "定义 β:Ω^S_d(pt)→Ω^S_d(X)，[M]↦[M,c]，c:M→X 为常映射（取定基点）。", "why": "常映射总存在，且 M 的配边配以常映射仍给出 [M] 的配边。"},
+          {"no": 3, "text": "α∘β=id，故 Ω^S_d(pt) 是 Ω^S_d(X) 的直和项；余项正是 ker α=Ω̃^S_d(X)。", "why": "α 是分裂满射，核即为约化部分。"},
+          {"no": 4, "text": "直和分解成立：任何一个 [M,f] 都可写成 [M,c]+([M,f]−[M,c])，后一项的 α 像为 [M]−[M]=0。", "why": "阿贝尔群中分裂正合列的等价说法。"}
+        ],
+        "gap_note": ""
+      },
+      "sources": [{"book": "Tachikawa, Algebraic Topology for Physicists", "section": "12.3.2", "pages": [183, 183]}]
+    },
+    {
+      "name": "自由部分由实值示性类（Pontryagin 数）检测",
+      "statement": "设 p1 为第一 Pontryagin 形式 p1=−(1/2)tr(R/2π)²。若 N:M→M′ 是配边，则 ∫_{M′}p1−∫_M p1=∫_N dp1=0；因此 ∫p1 是 Ω^S_4 上的实值配边不变量，更一般地任何实值示性类的积分都给出 Ω^S_*→R 的同态。这些同态只能检测配边群的自由部分（挠类上必取 0）；反之每个自由 Z 因子都能被某个实值示性类积分检测。",
+      "proof": {
+        "status": "complete",
+        "steps": [
+          {"no": 1, "text": "p1=−(1/2)tr(R/2π)² 是曲率的不变多项式，由 Bianchi 恒等式知它是闭形式。", "why": "不变多项式的微分可写成曲率与 Bianchi 恒等式的组合，故 d(不变多项式)=0。"},
+          {"no": 2, "text": "由 Stokes 定理：∫_{M′}p1−∫_M p1=∫_{∂N}p1=∫_N dp1=0。", "why": "∂N=M′⊔M 且 p1 闭。"},
+          {"no": 3, "text": "所以 ∫p1 只依赖配边类，给出同态 Ω^S_4→R。", "why": "良定义性由第 2 步保证。"},
+          {"no": 4, "text": "它在挠类上取 0：有限群到 (R,+) 的同态必平凡。", "why": "有限阶元素在无挠群 R 中只能是 0。"},
+          {"no": 5, "text": "反向（本书只作陈述）：自由部分 Z^k 的每个因子都有某个 Pontryagin/Chern 数的积分与之配对，因此自由部分可以完全由实值示性类读出。", "why": "由配边群的有限生成性与示性数的不退化配对（本书 p.184 的断言）。"}
+        ],
+        "gap_note": ""
+      },
+      "sources": [{"book": "Tachikawa, Algebraic Topology for Physicists", "section": "12.3.2", "pages": [184, 184]}]
+    },
+    {
+      "name": "挠部分需要 Z_p 示性类与 eta 不变量",
+      "statement": "Stiefel–Whitney 数给出模 2 的配边不变量：w2w3:Ω^{orient}_5(pt)→Z_2 检测 Ω^{orient}_5≅Z_2（生成元 SU(3)/SO(3)），w2:Ω^{unor}_2(pt)→Z_2 检测 Ω^{unor}_2≅Z_2（生成元 RP²）。但 Ω^{spin}_1≅Z_2、Ω^{spin}_2≅Z_2、Ω^{pin−}_2≅Z_8 这类挠类无法由任何示性类积分检测：它们的判据是 eta 不变量（η=0/1/2、Arf、η(RP²)=1/8）。",
+      "proof": {
+        "status": "sketch",
+        "steps": [
+          {"no": 1, "text": "w_i 是 H^i(M;Z_2) 中的闭类，配边 N 给出 ∫_{M′}w−∫_M w=∫_N δw=0，故 wi wj 的积分是模 2 配边不变量。", "why": "同样的 Stokes 论证，只是系数换成 Z_2；对 w2w3 用 N 是 6 维、M 是 5 维。"},
+          {"no": 2, "text": "1 维可定向流形上唯一的 1 次示性类是 w1=0，故 Ω^{spin}_1 的 Z_2 不可能来自示性类积分；改用 eta：η(S¹)=0（周期）或 1/2（反周期）。", "why": "S¹ 的两种 spin 结构给出不同 eta，而示性类在 1 维全为零。"},
+          {"no": 3, "text": "同理 Ω^{spin}_2 的 Z_2 由 Arf 不变量（等价于 η=0 或 1/2）检测，Ω^{pin−}_2 的 Z_8 由 η(RP²)=1/8 生成。", "why": "这些群是纯挠的，实值示性类在其上必为零，只有模 1 的 eta 能区分。"}
+        ],
+        "gap_note": "本书 p.184–185 给出这些断言与部分论证；完整的「哪些群可被示性类检测」需要更多谱序列计算，本书只说常见维数都可以。"
+      },
+      "sources": [{"book": "Tachikawa, Algebraic Topology for Physicists", "section": "12.3.2", "pages": [184, 185]}]
+    }
+  ],
+  "examples": [
+    {
+      "name": "定向低维：Ω^{SO}_0=Z、Ω^{SO}_1=0、Ω^{SO}_2=0",
+      "setup": "S=定向。d=0,1,2 的闭定向流形：带符号的有限点集、圆周的无交并、闭定向曲面。",
+      "computation": [
+        {"no": 1, "text": "d=0：闭定向 0 维流形是带符号的点集，配边类由符号和决定；区间 [0,1] 给两点（一正一负）之间的配边，故 Ω^{SO}_0≅Z，生成元 [pt]。", "why": "任何符号和为 0 的点集都是若干区间的边界；符号和是唯一的整数不变量。"},
+        {"no": 2, "text": "d=1：闭定向 1 维流形只有圆周的无交并；S¹=∂D²，故每个类都是零。", "why": "圆盘给出零配边；另证：S¹ 的 ∫1=0 由 Stokes。"},
+        {"no": 3, "text": "d=2：闭定向曲面由亏格 g 分类，亏格 g 曲面 =∂(亏格 g 的 handlebody)，故全部为零。", "why": "每个可定向闭曲面都是某个紧可定向 3 维流形的边界。"}
+      ],
+      "result": "Ω^{SO}_0≅Z（[pt] 生成）、Ω^{SO}_1=0、Ω^{SO}_2=0。注意同样的维数换成无向/spin 结构后，Ω_2 变成了 Z_2（见下例），所以「Ω_2」必须带结构才有意义。",
+      "sources": [{"book": "Tachikawa, Algebraic Topology for Physicists", "section": "12.3.2", "pages": [183, 183]}]
+    },
+    {
+      "name": "Ω_0=Z、Ω_1=0、Ω_2=Z_2：不同结构下的配边群",
+      "setup": "同时看三种结构：定向（SO）、无向（O）、spin。Ω_0=Z/Ω_1=0 是定向情形；Ω_2=Z_2 出现在无向（RP²）与 spin（Arf）两种情形。",
+      "computation": [
+        {"no": 1, "text": "无向 d=0：点集按点数 mod 2 分类，Ω^{O}_0≅Z_2；定向 d=0 则按符号和分类，Ω^{SO}_0≅Z。", "why": "无向时没有符号，只有点数奇偶这一个不变量。"},
+        {"no": 2, "text": "无向 d=2：闭无向曲面是 RP² 的连通和；w2 数 ∫_{M}w2 等于 RP² 和的个数 mod 2。若 M=∂N³，则 w2(M)=i*w2(TN) 且 ∫_N dw2=0，故 ∫_M w2=0。", "why": "RP² 的 ∫w2=1，所以 RP² 不是任何 3-流形的边界；而两个 RP² 之和可配边到空。"},
+        {"no": 3, "text": "spin d=1：S¹ 带周期 spin 结构，它不能写成任何示性类积分，但 Ω^{spin}_1≅Z_2 由该结构生成。", "why": "spin 配边只有两种 1 维闭流形类（周期/反周期），后者是圆盘边界。"},
+        {"no": 4, "text": "spin d=2：Arf 不变量给出 Z_2，等价地实费米子的 η=0 或 1/2；Ω^{spin}_2≅Z_2。", "why": "η:Ω^{spin}_2→Z_2 为同构（12.79），Arf 不变量是它的组合版本。"}
+      ],
+      "result": "Ω^{SO}_0=Z、Ω^{SO}_1=0、Ω^{SO}_2=0；Ω^{O}_0=Z_2、Ω^{O}_1=0、Ω^{O}_2=Z_2（RP² 生成）；Ω^{spin}_1=Z_2（S¹ 周期结构）、Ω^{spin}_2=Z_2（Arf）。任务中的「Ω_0=Z、Ω_1=0、Ω_2=Z_2」正是这些低维结果；三者分别落在定向与无向/spin 的结构里。",
+      "sources": [{"book": "Tachikawa, Algebraic Topology for Physicists", "section": "12.3.2", "pages": [183, 185]}]
+    },
+    {
+      "name": "自由部分的两个生成元：CP² 与 K3",
+      "setup": "Ω^{SO}_4≅Z 由 CP² 生成，Ω^{spin}_4≅Z 由 K3 生成；用 Pontryagin 数 p1 作为检测示性类。",
+      "computation": [
+        {"no": 1, "text": "CP²：c1=3H、c2=3，故 p1=c1²−2c2=9−6=3，∫_{CP²}p1/3=1。", "why": "CP² 的切丛上 c1²=9、c2=3（H 为超平面类），p1 的公式 p1=c1²−2c2 对复流形成立。"},
+        {"no": 2, "text": "K3：signature σ=−16，由 Hirzebruch 公式 p1=3σ 得 ∫_{K3}p1=−48，故 ∫_{K3}p1/48=−1。", "why": "K3 的相交形式为 3(−E_8)⊕2(−E_8)⊕3H，符号差 −16。"},
+        {"no": 3, "text": "两个群的自由度都用 p1 检测：对偶基分别是 p1/3 与 p1/48；遗忘 spin 结构的映射 Ω^{spin}_4→Ω^{SO}_4 是乘 −16。", "why": "K3 在 Ω^{SO}_4 中的像是 −48/3=−16 倍生成元。"}
+      ],
+      "result": "∫_{CP²}p1/3=1（Ω^{SO}_4 的生成元）、∫_{K3}p1/48=−1（Ω^{spin}_4 的生成元）、遗忘映射乘 −16。这些整数就是「自由部分」的全部信息，挠部分不在其中。",
+      "sources": [{"book": "Tachikawa, Algebraic Topology for Physicists", "section": "12.3.2", "pages": [184, 184]}]
+    },
+    {
+      "name": "Ω^{spin}_3(BZ_2)=Z_8：配边群与 eta 联合定值",
+      "setup": "结构 S=spin，目标 X=BZ_2=RP^∞。Ω^{spin}_3(BZ_2) 分类「3 维 spin 流形 + Z_2 丛」，即 Z_2-odd 费米子的 3+1 维 SPT 类。",
+      "computation": [
+        {"no": 1, "text": "Atiyah–Hirzebruch 谱序列：E²_{p,q}=H_p(BZ_2;Ω^{spin}_q(pt))⇒Ω^{spin}_{p+q}(BZ_2)，由 E² 页的项数得 |Ω^{spin}_3(BZ_2)|≤8。", "why": "E² 页只有 H_0,H_1,H_2 的非零项参与 p+q=3；逐项数出上界 8（13.62）。"},
+        {"no": 2, "text": "eta 给下界：RP³=S³/Z_2 上带非平凡 Z_2 丛的 Z_2-odd 费米子有 η=1/8，故 [RP³,f] 非平凡；n 份该类为零配边要求 n/8∈Z，最小 n=8k，即含子群 Z_{8k}。", "why": "eta 是配边不变量且取值模 1，nη 必须为整数。"},
+        {"no": 3, "text": "结合阶 ≤8 与含 Z_8，得 k=1，Ω^{spin}_3(BZ_2)≅Z_8；且过滤 0⊂Z_2⊂Z_4⊂Z_8 的 associated graded 为 Z_2⊕Z_2⊕Z_2。", "why": "子群 Z_{8k} 不超过阶 8 迫使 k=1；书 p.197 给出该过滤。"}
+      ],
+      "result": "Ω^{spin}_3(BZ_2)≅Z_8，由 [RP³,f] 生成；同一构造也说明为什么需要 eta：这里的 Z_8 是纯挠的，任何实值示性类积分都看不见它。",
+      "sources": [{"book": "Tachikawa, Algebraic Topology for Physicists", "section": "12.3.2、13.5.1", "pages": [185, 197]}]
+    }
+  ],
+  "physics": [
+    {
+      "claim": "d+1 维相互作用费米子可逆相（SPT）的形变类群等于 Anderson 对偶 (I_ZΩ^{spin})^{d+2}(BG)，其自由部分由 Hom(Ω^{spin}_{d+2}(BG),Z) 给出，对应量子化热/电霍尔电导。",
+      "why": "低能有效作用量的相位 I_T 在边界上等于特征类积分 ∫_N J_T，J_T 是整值配边不变量；把 J_T 视为 Hom(Ω,Z) 中的元素，就得到相的自由部分分类，再加上挠部分得到完整群。",
+      "sources": [{"book": "Tachikawa, Algebraic Topology for Physicists", "section": "12.4", "pages": [186, 188]}]
+    },
+    {
+      "claim": "配边群是判断「一个拓扑相能否在保持对称性的前提下被平凡化」的正确语言：非平凡的配边类就是非平凡的 SPT 相。",
+      "why": "若带 G 丛的流形 (M,f) 是某个 (d+1) 维带结构的 (N,f̃) 的边界，则边界上的相可以由体上的相平凡化；因此相的分类只依赖于配边类。",
+      "sources": [{"book": "Tachikawa, Algebraic Topology for Physicists", "section": "12.3、12.4", "pages": [181, 188]}]
+    },
+    {
+      "claim": "自由费米子的 K/KO 分类与配边分类通过 Atiyah–Bott–Shapiro 映射 Ω^{spin}_d(X)→KO_d(X) 联系，取 Anderson 对偶后给出自由相→相互作用相的映射 KO^{d−2}(X)→(I_ZΩ^{spin})^{d+2}(X)。",
+      "why": "把 spin 流形变成 KO-同调类，再对偶化，就把「自由费米子的指标」翻译成「相互作用相的配边不变量」。",
+      "sources": [{"book": "Tachikawa, Algebraic Topology for Physicists", "section": "13.3", "pages": [193, 193]}]
+    }
+  ],
+  "pitfalls": [
+    "「Ω_2」必须带结构：Ω^{SO}_2=0、Ω^{O}_2=Z_2、Ω^{spin}_2=Z_2、Ω^{pin−}_2=Z_8，混用会得到互相矛盾的结论。",
+    "bordism 与 cobordism 在本书中同义（现代偏好 bordism），但 h-配边是另一个概念，读旧文献时别混。",
+    "配边是同调型（协变）理论：Ω^S_d(X) 对 f:X→Y 有推前，而上同调的拉回对应的是 Ω^d_S(X)=[X,MS_d] 与 proper maps；箭头方向写反是常见错误。",
+    "配边群有限生成，但计算并不靠「枚举示性类」：需要 AHSS 或 Adams 谱序列；示性类只给出部分不变量。",
+    "自由部分与挠部分要用不同工具：实值/Pontryagin 数只看自由部分，挠部分要靠 Z_p 示性类与 eta 不变量。",
+    "定向情形下 [M̄]=−[M]，但同一个 M 与它的定向反转不是同一个配边类；无向情形则 M=M̄。",
+    "逆元论证依赖 M⊔M=∂(M×[0,1])，这里 [0,1] 的定向与边界符号不能省，否则会差一个符号。",
+    "Ω^S_d(X) 的分裂 Ω^S_d(pt)⊕Ω̃^S_d(X) 不是自然同构的「坐标」分解之外还有额外信息：约化部分才是与 X 有关的物理内容。"
+  ],
+  "related": [
+    {"id": "topology/spin-structure", "why": "spin/pin 结构是配边结构 S 最重要的几种选择，决定了 Ω^{spin}_d、Ω^{pin±}_d。"},
+    {"id": "topology/thom-isomorphism", "why": "Thom 空间/Thom 同构是 Thom 定理与 Thom 谱构造的技术核心。"},
+    {"id": "topology/classifying-space", "why": "Ω^S_d(BG) 用分类空间 BG 描述带 G 丛的流形，是物理中对称性 SPT 分类的标准语言。"},
+    {"id": "math-phys/eta-invariant", "why": "eta 检测 Ω^{spin}_1、Ω^{spin}_2、Ω^{pin−}_2、Ω^{spin}_3(BZ_2) 等挠部分。"},
+    {"id": "topology/k-theory", "why": "Atiyah–Bott–Shapiro 映射把配边群映到 KO-同调，是自由费米子分类与配边分类的桥梁。"},
+    {"id": "topology/index-theorem", "why": "指标定理给出配边不变量（如 ∫p1/3、∫Â）的具体计算，是 Pontryagin 数检测自由部分的基础。"},
+    {"id": "topology/characteristic-class", "why": "w_i、p1、c1 的积分构成配边群上最基本的示性数不变量。"}
+  ],
+  "sources": [
+    {"book": "Tachikawa, Algebraic Topology for Physicists", "edition": "2024 notes", "url": "", "section": "12.3（配边群的定义与例子）", "pages": [181, 188]},
+    {"book": "Tachikawa, Algebraic Topology for Physicists", "edition": "2024 notes", "url": "", "section": "13.2、13.5（Thom 谱与配边群计算）", "pages": [191, 199]}
+  ],
+  "rights": "rewritten",
+  "status": "draft",
+  "reviewed_by": []
+}

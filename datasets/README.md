@@ -110,4 +110,5 @@ https://atomgit.com/lzxSUSUY/mathtranslate/blob/main/datasets/<...>.jsonl
 - `v0.1`（2026-11-16）：五类 schema + SY05-25 试点 + 校验器。
 - `v0.2`（2026-11-16）：新增 `math/`（数学推理条目）与 `math.schema.json`，SY05-25 6 条；`parallel/` 降为术语样本；发布过滤器与门禁支持 `math/`。
 - `v0.6`（2026-11-16）：新增 `encyclopedia/`（按概念组织的词条库，17 条、74 定理、50 例）与 `tools/entry_lint.py`；`datasets/README.md` 升为八类。
+- `v0.7`（2026-11-16）：第一本书拆完——`encyclopedia/` 扩到 43 条、187 定理、130 例（128 complete / 59 sketch），覆盖拓扑、几何、数学物理、凝聚态、QFT。
 - 后续见 [CHANGELOG.md](../CHANGELOG.md)。

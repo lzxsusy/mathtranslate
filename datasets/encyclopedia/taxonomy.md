@@ -67,3 +67,37 @@
 1. 定义 + 定理 + 证明完整的核心词条（上表 topology 前 8 个）；
 2. 能算数的例子（同调群、π_n、陈数、Hopf）；
 3. 物理联系（规范场、反常、toric code、十重分类）。
+
+## 第二批分配（2026-11-16；把整本书拆完）
+
+第一批 17 条已完成。第二批按章补齐，原则不变：一条一个概念，出处只作证据，不作章节搬运。
+
+| agent | 词条（id） | 主章 | PDF 页 |
+|---|---|---|---|
+| entry-homology | topology/singular-homology | ch6 | 89–91 |
+| | topology/cw-complex | ch6 | 92–95 |
+| | topology/cohomology-ring | ch6 | 98–100 |
+| | topology/hurewicz | ch6 | 101–102 |
+| entry-charclass | topology/characteristic-class | ch7 | 105–110 |
+| | topology/chern-class | ch7 | 105–110 |
+| | topology/stiefel-whitney | ch7 | 103–110 |
+| | topology/euler-class | ch7 | 105–110 |
+| | topology/pontryagin-class | ch7 | 105–110 |
+| entry-thom | topology/classifying-space | ch7 | 115–118 |
+| | topology/thom-isomorphism | ch7 | 110–117 |
+| | topology/chern-simons | ch8 | 118–128 |
+| entry-groupcoh | topology/cech-cohomology | ch7 | 103–105 |
+| | topology/group-cohomology | ch9 | 130–136 |
+| | qft/anomaly | ch9 | 136–141 |
+| entry-spinor | math-phys/spinor | ch10 | 141–151 |
+| | math-phys/clifford-algebra | ch10 | 141–146 |
+| | math-phys/kitaev-periodicity | ch10 | 141–149 |
+| entry-kt | topology/k-theory | ch11 | 152–169 |
+| | condensed/ten-fold-way | ch11 | 156–169 |
+| entry-index | math-phys/eta-invariant | ch12 | 170–180 |
+| | topology/bordism | ch12 | 181–188 |
+| | topology/generalized-cohomology | ch13 | 189–206 |
+| | topology/index-theorem | ch12–13 | 170–206 |
+
+统稿后再补：qft/instanton（ch4.7、ch8）、condensed/toric-code（ch6.6）、热核/指标细节（ch12）。
+

@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## datasets v0.7 — 2026-11-16（第一本书拆完：43 个词条）
+
+在 v0.6 的 17 条基础上补齐 Tachikawa 全书：**43 个词条、187 条定理、130 个例子**；
+128 条证明为 `complete`（原书没证的标【补】），59 条为 `sketch` 并写 `gap_note`。
+
+- 新增词条（26）：奇异同调、CW 复形、上同调环、Hurewicz；示性类、陈类、Stiefel–Whitney、
+  Euler 类、Pontryagin 类；分类空间、Thom 同构、Chern–Simons；Čech 上同调、群上同调、反常；
+  旋量、Clifford 代数、Bott 周期；K 理论、十重分类；eta 不变量、配边、广义上同调、指标定理；
+  toric code、瞬子。
+- 代表性补证：∂²=0、cup 积 Leibniz 法则、Euler–Poincaré 公式、Poincaré 引理、Stokes 广义定理、
+  Hurewicz（S^n 特例）、dCS=tr F²、大规范变换量子化、BPST 自对偶与 8π²/g²、2^{2g} 简并。
+- 代表性计算：CP^n 的 c(TCP^n)=(1+c)^{n+1} 与陈数、RP² 的 w1/w2、S² 的 e 积分=χ=2、
+  K(S²)=Z⊕Z、KO(S^n) 表、十重分类读数、S³ 上 CS 作用量 −2π、Landau 能级 η̃、K3 的 Â=2。
+- `datasets/encyclopedia/README.md` 更新为「第一本已拆完」，列出全部 43 条；README/目录树/统计同步。
+- 状态：1 条 reviewed、42 条 draft；独立复核后升级（复核重点：标【补】的证明与页码）。
+
+下一步：复核已写词条并升级；接入用户提供的带答案习题集与人工精选例子；超对称场论词条（长期重点）。
+
 ## datasets v0.6 — 2026-11-16（词条库：按概念而不是按书组织）
 
 新增 `datasets/encyclopedia/`：第一本供料是立川裕二《物理学家用代数拓扑》，但分类轴是**概念词条**，
