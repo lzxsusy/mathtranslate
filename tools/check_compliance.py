@@ -23,6 +23,11 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.chdir(ROOT)
 
+# Windows 控制台默认 GBK，违规信息里带 © 等字符会让 print 直接崩，门禁变成假失败
+for _s in (sys.stdout, sys.stderr):
+    if hasattr(_s, "reconfigure"):
+        _s.reconfigure(encoding="utf-8", errors="replace")
+
 TEXT_EXT = {".md", ".txt", ".tsv", ".csv", ".json", ".jsonl", ".py", ".ps1", ".sh",
             ".html", ".js", ".css", ".yml", ".yaml", ".tex", ".bib", ".rst"}
 # 这些文件本身就在讨论规则，措辞检查跳过（但仍检查链接与文件）
