@@ -169,6 +169,7 @@ python tools/check_manifest.py             # 清单一致性
 6. **门禁**：`.githooks/pre-commit` 同时跑 `check_compliance.py` 与 `ds_lint.py`；任一失败不得提交。
 7. **轨迹脱敏**：`traces/` 中的本机路径写作 `<path>`，邮箱、口令、私钥一律删除；`fidelity=reconstructed` 的重建轨迹必须写明依据。
 8. **数学校验诚实**：`math/` 的 `verification.kind` 只能是 `lean` / `human` / `none`，标 `lean` 必须给编译过的 `artifact`；标 `human` 须写明审校人；难题（`difficulty>=4`）不得标 `checked` 而只做单人复核。
+9. **词条库（`datasets/encyclopedia/`）**：只收**改写**的词条，不收原书章节、译本章节或原文全文；每个词条必须是自足的知识单元（定义、定理、证明、可算例子），不是"把书拆成块"。单处引文 ≤60 字并注出处，累计引用 ≤ 词条 10%；不复制原图（图用文字描述或重画）；`sources.pages` 必须真实可查；拿不准的证明标 `sketch` 并在 `gap_note` 说明缺口。词条的**组织与表述**是自产（`rights: rewritten`，可 CC BY 4.0），原书的**表达、选目与图**仍属原权利人，若有异议按 §8 撤下。
 
 数据集不改变 §2 的 L1–L4 模型：它只是把 L2 的"译文"拆成更细的、可授权的颗粒度——理由、精读与中文证明整理是自产（L1），译文片段仍是 L2。
 

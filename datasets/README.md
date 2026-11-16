@@ -16,7 +16,7 @@
 
 设计依据见 [math/README.md](math/README.md)（北大 AI4Math 的命题级检索、层级展开、形式化反馈三条经验）。
 
-## 1. 七类数据
+## 1. 八类数据
 
 | 目录 | 内容 | 一条记录 = 什么 | 单条上限 |
 |---|---|---|---|
@@ -27,6 +27,7 @@
 | `traces/` | 事件级工作流：读→写→编译→报错→改→验 | 一次可重放的完整对话流 | 事件 500 条 |
 | `kg/` | 概念/定理/证明/人物/文献节点与带证据的边 | 一个节点或一条边 | 正文 500 字 |
 | `bench/` | 带评分细则的 held-out 评测题 | 一道题 | 题目 800 字 |
+| `encyclopedia/` | 按概念词条组织的自足数学单元：定义+定理+完整证明+可算例子+物理联系+坑 | 一个可独立阅读的词条（JSON） | 正文 20,000 字 |
 
 `bench/` 与训练集严格隔离：出题时不得使用 `parallel/`、`deepread/` 中已出现的同一段落。
 
@@ -35,6 +36,7 @@
 - `rights: "self"` — 自产（导读、术语裁决、精读卡、图谱边、评测题、中文证明与结构化）。可 CC BY 4.0，可商用训练。数学事实本身不受版权保护；`math/` 记录的版权只涉及其中的中文表述与结构。
 - `rights: "arxiv:<id>"` — 原文来自 arXiv。**逐篇**核对 arXiv 许可（`https://arxiv.org/abs/<id>` 页脚）；只有 CC BY / CC0 的原文片段可随数据集公开，其余只存 `src_ref` 链接与不超过 300 字的引用。
 - `rights: "book"` — 在版图书（含扫描件、出版社 PDF）。**只进 `_internal/`，不发布、不进公开数据集、不随权重发布**；片段引用 ≤ 200 字，且只用于本机训练与人工研读。
+- `rights: "rewritten"` — `encyclopedia/` 的词条：用自己的话重写的事实与结构，不复制原书表达与图；可 CC BY 4.0。单处引文 ≤ 60 字并注出处，累计不超过词条 10%。
 
 发布前用 `tools/ds_publish.py --check` 过滤：`rights: "book"` 与未确认许可的 `arxiv:*` 记录一律不出现在公开目录。
 
@@ -43,7 +45,8 @@
 ```
 datasets/
 ├── README.md                  # 本文件
-├── schema/                    # 七类记录的 JSON Schema
+├── schema/                    # 数据集的 JSON Schema
+├── encyclopedia/              # 词条库（entries/<category>/<slug>.json + taxonomy.md）
 ├── math/<pkg>.<split>.jsonl   # 数学推理条目（主力）
 ├── parallel/<pkg>.<split>.jsonl
 ├── deepread/<pkg>.<split>.jsonl
@@ -106,4 +109,5 @@ https://atomgit.com/lzxSUSUY/mathtranslate/blob/main/datasets/<...>.jsonl
 
 - `v0.1`（2026-11-16）：五类 schema + SY05-25 试点 + 校验器。
 - `v0.2`（2026-11-16）：新增 `math/`（数学推理条目）与 `math.schema.json`，SY05-25 6 条；`parallel/` 降为术语样本；发布过滤器与门禁支持 `math/`。
+- `v0.6`（2026-11-16）：新增 `encyclopedia/`（按概念组织的词条库，17 条、74 定理、50 例）与 `tools/entry_lint.py`；`datasets/README.md` 升为八类。
 - 后续见 [CHANGELOG.md](../CHANGELOG.md)。

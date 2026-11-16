@@ -1,0 +1,110 @@
+{
+  "id": "topology/fiber-bundle",
+  "title": "纤维丛",
+  "aliases": ["fiber bundle", "fibre bundle", "F-丛", "扭曲乘积"],
+  "category": "topology",
+  "summary": "局部像乘积 U×F、整体靠转移函数粘合的空间；局部平凡性把局部构造提升为整体对象，转移函数决定丛的扭曲。",
+  "definition": {
+    "text": "设 E、B 是流形，π: E → B 是连续满射。若存在流形 F，使得每个 b ∈ B 都有开邻域 U ∋ b 与同胚 φ: π^{-1}(U) → U × F 满足 π = pr_1 ∘ φ（pr_1 为到 U 的第一投影），则称 (E, π, B, F) 为纤维丛（fiber bundle），E 为全空间、B 为底空间、F 为纤维、φ 为局部平凡化。取开覆盖 {U_i} 与各自的 φ_i，在重叠 U_ij = U_i ∩ U_j 上定义转移函数 f_ij = φ_i ∘ φ_j^{-1}: U_ij × F → U_ij × F；它保持纤维（pr_1 ∘ f_ij = pr_1），并在三重叠 U_ijk 上满足 cocycle 条件 f_ij ∘ f_jk = f_ik。反之，任给满足这些条件的 {f_ij}，可将 ⊔_i U_i × F 沿重叠按 f_ij 粘合得到丛。若两丛之间存在与投影交换的同胚 h: E → E'（即 π' ∘ h = π），则称二者同构（等价）。",
+    "notation": "E（全空间）, B（底空间）, F（纤维）, π（投影）, {U_i}（平凡化开覆盖）, φ_i: π^{-1}(U_i) → U_i × F（局部平凡化）, U_ij = U_i ∩ U_j, f_ij = φ_i ∘ φ_j^{-1}（转移函数）, F → E → B（简记）"
+  },
+  "theorems": [
+    {
+      "name": "粘合构造与 cocycle 条件（补）",
+      "statement": "设 B 有开覆盖 {U_i}，F 是流形。给出一族同胚 f_ij: U_ij × F → U_ij × F，均与到 U_ij 的第一投影交换。若 f_ii = id 且在三重叠 U_ijk 上 f_ij ∘ f_jk = f_ik，则存在以 F 为纤维的纤维丛 π: E → B，其转移函数恰为 f_ij；并且这样的丛在保持 {U_i} 与 {f_ij} 的意义下唯一。",
+      "proof": {
+        "status": "complete",
+        "steps": [
+          {"no": 1, "text": "在 X = ⊔_i ({i} × U_i × F) 上定义关系 (i,b,v) ~ (j,b,f_ij(b,v))（要求 b ∈ U_ij）。", "why": "f_ii = id 给自反性；由 cocycle 取 i = k 得 f_ij ∘ f_ji = f_ii = id，给对称性；f_ij ∘ f_jk = f_ik 给传递性。故 ~ 是等价关系。"},
+          {"no": 2, "text": "令 E = X/~，π([i,b,v]) = b。", "why": "f_ij 与第一投影交换，所以 b 与代表元的选择无关，π 良定义；商映射连续且 π 由连续映射诱导，故 π 连续。"},
+          {"no": 3, "text": "固定 i，定义 ψ_i: U_i × F → π^{-1}(U_i)，(b,v) ↦ [i,b,v]。", "why": "同一 U_i 内不同点不等价，故 ψ_i 是连续双射；其逆由商映射在 {i}×U_i×F 上的限制给出，连续且开（f_ij 是同胚），所以 ψ_i 是同胚。"},
+          {"no": 4, "text": "取 φ_i = ψ_i^{-1}，则 φ_i ∘ φ_j^{-1}(b,v) = (b, f_ij(b,v))。", "why": "把 [j,b,v] 用等价关系改写成 [i,b,f_ij(b,v)] 后直接读出。"},
+          {"no": 5, "text": "唯一性：若 E' 有同覆盖的平凡化 φ'_i 且转移函数也是 f_ij，则 h := φ'_i ∘ φ_i^{-1} 逐片定义且与 i 无关，拼成整体同胚 E → E'。", "why": "在 U_ij 上 φ'_i ∘ φ_i^{-1} = φ'_j ∘ φ_j^{-1} 等价于 f'_ij = f_ij；故 h 良定义并与投影交换。"}
+        ],
+        "gap_note": "原书只写出粘合图 (3.2) 而未验证等价关系与局部平凡性；上面 (1)–(5) 是补出的完整论证。"
+      },
+      "sources": [{"book": "Tachikawa, Algebraic Topology for Physicists", "section": "3.1", "pages": [28, 29]}]
+    },
+    {
+      "name": "柱面与 Möbius 带作为丛不同构",
+      "statement": "C = S^1 × [-1,1]（柱面）与 M = [0,1]×[-1,1]/((0,t) ~ (1,-t))（Möbius 带）都是以 S^1 为底、以 [-1,1] 为纤维的纤维丛，但二者不同构。",
+      "proof": {
+        "status": "complete",
+        "steps": [
+          {"no": 1, "text": "∂C = S^1×{-1} ⊔ S^1×{+1}，是两个互不相交的圆。", "why": "乘积流形的边界是各因子边界的并，而 [-1,1] 的边界是两个点。"},
+          {"no": 2, "text": "∂M 是单独一条圆周。", "why": "沿 (0,t) ~ (1,-t) 粘合矩形：上边 t=1 从 (0,1) 到 (1,-1)，下边 t=-1 从 (0,-1) 到 (1,1)，四条边界线段首尾相接成一闭环；追踪端点即可验证。"},
+          {"no": 3, "text": "若存在丛同构 h: C → M，则 h 把 ∂C 同胚地送到 ∂M。", "why": "同胚把边界映到边界，且 h 在整个全空间上是同胚。"},
+          {"no": 4, "text": "但 S^1 ⊔ S^1 与 S^1 不同胚（连通分支数 2 对 1），矛盾。", "why": "连通分支数是拓扑不变量。"}
+        ],
+        "gap_note": ""
+      },
+      "sources": [{"book": "Tachikawa, Algebraic Topology for Physicists", "section": "3.1", "pages": [28, 29]}]
+    },
+    {
+      "name": "自由作用的轨道投影是纤维丛（缺 slice 定理）",
+      "statement": "设紧致李群 G 光滑且自由地作用在流形 M 上（每个 m 的稳定化子平凡）。则轨道投影 p: M → M/G 是以 G 为纤维的纤维丛，即 G → M → M/G。",
+      "proof": {
+        "status": "sketch",
+        "steps": [
+          {"no": 1, "text": "对每个 m，映射 g ↦ mg 是从 G 到轨道 Gm 的连续单射。", "why": "自由性保证单射；G 紧、轨道 Hausdorff，故它是同胚，每条纤维 ≅ G。"},
+          {"no": 2, "text": "在 m 处取 G-不变的切片（slice）S，使 M 在轨道 Gm 附近微分同胚于 G × S，且 M/G 在轨道附近同胚于 S。", "why": "这一步是紧群作用的切片（管状邻域）定理，原书未展开。"},
+          {"no": 3, "text": "于是 p^{-1}(U) ≅ U × G（U 为轨道在 M/G 中的邻域），转移函数由切片的选择给出且光滑，p 是纤维丛。", "why": "把第 2 步逐点拼起来；切片的光滑依赖给出转移函数的光滑性。"}
+        ],
+        "gap_note": "原书（命题 3.7）只叙述未证明，缺口正是第 2 步的切片/管状邻域定理（G 紧）。注意「自由」单独不够：若作用非 proper，轨道可能稠密（例如 R 在 T^2 上的无理流作用），商空间甚至不 Hausdorff，更不是丛。"
+      },
+      "sources": [{"book": "Tachikawa, Algebraic Topology for Physicists", "section": "3.2", "pages": [29, 29]}]
+    }
+  ],
+  "examples": [
+    {
+      "name": "柱面与 Möbius 带的转移函数",
+      "setup": "取 S^1 的开覆盖 U_1 = S^1 ∖ {1}、U_2 = S^1 ∖ {-1}，则 U_12 是两个不交开弧 A、B。U_i 可缩，故柱面与 Möbius 带在每个 U_i 上都能取平凡化。",
+      "computation": [
+        {"no": 1, "text": "柱面 C = S^1×[-1,1]：在 A、B 两个分量上转移函数都是恒等 f_12(b,t) = (b,t)，即分量值 +1。", "why": "整体是乘积，两个 U_i 上的平凡化都可以取成同一个全局投影。"},
+        {"no": 2, "text": "Möbius 带：沿其中一个分量转移为恒等，沿另一个分量为反射 f_12(b,t) = (b,-t)，即分量值 −1。", "why": "由 (0,t) ~ (1,-t) 的粘合，绕底圆走一圈回到原处时纤维坐标翻转一次，两次平凡化的差别正是这个翻转。"},
+        {"no": 3, "text": "该 ±1 不能靠重选平凡化消去。", "why": "若 f_12 = h_2^{-1} h_1，h_i 是 U_i 上的非零实函数。U_1、U_2 连通，故 h_1、h_2 的符号各自恒定，于是 h_2^{-1}h_1 在 A、B 上同号；而 f_12 在 A、B 上异号，矛盾。"},
+        {"no": 4, "text": "因此 Möbius 作为实线丛非平凡，这个 Z_2 值转移函数就是 w_1 ∈ H^1(S^1;Z_2) 的非零代表。", "why": "w_1 由转移函数行列式的符号给出（原书 7.2.2，定义 7.5）。"}
+      ],
+      "result": "柱面：转移函数恒为 +1，平凡；Möbius 带：一个分量上为 −1，不可消去，故非平凡、w_1 ≠ 0。",
+      "sources": [
+        {"book": "Tachikawa, Algebraic Topology for Physicists", "section": "3.1", "pages": [28, 29]},
+        {"book": "Tachikawa, Algebraic Topology for Physicists", "section": "7.2.2", "pages": [105, 105]}
+      ]
+    },
+    {
+      "name": "Hopf 纤维化 S^1 → S^3 → S^2 的显式纤维",
+      "setup": "S^3 = {(u,v) ∈ C^2 : |u|^2 + |v|^2 = 1}，S^2 = {(x,y,z) ∈ R^3 : x^2+y^2+z^2 = 1}，定义 π(u,v) = (2 Re(u v̄), 2 Im(u v̄), |u|^2 − |v|^2)。",
+      "computation": [
+        {"no": 1, "text": "π 的像落在 S^2 上：x^2+y^2 = 4|u|^2|v|^2，z^2 = (|u|^2−|v|^2)^2，相加得 (|u|^2+|v|^2)^2 = 1。", "why": "直接展开，并用 |u v̄|^2 = |u|^2|v|^2 与归一化条件。"},
+        {"no": 2, "text": "把 (u,v) 换成 (cu,cv)（|c| = 1）时 π 不变。", "why": "u v̄ 乘以 c c̄ = |c|^2 = 1；因此纤维至少含一个 U(1) 轨道。"},
+        {"no": 3, "text": "反之，相同的像只差一个模 1 复因子：任一 (u,v) 可写成 (cos(θ/2)e^{iψ}, sin(θ/2)e^{i(φ+ψ)})，其像为 (sinθ cosφ, sinθ sinφ, cosθ)。", "why": "这是球坐标下的标准参数化（原书式 3.15）；θ、φ 由像唯一确定，ψ 任意，故纤维恰为整个 U(1) 轨道。"},
+        {"no": 4, "text": "每条纤维是以 ψ 为参数的圆；在去掉南北极的两个半球上 ψ 给出局部平凡化。", "why": "半球可缩，取 φ 为纤维坐标即得 π^{-1}(U) ≅ U × S^1，转移函数为 U(1) 值的相位差。"}
+      ],
+      "result": "S^1 → S^3 → S^2；纤维由整体相位 ψ 参数化，dim S^3 = 3 = 1 + 2，与 Bloch 球上量子态的相位自由度为同一件事。",
+      "sources": [{"book": "Tachikawa, Algebraic Topology for Physicists", "section": "3.2", "pages": [31, 33]}]
+    }
+  ],
+  "physics": [
+    {"claim": "物质场是纤维丛的截面；规范场是主丛的联络，局部平凡化的选取对应规范的选择。", "why": "原书 3.7 在标准模型语境下把规范场写成主 G-丛的联络、把 Higgs 与费米子写成关联向量丛的截面；局部平凡化改变时截面按转移函数变换，正是规范变换。", "sources": [{"book": "Tachikawa, Algebraic Topology for Physicists", "section": "3.7", "pages": [44, 44]}]}
+  ],
+  "pitfalls": [
+    "纤维丛不是纤维化：fibration 只要求同伦提升性质，不必局部平凡；每个纤维丛是纤维化，反之不然。",
+    "纤维同胚、底空间同胚都不足以保证丛同构：柱面与 Möbius 带是标准反例。",
+    "「自由作用」本身不足以保证商映射是纤维丛，需要紧性/properness 与切片定理。",
+    "转移函数的方向约定（f_ij = φ_i ∘ φ_j^{-1} 还是反过来）会让 w_1、c_1 的符号整体翻转；同一篇文字里必须固定一种。",
+    "不要把「局部平凡」误当成「整体平凡」：只有转移函数是上边缘时才平凡。"
+  ],
+  "related": [
+    {"id": "topology/principal-bundle", "why": "主丛是纤维为群、且群在纤维上自由传递的纤维丛"},
+    {"id": "topology/vector-bundle", "why": "向量丛是纤维为向量空间、转移函数线性的纤维丛"},
+    {"id": "topology/tangent-bundle", "why": "切丛是流形上最典型的向量丛"},
+    {"id": "topology/hopf-fibration", "why": "Hopf 纤维化是 S^1 → S^3 → S^2 的非平凡例子"},
+    {"id": "geometry/manifold", "why": "底空间与全空间都是流形"}
+  ],
+  "sources": [
+    {"book": "Tachikawa, Algebraic Topology for Physicists", "edition": "2024 notes", "url": ""}
+  ],
+  "rights": "rewritten",
+  "status": "draft",
+  "reviewed_by": []
+}

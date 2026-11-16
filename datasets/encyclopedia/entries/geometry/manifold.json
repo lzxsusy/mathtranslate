@@ -1,0 +1,74 @@
+{
+  "id": "geometry/manifold",
+  "title": "流形",
+  "aliases": ["manifold", "微分流形", "smooth manifold"],
+  "category": "geometry",
+  "summary": "局部像欧氏空间、转移映射光滑的拓扑空间；一切局部的微积分都能无矛盾地搬上去。",
+  "definition": {
+    "text": "设 M 是拓扑空间。若存在开覆盖 {U_i} 与同胚 φ_i: U_i → V_i（V_i 为 R^n 的开集），使得任意 i,j 的转移映射 φ_j∘φ_i^{-1} 在其定义域上光滑，则称 M 为 n 维光滑流形（smooth manifold），{(U_i,φ_i)} 称为图册（atlas），(U_i,φ_i) 称为坐标卡（chart）。通常还要求 M 第二可数且 Hausdorff。",
+    "notation": "M（流形）, n=dim M, (U_i,φ_i)（坐标卡）, g_ij=φ_j∘φ_i^{-1}（转移映射）, TM（切丛）"
+  },
+  "theorems": [
+    {
+      "name": "正则值原像定理",
+      "statement": "设 F: M → N 是光滑映射，q ∈ N 是正则值（即对任意 p ∈ F^{-1}(q)，微分 dF_p: T_pM → T_qN 满秩）。则 F^{-1}(q) 是 M 的闭子流形，且 dim F^{-1}(q) = dim M − dim N。",
+      "proof": {
+        "status": "complete",
+        "steps": [
+          {"no": 1, "text": "取 p ∈ F^{-1}(q)。由 dF_p 满秩，存在 p 的坐标卡 (U,φ) 与 q 的坐标卡 (V,ψ)，使 ψ∘F∘φ^{-1} 在 φ(p) 处的雅可比前 dim N 行可逆。", "why": "dF_p 满秩 ⇔ 雅可比矩阵秩为 dim N；必要时重排坐标。"},
+          {"no": 2, "text": "由隐函数定理，在 p 的邻域内 F^{-1}(q) 恰为方程组 (ψ∘F∘φ^{-1})_1 = … = (ψ∘F∘φ^{-1})_{dim N} = 0 的解集，且可解出前 dim N 个坐标为其余坐标的光滑函数。", "why": "隐函数定理要求相应雅可比子块可逆，第 1 步已保证。"},
+          {"no": 3, "text": "于是 φ 把 F^{-1}(q)∩U 同胚地送到 R^{dim M − dim N} 的开集，且不同卡之间的转移映射是光滑的（因为它们都是环境流形 M 的转移映射的限制）。", "why": "光滑性在开子集上取限制仍光滑。"},
+          {"no": 4, "text": "p 任意，故 F^{-1}(q) 是嵌入子流形；又 q 在 N 中闭，F 连续，故 F^{-1}(q) 在 M 中闭。", "why": "闭集的原像闭。"}
+        ],
+        "gap_note": ""
+      },
+      "sources": [
+        {"book": "Tachikawa, Algebraic Topology for Physicists", "section": "2.2", "pages": [13, 16]}
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "name": "球面与射影空间",
+      "setup": "S^n = {x ∈ R^{n+1} : |x|² = 1}；RP^n = S^n/(x ~ −x)；CP^n = S^{2n+1}/U(1)。",
+      "computation": [
+        {"no": 1, "text": "S^n：取 f(x)=|x|²，则 1 是正则值（∇f=2x ≠ 0 于 S^n 上），由正则值原像定理得 dim S^n = n。", "why": "直接用定理。"},
+        {"no": 2, "text": "RP^n：在 S^n 上取对径映射的自由作用，商映射是 2 重覆盖，故 RP^n 局部同胚于 S^n，维数仍为 n。", "why": "覆盖映射是局部同胚；流形性由局部图册继承。"},
+        {"no": 3, "text": "CP^n：S^{2n+1} 上 U(1) 作用自由（z 与 e^{iθ}z 不同点），商映射局部截面存在，故 CP^n 是 2n 维流形。", "why": "自由紧群作用的商是流形（轨道空间局部是 slice）。"}
+      ],
+      "result": "dim S^n = n，dim RP^n = n，dim CP^n = 2n。",
+      "sources": [
+        {"book": "Tachikawa, Algebraic Topology for Physicists", "section": "2.4", "pages": [18, 23]}
+      ]
+    },
+    {
+      "name": "不可定向曲面",
+      "setup": "Möbius 带与 Klein 瓶都不能嵌入 R^3 为双侧曲面。",
+      "computation": [
+        {"no": 1, "text": "Möbius 带：把矩形 [0,1]×[0,1] 的 (0,y) 与 (1,1−y) 粘合，得到无边流形；沿中圈走一圈，局部定向翻转，故不可定向。", "why": "定向由切空间基的连续选择定义；闭路平行移动后基的定向改变。"},
+        {"no": 2, "text": "Klein 瓶：把矩形的 (0,y)~(1,y) 与 (x,0)~(1−x,1) 粘合，同样得到无边紧曲面，且第一 Stiefel–Whitney 类 w_1 ≠ 0。", "why": "w_1 是定向障碍；Klein 瓶的 w_1 非零。"}
+      ],
+      "result": "Möbius 带与 Klein 瓶不可定向；可定向性可用 w_1 ∈ H^1(M;Z_2) 判定。",
+      "sources": [
+        {"book": "Tachikawa, Algebraic Topology for Physicists", "section": "2.5", "pages": [24, 26]}
+      ]
+    }
+  ],
+  "physics": [
+    {"claim": "场论的位形空间通常是流形（或带奇点的极限），其上的纤维丛描述场的拓扑性质。", "why": "例如 U(1) 规范场的位形空间是联络空间模去规范群，底空间是时空流形。", "sources": [{"book": "Tachikawa, Algebraic Topology for Physicists", "section": "3.7", "pages": [44, 44]}]}
+  ],
+  "pitfalls": [
+    "「闭流形」指紧致且无边，不是拓扑闭集。",
+    "流形的商未必是流形：R/Z_2 在 0 处是 orbifold 奇点。",
+    "正则值原像定理要求 q 是正则值；F^{-1}(q) 在临界值处可能不是流形。"
+  ],
+  "related": [
+    {"id": "topology/fiber-bundle", "why": "切丛是流形上最重要的纤维丛"}
+  ],
+  "sources": [
+    {"book": "Tachikawa, Algebraic Topology for Physicists", "edition": "2024 notes", "url": ""}
+  ],
+  "rights": "rewritten",
+  "status": "reviewed",
+  "reviewed_by": ["lead"]
+}

@@ -1,0 +1,156 @@
+{
+  "id": "geometry/lie-group",
+  "title": "李群：SO(3)、SU(2) 与 Spin 群",
+  "aliases": ["Lie group", "李群", "SO(3)", "SU(2)", "Spin(n)", "旋量", "spinor", "double cover", "二重覆盖", "四元数"],
+  "category": "geometry",
+  "summary": "李群是同时为群与光滑流形的对象。三维旋转群 SO(3) 的二重覆盖是 SU(2)≅S^3，于是 SO(3)≅RP^3，其万有覆盖即 Spin(3)=SU(2)。",
+  "definition": {
+    "text": "李群（Lie group）是一个集合 G，同时具有群结构（乘法与取逆）与光滑流形结构，且乘法 G×G→G 与取逆 G→G 都是光滑映射。矩阵群是最常见的例子：U(n) = {M∈M_n(C) | M†M = I}；SU(n) = {M∈U(n) | det M = 1}；O(n) = {R∈M_n(R) | R^T R = I}；SO(n) = {R∈O(n) | det R = 1}，它由 R^n 中保持定向的旋转组成；四元数酉群 Sp(n) = {M∈M_n(H) | M†M = I}，其中 H = span_R{1,i,j,k} 是四元数代数，满足 i²=j²=k²=−1、ij=−ji=k 等乘法关系（本书 2.17 式）。低维时这些群与球面重合：S^1 = U(1) = SO(2)，S^3 = SU(2) = Sp(1)。每个李群 G 有单位元的连通分支 G₀，以及万有覆盖 G̃→G，它是一个单连通李群，可以写成 G = G̃/Γ，其中 Γ = π1(G) 是离散中心子群。SO(n)（n≥3）不是单连通的，它的万有覆盖叫 Spin(n)，于是有一列二重覆盖 {±1} → Spin(n) → SO(n)；Spin(3) 就是 SU(2)。",
+    "notation": "G（李群）, G̃（万有覆盖）, Γ=π1(G)（基本群，离散子群）, O(n), SO(n), U(n), SU(n), Sp(n)（矩阵群）, H（四元数）, Im H = span{i,j,k}≅R^3, S^n（单位球面）, M_n(K)（K 上 n×n 矩阵）, Ad_q(v) = q v q^{-1}（q∈S^3⊂H 的共轭作用）, Spin(n)（SO(n) 的万有覆盖）, π_k（第 k 同伦群）, χ（欧拉示性数）"
+  },
+  "theorems": [
+    {
+      "name": "SU(2) ≅ S^3（原书只给参数化，此处补全）",
+      "statement": "特殊酉群 SU(2) 与三维球面 S^3 同胚，并且作为李群同构：S^3 上的群结构由单位四元数的乘法给出。",
+      "proof": {
+        "status": "complete",
+        "steps": [
+          {"no": 1, "text": "先写出 SU(2) 的一般元素。设 A = [[a,b],[c,d]]∈SU(2)。由 A†A = I、det A = 1 可解出 d = ā、c = −b̄，故 A 必形如 [[z, −w̄],[w, z̄]]，并满足 |z|² + |w|² = 1。", "why": "把酉性四条方程与 det ad−bc=1 联立，直接消元即得；记 z=a、w=−b̄ 即得所示形式。"},
+          {"no": 2, "text": "把 A 与四元数 q = z + w j 对应（z,w∈C，j 是四元数单位）。则 A ↦ q 是双射，且 |z|²+|w|² = |q|²。于是 SU(2) 作为集合等于 {q∈H | |q| = 1} = S^3 ⊂ H ≅ R^4。", "why": "C² ≅ R^4，方程 |z|²+|w|²=1 正是单位球面；而 det 条件恰好化为四元数范数等于 1。"},
+          {"no": 3, "text": "验证乘法：四元数乘法表 i²=j²=k²=−1、ij=−ji=k、jk=−kj=i、ki=−ik=j 与矩阵乘法在 [[z,−w̄],[w,z̄]] 上逐项一致，所以 A(q₁q₂) = A(q₁)A(q₂)；单位四元数对乘法封闭、取逆为共轭，构成群。", "why": "把 q₁ q₂ 的实部与虚部按乘法表展开，与两个 SU(2) 矩阵相乘的结果比对即可（原书 2.18 式即此乘法表）。"},
+          {"no": 4, "text": "双射连续、群同构、且逆映射连续（S^3 紧、SU(2) 为 Hausdorff 空间，紧空间到 Hausdorff 的连续双射是同胚），故 SU(2) ≅ S^3 为李群同构。", "why": "李群同构要求群同构加微分同胚；紧性把「连续双射」升级为同胚。"}
+        ],
+        "gap_note": ""
+      },
+      "sources": [
+        {"book": "Tachikawa, Algebraic Topology for Physicists", "section": "2.2.3", "pages": [15, 15]}
+      ]
+    },
+    {
+      "name": "SO(3) ≅ RP^3，且 {±1} → SU(2) → SO(3) 是二重覆盖（原书只给结论，此处补证）",
+      "statement": "存在满同态 π: SU(2) → SO(3)，其核为 {±1}；因此 SO(3) ≅ SU(2)/{±1} ≅ S^3/{±1} = RP^3，且 π 是二重覆盖。",
+      "proof": {
+        "status": "complete",
+        "steps": [
+          {"no": 1, "text": "把纯虚四元数空间 Im H = span{i,j,k} 等同于 R^3。对单位四元数 q∈S^3 定义 Ad_q(v) = q v q^{-1}（v∈Im H）。由于 |q v q^{-1}| = |v|，Ad_q 是 R^3 的保范线性映射，即正交矩阵。", "why": "四元数范数满足 |q₁q₂| = |q₁||q₂|，故共轭保范；又 Ad_q 线性且可逆。"},
+          {"no": 2, "text": "Ad_q 的行列式恒为 +1：q ↦ det(Ad_q) 是 S^3 到 {±1} 的连续映射，S^3 连通且 det(Ad_1)=1，故 det 恒等于 1。于是 q ↦ Ad_q 给出同态 π: SU(2) → SO(3)。", "why": "连续函数在连通集上取值不能跳变；正交矩阵行列式只取 ±1。注：也可直接用「Ad_q 是旋转」来验证。"},
+          {"no": 3, "text": "核：Ad_q = id 当且仅当 q 与 i、j、k 都交换，当且仅当 q 是实数；结合 |q|=1 得 q = ±1。所以 ker π = {±1}。", "why": "由四元数乘法表，与 i 交换会迫使 j、k 的系数为零，故 q∈R。"},
+          {"no": 4, "text": "满射：S^3 紧连通，其像 π(S^3) 是 SO(3) 的紧连通子集；核有限说明 π 是局部微分同胚，像的维数等于 dim S^3 = 3 = dim SO(3)，故像既开又闭。又 SO(3) 连通（任一旋转都可经绕坐标轴的连续旋转实现），故像 = SO(3)。", "why": "紧集的像是闭的；局部微分同胚给开映射；连通空间里同时开闭的非空子集只能是全体。"},
+          {"no": 5, "text": "由同构定理 SO(3) ≅ S^3/{±1}；而对径等价 v ∼ −v 在 S^3 上的轨道空间正是 RP^3，故 SO(3) ≅ RP^3，且 π 的纤维是两点，即二重覆盖。", "why": "Ad_{−q} = Ad_q 因为 (−q)v(−q)^{-1} = q v q^{-1}；RP^n = S^n/{±1}（原书命题 2.32）。"}
+        ],
+        "gap_note": ""
+      },
+      "sources": [
+        {"book": "Tachikawa, Algebraic Topology for Physicists", "section": "3.2.2", "pages": [34, 34]},
+        {"book": "Tachikawa, Algebraic Topology for Physicists", "section": "3.6", "pages": [42, 42]}
+      ]
+    },
+    {
+      "name": "π1(SO(n)) = Z2（n ≥ 3，原书用长正合列归纳）",
+      "statement": "对 n ≥ 3，基本群 π1(SO(n)) ≅ Z2。",
+      "proof": {
+        "status": "complete",
+        "steps": [
+          {"no": 1, "text": "底情形 n=3：SO(3) ≅ RP^3，而 π1(RP^n) = Z2（原书 (4.34) 由覆盖 S^n→RP^n 的长正合列算出），故 π1(SO(3)) = Z2。", "why": "覆盖 S^3→RP^3 的 deck 变换群是 Z2，覆盖空间理论给出 π1(RP^3) = Z2。"},
+          {"no": 2, "text": "归纳步：有纤维化 SO(n−1) → SO(n) → S^{n−1}（原书命题 2.35，用 SO(n) 作用在 S^{n−1} 上，稳定子为 SO(n−1)）。其长正合列含 π2(S^{n−1}) → π1(SO(n−1)) → π1(SO(n)) → π1(S^{n−1})。", "why": "纤维化的同伦长正合列（原书 4.4 节）。"},
+          {"no": 3, "text": "当 n>3 时 n−1≥3，故 π1(S^{n−1}) = 0 且 π2(S^{n−1}) = 0。于是长正合列夹出 π1(SO(n)) ≅ π1(SO(n−1))。", "why": "两端为 0 的短正合列给出中间同构；π1(S^m)=0（m≥2）、π2(S^m)=0（m≥2）。"},
+          {"no": 4, "text": "从 n=3 出发归纳，对所有 n ≥ 3 得 π1(SO(n)) = Z2。", "why": "归纳假设与第 3 步的同构逐级传递。"}
+        ],
+        "gap_note": ""
+      },
+      "sources": [
+        {"book": "Tachikawa, Algebraic Topology for Physicists", "section": "4.4.2", "pages": [58, 59]}
+      ]
+    },
+    {
+      "name": "π1(G) = Γ 与 Spin(n) 是 SO(n) 的万有覆盖（原书 Fact 4.57 复述）",
+      "statement": "设 G 是连通李群，G̃ 是它的万有覆盖，G = G̃/Γ。则 π1(G) ≅ Γ。特别地取 G = SO(n)（n≥3），π1(SO(n))=Z2 给出二重覆盖 {±1} → Spin(n) → SO(n)，即 Spin(n) 是 SO(n) 的万有覆盖。",
+      "proof": {
+        "status": "complete",
+        "steps": [
+          {"no": 1, "text": "Γ → G̃ → G 是主 Γ-丛，因此是同伦纤维化；其同伦长正合列的一段为 π1(G̃) → π1(G) → π0(Γ) → π0(G̃)。", "why": "主丛是纤维化，长正合列适用（原书 4.4 节）。"},
+          {"no": 2, "text": "G̃ 单连通，故 π1(G̃)=0；G̃ 连通，故 π0(G̃)=0。于是 0 → π1(G) → π0(Γ) → 0 是短正合列，得 π1(G) ≅ Γ。", "why": "长正合列两端为零即得同构；Γ 离散，π0(Γ)=Γ。"},
+          {"no": 3, "text": "取 G = SO(n)（n≥3）。由 π1(SO(n)) = Z2 得 Γ = Z2，即万有覆盖是一个二重覆盖；它就是 Spin 群，故有 {±1} → Spin(n) → SO(n)。", "why": "万有覆盖在 SO(n) 情形定义即 Spin(n)（原书 (4.58)）。"}
+        ],
+        "gap_note": ""
+      },
+      "sources": [
+        {"book": "Tachikawa, Algebraic Topology for Physicists", "section": "4.5", "pages": [63, 63]}
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "name": "SO(3) 的拓扑账本：维数、同伦群、χ",
+      "setup": "SO(3) 是 3×3 实正交矩阵且 det=1 的群，等价地 R^3 中所有旋转。已知 SO(3) ≅ RP^3，万有覆盖为 S^3 = SU(2) = Spin(3)。",
+      "computation": [
+        {"no": 1, "text": "维数：dim SO(n) = n(n−1)/2，故 dim SO(3) = 3·2/2 = 3。也可数 S^3 的维数 4−1=3，两者一致（同胚必同维数）。", "why": "SO(n) 是 M_n(R) 中由 R^T R=I 截出的子流形，该方程组给 n(n+1)/2 个独立约束；n(n−1)/2 即独立旋转参数的个数。"},
+        {"no": 2, "text": "π1(SO(3)) = π1(RP^3) = Z2，几何上来自二重覆盖 S^3 → RP^3 的 deck 变换群。", "why": "覆盖映射的纤维度数等于 π1 的阶（道路连通情形）；π1(RP^n)=Z2（原书 (4.34)）。"},
+        {"no": 3, "text": "π2(SO(3)) = 0、π3(SO(3)) = Z：覆盖映射 S^3 → SO(3) 对 k ≥ 2 诱导同构 π_k(S^3) ≅ π_k(SO(3))，故 π2 = π2(S^3) = 0、π3 = π3(S^3) = Z。", "why": "覆盖空间理论：k≥2 时万有覆盖与底空间的同伦群同构；π2(S^3)=0、π3(S^3)=Z（原书 4.5 节 Table 2 中 Sp(1)=S^3 一行给出 d=2 为 0、d=3 为 Z）。"},
+        {"no": 4, "text": "χ(SO(3)) = χ(RP^3) = 1 − 1 + 1 − 1 = 0（RP^3 有每维恰一个胞腔的胞腔分解）。", "why": "胞腔数的交错和等于 χ；python 复核 1-1+1-1 得 0。"}
+      ],
+      "result": "SO(3) 的账本：dim = 3，π1 = Z2，π2 = 0，π3 = Z，χ = 0，万有覆盖是 S^3 = SU(2) = Spin(3)。",
+      "sources": [
+        {"book": "Tachikawa, Algebraic Topology for Physicists", "section": "4.4.2", "pages": [58, 59]},
+        {"book": "Tachikawa, Algebraic Topology for Physicists", "section": "4.5", "pages": [63, 64]}
+      ]
+    },
+    {
+      "name": "四元数显式旋转公式：为什么 2π 旋转给出 −1",
+      "setup": "取单位四元数 q = cos(θ/2) + sin(θ/2)(n_x i + n_y j + n_z k)，其中 n = (n_x,n_y,n_z) 是 R^3 中单位向量。令 Ad_q(v) = q v q^{-1} 作用在 Im H ≅ R^3 上。",
+      "computation": [
+        {"no": 1, "text": "代入四元数乘法表展开 q v q^{-1}，得到 3×3 矩阵 R = cos θ·I + sin θ·[n]_× + (1 − cos θ)·n n^T，其中 [n]_× 是叉乘矩阵。这就是绕轴 n 转 θ 的旋转矩阵（Rodrigues 公式）。", "why": "把 v 写成纯虚四元数，按 i²=j²=k²=−1、ij=k 等逐项相乘，再按 i,j,k 的系数收集成矩阵。"},
+        {"no": 2, "text": "迹：tr R = 1 + 2 cos θ。θ=0 时 tr R = 3（单位阵）；θ=π 时 tr R = −1（绕轴转 180°，垂直于轴的两个平面方向各取 −1）。python 复核 1+2cos0=3、1+2cos π=−1。", "why": "旋转矩阵的迹等于特征值之和 = 1 + e^{iθ} + e^{−iθ} = 1+2cos θ；这与 Ad_q 的符号约定（半角）一致。"},
+        {"no": 3, "text": "θ = 2π 时 q = cos π + sin π·(…)= −1，但 Ad_{−1} = id：在 SO(3) 中 2π 旋转就是单位元；而在 SU(2) 里 −1 ≠ 1，二维旋量表示下波函数乘 −1。", "why": "覆盖 {±1}→SU(2)→SO(3) 的核是 {±1}；旋量处在 SU(2) 的标准二维表示中，而非 SO(3) 的表示（原书 (3.47) 后的讨论）。"},
+        {"no": 4, "text": "因此 q 与 −q 给出同一个旋转矩阵：π 是严格的 2:1 映射，这正是「旋量双值」的几何来源。", "why": "Ad_{−q}(v) = (−q)v(−q)^{-1} = q v q^{-1} = Ad_q(v)。"}
+      ],
+      "result": "SU(2) → SO(3) 是 2:1 的覆盖；绕轴转 θ 时旋量波函数按 e^{iθ/2} 变换，故 θ=2π 给出 −1，θ=4π 才回到 +1。",
+      "sources": [
+        {"book": "Tachikawa, Algebraic Topology for Physicists", "section": "2.2.3", "pages": [15, 15]},
+        {"book": "Tachikawa, Algebraic Topology for Physicists", "section": "3.6", "pages": [42, 42]}
+      ]
+    },
+    {
+      "name": "维数核对：低维 Spin 群与球面的例外同构",
+      "setup": "用维数公式检验书 ch03 给出的低维同构：Spin(2)≅U(1)、Spin(3)≅SU(2)、Spin(4)≅SU(2)×SU(2)、Spin(5)≅Sp(2)、Spin(6)≅SU(4)。",
+      "computation": [
+        {"no": 1, "text": "dim SO(n) = n(n−1)/2，dim SU(n) = n²−1，dim Sp(n) = n(2n+1)，dim U(1) = 1。python 复核：SO(3)=3、SO(4)=6、SO(5)=10、SO(6)=15。", "why": "各群作为矩阵子流形的独立实参数个数。"},
+        {"no": 2, "text": "逐项核对：Spin(2)≅U(1)：1 = dim SO(2)=1；Spin(3)≅SU(2)：3 = 3；Spin(4)≅SU(2)×SU(2)：3+3 = 6 = dim SO(4)；Spin(5)≅Sp(2)：2·5 = 10 = dim SO(5)；Spin(6)≅SU(4)：16−1 = 15 = dim SO(6)。", "why": "同构的李群必同维数，这是必要条件；全部相符说明这些例外同构在维数上自洽（充分性需另行构造）。"},
+        {"no": 3, "text": "python 复核：3*2//2=3；6=3+3；10=2*5；15=4*4-1。", "why": "把对照表落成可执行算术，避免手算错位。"}
+      ],
+      "result": "低维例外同构的维数全部吻合；特别 Spin(3)=SU(2)=S^3 与 Spin(4)=SU(2)×SU(2) 给出 SO(3)、SO(4) 的万有覆盖。",
+      "sources": [
+        {"book": "Tachikawa, Algebraic Topology for Physicists", "section": "3.6", "pages": [43, 43]}
+      ]
+    }
+  ],
+  "physics": [
+    {"claim": "电子自旋 1/2 的波函数在 360° 旋转下变号（乘 −1），只有转 720° 才复原；这就是「旋量」的实验后果（中子干涉实验可观测）。", "why": "电子的波函数住在旋量丛里，变换规则是 SU(2) 的标准二维表示而不是 SO(3) 的表示；360° 对应 SU(2) 中的 −1，见本词条例子 2。", "sources": [{"book": "Tachikawa, Algebraic Topology for Physicists", "section": "3.6", "pages": [42, 42]}]},
+    {"claim": "任何可定向三维流形都有自旋结构，所以三维空间里总能定义电子；但 CP^2 不可自旋，纯引力背景下电子不能存在于 CP^2 上。", "why": "在 3 维时提升 SO(3)→SU(2) 的障碍 w_2 自动消失；4 维时 CP^2 的 w_2 非零，提升不可能（原书 Fact 3.43、3.46）。", "sources": [{"book": "Tachikawa, Algebraic Topology for Physicists", "section": "3.6", "pages": [42, 43]}]}
+  ],
+  "pitfalls": [
+    "SU(2) 与 SO(3) 不是同构：局部（李代数）相同，整体不同 —— SU(2)≅S^3 单连通，SO(3)≅RP^3 有 π1=Z2。",
+    "360° 旋转在 SO(3) 中就是单位元；在 SU(2) 中是 −I。说「SO(3) 的旋量表示」是错的，旋量是 SU(2)/Spin 的表示。",
+    "Spin(n) 不是 SO(n) 的子群（不要把 Spin(n) 写成 SO(n) 里的一堆矩阵）：它是 SO(n) 的二重覆盖，覆盖映射才是同态。",
+    "π1(SO(2)) = Z，不是 Z2；π1(SO(n))=Z2 只在 n≥3 成立，因为 SO(2)=S^1 可由角度整体提升。",
+    "不是所有球面都是李群：只有 S^0、S^1、S^3（原书 Fact 2.20）；S^2 上不存在李群结构（S^2 与 SO(3)/SO(2) 同胚但不群同构）。",
+    "Sp(n) 不是 SU(2n)：Sp(n) 是四元数酉群，维数 n(2n+1)，与 SU(2n) 的 4n²−1 不同。",
+    "SO(3) 的万有覆盖写 Spin(3) 或 SU(2) 都可以，但 Spin(4)=SU(2)×SU(2) 是例外，不能照搬成 Spin(n)=SU(n)。",
+    "李群的同伦群与流形的同伦群不要混：SO(3) 本身是 RP^3，而它作为群还有乘法结构；同伦群只看到前者，但 π1 正是二重覆盖的度数。"
+  ],
+  "related": [
+    {"id": "geometry/manifold", "why": "李群首先是一类特殊的光滑流形"},
+    {"id": "geometry/orientation", "why": "自旋结构以定向为前提，Spin 覆盖只对可定向流形讨论"},
+    {"id": "topology/covering-space", "why": "SO(3)=S^3/{±1} 与 Spin(n)→SO(n) 都是覆盖空间"},
+    {"id": "topology/spin-structure", "why": "把 SO(n) 转移函数提升到 Spin(n) 就是自旋结构"},
+    {"id": "topology/fiber-bundle", "why": "SO(n−1)→SO(n)→S^{n−1} 与二重覆盖都是主丛/纤维化"},
+    {"id": "topology/homotopy-group", "why": "π1、π2、π3 的账本由长正合列与覆盖算出"},
+    {"id": "geometry/connected-sum", "why": "同章 2.3 节用连通和构造曲面，2.2.3 节则用群作用构造流形"}
+  ],
+  "sources": [
+    {"book": "Tachikawa, Algebraic Topology for Physicists", "edition": "2024 notes", "url": ""}
+  ],
+  "rights": "rewritten",
+  "status": "draft",
+  "reviewed_by": []
+}

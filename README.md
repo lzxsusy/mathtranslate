@@ -124,7 +124,7 @@ Bourbaki 报告、Astérisque 专辑、arXiv 预印本、论文集（proceedings
 | `papers/WIT-1989-JONES/` | **威腾 1989 CS/Jones 论文研讨班**（第二轮解经试点）：六场研讨记录、claims/questions 数据、教材核查；交付两版讲义——**49 页连续叙事讲义**（`deliverables/lecture/`，可作课程主文本）与 **97 页逐句注疏版**（`deliverables/reading_note/`），均含 LaTeX 源码、一键构建工程、协作流程记录，并有打包下载 `WIT-1989-JONES-v1.0.zip` |
 | `08_source_code/` | **每部译本的完整工程**：`工程文件/`（BRIEF、构建脚本、交付清单、术语表、校对记录、逐章报告）+ `源码/`（LaTeX 源与插图） |
 | `07_refs_nlab/` | **nLab 参考资料库**（几何 Langlands 线专用）：120 条 nLab 条目摘要（含 `last_revised`，可直接写进译注来源行）+ 37 份替代来源卡（nLab 只有存根时改引 A 级教材 / MathWorld / Stacks）+ 110 条来源真实性抽查记录 |
-| `datasets/` | **可训练数据集**：数学推理条目（`math/`，命题+证明步骤+缺口+校验）、原文片段↔译文↔译法理由（`parallel/`）、精读卡（`deepread/`）、高光与难证标注（`highlights/`）、事件级工作流（`traces/`）、概念图谱（`kg/`）、held-out 评测（`bench/`）；规则见 `datasets/README.md`，权利分 `self / arxiv / book` 三层，`book` 只进 `_internal/` |
+| `datasets/` | **可训练数据集**：数学推理条目（`math/`，命题+证明步骤+缺口+校验）、原文片段↔译文↔译法理由（`parallel/`）、精读卡（`deepread/`）、高光与难证标注（`highlights/`）、事件级工作流（`traces/`）、概念图谱（`kg/`）、held-out 评测（`bench/`）、按概念组织的词条库（`encyclopedia/`）；规则见 `datasets/README.md`，权利分 `self / arxiv / book` 三层，`book` 只进 `_internal/` |
 | `site/` | 静态站点（`site/index.html` 双击即开，无需服务器） |
 
 ## `01_corpus_zh/`：语料的形态

@@ -1,0 +1,137 @@
+{
+  "id": "topology/vector-bundle",
+  "title": "向量丛与转移函数",
+  "aliases": ["vector bundle", "向量丛", "线丛", "complex line bundle"],
+  "category": "topology",
+  "summary": "纤维是向量空间、转移函数线性且取值 GL(n,K) 的纤维丛；它的拓扑由转移函数的上同调类刻画，截面就是物理场。",
+  "definition": {
+    "text": "设 B 是流形，K 是 R、C 或 H（实数维 k = 1, 2, 4）。B 上秩 n 的 K-向量丛是一个纤维丛 π: E → B，要求每条纤维 E_b = π^{-1}(b) 带 K-向量空间结构，且存在保持纤维线性的局部平凡化 φ: π^{-1}(U) → U × K^n（在每条纤维上是 K-线性同构）。取开覆盖 {U_i}，转移函数 g_ij: U_ij → GL(n,K) 光滑，按 f_ij(b,v) = (b, g_ij(b) v) 作用，并满足 cocycle 条件 g_ij g_jk = g_ik。n = 1 的复向量丛称为复线丛。E 的截面是光滑映射 ψ: B → E 满足 π ∘ ψ = id_B；全体截面记作 Γ(E)。在 E 上还可逐纤维做直和 E⊕F、张量积 E⊗F、对偶 E*（纤维取对偶空间）、复共轭 Ē（纤维取共轭复结构）；球丛 Sph(E) 把每条纤维中的单位球面 S^{kn−1} 取出，得到以球面为纤维的纤维丛。",
+    "notation": "E, B（底空间）, K = R/C/H, n（秩）, k = dim_R K, {U_i}（平凡化开覆盖）, φ_i: π^{-1}(U_i) → U_i × K^n, U_ij = U_i ∩ U_j, g_ij: U_ij → GL(n,K)（转移函数）, Γ(E)（截面空间）, E⊕F, E⊗F, E*, Ē, Sph(E)"
+  },
+  "theorems": [
+    {
+      "name": "粘合定理：cocycle 给出向量丛（补）",
+      "statement": "设 B 有开覆盖 {U_i}，给出一族光滑映射 g_ij: U_ij → GL(n,K) 满足 g_ii = id 与 g_ij g_jk = g_ik（在 U_ijk 上）。则存在秩 n 的 K-向量丛 E → B，其转移函数恰为 g_ij。",
+      "proof": {
+        "status": "complete",
+        "steps": [
+          {"no": 1, "text": "在 X = ⊔_i ({i} × U_i × K^n) 上定义 (i,b,v) ~ (j,b, g_ij(b) v)（b ∈ U_ij，矩阵按标准方式作用在列向量上）。", "why": "g_ii = id 给自反性；由 cocycle 取 i = k 得 g_ij g_ji = g_ii = id，故 g_ji = g_ij^{-1}，给对称性；g_ij g_jk = g_ik 给传递性。于是 ~ 是等价关系。"},
+          {"no": 2, "text": "令 E = X/~，π([i,b,v]) = b。", "why": "g_ij(b) 是 K^n 到自身的线性同构，不改变 b 的分量，故 b 与代表元无关，π 良定义且连续。"},
+          {"no": 3, "text": "每片 ψ_i: U_i × K^n → π^{-1}(U_i)，(b,v) ↦ [i,b,v] 是同胚。", "why": "同一 i 内除恒等外无别的等价，故 ψ_i 是连续双射；其逆由商映射限制连续给出，且 f_ij 是同胚保证商拓扑良好。"},
+          {"no": 4, "text": "取 φ_i = ψ_i^{-1}，则 φ_i ∘ φ_j^{-1}(b,v) = (b, g_ij(b) v)；它逐纤维 K-线性。", "why": "把 [j,b,v] 改写成 [i,b,g_ij(b)v] 后直接读出；乘法是线性的。"},
+          {"no": 5, "text": "光滑结构：g_ij 光滑，而 E 局部同构于 U_i × K^n，故 E 是光滑向量丛，且秩为 n。", "why": "转移函数的 C^∞ 相容性来自 g_ij 光滑。"}
+        ],
+        "gap_note": "原书把这一构造作为定义 3.21 的隐含内容，未单独证明；上面的 (1)–(5) 是补出的完整论证。"
+      },
+      "sources": [{"book": "Tachikawa, Algebraic Topology for Physicists", "section": "3.3", "pages": [34, 35]}]
+    },
+    {
+      "name": "同构类由转移函数的等价类决定（补）",
+      "statement": "两族转移函数 g_ij、g'_ij（同一覆盖）对应的向量丛同构，当且仅当存在光滑映射 A_i: U_i → GL(n,K) 使 g'_ij = A_i g_ij A_j^{-1} 在 U_ij 上成立。",
+      "proof": {
+        "status": "complete",
+        "steps": [
+          {"no": 1, "text": "若 F: E → E' 是丛同构，在 U_i 上写 φ'_i ∘ F ∘ φ_i^{-1}(b,v) = (b, A_i(b)v)。", "why": "F 与投影交换且逐纤维线性，故 A_i(b) 是 GL(n,K) 中元素，光滑依赖于 b。"},
+          {"no": 2, "text": "同一个 F 在 U_ij 上有两种写法，比较得 A_i = g'_ij A_j g_ij^{-1}，即 g'_ij = A_i g_ij A_j^{-1}。", "why": "φ_i 与 φ_j 之间差 g_ij；把 F = φ'^{-1}_i A_i φ_i 与 F = φ'^{-1}_j A_j φ_j 用 φ_i = F的复合式展开比较。"},
+          {"no": 3, "text": "反之给定满足该式的 {A_i}，逐片定义 F|_{π^{-1}(U_i)} = φ'^{-1}_i ∘ A_i ∘ φ_i。", "why": "重叠 U_ij 上两种定义的差异正好是 g'_ij = A_i g_ij A_j^{-1}，故 F 良定义。"},
+          {"no": 4, "text": "F 光滑、逐纤维线性双射且与投影交换，故是同构；综上同构类 = cocycle 的等价类。", "why": "A_i 光滑且取值 GL(n,K)，局部上 F 是 (b,v) ↦ (b, A_i(b)v)。"}
+        ],
+        "gap_note": "原书未证明，此处补出；注意同构不要求 A_i 的选取在重叠上一致，只要求 g'_ij 的共轭关系。"
+      },
+      "sources": [{"book": "Tachikawa, Algebraic Topology for Physicists", "section": "3.3", "pages": [34, 34]}]
+    },
+    {
+      "name": "度量把结构群约化到 O(n)/U(n)/Sp(n)（补）",
+      "statement": "设 E 是 B 上的 K-向量丛，且每条纤维带正定内积（K = R 时对称、K = C 时 Hermitian、K = H 时四元数 Hermitian），并光滑依赖于底点。则可在每个 U_i 上取局部正交标架，使转移函数取值于 O(n)、U(n) 或 Sp(n)。",
+      "proof": {
+        "status": "complete",
+        "steps": [
+          {"no": 1, "text": "在 U_i 上任取局部标架 s_1, …, s_n（即一组线性无关的局部截面）。", "why": "局部平凡化直接给出这样一组标架。"},
+          {"no": 2, "text": "对 (s_1, …, s_n) 作 Gram–Schmidt 正交化，得到正交标架 (e_1, …, e_n)。", "why": "内积正定，Gram–Schmidt 的分母 ⟨s,s⟩ 处处非零；内积光滑依赖 b，故 e_a 光滑。"},
+          {"no": 3, "text": "两套正交标架之间的过渡矩阵保持内积，故为正交矩阵（复、四元数情形为酉矩阵）。", "why": "若 e'_b = Σ_a M_ab e_a 且两组都正交归一，则 M 的列是标准正交基，即 M ∈ O(n)（或 U(n)、Sp(n)）。"},
+          {"no": 4, "text": "于是转移函数可全部取在紧子群 O(n) ⊂ GL(n,R)（对应地 U(n)、Sp(n)）中，即结构群约化。", "why": "转移函数就是过渡矩阵；特别地 TM 配上黎曼度规后结构群为 O(n)。"}
+        ],
+        "gap_note": "原书在 3.3 与 3.5 中只陈述这一约化，未给出证明；Gram–Schmidt 论证是补出的。"
+      },
+      "sources": [
+        {"book": "Tachikawa, Algebraic Topology for Physicists", "section": "3.3", "pages": [34, 35]},
+        {"book": "Tachikawa, Algebraic Topology for Physicists", "section": "3.5", "pages": [41, 41]}
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "name": "Möbius 丛复化后变平凡",
+      "setup": "设 L 是 S^1 上的实线丛，覆盖 U_1 = S^1 ∖ {1}、U_2 = S^1 ∖ {−1}，U_12 有两个分量 A、B，转移函数在一个分量上为 +1、另一个上为 −1（即 Möbius 带）。复化 L_C = L ⊗_R C 的纤维是 C，转移函数仍是 ±1 的实标量，但 regarded as complex number。",
+      "computation": [
+        {"no": 1, "text": "实情形：非零实函数在连通的 U_1、U_2 上符号恒定，故 h_2^{-1}h_1 在 A、B 上同号，无法等于在 A、B 上异号的 ±1。", "why": "若 L 平凡则 g_12 = h_2^{-1}h_1，与 Möbius 转移函数的符号矛盾。"},
+        {"no": 2, "text": "复情形：C^× 连通，可选取光滑 h_2: U_2 → C^× 使它在 A 附近取 +1、在 B 附近取 −1（沿 U_2 把 +1 连续旋转到 −1 再连续转回），h_1 ≡ 1。", "why": "只要 U_2 连通且目标 C^× 允许穿过复平面绕行，非零函数可以取到任意符号变化；这是实与复的本质差别。"},
+        {"no": 3, "text": "于是 g_12 = h_2^{-1} h_1 恰为 Möbius 的 ±1 转移函数，故 L_C 平凡。", "why": "平凡性判据：转移函数是上边缘（原书命题 3.10 的 GL(1) 版本）。"},
+        {"no": 4, "text": "这个 ±1 就是 w_1(L) ∈ H^1(S^1;Z_2)，L 非平凡；但复化后 w_1 信息丢失，c1(L_C) 可为零。", "why": "复线丛的第一陈类按转移函数绕数计算（7.18）；h_2 的绕数使 ±1 成为上边缘，绕数归零。"}
+      ],
+      "result": "Möbius 丛（实线丛）非平凡，w_1 ≠ 0；其复化 L_C 平凡（c1 = 0）。复化会丢掉实丛的部分拓扑信息。",
+      "sources": [
+        {"book": "Tachikawa, Algebraic Topology for Physicists", "section": "3.1", "pages": [28, 29]},
+        {"book": "Tachikawa, Algebraic Topology for Physicists", "section": "3.3", "pages": [35, 35]},
+        {"book": "Tachikawa, Algebraic Topology for Physicists", "section": "7.2.2", "pages": [105, 105]}
+      ]
+    },
+    {
+      "name": "CP^1 = S^2 上线丛的转移函数与陈数",
+      "setup": "CP^1 的齐次坐标 [z_0:z_1]；U_0 = {[1:z]} ≅ C（坐标 z = z_1/z_0），U_1 = {[w:1]} ≅ C（坐标 w = z_0/z_1 = 1/z）。tautological 线丛 O(-1) 的纤维是过原点的复直线本身。",
+      "computation": [
+        {"no": 1, "text": "在 U_0 上点 [1:z] 对应直线 span(1,z)，纤维坐标 v 表示向量 v(1,z)；在 U_1 上点 [w:1] 对应直线 span(w,1)，纤维坐标 u 表示 u(w,1)。", "why": "tautological 丛的纤维恰好是这条直线。"},
+        {"no": 2, "text": "重叠上 (1,z) = z(w,1)（因 w = 1/z），故 u = z v，即转移函数 g_01 = z。", "why": "同一向量在两种坐标下的表示比较：v(1,z) = v z (w,1) = u(w,1)，得 u = z v。"},
+        {"no": 3, "text": "赤道上 z = e^{iθ}，g_01 = e^{iθ}，绕数为 +1。", "why": "g_01 作为 S^1 → C^× 的映射，其绕数是标准结果 deg = 1。"},
+        {"no": 4, "text": "由 (7.18)，⟨c1(O(-1)), [S^2]⟩ = 绕数 = +1（符号随 Z_2 定向与转移函数方向约定可整体翻转）。", "why": "第一陈类由转移函数的绕数计算（原书 7.3.1）。"},
+        {"no": 5, "text": "对偶丛 O(1) = O(-1)* 的转移函数是 g_01^{-1} = 1/z，绕数 −1；O(1)⊗O(1) = O(2) 的转移函数是 z^2，绕数 2。", "why": "对偶取逆，张量积取矩阵/数的乘积；绕数相乘相加。"}
+      ],
+      "result": "⟨c1(O(-1)), [S^2]⟩ = 1，⟨c1(O(1)), [S^2]⟩ = −1，⟨c1(O(2)), [S^2]⟩ = 2；O(-1) 非平凡，其陈数是整数值的具体算出结果。",
+      "sources": [
+        {"book": "Tachikawa, Algebraic Topology for Physicists", "section": "3.3", "pages": [34, 35]},
+        {"book": "Tachikawa, Algebraic Topology for Physicists", "section": "7.3.1", "pages": [106, 107]},
+        {"book": "Tachikawa, Algebraic Topology for Physicists", "section": "2.2", "pages": [19, 19]}
+      ]
+    },
+    {
+      "name": "运算对应的转移函数",
+      "setup": "设 E、F 是同一底空间、同一覆盖上的 K-向量丛，转移函数分别为 g^E_ij、g^F_ij，秩为 n、m。",
+      "computation": [
+        {"no": 1, "text": "直和 E ⊕ F：转移函数为分块对角矩阵 diag(g^E_ij, g^F_ij)，秩 n + m。", "why": "纤维上把两个向量并排成 (v, w)，转移分别作用。"},
+        {"no": 2, "text": "张量积 E ⊗ F：转移函数为 g^E_ij ⊗ g^F_ij（Kronecker 积），秩 n·m。", "why": "纤维上取纯张量 v⊗w 的线性组合，转移张量化。"},
+        {"no": 3, "text": "对偶 E*：转移函数为 (g^E_ij^{-1})^T。", "why": "对偶基的变换矩阵是基变换矩阵的逆转置：⟨e^a, e_b⟩ = δ^a_b 迫使对偶标架按逆矩阵变换。"},
+        {"no": 4, "text": "复共轭 Ē（K = C 时）：转移函数为 conj(g^E_ij)。", "why": "共轭线性地作用在纤维上，把 C^n 的复结构翻转。"},
+        {"no": 5, "text": "对 CP^1 上的线丛 O(1)（转移函数 z）：O(1)* = O(-1) 转移为 1/z（绕数 −1）；O(1)⊗O(1) = O(2) 转移为 z^2（绕数 2）。", "why": "套用第 2、3 步的公式并计算绕数。"}
+      ],
+      "result": "E⊕F 的转移函数为 diag(g_E, g_F)，E⊗F 为 g_E⊗g_F，E* 为 (g_E^{-1})^T，Ē 为 conj(g_E)；由此 O(1)* = O(-1)、O(1)⊗O(1) = O(2)。",
+      "sources": [
+        {"book": "Tachikawa, Algebraic Topology for Physicists", "section": "3.3", "pages": [35, 35]},
+        {"book": "Tachikawa, Algebraic Topology for Physicists", "section": "7.3.1", "pages": [106, 107]}
+      ]
+    }
+  ],
+  "physics": [
+    {"claim": "量子力学中的波函数、Bloch 能带、Born–Oppenheimer 近似下的电子态都是向量丛的截面。", "why": "原书定义 3.22 之后的说明：场、波函数以及绝热近似（Born–Oppenheimer）与 Brillouin 区上的能带，都是「参数空间上的向量丛的截面」这一几何对象的具体来源。", "sources": [{"book": "Tachikawa, Algebraic Topology for Physicists", "section": "3.3", "pages": [35, 35]}]},
+    {"claim": "S^2 上自旋 1/2 的 Hamiltonian H = −(xσx + yσy + zσz) 的最低能带构成 S^2 上的复线丛，其球丛是 Hopf 丛。", "why": "H^2 = 1 使本征值只有 ±1；最低能 −1 的本征空间是一维复空间，随 (x,y,z) ∈ S^2 光滑变化成复线丛，其单位向量丛即 S^1 → S^3 → S^2（原书例 3.30）。", "sources": [{"book": "Tachikawa, Algebraic Topology for Physicists", "section": "3.3", "pages": [36, 37]}]}
+  ],
+  "pitfalls": [
+    "纤维同构不等于丛同构：必须在同一底空间上给出整体同构，转移函数满足共轭关系才算。",
+    "复线丛的转移函数可以取负值、可以绕行；实线丛则受符号约束——Möbius 丛复化变平凡就是例子。",
+    "不要用复化是否平凡去判断实丛是否平凡；也不要指望 c1 完全刻画复线丛（还需底空间的上同调）。",
+    "直和、张量、对偶的转移函数公式不同：对偶要取逆转置，张量积是 Kronecker 积；秩也按加/乘变化。",
+    "实丛的秩 n 对应纤维维数 n，复丛的秩 n 对应实维数 2n；引用处的「维数」要写清楚是 K-维还是 R-维。"
+  ],
+  "related": [
+    {"id": "topology/fiber-bundle", "why": "向量丛是转移函数线性的纤维丛"},
+    {"id": "topology/principal-bundle", "why": "关联丛 P ×_ρ V 把主丛实现为向量丛"},
+    {"id": "topology/tangent-bundle", "why": "切丛与余切丛是流形上最重要的一对向量丛"},
+    {"id": "topology/chern-class", "why": "c1 由复线丛的转移函数绕数算出"},
+    {"id": "topology/spin-structure", "why": "旋量丛是向量丛，自旋结构决定它能否存在"}
+  ],
+  "sources": [
+    {"book": "Tachikawa, Algebraic Topology for Physicists", "edition": "2024 notes", "url": ""}
+  ],
+  "rights": "rewritten",
+  "status": "draft",
+  "reviewed_by": []
+}

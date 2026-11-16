@@ -1,5 +1,30 @@
 # CHANGELOG
 
+## datasets v0.6 — 2026-11-16（词条库：按概念而不是按书组织）
+
+新增 `datasets/encyclopedia/`：第一本供料是立川裕二《物理学家用代数拓扑》，但分类轴是**概念词条**，
+不是书或章节。17 个词条、74 条定理、50 个例子；59 条证明为 complete（原书没证的标【补】），
+15 条为 sketch 并写 gap_note。
+
+- `datasets/encyclopedia/README.md`：定位（改写而非搬运）、词条字段、六条写作纪律（自足、证明完整、
+  例子要算、改写不复制、页码真实、诚实标注）、权利边界（`rights: rewritten`；单处引文 ≤60 字，
+  累计 ≤10%；不复制图）。
+- `datasets/encyclopedia/ENCYCLOPEDIA.md`：词条 JSON 规范（definition / theorems[proof.steps] /
+  examples / physics / pitfalls / related / sources）。
+- `datasets/encyclopedia/taxonomy.md`：约 45 个词条的总表与出处页码，SUSY 类目先占位。
+- `datasets/encyclopedia/entries/`：17 个 JSON。几何（流形、定向、连通和、李群）、丛论（纤维丛、
+  主丛、向量丛、切丛、自旋结构）、同伦（同伦群、长正合列、Hopf 纤维化、覆盖空间）、上同调
+  （微分形式、de Rham、Stokes、Mayer–Vietoris）。demo 词条流形为 reviewed，其余 draft。
+- `tools/entry_lint.py`：id/路径一致、类目白名单、summary 长度、complete 证明 ≥2 步且每步有 why、
+  sketch 必须有 gap_note、例子必须有 computation/result、页码 1–207、与译稿 12 字重合告警
+  （按符号断句，避免公式把句子拼成假重合）、`--index` 生成 index.jsonl。
+- 合规：`COMPLIANCE.md` §11 增第 9 条——只收改写词条，不收原书/译本章节；单处引文 ≤60 字、
+  累计 ≤10%；不复制原图；pages 必须真实；有异议按 §8 撤下。
+- `datasets/README.md` 升为「八类数据」，加 `encyclopedia/` 行与 `rights: rewritten`。
+
+后续：第二批 ch6–ch8（同调、示性类、Chern–Simons）、第三批 ch9–ch13（群上同调、旋量、K 理论、
+指标定理）；用户将提供带答案的习题集与人工精选例子；超对称场论词条是长期重点。
+
 ## datasets v0.5 — 2026-11-16（SEM-0604151 讲义生产的数据流）
 
 把「K–W 2006 分层解经本」的制作过程本身作为数据发布：不只是成品，还有**怎么一步步做出来的**。
