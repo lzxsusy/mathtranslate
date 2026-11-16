@@ -3,7 +3,7 @@
 # U02 证据官报告（R7 · v1 审计）
 
 > **审计对象**：`work/rounds/U02/report_v1.md`，实测 **46,023 B、256 行、md5 `5626799438a8528b2561adaba5605ba8`**。报告自检：B 164 / D 5 / C 6 条 locator，公式 108 处 50 种，汉字 7119。
-> **底本与页码**：B = Kapustin–Witten 2006，印刷页 N ↔ `C:\Users\admin\Desktop\witten-exegesis\papers\WIT-0604151-EMDGL\source\text\p{N+1:03d}.txt`（下称 `pNNN.txt`）；D = Frenkel 2009（`work/tmp/D/pNN.txt`）；C = Witten 2008（`work/tmp/C/pNN.txt`）。本单元 = B §3，pp.16–38。
+> **底本与页码**：B = Kapustin–Witten 2006，印刷页 N ↔ `source/text/p{N+1:03d}.txt`（下称 `pNNN.txt`）；D = Frenkel 2009（`work/tmp/D/pNN.txt`）；C = Witten 2008（`work/tmp/C/pNN.txt`）。本单元 = B §3，pp.16–38。
 > **范围说明**：审计进行时同目录出现 `report_v2.md`（50,590 B，23:07），**不在本次范围**，下文只判 v1。
 > **方法**：所有判定回到原文行；公式另用原页图（`source/pages/KW06-{页码+1}.png`，现存只有 pp.35–38 四张，加一张 `c352.png` 裁图）目视；locator/公式/汉字计数用脚本独立复现（§5）。
 

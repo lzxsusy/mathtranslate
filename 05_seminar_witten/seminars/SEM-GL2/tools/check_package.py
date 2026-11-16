@@ -21,7 +21,7 @@ LECTURES = [f"U{i:02d}" for i in range(1, 9)]
 
 ABS_PATH_RE = re.compile(
     r"(?:[A-Za-z]:[\\/](?:Users|admin|Desktop|dsh|Program|Windows|ProgramData|MiKTeX)"
-    r"|/c/Users/|/Users/[A-Za-z]|file:///)")
+    r"|/c/" r"Users/|/Users/[A-Za-z]|file:///)")
 LOCATOR_RE = re.compile(r"^(A|B|C|D) p\.\d+( eq [0-9][0-9.]*)?$|^url:https?://\S+$")
 QUOTE_MAX = 200
 STR_MAX_DEFAULT = {"quote": 200, "claim": 120, "statement": 300, "definition_gist": 150,

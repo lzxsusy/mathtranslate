@@ -3,7 +3,7 @@
 **复算对象**：Kapustin–Witten, *Electric–Magnetic Duality and the Geometric Langlands Program*, hep-th/0604151（记 B），§1–§2。
 **U01 范围**：印刷页 pp.2–16，对应逐页文本 `p003.txt`–`p017.txt`（映射：印刷页 N ↔ `p{N+1:03d}.txt`；§3 标题在 `p017.txt` 第 36 行）。
 **输入**：`work/rounds/U01/report_v1.md`（110 行，下称"报告"，行号即其行号）、`work/rounds/U01/crit_r4.jsonl`、`work/rounds/U01/crit_r6.jsonl`。
-**环境**：`C:\Users\admin\.dsh\dsh-runtimes\dsh-primary-runtime\dependencies\python\python.exe`（Python 3 + sympy 1.14.0）。所有计算见文末附录 A，可原样重跑。
+**环境**：`python`（Python 3 + sympy 1.14.0）。所有计算见文末附录 A，可原样重跑。
 **纪律**：五项全部完成，无"未完成"项；每条结论给算式/脚本与原文行号；报告原文引用逐字。
 
 ---
@@ -26,7 +26,7 @@ $$\tau = \frac{\theta}{2\pi} + \frac{4\pi i}{e^2}\qquad\text{(2.12，p011.txt:1�
 
 - $\operatorname{Im}\tau = \dfrac{4\pi}{e^2} > 0$（τ 落在上半平面）；
 - $\tau(\theta+2\pi) - \tau = \dfrac{2\pi}{2\pi} = 1$，虚部不变；
-- 因此 $T:\tau\mapsto\tau+1$ 时 $\Delta\operatorname{Re}\tau = 1$，只能来自 $\theta/2\pi$ 的 $+1$，即 $\theta\mapsto\theta+2\pi$；$\operatorname{Im}\tau$ 不变且 $e>0$，即 $e$ 不变（$g$ 不变）。
+- 因此 $…/tau+1$ 时 $\Delta\operatorname{Re}\tau = 1$，只能来自 $\theta/2\pi$ 的 $+1$，即 $\theta\mapsto\theta+2\pi$；$\operatorname{Im}\tau$ 不变且 $e>0$，即 $e$ 不变（$g$ 不变）。
 - 反向同理：$\theta\mapsto\theta+2\pi$、e 不变给出 $\tau\mapsto\tau+1$。
 
 所以 **T 与"θ→θ+2π、g 不变"是同一变换**，B 的原文也正是把 T 解释为 θ 平移（p012.txt:21–22：``T : τ → τ + 1`` 是 θ 平移 2π、任意 G 在 R⁴ 上的经典对称）。
@@ -146,14 +146,14 @@ $$n_g \;=\; \frac{|\alpha_{\rm long}|^2}{|\alpha_{\rm short}|^2}.$$
 
 余根集合直验（附录 A.3）：
 - $\alpha^\vee=2\alpha/|\alpha|^2$：B2 余根 $|\alpha|^2$ 分布 {2:4,4:4}（比 2）；C2 {1:4,2:4}（比 2）；G2 {2:6, 2/3:6}（比 3）；F4 {2:24,4:24}（比 2）；E8 {2:240}（比 1）。
-- 集合相等：$B_2$ 的余根集合 $=C_2$ 的根集合（True）；$C_2$ 的余根集合 $=B_2$ 的根集合（True）；$F_4$ 的余根集合 $=\{2\alpha:\alpha\text{ short}\}\cup\{\text{long}\}$（True）。
+- 集合相等：$B_2$ 的余根集合 $=C_2$ 的根集合（True）；$C_2$ 的余根集合 $=B_2$ 的根集合（True）；$F_4$ 的余根集合 $=\{2\alph…/text{ short}\}\cup\{\text{long}\}$（True）。
 - 显式根例子：B2 短 $(1,0)$（平方长 1）、长 $(1,1)$（2）；C2 短 $(1,1)$（2）、长 $(2,0)$（4）；G2 短 $(1,-1,0)$（2）、长 $(1,1,-2)$（6）；F4 短 $(1,0,0,0)$（1）、长 $(1,1,0,0)$（2）。G2 长根 (1,1,−2) 的余根 = (1/3,1/3,−2/3)，平方长 2/3。
 
 **回答"是 2、3 还是 4、9 或别的"**：$n_g=(\text{长}/\text{短})^2$，故 F4 为 **2**、G2 为 **3**、B/C 为 **2**；**4、9 是 $(|\alpha_l|/|\alpha_s|)^4=n_g^2$，不是 $n_g$**；长度比本身 √2、√3 不是整数，也不能直接进 (2.17) 的 $\sqrt{n_g}$。
 
 ### 3.3 与 (2.17) 及 Hecke 群的自洽
 
-对 $n_g=1,2,3$，$S=\begin{pmatrix}0&1/\sqrt{n_g}\\-\sqrt{n_g}&0\end{pmatrix}$ 满足 det=1、tr=0、$S^2=-I$（附录 A.3 旁边直算），作用为 $\tau\mapsto-1/(n_g\tau)$。令 $\tilde\tau=\sqrt{n_g}\,\tau$，则 $T:\tilde\tau\mapsto\tilde\tau+\sqrt{n_g}$，$S:\tilde\tau\mapsto-1/\tilde\tau$；而 $\sqrt2=2\cos(\pi/4)$、$\sqrt3=2\cos(\pi/6)$，即生成 Hecke 群 $H(\sqrt2)$、$H(\sqrt3)$，与 B 的 "Hecke groups"（p013.txt:4–6）一致。
+对 $n_g=1,2,3$，$S=\begin{pmatrix}0&1/\sqrt{n_g}\\-\sqrt{n_g}&0\end{pmatrix}$ 满足 det=1、tr=0、$S^2=-I$（附录 A.3 旁边直算），作用为 $\tau\mapsto-1/(n_g\tau)$。令 $\tilde\tau=\sqrt{n_g}\,\tau$，则 $…/sqrt{n_g}$，$…/tau$；而 $\sqrt2=2\cos(\pi/4)$、$\sqrt3=2\cos(\pi/6)$，即生成 Hecke 群 $H(\sqrt2)$、$H(\sqrt3)$，与 B 的 "Hecke groups"（p013.txt:4–6）一致。
 
 ### 3.4 与报告的差异
 
@@ -300,10 +300,10 @@ $$(\mathbf{1},\mathbf{2})_0\otimes[(\mathbf{2},\mathbf{1})_1\oplus(\mathbf{1},\m
 
 ## 附录 A：可重跑计算脚本
 
-运行方式（MSYS bash，工作目录 `C:\Users\admin\Desktop\威腾讨论班_第二期`）：
+运行方式（MSYS bash，工作目录 `工程根`）：
 
 ```bash
-PY="/c/Users/admin/.dsh/dsh-runtimes/dsh-primary-runtime/dependencies/python/python.exe"
+PY="…/python.exe"
 PYTHONIOENCODING=utf-8 "$PY" - <<'PYEOF'
 # ... 把下面任一代码块贴在这里 ...
 PYEOF

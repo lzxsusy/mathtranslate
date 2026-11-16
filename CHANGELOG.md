@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## seminar v1.0 — 2026-11-17（SEM-GL2 第二期八轮 + 合册）
+
+`05_seminar_witten/seminars/SEM-GL2/`：威腾讨论班第二期结项（draft-v1.0）。
+
+- **组织**：三文本轮读。B = Kapustin–Witten 2006（hep-th/0604151，231 页）切八节 U01–U08，
+  D = Frenkel《Gauge Theory and Langlands Duality》（arXiv:0906.2747，32 页）与
+  C = Witten《Mirror Symmetry, Hitchin's Equations, and Langlands Duality》（arXiv:0802.0999，15 页）
+  为全员通读的前置导读。每轮五拍：报告 → 三席质询 → 修订（before/after diff）→ 证据核验 → 独立复算 → 语料入库。
+- **产出**：8 份定稿报告（合计约 10 万汉字、约 2,100 处 `B p.N` 页锚）、8 份讲义、
+  112 条七类语料（reasoning 24 / concept 24 / challenge 16 / misconception 16 / qcard 16 / meta 8 / crosswalk 8）、
+  8 份 verify + 8 份 recalc（复算脚本可重跑）、合册 198 页 PDF、三文对读表 20 主题、盲区清单 40 条、训练价值终评。
+- **质量门**：每轮 `check_round.py` 0 error / 0 warn；语料 `check_package.py` 112 条 0 error；
+  合规 `--compliance` 0 error（无原文、页图、逐页文本、整节译文、本机路径）。
+- **副产物（真收获）**：讨论班抓出已发布解经本 SEM-0604151 的 **6 处实质错误**并回原页图核对后重编：
+  (3.52) 共轭位置写反（v1.2，5 处）；§4.2 (4.11)(4.20)、§10.5 (10.36)(10.41)(10.42)、§12.3 复 Hitchin
+  的下标 bar 丢失一族（v1.3，5 文件 8 式）。教训：locator 对得上不等于公式对，文本层抽取会系统性丢上划线。
+- **局限**：单次讨论水平；语料未经人类认证，只能标 dev；证据抽核是抽样；B 的严格化路线未展开。
+
 ## datasets v0.9 — 2026-11-16（路径积分资料卡：50 张）
 
 新增 `datasets/pathintegral/`：把李思《量子力学与几何》第 2 章「路径积分形式」拆成

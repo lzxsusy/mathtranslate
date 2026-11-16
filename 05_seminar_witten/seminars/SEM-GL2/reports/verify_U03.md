@@ -3,7 +3,7 @@
 # U03 `report_v1.md` 证据抽核（R7 · P4 证据官）
 
 - 审计对象：`work/rounds/U03/report_v1.md`（423 行 / 67,081 B，自检 locator B228/D12/C9）
-- 底本：B = K–W 2006 §4，`C:\Users\admin\Desktop\witten-exegesis\papers\WIT-0604151-EMDGL\source\text\pNNN.txt`（印刷页 N ↔ `p{N+1:03d}.txt`，pp.38–57 页脚逐页已核）；D = `work/tmp/D/pNN.txt`（页眉 1010–NN）；C = `work/tmp/C/pNN.txt`（页眉 = 印刷页号）
+- 底本：B = K–W 2006 §4，`source/text/pNNN.txt`（印刷页 N ↔ `p{N+1:03d}.txt`，pp.38–57 页脚逐页已核）；D = `work/tmp/D/pNN.txt`（页眉 1010–NN）；C = `work/tmp/C/pNN.txt`（页眉 = 印刷页号）
 - 页图：`source/pages/KW06.pdf` 400 dpi 渲染（PDF 页 = 印刷页 + 1），此轮页图在 `work/tmp/r7_verify/`（`view-042…048.png`、`crop-411.png`、`crop-420.png`、`crop-421-422.png`、`pg050-050.png`、`pg052-052.png`）
 - 判定口径：**命中** = 页与内容都对；**偏页** = 内容对、页码错（给出正确页）；**无据** = 该页（乃至全文）查不到支撑句
 
