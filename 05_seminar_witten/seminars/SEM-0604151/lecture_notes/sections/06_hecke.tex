@@ -1,0 +1,138 @@
+% ======================================================================
+%  06_hecke.tex —— 第 6 讲 核心等式：'t Hooft 算子 = Hecke 算子
+%  依据：Kapustin--Witten 2006 \S9--\S10（印刷 pp.123--184）
+% ======================================================================
+
+\section{核心等式：'t~Hooft 算子 = Hecke 算子}
+\label{sec:hecke}
+
+上一讲结尾留下一个问题：'t~Hooft 算子的特征膜（Hitchin 纤维上的 type~F 膜）与几何 Langlands 的 Hecke 特征层，是不是同一个东西？本讲回答它。原文第 9、10 节分两步走：先把 't~Hooft 算子与数学上的 Hecke 算子对上（\src{B p.123}--\src{B p.148}），再把 Hecke 修改的空间实现为 Bogomolny 方程的解空间（\src{B p.148}--\src{B p.184}）。两步合起来，就是全文的核心等式（\cite{kw06}）。
+
+\begin{goals}
+\begin{itemize}
+\item 掌握 Hecke 修改的定义，并知道它的几何化身是仿射 Grassmannian 的 Schubert 胞腔。
+\item 理解 't~Hooft 算子的奇点数据与 Hecke 修改的权是同一组整数（U(1) 情形就是同一个 twist $m$），以及 Bogomolny 方程如何把「修改空间」实现为「解空间」。
+\item 知道单极子冒泡、Hecke 特征层的标准陈述，以及这条推导里哪些步骤原文只写「应该」。
+\end{itemize}
+\end{goals}
+
+\subsection{Hecke 修改：在一点把丛改一下}
+
+先讲数学侧。设 $C$ 是紧黎曼面，$E_-$ 是 $C$ 上 $G$-丛，$p_0\in C$。一个\term{Hecke modification}{Hecke 修改}是一对 $(E,\sigma)$：$E$ 是 $C$ 上 $G$-丛，$\sigma:E|_{C\setminus\{p_0\}}\simeq E_-|_{C\setminus\{p_0\}}$ 是同构，而且 $\sigma$ 一般不能延拓到 $p_0$。直观地说，就是「在 $p_0$ 处把丛改一下」：$p_0$ 之外两个丛一样，$p_0$ 处允许跳变。这正是「点状缺陷」的数学语言，也是 't~Hooft 算子所指的东西（\src{B p.145}）。
+
+局部描述最清楚。取 $C=\PP^1$、$p_0=0$，用两个开集覆盖：$U_\infty=\PP^1\setminus\{0\}$ 与 $U_0=\PP^1\setminus\{\infty\}$，交叠是 $\CC^*$。$E_-$ 在 $U_\infty$ 上给平凡化 $\sigma$；$E$ 在 $U_0$ 上给平凡化 $\sigma'$。在交叠上两者相差 $g(z)=\sigma'\sigma^{-1}$，它是 $\CC^*$ 上全纯、并在 $\PP^1$ 上可亚纯延拓的 $\mathrm{GL}(N,\CC)$-值函数。换平凡化 $\sigma'$ 相当于右乘 $h_0\in\mathrm{GL}(N,\mathcal O)$，其中 $\mathcal O$ 是 $U_0\simeq\CC$ 上全纯函数的环。于是带固定平凡化的修改后丛的参数空间是
+\begin{equation}
+\mathrm{GL}(N,\mathcal X)/\mathrm{GL}(N,\mathcal O)=\mathrm{Gr}_N,
+\label{eq:grn}
+\end{equation}
+其中 $\mathcal X$ 是 $\CC^*$ 上全纯、在 $\PP^1$ 上可亚纯延拓的函数环。这个空间叫\term{affine Grassmannian}{仿射 Grassmannian}，也等于形式版本 $\mathrm{GL}(N,\CC((z)))/\mathrm{GL}(N,\CC[[z]])$（\src{B p.146}）。
+
+权的定义如下。若修改后的丛 $E_+$ 由截面 $s_j=z^{-m_j}f_j$ 生成（$f_j$ 是 $E_-$ 的全纯截面基，$m_j\in\ZZ$），则交叠上的转移矩阵是 $g_{ji}(z)=z^{-m_j}f_{ji}(z)$。最简单的情形 $f_{ji}=\delta_{ji}$，于是 $g(z)=\operatorname{diag}(z^{-m_1},\dots,z^{-m_N})$。这组整数 ${}^{L}w=(m_1,\dots,m_N)$（模置换）就叫权。关键观察：$g(z)$ 限制在 $\CC^*$ 上恰是一个同态 $\CC^*\to\mathrm{GL}(N,\CC)$，它正是
+\begin{equation}
+\rho:\mathrm{U}(1)\to\mathrm{U}(N),\qquad \ee^{\ii\alpha}\mapsto\operatorname{diag}(\ee^{\ii m_1\alpha},\dots,\ee^{\ii m_N\alpha})
+\label{eq:rho}
+\end{equation}
+的复化（\src{B p.147}）。记住这个 $\rho$，下一小节它就变成 't~Hooft 算子的磁荷。
+
+固定权 ${}^{L}w$ 后，所有这种形状的点构成一个轨道 $Y({}^{L}w;p_0)$，它是 $\mathrm{GL}(N,\mathcal O)$ 在 $\mathrm{Gr}_N$ 中的轨道；这些轨道把 $\mathrm{Gr}_N$ 分层，叫 Schubert 胞腔。紧化取轨道闭包，叫 Schubert cycle；它一般奇异，由 $Y({}^{L}w)$ 与若干低维轨道组成。为什么轨道有限维：$\mathrm{Gr}_N(i)=\{g:\text{在 }0\text{ 处极点阶}\le i\}$ 有限维、紧、$\mathrm{GL}(N,\mathcal O)$-不变，每个轨道都落在某个 $\mathrm{Gr}_N(i)$ 里。一般 $G$：$\mathrm{Gr}_G=G_{\CC}(\mathcal X)/G_{\CC}(\mathcal O)$，$Y(\rho)$ 是 $\rho_{\CC}:\CC^*\to G_{\CC}$ 所在的轨道；更一般地，'t~Hooft 算子的权是 $\Ldual$ 的权。修改空间的维数是 $\Delta_{{}^{L}w}=\sum_{i<j}(a_i-a_j)$，其中 $a_i$ 是权的分量（\src{B p.148}）。
+
+例子：${}^{L}w=(1,0)$ 给 $\PP^1$；${}^{L}w=(2,0)$ 给加权射影空间 $\PP(1,1,2)$（它是 $A_1$ 奇点 $\CC^2/\ZZ_2$ 的解消），自然紧化须再加入 $(1,1)$ 型极限点；minuscule 权 ${}^{L}w(k)=(1,\dots,1,0,\dots,0)$ 给 Grassmannian $\mathrm{Gr}(k,N)$，光滑紧（\src{B p.138}--\src{B p.144}）。
+
+\subsection{'t~Hooft 的奇点结构就是 Hecke 的权}
+
+现在看物理侧。$\Psi=0$，把四维理论放在 $M=\RR\times W$ 上，$W=I\times C$；静态 't~Hooft 算子支撑在 $\RR\times p_0$（\src{B p.123}）。按上一讲，'t~Hooft 算子是「在 $p_0$ 附近指定经典场的奇点、再对带奇点的场做路径积分」。奇点的类型：$\mathrm{U}(1)$ 是磁荷 $m$；$\mathrm{U}(N)$ 是同态 $\rho:\mathrm{U}(1)\to\mathrm{U}(N)$，$\ee^{\ii\alpha}\mapsto\operatorname{diag}(\ee^{\ii m_1\alpha},\dots,\ee^{\ii m_N\alpha})$，即权 ${}^{L}w=(m_1,\dots,m_N)$（模置换）；一般 $G$ 是 $\rho$ 的共轭类，GNO 对偶又把它等同于 $\Ldual$ 的不可约表示 ${}^{L}R$，故记 $T({}^{L}R)$（\src{B p.131}）。
+
+注意：这与上一小节的式~\eqref{eq:rho} 是同一个 $\rho$。Hecke 修改的转移矩阵 $\operatorname{diag}(z^{-m_j})$ 正是这个 $\rho$ 的复化。于是「't~Hooft 的磁荷」$=$「Hecke 修改的权」$=$「Schubert 胞腔的标号」：三者是同一组整数 $m_1,\dots,m_N$。这就是原文所说的基本联系（\src{B p.132}）。
+
+为什么必须是同一组整数？物理上有一条硬论证。Bogomolny 方程的解在无算子的区间里沿 $y$ 方向不变：取规范 $A_y=0$，有 $\partial_yA_{\bar z}=-\ii D_{\bar z}\varphi_0$；于是 $E_y$ 的全纯型在相邻算子之间不变，只有跨过 't~Hooft 算子时才跳变。$\mathrm{U}(1)$ 情形，取小圆盘包住 $p_0$，用 $c_1$ 的积分得 $0=q_+-m-q_-$，故 $L_+\cong L_-\otimes\mathcal O(p_0)^m$：奇点的磁荷 $m$ 恰好等于输出丛相对输入丛的 twist 阶，拓扑守恒同时定住了两边（\src{B p.130}--\src{B p.131}）。非阿贝尔情形把 $E_y$ 在 $p_0$ 附近对角化 $E_y=\bigoplus L_i$，每个 $L_i$ 各自跳变 $L_i\mapsto L_i\otimes\mathcal O(p_0)^{m_i}$；$c_1$ 的变化是 $\sum m_i$，故保拓扑要求 $\sum m_i=0$。一般 $G$：$E_{R,w}\mapsto E_{R,w}\otimes\mathcal O(p_0)^{\langle{}^{L}w,w\rangle}$，其中 $\langle\cdot,\cdot\rangle$ 是权与余权的配对（\src{B p.133}--\src{B p.134}）。
+
+把这些对应列成表~\ref{tab:correspondence}。
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{'t~Hooft 算子与 Hecke 修改的对应：两侧由同一组整数标号（据 \src{B p.130}--\src{B p.134}）。}
+\label{tab:correspondence}
+\begin{tabular}{@{}lll@{}}
+\toprule
+物理：'t~Hooft 算子 & 数学：Hecke 修改 & 共同的整数 \\
+\midrule
+$\mathrm{U}(1)$：磁荷 $m$ & $L\mapsto L\otimes\mathcal O(p_0)^m$ & $m\in\ZZ$ \\
+$\mathrm{U}(N)$：$\rho=\operatorname{diag}(\ee^{\ii m_i\alpha})$ & $L_i\mapsto L_i\otimes\mathcal O(p_0)^{m_i}$ & ${}^{L}w=(m_1\ge\dots\ge m_N)$ \\
+一般 $G$：$\rho:\mathrm{U}(1)\to G$ 的共轭类 & 轨道 $Y(\rho)=$ Schubert 胞腔 & $\Ldual$ 的权 ${}^{L}w$（${}^{L}R$ 的最高权） \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Bogomolny 方程：修改空间就是解空间}
+
+标号对上了，剩下的是「作用」是否也对上。原文的答案是：把 Hecke 修改空间实现为 Bogomolny 方程的解空间。先写边界条件。$W=I\times C$，'t~Hooft 算子插在 $p_i=y_i\times z_i$。左端 $C_-$：固定 $E_-$（即指定 $A_-$，Dirichlet 边界条件），$\varphi_0$ 自由，规范变换在 $C_-$ 上取平凡——于是输入的是丛 $E_-$ 本身，而不是它的同构类。右端 $C_+$：不指定 $A$，而令 $\varphi_0=0$；Bogomolny 方程随即要求 $A$ 满足协变 Neumann 条件 $\iota_nF=0$。规范变换在 $C_+$ 上允许非平凡，故输出的是 $E_+$ 的同构类。这组边界条件是椭圆的；没有算子时，能量恒等式强制 $F=D\varphi_0=0$，唯一解是平凡解，解空间是一个点（\src{B p.150}--\src{B p.155}）。
+
+有算子时，解空间 $Z$ 有两种描述。其一（辛商）：场空间 $(A,\varphi_0)$ 上有复结构 $I$ 与辛形式 $\omega$；矩映射 $\mu=0$ 给出 Bogomolny 方程，故 $Z=\mu^{-1}(0)/G$ 是辛商。其二（复商）：复 Bogomolny 方程的复商 $Z'=C_0/G_{\CC}$ 给出的正是 Hecke 修改空间——因为 $E_y$ 的全纯型沿 $y$ 不变、只在算子处跳变，跨算子时恰好做一次 Hecke 修改。两者共享同一个复结构：修改空间 $=$ 解空间（\src{B p.162}）。检查维数：椭圆复形的指标等于 $\dim Z$，算出来正是 $\Delta_{{}^{L}w}=\sum_{i<j}(a_i-a_j)$，与上一小节的公式一致，且对任意紧 $G$ 成立（Pauly--Kronheimer）（\src{B p.155}）。原文由此说，这给了 't~Hooft 与 Hecke 的关系「一个精确的框架」。图~\ref{fig:chain} 把这条链画成方块。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[font=\small,>=Stealth,
+  bx/.style={draw=kwblue!70,fill=kwblue!4,rounded corners=2pt,align=center,
+             text width=3.45cm,inner sep=5pt}]
+\node[bx] (th) {'t~Hooft 算子\\ 磁荷 ${}^{L}w$，奇点 $\rho:\mathrm{U}(1)\to G$};
+\node[bx,right=2.1cm of th] (hk) {Hecke 修改\\ 权 ${}^{L}w$，Schubert 胞腔 $Y({}^{L}w)$};
+\node[bx,below=1.8cm of th] (bg) {Bogomolny 解空间\\ $Z=\mu^{-1}(0)/G$};
+\node[bx,below=1.8cm of hk] (md) {Hecke 修改空间\\ $Z'=C_0/G_{\CC}$};
+\draw[<->,thick,kwblue] (th) -- (hk) node[midway,above]{\scriptsize 核心等式：作用 $=$ 修改};
+\draw[<->,thick,kwgray] (bg) -- (md) node[midway,below]{\scriptsize 同一个复流形};
+\draw[<->,thick,kwgray] (th) -- (bg) node[midway,left]{\scriptsize 奇点$\mapsto$边界条件};
+\draw[<->,thick,kwgray] (hk) -- (md) node[midway,right]{\scriptsize 修改空间$=$解空间};
+\end{tikzpicture}
+\caption{核心等式的三方块图。上边横边是核心等式：'t~Hooft 算子的作用 $=$ Hecke 修改；下边横边是它们共同的几何载体（同一个复流形）。左边竖边把算子的奇点数据翻成 Bogomolny 方程的边界条件，右边竖边把修改空间翻成解空间（\src{B p.162}）。}
+\label{fig:chain}
+\end{figure}
+
+还有一层结构要说清：沿 $I$ 与沿 $C$ 移动的角色不同。把联络改成 $A'=A-\ii\varphi_0\dd y$，则 $A'_z$、$A'_y$ 在复结构 $I$ 中全纯；保纤维化 $W\to C$ 的微分同胚群保持 $I$、保持复 Bogomolny 方程与 $C_0$，因此 $Z$ 的复结构不随 $p_i$ 变；但辛形式与矩映射不做此不变，所以沿 $y$ 方向滑动 $p_i$ 只改变 $Z$ 的辛结构、不改变复结构，而改变 $z_i$ 只改变复结构、不改变辛结构（\src{B p.163}--\src{B p.164}）。这就是为什么「修改空间 $=$ 解空间」只在复结构的意义上成立——下一讲的 D-模正需要这个复结构。
+
+接下来是冒泡。若两个 't~Hooft 算子的奇点重合，Bogomolny 解会出现\term{monopole bubbling}{单极子冒泡}：把 $\CC^2$ 看作 $\RR^4$，$\mathrm{U}(1)$ 作用在 $\CC^2$ 上，$\CC^2/\mathrm{U}(1)\simeq\RR^3$；等变瞬子对应 $\RR^3$ 上的 Bogomolny 解。瞬子有尺度，尺度趋于零时缩成一个点——磁荷集中到奇点并消失，这就是 bubbling。ADHM 复形给出纤维的特征标公式 $\chi(E_0')=\chi(E_0)+\chi(H_1)(2-\ee^{\ii\theta}-\ee^{-\ii\theta})$，对应的权变化是 $(m+1,m-1)\to(m,m)$（原文 (10.13)）（\src{B p.157}--\src{B p.158}）。这恰好是上一小节紧化 $Y({}^{L}w)$ 时必须加入的 associated weights：物理上的冒泡 $=$ 数学上的轨道闭包。它也解释了为什么 Schubert cycle 的奇异结构正好是超凯勒的：它来自 $\RR^4$ 上瞬子模空间的超凯勒结构（\src{B p.159}）。
+
+最后是 OPE，只给结论不证。两个 't~Hooft 算子靠近时，物理上可作算子乘积展开；几何上是两个修改空间的卷积。原文的结论是：Hecke 算子的 OPE 代数就是 $\Ldual$ 的表示环，${}^{L}R\otimes{}^{L}R'=\bigoplus_\alpha N_\alpha\otimes{}^{L}R_\alpha$（原文 (10.21)）；解空间的（交叠）上同调恰好给出表示本身：$H({}^{L}R)\cong{}^{L}R$（原文 (10.22) 与 \src{B p.173}）；卷积的精确形式是 IC 层的分解
+\begin{equation}
+\pi_*\big(IC({}^{L}w)\star IC({}^{L}w')\big)=IC({}^{L}w+{}^{L}w')\oplus\bigoplus_\alpha \tilde N_\alpha\otimes IC({}^{L}w_\alpha),
+\label{eq:convolution}
+\end{equation}
+其中系数 $\tilde N_\alpha$ 与张量积系数 $N_\alpha$ 相等，靠的是 Lusztig--Ginzburg--Mirkovi\'c--Vilonen 的数学定理（\src{B p.178}）。物理侧只得到首项；系数的证明在数学文献里（\src{B p.169}）。
+
+\subsection{Hecke 特征层与几何 Langlands}
+
+现在把整条链翻译成层论。数学上，Hecke 算子是作用在 $\mathrm{Bun}_G$ 上的层（或 D-模）范畴的函子：对 $x\in C$ 与 $\Ldual$ 的表示 $V$，Hecke 函子 $H_x^V$ 由 Hecke 对应 $\mathrm{Bun}_G\leftarrow \mathcal H_x\to\mathrm{Bun}_G$ 定义（$\mathcal H_x$ 参数化「在 $x$ 处相差一个 Hecke 修改」的丛对）：先沿对应拉回到中间空间、张量上「通用修改」给出的丛 $V$，再推回 $\mathrm{Bun}_G$。\term{Hecke eigensheaf}{Hecke 特征层}就是对它的特征对象：
+\begin{equation}
+H_x^V(\mathcal F)\cong V\otimes\mathcal F
+\quad\text{（在 } C\times\mathrm{Bun}_G\text{ 上；限制到 }\{x\}\times\mathrm{Bun}_G\text{ 就是 }V\otimes\mathcal F\text{）}.
+\label{eq:eigensheaf}
+\end{equation}
+用上一讲的语言：把「Hecke 算子 $\leftrightarrow$ 't~Hooft 算子」、「$\mathrm{Bun}_G$ 上的层 $\leftrightarrow$ 膜」对上，式~\eqref{eq:eigensheaf} 就是特征膜定义 $XB\cong B\otimes V$ 的数学版——「特征值」从向量空间变成局部系统的纤维。
+
+几何 Langlands 的标准陈述是：对每个满足半稳定条件的 $\Ldual$-局部系统 $\rho:\pi_1(C)\to\LdualC$，存在 $\mathrm{Bun}_G$ 上一个非零 Hecke 特征层 $\mathcal F_\rho$，使得对每个 $x$ 与 $V$，Hecke 算子的作用等于张量上 $\rho$ 的纤维；并且 $\mathcal F_\rho$ 是 D-模（holonomic）。物理侧的对应物就是上一讲的图景：$\rho$ 给出 $\MH(\Ldual,C)$ 中的点 $x(\rho)$，其零膜是电特征膜；S-对偶把它变成 $\MH(G,C)$ 中 Hitchin 纤维上的 type~F 膜，即磁特征膜。于是「't~Hooft 算子的特征膜 $=$ Hecke 特征层」——本讲的标题等式，在层论层面就是几何 Langlands 的「伽罗瓦 $\to$ 自守」方向（\src{B p.122}）。
+
+最后是诚实提醒，共四条。第一，本讲的每一步几乎都是物理推导，不是数学证明。原文自己大量使用 should、we expect：「't~Hooft OPE 生成 $\Ldual$ 表示环」是 we expect（\src{B p.99}）；「$H({}^{L}R)\cong{}^{L}R$ 的物理解释从物理观点看是神秘的」（\src{B p.173}）；extended Bogomolny 与任意 A-膜的作用只是 strongly suggests（\src{B p.181}），完整证明在别的文献（\src{B p.183}）。第二，原文只处理非分歧、半单、generic 的情形；分歧情形属于别的工作。第三，2024 年前后 Gaitsgory 等人的纯代数几何工作才把几何 Langlands 真正证出来；K--W 提供的是「为什么应该如此」的物理图像。第四，就连本讲最核心的「修改空间 $=$ 解空间」也只是复结构层面的等同（辛结构会随 $p_i$ 移动而变），原文对此很谨慎。所以读完这一讲，你应该能画出图~\ref{fig:chain}，并指着每一条边说出它为什么成立、哪一边原文没有证。
+
+\begin{keybox}
+同一组整数既是 't~Hooft 算子的磁荷（权 ${}^{L}w$），又是 Hecke 修改的权；Bogomolny 方程让 Hecke 修改空间成为解空间；于是 't~Hooft 算子的特征膜就是 Hecke 特征层——几何 Langlands 的物理版核心等式。
+\end{keybox}
+
+\begin{follow}
+\begin{itemize}
+\item B \S9.1, pp.123--135：'t~Hooft 与 Hecke 的初步比较；$\mathrm{U}(1)$、$\mathrm{U}(N)$、一般 $G$ 的权与作用。先读这一段，抓住 $L_i\mapsto L_i\otimes\mathcal O(p_0)^{m_i}$。
+\item B \S9.2, pp.135--144：修改空间 $Y({}^{L}w)$ 的显式构造、紧化与 associated weights、维数与例子。
+\item B \S9.3, pp.145--148：仿射 Grassmannian 与 Schubert 胞腔；原文自己说「本文并不真正使用这个框架」，可快读。
+\item B \S10, pp.148--184：Bogomolny 的边界条件与指标（\S10.1）、冒泡（\S10.2）、K\"ahler 商（\S10.3）、OPE（\S10.4）；\S10.5 的 extended Bogomolny 可选，第 7 讲会再用。
+\end{itemize}
+\end{follow}
+
+\begin{checkbox}
+\begin{enumerate}
+\item 写出 Hecke 修改的定义，并说明为什么带固定平凡化的修改后丛的参数空间是 $\mathrm{GL}(N,\mathcal X)/\mathrm{GL}(N,\mathcal O)$。
+\item 权 ${}^{L}w=(m_1,\dots,m_N)$ 的修改为什么恰好对应同态 $\rho:\mathrm{U}(1)\to\mathrm{U}(N)$？这个 $\rho$ 在 't~Hooft 一侧是什么数据？
+\item $\mathrm{U}(1)$ 情形用 $c_1$ 的积分证明 $L_+\cong L_-\otimes\mathcal O(p_0)^m$；指出哪一步是纯拓扑论证，并说明为什么非阿贝尔情形不能照搬。
+\item 为什么 $\sum m_i=0$ 对应 't~Hooft 算子的规范群是 $G$ 而不是 $\mathrm{U}(N)$？
+\item 说明 Bogomolny 方程的两种商（辛商与复商）各是什么，为什么说「修改空间 $=$ 解空间」只在复结构意义上成立。
+\item 什么是单极子冒泡？它对应修改空间紧化的哪一步？Hecke 特征层的定义与几何 Langlands 的标准陈述各是什么？
+\end{enumerate}
+\end{checkbox}

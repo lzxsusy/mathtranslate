@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## lecture-notes v1.0 — 2026-11-17（Kapustin–Witten 十讲导读讲义）
+
+`05_seminar_witten/seminars/SEM-0604151/lecture_notes/`：46 页 TeX 讲义，
+把 231 页原文压成十讲，供第一次读原文的人用（形态上区别于 219 页解经本与研讨班报告）。
+
+- 结构：写在前面（三条读法 / 前置 / 记号 / 十讲地图 / 三条诚实提醒）+ 八讲正文 + 附录 A 术语 90 条、
+  B 习题 30 题（均带提示）、C 参考文献与阅读路线。
+- 每讲统一五件：本讲目标 → 正文（2,200–3,200 汉字）→ 本讲核心 → 跟读提示（原文页段）→ 自检问题；
+  断言带 `\src{B p.N}` 页锚，可回原文逐条核对。
+- 质量：两遍 xelatex 0 error、0 overfull、0 missing character；`tools/check_lectures.py --strict` 0 issue。
+- 附带：第 3 讲把 (3.52) 的正确形式与「OCR 把倒数读反」的坑写进正文（对应解经本 v1.2 勘误）。
+- 已知薄弱：§1.4 可解性依赖 T-对偶直觉、§2.3 GNO↔^L G 只给一行、§8.1 三类膜四维推导未展开。
+
 ## seminar v1.0 — 2026-11-17（SEM-GL2 第二期八轮 + 合册）
 
 `05_seminar_witten/seminars/SEM-GL2/`：威腾讨论班第二期结项（draft-v1.0）。
