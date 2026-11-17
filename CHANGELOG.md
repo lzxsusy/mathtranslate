@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## translation SY07-08 v1.1 — 2026-11-17（术语更正：presheaf 前层 → 预层）
+
+仓主指出 presheaf 的标准中文译名是**预层**（本库术语基原本就有 `前層 → 预层` 一条），
+而 SY07-08 初稿误作「前层」。本次全量改正，并把判据写进术语基与工程纪要：
+
+- 术语基 `01_corpus_zh/termbase.jsonl`：`前層 → 预层` 由 `candidate` 升级为 `confirmed`（等级 A、记裁决来源）；
+  新增 `presheaf 预层`、`constant presheaf 常预层`、`morphism of presheaves 预层态射` 三条英文条（1627 → 1630 行）。
+- SY07-08 正文：32 个文件「前层 → 预层」（21 个块共 72 处含索引项），索引键 `qianceng → yuceng`、
+  `changqianceng → changyuceng`；重编译 **209 页 / 0 未定义引用 / 0 Overfull / 0 缺字**，条目编号仍 12 节全连续（210 条）。
+- 审计方向翻转：`check.py` 禁用术语由「预层」改为「前层」，`normalize.py` 规则改为「前层 → 预层」，防止回退。
+- 交付报告新增「术语更正记录」一节；`工程文件/工作流与决策纪要.md` §3 记录决策链与教训
+  （**开译前先 grep 术语基，库里有条目者不得自行「通行译法」式新造**）。
+- 成品 PDF 依 COMPLIANCE v1.0 不随仓；仓内只更新交付报告、术语表与三张预览图。
+
 ## datasets v0.10 — 2026-11-17（kw06：Kapustin–Witten 资料卡 67 张）
 
 `datasets/kw06/`：把 K–W 2006 的三份工作底稿（219 页解经本、46 页导读讲义、第二期研讨班八轮报告）

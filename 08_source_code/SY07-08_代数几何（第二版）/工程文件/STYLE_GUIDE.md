@@ -34,7 +34,7 @@
 - 全角标点（，。；：？！（）），英文术语/人名/数字与中文之间留**半角空格**：`设 X 是概形`、`由定理 1.2.3 可知`。
 - 行内公式句末标点放在公式**后面**：`满足 f(x)=0。`
 - 数学文体用"我们"或无人称，不用"你"。
-- 原文斜体强调的术语用 `\emph{}`（中文渲染为楷体）：`\emph{前层}`。
+- 原文斜体强调的术语用 `\emph{}`（中文渲染为楷体）：`\emph{预层}`。
 - 原书 `Proof.` → `\begin{proof}…\end{proof}`；证明末尾的 □ 由环境自动生成，**不要手写**。
 - 原书 `Exercises.` → `\begin{exercises}…\end{exercises}`（自定义环境，见 §3），习题用 `\item` 顺序编号 1.,2.,…（与书上一致）。
 
@@ -42,7 +42,7 @@
 
 ```latex
 % —— 小节标题只由「起始块」写一次（BRIEF 表 new_subsection 列） ——
-\subsection{前层与层}          % 对应原书 1.1
+\subsection{预层与层}          % 对应原书 1.1
 
 % —— 条目：自动编号，禁止手写 [1.2.3] ——
 \begin{definition}\label{it:1.2.1}
@@ -90,7 +90,7 @@ Y' \arrow[r] & Y
 - **定义术语的强调**：原文用斜体给出的术语，中文首次出现写 `\emph{层}`（渲染为楷体）。同一术语后文不再 `\emph`。
 - **分条列表**：原文 `(a)(b)` 用 `\begin{enumerate}[label=(\alph*)]`；`(i)(ii)` 用 `[label=(\roman*)]`；例子的 `1. 2. 3.` 用 `[label=\arabic*.]`。列表前后各留一个空行。
 - **段落缩进**：显示公式后若原书另起一段，公式与下文之间要留**空行**（否则不缩进）；若下文是同一句的续写（如 "which is …"），不要留空行。
-- **索引**：术语首次定义时登记 `\idx{拼音}{显示名}`，如 `\idx{ceng}{层}`、`\idx{qianceng}{前层}`；拼音全小写无空格。上同调 H 的条目、专名不登记。
+- **索引**：术语首次定义时登记 `\idx{拼音}{显示名}`，如 `\idx{ceng}{层}`、`\idx{yuceng}{预层}`；拼音全小写无空格。上同调 H 的条目、专名不登记。
 - **强调与引号**：中文引号用「」，不用 “ ”。
 
 ### 3.2 样板块
@@ -156,8 +156,8 @@ Y' \arrow[r] & Y
 ## 7. 自检编译
 
 ```powershell
-$env:PATH="<本地路径>;$env:PATH"
-cd "<本地路径>"
+$env:PATH="C:\Users\admin\AppData\Local\Programs\MiKTeX\miktex\bin\x64\;$env:PATH"
+cd "C:\Users\admin\Desktop\数译发布\shuyi\translations\SY07-08\源码"
 xelatex -interaction=nonstopmode _check_c01b.tex
 ```
 判据：0 个 `!` 错误；允许 Overfull/Underfull 警告但需记录；若报 `Undefined control sequence` 说明用了未定义宏（报告给 Lead，别自己定义）。

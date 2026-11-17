@@ -2,7 +2,7 @@
 """把 glossary.tsv 导出为交付用术语对照表（Markdown + TSV）。"""
 import csv, io
 
-src = r"<本地路径>"
+src = r"C:\Users\admin\Desktop\数译发布\shuyi\translations\SY07-08\工程文件\glossary.tsv"
 rows = []
 with open(src, encoding="utf-8") as f:
     for line in f:
@@ -26,6 +26,6 @@ md.write("| 英文 | 中文 | 处理 | 首现页 | 备注 |\n|---|---|---|---|--
 for en, zh, mode, grade, page, note in rows:
     md.write(f"| {en} | {zh} | {mode_name.get(mode, mode)} | {page} | {note} |\n")
 
-out = r"<本地路径>"
+out = r"C:\Users\admin\Desktop\数译发布\shuyi\translations\SY07-08\成品\SY07-08_术语对照表.md"
 open(out, "w", encoding="utf-8", newline="\n").write(md.getvalue())
 print("写出", out, len(rows), "条")

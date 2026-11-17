@@ -6,7 +6,7 @@ import os
 import re
 import sys
 
-ROOT = r"<本地路径>"
+ROOT = r"C:\Users\admin\Desktop\数译发布\shuyi\translations\SY07-08\源码\chunks"
 APPLY = "--apply" in sys.argv
 SKIP = {"c16", "c17", "c18", "c19"}  # 仍在翻译/重写中的块
 
@@ -14,7 +14,7 @@ SKIP = {"c16", "c17", "c18", "c19"}  # 仍在翻译/重写中的块
 RULES = [
     ("删除重复索引键 huankongjian", r"\\idx\{huankongjian\}\{环空间\}", ""),
     ("删除自造别名「或基扩张」", r"或基扩张", ""),
-    ("预层→前层", r"预层", "前层"),
+    ("前层→预层（presheaf 标准译名）", r"前层", "预层"),
     ("环空间→环层空间", r"环空间", "环层空间"),
     ("Noetherian→诺特", r"Noetherian", "诺特"),
     ("Noether→诺特", r"Noether", "诺特"),

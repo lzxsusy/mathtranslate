@@ -14,7 +14,7 @@ CH = os.path.join(SRC, "chunks")
 BLACK = re.compile(r"知乎|zhihu\.com|百度百科|baike\.baidu|CSDN|csdn\.net|简书|jianshu|公众号|mp\.weixin|bilibili|b站|个人博客")
 FORBID = [
     ("旧术语 真态射", re.compile(r"真态射")),
-    ("旧术语 层化(应为层/前层语境)", re.compile(r"预层")),
+    ("旧术语 前层（应为预层）", re.compile(r"前层")),
     ("eqnarray", re.compile(r"eqnarray")),
     ("手写条目编号", re.compile(r"\\begin\{(?:definition|proposition|theorem|lemma|corollary|example|remark|construction)\}\[[0-9]")),
     ("手写 qed", re.compile(r"\\qed\b")),
@@ -23,7 +23,7 @@ TNOTE_SRC = re.compile(r"\[(?:来源|依据|译者按)")
 CJK = re.compile(r"[\u3000-\u303f\u4e00-\u9fff\uff00-\uffef]")
 CJK2 = re.compile(r"[\u4e00-\u9fff] +[\u4e00-\u9fff]")
 TERM_OLD = [
-    ("旧术语 预层", re.compile(r"预层")),
+    ("旧术语 前层（presheaf 标准译名为预层）", re.compile(r"前层")),
     ("旧术语 定向集", re.compile(r"定向集")),
     ("旧术语 正向极限/正向系统", re.compile(r"正向(极限|系统)")),
     ("旧术语 环空间（应为环层空间）", re.compile(r"(?<!层)环空间")),

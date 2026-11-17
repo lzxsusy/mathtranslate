@@ -2,7 +2,7 @@
 """交付报告用的统计：条目分类、习题数、译注分类、索引项、图、公式。"""
 import glob, os, re, collections
 
-CH = r"<本地路径>"
+CH = r"C:\Users\admin\Desktop\数译发布\shuyi\translations\SY07-08\源码\chunks"
 files = sorted(glob.glob(os.path.join(CH, "c*.tex")))
 kinds = collections.Counter()
 ex_items = 0

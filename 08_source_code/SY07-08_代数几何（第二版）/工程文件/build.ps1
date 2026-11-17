@@ -1,7 +1,7 @@
 ﻿param([switch]$Quick)
 # SY07-08 build: xelatex -> makeindex -> xelatex x2 -> copy deliverable
 $ErrorActionPreference = 'Continue'
-$env:PATH = '<本地路径>;' + $env:PATH
+$env:PATH = 'C:\Users\admin\AppData\Local\Programs\MiKTeX\miktex\bin\x64\;' + $env:PATH
 
 $root = Split-Path -Parent $PSScriptRoot
 $src  = Join-Path $root ([char]0x6E90 + [char]0x7801)          # 源码
