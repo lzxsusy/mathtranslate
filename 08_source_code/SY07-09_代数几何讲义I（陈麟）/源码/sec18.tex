@@ -1,0 +1,562 @@
+% ======================================================================
+%  sec18.tex —— 第 18 节 拟紧态射与（拟）分离态射
+%  底本：原书 pp.85–94（印刷页 = PDF 页）
+%  原书标题：18. Quasi-compact morphisms and (quasi-)separated morphisms
+%            18.1 Quasi-compact morphisms / 18.2 Separated morphisms
+%            18.3 Quasi-separated morphisms / 18.4 Direct image along qcqs morphisms
+%            18.5 Application: scheme theoretic images / 18.6 Extension of modules of finite type
+% ======================================================================
+
+\makeatletter
+\@ifundefined{c@propdef}{\newaliascnt{propdef}{theorem}\newtheorem{propdef}[propdef]{命题--定义}\aliascntresetthe{propdef}}{}
+\makeatother
+
+\section{拟紧态射与（拟）分离态射}\label{sec:18}
+
+本节属于原书第 V 部分「概形与态射的基本性质」。以下把「拟紧且拟分离」简称为 qcqs。
+
+% ---------------------------------------------------------------- p.85
+\subsection{拟紧态射}\label{sec:18.1}
+
+\begin{definition}\label{def:18.1.1}
+称概形 $X$ 为\emph{拟紧的}，若其底拓扑空间拟紧，即 $X$ 的任意开覆盖都有有限子覆盖。
+\end{definition}
+
+\begin{definition}\label{def:18.1.2}
+设 $f:X\to Y$ 是概形间的态射。称 $f$ 为\emph{拟紧的}，若对任意拟紧开子集 $U\subseteq Y$，其原像 $f^{-1}(U)$ 拟紧。
+\end{definition}
+
+\begin{yizhu}
+拟紧性只涉及底拓扑空间，故定义 \ref{def:18.1.2} 与 Stacks 的定义逐字相同：底连续映射拟紧，即每个拟紧开集的原像拟紧。区别在于落脚点。原书先立拟紧概形（定义 \ref{def:18.1.1}），再把态射的拟紧写成「拟紧开集的原像拟紧」；Stacks 则先定义拓扑空间之间的拟紧映射，概形的拟紧性由到终对象的态射读出来。后一写法使 \ref{lem:18.1.3} 一类的陈述成为定义的同义反复。
+[来源：Stacks Project, Tag 01K3（Definition 26.19.1, Quasi-compact morphisms）与 Tag 005A（Definition 5.12.1, Quasi-compact spaces and maps），\url{https://stacks.math.columbia.edu/tag/01K3}、\url{https://stacks.math.columbia.edu/tag/005A}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{lemma}\label{lem:18.1.3}
+设 $f:X\to Y$ 是态射且 $Y$ 仿射。则 $f$ 拟紧当且仅当 $X$ 拟紧。
+\end{lemma}
+
+\begin{proof}
+「仅当」显然，因为 $Y$ 拟紧。下证「当」。设 $X$ 拟紧。对任意拟紧开子集 $U\subseteq Y$，只需证 $X\times_Y U$ 拟紧。取 $X$ 的有限仿射开覆盖 $X=\bigcup_{i\in I}X_i$，同样取 $U=\bigcup_{j\in J}U_j$。则
+\[
+X\times_Y U\simeq\bigcup_{(i,j)\in I\times J}X_i\times_Y U_j.
+\]
+每个 $X_i\times_Y U_j$ 仿射，从而拟紧，故 $X\times_Y U$ 拟紧。
+\end{proof}
+
+\begin{lemma}\label{lem:18.1.4}
+考虑拟紧态射构成的类。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 拟紧态射对合成稳定。
+  \item 拟紧态射对基变换稳定。
+  \item 「$f$ 拟紧」这一性质在靶上局部。
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) 显然。
+
+下证 (iii)。设 $f:X\to Y$ 是态射，$Y=\bigsqcup_{i\in I}Y_i$ 是开覆盖，且每个 $f_i:X\times_Y Y_i\to Y_i$ 拟紧。只需证 $f$ 拟紧。设 $U\subseteq Y$ 是拟紧开子集。取 $U$ 的有限仿射开覆盖 $U=\bigcup_{j\in J}U_j$，使每个 $j\in J$ 都有某个 $i\in I$ 满足 $U_j\subseteq Y_i$。因 $f_i$ 拟紧而 $U_j$ 是 $Y_i$ 的拟紧开子集，其原像
+\[
+f_i^{-1}(U_j)\simeq(X\times_Y Y_i)\times_{Y_i}U_j\simeq X\times_Y U_j
+\]
+拟紧。于是
+\[
+f^{-1}(U)\simeq X\times_Y U\simeq\bigcup_{j\in J}X\times_Y U_j
+\]
+也拟紧，如所愿。
+
+下证 (ii)。设 $f:X\to Y$ 拟紧，$f':X'\to Y'$ 是它的基变换。只需证 $f'$ 拟紧。由引理 \ref{lem:18.1.3}，对任意仿射开子概形 $U\subseteq Y$，基变换 $X\times_Y U\to U$ 拟紧。于是由 (iii) 可归约到 $Y$ 与 $Y'$ 都仿射的情形。再用引理 \ref{lem:18.1.3}，知 $X$ 拟紧。于是 $X'\simeq X\times_Y Y'$ 有有限仿射开覆盖，从而 $X'$ 拟紧。再用一次引理 \ref{lem:18.1.3}，知 $f'$ 拟紧。
+\end{proof}
+
+% ---------------------------------------------------------------- p.86
+\begin{exercise}\label{exc:18.1.5}
+证明闭浸入拟紧。
+\end{exercise}
+
+\subsection{分离态射}\label{sec:18.2}
+
+\begin{definition}\label{def:18.2.1}
+设 $f:X\to Y$ 是概形间的态射。\emph{（相对）对角线态射}
+\[
+\Delta_f:X\longrightarrow X\times_Y X
+\]
+是指对应于交换方块
+\[
+\begin{tikzcd}
+X \arrow[r,"="] \arrow[d,"="'] & X \arrow[d,"f"] \\
+X \arrow[r,"f"'] & Y
+\end{tikzcd}
+\]
+的态射。设 $p:X\to S$ 是 $S$-概形，我们也写
+\[
+\Delta_X:=\Delta_p:X\longrightarrow X\times_S X,
+\]
+并称之为 $S$-概形 $X$ 的\emph{对角线态射}。
+\end{definition}
+
+\begin{lemma}\label{lem:18.2.2}
+设 $f:X\to Y$ 是概形间的态射。则 $\Delta_f:X\to X\times_Y X$ 是局部闭浸入。
+\end{lemma}
+
+\begin{proof}
+考虑投影 $p_1:X\times_Y X\to X$。注意 $p_1\circ\Delta_f=\id_X$。这说明 $\Delta_f$ 诱导 $X$ 到其像的同胚。此外，对任意点 $x\in X$，恒等同态 $\cO_{X,x}\to\cO_{X,x}$ 分解为
+\[
+\cO_{X,x}\to\cO_{X\times_Y X,\Delta_f(x)}\to\cO_{X,x},
+\]
+其中第一个同态由 $p_1$ 诱导，第二个由 $\Delta_f$ 诱导。特别地，第二个同态是满射。
+
+由命题 11.5.2，只需证 $\Delta_f(X)$ 是 $X\times_Y X$ 的局部闭子集。问题在 $Y$ 上局部，故可设 $Y=\Spec(B)$ 仿射。取点 $x\in X$ 及它的仿射开邻域 $U\subseteq X$。注意 $U\times_Y U\subseteq X\times_Y X$ 是 $\Delta(x)$ 的开邻域，故只需证 $\Delta_f(X)\cap(U\times_Y U)$ 是 $U\times_Y U$ 的闭子集。注意有
+\[
+\Delta_f(X)\cap(U\times_Y U)=\Delta_f(U).
+\]
+于是可把 $X$ 换成 $U$，从而设 $X=\Spec(A)$ 仿射。此时 $\Delta_f$ 对应环同态 $A\otimes_B A\to A,\ a\otimes a'\mapsto aa'$，它是满射。故 $\Delta_f$ 是闭浸入，如所愿。
+\end{proof}
+
+\begin{exercise}\label{exc:18.2.3}
+证明 $f:X\to Y$ 是单态射当且仅当 $\Delta_f$ 是同构。
+\end{exercise}
+
+\begin{definition}\label{def:18.2.4}
+设 $f:X\to Y$ 是概形间的态射。称 $f$ \emph{分离}，若对角线态射 $\Delta_f:X\to X\times_Y X$ 是闭浸入。称概形 $X$ 是\emph{分离的}，若 $X\to\Spec(\Z)$ 分离。
+\end{definition}
+
+\begin{yizhu}
+Stacks 把分离与拟分离放进同一条定义：对角线是闭浸入者称分离，对角线拟紧者称拟分离，概形的相应性质则由到 $\Spec(\Z)$ 的态射给出。原书把二者拆成定义 \ref{def:18.2.4} 与定义 \ref{def:18.3.1}，中间隔着一整套分离态射的稳定性引理。这一安排的用意是：分离性先作为「对角线闭」讲透，拟分离性再作为「对角线拟紧」平行搬演，读者由此看出两套论证是同一模板的两份拷贝。
+[来源：Stacks Project, Tag 01KK（Definition 26.21.3, Separation axioms），\url{https://stacks.math.columbia.edu/tag/01KK}（2026-11-17 访问）。]
+\end{yizhu}
+
+由引理 \ref{lem:18.2.2}，我们有：
+
+\begin{corollary}\label{cor:18.2.5}
+态射 $f:X\to Y$ 分离当且仅当 $\Delta_f(X)$ 是 $X\times_Y X$ 的闭子集。
+\end{corollary}
+
+\begin{yizhu}
+nLab 的条目干脆用推论 \ref{cor:18.2.5} 的说法当定义：$f$ 分离，指 $\Delta(X)$ 是 $X\times_Y X$ 的闭子空间。条目随即提醒，这与 Hausdorff 空间的对角线条件形式相似，差别只在乘积取的是纤维积、闭性只在 Zariski 拓扑下检验。原书反过来，以「$\Delta_f$ 是闭浸入」为定义，把「像闭」降为推论；两者只差「浸入的层论部分」，而这部分由引理 \ref{lem:18.2.2} 的茎满射自动补上。
+[来源：nLab "separated morphism of schemes"，\url{https://ncatlab.org/nlab/show/separated+morphism+of+schemes}（Last revised 2024-08-24；2026-11-17 访问）。]
+\end{yizhu}
+
+% ---------------------------------------------------------------- p.87
+由习题 \ref{exc:18.2.3}，我们有：
+
+\begin{corollary}\label{cor:18.2.6}
+概形之间的单态射分离。特别地，局部闭浸入分离。
+\end{corollary}
+
+\begin{lemma}\label{lem:18.2.7}
+考虑分离态射构成的类。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 设 $X\xrightarrow{f}Y\xrightarrow{g}Z$ 是态射链，$f$ 与 $g$ 都分离。则 $g\circ f$ 分离。
+  \item 设 $X\xrightarrow{f}Y\xrightarrow{g}Z$ 是态射链，$g\circ f$ 分离。则 $f$ 分离。
+  \item 分离态射对基变换稳定。
+  \item 「$f$ 分离」这一性质在靶上局部。
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+对 (i) 与 (ii)，有交换图
+\[
+\begin{tikzcd}
+X \arrow[r,"\Delta_f"] \arrow[dr,"\Delta_{g\circ f}"'] & X\times_Y X \arrow[r] \arrow[d,"\Delta'_g"] & Y \arrow[d,"\Delta_g"] \\
+& X\times_Z X \arrow[r] & Y\times_Z Y.
+\end{tikzcd}
+\]
+而且可以验证右方块是 Cartesian 的。
+
+若 $f$ 与 $g$ 分离，则 $\Delta_f$ 与 $\Delta_g$ 是闭浸入。由推论 15.1.3，$\Delta'_g$ 也是闭浸入。于是 $\Delta_{g\circ f}\simeq\Delta'_g\circ\Delta_f$ 也是闭浸入。这证明了 (i)。
+
+若 $g\circ f$ 分离，则 $\Delta_{g\circ f}\simeq\Delta'_g\circ\Delta_f$ 是闭浸入。特别地，$\Delta'_g(\Delta_f(X))$ 是 $X\times_Z X$ 的闭子集。
+
+注意由推论 15.1.4 与引理 \ref{lem:18.2.2}，$\Delta'_g$ 是局部闭浸入。于是 $\Delta'_g$ 诱导 $X\times_Y X$ 到其像的同胚。与上一段合起来，知 $\Delta_f(X)$ 是 $X\times_Y X$ 的闭子集。由推论 \ref{cor:18.2.5}，这给出 (ii)。
+
+对 (iii) 与 (iv)，注意对 Cartesian 方块
+\[
+\begin{tikzcd}
+X' \arrow[r,"f'"] \arrow[d] & Y' \arrow[d] \\
+X \arrow[r,"f"'] & Y,
+\end{tikzcd}
+\]
+有交换图
+\[
+\begin{tikzcd}
+X' \arrow[r,"\Delta_{f'}"] \arrow[d] & X'\times_{Y'}X' \arrow[r] \arrow[d] & Y' \arrow[d] \\
+X \arrow[r,"\Delta_f"] & X\times_Y X \arrow[r] & Y,
+\end{tikzcd}
+\]
+其中右方块与外方块都 Cartesian，故左方块也 Cartesian。于是 (iii) 由推论 15.1.3 得到，而 (iv) 由「闭浸入在靶上局部」得到。
+\end{proof}
+
+\begin{exercise}\label{exc:18.2.8}
+从仿射概形出发的态射分离。
+\end{exercise}
+
+% ---------------------------------------------------------------- p.88
+\begin{exercise}\label{exc:18.2.9}
+设 $X$ 是分离概形。证明 $X$ 的两个仿射开子集之交仿射。
+\end{exercise}
+
+\begin{definition}\label{def:18.2.10}
+设 $f:X\to Y$ 是 $S$-概形间的态射。\emph{（相对于 $S$ 的）图态射}
+\[
+\Gamma_f:X\longrightarrow X\times_S Y
+\]
+是指对应于交换方块
+\[
+\begin{tikzcd}
+X \arrow[r,"f"] \arrow[d,"="'] & Y \arrow[d] \\
+X \arrow[r] & S
+\end{tikzcd}
+\]
+的态射。
+\end{definition}
+
+\begin{exercise}\label{exc:18.2.11}
+设 $f:X\to Y$ 是 $S$-概形间的态射。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 证明图态射 $\Gamma_f:X\to X\times_S Y$ 是局部闭浸入。
+  \item 若 $q:Y\to S$ 分离，证明 $\Gamma_f$ 是闭浸入。特别地，$q$ 的任意截面 $S\to Y$ 是闭浸入。
+\end{enumerate}
+\end{exercise}
+
+\subsection{拟分离态射}\label{sec:18.3}
+
+\begin{definition}\label{def:18.3.1}
+设 $f:X\to Y$ 是概形间的态射。称 $f$ \emph{拟分离}，若对角线态射 $\Delta_f:X\to X\times_Y X$ 拟紧。称概形 $X$ \emph{拟分离}，若 $X\to\Spec(\Z)$ 拟分离。
+\end{definition}
+
+由习题 \ref{exc:18.1.5}，我们有：
+
+\begin{corollary}\label{cor:18.3.2}
+分离态射拟分离。
+\end{corollary}
+
+\begin{lemma}\label{lem:18.3.3}
+设 $X$ 是概形。下列条件等价：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 概形 $X$ 拟分离。
+  \item $X$ 的任意两个拟紧开子集之交拟紧。
+  \item $X$ 的任意两个仿射开子集之交拟紧。
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i)$\Rightarrow$(ii)：设 $X$ 拟分离，$U_1,U_2$ 是拟紧开子集。由引理 18.1.4，$U_1\times U_2$ 也拟紧。按假设 $\Delta:X\to X\times X$ 拟紧，故 $U_1\cap U_2\simeq\Delta^{-1}(U_1\times U_2)$ 拟紧，如所愿。
+
+(ii)$\Rightarrow$(iii) 显然。
+
+(iii)$\Rightarrow$(i)：设任意两个仿射开子集之交拟紧。取 $X$ 的仿射开覆盖 $X=\bigcup_{i\in I}U_i$。则 $X\times X$ 被仿射开子概形 $U_i\times U_j\ (i,j)\in I^2$ 覆盖。由引理 18.1.4，只需证
+\[
+U_i\cap U_j\simeq X\times_{X\times X}(U_i\times U_j)\to U_i\times U_j
+\]
+拟紧。但这由「$U_i\cap U_j$ 拟紧」的假设与引理 \ref{lem:18.1.3} 得到。
+\end{proof}
+
+\begin{yizhu}
+Stacks 对拟分离给出另一个等价刻画：对任意落入 $S$ 的同一个仿射开集的两个仿射开集 $U,V\subseteq X$，交 $U\cap V$ 是有限个仿射开集之并。有限并要求比拟紧强，但当 $X$ 本身拟紧时二者一致：拟紧开集被有限个仿射开集覆盖，故拟紧性可以换成有限性。原书用拟紧，好处是整套论证与第 \ref{sec:18.2} 小节逐条平行，代价是与 Stacks 的表述对读时须先补这一步。
+[来源：Stacks Project, Tag 01KO（Lemma 26.21.6, Separation axioms），\url{https://stacks.math.columbia.edu/tag/01KO}（2026-11-17 访问）。]
+\end{yizhu}
+
+以下结果的证明与引理 \ref{lem:18.2.7} 类似，留给读者。
+
+% ---------------------------------------------------------------- p.89
+\begin{lemma}\label{lem:18.3.4}
+考虑拟分离态射构成的类。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 设 $X\xrightarrow{f}Y\xrightarrow{g}Z$ 是态射链，$f$ 与 $g$ 都拟分离。则 $g\circ f$ 拟分离。
+  \item 设 $X\xrightarrow{f}Y\xrightarrow{g}Z$ 是态射链，$g\circ f$ 拟分离。则 $f$ 拟分离。
+  \item 拟分离态射对基变换稳定。
+  \item 「$f$ 拟分离」这一性质在靶上局部。
+\end{enumerate}
+\end{lemma}
+
+\begin{exercise}\label{exc:18.3.5}
+设 $X\xrightarrow{f}Y\xrightarrow{g}Z$ 是态射链，$g$ 拟分离且 $g\circ f$ 拟紧。证明 $f$ 拟紧。
+\end{exercise}
+
+\subsection{qcqs 态射下的正像}\label{sec:18.4}
+
+\begin{theorem}\label{thm:18.4.1}
+设 $f:X\to Y$ 是拟紧且拟分离的态射。则函子 $f_*:\omod\to\cO_Y\text{-}\mathsf{mod}$ 把拟凝聚 $\cO_X$-模送到拟凝聚 $\cO_Y$-模。此外，所得函子
+\[
+f_*:\mathsf{QCoh}(X)\to\mathsf{QCoh}(Y)
+\]
+与小余积、滤过余极限交换。
+\end{theorem}
+
+\begin{proof}
+先证这些断言在 $Y$ 上局部。这由以下观察得到：
+\begin{itemize}[leftmargin=1.5em,itemsep=0.15ex]
+  \item 拟紧拟分离态射类对基变换封闭。
+  \item 对任意 $\cM\in\omod$ 与开子概形 $U\subseteq Y$，有 $f_*(\cM)|_U\simeq f'_*(\cM|_V)$，其中 $f':V\to U$ 是 $f:X\to Y$ 的基变换。
+  \item 对概形的开覆盖 $Z=\bigcup_{i\in I}Z_i$，函子 $(-)|_{Z_i}:\cO_Z\text{-}\mathsf{mod}\to\cO_{Z_i}\text{-}\mathsf{mod}$ 既保持又检测拟凝聚模。
+  \item 对概形的开覆盖 $Z=\bigcup_{i\in I}Z_i$，函子 $(-)|_{Z_i}:\mathsf{QCoh}(Z)\to\mathsf{QCoh}(Z_i)$ 既保持又检测小余积（事实上保持任意小余极限）。
+\end{itemize}
+于是可设 $Y=\Spec(A)$ 仿射，从而 $X$ 拟紧且拟分离。
+
+下面归约到 $X$ 拟紧且分离的情形。为此取 $X$ 的有限仿射开覆盖 $X=\bigcup_{i\in I}U_i$。记 $U_{ij}:=U_i\cap U_j$，由引理 \ref{lem:18.3.3} 它拟紧。注意 $U_{ij}$ 也分离：$U_i$ 分离（习题 \ref{exc:18.2.8}），而 $U_{ij}\to U_i$ 分离（推论 \ref{cor:18.2.6}）。设 $\cM\in\mathsf{QCoh}(X)$ 是拟凝聚 $\cO_X$-模。回忆
+\[
+\cM\simeq\ker\Big(\prod_{i\in I}g_{i,*}(\cM|_{U_i})\to\prod_{(i,j)\in I^2}g_{ij,*}(\cM|_{U_{ij}})\Big),
+\]
+其中 $g_i:U_i\to X$ 与 $g_{ij}:U_{ij}\to X$ 是开浸入。由此
+\[
+f_*\cM\simeq\ker\Big(\prod_{i\in I}(f\circ g_i)_*(\cM|_{U_i})\to\prod_{(i,j)\in I^2}(f\circ g_{ij})_*(\cM|_{U_{ij}})\Big).
+\]
+由推论 13.4.3，为证 $f_*\cM$ 拟凝聚，只需每个 $(f\circ g_i)_*(\cM|_{U_i})$ 与 $(f\circ g_{ij})_*(\cM|_{U_{ij}})$ 拟凝聚。此外推论 13.4.3 还说明余积（相应地，滤过余极限）与 $\mathsf{QCoh}(Z)$ 中的有限极限交换。故为证所得函子 $f_*:\mathsf{QCoh}(X)\to\mathsf{QCoh}(Y)$ 与余积（相应地，滤过余极限）交换，只需每个 $(f\circ g_i)_*$ 与 $(f\circ g_{ij})_*$ 如此。于是可把 $X$ 换成 $U_i$ 或 $U_{ij}$，从而设 $X$ 拟紧且分离。
+
+现在重复上一段。注意在新假设「$X$ 分离」下，$U_{ij}\simeq U_i\times_X U_j\to U_i\times U_j$ 是闭浸入，因为它是 $\Delta:X\to X\times X$ 的基变换。由于 $U_i\times U_j$ 仿射，$U_{ij}$ 也仿射（推论 15.1.2）。于是把 $X$ 换成 $U_i$ 或 $U_{ij}$ 之后，可设 $X$ 仿射。
+
+此时所需断言由推论 13.3.4 与下述事实得到：对任意环同态 $\phi:A\to B$，限制函子 $B\text{-}\mathsf{mod}\to A\text{-}\mathsf{mod}$ 与小余积、滤过余极限交换。
+\end{proof}
+
+% ---------------------------------------------------------------- p.90
+\begin{exercise}\label{exc:18.4.2}
+考虑 $\A^\infty_\Z:=\Spec(\Z[t_1,t_2,\dots])$ 及对应于理想 $(t_1,t_2,\dots)$ 的闭子概形 $Z$。令 $U:=\A^\infty_\Z\setminus Z$ 为其补开子概形。定义 $X$ 为把两块 $\A^\infty_\Z$ 沿 $U$ 上的恒等态射粘合所得的概形。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 证明 $X$ 拟紧但不拟分离。
+  \item 考虑唯一态射 $p:X\to\Spec(\Z)$。证明 $p_*$ 不保持拟凝聚模。
+\end{enumerate}
+\end{exercise}
+
+\begin{yizhu}
+习题 \ref{exc:18.4.2} 是定理 \ref{thm:18.4.1} 中两项假设的「分离见证」：$X$ 由两块 $\A^\infty_\Z$ 沿补闭子概形 $U$ 粘成，故拟紧；但两块的交叉 $U$ 不是拟紧的，对角线因而不拟紧，$X$ 不拟分离。此时 $p_*\cO_X$ 不再是拟凝聚层。换言之，定理里「拟分离」不是装饰：去掉它，连 $\cO_X$ 的正像都留不住拟凝聚性。
+[依据：原书 p.90 习题 \ref{exc:18.4.2}（$\A^\infty_\Z$ 的补闭子概形、沿 $U$ 的粘合）与 p.89 定理 \ref{thm:18.4.1} 的「在 $Y$ 上局部」归约。]
+\end{yizhu}
+
+\begin{corollary}\label{cor:18.4.3}
+设 $X$ 拟紧且拟分离。则函子
+\[
+\Gamma(X,-):\mathsf{QCoh}(X)\to\Ab
+\]
+与（小）余积、滤过余极限交换。
+\end{corollary}
+
+\begin{exercise}\label{exc:18.4.4}
+设 $X$ 拟紧且拟分离，$\cM$ 是有限表现的 $\cO_X$-模。则函子
+\[
+\cHom_{\cO_X}(\cM,-):\mathsf{QCoh}(X)\to\Ab
+\]
+保持滤过余极限。
+\end{exercise}
+
+\subsection{应用：概形论像}\label{sec:18.5}
+
+\begin{lemma}\label{lem:18.5.1}
+设 $f:X\to Y$ 是拟紧态射。则核
+\[
+\ker(\cO_Y\to f_*\cO_X)
+\]
+是拟凝聚 $\cO_Y$-模。
+\end{lemma}
+
+\begin{proof}
+问题在 $Y$ 上局部，故可设 $Y$ 仿射，从而 $X$ 拟紧。取 $X$ 的有限仿射开覆盖 $X=\bigcup_{i\in I}U_i$，并令 $X':=\bigsqcup_{i\in I}U_i$ 为这些开子概形的不交并。设 $g:X'\to X$ 是显然的态射。注意 $\cO_X\to g_*\cO_{X'}$ 是单射，故 $f_*\cO_X\to(f\circ g)_*\cO_{X'}$ 也是单射。于是
+\[
+\ker(\cO_Y\to f_*\cO_X)=\ker(\cO_Y\to(f\circ g)_*\cO_{X'}).
+\]
+注意 $f\circ g$ 仿射。于是右端拟凝聚，如所愿。
+\end{proof}
+
+\begin{construction}\label{con:18.5.2}
+设 $f:X\to Y$ 是拟紧态射。考虑拟凝聚理想 $\cI:=\ker(\cO_Y\to f_*\cO_X)$\footnote{原书此处印作 $i_*\cO_X$，显系 $f_*\cO_X$ 之误。}并令
+\[
+\overline{f(X)}:=\Spec_Y(\cO_Y/\cI).
+\]
+\end{construction}
+
+% ---------------------------------------------------------------- p.91
+注意 $\overline{f(X)}$ 是 $Y$ 的闭子概形。由习题 14.2.7，同态 $\cO_Y/\cI\to f_*\cO_X$ 诱导 $Y$-态射
+\[
+X\to\overline{f(X)}.
+\]
+
+\begin{remark}\label{rem:18.5.3}
+容易看出上述构造对 $f:X\to Y$ 具有函子性。换言之，对交换图
+\[
+\begin{tikzcd}
+X \arrow[r,"f"] \arrow[d] & Y \arrow[d] \\
+X' \arrow[r,"f'"'] & Y',
+\end{tikzcd}
+\]
+若 $f$ 与 $f'$ 拟紧，则得到交换图
+\[
+\begin{tikzcd}
+X \arrow[r] \arrow[d] & \overline{f(X)} \arrow[r] \arrow[d] & Y \arrow[d] \\
+X' \arrow[r] & \overline{f(X')} \arrow[r] & Y'.
+\end{tikzcd}
+\]
+\end{remark}
+
+\begin{propdef}\label{prop:18.5.4}
+设 $f:X\to Y$ 是概形间的拟紧态射。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 典范态射 $X\to\overline{f(X)}$ 的像稠密。
+  \item 若闭浸入 $Z\to Y$ 使 $f:X\to Y$ 穿过 $Z$，则 $\overline{f(X)}\to Y$ 也穿过 $Z$。
+\end{enumerate}
+称 $\overline{f(X)}$ 为 $X$ 在 $Y$ 中的\emph{概形论像}。
+\end{propdef}
+
+\begin{proof}
+对 (1)，取开子集 $U\subseteq Y$ 使 $U\cap f(Y)=\varnothing$。只需证 $U\cap\overline{f(X)}$ 为空。正合列
+\[
+0\to\cI\to\cO_Y\to f_*\cO_X
+\]
+诱导正合列
+\[
+0\to\cI|_U\to\cO_Y|_U\to(f_*\cO_X)|_U.
+\]
+注意 $(f_*\cO_X)|_U=0$，因为 $f^{-1}(U)=\varnothing$。于是 $\cI|_U\simeq\cO_Y|_U$。因此
+\[
+\overline{f(X)}\cap U\simeq\overline{f(X)}\times_Y U\simeq\Spec_U((\cO_Y/\cI)|_U)\simeq\Spec_U(\cO_Y|_U/\cI|_U)=\varnothing,
+\]
+如所愿。
+
+对 (2)，设 $\cJ$ 是 $Z\to Y$ 的定义理想，即 $Z\simeq\Spec_Y(\cO_Y/\cJ)$。由习题 14.2.7，$Y$-态射 $X\to Z$ 对应 $\cO_Y$-同态 $\cO_Y/\cJ\to f_*\cO_X$。特别地，
+\[
+\cI=\ker(\cO_Y\to f_*\cO_X)\supseteq\cJ.
+\]
+由定理 15.1.1，这给出 $Y$-态射 $\overline{f(X)}\to Z$。
+\end{proof}
+
+当 $f:X\to Y$ 是拟紧的局部闭浸入时，我们也把 $\overline{f(X)}$ 写作 $\overline{X}$，并称之为 $X$ 在 $Y$ 中的\emph{概形论闭包}。
+
+\begin{yizhu}
+Stacks 把「最小闭子概形」直接当作定义，并在证明里点明关键：$f$ 任意时 $\ker(\cO_Y\to f_*\cO_X)$ 未必拟凝聚，故须先取其中最大的拟凝聚理想，再取零化子。原书借引理 \ref{lem:18.5.1} 把 $f$ 限制为拟紧，于是「最大拟凝聚理想」这一步消失，构造 \ref{con:18.5.2} 可以直接写 $\cI=\ker(\cO_Y\to f_*\cO_X)$。警告 \ref{warn:18.5.6} 说的正是丢掉这一步的代价。
+[来源：Stacks Project, Tag 01R6（Lemma 29.6.1, Scheme theoretic image），\url{https://stacks.math.columbia.edu/tag/01R6}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{lemma}\label{lem:18.5.5}
+设 $i:X\to Y$ 是拟紧的局部闭浸入。则典范态射 $j:X\to\overline{X}$ 是像稠密的开浸入。
+\end{lemma}
+
+% ---------------------------------------------------------------- p.92
+\begin{proof}
+由命题--定义 \ref{prop:18.5.4}，只需证 $j$ 是开浸入。取开子概形 $U\subseteq Y$ 使 $i(X)$ 在 $U$ 中闭。按构造有
+\[
+\overline{X}\cap U\simeq\overline{X\times_Y U}\simeq X\times_Y U,
+\]
+其中右端是 $X\times_Y U$ 在 $U$ 中的概形论闭包。按定义 $X\times_Y U\simeq X$。于是得到
+\[
+\overline{X}\cap U\simeq X.
+\]
+这说明 $X\to\overline{X}$ 是以 $X\cap U$ 为像的开浸入。
+\end{proof}
+
+\begin{warning}\label{warn:18.5.6}
+对一般态射 $f:X\to Y$，可以把它的概形论像定义为使 $f$ 穿过的 $Y$ 的最小闭子概形 $Z$。然而若 $f$ 不拟紧，命题--定义 \ref{prop:18.5.4}(1) 可能失效。
+\end{warning}
+
+\subsection{有限型模的扩张}\label{sec:18.6}
+
+\begin{theorem}\label{thm:18.6.1}
+设 $X$ 是拟紧且拟分离的概形，$j:U\to X$ 是拟紧开浸入。则下述命题成立：
+\begin{itemize}[leftmargin=1.5em,itemsep=0.15ex]
+  \item[(*)] 对任意拟凝聚 $\cO_X$-模 $\cF$ 与任意有限型的拟凝聚 $\cO_U$-子模 $\cM\subseteq j^*\cF$，存在有限型的拟凝聚 $\cO_X$-子模 $\cM'\subseteq\cF$，使 $\cM\simeq j^*\cM'$。
+\end{itemize}
+\end{theorem}
+
+为证明该定理，需要一些准备。
+
+\begin{lemma}\label{lem:18.6.2}
+设 $X$ 是概形，$\cF\in\mathsf{QCoh}(X)$。记 $\mathrm{Sub}(\cF)_{\mathrm{ft}}$ 为 $\cF$ 的拟凝聚有限型子对象构成的范畴。则 $\mathrm{Sub}(\cF)_{\mathrm{ft}}$ 滤过。
+\end{lemma}
+
+\begin{proof}
+注意 $\mathrm{Sub}(\cF)_{\mathrm{ft}}$ 有有限余积。事实上，对有限集 $I$，$\cF_i\subseteq\cF\ (i\in I)$ 的余积可计算为
+\[
+\bigoplus_{i\in I}\cF_i\to\cF
+\]
+的像，而它确实有限型，因为 $\bigoplus_{i\in I}\cF_i$ 有限型。于是断言由下述一般事实得到：若范畴有有限余积，则它滤过。\footnote{此处的一般事实只对每个 $\mathrm{Hom}$ 集至多一元的偏序范畴无条件成立：有限余积即上确界，而滤过性中「平行态射可被右乘同一态射而相等」一条自动满足。$\mathrm{Sub}(\cF)_{\mathrm{ft}}$ 正是这样的范畴，故结论无误；对一般的范畴，仅凭有限余积不足以推出滤过性。}
+\end{proof}
+
+\begin{lemma}\label{lem:18.6.3}
+设 $X$ 是概形，$\cF\in\mathsf{QCoh}(X)$。典范态射
+\begin{equation}\label{eq:18.1}
+\colim_{\cF'\in\mathrm{Sub}(\cF)_{\mathrm{ft}}}\cF'\to\cF
+\end{equation}
+是单射。若 $X$ 仿射，则该态射是同构。
+\end{lemma}
+
+\begin{proof}
+第二个断言显然。对第一个断言，只需证对任意仿射开子集 $U\subseteq X$，
+\begin{equation}\label{eq:18.2}
+\Big(\colim_{\cF'\in\mathrm{Sub}(\cF)_{\mathrm{ft}}}\cF'\Big)(U)\to\cF(U)
+\end{equation}
+是单射。注意有
+\[
+\Big(\colim_{\cF'\in\mathrm{Sub}(\cF)_{\mathrm{ft}}}\cF'\Big)(U)\simeq\colim_{\cF'\in\mathrm{Sub}(\cF)_{\mathrm{ft}}}\cF'(U)
+\]
+以及
+\[
+\cF(U)\simeq\colim_{\cF'\in\mathrm{Sub}(\cF)_{\mathrm{ft}}}\cF(U).
+\]
+% ---------------------------------------------------------------- p.93
+于是 \eqref{eq:18.2} 可等同于滤过余极限下的单射 $\cF'(U)\to\cF(U)$ 之余极限，从而 \eqref{eq:18.2} 是单射，如所愿。
+\end{proof}
+
+\begin{lemma}\label{lem:18.6.4}
+设 $X$ 是概形，且对任意 $\cF\in\mathsf{QCoh}(X)$，典范态射 \eqref{eq:18.1} 是同构。设 $j:U\to X$ 是拟紧开浸入且 $U$ 拟紧。则定理 \ref{thm:18.6.1} 中的 (*) 成立。
+\end{lemma}
+
+\begin{proof}
+注意由定理 \ref{thm:18.4.1}，$j_*$ 保持拟凝聚模。设 $N\in\mathsf{QCoh}(X)$ 是如下纤维积：
+\begin{equation}\label{eq:18.3}
+\begin{tikzcd}
+N \arrow[r] \arrow[d] & j_*M \arrow[d] \\
+\cF \arrow[r] & j_*j^*\cF,
+\end{tikzcd}
+\end{equation}
+其中右竖态射由单射 $M\to j^*\cF$ 诱导。因 $j_*$ 左正合，$j_*M\to j_*j^*\cF$ 也是单射。于是 $N\to\cF$ 是单射。
+
+对 \eqref{eq:18.3} 作用 $j^*$，得到 Cartesian 方块
+\[
+\begin{tikzcd}
+j^*N \arrow[r] \arrow[d] & M \arrow[d] \\
+j^*\cF \arrow[r] & j^*j_*\cF,
+\end{tikzcd}
+\]
+这说明 $j^*N\to M$ 是同构。于是所需断言由下面的引理 \ref{lem:18.6.5} 得到。
+\end{proof}
+
+\begin{lemma}\label{lem:18.6.5}
+设 $X$ 是概形，且对任意 $\cF\in\mathsf{QCoh}(X)$，典范态射 \eqref{eq:18.1} 是同构。设 $j:U\to X$ 是开浸入且 $U$ 拟紧。则下述命题成立：
+\begin{itemize}[leftmargin=1.5em,itemsep=0.15ex]
+  \item[(*)] 对任意拟凝聚 $\cO_X$-模 $N$，若 $j^*N$ 有限型，则存在有限型的拟凝聚 $\cO_X$-子模 $\cM'\subseteq N$，使 $j^*\cM'\simeq j^*N$。
+\end{itemize}
+\end{lemma}
+
+\begin{proof}
+按假设有
+\[
+\colim_{N'\in\mathrm{Sub}(N)_{\mathrm{ft}}}N'\xrightarrow{\ \simeq\ }N.
+\]
+于是对任意仿射开子集 $V\subseteq U$ 与任意截面 $s\in(j^*N)(V)\simeq N(V)$，存在 $N'\in\mathrm{Sub}(N)_{\mathrm{ft}}$，使 $s$ 落在
+\[
+(j^*N')(V)\to(j^*N)(V)
+\]
+的像中。由于 $\mathrm{Sub}(N)_{\mathrm{ft}}$ 滤过，且 $U$ 拟紧、$N$ 有限型，可知存在足够大的对象 $\cM'\in\mathrm{Sub}(N)_{\mathrm{ft}}$，使 $j^*\cM'\to j^*N$ 是满射。又 $j^*$ 正合，故它也是单射。
+\end{proof}
+
+% ---------------------------------------------------------------- p.94
+\begin{proof}[定理 \ref{thm:18.6.1} 的证明]
+取 $X$ 的有限仿射开覆盖 $X=\bigcup_{i=1}^nX_i$，并令
+\[
+X_{\le i}:=U\cup\Big(\bigcup_{j=1}^iX_j\Big),
+\]
+从而 $U=X_{\le 0}\subseteq\cdots\subseteq X_{\le n}=X$。我们归纳构造 $\cM'_i\in\mathrm{Sub}(\cF|_{X_{\le i}})_{\mathrm{ft}}$，使 $\cM'_{i+1}|_{X_{\le i}}=\cM'_i$。为此只需把 $\cM'_i|_{X_{i+1}\cap X_{\le i}}$ 扩张为 $\mathrm{Sub}(\cF|_{X_{i+1}})_{\mathrm{ft}}$ 中的对象，也就是对仿射概形 $X_{i+1}$ 与开浸入 $X_{i+1}\cap X_{\le i}\to X_{i+1}$ 验证 (*)。注意
+\[
+X_{i+1}\cap X_{\le i}=(X_{i+1}\cap U)\cup\bigcup_{j=1}^i(X_{i+1}\cap X_j)
+\]
+拟紧：$U$ 拟紧，各 $X_j$ 拟紧，而 $X$ 拟分离。于是由引理 \ref{lem:18.6.4} 即得所需。
+\end{proof}
+
+\begin{theorem}\label{thm:18.6.6}
+设 $X$ 是拟紧且拟分离的概形，$\cF\in\mathsf{QCoh}(X)$。则典范态射
+\begin{equation}\label{eq:18.4}
+\colim_{\cF'\in\mathrm{Sub}(\cF)_{\mathrm{ft}}}\cF'\to\cF
+\end{equation}
+是同构。
+\end{theorem}
+
+\begin{proof}
+由引理 \ref{lem:18.6.3}，只需证 \eqref{eq:18.4} 是满射。设 $U\subseteq X$ 仿射开，$M\in\mathrm{Sub}(\cF|_U)_{\mathrm{ft}}$。由定理 \ref{thm:18.6.1}，可把 $M$ 扩张为某个有限型 $\cM'\subseteq\cF$ 在 $U$ 上的限制。于是 \eqref{eq:18.4} 在每个仿射开集上满，从而满。
+\end{proof}

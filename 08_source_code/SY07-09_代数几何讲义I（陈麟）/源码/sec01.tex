@@ -1,0 +1,347 @@
+% ======================================================================
+%  sec01.tex —— 第 1 节 （预）层的定义
+%  底本：原书 pp.9–13（印刷页 = PDF 页）
+%  原书标题：1. Definition of (pre)sheaves
+%  体例：\section + \subsection 与原文编号一致；定理类环境紧跟 \label{类型:编号}。
+% ======================================================================
+
+\section{（预）层的定义}\label{sec:1}
+
+% ---------------------------------------------------------------- p.9
+\subsection{预层}\label{sec:1.1}
+
+\begin{definition}\label{def:1.1.1}
+设 $X$ 是拓扑空间，$(\mathcal U(X),\subseteq)$ 是其开子集构成的偏序集。我们把 $X$ 的\emph{开子集范畴} $\smallcat U(X)$ 定义为偏序集 $(\mathcal U(X),\subseteq)$ 所关联的范畴。
+\end{definition}
+
+范畴 $\smallcat U(X)$ 可以显式描述如下：
+\begin{itemize}
+  \item $\smallcat U(X)$ 的对象是开子集 $U\subseteq X$。
+  \item 若 $U\subseteq V$，则 $\Hom_{\smallcat U(X)}(U,V)$ 是单元集；否则 $\Hom_{\smallcat U(X)}(U,V)$ 是空集。
+  \item 恒等态射与复合律按唯一的方式定义。
+\end{itemize}
+
+\begin{yizhu}
+把偏序集 $(\mathcal U(X),\subseteq)$ 看成范畴，是范畴论的标准手法：任意两个对象之间至多一个态射，这样的范畴在 nLab 中称 thin category。于是「反变函子 $\smallcat U(X)^{\op}\to\Set$」与「每个开集给一个集合、每对包含给一个映射」的古典说法完全等价。
+[来源：nLab \emph{thin category}，\url{https://ncatlab.org/nlab/show/thin+category}（Last revised 2024-02-23；2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{definition}\label{def:1.1.2}
+设 $X$ 是拓扑空间，$\mathcal C$ 是范畴。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item $X$ 上的 \emph{$\mathcal C$-值预层}，是指函子 $F\colon \smallcat U(X)^{\op}\to\mathcal C$。
+  \item $\mathcal C$-值预层之间的态射 $F\to F'$，是指这些函子之间的自然变换。
+\end{enumerate}
+\end{definition}
+
+设 $\Set$ 是集合范畴。按定义，$X$ 上的集合预层 $F$（即 $\Set$-值预层）由下述数据组成：
+\begin{itemize}
+  \item 对任意开子集 $U\subseteq X$，有一个集合 $F(U)$，称为 $F$ 在 $U$ 上的\emph{截面}之集。
+  \item 对 $U\subseteq V$，有一个映射
+  \[
+  F(V)\to F(U),\qquad s\mapsto s|_U,
+  \]
+  称为\emph{限制映射}。
+\end{itemize}
+这些数据应满足下述条件：
+\begin{itemize}
+  \item 对任意开子集 $U\subseteq X$，限制映射 $F(U)\to F(U)$ 是恒等映射。
+  \item 对 $U\subseteq V\subseteq W$，限制映射使下图交换：
+  \[
+  \begin{tikzcd}[row sep=2.2em,column sep=3em]
+  F(W) \arrow[r] \arrow[dr] & F(V) \arrow[d] \\
+  & F(U)
+  \end{tikzcd}
+  \]
+\end{itemize}
+
+设 $F$ 与 $F'$ 是 $X$ 上的集合预层。按定义，态射 $\phi\colon F\to F'$ 由下述数据组成：
+\begin{itemize}
+  \item 对任意开子集 $U\subseteq X$，有一个映射 $\phi_U\colon F(U)\to F'(U)$。
+\end{itemize}
+这些数据应满足下述条件：
+\begin{itemize}
+  \item 对 $U\subseteq V$，下图交换：
+  \[
+  \begin{tikzcd}
+  F(V) \arrow[r,"\phi_V"] \arrow[d] & F'(V) \arrow[d] \\
+  F(U) \arrow[r,"\phi_U"] & F'(U),
+  \end{tikzcd}
+  \]
+  其中竖直映射是限制映射。
+\end{itemize}
+
+% ---------------------------------------------------------------- p.10
+类似地，可以显式描述阿贝尔群预层（$k$-向量空间预层、交换代数预层）及其间的态射。
+
+\begin{example}\label{ex:1.1.3}
+设 $X$ 是拓扑空间，$\mathcal C$ 是范畴。对任意对象 $A\in\mathcal C$，常函子
+\[
+\smallcat U(X)^{\op}\to\mathcal C,\qquad U\mapsto A,\qquad f\mapsto \id_A
+\]
+定义了 $X$ 上的一个 $\mathcal C$-值预层，称为与 $A$ 关联的\emph{常预层}，常记作 $\underline{A}$。
+\end{example}
+
+\begin{example}\label{ex:1.1.4}
+设 $X$ 是拓扑空间，$E\to X$ 是其上的一个拓扑空间。如下定义集合预层 $\operatorname{Sect}_E$。
+\begin{itemize}
+  \item 对任意 $U\subseteq X$，
+  \[
+  \operatorname{Sect}_E(U):=\Hom_X(U,E)
+  \]
+  即 $X$ 上定义的连续映射 $U\to E$ 之集，亦称 $E$ 在 $U$ 上的\emph{截面}。
+  \item 对 $U\subseteq V$，限制映射 $\operatorname{Sect}_E(V)\to\operatorname{Sect}_E(U)$ 把截面 $s\colon V\to E$ 送到其限制 $s|_U\colon U\to E$。
+\end{itemize}
+称之为 $E\to X$ 的\emph{截面预层}。
+\end{example}
+
+\begin{example}\label{ex:1.1.5}
+若 $E\to X$ 是实向量丛，则可自然把 $\operatorname{Sect}_E$ 提升为 $X$ 上的实向量空间预层。
+\end{example}
+
+\begin{example}\label{ex:1.1.6}
+考虑 $X$ 上的平凡实线丛 $\R\times X$。注意 $\operatorname{Sect}_{\R\times X}(U)$ 可与 $U$ 上连续函数之集等同。于是可把 $\operatorname{Sect}_{\R\times X}$ 提升为 $X$ 上的 $\R$-代数预层。
+\end{example}
+
+% ---------------------------------------------------------------- p.11
+\subsection{集合层}\label{sec:1.2}
+
+粗略地说，层是这样一个预层：它在小开子集上的截面可以唯一地粘成较大开子集上的截面。
+
+\begin{definition}\label{def:1.2.1}
+设 $F$ 是拓扑空间 $X$ 上的集合预层。若它满足下述条件，则称 $F$ 是\emph{层}：
+\begin{itemize}
+  \item[$(*)$] 对任意开覆盖 $U=\bigcup_{i\in I}U_i$ 与任意一族截面 $s_i\in F(U_i)$（$i\in I$），只要
+  \[
+  s_i|_{U_i\cap U_j}=s_j|_{U_i\cap U_j}\qquad\text{对一切 } i,j\in I,
+  \]
+  就存在唯一的截面 $s\in F(U)$ 使得
+  \[
+  s_i=s|_{U_i}\qquad\text{对一切 } i\in I.
+  \]
+\end{itemize}
+\end{definition}
+
+\begin{remark}\label{rem:1.2.2}
+用范畴论的语言，层条件等价于下述条件：
+\begin{itemize}
+  \item 对任意开覆盖 $U=\bigcup_{i\in I}U_i$，图表
+  \[
+  F(U)\to\prod_{i\in I}F(U_i)\rightrightarrows\prod_{(i,j)\in I^2}F(U_i\cap U_j)
+  \]
+  是等化子图表。其中第一个映射是
+  \[
+  s\mapsto (s|_{U_i})_{i\in I},
+  \]
+  另外两个映射分别是
+  \[
+  (s_i)_{i\in I}\mapsto (s_i|_{U_i\cap U_j})_{(i,j)\in I^2}
+  \]
+  与
+  \[
+  (s_i)_{i\in I}\mapsto (s_j|_{U_i\cap U_j})_{(i,j)\in I^2}.
+  \]
+\end{itemize}
+特别地，映射
+\[
+F(U)\to\prod_{i\in I}F(U_i)
+\]
+是单射。
+\end{remark}
+
+\begin{remark}\label{rem:1.2.3}
+对 $U=\emptyset$ 与 $I=\emptyset$，层条件说的是：不受任何条件约束的截面 $s\in F(\emptyset)$ 唯一。换言之，上述定义迫使 $F(\emptyset)$ 是单元集。
+\end{remark}
+
+\begin{example}\label{ex:1.2.4}
+设 $X$ 是拓扑空间。与集合 $A$ 关联的常预层一般不是层。事实上，$A(\emptyset)$ 是 $A$ 而不是单元集。
+
+对上述理由感到不适的读者，我们另给一个理由。设 $F$ 是层，$U_1,U_2$ 是 $X$ 中不交的开子集。层条件蕴含
+\[
+F(U_1\sqcup U_2)\simeq F(U_1)\times F(U_2).
+\]
+但一般而言 $A$ 与 $A\times A$ 并不同构。
+\end{example}
+
+\begin{yizhu}
+常预层与常层之差，恰好落在空集这一项：层化之后 $A^{\sharp}(U)$ 是 $U$ 到 $A$（赋离散拓扑）的连续映射之集，故 $A^{\sharp}(\emptyset)$ 是单元集。第 \ref{sec:3.1} 小节将看到，常预层的层化就是常层。
+[来源：Stacks Project, Tag 0081（Example 6.17.4，常预层的层化即常层），\url{https://stacks.math.columbia.edu/tag/0081}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{example}\label{ex:1.2.5}
+设 $E\to X$ 是拓扑空间之间的连续映射。$X$ 上的截面预层 $\operatorname{Sect}_E$ 是层。事实上，这可由连续映射可以粘接这一事实推出。
+\end{example}
+
+\begin{example}\label{ex:1.2.6}
+设 $\{*\}$ 是单点空间。则 $\{*\}$ 上的集合层 $F$ 由整体截面之集 $F(\{*\})$ 唯一决定。我们常滥用记号，用集合 $A$ 记 $\{*\}$ 上整体截面为 $A$ 的层。
+\end{example}
+
+\begin{exercise}\label{exc:1.2.7}
+设 $X$ 是拓扑空间，$\mathcal B\subseteq\mathcal U(X)$ 是 $X$ 的开子集基。
+\begin{enumerate}[label=(\arabic*),leftmargin=2em,itemsep=0.25ex]
+  \item 设 $F$ 与 $F'$ 是 $X$ 上的层，$\alpha\colon F|_{\mathcal B}\to F'|_{\mathcal B}$ 是它们在全子范畴 $\mathcal B^{\op}\subseteq\smallcat U(X)^{\op}$ 上的限制之间的自然变换。证明 $\alpha$ 可唯一延拓为态射 $\phi\colon F\to F'$。
+  \item 证明：若只假设 $F$ 是预层，(1) 的结论仍然成立。
+  \item 证明：若只假设 $F'$ 是预层，(1) 中关于存在性与唯一性的结论都可能不成立。
+\end{enumerate}
+\end{exercise}
+
+上述习题说明，层由其在拓扑基上的限制决定。一个自然的问题是：给定函子 $\mathcal B^{\op}\to\Set$，在什么条件下可以把它延拓为层 $\smallcat U(X)^{\op}\to\Set$？这个问题与我们相关，因为 $\Spec R$ 的 Zariski 拓扑是用一个容易描述的开子集基定义的：
+\[
+U(f):=\{p\in\Spec R\mid f\notin p\}\simeq\Spec R_f.
+\]
+若能由层 $F$ 在 $\Spec R$ 的这些开子集上的取值恢复 $F$，将会很方便。例如，我们想知道反变函子
+\[
+U(f)\mapsto R_f
+\]
+能否延拓为交换环层。若能，我们就得到引言中想要的代数函数层 $\cO_X$。下述构造对这个问题给出肯定的回答。
+
+\begin{construction}\label{con:1.2.8}
+设 $X$ 是拓扑空间，$\mathcal B\subseteq\mathcal U(X)$ 是开子集基。对函子 $F\colon\mathcal B^{\op}\to\Set$ 与 $U\in\mathcal U(X)$，定义
+\[
+F'(U):=\lim_{V\in\mathcal B^{\op},\,V\subseteq U}F(V).
+\]
+\end{construction}
+
+% ---------------------------------------------------------------- p.12
+换言之，$s'\in F'(U)$ 是一族元素 $s_V\in F(V)$：对一切含于 $U$ 的基开集 $V$ 给定，且对 $V_1\subseteq V_2\subseteq U$（$V_1,V_2\in\mathcal B$），映射 $F(V_2)\to F(V_1)$ 把 $s_{V_2}$ 送到 $s_{V_1}$。这一构造显然对 $U$ 函子化：对 $U_1\subseteq U_2$，有自然映射 $F'(U_2)\to F'(U_1)$。容易验证这定义了函子
+\[
+F'\colon\smallcat U(X)^{\op}\to\Set,
+\]
+并带有典范同构 $F'|_{\mathcal B^{\op}}\simeq F$。换言之，我们把 $F$ 延拓成了 $X$ 上的集合预层 $F'$。
+
+\begin{remark}\label{rem:1.2.9}
+用范畴论的语言，函子 $F'$ 是 $F$ 沿嵌入 $\mathcal B^{\op}\to\smallcat U(X)^{\op}$ 的\emph{右 Kan 扩张}。
+\end{remark}
+
+\begin{yizhu}
+右 Kan 扩张的通行公式是 $(\mathrm{Ran}_K F)(U)=\lim_{U\downarrow K}F$。此处 $U\downarrow K$ 的对象恰好是基中含于 $U$ 的开集，所以第 \ref{con:1.2.8} 号构造里写的是 $\lim$ 而不是 $\colim$：若误写成余极限，得到的就不再是 $F$ 的延拓。
+[来源：nLab \emph{Kan extension}，\url{https://ncatlab.org/nlab/show/Kan+extension}（Last revised 2026-06-05；2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{proposition}\label{prop:1.2.10}
+在上述情形中，$F'$ 是层当且仅当 $F$ 满足下述条件：
+\begin{itemize}
+  \item[$(**)$] 对任意基中的开覆盖 $U=\bigcup_{i\in I}U_i$，以及任意一族元素 $s_i\in F(U_i)$（$i\in I$），只要
+  \[
+  s_i|_V=s_j|_V\qquad\text{对任意 } i,j\in I \text{ 与 } V\subseteq U_i\cap U_j,\ V\in\mathcal B,
+  \]
+  就存在唯一的截面 $s\in F(U)$ 使得
+  \[
+  s_i=s|_{U_i}\qquad\text{对一切 } i\in I.
+  \]
+\end{itemize}
+\end{proposition}
+
+\begin{yizhu}
+Stacks 在基上验证层条件时，先对每个 $U_i\cap U_j$ 再取基覆盖 $U_{ijk}$，只要求 $s_i$ 与 $s_j$ 在 $U_{ijk}$ 上相等；本书 $(**)$ 则要求二者在所有基开集 $V\subseteq U_i\cap U_j$ 上相等。由于条件对更小的基开集封闭，两种要求等价。
+[来源：Stacks Project, Tag 009J（Definition 6.30.2，基上的层），\url{https://stacks.math.columbia.edu/tag/009J}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{proof}
+「仅当」由 $F'$ 上的层条件与同构 $F'|_{\mathcal B^{\op}}\simeq F$ 推出。
+
+「当」：我们直接验证 $F'$ 上的层条件。设 $U=\bigcup_{i\in I}U_i$ 是开覆盖，$s'_i\in F'(U_i)$ 是一族截面，满足
+\[
+s'_i|_{U_i\cap U_j}=s'_j|_{U_i\cap U_j}\qquad\text{对一切 } i,j\in I.
+\]
+由构造 \ref{con:1.2.8}，每个 $s'_i$ 对应于一族元素 $s_{i,V}\in F(V)$（$V\subseteq U_i$，$V\in\mathcal B$），且与限制映射相容。
+
+只需证明存在唯一的截面 $s'\in F'(U)$ 使得 $s'|_{U_i}=s'_i$。
+
+先处理存在性。对任意 $V\subseteq U$（$V\in\mathcal B$），因 $\mathcal B$ 是基，可取基中的开覆盖 $V=\bigcup_{j\in J}V_j$，使每个 $V_j$ 含于某个 $U_i$。换言之，可取映射 $f\colon J\to I$ 使得 $V_j\subseteq U_{f(j)}$。考虑截面族
+\begin{equation}\tag{1.1}\label{eq:1.1}
+t_j:=s_{f(j),V_j}\in F(V_j),\qquad j\in J.
+\end{equation}
+容易验证它不依赖 $f$ 的选择，并且满足 $(**)$ 中的假设。于是存在唯一的截面 $s'_V\in F(V)$ 使得 $s'_V|_{V_j}=s_{f(j),V_j}$。
+
+容易验证所得的截面 $s'_V$ 不依赖开覆盖 $V=\bigcup_{j\in J}V_j$，且族 $(s'_V)$（$V\subseteq U$，$V\in\mathcal B$）与限制映射相容。于是由构造 \ref{con:1.2.8}，它对应于元素 $s'\in F'(U)$。容易验证 $s'|_{U_i}=s'_i$。存在性得证。
+
+% ---------------------------------------------------------------- p.13
+剩下唯一性。设有两个这样的截面 $s',s''$，满足
+\begin{equation}\tag{1.2}\label{eq:1.2}
+s'|_{U_i}=s''|_{U_i}=s'_i.
+\end{equation}
+由构造 \ref{con:1.2.8}，它们对应于两族元素 $s'_V,s''_V\in F(V)$（$V\subseteq U$，$V\in\mathcal B$）。只需证明 $s'_V=s''_V$。
+
+注意若 $V$ 含于某个 $U_i$，则 \eqref{eq:1.2} 蕴含
+\begin{equation}\tag{1.3}\label{eq:1.3}
+s'_V=s''_V=s_{i,V}.
+\end{equation}
+
+现设 $V\subseteq U$（$V\in\mathcal B$）任意。如前，可取基中的开覆盖 $V=\bigcup_{j\in J}V_j$，使每个 $V_j$ 含于某个 $U_i$。考虑截面族 \eqref{eq:1.1}。由 \eqref{eq:1.3}（对各 $V_j$ 施用），有
+\[
+s'_V|_{V_j}=s''_V|_{V_j}=t_j,.
+\]
+于是由 $(**)$ 可得 $s'_V=s''_V$，如所欲证。
+\end{proof}
+
+\subsection{$\mathcal C$-值层}\label{sec:1.3}
+
+\begin{definition}\label{def:1.3.1}
+设 $\mathcal C$ 是范畴，$F$ 是拓扑空间 $X$ 上的 $\mathcal C$-值预层。若对任意\emph{检验对象} $c\in\mathcal C$，函子
+\[
+\smallcat U(X)^{\op}\xrightarrow{\ F\ }\mathcal C\xrightarrow{\ \Hom_{\mathcal C}(c,-)\ }\Set
+\]
+是集合层，则称 $F$ 是\emph{$\mathcal C$-值层}。
+\end{definition}
+
+\begin{remark}\label{rem:1.3.2}
+由 Yoneda 引理与注记 \ref{rem:1.2.2}，$F$ 是 $\mathcal C$-值层当且仅当对任意开覆盖 $U=\bigcup_{i\in I}U_i$，典范图表
+\[
+F(U)\to\prod_{i\in I}F(U_i)\rightrightarrows\prod_{(i,j)\in I^2}F(U_i\cap U_j)
+\]
+在 $\mathcal C$ 中是等化子图表。其中第一个态射由沿 $U_i\subseteq U$ 的限制给出，另外两个态射分别由沿 $U_i\cap U_j\subseteq U_i$ 与 $U_i\cap U_j\subseteq U_j$ 的限制给出。特别地，态射
+\[
+F(U)\to\prod_{i\in I}F(U_i)
+\]
+是单态射\footnote{意即：对任意检验对象 $c\in\mathcal C$，函子 $\Hom_{\mathcal C}(c,-)$ 把它送到集合之间的单射。}。
+\end{remark}
+
+作为该注记的推论，我们得到：
+
+\begin{corollary}\label{cor:1.3.3}
+设 $F$ 是阿贝尔群预层。则 $F$ 是阿贝尔群层当且仅当其底层的集合预层
+\[
+\smallcat U(X)^{\op}\xrightarrow{\ F\ }\Ab\to\Set
+\]
+是集合层。这里函子 $\Ab\to\Set$ 把阿贝尔群送到其底层的集合。
+\end{corollary}
+
+\begin{exercise}\label{exc:1.3.4}
+设 $F$ 是阿贝尔群预层。证明：$F$ 是阿贝尔群层当且仅当对任意开覆盖 $U=\bigcup_{i\in I}U_i$，序列
+\[
+0\to F(U)\to\prod_{i\in I}F(U_i)\to\prod_{(i,j)\in I^2}F(U_i\cap U_j)
+\]
+正合。这里第二个映射是
+\[
+s\mapsto (s|_{U_i})_{i\in I},
+\]
+第三个映射是
+\[
+(s_i)_{i\in I}\mapsto (s_j|_{U_i\cap U_j}-s_i|_{U_i\cap U_j})_{(i,j)\in I^2}.
+\]
+现在设 $F$ 是层，你能把这个正合列向右进一步延长吗？
+\end{exercise}
+
+% ---------------------------------------------------------------- p.14
+\begin{remark}\label{rem:1.3.5}
+设 $\mathcal C$ 是容许小极限的范畴。则构造 \ref{con:1.2.8} 与命题 \ref{prop:1.2.10} 可推广到 $\mathcal C$-值（预）层，只需把条件 $(**)$ 换成：
+\begin{itemize}
+  \item 对任意基中的开覆盖 $U=\bigcup_{i\in I}U_i$、任意对象 $c\in\mathcal C$，以及任意一族元素 $s_i\in\Hom_{\mathcal C}(c,F(U_i))$（$i\in I$），只要
+  \[
+  s_i|_V=s_j|_V\qquad\text{对任意 } i,j\in I \text{ 与 } V\subseteq U_i\cap U_j,\ V\in\mathcal B,
+  \]
+  就存在唯一的元素 $s\in\Hom_{\mathcal C}(c,F(U))$ 使得
+  \[
+  s_i=s|_{U_i}\qquad\text{对一切 } i\in I.
+  \]
+\end{itemize}
+这里 $s|_V$ 指把 $s\in\Hom_{\mathcal C}(c,F(U))$ 与限制态射 $F(U)\to F(V)$ 复合。
+
+不过，对 $\mathcal C=\Ab$，条件 $(**)$ 可以原样保留，因为遗忘函子 $\Ab\to\Set$ 检测极限。
+\end{remark}
+
+\begin{yizhu}
+Stacks 把 $\mathcal C$-值层的定义直接写成「等化子图表在 $\mathcal C$ 中成立」，只要求 $\mathcal C$ 有积；这与本书借助检验对象与 Yoneda 引理的表述（\ref{rem:1.3.2}）等价，却省去了「对每个 $c$ 逐一验证」的负担。
+[来源：Stacks Project, Tag 0072（Definition 6.9.1，$\mathcal C$-值层），\url{https://stacks.math.columbia.edu/tag/0072}（2026-11-17 访问）。]
+\end{yizhu}

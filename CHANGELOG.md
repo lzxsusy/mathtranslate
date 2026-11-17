@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## translation SY07-09 — 2026-11-17（陈麟《代数几何讲义 I》中译注本 + 定义与定理资料卡 366 张）
+
+新增工程 `08_source_code/SY07-09_代数几何讲义I（陈麟）/`：Lin Chen（陈麟）*Notes for Algebraic Geometry 1*
+（2025 年秋季课程讲义，英文，原书 171 页）的整本中译注本，以及从译注本逐条裁出的资料卡。
+
+- 译注本 195 页：31 节（§0–§30）+ 附录 A（阿贝尔范畴）+ 附录 B（术语英中对照）+ 参考文献；
+  定理类编号与原书逐条对应（「节.小节.序号」），205 条译注，引用 Stacks Project 123 个不同 Tag、nLab 15 条
+  （均记 Last revised），术语 226 条；编译 xelatex ×2，0 error / 0 Overfull / 0 未定义引用 / 0 缺字。
+- 资料卡 64 页 366 张：定义、定理、命题、引理、推论、断言、预备定义、命题—定义 8 类；
+  每张标「§小节 · 原书页」，卡内交叉引用全部换成字面编号（全文无 `??`），书末附条目索引。
+  生成链为 `工程文件/tools/extract_cards.py`（讲义源码 → cards.json）与 `gen_deck.py`（→ tex → pdf），两脚本随仓。
+- 依 COMPLIANCE v1.0 §4，讲义译文成品 PDF 不随仓（台账 `成品级别` = 成品不公开）；仓内为
+  LaTeX 源码、术语表、交付报告、疑问清单与两张预览图，两遍 xelatex 可原样重出。
+- 原书笔误 50 余处（Algbera/Algera、Haussdorff、Principle open subschemes、$f_*$ 与 $i_*$ 互换等）
+  一律不改编号与结构，正文按正字排印并在译注或《疑点清单》说明；疑点 55 条全「已解」。
+
 ## translation SY07-08 v1.1 — 2026-11-17（术语更正：presheaf 前层 → 预层）
 
 仓主指出 presheaf 的标准中文译名是**预层**（本库术语基原本就有 `前層 → 预层` 一条），

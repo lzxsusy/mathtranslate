@@ -1,0 +1,2864 @@
+\documentclass[UTF8,10pt,fontset=windows]{ctexart}
+\usepackage[a4paper,top=18mm,bottom=17mm,left=16mm,right=16mm,headsep=5mm]{geometry}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage{enumitem}
+\usepackage{booktabs,longtable,array}
+\usepackage[most]{tcolorbox}
+\usepackage{needspace}
+\usepackage{fancyhdr}
+\usepackage[hidelinks,bookmarksnumbered]{hyperref}
+\usepackage{fontspec}
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Mono}
+\setCJKmainfont{SimSun}[BoldFont=SimHei,ItalicFont=KaiTi,BoldItalicFont=SimHei]
+\setCJKsansfont{Microsoft YaHei}[BoldFont=Microsoft YaHei]
+\setCJKmonofont{SimSun}
+\linespread{1.30}
+\emergencystretch=2.5em
+\parindent=0pt
+\parskip=2.4pt
+
+\definecolor{ink}{HTML}{1F3A5F}
+\definecolor{accent}{HTML}{B06A2C}
+\definecolor{cardbg}{HTML}{FCFAF5}
+\definecolor{yzbg}{HTML}{F4F1E8}
+\definecolor{rulegray}{HTML}{D8D2C4}
+\definecolor{metagray}{HTML}{8A8272}
+
+\newcommand{\yizhu}[1]{\par\vspace{1.6pt}%
+  {\color{accent}\vrule width 1.2pt}\hspace{3pt}%
+  \begin{minipage}[t]{\dimexpr\linewidth-4pt\relax}\sloppy%
+  {\color{ink}\sffamily\bfseries\scriptsize 译注}\hspace{2pt}{\small #1}%
+  \end{minipage}\par\vspace{1pt}}
+
+\newtcolorbox{card}[2]{enhanced,breakable,colback=cardbg,colframe=rulegray,
+  boxrule=0.4pt,arc=1.5pt,left=3.6mm,right=3.2mm,top=2.0mm,bottom=2.4mm,
+  fonttitle=\sffamily\bfseries\small,coltitle=white,colbacktitle=ink,
+  title={#1\hfill{\mdseries\scriptsize\color{white!85!ink}#2}},
+  title after break={\sffamily\bfseries\small #1\hfill{\mdseries\scriptsize\color{white!85!ink}#2（续）}},
+  before skip=4pt,after skip=5pt,toprule at break=0pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\kaishu\small 代数几何讲义 I\,·\,定义与定理资料卡}
+\fancyhead[R]{\kaishu\small\leftmark}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyfoot[C]{\small\thepage}
+
+\newcommand{\cardssec}[2]{%
+  \needspace{6\baselineskip}\par\addvspace{6mm}%
+  \phantomsection\addcontentsline{toc}{section}{#1\quad #2}%
+  \noindent{\sffamily\bfseries\large #1\quad #2}\par\vspace{1.4mm}%
+  {\color{accent}\rule{\linewidth}{0.9pt}}\par\vspace{3.4mm}%
+  \markboth{#1\ #2}{#1\ #2}}
+
+
+% ---- 书本宏（与译注本 preamble 一致）----
+\newcommand{\Z}{\mathbb{Z}}\newcommand{\Q}{\mathbb{Q}}\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}\newcommand{\N}{\mathbb{N}}\newcommand{\F}{\mathbb{F}}
+\newcommand{\A}{\mathbb{A}}\newcommand{\PP}{\mathbb{P}}\newcommand{\GG}{\mathbb{G}}
+\newcommand{\bbk}{\mathbb{k}}
+\newcommand{\cA}{\mathcal{A}}\newcommand{\cB}{\mathcal{B}}\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}\newcommand{\cE}{\mathcal{E}}\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}\newcommand{\cI}{\mathcal{I}}\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}\newcommand{\cL}{\mathcal{L}}\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cN}{\mathcal{N}}\newcommand{\cO}{\mathcal{O}}\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}\newcommand{\cR}{\mathcal{R}}\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cT}{\mathcal{T}}\newcommand{\cU}{\mathcal{U}}\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}\newcommand{\cX}{\mathcal{X}}\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\Spec}{\operatorname{Spec}}\newcommand{\Spm}{\operatorname{Spm}}
+\newcommand{\Proj}{\operatorname{Proj}}\newcommand{\Spv}{\operatorname{Spv}}
+\newcommand{\Hom}{\operatorname{Hom}}\newcommand{\uHom}{\underline{\mathrm{Hom}}}
+\newcommand{\End}{\operatorname{End}}\newcommand{\Aut}{\operatorname{Aut}}
+\newcommand{\Isom}{\operatorname{Isom}}\newcommand{\id}{\operatorname{id}}
+\newcommand{\coker}{\operatorname{coker}}\newcommand{\im}{\operatorname{im}}
+\newcommand{\Ker}{\operatorname{Ker}}\newcommand{\Ob}{\operatorname{Ob}}
+\newcommand{\Mor}{\operatorname{Mor}}\newcommand{\Frac}{\operatorname{Frac}}
+\newcommand{\Pic}{\operatorname{Pic}}\newcommand{\Supp}{\operatorname{Supp}}
+\newcommand{\cHom}{\underline{\mathcal{H}om}}
+\newcommand{\Ext}{\operatorname{Ext}}\newcommand{\Tor}{\operatorname{Tor}}
+\newcommand{\coim}{\operatorname{coim}}
+\newcommand{\colim}{\operatorname*{colim}}
+\newcommand{\CRing}{\mathsf{CRing}}\newcommand{\Ring}{\mathsf{Ring}}
+\newcommand{\Set}{\mathsf{Set}}\newcommand{\Ab}{\mathsf{Ab}}
+\newcommand{\Grp}{\mathsf{Grp}}\newcommand{\Top}{\mathsf{Top}}
+\newcommand{\Sch}{\mathsf{Sch}}\newcommand{\PShv}{\mathsf{PShv}}
+\newcommand{\Shv}{\mathsf{Shv}}\newcommand{\Mod}{\mathsf{Mod}}
+\newcommand{\Vect}{\mathsf{Vect}}\newcommand{\QCoh}{\mathsf{QCoh}}
+\newcommand{\Coh}{\mathsf{Coh}}\newcommand{\Sym}{\operatorname{Sym}}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\smallcat}[1]{\mathsf{#1}}
+\newcommand{\omod}{\cO_X\text{-}\mathsf{mod}}
+\newcommand{\omodP}{\cO_X\text{-}\mathsf{mod}^{\PShv}}
+\newcommand{\lto}{\longrightarrow}\newcommand{\into}{\hookrightarrow}
+\newcommand{\longmapsfrom}{\mathrel{\rotatebox[origin=c]{180}{$\longmapsto$}}}
+\newcommand{\mapsfrom}{\mathrel{\reflectbox{$\mapsto$}}}
+\newcommand{\Zc}{\Z}\newcommand{\PPc}{\PP}
+\providecommand{\cQ}{\mathcal{Q}}
+\providecommand{\supp}{\operatorname{supp}}
+\providecommand{\fm}{\mathfrak{m}}
+\providecommand{\QCoh}{\mathsf{QCoh}}
+\providecommand{\Sym}{\operatorname{Sym}}
+\providecommand{\Ann}{\operatorname{Ann}}
+\providecommand{\Sub}{\operatorname{Sub}}
+\providecommand{\coim}{\operatorname{coim}}
+
+\begin{document}
+\begin{titlepage}
+\centering
+\vspace*{34mm}
+{\sffamily\bfseries\fontsize{30}{38}\selectfont 代数几何讲义 I\par}
+\vspace{5mm}
+{\sffamily\fontsize{17}{22}\selectfont 定义与定理资料卡\par}
+\vspace{12mm}
+{\color{accent}\rule{0.55\linewidth}{1.1pt}\par}
+\vspace{10mm}
+{\large 预层与层\,·\,概形\,·\,凝聚层\,·\,射影态射\par}
+\vspace{26mm}
+\begin{minipage}{0.72\linewidth}\centering\small
+本册把《代数几何讲义 I（中译注本）》中的定义、定理、命题、引理、推论与断言逐条裁出，
+每条一张卡片，按原书节次排列，并注明所属小节与原书页码。\\
+卡片正文与译注均取自译注本，公式、记号、编号一律与原书对应。
+\end{minipage}
+\vfill
+{\small 底本：Lin Chen, \emph{Notes for Algebraic Geometry 1}（2025 年秋，171 页）\par}
+\vspace{4mm}
+{\small 二〇二六年十一月\par}
+\end{titlepage}
+
+\thispagestyle{empty}
+{\small\makeatletter\renewcommand{\addvspace}[1]{\vspace{0.42em}}\makeatother\tableofcontents}
+\clearpage
+\cardssec{0}{引言：为什么需要概形？}
+\begin{card}{定义 0.1.1}{§0.1 · p.5}
+设 $k$ 为代数闭域。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 仿射空间 $\A^n_k$ 上的 \emph{Zariski 拓扑}，是指以如下子集为基的拓扑：这些子集等于某个多项式 $f \in k[x_1,\dots,x_n]$ 的非零点轨迹 $U(f)$。
+  \item $\A^n_k$ 中的一个\emph{嵌入仿射代数集}\footnote{有人使用 variety（簇）一词，也有人把它留给不可约代数集。}，是指 Zariski 拓扑下的闭子空间。
+  \item 一个\emph{嵌入拟仿射代数集}，是指某个嵌入仿射代数集的 Zariski 开子集。
+\end{enumerate}
+\yizhu{「嵌入的」（embedded）三个字是原书的用意所在：这里的一切对象都先验地放在某个固定的 $\A^n_k$ 中，闭集由环境空间的多项式方程定义。nLab 的「Zariski topology」条目把这一构造说成一部词典：闭子集对应多项式环中的理想（取 $V(I)$），不可约闭子集对应素理想，而闭点对应极大理想。词典的最后一条正是第 0.2 小节从 $\Spm$ 走向 $\Spec$ 的伏笔：一旦把「闭点」换成「素理想」，环境空间就不再必要。
+[来源：nLab "Zariski topology"，\url{https://ncatlab.org/nlab/show/Zariski+topology}（Last revised 2024-12-19；2026-11-17 访问）。]}
+\end{card}
+\begin{card}{定理 0.1.6}{§0.1 · p.5}
+存在双射
+\[
+\begin{array}{rcl}
+\{\,k[x_1,\dots,x_n] \text{ 的根理想}\,\} & \longleftrightarrow & \{\,\A^n_k \text{ 的 Zariski 闭子集}\,\}\\[0.5ex]
+I & \longmapsto & Z(I)\\
+I(X) & \longmapsfrom & X.
+\end{array}
+\]
+\end{card}
+\begin{card}{定义 0.1.7}{§0.1 · p.5}
+\emph{仿射代数 $k$-集}，是指某个有限生成（交换含幺）既约 $k$-代数 $R$ 的\emph{极大谱} $\Spm R$（即极大理想之集）。我们在其上赋予 Zariski 拓扑，其开集基由
+\[
+U(f) := \{\,\mathfrak m \in \Spm R \mid f \notin \mathfrak m\,\}, \qquad f \in R,
+\]
+给出。
+\yizhu{零点定理的完整形式比原书陈述的双射更强：它同时断言，对任意极大理想 $\mathfrak m \subset k[x_1,\dots,x_n]$，剩余域扩张 $\kappa(\mathfrak m)/k$ 是有限的；并且任一根理想都等于包含它的极大理想之交。「交换环 $\to$ 仿射概形」这一侧之所以能够成立，靠的正是后一条：根理想被它在极大理想中的成员完全决定。Stacks Project 把这层内容单列为定理，并明确说明它可推广到任意有限生成 $k$-代数。
+[来源：Stacks Project, Tag 00FV（Theorem 10.34.1，Hilbert Nullstellensatz），\url{https://stacks.math.columbia.edu/tag/00FV}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{定义 0.1.10}{§0.1 · p.5}
+从 $\Spm R$ 到 $\Spm R'$ 的\emph{态射}，是指由同态 $R' \to R$ 给出的连续映射。
+\end{card}
+\begin{card}{预备定义 0.3.2}{§0.3 · p.5}
+\emph{概形}是指一个拓扑空间 $X$，连同其上的交换环层 $\cO_X$，使得 $X$ 局部同构于仿射概形。
+\end{card}
+
+\cardssec{1}{（预）层的定义}
+\begin{card}{定义 1.1.1}{§1.1 · p.9}
+设 $X$ 是拓扑空间，$(\mathcal U(X),\subseteq)$ 是其开子集构成的偏序集。我们把 $X$ 的\emph{开子集范畴} $\smallcat U(X)$ 定义为偏序集 $(\mathcal U(X),\subseteq)$ 所关联的范畴。
+\end{card}
+\begin{card}{定义 1.1.2}{§1.1 · p.9}
+设 $X$ 是拓扑空间，$\mathcal C$ 是范畴。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item $X$ 上的 \emph{$\mathcal C$-值预层}，是指函子 $F\colon \smallcat U(X)^{\op}\to\mathcal C$。
+  \item $\mathcal C$-值预层之间的态射 $F\to F'$，是指这些函子之间的自然变换。
+\end{enumerate}
+\end{card}
+\begin{card}{定义 1.2.1}{§1.2 · p.9}
+设 $F$ 是拓扑空间 $X$ 上的集合预层。若它满足下述条件，则称 $F$ 是\emph{层}：
+\begin{itemize}
+  \item[$(*)$] 对任意开覆盖 $U=\bigcup_{i\in I}U_i$ 与任意一族截面 $s_i\in F(U_i)$（$i\in I$），只要
+  \[
+  s_i|_{U_i\cap U_j}=s_j|_{U_i\cap U_j}\qquad\text{对一切 } i,j\in I,
+  \]
+  就存在唯一的截面 $s\in F(U)$ 使得
+  \[
+  s_i=s|_{U_i}\qquad\text{对一切 } i\in I.
+  \]
+\end{itemize}
+\end{card}
+\begin{card}{命题 1.2.10}{§1.2 · p.9}
+在上述情形中，$F'$ 是层当且仅当 $F$ 满足下述条件：
+\begin{itemize}
+  \item[$(**)$] 对任意基中的开覆盖 $U=\bigcup_{i\in I}U_i$，以及任意一族元素 $s_i\in F(U_i)$（$i\in I$），只要
+  \[
+  s_i|_V=s_j|_V\qquad\text{对任意 } i,j\in I \text{ 与 } V\subseteq U_i\cap U_j,\ V\in\mathcal B,
+  \]
+  就存在唯一的截面 $s\in F(U)$ 使得
+  \[
+  s_i=s|_{U_i}\qquad\text{对一切 } i\in I.
+  \]
+\end{itemize}
+\yizhu{Stacks 在基上验证层条件时，先对每个 $U_i\cap U_j$ 再取基覆盖 $U_{ijk}$，只要求 $s_i$ 与 $s_j$ 在 $U_{ijk}$ 上相等；本书 $(**)$ 则要求二者在所有基开集 $V\subseteq U_i\cap U_j$ 上相等。由于条件对更小的基开集封闭，两种要求等价。
+[来源：Stacks Project, Tag 009J（Definition 6.30.2，基上的层），\url{https://stacks.math.columbia.edu/tag/009J}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{定义 1.3.1}{§1.3 · p.9}
+设 $\mathcal C$ 是范畴，$F$ 是拓扑空间 $X$ 上的 $\mathcal C$-值预层。若对任意\emph{检验对象} $c\in\mathcal C$，函子
+\[
+\smallcat U(X)^{\op}\xrightarrow{\ F\ }\mathcal C\xrightarrow{\ \Hom_{\mathcal C}(c,-)\ }\Set
+\]
+是集合层，则称 $F$ 是\emph{$\mathcal C$-值层}。
+\end{card}
+\begin{card}{推论 1.3.3}{§1.3 · p.9}
+设 $F$ 是阿贝尔群预层。则 $F$ 是阿贝尔群层当且仅当其底层的集合预层
+\[
+\smallcat U(X)^{\op}\xrightarrow{\ F\ }\Ab\to\Set
+\]
+是集合层。这里函子 $\Ab\to\Set$ 把阿贝尔群送到其底层的集合。
+\end{card}
+
+\cardssec{2}{茎}
+\begin{card}{定义 2.1.1}{§2.1 · p.14}
+设 $X$ 是拓扑空间，$F$ 是 $X$ 上的集合预层。对 $x\in X$，令 $\mathcal U(X,x)\subseteq\mathcal U(X)$ 为 $X$ 中含 $x$ 的开邻域构成的全子范畴。$F$ 在 $x$ 处的\emph{茎}是
+\begin{equation}\tag{2.1}
+F_x:=\colim_{U\in\mathcal U(X,x)^{\op}}F(U).
+\end{equation}
+对给定的截面 $s\in F(U)$，$s$ 在 $x$ 处的\emph{芽}（记作 $s_x$）是 $s$ 在典范映射 $F(U)\to F_x$ 下的像。
+\end{card}
+\begin{card}{引理 2.2.1}{§2.2 · p.14}
+设 $F$ 是拓扑空间 $X$ 上的集合层。则对任意开子集 $U\subseteq X$，映射
+\begin{equation}\tag{2.3}
+F(U)\to\prod_{x\in U}F_x,\qquad s\mapsto (s_x)_{x\in U}
+\end{equation}
+是单射。此外，一族元素 $s(x)\in F_x$（$x\in U$）位于该映射的像中，当且仅当它满足下述条件：
+\begin{itemize}
+  \item[$(***)$] 对任意 $x\in U$，存在 $U$ 中含 $x$ 的邻域 $V$ 与截面 $s_V\in F(V)$，使得对任意 $y\in V$，有 $s(y)=(s_V)_y$。
+\end{itemize}
+\end{card}
+\begin{card}{推论 2.2.3}{§2.2 · p.14}
+若 $\alpha,\beta\colon F\to F'$ 是集合层之间的态射，且对任意 $x\in X$ 有 $\alpha_x=\beta_x$，则 $\alpha=\beta$。
+\end{card}
+\begin{card}{命题 2.2.5}{§2.2 · p.14}
+设 $\alpha\colon F\to F'$ 是拓扑空间上集合层之间的态射。则 $\alpha$ 是同构，当且仅当对任意 $x\in X$，$\alpha_x\colon F_x\to F'_x$ 是双射。
+\end{card}
+\begin{card}{定义 2.3.1}{§2.3 · p.14}
+设 $X$ 是拓扑空间，$x\in X$ 是点。对任意集合 $A$，如下定义集合预层 $\delta_{x,A}$。
+\begin{itemize}
+  \item 对开子集 $U\subseteq X$：
+  \begin{itemize}
+    \item 若 $x\in U$，定义 $\delta_{x,A}(U):=A$；
+    \item 若 $x\notin U$，定义 $\delta_{x,A}(U):=\{*\}$。
+  \end{itemize}
+  \item 对开子集 $U\subseteq V$：
+  \begin{itemize}
+    \item 若 $x\in U$（从而 $x\in V$），定义限制映射 $\delta_{x,A}(V)\to\delta_{x,A}(U)$ 为 $\id_A$；
+    \item 若 $x\notin U$，定义限制映射为唯一的映射 $\delta_{x,A}(V)\to\delta_{x,A}(U)=\{*\}$。
+  \end{itemize}
+\end{itemize}
+容易验证这确实定义了预层 $\delta_{x,A}$。称它为在 $x$ 处取值 $A$ 的\emph{摩天楼层}。
+\yizhu{「摩天楼层」（skyscraper sheaf）之名来自图像：整栋楼只立在 $x$ 这一点，$x$ 的一切邻域都取到整栋楼 $A$，其余开集只剩一个点。nLab 独立收录了 skyscraper sheaf 一词，其标准构造正是沿闭点包含 $\{x\}\to X$ 的正像；本书例 3.2.3 将说明 $\delta_{x,A}\simeq i_*A$。
+[来源：nLab \emph{skyscraper sheaf}，\url{https://ncatlab.org/nlab/show/skyscraper+sheaf}（Last revised 2016-06-23；2026-11-17 访问）。]}
+\end{card}
+\begin{card}{引理 2.3.3}{§2.3 · p.14}
+设 $X$ 是拓扑空间，$x\in X$ 是点，$A$ 是集合。则 $\delta_{x,A}$ 在点 $y\in X$ 处的茎典范双射于
+\begin{itemize}
+  \item 集合 $A$，若 $y$ 含于 $\overline{\{x\}}$，即 $\{x\}$ 在 $X$ 中的闭包；
+  \item 单元集 $\{*\}$，否则。
+\end{itemize}
+\end{card}
+\begin{card}{命题 2.3.4}{§2.3 · p.14}
+设 $X$ 是拓扑空间，$x\in X$ 是点，$A$ 是集合。则对任意集合预层 $F$，复合
+\begin{equation}\tag{2.5}
+\Hom_{\PShv(X,\Set)}(F,\delta_{x,A})\xrightarrow{\ (-)_x\ }\Hom_{\Set}(F_x,(\delta_{x,A})_x)\simeq\Hom_{\Set}(F_x,A)
+\end{equation}
+是双射。
+\end{card}
+\begin{card}{推论 2.3.5}{§2.3 · p.14}
+茎函子
+\[
+\PShv(X,\Set)\to\Set,\qquad F\mapsto F_x
+\]
+有右伴随
+\[
+\Set\to\PShv(X,\Set),\qquad A\mapsto\delta_{A,x}.
+\]
+\end{card}
+
+\cardssec{3}{（预）层的范畴}
+\begin{card}{定义 3.1.1}{§3.1 · p.19}
+设 $F\in\PShv(X,\Set)$。$F$ 的\emph{层化}是指一个层 $F^{\sharp}\in\Shv(X,\Set)$，连带态射 $\theta\colon F\to F^{\sharp}$，使得对任意检验层 $\mathcal G$，用 $\theta$ 前复合诱导双射
+\[
+\Hom_{\Shv(X,\Set)}(F^{\sharp},\mathcal G)\xrightarrow{\ \simeq\ }\Hom_{\PShv(X,\Set)}(F,\mathcal G),\qquad \alpha\mapsto\alpha\circ\theta.
+\]
+\end{card}
+\begin{card}{命题 3.1.2}{§3.1 · p.19}
+对任意 $F\in\PShv(X,\Set)$，其层化 $(F^{\sharp},\theta)$ 存在，且在唯一同构的意义下唯一。此外，态射 $\theta\colon F\to F^{\sharp}$ 在茎上诱导双射 $F_x\to F^{\sharp}_x$。
+\yizhu{层化不动茎，是 Stacks 中对同一命题的单列条目：$\mathcal F_x=\mathcal F^{\sharp}_x$。其显式构造以 $\Pi(\mathcal F)(U):=\prod_{x\in U}\mathcal F_x$ 为中介，再把满足局部粘接条件的元素取出作为子层，即得 $\mathcal F^{\sharp}$；$\Pi(\mathcal F)$ 常称 Godement 构造。
+[来源：Stacks Project, Tag 007Z（Lemma 6.17.2，层化前后的茎相同），\url{https://stacks.math.columbia.edu/tag/007Z}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{推论 3.1.3}{§3.1 · p.19}
+全忠实嵌入 $\Shv(X,\Set)\to\PShv(X,\Set)$ 有左伴随，它把 $F$ 送到其层化 $F^{\sharp}$。
+\end{card}
+\begin{card}{命题 3.2.2}{§3.2 · p.19}
+设 $f\colon X\to X'$ 是拓扑空间之间的连续映射。若 $F$ 是层，则 $f_*F$ 是层。
+\end{card}
+\begin{card}{引理 3.3.5}{§3.3 · p.19}
+设 $X$ 是拓扑空间，$U\subseteq X$ 是开子集。记 $j\colon U\to X$ 为嵌入映射。则 $j_{\PShv}^{-1}$ 把层送到层。
+\end{card}
+\begin{card}{命题 3.3.9}{§3.3 · p.19}
+设 $f\colon X\to X'$ 是拓扑空间之间的连续映射，$F\in\PShv(X,\Set)$，$F'\in\PShv(X',\Set)$。下述两个复合互为逆映射：
+\[
+\begin{aligned}
+\Hom_{\PShv(X,\Set)}(f_{\PShv}^{-1}(F'),F)
+&\xrightarrow{\ f_*\ }\Hom_{\PShv(X',\Set)}(f_*\circ f_{\PShv}^{-1}(F'),f_*F)\\
+&\xrightarrow{\ -\circ(3.2)\ }\Hom_{\PShv(X',\Set)}(F',f_*F),
+\end{aligned}
+\]
+% ---------------------------------------------------------------- p.24
+与
+\[
+\begin{aligned}
+\Hom_{\PShv(X',\Set)}(F',f_*F)
+&\xrightarrow{\ f_{\PShv}^{-1}\ }\Hom_{\PShv(X,\Set)}(f_{\PShv}^{-1}(F'),f_{\PShv}^{-1}\circ f_*(F))\\
+&\xrightarrow{\ (3.4)\circ-\ }\Hom_{\PShv(X,\Set)}(f_{\PShv}^{-1}(F'),F).
+\end{aligned}
+\]
+\end{card}
+\begin{card}{推论 3.3.10}{§3.3 · p.19}
+设 $f\colon X\to X'$ 是拓扑空间之间的连续映射。函子
+\[
+f_{\PShv}^{-1}\colon\PShv(X',\Set)\to\PShv(X,\Set)
+\]
+典范左伴随于
+\[
+f_*\colon\PShv(X,\Set)\to\PShv(X',\Set).
+\]
+\end{card}
+\begin{card}{推论 3.3.11}{§3.3 · p.19}
+对连续映射 $X\xrightarrow{\ f\ }Y\xrightarrow{\ g\ }Z$，有典范自然同构 $(g\circ f)_{\PShv}^{-1}\simeq f_{\PShv}^{-1}\circ g_{\PShv}^{-1}$。
+\end{card}
+\begin{card}{推论 3.3.12}{§3.3 · p.19}
+设 $f\colon X\to X'$ 是连续映射，$x\in X$ 是点。记 $x':=f(x)$。则对任意预层 $F'\in\PShv(X',\Set)$，有典范同构
+\[
+f_{\PShv}^{-1}(F')_x\simeq F'_{x'}.
+\]
+\end{card}
+\begin{card}{推论 3.4.2}{§3.4 · p.19}
+设 $f\colon X\to X'$ 是拓扑空间之间的连续映射。函子
+\[
+f^{-1}\colon\Shv(X',\Set)\to\Shv(X,\Set)
+\]
+典范左伴随于
+\[
+f_*\colon\Shv(X,\Set)\to\Shv(X',\Set).
+\]
+\end{card}
+\begin{card}{推论 3.4.3}{§3.4 · p.19}
+对连续映射 $X\xrightarrow{\ f\ }Y\xrightarrow{\ g\ }Z$，有典范自然同构 $(g\circ f)^{-1}\simeq f^{-1}\circ g^{-1}$。
+\end{card}
+\begin{card}{推论 3.4.4}{§3.4 · p.19}
+设 $f\colon X\to X'$ 是连续映射，$x\in X$ 是点。记 $x':=f(x)$。则对任意层 $F'\in\Shv(X',\Set)$，有典范同构
+\[
+f^{-1}(F')_x\simeq F'_{x'}.
+\]
+\end{card}
+
+\cardssec{4}{素谱 $\Spec(R)$}
+\begin{card}{定义 4.1.1}{§4.1 · p.27}
+设 $R$ 为（含幺）交换环。以 $\Spec(R)$ 记 $R$ 的素理想之集合。在 $\Spec(R)$ 上赋予 \emph{Zariski 拓扑}，使得子集
+\[
+U(f) := \{\mathfrak p \in \Spec(R) \mid f \notin \mathfrak p\},\qquad f \in R
+\]
+构成拓扑基。所得拓扑空间称为 $R$ 的\emph{素谱}。形如 $U(f)$ 的开子集称为\emph{标准开子集}\footnote{别名：elementary open subsets（基本开子集）。}。
+\end{card}
+\begin{card}{引理 4.1.3}{§4.1 · p.27}
+$\Spec(R)$ 的子集 $Z$ 是闭子集，当且仅当存在理想 $I \subseteq R$ 使 $Z = Z(I)$。
+\end{card}
+\begin{card}{引理 4.1.4}{§4.1 · p.27}
+设 $I, J \subseteq R$ 为理想。则 $Z(I) \subseteq Z(J)$ 当且仅当 $J \subseteq \sqrt{I}$。
+\end{card}
+\begin{card}{推论 4.1.5}{§4.1 · p.27}
+设 $I, J \subseteq R$ 为理想。则 $Z(I) = Z(J)$ 当且仅当 $\sqrt{J} = \sqrt{I}$。
+\end{card}
+\begin{card}{推论 4.1.6}{§4.1 · p.27}
+点 $\mathfrak p \in \Spec(R)$ 是闭点，当且仅当 $\mathfrak p$ 是极大理想。
+\end{card}
+\begin{card}{推论 4.1.7}{§4.1 · p.27}
+设 $x, y \in \Spec(R)$ 分别由素理想 $\mathfrak p$ 与 $\mathfrak q$ 给出。则 $x \in \overline{\{y\}}$ 当且仅当 $\mathfrak p \supset \mathfrak q$。
+\end{card}
+\begin{card}{推论 4.1.8}{§4.1 · p.27}
+拓扑空间 $\Spec(R)$ 是 Kolmogorov 空间：对任意两个不同点，其中至少一个拥有不含另一点的开邻域。
+\end{card}
+\begin{card}{引理 4.1.14}{§4.1 · p.27}
+$\Spec(R)$ 是拟紧空间。
+\end{card}
+\begin{card}{引理 4.2.1}{§4.2 · p.27}
+$U(f) \subseteq U(f')$ 当且仅当同态 $R \to R_f$ 唯一地经 $R \to R_{f'}$ 分解。
+\end{card}
+\begin{card}{推论 4.2.2}{§4.2 · p.27}
+$U(f) = U(f')$ 当且仅当 $R_f \cong R_{f'}$ 作为 $R$-代数同构。
+\end{card}
+\begin{card}{命题—定义 4.2.3}{§4.2 · p.27}
+$\Spec(R)$ 上存在本质唯一的交换环层 $\cO$，连同同构 $R \xrightarrow{\simeq} \cO(\Spec(R))$，使得对任意 $f \in R$，由
+\[
+R \cong \cO(\Spec(R)) \to \cO(U(f))
+\]
+给出的 $R$-代数 $\cO(U(f))$ 同构于 $R_f$。这里的\emph{本质唯一}\footnote{本质唯一是指：二元组 $(\cO,\varphi)$ 在唯一同构的意义下唯一。}是指同构意义下的唯一性。
+\end{card}
+\begin{card}{引理 4.2.5}{§4.2 · p.27}
+设 $A$ 为交换环，$f,(f_i)_{i \in I} \in A$ 满足 $U(f) = \bigcup_{i \in I} U(f_i)$，其中 $U(\cdot)$ 指 $\Spec(A)$ 中的标准开集。则对任意 $A$-模 $M$，序列
+\[
+0 \to M_f \to \prod_{i \in I} M_{f_i} \to \prod_{(i,j) \in I^2} M_{f_i f_j}
+\]
+正合。这里第二个映射由典范映射 $M \to M_{f_i}$ 诱导，第三个映射为
+\[
+(s_i)_{i \in I} \mapsto (s_j - s_i)_{(i,j) \in I^2}.
+\]
+\end{card}
+\begin{card}{定义 4.2.7}{§4.2 · p.27}
+\emph{仿射概形}是指这样的拓扑空间 $X$，它带有一层交换环层 $\cO$，且存在交换环 $R$ 使 $(X,\cO) \cong (\Spec R, \cO_{\Spec(R)})$。
+\end{card}
+\begin{card}{命题 4.2.8}{§4.2 · p.27}
+设 $x \in \Spec(R)$ 对应素理想 $\mathfrak p \subseteq R$。则由
+\[
+R \cong \cO(\Spec(R)) \to \cO_x
+\]
+给出的 $R$-代数 $\cO_x$（唯一地）同构于 $R_{\mathfrak p}$。特别地，$\cO_x$ 是局部环。
+\end{card}
+\begin{card}{命题 4.3.2}{§4.3 · p.27}
+存在唯一的 $\Shv(X,\CRing)$ 中态射 $\alpha : \cO \to \varphi_*(\cO')$，使下图交换：
+\[
+\begin{tikzcd}
+\cO(X) \arrow[r,"\alpha_X"] \arrow[d,"\simeq"'] & (\varphi_*\cO')(X) \arrow[d,"\simeq"] \\
+R \arrow[r,"h"'] & R'
+\end{tikzcd}
+\]
+其中两侧竖箭头为同构。
+\end{card}
+\begin{card}{推论 4.3.3}{§4.3 · p.27}
+存在唯一的 $\Shv(X',\CRing)$ 中态射 $\beta : \varphi^{-1}\cO \to \cO'$，使下图交换：
+\[
+\begin{tikzcd}
+\varphi^{-1}\cO(X') \arrow[r] \arrow[d,"\simeq"'] & \cO'(X') \arrow[d,"\simeq"] \\
+R \arrow[r,"h"'] & R'
+\end{tikzcd}
+\]
+此外，对任意 $x' \in X'$，令 $x := \varphi(x')$，则同态
+\[
+\beta_{x'} : \cO_x \simeq (\varphi^{-1}\cO)_{x'} \to \cO'_{x'}
+\]
+是局部同态。
+\end{card}
+
+\cardssec{5}{作为局部环化空间的概形}
+\begin{card}{定义 5.1.1}{§5.1 · p.33}
+\emph{环化空间}是指二元组 $(X,\cO_X)$：其中 $X$ 为拓扑空间，$\cO_X$ 为 $X$ 上的交换环层。环化空间之间的态射 $(X,\cO_X)\to(Y,\cO_Y)$ 是指二元组 $(\varphi,\beta)$：其中 $\varphi:X\to Y$ 连续，$\beta:\varphi^{-1}\cO_Y\to\cO_X$ 为层态射。由此得到范畴 $\Top_{\CRing}$。
+\end{card}
+\begin{card}{定义 5.1.4}{§5.1 · p.33}
+\emph{局部环化空间}是指所有茎 $\cO_{X,x}$ 都是局部环的环化空间。点 $x$ 处的\emph{剩余域}定义为
+\[
+\kappa_x := \cO_{X,x}/\mathfrak m_x,
+\]
+其中 $\mathfrak m_x$ 是 $\cO_{X,x}$ 的极大理想。局部环化空间之间的态射是指环化空间态射 $(\varphi,\beta)$，且对每个 $x$ 同态
+\[
+\beta_x:\cO_{Y,\varphi(x)}\to\cO_{X,x}
+\]
+都是局部同态。由此得到范畴 $\Top^{\mathrm{loc}}_{\CRing}$。
+\yizhu{局部环化空间的标准化记号是 $\mathfrak m_x$ 与 $\kappa(x)=\cO_{X,x}/\mathfrak m_x$，Stacks 与本书用法一致。值得注意的是「态射在每个茎上局部」这一条并不是可有可无的技术条件：它是把「函数在 $x$ 处取值」这件事提升为态射的必要条件，缺少它，环谱之间的连续映射就无法与环同态对应。
+[来源：Stacks Project, Tag 01HB（Definition 26.2.1, Locally ringed spaces），\url{https://stacks.math.columbia.edu/tag/01HB}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{定义 5.1.8}{§5.1 · p.33}
+\emph{仿射概形}是指同构于某个 $\Spec(R)$ 的局部环化空间。仿射概形之间的态射就是局部环化空间态射。由此得到完整子范畴 $\mathsf{Aff}\subseteq\Top^{\mathrm{loc}}_{\CRing}$。
+\end{card}
+\begin{card}{定义 5.2.1}{§5.2 · p.33}
+\emph{概形}是指这样的局部环化空间 $(X,\cO_X)$：存在开覆盖 $X=\bigcup_{i\in I}U_i$，使每个 $(U_i,\cO_X|_{U_i})$ 都是仿射概形。概形之间的态射就是局部环化空间态射。由此得到完整子范畴 $\Sch\subseteq\Top^{\mathrm{loc}}_{\CRing}$。
+\end{card}
+\begin{card}{引理 5.2.5}{§5.2 · p.33}
+概形 $X$ 的仿射开子集构成拓扑基。此外，$X$ 是 Kolmogorov 空间。
+\end{card}
+\begin{card}{命题—定义 5.3.1}{§5.3 · p.33}
+设 $X$ 为概形，$U\subseteq X$ 为开子空间。则与 $U$ 相伴的局部环化子空间是概形，称为与 $U$ 相伴的\emph{开子概形}。
+\end{card}
+\begin{card}{定义 5.3.2}{§5.3 · p.33}
+态射 $f:Y\to X$ 称为\emph{开浸入}，若存在开子概形 $U\subseteq X$（这样的 $U$ 唯一），使 $f$ 分解为
+\[
+Y\xrightarrow{\ \simeq\ }U\into X .
+\]
+\yizhu{开浸入在 Stacks 中的原始定义分两步：先要求 $f$ 是到开子集的同胚，再要求 $f^{-1}\cO_Y\to\cO_X$ 是同构；随后才证明这与「同构到某个开子概形再嵌入」等价。本书直接采用后一形式，好处是「开子概形」这个概念不必预先定义，坏处是唯一性需要单独说明。
+[来源：Stacks Project, Tag 01HE（Definition 26.3.1, Open immersions of locally ringed spaces），\url{https://stacks.math.columbia.edu/tag/01HE}（2026-11-17 访问）。]}
+\end{card}
+
+\cardssec{6}{粘接概形}
+\begin{card}{定义 6.1.1}{§6.1 · p.37}
+概形的\emph{粘接数据}是指一组资料
+\[
+\bigl(I,\ (X_i)_{i\in I},\ (U_{ij})_{(i,j)\in I^2},\ (\varphi_{ij})_{(i,j)\in I^2}\bigr),
+\]
+其中
+\begin{itemize}[leftmargin=1.6em,itemsep=0.2ex]
+  \item $I$ 是集合；
+  \item 对每个 $i\in I$，$X_i$ 是概形；
+  \item 对任意二元组 $(i,j)\in I^2$，$U_{ij}$ 是 $X_i$ 的开子概形；
+  \item 对任意二元组 $(i,j)\in I^2$，$\varphi_{ij}:U_{ij}\to U_{ji}$ 是概形之间的同构。
+\end{itemize}
+上述资料应满足以下条件：
+\begin{itemize}[leftmargin=1.6em,itemsep=0.2ex]
+  \item 对任意 $i\in I$，$U_{ii}=X_i$，且 $\varphi_{ii}=\id_{X_i}$；
+  \item 对任意三元组 $(i,j,k)\in I^3$，
+\[
+\varphi_{ij}(U_{ij}\cap U_{ik})=U_{ji}\cap U_{jk}
+\]
+作为 $U_{ji}$ 的开子集成立；
+  \item 对任意三元组 $(i,j,k)\in I^3$，下述\emph{余圈条件}成立：
+\[
+\varphi_{jk}\big|_{U_{ji}\cap U_{jk}}\circ\varphi_{ij}\big|_{U_{ij}\cap U_{ik}}
+=\varphi_{ik}\big|_{U_{ij}\cap U_{ik}},
+\]
+即下图交换：
+\[
+\begin{tikzcd}[column sep=large,row sep=large]
+U_{ij}\cap U_{ik}\arrow[dr,"\varphi_{ij}"']\arrow[drr,bend left=14,"\varphi_{ik}"] & {} & \\
+& U_{ji}\cap U_{jk}\arrow[r,"\varphi_{jk}"'] & U_{ki}\cap U_{kj}
+\end{tikzcd}
+\]
+（图中三个箭头都是同构。）
+\end{itemize}
+\yizhu{粘接数据的三条条件逐条对应「粘合拓扑空间」所需的三件事：自反性（$U_{ii}=X_i$、$\varphi_{ii}=\id$）、两边一致（$\varphi_{ij}$ 把交映到交）、以及余圈条件（三次转换回到原处）。Stacks 用的是同一套条件，只是把对象换成局部环化空间；在那里还额外说明这套条件足以保证粘接结果的存在性与唯一性。
+[来源：Stacks Project, Tag 01JA（Section 26.14, Glueing schemes），\url{https://stacks.math.columbia.edu/tag/01JA}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{命题—定义 6.1.2}{§6.1 · p.37}
+给定概形的粘接数据
+\[
+\bigl(I,\ (X_i)_{i\in I},\ (U_{ij})_{(i,j)\in I^2},\ (\varphi_{ij})_{(i,j)\in I^2}\bigr),
+\]
+则存在本质唯一的一组资料
+\[
+\bigl(X,\ (X'_i)_{i\in I},\ (\varphi_i)_{i\in I}\bigr),
+\]
+其中
+\begin{itemize}[leftmargin=1.6em,itemsep=0.2ex]
+  \item $X$ 是概形；
+  \item 对每个 $i\in I$，$X'_i$ 是 $X$ 的开子概形；
+  \item 对每个 $i\in I$，$\varphi_i:X_i\xrightarrow{\ \simeq\ }X'_i$ 是同构；
+\end{itemize}
+使得
+\begin{itemize}[leftmargin=1.6em,itemsep=0.2ex]
+  \item 作为拓扑空间，$X=\bigcup_{i\in I}X'_i$；
+  \item 对任意二元组 $(i,j)\in I^2$，$\varphi_i(U_{ij})=X'_i\cap X'_j$，作为 $X'_i$ 的开子集成立；
+  \item 对任意二元组 $(i,j)\in I^2$，
+\[
+\varphi_i|_{U_{ij}}=\varphi_j|_{U_{ji}}\circ\varphi_{ij},
+\]
+即下图交换：
+\[
+\begin{tikzcd}[column sep=large,row sep=large]
+& U_{ij}\arrow[dl,"\varphi_{ij}"']\arrow[dr,"\varphi_i"] & \\
+U_{ji}\arrow[rr,"\varphi_j"'] & {} & X'_i\cap X'_j
+\end{tikzcd}
+\]
+\end{itemize}
+此时称概形 $X$ 由给定粘接数据\emph{粘接}而成，并把 $\bigl((X'_i)_{i\in I},(\varphi_i)_{i\in I}\bigr)$ 视为隐含。
+\end{card}
+\begin{card}{命题 6.1.3}{§6.1 · p.37}
+设
+\[
+\bigl(I,\ (X_i)_{i\in I},\ (U_{ij})_{(i,j)\in I^2},\ (\varphi_{ij})_{(i,j)\in I^2}\bigr)
+\]
+为概形的粘接数据，
+\[
+\bigl(X,\ (X'_i)_{i\in I},\ (\varphi_i)_{i\in I}\bigr)
+\]
+为其粘接输出。则对任意概形 $Y$，映射
+\[
+\Hom_{\Sch}(X,Y)\to\prod_{i\in I}\Hom_{\Sch}(X_i,Y),
+\qquad
+f\mapsto\bigl(f|_{X'_i}\circ\varphi_i\bigr)_{i\in I}
+\]
+是单射；并且一簇态射 $(g_i:X_i\to Y)_{i\in I}$ 落在其像中，当且仅当对任意二元组 $(i,j)\in I^2$ 有
+\[
+g_i|_{U_{ij}}=g_j|_{U_{ji}}\circ\varphi_{ij}.
+\]
+\end{card}
+
+\cardssec{7}{映入仿射概形的态射}
+\begin{card}{定理 7.1.2}{§7.1 · p.42}
+概形 $Y$ 仿射，当且仅当对任意概形 $X$，自然映射
+\begin{equation}\tag{7.1}
+\Hom_{\Sch}(X,Y)\to\Hom_{\CRing}\bigl(\cO_Y(Y),\cO_X(X)\bigr)
+\end{equation}
+是双射。
+\end{card}
+\begin{card}{推论 7.2.1}{§7.2 · p.42}
+对任意概形 $X$，存在唯一态射 $X\to\Spec(\Z)$。换言之，$\Spec(\Z)\in\Sch$ 是终对象。
+\yizhu{推论 7.2.1 的对偶陈述是：空概形是 $\Sch$ 的初始对象。两者合起来说明 $\Sch$ 没有零对象——它既有初始对象又有终对象，而二者并不同构。这一点与 $\CRing$ 的情形形成对照：在 $\CRing$ 中零环既是初始对象又是终对象。
+[译者按（上下文推断，无外部依据）：由终对象与初始对象的定义直接比较。]}
+\end{card}
+\begin{card}{推论 7.2.2}{§7.2 · p.42}
+对任意概形 $X$，存在唯一态射
+\[
+q:X\to\Spec\bigl(\cO_X(X)\bigr),
+\]
+它在整体截面之间诱导恒等同态。
+\end{card}
+\begin{card}{推论 7.2.3}{§7.2 · p.42}
+嵌入函子 $\mathsf{Aff}\to\Sch$ 有典范左伴随
+\[
+\Sch\to\mathsf{Aff},\qquad X\mapsto\Spec\bigl(\cO_X(X)\bigr).
+\]
+\yizhu{推论 7.2.3 中的左伴随通常称为\emph{仿射化}：它把任意概形 $X$ 送到仿射概形 $\Spec(\cO_X(X))$，而推论 7.2.2 的 $q$ 正是这一伴随的单位。对仿射 $X=\Spec(R)$，单位是同构 $R\simeq\cO_X(X)$，故仿射概形是此伴随的不动点。
+[依据：原书 p.43 推论 7.2.2 与 7.2.3]}
+\end{card}
+
+\cardssec{8}{点函子}
+\begin{card}{定义 8.1.1}{§8.1 · p.44}
+设 $X$ 为概形，$R$ 为交换环。$X$ 的一个\emph{$R$-点}是指态射 $\Spec(R)\to X$。令
+\[
+X(R):=\Hom_{\Sch}\bigl(\Spec(R),X\bigr)
+\]
+为 $X$ 的 $R$-点集。
+
+$X$ 的\emph{域值点}是指 $X$ 的某个域 $k$ 上的 $k$-点。$X$ 的\emph{几何点}是指 $X$ 的某个可分闭域 $k$ 上的 $k$-点。
+\end{card}
+\begin{card}{定义 8.2.1}{§8.2 · p.44}
+设 $X$ 为概形。函子
+\[
+h_X:\CRing\to\Set,\qquad R\mapsto X(R)
+\]
+称为 $X$ 的\emph{点函子}。
+
+注意构造 $X\mapsto h_X$ 具有函子性。于是得到典范函子
+\[
+h:\Sch\to\mathsf{Fun}(\CRing,\Set).
+\]
+\end{card}
+\begin{card}{定理 8.2.3}{§8.2 · p.44}
+函子 $h:\Sch\to\mathsf{Fun}(\CRing,\Set)$ 完全忠实。
+\end{card}
+\begin{card}{定义 8.2.6}{§8.2 · p.44}
+称函子 $F:\CRing\to\Set$ 被概形 $X$ \emph{表示}，若它带自然同构 $F\simeq h_X$。
+\end{card}
+
+\cardssec{9}{纤维积}
+\begin{card}{定义 9.1.1}{§9.1 · p.47}
+设 $\mathcal C$ 是范畴。称 $\mathcal C$ 中的交换方块
+\[
+\begin{tikzcd}[column sep=3.4em,row sep=3em]
+d \arrow[r,"g'"] \arrow[d,"f'"'] & a \arrow[d,"f"]\\
+b \arrow[r,"g"'] & c
+\end{tikzcd}
+\tag{9.1}
+\]
+为\emph{笛卡儿的}，若对任意对象 $x \in \mathcal C$，交换方块
+\[
+\begin{tikzcd}[column sep=5em,row sep=3em]
+\Hom_{\mathcal C}(x,d) \arrow[r,"g'\circ-"] \arrow[d,"f'\circ-"'] & \Hom_{\mathcal C}(x,a) \arrow[d,"f\circ-"]\\
+\Hom_{\mathcal C}(x,b) \arrow[r,"g\circ-"'] & \Hom_{\mathcal C}(x,c)
+\end{tikzcd}
+\]
+在 $\Set$ 中是笛卡儿方块。换言之，若它诱导双射
+\[
+\Hom_{\mathcal C}(x,d) \longrightarrow \Hom_{\mathcal C}(x,a) \times_{\Hom_{\mathcal C}(x,c)} \Hom_{\mathcal C}(x,b).
+\]
+此时也称 (9.1) 是\emph{拉回方块}，称 (9.1) 把 $d$ 实现为图 $a \xrightarrow{f} c \xleftarrow{g} b$ 的\emph{拉回}；也称 $d$ 是 $a \xrightarrow{f} c \xleftarrow{g} b$ 的\emph{纤维积}。
+\yizhu{原文用 Hom 集的双射定义笛卡儿方，这正是泛性质的逐对象展开：给一个态射 $x \to d$ 等同于给一对相容的态射 $x \to a$、$x \to b$，而后者就是右边纤维积的元素。Stacks 的定义直接写泛性质，二者等价。又，此定义只要求 Hom 集上的双射，不要求 $d$ 有唯一构造，唯一性来自 Yoneda 引理，见注 9.1.2。
+[来源：Stacks Project, Tag 001V（Definition 4.6.1，纤维积），\url{https://stacks.math.columbia.edu/tag/001V}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{定义 9.1.7}{§9.1 · p.47}
+设 $\mathcal C$ 是范畴。图 $a \xleftarrow{f} c \xrightarrow{g} b$ 的\emph{余积}，定义为 $\mathcal C^{\op}$ 中相应图的拉回。也称它为 $a \xleftarrow{f} c \xrightarrow{g} b$ 的\emph{纤维余积}，并记作
+\[
+a \coprod_c b .
+\]
+\end{card}
+\begin{card}{推论 9.2.2}{§9.2 · p.47}
+$\mathsf{Aff}$ 中纤维积存在。给定图 $A \leftarrow C \to B$，有
+\[
+\Spec(A \otimes_C B) \simeq \Spec(A) \times_{\Spec(C)} \Spec(B).
+\]
+\end{card}
+\begin{card}{推论 9.2.5}{§9.2 · p.47}
+函子 $\mathsf{Aff} \to \Sch$ 保持纤维积。
+\end{card}
+\begin{card}{定理 9.3.1}{§9.3 · p.47}
+范畴 $\Sch$ 有纤维积。
+\yizhu{纤维积存在与有限极限存在是一回事：$\Sch$ 的终对象是 $\Spec \Z$，故定理连同积的存在性给出 $\Sch$ 的全部有限极限。Stacks 把这两件事合并为一条陈述，且采用与原文不同的证明（可表性判别法），并在证明开头自注可以跳过该证明，理由是学会在纤维积上工作更重要。
+[来源：Stacks Project, Tag 01JM（Lemma 26.16.1，概形范畴的有限极限），\url{https://stacks.math.columbia.edu/tag/01JM}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{引理 9.3.2}{§9.3 · p.47}
+设 $f \colon X \to Y$ 是概形间的态射，$U \subseteq Y$ 是开子概形。则纤维积 $X \times_Y U$ 存在，且典范态射 $X \times_Y U \to X$ 是到开子概形 $f^{-1}(U)$ 上的开浸入。
+\end{card}
+\begin{card}{推论 9.3.3}{§9.3 · p.47}
+设 $X \xrightarrow{j} Y \leftarrow U$ 是 $\Sch$ 中的图，且 $j$ 是开浸入。则遗忘函子 $\Sch \to \Top$ 保持该图的纤维积。
+\end{card}
+\begin{card}{命题 9.3.5}{§9.3 · p.47}
+$\Sch$ 中的方块
+\[
+\begin{tikzcd}[column sep=3.8em,row sep=3em]
+W \arrow[r] \arrow[d] & X \arrow[d]\\
+Y \arrow[r] & Z
+\end{tikzcd}
+\tag{9.2}
+\]
+是笛卡儿的，当且仅当它诱导 $\mathsf{Fun}(\CRing,\Set)$ 中的笛卡儿方块
+\[
+\begin{tikzcd}[column sep=3.8em,row sep=3em]
+h_W \arrow[r] \arrow[d] & h_X \arrow[d]\\
+h_Y \arrow[r] & h_Z
+\end{tikzcd}
+\tag{9.3}
+\]
+特别地，有
+\[
+h_{X \times_Z Y} \simeq h_X \times_{h_Z} h_Y .
+\tag{9.4}
+\]
+\end{card}
+\begin{card}{引理 9.4.1}{§9.4 · p.47}
+设 $X \to S \leftarrow Y$ 是 $\Sch$ 中的图。设 $X = \bigcup_{i \in I} X_i$ 与 $Y = \bigcup_{j \in J} Y_j$ 是开子概形覆盖。若对每对 $(i,j) \in I \times J$，纤维积 $X_i \times_S Y_j$ 在 $\Sch$ 中存在，则 $X \times_S Y$ 存在。
+\end{card}
+
+\cardssec{10}{基变换}
+\begin{card}{定义 10.1.1}{§10.1 · p.52}
+设 $S$ 是概形。$S$-\emph{概形}指带态射 $X \to S$ 的概形 $X$。当 $S = \Spec(R)$ 时，也称 $X$ 是 $R$-\emph{概形}。
+\end{card}
+\begin{card}{定义 10.1.2}{§10.1 · p.52}
+设 $X$ 是 $S$-概形。$X$ 沿态射 $S' \to S$ 的\emph{基变换}指 $S'$-概形
+\[
+X_{S'} := X \times_S S',
+\]
+连同它到 $S'$ 的典范投影。
+\end{card}
+\begin{card}{定义 10.2.1}{§10.2 · p.52}
+设 $X$ 是 $S$-概形，$s \in S$ 是拓扑点。$X$ 在 $s$ 处的\emph{纤维}指 $\kappa_s$-概形
+\[
+X_s := X \times_S s := X \times_S \Spec(\kappa_s),
+\]
+其中 $\Spec(\kappa_s) \to S$ 是位于 $s$ 之上的典范 $\kappa_s$-点。
+\yizhu{Stacks 称 $X_s$ 为 $f$ 在 $s$ 处的 scheme-theoretic fibre（概形论纤维），定义同样是 $\Spec(\kappa(s)) \times_S X$，并强调要始终把纤维看成 $\kappa(s)$-概形。原文用记号 $s$ 代替 $\Spec(\kappa_s)$，又把 $X \times_S s$ 简写为 $X_s$。纤维上的点自带剩余域，这一点在命题 10.2.6 中起作用。
+[来源：Stacks Project, Tag 01K0（Definition 26.18.4，概形论纤维），\url{https://stacks.math.columbia.edu/tag/01K0}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{命题 10.2.2}{§10.2 · p.52}
+设 $p \colon X \to S$ 是 $S$-概形，$s \in S$ 是拓扑点。连续映射 $X_s \to X$ 诱导拓扑空间间的同胚
+\[
+X_s \xrightarrow{\ \simeq\ } p^{-1}(s).
+\]
+\end{card}
+\begin{card}{命题 10.2.6}{§10.2 · p.52}
+态射 $i \colon X_s \to X$ 对任意拓扑点 $x \in X_s$ 诱导同构
+\[
+\kappa_{i(x)} \xrightarrow{\ \simeq\ } \kappa_x .
+\]
+\yizhu{纤维在环层面偏离 $X$，剩余域却完全一致：局部环 $\cO_{X,i(x)}$ 与 $\cO_{X_s,x}$ 一般不同构，但两者的剩余域相同。因此基变换不改变「点」的域论信息，只改变环论信息。原文的证法是考察域值点：$X_s(k) \simeq X(k) \times_{S(k)} s(k)$，再对一切域 $k$ 比较。
+[依据：原书 pp.54--55，命题 10.2.6 及其证明。]}
+\end{card}
+\begin{card}{命题 10.3.1}{§10.3 · p.52}
+设 $p \colon X \to S$ 是 $S$-概形，$s \in S$ 是拓扑点。记 $S' := \Spec(\cO_{S,s})$。态射
+\[
+X_{S'} := X \times_S S' \longrightarrow X
+\]
+诱导局部环化空间间的同构 $X_{S'} \xrightarrow{\simeq} p^{-1}(S')$。
+
+特别地，$p^{-1}(S')$ 作为 $X$ 的局部环化子空间是概形。
+\yizhu{$B \to B \otimes_A A_{\mathfrak p} = B_{\mathfrak p}$ 是局部化，不做商，于是 $\Spec B_{\mathfrak p} \to \Spec B$ 在局部环化空间层面是同构到其像上，像即 $p^{-1}(S')$。注意 $p^{-1}(S')$ 一般不是 $X$ 的开子集：取 $X = S = \A^2$、$s$ 为原点，则 $\Spec \cO_{S,s}$ 的像只含 $(0)$、$(x)$、$(y)$、$(x,y)$ 四个点。它却是自带概形结构的局部环化子空间，这正是本命题的内容。
+[依据：原书 p.55，命题 10.3.1 与习题 10.3.2。]}
+\end{card}
+
+\cardssec{11}{子概形与浸入}
+\begin{card}{定义 11.1.1}{§11.1 · p.56}
+称范畴 $\mathcal{C}$ 中的态射 $f \colon x \to y$ 为\emph{单态射}，若对任意试验对象 $z$，映射
+\[
+\Hom_{\mathcal{C}}(z,x) \xrightarrow{\ f \circ -\ } \Hom_{\mathcal{C}}(z,y)
+\]
+是单射。
+
+称范畴 $\mathcal{C}$ 中的态射 $f \colon x \to y$ 为\emph{满态射}，若它在 $\mathcal{C}^{\op}$ 中对应的态射是单态射；亦即，对任意试验对象 $z$，映射
+\[
+\Hom_{\mathcal{C}}(y,z) \xrightarrow{\ -\circ f\ } \Hom_{\mathcal{C}}(x,z)
+\]
+是单射。
+\yizhu{单态射即「左可消」：$f \circ a = f \circ b$ 蕴含 $a = b$；满态射即「右可消」。这一对概念只用 Hom 集与复合表述，故对任意范畴都有意义，不依赖元素。Stacks 的定义与此相同，只是把试验对象记作 $W$。
+[来源：Stacks Project, Tag 003B（Definition 4.13.1，单态射与满态射），\url{https://stacks.math.columbia.edu/tag/003B}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{命题 11.2.1}{§11.2 · p.56}
+设 $X$ 是拓扑空间，$\alpha \colon \cF \to \cF'$ 是 $\Shv(X,\Set)$ 中的态射。下列条件等价：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 态射 $\alpha$ 是 $\Shv(X,\Set)$ 中的满态射。
+  \item 对任意点 $x \in X$，映射 $\alpha_x \colon \cF_x \to \cF'_x$ 是满射。
+\end{enumerate}
+\yizhu{这条命题说明：层范畴中的满态射可以逐茎检验。Stacks 的处理方式是先把层间映射分为「单（截面逐点单）」与「满（截面局部来自下方）」，再证明二者恰是 $\Shv(\mathcal{C})$ 的单态射与满态射，且同构当且仅当既单又满。
+[来源：Stacks Project, Tag 00WN（Lemma 7.11.2，层间单射与满射即单态射与满态射），\url{https://stacks.math.columbia.edu/tag/00WN}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{定义 11.3.1}{§11.3 · p.56}
+设 $i \colon Y \to X$ 是概形间的态射。称 $i$ 为\emph{闭浸入}，若
+\begin{enumerate}[label=(\arabic*),leftmargin=2em,itemsep=0.25ex]
+  \item 它诱导到 $X$ 的闭子空间上的同胚 $Y \xrightarrow{\ \simeq\ } i(Y)$；
+  \item 态射 $\cO_X \to i_*\cO_Y$ 是 $\Shv(X,\Set)$ 中的满态射。
+\end{enumerate}
+设 $X$ 是概形。\emph{闭子概形}指映入 $X$ 的闭浸入的同构类。
+\end{card}
+\begin{card}{命题 11.3.3}{§11.3 · p.56}
+概形间的态射 $i \colon Y \to X$ 是闭浸入，当且仅当
+\begin{enumerate}[label=(\arabic*),leftmargin=2em,itemsep=0.25ex]
+  \item 它诱导到 $X$ 的闭子空间上的同胚 $Y \xrightarrow{\ \simeq\ } i(Y)$；
+  \item[(2$'$)] 对任意点 $y \in Y$，映射 $\cO_{X,i(y)} \to \cO_{Y,y}$ 是满射。
+\end{enumerate}
+\yizhu{Stacks 的闭浸入定义是三条：到闭子集上的同胚、$\cO_X \to i_*\cO_Y$ 满、核理想局部由截面生成。命题 11.3.3 说明在第一条成立时，后两条可以合并成茎上满射一条。核理想那条并非多余：它保证定义理想是理想层，见引理 11.4.2 之后的讨论。
+[来源：Stacks Project, Tag 01HK（Definition 26.4.1，局部环化空间的闭浸入），\url{https://stacks.math.columbia.edu/tag/01HK}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{命题 11.3.5}{§11.3 · p.56}
+设 $R \in \CRing$，$I \subseteq R$ 是理想。设 $i \colon \Spec(R/I) \to \Spec(R)$ 是对应于典范满射 $\pi \colon R \to R/I$ 的态射。则 $i$ 是闭浸入。
+\end{card}
+\begin{card}{命题 11.3.7}{§11.3 · p.56}
+闭浸入 $i \colon Y \to X$ 是 $\Sch$ 中的单态射。
+\end{card}
+\begin{card}{引理 11.4.2}{§11.4 · p.56}
+设 $i \colon Y \to X$ 是闭浸入，$\cI_Y \subseteq \cO_X$ 是其定义理想。则典范态射
+\[
+\cO_X/\cI_Y := \coker(\cI_Y \to \cO_X) \longrightarrow i_*\cO_Y
+\]
+是同构，其中余核在 $\Shv(X,\Ab)$ 中取。
+\end{card}
+\begin{card}{引理 11.4.5}{§11.4 · p.56}
+闭浸入 $i \colon Y \to X$ 在同构意义下由其定义理想决定。
+\end{card}
+\begin{card}{定义 11.5.1}{§11.5 · p.56}
+设 $f \colon Y \to X$ 是概形间的态射。称 $f$ 为\emph{局部闭浸入}，若它可以写成合成
+\[
+Y \xrightarrow{\ i\ } Z \xrightarrow{\ j\ } X,
+\]
+其中 $i$ 是闭浸入，而 $j$ 是开浸入。
+\end{card}
+\begin{card}{命题 11.5.2}{§11.5 · p.56}
+概形间的态射 $f \colon Y \to X$ 是局部闭浸入，当且仅当
+\begin{enumerate}[label=(\arabic*),leftmargin=2em,itemsep=0.25ex]
+  \item 它诱导到 $X$ 的局部闭子空间\footnote{子空间是局部闭的，当且仅当它可写成一个开子空间与一个闭子空间的交。}上的同胚 $Y \xrightarrow{\ \simeq\ } f(Y)$；
+  \item 对任意点 $y \in Y$，映射 $\cO_{X,f(y)} \to \cO_{Y,y}$ 是满射。
+\end{enumerate}
+\end{card}
+
+\cardssec{12}{$\cO_X$-模层}
+\begin{card}{定义 12.1.1}{§12.1 · p.61}
+设 $(X,\cO_X)$ 是环化空间。\emph{$\cO_X$-模预层}\footnote{另一名称：\emph{presheaf of modules for $\cO_X$}（$\cO_X$ 的模预层）。}是指一个对象 $\cM\in\PShv(X,\Ab)$，连同下述结构：
+\begin{itemize}
+  \item 对任意开子集 $U\subset X$，阿贝尔群 $\cM(U)$ 带有 $\cO_X(U)$-模结构，
+\end{itemize}
+使得
+\begin{itemize}
+  \item 对任意开子集 $U\subseteq V\subseteq X$，限制映射
+  \[
+  \cM(V)\to\cM(U)
+  \]
+  与同态
+  \[
+  \cO_X(V)\to\cO_X(U)
+  \]
+  的作用相容。
+\end{itemize}
+\end{card}
+\begin{card}{定义 12.1.3}{§12.1 · p.61}
+设 $\cM$ 与 $\cN$ 是 $\cO_X$-模预层。从 $\cM$ 到 $\cN$ 的\emph{$\cO_X$-线性态射}，是指层间的态射 $f\colon\cM\to\cN$，使得：
+\begin{itemize}
+  \item 对任意开子集 $U\subset X$，映射 $f_U\colon\cM(U)\to\cN(U)$ 是 $\cO_X(U)$-线性的。
+\end{itemize}
+\end{card}
+\begin{card}{命题 12.2.1}{§12.2 · p.61}
+嵌入函子 $\omod\to\omodP$ 有左伴随
+\[
+\omodP\to\omod,
+\]
+且与层化函子
+\[
+(-)^{\sharp}\colon\PShv(X,\Ab)\to\Shv(X,\Ab)
+\]
+相容。
+\end{card}
+\begin{card}{命题 12.3.4}{§12.3 · p.61}
+设 $\phi\colon(X,\cO_X)\to(Y,\cO_Y)$ 是环化空间之间的态射。函子
+\[
+\phi^*_{\PShv}\colon\cO_Y\text{-}\mathsf{mod}^{\PShv}\to\omodP
+\]
+典范左伴随于
+\[
+\phi_*\colon\omodP\to\cO_Y\text{-}\mathsf{mod}^{\PShv}.
+\]
+\end{card}
+\begin{card}{引理 12.3.7}{§12.3 · p.61}
+设 $j\colon U\to X$ 是概形的开浸入。对 $\cM\in\omod$，有 $j^*\cM\simeq j^{-1}\cM$。
+\end{card}
+\begin{card}{推论 12.3.11}{§12.3 · p.61}
+设 $\phi\colon(X,\cO_X)\to(Y,\cO_Y)$ 是环化空间之间的态射。函子
+\[
+\phi^*\colon\cO_Y\text{-}\mathsf{mod}\to\omod
+\]
+典范左伴随于
+\[
+\phi_*\colon\omod\to\cO_Y\text{-}\mathsf{mod}.
+\]
+\end{card}
+\begin{card}{引理 12.4.3}{§12.4 · p.61}
+设 $x\in X$。有
+\[
+(\cM\otimes_{\cO_X}\cN)_x\simeq\cM_x\otimes_{\cO_{X,x}}\cN_x.
+\]
+\end{card}
+\begin{card}{命题 12.4.10}{§12.4 · p.61}
+对任意 $\cM\in\omod$，自然变换 (12.3) 给出伴随对
+\[
+\cM\otimes_{\cO_X}-\colon\omod\rightleftarrows\omod\colon\uHom_{\cO_X}(\cM,-).
+\]
+\yizhu{伴随的另一半是层版张量–内 Hom 同构
+\[
+\uHom_{\cO_X}(\cM\otimes_{\cO_X}\cN,\cP)\simeq\uHom_{\cO_X}(\cM,\uHom_{\cO_X}(\cN,\cP)),
+\]
+Stacks 的 Lemma 17.22.1 给出它；把恒等态射 $\uHom_{\cO_X}(\cM,\cN)\to\uHom_{\cO_X}(\cM,\cN)$ 沿该同构搬到左边，即得 (12.3) 的求值态射。命题 12.4.10 只是把这句同构改写成伴随对的说法。
+[来源：Stacks Project, Tag 01CM（Lemma 17.22.1），\url{https://stacks.math.columbia.edu/tag/01CM}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{推论 12.4.11}{§12.4 · p.61}
+对任意 $\cM\in\omod$，有：
+\begin{itemize}
+  \item 函子 $\cM\otimes_{\cO_X}-$ 与余极限交换。特别地，它右正合。
+  \item 函子 $\uHom_{\cO_X}(\cM,-)$ 与极限交换。特别地，它左正合。
+\end{itemize}
+\end{card}
+\begin{card}{引理 12.4.12}{§12.4 · p.61}
+对任意 $\cN\in\omod$，函子
+\[
+\uHom_{\cO_X}(-,\cN)\colon\omod^{\op}\to\omod
+\]
+与极限交换。特别地，它左正合。
+\end{card}
+
+\cardssec{13}{拟凝聚层}
+\begin{card}{定义 13.1.1}{§13.1 · p.67}
+考虑函子
+\[
+\pi^*\colon A\text{-}\mathsf{mod}\to\omod.
+\]
+对 $M\in A\text{-}\mathsf{mod}$，记
+\[
+\widetilde{M}:=\pi^*(M)\in\omod,
+\]
+并称之为与 $A$-模 $M$ 相伴的 $\cO_X$-模。
+\yizhu{Stacks 把同一构造写成三条等价途径：对环同态 $R\to\Gamma(X,\cO_X)$ 与 $R$-模 $M$，取 $\pi^*M$、取自由表现之后的余核、以及把 $U\mapsto\cO_X(U)\otimes_RM$ 层化，三者典范同构，结果记 $\cF_M$。该构造还与任意余极限交换，这一点在原书中要等到推论 13.1.8 才出现。
+[来源：Stacks Project, Tag 01BH（Lemma 17.10.5），\url{https://stacks.math.columbia.edu/tag/01BH}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{推论 13.1.2}{§13.1 · p.67}
+设 $A\in\CRing$，$X:=\Spec(A)$。有典范伴随
+\[
+\begin{array}{ccc}
+A\text{-}\mathsf{mod} & \rightleftarrows & \omod\\[0.5ex]
+M & \mapsto & \widetilde{M}\\
+F(X) & \mapsfrom & F.
+\end{array}
+\]
+\end{card}
+\begin{card}{命题 13.1.4}{§13.1 · p.67}
+设 $A\in\CRing$，$X:=\Spec(A)$。对任意 $M\in A\text{-}\mathsf{mod}$，存在本质唯一的 $\cO_X$-模 $\cM$，连同 $A$-线性同构
+\[
+M\xrightarrow{\simeq}\cM(X),
+\]
+使得对任意 $f\in A$，$A$-线性映射 $M\simeq\cM(X)\to\cM(U(f))$ 诱导同构
+\[
+M_f\xrightarrow{\simeq}\cM(U(f)).
+\]
+\end{card}
+\begin{card}{命题 13.1.5}{§13.1 · p.67}
+设 $A\in\CRing$，$X:=\Spec(A)$。对 $M\in A\text{-}\mathsf{mod}$，设 $\widetilde{M}$ 与 $\cM$ 是上述 $\cO_X$-模。则典范态射 $\cM\to\widetilde{M}$ 是同构。特别地，对任意 $f\in A$，有
+\[
+M_f\xrightarrow{\simeq}\widetilde{M}(U(f)).
+\]
+\end{card}
+\begin{card}{推论 13.1.6}{§13.1 · p.67}
+设 $A\in\CRing$，$X:=\Spec(A)$。函子
+\[
+\widetilde{(-)}\colon A\text{-}\mathsf{mod}\to\omod
+\]
+全忠实。
+\end{card}
+\begin{card}{推论 13.1.8}{§13.1 · p.67}
+设 $A\in\CRing$，$X:=\Spec(A)$。函子
+\[
+\widetilde{(-)}\colon A\text{-}\mathsf{mod}\to\omod
+\]
+与有限极限及小余极限交换。
+\end{card}
+\begin{card}{推论 13.1.9}{§13.1 · p.67}
+设 $\phi\colon A\to B$ 是 $\CRing$ 中的同态，$f\colon Y\to X$ 是对应的仿射概形之间的态射。交换方块 (13.1) 诱导自然同构 $\widetilde{\mathrm{res}(-)}\simeq f_*\widetilde{(-)}$，即有交换方块
+\begin{equation}\tag{13.6}
+\begin{tikzcd}[row sep=3em,column sep=3.6em]
+A\text{-}\mathsf{mod} \arrow[r,"\widetilde{(-)}"] & \omod \arrow[d,"f_*"]\\
+B\text{-}\mathsf{mod} \arrow[r,"\widetilde{(-)}"'] \arrow[u,"\mathrm{res}"'] & \cO_Y\text{-}\mathsf{mod}.
+\end{tikzcd}
+\end{equation}
+\end{card}
+\begin{card}{定义 13.2.1}{§13.2 · p.67}
+设 $X$ 是概形。称 $\cO_X$-模 $\cF$ \emph{拟凝聚}，若对任意开浸入 $j\colon U=\Spec(A)\to X$，$\cO_U$-模 $\cF|_U:=j^*\cF$ 同构于某个 $\widetilde{M}$（$M\in A\text{-}\mathsf{mod}$）。
+
+记
+\[
+\mathsf{QCoh}(X)=\omod_{\mathrm{qcoh}}\subseteq\omod
+\]
+为拟凝聚 $\cO_X$-模构成的全子范畴。
+\yizhu{Stacks 的定义不依赖仿射开集：$\cF$ 拟凝聚，指每点有邻域 $U$，使 $\cF|_U$ 是某个态射 $\bigoplus_J\cO_U\to\bigoplus_I\cO_U$ 的余核。该定义对任意环化空间都可用，且一般环化空间上拟凝聚层范畴未必是阿贝尔范畴。概形上两种定义一致：仿射开集上 $\widetilde{M}$ 恰是自由模表现余核的层化。
+[来源：Stacks Project, Tag 01BD（Definition 17.10.1），\url{https://stacks.math.columbia.edu/tag/01BD}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{命题 13.3.1}{§13.3 · p.67}
+设 $A\in\CRing$，$X:=\Spec(A)$。下述函子有定义，且互为逆函子
+\[
+\begin{array}{ccc}
+A\text{-}\mathsf{mod} & \rightleftarrows & \mathsf{QCoh}(X)\\[0.5ex]
+M & \mapsto & \widetilde{M}\\
+\cF(X) & \mapsfrom & \cF.
+\end{array}
+\]
+\end{card}
+\begin{card}{推论 13.3.2}{§13.3 · p.67}
+设 $X$ 是仿射概形。拟凝聚 $\cO_X$-模的有限极限与小余极限仍拟凝聚。
+\end{card}
+\begin{card}{推论 13.3.3}{§13.3 · p.67}
+设 $f\colon X\to Y$ 是仿射概形之间的态射。函子 $f^*$ 把拟凝聚 $\cO_Y$-模送到拟凝聚 $\cO_X$-模。
+\end{card}
+\begin{card}{推论 13.3.4}{§13.3 · p.67}
+设 $f\colon X\to Y$ 是仿射概形之间的态射。函子 $f_*$ 把拟凝聚 $\cO_X$-模送到拟凝聚 $\cO_Y$-模。
+\end{card}
+\begin{card}{定理 13.4.1}{§13.4 · p.67}
+拟凝聚性是局部条件。换言之，对概形 $X$ 与开覆盖 $X=\bigcup_{i\in I}X_i$，对象 $\cF\in\omod$ 拟凝聚，当且仅当每个 $\cF|_{X_i}$（$i\in I$）拟凝聚。
+\end{card}
+\begin{card}{推论 13.4.2}{§13.4 · p.67}
+设 $f\colon X\to Y$ 是概形之间的态射。函子 $f^*$ 把拟凝聚 $\cO_Y$-模送到拟凝聚 $\cO_X$-模。
+\end{card}
+\begin{card}{推论 13.4.3}{§13.4 · p.67}
+设 $X$ 是概形。拟凝聚 $\cO_X$-模的有限极限与小余极限仍拟凝聚。
+\end{card}
+\begin{card}{引理 13.4.4}{§13.4 · p.67}
+设 $f\colon X\to Y$ 是闭浸入。函子 $f_*$ 把拟凝聚 $\cO_X$-模送到拟凝聚 $\cO_Y$-模。
+\end{card}
+
+\cardssec{14}{拟凝聚代数}
+\begin{card}{定义 14.1.1}{§14.1 · p.72}
+设 $(X,\cO_X)$ 是环化空间。$\cO_X$-\emph{代数}（层）是指一个对象 $\cA\in\Shv(X,\CRing)$，连同态射 $\cO_X\to\cA$。记
+\[
+\cO_X\text{-}\mathsf{alg}:=\Shv(X,\CRing)_{\cO_X/}
+\]
+为 $\cO_X$-代数构成的范畴。
+\end{card}
+\begin{card}{定义 14.1.4}{§14.1 · p.72}
+设 $X$ 是概形。称 $\cO_X$-代数 $\cA$ \emph{拟凝聚}，若把它视为 $\cO_X$-模时拟凝聚。记
+\[
+\cO_X\text{-}\mathsf{alg}_{\mathrm{qcoh}}\subseteq\cO_X\text{-}\mathsf{alg}
+\]
+为拟凝聚 $\cO_X$-代数构成的全子范畴。
+\end{card}
+\begin{card}{定义 14.1.5}{§14.1 · p.72}
+设 $X$ 是概形。$\cO_X$ 的\emph{拟凝聚理想}是指这样的理想层 $\cI$：把它视为 $\cO_X$-模时拟凝聚。
+\end{card}
+\begin{card}{定理 14.2.4}{§14.2 · p.72}
+设 $S$ 是概形。对任意 $\cA\in\cO_S\text{-}\mathsf{alg}_{\mathrm{qcoh}}$，存在本质唯一的 $S$-概形 $q\colon Y\to S$，连同同构 $\cA\xrightarrow{\simeq}q_*\cO_Y$，使得对任意满足 $p_*\cO_X$ 拟凝聚的测试 $S$-概形 $p\colon X\to S$，复合
+\begin{equation}\tag{14.1}
+\Hom_{\Sch_S}(X,Y)\to\Hom_{\cO_S\text{-}\mathsf{alg}}(q_*\cO_Y,p_*\cO_X)\xrightarrow{\simeq}\Hom_{\cO_S\text{-}\mathsf{alg}}(\cA,p_*\cO_X)
+\end{equation}
+是双射。把这个 $S$-概形记作
+\[
+\Spec_S(\cA)\in\Sch_S.
+\]
+\yizhu{Stacks 把相对谱的泛性质写成「$\Hom_{\Sch_S}(T,\underline{\Spec}_S(\cA))$ 与满足 $\varphi\colon f^*\cA\to\cO_T$ 的配对 $(f\colon T\to S,\varphi)$ 之间的双射」。由伴随 $f^*\dashv f_*$，$\varphi$ 与 $\cA\to f_*\cO_T$ 互相转换；所以这与 (14.1) 里的 $\Hom_{\cO_S\text{-}\mathsf{alg}}(\cA,p_*\cO_X)$ 是同一件事，只是把同构放宽成了任意态射。
+[来源：Stacks Project, Tag 01LQ（Section 27.4, Relative spectrum as a functor），\url{https://stacks.math.columbia.edu/tag/01LQ}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{推论 14.2.5}{§14.2 · p.72}
+设 $S$ 是概形，$\Sch'_S\subseteq\Sch_S$ 是由满足 $p_*\cO_X$ 拟凝聚的 $S$-概形 $p\colon X\to S$ 构成的全子范畴。则函子
+\[
+(\Sch'_S)^{\op}\to\cO_S\text{-}\mathsf{alg}_{\mathrm{qcoh}},\qquad (p\colon X\to S)\mapsto p_*\cO_X
+\]
+有全忠实的左伴随
+\[
+\Spec_S\colon\cO_S\text{-}\mathsf{alg}_{\mathrm{qcoh}}\to(\Sch'_S)^{\op}.
+\]
+\yizhu{相对谱的存在性在 Stacks 中被单独陈述为「存在 $\pi\colon\underline{\Spec}_S(\cA)\to S$」，泛性质则另立一节。这样拆开的好处是：粘接构造只在存在性里出现一次，而一切用到相对谱的论证都只依赖泛性质。本节 Sketch 的处理顺序恰好相反，先对一般 $S$ 作粘接，再用泛性质收尾。
+[来源：Stacks Project, Tag 01LP（Lemma 27.3.4），\url{https://stacks.math.columbia.edu/tag/01LP}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{引理 14.3.2}{§14.3 · p.72}
+设 $S$ 是概形，$\cE$ 是拟凝聚 $\cO_S$-模。则 $\mathrm{Sym}_{\cO_S}(\cE)$ 是拟凝聚 $\cO_S$-代数。此外，对任意仿射开子概形 $U\subseteq S$，有
+\[
+(\mathrm{Sym}_{\cO_S}(\cE))(U)\simeq\mathrm{Sym}_{\cO_S(U)}(\cE(U)).
+\]
+\yizhu{Stacks 的定义与此一致：$V(\cE)=\underline{\Spec}_S(\mathrm{Sym}(\cE))$，并指出 $\mathrm{Sym}(\cE)$ 拟凝聚，这正是引理 14.3.2 的第一句。该处还把 $V(\cE)$ 刻画成「$\cE$ 的对偶在测试概形上的整体截面」所给出的函子，与引理 14.3.5 是同一条双射的两种写法。
+[来源：Stacks Project, Tag 01M1（Definition 27.6.1），\url{https://stacks.math.columbia.edu/tag/01M1}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{引理 14.3.5}{§14.3 · p.72}
+设 $S$ 是概形，$\cE$ 是拟凝聚 $\cO_S$-模。对任意 $S$-概形 $p\colon X\to S$，典范映射
+\[
+\Hom_{\Sch_S}(X,V_S(\cE))\to\Hom_{\cO_S\text{-}\mathsf{mod}}(\cE,p_*\cO_X)
+\]
+是双射。
+\yizhu{取 $X=S$，引理 14.3.5 给出 $\Hom_{\Sch_S}(S,V_S(\cE))\simeq\Hom_{\cO_S}(\cE,\cO_S)$：$V_S(\cE)$ 的 $S$-点恰是 $\cE$ 的对偶模的整体截面。取 $\cE=\cO_S^{\oplus n}$ 便回到「$\A^n_S$ 的 $S$-点是 $n$ 个整体函数」这一熟悉事实，可见该双射把几何与代数两侧的「截面」对齐了。
+[译者按（上下文推断，无外部依据）：这里对偶的出现源于 $\Spec_S(\mathrm{Sym}\,\cE)$ 的函数环是 $\mathrm{Sym}\,\cE$，故其点对应 $\cE$ 上的线性函数。]}
+\end{card}
+
+\cardssec{15}{应用：闭浸入的分类}
+\begin{card}{定理 15.1.1}{§15.1 · p.77}
+设 $X$ 是概形。下述两个函子有定义，且互为逆函子：
+\[
+\begin{array}{rcl}
+\{\text{到 $X$ 的闭浸入}\}^{\op} & \longleftrightarrow & \{\cO_X \text{ 的拟凝聚理想}\}\\[0.8ex]
+(i \colon Y \to X) & \longmapsto & \ker(\cO_X \to i_*\cO_Y)\\[0.4ex]
+\Spec_X(\cO_X/\cI) & \longmapsfrom & \cI \subseteq \cO_X.
+\end{array}
+\]
+\end{card}
+\begin{card}{推论 15.1.2}{§15.1 · p.77}
+设 $X = \Spec(A)$ 是仿射概形。到 $X$ 的任意闭浸入都同构于某个 $\Spec(A/I) \to \Spec(A)$，其中 $I \subseteq A$ 是唯一确定的理想。
+\yizhu{仿射情形可以把定理翻译成一句交换代数：$\Spec(A)$ 的闭子概形与 $A$ 的理想一一对应。同一定理在 Stacks Project 中分成两半陈述：闭浸入的定义理想是拟凝聚理想，且在仿射开集 $U = \Spec(R)$ 上该理想限制为 $\widetilde{I}$，$i^{-1}(U) \to U$ 就是 $\Spec(R/I) \to \Spec(R)$。
+[来源：Stacks Project, Tag 01IN（Lemma 26.10.1，闭浸入的局部形状与定义理想），\url{https://stacks.math.columbia.edu/tag/01IN}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{推论 15.1.3}{§15.1 · p.77}
+闭浸入对基变换稳定。
+\end{card}
+\begin{card}{推论 15.1.4}{§15.1 · p.77}
+局部闭浸入对基变换稳定。
+\yizhu{局部闭浸入按定义是开浸入与闭浸入的复合（习题 10.1.4）。开浸入对基变换的稳定性是纤维积的泛性质：$U \times_X X' \to X'$ 仍是开浸入。把两种稳定性合起来，复合的稳定性便随之得到，无需再对局部闭的情形单独验证。
+[依据：原书 p.77 推论 15.1.4 与 p.59 习题 10.1.4。]}
+\end{card}
+
+\cardssec{16}{凝聚模}
+\begin{card}{定义 16.1.1}{§16.1 · p.78}
+设 $(X,\cO_X)$ 是环化空间，$\cF\in\omod$。若存在截面 $s_i\in\cF(X)$（$i\in I$），使态射
+\[
+\bigoplus_{i\in I}\cO_X \xrightarrow{(s_i)_{i\in I}} \cF
+\]
+在阿贝尔范畴 $\omod$ 中是满射，则称 $\cF$ 由截面 ${(s_i)}_{i\in I}$ 生成。
+\end{card}
+\begin{card}{定义 16.1.2}{§16.1 · p.78}
+设 $(X,\cO_X)$ 是环化空间。若对任意点 $x\in X$，存在 $x$ 的开邻域 $U\subseteq X$，使 $\cF|_U$ 由有限多个截面生成，则称 $\cF\in\omod$ 为\textbf{有限型}（of finite type）。
+\end{card}
+\begin{card}{引理 16.1.3}{§16.1 · p.78}
+设 $f\colon (X,\cO_X)\to(Y,\cO_Y)$ 是环化空间之间的态射。则 $f^*$ 把有限型 $\cO_Y$-模送到有限型 $\cO_X$-模。
+\end{card}
+\begin{card}{引理 16.1.4}{§16.1 · p.78}
+设 $(X,\cO_X)$ 是环化空间，$0\to\cF_1\xrightarrow{\alpha}\cF_2\xrightarrow{\beta}\cF_3\to 0$ 是 $\cO_X$-模的短正合列。
+\begin{enumerate}[label=(\arabic*),leftmargin=2em,itemsep=0.25ex]
+\item 若 $\cF_2$ 是有限型，则 $\cF_3$ 亦然。
+\item 若 $\cF_1$ 与 $\cF_3$ 是有限型，则 $\cF_2$ 亦然。
+\end{enumerate}
+\end{card}
+\begin{card}{引理 16.1.6}{§16.1 · p.78}
+设 $(X,\cO_X)$ 是环化空间，$\cF$ 是有限型 $\cO_X$-模。则 $\mathrm{supp}(\cF):=\{x\in X\mid \cF_x\neq 0\}$ 是 $X$ 的闭子集。
+\end{card}
+\begin{card}{引理 16.1.7}{§16.1 · p.78}
+设 $X$ 是概形，$\cF$ 是有限型的拟凝聚 $\cO_X$-模。则对任意仿射开子概形 $U\subseteq X$，$\cF(U)$ 是有限生成 $\cO_X(U)$-模。
+\end{card}
+\begin{card}{推论 16.1.9}{§16.1 · p.78}
+设 $X$ 是概形，$\cF$ 是有限型的拟凝聚 $\cO_X$-模。则对任意 $x\in X$，$\cF_x$ 是有限生成 $\cO_{X,x}$-模。
+\end{card}
+\begin{card}{推论 16.1.10}{§16.1 · p.78}
+设 $X$ 是概形，$\cF$ 是有限型的拟凝聚 $\cO_X$-模。则 $x\in\mathrm{supp}(\cF)$ 当且仅当 $\cF$ 在 $x$ 处的纤维 $\cF_x\otimes_{\cO_{X,x}}\kappa_x$ 非零。
+\end{card}
+\begin{card}{命题 16.1.12}{§16.1 · p.78}
+设 $X$ 是概形，$\cF$ 是有限型的拟凝聚 $\cO_X$-模，并设 $i\colon Y\to X$ 是对应于 $\mathrm{Ann}_{\cO_X}(\cF)$ 的闭浸入。则存在本质唯一的拟凝聚 $\cO_Y$-模 $\cM$，连同同构 $\alpha\colon\cF\xrightarrow{\simeq}i_*\cM$。此外还有：
+\begin{enumerate}[label=(\arabic*),leftmargin=2em,itemsep=0.25ex]
+\item 拟凝聚模 $\cM$ 是有限型。
+\item $\mathrm{supp}(\cM)=Y$，从而 $\mathrm{supp}(\cF)=i(Y)$。
+\item 对任意闭浸入 $i'\colon Y'\to X$ 与 $\cM'\in\mathsf{QCoh}(Y')$，连同同构 $\alpha'\colon\cF\xrightarrow{\simeq}(i')_*\cM'$，存在唯一的 $X$-态射 $f\colon Y\to Y'$ 与唯一的同构 $\beta\colon\cM'\xrightarrow{\simeq}f_*\cM$，使 $(i')_*(\beta)\circ\alpha'=\alpha$。
+\end{enumerate}
+称 $Y$ 为 $\cF$ 的\textbf{概形论支集}（scheme theoretic support）。
+\end{card}
+\begin{card}{定义 16.2.1}{§16.2 · p.78}
+设 $(X,\cO_X)$ 是环化空间。若对任意点 $x\in X$，存在 $x$ 的开邻域 $U\subseteq X$ 与正合列
+\[
+\bigoplus_{i\in I}\cO_U\to\bigoplus_{j\in J}\cO_U\to\cF|_U\to 0,
+\]
+其中 $|I|,|J|<\infty$，则称 $\cF\in\omod$ 为\textbf{有限表现}（of finite presentation）。
+\end{card}
+\begin{card}{引理 16.2.2}{§16.2 · p.78}
+设 $(X,\cO_X)$ 是环化空间，$\cF$ 是有限表现的 $\cO_X$-模。则 $\cF$ 是有限型的。
+\end{card}
+\begin{card}{引理 16.2.3}{§16.2 · p.78}
+设 $X$ 是概形，$\cF$ 是有限表现的 $\cO_X$-模。则 $\cF$ 是拟凝聚的。
+\end{card}
+\begin{card}{引理 16.3.1}{§16.3 · p.78}
+设 $(X,\cO_X)$ 是环化空间，$M,N\in\omod$。若 $M$ 有限表现，则典范映射
+\[
+\cHom_{\cO_X}(M,N)_x\to\Hom_{\cO_{X,x}}(M_x,N_x)
+\]
+是同构。
+\end{card}
+\begin{card}{引理 16.3.2}{§16.3 · p.78}
+设 $(X,\cO_X)$ 是环化空间，$M$ 是有限表现的 $\cO_X$-模。则函子
+\[
+\cHom_{\cO_X}(M,-)\colon\omod\to\omod
+\]
+保持滤过余极限。
+\end{card}
+\begin{card}{引理 16.3.3}{§16.3 · p.78}
+设 $X$ 是概形，$M$ 是有限表现的 $\cO_X$-模。则函子
+\[
+\cHom_{\cO_X}(M,-)\colon\omod\to\omod
+\]
+保持拟凝聚模。所得函子
+\[
+\cHom_{\cO_X}(M,-)\colon\mathsf{QCoh}(X)\to\mathsf{QCoh}(X)
+\]
+保持滤过余极限。
+\yizhu{「有限表现」在这里的作用是让生成元与关系都有限，从而 $\cHom(M,-)$ 能逐项与余极限交换：把 $M$ 写成 $\cO_X^{\oplus I}\to\cO_X^{\oplus J}\to M\to 0$（$I,J$ 有限），再用 $\cHom(\cO_X^{\oplus I},-)$ 与有限直和、余极限的交换性。若不要求有限表现，这条交换性一般不成立：无限秩自由模上的 $\cHom$ 会把直和变成直积，余极限无法穿过。
+[依据：原书 p.81 引理 16.3.2、16.3.3 与其前的口号。]}
+\end{card}
+\begin{card}{定义 16.4.1}{§16.4 · p.78}
+设 $(X,\cO_X)$ 是环化空间。若 $\cO_X$-模 $\cF$ 是有限型的，且对任意开子集 $U\subseteq X$ 与任意有限个截面 $s_i\in\cF(U)$（$i\in I$），核
+\[
+\ker\Bigl(\bigoplus_{i\in I}\cO_U\xrightarrow{(s_i)_{i\in I}}\cF|_U\Bigr)
+\]
+都是有限型的，则称 $\cF$ 为\textbf{凝聚的}（coherent）。
+\end{card}
+
+\cardssec{17}{局部自由模}
+\begin{card}{定义 17.1.1}{§17.1 · p.83}
+设 $(X,\cO_X)$ 是环化空间。若对任意 $x\in X$，存在 $x$ 的开邻域 $U\subseteq X$ 与集合 $I$，使 $\cF|_U\simeq\cO_U^{\oplus I}$，则称 $\cO_X$-模 $\cF$ 为\textbf{局部自由}的。
+
+若在上述定义中可以取 $I$ 为有限集，则称局部自由 $\cO_X$-模 $\cF$ 为\textbf{有限秩}的。
+
+若在上述定义中可以取 $I$ 使 $|I|=n$，则称局部自由 $\cO_X$-模 $\cF$ 的\textbf{秩}为 $n$。
+
+秩为 $1$ 的局部自由 $\cO_X$-模也称为\textbf{线丛}（line bundle）。
+\yizhu{秩可以逐点读出：$\cF$ 局部自由时，函数 $x\mapsto\mathrm{rank}_{\cO_{X,x}}\cF_x$ 在每点邻域内为常数，故在每个连通分支上为常数。原文的「秩为 $n$」要求同一个 $n$ 在每点都能取到，比「逐点秩为 $n$」更强。非连通概形上两者不同：在两个点上分别取秩 $1$ 与秩 $2$ 的自由层，逐点有秩而整体无秩。
+[依据：原书 p.83 定义 17.1.1 的三段表述。]}
+\end{card}
+\begin{card}{引理 17.1.2}{§17.1 · p.83}
+设 $X$ 是概形。局部自由的 $\cO_X$-模是拟凝聚的。
+\end{card}
+\begin{card}{引理 17.1.3}{§17.1 · p.83}
+设 $X$ 是环化空间，$\cL$ 是有限表现的 $\cO_X$-模。设 $x\in X$ 使 $\cL_x\simeq\cO_{X,x}^{\oplus r}$（$r\geq 0$）。则存在 $x$ 的开邻域 $U\subseteq X$，使 $\cL|_U\simeq\cO_U^{\oplus r}$。
+\end{card}
+\begin{card}{命题 17.1.4}{§17.1 · p.83}
+设 $X$ 是局部环化空间，$\cL\in\omod$。下述条件等价：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+\item $\cO_X$-模 $\cL$ 是秩 $1$ 局部自由的。
+\item $\cO_X$-模 $\cL$ 可逆，即存在 $\cO_X$-模 $\cL'$ 使 $\cL\otimes_{\cO_X}\cL'\simeq\cO_X$。
+\end{enumerate}
+此外，若这些条件成立，则 (ii) 中的 $\cL'$ 同构于 $\cHom_{\cO_X}(\cL,\cO_X)$。
+\end{card}
+
+\cardssec{18}{拟紧态射与（拟）分离态射}
+\begin{card}{定义 18.1.1}{§18.1 · p.85}
+称概形 $X$ 为\emph{拟紧的}，若其底拓扑空间拟紧，即 $X$ 的任意开覆盖都有有限子覆盖。
+\end{card}
+\begin{card}{定义 18.1.2}{§18.1 · p.85}
+设 $f:X\to Y$ 是概形间的态射。称 $f$ 为\emph{拟紧的}，若对任意拟紧开子集 $U\subseteq Y$，其原像 $f^{-1}(U)$ 拟紧。
+\yizhu{拟紧性只涉及底拓扑空间，故定义 18.1.2 与 Stacks 的定义逐字相同：底连续映射拟紧，即每个拟紧开集的原像拟紧。区别在于落脚点。原书先立拟紧概形（定义 18.1.1），再把态射的拟紧写成「拟紧开集的原像拟紧」；Stacks 则先定义拓扑空间之间的拟紧映射，概形的拟紧性由到终对象的态射读出来。后一写法使 18.1.3 一类的陈述成为定义的同义反复。
+[来源：Stacks Project, Tag 01K3（Definition 26.19.1, Quasi-compact morphisms）与 Tag 005A（Definition 5.12.1, Quasi-compact spaces and maps），\url{https://stacks.math.columbia.edu/tag/01K3}、\url{https://stacks.math.columbia.edu/tag/005A}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{引理 18.1.3}{§18.1 · p.85}
+设 $f:X\to Y$ 是态射且 $Y$ 仿射。则 $f$ 拟紧当且仅当 $X$ 拟紧。
+\end{card}
+\begin{card}{引理 18.1.4}{§18.1 · p.85}
+考虑拟紧态射构成的类。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 拟紧态射对合成稳定。
+  \item 拟紧态射对基变换稳定。
+  \item 「$f$ 拟紧」这一性质在靶上局部。
+\end{enumerate}
+\end{card}
+\begin{card}{定义 18.2.1}{§18.2 · p.85}
+设 $f:X\to Y$ 是概形间的态射。\emph{（相对）对角线态射}
+\[
+\Delta_f:X\longrightarrow X\times_Y X
+\]
+是指对应于交换方块
+\[
+\begin{tikzcd}
+X \arrow[r,"="] \arrow[d,"="'] & X \arrow[d,"f"] \\
+X \arrow[r,"f"'] & Y
+\end{tikzcd}
+\]
+的态射。设 $p:X\to S$ 是 $S$-概形，我们也写
+\[
+\Delta_X:=\Delta_p:X\longrightarrow X\times_S X,
+\]
+并称之为 $S$-概形 $X$ 的\emph{对角线态射}。
+\end{card}
+\begin{card}{引理 18.2.2}{§18.2 · p.85}
+设 $f:X\to Y$ 是概形间的态射。则 $\Delta_f:X\to X\times_Y X$ 是局部闭浸入。
+\end{card}
+\begin{card}{定义 18.2.4}{§18.2 · p.85}
+设 $f:X\to Y$ 是概形间的态射。称 $f$ \emph{分离}，若对角线态射 $\Delta_f:X\to X\times_Y X$ 是闭浸入。称概形 $X$ 是\emph{分离的}，若 $X\to\Spec(\Z)$ 分离。
+\yizhu{Stacks 把分离与拟分离放进同一条定义：对角线是闭浸入者称分离，对角线拟紧者称拟分离，概形的相应性质则由到 $\Spec(\Z)$ 的态射给出。原书把二者拆成定义 18.2.4 与定义 18.3.1，中间隔着一整套分离态射的稳定性引理。这一安排的用意是：分离性先作为「对角线闭」讲透，拟分离性再作为「对角线拟紧」平行搬演，读者由此看出两套论证是同一模板的两份拷贝。
+[来源：Stacks Project, Tag 01KK（Definition 26.21.3, Separation axioms），\url{https://stacks.math.columbia.edu/tag/01KK}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{推论 18.2.5}{§18.2 · p.85}
+态射 $f:X\to Y$ 分离当且仅当 $\Delta_f(X)$ 是 $X\times_Y X$ 的闭子集。
+\yizhu{nLab 的条目干脆用推论 18.2.5 的说法当定义：$f$ 分离，指 $\Delta(X)$ 是 $X\times_Y X$ 的闭子空间。条目随即提醒，这与 Hausdorff 空间的对角线条件形式相似，差别只在乘积取的是纤维积、闭性只在 Zariski 拓扑下检验。原书反过来，以「$\Delta_f$ 是闭浸入」为定义，把「像闭」降为推论；两者只差「浸入的层论部分」，而这部分由引理 18.2.2 的茎满射自动补上。
+[来源：nLab "separated morphism of schemes"，\url{https://ncatlab.org/nlab/show/separated+morphism+of+schemes}（Last revised 2024-08-24；2026-11-17 访问）。]}
+\end{card}
+\begin{card}{推论 18.2.6}{§18.2 · p.85}
+概形之间的单态射分离。特别地，局部闭浸入分离。
+\end{card}
+\begin{card}{引理 18.2.7}{§18.2 · p.85}
+考虑分离态射构成的类。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 设 $X\xrightarrow{f}Y\xrightarrow{g}Z$ 是态射链，$f$ 与 $g$ 都分离。则 $g\circ f$ 分离。
+  \item 设 $X\xrightarrow{f}Y\xrightarrow{g}Z$ 是态射链，$g\circ f$ 分离。则 $f$ 分离。
+  \item 分离态射对基变换稳定。
+  \item 「$f$ 分离」这一性质在靶上局部。
+\end{enumerate}
+\end{card}
+\begin{card}{定义 18.2.10}{§18.2 · p.85}
+设 $f:X\to Y$ 是 $S$-概形间的态射。\emph{（相对于 $S$ 的）图态射}
+\[
+\Gamma_f:X\longrightarrow X\times_S Y
+\]
+是指对应于交换方块
+\[
+\begin{tikzcd}
+X \arrow[r,"f"] \arrow[d,"="'] & Y \arrow[d] \\
+X \arrow[r] & S
+\end{tikzcd}
+\]
+的态射。
+\end{card}
+\begin{card}{定义 18.3.1}{§18.3 · p.85}
+设 $f:X\to Y$ 是概形间的态射。称 $f$ \emph{拟分离}，若对角线态射 $\Delta_f:X\to X\times_Y X$ 拟紧。称概形 $X$ \emph{拟分离}，若 $X\to\Spec(\Z)$ 拟分离。
+\end{card}
+\begin{card}{推论 18.3.2}{§18.3 · p.85}
+分离态射拟分离。
+\end{card}
+\begin{card}{引理 18.3.3}{§18.3 · p.85}
+设 $X$ 是概形。下列条件等价：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 概形 $X$ 拟分离。
+  \item $X$ 的任意两个拟紧开子集之交拟紧。
+  \item $X$ 的任意两个仿射开子集之交拟紧。
+\end{enumerate}
+\end{card}
+\begin{card}{引理 18.3.4}{§18.3 · p.85}
+考虑拟分离态射构成的类。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 设 $X\xrightarrow{f}Y\xrightarrow{g}Z$ 是态射链，$f$ 与 $g$ 都拟分离。则 $g\circ f$ 拟分离。
+  \item 设 $X\xrightarrow{f}Y\xrightarrow{g}Z$ 是态射链，$g\circ f$ 拟分离。则 $f$ 拟分离。
+  \item 拟分离态射对基变换稳定。
+  \item 「$f$ 拟分离」这一性质在靶上局部。
+\end{enumerate}
+\end{card}
+\begin{card}{定理 18.4.1}{§18.4 · p.85}
+设 $f:X\to Y$ 是拟紧且拟分离的态射。则函子 $f_*:\omod\to\cO_Y\text{-}\mathsf{mod}$ 把拟凝聚 $\cO_X$-模送到拟凝聚 $\cO_Y$-模。此外，所得函子
+\[
+f_*:\mathsf{QCoh}(X)\to\mathsf{QCoh}(Y)
+\]
+与小余积、滤过余极限交换。
+\end{card}
+\begin{card}{推论 18.4.3}{§18.4 · p.85}
+设 $X$ 拟紧且拟分离。则函子
+\[
+\Gamma(X,-):\mathsf{QCoh}(X)\to\Ab
+\]
+与（小）余积、滤过余极限交换。
+\end{card}
+\begin{card}{引理 18.5.1}{§18.5 · p.85}
+设 $f:X\to Y$ 是拟紧态射。则核
+\[
+\ker(\cO_Y\to f_*\cO_X)
+\]
+是拟凝聚 $\cO_Y$-模。
+\end{card}
+\begin{card}{命题—定义 18.5.4}{§18.5 · p.85}
+设 $f:X\to Y$ 是概形间的拟紧态射。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 典范态射 $X\to\overline{f(X)}$ 的像稠密。
+  \item 若闭浸入 $Z\to Y$ 使 $f:X\to Y$ 穿过 $Z$，则 $\overline{f(X)}\to Y$ 也穿过 $Z$。
+\end{enumerate}
+称 $\overline{f(X)}$ 为 $X$ 在 $Y$ 中的\emph{概形论像}。
+\end{card}
+\begin{card}{引理 18.5.5}{§18.5 · p.85}
+设 $i:X\to Y$ 是拟紧的局部闭浸入。则典范态射 $j:X\to\overline{X}$ 是像稠密的开浸入。
+\end{card}
+\begin{card}{定理 18.6.1}{§18.6 · p.85}
+设 $X$ 是拟紧且拟分离的概形，$j:U\to X$ 是拟紧开浸入。则下述命题成立：
+\begin{itemize}[leftmargin=1.5em,itemsep=0.15ex]
+  \item[(*)] 对任意拟凝聚 $\cO_X$-模 $\cF$ 与任意有限型的拟凝聚 $\cO_U$-子模 $\cM\subseteq j^*\cF$，存在有限型的拟凝聚 $\cO_X$-子模 $\cM'\subseteq\cF$，使 $\cM\simeq j^*\cM'$。
+\end{itemize}
+\end{card}
+\begin{card}{引理 18.6.2}{§18.6 · p.85}
+设 $X$ 是概形，$\cF\in\mathsf{QCoh}(X)$。记 $\mathrm{Sub}(\cF)_{\mathrm{ft}}$ 为 $\cF$ 的拟凝聚有限型子对象构成的范畴。则 $\mathrm{Sub}(\cF)_{\mathrm{ft}}$ 滤过。
+\end{card}
+\begin{card}{引理 18.6.3}{§18.6 · p.85}
+设 $X$ 是概形，$\cF\in\mathsf{QCoh}(X)$。典范态射
+\begin{equation}
+\colim_{\cF'\in\mathrm{Sub}(\cF)_{\mathrm{ft}}}\cF'\to\cF
+\end{equation}
+是单射。若 $X$ 仿射，则该态射是同构。
+\end{card}
+\begin{card}{引理 18.6.4}{§18.6 · p.85}
+设 $X$ 是概形，且对任意 $\cF\in\mathsf{QCoh}(X)$，典范态射 (18.1) 是同构。设 $j:U\to X$ 是拟紧开浸入且 $U$ 拟紧。则定理 18.6.1 中的 (*) 成立。
+\end{card}
+\begin{card}{引理 18.6.5}{§18.6 · p.85}
+设 $X$ 是概形，且对任意 $\cF\in\mathsf{QCoh}(X)$，典范态射 (18.1) 是同构。设 $j:U\to X$ 是开浸入且 $U$ 拟紧。则下述命题成立：
+\begin{itemize}[leftmargin=1.5em,itemsep=0.15ex]
+  \item[(*)] 对任意拟凝聚 $\cO_X$-模 $N$，若 $j^*N$ 有限型，则存在有限型的拟凝聚 $\cO_X$-子模 $\cM'\subseteq N$，使 $j^*\cM'\simeq j^*N$。
+\end{itemize}
+\end{card}
+\begin{card}{定理 18.6.6}{§18.6 · p.85}
+设 $X$ 是拟紧且拟分离的概形，$\cF\in\mathsf{QCoh}(X)$。则典范态射
+\begin{equation}
+\colim_{\cF'\in\mathrm{Sub}(\cF)_{\mathrm{ft}}}\cF'\to\cF
+\end{equation}
+是同构。
+\end{card}
+
+\cardssec{19}{既约概形}
+\begin{card}{定义 19.1.1}{§19.1 · p.95}
+设 $X$ 是概形。称 $X$ \emph{既约}，若对任意开子集 $U\subseteq X$，交换环 $\cO_X(U)$ 既约。
+\yizhu{「既约」有三个常见入口：每个仿射开集 $\Spec(R)$ 的 $R$ 既约；每个局部环 $\cO_{X,x}$ 既约；每个开集的截面环 $\cO_X(U)$ 既约。原书取第三条，它最强，也最便于使用：引理 19.1.2 只需查一个拓扑基，引理 19.1.4 再退到点。Stacks 在这三条之间来回搬运，正说明三者互推并不平凡，尤其从局部环回到整体截面要经过层的条件。
+[来源：Stacks Project, Tag 01J0（Definition 26.12.1, Reduced schemes）与 Tag 01J1、Tag 01J2（Lemma 26.12.2, Lemma 26.12.3），\url{https://stacks.math.columbia.edu/tag/01J1}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{引理 19.1.2}{§19.1 · p.95}
+概形 $X$ 既约，当且仅当存在 $X$ 的一个拓扑基 $\mathcal{B}$，使对任意 $U\in\mathcal{B}$，交换环 $\cO_X(U)$ 既约。
+\end{card}
+\begin{card}{推论 19.1.3}{§19.1 · p.95}
+仿射概形 $\Spec(A)$ 既约当且仅当 $A$ 既约。
+\end{card}
+\begin{card}{引理 19.1.4}{§19.1 · p.95}
+概形 $X$ 既约，当且仅当对任意 $x\in X$，局部环 $\cO_{X,x}$ 既约。
+\end{card}
+\begin{card}{命题—定义 19.2.1}{§19.2 · p.95}
+在 $\mathrm{SubSch}_{X,Z}$ 中存在本质唯一的对象 $Z_{\mathrm{red}}\to X$，使 $Z_{\mathrm{red}}$ 既约。此外，它是该范畴的始对象。称 $Z_{\mathrm{red}}$ 为 $X$ 在 $Z$ 上的\emph{既约子概形}。
+\end{card}
+\begin{card}{引理 19.2.2}{§19.2 · p.95}
+设 $X$ 是概形，$U\subseteq X$ 是仿射开子集。则典范态射 $\cO_X\to\cO_{X_{\mathrm{red}}}$ 诱导同构
+\[
+\cO_X(U)_{\mathrm{red}}\xrightarrow{\ \simeq\ }\cO_{X_{\mathrm{red}}}(U).
+\]
+\end{card}
+\begin{card}{引理 19.2.4}{§19.2 · p.95}
+设 $X$ 是概形，$x\in X$。则 $\cO_{X_{\mathrm{red}},x}\simeq(\cO_{X,x})_{\mathrm{red}}$。
+\end{card}
+\begin{card}{引理 19.2.5}{§19.2 · p.95}
+设 $X$ 与 $Y$ 是 $S$-概形。典范态射
+\[
+X_{\mathrm{red}}\times_S Y_{\mathrm{red}}\to X\times_S Y
+\]
+是闭浸入，且诱导底拓扑空间之间的同胚。特别地
+\[
+(X_{\mathrm{red}}\times_S Y_{\mathrm{red}})_{\mathrm{red}}\simeq(X\times_S Y)_{\mathrm{red}}.
+\]
+\end{card}
+\begin{card}{推论 19.3.2}{§19.3 · p.95}
+设 $f:X\to Y$ 是概形间的态射。则存在唯一的态射 $f_{\mathrm{red}}:X_{\mathrm{red}}\to Y_{\mathrm{red}}$，使下图交换：
+\[
+\begin{tikzcd}
+X_{\mathrm{red}} \arrow[r,"f_{\mathrm{red}}"] \arrow[d] & Y_{\mathrm{red}} \arrow[d] \\
+X \arrow[r,"f"'] & Y.
+\end{tikzcd}
+\]
+\end{card}
+
+\cardssec{20}{仿射与拟仿射态射}
+\begin{card}{定义 20.1.1}{§20.1 · p.98}
+称概形间的态射 $f:X\to Y$ \emph{仿射}，若对任意仿射开子概形 $U\subseteq Y$，其原像 $X\times_Y U$ 仿射。
+\yizhu{Stacks 的定义与这里逐字相同，只有一处换名：条件写作「$f^{-1}(U)$ 仿射」。对开子概形而言 $f^{-1}(U)$ 与纤维积 $X\times_Y U$ 是同一个对象，本书取后者，把「仿射性对基变换稳定」直接写进了定义。这样安排的好处是引理 20.1.6(iii) 几乎不需要证明，代价是定义里出现了尚未造出的纤维积。
+[来源：Stacks Project, Tag 01S6（Definition 29.11.1, Affine morphisms），\url{https://stacks.math.columbia.edu/tag/01S6}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{引理 20.1.3}{§20.1 · p.98}
+仿射态射 $f:X\to Y$ 拟紧且分离。
+\end{card}
+\begin{card}{命题 20.1.4}{§20.1 · p.98}
+设 $S$ 是概形。下述两个函子有定义，且互为逆：
+\begin{equation}
+\begin{array}{ccc}
+\cO_S\text{-}\mathsf{alg}_{\mathrm{qcoh}} & \longrightarrow & \{\text{仿射态射 }p:X\to S\}^{\op},\\[2pt]
+\cA & \longmapsto & \big(\Spec_S(\cA)\to S\big),\\[2pt]
+p_*\cO_X & \longmapsfrom & (p:X\to S).
+\end{array}
+\end{equation}
+\end{card}
+\begin{card}{推论 20.1.5}{§20.1 · p.98}
+任意闭浸入仿射。
+\end{card}
+\begin{card}{引理 20.1.6}{§20.1 · p.98}
+考虑仿射态射构成的类。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 设 $X\xrightarrow{f}Y\xrightarrow{g}Z$ 是态射链，$f$ 与 $g$ 都仿射。则 $g\circ f$ 仿射。
+  \item 设 $X\xrightarrow{f}Y\xrightarrow{g}Z$ 是态射链，$g$ 分离且 $g\circ f$ 仿射。则 $f$ 仿射。
+  \item 仿射态射对基变换稳定。
+  \item 「$f$ 仿射」这一性质在靶上局部。
+\end{enumerate}
+\end{card}
+\begin{card}{命题 20.2.2}{§20.2 · p.98}
+在上述情形下，下述函子有定义，且互为逆：
+\[
+\begin{array}{ccc}
+\cA\text{-}\mathsf{mod}_{\mathrm{qcoh}} & \longrightarrow & \cO_X\text{-}\mathsf{mod}_{\mathrm{qcoh}},\\[2pt]
+M & \longmapsto & \widetilde{M},\\[2pt]
+f_*\cF & \longmapsfrom & \cF.
+\end{array}
+\]
+\end{card}
+\begin{card}{定理 20.3.1}{§20.3 · p.100}
+设 $f:X\to Y$ 是概形间的拟紧且拟分离态射。下列条件等价：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 态射 $f$ 仿射。
+  \item 函子
+  \[
+  f_*:\mathsf{QCoh}(X)\to\mathsf{QCoh}(Y)
+  \]
+  正合。
+\end{enumerate}
+\end{card}
+\begin{card}{定理 20.3.2}{§20.3 · p.100}
+设 $X$ 是拟紧概形。下列条件等价：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 概形 $X$ 仿射。
+  \item 函子
+  \[
+  \Gamma(X,-):\mathsf{QCoh}(X)\to\Ab
+  \]
+  正合。
+\end{enumerate}
+\end{card}
+\begin{card}{命题—定义 20.4.1}{§20.4 · p.100}
+设 $X$ 是概形，$f\in\cL(X)$ 是整体截面。对任意 $x\in X$，考虑 $f$ 在 $x$ 处的芽 $f_x\in\cO_{X,x}$。考虑
+\[
+X_f:=\{x\in X\mid f_x\notin\fm_x\},
+\]
+其中 $\fm_x\subseteq\cO_{X,x}$ 是唯一极大理想。则 $X_f$ 是 $X$ 的开子集。称它为 $f$ 对应的\emph{主开子集}。
+\yizhu{本小节标题与本节多处印作 principle open subscheme（p.100、p.101、p.102 共三处），显系 principal 之误：主开集由单个截面 $f$ 生成，仿射时正是 $U(f)=\Spec(A_f)$。英文 principle 意为「原则」，与「主」无关。译文按 principal 译作「主开子概形」，并在正文中保留这一说明，以便与原文页码对照。
+[依据：原书 p.100–102 的三处拼写。]}
+\end{card}
+\begin{card}{引理 20.4.4}{§20.4 · p.101}
+设 $X$ 是概形，$f\in\cL(X)$ 是整体截面。则 $X_f$ 是使 $f:\cO_X\to\cO_X$ 可逆的开轨迹。更确切地说：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 限制
+  \[
+  f|_{X_f}:\cO_X|_{X_f}\to\cO_X|_{X_f}
+  \]
+  是同构。
+  \item 若子集 $V\subseteq X$ 使 $f|_V$ 是同构，则 $V\subseteq X_f$。
+\end{enumerate}
+\end{card}
+\begin{card}{引理 20.4.5}{§20.4 · p.101}
+设 $X$ 拟紧且拟分离，$f\in\cO_X(X)$。对任意 $\cF\in\mathsf{QCoh}(X)$，$\cO_X(X)$-线性映射 $\cF(X)\to\cF(X_f)$ 诱导同构
+\[
+\cF(X)_f\to\cF(X_f).
+\]
+\end{card}
+\begin{card}{定义 20.6.1}{§20.6 · p.103}
+称概形 $X$ \emph{拟仿射}，若它拟紧且同构于仿射概形的开子概形。
+\end{card}
+\begin{card}{命题 20.6.2}{§20.6 · p.103}
+概形 $X$ 拟仿射当且仅当典范态射 $f:X\to\Spec(\cO_X(X))$ 是拟紧开浸入。
+\end{card}
+\begin{card}{定义 20.6.3}{§20.6 · p.103}
+设 $X$ 是拟仿射概形。称 $\overline{X}:=\Spec(\cO_X(X))$ 为 $X$ 的\emph{仿射闭包}。
+\end{card}
+\begin{card}{定义 20.6.4}{§20.6 · p.103}
+称概形间的态射 $f:X\to Y$ \emph{拟仿射}，若对任意仿射开子概形 $U\subseteq Y$，其原像 $X\times_Y U$ 拟仿射。
+\end{card}
+\begin{card}{引理 20.6.5}{§20.6 · p.103}
+拟仿射态射 $f:X\to Y$ 拟紧且分离。
+\end{card}
+\begin{card}{命题 20.6.6}{§20.6 · p.103}
+拟紧且拟分离的态射 $p:X\to S$ 拟仿射，当且仅当典范态射 $f:X\to\Spec_S(p_*\cO_X)$ 是开浸入。
+\end{card}
+\begin{card}{引理 20.6.7}{§20.6 · p.103}
+任意拟紧的局部闭浸入拟仿射。
+\end{card}
+\begin{card}{引理 20.6.8}{§20.6 · p.103}
+考虑拟仿射态射构成的类。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 设 $X\xrightarrow{f}Y\xrightarrow{g}Z$ 是态射链，$f$ 与 $g$ 都拟仿射。则 $g\circ f$ 拟仿射。
+  \item 设 $X\xrightarrow{f}Y\xrightarrow{g}Z$ 是态射链，$g$ 拟分离且 $g\circ f$ 拟仿射。则 $f$ 拟仿射。
+% ---------------------------------------------------------------- p.104
+  \item 拟仿射态射对基变换稳定。
+  \item 「$f$ 拟仿射」这一性质在靶上局部。
+\end{enumerate}
+\end{card}
+
+\cardssec{21}{不可约概形}
+\begin{card}{定义 21.1.1}{§21.1 · p.105}
+称拓扑空间 $X$ \emph{不可约}，若它非空且不是两个真闭子空间之并。
+\yizhu{Stacks 把同一件事写成：$X$ 非空，且只要 $X=Z_1\cup Z_2$ 而 $Z_1,Z_2$ 闭，就有 $X=Z_1$ 或 $X=Z_2$。两种说法逻辑等价，但后者便于对有限多个闭子空间归纳：不可约空间不能写成有限个真闭子空间之并。定义中「非空」一项不可省，否则空空间按上述条件会被判为不可约，而空概形是既约的，这将使「整概形」的定义失去意义。
+[来源：Stacks Project, Tag 004V（Definition 5.8.1, Irreducible components），\url{https://stacks.math.columbia.edu/tag/004V}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{定义 21.1.5}{§21.1 · p.105}
+称拓扑空间 $X$ 有\emph{一般点} $x\in X$，若 $X=\overline{\{x\}}$。
+\yizhu{Stacks 只对不可约闭子集 $Z\subseteq X$ 定义一般点：点 $\xi\in Z$ 称为 $Z$ 的一般点，若 $Z=\overline{\{\xi\}}$。原书对空间本身定义（$X=\overline{\{x\}}$），正是 $Z=X$ 的特例。两种措辞的差别不只是编排：对子集定义时「$\xi$ 落在 $Z$ 中」是条件的一部分，这解释了为何一般点唯一时它必属于它所代表的闭集。
+[来源：Stacks Project, Tag 004X（Definition 5.8.6, Irreducible components），\url{https://stacks.math.columbia.edu/tag/004X}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{定义 21.2.1}{§21.2 · p.105}
+设 $X$ 是拓扑空间。$X$ 的\emph{不可约分支}是指 $X$ 的极大不可约子空间。
+\end{card}
+\begin{card}{定义 21.3.1}{§21.3 · p.105}
+称概形 $X$ \emph{不可约}，若其底拓扑空间不可约。
+\end{card}
+\begin{card}{引理 21.3.2}{§21.3 · p.105}
+设 $X$ 是概形。则 $X$ 的任意闭不可约子空间有唯一的一般点。
+\yizhu{唯一性只用 Kolmogorov 性质（习题 21.1.7）：若 $x\ne y$ 而闭包相同，则任何开集含 $x$ 当且仅当含 $y$，与 $T_0$ 矛盾。存在性在仿射情形化为一句交换代数：$\Spec(A)$ 中素理想的闭包是 $V(\mathfrak{p})$，而每个闭不可约子集都形如 $V(\mathfrak{p})$。书中绕开这一步，改用「换 $X$ 为 $\Spec(A/I)$ 并取既约」的手法（见下方证明），于是只需证既约不可约环的零理想为素。
+[来源：Stacks Project, Tag 00ES（Lemma 10.26.1, Irreducible components of spectra），\url{https://stacks.math.columbia.edu/tag/00ES}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{推论 21.3.3}{§21.3 · p.106}
+设 $X$ 是概形。则 $x\mapsto\overline{\{x\}}$ 给出 $X$ 的底层集与 $X$ 的闭不可约子空间集之间的双射。
+\end{card}
+\begin{card}{推论 21.3.4}{§21.3 · p.106}
+$\Spec(A)$ 的不可约分支集与 $A$ 的极小素理想集一一对应。
+\end{card}
+\begin{card}{推论 21.3.5}{§21.3 · p.106}
+仿射概形 $\Spec(A)$ 不可约当且仅当 $A$ 的幂零根是素理想。
+\end{card}
+\begin{card}{引理 21.3.7}{§21.3 · p.106}
+设 $X$ 是概形。下列条件等价：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 概形 $X$ 不可约。
+  \item 概形 $X$ 非空，且 $X$ 的任意非空仿射开子概形 $U$ 不可约。
+  \item 存在非空的覆盖 $X=\bigcup_{i\in I}U_i$，使每个 $U_i$ 是不可约仿射开子概形，且每个交 $U_i\cap U_j$ 非空。
+\end{enumerate}
+\end{card}
+\begin{card}{定义 21.4.1}{§21.4 · p.106}
+称概形 $X$ \emph{整}，若它不可约且既约。
+\yizhu{Stacks 的定义取另一条等价路径：$X$ 整，指它非空且每个非空仿射开子概形 $\Spec(R)$ 的 $R$ 是整环。「不可约 + 既约」与这条要经过引理 21.3.7 与推论 19.1.3 才能对上，其中不可约供出素理想、既约供出零理想，两者合起来才使 $R$ 成为整环。书中的定义更短，但把「非空」藏进了不可约。
+[来源：Stacks Project, Tag 01OK（Definition 28.3.1, Integral, irreducible, and reduced schemes），\url{https://stacks.math.columbia.edu/tag/01OK}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{推论 21.4.2}{§21.4 · p.106}
+仿射概形 $\Spec(A)$ 整当且仅当 $A$ 是整环。
+\end{card}
+
+\cardssec{22}{（局部）诺特概形}
+\begin{card}{定义 22.1.1}{§22.1 · p.108}
+称概形 $X$ 为\emph{局部诺特的}，若对任意仿射开子概形 $\Spec(A) \subseteq X$，交换环 $A$ 都是诺特环。称 $X$ 为\emph{诺特的}，若它局部诺特且拟紧。
+\yizhu{「每个仿射开子概形」这一要求看似过强：概形只由一族仿射开覆盖给出，覆盖中出现的环诺特，未必能保证其余仿射开子概形上的环也诺特。真正省力的是下一引理——只要\emph{存在}一族仿射诺特覆盖就够。Stacks Project 的定义正取此形式，并把它与「每点有仿射诺特开邻域」等同。
+[来源：Stacks Project, Tag 01OV（Definition 28.5.1，诺特概形），\url{https://stacks.math.columbia.edu/tag/01OV}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{引理 22.1.2}{§22.1 · p.108}
+设 $X$ 为概形。若存在由仿射开子概形给出的覆盖 $X = \bigcup_{i \in I} X_i$，使得对每个 $i \in I$，$\cO_X(X_i)$ 都是诺特环，则 $X$ 局部诺特。
+\end{card}
+\begin{card}{推论 22.1.3}{§22.1 · p.108}
+仿射概形 $\Spec(A)$ 诺特当且仅当 $A$ 诺特。
+\end{card}
+\begin{card}{推论 22.1.4}{§22.1 · p.108}
+局部诺特性在概形上是局部的。
+\end{card}
+\begin{card}{定义 22.2.1}{§22.2 · p.108}
+称拓扑空间 $X$ 为\emph{诺特的}，若 $X$ 的闭子集满足降链条件，即任意闭子集降链都稳定。称 $X$ 为\emph{局部诺特的}，若对任意点 $x \in X$，$x$ 在 $X$ 中都有诺特开邻域。
+\end{card}
+\begin{card}{引理 22.2.3}{§22.2 · p.108}
+诺特拓扑空间 $X$ 只有有限多个不可约分支，且每个不可约分支都包含 $X$ 的一个非空开子集。
+\end{card}
+\begin{card}{引理 22.2.4}{§22.2 · p.108}
+（局部）诺特概形的底拓扑空间是（局部）诺特的。
+\end{card}
+\begin{card}{命题 22.3.1}{§22.3 · p.108}
+设 $f\colon X \to Y$ 为概形的局部闭浸入。若 $Y$ （局部）诺特，则 $X$ 亦然。
+\end{card}
+\begin{card}{引理 22.3.2}{§22.3 · p.108}
+设 $X$ 为局部诺特概形。任意态射 $f\colon X \to Y$ 都拟分离。
+\end{card}
+\begin{card}{引理 22.3.3}{§22.3 · p.108}
+设 $X$ 为诺特概形，$Y$ 为局部诺特概形。任意态射 $f\colon X \to Y$ 都拟紧。
+\end{card}
+\begin{card}{推论 22.3.4}{§22.3 · p.110}
+设 $Y$ 为局部诺特概形，$i\colon X \to Y$ 为概形的局部闭浸入。则 $X$ 在 $Y$ 中的闭包 $\bar X$ 良定义，且典范态射 $j\colon X \to \bar X$ 是开浸入。
+\end{card}
+\begin{card}{引理 22.4.1}{§22.4 · p.110}
+设 $X$ 为局部诺特概形，$\cF$ 为 $\cO_X$-模。则下列条件等价：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item $\cO_X$-模 $\cF$ 凝聚；
+  \item $\cO_X$-模 $\cF$ 有限表现；
+  \item $\cF$ 拟凝聚且有限型；
+  \item 对任意仿射开子概形 $U \subseteq X$，有 $\cF|_U \simeq \widetilde M$，其中 $M$ 是某个有限生成 $\cO_X(U)$-模。
+\end{enumerate}
+\end{card}
+\begin{card}{推论 22.4.2}{§22.4 · p.110}
+「凝聚模」这一性质在局部诺特概形上是局部的。
+\end{card}
+\begin{card}{推论 22.4.3}{§22.4 · p.110}
+设 $f\colon X \to Y$ 为局部诺特概形之间的态射。则 $f^*$ 保持凝聚模。
+\end{card}
+\begin{card}{推论 22.4.4}{§22.4 · p.110}
+设 $X$ 为局部诺特概形。$\cO_X$-凝聚模对取核、余核与扩张封闭。特别地，它们构成阿贝尔范畴 $\mathsf{Coh}(X)$，且嵌入函子 $\mathsf{Coh}(X) \subseteq \mathsf{QCoh}(X)$ 正合。
+\yizhu{Stacks Project 把这三条封闭性合并为「凝聚模范畴是阿贝尔范畴」，并指出关键仍在局部诺特：此时凝聚性与有限表现性一致，而有限表现模对核、余核、扩张封闭是形式事实。正合性则来自 $\mathsf{Coh}(X) \subseteq \mathsf{QCoh}(X)$ 作为全子范畴的嵌入恰好保持这两类极限。
+[来源：Stacks Project, Tag 01Y0（Lemma 30.9.2，局部诺特概形上的凝聚模），\url{https://stacks.math.columbia.edu/tag/01Y0}（2026-11-17 访问）。]}
+\end{card}
+
+\cardssec{23}{有限型态射与有限表现态射}
+\begin{card}{定义 23.1.1}{§23.1 · p.111}
+设 $f\colon X \to Y$ 为概形态射。称 $f$ \emph{局部有限型}，若对任意满足 $f(U) \subseteq V$ 的仿射开子概形 $U \subseteq X$ 与 $V \subseteq Y$，诱导的环同态 $\cO_Y(V) \to \cO_X(U)$ 都有限型。
+
+称 $f$ 为\emph{有限型}，若它局部有限型且拟紧。
+\yizhu{有限型是「局部有限型加拟紧」，而拟紧这一半并非装饰。取可数多个仿射开片的不交并 $\coprod_{n \ge 1} \Spec(k) \to \Spec(k)$：它在每一点的附近都局部有限型，整体却不拟紧，故不有限型。Stacks Project 同样把这两个词分开定义。
+[来源：Stacks Project, Tag 01T1（Definition 29.15.1，有限型态射），\url{https://stacks.math.columbia.edu/tag/01T1}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{引理 23.1.2}{§23.1 · p.111}
+设 $f\colon X \to Y$ 为概形态射。下列条件等价：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 态射 $f$ 局部有限型；
+  \item 对任意点 $x \in X$，存在 $x$ 的仿射开邻域 $U$ 与仿射开子概形 $V \subseteq Y$，使 $f(U) \subseteq V$，且诱导的环同态 $\cO_Y(V) \to \cO_X(U)$ 有限型。
+\end{enumerate}
+\end{card}
+\begin{card}{推论 23.1.4}{§23.1 · p.111}
+态射 $\Spec(B) \to \Spec(A)$ 有限型当且仅当 $A \to B$ 有限型。
+\end{card}
+\begin{card}{推论 23.1.5}{§23.1 · p.111}
+（局部）闭浸入是（局部）有限型的。
+\end{card}
+\begin{card}{引理 23.1.6}{§23.1 · p.111}
+考虑概形的（局部）有限型态射构成的类。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 设 $X \xrightarrow{f} Y \xrightarrow{g} Z$ 为态射链，$f$ 与 $g$ 都（局部）有限型。则 $g \circ f$ 亦然。
+  \item 设 $X \xrightarrow{f} Y \xrightarrow{g} Z$ 为态射链，$g \circ f$ 局部有限型。则 $f$ 局部有限型。
+  \item[(ii')] 设 $X \xrightarrow{f} Y \xrightarrow{g} Z$ 为态射链，$g \circ f$ 有限型且 $g$ 拟分离。则 $f$ 有限型。
+  \item 概形的（局部）有限型态射对基变换稳定。
+  \item 「（局部）有限型」在目标上是局部的。
+  \item 「局部有限型」在源上是局部的。
+\end{enumerate}
+\end{card}
+\begin{card}{引理 23.1.7}{§23.1 · p.112}
+设 $f\colon X \to Y$ 为概形态射。若 $Y$ （局部）诺特且 $f$ （局部）有限型，则 $X$ （局部）诺特。
+\yizhu{Stacks Project 把这条引理的代数内核拆成两条并列陈述：诺特环上的有限生成代数仍诺特；诺特环的局部化仍诺特。前者是 Hilbert 基定理，后者靠理想与局部化的交换性。几何侧的「局部诺特底加局部有限型态射」恰好逐片调用这两条。
+[来源：Stacks Project, Tag 00FN（Lemma 10.31.1，诺特性对有限型扩张与局部化稳定），\url{https://stacks.math.columbia.edu/tag/00FN}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{推论 23.1.8}{§23.1 · p.112}
+设 $\cC$ 为 $\Sch$ 中由（局部）诺特概形与（局部）有限型态射构成的子范畴。则 $\cC$ 有纤维积。
+\end{card}
+\begin{card}{定义 23.2.1}{§23.2 · p.112}
+设 $f\colon X \to Y$ 为概形态射。称 $f$ \emph{局部有限表现}，若对任意满足 $f(U) \subseteq V$ 的仿射开子概形 $U \subseteq X$ 与 $V \subseteq Y$，诱导的环同态 $\cO_Y(V) \to \cO_X(U)$ 都有限表现。
+
+称 $f$ 为\emph{有限表现}，若它局部有限表现、拟紧且拟分离。
+\yizhu{有限表现比有限型多出两件事：定义理想须有限生成（局部条件），整体上还须拟分离。拟分离不可省——开浸入总局部有限表现，但只有拟紧时才有限表现（推论 23.2.4）。Stacks Project 的定义同样把这三个条件并列，缺一不可。
+[来源：Stacks Project, Tag 01TP（Definition 29.22.1，有限表现态射），\url{https://stacks.math.columbia.edu/tag/01TP}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{引理 23.2.2}{§23.2 · p.112}
+设 $f\colon X \to Y$ 为概形态射。下列条件等价：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 态射 $f$ 局部有限表现；
+  \item 对任意点 $x \in X$，存在 $x$ 的仿射开邻域 $U$ 与仿射开子概形 $V \subseteq Y$，使 $f(U) \subseteq V$，且诱导的环同态 $\cO_Y(V) \to \cO_X(U)$ 有限表现。
+\end{enumerate}
+\end{card}
+\begin{card}{推论 23.2.3}{§23.2 · p.112}
+态射 $\Spec(B) \to \Spec(A)$ 有限表现当且仅当 $A \to B$ 有限表现。
+\end{card}
+\begin{card}{推论 23.2.4}{§23.2 · p.112}
+开浸入局部有限表现。拟紧的开浸入有限表现。
+\end{card}
+\begin{card}{引理 23.2.6}{§23.2 · p.112}
+考虑概形的（局部）有限表现态射构成的类。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 设 $X \xrightarrow{f} Y \xrightarrow{g} Z$ 为态射链，$f$ 与 $g$ 都（局部）有限表现。则 $g \circ f$ 亦然。
+  \item 设 $X \xrightarrow{f} Y \xrightarrow{g} Z$ 为态射链，$g \circ f$ 局部有限表现且 $g$ 局部有限型。则 $f$ 局部有限表现。
+  \item[(ii')] 设 $X \xrightarrow{f} Y \xrightarrow{g} Z$ 为态射链，$g \circ f$ 有限表现且 $g$ 局部有限型、拟分离。则 $f$ 有限表现。
+  \item 概形的（局部）有限表现态射对基变换稳定。
+  \item 「（局部）有限表现」在目标上是局部的。
+  \item 「局部有限表现」在源上是局部的。
+\end{enumerate}
+\end{card}
+\begin{card}{引理 23.2.7}{§23.2 · p.113}
+设 $f\colon X \to Y$ 为态射。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 若 $f$ （局部）有限表现，则 $f$ （局部）有限型。
+  \item 若 $f$ （局部）有限型且 $Y$ 局部诺特，则 $f$ （局部）有限表现。
+\end{enumerate}
+\yizhu{Stacks Project 把局部情形与整体情形分列，且不额外假设拟分离。原因是引理 23.1.7：底概形局部诺特、态射有限型时 $X$ 局部诺特，再由引理 22.3.2，$X \to Y$ 自动拟分离。第 22 节与本节在此接上。
+[来源：Stacks Project, Tag 01TX（Lemma 29.22.9，局部诺特底上的有限型即有限表现），\url{https://stacks.math.columbia.edu/tag/01TX}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{定理 23.3.1}{§23.3 · p.113}
+设 $A \simeq \colim_{i \in I} A_i$ 是 $\CRing$ 中的滤过余极限。对任意 $B \in \CRing$，记 $\Sch^{\mathrm{fp}}_B \subseteq \Sch_B$ 为在 $\Spec(B)$ 上有限表现的概形构成的全子范畴。则函子
+\[
+\Sch^{\mathrm{fp}}_{A_i} \lto \Sch^{\mathrm{fp}}_A, \qquad Y \longmapsto Y \times_{\Spec(A_i)} \Spec(A)
+\]
+诱导等价
+\[
+\colim_{i \in I} \Sch^{\mathrm{fp}}_{A_i} \xrightarrow{\ \simeq\ } \Sch^{\mathrm{fp}}_A.
+\]
+\yizhu{定理可读作「有限表现即紧对象」。Stacks Project 证明：$f$ 局部有限表现，当且仅当对任意滤过系统 $T_i$，有 $\Mor_S(\lim_i T_i, X) = \colim_i \Mor_S(T_i, X)$。诺特逼近正是这条余极限交换性在「底概形也一起变动」时的整体形式，故必须把对象限制在有限表现一侧。
+[来源：Stacks Project, Tag 01ZC（Proposition 32.6.1，有限表现与滤过余极限交换），\url{https://stacks.math.columbia.edu/tag/01ZC}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{推论 23.3.2}{§23.3 · p.113}
+设 $A \simeq \colim_{i \in I} A_i$ 为 $\CRing$ 中的滤过余极限。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 对任意概形 $X \in \Sch^{\mathrm{fp}}_A$，存在指标 $i \in I$ 与 $X_i \in \Sch^{\mathrm{fp}}_{A_i}$，使
+  \[
+  X \simeq X_i \times_{\Spec(A_i)} \Spec(A).
+  \]
+  \item 对任意态射 $f\colon X \to X'$（$X, X' \in \Sch^{\mathrm{fp}}_A$），存在指标 $i \in I$ 与态射 $f_i\colon X_i \to X'_i$（$X_i, X'_i \in \Sch^{\mathrm{fp}}_{A_i}$），使 $f$ 可等同于 $f_i$ 沿 $\Spec(A) \to \Spec(A_i)$ 的基变换。
+\end{enumerate}
+\end{card}
+
+\cardssec{24}{紧合态射}
+\begin{card}{定义 24.1.1}{§24.1 · p.114}
+称拓扑空间的连续映射 $f\colon X \to Y$ \emph{闭}，若它把 $X$ 的闭子集都送到 $Y$ 的闭子集。
+\end{card}
+\begin{card}{引理 24.1.3}{§24.1 · p.114}
+设 $f\colon X \to Y$ 为概形的拟紧态射。则下列条件等价：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 子集 $f(X)$ 在 $Y$ 中闭；
+  \item 子集 $f(X)$ 对特殊化稳定。
+\end{enumerate}
+\end{card}
+\begin{card}{推论 24.1.4}{§24.1 · p.114}
+设 $f\colon X \to Y$ 为概形的拟紧态射。则下列条件等价：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item $f$ 闭；
+  \item 特殊化沿 $f$ 提升。换言之，对 $y, y' \in Y$ 与 $x \in X$，若 $y' \in \overline{\{y\}}$ 且 $f(x) = y$，则存在 $x' \in \overline{\{x\}}$，使 $f(x') = y'$。
+\end{enumerate}
+\end{card}
+\begin{card}{引理 24.1.5}{§24.1 · p.114}
+考虑概形的闭态射构成的类。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 设 $X \xrightarrow{f} Y \xrightarrow{g} Z$ 为态射链，$f$ 与 $g$ 都闭。则 $g \circ f$ 亦然。
+  \item 「闭」在目标上是局部的。
+\end{enumerate}
+\end{card}
+\begin{card}{定义 24.2.1}{§24.2 · p.114}
+称概形态射 $f\colon X \to Y$ \emph{泛闭}，若对任意 $Y$ 上的概形 $Y'$，基变换 $f'\colon X \times_Y Y' \to Y'$ 都闭。
+\yizhu{「泛」字的含义是对一切基变换都要求闭性，故泛闭是基变换稳定的性质，而单纯的闭不是。这解释了紧合性为何用泛闭而非闭：$\A^1_k \to \Spec(k)$ 闭，作一次基变换后却不闭（例 24.2.2），故它不该被认作紧合。
+[来源：Stacks Project, Tag 01KB（Definition 26.20.1，泛闭态射），\url{https://stacks.math.columbia.edu/tag/01KB}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{引理 24.2.3}{§24.2 · p.115}
+概形的泛闭态射 $f\colon X \to Y$ 拟紧。
+\end{card}
+\begin{card}{引理 24.2.4}{§24.2 · p.115}
+考虑概形的泛闭态射构成的类。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 设 $X \xrightarrow{f} Y \xrightarrow{g} Z$ 为态射链，$f$ 与 $g$ 都泛闭。则 $g \circ f$ 亦然。
+  \item 设 $X \xrightarrow{f} Y \xrightarrow{g} Z$ 为态射链，$g \circ f$ 泛闭且 $g$ 分离。则 $f$ 泛闭。
+  \item 泛闭态射对基变换稳定。
+  \item 「泛闭」在目标上是局部的。
+\end{enumerate}
+\end{card}
+\begin{card}{定义 24.3.1}{§24.3 · p.115}
+\emph{赋值环}是指满足下述条件的整环 $A$：对其分式域 $K := \Frac(A)$ 的任意非零元 $x$，$x$ 与 $x^{-1}$ 中至少有一个属于 $A$。
+\yizhu{nLab 在同一页列出等价的三种刻画：$x$ 或 $x^{-1}$ 属于 $A$；理想按包含构成全序；主理想按包含构成全序。由全序性立得不可逆元之集对加法封闭，这正是习题 24.3.2 的内容，故赋值环自动局部。
+[来源：nLab "valuation ring"，\url{https://ncatlab.org/nlab/show/valuation+ring}（Last revised 2025-07-29；2026-11-17 访问）。]}
+\end{card}
+\begin{card}{引理 24.3.3}{§24.3 · p.115}
+设 $K$ 为域，$\mathcal{C}$ 为 $K$ 的局部子环构成的集合。对 $A, B \in \mathcal{C}$，称 $B \le A$，若 $B \subseteq A$ 且 $B \to A$ 是局部同态。则对 $A \in \mathcal{C}$，下列条件等价：
+\begin{itemize}
+  \item $A$ 是偏序集 $(\mathcal{C}, \le)$ 的极大元；
+  \item $A$ 是赋值环，且典范映射 $\Frac(A) \to K$ 是同构。
+\end{itemize}
+\end{card}
+\begin{card}{定义 24.3.4}{§24.3 · p.115}
+设 $f\colon X \to Y$ 为概形态射。称 $f$ 满足赋值判别法的\emph{存在部分}，若对任意赋值环 $A$（记 $K = \Frac(A)$）与任意实线交换方块
+\[
+\begin{tikzcd}
+\Spec(K) \arrow[r] \arrow[d] & X \arrow[d, "f"] \\
+\Spec(A) \arrow[r] \arrow[ur, dashed] & Y,
+\end{tikzcd}
+\tag{24.1}
+\]
+都存在虚线态射使两个三角形交换。
+
+称 $f$ 满足赋值判别法的\emph{唯一部分}，若在上述情形下，使两个三角形交换的虚线态射至多一个。
+
+称 $f$ 满足\emph{赋值判别法}，若它同时满足存在部分与唯一部分。
+\end{card}
+\begin{card}{命题 24.3.5}{§24.3 · p.115}
+设 $f\colon X \to Y$ 为概形的拟紧态射。则 $f$ 泛闭，当且仅当它满足赋值判别法的存在部分。
+\end{card}
+\begin{card}{命题 24.3.6}{§24.3 · p.117}
+设 $f\colon X \to Y$ 为概形的拟分离态射。则 $f$ 分离，当且仅当它满足赋值判别法的唯一部分。
+\end{card}
+\begin{card}{命题 24.3.7}{§24.3 · p.117}
+设 $f\colon X \to Y$ 为概形的有限型态射，且 $Y$ 局部诺特。则 $f$ 泛闭，当且仅当它对所有离散赋值环满足赋值判别法的存在部分。
+\end{card}
+\begin{card}{命题 24.3.8}{§24.3 · p.117}
+设 $f\colon X \to Y$ 为概形的局部有限型态射，且 $Y$ 局部诺特。则 $f$ 分离，当且仅当它对所有离散赋值环满足赋值判别法的唯一部分。
+\end{card}
+\begin{card}{定义 24.4.1}{§24.4 · p.117}
+称概形态射 $f\colon X \to Y$ \emph{紧合（proper）}，若它分离、有限型且泛闭。
+\yizhu{nLab 把紧合与拓扑紧性直接类比：紧合概形之于概形，如同紧空间之于拓扑空间；「拟紧」这一命名正是为避开与「紧」混淆。该条目还提到紧合性有 Chevalley 形式的赋值判别法，与命题 24.3.5 相呼应。
+[来源：nLab "proper morphism"，\url{https://ncatlab.org/nlab/show/proper+morphism}（Last revised 2024-08-24；2026-11-17 访问）。]}
+\end{card}
+\begin{card}{推论 24.4.5}{§24.4 · p.118}
+设 $f\colon X \to Y$ 为概形的拟分离有限型态射。则 $f$ 紧合，当且仅当它满足赋值判别法。
+\end{card}
+\begin{card}{推论 24.4.6}{§24.4 · p.118}
+设 $f\colon X \to Y$ 为概形的有限型态射，且 $Y$ 局部诺特。则 $f$ 紧合，当且仅当它对所有离散赋值环满足赋值判别法。
+\end{card}
+\begin{card}{引理 24.4.7}{§24.4 · p.118}
+考虑概形的紧合态射构成的类。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 设 $X \xrightarrow{f} Y \xrightarrow{g} Z$ 为态射链，$f$ 与 $g$ 都紧合。则 $g \circ f$ 亦然。
+  \item 设 $X \xrightarrow{f} Y \xrightarrow{g} Z$ 为态射链，$g \circ f$ 紧合且 $g$ 分离。则 $f$ 紧合。
+  \item 紧合态射对基变换稳定。
+  \item 「紧合」在目标上是局部的。
+\end{enumerate}
+\end{card}
+\begin{card}{定理 24.4.8}{§24.4 · p.118}
+设 $f\colon X \to Y$ 为有限表现的紧合态射。则 $f_*$ 保持凝聚模。
+\end{card}
+
+\cardssec{25}{$\Proj(S)$}
+\begin{card}{定义 25.1.2}{§25.1 · p.119}
+我们定义 $S$ 的\emph{齐次（素）谱}为如下子空间
+\[
+\Proj(S) \subseteq \Spec(S),
+\]
+它由那些对应于齐次素理想 $\mathfrak p \subseteq S$ 且满足 $S_+ \not\subseteq \mathfrak p$ 的点组成。
+\yizhu{$S_+$ 通常称为\emph{无关理想}（irrelevant ideal），$\Proj(S)$ 的定义就是「齐次素谱去掉 $S_+$ 的零点集」。条件 $S_+ \not\subseteq \mathfrak p$ 等价于存在正次数的齐次元素 $f \in S_+ \setminus \mathfrak p$，而这样的 $f$ 正是下文标准开集 $U_+(f)$ 的指标：没有它，$\Proj(S)$ 上的结构层无从定义。Stacks Project 用同一条件定义齐次谱。
+[来源：Stacks Project, Tag 00JN（Definition 10.57.1，齐次谱 $\Proj(S)$ 的定义），\url{https://stacks.math.columbia.edu/tag/00JN}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{引理 25.1.5}{§25.1 · p.119}
+设 $S$ 是 $\Z_{\ge 0}$-分次环。
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item 对任意元素 $f = \sum_{i=0}^n f_i \in S$（其中 $f_i \in S_i$），有
+  \[
+  U_+(f) = \bigcup_{i=0}^n U_+(f_i).
+  \]
+  \item 对任意元素 $f_0 \in S_0$，有
+  \[
+  U_+(f_0) = \bigcup_{g \in S_n,\ n>0} U_+(f_0 g).
+  \]
+  \item 对任意理想 $I \subseteq S$，有
+  \[
+  Z_+(I) = Z_+\Bigl(\bigoplus_{n \in \Z_{\ge 0}} (I \cap S_n)\Bigr).
+  \]
+  \item 对任意理想 $I \subseteq S$ 与 $n \ge 0$，有
+  \[
+  Z_+(I) = Z_+\bigl(\sqrt{I} \cap S_+\bigr).
+  \]
+  此外，若 $I$ 齐次，则 $\sqrt{I} \cap S_+$ 也齐次。
+\end{itemize}
+\end{card}
+\begin{card}{推论 25.1.6}{§25.1 · p.119}
+开子集 $U_+(f)$ 构成 $\Proj(S)$ 拓扑的一组基，其中 $f$ 取遍 $S_+$ 中全部齐次元素。我们称它们为 $\Proj(S)$ 的\emph{标准开子集}。
+\yizhu{标准开集并不自动给出拟紧性。Stacks Project 记 $U_d = \bigcup_{f \in S_d} D_+(f) \subseteq \Proj(S)$，指出 $\Proj(S) = \bigcup_{d \ge 1} U_d$，但对一般的 $S$，$U_d$ 与 $\Proj(S)$ 本身都未必拟紧。故拟紧性必须另加条件，这正是引理 25.4.2 的由来。
+同一记号下还引入 Veronese 子环 $S^{(d)}$：换成 $S^{(d)}$ 后 $\cO(d)$ 才成为线丛，这正是习题 25.2.10 的用处。
+
+[来源：Stacks Project, Tag 01N4（Section 27.12，Morphisms into Proj；其中有 $U_d$ 的定义与「Neither $X$ nor $U_d$ need be quasi-compact」），\url{https://stacks.math.columbia.edu/tag/01N4}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{推论 25.1.7}{§25.1 · p.119}
+$\Proj(S)$ 的闭子集与满足 $I = \sqrt{I} \cap S_+$ 的齐次理想 $I \subseteq S_+$ 一一对应。
+\end{card}
+\begin{card}{命题 25.2.4}{§25.2 · p.119}
+环化空间 $(\Proj(S), \cO_{\Proj(S)})$ 是概形，且 $\pi \colon \Spec(S)^{\circ} \to \Proj(S)$ 是概形的仿射态射。
+\end{card}
+\begin{card}{命题 25.3.2}{§25.3 · p.119}
+存在唯一的虚线态射使下述图表交换：
+\[
+\begin{tikzcd}[column sep=1.6em, row sep=2.6em]
+\Spec(S')^{\circ} & U(\phi) \arrow[l, hook] \arrow[r] \arrow[d] & \Spec(S)^{\circ} \arrow[d, "\pi"] \\
+\Proj(S') \arrow[u, "\pi'"] & U_+(\phi) \arrow[l, hook] \arrow[r, dotted] & \Proj(S)
+\end{tikzcd}
+\]
+\end{card}
+\begin{card}{引理 25.3.5}{§25.3 · p.119}
+设 $A \to B$ 是 $\CRing$ 中的同态，$S$ 是 $\Z_{\ge 0}$-分次 $A$-代数。注意 $S \otimes_A B$ 自然地是 $\Z_{\ge 0}$-分次 $B$-代数。考虑 $\Z_{\ge 0}$-分次同态 $\phi \colon S \to S \otimes_A B$。则 $U_+(\phi) = \Proj(S \otimes_A B)$，且下述图表是笛卡儿方块：
+\[
+\begin{tikzcd}[column sep=3em, row sep=2.6em]
+\Proj(S \otimes_A B) \arrow[r] \arrow[d] & \Proj(S) \arrow[d] \\
+\Spec(B) \arrow[r] & \Spec(A).
+\end{tikzcd}
+\]
+\end{card}
+\begin{card}{引理 25.4.1}{§25.4 · p.119}
+设 $S_+$ 不含幂零元。则：
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em,itemsep=0.25ex]
+  \item 概形 $\Proj(S)$ 既约。
+  \item 概形 $\Proj(S)$ 整，当且仅当 $S_+$ 不含零因子。
+\end{enumerate}
+\end{card}
+\begin{card}{引理 25.4.2}{§25.4 · p.119}
+概形 $\Proj(S)$ 拟紧，当且仅当存在有限生成的齐次理想 $I \subseteq S_+$ 使 $S_+ \subseteq \sqrt{I}$。
+\end{card}
+\begin{card}{引理 25.4.3}{§25.4 · p.119}
+概形 $\Proj(S)$ 分离。
+\end{card}
+\begin{card}{引理 25.4.4}{§25.4 · p.119}
+若 $S$ 是诺特环，则 $\Proj(S)$ 是诺特概形。
+\end{card}
+\begin{card}{引理 25.4.6}{§25.4 · p.119}
+若 $S$ 在 $S_0$ 上有限生成，则态射 $\Proj(S) \to \Spec(S_0)$ 是有限型的。
+\yizhu{引理 25.4.3 的证明并非同义反复：分离性等价于对角线 $\Proj(S) \to \Proj(S) \times_\Z \Proj(S)$ 是闭浸入，而后者只需在一对标准开集 $D_+(f)$、$D_+(g)$ 上检验。此时 $D_+(f) \cap D_+(g) = D_+(fg)$ 仿射，剩下要证 $S_{(f)} \otimes_\Z S_{(g)} \to S_{(fg)}$ 满，这由把 $h/(f^n g^m)$ 配成公分母得到。
+分离性也可用来组织粘接：只要每一片仿射开子概形都分离，沿开子集粘接所得的概形就分离。
+
+[来源：Stacks Project, Tag 01MC（Lemma 27.8.8：$\Proj(S)$ 分离及其证明），\url{https://stacks.math.columbia.edu/tag/01MC}（2026-11-17 访问）。]}
+\end{card}
+
+\cardssec{26}{$\Proj(S)$ 上的拟凝聚模}
+\begin{card}{引理 26.1.4}{§26.1 · p.124}
+函子 (26.2) 正合，且与（小）余极限交换。
+\end{card}
+\begin{card}{定义 26.1.6}{§26.1 · p.124}
+称 $\Z$-分次 $S$-模 $M$ \emph{最终为零}，若当 $n \gg 0$ 时 $M_n = 0$。
+\end{card}
+\begin{card}{引理 26.1.7}{§26.1 · p.124}
+若 $M$ 最终为零，则 $\widetilde{M} = 0$。
+\end{card}
+\begin{card}{引理 26.1.10}{§26.1 · p.124}
+设 $U_+(f) \subseteq \Proj(S)$ 为标准开子集，$M$ 为 $\Z$-分次 $S$-模，且 $M \to M_f$ 是双射。则 $\widetilde{M}$ 是沿开浸入 $U_+(f) \to \Proj(S)$ 的 $\ast$-延拓。
+\end{card}
+\begin{card}{命题—定义 26.2.2}{§26.2 · p.124}
+对任意 $n \in \Z$，$\cO$-模
+\[
+\cO(n) := \widetilde{S(n)}
+\]
+可逆。我们称 $\cO(1)$ 为 $\Proj(S)$ 上的\emph{重言线丛}。
+\end{card}
+\begin{card}{推论 26.2.3}{§26.2 · p.124}
+对任意 $n \in \Z$，有自同构
+\[
+\QCoh(\Proj(S)) \to \QCoh(\Proj(S)), \qquad \cF \mapsto \cF(n) := \cF \otimes_\cO \cO(n).
+\]
+\end{card}
+\begin{card}{引理 26.2.6}{§26.2 · p.124}
+典范态射 (26.5) 是同构。
+\end{card}
+\begin{card}{推论 26.2.8}{§26.2 · p.124}
+有
+\[
+\cO(m) \otimes_\cO \cO(n) \simeq \cO(m+n).
+\]
+特别地，对 $\cF \in \QCoh(\Proj(S))$，有
+\[
+(\cF(m))(n) \simeq \cF(m+n).
+\]
+\end{card}
+\begin{card}{推论 26.2.9}{§26.2 · p.124}
+设 $M$ 为 $\Z$-分次 $S$-模。则
+\[
+\widetilde{M}(n) \simeq \widetilde{M(n)}.
+\]
+\end{card}
+\begin{card}{定义 26.2.10}{§26.2 · p.124}
+设 $M$ 为 $\Z$-分次 $S$-模。称 $M$ \emph{（分次）有限表现}，若存在 $\Z$-分次 $S$-模的正合列
+\[
+\bigoplus_{i=1}^{m} S(d_i) \to \bigoplus_{j=1}^{n} S(e_j) \to M \to 0.
+\]
+\end{card}
+\begin{card}{命题 26.3.3}{§26.3 · p.124}
+自然变换 (26.9) 诱导伴随对
+\[
+\begin{array}{ccc}
+S\text{-}\mathsf{mod}_{\mathrm{gr}} & \leftrightarrows & \cO\text{-}\mathsf{mod}\\[0.4ex]
+M & \mapsto & \widetilde{M}\\
+\Gamma(\cF)_{\mathrm{gr}} & \mapsfrom & \cF.
+\end{array}
+\]
+\end{card}
+\begin{card}{定义 26.4.1}{§26.4 · p.124}
+设 $M$ 为 $\Z$-分次 $S$-模。称 $M$ \emph{最终有限型}，若存在整数 $N$ 使
+\[
+\bigoplus_{n \ge N} M_n
+\]
+是有限型 $S$-模。
+\end{card}
+\begin{card}{引理 26.4.2}{§26.4 · p.124}
+设 $S_+$ 由有限多个元素生成，$M$ 为最终有限型的 $\Z$-分次 $S$-模。则 $\widetilde{M}$ 有限型。
+\end{card}
+\begin{card}{定理 26.4.6}{§26.4 · p.124}
+设 $S_+$ 由 $S_1$ 中有限多个元素生成。则函子
+\[
+\Gamma(-)_{\mathrm{gr}} \colon \QCoh(\Proj(S)) \to S\text{-}\mathsf{mod}_{\mathrm{gr}}
+\]
+全忠实。
+\end{card}
+\begin{card}{推论 26.4.7}{§26.4 · p.124}
+设 $S_+$ 由 $S_1$ 中有限多个元素生成。则任意 $\cF \in \QCoh(\Proj(S))$ 都形如 $\widetilde{M}$。而且，若 $\cF$ 有限型，则可取 $M$ 使 $M$ 有限型。
+\end{card}
+\begin{card}{命题 26.4.8}{§26.4 · p.124}
+设 $S_+$ 由 $S_1$ 中有限多个元素生成。对任意有限型的 $\cF \in \QCoh(\Proj(S))$，存在整数 $N$，使对 $n \ge N$，$\cO_X$-模 $\cF(n)$ 由有限多个整体截面生成，即存在形如 $\cO^{\oplus m} \to \cF(n)$ 的满射。
+\end{card}
+\begin{card}{定理 26.5.1}{§26.5 · p.124}
+设 $S$ 为 $\Z_{\ge 0}$-分次交换环。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em,itemsep=0.4ex]
+  \item 对任意分次理想 $I \subseteq S$，同态 $\phi \colon S \to S/I$ 诱导闭浸入
+  \begin{equation}
+  \Proj(S/I) \to \Proj(S),
+  \end{equation}
+  其定义理想由 $\widetilde{I}$ 给出。
+  \item 设 $S_+$ 由 $S_1$ 中有限多个元素生成。则任意闭浸入 $i \colon X \to \Proj(S)$ 都形如 (26.12)，其中
+  \[
+  I := \ker\bigl(S \to \Gamma(\cO)_{\mathrm{gr}} \to \Gamma(i_*\cO_X)_{\mathrm{gr}}\bigr).
+  \]
+\end{enumerate}
+\end{card}
+\begin{card}{推论 26.5.3}{§26.5 · p.124}
+设 $S_+$ 由 $S_1$ 中有限多个元素生成。则 $p \colon \Proj(S) \to \Spec(S_0)$ 紧合。
+\end{card}
+
+\cardssec{27}{相对 $\Proj$}
+\begin{card}{引理 27.1.2}{§27.1 · p.133}
+设 $f \colon Y' \to Y$ 为概形态射。则有典范同构
+\[
+\Proj_Y(S) \times_Y Y' \simeq \Proj_{Y'}(f^*S).
+\]
+\end{card}
+\begin{card}{定义 27.2.2}{§27.2 · p.133}
+称增广理想 $S_+$ 由 $S_1$ 生成，若存在由仿射开子集组成的覆盖 $Y = \bigcup_{i \in I} U_i$，使得对每个 $i \in I$，增广理想 $S_+(U_i)$ 由 $S_1(U_i)$ 生成。
+\end{card}
+\begin{card}{推论 27.2.4}{§27.2 · p.133}
+设 $S_+$ 由 $S_1$ 生成。则
+\[
+\cO_{\Proj_Y(S)}(1) := \widetilde{S(1)} \in \QCoh(\Proj_Y(S))
+\]
+是 $\Proj_Y(S)$ 上的线丛。
+\end{card}
+\begin{card}{推论 27.3.1}{§27.3 · p.133}
+设 $S_+$ 由 $S_1$ 生成，且 $S_1$ 有限型。则态射 $\Proj_Y(S) \to Y$ 有限型。
+\end{card}
+\begin{card}{定义 27.3.2}{§27.3 · p.133}
+设 $M$ 为 $\Z$-分次拟凝聚 $S$-模。
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item 称 $M$ \emph{局部最终有限型}，若存在 $Y$ 的仿射开覆盖 $Y = \bigcup U_i$，使对每个 $i$ 存在 $N_i$，使得
+  \[
+  \bigoplus_{n \ge N_i} M_n(U_i)
+  \]
+  是有限生成 $S(U_i)$-模。
+  \item 称 $M$ \emph{局部最终为零}，若存在 $Y$ 的仿射开覆盖 $Y = \bigcup U_i$，使对每个 $i$ 存在 $N_i$，使得当 $n \ge N_i$ 时 $M_n(U_i) = 0$。
+\end{itemize}
+\end{card}
+\begin{card}{推论 27.3.3}{§27.3 · p.133}
+设 $S_+$ 由 $S_1$ 生成，且 $S_1$ 有限型。
+\begin{enumerate}[label=(\roman*),leftmargin=2.6em,itemsep=0.25ex]
+  \item 设 $M$ 为局部最终有限型的 $\Z$-分次拟凝聚 $S$-模。则 $\widetilde{M}$ 有限型。
+  \item 在上述假设下，$\widetilde{M} = 0$ 当且仅当 $M$ 局部最终为零。
+\end{enumerate}
+\end{card}
+\begin{card}{推论 27.3.4}{§27.3 · p.133}
+设 $S_+$ 由 $S_1$ 生成，且 $S_1$ 有限型。则函子 (27.2) 全忠实。
+\end{card}
+\begin{card}{推论 27.3.5}{§27.3 · p.133}
+设 $S_+$ 由 $S_1$ 生成，且 $S_1$ 有限型。则任意对象 $\cF \in \QCoh(\Proj_Y(S))$ 都形如 $\widetilde{M}$，其中 $M \in S\text{-}\mathsf{mod}_{\mathrm{gr},\mathrm{qcoh}}$。此外，若还有：
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item $Y$ 拟紧且拟分离；
+  \item $\cF$ 有限型，
+\end{itemize}
+则可取 $M$ 有限型。
+\end{card}
+\begin{card}{推论 27.3.6}{§27.3 · p.133}
+设：
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item 概形 $Y$ 拟紧；
+  \item 理想 $S_+$ 由 $S_1$ 生成，且 $S_1$ 有限型。
+\end{itemize}
+则对任意有限型的 $\cF \in \QCoh(\Proj_Y(S))$，典范态射
+\[
+p^* p_*\cF(n) \to \cF(n)
+\]
+当 $n \gg 0$ 时是满射。此外，若 $Y$ 还拟分离，则当 $n \gg 0$ 时存在满射
+\[
+p^* N \to \cF(n),
+\]
+其中 $N$ 是有限型的拟凝聚 $\cO_Y$-模。
+\end{card}
+\begin{card}{推论 27.3.7}{§27.3 · p.133}
+设 $S_+$ 由 $S_1$ 生成。则对任意 $n \ge 0$，典范态射
+\[
+S_n \to p_*\bigl(\cO_{\Proj_Y(S)}(n)\bigr)
+\]
+诱导满射
+\[
+\phi_n \colon p^* (S_n) \to \cO_{\Proj_Y(S)}(n).
+\]
+\end{card}
+\begin{card}{推论 27.3.9}{§27.3 · p.133}
+对任意分次理想 $I \subseteq S$，同态 $S \to S/I$ 诱导闭浸入
+\begin{equation}
+\Proj_Y(S/I) \to \Proj_Y(S),
+\end{equation}
+其定义理想由 $\widetilde{I}$ 给出。此外：
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em,itemsep=0.25ex]
+  \item 若 $S_+$ 由 $S_1$ 生成，则沿 (27.3) 的拉回函子把 $\cO(n)$ 送到 $\cO(n)$。
+  \item 若 $S_+$ 由 $S_1$ 生成且 $S_1$ 有限型，则任意闭浸入 $i \colon X \to \Proj_Y(S)$ 都形如 (27.3)，其中
+  \[
+  I := \ker\bigl(S \to p_*(\cO_{\Proj_Y(S)})_{\mathrm{gr}} \to p_*(i_*\cO_X)_{\mathrm{gr}}\bigr).
+  \]
+\end{enumerate}
+\end{card}
+\begin{card}{推论 27.3.10}{§27.3 · p.133}
+设 $S_+$ 由 $S_1$ 生成，且 $S_1$ 有限型。则典范态射
+\[
+\Proj_Y(S) \to \Spec_Y(S_0)
+\]
+紧合。
+\end{card}
+\begin{card}{定理 27.5.2}{§27.5 · p.133}
+设 $S_+$ 由 $S_1$ 生成。则函子 $F_{Y,S}$ 被 $\Proj_Y(S)$ 表示，即有自然同构
+\[
+F_{Y,S} \simeq \Hom_Y\bigl(-, \Proj_Y(S)\bigr).
+\]
+此外，恒等态射 $\id_{\Proj_Y(S)}$ 对应元素
+\[
+\bigl(\cO(1), \phi\bigr) \in F_{Y,S}\bigl(\Proj_Y(S)\bigr),
+\]
+其中 $\phi$ 是典范同态 (27.4)。
+\end{card}
+\begin{card}{推论 27.5.6}{§27.5 · p.133}
+设 $Y$ 为概形，$E$ 为拟凝聚 $\cO_Y$-模。对任意 $Y$-概形 $q \colon X \to Y$，下述两集之间有典范双射：
+\begin{enumerate}[label=(\alph*),leftmargin=2.6em,itemsep=0.25ex]
+  \item $Y$-态射 $X \to \PP_Y(E)$ 之集。
+  \item 数对 $(L, \psi)$ 的同构类之集，其中 $L$ 是 $X$ 上的线丛，且
+  \[
+  q^*(E) \to L
+  \]
+  是 $\cO_X$-模之间的满射。
+\end{enumerate}
+\yizhu{定理 27.5.2 的证明之所以能归约到 $X = Y$，靠的是引理 27.1.2：基变换后仍是同一个相对 $\Proj$ 构造。Stacks Project 在一般情形下改用「$d$ 倍」的四元组 $(d, f \colon T \to S, \cL, \psi)$，其中 $\psi \colon f^*\mathcal A^{(d)} \to \bigoplus_{n \ge 0} \cL^{\otimes n}$ 且 $f^*\mathcal A_d \to \cL$ 满；本节的假设允许一律取 $d = 1$。
+不同 $d$ 给出的函子表示同一概形，故 $d$ 只是记账上的方便选择。
+
+[来源：Stacks Project, Tag 01NS（Section 27.16，Relative Proj as a functor：四元组的严格等价类与表示函子），\url{https://stacks.math.columbia.edu/tag/01NS}（2026-11-17 访问）。]}
+\end{card}
+
+\cardssec{28}{（极）丰沛线丛}
+\begin{card}{命题—定义 28.1.1}{§28.1 · p.141}
+设 $X$ 是概形，$\cL$ 是 $X$ 上的线丛，$f\in\cL(X)$ 是整体截面。对任意 $x\in X$，考虑 $f$ 在 $x$ 处的芽 $f_x\in\cL_x$，并令
+\[
+X_f := \{x\in X \mid f_x\notin \mathfrak m_x\cL_x\},
+\]
+其中 $\mathfrak m_x\subseteq\cO_{X,x}$ 是唯一极大理想。则 $X_f$ 是 $X$ 的开子集。称之为对应于 $f$ 的\emph{主开子集}。
+\yizhu{原书小节标题中的 principle 是 principal 的误拼，实指「主开子集」。当 $\cL=\cO_X$ 时，$X_f$ 就是 $\Spec R$ 中的标准开集 $D(f)$；一般情形下主开子集对乘法封闭，即 $X_f\cap X_{f'}=X_{f\otimes f'}$，其中 $f'$ 是某个 $\cL'^{\otimes n'}$ 的整体截面。在局部平凡化下，主开子集与仿射标准开集重合，因此丰沛性可以逐个仿射开集检验。
+[来源：Stacks Project, Tag 01PR（Section 28.27，Ample invertible sheaves 开篇评注：$X_s$ 开且 $X_s\cap X_{s'}=X_{ss'}$），\url{https://stacks.math.columbia.edu/tag/01PR}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{引理 28.1.2}{§28.1 · p.141}
+设 $X$ 是概形，$\cL$ 是 $X$ 上的线丛，$f\in\cL(X)$ 是整体截面。则 $X_f$ 正是 $f\colon\cO_X\to\cL$ 可逆的开区。更精确地说：
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em,itemsep=0.25ex]
+  \item 限制 $f|_{X_f}\colon\cO_X|_{X_f}\to\cL|_{X_f}$ 是同构。
+  \item 若 $V\subseteq X$ 是子集且 $f|_V$ 是同构，则 $V\subseteq X_f$。
+\end{enumerate}
+\yizhu{引理 (2) 说明 $X_f$ 是使 $f$ 成为可逆截面的最大开子集，因此 $X_f$ 只由 $f$ 与 $\cL$ 决定，与所选平凡化覆盖无关。另有一条常用事实：对任意仿射开子集 $U\subseteq X$，交 $U\cap X_f$ 仍仿射，故 $X_f$ 的仿射性可以逐块检验。
+[来源：Stacks Project, Tag 01PV（Lemma 28.27.4：若 $U\subseteq X$ 仿射开且 $s\in\Gamma(X,\cL)$，则 $U\cap X_s$ 仿射），\url{https://stacks.math.columbia.edu/tag/01PV}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{定理 28.1.5}{§28.1 · p.141}
+典范映射 (28.1) 是同构。
+\end{card}
+\begin{card}{命题—定义 28.3.1}{§28.3 · p.141}
+设 $X$ 是拟紧概形，$\cL$ 是 $X$ 上的线丛。以下条件等价：
+\begin{enumerate}[label=(\alph*),leftmargin=2.6em,itemsep=0.3ex]
+  \item 主开子集 $X_f$ 构成 $X$ 的一组拓扑基，其中 $f$ 取遍 $\bigoplus_{n>0}\cL^{\otimes n}(X)$ 中的元素。
+  \item[\textup{(a')}] 主开子集 $X_f$ 覆盖 $X$，其中 $f$ 取遍 $\bigoplus_{n>0}\cL^{\otimes n}(X)$ 中使 $X_f$ 仿射的元素。
+  \item[\textup{(a'')}] 主开子集 $X_f$ 构成 $X$ 的一组拓扑基，其中 $f$ 取遍 $\bigoplus_{n>0}\cL^{\otimes n}(X)$ 中使 $X_f$ 仿射的元素。
+  \item 有 $U_{\cL}=X$，且态射 $\mathfrak r_{\cL}\colon X\to\Proj(\bigoplus_{n>0}\cL^{\otimes n}(X))$ 是像稠密的开浸入。
+  \item[\textup{(b')}] 有 $U_{\cL}=X$，且态射 $\mathfrak r_{\cL}\colon X\to\Proj(\bigoplus_{n>0}\cL^{\otimes n}(X))$ 诱导到其像上的同胚。
+  \item 对任意拟凝聚 $\cO_X$-模 $\cF$，典范态射
+  \[
+  \bigoplus_{n\ge N}\cL^{\otimes -n}\otimes_{\Z}\Gamma\Bigl(X,\cF\otimes_{\cO_X}\cL^{\otimes n}\Bigr) \to \cF
+  \]
+  对任意整数 $N$ 都是满射。
+  \item[\textup{(c')}] 对任意拟凝聚理想 $\cI\subseteq\cO_X$，典范态射
+  \[
+  \bigoplus_{n>0}\cL^{\otimes -n}\otimes_{\Z}\Gamma\Bigl(X,\cI\otimes_{\cO_X}\cL^{\otimes n}\Bigr) \to \cI
+  \]
+  是满射。
+\end{enumerate}
+若 $\cL$ 满足上述条件，则称 $\cL$ 是\emph{丰沛的}。
+\yizhu{条件 (c) 中的张量积是 $\Z$-模张量积，因为整体截面 $\Gamma(X,\cF\otimes\cL^{\otimes n})$ 只有 $\Z$-模结构，写成 $\otimes_{\cO_X}$ 并无意义。Stacks 把同一条件表述为「各 $n$ 的像之和等于 $\cF$」，且只要求 $n\ge 1$；本书「对任意整数 $N$」的形式是它的加强版，两者等价。
+[来源：Stacks Project, Tag 01Q3（Proposition 28.27.13，条件 (5)：$\bigoplus_{n\ge0}\Gamma(X,\cF\otimes\cL^{\otimes n})\otimes_\Z\cL^{\otimes -n}$ 的像之和等于 $\cF$），\url{https://stacks.math.columbia.edu/tag/01Q3}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{引理 28.3.2}{§28.3 · p.141}
+设 $X$ 是拟紧概形且存在丰沛线丛，则 $X$ 分离。
+\end{card}
+\begin{card}{命题 28.3.3}{§28.3 · p.141}
+设 $X$ 是拟紧且拟分离的概形，$\cL$ 是 $X$ 上的线丛。以下条件等价：
+\begin{enumerate}[label=(\alph*),leftmargin=2.6em,itemsep=0.3ex]
+  \item 线丛 $\cL$ 丰沛。
+  \item[\textup{(d)}] 对任意有限型的拟凝聚 $\cO_X$-模 $\cF$，当 $n\gg 0$ 时 $\cF\otimes_{\cO_X}\cL^{\otimes n}$ 由有限多个整体截面生成。
+  \item[\textup{(d')}] 对任意有限型的拟凝聚理想 $\cI\subseteq\cO_X$，存在 $n>0$ 使 $\cI\otimes_{\cO_X}\cL^{\otimes n}$ 由整体截面生成。
+\end{enumerate}
+\yizhu{(d) 是实际验证丰沛性最常用的形式：它只涉及有限型的 $\cF$ 与「足够大的扭转由有限多个截面生成」，不必逐点找仿射主开集。Stacks 把这条列为等价条件 (7)，但先要求 $X$ 拟分离，因为要用「拟凝聚模是有限型子模的滤过余极限」把一般 $\cF$ 化到有限型。
+[来源：Stacks Project, Tag 01Q3（Proposition 28.27.13，条件 (7)：$X$ 拟分离且对有限型 $\cF$，$\cF\otimes\cL^{\otimes n}$ 对 $n\gg0$ 整体生成），\url{https://stacks.math.columbia.edu/tag/01Q3}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{定义 28.4.1}{§28.4 · p.141}
+设 $f\colon X\to Y$ 是拟紧态射，$\cL$ 是 $X$ 上的线丛。若对任意仿射开子概形 $U\subseteq Y$，限制 $\cL|_{X_U}$ 都是 $X_U:=X\times_Y U$ 上的丰沛线丛，则称 $\cL$ 是 \emph{$f$-丰沛的}\footnote{其它术语：对 $f$ 相对丰沛（relatively ample）；$X$ 在 $Y$ 上丰沛（ample on $X$ over $Y$）。}。
+\yizhu{定义要求 $f$ 拟紧，这一条不能省：Stacks 的 $f$-ample 定义同样内置「$f$ 拟紧」，并注明这与 EGA II 4.6.1 一致。少了它，$f_*(\cL^{\otimes n})$ 未必拟凝聚，28.2.1 的 $\mathfrak r_{\cL/Y}$ 就无从谈起。紧随其后的推论 28.4.2 说明相对丰沛性还迫使 $f$ 分离，这一点在 §29 判定射影性时反复用到。
+[来源：Stacks Project, Tag 01VH（Definition 29.38.1，relatively ample：$f$ 拟紧且每个仿射开 $V\subseteq S$ 上 $\cL|_{f^{-1}(V)}$ ample；EGA II 4.6.1），\url{https://stacks.math.columbia.edu/tag/01VH}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{推论 28.4.2}{§28.4 · p.141}
+设 $f\colon X\to Y$ 是拟紧态射且存在 $f$-丰沛线丛，则 $f$ 分离。
+\end{card}
+\begin{card}{推论 28.4.3}{§28.4 · p.141}
+设 $f\colon X\to Y$ 是拟紧态射，$\cL$ 是 $X$ 上的线丛。以下条件等价：
+\begin{enumerate}[label=(\alph*),leftmargin=2.6em,itemsep=0.3ex]
+  \item 线丛 $\cL$ 是 $f$-丰沛的。
+  \item 态射 $\mathfrak r_{\cL/Y}\colon X\to\Proj_Y(\mathcal S)$ 有定义\footnote{换言之，$f_*(\cL^{\otimes n})$ 对 $n\ge 0$ 拟凝聚，且 $U_{\cL/Y}=X$。}，且是像稠密的开浸入。
+  \item[\textup{(b')}] 态射 $\mathfrak r_{\cL/Y}\colon X\to\Proj_Y(\mathcal S)$ 有定义，且诱导到其像上的同胚。
+\end{enumerate}
+若 $X$ 拟分离，则上述条件还等价于：
+\begin{enumerate}[label=(\alph*),leftmargin=2.6em,itemsep=0.3ex,start=3]
+  \item 对任意拟凝聚 $\cO_X$-模 $\cF$，典范态射
+  \[
+  \bigoplus_{n\ge N}\Bigl(f_*f^*\bigl(\cF\otimes_{\cO_X}\cL^{\otimes n}\bigr)\Bigr)\otimes_{\cO_X}\cL^{\otimes -n} \to \cF
+  \]
+  对任意整数 $N$ 都是满射。
+  \item[\textup{(c')}] 对任意拟凝聚理想 $\cI\subseteq\cO_X$，典范态射
+  \[
+  \bigoplus_{n\ge N}\Bigl(f_*f^*\bigl(\cI\otimes_{\cO_X}\cL^{\otimes n}\bigr)\Bigr)\otimes_{\cO_X}\cL^{\otimes -n} \to \cI
+  \]
+  都是满射。
+\end{enumerate}
+若 $X$ 拟紧且拟分离，则上述条件还等价于：
+\begin{enumerate}[label=(\alph*),leftmargin=2.6em,itemsep=0.3ex,start=5]
+  \item[\textup{(d)}] 对任意有限型拟凝聚 $\cO_X$-模 $\cF$，存在 $N$，使得对任意 $n\ge N$ 都存在有限型子模
+  \[
+  \cM\subseteq f_*\bigl(\cF\otimes_{\cO_X}\cL^{\otimes n}\bigr),
+  \]
+  使
+  \[
+  f^*\cM \to f^*f_*\bigl(\cF\otimes_{\cO_X}\cL^{\otimes n}\bigr) \to \cF\otimes_{\cO_X}\cL^{\otimes n}
+  \]
+  是满射。
+  \item[\textup{(d')}] 对任意有限型拟凝聚理想 $\cI\subseteq\cO_X$，存在 $n>0$ 使
+  \[
+  f^*f_*\bigl(\cI\otimes_{\cO_X}\cL^{\otimes n}\bigr) \to \cI\otimes_{\cO_X}\cL^{\otimes n}
+  \]
+  是满射。
+\end{enumerate}
+\end{card}
+\begin{card}{引理 28.4.4}{§28.4 · p.141}
+相对丰沛线丛有以下标准性质。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.6em,itemsep=0.35ex]
+  \item 设 $f\colon X\to Y$ 是拟仿射态射，则 $X$ 上的任意线丛 $\cL$ 都是 $f$-丰沛的。
+  \item 设 $f\colon X\to Y$ 拟紧，$d>0$ 是正整数。则 $\cL$ 是 $f$-丰沛的当且仅当 $\cL^{\otimes d}$ 是。
+  \item 设 $f\colon X\to Y$ 拟紧，$\cL$（相应地 $\cK$）是 $X$（相应地 $Y$）上的线丛。则 $\cL$ 是 $f$-丰沛的当且仅当 $\cL\otimes_{\cO_X}f^*\cK$ 是。
+  \item 设 $X\xrightarrow{f}Y\xrightarrow{g}Z$ 是拟紧态射，且 $f$ 诱导到其像上的同胚。设 $\cK$ 是 $g$-丰沛线丛，则 $f^*\cK$ 是 $(g\circ f)$-丰沛的。
+  \item[\textup{(4')}] 设 $X\xrightarrow{f}Y\xrightarrow{g}Z$ 是拟紧态射，且 $Z$ 拟紧。设 $\cL$ 是 $f$-丰沛线丛，$\cK$ 是 $g$-丰沛线丛。则当 $l\gg 0$ 时 $\cL\otimes_{\cO_X}f^*(\cK^{\otimes l})$ 是 $(g\circ f)$-丰沛的。
+  \item 设 $X\xrightarrow{f}Y\xrightarrow{g}Z$ 是概形态射，且 $g\circ f$ 拟紧、$g$ 拟分离。设 $\cL$ 是 $(g\circ f)$-丰沛线丛，则 $\cL$ 是 $f$-丰沛线丛。
+  \item 相对丰沛线丛对张量积稳定。
+  \item 相对丰沛线丛经基变换保持。
+  \item 相对丰沛性对目标概形是局部的。
+\end{enumerate}
+\end{card}
+\begin{card}{推论 28.4.6}{§28.4 · p.141}
+设 $Y$ 是概形，$\mathcal S$ 是 $\Z_{\ge 0}$-分次拟凝聚 $\cO_Y$-代数，且
+\begin{itemize}[leftmargin=1.6em,itemsep=0.2ex]
+  \item $\mathcal S_+$ 由 $\mathcal S_1$ 生成；
+  \item $\mathcal S_1$ 有限型。
+\end{itemize}
+设 $i\colon X\to\Proj_Y(\mathcal S)$ 是拟紧局部闭浸入。则 $i^*(\cO(1))$ 对态射 $X\to Y$ 相对丰沛。
+\end{card}
+\begin{card}{定义 28.5.1}{§28.5 · p.141}
+设 $f\colon X\to Y$ 是概形态射，$\cL$ 是 $X$ 上的线丛。若存在拟凝聚 $\cO_Y$-模 $\cE$ 与在 $Y$ 上定义的局部闭浸入
+\[
+i\colon X\to\PP_Y(\cE),
+\]
+使 $\cL\simeq i^*(\cO_{\PP_Y(\cE)}(1))$，则称 $\cL$ 是 \emph{$f$-极丰沛的}。
+
+若 $X$ 上的线丛 $\cL$ 对态射 $X\to\Spec(\Z)$ 相对极丰沛，则称 $\cL$ 是\emph{极丰沛的}。
+\yizhu{Stacks 的定义与此逐字相同：存在拟凝聚 $\cO_S$-模 $\cE$ 与 $S$-浸入 $i\colon X\to\mathbf P(\cE)$，使 $\cL\cong i^*\cO(1)$；其中 immersion 指局部闭浸入，且同样不要求 $f$ 拟紧。这与下面的警告 28.5.2 一致：拟紧性来自历史惯例，而非定义本身。定义并不要求 $\cE$ 有限型；当 $Y$ 拟紧且 $f$ 有限型时，命题 28.5.6 说明可取 $\cE\subseteq f_*\cL$ 为有限型。
+[来源：Stacks Project, Tag 01VM（Definition 29.39.1，very ample invertible sheaf），\url{https://stacks.math.columbia.edu/tag/01VM}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{引理 28.5.3}{§28.5 · p.141}
+设 $f\colon X\to Y$ 是存在 $f$-极丰沛线丛的态射，则 $f$ 分离。
+\end{card}
+\begin{card}{引理 28.5.4}{§28.5 · p.141}
+设 $f\colon X\to Y$ 是概形间的拟紧态射。则 $X$ 上的线丛 $\cL$ 是 $f$-极丰沛的，当且仅当它满足以下条件：
+\begin{enumerate}[label=(\roman*),leftmargin=2.6em,itemsep=0.3ex]
+  \item $\cO_Y$-模 $f_*(\cL)$ 拟凝聚，且典范态射
+  \[
+  v\colon f^*f_*(\cL)\to\cL
+  \]
+  是满射；
+  \item 典范态射（见习题 28.2.5）
+  \[
+  \mathfrak s_{\cL/Y}\colon X\to\PP_Y(f_*\cL)
+  \]
+  是局部闭浸入。
+\end{enumerate}
+\end{card}
+\begin{card}{推论 28.5.5}{§28.5 · p.141}
+设 $f\colon X\to Y$ 是拟紧态射。对 $X$ 上的线丛而言，$f$-极丰沛性对 $Y$ 是局部的。
+\end{card}
+\begin{card}{命题 28.5.6}{§28.5 · p.141}
+设 $Y$ 是拟紧且拟分离的概形，$f\colon X\to Y$ 是有限型态射。则 $X$ 上的线丛 $\cL$ 是 $f$-极丰沛的，当且仅当存在拟凝聚子模 $\cE\subseteq f_*\cL$，使
+\begin{itemize}[leftmargin=1.6em,itemsep=0.25ex]
+  \item $\cO_Y$-模 $\cE$ 有限型，且典范态射 $f^*\cE\to\cL$ 是满射；
+  \item 典范态射 $X\to\PP_Y(\cE)$ 是局部闭浸入。
+\end{itemize}
+\end{card}
+\begin{card}{推论 28.5.7}{§28.5 · p.141}
+设 $Y$ 是拟紧概形且存在丰沛线丛 $\cK$。设 $f\colon X\to Y$ 是有限型态射且存在 $f$-极丰沛线丛。则存在 $n\ge 0$ 与局部闭浸入 $i\colon X\to\PP^n_Y$。
+\end{card}
+\begin{card}{引理 28.5.8}{§28.5 · p.141}
+设 $f\colon X\to Y$ 是概形间的态射，$\cL$ 是 $X$ 上的 $f$-极丰沛线丛。设 $\cL'$ 是 $X$ 上的线丛，且存在 $\cE'\in\QCoh(\cO_Y)$ 与满射 $f^*\cE'\to\cL'$。则 $\cL\otimes_{\cO_X}\cL'$ 是 $f$-极丰沛的。
+\end{card}
+\begin{card}{推论 28.5.9}{§28.5 · p.141}
+设 $f\colon X\to Y$ 是概形间的态射。则 $f$-极丰沛线丛对张量积稳定。
+\end{card}
+\begin{card}{推论 28.5.10}{§28.5 · p.141}
+设 $f\colon X\to Y$ 是概形间的态射，$\cL$（相应地 $\cK$）是 $X$（相应地 $Y$）上的线丛。则 $\cL$ 是 $f$-极丰沛的当且仅当 $\cL\otimes_{\cO_X}f^*\cK$ 是。
+\end{card}
+\begin{card}{引理 28.5.11}{§28.5 · p.141}
+相对极丰沛线丛有以下标准性质。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.6em,itemsep=0.35ex]
+  \item $X$ 上的任意线丛 $\cL$ 都是 $\id_X$-极丰沛的。
+  \item 设 $X\xrightarrow{f}Y\xrightarrow{g}Z$ 是概形态射，且 $f$ 是局部闭浸入。设 $\cK$ 是 $g$-极丰沛线丛，则 $f^*\cK$ 是 $(g\circ f)$-极丰沛的。
+  \item[\textup{(2')}] 设 $X\xrightarrow{f}Y\xrightarrow{g}Z$ 是拟紧态射，$Z$ 拟紧，$f$ 有限型。设 $\cL$ 是 $f$-极丰沛线丛，$\cK$ 是 $g$-极丰沛线丛。则当 $l\gg 0$ 时 $\cL\otimes_{\cO_X}f^*(\cK^{\otimes l})$ 是 $(g\circ f)$-极丰沛的。
+  \item 设 $X\xrightarrow{f}Y\xrightarrow{g}Z$ 是概形态射。设 $\cL$ 是 $(g\circ f)$-极丰沛线丛，则 $\cL$ 是 $f$-极丰沛线丛。
+  \item 相对极丰沛线丛经基变换保持。
+\end{enumerate}
+\end{card}
+\begin{card}{引理 28.6.1}{§28.6 · p.141}
+设 $f\colon X\to Y$ 是拟紧态射。任意 $f$-极丰沛线丛都是 $f$-丰沛的。
+\end{card}
+\begin{card}{命题 28.6.2}{§28.6 · p.141}
+设 $Y$ 是拟紧概形，$f\colon X\to Y$ 是有限型态射，$\cL$ 是 $X$ 上的线丛。以下条件等价：
+\begin{enumerate}[label=(\roman*),leftmargin=2.6em,itemsep=0.3ex]
+  \item 线丛 $\cL$ 是 $f$-丰沛的。
+  \item 当 $n\gg 0$ 时，线丛 $\cL^{\otimes n}$ 是 $f$-极丰沛的。
+  \item 存在 $n>0$ 使 $\cL^{\otimes n}$ 是 $f$-丰沛的。
+\end{enumerate}
+\end{card}
+\begin{card}{引理 28.6.3}{§28.6 · p.141}
+设 $f\colon X\to Y$ 是局部有限型态射。假设 $X$ 拟紧且 $\cL$ 是 $X$ 上的丰沛线丛。则对足够大的 $n$，存在局部闭浸入 $\iota\colon X\to\PP^m_Y$（其中 $m$ 依赖 $n$），使 $\iota^*(\cO_{\PP^m_Y}(1))\simeq\cL^{\otimes n}$。特别地，当 $n\gg 0$ 时 $\cL^{\otimes n}$ 是 $f$-极丰沛的。
+\end{card}
+
+\cardssec{29}{（拟）射影态射}
+\begin{card}{定义 29.1.1}{§29.1 · p.157}
+设 $f\colon X\to Y$ 是概形间的态射。若存在有限型的拟凝聚 $\cO_Y$-模 $\cE$，使 $X$ 与 $\PP_Y(\cE)$ 的某个闭子概形 $Y$-同构，则称 $f$ 是\emph{射影的}。
+\yizhu{定义要求 $\cE$ 有限型拟凝聚，故 $\PP_Y(\cE)$ 在 $Y$ 上射影：在 $Y$ 的仿射开集上，$\cE$ 由有限多个截面生成，于是 $\PP_Y(\cE)$ 是该仿射开集上某个 $\PP^n$ 的闭子概形。定理 29.1.5(1) 中的紧合性正来自这一结构。
+[来源：Stacks Project, Tag 01W8（Definition 29.44.1，projective morphism：$X$ 同构于某个射影丛 $\mathbf P(\cE)$ 的闭子概形，$\cE$ 拟凝聚且有限型），\url{https://stacks.math.columbia.edu/tag/01W8}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{定义 29.1.3}{§29.1 · p.157}
+设 $f\colon X\to Y$ 是概形间的态射。若 $f$ 有限型且存在 $f$-丰沛线丛，则称 $f$ 是\emph{拟射影的}。
+\yizhu{由定义，拟射影态射是有限型且带 $f$-丰沛线丛；而推论 28.4.2 说明 $f$-丰沛线丛的存在迫使 $f$ 分离。故拟射影像射自动分离，这一点在原书中由分开放置的两条结果合成，读时容易漏掉。
+[依据：原书 p.147 推论 28.4.2（存在 $f$-丰沛线丛则 $f$ 分离）]}
+\end{card}
+\begin{card}{定理 29.1.5}{§29.1 · p.157}
+有：
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em,itemsep=0.3ex]
+  \item 射影态射 $f\colon X\to Y$ 紧合且拟射影。
+  \item 若 $Y$ 拟紧且拟分离，则紧合且拟射影的态射 $f\colon X\to Y$ 是射影的。
+\end{enumerate}
+\end{card}
+\begin{card}{推论 29.1.6}{§29.1 · p.157}
+设 $Y$ 是拟紧概形且存在丰沛线丛。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em,itemsep=0.3ex]
+  \item 态射 $f\colon X\to Y$ 射影，当且仅当 $X$ 对某个 $n\ge 0$ 与 $\PP^n_Y$ 的闭子概形 $Y$-同构。
+  \item 态射 $f\colon X\to Y$ 拟射影，当且仅当 $X$ 对某个 $n\ge 0$ 与 $\PP^n_Y$ 的拟紧局部闭子概形 $Y$-同构。
+\end{enumerate}
+\end{card}
+\begin{card}{定理 29.2.1}{§29.2 · p.157}
+设 $f\colon X\to Y$ 是分离的有限型态射。假设
+\begin{enumerate}[label=(\alph*),leftmargin=2.6em,itemsep=0.25ex]
+  \item 概形 $Y$ 拟紧且拟分离；
+  \item 概形 $X$ 只有有限多个不可约分支。
+\end{enumerate}
+则存在图
+\begin{equation}
+\begin{tikzcd}[column sep=4.4em, row sep=3em]
+X & X' \arrow[l, "\pi"'] \arrow[r, "i"] & \PP^n_Y \arrow[dl] \\
+& Y \arrow[ul, "f"] &
+\end{tikzcd}
+\end{equation}
+使：
+\begin{enumerate}[label=(\roman*),leftmargin=2.6em,itemsep=0.25ex]
+  \item 态射 $i$ 是局部闭浸入。
+  \item 态射 $\pi$ 紧合且满。
+  \item 存在稠密开子集 $U\subseteq X$，使 $\pi^{-1}(U)$ 在 $X'$ 中稠密，且 $\pi^{-1}(U)\to U$ 是同构。
+\end{enumerate}
+\end{card}
+
+\cardssec{30}{整态射与有限态射}
+\begin{card}{定义 30.1.1}{§30.1 · p.161}
+设 $f\colon X\to Y$ 是概形间的态射。若 $f$ 仿射，且对任意仿射开子概形 $U\subseteq Y$，环同态
+\[
+\cO_Y(U)\to\cO_X\bigl(f^{-1}(U)\bigr)
+\]
+都是整的（相应地，有限的），则称 $f$ 是\emph{整的}（相应地，\emph{有限的}）。
+\end{card}
+\begin{card}{引理 30.1.4}{§30.1 · p.161}
+设 $\phi\colon A\to B$ 是环同态，$f\colon\Spec(B)\to\Spec(A)$ 是相应的概形态射。则 $f$ 整（相应地，有限）当且仅当 $\phi$ 整（相应地，有限）。
+\end{card}
+\begin{card}{引理 30.1.5}{§30.1 · p.161}
+有限态射是整的。整且有限型的态射是有限的。
+\end{card}
+\begin{card}{引理 30.1.6}{§30.1 · p.161}
+考虑概形间的整（相应地，有限）态射的集合。有：
+\begin{enumerate}[label=(\roman*),leftmargin=2.6em,itemsep=0.3ex]
+  \item 设 $X\xrightarrow{f}Y\xrightarrow{g}Z$ 是态射链，且 $f$ 与 $g$ 都整（相应地，有限）。则 $g\circ f$ 整（相应地，有限）。
+  \item 设 $X\xrightarrow{f}Y\xrightarrow{g}Z$ 是态射链，且 $g\circ f$ 整（相应地，有限）、$g$ 分离。则 $f$ 整（相应地，有限）。
+  \item 整（相应地，有限）态射经基变换保持。
+  \item 整性（相应地，有限性）对目标概形是局部的。
+\end{enumerate}
+\end{card}
+\begin{card}{引理 30.2.1}{§30.2 · p.161}
+设 $f\colon X\to Y$ 是整态射。则每点 $x\in X$ 都在纤维 $f^{-1}(f(x))$ 中闭。
+\end{card}
+\begin{card}{引理 30.2.2}{§30.2 · p.161}
+设 $f\colon X\to Y$ 是有限态射。则 $f$ 的每根纤维都是有限个点的有限不交并。
+\end{card}
+\begin{card}{命题 30.3.1}{§30.3 · p.161}
+态射 $f\colon X\to Y$ 整，当且仅当它仿射且泛闭。
+\end{card}
+\begin{card}{推论 30.3.3}{§30.3 · p.161}
+态射 $f\colon X\to Y$ 有限，当且仅当它仿射且紧合。
+\end{card}
+\begin{card}{推论 30.3.4}{§30.3 · p.161}
+有限态射 $f\colon X\to Y$ 是射影的。
+\end{card}
+
+\cardssec{A}{阿贝尔范畴}
+\begin{card}{定义 A.1.1}{§A.1 · p.164}
+设 $\mathcal{A}$ 为范畴。若 $\mathcal{A}$ 容许一个终对象 $*$ 与一个初始对象 $\varnothing$，并且唯一态射 $\varnothing\to *$ 是同构，则称 $\mathcal{A}$ \emph{容许零对象}。
+\end{card}
+\begin{card}{引理 A.1.4}{§A.1 · p.164}
+设 $\mathcal{A}$ 为容许零对象的范畴。对任意一对对象 $X,Y\in\mathcal{A}$，存在唯一的态射 $f:X\to Y$，它能穿过某个零对象分解。
+\end{card}
+\begin{card}{定义 A.1.5}{§A.1 · p.164}
+设 $\mathcal{A}$ 为容许零对象的范畴，$X,Y$ 为一对对象。穿过某个零对象分解的唯一态射 $X\to Y$ 称为\emph{零态射}，常记作 $0:X\to Y$。
+\end{card}
+\begin{card}{定义 A.1.6}{§A.1 · p.164}
+设 $\mathcal{A}$ 为范畴。若下列条件成立，则称 $\mathcal{A}$ \emph{容许有限双积}。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 范畴 $\mathcal{A}$ 容许有限积、有限余积与零对象。
+  \item 对任意一对对象 $X,Y$，由矩阵
+  \[
+  \begin{pmatrix}\id_X & 0\\ 0 & \id_Y\end{pmatrix}
+  \]
+  给出的映射 $X\coprod Y\to X\times Y$ 是同构。
+\end{enumerate}
+\end{card}
+\begin{card}{定义 A.1.8}{§A.1 · p.165}
+设 $\mathcal{A}$ 为范畴。若下列条件成立，则称 $\mathcal{A}$ 是\emph{加性范畴}。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 范畴 $\mathcal{A}$ 容许有限双积。
+  \item 对任意一对对象 $X,Y$，构造 A.1.7 中的阿贝尔半群 $\Hom_{\mathcal{A}}(X,Y)$ 是阿贝尔群，即任一元素 $f\in\Hom_{\mathcal{A}}(X,Y)$ 都有逆元 $-f$，使 $f+(-f)=0$。
+\end{enumerate}
+\end{card}
+\begin{card}{定义 A.2.1}{§A.2 · p.165}
+设 $\mathcal{A}$ 为加性范畴，$f:X\to Y$ 为态射。
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item $f$ 的\emph{核}，常记作 $\ker(f)$，定义为态射图 $X\xrightarrow{f}Y\xleftarrow{0}0$ 的纤维积。
+  \item $f$ 的\emph{余核}，常记作 $\coker(f)$，定义为态射图 $Y\xleftarrow{f}X\xrightarrow{0}0$ 的纤维余积。
+\end{itemize}
+\yizhu{用纤维积代替泛性质，是下文引理 A.2.2 的伏笔：纤维积天然给出 $\Hom$-集上的笛卡尔方块。Stacks Project 则直接以泛性质定义核与余核，并据此定义像与余像。
+[来源：Stacks Project, Tag 0106（Definition 12.3.9，核、余核、像与余像），\url{https://stacks.math.columbia.edu/tag/0106}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{引理 A.2.2}{§A.2 · p.165}
+设 $\mathcal{A}$ 为加性范畴，$f:X\to Y$ 为有核的态射。则典范态射 $i:\ker(f)\to X$ 是单态射。
+\end{card}
+\begin{card}{引理 A.2.6}{§A.2 · p.165}
+设 $\mathcal{A}$ 为加性范畴，$f:X\to Y$ 为态射。下列条件等价：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 态射 $f$ 是单态射。
+  \item 核 $\ker(f)$ 存在，并且是零对象。
+\end{enumerate}
+\end{card}
+\begin{card}{定义 A.3.1}{§A.3 · p.167}
+设 $\mathcal{A}$ 为加性范畴，$f:X\to Y$ 为态射。
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item 若 $\coker(f)$ 存在，则 $f$ 的\emph{像}定义为 $\im(f):=\ker(Y\to\coker(f))$。
+  \item 若 $\ker(f)$ 存在，则 $f$ 的\emph{余像}定义为 $\coim(f):=\coker(\ker(f)\to X)$。
+\end{itemize}
+\end{card}
+\begin{card}{定义 A.3.4}{§A.3 · p.167}
+设 $\mathcal{A}$ 为范畴。若下列条件成立，则称 $\mathcal{A}$ 是\emph{阿贝尔范畴}。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 范畴 $\mathcal{A}$ 是加性的。
+  \item $\mathcal{A}$ 中任何态射都有核与余核。
+  \item 对 $\mathcal{A}$ 中任何态射 $f$，典范态射 $\coim(f)\to\im(f)$ 是同构。
+\end{enumerate}
+\yizhu{这三条与 Stacks Project 对阿贝尔范畴的定义逐字对应：加性、核与余核都存在、典范态射 $\coim(f)\to\im(f)$ 是同构。差别只在前者把「加性」当作已知条件，后者把它列为第一条。
+[来源：Stacks Project, Tag 0109（Definition 12.5.1，阿贝尔范畴），\url{https://stacks.math.columbia.edu/tag/0109}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{引理 A.3.7}{§A.3 · p.167}
+设 $\mathcal{A}$ 为阿贝尔范畴，$f:X\to Y$ 为态射。下列条件等价：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 态射 $f$ 是单态射。
+  \item 核 $\ker(f)$ 存在，并且是零对象。
+  \item 态射 $f$ 是某个态射的核，即存在态射 $g:Y\to Z$，使 $f$ 可写成 $\ker(g)\to X$。
+\end{enumerate}
+\end{card}
+\begin{card}{命题 A.3.8}{§A.3 · p.168}
+设 $\mathcal{A}$ 为阿贝尔范畴，$f:X\to Y$ 为态射。则 $f$ 是同构当且仅当 $\ker(f)$ 与 $\coker(f)$ 都是零对象。
+\end{card}
+\begin{card}{定义 A.3.10}{§A.3 · p.168}
+设 $\mathcal{A}$ 为阿贝尔范畴。若下列条件成立，则称序列 $X\xrightarrow{f}Y\xrightarrow{g}Z$ 是\emph{正合}的。
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item 合成 $g\circ f$ 是零。
+  \item 构造 A.3.9 中的典范态射 $\coim(f)\to\ker(g)$ 是同构。
+\end{itemize}
+若序列 $X_1\to X_2\to\cdots\to X_n$ 中任意三个相邻项都构成正合序列，则称该序列正合。
+\end{card}
+\begin{card}{命题—定义 A.4.1}{§A.4 · p.168}
+设 $F:\mathcal{A}\to\mathcal{A}'$ 为加性范畴之间的函子。下列条件等价：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 函子 $F$ 保持有限积。
+  \item 函子 $F$ 保持有限余积。
+\end{enumerate}
+若满足上述条件，则称 $F$ 是\emph{加性函子}。
+\end{card}
+\begin{card}{引理 A.4.2}{§A.4 · p.168}
+设 $F:\mathcal{A}\to\mathcal{A}'$ 为加性范畴之间的加性函子。则对任意一对对象 $X,Y\in\mathcal{A}$，映射
+\[
+\Hom_{\mathcal{A}}(X,Y)\to\Hom_{\mathcal{A}'}(F(X),F(Y))
+\]
+是阿贝尔群之间的同态。
+\end{card}
+\begin{card}{定义 A.4.3}{§A.4 · p.168}
+设 $F:\mathcal{A}\to\mathcal{A}'$ 为阿贝尔范畴之间的加性函子。
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item 若 $F$ 保持核，则称 $F$ 是\emph{左正合}的。
+  \item 若 $F$ 保持余核，则称 $F$ 是\emph{右正合}的。
+  \item 若 $F$ 既左正合又右正合，则称 $F$ 是\emph{正合}的。
+\end{itemize}
+\end{card}
+\begin{card}{引理 A.4.6}{§A.4 · p.168}
+阿贝尔范畴之间的加性函子 $F:\mathcal{A}\to\mathcal{A}'$ 左正合，当且仅当它保持纤维积。对偶地，$F$ 右正合当且仅当它保持纤维余积。
+\end{card}
+\begin{card}{命题 A.5.1}{§A.5 · p.169}
+设 $X$ 为拓扑空间。
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item 范畴 $\PShv(X,\Ab)$ 是阿贝尔范畴。
+  \item 对任意开子集 $U\subseteq X$，函子 $(-)(U):\PShv(X,\Ab)\to\Ab$ 正合。
+  \item 对任意点 $x\in X$，函子 $(-)_x:\PShv(X,\Ab)\to\Ab$ 正合。
+\end{itemize}
+设 $f:X\to Y$ 为拓扑空间之间的连续映射。
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item 函子 $f_*:\PShv(X,\Ab)\to\PShv(Y,\Ab)$ 正合。
+  \item 函子 $f^{\PShv}_{-1}:\PShv(Y,\Ab)\to\PShv(X,\Ab)$ 正合。
+\end{itemize}
+\end{card}
+\begin{card}{命题 A.5.2}{§A.5 · p.170}
+设 $X$ 为拓扑空间。
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item 范畴 $\Shv(X,\Ab)$ 是阿贝尔范畴。
+  \item 对任意开子集 $U\subseteq X$，函子 $(-)(U):\Shv(X,\Ab)\to\Ab$ 左正合。
+  \item 对任意点 $x\in X$，函子 $(-)_x:\Shv(X,\Ab)\to\Ab$ 正合。
+  \item 完全忠实函子 $\Shv(X,\Ab)\to\PShv(X,\Ab)$ 左正合。
+  \item 层化函子 $\sharp:\PShv(X,\Ab)\to\Shv(X,\Ab)$ 正合。
+\end{itemize}
+设 $f:X\to Y$ 为拓扑空间之间的连续映射。
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item 函子 $f_*:\Shv(X,\Ab)\to\Shv(Y,\Ab)$ 左正合。
+  \item 函子 $f^{-1}:\Shv(Y,\Ab)\to\Shv(X,\Ab)$ 正合。
+\end{itemize}
+\yizhu{层化 $\sharp$ 正合，原因是它作为完全忠实函子 $\Shv(X,\Ab)\to\PShv(X,\Ab)$ 的左伴随，而包含函子正合，正合函子的左伴随正合。Stacks Project 把这条伴随关系写成 $\Hom_{\PShv}(\cF,i(\cG))\simeq\Hom_{\Shv}(\cF^{\sharp},\cG)$。
+[来源：Stacks Project, Tag 0085（Lemma 6.18.2，阿贝尔预层的层化与伴随），\url{https://stacks.math.columbia.edu/tag/0085}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{命题 A.5.3}{§A.5 · p.170}
+设 $(X,\cO_X)$ 为环化空间。
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item 范畴 $\omodP$ 与 $\omod$ 都是阿贝尔范畴。
+  \item 遗忘函子 $\omodP\to\PShv(X,\Ab)$ 与 $\omod\to\Shv(X,\Ab)$ 正合。
+  \item 完全忠实函子 $\omod\to\omodP$ 左正合。
+  \item 层化函子 $\omodP\to\omod$ 正合。
+\end{itemize}
+设 $f:(X,\cO_X)\to(Y,\cO_Y)$ 为环化空间之间的态射。
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item 函子 $f_*:\omodP\to\cO_Y\text{-}\mathsf{mod}^{\PShv}$ 正合。
+  \item 函子 $f_*:\omod\to\cO_Y\text{-}\mathsf{mod}$ 左正合。
+  \item 函子 $f^{\PShv}_{-1}:\cO_Y\text{-}\mathsf{mod}^{\PShv}\to\omodP$ 右正合。
+  \item 函子 $f^*:\cO_Y\text{-}\mathsf{mod}\to\omod$ 右正合。
+\end{itemize}
+\end{card}
+\begin{card}{命题 A.5.4}{§A.5 · p.170}
+设 $X$ 为概形。
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item 范畴 $\mathsf{QCoh}(X)$ 是阿贝尔范畴。
+  \item 完全忠实函子 $\mathsf{QCoh}(X)\to\omod$ 正合。
+\end{itemize}
+\end{card}
+\begin{card}{命题 A.5.5}{§A.5 · p.170}
+设 $f:X\to Y$ 为概形之间的态射。函子 $f^*:\mathsf{QCoh}(Y)\to\mathsf{QCoh}(X)$ 右正合。若 $f$ 是开浸入，则它正合。
+\yizhu{若 $f$ 平坦，则 $f^*$ 正合：$f^*$ 分解为 $f^{-1}$ 与换环张量，后者按平坦性正合。开浸入的情形更简单，$f^*$ 就是限制函子，而限制本身正合。
+[来源：Stacks Project, Tag 02N4（Lemma 17.20.2，平坦态射的拉回正合），\url{https://stacks.math.columbia.edu/tag/02N4}（2026-11-17 访问）。]}
+\end{card}
+\begin{card}{命题 A.5.7}{§A.5 · p.170}
+设 $f:X\to Y$ 为概形之间拟紧且拟分离的态射。函子 $f_*:\mathsf{QCoh}(X)\to\mathsf{QCoh}(Y)$ 左正合。它正合当且仅当 $f$ 是仿射态射。
+\yizhu{$f$ 仿射时，$f_*$ 给出 $\mathsf{QCoh}(X)$ 与拟凝聚 $\cO_Y$-代数上的模之间的等价，等价当然正合。至于 $f$ 只拟紧拟分离时，$f_*$ 仍把拟凝聚模送到拟凝聚模，但一般不正合。
+[来源：Stacks Project, Tag 01SB（Lemma 29.11.7，仿射态射的推前等价），\url{https://stacks.math.columbia.edu/tag/01SB}（2026-11-17 访问）。]}
+\end{card}
+
+
+\clearpage
+\cardssec{}{条目索引}
+\noindent{\small 下表列出全部 366 条卡片；「原书页」一栏是条目在原书（译注本）中的页码。}\par\vspace{2mm}
+\renewcommand{\arraystretch}{1.18}
+{\small\begin{longtable}{@{}p{0.355\linewidth}p{0.085\linewidth}p{0.355\linewidth}p{0.085\linewidth}@{}}
+\toprule
+\textbf{条目} & \textbf{原书页} & \textbf{条目} & \textbf{原书页} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{条目} & \textbf{原书页} & \textbf{条目} & \textbf{原书页} \\
+\midrule
+\endhead
+定义 0.1.1 & 5 & 引理 20.1.3 & 98 \\
+定理 0.1.6 & 5 & 命题 20.1.4 & 98 \\
+定义 0.1.7 & 5 & 推论 20.1.5 & 98 \\
+定义 0.1.10 & 5 & 引理 20.1.6 & 98 \\
+预备定义 0.3.2 & 5 & 命题 20.2.2 & 98 \\
+定义 1.1.1 & 9 & 定理 20.3.1 & 100 \\
+定义 1.1.2 & 9 & 定理 20.3.2 & 100 \\
+定义 1.2.1 & 9 & 命题—定义 20.4.1 & 100 \\
+命题 1.2.10 & 9 & 引理 20.4.4 & 101 \\
+定义 1.3.1 & 9 & 引理 20.4.5 & 101 \\
+推论 1.3.3 & 9 & 定义 20.6.1 & 103 \\
+定义 2.1.1 & 14 & 命题 20.6.2 & 103 \\
+引理 2.2.1 & 14 & 定义 20.6.3 & 103 \\
+推论 2.2.3 & 14 & 定义 20.6.4 & 103 \\
+命题 2.2.5 & 14 & 引理 20.6.5 & 103 \\
+定义 2.3.1 & 14 & 命题 20.6.6 & 103 \\
+引理 2.3.3 & 14 & 引理 20.6.7 & 103 \\
+命题 2.3.4 & 14 & 引理 20.6.8 & 103 \\
+推论 2.3.5 & 14 & 定义 21.1.1 & 105 \\
+定义 3.1.1 & 19 & 定义 21.1.5 & 105 \\
+命题 3.1.2 & 19 & 定义 21.2.1 & 105 \\
+推论 3.1.3 & 19 & 定义 21.3.1 & 105 \\
+命题 3.2.2 & 19 & 引理 21.3.2 & 105 \\
+引理 3.3.5 & 19 & 推论 21.3.3 & 106 \\
+命题 3.3.9 & 19 & 推论 21.3.4 & 106 \\
+推论 3.3.10 & 19 & 推论 21.3.5 & 106 \\
+推论 3.3.11 & 19 & 引理 21.3.7 & 106 \\
+推论 3.3.12 & 19 & 定义 21.4.1 & 106 \\
+推论 3.4.2 & 19 & 推论 21.4.2 & 106 \\
+推论 3.4.3 & 19 & 定义 22.1.1 & 108 \\
+推论 3.4.4 & 19 & 引理 22.1.2 & 108 \\
+定义 4.1.1 & 27 & 推论 22.1.3 & 108 \\
+引理 4.1.3 & 27 & 推论 22.1.4 & 108 \\
+引理 4.1.4 & 27 & 定义 22.2.1 & 108 \\
+推论 4.1.5 & 27 & 引理 22.2.3 & 108 \\
+推论 4.1.6 & 27 & 引理 22.2.4 & 108 \\
+推论 4.1.7 & 27 & 命题 22.3.1 & 108 \\
+推论 4.1.8 & 27 & 引理 22.3.2 & 108 \\
+引理 4.1.14 & 27 & 引理 22.3.3 & 108 \\
+引理 4.2.1 & 27 & 推论 22.3.4 & 110 \\
+推论 4.2.2 & 27 & 引理 22.4.1 & 110 \\
+命题—定义 4.2.3 & 27 & 推论 22.4.2 & 110 \\
+引理 4.2.5 & 27 & 推论 22.4.3 & 110 \\
+定义 4.2.7 & 27 & 推论 22.4.4 & 110 \\
+命题 4.2.8 & 27 & 定义 23.1.1 & 111 \\
+命题 4.3.2 & 27 & 引理 23.1.2 & 111 \\
+推论 4.3.3 & 27 & 推论 23.1.4 & 111 \\
+定义 5.1.1 & 33 & 推论 23.1.5 & 111 \\
+定义 5.1.4 & 33 & 引理 23.1.6 & 111 \\
+定义 5.1.8 & 33 & 引理 23.1.7 & 112 \\
+定义 5.2.1 & 33 & 推论 23.1.8 & 112 \\
+引理 5.2.5 & 33 & 定义 23.2.1 & 112 \\
+命题—定义 5.3.1 & 33 & 引理 23.2.2 & 112 \\
+定义 5.3.2 & 33 & 推论 23.2.3 & 112 \\
+定义 6.1.1 & 37 & 推论 23.2.4 & 112 \\
+命题—定义 6.1.2 & 37 & 引理 23.2.6 & 112 \\
+命题 6.1.3 & 37 & 引理 23.2.7 & 113 \\
+定理 7.1.2 & 42 & 定理 23.3.1 & 113 \\
+推论 7.2.1 & 42 & 推论 23.3.2 & 113 \\
+推论 7.2.2 & 42 & 定义 24.1.1 & 114 \\
+推论 7.2.3 & 42 & 引理 24.1.3 & 114 \\
+定义 8.1.1 & 44 & 推论 24.1.4 & 114 \\
+定义 8.2.1 & 44 & 引理 24.1.5 & 114 \\
+定理 8.2.3 & 44 & 定义 24.2.1 & 114 \\
+定义 8.2.6 & 44 & 引理 24.2.3 & 115 \\
+定义 9.1.1 & 47 & 引理 24.2.4 & 115 \\
+定义 9.1.7 & 47 & 定义 24.3.1 & 115 \\
+推论 9.2.2 & 47 & 引理 24.3.3 & 115 \\
+推论 9.2.5 & 47 & 定义 24.3.4 & 115 \\
+定理 9.3.1 & 47 & 命题 24.3.5 & 115 \\
+引理 9.3.2 & 47 & 命题 24.3.6 & 117 \\
+推论 9.3.3 & 47 & 命题 24.3.7 & 117 \\
+命题 9.3.5 & 47 & 命题 24.3.8 & 117 \\
+引理 9.4.1 & 47 & 定义 24.4.1 & 117 \\
+定义 10.1.1 & 52 & 推论 24.4.5 & 118 \\
+定义 10.1.2 & 52 & 推论 24.4.6 & 118 \\
+定义 10.2.1 & 52 & 引理 24.4.7 & 118 \\
+命题 10.2.2 & 52 & 定理 24.4.8 & 118 \\
+命题 10.2.6 & 52 & 定义 25.1.2 & 119 \\
+命题 10.3.1 & 52 & 引理 25.1.5 & 119 \\
+定义 11.1.1 & 56 & 推论 25.1.6 & 119 \\
+命题 11.2.1 & 56 & 推论 25.1.7 & 119 \\
+定义 11.3.1 & 56 & 命题 25.2.4 & 119 \\
+命题 11.3.3 & 56 & 命题 25.3.2 & 119 \\
+命题 11.3.5 & 56 & 引理 25.3.5 & 119 \\
+命题 11.3.7 & 56 & 引理 25.4.1 & 119 \\
+引理 11.4.2 & 56 & 引理 25.4.2 & 119 \\
+引理 11.4.5 & 56 & 引理 25.4.3 & 119 \\
+定义 11.5.1 & 56 & 引理 25.4.4 & 119 \\
+命题 11.5.2 & 56 & 引理 25.4.6 & 119 \\
+定义 12.1.1 & 61 & 引理 26.1.4 & 124 \\
+定义 12.1.3 & 61 & 定义 26.1.6 & 124 \\
+命题 12.2.1 & 61 & 引理 26.1.7 & 124 \\
+命题 12.3.4 & 61 & 引理 26.1.10 & 124 \\
+引理 12.3.7 & 61 & 命题—定义 26.2.2 & 124 \\
+推论 12.3.11 & 61 & 推论 26.2.3 & 124 \\
+引理 12.4.3 & 61 & 引理 26.2.6 & 124 \\
+命题 12.4.10 & 61 & 推论 26.2.8 & 124 \\
+推论 12.4.11 & 61 & 推论 26.2.9 & 124 \\
+引理 12.4.12 & 61 & 定义 26.2.10 & 124 \\
+定义 13.1.1 & 67 & 命题 26.3.3 & 124 \\
+推论 13.1.2 & 67 & 定义 26.4.1 & 124 \\
+命题 13.1.4 & 67 & 引理 26.4.2 & 124 \\
+命题 13.1.5 & 67 & 定理 26.4.6 & 124 \\
+推论 13.1.6 & 67 & 推论 26.4.7 & 124 \\
+推论 13.1.8 & 67 & 命题 26.4.8 & 124 \\
+推论 13.1.9 & 67 & 定理 26.5.1 & 124 \\
+定义 13.2.1 & 67 & 推论 26.5.3 & 124 \\
+命题 13.3.1 & 67 & 引理 27.1.2 & 133 \\
+推论 13.3.2 & 67 & 定义 27.2.2 & 133 \\
+推论 13.3.3 & 67 & 推论 27.2.4 & 133 \\
+推论 13.3.4 & 67 & 推论 27.3.1 & 133 \\
+定理 13.4.1 & 67 & 定义 27.3.2 & 133 \\
+推论 13.4.2 & 67 & 推论 27.3.3 & 133 \\
+推论 13.4.3 & 67 & 推论 27.3.4 & 133 \\
+引理 13.4.4 & 67 & 推论 27.3.5 & 133 \\
+定义 14.1.1 & 72 & 推论 27.3.6 & 133 \\
+定义 14.1.4 & 72 & 推论 27.3.7 & 133 \\
+定义 14.1.5 & 72 & 推论 27.3.9 & 133 \\
+定理 14.2.4 & 72 & 推论 27.3.10 & 133 \\
+推论 14.2.5 & 72 & 定理 27.5.2 & 133 \\
+引理 14.3.2 & 72 & 推论 27.5.6 & 133 \\
+引理 14.3.5 & 72 & 命题—定义 28.1.1 & 141 \\
+定理 15.1.1 & 77 & 引理 28.1.2 & 141 \\
+推论 15.1.2 & 77 & 定理 28.1.5 & 141 \\
+推论 15.1.3 & 77 & 命题—定义 28.3.1 & 141 \\
+推论 15.1.4 & 77 & 引理 28.3.2 & 141 \\
+定义 16.1.1 & 78 & 命题 28.3.3 & 141 \\
+定义 16.1.2 & 78 & 定义 28.4.1 & 141 \\
+引理 16.1.3 & 78 & 推论 28.4.2 & 141 \\
+引理 16.1.4 & 78 & 推论 28.4.3 & 141 \\
+引理 16.1.6 & 78 & 引理 28.4.4 & 141 \\
+引理 16.1.7 & 78 & 推论 28.4.6 & 141 \\
+推论 16.1.9 & 78 & 定义 28.5.1 & 141 \\
+推论 16.1.10 & 78 & 引理 28.5.3 & 141 \\
+命题 16.1.12 & 78 & 引理 28.5.4 & 141 \\
+定义 16.2.1 & 78 & 推论 28.5.5 & 141 \\
+引理 16.2.2 & 78 & 命题 28.5.6 & 141 \\
+引理 16.2.3 & 78 & 推论 28.5.7 & 141 \\
+引理 16.3.1 & 78 & 引理 28.5.8 & 141 \\
+引理 16.3.2 & 78 & 推论 28.5.9 & 141 \\
+引理 16.3.3 & 78 & 推论 28.5.10 & 141 \\
+定义 16.4.1 & 78 & 引理 28.5.11 & 141 \\
+定义 17.1.1 & 83 & 引理 28.6.1 & 141 \\
+引理 17.1.2 & 83 & 命题 28.6.2 & 141 \\
+引理 17.1.3 & 83 & 引理 28.6.3 & 141 \\
+命题 17.1.4 & 83 & 定义 29.1.1 & 157 \\
+定义 18.1.1 & 85 & 定义 29.1.3 & 157 \\
+定义 18.1.2 & 85 & 定理 29.1.5 & 157 \\
+引理 18.1.3 & 85 & 推论 29.1.6 & 157 \\
+引理 18.1.4 & 85 & 定理 29.2.1 & 157 \\
+定义 18.2.1 & 85 & 定义 30.1.1 & 161 \\
+引理 18.2.2 & 85 & 引理 30.1.4 & 161 \\
+定义 18.2.4 & 85 & 引理 30.1.5 & 161 \\
+推论 18.2.5 & 85 & 引理 30.1.6 & 161 \\
+推论 18.2.6 & 85 & 引理 30.2.1 & 161 \\
+引理 18.2.7 & 85 & 引理 30.2.2 & 161 \\
+定义 18.2.10 & 85 & 命题 30.3.1 & 161 \\
+定义 18.3.1 & 85 & 推论 30.3.3 & 161 \\
+推论 18.3.2 & 85 & 推论 30.3.4 & 161 \\
+引理 18.3.3 & 85 & 定义 A.1.1 & 164 \\
+引理 18.3.4 & 85 & 引理 A.1.4 & 164 \\
+定理 18.4.1 & 85 & 定义 A.1.5 & 164 \\
+推论 18.4.3 & 85 & 定义 A.1.6 & 164 \\
+引理 18.5.1 & 85 & 定义 A.1.8 & 165 \\
+命题—定义 18.5.4 & 85 & 定义 A.2.1 & 165 \\
+引理 18.5.5 & 85 & 引理 A.2.2 & 165 \\
+定理 18.6.1 & 85 & 引理 A.2.6 & 165 \\
+引理 18.6.2 & 85 & 定义 A.3.1 & 167 \\
+引理 18.6.3 & 85 & 定义 A.3.4 & 167 \\
+引理 18.6.4 & 85 & 引理 A.3.7 & 167 \\
+引理 18.6.5 & 85 & 命题 A.3.8 & 168 \\
+定理 18.6.6 & 85 & 定义 A.3.10 & 168 \\
+定义 19.1.1 & 95 & 命题—定义 A.4.1 & 168 \\
+引理 19.1.2 & 95 & 引理 A.4.2 & 168 \\
+推论 19.1.3 & 95 & 定义 A.4.3 & 168 \\
+引理 19.1.4 & 95 & 引理 A.4.6 & 168 \\
+命题—定义 19.2.1 & 95 & 命题 A.5.1 & 169 \\
+引理 19.2.2 & 95 & 命题 A.5.2 & 170 \\
+引理 19.2.4 & 95 & 命题 A.5.3 & 170 \\
+引理 19.2.5 & 95 & 命题 A.5.4 & 170 \\
+推论 19.3.2 & 95 & 命题 A.5.5 & 170 \\
+定义 20.1.1 & 98 & 命题 A.5.7 & 170 \\
+\bottomrule
+\end{longtable}}
+\end{document}

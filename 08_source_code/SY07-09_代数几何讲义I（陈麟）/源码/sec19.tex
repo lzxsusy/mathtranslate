@@ -1,0 +1,173 @@
+% ======================================================================
+%  sec19.tex —— 第 19 节 既约概形
+%  底本：原书 pp.95–97（印刷页 = PDF 页）
+%  原书标题：19. Reduced schemes
+%            19.1 Definition / 19.2 Reduced subschemes
+%            19.3 Morphisms between reduced subschemes
+% ======================================================================
+
+\makeatletter
+\@ifundefined{c@propdef}{\newaliascnt{propdef}{theorem}\newtheorem{propdef}[propdef]{命题--定义}\aliascntresetthe{propdef}}{}
+\makeatother
+
+\section{既约概形}\label{sec:19}
+
+% ---------------------------------------------------------------- p.95
+\subsection{定义}\label{sec:19.1}
+
+\begin{definition}\label{def:19.1.1}
+设 $X$ 是概形。称 $X$ \emph{既约}，若对任意开子集 $U\subseteq X$，交换环 $\cO_X(U)$ 既约。
+\end{definition}
+
+\begin{yizhu}
+「既约」有三个常见入口：每个仿射开集 $\Spec(R)$ 的 $R$ 既约；每个局部环 $\cO_{X,x}$ 既约；每个开集的截面环 $\cO_X(U)$ 既约。原书取第三条，它最强，也最便于使用：引理 \ref{lem:19.1.2} 只需查一个拓扑基，引理 \ref{lem:19.1.4} 再退到点。Stacks 在这三条之间来回搬运，正说明三者互推并不平凡，尤其从局部环回到整体截面要经过层的条件。
+[来源：Stacks Project, Tag 01J0（Definition 26.12.1, Reduced schemes）与 Tag 01J1、Tag 01J2（Lemma 26.12.2, Lemma 26.12.3），\url{https://stacks.math.columbia.edu/tag/01J1}（2026-11-17 访问）。]
+\end{yizhu}
+
+下述结果由 $\cO_X$ 的层条件得到。
+
+\begin{lemma}\label{lem:19.1.2}
+概形 $X$ 既约，当且仅当存在 $X$ 的一个拓扑基 $\mathcal{B}$，使对任意 $U\in\mathcal{B}$，交换环 $\cO_X(U)$ 既约。
+\end{lemma}
+
+\begin{corollary}\label{cor:19.1.3}
+仿射概形 $\Spec(A)$ 既约当且仅当 $A$ 既约。
+\end{corollary}
+
+\begin{lemma}\label{lem:19.1.4}
+概形 $X$ 既约，当且仅当对任意 $x\in X$，局部环 $\cO_{X,x}$ 既约。
+\end{lemma}
+
+\begin{proof}
+断言在 $X$ 上局部，而仿射情形是熟知的。
+\end{proof}
+
+% ---------------------------------------------------------------- p.95
+\subsection{既约子概形}\label{sec:19.2}
+
+设 $X$ 是概形，$Z\subseteq X$ 是局部闭子集。考虑由满足 $i(Y)=Z$ 的局部闭浸入 $i:Y\to X$ 构成的范畴 $\mathrm{SubSch}_{X,Z}$。
+
+\begin{propdef}\label{prop:19.2.1}
+在 $\mathrm{SubSch}_{X,Z}$ 中存在本质唯一的对象 $Z_{\mathrm{red}}\to X$，使 $Z_{\mathrm{red}}$ 既约。此外，它是该范畴的始对象。称 $Z_{\mathrm{red}}$ 为 $X$ 在 $Z$ 上的\emph{既约子概形}。
+\end{propdef}
+
+\begin{proof}
+取开子概形 $U\subseteq X$ 使 $Z$ 是 $U$ 的闭子集。注意显然的函子 $\mathrm{SubSch}_{U,Z}\to\mathrm{SubSch}_{X,Z}$ 是等价，故可把 $X$ 换成 $U$，从而设 $Z$ 在 $X$ 中闭。
+
+先设 $X=\Spec(A)$ 仿射。取理想 $J\subseteq A$ 使 $Z=Z(J)$。由定理 15.1.1，范畴 $\mathrm{SubSch}_{X,Z}$ 等价于满足 $Z(I)=Z(J)$ 的理想 $I\subseteq A$ 的反范畴。后一条件等价于 $\sqrt{I}=\sqrt{J}$。于是 $\Spec(A/\sqrt{J})\to\Spec(A)$ 是该范畴中唯一的既约对象；再者，由于上式中的任意 $I$ 都满足 $I\subseteq\sqrt{J}$，它还是始对象。
+
+现在证一般情形。对任意仿射开子概形 $U\subseteq X$，考虑既约闭子概形 $(U\cap Z)_{\mathrm{red}}\to U$。若 $U\subseteq V$ 是两个仿射开子概形，可以验证
+\[
+(V\cap Z)_{\mathrm{red}}\times_V U\to U
+\]
+是既约闭子概形，且其像为拓扑空间 $U\cap Z$。于是得到 $U$ 的闭子概形之间的同构
+\[
+(V\cap Z)_{\mathrm{red}}\times_V U\simeq(U\cap Z)_{\mathrm{red}}.
+\]
+这说明存在唯一的闭子概形 $Z_{\mathrm{red}}\to X$，使
+\[
+Z_{\mathrm{red}}\times_X U\simeq(U\cap Z)_{\mathrm{red}}
+\]
+作为 $U$ 的闭子概形成立。由引理 \ref{lem:19.1.2}，$Z_{\mathrm{red}}$ 确实既约。
+
+% ---------------------------------------------------------------- p.96
+还需证明如上构造的对象 $Z_{\mathrm{red}}\to X$ 具有所要的性质。设 $Y\to X$ 是任意像为 $Z$ 的闭浸入。只需证明存在唯一的 $X$-态射 $Z_{\mathrm{red}}\to Y$，且当 $Y$ 既约时该态射是同构。可以验证这一断言在 $X$ 上局部，故它由已经证明的仿射情形得到。
+\end{proof}
+
+特别地，存在唯一的既约子概形 $X_{\mathrm{red}}\to X$，其底拓扑空间为 $X$。
+
+命题 \ref{prop:19.2.1} 的证明实际上给出了下述结果。
+
+\begin{lemma}\label{lem:19.2.2}
+设 $X$ 是概形，$U\subseteq X$ 是仿射开子集。则典范态射 $\cO_X\to\cO_{X_{\mathrm{red}}}$ 诱导同构
+\[
+\cO_X(U)_{\mathrm{red}}\xrightarrow{\ \simeq\ }\cO_{X_{\mathrm{red}}}(U).
+\]
+\end{lemma}
+
+\begin{warning}\label{warn:19.2.3}
+对一般的开子集 $U$，上一引理的断言可能失效。例如取域 $k$ 并令 $X=U=\bigsqcup_{n>0}\Spec(k[t]/(t^n))$。则 $X_{\mathrm{red}}\simeq\bigsqcup_{n>0}\Spec(k)$，从而
+\[
+\cO_{X_{\mathrm{red}}}(X)\simeq\prod_{n>0}k.
+\]
+另一方面
+\[
+\cO_X(U)_{\mathrm{red}}\simeq\Big(\prod_{n>0}k[t]/(t^n)\Big)_{\mathrm{red}},
+\]
+而典范态射 $\cO_X(U)_{\mathrm{red}}\to\cO_{X_{\mathrm{red}}}(X)$ 由
+\[
+\Big(\prod_{n>0}k[t]/(t^n)\Big)_{\mathrm{red}}\xrightarrow{\ t\mapsto0\ }\prod_{n>0}k
+\]
+给出。然而它不是同构：$(t,t,\dots)$ 是核中的非零元。
+\end{warning}
+
+\begin{yizhu}
+反例的机制是无限乘积不保持既约：幂零的阶可以逐分量无界。$\bigsqcup_{n>0}\Spec(k[t]/(t^n))$ 的截面环是 $\prod k[t]/(t^n)$，其中 $(t,t,\dots)$ 的任一次幂都还有非零分量，故它不是幂零元，却在既约化后消失。有限乘积没有这个毛病，这正是引理 \ref{lem:19.2.2} 要求 $U$ 仿射的理由：仿射开集上的截面由局部化给出，局部化总保持既约。
+[依据：原书 p.96 警告 \ref{warn:19.2.3} 的反例。]
+\end{yizhu}
+
+\begin{lemma}\label{lem:19.2.4}
+设 $X$ 是概形，$x\in X$。则 $\cO_{X_{\mathrm{red}},x}\simeq(\cO_{X,x})_{\mathrm{red}}$。
+\end{lemma}
+
+\begin{proof}
+断言在 $X$ 上局部，故可设 $X=\Spec(A)$ 仿射。此时断言是交换代数中的熟知事实。
+\end{proof}
+
+\begin{lemma}\label{lem:19.2.5}
+设 $X$ 与 $Y$ 是 $S$-概形。典范态射
+\[
+X_{\mathrm{red}}\times_S Y_{\mathrm{red}}\to X\times_S Y
+\]
+是闭浸入，且诱导底拓扑空间之间的同胚。特别地
+\[
+(X_{\mathrm{red}}\times_S Y_{\mathrm{red}})_{\mathrm{red}}\simeq(X\times_S Y)_{\mathrm{red}}.
+\]
+\end{lemma}
+
+\begin{proof}
+该态射是闭浸入，因为它可写成合成
+\[
+X_{\mathrm{red}}\times_S Y_{\mathrm{red}}\to X\times_S Y_{\mathrm{red}}\to X\times_S Y,
+\]
+而其中两个态射各是某个闭浸入的基变换。为证它诱导同胚，注意该断言在 $X$、$Y$ 与 $S$ 上局部。故可设 $X=\Spec(A)$、$Y=\Spec(B)$、$S=\Spec(R)$。此时所需态射由 $A\otimes_R B\to A_{\mathrm{red}}\otimes_R B_{\mathrm{red}}$ 给出，它是核幂零的满射。于是 $\Spec(A_{\mathrm{red}}\otimes_R B_{\mathrm{red}})\to\Spec(A\otimes_R B)$ 是同胚。
+\end{proof}
+
+\begin{warning}\label{warn:19.2.6}
+既约概形之积未必既约。例如 $\Z[t]/(t^2-p)\otimes\F_p\simeq\F_p[t]/(t^2)$ 不既约。
+\end{warning}
+
+\begin{yizhu}
+两条警告合起来说明：既约化与纤维积只在一侧相处。引理 \ref{lem:19.2.5} 允许把两次既约化并成一次，却不允许把 $X\times_S Y$ 换成既约的积，警告 \ref{warn:19.2.6} 就是最小的反例。几何上，$\Spec(\Z[t]/(t^2-p))\to\Spec(\Z)$ 是一族两个点，在素点 $p$ 处的纤维重数加倍，退化为一个二重点，故纤维的既约性不能沿基变换保持。
+[依据：原书 p.96 引理 \ref{lem:19.2.5} 与警告 \ref{warn:19.2.6}。]
+\end{yizhu}
+
+% ---------------------------------------------------------------- p.97
+\subsection{既约子概形之间的态射}\label{sec:19.3}
+
+\begin{exercise}\label{exc:19.3.1}
+设 $f:X\to Y$ 是概形间的态射。若 $X$ 既约，则 $f$ 唯一地穿过 $Y_{\mathrm{red}}$。提示：化到 $Y$ 仿射的情形。
+\end{exercise}
+
+\begin{yizhu}
+本题把「既约」再一次翻译为万有性质：从既约概形出发的态射只取决于集合论像。Stacks 的表述更完整：$f:Y\to X$ 穿过闭子概形 $Z$ 当且仅当 $f(Y)\subseteq Z$（集合论意义），由此任意态射分解为 $Y\to X_{\mathrm{red}}\to X$。原书留作习题并提示化 $Y$ 仿射，因为此时只需把理想取原像并比较零点集。
+[来源：Stacks Project, Tag 0356（Lemma 26.12.7, Reduced schemes），\url{https://stacks.math.columbia.edu/tag/0356}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{corollary}\label{cor:19.3.2}
+设 $f:X\to Y$ 是概形间的态射。则存在唯一的态射 $f_{\mathrm{red}}:X_{\mathrm{red}}\to Y_{\mathrm{red}}$，使下图交换：
+\[
+\begin{tikzcd}
+X_{\mathrm{red}} \arrow[r,"f_{\mathrm{red}}"] \arrow[d] & Y_{\mathrm{red}} \arrow[d] \\
+X \arrow[r,"f"'] & Y.
+\end{tikzcd}
+\]
+\end{corollary}
+
+\begin{exercise}\label{exc:19.3.3}
+若 $f:X\to Y$ 是开（相应地，闭、局部闭）浸入，则 $f_{\mathrm{red}}:X_{\mathrm{red}}\to Y_{\mathrm{red}}$ 亦然。
+\end{exercise}
+
+\begin{exercise}\label{exc:19.3.4}
+证明 $f$ 拟紧（相应地，分离、拟分离）当且仅当 $f_{\mathrm{red}}$ 亦然。
+\end{exercise}

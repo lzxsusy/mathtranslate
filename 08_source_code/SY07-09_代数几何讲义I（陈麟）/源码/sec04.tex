@@ -1,0 +1,314 @@
+% ======================================================================
+%  sec04.tex —— 第 4 节 素谱 $\Spec(R)$
+%  底本：原书 pp.27–32（第二部分自本节开始）
+%  原书标题：4. Spec(R)；4.1 Zariski topology / 4.2 Structure sheaf / 4.3 Functoriality
+% ======================================================================
+
+% 原书的混合环境（Proposition-Definition / Proposition-Construction）在导言区未定义，此处就地补上；
+% 沿用 aliascnt，使它们与定理共用计数器，编号仍由 (sub)section 决定。
+\makeatletter
+\@ifundefined{c@propdef}{\newaliascnt{propdef}{theorem}\newtheorem{propdef}[propdef]{命题--定义}\aliascntresetthe{propdef}}{}
+\@ifundefined{c@propcon}{\newaliascnt{propcon}{theorem}\newtheorem{propcon}[propcon]{命题--构造}\aliascntresetthe{propcon}}{}
+\makeatother
+
+\section{素谱 $\Spec(R)$}\label{sec:4}
+
+从本节起进入第二部分：概形的定义。
+
+\subsection{Zariski 拓扑}\label{sec:4.1}
+
+\begin{definition}\label{def:4.1.1}
+设 $R$ 为（含幺）交换环。以 $\Spec(R)$ 记 $R$ 的素理想之集合。在 $\Spec(R)$ 上赋予 \emph{Zariski 拓扑}，使得子集
+\[
+U(f) := \{\mathfrak p \in \Spec(R) \mid f \notin \mathfrak p\},\qquad f \in R
+\]
+构成拓扑基。所得拓扑空间称为 $R$ 的\emph{素谱}。形如 $U(f)$ 的开子集称为\emph{标准开子集}\footnote{别名：elementary open subsets（基本开子集）。}。
+\end{definition}
+
+注意 $U(f) \cap U(g) = U(fg)$。
+
+\begin{construction}\label{con:4.1.2}
+设 $I \subseteq R$ 为理想，考虑 $Z(I) = \{\mathfrak p \mid I \subseteq \mathfrak p\}$。按定义，
+\[
+Z(I) \simeq \Spec(R) \setminus \bigcup_{f \in I} U(f).
+\]
+\end{construction}
+
+由此得到下面这个结果。
+
+\begin{lemma}\label{lem:4.1.3}
+$\Spec(R)$ 的子集 $Z$ 是闭子集，当且仅当存在理想 $I \subseteq R$ 使 $Z = Z(I)$。
+\end{lemma}
+
+\begin{lemma}\label{lem:4.1.4}
+设 $I, J \subseteq R$ 为理想。则 $Z(I) \subseteq Z(J)$ 当且仅当 $J \subseteq \sqrt{I}$。
+\end{lemma}
+
+\begin{proof}
+回忆根 $\sqrt{I}$ 等于包含 $I$ 的全体素理想之交，即
+\begin{equation}\tag{4.1}\label{eq:4.1}
+\sqrt{I} = \bigcap_{\mathfrak p \in Z(I)} \mathfrak p .
+\end{equation}
+
+先证「若」。设 $J \subseteq \sqrt{I}$。则对任意 $\mathfrak p \in Z(I)$ 有 $J \subseteq \mathfrak p$，从而 $\mathfrak p \in Z(J)$。故 $Z(I) \subset Z(J)$，如所欲证。
+
+再证「仅当」。设 $Z(I) \subseteq Z(J)$。由 \eqref{eq:4.1} 得 $\sqrt{J} \subseteq \sqrt{I}$。特别地 $J \subseteq \sqrt{I}$，如所欲证。
+\end{proof}
+
+\begin{corollary}\label{cor:4.1.5}
+设 $I, J \subseteq R$ 为理想。则 $Z(I) = Z(J)$ 当且仅当 $\sqrt{J} = \sqrt{I}$。
+\end{corollary}
+
+\begin{corollary}\label{cor:4.1.6}
+点 $\mathfrak p \in \Spec(R)$ 是闭点，当且仅当 $\mathfrak p$ 是极大理想。
+\end{corollary}
+
+\begin{corollary}\label{cor:4.1.7}
+设 $x, y \in \Spec(R)$ 分别由素理想 $\mathfrak p$ 与 $\mathfrak q$ 给出。则 $x \in \overline{\{y\}}$ 当且仅当 $\mathfrak p \supset \mathfrak q$。
+\end{corollary}
+
+上文中，称 $x$ 是 $y$ 的\emph{特殊化}，$y$ 是 $x$ 的\emph{一般化}。
+
+\begin{corollary}\label{cor:4.1.8}
+拓扑空间 $\Spec(R)$ 是 Kolmogorov 空间：对任意两个不同点，其中至少一个拥有不含另一点的开邻域。
+\end{corollary}
+
+\begin{remark}\label{rem:4.1.9}
+空间 $\Spec(R)$ 一般不是 Hausdorff 空间。事实上，它是 Hausdorff 空间当且仅当 $R$ 的 Krull 维数为零。
+\end{remark}
+
+\begin{example}\label{ex:4.1.10}
+$\Spec(\Z)$ 的点如下：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 每个素数 $p$ 给出一个点 $(p)$；
+  \item 有一个点 $(0)$。
+\end{enumerate}
+它的闭子集，要么是 (i) 中有限个点，要么是全空间。(i) 中的点是闭点；(ii) 中的点不闭，且在全空间中稠密。
+\end{example}
+
+\begin{example}\label{ex:4.1.11}
+设 $k$ 为域。则 $\Spec(k)$ 是单点空间。
+\end{example}
+
+\begin{example}\label{ex:4.1.12}
+设 $R$ 为离散赋值环。则 $\Spec(R)$ 有两个点：闭点对应 $R$ 的定义理想，开点对应零理想。
+\end{example}
+
+\begin{exercise}\label{exc:4.1.13}
+设 $k$ 为代数闭域。描述 $\Spec(k[x,y]/(xy))$。
+\end{exercise}
+
+\begin{lemma}\label{lem:4.1.14}
+$\Spec(R)$ 是拟紧空间。
+\end{lemma}
+
+\begin{proof}
+任意开覆盖都可加细为形如 $\Spec(R) = \bigcup_{f \in S} U(f)$ 的覆盖，故只需处理这种情形。令 $\langle S\rangle$ 为 $S$ 生成的理想。由 $Z(\langle S\rangle) = \varnothing$ 得 $\langle S\rangle = R$。于是存在有限子集 $S' \subseteq S$ 使 $1 \in \langle S'\rangle$，即 $R = \langle S'\rangle$。于是
+\[
+\varnothing = Z(\langle S'\rangle) = \Spec(R) \setminus \bigcup_{f \in S'} U(f).
+\]
+\end{proof}
+
+\begin{yizhu}
+标准开集对有限交封闭（$U(f)\cap U(g)=U(fg)$），这一条小小的封闭性支撑了后面所有的「只需验证标准开覆盖」论证。Stacks 把与之配套的翻译逐条列出：$D(g)\subset D(f)$ 时存在典范映射 $R_f\to R_g$，且每个 $D(f)$ 都拟紧。第 \ref{lem:4.1.14} 号引理之所以能只处理 $S$ 的有限子集，前提正是后者。
+[来源：Stacks Project, Tag 01HS（Lemma 26.5.1, Affine schemes），\url{https://stacks.math.columbia.edu/tag/01HS}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{yizhu}
+推论 \ref{cor:4.1.7} 的偏序关系把拓扑信息完全压缩成一个序：闭包恰是「所有特殊化」。Stacks 进一步指出概形都是 sober 空间，即每个不可约闭子集有唯一的 generic point；在 $\Spec(R)$ 里，$Z(\mathfrak p)$ 的 generic point 就是 $\mathfrak p$。sober 比 Kolmogorov 更弱于 Hausdorff，这个层级是代数几何中空间的常态。
+[来源：Stacks Project, Tag 01IS（Lemma 26.11.1, Zariski topology of schemes），\url{https://stacks.math.columbia.edu/tag/01IS}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{yizhu}
+「拟紧」这个译名值得强调：它指任意开覆盖有有限子覆盖，并不要求空间 Hausdorff，因此与「紧」不是同义词。$\Spec(R)$ 拟紧的算术根源只有一句：单位理想由 $1$ 这一个元素生成。对一般概形，仿射开集构成拓扑基，所以只能得到局部拟紧；粘接多个仿射块时，全局的有限性并不自动成立。
+[依据：原书 p.28 第 1 段]
+\end{yizhu}
+
+\subsection{结构层}\label{sec:4.2}
+
+\begin{lemma}\label{lem:4.2.1}
+$U(f) \subseteq U(f')$ 当且仅当同态 $R \to R_f$ 唯一地经 $R \to R_{f'}$ 分解。
+\end{lemma}
+
+\begin{proof}
+按定义，$U(f) \subseteq U(f')$ 等价于 $Z(\langle f\rangle) \supset Z(\langle f'\rangle)$。由引理 \ref{lem:4.1.4}，这等价于 $f^n \in \langle f'\rangle$ 对某个 $n \ge 0$ 成立。这又等价于 $f'$ 在 $R \to R_f$ 下的像可逆，而后者等价于所要求的分解。
+\end{proof}
+
+\begin{corollary}\label{cor:4.2.2}
+$U(f) = U(f')$ 当且仅当 $R_f \cong R_{f'}$ 作为 $R$-代数同构。
+\end{corollary}
+
+\begin{propdef}\label{prop:4.2.3}
+$\Spec(R)$ 上存在本质唯一的交换环层 $\cO$，连同同构 $R \xrightarrow{\simeq} \cO(\Spec(R))$，使得对任意 $f \in R$，由
+\[
+R \cong \cO(\Spec(R)) \to \cO(U(f))
+\]
+给出的 $R$-代数 $\cO(U(f))$ 同构于 $R_f$。这里的\emph{本质唯一}\footnote{本质唯一是指：二元组 $(\cO,\varphi)$ 在唯一同构的意义下唯一。}是指同构意义下的唯一性。
+\end{propdef}
+
+记 $\cO_{\Spec(R)} := \cO$，称它为 $\Spec(R)$ 上的\emph{结构层}。使用这个术语时，把同构 $R \xrightarrow{\simeq} \cO(\Spec(R))$ 视为隐含。
+
+\begin{remark}\label{rem:4.2.4}
+注意，对 $R$-代数 $A$ 而言，「同构于 $R_f$」是\emph{性质}而非\emph{结构}：从 $R_f$ 到 $A$ 的 $R$-同态至多有一个。
+\end{remark}
+
+\begin{proof}[命题--定义 \ref{prop:4.2.3} 的证明]
+令 $\mathfrak{B}$ 为 $\Spec(R)$ 中标准开子集构成的范畴。由于层由它在拓扑基上的限制唯一决定，只需说明存在唯一函子 $\cO : \mathfrak{B}^{\mathrm{op}} \to \CRing$，连同同构 $\varphi : R \xrightarrow{\simeq} \cO(\Spec(R))$，使得：
+\begin{enumerate}[label=(\alph*),leftmargin=2em,itemsep=0.25ex]
+  \item 函子 $\cO : \mathfrak{B}^{\mathrm{op}} \to \CRing$ 满足命题 \ref{prop:1.2.10} 中的层条件；
+  \item 对任意 $f \in R$，$\cO(U(f))$ 作为 $R$-代数同构于 $R_f$。
+\end{enumerate}
+
+由引理 \ref{lem:4.2.1}，满足条件 (b) 的二元组 $(\cO,\varphi)$ 唯一。于是只需验证条件 (a)。展开定义后，这归结为下面这条交换代数事实（取 $M=A$）。其证明留给读者。
+\end{proof}
+
+\begin{lemma}\label{lem:4.2.5}
+设 $A$ 为交换环，$f,(f_i)_{i \in I} \in A$ 满足 $U(f) = \bigcup_{i \in I} U(f_i)$，其中 $U(\cdot)$ 指 $\Spec(A)$ 中的标准开集。则对任意 $A$-模 $M$，序列
+\[
+0 \to M_f \to \prod_{i \in I} M_{f_i} \to \prod_{(i,j) \in I^2} M_{f_i f_j}
+\]
+正合。这里第二个映射由典范映射 $M \to M_{f_i}$ 诱导，第三个映射为
+\[
+(s_i)_{i \in I} \mapsto (s_j - s_i)_{(i,j) \in I^2}.
+\]
+\end{lemma}
+
+\begin{exercise}\label{exc:4.2.6}
+设 $k$ 为域，$R = k[x,y]$。考虑对应极大理想 $(x,y)$ 的点 $0 \in \Spec(R)$。令 $U := \Spec(R) \setminus 0$ 为其补开子集。求 $\cO(U)$。
+\end{exercise}
+
+\begin{definition}\label{def:4.2.7}
+\emph{仿射概形}是指这样的拓扑空间 $X$，它带有一层交换环层 $\cO$，且存在交换环 $R$ 使 $(X,\cO) \cong (\Spec R, \cO_{\Spec(R)})$。
+\end{definition}
+
+\begin{proposition}\label{prop:4.2.8}
+设 $x \in \Spec(R)$ 对应素理想 $\mathfrak p \subseteq R$。则由
+\[
+R \cong \cO(\Spec(R)) \to \cO_x
+\]
+给出的 $R$-代数 $\cO_x$（唯一地）同构于 $R_{\mathfrak p}$。特别地，$\cO_x$ 是局部环。
+\end{proposition}
+
+\begin{proof}
+按定义，
+\[
+\cO_x \simeq \colim_{U \in \mathfrak{U}(\Spec(R),x)^{\mathrm{op}}} \cO(U).
+\]
+令 $\mathfrak{B}_x \subseteq \mathfrak{U}(\Spec(R),x)$ 为 $x$ 在 $\Spec(R)$ 中的标准开邻域构成的完整子范畴。按 Zariski 拓扑的定义，$\mathfrak{B}_x^{\mathrm{op}} \to \mathfrak{U}(\Spec(R),x)^{\mathrm{op}}$ 是（余）终的。于是
+\[
+\cO_x \simeq \colim_{U \in \mathfrak{B}_x^{\mathrm{op}}} \cO(U).
+\]
+
+对任意试验 $R$-代数 $\varphi : R \to A$，有
+\[
+\Hom_R(\cO_x, A) \simeq \lim_{U \in \mathfrak{B}_x} \Hom_R(\cO(U), A).
+\]
+由于每个 $\cO(U)$ 都是 $R$ 的局部化，由此得到两条：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 若 $U = U(f)$ 且 $\varphi(f)$ 不可逆，则 $\Hom_R(\cO(U),A) \simeq \varnothing$；
+  \item 若 $\varphi(f)$ 可逆，则 $\Hom_R(\cO(U),A) \simeq \{*\}$。
+\end{enumerate}
+于是，若存在 $f \in R \setminus \mathfrak p$ 使 $\varphi(f)$ 不可逆，则 $\Hom_R(\cO_x,A) \simeq \varnothing$；若所有 $f \in R \setminus \mathfrak p$ 都使 $\varphi(f)$ 可逆，则 $\Hom_R(\cO_x,A) \simeq \{*\}$。同态 $\Hom_R(R_{\mathfrak p},A)$ 有完全相同的刻画。由 Yoneda 引理，得到唯一同构 $\cO_x \simeq R_{\mathfrak p}$。
+\end{proof}
+
+\begin{yizhu}
+原书把结构层的存在性交给「基上层」的延拓，而 Stacks 直接把它定义为在标准开集上与 $\widetilde R$ 一致的那唯一一层，其中 $\widetilde R(D(f))=R_f$，并借此把 $\widetilde M(D(f))=M_f$ 一并造出。这与命题--定义 \ref{prop:4.2.3} 的 (b) 条件逐字对应，区别只在于 Stacks 先造 $\widetilde M$ 再取 $M=R$。
+[来源：Stacks Project, Tag 01HU（Definition 26.5.3, Affine schemes），\url{https://stacks.math.columbia.edu/tag/01HU}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{yizhu}
+命题 \ref{prop:4.2.8} 的「唯一同构」在整体截面上的对应物是：$\Gamma(\Spec R,\cO_{\Spec R})=R$，且对每个 $f$ 有 $\Gamma(D(f),\cO_{\Spec R})=R_f$。这两条合起来说明，原书把 $R\cong\cO(\Spec R)$ 当作隐含同构是安全的：它由 $R$ 本身完全决定，不含任何额外选择。
+[来源：Stacks Project, Tag 01HV（Lemma 26.5.4, Affine schemes），\url{https://stacks.math.columbia.edu/tag/01HV}（2026-11-17 访问）。]
+\end{yizhu}
+
+\subsection{函子性}\label{sec:4.3}
+
+固定交换环 $R,R'$，记 $X = \Spec R$，$X' = \Spec R'$，$\cO,\cO'$ 为相应的结构层。
+
+\begin{construction}\label{con:4.3.1}
+设 $h : R \to R'$ 为交换环同态。定义
+\[
+\varphi : X' \to X,\qquad \mathfrak p' \mapsto h^{-1}(\mathfrak p').
+\]
+对任意 $f \in R$ 有 $\varphi^{-1}(U(f)) = U(h(f))$，故 $\varphi$ 连续。
+\end{construction}
+
+注意 $h \mapsto \varphi$ 会丢掉信息：由 $\varphi$ 无法还原 $h$。
+
+\begin{proposition}\label{prop:4.3.2}
+存在唯一的 $\Shv(X,\CRing)$ 中态射 $\alpha : \cO \to \varphi_*(\cO')$，使下图交换：
+\[
+\begin{tikzcd}
+\cO(X) \arrow[r,"\alpha_X"] \arrow[d,"\simeq"'] & (\varphi_*\cO')(X) \arrow[d,"\simeq"] \\
+R \arrow[r,"h"'] & R'
+\end{tikzcd}
+\]
+其中两侧竖箭头为同构。
+\end{proposition}
+
+\begin{proof}
+令 $\mathfrak{B}$ 为 $X$ 中标准开子集构成的完整子范畴。由习题 \ref{exc:1.2.7}，只需给出唯一的自然变换 $\alpha : \cO|_{\mathfrak{B}^{\mathrm{op}}} \to \varphi_*(\cO')|_{\mathfrak{B}^{\mathrm{op}}}$。取 $U = U(f)$，则 $\varphi^{-1}(U) = U(h(f))$，而 $\cO(U) \cong R_f$、$\cO'(\varphi^{-1}U) \cong R_{h(f)}$。经这些同构，命题显然成立。各 $\alpha_U$ 唯一，故 $\alpha$ 唯一。
+\end{proof}
+
+\begin{corollary}\label{cor:4.3.3}
+存在唯一的 $\Shv(X',\CRing)$ 中态射 $\beta : \varphi^{-1}\cO \to \cO'$，使下图交换：
+\[
+\begin{tikzcd}
+\varphi^{-1}\cO(X') \arrow[r] \arrow[d,"\simeq"'] & \cO'(X') \arrow[d,"\simeq"] \\
+R \arrow[r,"h"'] & R'
+\end{tikzcd}
+\]
+此外，对任意 $x' \in X'$，令 $x := \varphi(x')$，则同态
+\[
+\beta_{x'} : \cO_x \simeq (\varphi^{-1}\cO)_{x'} \to \cO'_{x'}
+\]
+是局部同态。
+\end{corollary}
+
+\begin{proof}
+第一个断言由命题 \ref{prop:4.3.2} 与伴随 $\varphi^{-1} \dashv \varphi_*$ 得到。对第二个断言，设 $x'$ 对应 $\mathfrak p' \subseteq R'$，$p := \varphi^{-1}(\mathfrak p')$。由命题 \ref{prop:4.2.8}，可把 $\cO_x \to \cO'_{x'}$ 等同于唯一 $R$-同态 $R_{\mathfrak p} \to R_{\mathfrak p'}$。
+\end{proof}
+
+\begin{propcon}\label{prop:4.3.4}
+存在典范双射，介于下列两类对象之间：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item $\Hom_{\CRing}(R,R')$ 中的元素；
+  \item 二元组 $(\varphi,\beta)$，其中 $\varphi : X' \to X$ 连续，$\beta : \varphi^{-1}\cO \to \cO'$ 为 $\Shv(X',\CRing)$ 中态射，且对任意 $x' \in X'$、$x = \varphi(x')$，同态 $\beta_{x'} : \cO_x \simeq (\varphi^{-1}\cO)_{x'} \to \cO'_{x'}$ 是局部同态。
+\end{enumerate}
+\end{propcon}
+
+\begin{proof}
+从 (ii) 到 (i)：由伴随得到 $\alpha : \cO \to \varphi_*\cO'$，而图
+\[
+\begin{tikzcd}
+\cO(X) \arrow[r] \arrow[d,"\simeq"'] & (\varphi_*\cO')(X) \arrow[r,"\simeq"] & \cO'(X') \arrow[d,"\simeq"] \\
+R \arrow[rr,"h"'] & {} & R'
+\end{tikzcd}
+\]
+给出唯一同态 $h$。推论 \ref{cor:4.3.3} 说明该映射是满的。
+
+再证单性。设 $(\varphi_1,\beta_1)$ 与 $(\varphi_2,\beta_2)$ 给出同一个 $h$。先证 $\varphi_1 = \varphi_2$。取 $x' \in X'$，它对应 $\mathfrak p \subseteq R'$；置 $x_i := \varphi_i(x')$，并设 $x_i$ 对应 $\mathfrak p_i \subseteq R$。有交换图
+\[
+\begin{tikzcd}
+\cO_{x_i} \arrow[r,"\simeq"] \arrow[d,"\simeq"'] & (\varphi_i^{-1}\cO)_{x'} \arrow[r] \arrow[d] & \cO'_{x'} \arrow[d,"\simeq"] \\
+R \arrow[rr,"h"'] & {} & R'
+\end{tikzcd}
+\]
+由命题 \ref{prop:4.2.8}，$\cO_{x_i} \simeq R_{\mathfrak p_i}$，$\cO'_{x'} \simeq R_{\mathfrak p'}$，故 $h^{-1}(\mathfrak p') \subseteq \mathfrak p_i$。又因图中顶部水平箭头是局部同态，得 $h^{-1}(\mathfrak p') = \mathfrak p_i$。于是 $\mathfrak p_1 = \mathfrak p_2$。
+
+再令 $\varphi = \varphi_1 = \varphi_2$。对任意 $x'$ 有 $(\beta_1)_{x'} = (\beta_2)_{x'}$：两者都可等同于与 $h$ 相容的唯一同态 $R_{\mathfrak p} \to R_{\mathfrak p'}$。由推论 \ref{cor:2.2.3}（层态射由茎决定），得 $\beta_1 = \beta_2$。
+\end{proof}
+
+\begin{exercise}\label{exc:4.3.5}
+说明：若去掉「$\beta_{x'}$ 为局部同态」这一要求，命题--构造 \ref{prop:4.3.4} 的结论便不再成立。换言之，请举出连续映射 $\varphi$ 与层态射 $\beta : \varphi^{-1}\cO \to \cO'$，使某个点处的 $\beta_{x'}$ 不是局部同态。
+\end{exercise}
+
+\begin{yizhu}
+原书说「$h\mapsto\varphi$ 丢掉信息」，Stacks 把这一点列为引入局部环化空间的第一条理由：一般说来，没有任何机制能由谱之间的连续映射造出环同态。第二理由是环化空间态射在茎上未必局部，这正是习题 \ref{exc:4.3.5} 的要点。两条合起来解释了为什么概形态射必须同时带上层的数据 $\beta$。
+[来源：Stacks Project, Tag 01HA（Section 26.2, Locally ringed spaces），\url{https://stacks.math.columbia.edu/tag/01HA}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{yizhu}
+命题--构造 \ref{prop:4.3.4} 是「$\Spec$ 与整体截面互逆」的雏形：它说的正是 $\CRing^{\mathrm{op}}$ 与仿射概形范畴之间的等价在对象层面完全忠实。若把右边的 $X'$ 换成任意局部环化空间，结论依然成立，此时它读作 $\Hom(X,\Spec R)\cong\Hom_{\CRing}(R,\Gamma(X,\cO_X))$，即 $\Gamma\dashv\Spec$ 这一伴随。
+[来源：Stacks Project, Tag 01I1（Lemma 26.6.4, The category of affine schemes），\url{https://stacks.math.columbia.edu/tag/01I1}（2026-11-17 访问）。]
+\end{yizhu}

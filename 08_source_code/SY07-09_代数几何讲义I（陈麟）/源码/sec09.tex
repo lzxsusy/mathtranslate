@@ -1,0 +1,315 @@
+% ======================================================================
+%  sec09.tex —— 第 9 节 纤维积
+%  底本：原书 pp.47–51；原书标题：9. Fiber products
+% ======================================================================
+
+\section{纤维积}\label{sec:9}
+
+\subsection{纤维积的定义}\label{sec:9.1}
+
+回忆：任意范畴中都有纤维积的概念。
+
+\begin{definition}\label{def:9.1.1}
+设 $\mathcal C$ 是范畴。称 $\mathcal C$ 中的交换方块
+\[
+\begin{tikzcd}[column sep=3.4em,row sep=3em]
+d \arrow[r,"g'"] \arrow[d,"f'"'] & a \arrow[d,"f"]\\
+b \arrow[r,"g"'] & c
+\end{tikzcd}
+\tag{9.1}
+\]
+为\emph{笛卡儿的}，若对任意对象 $x \in \mathcal C$，交换方块
+\[
+\begin{tikzcd}[column sep=5em,row sep=3em]
+\Hom_{\mathcal C}(x,d) \arrow[r,"g'\circ-"] \arrow[d,"f'\circ-"'] & \Hom_{\mathcal C}(x,a) \arrow[d,"f\circ-"]\\
+\Hom_{\mathcal C}(x,b) \arrow[r,"g\circ-"'] & \Hom_{\mathcal C}(x,c)
+\end{tikzcd}
+\]
+在 $\Set$ 中是笛卡儿方块。换言之，若它诱导双射
+\[
+\Hom_{\mathcal C}(x,d) \longrightarrow \Hom_{\mathcal C}(x,a) \times_{\Hom_{\mathcal C}(x,c)} \Hom_{\mathcal C}(x,b).
+\]
+此时也称 (9.1) 是\emph{拉回方块}，称 (9.1) 把 $d$ 实现为图 $a \xrightarrow{f} c \xleftarrow{g} b$ 的\emph{拉回}；也称 $d$ 是 $a \xrightarrow{f} c \xleftarrow{g} b$ 的\emph{纤维积}。
+\end{definition}
+
+\begin{yizhu}
+原文用 Hom 集的双射定义笛卡儿方，这正是泛性质的逐对象展开：给一个态射 $x \to d$ 等同于给一对相容的态射 $x \to a$、$x \to b$，而后者就是右边纤维积的元素。Stacks 的定义直接写泛性质，二者等价。又，此定义只要求 Hom 集上的双射，不要求 $d$ 有唯一构造，唯一性来自 Yoneda 引理，见注 \ref{rem:9.1.2}。
+[来源：Stacks Project, Tag 001V（Definition 4.6.1，纤维积），\url{https://stacks.math.columbia.edu/tag/001V}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{remark}\label{rem:9.1.2}
+由 Yoneda 引理，带态射 $f'$、$g'$ 的对象 $d$ 本质唯一。当态射在上下文中清楚时，常写
+\[
+d \simeq a \times_c b .
+\]
+\end{remark}
+
+\begin{remark}\label{rem:9.1.3}
+由 Yoneda 引理，构造
+\[
+\bigl[\,a \xrightarrow{f} c \xleftarrow{g} b\,\bigr] \longmapsto a \times_c b
+\]
+是函子性的。换言之，对交换图
+\[
+\begin{tikzcd}[column sep=3.8em,row sep=3em]
+a \arrow[r] \arrow[d,"p"'] & c \arrow[l] \arrow[d,"r"] & b \arrow[l] \arrow[d,"q"]\\
+a' \arrow[r] & c' \arrow[l] & b'
+\end{tikzcd}
+\]
+存在唯一的虚线态射 $a \times_c b \to a' \times_{c'} b'$，使下图交换：
+\[
+\begin{tikzcd}[column sep=4.4em,row sep=3em]
+a & a \times_c b \arrow[l] \arrow[r] \arrow[d,dashed] & b \arrow[d,"q"]\\
+a' & a' \times_{c'} b' \arrow[l] \arrow[r] & b'
+\end{tikzcd}
+\]
+\end{remark}
+
+我们常滥用记号，把这个态射记为
+\[
+(p,q) \colon a \times_c b \to a' \times_{c'} b'
+\]
+（它还依赖图中其它态射）。
+
+\begin{example}\label{ex:9.1.4}
+若 $c$ 是终对象，则 $a \times_c b \simeq a \times b$。
+\end{example}
+
+\begin{example}\label{ex:9.1.5}
+$\Ab$ 中纤维积存在，且遗忘函子 $\Ab \to \Set$ 保持纤维积。给定 $\Ab$ 中的图 $A \xrightarrow{f} C \xleftarrow{g} B$，有
+\[
+A \times_C B \simeq \ker\bigl(A \oplus B \xrightarrow{(f,-g)} C\bigr).
+\]
+\end{example}
+
+\begin{example}\label{ex:9.1.6}
+设 $\mathcal C$、$\mathcal D$ 是范畴，并设 $\mathcal C$ 中纤维积存在。则 $\mathsf{Fun}(\mathcal D,\mathcal C)$ 中纤维积存在，且对函子 $F_i \colon \mathcal D \to \mathcal C$ 与对象 $d \in \mathcal D$ 有
+\[
+(F_1 \times_{F_3} F_2)(d) \simeq F_1(d) \times_{F_3(d)} F_2(d).
+\]
+\end{example}
+
+\begin{definition}\label{def:9.1.7}
+设 $\mathcal C$ 是范畴。图 $a \xleftarrow{f} c \xrightarrow{g} b$ 的\emph{余积}，定义为 $\mathcal C^{\op}$ 中相应图的拉回。也称它为 $a \xleftarrow{f} c \xrightarrow{g} b$ 的\emph{纤维余积}，并记作
+\[
+a \coprod_c b .
+\]
+\end{definition}
+
+\subsection{仿射概形的纤维积}\label{sec:9.2}
+
+\begin{exercise}\label{exc:9.2.1}
+$\CRing$ 中纤维余积存在，且
+\[
+A \coprod_C B \simeq A \otimes_C B .
+\]
+\end{exercise}
+
+\begin{corollary}\label{cor:9.2.2}
+$\mathsf{Aff}$ 中纤维积存在。给定图 $A \leftarrow C \to B$，有
+\[
+\Spec(A \otimes_C B) \simeq \Spec(A) \times_{\Spec(C)} \Spec(B).
+\]
+\end{corollary}
+
+\begin{warning}\label{warn:9.2.3}
+$\Spec(A \otimes_C B)$ 的底拓扑空间一般\emph{不是}相应拓扑空间的纤维积。换言之，遗忘函子 $\mathsf{Aff} \to \Top$ 不保持纤维积。
+\end{warning}
+
+\begin{yizhu}
+底空间上的差异可以精确描述：$X \times_S Y$ 的点与四元组 $(x,y,s,\mathfrak p)$ 一一对应，其中 $f(x) = g(y) = s$，而 $\mathfrak p$ 是 $\kappa(x) \otimes_{\kappa(s)} \kappa(y)$ 的素理想，该点的剩余域即 $\mathfrak p$ 的剩余域。取 $S = \Spec k$ 时，$A \otimes_k B$ 的素理想远多于两个因子素理想的配对，多出来的点正是 $\Spec$ 对张量积的贡献，它们在底空间层面没有对应物。
+[来源：Stacks Project, Tag 01JT（Lemma 26.17.5，纤维积的点），\url{https://stacks.math.columbia.edu/tag/01JT}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{exercise}\label{exc:9.2.4}
+设 $k \to k'$ 是 $d$ 次有限可分扩张，$\overline{k}$ 是 $k$ 的代数闭包。证明
+\[
+\Spec(k') \times_{\Spec(k)} \Spec(\overline{k}) \simeq \bigsqcup_d \Spec(\overline{k}).
+\]
+\end{exercise}
+
+\begin{yizhu}
+可分性使张量积分裂。$\overline{k} \otimes_k k'$ 是 $\overline{k}$ 上有限维代数；因 $\overline{k}/k$ 可分而 $k'$ 既约，该张量积既约，从而分裂为有限个域的直积。每个因子是 $\overline{k}$ 的有限扩张，而 $\overline{k}$ 代数闭，故每个因子都等于 $\overline{k}$，因子个数即维数 $d$。若 $k'/k$ 不可分，张量积会带幂零元，点数就少于 $d$。
+[来源：Stacks Project, Tag 030U（Lemma 10.43.6，可分扩张保持既约性），\url{https://stacks.math.columbia.edu/tag/030U}（2026-11-17 访问）。]
+\end{yizhu}
+
+注意，由推论 \ref{cor:7.2.3} 还有如下形式推论：
+
+\begin{corollary}\label{cor:9.2.5}
+函子 $\mathsf{Aff} \to \Sch$ 保持纤维积。
+\end{corollary}
+
+\subsection{概形的纤维积}\label{sec:9.3}
+
+\begin{theorem}\label{thm:9.3.1}
+范畴 $\Sch$ 有纤维积。
+\end{theorem}
+
+\begin{yizhu}
+纤维积存在与有限极限存在是一回事：$\Sch$ 的终对象是 $\Spec \Z$，故定理连同积的存在性给出 $\Sch$ 的全部有限极限。Stacks 把这两件事合并为一条陈述，且采用与原文不同的证明（可表性判别法），并在证明开头自注可以跳过该证明，理由是学会在纤维积上工作更重要。
+[来源：Stacks Project, Tag 01JM（Lemma 26.16.1，概形范畴的有限极限），\url{https://stacks.math.columbia.edu/tag/01JM}（2026-11-17 访问）。]
+\end{yizhu}
+
+我们将在本节末尾给出该定理的构造性证明。眼下先证它的一个特例。
+
+\begin{lemma}\label{lem:9.3.2}
+设 $f \colon X \to Y$ 是概形间的态射，$U \subseteq Y$ 是开子概形。则纤维积 $X \times_Y U$ 存在，且典范态射 $X \times_Y U \to X$ 是到开子概形 $f^{-1}(U)$ 上的开浸入。
+\end{lemma}
+
+\begin{proof}
+只需证明交换方块
+\[
+\begin{tikzcd}[column sep=4.2em,row sep=3em]
+f^{-1}(U) \arrow[r,"f'"] \arrow[d,"j'"'] & U \arrow[d,"j"]\\
+X \arrow[r,"f"'] & Y
+\end{tikzcd}
+\]
+在 $\Sch$ 中是笛卡儿的。设 $Z \in \Sch$ 是测试对象，只需证明交换方块
+\[
+\begin{tikzcd}[column sep=5.6em,row sep=3em]
+\Hom_{\Sch}(Z,f^{-1}(U)) \arrow[r,"f'\circ-"] \arrow[d,"j'\circ-"'] & \Hom_{\Sch}(Z,U) \arrow[d,"j\circ-"]\\
+\Hom_{\Sch}(Z,X) \arrow[r,"f\circ-"'] & \Hom_{\Sch}(Z,Y)
+\end{tikzcd}
+\]
+在 $\Set$ 中是笛卡儿的。由开子概形的定义，竖直映射是单射；且态射 $g \colon Z \to X$（相应地 $h \colon Z \to Y$）落在像中，当且仅当子空间 $g(Z)$（相应地 $h(Z)$）含于 $f^{-1}(U)$（相应地 $U$）。由此可见：$g \colon Z \to X$ 落在左竖直映射的像中，当且仅当 $f \circ g$ 落在右竖直映射的像中。换言之，上述方块正如所求是笛卡儿的。
+\end{proof}
+
+\begin{corollary}\label{cor:9.3.3}
+设 $X \xrightarrow{j} Y \leftarrow U$ 是 $\Sch$ 中的图，且 $j$ 是开浸入。则遗忘函子 $\Sch \to \Top$ 保持该图的纤维积。
+\end{corollary}
+
+\begin{exercise}\label{exc:9.3.4}
+设 $X$ 是概形。
+\begin{enumerate}[label=(\arabic*),leftmargin=2em,itemsep=0.25ex]
+  \item 设 $X$ 仿射。证明 $X$ 中两个仿射开子集之交仍仿射。
+  \item 证明 (1) 对一般的 $X$ 可以不成立。
+\end{enumerate}
+\end{exercise}
+
+\begin{yizhu}
+(2) 的反例必须取非分离概形。分离性恰好等价于「局部」的仿射交性质：若 $f \colon X \to S$ 分离，则含于 $S$ 的同一仿射开子集中的两个仿射开子集之交仿射，且 $\cO_X(U) \otimes_\Z \cO_X(V) \to \cO_X(U \cap V)$ 满。最简单的非分离例子是把两份 $\A^2$ 沿 $\A^2 \setminus \{0\}$ 粘成一个双原点概形，两个「半平面」之交即 $\A^2 \setminus \{0\}$，而 $n \ge 2$ 时 $\A^n \setminus \{0\}$ 不仿射。
+[来源：Stacks Project, Tag 01KP（Lemma 26.21.7，分离性由仿射开集之交刻画），\url{https://stacks.math.columbia.edu/tag/01KP}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{proposition}\label{prop:9.3.5}
+$\Sch$ 中的方块
+\[
+\begin{tikzcd}[column sep=3.8em,row sep=3em]
+W \arrow[r] \arrow[d] & X \arrow[d]\\
+Y \arrow[r] & Z
+\end{tikzcd}
+\tag{9.2}
+\]
+是笛卡儿的，当且仅当它诱导 $\mathsf{Fun}(\CRing,\Set)$ 中的笛卡儿方块
+\[
+\begin{tikzcd}[column sep=3.8em,row sep=3em]
+h_W \arrow[r] \arrow[d] & h_X \arrow[d]\\
+h_Y \arrow[r] & h_Z
+\end{tikzcd}
+\tag{9.3}
+\]
+特别地，有
+\[
+h_{X \times_Z Y} \simeq h_X \times_{h_Z} h_Y .
+\tag{9.4}
+\]
+\end{proposition}
+
+\begin{proof}
+先证「仅当」。设 (9.2) 是笛卡儿方块。按定义，对任意 $R \in \CRing$，函子 $\Hom_{\Sch}(\Spec(R),-)$ 把 (9.2) 送到 $\Set$ 中的笛卡儿方块。换言之，(9.3) 中各函子在 $R$ 处的取值构成 $\Set$ 中的笛卡儿方块。由例 \ref{ex:9.1.6}，这形式地推出 (9.3) 自身是笛卡儿方块。
+
+注意「仅当」这一半已经蕴含同构 (9.4)。
+
+再证「当」。设 (9.2) 是交换方块，且 (9.3) 是笛卡儿的。按定义，(9.2) 对应一个态射 $f \colon W \to X \times_Z Y$，而 (9.3) 对应一个同构
+\[
+h_W \simeq h_X \times_{h_Z} h_Y .
+\tag{9.5}
+\]
+此外，展开定义可见下图交换：
+\[
+\begin{tikzcd}[column sep=5em,row sep=3.6em]
+h_W \arrow[r,"(9.5)"] \arrow[d,"h_f"'] & h_X \times_{h_Z} h_Y\\
+h_{X \times_Z Y} \arrow[r,"(9.4)"'] & h_X \times_{h_Z} h_Y \arrow[u,equal]
+\end{tikzcd}
+\]
+于是 $h_f$ 也是同构。由定理 \ref{thm:8.2.3}，$f$ 是同构，如所求。
+\end{proof}
+
+\begin{yizhu}
+本命题把「概形范畴中的笛卡儿方」翻译成「$\CRing$ 上函子范畴中的笛卡儿方」，而 (9.4) 说的正是 Yoneda 嵌入保持纤维积。由此可以只用 $R$-点来计算纤维积：对每个环 $R$ 验证 $\Hom_{\Sch}(\Spec R,-)$ 上成立即可。「当」的一步用定理 \ref{thm:8.2.3}：函子同构蕴含对象同构，这正是 Yoneda 引理的另一半。
+[依据：原书 pp.49--50，命题 9.3.5 及其证明；函子同构与对象同构的互推见注 \ref{rem:9.1.2}。]
+\end{yizhu}
+
+\subsection{纤维积的存在性}\label{sec:9.4}
+
+本小节证明定理 \ref{thm:9.3.1}。先由下述引理推出该定理。
+
+\begin{lemma}\label{lem:9.4.1}
+设 $X \to S \leftarrow Y$ 是 $\Sch$ 中的图。设 $X = \bigcup_{i \in I} X_i$ 与 $Y = \bigcup_{j \in J} Y_j$ 是开子概形覆盖。若对每对 $(i,j) \in I \times J$，纤维积 $X_i \times_S Y_j$ 在 $\Sch$ 中存在，则 $X \times_S Y$ 存在。
+\end{lemma}
+
+\begin{proof}[定理 \ref{thm:9.3.1} 的证明]
+设 $X \xrightarrow{f} S \xleftarrow{g} Y$ 是 $\Sch$ 中的图，我们要证 $X \times_S Y$ 存在。
+
+先化归到 $S$ 仿射的情形。设 $S = \bigcup_{i \in I} S_i$ 是仿射开子概形覆盖。对每个 $i \in I$，令 $X_i := f^{-1}(S_i) \subseteq X$、$Y_i := g^{-1}(S_i)$ 为相应的开子概形。由引理 \ref{lem:9.4.1}，只需对任意 $(i,j) \in I^2$ 证明 $X_i \times_S Y_j$ 存在。由引理 \ref{lem:9.3.2}，有笛卡儿方块
+\[
+\begin{tikzcd}[column sep=3.4em,row sep=3em]
+& Y_i \cap Y_j \arrow[r] \arrow[d] & Y_j \arrow[d]\\
+X_i \arrow[r] & S_i \arrow[r] & S
+\end{tikzcd}
+\]
+图追踪表明：$X_i \times_S Y_j$ 存在，当且仅当
+\[
+X_i \times_{S_i} (Y_i \cap Y_j)
+\]
+存在，且这两个纤维积典范同构。由假设 $S_i$ 仿射，故可化归到 $S$ 仿射的情形。
+
+再次施用引理 \ref{lem:9.4.1}，可化归到 $X$、$Y$ 均仿射的情形。此时结论由推论 \ref{cor:9.2.5} 与推论 \ref{cor:9.2.2} 得出。
+\end{proof}
+
+\begin{proofsketch}[引理 \ref{lem:9.4.1} 的证明概略]
+我们将用概形的粘接构造所求的纤维积。记 $P := I \times J$，并对 $\alpha = (i,j) \in P$ 记 $W_\alpha := X_i \times_S Y_j$。对 $(i,k) \in I^2$，记 $X_{ik} := X_i \cap X_k$，类似地记 $Y_{jl} := Y_j \cap Y_l$。
+
+对每对 $(\alpha,\beta) \in P^2$，如下定义开子概形 $W_{\alpha\beta} \subseteq W_\alpha$。写 $\alpha = (i,j)$、$\beta = (k,l)$。因 $X_{ik} \to X_i$ 与 $Y_{jl} \to Y_j$ 是开子概形，两次施用引理 \ref{lem:9.3.2} 可知
+\[
+W_{\alpha\beta} := X_{ik} \times_{X_i} W_\alpha \times_{Y_j} Y_{jl}
+\]
+存在，并可等同于 $W_\alpha$ 的开子概形。注意有典范同构
+\[
+\phi_{\alpha\beta} \colon W_{\alpha\beta} \simeq X_{ik} \times_{X_i} (X_i \times_S Y_j) \times_{Y_j} Y_{jl} \simeq X_{ik} \times_S Y_{jl} \simeq X_{ki} \times_S Y_{lj} \simeq W_{\beta\alpha}.
+\]
+
+可以验证
+\[
+\bigl(P,\ (W_\alpha)_{\alpha \in P},\ (W_{\alpha\beta})_{(\alpha,\beta) \in P^2},\ (\phi_{\alpha\beta})_{(\alpha,\beta) \in P^2}\bigr)
+\]
+是概形的粘接数据（定义 \ref{def:6.1.1}）。令
+\[
+\bigl(W,\ (W'_\alpha)_{\alpha \in P},\ (\varphi_\alpha)_{\alpha \in P}\bigr)
+\]
+为粘接的输出。
+
+现在构造典范态射 $p \colon W \to X$。由命题 \ref{prop:6.1.3}，只需构造态射 $p_\alpha \colon W_\alpha \to X$，使
+\[
+p_\alpha|_{W_{\alpha\beta}} = p_\beta|_{W_{\beta\alpha}} \circ \phi_{\alpha\beta}.
+\]
+取 $p_\alpha$ 为合成
+\[
+W_\alpha = X_i \times_S Y_j \longrightarrow X_i \longrightarrow X .
+\]
+可以验证族 $(p_\alpha)_{\alpha \in P}$ 满足上述等式。于是得到唯一态射 $p \colon W \to X$，使 $p|_{W'_\alpha} \circ \varphi_\alpha = p_\alpha$。
+
+类似地，用命题 \ref{prop:6.1.3} 构造典范态射 $q \colon W \to Y$。按构造，下图交换：
+\[
+\begin{tikzcd}[column sep=3.6em,row sep=3em]
+W \arrow[r] \arrow[d] & X \arrow[d]\\
+Y \arrow[r] & S
+\end{tikzcd}
+\]
+余下要证该图是笛卡儿的。设 $Z \in \Sch$ 是测试对象，只需证明 $\Hom_{\Sch}(Z,-)$ 把上图送到 $\Set$ 中的笛卡儿方块。用命题 \ref{prop:6.1.4} 即可验证。
+\end{proofsketch}
+
+\begin{yizhu}
+概略中的「可以验证」包含两处实质检查。其一，$\phi_{\alpha\beta}$ 须满足上闭链条件：在 $W_{\alpha\beta} \cap W_{\alpha\gamma}$ 上 $\phi_{\alpha\gamma} = \phi_{\beta\gamma} \circ \phi_{\alpha\beta}$，这是粘接数据（定义 \ref{def:6.1.1}）里最容易被跳过的一条。其二，$p_\alpha$ 与 $q$ 的相容性要在两两交乃至三重交上核对。只核对两两相交，粘出的 $W$ 未必是纤维积。
+[依据：原书 p.51，引理 \ref{lem:9.4.1} 的证明概略与定义 \ref{def:6.1.1}。]
+\end{yizhu}

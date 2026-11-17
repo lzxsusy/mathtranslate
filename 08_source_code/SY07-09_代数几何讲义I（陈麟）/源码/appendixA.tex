@@ -1,0 +1,522 @@
+% ======================================================================
+%  appendixA.tex —— 附录 A 阿贝尔范畴
+%  底本：原书 pp.164–170（印刷页 = PDF 页）
+%  体例：小节编号 A.1–A.5 与原书一致；定理类环境紧跟一行的标签，形如 类型:A.小节.序号；
+%        译注用 yizhu 环境，来源为 Stacks Project 与 nLab 的实查条目。
+% ======================================================================
+
+\providecommand{\coim}{\operatorname{coim}}
+
+% ---------------------------------------------------------------- p.164
+\section{阿贝尔范畴}\label{sec:A}
+
+\subsection{加性范畴}\label{sec:A.1}
+
+在多数教材中，加性范畴被定义为带有某种额外结构\footnote{即 $\Ab$ 上的富化。换言之，所有 $\Hom$-集都被提升为阿贝尔群，而合成映射是阿贝尔群之间的双线性映射。}、并且容许有限积的范畴。然而，这样的额外结构其实唯一，这一点颇出人意料。换言之，「加性」是一种性质，而不是一种结构。
+
+\begin{yizhu}
+nLab 的「additive category」条目从交换幺半群富化出发，证明在这种富化下终对象自动是初始对象，并进一步说明富化结构在同构意义下唯一。于是「加性」确为性质，富化本身不带来额外选择。
+[来源：nLab "additive category"，\url{https://ncatlab.org/nlab/show/additive+category}（Last revised 2024-01-25；2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{definition}\label{def:A.1.1}
+设 $\mathcal{A}$ 为范畴。若 $\mathcal{A}$ 容许一个终对象 $*$ 与一个初始对象 $\varnothing$，并且唯一态射 $\varnothing\to *$ 是同构，则称 $\mathcal{A}$ \emph{容许零对象}。
+\end{definition}
+
+若 $\mathcal{A}$ 容许零对象，则任一终对象也是初始对象，反之亦然。这样的对象常记作 $0\in\mathcal{A}$。
+
+\begin{yizhu}
+零对象的定义中，「$\varnothing\to *$ 是同构」这一条不能省。$\mathsf{Top}$ 同时有终对象与初始对象，二者却不同构；把空间带上基点之后，$\mathsf{Top}_*$ 才有零对象。可见初终合一并非自动。
+[依据：原书 p.164 定义 A.1.1 之后的段落与例 A.1.3]
+\end{yizhu}
+
+\begin{example}\label{ex:A.1.2}
+阿贝尔群范畴 $\Ab$ 容许零对象，即零阿贝尔群。
+\end{example}
+
+\begin{example}\label{ex:A.1.3}
+拓扑空间范畴 $\mathsf{Top}$ 既有终对象又有初始对象，但这两个对象不同构。另一方面，带点拓扑空间的范畴 $\mathsf{Top}_*$ 容许零对象。
+\end{example}
+
+\begin{lemma}\label{lem:A.1.4}
+设 $\mathcal{A}$ 为容许零对象的范畴。对任意一对对象 $X,Y\in\mathcal{A}$，存在唯一的态射 $f:X\to Y$，它能穿过某个零对象分解。
+\end{lemma}
+
+\begin{proof}
+存在性显然。为证唯一性，设 $f$ 与 $f'$ 是两个这样的态射，可把它们写成如下合成：
+\[
+f:X\xrightarrow{\ f_1\ }0\xrightarrow{\ f_2\ }Y,\qquad
+f':X\xrightarrow{\ f'_1\ }0'\xrightarrow{\ f'_2\ }Y,
+\]
+其中 $0$ 与 $0'$ 都是零对象。设 $h:0\to 0'$ 为从 $0$ 到 $0'$ 的唯一态射。由于 $0'$ 是终对象，$f'_1=h\circ f_1$；由于 $0$ 是初始对象，$f_2=f'_2\circ h$。于是
+\[
+f=f_2\circ f_1=f'_2\circ h\circ f_1=f'_2\circ f'_1=f',
+\]
+如所欲证。
+\end{proof}
+
+\begin{definition}\label{def:A.1.5}
+设 $\mathcal{A}$ 为容许零对象的范畴，$X,Y$ 为一对对象。穿过某个零对象分解的唯一态射 $X\to Y$ 称为\emph{零态射}，常记作 $0:X\to Y$。
+\end{definition}
+
+\begin{definition}\label{def:A.1.6}
+设 $\mathcal{A}$ 为范畴。若下列条件成立，则称 $\mathcal{A}$ \emph{容许有限双积}。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 范畴 $\mathcal{A}$ 容许有限积、有限余积与零对象。
+  \item 对任意一对对象 $X,Y$，由矩阵
+  \[
+  \begin{pmatrix}\id_X & 0\\ 0 & \id_Y\end{pmatrix}
+  \]
+  给出的映射 $X\coprod Y\to X\times Y$ 是同构。
+\end{enumerate}
+\end{definition}
+
+若 $\mathcal{A}$ 是容许有限双积的范畴，则对任意有限族 $(X_i)_{i\in I}$，其积也是余积，反之亦然。这样的对象常记作 $\bigoplus_{i\in I}X_i$。
+
+\begin{yizhu}
+Stacks Project 走另一条路：先要求 $\Ab$-富化，再要求有限积存在，便得到加性范畴。本书则从双积与 $\Hom$-集上的加法出发。两条路线在习题 \ref{exc:A.1.10} 处汇合，故下文与文献中的用法并无出入。
+[来源：Stacks Project, Tag 0104（Definition 12.3.8，加性范畴），\url{https://stacks.math.columbia.edu/tag/0104}（2026-11-17 访问）。]
+\end{yizhu}
+
+% ---------------------------------------------------------------- p.165
+\begin{construction}\label{con:A.1.7}
+设 $\mathcal{A}$ 为容许有限双积的范畴。对任意一对对象 $X,Y$ 与任意一对态射 $f,g:X\to Y$，令 $f+g$ 为合成
+\[
+X\xrightarrow{\ \binom{\id_X}{\id_X}\ }X\oplus X
+\xrightarrow{\ \begin{pmatrix}f & 0\\ 0 & g\end{pmatrix}\ }Y\oplus Y
+\xrightarrow{\ (\id_Y\ \ \id_Y)\ }Y.
+\]
+可以证明，这使 $\Hom_{\mathcal{A}}(X,Y)$ 具有阿贝尔半群\footnote{另一名称：交换幺半群。}的结构，即二元运算 $+$ 有单位元、交换且结合，其单位元是零态射 $0:X\to Y$。此外可以验证，合成映射
+\[
+\Hom_{\mathcal{A}}(X,Y)\times\Hom_{\mathcal{A}}(Y,Z)\to\Hom_{\mathcal{A}}(X,Z)
+\]
+是双线性的。换言之：$(f_1+f_2)\circ g=f_1\circ g+f_2\circ g$，且 $f\circ(g_1+g_2)=f\circ g_1+f\circ g_2$。
+\end{construction}
+
+\begin{definition}\label{def:A.1.8}
+设 $\mathcal{A}$ 为范畴。若下列条件成立，则称 $\mathcal{A}$ 是\emph{加性范畴}。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 范畴 $\mathcal{A}$ 容许有限双积。
+  \item 对任意一对对象 $X,Y$，构造 \ref{con:A.1.7} 中的阿贝尔半群 $\Hom_{\mathcal{A}}(X,Y)$ 是阿贝尔群，即任一元素 $f\in\Hom_{\mathcal{A}}(X,Y)$ 都有逆元 $-f$，使 $f+(-f)=0$。
+\end{enumerate}
+\end{definition}
+
+\begin{example}\label{ex:A.1.9}
+阿贝尔群范畴 $\Ab$ 是加性范畴。
+\end{example}
+
+下述结果说明，本书对加性范畴的定义与文献中的其他进路一致。
+
+\begin{exercise}\label{exc:A.1.10}
+设 $\mathcal{A}$ 为容许有限积的范畴。假设对任意一对对象 $X,Y$，$\Hom_{\mathcal{A}}(X,Y)$ 上都有一个二元运算 $+'$，使得：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item $(\Hom_{\mathcal{A}}(X,Y),+')$ 是阿贝尔群。
+  \item 对对象 $X,Y,Z$，合成映射
+  \[
+  \Hom_{\mathcal{A}}(X,Y)\times\Hom_{\mathcal{A}}(Y,Z)\to\Hom_{\mathcal{A}}(X,Z)
+  \]
+  关于上述阿贝尔群结构是双线性的。
+\end{enumerate}
+则 $\mathcal{A}$ 是加性范畴，且 $+'$ 等于构造 \ref{con:A.1.7} 中的运算。
+\end{exercise}
+
+\begin{yizhu}
+习题 \ref{exc:A.1.10} 的结论正是 Eckmann--Hilton 论证：一个集合上若有两个幺半群结构，且其中一个运算对另一个是双线性的，则两个运算相等，所得幺半群交换。把 $+$ 与 $+'$ 代入即得 $+'=+$。
+[来源：nLab "Eckmann–Hilton argument"，\url{https://ncatlab.org/nlab/show/Eckmann-Hilton+argument}（Last revised 2026-06-11；2026-11-17 访问）。]
+\end{yizhu}
+
+% ---------------------------------------------------------------- p.165
+\subsection{核与余核}\label{sec:A.2}
+
+回忆：核与余核可以定义为纤维积与纤维余积。
+
+\begin{definition}\label{def:A.2.1}
+设 $\mathcal{A}$ 为加性范畴，$f:X\to Y$ 为态射。
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item $f$ 的\emph{核}，常记作 $\ker(f)$，定义为态射图 $X\xrightarrow{f}Y\xleftarrow{0}0$ 的纤维积。
+  \item $f$ 的\emph{余核}，常记作 $\coker(f)$，定义为态射图 $Y\xleftarrow{f}X\xrightarrow{0}0$ 的纤维余积。
+\end{itemize}
+\end{definition}
+
+\begin{yizhu}
+用纤维积代替泛性质，是下文引理 \ref{lem:A.2.2} 的伏笔：纤维积天然给出 $\Hom$-集上的笛卡尔方块。Stacks Project 则直接以泛性质定义核与余核，并据此定义像与余像。
+[来源：Stacks Project, Tag 0106（Definition 12.3.9，核、余核、像与余像），\url{https://stacks.math.columbia.edu/tag/0106}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{lemma}\label{lem:A.2.2}
+设 $\mathcal{A}$ 为加性范畴，$f:X\to Y$ 为有核的态射。则典范态射 $i:\ker(f)\to X$ 是单态射。
+\end{lemma}
+
+\begin{proof}
+按定义，只需说明对任意试验对象 $T\in\mathcal{A}$，与 $i$ 后复合给出集合之间的单射
+\[
+\Hom_{\mathcal{A}}(T,\ker(f))\to\Hom_{\mathcal{A}}(T,X).
+\]
+由 $\ker(-)$ 的定义，有集合的笛卡尔方块
+\[
+\begin{array}{ccc}
+\Hom_{\mathcal{A}}(T,\ker(f)) & \xrightarrow{\ i\circ -} & \Hom_{\mathcal{A}}(T,X)\\[1.2ex]
+\downarrow{\scriptstyle 0\circ -} & & \downarrow{\scriptstyle f\circ -}\\[1.2ex]
+\Hom_{\mathcal{A}}(T,0) & \xrightarrow{\ 0\circ -} & \Hom_{\mathcal{A}}(T,Y).
+\end{array}
+\]
+由零对象与零态射的定义，$\Hom_{\mathcal{A}}(T,0)$ 是单点集，且下方水平箭头是单射。于是上方水平箭头也是单射，如所欲证。
+\end{proof}
+
+\begin{remark}\label{rem:A.2.3}
+对偶地，典范映射 $p:Y\to\coker(f)$ 是\emph{满态射}，即与 $p$ 前复合给出单射
+\[
+\Hom_{\mathcal{A}}(\coker(f),T)\to\Hom_{\mathcal{A}}(Y,T),
+\]
+其中 $T\in\mathcal{A}$ 为任意试验对象。
+\end{remark}
+
+\begin{yizhu}
+注记 \ref{rem:A.2.3} 是引理 \ref{lem:A.2.2} 的对偶：在 $\mathcal{A}^{\mathrm{op}}$ 中核与余核互换，单态射与满态射也互换。Stacks Project 把这一点写成一条引理：$\mathcal{A}$ 加性当且仅当 $\mathcal{A}^{\mathrm{op}}$ 加性，$\mathcal{A}$ 阿贝尔当且仅当 $\mathcal{A}^{\mathrm{op}}$ 阿贝尔。
+[来源：Stacks Project, Tag 010A（Lemma 12.5.2，对偶范畴中的加性与阿贝尔性），\url{https://stacks.math.columbia.edu/tag/010A}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{example}\label{ex:A.2.4}
+在 $\Ab$ 中，任何态射都有核与余核。
+\end{example}
+
+\begin{example}\label{ex:A.2.5}
+典范态射 $\ker(X\xrightarrow{0}Y)\to X$ 是同构，而 $Y\to\coker(X\xrightarrow{0}Y)$ 也是同构。
+\end{example}
+
+\begin{lemma}\label{lem:A.2.6}
+设 $\mathcal{A}$ 为加性范畴，$f:X\to Y$ 为态射。下列条件等价：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 态射 $f$ 是单态射。
+  \item 核 $\ker(f)$ 存在，并且是零对象。
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+按定义，条件 (ii) 等价于：
+
+(ii$'$) 对任意试验对象 $T\in\mathcal{A}$，下图是集合的笛卡尔方块：
+\[
+\begin{array}{ccc}
+\Hom_{\mathcal{A}}(T,0) & \xrightarrow{\ =} & \Hom_{\mathcal{A}}(T,0)\\[1.2ex]
+\downarrow{\scriptstyle 0\circ -} & & \downarrow{\scriptstyle 0\circ -}\\[1.2ex]
+\Hom_{\mathcal{A}}(T,X) & \xrightarrow{\ f\circ -} & \Hom_{\mathcal{A}}(T,Y).
+\end{array}
+\]
+由零对象与零态射的定义，这又等价于：
+
+(ii$''$) 对任意试验对象 $T\in\mathcal{A}$，映射 $\Hom_{\mathcal{A}}(T,X)\to\Hom_{\mathcal{A}}(T,Y)$ 把非零态射送到非零态射。
+
+由于 $\mathcal{A}$ 是加性的，上述映射是阿贝尔群之间的同态。回忆零态射在这些群中是单位元。于是条件 (ii$''$) 等价于 $\Hom_{\mathcal{A}}(T,X)\to\Hom_{\mathcal{A}}(T,Y)$ 是单射，而这正是条件 (i)。
+\end{proof}
+
+\begin{yizhu}
+条件 (ii) 的对偶是「余核为零对象」，它刻画的是满态射。两者同时成立并不保证 $f$ 是同构：习题 \ref{exc:A.2.8} 在加性范畴中给出反例，而命题 \ref{prop:A.3.8} 说明阿贝尔范畴排除了这种可能。
+[依据：原书 p.166 引理 A.2.6 与警告 A.2.7]
+\end{yizhu}
+
+\begin{warning}\label{warn:A.2.7}
+一般来说，既是单态射又是满态射，并不蕴含是同构。因此在加性范畴中，核与余核同时消失也不意味着态射是同构。反例见下面的习题。不过我们将会看到，阿贝尔范畴没有这一缺陷。
+\end{warning}
+
+\begin{yizhu}
+习题 \ref{exc:A.2.8} 的反例可取包含映射 $\Z\hookrightarrow\Z[1/2]$：它是 $\Ab_{\mathrm{tf}}$ 中的单态射，在 $\Ab_{\mathrm{tf}}$ 内部计算的余核为零，本身却不是同构。关键在于余核必须在这个子范畴内部取，而不是在 $\Ab$ 中取。
+[译者按（上下文推断，无外部依据）：原书未写出该反例，此处补出并说明余核的取法。]
+\end{yizhu}
+
+% ---------------------------------------------------------------- p.167
+\begin{exercise}\label{exc:A.2.8}
+设 $\Ab_{\mathrm{tf}}\subseteq\Ab$ 为无挠阿贝尔群构成的满子范畴，即不含有限阶元素的阿贝尔群。
+\begin{enumerate}[label=(\arabic*),leftmargin=2em,itemsep=0.25ex]
+  \item 证明 $\Ab_{\mathrm{tf}}$ 是加性范畴，且 $\Ab_{\mathrm{tf}}$ 中任何态射都有核与余核。
+  \item 在 $\Ab_{\mathrm{tf}}$ 中找一个态射 $f$，使 $\ker(f)$ 与 $\coker(f)$ 都是零对象，但 $f$ 不是同构。
+\end{enumerate}
+\end{exercise}
+
+\subsection{阿贝尔范畴}\label{sec:A.3}
+
+\begin{definition}\label{def:A.3.1}
+设 $\mathcal{A}$ 为加性范畴，$f:X\to Y$ 为态射。
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item 若 $\coker(f)$ 存在，则 $f$ 的\emph{像}定义为 $\im(f):=\ker(Y\to\coker(f))$。
+  \item 若 $\ker(f)$ 存在，则 $f$ 的\emph{余像}定义为 $\coim(f):=\coker(\ker(f)\to X)$。
+\end{itemize}
+\end{definition}
+
+\begin{remark}\label{rem:A.3.2}
+设 $f'\in\Hom_{\mathcal{A}^{\mathrm{op}}}(Y,X)$ 为对应于 $f$ 的态射。注意 $\mathcal{A}^{\mathrm{op}}$ 也是加性范畴，且 $\mathcal{A}$ 中的单态射 $\ker(f)\to X$ 对应于 $\mathcal{A}^{\mathrm{op}}$ 中的满态射 $X\to\coker(f')$。于是 $\mathcal{A}$ 中的单态射 $\im(f)\to Y$ 对应于 $\mathcal{A}^{\mathrm{op}}$ 中的满态射 $Y\to\coim(f')$。
+\end{remark}
+
+\begin{exercise}\label{exc:A.3.3}
+设 $\mathcal{A}$ 为加性范畴，$f:X\to Y$ 为态射，且 $\ker(f)$、$\coker(f)$、$\im(f)$、$\coim(f)$ 都存在。设 $p:X\to\coim(f)$ 与 $i:\im(f)\to Y$ 为典范态射。证明 $f$ 有唯一的分解
+\[
+X\xrightarrow{\ p\ }\coim(f)\to\im(f)\xrightarrow{\ i\ }Y.
+\]
+特别地，得到典范态射 $\coim(f)\to\im(f)$。
+\end{exercise}
+
+\begin{yizhu}
+Stacks Project 把习题 \ref{exc:A.3.3} 单列为引理：当核、余核、像、余像都存在时，$f$ 唯一地分解为 $x\to\coim(f)\to\im(f)\to y$。中间那个典范态射，正是定义阿贝尔范畴所需要的东西。
+[来源：Stacks Project, Tag 0107（Lemma 12.3.12，经余像与像的典范分解），\url{https://stacks.math.columbia.edu/tag/0107}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{definition}\label{def:A.3.4}
+设 $\mathcal{A}$ 为范畴。若下列条件成立，则称 $\mathcal{A}$ 是\emph{阿贝尔范畴}。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 范畴 $\mathcal{A}$ 是加性的。
+  \item $\mathcal{A}$ 中任何态射都有核与余核。
+  \item 对 $\mathcal{A}$ 中任何态射 $f$，典范态射 $\coim(f)\to\im(f)$ 是同构。
+\end{enumerate}
+\end{definition}
+
+\begin{yizhu}
+这三条与 Stacks Project 对阿贝尔范畴的定义逐字对应：加性、核与余核都存在、典范态射 $\coim(f)\to\im(f)$ 是同构。差别只在前者把「加性」当作已知条件，后者把它列为第一条。
+[来源：Stacks Project, Tag 0109（Definition 12.5.1，阿贝尔范畴），\url{https://stacks.math.columbia.edu/tag/0109}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{example}\label{ex:A.3.5}
+范畴 $\Ab$ 是阿贝尔范畴。
+\end{example}
+
+\begin{remark}\label{rem:A.3.6}
+由注记 \ref{rem:A.3.2}，$\mathcal{A}$ 是阿贝尔范畴当且仅当 $\mathcal{A}^{\mathrm{op}}$ 是。
+\end{remark}
+
+\begin{lemma}\label{lem:A.3.7}
+设 $\mathcal{A}$ 为阿贝尔范畴，$f:X\to Y$ 为态射。下列条件等价：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 态射 $f$ 是单态射。
+  \item 核 $\ker(f)$ 存在，并且是零对象。
+  \item 态射 $f$ 是某个态射的核，即存在态射 $g:Y\to Z$，使 $f$ 可写成 $\ker(g)\to X$。
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+我们已在引理 \ref{lem:A.2.6} 中看到 (i)$\Leftrightarrow$(ii)，并在引理 \ref{lem:A.2.2} 中看到 (iii)$\Rightarrow$(i)。只需再证 (ii)$\Rightarrow$(iii)。
+
+现设条件 (ii) 成立。由例 \ref{ex:A.2.5}，从 $X$ 到 $\coim(f)=\coker(\ker(f)\to X)$ 的典范映射是同构。由于 $\mathcal{A}$ 是阿贝尔范畴，得到同构
+\[
+X\xrightarrow{\ \simeq\ }\coim(f)\xrightarrow{\ \simeq\ }\im(f).
+\]
+按定义，典范映射 $\im(f)\to Y$ 是典范映射 $Y\to\coker(f)$ 的核。于是合成
+\[
+X\xrightarrow{\ \simeq\ }\coim(f)\xrightarrow{\ \simeq\ }\im(f)\to Y
+\]
+也是 $Y\to\coker(f)$ 的核。但按定义，这个合成正是 $f$。故 $f$ 是某个态射的核，如所欲证。
+\end{proof}
+
+% ---------------------------------------------------------------- p.168
+\begin{proposition}\label{prop:A.3.8}
+设 $\mathcal{A}$ 为阿贝尔范畴，$f:X\to Y$ 为态射。则 $f$ 是同构当且仅当 $\ker(f)$ 与 $\coker(f)$ 都是零对象。
+\end{proposition}
+
+\begin{proof}
+「仅当」显然。为证「当」，设 $\ker(f)$ 与 $\coker(f)$ 都是零对象。由例 \ref{ex:A.2.5}，典范映射
+\[
+\ker(Y\to\coker(f))\to Y,\qquad X\to\coker(\ker(f)\to X)
+\]
+都是同构。换言之，$\im(f)\to Y$ 与 $X\to\coim(f)$ 都是同构。另一方面，由于 $\mathcal{A}$ 是阿贝尔范畴，典范映射 $\coim(f)\to\im(f)$ 也是同构。于是合成
+\[
+X\xrightarrow{\ \simeq\ }\coim(f)\xrightarrow{\ \simeq\ }\im(f)\xrightarrow{\ \simeq\ }Y
+\]
+是同构。但按定义，这个合成正是 $f$。
+\end{proof}
+
+\begin{yizhu}
+nLab 的「abelian category」条目采用另一组公理：每个单态射都是某个态的核，每个满态射都是某个态的余核。它由此推出：若 $f$ 的核与余核都消失，则 $f$ 是同构。这正是引理 \ref{lem:A.3.7} 与命题 \ref{prop:A.3.8} 的合体。
+[来源：nLab "abelian category"，\url{https://ncatlab.org/nlab/show/abelian+category}（Last revised 2026-10-17；2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{construction}\label{con:A.3.9}
+设 $\mathcal{A}$ 为加性范畴，$X\xrightarrow{f}Y\xrightarrow{g}Z$ 为满足 $g\circ f=0$ 的序列。由于典范态射 $X\to\coim(f)$ 是满态射，合成 $\coim(f)\to Y\xrightarrow{g}Z$ 也是零。于是态射 $\coim(f)\to Y$ 有唯一分解 $\coim(f)\to\ker(g)\to Y$，其中第二个映射是典范单态射。特别地，得到典范态射
+\[
+\coim(f)\to\ker(g).
+\]
+\end{construction}
+
+\begin{definition}\label{def:A.3.10}
+设 $\mathcal{A}$ 为阿贝尔范畴。若下列条件成立，则称序列 $X\xrightarrow{f}Y\xrightarrow{g}Z$ 是\emph{正合}的。
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item 合成 $g\circ f$ 是零。
+  \item 构造 \ref{con:A.3.9} 中的典范态射 $\coim(f)\to\ker(g)$ 是同构。
+\end{itemize}
+若序列 $X_1\to X_2\to\cdots\to X_n$ 中任意三个相邻项都构成正合序列，则称该序列正合。
+\end{definition}
+
+\subsection{加性函子}\label{sec:A.4}
+
+\begin{propdef}\label{prop:A.4.1}
+设 $F:\mathcal{A}\to\mathcal{A}'$ 为加性范畴之间的函子。下列条件等价：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 函子 $F$ 保持有限积。
+  \item 函子 $F$ 保持有限余积。
+\end{enumerate}
+若满足上述条件，则称 $F$ 是\emph{加性函子}。
+\end{propdef}
+
+\begin{proof}
+我们证明 (i)$\Rightarrow$(ii)，另一方向由对偶得到。设 $F$ 保持有限积。为验证 (ii)，只需验证 $F$ 保持初始对象与二元余积。初始对象的情形来自「加性范畴容许零对象」这一公理。二元余积的情形来自「典范映射 $X\coprod Y\to X\times Y$ 是同构」这一公理。
+\end{proof}
+
+\begin{yizhu}
+两个条件只差一个对偶，依据是加性范畴中 $X\coprod Y\to X\times Y$ 为同构。nLab 的「additive functor」条目把加性函子定义为保持有限双积，并列出充分条件：保持有限积、保持有限余积，或两者兼有。
+[来源：nLab "additive functor"，\url{https://ncatlab.org/nlab/show/additive+functor}（Last revised 2023-04-15；2026-11-17 访问）。]
+\end{yizhu}
+
+下述结果立即由构造 \ref{con:A.1.7} 得到。
+
+\begin{lemma}\label{lem:A.4.2}
+设 $F:\mathcal{A}\to\mathcal{A}'$ 为加性范畴之间的加性函子。则对任意一对对象 $X,Y\in\mathcal{A}$，映射
+\[
+\Hom_{\mathcal{A}}(X,Y)\to\Hom_{\mathcal{A}'}(F(X),F(Y))
+\]
+是阿贝尔群之间的同态。
+\end{lemma}
+
+注意，加性函子一般不保持核与余核。
+
+\begin{definition}\label{def:A.4.3}
+设 $F:\mathcal{A}\to\mathcal{A}'$ 为阿贝尔范畴之间的加性函子。
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item 若 $F$ 保持核，则称 $F$ 是\emph{左正合}的。
+  \item 若 $F$ 保持余核，则称 $F$ 是\emph{右正合}的。
+  \item 若 $F$ 既左正合又右正合，则称 $F$ 是\emph{正合}的。
+\end{itemize}
+\end{definition}
+
+\begin{remark}\label{rem:A.4.4}
+容易看出，$F$ 左正合当且仅当它保持形如 $0\to X_1\to X_2\to X_3$ 的正合序列；$F$ 右正合当且仅当它保持形如 $X_1\to X_2\to X_3\to 0$ 的正合序列。又，$F$ 正合当且仅当它保持所有正合序列。
+\end{remark}
+
+\begin{yizhu}
+Stacks Project 把注记 \ref{rem:A.4.4} 的判据收成一条引理：左正合当且仅当每个短正合列 $0\to A\to B\to C\to 0$ 都变成正合列 $0\to F(A)\to F(B)\to F(C)$；并指出左正合或右正合的函子自动是加性函子。
+[来源：Stacks Project, Tag 010N（Lemma 12.7.2，正合函子的短正合列刻画），\url{https://stacks.math.columbia.edu/tag/010N}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{example}\label{ex:A.4.5}
+设 $\mathcal{A}$ 为阿贝尔范畴，$X\in\mathcal{A}$ 为对象。注意有函子
+\[
+\Hom_{\mathcal{A}}(X,-):\mathcal{A}\to\Ab,\qquad
+\Hom_{\mathcal{A}}(-,X):\mathcal{A}^{\mathrm{op}}\to\Ab.
+\]
+可以验证，这两个函子都是左正合的。
+\end{example}
+
+\begin{lemma}\label{lem:A.4.6}
+阿贝尔范畴之间的加性函子 $F:\mathcal{A}\to\mathcal{A}'$ 左正合，当且仅当它保持纤维积。对偶地，$F$ 右正合当且仅当它保持纤维余积。
+\end{lemma}
+
+\begin{proof}
+「当」的方向显然，因为任何核都是纤维积。为证「仅当」的方向，设 $X\xrightarrow{f}Y\xleftarrow{g}Z$ 为任意态射图。考虑
+\[
+W:=\ker\left(X\oplus Z\xrightarrow{\ \binom{f}{-g}\ }Y\right).
+\]
+可以验证，态射 $W\to X\oplus Z\to X$ 与 $W\to X\oplus Z\to Z$ 把 $W$ 实现为 $X\xrightarrow{f}Y\xleftarrow{g}Z$ 的纤维积。由于 $F$ 保持双积与核，它也保持纤维积。
+\end{proof}
+
+\begin{yizhu}
+证明的关键是把纤维积写成某个态的核：$\binom{f}{-g}$ 使 $(x,z)\mapsto f(x)-g(z)$，故 $W$ 中的一对态射恰好满足 $f(x)=g(z)$。于是「保持纤维积」归结为「保持核与双积」。
+[依据：原书 p.169 引理 A.4.6 的证明]
+\end{yizhu}
+
+\begin{remark}\label{rem:A.4.7}
+用范畴论的语言说，阿贝尔范畴之间的函子 $F:\mathcal{A}\to\mathcal{A}'$ 左正合（相应地，右正合）当且仅当它保持有限极限（相应地，余极限）。
+\end{remark}
+
+% ---------------------------------------------------------------- p.169
+\subsection{讲义中的阿贝尔范畴}\label{sec:A.5}
+
+以下结论或在讲义中已证，或由定义立得。
+
+\begin{yizhu}
+原书标题作 "Abelian categories in theses notes"，其中 theses 应为 these，是排印之误。译文按正意作「讲义中的阿贝尔范畴」，指本书正文各章反复引用的那些范畴论事实。
+[依据：原书 p.169 小节标题]
+\end{yizhu}
+
+\begin{proposition}\label{prop:A.5.1}
+设 $X$ 为拓扑空间。
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item 范畴 $\PShv(X,\Ab)$ 是阿贝尔范畴。
+  \item 对任意开子集 $U\subseteq X$，函子 $(-)(U):\PShv(X,\Ab)\to\Ab$ 正合。
+  \item 对任意点 $x\in X$，函子 $(-)_x:\PShv(X,\Ab)\to\Ab$ 正合。
+\end{itemize}
+设 $f:X\to Y$ 为拓扑空间之间的连续映射。
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item 函子 $f_*:\PShv(X,\Ab)\to\PShv(Y,\Ab)$ 正合。
+  \item 函子 $f^{\PShv}_{-1}:\PShv(Y,\Ab)\to\PShv(X,\Ab)$ 正合。
+\end{itemize}
+\end{proposition}
+
+% ---------------------------------------------------------------- p.170
+\begin{proposition}\label{prop:A.5.2}
+设 $X$ 为拓扑空间。
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item 范畴 $\Shv(X,\Ab)$ 是阿贝尔范畴。
+  \item 对任意开子集 $U\subseteq X$，函子 $(-)(U):\Shv(X,\Ab)\to\Ab$ 左正合。
+  \item 对任意点 $x\in X$，函子 $(-)_x:\Shv(X,\Ab)\to\Ab$ 正合。
+  \item 完全忠实函子 $\Shv(X,\Ab)\to\PShv(X,\Ab)$ 左正合。
+  \item 层化函子 $\sharp:\PShv(X,\Ab)\to\Shv(X,\Ab)$ 正合。
+\end{itemize}
+设 $f:X\to Y$ 为拓扑空间之间的连续映射。
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item 函子 $f_*:\Shv(X,\Ab)\to\Shv(Y,\Ab)$ 左正合。
+  \item 函子 $f^{-1}:\Shv(Y,\Ab)\to\Shv(X,\Ab)$ 正合。
+\end{itemize}
+\end{proposition}
+
+\begin{yizhu}
+层化 $\sharp$ 正合，原因是它作为完全忠实函子 $\Shv(X,\Ab)\to\PShv(X,\Ab)$ 的左伴随，而包含函子正合，正合函子的左伴随正合。Stacks Project 把这条伴随关系写成 $\Hom_{\PShv}(\cF,i(\cG))\simeq\Hom_{\Shv}(\cF^{\sharp},\cG)$。
+[来源：Stacks Project, Tag 0085（Lemma 6.18.2，阿贝尔预层的层化与伴随），\url{https://stacks.math.columbia.edu/tag/0085}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{proposition}\label{prop:A.5.3}
+设 $(X,\cO_X)$ 为环化空间。
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item 范畴 $\omodP$ 与 $\omod$ 都是阿贝尔范畴。
+  \item 遗忘函子 $\omodP\to\PShv(X,\Ab)$ 与 $\omod\to\Shv(X,\Ab)$ 正合。
+  \item 完全忠实函子 $\omod\to\omodP$ 左正合。
+  \item 层化函子 $\omodP\to\omod$ 正合。
+\end{itemize}
+设 $f:(X,\cO_X)\to(Y,\cO_Y)$ 为环化空间之间的态射。
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item 函子 $f_*:\omodP\to\cO_Y\text{-}\mathsf{mod}^{\PShv}$ 正合。
+  \item 函子 $f_*:\omod\to\cO_Y\text{-}\mathsf{mod}$ 左正合。
+  \item 函子 $f^{\PShv}_{-1}:\cO_Y\text{-}\mathsf{mod}^{\PShv}\to\omodP$ 右正合。
+  \item 函子 $f^*:\cO_Y\text{-}\mathsf{mod}\to\omod$ 右正合。
+\end{itemize}
+\end{proposition}
+
+\begin{proposition}\label{prop:A.5.4}
+设 $X$ 为概形。
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item 范畴 $\mathsf{QCoh}(X)$ 是阿贝尔范畴。
+  \item 完全忠实函子 $\mathsf{QCoh}(X)\to\omod$ 正合。
+\end{itemize}
+\end{proposition}
+
+\begin{proposition}\label{prop:A.5.5}
+设 $f:X\to Y$ 为概形之间的态射。函子 $f^*:\mathsf{QCoh}(Y)\to\mathsf{QCoh}(X)$ 右正合。若 $f$ 是开浸入，则它正合。
+\end{proposition}
+
+\begin{yizhu}
+若 $f$ 平坦，则 $f^*$ 正合：$f^*$ 分解为 $f^{-1}$ 与换环张量，后者按平坦性正合。开浸入的情形更简单，$f^*$ 就是限制函子，而限制本身正合。
+[来源：Stacks Project, Tag 02N4（Lemma 17.20.2，平坦态射的拉回正合），\url{https://stacks.math.columbia.edu/tag/02N4}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{remark}\label{rem:A.5.6}
+事实上，$f^*$ 正合当且仅当 $f$ 平坦。
+\end{remark}
+
+\begin{yizhu}
+反过来，按平坦模的定义，$-\otimes_A B$ 保持正合列当且仅当 $B$ 是平坦 $A$-代数。仿射情形下 $f^*$ 就是这一张量函子，故注记 \ref{rem:A.5.6} 的「仅当」由定义立得。
+[来源：Stacks Project, Tag 00HB（Definition 10.39.1，平坦模），\url{https://stacks.math.columbia.edu/tag/00HB}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{proposition}\label{prop:A.5.7}
+设 $f:X\to Y$ 为概形之间拟紧且拟分离的态射。函子 $f_*:\mathsf{QCoh}(X)\to\mathsf{QCoh}(Y)$ 左正合。它正合当且仅当 $f$ 是仿射态射。
+\end{proposition}
+
+\begin{yizhu}
+$f$ 仿射时，$f_*$ 给出 $\mathsf{QCoh}(X)$ 与拟凝聚 $\cO_Y$-代数上的模之间的等价，等价当然正合。至于 $f$ 只拟紧拟分离时，$f_*$ 仍把拟凝聚模送到拟凝聚模，但一般不正合。
+[来源：Stacks Project, Tag 01SB（Lemma 29.11.7，仿射态射的推前等价），\url{https://stacks.math.columbia.edu/tag/01SB}（2026-11-17 访问）。]
+\end{yizhu}

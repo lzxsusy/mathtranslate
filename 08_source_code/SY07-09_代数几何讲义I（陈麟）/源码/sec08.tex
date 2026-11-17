@@ -1,0 +1,161 @@
+% ======================================================================
+%  sec08.tex —— 第 8 节 点函子
+%  底本：原书 pp.44–45
+%  原书标题：8. Functor of points
+%            8.1 R-points / 8.2 Schemes as a functor
+% ======================================================================
+
+% 原书的混合环境在导言区未定义，此处就地补上（aliascnt 使其与定理共享计数器）。
+\makeatletter
+\@ifundefined{c@propdef}{\newaliascnt{propdef}{theorem}\newtheorem{propdef}[propdef]{命题--定义}\aliascntresetthe{propdef}}{}
+\@ifundefined{c@propcon}{\newaliascnt{propcon}{theorem}\newtheorem{propcon}[propcon]{命题--构造}\aliascntresetthe{propcon}}{}
+\makeatother
+
+\section{点函子}\label{sec:8}
+
+本节的主要目标是构造完全忠实的函子 $\Sch\to\mathsf{Fun}(\CRing,\Set)$，并描述它的本质像。
+
+\subsection{\texorpdfstring{$R$}{R}-点}\label{sec:8.1}
+
+\begin{definition}\label{def:8.1.1}
+设 $X$ 为概形，$R$ 为交换环。$X$ 的一个\emph{$R$-点}是指态射 $\Spec(R)\to X$。令
+\[
+X(R):=\Hom_{\Sch}\bigl(\Spec(R),X\bigr)
+\]
+为 $X$ 的 $R$-点集。
+
+$X$ 的\emph{域值点}是指 $X$ 的某个域 $k$ 上的 $k$-点。$X$ 的\emph{几何点}是指 $X$ 的某个可分闭域 $k$ 上的 $k$-点。
+\end{definition}
+
+\begin{propcon}\label{prop:8.1.2}
+设 $X$ 为概形，$k$ 为域。则下述两个集合之间存在双射：
+\begin{itemize}[leftmargin=1.6em,itemsep=0.2ex]
+  \item $X$ 的 $k$-点集 $X(k)$；
+  \item 二元组 $(x,i)$ 构成的集合，其中 $x\in X$ 是拓扑点\footnote{指底层拓扑空间中的点。}，$i:\kappa_x\to k$ 是环同态。
+\end{itemize}
+\end{propcon}
+
+\begin{proof}
+按定义，$X$ 的 $k$-点由二元组 $(\varphi,\beta)$ 给出。由于 $\Spec(k)$ 只有一个拓扑点，连续映射 $\varphi$ 由某个拓扑点 $x\in X$ 给出。此时态射 $\beta$ 由局部同态 $\cO_{X,x}\to k$ 给出；这里把单点空间 $\{*\}$ 上交换环层 $\mathcal F$ 与 $\mathcal F(\{*\})$ 等同。而局部同态 $\cO_{X,x}\to k$ 唯一地分解为
+\[
+\cO_{X,x}\to\kappa_x\to k .
+\]
+这就给出所要的双射。
+\end{proof}
+
+\begin{remark}\label{rem:8.1.3}
+对域值点 $s:\Spec(k)\to X$，有时滥用记号写作 $s\to X$，其中 $s$ 理解为 $\Spec(k)$。类似地，对拓扑点 $x\in X$，有时滥用记号把 $\kappa_x$-点 $\Spec(\kappa_x)\to X$ 写作 $x\to X$。
+
+但要注意，概形并不被它的域值点决定。
+\end{remark}
+
+\begin{exercise}\label{exc:8.1.4}
+设 $k$ 为域，考虑 $X:=\Spec(k)$ 与 $X':=\Spec(k[\epsilon]/(\epsilon^2))$。设 $f:X\to X'$ 为对应显然同态 $k[\epsilon]/(\epsilon^2)\to k$ 的态射。证明 $f$ 在 $X$ 与 $X'$ 的域值点集之间诱导双射。
+\end{exercise}
+
+\begin{construction}\label{con:8.1.5}
+设 $X$ 为概形，$x\in X$ 为拓扑点。取含 $x$ 的仿射开子集 $U\subseteq X$，注意 $U\simeq\Spec(\cO_X(U))$。典范同态 $\cO_X(U)\to\cO_{X,x}$ 诱导态射 $\Spec(\cO_{X,x})\to\Spec(\cO_X(U))$。于是合成
+\[
+\Spec(\cO_{X,x})\to\Spec(\cO_X(U))\simeq U\to X
+\]
+给出 $X$ 的一个 $\cO_{X,x}$-点。
+\end{construction}
+
+\begin{exercise}\label{exc:8.1.6}
+证明：
+\begin{enumerate}[label=(\arabic*),leftmargin=2em,itemsep=0.25ex]
+  \item 上述 $X$ 的 $\cO_{X,x}$-点不依赖 $U$ 的选取；
+  \item 态射 $\Spec(\cO_{X,x})\to X$ 把局部环化空间 $\Spec(\cO_{X,x})$ 实现为 $X$ 限制到某个子空间所得的局部环化空间。
+\end{enumerate}
+\end{exercise}
+
+\subsection{概形作为函子}\label{sec:8.2}
+
+\begin{definition}\label{def:8.2.1}
+设 $X$ 为概形。函子
+\[
+h_X:\CRing\to\Set,\qquad R\mapsto X(R)
+\]
+称为 $X$ 的\emph{点函子}。
+
+注意构造 $X\mapsto h_X$ 具有函子性。于是得到典范函子
+\[
+h:\Sch\to\mathsf{Fun}(\CRing,\Set).
+\]
+\end{definition}
+
+\begin{remark}\label{rem:8.2.2}
+按构造，合成
+\[
+\CRing^{\mathrm{op}}\simeq\mathsf{Aff}\to\Sch\xrightarrow{\ h\ }\mathsf{Fun}(\CRing,\Set)
+\]
+可等同于 Yoneda 嵌入 $R\mapsto\Hom_{\CRing}(R,-)$。
+\end{remark}
+
+\begin{theorem}\label{thm:8.2.3}
+函子 $h:\Sch\to\mathsf{Fun}(\CRing,\Set)$ 完全忠实。
+\end{theorem}
+
+\begin{remark}\label{rem:8.2.4}
+关于该函子本质像的描述\footnote{在标准术语下，函子 $F:\CRing\to\Set$ 属于本质像，当且仅当 $F$ 满足 Zariski 下降，且可被可表函子的开覆盖覆盖。}，参见 \cite[Chapter VI]{EH00}。
+\end{remark}
+
+\begin{remark}\label{rem:8.2.5}
+上述定理提示了另一条发展概形理论的途径，它不使用局部环化空间。具体地说，可以把概形定义为满足某些性质的函子 $\CRing\to\Set$。事实上，在 1970 年代，Grothendieck 本人就极力主张放弃他早期给出的概形定义，转而采用函子观点。在笔者看来，这一途径至少有如下优点。
+\begin{itemize}[leftmargin=1.6em,itemsep=0.2ex]
+  \item 它使大量关于概形的构造变得形式化，因而更容易。
+  \item 它提供了处理模问题与形变理论的更直接的途径。
+  \item 它允许定义更奇异的几何对象，例如代数空间、栈、indscheme 等。
+\end{itemize}
+然而，无论笔者多么喜爱这种函子途径，都不认为初学者可以忽视「概形是带结构的拓扑空间」这一经典观点\footnote{试想第一次学习射影空间 $\PP^n_\Z$ 就用下述定义：它是把交换代数 $R$ 送到「自由 $R$-模 $R^{\oplus(n+1)}$ 到秩 $1$ 投射 $R$-模 $P$ 的满射的同构类」的函子。}。
+\end{remark}
+
+\begin{definition}\label{def:8.2.6}
+称函子 $F:\CRing\to\Set$ 被概形 $X$ \emph{表示}，若它带自然同构 $F\simeq h_X$。
+\end{definition}
+
+\begin{example}\label{ex:8.2.7}
+把 $R$ 送到其底层集合的函子 $\CRing\to\Set$ 由仿射概形 $\A^1_\Z:=\Spec(\Z[t])$ 表示。
+\end{example}
+
+\begin{exercise}\label{exc:8.2.8}
+证明：把 $R$ 送到 $R$ 上 $n\times n$ 可逆矩阵集 $\mathrm{GL}_n(R)$ 的函子 $\CRing\to\Set$ 由某个仿射概形表示。
+\end{exercise}
+
+\begin{exercise}\label{exc:8.2.9}
+证明：常函子 $\CRing\to\Set$，$R\mapsto I$ 不被概形表示，除非 $I\simeq\{*\}$。不交并 $\coprod_{i\in I}\Spec(\Z)$ 表示的是什么函子？
+\end{exercise}
+
+\begin{yizhu}
+$R$-点集 $X(R)=\Hom_{\Sch}(\Spec(R),X)$ 对 $R$ 是反变的：环同态 $R\to R'$ 诱导 $\Spec(R')\to\Spec(R)$，从而给出 $X(R)\to X(R')$。这正是把 $X$ 写成函子 $h_X:\CRing\to\Set$ 的全部内容，也是「点函子」一词的由来——对每个测试环 $R$，$X(R)$ 就是 $X$ 的「$R$ 值点」。
+[来源：Stacks Project, Tag 01JF（Section 26.15, A representability criterion），\url{https://stacks.math.columbia.edu/tag/01JF}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{yizhu}
+命题--构造 \ref{prop:8.1.2} 是 Stacks 中一条更一般引理的特例：对局部环 $R$，态射 $\Spec(R)\to X$ 与二元组 $(x,\ \cO_{X,x}\to R)$ 一一对应，其中第二个分量是局部同态。把 $R$ 取成域 $k$，局部同态只能经由剩余域 $\kappa_x$ 分解，于是得到本题的双射。
+[来源：Stacks Project, Tag 01J6（Lemma 26.13.1, Points of schemes），\url{https://stacks.math.columbia.edu/tag/01J6}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{yizhu}
+习题 \ref{exc:8.1.4} 的现象值得记住：$\Spec(k[\epsilon]/(\epsilon^2))$ 与 $\Spec(k)$ 有相同的域值点，却带着一层非平凡的幂零信息。这说明域值点看不见幂零元，因而看不见非既约的结构；要看见它们，必须允许把 $\Spec(k[\epsilon]/(\epsilon^2))$ 这样的「加厚点」当作测试对象。
+[依据：原书 p.44 习题 8.1.4 与注记 8.1.3]
+\end{yizhu}
+
+\begin{yizhu}
+定理 \ref{thm:8.2.3} 的完全忠实性可以看作定理 \ref{thm:7.1.2} 的函子版：仿射情形给出 $\Hom(\Spec R,\Spec R')\cong\Hom(R',R)$，而一般概形由仿射开集粘接而成，粘接数据在函子层面恰好转化为下降数据。原书没有给出证明，但这条定理是后面用 Yoneda 引理处理概形问题的合法依据。
+[依据：原书 p.45 定理 8.2.3 与 p.42 定理 7.1.2]
+\end{yizhu}
+
+\begin{yizhu}
+例 \ref{ex:8.2.7} 之所以成立，是因为 $\Hom_{\CRing}(\Z[t],R)$ 与 $R$ 的元素一一对应：给定环同态，$t$ 的像可任取；反之任取 $r\in R$，由 $\Z[t]\to R$，$t\mapsto r$ 得到唯一同态。于是 $\A^1_\Z$ 表示「忘记环结构、只留底层集合」的函子。
+[译者按（上下文推断，无外部依据）：由自由多项式环的泛性质直接验证。]
+\end{yizhu}
+
+\begin{yizhu}
+习题 \ref{exc:8.2.9} 的答案可由命题 \ref{prop:6.1.3} 读出：不交并是余积，故
+\[
+\Hom_{\Sch}\Bigl(\Spec(R),\coprod_{i\in I}\Spec(\Z)\Bigr)\cong\prod_{i\in I}\Hom_{\Sch}\bigl(\Spec(R),\Spec(\Z)\bigr),
+\]
+而每个因子只有一个元素，因为 $\Z\to R$ 的环同态唯一。于是当 $I$ 非空时，$\coprod_{i\in I}\Spec(\Z)$ 表示取值为单点的常函子。
+[译者按（上下文推断，无外部依据）：用不交并的余积性质与 $\Z$ 的初始性。]
+\end{yizhu}

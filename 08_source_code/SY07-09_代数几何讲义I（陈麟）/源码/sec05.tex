@@ -1,0 +1,188 @@
+% ======================================================================
+%  sec05.tex —— 第 5 节 作为局部环化空间的概形
+%  底本：原书 pp.33–36
+%  原书标题：5. Schemes as locally ringed spaces
+%            5.1 Locally ringed spaces / 5.2 Schemes / 5.3 Open immersions
+% ======================================================================
+
+% 原书的混合环境（Proposition-Definition / Proposition-Construction）在导言区未定义，此处就地补上；
+% 沿用 aliascnt，使它们与定理共用计数器，编号仍由 (sub)section 决定。
+\makeatletter
+\@ifundefined{c@propdef}{\newaliascnt{propdef}{theorem}\newtheorem{propdef}[propdef]{命题--定义}\aliascntresetthe{propdef}}{}
+\@ifundefined{c@propcon}{\newaliascnt{propcon}{theorem}\newtheorem{propcon}[propcon]{命题--构造}\aliascntresetthe{propcon}}{}
+\makeatother
+
+\section{作为局部环化空间的概形}\label{sec:5}
+
+\subsection{局部环化空间}\label{sec:5.1}
+
+\begin{definition}\label{def:5.1.1}
+\emph{环化空间}是指二元组 $(X,\cO_X)$：其中 $X$ 为拓扑空间，$\cO_X$ 为 $X$ 上的交换环层。环化空间之间的态射 $(X,\cO_X)\to(Y,\cO_Y)$ 是指二元组 $(\varphi,\beta)$：其中 $\varphi:X\to Y$ 连续，$\beta:\varphi^{-1}\cO_Y\to\cO_X$ 为层态射。由此得到范畴 $\Top_{\CRing}$。
+\end{definition}
+
+\begin{remark}\label{rem:5.1.2}
+等价地，也可用层态射 $\alpha:\cO_Y\to\varphi_*\cO_X$ 代替 $\beta$。
+\end{remark}
+
+\begin{construction}\label{con:5.1.3}
+任意态射 $(\varphi,\beta)$ 都可分解为
+\[
+(X,\cO_X)\xrightarrow{(\id,\beta)}(X,\varphi^{-1}\cO_Y)\xrightarrow{(\varphi,\id)}(Y,\cO_Y).
+\]
+\end{construction}
+
+\begin{definition}\label{def:5.1.4}
+\emph{局部环化空间}是指所有茎 $\cO_{X,x}$ 都是局部环的环化空间。点 $x$ 处的\emph{剩余域}定义为
+\[
+\kappa_x := \cO_{X,x}/\mathfrak m_x,
+\]
+其中 $\mathfrak m_x$ 是 $\cO_{X,x}$ 的极大理想。局部环化空间之间的态射是指环化空间态射 $(\varphi,\beta)$，且对每个 $x$ 同态
+\[
+\beta_x:\cO_{Y,\varphi(x)}\to\cO_{X,x}
+\]
+都是局部同态。由此得到范畴 $\Top^{\mathrm{loc}}_{\CRing}$。
+\end{definition}
+
+\begin{yizhu}
+局部环化空间的标准化记号是 $\mathfrak m_x$ 与 $\kappa(x)=\cO_{X,x}/\mathfrak m_x$，Stacks 与本书用法一致。值得注意的是「态射在每个茎上局部」这一条并不是可有可无的技术条件：它是把「函数在 $x$ 处取值」这件事提升为态射的必要条件，缺少它，环谱之间的连续映射就无法与环同态对应。
+[来源：Stacks Project, Tag 01HB（Definition 26.2.1, Locally ringed spaces），\url{https://stacks.math.columbia.edu/tag/01HB}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{construction}\label{con:5.1.5}
+局部同态 $\beta_x$ 诱导剩余域之间的同态 $\kappa_{Y,\varphi(x)}\to\kappa_{X,x}$。
+\end{construction}
+
+\begin{warning}\label{warn:5.1.6}
+遗忘函子 $\Top^{\mathrm{loc}}_{\CRing}\to\Top_{\CRing}$ 是忠实的，但不是满的。
+\end{warning}
+
+\begin{yizhu}
+警告 \ref{warn:5.1.6} 的「不满」可以直接看见：设 $A$ 为局部环，$\Frac(A)$ 为其分式域，则包含映射 $A\into\Frac(A)$ 把极大理想送到非零元，故它在闭点处不是局部同态。于是同一个底层连续映射配上这个环同态，给出环化空间态射而非局部环化空间态射。
+[译者按（上下文推断，无外部依据）：此处用局部环到其分式域的包含映射说明忠实而非满。]
+\end{yizhu}
+
+\begin{example}\label{ex:5.1.7}
+任意交换环 $R$ 给出局部环化空间 $(\Spec(R),\cO)$，简记为 $\Spec(R)$。任意同态 $h:R\to R'$ 给出局部环化空间态射 $\Spec(R')\to\Spec(R)$（见命题--构造 \ref{prop:4.3.4}），而且 $h$ 的信息恰好由该态射编码。
+\end{example}
+
+\begin{definition}\label{def:5.1.8}
+\emph{仿射概形}是指同构于某个 $\Spec(R)$ 的局部环化空间。仿射概形之间的态射就是局部环化空间态射。由此得到完整子范畴 $\mathsf{Aff}\subseteq\Top^{\mathrm{loc}}_{\CRing}$。
+\end{definition}
+
+\begin{propcon}\label{prop:5.1.9}
+下列两函子互逆，从而给出范畴等价 $\CRing^{\mathrm{op}}\simeq\mathsf{Aff}$：
+\[
+\CRing^{\mathrm{op}}\to\mathsf{Aff},\quad R\mapsto\Spec(R);
+\qquad
+\mathsf{Aff}\to\CRing^{\mathrm{op}},\quad X\mapsto\cO_X(X).
+\]
+\end{propcon}
+
+\begin{yizhu}
+命题--构造 \ref{prop:5.1.9} 的等价在 Stacks 中占据一整节（The category of affine schemes），其中把 $\Spec$ 与整体截面函子写成互为拟逆的一对，并由此把仿射概形的全部范畴论性质还原为交换环的性质。本书把它压缩成一句话，但后面每一次「化归到仿射情形」用的都是这条等价。
+[来源：Stacks Project, Tag 01HX（Section 26.6, The category of affine schemes），\url{https://stacks.math.columbia.edu/tag/01HX}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{construction}\label{con:5.1.10}
+设 $(X,\cO_X)$ 为（局部）环化空间，$f:Y\to X$ 为任意连续映射。则 $(Y,f^{-1}\cO_X)$ 也是（局部）环化空间，并带典范态射
+\[
+(Y,f^{-1}\cO_X)\to(X,\cO_X),
+\]
+即二元组 $(f,\id)$。当 $f:Y\subseteq X$ 为子空间时，记 $\cO_X|_Y:=f^{-1}\cO_X$，称 $(Y,\cO_X|_Y)$ 为 $(X,\cO_X)$ 在 $Y$ 上的\emph{限制}，或称与 $Y$ 相伴的\emph{局部环化子空间}。
+\end{construction}
+
+\begin{example}\label{ex:5.1.11}
+设 $R$ 为交换环，$f\in R$。由构造 \ref{con:5.1.10} 得到与 $U(f)$ 相伴的局部环化子空间。按构造，它可等同于 $\Spec(R_f)$，特别地是仿射概形。
+\end{example}
+
+\subsection{概形}\label{sec:5.2}
+
+\begin{definition}\label{def:5.2.1}
+\emph{概形}是指这样的局部环化空间 $(X,\cO_X)$：存在开覆盖 $X=\bigcup_{i\in I}U_i$，使每个 $(U_i,\cO_X|_{U_i})$ 都是仿射概形。概形之间的态射就是局部环化空间态射。由此得到完整子范畴 $\Sch\subseteq\Top^{\mathrm{loc}}_{\CRing}$。
+\end{definition}
+
+\begin{notation}\label{not:5.2.2}
+此后常滥用记号，把概形 $(X,\cO_X)$ 简写为 $X$，而把结构层视为隐含。对态射 $\varphi:X\to Y$ 也同样处理：层态射 $\beta:\varphi^{-1}\cO_Y\to\cO_X$ 视为隐含。
+\end{notation}
+
+\begin{warning}\label{warn:5.2.3}
+概形不被其底层拓扑空间决定；概形态射也不被其底层连续映射决定。
+\end{warning}
+
+\begin{exercise}\label{exc:5.2.4}
+设 $X$ 为 $\Spec(\F_q)$ 上的概形。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 对任意开集 $U\subseteq X$，映射 $\beta_U:\cO_X(U)\to\cO_X(U)$，$f\mapsto f^q$ 是环同态，且这些映射给出结构层的自同态 $\beta:\cO_X\to\cO_X$；
+  \item $\mathrm{Frob}_{X,q}:=(\id_X,\beta)$ 是 $X$ 的自同态。
+\end{enumerate}
+称 $\mathrm{Frob}_{X,q}$ 为\emph{绝对 $q$-Frobenius 态射}。
+\end{exercise}
+
+\begin{yizhu}
+习题 \ref{exc:5.2.4} 的 $\mathrm{Frob}_{X,q}$ 与恒等态射有相同的底层连续映射，却是不同的概形态射（除非 $q=p$ 且结构层上的 $q$ 次幂映射恰为恒等）。这正是警告 \ref{warn:5.2.3} 最经济的例证：拓扑空间那一层的信息不足以记住一个概形，Frobenius 的全部内容都藏在结构层的自同态里。
+[依据：原书 p.34 习题 5.2.4 与警告 5.2.3]
+\end{yizhu}
+
+\begin{lemma}\label{lem:5.2.5}
+概形 $X$ 的仿射开子集构成拓扑基。此外，$X$ 是 Kolmogorov 空间。
+\end{lemma}
+
+\begin{exercise}\label{exc:5.2.6}
+设 $X$ 为拓扑空间，以 $\cC_X(U)$ 记 $U$ 上取值于 $\R$ 的连续函数环\footnote{此处 $\R$ 取通常拓扑。}。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item $(X,\cC_X)$ 是局部环化空间；
+  \item 连续映射 $X\to X'$ 诱导局部环化空间态射 $(X,\cC_X)\to(X',\cC_{X'})$；
+  \item $(\R,\cC_\R)$ 不是概形。
+\end{enumerate}
+\end{exercise}
+
+\subsection{开浸入}\label{sec:5.3}
+
+\begin{propdef}\label{prop:5.3.1}
+设 $X$ 为概形，$U\subseteq X$ 为开子空间。则与 $U$ 相伴的局部环化子空间是概形，称为与 $U$ 相伴的\emph{开子概形}。
+\end{propdef}
+
+\begin{proof}
+取仿射开覆盖 $X=\bigcup U_i$。只需证明每个 $U_i\cap U$ 都能被仿射概形覆盖。于是化归到 $X\simeq\Spec(R)$ 为仿射的情形。按 Zariski 拓扑的定义，取 $(f_j)$ 使 $U=\bigcup U(f_j)$；由例 \ref{ex:5.1.11}，每个 $U(f_j)\cong\Spec(R_{f_j})$ 都是仿射的。
+\end{proof}
+
+\begin{definition}\label{def:5.3.2}
+态射 $f:Y\to X$ 称为\emph{开浸入}，若存在开子概形 $U\subseteq X$（这样的 $U$ 唯一），使 $f$ 分解为
+\[
+Y\xrightarrow{\ \simeq\ }U\into X .
+\]
+\end{definition}
+
+\begin{yizhu}
+开浸入在 Stacks 中的原始定义分两步：先要求 $f$ 是到开子集的同胚，再要求 $f^{-1}\cO_Y\to\cO_X$ 是同构；随后才证明这与「同构到某个开子概形再嵌入」等价。本书直接采用后一形式，好处是「开子概形」这个概念不必预先定义，坏处是唯一性需要单独说明。
+[来源：Stacks Project, Tag 01HE（Definition 26.3.1, Open immersions of locally ringed spaces），\url{https://stacks.math.columbia.edu/tag/01HE}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{warning}\label{warn:5.3.3}
+仿射概形的开子概形未必仿射；仿射概形的仿射开子集也未必是标准开集。
+\end{warning}
+
+\begin{exercise}\label{exc:5.3.4}
+设 $k$ 为域，$R=k[x,y]$，点 $(0,0)$ 对应极大理想 $(x,y)$，并令 $U:=\Spec(R)\setminus\{(0,0)\}$。证明 $U$ 不仿射。
+\end{exercise}
+
+\begin{exercise}\label{exc:5.3.5}
+设 $\mathrm{char}\,k=0$，$R:=k[x,y]/(y^2-x^3)$，点 $(1,1)$ 对应理想 $(x-1,y-1)$，并令 $U:=\Spec(R)\setminus\{(1,1)\}$。证明 $U$ 仿射，但它不是 $\Spec(R)$ 的标准开子集。
+\end{exercise}
+
+\begin{warning}\label{warn:5.3.6}
+对一般的子空间 $Y\subseteq X$，与 $Y$ 相伴的局部环化子空间不一定是概形。
+\end{warning}
+
+\begin{exercise}\label{exc:5.3.7}
+设 $R$ 为局部环，$X:=\Spec(R)$，$x$ 为其唯一闭点。证明：除非 $R$ 是域，$(\{x\},\cO_X|_{\{x\}})$ 不是概形。
+\end{exercise}
+
+\begin{exercise}\label{exc:5.3.8}
+设 $f:Y\to X$ 为开浸入。证明 $f$ 是 $\Sch$ 中的单态射，即对任意概形 $Z$，映射
+\[
+\Hom_{\Sch}(Z,Y)\to\Hom_{\Sch}(Z,X),\qquad g\mapsto f\circ g
+\]
+是单射；并且 $h:Z\to X$ 落在其像中，当且仅当底层连续映射 $Z\to X$ 经由开子集 $f(Y)\subset X$ 分解。
+\end{exercise}
+

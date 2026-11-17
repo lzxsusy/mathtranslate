@@ -1,0 +1,284 @@
+% ======================================================================
+%  sec06.tex —— 第 6 节 粘接概形
+%  底本：原书 pp.37–41
+%  原书标题：6. Gluing schemes
+%            6.1 Statement / 6.2 Examples
+% ======================================================================
+
+% 原书的混合环境在导言区未定义，此处就地补上（aliascnt 使其与定理共享计数器）。
+\makeatletter
+\@ifundefined{c@propdef}{\newaliascnt{propdef}{theorem}\newtheorem{propdef}[propdef]{命题--定义}\aliascntresetthe{propdef}}{}
+\@ifundefined{c@propcon}{\newaliascnt{propcon}{theorem}\newtheorem{propcon}[propcon]{命题--构造}\aliascntresetthe{propcon}}{}
+\makeatother
+
+\section{粘接概形}\label{sec:6}
+
+\subsection{陈述}\label{sec:6.1}
+
+\begin{definition}\label{def:6.1.1}
+概形的\emph{粘接数据}是指一组资料
+\[
+\bigl(I,\ (X_i)_{i\in I},\ (U_{ij})_{(i,j)\in I^2},\ (\varphi_{ij})_{(i,j)\in I^2}\bigr),
+\]
+其中
+\begin{itemize}[leftmargin=1.6em,itemsep=0.2ex]
+  \item $I$ 是集合；
+  \item 对每个 $i\in I$，$X_i$ 是概形；
+  \item 对任意二元组 $(i,j)\in I^2$，$U_{ij}$ 是 $X_i$ 的开子概形；
+  \item 对任意二元组 $(i,j)\in I^2$，$\varphi_{ij}:U_{ij}\to U_{ji}$ 是概形之间的同构。
+\end{itemize}
+上述资料应满足以下条件：
+\begin{itemize}[leftmargin=1.6em,itemsep=0.2ex]
+  \item 对任意 $i\in I$，$U_{ii}=X_i$，且 $\varphi_{ii}=\id_{X_i}$；
+  \item 对任意三元组 $(i,j,k)\in I^3$，
+\[
+\varphi_{ij}(U_{ij}\cap U_{ik})=U_{ji}\cap U_{jk}
+\]
+作为 $U_{ji}$ 的开子集成立；
+  \item 对任意三元组 $(i,j,k)\in I^3$，下述\emph{余圈条件}成立：
+\[
+\varphi_{jk}\big|_{U_{ji}\cap U_{jk}}\circ\varphi_{ij}\big|_{U_{ij}\cap U_{ik}}
+=\varphi_{ik}\big|_{U_{ij}\cap U_{ik}},
+\]
+即下图交换：
+\[
+\begin{tikzcd}[column sep=large,row sep=large]
+U_{ij}\cap U_{ik}\arrow[dr,"\varphi_{ij}"']\arrow[drr,bend left=14,"\varphi_{ik}"] & {} & \\
+& U_{ji}\cap U_{jk}\arrow[r,"\varphi_{jk}"'] & U_{ki}\cap U_{kj}
+\end{tikzcd}
+\]
+（图中三个箭头都是同构。）
+\end{itemize}
+\end{definition}
+
+\begin{yizhu}
+粘接数据的三条条件逐条对应「粘合拓扑空间」所需的三件事：自反性（$U_{ii}=X_i$、$\varphi_{ii}=\id$）、两边一致（$\varphi_{ij}$ 把交映到交）、以及余圈条件（三次转换回到原处）。Stacks 用的是同一套条件，只是把对象换成局部环化空间；在那里还额外说明这套条件足以保证粘接结果的存在性与唯一性。
+[来源：Stacks Project, Tag 01JA（Section 26.14, Glueing schemes），\url{https://stacks.math.columbia.edu/tag/01JA}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{propdef}\label{prop:6.1.2}
+给定概形的粘接数据
+\[
+\bigl(I,\ (X_i)_{i\in I},\ (U_{ij})_{(i,j)\in I^2},\ (\varphi_{ij})_{(i,j)\in I^2}\bigr),
+\]
+则存在本质唯一的一组资料
+\[
+\bigl(X,\ (X'_i)_{i\in I},\ (\varphi_i)_{i\in I}\bigr),
+\]
+其中
+\begin{itemize}[leftmargin=1.6em,itemsep=0.2ex]
+  \item $X$ 是概形；
+  \item 对每个 $i\in I$，$X'_i$ 是 $X$ 的开子概形；
+  \item 对每个 $i\in I$，$\varphi_i:X_i\xrightarrow{\ \simeq\ }X'_i$ 是同构；
+\end{itemize}
+使得
+\begin{itemize}[leftmargin=1.6em,itemsep=0.2ex]
+  \item 作为拓扑空间，$X=\bigcup_{i\in I}X'_i$；
+  \item 对任意二元组 $(i,j)\in I^2$，$\varphi_i(U_{ij})=X'_i\cap X'_j$，作为 $X'_i$ 的开子集成立；
+  \item 对任意二元组 $(i,j)\in I^2$，
+\[
+\varphi_i|_{U_{ij}}=\varphi_j|_{U_{ji}}\circ\varphi_{ij},
+\]
+即下图交换：
+\[
+\begin{tikzcd}[column sep=large,row sep=large]
+& U_{ij}\arrow[dl,"\varphi_{ij}"']\arrow[dr,"\varphi_i"] & \\
+U_{ji}\arrow[rr,"\varphi_j"'] & {} & X'_i\cap X'_j
+\end{tikzcd}
+\]
+\end{itemize}
+此时称概形 $X$ 由给定粘接数据\emph{粘接}而成，并把 $\bigl((X'_i)_{i\in I},(\varphi_i)_{i\in I}\bigr)$ 视为隐含。
+\end{propdef}
+
+\begin{proof}
+拓扑空间情形的类似结论是点集拓扑的习题：粘接数据给出本质唯一的拓扑空间 $X$，带开子空间 $X'_i$ 与同胚 $\varphi_i:X_i\to X'_i$，且满足陈述中列出的那些拓扑条件。
+
+因此只需证明：存在本质唯一的 $\cO_X\in\Shv(X,\CRing)$，带同构
+\[
+\beta_i:\varphi_i^{-1}\bigl(\cO_X|_{X'_i}\bigr)\xrightarrow{\ \simeq\ }\cO_{X_i},
+\]
+并且满足其余的层论条件。注意这样的环化空间 $(X,\cO_X)$ 自动是概形，因为它在每个 $X'_i$ 上的限制都是与 $X_i$ 同构的概形。
+
+令 $\mathfrak{B}\subseteq\mathfrak{U}(X)$ 为由这样的开集 $V\subseteq X$ 组成的完整子范畴：存在 $i\in I$ 使 $V\subseteq X'_i$。$\mathfrak{B}$ 的对象构成 $X$ 的拓扑基。容易看出，存在本质唯一的函子
+\[
+\cO_{\mathfrak{B}^{\mathrm{op}}}:\mathfrak{B}^{\mathrm{op}}\to\CRing,
+\]
+带同构
+\[
+\beta_i:\varphi_i^{-1}\bigl((\cO_{\mathfrak{B}^{\mathrm{op}}})|_{X'_i}\bigr)
+\xrightarrow{\ \simeq\ }\cO_{X_i},
+\]
+且满足所需的条件；这里 $(\cO_{\mathfrak{B}^{\mathrm{op}}})|_{X'_i}$ 指沿完整忠实嵌入 $\mathfrak{U}(X'_i)^{\mathrm{op}}\to\mathfrak{B}^{\mathrm{op}}$ 对 $\cO|_{\mathfrak{B}^{\mathrm{op}}}$ 所作的限制。此外可以验证，所得的 $\cO|_{\mathfrak{B}^{\mathrm{op}}}$ 满足命题 \ref{prop:1.2.10} 中的层条件。于是 $\cO|_{\mathfrak{B}^{\mathrm{op}}}$ 本质唯一地延拓为 $X$ 上的 $\CRing$ 值层 $\cO_X$，这正是所要的。
+\end{proof}
+
+\begin{yizhu}
+命题--定义 \ref{prop:6.1.2} 的证明把问题拆成拓扑与层论两半，关键一步是只在「含于某个 $X'_i$ 的开集」上造层，再用命题 \ref{prop:1.2.10} 的层条件延拓。Stacks 的相应引理走同一条路线，但它先粘接局部环化空间、再验证结果为概形，分作两个引理陈述。
+[来源：Stacks Project, Tag 01JC（Lemma 26.14.2, Glueing schemes），\url{https://stacks.math.columbia.edu/tag/01JC}（2026-11-17 访问）。]
+\end{yizhu}
+
+下面的命题说明如何从粘接空间出发构造态射。
+
+\begin{proposition}\label{prop:6.1.3}
+设
+\[
+\bigl(I,\ (X_i)_{i\in I},\ (U_{ij})_{(i,j)\in I^2},\ (\varphi_{ij})_{(i,j)\in I^2}\bigr)
+\]
+为概形的粘接数据，
+\[
+\bigl(X,\ (X'_i)_{i\in I},\ (\varphi_i)_{i\in I}\bigr)
+\]
+为其粘接输出。则对任意概形 $Y$，映射
+\[
+\Hom_{\Sch}(X,Y)\to\prod_{i\in I}\Hom_{\Sch}(X_i,Y),
+\qquad
+f\mapsto\bigl(f|_{X'_i}\circ\varphi_i\bigr)_{i\in I}
+\]
+是单射；并且一簇态射 $(g_i:X_i\to Y)_{i\in I}$ 落在其像中，当且仅当对任意二元组 $(i,j)\in I^2$ 有
+\[
+g_i|_{U_{ij}}=g_j|_{U_{ji}}\circ\varphi_{ij}.
+\]
+\end{proposition}
+
+\begin{proof}
+为简化记号，把 $X_i$ 与 $X'_i$ 等同，并把 $U_{ij}$ 与 $X$ 中的交 $X_i\cap X_j$ 等同。于是 $\varphi_{ij}$ 与 $\varphi_i$ 都是恒等态射。
+
+先对拓扑空间证明类似结论。由于 $X=\bigcup_{i\in I}X_i$ 是拓扑空间，映射
+\[
+\Hom_{\Top}(X,Y)\to\prod_{i\in I}\Hom_{\Top}(X_i,Y),
+\qquad
+f\mapsto(f|_{X_i})_{i\in I}
+\]
+是单射；并且一簇连续映射 $(f_i:X_i\to Y)_{i\in I}$ 落在其像中，当且仅当对任意二元组 $(i,j)\in I^2$ 有 $f_i|_{X_i\cap X_j}=f_j|_{X_i\cap X_j}$。
+
+由此只需证明：对给定的连续映射 $f:X\to Y$ 及 $f_i:=f|_{X_i}$，映射
+\[
+\Hom_{\Shv(X,\CRing)}(f^{-1}\cO_Y,\cO_X)\to\prod_{i\in I}\Hom_{\Shv(X_i,\CRing)}(f_i^{-1}\cO_Y,\cO_{X_i}),
+\qquad
+\beta\mapsto(\beta|_{X_i})_{i\in I}
+\]
+是单射；并且一簇态射 $(\beta_i:f_i^{-1}\cO_Y\to\cO_{X_i})_{i\in I}$ 落在其像中，当且仅当 $\beta_i|_{X_i\cap X_j}=\beta_j|_{X_i\cap X_j}$。
+
+令 $\mathfrak{B}\subseteq\mathfrak{U}(X)$ 为由这样的开集 $V\subseteq X$ 组成的完整子范畴：存在 $i\in I$ 使 $V\subseteq X_i$。$\mathfrak{B}$ 的对象构成 $X$ 的拓扑基。由习题 \ref{exc:1.2.7}，有双射
+\[
+\Hom_{\Shv(X,\CRing)}(f^{-1}\cO_Y,\cO_X)
+\xrightarrow{\ \simeq\ }
+\Hom_{\mathsf{Fun}(\mathfrak{B}^{\mathrm{op}},\CRing)}\bigl((f^{-1}\cO_Y)|_{\mathfrak{B}^{\mathrm{op}}},(\cO_X)|_{\mathfrak{B}^{\mathrm{op}}}\bigr),
+\qquad
+\beta\mapsto\beta|_{\mathfrak{B}^{\mathrm{op}}}.
+\]
+现在所求结论由下述事实得出：范畴 $\mathfrak{B}$ 可被其完整子范畴 $\mathfrak{U}(X_i)$ 覆盖，且 $\mathfrak{U}(X_i)\cap\mathfrak{U}(X_j)\simeq\mathfrak{U}(X_i\cap X_j)$。
+\end{proof}
+
+同样可以描述映入粘接空间的态射。
+
+\begin{propcon}\label{prop:6.1.4}
+设
+\[
+\bigl(I,\ (X_i)_{i\in I},\ (U_{ij})_{(i,j)\in I^2},\ (\varphi_{ij})_{(i,j)\in I^2}\bigr)
+\]
+为概形的粘接数据，
+\[
+\bigl(X,\ (X'_i)_{i\in I},\ (\varphi_i)_{i\in I}\bigr)
+\]
+为其粘接输出。则对任意概形 $Y$，下述两个集合之间存在典范双射：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 态射 $f:Y\to X$ 构成的集合 $\Hom_{\Sch}(Y,X)$；
+  \item 一簇态射 $(f_i:Y_i\to X_i)_{i\in I}$ 构成的集合，其中每个 $Y_i$ 是 $Y$ 的开子概形、$Y=\bigcup_{i\in I}Y_i$ 是开覆盖，每个 $f_i:Y_i\to X_i$ 是态射，并且满足
+  \begin{itemize}[leftmargin=1.6em,itemsep=0.15ex]
+    \item 对每个二元组 $(i,j)\in I^2$，$f_i^{-1}(U_{ij})=Y_i\cap Y_j$；
+    \item 对每个二元组 $(i,j)\in I^2$，$f_j|_{Y_i\cap Y_j}=\varphi_{ij}\circ f_i|_{Y_i\cap Y_j}$。
+  \end{itemize}
+\end{enumerate}
+\end{propcon}
+
+\begin{proofsketch}
+先构造映射 (i)$\to$(ii)。给定态射 $f:Y\to X$，令 $Y_i$ 为开子集 $f^{-1}(X'_i)$ 所对应的开子概形。特别地，$f|_{Y_i}$ 给出态射 $Y_i\to X'_i$。令 $f_i$ 为合成
+\[
+Y_i\to X'_i\xrightarrow{\ \varphi_i^{-1}\ }X_i .
+\]
+可以验证，一簇 $(f_i:Y_i\to X_i)_{i\in I}$ 满足所需的各项要求。这就给出映射 (i)$\to$(ii)。
+
+再构造映射 (ii)$\to$(i)。给定一簇 $(f_i:Y_i\to X_i)_{i\in I}$，考虑合成
+\[
+g_i:\ Y_i\xrightarrow{\ f_i\ }X_i\xrightarrow{\ \varphi_i\ }X'_i\to X .
+\]
+可以验证 $g_i|_{Y_i\cap Y_j}=g_j|_{Y_i\cap Y_j}$。由此存在唯一态射 $f:Y\to X$ 使 $f|_{Y_i}=g_i$。这就给出映射 (ii)$\to$(i)。
+
+最后可以验证，上述两个映射互为逆映射。
+\end{proofsketch}
+
+\begin{yizhu}
+命题 \ref{prop:6.1.3} 与命题--构造 \ref{prop:6.1.4} 是一对对偶的陈述：前者说「从粘接结果出发的态射由各块上的态射决定」，后者说「映入粘接结果的态射由各块上的态射拼成」。二者合起来正是 Stacks 中粘接引理的两条映射性质，也是把「粘接」当作余极限来用的依据。
+[来源：Stacks Project, Tag 01JB（Lemma 26.14.1, Glueing schemes），\url{https://stacks.math.columbia.edu/tag/01JB}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{remark}\label{rem:6.1.5}
+本小节的结果对一般的（局部）环化空间同样成立。
+\end{remark}
+
+\subsection{例子}\label{sec:6.2}
+
+\begin{example}\label{ex:6.2.1}
+设 $(X_i)_{i\in I}$ 为一族概形，对 $i\neq j$ 取 $U_{ij}$ 为空概形，并取 $\varphi_{ij}$ 为恒等态射。这显然是一组粘接数据。由该粘接数据粘接所得的概形 $X$ 称为 $(X_i)_{i\in I}$ 的\emph{不交并}，记作 $\coprod_{i\in I}X_i$。由命题 \ref{prop:6.1.3}，$\coprod_{i\in I}X_i$ 也是 $(X_i)_{i\in I}$ 在范畴 $\Sch$ 中的余积。
+\end{example}
+
+\begin{example}\label{ex:6.2.2}
+正如所期望的，$n$ 维射影空间可由 $n+1$ 个 $n$ 维仿射空间粘接而成。细节如下。
+
+设 $R$ 为任意交换环。对 $n\ge 0$，令 $I:=\{0,1,\dots,n\}$，并令
+\[
+X_i:=\Spec\bigl(R[x_0^{(i)},\dots,x_n^{(i)}]/(x_i^{(i)}-1)\bigr).
+\]
+再令
+\[
+U_{ij}:=U\bigl(x_j^{(i)}\bigr)\subseteq X_i .
+\]
+于是
+\[
+U_{ij}\simeq\Spec\bigl(R[x_0^{(i)},\dots,x_n^{(i)}]_{x_j^{(i)}}/(x_i^{(i)}-1)\bigr).
+\]
+注意有同构
+\[
+R[x_0^{(i)},\dots,x_n^{(i)}]_{x_j^{(i)}}/(x_i^{(i)}-1)
+\simeq
+R[x_0^{(j)},\dots,x_n^{(j)}]_{x_i^{(j)}}/(x_j^{(j)}-1),
+\]
+它把 $x_k^{(i)}$ 送到 $x_k^{(j)}/x_i^{(j)}$。由此得到同构
+\[
+U_{ij}\xrightarrow{\ \simeq\ }U_{ji}.
+\]
+可以验证，以上资料给出粘接数据，于是得到由它粘接而成的本质唯一概形 $X$。
+
+把粘接结果记作 $\PP^n_R$，称为 $R$ 上的 $n$ 维\emph{射影空间}。
+\end{example}
+
+\begin{yizhu}
+例 \ref{ex:6.2.2} 的粘接数据把每个 $X_i$ 中的超平面 $x_i^{(i)}=0$ 挖掉，剩下的部分恰是 $\PP^n_R$ 的第 $i$ 个标准仿射卡。Stacks 对 $n=1$ 的情形写得最清楚：两条 $\A^1$ 沿各自的 $\mathbb{G}_m$ 粘成 $\PP^1$，而坐标变换 $t\mapsto 1/t$ 正是本例中 $x_k^{(i)}\mapsto x_k^{(j)}/x_i^{(j)}$ 的特例。
+[来源：Stacks Project, Tag 01JE（Example 26.14.4, Projective line），\url{https://stacks.math.columbia.edu/tag/01JE}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{exercise}\label{exc:6.2.3}
+设 $R$ 为交换环，$k$ 为代数闭域。
+\begin{enumerate}[label=(\arabic*),leftmargin=2em,itemsep=0.25ex]
+  \item 求 $\cO_{\PP^n_R}(\PP^n_R)$，并由此推出：当 $n\ge 1$ 时 $\PP^n_R$ 不仿射。
+  \item 证明 $\PP^n_k$ 的闭点可典范地等同于 $(\bbk^{n+1}\setminus 0)/\bbk^{\times}$ 中的元素，其中 $\bbk^{\times}$ 通过数乘作用在向量空间 $\bbk^{n+1}$ 上。
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}\label{exc:6.2.4}
+设 $R$ 为任意交换环，$I=\{1,2\}$。令
+\[
+X_1=X_2:=\A^1_R:=\Spec(R[t]),
+\]
+并令
+\[
+U_{12}=U_{21}:=U(t),\qquad U_{11}:=X_1,\qquad U_{22}:=X_2 .
+\]
+取 $\varphi_{ij}$ 为恒等态射，考虑由上述粘接数据粘接所得的概形 $X$。证明 $X$ 不仿射。
+\end{exercise}
+
+\begin{yizhu}
+习题 \ref{exc:6.2.4} 中把两条 $\A^1_R$ 沿 $U(t)$ 粘接，所得是「带两个原点的仿射直线」。它不是仿射概形，直观原因是两个原点各自带有不同的局部信息，无法由单个环的整体截面同时记录。Stacks 用「带两个原点的仿射空间」这个名称收录了同一例子，并指出它不满足分离性。
+[来源：Stacks Project, Tag 01JD（Example 26.14.3, Affine space with zero doubled），\url{https://stacks.math.columbia.edu/tag/01JD}（2026-11-17 访问）。]
+\end{yizhu}
+

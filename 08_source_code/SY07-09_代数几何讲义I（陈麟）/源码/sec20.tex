@@ -1,0 +1,414 @@
+% ======================================================================
+%  sec20.tex —— 第 20 节 仿射与拟仿射态射
+%  底本：原书 pp.98–104（印刷页 = PDF 页）
+%  原书标题：20. (Quasi-)affine morphisms
+%            20.1 Affine morphisms / 20.2 Quasi-coherent modules and affine morphisms
+%            20.3 Serre's criterion: statement / 20.4 Principle open subschemes
+%            20.5 Proof of Theorem 20.3.2 / 20.6 Quasi-affine morphisms
+% ======================================================================
+
+\providecommand{\fm}{\mathfrak{m}}
+
+\makeatletter
+\@ifundefined{c@propdef}{\newaliascnt{propdef}{theorem}\newtheorem{propdef}[propdef]{命题--定义}\aliascntresetthe{propdef}}{}
+\makeatother
+
+\section{仿射与拟仿射态射}\label{sec:20}
+
+% ---------------------------------------------------------------- p.98
+\subsection{仿射态射}\label{sec:20.1}
+
+\begin{definition}\label{def:20.1.1}
+称概形间的态射 $f:X\to Y$ \emph{仿射}，若对任意仿射开子概形 $U\subseteq Y$，其原像 $X\times_Y U$ 仿射。
+\end{definition}
+
+\begin{yizhu}
+Stacks 的定义与这里逐字相同，只有一处换名：条件写作「$f^{-1}(U)$ 仿射」。对开子概形而言 $f^{-1}(U)$ 与纤维积 $X\times_Y U$ 是同一个对象，本书取后者，把「仿射性对基变换稳定」直接写进了定义。这样安排的好处是引理 \ref{lem:20.1.6}(iii) 几乎不需要证明，代价是定义里出现了尚未造出的纤维积。
+[来源：Stacks Project, Tag 01S6（Definition 29.11.1, Affine morphisms），\url{https://stacks.math.columbia.edu/tag/01S6}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{example}\label{ex:20.1.2}
+设 $S$ 是仿射概形。态射 $f:X\to S$ 仿射当且仅当 $X$ 仿射。
+\end{example}
+
+\begin{lemma}\label{lem:20.1.3}
+仿射态射 $f:X\to Y$ 拟紧且分离。
+\end{lemma}
+
+\begin{proof}
+由引理 18.1.4(iii) 与引理 18.2.7(iv)，可设 $Y$ 仿射。因 $f$ 仿射，$X$ 也仿射。于是由引理 18.1.3 知 $f$ 拟紧，由习题 18.2.8 知 $f$ 分离。
+\end{proof}
+
+\begin{proposition}\label{prop:20.1.4}
+设 $S$ 是概形。下述两个函子有定义，且互为逆：
+\begin{equation}\label{eq:20.1}
+\begin{array}{ccc}
+\cO_S\text{-}\mathsf{alg}_{\mathrm{qcoh}} & \longrightarrow & \{\text{仿射态射 }p:X\to S\}^{\op},\\[2pt]
+\cA & \longmapsto & \big(\Spec_S(\cA)\to S\big),\\[2pt]
+p_*\cO_X & \longmapsfrom & (p:X\to S).
+\end{array}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+向左的函子由引理 \ref{lem:20.1.3} 与定理 18.4.1 有定义。
+
+为证向右的函子有定义，只需证 $\Spec_S(\cA)\to S$ 仿射。设 $U\subseteq S$ 是仿射开子概形，则
+\[
+\Spec_S(\cA)\times_S U\simeq\Spec_U(\cA|_U)\simeq\Spec(\cA(U)),
+\]
+它确实是仿射概形。
+
+由推论 14.2.5，\eqref{eq:20.1} 是伴随对，且左伴随全忠实。于是只需证：对任意仿射态射 $p:X\to S$，对应于恒等态射 $p_*\cO_X$ 的 $S$-态射
+\[
+X\to\Spec_S(p_*\cO_X)
+\]
+是同构。该断言在 $S$ 上局部，故可设 $S$ 仿射，从而 $X$ 仿射。此时上述态射成为典范态射
+\[
+X\to\Spec(\cO_X(X)),
+\]
+它确实是同构。
+\end{proof}
+
+\begin{yizhu}
+Stacks 把命题 \ref{prop:20.1.4} 写成反范畴等价：拟凝聚 $\cO_S$-代数层与仿射 $S$-概形互为反向对应，并额外声明它与 $S$ 的任意基变换相容。相容性在本书里散落在两处：引理 \ref{lem:20.1.6}(iii) 管态射，证明里的 $\Spec_S(\cA)\times_S U\simeq\Spec_U(\cA|_U)$ 管对象。写成一条定理的好处是此后不必每次回到定义验证。
+[来源：Stacks Project, Tag 01SA（Lemma 29.11.5, Affine morphisms），\url{https://stacks.math.columbia.edu/tag/01SA}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{corollary}\label{cor:20.1.5}
+任意闭浸入仿射。
+\end{corollary}
+
+\begin{lemma}\label{lem:20.1.6}
+考虑仿射态射构成的类。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 设 $X\xrightarrow{f}Y\xrightarrow{g}Z$ 是态射链，$f$ 与 $g$ 都仿射。则 $g\circ f$ 仿射。
+  \item 设 $X\xrightarrow{f}Y\xrightarrow{g}Z$ 是态射链，$g$ 分离且 $g\circ f$ 仿射。则 $f$ 仿射。
+  \item 仿射态射对基变换稳定。
+  \item 「$f$ 仿射」这一性质在靶上局部。
+\end{enumerate}
+\end{lemma}
+
+% ---------------------------------------------------------------- p.99
+\begin{proof}
+(i) 显然。
+
+(iii) 由命题 \ref{prop:20.1.4} 与习题 14.2.6 得到。
+
+为证 (ii)，把 $f$ 分解为 $X\xrightarrow{\Gamma_f}X\times_ZY\xrightarrow{\mathrm{pr}_2}Y$，其中第一个态射是 $f$ 相对于 $Z$ 的图，$\mathrm{pr}_2$ 是显然的投影。由习题 18.2.11(2)，$\Gamma_f$ 是闭浸入，从而仿射（推论 \ref{cor:20.1.5}）。另一方面，$\mathrm{pr}_2$ 是 $g\circ f:X\to Z$ 沿 $Y\to Z$ 的基变换。由 (iii)，$\mathrm{pr}_2$ 仿射。于是 $f$ 作为两个仿射态射的合成也仿射。
+
+为证 (iv)，设 $f:X\to Y$ 是态射，$Y=\bigcup_{i\in I}Y_i$ 是开覆盖，使每个 $f_i:X\times_YY_i\to Y_i$ 仿射。由引理 \ref{lem:20.1.3}，每个 $f_i$ 拟紧且分离。由引理 18.1.4(iii) 与引理 18.2.7(iv)，$f$ 拟紧且分离。特别地，$f_*\cO_X$ 拟凝聚。由推论 14.2.5 与命题 \ref{prop:20.1.4}，只需证对应于 $f_*\cO_X$ 上恒等态射的 $Y$-态射
+\begin{equation}\label{eq:20.2}
+X\to\Spec_Y(f_*\cO_X)
+\end{equation}
+是同构。假设说明 \eqref{eq:20.2} 到每个 $Y_i$ 的基变换都是同构。于是 \eqref{eq:20.2} 确实同构。
+\end{proof}
+
+\subsection{拟凝聚模与仿射态射}\label{sec:20.2}
+
+\begin{construction}\label{con:20.2.1}
+设 $S$ 是概形，$f:X\to S$ 是仿射态射。记 $\cA:=f_*\cO_X$，它是拟凝聚 $\cO_S$-代数。考虑环化空间之间的态射 $(X,\cO_X)\to(S,\cA)$。沿此态射的拉回与前推给出伴随对
+\[
+\cA\text{-}\mathsf{mod}\rightleftarrows\cO_X\text{-}\mathsf{mod},\qquad
+M\mapsto\widetilde{M},\qquad
+f_*\cF\mapsfrom\cF,
+\]
+其中回忆
+\[
+\widetilde{M}\simeq\cO_X\otimes_{f^{-1}\cA}f^{-1}M.
+\]
+令
+\[
+\cA\text{-}\mathsf{mod}_{\mathrm{qcoh}}\subseteq\cA\text{-}\mathsf{mod}
+\]
+为满足「$\cF$ 作为 $\cO_S$-模拟凝聚」的 $\cF\in\cA\text{-}\mathsf{mod}$ 构成的满子范畴。
+\end{construction}
+
+\begin{proposition}\label{prop:20.2.2}
+在上述情形下，下述函子有定义，且互为逆：
+\[
+\begin{array}{ccc}
+\cA\text{-}\mathsf{mod}_{\mathrm{qcoh}} & \longrightarrow & \cO_X\text{-}\mathsf{mod}_{\mathrm{qcoh}},\\[2pt]
+M & \longmapsto & \widetilde{M},\\[2pt]
+f_*\cF & \longmapsfrom & \cF.
+\end{array}
+\]
+\end{proposition}
+
+\begin{proof}
+该断言在 $S$ 上局部，故可设 $S=\Spec(R)$。回忆 $\mathsf{QCoh}(S)\simeq R\text{-}\mathsf{mod}$。记 $\cA:=\cA(S)$，并把它视为 $R\text{-}\mathsf{mod}$ 中的交换代数对象。于是 $\cA\text{-}\mathsf{mod}_{\mathrm{qcoh}}\simeq\cA\text{-}\mathsf{mod}(R\text{-}\mathsf{mod})\simeq\cA\text{-}\mathsf{mod}$。此时所需等价成为推论 13.1.2 中的等价。
+\end{proof}
+
+% ---------------------------------------------------------------- p.100
+\begin{exercise}\label{exc:20.2.3}
+设 $S$ 是概形，$f:X\to S$ 是仿射态射。记 $\cA:=f_*\cO_X$。证明
+\[
+f_*(\cF\otimes_{\cO_X}\cF')\simeq f_*\cF\otimes_\cA f_*\cF'.
+\]
+\end{exercise}
+
+\subsection{Serre 判别法：陈述}\label{sec:20.3}
+
+\begin{theorem}[Serre]\label{thm:20.3.1}
+设 $f:X\to Y$ 是概形间的拟紧且拟分离态射。下列条件等价：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 态射 $f$ 仿射。
+  \item 函子
+  \[
+  f_*:\mathsf{QCoh}(X)\to\mathsf{QCoh}(Y)
+  \]
+  正合。
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+先证两个条件都在 $Y$ 上局部。对 (1)，这是引理 \ref{lem:20.1.6}(iv)。对 (2)，设 $Y=\bigsqcup_{i\in I}Y_i$ 是开覆盖，$f_i:X_i\to Y_i$ 是 $f$ 沿 $Y_i\to Y$ 的基变换。对 $\cF\in\mathsf{QCoh}(X)$，容易看出
+\[
+f_*(\cF)|_{Y_i}\simeq f_{i,*}(\cF|_{X_i}).
+\]
+注意限制函子 $\mathsf{QCoh}(Y)\to\mathsf{QCoh}(Y_i)$ 与 $\mathsf{QCoh}(X)\to\mathsf{QCoh}(X_i)\ (i\in I)$ 既保持又检测拟凝聚模的正合列。于是 $f_*$ 正合当且仅当每个 $f_{i,*}$ 正合。换言之，条件 (2) 在 $Y$ 上局部。
+
+由上述讨论，可设 $Y=\Spec(R)$ 仿射，从而 $X$ 拟紧且拟分离。回忆 $\mathsf{QCoh}(Y)\simeq R\text{-}\mathsf{mod}$，且遗忘函子 $R\text{-}\mathsf{mod}\to\Ab$ 既保持又检测正合列。于是 $f_*$ 正合当且仅当函子
+\[
+\mathsf{QCoh}(X)\xrightarrow{f_*}\mathsf{QCoh}(Y)\simeq R\text{-}\mathsf{mod}\to\Ab
+\]
+正合。按定义，该函子就是
+\[
+\Gamma(X,-):\mathsf{QCoh}(X)\to\Ab.
+\]
+于是所需断言由下面的定理 \ref{thm:20.3.2} 得到。
+\end{proof}
+
+\begin{yizhu}
+Stacks 的 Serre 判别法取上同调形式：$X$ 拟紧（连同拟分离），若每个拟凝聚理想层的 $H^1$ 都为零，则 $X$ 仿射；若只要求有限型理想层，条件还能再弱一档。本书改用「$\Gamma(X,-)$ 正合」的函子形式，两者通过「$\Gamma(X,-)$ 正合当且仅当拟凝聚层的高阶上同调全消」对译。函子形式省去谱序列，代价是正合性要对每个拟凝聚层逐条验证。
+[来源：Stacks Project, Tag 01XF（Lemma 30.3.1, Vanishing of cohomology）与 Tag 01XG（Lemma 30.3.2），\url{https://stacks.math.columbia.edu/tag/01XF}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{theorem}[Serre]\label{thm:20.3.2}
+设 $X$ 是拟紧概形。下列条件等价：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 概形 $X$ 仿射。
+  \item 函子
+  \[
+  \Gamma(X,-):\mathsf{QCoh}(X)\to\Ab
+  \]
+  正合。
+\end{enumerate}
+\end{theorem}
+
+% ---------------------------------------------------------------- p.100
+\subsection{主开子概形}\label{sec:20.4}
+
+\begin{propdef}\label{prop:20.4.1}
+设 $X$ 是概形，$f\in\cL(X)$ 是整体截面。对任意 $x\in X$，考虑 $f$ 在 $x$ 处的芽 $f_x\in\cO_{X,x}$。考虑
+\[
+X_f:=\{x\in X\mid f_x\notin\fm_x\},
+\]
+其中 $\fm_x\subseteq\cO_{X,x}$ 是唯一极大理想。则 $X_f$ 是 $X$ 的开子集。称它为 $f$ 对应的\emph{主开子集}。
+\end{propdef}
+
+\begin{yizhu}
+本小节标题与本节多处印作 principle open subscheme（p.100、p.101、p.102 共三处），显系 principal 之误：主开集由单个截面 $f$ 生成，仿射时正是 $U(f)=\Spec(A_f)$。英文 principle 意为「原则」，与「主」无关。译文按 principal 译作「主开子概形」，并在正文中保留这一说明，以便与原文页码对照。
+[依据：原书 p.100–102 的三处拼写。]
+\end{yizhu}
+
+\begin{proof}
+该断言在 $X$ 上局部。故可化到 $X$ 仿射的情形，此时断言显然。
+\end{proof}
+
+% ---------------------------------------------------------------- p.101
+\begin{remark}\label{rem:20.4.2}
+当 $X=\Spec(A)$ 仿射时，有 $X_f=U(f)$。
+\end{remark}
+
+\begin{exercise}\label{exc:20.4.3}
+设 $X$ 是概形，$f\in\cO_X(X)$。考虑典范态射 $\phi:X\to\Spec(\cO_X(X))$。证明 $\phi^{-1}(U(f))=X_f$。
+\end{exercise}
+
+\begin{lemma}\label{lem:20.4.4}
+设 $X$ 是概形，$f\in\cL(X)$ 是整体截面。则 $X_f$ 是使 $f:\cO_X\to\cO_X$ 可逆的开轨迹。更确切地说：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 限制
+  \[
+  f|_{X_f}:\cO_X|_{X_f}\to\cO_X|_{X_f}
+  \]
+  是同构。
+  \item 若子集 $V\subseteq X$ 使 $f|_V$ 是同构，则 $V\subseteq X_f$。
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+该断言在 $X$ 上局部。故可化到 $X$ 仿射的情形，此时断言显然。
+\end{proof}
+
+\begin{yizhu}
+原书用 $\cL(X)$ 记整体截面，却从未定义这个记号；习题 \ref{exc:20.4.3} 与引理 \ref{lem:20.4.5} 又改用 $\cO_X(X)$，两处指同一个对象，即 $\Gamma(X,\cO_X)$。译文按原书各处出现的写法照录，读者可放心把 $\cL(X)$ 读作 $\cO_X(X)$。$X$ 仿射时它就是 $A$，而主开集 $X_f$ 对应局部化 $A_f$。
+[依据：原书 p.100 命题--定义 20.4.1 与 p.101 习题 20.4.3 的记号对照。]
+\end{yizhu}
+
+下述结果表明，拟凝聚层在主开子集上的截面只有亚纯奇点。
+
+\begin{lemma}\label{lem:20.4.5}
+设 $X$ 拟紧且拟分离，$f\in\cO_X(X)$。对任意 $\cF\in\mathsf{QCoh}(X)$，$\cO_X(X)$-线性映射 $\cF(X)\to\cF(X_f)$ 诱导同构
+\[
+\cF(X)_f\to\cF(X_f).
+\]
+\end{lemma}
+
+\begin{proof}
+考虑典范态射 $\phi:X\to Y$，其中 $Y:=\Spec(\cO_X(X))$。注意 $\phi$ 拟紧且拟分离。由定理 18.4.1，$\phi_*\cF$ 拟凝聚。由习题 \ref{exc:20.4.3}，映射 $\cF(X)\to\cF(X_f)$ 可等同于
+\[
+(\phi_*\cF)(Y)\to(\phi_*\cF)(U(f)).
+\]
+由于 $Y$ 仿射，此时断言显然。
+\end{proof}
+
+% ---------------------------------------------------------------- p.101
+\subsection{定理 \ref{thm:20.3.2} 的证明}\label{sec:20.5}
+
+\begin{proof}[\cref{thm:20.3.2} 的证明]
+\medskip\noindent\textbf{（1）$\Rightarrow$（2）} 若 $X=\Spec(A)$ 仿射，则 $\mathsf{QCoh}(X)\simeq A\text{-}\mathsf{mod}$，且函子 $\Gamma(X,-)$ 可等同于遗忘函子 $A\text{-}\mathsf{mod}\to\Ab$，后者显然正合。
+
+\medskip\noindent\textbf{（2）$\Rightarrow$（1）：$X$ 被仿射主开子集覆盖} 设 $W\subseteq X$ 是全部仿射主开子集 $X_f$ 之并。注意 $W$ 是开子集。
+
+先证 $X=W$。反设 $X\setminus W\ne\varnothing$。因 $X$ 拟紧且 Kolmogorov，其闭子空间 $X\setminus W$ 亦然。由习题 \ref{exc:20.5.7}，$X\setminus W$ 含闭点 $x\in X\setminus W$。注意 $x$ 也是 $X$ 的闭点。取 $x$ 在 $X$ 中的仿射开邻域 $\Spec(A)=V$，设 $\fm\subseteq A$ 是对应于 $x\in V$ 的极大理想。考虑 $X$ 的闭子集
+\[
+Z:=X\setminus V,\qquad Z':=Z\sqcup\{x\}.
+\]
+设 $\cI$ 与 $\cI'$ 是 $Z_{\mathrm{red}}$ 与 $Z'_{\mathrm{red}}$ 对应的拟凝聚理想。由于 $Z_{\mathrm{red}}$ 是 $Z'_{\mathrm{red}}$ 的闭子概形，有 $\cI'\subseteq\cI$。
+
+考虑短正合列
+\[
+0\to\cI'\to\cI\to\cI/\cI'\to 0.
+\]
+因 $Z\cap(X\setminus x)=Z'\cap(X\setminus x)$，有 $\cI|_{X\setminus x}\simeq\cI'|_{X\setminus x}$。于是
+\[
+\Supp(\cI/\cI')\subseteq\{x\}.
+\]
+另一方面，因 $Z\cap V=\varnothing$ 而 $Z'\cap V=\{x\}$，有 $\cI|_V\simeq\widetilde{A}$ 与 $\cI'|_V\simeq\widetilde{\fm}$。由此
+\[
+\Gamma(X,\cI/\cI')\simeq\Gamma(V,(\cI/\cI')|_V)\simeq A/\fm.
+\]
+
+% ---------------------------------------------------------------- p.102
+因假设 $\Gamma(X,-)$ 正合，存在截面 $f\in\Gamma(X,\cI)$，使其在
+\[
+\Gamma(X,\cI)\to\Gamma(X,\cI/\cI')\simeq A/\fm
+\]
+下的像是单位元 $1\in A/\fm$。按定义有 $x\in U(f)\subseteq V$。于是 $U(f)=U(f|_V)$，其中 $f|_V$ 是 $\cI|_V$ 的整体截面。因 $V$ 仿射，$U(f|_V)$ 也仿射。故 $U(f)$ 是含 $x$ 的仿射开子概形，即 $x\in U(f)\subseteq W$。这与 $x\in X\setminus W$ 矛盾。
+
+\medskip\noindent\textbf{（2）$\Rightarrow$（1）：有限覆盖} 已证 $X=\bigcup_{i\in I}X_{f_i}$，其中 $X_{f_i}$ 是仿射主开子集。因 $X$ 拟紧，可设 $I$ 有限。
+
+断言 $(f_1,\dots,f_n)=\cO_X(X)$。为此考虑态射
+\begin{equation}\label{eq:20.3}
+\cO_X^{\oplus n}\xrightarrow{(f_1,\dots,f_n)}\cO_X.
+\end{equation}
+因 $f_i|_{X_{f_i}}:\cO_X|_{X_{f_i}}\to\cO_X|_{X_{f_i}}$ 是同构，且 $X$ 被 $X_{f_i}\ (i\in I)$ 覆盖，知 \eqref{eq:20.3} 是满射。取 $\Gamma(X,-)$，得满射
+\[
+\Gamma(X,\cO_X)^{\oplus n}\xrightarrow{(f_1,\dots,f_n)}\Gamma(X,\cO_X).
+\]
+这证明了该断言。
+
+\medskip\noindent\textbf{结论} 最后考虑典范态射 $\phi:X\to\Spec(\cO_X(X))$。只需证 $\phi$ 仿射。由上一段的断言，仿射概形 $\Spec(\cO_X(X))$ 被 $U(f_i)$ 覆盖。故只需证 $\phi^{-1}(U(f_i))\to U(f_i)$ 仿射。这由 $\phi^{-1}(U(f_i))=X_{f_i}$（习题 \ref{exc:20.4.3}）与 $U(f_i)$ 仿射的假设得到。
+\end{proof}
+
+\begin{exercise}\label{exc:20.5.7}
+任意非空拟紧 Kolmogorov 拓扑空间至少含一个闭点。
+\end{exercise}
+
+\begin{warning}\label{warn:20.5.8}
+概形可能不含闭点。
+\end{warning}
+
+\begin{exercise}\label{exc:20.5.9}
+设 $k$ 是域，
+\[
+A=k[x_1,x_2,\dots]\Big[\frac{x_1}{x_2},\frac{x_1}{x_2^2},\dots\Big]\Big[\frac{x_2}{x_3},\frac{x_2}{x_3^2},\dots\Big]\cdots
+\]
+是 $k[x_1,x_2^{\pm1},x_3^{\pm1},\dots]$ 中由 $\big(x_i/x_{i+1}^m\big)_{i\ge1,m\ge0}$ 生成的子 $k$-代数。设 $\fm\subseteq A$ 是同态 $A\to k,\ x_i\mapsto0$ 的核。考虑 $X:=\Spec(A_\fm)$ 及其唯一闭点 $x\in X$。证明 $U:=X\setminus x$ 是不含闭点的概形。
+\end{exercise}
+
+\begin{yizhu}
+警告 \ref{warn:20.5.8} 与本题互为补充：习题中的 $X$ 恰有一个闭点 $x$，把 $x$ 挖掉所得的开子概形 $U$ 便再无闭点。可见证明里「拟紧且 Kolmogorov」两项都不能丢：拟紧保证闭点存在（习题 \ref{exc:20.5.7}）；去掉拟紧，闭点可以整族消失，仿射性也就无法再用闭点的邻域来局部检验。
+[依据：原书 p.101 习题 \ref{exc:20.5.7}、p.102 警告 \ref{warn:20.5.8} 与 p.102–103 习题 \ref{exc:20.5.9}。]
+\end{yizhu}
+
+% ---------------------------------------------------------------- p.103
+\subsection{拟仿射态射}\label{sec:20.6}
+
+\begin{definition}\label{def:20.6.1}
+称概形 $X$ \emph{拟仿射}，若它拟紧且同构于仿射概形的开子概形。
+\end{definition}
+
+\begin{proposition}\label{prop:20.6.2}
+概形 $X$ 拟仿射当且仅当典范态射 $f:X\to\Spec(\cO_X(X))$ 是拟紧开浸入。
+\end{proposition}
+
+\begin{proof}
+「当」显然。下证「仅当」。设 $X$ 拟仿射，$j:X\to\Spec(B)$ 是拟仿射开浸入。记 $A:=\cO_X(X)$。由定理 7.1.2，$j$ 分解为
+\[
+X\xrightarrow{f}\Spec(A)\xrightarrow{g}\Spec(B).
+\]
+设 $\phi:B\to A$ 是对应于 $g$ 的同态。由于 $j$ 是单射，$f$ 也是单射。于是只需证：对任意点 $x\in X$，存在开邻域 $x\in U\subseteq X$，使 $f|_U$ 是开浸入。取 $j(x)$ 的标准开邻域 $U(b)\subseteq j(X)$，它含于 $j(X)$ 中。因 $j$ 是开浸入，有 $U:=j^{-1}(U(b))\simeq U(b)$。特别地，$U$ 仿射。另一方面，
+\[
+U=j^{-1}(U(b))=f^{-1}(U(\phi(b)))=X_{\phi(b)},
+\]
+其中最后一个等式来自习题 \ref{exc:20.4.3}。由引理 \ref{lem:20.4.5}，
+\[
+\cO_X(X)_{\phi(b)}\simeq\cO_X(X_{\phi(b)}),
+\]
+即 $A_{\phi(b)}\simeq\cO_X(U)$。由于 $U$ 仿射，这说明 $f|_U$ 由开浸入 $\Spec(A_{\phi(b)})\to\Spec(A)$ 给出。
+\end{proof}
+
+\begin{yizhu}
+Stacks 把这条刻画收进拟仿射态射的等价条件清单：$f:X\to S$ 拟仿射，当且仅当典范态射 $X\to\Spec_S(f_*\cO_X)$ 是拟紧开浸入。本书分两步走：先在 $S$ 为终对象时证明命题 \ref{prop:20.6.2}，再把相对版本留作命题 \ref{prop:20.6.6}。两步之间靠命题 \ref{prop:20.1.4} 的相对谱过渡，这也是本节把仿射态射先讲完的理由。
+[来源：Stacks Project, Tag 01SM（Lemma 29.13.3, Quasi-affine morphisms），\url{https://stacks.math.columbia.edu/tag/01SM}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{definition}\label{def:20.6.3}
+设 $X$ 是拟仿射概形。称 $\overline{X}:=\Spec(\cO_X(X))$ 为 $X$ 的\emph{仿射闭包}。
+\end{definition}
+
+\begin{definition}\label{def:20.6.4}
+称概形间的态射 $f:X\to Y$ \emph{拟仿射}，若对任意仿射开子概形 $U\subseteq Y$，其原像 $X\times_Y U$ 拟仿射。
+\end{definition}
+
+下述结果是引理 \ref{lem:20.1.3} 的类比。
+
+\begin{lemma}\label{lem:20.6.5}
+拟仿射态射 $f:X\to Y$ 拟紧且分离。
+\end{lemma}
+
+下述结果容易由命题 \ref{prop:20.6.2} 得到。
+
+\begin{proposition}\label{prop:20.6.6}
+拟紧且拟分离的态射 $p:X\to S$ 拟仿射，当且仅当典范态射 $f:X\to\Spec_S(p_*\cO_X)$ 是开浸入。
+\end{proposition}
+
+与仿射情形一样，我们有下述结果：
+
+\begin{lemma}\label{lem:20.6.7}
+任意拟紧的局部闭浸入拟仿射。
+\end{lemma}
+
+\begin{lemma}\label{lem:20.6.8}
+考虑拟仿射态射构成的类。
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 设 $X\xrightarrow{f}Y\xrightarrow{g}Z$ 是态射链，$f$ 与 $g$ 都拟仿射。则 $g\circ f$ 拟仿射。
+  \item 设 $X\xrightarrow{f}Y\xrightarrow{g}Z$ 是态射链，$g$ 拟分离且 $g\circ f$ 拟仿射。则 $f$ 拟仿射。
+% ---------------------------------------------------------------- p.104
+  \item 拟仿射态射对基变换稳定。
+  \item 「$f$ 拟仿射」这一性质在靶上局部。
+\end{enumerate}
+\end{lemma}
+
+\begin{exercise}\label{exc:20.6.9}
+设 $f:X\to Y$ 是拟仿射概形之间的仿射态射。设 $\overline{X}$ 与 $\overline{Y}$ 分别是 $X$ 与 $Y$ 的仿射闭包。证明典范交换图
+\[
+\begin{tikzcd}
+X \arrow[r,"j_X"] \arrow[d,"f"'] & \overline{X} \arrow[d,"\overline{f}"] \\
+Y \arrow[r,"j_Y"'] & \overline{Y}
+\end{tikzcd}
+\]
+是 Cartesian 的。提示：证明 $\overline{X}\simeq\Spec_{\overline{Y}}(j_{Y,*}\circ f_*(\cO_X))$。
+\end{exercise}

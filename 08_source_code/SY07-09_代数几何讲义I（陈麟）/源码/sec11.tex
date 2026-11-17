@@ -1,0 +1,345 @@
+% ======================================================================
+%  sec11.tex —— 第 11 节 子概形与浸入
+%  底本：原书 pp.56–60；原书标题：11. Subschemes and immersions
+% ======================================================================
+
+% 本节专用记号（preamble 未提供）
+\providecommand{\cQ}{\mathcal{Q}}
+\providecommand{\supp}{\operatorname{supp}}
+
+\section{子概形与浸入}\label{sec:11}
+
+我们在 \S\ref{sec:5.3} 中研究了开子概形与开浸入。本节引入一般的子概形与浸入。
+
+\subsection{单态射与满态射}\label{sec:11.1}
+
+回忆在任意范畴 $\mathcal{C}$ 中，都可以定义单态射与满态射。
+
+\begin{definition}\label{def:11.1.1}
+称范畴 $\mathcal{C}$ 中的态射 $f \colon x \to y$ 为\emph{单态射}，若对任意试验对象 $z$，映射
+\[
+\Hom_{\mathcal{C}}(z,x) \xrightarrow{\ f \circ -\ } \Hom_{\mathcal{C}}(z,y)
+\]
+是单射。
+
+称范畴 $\mathcal{C}$ 中的态射 $f \colon x \to y$ 为\emph{满态射}，若它在 $\mathcal{C}^{\op}$ 中对应的态射是单态射；亦即，对任意试验对象 $z$，映射
+\[
+\Hom_{\mathcal{C}}(y,z) \xrightarrow{\ -\circ f\ } \Hom_{\mathcal{C}}(x,z)
+\]
+是单射。
+\end{definition}
+
+\begin{yizhu}
+单态射即「左可消」：$f \circ a = f \circ b$ 蕴含 $a = b$；满态射即「右可消」。这一对概念只用 Hom 集与复合表述，故对任意范畴都有意义，不依赖元素。Stacks 的定义与此相同，只是把试验对象记作 $W$。
+[来源：Stacks Project, Tag 003B（Definition 4.13.1，单态射与满态射），\url{https://stacks.math.columbia.edu/tag/003B}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{example}\label{ex:11.1.2}
+在 $\Set$ 中，单态射恰是单射，满态射恰是满射。
+\end{example}
+
+\begin{exercise}\label{exc:11.1.3}
+设 $f \colon U \to X$ 是开浸入。
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item 证明 $f$ 是单态射。
+  \item 证明：$f$ 是满态射当且仅当它是同构。
+\end{itemize}
+\end{exercise}
+
+\begin{warning}\label{warn:11.1.4}
+一个态射可以同时是单态射与满态射，却不是同构。
+\end{warning}
+
+\begin{exercise}\label{exc:11.1.5}
+设 $R \in \CRing$，$f \in R$ 不是零因子。证明 $R \to R_f$ 在 $\CRing$ 中既是单态射又是满态射。
+\end{exercise}
+
+\begin{yizhu}
+环论中「满态射」远比「满射」弱。Stacks 给出判据：$R \to S$ 是满态射，当且仅当 $S \otimes_R S \to S$ 是同构，等价于 $S \to S \otimes_R S$ 的两个映射相等。局部化 $R \to R_f$ 满足此条件：$R_f \otimes_R R_f \simeq R_f$。故它是满态射，尽管通常远非满射。这正是警告 \ref{warn:11.1.4} 在环范畴中的实例。
+[来源：Stacks Project, Tag 04VN（Lemma 10.107.1，环满态射的判据），\url{https://stacks.math.columbia.edu/tag/04VN}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{exercise}\label{exc:11.1.6}
+证明函子 $\mathsf{Aff} \to \Sch$ 把单态射送到单态射，但可能不把满态射送到满态射。
+\end{exercise}
+
+\subsection{离题：层间的满态射}\label{sec:11.2}
+
+\begin{proposition}\label{prop:11.2.1}
+设 $X$ 是拓扑空间，$\alpha \colon \cF \to \cF'$ 是 $\Shv(X,\Set)$ 中的态射。下列条件等价：
+\begin{enumerate}[label=(\roman*),leftmargin=2em,itemsep=0.25ex]
+  \item 态射 $\alpha$ 是 $\Shv(X,\Set)$ 中的满态射。
+  \item 对任意点 $x \in X$，映射 $\alpha_x \colon \cF_x \to \cF'_x$ 是满射。
+\end{enumerate}
+\end{proposition}
+
+\begin{yizhu}
+这条命题说明：层范畴中的满态射可以逐茎检验。Stacks 的处理方式是先把层间映射分为「单（截面逐点单）」与「满（截面局部来自下方）」，再证明二者恰是 $\Shv(\mathcal{C})$ 的单态射与满态射，且同构当且仅当既单又满。
+[来源：Stacks Project, Tag 00WN（Lemma 7.11.2，层间单射与满射即单态射与满态射），\url{https://stacks.math.columbia.edu/tag/00WN}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{proof}
+(i)$\Rightarrow$(ii)：设 $\alpha$ 是 $\Shv(X,\Set)$ 中的满态射。若某点 $x \in X$ 处 $\alpha_x$ 不是满射，则可取集合 $A$ 与映射 $f, g \colon \cF'_x \to A$，使 $f \neq g$ 而 $f \circ \alpha_x = g \circ \alpha_x$。由命题 \ref{prop:2.3.4}，$f$、$g$ 对应态射 $\phi, \varphi \colon \cF' \to \delta_{x,A}$，使 $\phi \neq \varphi$ 而 $\phi \circ \alpha = \varphi \circ \alpha$。这与 $\alpha$ 是满态射矛盾。
+
+(ii)$\Rightarrow$(i)：设 $\alpha$ 在茎上诱导满射，要证 $\alpha$ 是满态射。设 $\phi, \varphi \colon \cF' \to \cF''$ 是 $\Shv(X,\Set)$ 中的态射，满足 $\phi \circ \alpha = \varphi \circ \alpha$。只需证对任意开子集 $U \subseteq X$ 有 $\phi_U = \varphi_U \colon \cF'(U) \to \cF''(U)$。对任意态射 $\theta \colon \cF' \to \cF''$，有交换图
+\[
+\begin{tikzcd}[column sep=4.4em,row sep=3em]
+\cF'(U) \arrow[r] \arrow[d,"\theta_U"'] & \prod_{x \in U} \cF'_x \arrow[d,"(\theta_x)_{x \in U}"]\\
+\cF''(U) \arrow[r] & \prod_{x \in U} \cF''_x
+\end{tikzcd}
+\]
+其中水平箭头是单射（引理 \ref{lem:2.2.1}）。故要证 $\phi_U = \varphi_U$，只需证对任意 $x \in U$ 有 $\phi_x = \varphi_x$。而后者由 $\phi_x \circ \alpha_x = \varphi_x \circ \alpha_x$ 与 $\alpha_x$ 是满射得出。
+\end{proof}
+
+\begin{warning}\label{warn:11.2.2}
+设 $\alpha \colon \cF \to \cF'$ 是 $\Shv(X,\Set)$ 中的满态射。映射 $\alpha_X \colon \cF(X) \to \cF'(X)$ 一般不是满射。
+\end{warning}
+
+\begin{yizhu}
+原因在于层间满射的定义只要求「局部」提升：Stacks 的定义是，对任意开集 $U$ 与任意截面 $s \in \cF'(U)$，存在 $U$ 的覆盖 $\{U_i\}$ 与 $s_i \in \cF(U_i)$，使 $s_i$ 映入 $s|_{U_i}$。覆盖依赖截面，故整体截面未必能由 $\cF(X)$ 的一个截面提升，警告 \ref{warn:11.2.2} 正是这一点。
+[来源：Stacks Project, Tag 00WM（Definition 7.11.1，层间单射与满射），\url{https://stacks.math.columbia.edu/tag/00WM}（2026-11-17 访问）。]
+\end{yizhu}
+
+\subsection{闭浸入}\label{sec:11.3}
+
+\begin{definition}\label{def:11.3.1}
+设 $i \colon Y \to X$ 是概形间的态射。称 $i$ 为\emph{闭浸入}，若
+\begin{enumerate}[label=(\arabic*),leftmargin=2em,itemsep=0.25ex]
+  \item 它诱导到 $X$ 的闭子空间上的同胚 $Y \xrightarrow{\ \simeq\ } i(Y)$；
+  \item 态射 $\cO_X \to i_*\cO_Y$ 是 $\Shv(X,\Set)$ 中的满态射。
+\end{enumerate}
+设 $X$ 是概形。\emph{闭子概形}指映入 $X$ 的闭浸入的同构类。
+\end{definition}
+
+\begin{remark}\label{rem:11.3.2}
+条件 (2) 等价于
+\begin{itemize}[leftmargin=3.2em,itemsep=0.25ex]
+  \item[(2Ab)] 态射 $\cO_X \to i_*\cO_Y$ 是 $\Shv(X,\Ab)$ 中的满态射。
+\end{itemize}
+$\Shv(X,\Ab)$（更一般地，任意 Abel 范畴）中的满态射常称为\emph{满射}。
+\end{remark}
+
+\begin{proposition}\label{prop:11.3.3}
+概形间的态射 $i \colon Y \to X$ 是闭浸入，当且仅当
+\begin{enumerate}[label=(\arabic*),leftmargin=2em,itemsep=0.25ex]
+  \item 它诱导到 $X$ 的闭子空间上的同胚 $Y \xrightarrow{\ \simeq\ } i(Y)$；
+  \item[(2$'$)] 对任意点 $y \in Y$，映射 $\cO_{X,i(y)} \to \cO_{Y,y}$ 是满射。
+\end{enumerate}
+\end{proposition}
+
+\begin{yizhu}
+Stacks 的闭浸入定义是三条：到闭子集上的同胚、$\cO_X \to i_*\cO_Y$ 满、核理想局部由截面生成。命题 \ref{prop:11.3.3} 说明在第一条成立时，后两条可以合并成茎上满射一条。核理想那条并非多余：它保证定义理想是理想层，见引理 \ref{lem:11.4.2} 之后的讨论。
+[来源：Stacks Project, Tag 01HK（Definition 26.4.1，局部环化空间的闭浸入），\url{https://stacks.math.columbia.edu/tag/01HK}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{proof}
+只需证在 (1) 成立时 (2) 与 (2$'$) 等价。在后一假设下，容易看出：
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item 若 $x \notin i(Y)$，则 $(i_*\cO_Y)_x \simeq 0$；
+  \item 若 $x = i(y)$，则 $(i_*\cO_Y)_x \simeq \cO_{Y,y}$。
+\end{itemize}
+于是结论由命题 \ref{prop:11.2.1} 得出。
+\end{proof}
+
+\begin{remark}\label{rem:11.3.4}
+由命题 \ref{prop:11.2.1}，还可把条件 (2$'$) 换成
+\begin{itemize}[leftmargin=3.2em,itemsep=0.25ex]
+  \item[(2$''$)] 态射 $i^{-1}\cO_X \to \cO_Y$ 是 $\Shv(Y,\Set)$ 中的满态射。
+\end{itemize}
+\end{remark}
+
+\begin{yizhu}
+原文在定义 \ref{def:11.3.1}(2) 与注 \ref{rem:11.3.2} 中把 $\cO_X \to i_*\cO_Y$ 说成 $\Shv(Y,\Set)$、$\Shv(Y,\Ab)$ 中的态射，在注 \ref{rem:11.3.4} 中又把 $i^{-1}\cO_X \to \cO_Y$ 说成 $\Shv(X,\Set)$ 中的态射，范畴与概形两处互换。按定义，前者是 $X$ 上的层间态射，后者是 $Y$ 上的层间态射；译稿已按此写。
+[译者按（上下文推断，无外部依据）：据 $i_*$ 与 $i^{-1}$ 的伴随性，两处范畴应分别为 $\Shv(X,\Set)$ 与 $\Shv(Y,\Set)$。]
+\end{yizhu}
+
+\begin{proposition}\label{prop:11.3.5}
+设 $R \in \CRing$，$I \subseteq R$ 是理想。设 $i \colon \Spec(R/I) \to \Spec(R)$ 是对应于典范满射 $\pi \colon R \to R/I$ 的态射。则 $i$ 是闭浸入。
+\end{proposition}
+
+\begin{proof}
+容易看出 $i$ 诱导从 $\Spec(R/I)$ 到 $\Spec(R)$ 的闭子空间 $Z(I)$ 的连续双射。此外，对任意标准开子集 $U(\bar f) \subseteq \Spec(R/I)$，其中 $\bar f \in R/I$，其像等于开子集 $U(f) \cap Z(I) \subseteq Z(I)$，这里 $f \in R$ 是 $\bar f$ 的任意提升。这说明 $i$ 诱导从 $\Spec(R/I)$ 到 $Z(I)$ 的同胚。
+
+设 $y \in \Spec(R/I)$ 是拓扑点，$\mathfrak p \subseteq R/I$ 是对应的素理想。按定义，$i(y)$ 对应素理想 $\mathfrak p' := \pi^{-1}(\mathfrak p)$，且有 $\mathfrak p = \mathfrak p'/I$。同态 $\cO_{\Spec(R),i(y)} \to \cO_{\Spec(R/I),y}$ 可等同于 $R_{\mathfrak p'} \to (R/I)_{\mathfrak p'/I}$，后者显然满。
+\end{proof}
+
+\begin{exercise}\label{exc:11.3.6}
+设 $k$ 是域。考虑对应于满射 $k[x,y] \to k[x]$ 的闭浸入 $i \colon \A^1_k \to \A^2_k$。证明对一般的开子集 $U \subseteq \A^2_k$，映射 $\cO_{\A^2_k}(U) \to (i_*\cO_{\A^1_k})(U)$ 不是满射。
+\end{exercise}
+
+\begin{proposition}\label{prop:11.3.7}
+闭浸入 $i \colon Y \to X$ 是 $\Sch$ 中的单态射。
+\end{proposition}
+
+\begin{proof}
+设 $Z$ 是任意试验概形。要证 $\Hom_{\Sch}(Z,Y) \to \Hom_{\Sch}(Z,X)$ 是单射。
+
+设 $f, g \colon Z \to Y$ 是满足 $i \circ f = i \circ g$ 的态射。显然 $f$、$g$ 的底连续映射相同，记之为 $\phi$。此时 $f$、$g$ 由态射
+\[
+\alpha, \beta \colon \cO_Y \to \phi_*\cO_Z
+\]
+给出，只需证 $\alpha = \beta$。
+
+设 $\gamma \colon \cO_X \to i_*\cO_Y$ 是典范态射。假设 $i \circ f = i \circ g$ 给出
+\[
+i_*(\alpha) \circ \gamma = i_*(\beta) \circ \gamma \colon \cO_X \to i_* \circ \phi_*\cO_Z .
+\]
+因 $\gamma$ 是满态射，得到
+\[
+i_*(\alpha) = i_*(\beta).
+\]
+特别地
+\[
+i^{-1} i_*(\alpha) = i^{-1} i_*(\beta).
+\]
+所求结论现在来自 $i^{-1} \circ i_* \simeq \Id$，这可以拆开定义直接验证。
+\end{proof}
+
+\subsection{定义理想}\label{sec:11.4}
+
+\begin{construction}\label{con:11.4.1}
+设 $i \colon Y \to X$ 是闭浸入。考虑核
+\[
+\cI_Y := \ker(\cO_X \to i_*\cO_Y),
+\]
+它定义为 $\Shv(X,\Ab)$ 中 $\cO_X \to i_*\cO_Y \leftarrow 0$ 的纤维积。我们称它为闭浸入 $i \colon Y \to X$ 的\emph{定义理想}。
+
+对任意开子集 $U \subseteq X$，容易看出函子
+\[
+(-)(U) \colon \Shv(X,\Ab) \to \Ab
+\]
+保持纤维积（事实上保持任意小极限）。于是
+\[
+\cI_Y(U) \simeq \ker\bigl(\cO_X(U) \to (i_*\cO_Y)(U)\bigr) \simeq \ker\bigl(\cO_X(U) \to \cO_Y(i^{-1}U)\bigr).
+\]
+特别地，$\cI_Y(U) \subseteq \cO_X(U)$ 是理想，因此 $\cI_Y$ 是 $\cO_X$ 的理想层\footnote{另一个名称：$\cO_X$ 的\emph{理想层}（ideal sheaf）。}。
+
+但要注意，$\cO_X(U) \to (i_*\cO_Y)(U)$ 可能不是满射，见习题 \ref{exc:11.3.6}。
+
+对任意点 $x \in X$，容易看出函子
+\[
+(-)_x \colon \Shv(X,\Ab) \to \Ab
+\]
+保持纤维积（事实上保持任意有限极限）。于是
+\[
+\cI_{Y,x} \simeq \ker(\cO_{X,x} \to (i_*\cO_Y)_x).
+\]
+因此
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item 若 $x \notin i(Y)$，则 $\cI_{Y,x} \simeq \cO_{X,x}$；
+  \item 若 $x = i(y)$，则 $\cI_{Y,x} \simeq \ker(\cO_{X,x} \to \cO_{Y,y})$。
+\end{itemize}
+由于 $\cO_{X,x} \to (i_*\cO_Y)_x$ 是满射，$\Ab$ 中得到短正合列
+\[
+0 \to \cI_{Y,x} \to \cO_{X,x} \to (i_*\cO_Y)_x \to 0.
+\]
+\end{construction}
+
+\begin{lemma}\label{lem:11.4.2}
+设 $i \colon Y \to X$ 是闭浸入，$\cI_Y \subseteq \cO_X$ 是其定义理想。则典范态射
+\[
+\cO_X/\cI_Y := \coker(\cI_Y \to \cO_X) \longrightarrow i_*\cO_Y
+\]
+是同构，其中余核在 $\Shv(X,\Ab)$ 中取。
+\end{lemma}
+
+\begin{proof}
+取茎与余极限交换（事实上与任意小余极限交换），故对任意点 $x \in X$ 有
+\[
+\coker(\cI_Y \to \cO_X)_x \simeq \coker(\cI_{Y,x} \to \cO_{X,x}) \simeq (i_*\cO_Y)_x .
+\]
+这说明 $\coker(\cI_Y \to \cO_X) \to i_*\cO_Y$ 是同构。
+\end{proof}
+
+\begin{remark}\label{rem:11.4.3}
+事实上，对 $\Shv(X,\Ab)$ 中任意满射 $\phi \colon \cF \to \cF'$，都有
+\[
+\coker(\ker(\phi) \to \cF) \simeq \cF'.
+\]
+我们将在今后的课程中回到这一事实。
+\end{remark}
+
+\begin{exercise}\label{exc:11.4.4}
+设 $i \colon Y \to X$ 是闭浸入，$\cI_Y \subseteq \cO_X$ 是其定义理想。证明 $\cO_X/\cI_Y$ 是预层
+\[
+U \longmapsto \cO_X(U)/\cI_Y(U)
+\]
+的层化。并给出一个必须做这一步层化的例子。
+\end{exercise}
+
+\begin{lemma}\label{lem:11.4.5}
+闭浸入 $i \colon Y \to X$ 在同构意义下由其定义理想决定。
+\end{lemma}
+
+\begin{proof}
+设 $\cI_Y \subseteq \cO_X$ 是定义理想。可按如下方式重构相应的闭子概形。考虑 $\cQ := \cO_X/\cI_Y$。有 $\cQ \simeq i_*\cO_Y$，故当 $x \notin i(Y)$ 时 $\cQ_x \simeq 0$，而当 $x = i(y)$ 时 $\cQ_x \simeq \cO_{Y,y} \neq 0$。这说明 $i(Y)$ 等于 $\cQ$ 的\emph{支集}
+\[
+\supp(\cQ) := \{x \in X \mid \cQ_x \neq 0\}.
+\]
+特别地，$Y$ 的底拓扑空间可等同于子空间 $\supp(\cQ) \subseteq X$。通过这一等同，结构层 $\cO_Y$ 由 $\cQ|_{\supp(\cQ)}$ 给出，而态射 $Y \to X$ 同构于局部环化空间间态射的合成
+\[
+(\supp(\cQ), \cQ|_{\supp(\cQ)}) \longrightarrow (X, \cQ) \longrightarrow (X, \cO_X).
+\]
+\end{proof}
+
+但要注意，并非每个理想层 $\cI \subseteq \cO_X$ 都能实现为某个闭浸入的定义理想。
+
+\begin{exercise}\label{exc:11.4.6}
+设 $k$ 是域，$X := \A^1_k$，$0 \in X$ 是零点。证明
+\[
+\cI(U) :=
+\begin{cases}
+\cO(U), & 0 \notin U,\\
+0, & 0 \in U
+\end{cases}
+\]
+定义了 $\cO_X$ 的一个理想层 $\cI$，但它不是映入 $X$ 的任何闭浸入的定义理想。
+\end{exercise}
+
+\begin{yizhu}
+究竟哪些理想层能当定义理想，Stacks 给出干净的回答：$\cO_X$ 的理想层 $\cI$ 是某个闭浸入的核，当且仅当它作为 $\cO_X$-模拟凝聚，当且仅当它局部由截面生成。习题 \ref{exc:11.4.6} 中的 $\cI$ 在 $0$ 处取 $0$、其余处取 $\cO$，不是拟凝聚层，故不能。
+[来源：Stacks Project, Tag 01QQ（Lemma 29.2.3，理想层为闭浸入之核的等价条件），\url{https://stacks.math.columbia.edu/tag/01QQ}（2026-11-17 访问）。]
+\end{yizhu}
+
+今后的课程将给出理想层成为定义理想的充要条件，即要求 $\cI$ 作为 $\cO_X$-模是\emph{拟凝聚}的。
+
+\subsection{局部闭浸入}\label{sec:11.5}
+
+\begin{definition}\label{def:11.5.1}
+设 $f \colon Y \to X$ 是概形间的态射。称 $f$ 为\emph{局部闭浸入}，若它可以写成合成
+\[
+Y \xrightarrow{\ i\ } Z \xrightarrow{\ j\ } X,
+\]
+其中 $i$ 是闭浸入，而 $j$ 是开浸入。
+\end{definition}
+
+\begin{proposition}\label{prop:11.5.2}
+概形间的态射 $f \colon Y \to X$ 是局部闭浸入，当且仅当
+\begin{enumerate}[label=(\arabic*),leftmargin=2em,itemsep=0.25ex]
+  \item 它诱导到 $X$ 的局部闭子空间\footnote{子空间是局部闭的，当且仅当它可写成一个开子空间与一个闭子空间的交。}上的同胚 $Y \xrightarrow{\ \simeq\ } f(Y)$；
+  \item 对任意点 $y \in Y$，映射 $\cO_{X,f(y)} \to \cO_{Y,y}$ 是满射。
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+「仅当」：设 $f \colon Y \xrightarrow{i} Z \xrightarrow{j} X$ 是 $f$ 的分解，其中 $i$ 是闭浸入，$j$ 是开浸入。则 $Y$ 同胚于闭子空间 $i(Y) \subseteq Z$，而 $Z$ 同胚于开子空间 $j(Z)$。故 $Y$ 同胚于 $j(i(Y)) = f(Y)$，它是 $X$ 的局部闭子空间。此外，对任意点 $y \in Y$，同态 $\cO_{X,f(y)} \to \cO_{Y,y}$ 分解为
+\[
+\cO_{X,f(y)} = \cO_{X,j \circ i(y)} \longrightarrow \cO_{Z,i(y)} \longrightarrow \cO_{Y,y}.
+\]
+因 $j$ 是开浸入，第二个映射是同构；因 $i$ 是闭浸入，最后一个映射是满射。故 $\cO_{X,f(y)} \to \cO_{Y,y}$ 是满射。
+
+「当」：由 (1)，可取开子集 $Z \subseteq X$，使 $f(Y)$ 是 $Z$ 的闭子集。考虑由 $Z$ 给出的 $X$ 的开子概形，记 $j \colon Z \to X$ 为对应的开嵌入。由习题 \ref{exc:5.3.8}，存在唯一态射 $i \colon Y \to Z$ 使 $f = j \circ i$。只需证 $i$ 是闭浸入。条件 (1) 说明 $i$ 诱导同胚 $Y \simeq i(Y) = f(Y)$，其中 $i(Y)$ 是 $Z$ 的闭子空间。条件 (2) 说明合成
+\[
+\cO_{X,f(y)} = \cO_{X,j \circ i(y)} \longrightarrow \cO_{Z,i(y)} \longrightarrow \cO_{Y,y}
+\]
+是满射。因第二个映射是同构，最后一个映射是满射。
+\end{proof}
+
+\begin{warning}\label{warn:11.5.3}
+局部闭浸入可能无法写成先开浸入、再闭浸入的合成。我们将在今后的课程中给出反例。
+\end{warning}
+
+\begin{yizhu}
+注意次序。Stacks 把 immersion（又称 locally closed immersion）定义为先闭浸入、后开浸入的合成 $j \circ i$，与定义 \ref{def:11.5.1} 一致；反过来的次序一般不可行，警告 \ref{warn:11.5.3} 即此。若把 $X$ 换成仿射概形而只看仿射情形，两种次序的差别就消失了。
+[来源：Stacks Project, Tag 01IO（Definition 26.10.2，概形的浸入），\url{https://stacks.math.columbia.edu/tag/01IO}（2026-11-17 访问）。]
+\end{yizhu}

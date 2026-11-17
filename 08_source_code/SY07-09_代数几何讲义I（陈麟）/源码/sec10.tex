@@ -1,0 +1,220 @@
+% ======================================================================
+%  sec10.tex —— 第 10 节 基变换
+%  底本：原书 pp.52–55；原书标题：10. Change of base
+% ======================================================================
+
+\section{基变换}\label{sec:10}
+
+\subsection{S-概形}\label{sec:10.1}
+
+\begin{definition}\label{def:10.1.1}
+设 $S$ 是概形。$S$-\emph{概形}指带态射 $X \to S$ 的概形 $X$。当 $S = \Spec(R)$ 时，也称 $X$ 是 $R$-\emph{概形}。
+\end{definition}
+
+\begin{definition}\label{def:10.1.2}
+设 $X$ 是 $S$-概形。$X$ 沿态射 $S' \to S$ 的\emph{基变换}指 $S'$-概形
+\[
+X_{S'} := X \times_S S',
+\]
+连同它到 $S'$ 的典范投影。
+\end{definition}
+
+\begin{remark}\label{rem:10.1.3}
+引入上述术语，是为了鼓励读者把 $S$-概形 $X$ 看成 $S$ 上的一族概形。
+\end{remark}
+
+\begin{exercise}\label{exc:10.1.4}
+证明开浸入的基变换仍是开浸入。换言之，设 $f \colon X \to Y$ 是 $S$-概形间的开浸入，$S' \to S$ 是任意态射。则 $f_{S'} \colon X_{S'} \to Y_{S'}$ 是开浸入，其中 $f_{S'}$ 是态射
+\[
+(f, \id_{S'}) \colon X \times_S S' \longrightarrow Y \times_S S'.
+\]
+\end{exercise}
+
+\subsection{纤维}\label{sec:10.2}
+
+\begin{definition}\label{def:10.2.1}
+设 $X$ 是 $S$-概形，$s \in S$ 是拓扑点。$X$ 在 $s$ 处的\emph{纤维}指 $\kappa_s$-概形
+\[
+X_s := X \times_S s := X \times_S \Spec(\kappa_s),
+\]
+其中 $\Spec(\kappa_s) \to S$ 是位于 $s$ 之上的典范 $\kappa_s$-点。
+\end{definition}
+
+\begin{yizhu}
+Stacks 称 $X_s$ 为 $f$ 在 $s$ 处的 scheme-theoretic fibre（概形论纤维），定义同样是 $\Spec(\kappa(s)) \times_S X$，并强调要始终把纤维看成 $\kappa(s)$-概形。原文用记号 $s$ 代替 $\Spec(\kappa_s)$，又把 $X \times_S s$ 简写为 $X_s$。纤维上的点自带剩余域，这一点在命题 \ref{prop:10.2.6} 中起作用。
+[来源：Stacks Project, Tag 01K0（Definition 26.18.4，概形论纤维），\url{https://stacks.math.columbia.edu/tag/01K0}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{proposition}\label{prop:10.2.2}
+设 $p \colon X \to S$ 是 $S$-概形，$s \in S$ 是拓扑点。连续映射 $X_s \to X$ 诱导拓扑空间间的同胚
+\[
+X_s \xrightarrow{\ \simeq\ } p^{-1}(s).
+\]
+\end{proposition}
+
+\begin{remark}\label{rem:10.2.3}
+本命题可改述为：遗忘函子 $\Sch \to \Top$ 保持纤维积 $X \to S \leftarrow s$，其中 $s$ 理解为 $\Spec(\kappa_s)$。
+\end{remark}
+
+\begin{yizhu}
+Stacks 把两件事并成一条引理：$X_s \to X$ 与 $\Spec(\cO_{S,s}) \times_S X \to X$ 都使相应方块成为拓扑空间的纤维方块，从而水平箭头是到其像上的同胚。原文把它拆成命题 \ref{prop:10.2.2} 与命题 \ref{prop:10.3.1}：前者只讲拓扑，后者升级为局部环化空间之间的同构。
+[来源：Stacks Project, Tag 01K1（Lemma 26.18.5，纤维与局部化处的基变换），\url{https://stacks.math.columbia.edu/tag/01K1}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{proof}[命题 \ref{prop:10.2.2} 的证明]
+注意连续映射 $q \colon X_s \to X$ 确实经过子空间 $p^{-1}(s) \subseteq X$ 分解。这一点来自把遗忘函子 $\Sch \to \Top$ 作用于交换图
+\[
+\begin{tikzcd}[column sep=3.8em,row sep=3em]
+X_s \arrow[r] \arrow[d] & X \arrow[d,"p"]\\
+\Spec(\kappa_s) \arrow[r] & S
+\end{tikzcd}
+\]
+先证 $X_s \to p^{-1}(s)$ 是满射。设 $x \in p^{-1}(s)$ 是拓扑点。$\Sch$ 中有交换图
+\[
+\begin{tikzcd}[column sep=3.8em,row sep=3em]
+\Spec(\kappa_x) \arrow[r] \arrow[d] & X \arrow[d,"p"]\\
+\Spec(\kappa_s) \arrow[r] & S
+\end{tikzcd}
+\]
+按定义，它对应一个态射 $\Spec(\kappa_x) \to X_s$。按构造，合成 $\Spec(\kappa_x) \to X_s \to X$ 正是 $x \in X$ 处的典范 $\kappa_x$-点。这说明 $x \in p^{-1}(s)$ 落在映射 $X_s \to p^{-1}(s)$ 的像中。
+
+现在化归到 $S$ 仿射的情形。换言之，我们要证该断言对 $S$ 是局部的。为此取含 $s$ 的仿射开子概形 $U \subseteq S$，令 $X_U := X \times_S U$ 为 $X$ 到 $U$ 的基变换。考虑笛卡儿方块
+\[
+\begin{tikzcd}[column sep=3.4em,row sep=3em]
+(X_U)_s \arrow[r] \arrow[d] & X_U \arrow[r,"j_X"] \arrow[d,"p_U"] & X \arrow[d,"p"]\\
+s \arrow[r] & U \arrow[r,"j"'] & S
+\end{tikzcd}
+\]
+由此形式地推出外方块也是笛卡儿的，特别地有 $(X_U)_s \simeq X_s$。另一方面，由习题 \ref{exc:10.1.4}，$j_X$ 也是开浸入，其像是开子集 $p^{-1}(U) \subseteq X$。这说明 $j_X$ 诱导同胚
+\[
+p_U^{-1}(s) \simeq p^{-1}(s).
+\]
+此外，容易看出下图交换：
+\[
+\begin{tikzcd}[column sep=4.6em,row sep=3.2em]
+(X_U)_s \arrow[r] \arrow[d,"\simeq"'] & p_U^{-1}(s) \arrow[d,"\simeq"]\\
+X_s \arrow[r] & p^{-1}(s)
+\end{tikzcd}
+\]
+因此，要证下方水平映射是同胚，只需证上方水平映射是同胚。这允许把 $S$ 换成 $U$（从而把 $X$ 换成 $X_U$），于是可假设 $S$ 仿射。
+
+现在化归到 $X$ 仿射的情形。换言之，我们要证该断言对 $X$ 是局部的。为此取开覆盖 $X = \bigcup_{i \in I} U_i$，其中每个 $U_i$ 仿射。只需证连续映射
+\[
+X_s \cap q^{-1}(U_i) \longrightarrow p^{-1}(s) \cap U_i
+\]
+是同胚。记 $p_i$ 为合成 $U_i \to X \to S$。作为 $U_i$ 的子空间，有 $p^{-1}(s) \cap U_i = p_i^{-1}(s)$。另一方面，由引理 \ref{lem:9.3.2}，$X_s \cap q^{-1}(U_i)$ 是纤维积
+\[
+X_s \times_X U_i \simeq (s \times_S X) \times_X U_i \simeq s \times_S U_i \simeq (U_i)_s
+\]
+的底拓扑空间。
+
+于是只需证 $(U_i)_s \to p_i^{-1}(s)$ 是同胚。这允许把 $X$ 换成 $U_i$，从而假设 $X$ 仿射。
+
+由上述讨论，可设 $S = \Spec(A)$、$X = \Spec(B)$。设 $f \colon A \to B$ 是对应于 $p \colon X \to S$ 的同态，$\mathfrak p \subseteq A$ 是对应于 $x \in S$ 的素理想。回忆 $\kappa_{\mathfrak p} \simeq A_{\mathfrak p}/\mathfrak p A_{\mathfrak p}$。由推论 \ref{cor:9.2.2} 与推论 \ref{cor:9.2.5}，有
+\[
+X_s \simeq \Spec(B \otimes_A \kappa_{\mathfrak p}),
+\]
+而态射 $X_s \to X$ 由同态 $B \simeq B \otimes_A A \to B \otimes_A \kappa_{\mathfrak p}$ 诱导。需要证 $\Spec(B \otimes_A \kappa_{\mathfrak p}) \to \Spec(B)$ 诱导到其像上的同胚。这由下述习题得出。
+
+\begin{exercise}\label{exc:10.2.4}
+设 $h \colon R \to R'$ 是同态。若任意元素 $r' \in R'$ 都可写成 $h(r)u$，其中 $r \in R$、$u \in R'$ 可逆，则 $\Spec(R') \to \Spec(R)$ 诱导到其像上的同胚。
+\end{exercise}
+
+具体地说，$B \otimes_A \kappa_{\mathfrak p}$ 中任意元素可写成
+\[
+\sum_{i \in I} b_i \otimes a_i/c = \Bigl(\bigl(\sum_{i \in I} b_i f(a_i)\bigr) \otimes 1\Bigr) \cdot (1 \otimes 1/c),
+\]
+其中 $a_i \in A$、$b_i \in B$、$c \in A \setminus \mathfrak p$，而 $b_i/c$ 是 $b_i/c$ 在 $A_{\mathfrak p} \to \kappa_{\mathfrak p}$ 下的像。注意 $(1 \otimes 1/c)$ 正如所需是可逆元。
+\end{proof}
+
+\begin{warning}\label{warn:10.2.5}
+在命题 \ref{prop:10.2.2} 中，$X_s$ 一般不同构于 $p^{-1}(s)$ 对应的局部环化子空间 $\bigl(p^{-1}(s), \cO_X|_{p^{-1}(s)}\bigr)$，见警告 \ref{warn:5.3.6}。
+
+特别地，对拓扑点 $x \in X_s$，同态 $\cO_{X,i(x)} \to \cO_{X_s,x}$ 一般不是同构，其中 $i \colon X_s \to X$ 是典范态射。
+\end{warning}
+
+\begin{yizhu}
+差别出在环同态的形状。$B \to B \otimes_A \kappa_{\mathfrak p} = B_{\mathfrak p}/\mathfrak p B_{\mathfrak p}$ 先局部化、再取商，结构层因此被真正改变；\S\ref{sec:10.3} 中的 $B \to B \otimes_A A_{\mathfrak p} = B_{\mathfrak p}$ 只是局部化，$\Spec B_{\mathfrak p} \to \Spec B$ 在局部环化空间层面是到其像上的同构（习题 \ref{exc:10.3.2}）。所以纤维只在拓扑上贴合 $X$，在环化空间层面则不是 $X$ 的子空间。
+[依据：原书 pp.54--55，命题 \ref{prop:10.2.2} 与命题 \ref{prop:10.3.1} 的证明。]
+\end{yizhu}
+
+又，我们还有如下结果：
+
+\begin{proposition}\label{prop:10.2.6}
+态射 $i \colon X_s \to X$ 对任意拓扑点 $x \in X_s$ 诱导同构
+\[
+\kappa_{i(x)} \xrightarrow{\ \simeq\ } \kappa_x .
+\]
+\end{proposition}
+
+\begin{yizhu}
+纤维在环层面偏离 $X$，剩余域却完全一致：局部环 $\cO_{X,i(x)}$ 与 $\cO_{X_s,x}$ 一般不同构，但两者的剩余域相同。因此基变换不改变「点」的域论信息，只改变环论信息。原文的证法是考察域值点：$X_s(k) \simeq X(k) \times_{S(k)} s(k)$，再对一切域 $k$ 比较。
+[依据：原书 pp.54--55，命题 \ref{prop:10.2.6} 及其证明。]
+\end{yizhu}
+
+\begin{proof}
+我们断言 $i$ 在下述两个集合之间诱导双射：
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item $X_s$ 的域值点之集；
+  \item $X$ 的、含于 $p^{-1}(s)$ 的域值点之集。
+\end{itemize}
+为证断言，设 $k$ 是任意域。按纤维的定义，
+\[
+X_s(k) \simeq X(k) \times_{S(k)} s(k).
+\]
+用命题–构造 \ref{prop:8.1.2} 容易看出 $s(k) \to S(k)$ 是单射，且其像包含 $S$ 的、位于 $s$ 之上的 $k$-点。于是 $X_s(k) \to X(k)$ 也是单射，且其像包含 $X$ 的、底拓扑点被 $p$ 送到 $s$ 的 $k$-点。断言得证。
+
+因 $X_s$ 的底拓扑空间同胚于 $p^{-1}(s)$，该断言说明 $i$ 在下述两个集合之间诱导双射：
+\begin{itemize}[leftmargin=2em,itemsep=0.25ex]
+  \item $X_s$ 的、位于 $x$ 之上的域值点之集；
+  \item $X$ 的、位于 $i(x)$ 之上的域值点之集。
+\end{itemize}
+再次施用命题–构造 \ref{prop:8.1.2} 可见，$\kappa_{i(x)} \to \kappa_x$ 在 $\kappa_{i(x)}$ 与 $\kappa_x$ 的域扩张之集之间诱导双射。这只有当 $\kappa_{i(x)} \xrightarrow{\simeq} \kappa_x$ 时才可能。
+\end{proof}
+
+\begin{exercise}\label{exc:10.2.7}
+设 $X \xrightarrow{f} S \xleftarrow{g} Y$ 是概形图。证明态射
+\[
+\bigsqcup_{(x,y,s)} \Spec(\kappa_x) \times_{\Spec(\kappa_s)} \Spec(\kappa_y) \longrightarrow X \times_S Y
+\]
+在拓扑点之间诱导双射。这里 $x \in X$、$y \in Y$、$s \in S$ 是满足 $f(x) = g(y) = s$ 的拓扑点。
+\end{exercise}
+
+\begin{yizhu}
+这是 Tag 01JT 的集合论版本：$X \times_S Y$ 的点与四元组 $(x,y,s,\mathfrak p)$ 一一对应，其中 $\mathfrak p$ 是 $\kappa(x) \otimes_{\kappa(s)} \kappa(y)$ 的素理想。本习题左边的每一项 $\Spec(\kappa_x) \times_{\Spec(\kappa_s)} \Spec(\kappa_y)$ 恰是 $\Spec\bigl(\kappa(x) \otimes_{\kappa(s)} \kappa(y)\bigr)$，它枚举了固定 $(x,y,s)$ 时所有可能的 $\mathfrak p$，故整体在点上给出双射。可见纤维积的点远比底拓扑空间的积复杂，警告 \ref{warn:9.2.3} 已指出这一点。
+[来源：Stacks Project, Tag 01JT（Lemma 26.17.5，纤维积的点），\url{https://stacks.math.columbia.edu/tag/01JT}（2026-11-17 访问）。]
+\end{yizhu}
+
+\subsection{基变换到局部概形}\label{sec:10.3}
+
+关于沿 $\Spec(\cO_{S,s}) \to S$ 的基变换，我们还有如下结果。
+
+\begin{proposition}\label{prop:10.3.1}
+设 $p \colon X \to S$ 是 $S$-概形，$s \in S$ 是拓扑点。记 $S' := \Spec(\cO_{S,s})$。态射
+\[
+X_{S'} := X \times_S S' \longrightarrow X
+\]
+诱导局部环化空间间的同构 $X_{S'} \xrightarrow{\simeq} p^{-1}(S')$。
+
+特别地，$p^{-1}(S')$ 作为 $X$ 的局部环化子空间是概形。
+\end{proposition}
+
+\begin{yizhu}
+$B \to B \otimes_A A_{\mathfrak p} = B_{\mathfrak p}$ 是局部化，不做商，于是 $\Spec B_{\mathfrak p} \to \Spec B$ 在局部环化空间层面是同构到其像上，像即 $p^{-1}(S')$。注意 $p^{-1}(S')$ 一般不是 $X$ 的开子集：取 $X = S = \A^2$、$s$ 为原点，则 $\Spec \cO_{S,s}$ 的像只含 $(0)$、$(x)$、$(y)$、$(x,y)$ 四个点。它却是自带概形结构的局部环化子空间，这正是本命题的内容。
+[依据：原书 p.55，命题 \ref{prop:10.3.1} 与习题 \ref{exc:10.3.2}。]
+\end{yizhu}
+
+\begin{proof}
+与命题 \ref{prop:10.2.2} 的证明一样，有局部环化空间间的满射 $X_{S'} \to p^{-1}(S')$，且可假设 $X$、$S$ 均仿射。设 $f \colon A \to B$ 与素理想 $\mathfrak p \subset A$ 如命题 \ref{prop:10.2.2} 的证明。需要证 $\phi \colon \Spec(B \otimes_A A_{\mathfrak p}) \to \Spec(B)$ 诱导同构
+\[
+\Spec(B \otimes_A A_{\mathfrak p}) \xrightarrow{\ \simeq\ } \phi\bigl(\Spec(B \otimes_A A_{\mathfrak p})\bigr),
+\]
+其中目标视为 $\Spec(B)$ 的局部环化子空间。这由下述习题得出：
+\begin{exercise}\label{exc:10.3.2}
+设 $R$ 是交换环，$S \subseteq R$ 是乘性子集。考虑典范同态 $R \to R[S^{-1}]$。证明：由它诱导的态射 $\phi \colon \Spec(R[S^{-1}]) \to \Spec(R)$ 给出同构
+\[
+\Spec(R[S^{-1}]) \xrightarrow{\ \simeq\ } \phi\bigl(\Spec(R[S^{-1}])\bigr),
+\]
+其中目标视为 $\Spec(R)$ 的局部环化子空间。
+\end{exercise}
+\end{proof}

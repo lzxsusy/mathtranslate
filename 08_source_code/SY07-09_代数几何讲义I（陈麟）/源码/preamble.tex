@@ -1,0 +1,247 @@
+% ======================================================================
+%  preamble.tex —— 全书共用导言区（main.tex 与各节自检文件共同载入）
+%  只做版式与宏定义，不含正文；改版式只改这里。
+%  底本：Lin Chen, NOTES FOR ALGEBRAIC GEOMETRY 1 (2025-12-27), 171 pp.
+% ======================================================================
+\usepackage[margin=1.0in]{geometry}
+\parskip 1ex
+\usepackage[no-math]{fontspec}
+\usepackage{xeCJK}
+\setCJKmainfont{SimSun}[BoldFont=SimHei,ItalicFont=KaiTi,BoldItalicFont=SimHei]
+\setCJKsansfont{SimHei}[BoldFont=SimHei]
+\setCJKmonofont{SimSun}
+\setCJKfamilyfont{kaishu}{KaiTi}
+\newcommand{\kaishu}{\CJKfamily{kaishu}}
+\setmainfont{lmroman10-regular.otf}[BoldFont=lmroman10-bold.otf,ItalicFont=lmroman10-italic.otf,BoldItalicFont=lmroman10-bolditalic.otf]
+\setsansfont{lmsans10-regular.otf}[BoldFont=lmsans10-bold.otf,ItalicFont=lmsans10-oblique.otf,BoldItalicFont=lmsans10-boldoblique.otf]
+\setmonofont{lmmono10-regular.otf}
+
+\usepackage{amsmath,amssymb,amsthm,mathtools,bm}
+\usepackage{mathrsfs}
+\usepackage{aliascnt}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage[font=normalsize,labelsep=period]{caption}
+\usepackage[export]{adjustbox}
+\usepackage{tikz-cd}
+\usepackage{titlesec}
+\titleformat*{\section}{\normalfont\sffamily\Large\bfseries}
+\titleformat*{\subsection}{\normalfont\sffamily\large\bfseries}
+\titleformat*{\subsubsection}{\normalfont\sffamily\normalsize\bfseries}
+\usepackage[section]{placeins}
+\usepackage{xcolor}
+\usepackage{framed}
+\usepackage[unicode,hidelinks,bookmarksnumbered]{hyperref}
+\usepackage{bookmark}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\hypersetup{
+  pdftitle={代数几何讲义 I（中译注本）},
+  pdfauthor={Lin Chen 著；中译注},
+  pdfsubject={代数几何，概形，层论与上同调（底本 2025-12-27 版，171 页）},
+  pdfkeywords={代数几何, 概形, 层, 拟凝聚层, 射影态射, 中译注本}
+}
+
+\renewcommand{\contentsname}{目录}
+\renewcommand{\refname}{参考文献}
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+\renewcommand{\proofname}{\bfseries 证明}
+\renewcommand{\partname}{第}
+\renewcommand{\abstractname}{摘要}
+\renewcommand{\appendixname}{附录}
+\renewcommand{\indexname}{索引}
+
+\pagestyle{plain}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{2}
+
+% ---------- 版式：行距与页眉页脚 ----------
+\linespread{1.12}
+\usepackage{fancyhdr}
+\setlength{\headheight}{14pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\kaishu 代数几何讲义 I\,·\,中译注本}
+\fancyhead[R]{\small\kaishu\nouppercase{\rightmark}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\quad #1}}
+\renewcommand{\subsectionmark}[1]{}
+
+% ---------- 译注环境（全局开关 \ifshowyizhu） ----------
+% 用法：\begin{yizhu}……[来源：……]\end{yizhu}
+\newif\ifshowyizhu
+\showyizhutrue
+\newenvironment{yizhubox}{%
+  \def\FrameCommand{{\color{black!55}\vrule width 1.4pt}\hspace{9pt}}%
+  \MakeFramed{\advance\hsize-\width\sloppy\FrameRestore}}%
+ {\endMakeFramed}
+\newenvironment{yizhu}{%
+  \ifshowyizhu\begin{yizhubox}\small\noindent{\bfseries 译注}\quad\ignorespaces\fi}%
+ {\ifshowyizhu\end{yizhubox}\fi}
+
+% ---------- 定理类环境：统一计数器，编号 = 节.小节.序号（同原书） ----------
+\theoremstyle{plain}
+\newtheorem{theorem}{定理}[subsection]
+\newaliascnt{lemma}{theorem}\newtheorem{lemma}[lemma]{引理}\aliascntresetthe{lemma}
+\newaliascnt{proposition}{theorem}\newtheorem{proposition}[proposition]{命题}\aliascntresetthe{proposition}
+\newaliascnt{corollary}{theorem}\newtheorem{corollary}[corollary]{推论}\aliascntresetthe{corollary}
+\newaliascnt{claim}{theorem}\newtheorem{claim}[claim]{断言}\aliascntresetthe{claim}
+\newaliascnt{conjecture}{theorem}\newtheorem{conjecture}[conjecture]{猜想}\aliascntresetthe{conjecture}
+
+\theoremstyle{definition}
+\newaliascnt{definition}{theorem}\newtheorem{definition}[definition]{定义}\aliascntresetthe{definition}
+\newaliascnt{example}{theorem}\newtheorem{example}[example]{例}\aliascntresetthe{example}
+\newaliascnt{predefinition}{theorem}\newtheorem{predefinition}[predefinition]{预备定义}\aliascntresetthe{predefinition}
+\newaliascnt{remark}{theorem}\newtheorem{remark}[remark]{注记}\aliascntresetthe{remark}
+\newaliascnt{notation}{theorem}\newtheorem{notation}[notation]{记号}\aliascntresetthe{notation}
+\newaliascnt{construction}{theorem}\newtheorem{construction}[construction]{构造}\aliascntresetthe{construction}
+\newaliascnt{exercise}{theorem}\newtheorem{exercise}[exercise]{习题}\aliascntresetthe{exercise}
+\newaliascnt{warning}{theorem}\newtheorem{warning}[warning]{警告}\aliascntresetthe{warning}
+\newaliascnt{question}{theorem}\newtheorem{question}[question]{问题}\aliascntresetthe{question}
+\newaliascnt{convention}{theorem}\newtheorem{convention}[convention]{约定}\aliascntresetthe{convention}
+
+\newenvironment{sketch}[1][证明概略]{\begin{proof}[#1]}{\end{proof}}
+\newenvironment{proofsketch}[1][证明概略]{\begin{proof}[#1]}{\end{proof}}
+\newenvironment{proofidea}[1][证明思路]{\begin{proof}[#1]}{\end{proof}}
+
+\crefname{theorem}{定理}{定理}
+\crefname{lemma}{引理}{引理}
+\crefname{proposition}{命题}{命题}
+\crefname{corollary}{推论}{推论}
+\crefname{claim}{断言}{断言}
+\crefname{conjecture}{猜想}{猜想}
+\crefname{definition}{定义}{定义}
+\crefname{example}{例}{例}
+\crefname{predefinition}{预备定义}{预备定义}
+\crefname{remark}{注记}{注记}
+\crefname{notation}{记号}{记号}
+\crefname{construction}{构造}{构造}
+\crefname{exercise}{习题}{习题}
+\crefname{warning}{警告}{警告}
+\crefname{question}{问题}{问题}
+\crefname{convention}{约定}{约定}
+\crefname{equation}{式}{式}
+\crefname{figure}{图}{图}
+\crefname{section}{节}{节}
+\crefname{subsection}{小节}{小节}
+
+% ---------- 数学宏 ----------
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\A}{\mathbb{A}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\GG}{\mathbb{G}}
+\newcommand{\bbk}{\mathbb{k}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\Spm}{\operatorname{Spm}}
+\newcommand{\Smax}{\operatorname{Spm}}
+\newcommand{\Proj}{\operatorname{Proj}}
+\newcommand{\Spv}{\operatorname{Spv}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\uHom}{\underline{\mathrm{Hom}}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\Aut}{\operatorname{Aut}}
+\newcommand{\Isom}{\operatorname{Isom}}
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\coker}{\operatorname{coker}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\Ker}{\operatorname{Ker}}
+\newcommand{\Ob}{\operatorname{Ob}}
+\newcommand{\Mor}{\operatorname{Mor}}
+\newcommand{\Frac}{\operatorname{Frac}}
+\newcommand{\Pic}{\operatorname{Pic}}
+\newcommand{\Supp}{\operatorname{Supp}}
+\newcommand{\cHom}{\underline{\mathcal{H}om}}
+\newcommand{\Ext}{\operatorname{Ext}}
+\newcommand{\Tor}{\operatorname{Tor}}
+\newcommand{\colim}{\operatorname*{colim}}
+\newcommand{\CRing}{\mathsf{CRing}}
+\newcommand{\Ring}{\mathsf{Ring}}
+\newcommand{\Set}{\mathsf{Set}}
+\newcommand{\Ab}{\mathsf{Ab}}
+\newcommand{\Grp}{\mathsf{Grp}}
+\newcommand{\Top}{\mathsf{Top}}
+\newcommand{\Sch}{\mathsf{Sch}}
+\newcommand{\PShv}{\mathsf{PShv}}
+\newcommand{\Shv}{\mathsf{Shv}}
+\newcommand{\Mod}{\mathsf{Mod}}
+\newcommand{\Vect}{\mathsf{Vect}}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\smallcat}[1]{\mathsf{#1}}
+\newcommand{\omod}{\cO_X\text{-}\mathsf{mod}}
+\newcommand{\omodP}{\cO_X\text{-}\mathsf{mod}^{\PShv}}
+\newcommand{\lto}{\longrightarrow}
+\newcommand{\lfrom}{\longleftarrow}
+\newcommand{\into}{\hookrightarrow}
+\newcommand{\from}{\leftarrow}
+\newcommand{\eop}{\unskip\nobreak\hfill\ensuremath{\square}}
+\providecommand{\longmapsfrom}{\mathrel{\rotatebox[origin=c]{180}{$\longmapsto$}}}
+\providecommand{\mapsfrom}{\mathrel{\rotatebox[origin=c]{180}{$\mapsto$}}}
+\newcommand{\secref}[1]{第~\ref{sec:#1}~节}
+\newcommand{\secrefx}[1]{\ref{sec:#1}}
+\pdfstringdefDisableCommands{\def\PShv{PShv}\def\Shv{Shv}\def\Spec{Spec}\def\Proj{Proj}\def\cO{O}\def\Z{Z}\def\A{A}\def\PP{P}\def\omod{mod}}
+
+% ---- 通用补充宏（各节执笔者可能用到，统一在此定义，避免 undefined） ----
+\providecommand{\supp}{\operatorname{Supp}}
+\providecommand{\Ann}{\operatorname{Ann}}
+\providecommand{\ann}{\operatorname{ann}}
+\providecommand{\Id}{\mathrm{Id}}
+\providecommand{\rank}{\operatorname{rank}}
+\providecommand{\tr}{\operatorname{tr}}
+\providecommand{\coker}{\operatorname{coker}}
+\providecommand{\cH}{\mathcal{H}}
+\providecommand{\cK}{\mathcal{K}}
+\providecommand{\cQ}{\mathcal{Q}}
+\providecommand{\cR}{\mathcal{R}}
+\providecommand{\cT}{\mathcal{T}}
+\providecommand{\cV}{\mathcal{V}}
+\providecommand{\cW}{\mathcal{W}}
+\providecommand{\cZ}{\mathcal{Z}}
+\providecommand{\cK}{\mathcal{K}}
+\providecommand{\cJ}{\mathcal{J}}
+\providecommand{\cG}{\mathcal{G}}
+\providecommand{\cS}{\mathcal{S}}
+\providecommand{\cU}{\mathcal{U}}
+\providecommand{\cX}{\mathcal{X}}
+\providecommand{\cY}{\mathcal{Y}}
+
+\providecommand{\coim}{\operatorname{coim}}
+\providecommand{\QCoh}{\mathsf{QCoh}}
+\providecommand{\Coh}{\mathsf{Coh}}
+\providecommand{\Sym}{\operatorname{Sym}}
+\makeatletter
+\@ifundefined{propdef}{\newtheorem{propdef}[theorem]{命题—定义}\crefname{propdef}{命题—定义}{命题—定义}}{}
+\makeatother
+
+\counterwithin*{equation}{section}
+\renewcommand{\theequation}{\thesection.\arabic{equation}}

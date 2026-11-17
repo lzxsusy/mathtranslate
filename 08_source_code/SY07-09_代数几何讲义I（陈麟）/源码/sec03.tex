@@ -1,0 +1,461 @@
+% ======================================================================
+%  sec03.tex —— 第 3 节 （预）层的范畴
+%  底本：原书 pp.19–25（印刷页 = PDF 页）
+%  原书标题：3. Category of (pre)sheaves
+%  体例：\section + \subsection 与原文编号一致；定理类环境紧跟 \label{类型:编号}。
+% ======================================================================
+
+\section{（预）层的范畴}\label{sec:3}
+
+% ---------------------------------------------------------------- p.19
+设 $X$ 是拓扑空间，$\mathcal C$ 是范畴。注意 $X$ 上的 $\mathcal C$-值预层构成范畴
+\[
+\PShv(X,\mathcal C):=\operatorname{Fun}(\smallcat U(X)^{\op},\mathcal C),
+\]
+而 $\mathcal C$-值层构成全子范畴
+\[
+\Shv(X,\mathcal C)\subseteq\PShv(X,\mathcal C).
+\]
+本节研究这两个范畴的基本性质。
+
+\subsection{层化}\label{sec:3.1}
+
+\begin{definition}\label{def:3.1.1}
+设 $F\in\PShv(X,\Set)$。$F$ 的\emph{层化}是指一个层 $F^{\sharp}\in\Shv(X,\Set)$，连带态射 $\theta\colon F\to F^{\sharp}$，使得对任意检验层 $\mathcal G$，用 $\theta$ 前复合诱导双射
+\[
+\Hom_{\Shv(X,\Set)}(F^{\sharp},\mathcal G)\xrightarrow{\ \simeq\ }\Hom_{\PShv(X,\Set)}(F,\mathcal G),\qquad \alpha\mapsto\alpha\circ\theta.
+\]
+\end{definition}
+
+\begin{proposition}\label{prop:3.1.2}
+对任意 $F\in\PShv(X,\Set)$，其层化 $(F^{\sharp},\theta)$ 存在，且在唯一同构的意义下唯一。此外，态射 $\theta\colon F\to F^{\sharp}$ 在茎上诱导双射 $F_x\to F^{\sharp}_x$。
+\end{proposition}
+
+\begin{yizhu}
+层化不动茎，是 Stacks 中对同一命题的单列条目：$\mathcal F_x=\mathcal F^{\sharp}_x$。其显式构造以 $\Pi(\mathcal F)(U):=\prod_{x\in U}\mathcal F_x$ 为中介，再把满足局部粘接条件的元素取出作为子层，即得 $\mathcal F^{\sharp}$；$\Pi(\mathcal F)$ 常称 Godement 构造。
+[来源：Stacks Project, Tag 007Z（Lemma 6.17.2，层化前后的茎相同），\url{https://stacks.math.columbia.edu/tag/007Z}（2026-11-17 访问）。]
+\end{yizhu}
+
+\begin{proof}
+唯一性由 Yoneda 引理推出。为证存在性，我们如下构造层化。
+
+先构造所求的层 $F^{\sharp}$。对任意开子集 $U\subseteq X$，令
+\[
+F^{\sharp}(U)\subseteq\prod_{x\in U}F_x
+\]
+为满足下述条件的元素 $(s(x))_{x\in U}$ 构成的子集：
+\begin{itemize}
+  \item 对任意 $x\in U$，存在 $U$ 中含 $x$ 的邻域 $V$ 与截面 $s_V\in F(V)$，使得对任意 $y\in V$，有 $s(y)=(s_V)_y$。
+\end{itemize}
+对 $U\subseteq U'$，投影映射 $\prod_{x\in U'}F_x\to\prod_{x\in U}F_x$ 显然把 $F^{\sharp}(U')$ 送入 $F^{\sharp}(U)$。此外，容易验证所得的映射 $F^{\sharp}(U')\to F^{\sharp}(U)$ 把对应 $U\mapsto F^{\sharp}(U)$ 提升为 $\Shv(X,\Set)$ 中的对象。
+
+现在构造态射 $\theta\colon F\to F^{\sharp}$。对任意开子集 $U\subseteq X$，考虑映射
+\[
+F(U)\to\prod_{x\in U}F_x,\qquad s\mapsto (s_x)_{x\in U}.
+\]
+显然该映射的像含于 $F^{\sharp}(U)$。此外，所得的映射 $F(U)\to F^{\sharp}(U)$ 对 $U$ 函子化，因此给出态射 $\theta\colon F\to F^{\sharp}$。
+
+剩下证明 $\theta\colon F\to F^{\sharp}$ 确实把 $F^{\sharp}$ 实现为 $F$ 的层化。设 $\mathcal G$ 是检验层，只需证明
+\begin{equation}\tag{3.1}\label{eq:3.1}
+\Hom_{\Shv(X,\Set)}(F^{\sharp},\mathcal G)\to\Hom_{\PShv(X,\Set)}(F,\mathcal G),\qquad \alpha\mapsto\alpha\circ\theta
+\end{equation}
+是双射。设 $\beta\colon F\to\mathcal G$ 是态射。对任意开子集 $U\subseteq X$，回忆取芽诱导单射
+\[
+\mathcal G(U)\to\prod_{x\in U}\mathcal G_x,
+\]
+% ---------------------------------------------------------------- p.20
+其像由引理 \ref{lem:2.2.1} 描述。利用该描述，显然存在唯一的虚线映射使下图交换：
+\[
+\begin{tikzcd}[row sep=2.6em,column sep=2.6em]
+F^{\sharp}(U) \arrow[r, hook] \arrow[d, dashed] & \prod_{x\in U}F_x \arrow[d,"(\beta_x)_{x\in U}"] \\
+\mathcal G(U) \arrow[r, hook] & \prod_{x\in U}\mathcal G_x.
+\end{tikzcd}
+\]
+此外，所得映射 $F^{\sharp}(U)\to\mathcal G(U)$ 对 $U$ 函子化。于是得到态射 $\beta^{\sharp}\colon F^{\sharp}\to\mathcal G$。现在容易验证，映射
+\[
+\Hom_{\PShv(X,\Set)}(F,\mathcal G)\to\Hom_{\Shv(X,\Set)}(F^{\sharp},\mathcal G),\qquad \beta\mapsto\beta^{\sharp}
+\]
+与 \eqref{eq:3.1} 互为逆映射。特别地，二者都是双射。
+\end{proof}
+
+\begin{yizhu}
+层化是左伴随，故它保持一切余极限；注记 \ref{rem:3.1.5} 又说明它保持有限极限。二者合起来即：层化是正合函子，把预层的正合列送到层的正合列。
+[译者按（上下文推断，无外部依据）：有限极限那一半不能由伴随性得到，其依据是滤过余极限与有限极限的交换。]
+\end{yizhu}
+
+\begin{corollary}\label{cor:3.1.3}
+全忠实嵌入 $\Shv(X,\Set)\to\PShv(X,\Set)$ 有左伴随，它把 $F$ 送到其层化 $F^{\sharp}$。
+\end{corollary}
+
+\begin{example}\label{ex:3.1.4}
+设 $A$ 是集合。常预层 $A$ 的层化 $A^{\sharp}$ 是层
+\[
+\smallcat U(X)^{\op}\to\Set,\qquad U\mapsto C(U,A),
+\]
+它把 $U$ 送到 $U$ 到 $A$（赋离散拓扑）的连续映射之集。称它为与 $A$ 关联的\emph{常层}。
+\end{example}
+
+\begin{remark}\label{rem:3.1.5}
+层化函子 $\PShv(X,\Set)\to\Shv(X,\Set)$ 保持有限极限。这可由下述三条事实推出：
+\begin{itemize}
+  \item 层化函子与取茎交换；
+  \item 取茎与有限极限交换（注记 \ref{rem:2.1.3}）。
+  \item 取茎的诸函子在层范畴上联合保守（注记 \ref{rem:2.2.4}）
+\end{itemize}
+具体说来，对任意有限图表 $F_i$（$i\in I$）有
+\[
+\Bigl(\lim_{i\in I}F_i\Bigr)^{\sharp}_x\simeq\Bigl(\lim_{i\in I}F_i\Bigr)_x\simeq\lim_{i\in I}F_{i,x}\simeq\lim_{i\in I}(F_i^{\sharp})_x\simeq\Bigl(\lim_{i\in I}F_i^{\sharp}\Bigr)_x,\qquad \forall x\in X,
+\]
+而这一同构由典范态射 $(\lim_i F_i)^{\sharp}\to\lim_i F_i^{\sharp}$ 诱导。由此可知上述态射是同构。
+\end{remark}
+
+\begin{remark}\label{rem:3.1.6}
+设 $F$ 是阿贝尔群预层。取命题 \ref{prop:3.1.2} 的证明中所构造的、底层集合预层的层化 $F^{\sharp}$。容易验证 $F^{\sharp}(U)$ 是阿贝尔群 $\prod_{x\in U}F_x$ 的子群。由此 $F^{\sharp}$ 可提升为阿贝尔群层。此外，对任意阿贝尔群检验层 $\mathcal G$，用 $\theta$ 前复合诱导双射
+\[
+\Hom_{\Shv(X,\Ab)}(F^{\sharp},\mathcal G)\xrightarrow{\ \simeq\ }\Hom_{\PShv(X,\Ab)}(F,\mathcal G),\qquad \alpha\mapsto\alpha\circ\theta.
+\]
+换言之，$\Shv(X,\Ab)\to\PShv(X,\Ab)$ 有左伴随，它把 $F$ 送到 $F^{\sharp}$。
+\end{remark}
+
+\begin{remark}\label{rem:3.1.7}
+一般地，若范畴 $\mathcal C$ 容许小极限与滤过余极限，则任意 $\mathcal C$-值预层都有层化，可如下构造。
+
+对 $U\subseteq X$，如下定义 $U$ 的开覆盖范畴 $\mathrm{Cov}_U$：
+\begin{itemize}
+  \item 对象是开覆盖 $U=\bigcup_{i\in I}U_i$；
+  \item 从 $(U_i)_{i\in I}$ 到 $(V_j)_{j\in J}$ 的态射是映射 $J\to I$，使得 $V_j\subseteq U_i$ 对一切 $j\in J$ 成立。
+\end{itemize}
+% ---------------------------------------------------------------- p.21
+可以证明 $\mathrm{Cov}_U$ 是滤过的。现对任意 $F\in\PShv(X,\mathcal C)$，有函子
+\[
+\mathrm{Cov}_U\to\mathcal C,\qquad (U_i)_{i\in I}\mapsto\lim\Bigl[\prod_{i\in I}F(U_i)\rightrightarrows\prod_{(i,j)\in I^2}F(U_i\cap U_j)\Bigr],
+\]
+它把覆盖送到层条件中出现的等化子。注意恒等覆盖 $\{U\}$ 被送到对象 $F(U)$。现定义
+\[
+F^{+}(U):=\colim_{[(U_i)_{i\in I}]\in\mathrm{Cov}_U}\lim\Bigl[\prod_{i\in I}F(U_i)\rightrightarrows\prod_{(i,j)\in I^2}F(U_i\cap U_j)\Bigr].
+\]
+按构造，有典范态射 $F(U)\to F^{+}(U)$。此外，上述定义对 $U$ 反变函子化，因此得到带典范态射 $F\to F^{+}$ 的对象 $F^{+}\in\PShv(X,\mathcal C)$。
+
+一般而言 $F^{+}$ 不是 $\mathcal C$-值层。但容易验证，对任意开覆盖 $U=\bigcup_{i\in I}U_i$，态射
+\[
+F^{+}(U)\to\prod_{i\in I}F^{+}(U_i)
+\]
+是单态射。利用这一性质可以证明 $(F^{+})^{+}$ 是层，且复合 $F\to F^{+}\to(F^{+})^{+}$ 把 $(F^{+})^{+}$ 实现为 $F$ 的层化。
+\end{remark}
+
+\subsection{正像}\label{sec:3.2}
+
+\begin{construction}\label{con:3.2.1}
+设 $f\colon X\to X'$ 是拓扑空间之间的连续映射。有函子
+\[
+\smallcat U(X')^{\op}\to\smallcat U(X)^{\op},\qquad U'\mapsto f^{-1}(U').
+\]
+对任意范畴 $\mathcal C$，它诱导函子
+\[
+\operatorname{Fun}(\smallcat U(X)^{\op},\mathcal C)\to\operatorname{Fun}(\smallcat U(X')^{\op},\mathcal C).
+\]
+按定义，这给出函子
+\[
+f_*\colon\PShv(X,\mathcal C)\to\PShv(X',\mathcal C).
+\]
+称它为沿 $f$ 的\emph{正像函子}（或\emph{前推函子}），作用于 $\mathcal C$-值预层。
+\end{construction}
+
+注意对连续映射 $X\xrightarrow{\ f\ }Y\xrightarrow{\ g\ }Z$，有典范自然同构 $(g\circ f)_*\simeq g_*\circ f_*$。
+
+具体说来，给定 $X$ 上的 $\mathcal C$-值预层 $F$，它沿 $f$ 的正像（或前推）是由
+\[
+f_*F(U'):=F(f^{-1}(U'))
+\]
+定义的预层 $f_*F$，其限制映射由 $F$ 的相应映射给出。
+
+\begin{proposition}\label{prop:3.2.2}
+设 $f\colon X\to X'$ 是拓扑空间之间的连续映射。若 $F$ 是层，则 $f_*F$ 是层。
+\end{proposition}
+
+\begin{proof}
+$f_*F$ 关于开覆盖 $U'=\bigcup_{i\in I}U'_i$ 的层条件，正是 $F$ 关于开覆盖 $f^{-1}(U')=\bigcup_{i\in I}f^{-1}(U'_i)$ 的层条件。
+\end{proof}
+
+% ---------------------------------------------------------------- p.22
+\begin{example}\label{ex:3.2.3}
+设 $x\in X$ 是点，$i\colon\{x\}\to X$ 是嵌入映射。设 $\mathcal C$ 是容许终对象 $*$ 的范畴。则对任意对象 $A\in\mathcal C$ 有
+\[
+i_*(A)\simeq\delta_{x,A},
+\]
+这里我们滥用记号，用 $A$ 记 $\{x\}$ 上整体截面为 $A$ 的唯一 $\mathcal C$-值层。
+\end{example}
+
+\begin{example}\label{ex:3.2.4}
+设 $p\colon X\to\{*\}$ 是显然的投影映射。对任意层 $F$，正像 $p_*F$ 由 $p_*F(\{*\})$ 唯一决定，而按定义后者就是 $F(X)$。因此在这一情形，我们也称 $p_*$ 为\emph{取整体截面函子}。
+\end{example}
+
+\begin{warning}\label{warn:3.2.5}
+正像函子不与层化交换。换言之，$f_*(F^{\sharp})$ 与 $(f_*F)^{\sharp}$ 一般不同构。反例可取 $F$ 为常预层。
+\end{warning}
+
+\begin{yizhu}
+把反例算清：取 $X$ 为两点离散空间，$A$ 为二元集，$f\colon X\to\{*\}$。则 $f_*(F^{\sharp})=F^{\sharp}(X)=C(X,A)$ 有四个元素，而 $(f_*F)^{\sharp}=A$ 只有两个元素。原因是层化在基空间 $X$ 上要记录连通分支，而单点空间看不出这个分支数。
+[译者按（上下文推断，无外部依据）：只要 $X$ 不连通且 $A$ 至少两个元素，上述计数就会分岔。]
+\end{yizhu}
+
+\subsection{预层的逆像}\label{sec:3.3}
+
+\begin{construction}\label{con:3.3.1}
+设 $f\colon X\to X'$ 是拓扑空间之间的连续映射，$F'\in\PShv(X',\Set)$ 是预层。如下定义预层 $f_{\PShv}^{-1}F'\in\PShv(X,\Set)$：
+\[
+f_{\PShv}^{-1}F'(U):=\colim_{V\in\mathcal U(X',f(U))^{\op}}F'(V),
+\]
+其中 $\mathcal U(X',f(U))\subseteq\mathcal U(X')$ 是 $f(U)$ 在 $X'$ 中的开邻域构成的全子范畴，而 $f_{\PShv}^{-1}F'$ 的限制映射由 $F'$ 的相应映射诱导。
+
+构造 $F'\mapsto f_{\PShv}^{-1}F'$ 显然可提升为函子
+\[
+f_{\PShv}^{-1}\colon\PShv(X',\Set)\to\PShv(X,\Set).
+\]
+称它为沿 $f$ 的\emph{逆像函子}（或\emph{拉回函子}），作用于集合预层。
+
+注意 $\mathcal U(X',f(U))^{\op}$ 是与正向集关联的范畴。因此 $f_{\PShv}^{-1}F'(U)$ 可计算为
+\[
+\coprod_{V\in\mathcal U(X',f(U))^{\op}}F'(V)
+\]
+的商。
+\end{construction}
+
+\begin{example}\label{ex:3.3.2}
+设 $X$ 是拓扑空间，$x$ 是点。记 $i\colon\{x\}\to X$ 为嵌入映射。则
+\[
+(i_{\PShv}^{-1}(F))(\{x\})\simeq F_x.
+\]
+\end{example}
+
+\begin{remark}\label{rem:3.3.3}
+函子 $f_{\PShv}^{-1}F'\colon\smallcat U(X)^{\op}\to\Set$ 是 $F'\colon\smallcat U(X')^{\op}\to\Set$ 沿拉回函子 $\smallcat U(X')^{\op}\to\smallcat U(X)^{\op}$ 的\emph{左 Kan 扩张}。
+\end{remark}
+
+\begin{remark}\label{rem:3.3.4}
+函子 $f_{\PShv}^{-1}$ 与有限极限交换，因为 $\Set$ 中滤过余极限与有限极限交换。
+\end{remark}
+
+\begin{lemma}\label{lem:3.3.5}
+设 $X$ 是拓扑空间，$U\subseteq X$ 是开子集。记 $j\colon U\to X$ 为嵌入映射。则 $j_{\PShv}^{-1}$ 把层送到层。
+\end{lemma}
+
+\begin{proof}
+对任意 $F\in\PShv(X,\Set)$ 与开子集 $V\subseteq U$，展开定义即得
+\[
+(j_{\PShv}^{-1}(F))(V)\simeq F(V).
+\]
+于是 $j_{\PShv}^{-1}(F)$ 的层条件可由 $F$ 的层条件推出。
+\end{proof}
+
+\begin{yizhu}
+这一证明的枢纽是：$j(V)=V$ 本身是开集，故它在 $X$ 中的开邻域系统 $V$ 有最小元，余极限退化成一个值。一般连续映射 $f$ 下 $f(U)$ 未必开，邻域系统没有最小元，$f_{\PShv}^{-1}$ 便可能把层打成预层，这正是警告 \ref{warn:3.3.6} 的由来。
+[译者按（上下文推断，无外部依据）：因此层范畴中的逆像必须再层化一次，见构造 \ref{con:3.4.1}。]
+\end{yizhu}
+
+\begin{warning}\label{warn:3.3.6}
+对一般的连续映射 $f\colon X\to X'$，函子 $f_{\PShv}^{-1}$ 不把层送到层。取投影映射 $p\colon X\to\{*\}$ 即可看出。
+\end{warning}
+
+% ---------------------------------------------------------------- p.23
+\begin{construction}\label{con:3.3.7}
+设 $f\colon X\to X'$ 是拓扑空间之间的连续映射，$F'\in\PShv(X',\Set)$ 是预层。我们构造态射
+\begin{equation}\tag{3.2}\label{eq:3.2}
+F'\to f_*\circ f_{\PShv}^{-1}(F')
+\end{equation}
+如下。对任意开子集 $U'\subseteq X'$，按定义
+\[
+(f_*\circ f_{\PShv}^{-1}(F'))(U')\simeq(f_{\PShv}^{-1}(F'))(f^{-1}(U'))\simeq\colim_{V\in\mathcal U(X',f(f^{-1}(U')))^{\op}}F'(V).
+\]
+注意 $U'$ 是 $\mathcal U(X',f(f^{-1}(U')))^{\op}$ 中的对象。因此有典范映射
+\[
+F'(U')\to(f_*\circ f_{\PShv}^{-1}(F'))(U').
+\]
+容易验证这些映射与限制映射相容，因此给出态射 \eqref{eq:3.2}。
+
+此外，这些态射可提升为自然变换
+\begin{equation}\tag{3.3}\label{eq:3.3}
+\id\to f_*\circ f_{\PShv}^{-1}.
+\end{equation}
+\end{construction}
+
+\begin{construction}\label{con:3.3.8}
+对偶地，设 $f\colon X\to X'$ 是拓扑空间之间的连续映射，$F\in\PShv(X,\Set)$ 是预层。我们构造态射
+\begin{equation}\tag{3.4}\label{eq:3.4}
+f_{\PShv}^{-1}\circ f_*(F)\to F.
+\end{equation}
+如下。对任意开子集 $U\subseteq X$，按定义
+\[
+(f_{\PShv}^{-1}\circ f_*(F))(U)\simeq\colim_{V\in\mathcal U(X',f(U))^{\op}}(f_*(F))(V)\simeq\colim_{V\in\mathcal U(X',f(U))^{\op}}F(f^{-1}(V)).
+\]
+注意对任意 $V\in\mathcal U(X',f(U))^{\op}$ 有 $U\subseteq f^{-1}(V)$，从而给出限制映射 $F(f^{-1}(V))\to F(U)$。容易验证这些映射对 $V$ 函子化，并给出映射
+\[
+\colim_{V\in\mathcal U(X',f(U))^{\op}}F(f^{-1}(V))\to F(U).
+\]
+于是得到映射
+\[
+(f_{\PShv}^{-1}\circ f_*(F))(U)\to F(U).
+\]
+容易验证这些映射与限制映射相容，因此给出态射 \eqref{eq:3.4}。
+
+此外，这些态射可提升为自然变换
+\begin{equation}\tag{3.5}\label{eq:3.5}
+f_{\PShv}^{-1}\circ f_*\to\id.
+\end{equation}
+\end{construction}
+
+下述命题由平凡的图表追逐得到，细节从略。
+
+\begin{proposition}\label{prop:3.3.9}
+设 $f\colon X\to X'$ 是拓扑空间之间的连续映射，$F\in\PShv(X,\Set)$，$F'\in\PShv(X',\Set)$。下述两个复合互为逆映射：
+\[
+\begin{aligned}
+\Hom_{\PShv(X,\Set)}(f_{\PShv}^{-1}(F'),F)
+&\xrightarrow{\ f_*\ }\Hom_{\PShv(X',\Set)}(f_*\circ f_{\PShv}^{-1}(F'),f_*F)\\
+&\xrightarrow{\ -\circ\eqref{eq:3.2}\ }\Hom_{\PShv(X',\Set)}(F',f_*F),
+\end{aligned}
+\]
+% ---------------------------------------------------------------- p.24
+与
+\[
+\begin{aligned}
+\Hom_{\PShv(X',\Set)}(F',f_*F)
+&\xrightarrow{\ f_{\PShv}^{-1}\ }\Hom_{\PShv(X,\Set)}(f_{\PShv}^{-1}(F'),f_{\PShv}^{-1}\circ f_*(F))\\
+&\xrightarrow{\ \eqref{eq:3.4}\circ-\ }\Hom_{\PShv(X,\Set)}(f_{\PShv}^{-1}(F'),F).
+\end{aligned}
+\]
+\end{proposition}
+
+\begin{corollary}\label{cor:3.3.10}
+设 $f\colon X\to X'$ 是拓扑空间之间的连续映射。函子
+\[
+f_{\PShv}^{-1}\colon\PShv(X',\Set)\to\PShv(X,\Set)
+\]
+典范左伴随于
+\[
+f_*\colon\PShv(X,\Set)\to\PShv(X',\Set).
+\]
+\end{corollary}
+
+\begin{corollary}\label{cor:3.3.11}
+对连续映射 $X\xrightarrow{\ f\ }Y\xrightarrow{\ g\ }Z$，有典范自然同构 $(g\circ f)_{\PShv}^{-1}\simeq f_{\PShv}^{-1}\circ g_{\PShv}^{-1}$。
+\end{corollary}
+
+\begin{corollary}\label{cor:3.3.12}
+设 $f\colon X\to X'$ 是连续映射，$x\in X$ 是点。记 $x':=f(x)$。则对任意预层 $F'\in\PShv(X',\Set)$，有典范同构
+\[
+f_{\PShv}^{-1}(F')_x\simeq F'_{x'}.
+\]
+\end{corollary}
+
+\begin{remark}\label{rem:3.3.13}
+设 $\mathcal C$ 是容许正向余极限的范畴。可用同一公式对 $\mathcal C$-值预层定义函子 $f_{\PShv}^{-1}$，且 $f_{\PShv}^{-1}$ 典范左伴随于 $f_*$。
+\end{remark}
+
+\subsection{层的逆像}\label{sec:3.4}
+
+\begin{construction}\label{con:3.4.1}
+设 $f\colon X\to X'$ 是拓扑空间之间的连续映射，$F'\in\Shv(X',\Set)$ 是层。定义
+\[
+f^{-1}F':=(f_{\PShv}^{-1}F')^{\sharp}
+\]
+为 $F'$ 的预层意义下的逆像的层化。
+
+构造 $F'\mapsto f^{-1}F'$ 显然可提升为函子
+\[
+f^{-1}\colon\Shv(X',\Set)\to\Shv(X,\Set).
+\]
+称它为沿 $f$ 的\emph{逆像函子}（或\emph{拉回函子}），作用于集合层。
+
+设 $f\colon X\to X'$ 是拓扑空间之间的连续映射，$F\in\Shv(X,\Set)$，$F'\in\Shv(X',\Set)$。有典范双射
+\[
+\begin{aligned}
+\Hom_{\Shv(X,\Set)}(f^{-1}(F'),F)&\simeq\Hom_{\PShv(X,\Set)}(f_{\PShv}^{-1}(F'),F)\\
+&\simeq\Hom_{\PShv(X',\Set)}(F',f_*F)\simeq\Hom_{\Shv(X',\Set)}(F',f_*F),
+\end{aligned}
+\]
+其中：
+\begin{itemize}
+  \item 第一个双射来自层化的定义；
+  \item 第二个双射是命题 \ref{prop:3.3.9} 中的双射；
+  \item 最后一个双射来自全忠实嵌入 $\Shv(X',\Set)\subseteq\PShv(X',\Set)$。
+\end{itemize}
+\end{construction}
+
+\begin{corollary}\label{cor:3.4.2}
+设 $f\colon X\to X'$ 是拓扑空间之间的连续映射。函子
+\[
+f^{-1}\colon\Shv(X',\Set)\to\Shv(X,\Set)
+\]
+典范左伴随于
+\[
+f_*\colon\Shv(X,\Set)\to\Shv(X',\Set).
+\]
+\end{corollary}
+
+% ---------------------------------------------------------------- p.25
+\begin{corollary}\label{cor:3.4.3}
+对连续映射 $X\xrightarrow{\ f\ }Y\xrightarrow{\ g\ }Z$，有典范自然同构 $(g\circ f)^{-1}\simeq f^{-1}\circ g^{-1}$。
+\end{corollary}
+
+\begin{corollary}\label{cor:3.4.4}
+设 $f\colon X\to X'$ 是连续映射，$x\in X$ 是点。记 $x':=f(x)$。则对任意层 $F'\in\Shv(X',\Set)$，有典范同构
+\[
+f^{-1}(F')_x\simeq F'_{x'}.
+\]
+\end{corollary}
+
+\begin{exercise}\label{exc:3.4.5}
+下述图表交换：
+\[
+\begin{tikzcd}[row sep=3.2em,column sep=4em]
+\PShv(X',\Set) \arrow[r,"f_{\PShv}^{-1}"] \arrow[d,"(-)^{\sharp}"'] & \PShv(X,\Set) \arrow[d,"(-)^{\sharp}"] \\
+\Shv(X',\Set) \arrow[r,"f^{-1}"'] & \Shv(X,\Set).
+\end{tikzcd}
+\]
+\end{exercise}
+
+\begin{exercise}\label{exc:3.4.6}
+证明：$f^{-1}$ 把常层送到与同一集合关联的常层。
+\end{exercise}
+
+\begin{example}\label{ex:3.4.7}
+设 $X$ 是拓扑空间，$x$ 是点。记 $i\colon\{x\}\to X$ 为嵌入映射。对 $F\in\Shv(X,\Set)$ 有
+\[
+i^{-1}(F)\simeq F_x,
+\]
+其中右端滥用记号，把 $\{x\}$ 上的层与其整体截面之集等同（见例 \ref{ex:1.2.6}）。
+\end{example}
+
+\begin{remark}\label{rem:3.4.8}
+设 $\mathcal C$ 是容许小极限与滤过余极限的范畴。可用同一公式对 $\mathcal C$-值层定义函子 $f^{-1}$，且 $f^{-1}$ 典范左伴随于 $f_*$。
+\end{remark}
+
+\subsection{开基变换}\label{sec:3.5}
+
+\begin{construction}\label{con:3.5.1}
+给定拓扑空间的交换方块
+\begin{equation}\tag{3.6}\label{eq:3.6}
+\begin{tikzcd}[row sep=2.8em,column sep=3.2em]
+X \arrow[r,"f"] \arrow[d,"u"'] & X' \arrow[d,"v"] \\
+Y \arrow[r,"g"'] & Y',
+\end{tikzcd}
+\end{equation}
+考虑典范自然同构 $v_*\circ f_*\simeq g_*\circ u_*$。利用伴随 $(g_{\PShv}^{-1},g_*)$ 与 $(f_{\PShv}^{-1},f_*)$，得到自然变换
+\[
+g_{\PShv}^{-1}\circ v_*\to g_{\PShv}^{-1}\circ v_*\circ f_*\circ f_{\PShv}^{-1}\simeq g_{\PShv}^{-1}\circ g_*\circ u_*\circ f_{\PShv}^{-1}\to u_*\circ f_{\PShv}^{-1},
+\]
+其中第一个箭头由 $\id\to f_*\circ f_{\PShv}^{-1}$ 诱导（见 \eqref{eq:3.3}），最后一个箭头由 $g_{\PShv}^{-1}\circ g_*\to\id$ 诱导（见 \eqref{eq:3.5}）。
+
+我们称上述复合为与方块 \eqref{eq:3.6} 关联的、预层的\emph{基变换自然变换}。
+
+类似地，有层的基变换自然变换
+\[
+g^{-1}\circ v_*\to u_*\circ f^{-1}.
+\]
+\end{construction}
+
+\begin{yizhu}
+原书脚注把这一名称写作 Bech--Chevalley，通行拼写是 Beck--Chevalley，其中 Beck 指 Jon Beck。nLab 的条目把它列为一般范畴中的条件：当方块是拉回、且相应函子满足适当伴随条件时，该自然变换为同构，此时称方块满足 Beck--Chevalley 条件。
+[来源：nLab \emph{Beck-Chevalley condition}，\url{https://ncatlab.org/nlab/show/Beck-Chevalley+condition}（Last revised 2026-07-08；2026-11-17 访问）。]
+\end{yizhu}
