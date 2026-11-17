@@ -16,6 +16,7 @@
 """
 import csv
 import os
+import io
 import re
 import subprocess
 import sys
@@ -38,6 +39,24 @@ POLICY_FILES = {"COMPLIANCE.md", "LICENSE", "AUDIT_2026-11-15.md",
                 "tools/build_release_register.py"}
 # 自撰交付物（讲义、读书笔记），非第三方底本成品
 ALLOW_PDF = re.compile(r"^papers/[^/]+/deliverables/")
+
+
+def repo_public_projects():
+    """台账里 成品在仓=是 且 成品级别=随仓公开 的工程目录集合。
+
+    R3 的红线针对「在版图书底本的译文成品」；底本为公开课程讲义/开放许可材料时，
+    只要在 RELEASE_REGISTER.csv 登记为随仓公开，成品 PDF 即随仓发布。
+    """
+    import csv as _csv
+    try:
+        rows = list(_csv.DictReader(io.open("RELEASE_REGISTER.csv", encoding="utf-8-sig")))
+    except OSError:
+        return set()
+    return {
+        r.get("工程目录", "").replace("\\", "/")
+        for r in rows
+        if (r.get("成品在仓") or "").strip() == "是" and (r.get("成品级别") or "").strip() == "随仓公开"
+    }
 
 violations = []
 warnings = []
@@ -71,7 +90,13 @@ def read_bytes(rel, limit=None):
         return b""
 
 
+PUBLIC_PROJECTS = None
+
+
 def check_paths(files):
+    global PUBLIC_PROJECTS
+    if PUBLIC_PROJECTS is None:
+        PUBLIC_PROJECTS = repo_public_projects()
     for rel in files:
         low = rel.replace("\\", "/")
         parts = low.split("/")
@@ -92,8 +117,10 @@ def check_paths(files):
         if ALLOW_PDF.match(low):
             continue
 
-        # R3：成品 PDF
+        # R3：成品 PDF（台账登记为「随仓公开」的工程放行）
         if ext == ".pdf" and ("成品" in parts[:-1] or "deliverables/成品" in low):
+            if any(low.startswith(p + "/") for p in PUBLIC_PROJECTS):
+                continue
             add("R3", "%s：成品 PDF 不得入库，改用 Release 外链或申请获取" % rel)
             continue
         if ext == ".pdf" and name == "main.pdf":

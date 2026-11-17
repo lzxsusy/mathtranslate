@@ -50,7 +50,7 @@
 |---|---|---|
 | **R1** | 任何**扫描件、影印本、整本原书 PDF**、逐页 PNG、OCR 文本/中间产物，不得进入仓库、历史或 Release | `check_compliance.py` 按路径、文件名、`/Producer`、图像密度扫描 |
 | **R2** | **原文 PDF 一律不随仓、不上 Release、不给直链**；只允许书目信息与 arXiv abs 链接 | 扫描 `_PDF清单.tsv`、站点、README 中的 `原书/*.pdf`、`raw.*/*.pdf` 直链 |
-| **R3** | **在版图书底本的译文成品不公开下载**；arXiv / 开放许可底本才可走 Release 外链 | 以 `RELEASE_REGISTER.csv` 的 `成品级别` 为准 |
+| **R3** | **在版图书底本的译文成品不公开下载**；arXiv / 开放许可底本才可走 Release 外链。底本为**公开课程讲义/未出版材料**时，可在台账登记 `成品级别=随仓公开`、`成品在仓=是`，成品 PDF 随仓发布（SY07-09 先例） | 以 `RELEASE_REGISTER.csv` 的 `成品级别` 与 `成品在仓` 为准，`check_compliance.py` 逐工程读取台账后放行 |
 | **R4** | 译文、译注、语料**不得标 CC BY 4.0，不得写"欢迎商用"**；统一"保留权利 + 非商业研读 + 48 小时撤下" | 全文检索越权表述（见 §5） |
 | **R5** | 每部工程必须先登记 `RELEASE_REGISTER.csv`，标明底本类型与发布级别 | `check_compliance.py` 检查台账覆盖 96 部工程 |
 | **R6** | 提交前必须通过 `tools/check_compliance.py`；本地钩子 `.githooks/pre-commit` 默认拦截 | 钩子 + CI |
