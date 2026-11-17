@@ -2,6 +2,18 @@
 
 > 让散落的数学资料得以保存，让数学术语形成共识。
 
+> **⚠️ 强制前置读本（2026-11-18 起）**
+> 任何人与智能体在做「挑文章 → 精读 → 造语料 → 评数据」之前，**必须先通读**
+> [`MEMORANDUM_01_论证精读与语料生产.md`](MEMORANDUM_01_论证精读与语料生产.md)
+> （网页版：[`site/memo.html`](site/memo.html)，站点首页顶部亦有入口）。
+> 它与任务书、brief、口头指令冲突时**以它为准**；违反其 §8 红线者，本次产出作废并记 incident。
+> 读完请在 `_meta/read_receipts.jsonl` 记一行，或用闸门脚本：
+> `python tools/check_memo_gate.py --role <角色> --record`（没回执不许开工）。
+>
+> **配套任务规程**：AMS《量子场与弦》习题课那条线，读
+> [`PLAYBOOK_02_AMS量子场与弦习题推理链_v1.md`](PLAYBOOK_02_AMS量子场与弦习题推理链_v1.md)
+> （网页版：[`site/playbook-ams.html`](site/playbook-ams.html)）。它是 MEMORANDUM-01 在习题课场景的实例化，只能更严、不能更松。
+
 > **施工标准（硬性）**：本库全部译注工程一律按 [`04_playbook/01_数学文献翻译纪律.md`](04_playbook/01_数学文献翻译纪律.md) **v2.1** 执行——
 > 先通读后落笔（§1.0）、译注必须有来源并可追溯（§2.5）、来源黑名单与语料卫生（§2.5.9）。
 > **每次开工前、每次接手别人的稿、每次交付前都要重读对应章节**；文件库总入口见 [`04_playbook/README.md`](04_playbook/README.md)。

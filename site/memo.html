@@ -1,0 +1,173 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>论证精读与语料生产的科学规程 · 数译</title><link rel="stylesheet" href="./assets/style.css"></head>
+<body>
+<header class="top"><div class="wrap"><div class="brand">
+  <div class="logo">译</div>
+  <div><h1>论证精读与语料生产的科学规程</h1><div class="sub">MEMORANDUM-01 · 强制前置读本 · 数译</div></div>
+  <nav class="meta"><a href="./index.html">← 返回文献库</a><br>2026-11-18</nav>
+</div></div></header>
+<main class="wrap doc">
+<h1>硬性备忘录 01 · 论证精读与语料生产</h1>
+<p><strong>MEMORANDUM-01 ｜ v1.0 ｜ 2026-11-18 ｜ 强制前置读本</strong></p>
+<blockquote><p><strong>适用范围</strong>：本库一切「挑文章 → 精读 → 造语料 → 评数据」的工作，无论执行者是人还是智能体。<br><strong>效力</strong>：与任务书、brief、口头指令、旧习惯冲突时，<strong>以本文件为准</strong>。违反 §8 任一条红线，本次产出作废并登记 incident；连续两次同类违规，该角色停用。<br><strong>读法</strong>：开工前通读 §0–§2；动笔前重读 §3–§5；交付前逐条走 §10 清单。<br><strong>它不替代什么</strong>：不替代《数学文献翻译纪律》v2.x（翻译线），不替代各工程 brief（范围线）。它管的是<strong>判断的质量</strong>。</p></blockquote>
+<hr>
+<h2>§0 三十秒版</h2>
+<p>七条。缺一条，就不算做完。</p>
+<ol><li><strong>结论必须能被第三方用锚点复现。</strong> 不能复现的，叫笔记，不叫结论。</li><li><strong>每条"对"必须配一条"看起来对但错"。</strong> 只收正确样本的数据，训不出判别力。</li><li><strong>难度不是自评的，是测出来的。</strong> 唯一的难度货币是 obligation 失败率。</li><li><strong>生成者不得当裁判，裁判不得看生成过程。</strong> 同一个人格既写又评，分数必然膨胀。</li><li><strong>自报数字一律不采信。</strong> 字数、锚点数、claim 数，一律脚本现算，UTF-8 强制。</li><li><strong>闸门没有产物，就是没执行。</strong> <code>quality_gate: self-assessed</code> 等于未执行。</li><li><strong>改进只能在新文献上认证。</strong> 在原文献上重评，是把同一张卷子做第二遍。</li></ol>
+<hr>
+<h2>§1 第一性原理：我们到底在造什么</h2>
+<h3>1.1 不是语料，是"判断的轨迹"</h3>
+<p>数学文本从来不缺。arXiv 每天都在长，Mathlib 有上百万条机器可查的证明。缺的是：</p>
+<ul><li>作者<strong>跳过的那一步</strong>——他为什么觉得显然，补上它需要什么；</li><li>一个论证<strong>为什么妙</strong>——它把哪个障碍绕过去了，绕法能不能搬到别处；</li><li>一条<strong>错误路径怎么被修回来</strong>——错在哪、谁发现的、改了什么；</li><li>同一个命题<strong>换一套记号/范畴还成不成立</strong>。</li></ul>
+<p>2026 年的数据工作反复证明这一点。<code>AgenticCommons/formal-math-autoformalization</code> 的说明写得很直白：Mathlib 有几百万条证明，<strong>稀缺的不是证明，是自然语言与形式化之间的配对</strong>（<a href="https://huggingface.co/datasets/AgenticCommons/formal-math-autoformalization">数据集说明</a>）。QuantumQA 的工作顺序更值得抄：先做量子执行套件 SES 作为验证器，再堆 92,749 条样本，于是一个 8B 模型在量子专项推理上超过了 GPT-5（<a href="https://aclanthology.org/2026.acl-long.1423/">ACL 2026</a>）。<strong>先有验证工具，再有数据规模</strong>——顺序反了，数据就只是文本。</p>
+<h3>1.2 三条推论</h3>
+<p><strong>推论一：可验证性优先于正确性声明。</strong><br>"这条是对的"没有信息量；"这条能被 Lean 编译/能被 sympy 重放/能被第二个独立的人用锚点复算"才有。所以每条数据必须带 <code>how_verified</code>，而不是只带 <code>status: checked</code>。</p>
+<p><strong>推论二：过程信号优先于结果信号。</strong><br>SPARE 证明了步骤标注是 PRM 的真正瓶颈，单次结构化生成可以同时做步骤对齐与正确性判断，比 MCTS 快 2.3 倍、只需 16% 的训练样本就能 OOD 泛化（<a href="https://arxiv.org/abs/2506.15498">AAAI 2026</a>）。ScalePRM 进一步证明：没有 ground truth 也能造 step-level 标签，靠多次独立验证聚合（<a href="https://aclanthology.org/2026.emnlp-main.1452/">ACL 2026</a>）。<strong>"结论 + 一段解释"是最低价值形态；"状态 → 步 → 理由 → 反事实"才是可训练形态。</strong></p>
+<p><strong>推论三：领域验证器优先于领域数据量。</strong><br>同一条判据也解释了为什么"再收十万条中文数学段落"没有意义，而"把 2,000 条段落跑成难度分层 + 错误变体"有意义。</p>
+<h3>1.3 一个反直觉的结论：算力受限时，模型要做小</h3>
+<p>如果目标是提高智能而不是刷榜，推理成本比训练成本更致命。所以资源受限下的正确配方是：</p>
+<blockquote><p><strong>模型做小、数据做精、训练做久、外挂记忆。</strong></p></blockquote>
+<p>这不是省钱技巧，是能力结构的选择：小模型 + 高质量过程数据，可以在特定推理域逼近大模型；而大模型 + 脏数据，只会在 benchmark 上虚胖。腾讯 Hy4 flash（224B 总参、每 token 激活 12B、KV cache 降到 1/24）和 DeepSeek V4.1 Flash（prefill 8B / decode 16B，论文承认实质变化全在数据流水线）都在往这个方向走。</p>
+<h3>1.4 "高热数据"的正式定义</h3>
+<p>本库说的"高热"，不是"重要"，不是"难"，而是：</p>
+<pre><code>热度 ≈ p(1 − p) × 可迁移性 / 标注成本</code></pre>
+<p>其中 <code>p</code> 是模型在该单元上的 obligation 失败率。<code>p=0</code> 的数据模型已经会了，<code>p=1</code> 的数据模型完全够不着——两者都不热。<strong>最热的是 30%–70% 那一段</strong>，也就是"差一点就能做对"的地方。这条定义贯穿 §5。</p>
+<hr>
+<h2>§2 证据等级：把"对"拆成七级</h2>
+<p>任何 claim 必须标一个等级。<strong>不标等级 = 未完成。</strong></p>
+<table><thead><tr><th>级</th><th>名称</th><th>定义</th><th>典型例子</th><th>能否进"结论"</th></tr></thead><tbody><tr><td><strong>T0</strong></td><td>已证</td><td>文内有完整证明，且可被独立复算</td><td>BPS 质量公式 <code>M=√2|Z|</code>（给定电荷）</td><td>能</td></tr><tr><td><strong>T1</strong></td><td>引用定理</td><td>依赖外部定理，标注出处且未曲解</td><td><code>Γ(2)</code> 由 <code>M∞,M₁</code> 生成（引 Clemens）</td><td>能，但须注明依赖</td></tr><tr><td><strong>T2</strong></td><td>构造 + 验证</td><td>猜出来，再用多重一致性检验钉住</td><td>SW 曲线 <code>y²=(x²−1)(x−u)</code> 与 <code>λ</code></td><td>能，但须写"构造"，不能写"推出"</td></tr><tr><td><strong>T3</strong></td><td>明确假设</td><td>原文写明 assumption / ansatz</td><td>"恰好两个有限奇点"（p24/p28）、<code>du≠0</code>（p34）</td><td><strong>不能</strong>，只能进"边界"</td></tr><tr><td><strong>T4</strong></td><td>一致性论证</td><td>物理动机、半经典图像、自洽检验</td><td>磁单极凝聚 → 电禁闭（软破缺后）</td><td><strong>不能</strong>，须标"半经典"</td></tr><tr><td><strong>T5</strong></td><td>条件性排除</td><td>结论成立依赖未证判据</td><td>p42 实轴走廊（依赖四维跳变判据）</td><td><strong>不能</strong>，须列出依赖项</td></tr><tr><td><strong>T6</strong></td><td>proof-gap / 叙事</td><td>只有 sketch、类比、"可以证明"</td><td>p38 唯一性；"Riemann–Hilbert"式诠释</td><td><strong>不能</strong>，只能进"待办"</td></tr></tbody></table>
+<p>三条用法：</p>
+<ul><li><strong>降级必须写理由。</strong> 把 T3 写成 T0 是本库最常见、也最伤可信度的错误。</li><li><strong>一篇好论文的 T0 占比通常不到 30%。</strong> 这不是论文弱，是数学的常态。为了报告好看而抬级，等于自毁。</li><li><strong>T5/T6 不是"没价值"，是"要标清楚边界"。</strong> 读者最需要的往往正是"这里到底证没证"。</li></ul>
+<blockquote><p>本库实证：SEM-9407087 把 p42 从"已证的必要性排除"降到"条件性排除"，把唯一性从"定理"降到"proof-gap"，整份报告的可信度反而上升——因为读者终于知道哪里能踩、哪里会塌。</p></blockquote>
+<hr>
+<h2>§3 精读协议：三席、三轮、三题</h2>
+<h3>3.1 三席：都读全文，不许分章</h3>
+<table><thead><tr><th>席</th><th>职责</th><th>必须交的东西</th></tr></thead><tbody><tr><td><strong>结构席</strong></td><td>论证链：问题 → 策略 → 每个节点依赖什么 → 推出什么</td><td>一条带页码的论证链；标出哪几步是严格证明、哪几步是一致性论证</td></tr><tr><td><strong>计算席</strong></td><td>公式与计算：自己重推，不看别人的核对表</td><td>≥6 条公式核对（公式号、页、结果：对/错/文字层坏/需页图）</td></tr><tr><td><strong>文本席</strong></td><td>证据与批判：摘要的大 claim 正文是否真证了；有没有循环、缺口、未证假设</td><td>每条大 claim 的 T 级；≥5 个可攻击点；与后续文献的连接</td></tr></tbody></table>
+<p><strong>为什么必须都读全文</strong>：只读自己那一章的人，发现不了跨章的错误。本库实证：r01 把 (5.21) 的根号套在乘积上，只有独立通读并复算的 r02 抓到了；r03 初判 M7/M12 过严，是在重读备忘全文后自我更正的。</p>
+<h3>3.2 三轮：独立 → 质询 → 圆桌</h3>
+<p><strong>第一轮：独立报告，物理隔离。</strong><br>禁止互看、禁止共享草稿、禁止"参考一下别人怎么写"。每人 3,000–5,000 字，末尾一张 claims 表。</p>
+<p><strong>第二轮：交叉质询，只打锚点。</strong><br>A 对 B 的质询，只能针对<strong>B 自己写下的 claim 与它自己引的页码/公式</strong>。不许泛泛评论"论证不够严谨"。九份质询（3×3 去掉自质询）是标准配置。</p>
+<p><strong>第三轮：圆桌三题，只裁三题。</strong><br>Chair 从所有分歧里挑出<strong>三个</strong>最要命的，逐题要三方立场 + 反驳 + 裁决。题多了必然分散——本库教训：圆桌裁太多题，焦点涣散，等于没裁。</p>
+<h3>3.3 质询的五段式（格式硬约束）</h3>
+<pre><code>## Qn（一句话标题）
+- 目标：&lt;被质询的 claim id + 原句&gt;
+- 原文锚点：[src p.N] / [eq x.y]，并引原文那一句
+- 为什么可疑：&lt;具体到代数、符号、逻辑步骤；能当场复算的写复算过程&gt;
+- 替代说法：&lt;你认为正确的版本&gt;
+- 怎么检验：&lt;读者按什么步骤能自己确认谁对&gt;</code></pre>
+<p>缺任何一段，质询无效。</p>
+<h3>3.4 裁决必须写"改判条件"</h3>
+<p>裁决的含金量不在结论，在<strong>"什么证据能让我改判"</strong>。这句话逼裁决者把立场暴露成可检验的。示例：</p>
+<blockquote><p>"若能证明纯 SU(2) 的真实边缘稳定墙在实轴 |u|&gt;1 段被穿过，或 u=±1 处存在非 BPS 的无质量多重态，则我改判为只证的弱版本。"</p></blockquote>
+<p>没有改判条件的裁决，视为表态，不计分。</p>
+<h3>3.5 禁止清单（出现即返工）</h3>
+<ol><li>互相夸奖、互相引用以示友好；</li><li>复述摘要/引言当分析；</li><li>无锚点断言；</li><li>"可能不严谨""值得进一步研究"——必须具体到<strong>哪一步、为什么不成立、怎么补</strong>；</li><li>把"我记得/普遍认为"写成"作者证明"；</li><li>把译本、OCR 文字层当原文（页图才是原文）；</li><li>用"作者显然知道"替作者补证明，却不标 <code>[inference]</code>。</li></ol>
+<hr>
+<h2>§4 数据协议：一个 unit 的解剖</h2>
+<h3>4.1 Schema（八字段，缺一不入库）</h3>
+<pre><code class="language-json">{
+  &quot;id&quot;: &quot;SY05-25.u001&quot;,
+  &quot;state&quot;: &quot;问题状态：已知什么、要求什么、卡在哪&quot;,
+  &quot;steps&quot;: [
+    {&quot;assertion&quot;: &quot;这一步断言什么&quot;,
+     &quot;warrant&quot;: &quot;凭什么成立（定理/计算/定义展开/类比）&quot;,
+     &quot;depends_on&quot;: [&quot;u000&quot;, &quot;eq 2.3&quot;],
+     &quot;t_level&quot;: &quot;T0|T1|T2|T3|T4|T5|T6&quot;}
+  ],
+  &quot;gap&quot;: {
+    &quot;where&quot;: &quot;作者跳过的是哪一步&quot;,
+    &quot;why_skipped&quot;: &quot;为什么他觉得显然（记号？旧结果？领域常识？）&quot;,
+    &quot;fill&quot;: &quot;补出来的完整论证&quot;,
+    &quot;how_verified&quot;: &quot;Lean 编译 / sympy 重放 / 第二人用锚点复算 / 交叉审一致&quot;
+  },
+  &quot;counterfactual&quot;: {
+    &quot;which_step&quot;: &quot;如果哪一步不成立&quot;,
+    &quot;what_breaks&quot;: &quot;具体哪个结论会崩，崩成什么样&quot;
+  },
+  &quot;variants&quot;: [
+    {&quot;wrong&quot;: &quot;看起来对但错的版本&quot;, &quot;error_type&quot;: &quot;符号|指标|交换极限|充分当必要|悄悄放松条件&quot;, &quot;why_tempting&quot;: &quot;为什么容易上当&quot;}
+  ],
+  &quot;anchors&quot;: [&quot;[src p.27]&quot;, &quot;[eq 5.21]&quot;],
+  &quot;difficulty&quot;: {&quot;obligation_fail_rate&quot;: 0.55, &quot;signals&quot;: [&quot;jump&quot;, &quot;load-bearing&quot;]},
+  &quot;rights&quot;: &quot;self|arxiv|book|rewritten&quot;
+}</code></pre>
+<h3>4.2 六条硬规矩</h3>
+<ul><li><strong>4.2.1 无锚点不入库。</strong> 锚点必须可解析到具体页/式，且该页确实支持这条断言。</li><li><strong>4.2.2 无 quote 不成边。</strong> 推理边必须带 <code>evidence.quote</code>（原文原句），不许转述。</li><li><strong>4.2.3 无 <code>how_verified</code> 的 gap 只是猜测。</strong> 标 <code>status: draft</code>，不许进 <code>train</code>。</li><li><strong>4.2.4 每条正确数据配 ≥1 条错误变体。</strong> 错误变体五类：符号/指标、极限交换、充分当必要、条件悄悄放松、构造对象错。变体同时是训练数据和评测题。</li><li><strong>4.2.5 反事实必须具体。</strong> "如果这一步不成立"不行，要写"如果 (6.16) 的 ansatz 不成立，则 τ=b₁/b₂ 与 f 无关这一步失效，整条曲线周期比路线塌掉"。</li><li><strong>4.2.6 权利分层不混。</strong> <code>self</code> 可公开；<code>arxiv</code> 限非商业研读；<code>book</code> 只进 <code>_internal/</code>，永不发布。混层即合规事故。</li></ul>
+<h3>4.3 三个"可训练性"判据（新增，重要）</h3>
+<p>一条数据够不够格进训练集，问三句：</p>
+<ol><li><strong>能被 8B 模型在 ≤5 个 in-context 例子里学会吗？</strong> 学不会，说明它需要太多前置知识，是"阅读材料"不是"训练数据"。</li><li><strong>能构造出让 32B 模型稳定答错的对抗题吗？</strong> 构造不出，说明它太简单。</li><li><strong>模型错了之后，能指出具体哪一步吗？</strong> 指不出，说明它没有过程信号，只是答案。</li></ol>
+<p>三问全过 → <code>train</code>；过两问 → <code>dev</code>；一问不过 → <code>reading</code>。<strong>本库当前绝大多数数据应标 <code>reading</code> 或 <code>dev</code>，这是诚实的，不是丢人的。</strong></p>
+<hr>
+<h2>§5 难度经济学：唯一的难度货币</h2>
+<h3>5.1 Obligation 测试（标准操作）</h3>
+<p>对每个候选单元：</p>
+<ol><li>挖掉结论或关键中间步，把前文交给模型；</li><li>让它补，连续 <code>k = 5–8</code> 次，记录失败次数；</li><li>失败率 <code>p = 失败次数 / k</code>。</li></ol>
+<p>这就是该单元的难度分。<strong>不用问模型"这题难不难"</strong>——模型的自我难度评估与真实失败率相关性很低，本库 <code>playbook/08</code> 已经把"LLM 自评难度"列为反例。</p>
+<h3>5.2 分层处置</h3>
+<table><thead><tr><th>p</th><th>处置</th><th>理由</th></tr></thead><tbody><tr><td>&lt; 10%</td><td>跳过</td><td>模型已会，标了也不增加信息</td></tr><tr><td>10–30%</td><td>进"巩固集"</td><td>有用，但边际收益低</td></tr><tr><td><strong>30–70%</strong></td><td><strong>进"核心候选"</strong></td><td>最近发展区，热度最高</td></tr><tr><td>70–90%</td><td>进"挑战集"，人判</td><td>可能是真难，可能是表述坏</td></tr><tr><td>&gt; 90%</td><td>先查表述/前置</td><td>大概率不是难度问题，是题目坏了</td></tr></tbody></table>
+<h3>5.3 成本</h3>
+<p>49,000 段 × 8 次补全 ≈ 39 万次调用。按小模型价格算是几十美元量级，比人读一遍便宜两到三个数量级。<strong>这就是"机器能判的不许人看"的算术基础。</strong></p>
+<h3>5.4 反例（本库真实教训）</h3>
+<ul><li>让报告人自己报 locator 数：自检 89、实算 94；自检 228、实算 132。<strong>自报不可信。</strong></li><li>用 <code>Get-Content</code>（默认 ANSI）读 UTF-8：字数虚高 1.7×（8,705 vs 5,013）。<strong>编码不锁，所有数字作废。</strong></li><li>locator 命中率 93.3% 的稿子，仍可能有 15 个公式符号结构错。<strong>锚点命中与公式正确是两条检查线，不能互相替代。</strong></li></ul>
+<hr>
+<h2>§6 多智能体：数量不是变量，独立性才是</h2>
+<h3>6.1 实证结论</h3>
+<p>本库跑过两版：</p>
+<table><thead><tr><th>版本</th><th>组织方式</th><th>结果</th></tr></thead><tbody><tr><td>v1</td><td>12 人并行，每人一节，互不干扰</td><td>无讨论、无质询、无 diff，"八个自说自话"</td></tr><tr><td>v2</td><td>全员通读 → 逐节轮值报告 → 三席质询 → 修订 → 复算</td><td>前三轮所有实质错误都在质询环节被抓出</td></tr></tbody></table>
+<p><strong>结论：讨论的价值不在"讲一遍"，而在"有人拿着原文找你的错"。</strong> 串行 + 三席质询比并行各写各的强一个量级。</p>
+<h3>6.2 三种正确的规模化</h3>
+<ul><li><strong>纵深</strong>：同一个 unit 交给 N 个独立复算者。N=3 足够覆盖大多数错误；N=10 收益递减，因为错误有相关性。</li><li><strong>广度</strong>：N 篇不同文献并行。<strong>这是最容易吃到规模效应的方向</strong>——彼此不共享上下文，互不污染。</li><li><strong>对抗</strong>：生成者与判别者分离，红蓝对抗。判别者只看输出与锚点，不看生成过程。</li></ul>
+<h3>6.3 反模式（占一条就是浪费）</h3>
+<ol><li><strong>N 个 agent 同时写同一篇</strong>——会趋同、互相抄、评分膨胀。</li><li><strong>共享上下文的多角色</strong>——角色会退化成同一个声音。</li><li><strong>用 agent 数量当质量指标</strong>——101 个 agent 并行写同一篇，产出的不是 101 份独立判断，是一份判断的 101 个回声。</li><li><strong>让写的人顺便打分</strong>——自己给自己判卷，没有例外。</li></ol>
+<h3>6.4 角色分离硬规则</h3>
+<ul><li>证据官（数锚点、验页码）≠ 复算员（重推公式）≠ 质询者（找茬）≠ 裁决者（拍板）。</li><li>生成者不得给自己打分；裁决者不得参与生成。</li><li><strong>0 产物的角色 = <code>ROLE_ABSENT</code> incident。</strong> 不是"他没意见"，是"他没干活"。</li></ul>
+<h3>6.5 成本基线</h3>
+<p>一场 45 页论文的完整研讨：3 席 × 3 轮 + 9 份质询 + 3 份回应 + 圆桌 ≈ <strong>20–30 次运行</strong>。超过 40 次同步写同一篇，是浪费；低于 10 次，是没跑完。</p>
+<hr>
+<h2>§7 门禁：self-assessed 不算执行</h2>
+<p>每个 gate 必须有<strong>机器可读的产物文件</strong>。没有文件 = 没执行。<code>status: completed</code> 只能由 <code>gate_report.json</code> 推导，不许手填。</p>
+<table><thead><tr><th>闸</th><th>名称</th><th>必须产物</th><th>通过条件</th><th>失败模式</th></tr></thead><tbody><tr><td><strong>G0</strong></td><td>立项</td><td><code>brief.md</code> + <code>seminar.yaml</code></td><td>有产品定义、读者、禁区、验收标准</td><td>写着"像古人注疏"这种没法验收的话</td></tr><tr><td><strong>G1</strong></td><td>通读</td><td><code>疑点清单.tsv</code></td><td>未解项 = 0</td><td>疑点还在，就开始写结论</td></tr><tr><td><strong>G2</strong></td><td>锚点</td><td><code>claims.jsonl</code></td><td>每条 claim 有可解析锚点，可解析率 100%</td><td>锚点指向的页不支持该 claim</td></tr><tr><td><strong>G3</strong></td><td>复算</td><td><code>recalc.md</code></td><td>≥6 条公式，逐条页图核对并留痕</td><td>只核"报告里出现的公式"，被选择性呈现框住</td></tr><tr><td><strong>G4</strong></td><td>质询</td><td><code>challenges/*.md</code> + <code>responses</code></td><td>每席 ≥5 条；accept/partial/reject 齐全</td><td>质询变成互相夸奖</td></tr><tr><td><strong>G5</strong></td><td>裁决</td><td><code>transcript.md</code></td><td>三题，每题有立场 + 反驳 + 裁决 + 改判条件</td><td>裁了十题，一题没裁透</td></tr><tr><td><strong>G6</strong></td><td>综合</td><td><code>merged.jsonl</code></td><td>UTF-8；schema 合法；每条带 upstream id</td><td>乱码、越界枚举、综合层丢上游</td></tr><tr><td><strong>G7</strong></td><td>数据</td><td><code>corpus/*.jsonl</code></td><td>lint 0 error；配额齐；无锚点 = 0</td><td>配额凑数，全是同一种类型</td></tr><tr><td><strong>G8</strong></td><td>认证</td><td><code>heldout_report.md</code></td><td>在新文献上跑通，指标不降</td><td>在原文献上重评，声称"改进"</td></tr></tbody></table>
+<p>补充三条：</p>
+<ul><li><strong>G1–G8 的定义只许有一套。</strong> 三套互相冲突的定义 = 三套都不执行。</li><li><strong>每个 gate 的产物必须能被一个脚本检查</strong>，检查脚本本身入库。</li><li><strong>闸门失败要留证据</strong>，不许改状态绕过。</li></ul>
+<hr>
+<h2>§8 红线十条</h2>
+<p>违反任一条，本次产出作废，登记 <code>incident.jsonl</code>。</p>
+<ol><li><strong>编造锚点、页码、定理、引理、参考文献编号。</strong></li><li><strong>把译本、OCR 文字层、笔记当原文。</strong> 公式与符号一律以页图为准。</li><li><strong>用 LLM 自评难度当难度分。</strong> 难度只能来自 obligation 失败率或人工抽检校准。</li><li><strong>生成者自评、自审、自裁。</strong></li><li><strong>无 <code>quote</code> 建推理边</strong>，或用转述冒充原文。</li><li><strong>把过程稿、初稿、已撤回的 claim 当结论。</strong></li><li><strong>自报数字不核算。</strong> 字数、锚点数、claim 数必须脚本现算，UTF-8 强制。</li><li><strong>把 locator 命中当公式正确。</strong> 两条检查线必须分开跑。</li><li><strong>未过闸门就标 <code>completed</code> / <code>quality_gate: self-assessed</code>。</strong></li><li><strong>用"可能不严谨""值得进一步研究"代替具体攻击点。</strong></li></ol>
+<p>另有一条软红线，但同样计分：</p>
+<ol><li><strong>用 agent 数量当质量指标。</strong> 规模化的正确维度是独立性与对抗性，不是并发数。</li></ol>
+<hr>
+<h2>§9 质量度量：四个数 + 一个 κ</h2>
+<table><thead><tr><th>指标</th><th>口径</th><th>现状</th><th>目标</th></tr></thead><tbody><tr><td><code>anchor_hit_rate</code></td><td>抽核中页码与内容都对的比例</td><td>88.4%（382/432）</td><td>≥ 95%</td></tr><tr><td><code>formula_escape_rate</code></td><td>每万字未被抓出的硬错误数</td><td>未系统统计（U08 抽 27 式错 15）</td><td>≤ 0.5</td></tr><tr><td><code>obligation_coverage</code></td><td>打过难度分的段落占比</td><td>0</td><td>100%</td></tr><tr><td><code>holdout_delta</code></td><td>新文献上的通过率变化</td><td>无</td><td>&gt; 0 且可复现</td></tr><tr><td><code>κ</code></td><td>人机难度判定一致度</td><td>无</td><td>≥ 0.6 才扩量</td></tr></tbody></table>
+<p><strong>预注册规则</strong>：任何"这批数据有用"的主张，必须先写下"什么结果会推翻它"，再跑实验。跑完再找解释，等于没做实验。</p>
+<hr>
+<h2>§10 开工前 12 问 / 交付前 12 检</h2>
+<h3>开工前（12 问）</h3>
+<ol><li>这次的产品形态是什么？20–35 页读书笔记？unit 集？bench？<strong>写不出来的，先别开工。</strong></li><li>读者是谁？没读过原文的学生，还是同行？</li><li>有没有 <code>brief.md</code> 写明范围、禁区、验收？</li><li>原文的页图在哪？文字层能不能用？（默认：不能，只用于定位）</li><li>译本算不算"标准答案"？（默认：不算，它是第四份待核验输入）</li><li>三席怎么分？每席的必交产物是什么？</li><li>谁当证据官、谁当复算员、谁当裁决者？<strong>三者不能是同一人格。</strong></li><li>这一轮要裁的三题是哪三题？</li><li>难度怎么测？obligation 的 k 取多少？</li><li>错误变体从哪来？谁筛？</li><li>权利分层是哪一层？能不能公开发？</li><li>这次要验证的假设是什么？<strong>什么结果会推翻它？</strong></li></ol>
+<h3>交付前（12 检）</h3>
+<ol><li>每条 claim 有锚点吗？锚点指向的页真的支持它吗？</li><li>每个 gap 有 <code>how_verified</code> 吗？</li><li>每条正确数据有错误变体吗？</li><li>反事实具体到"哪一步、崩成什么"了吗？</li><li>质询有没有变成互相夸奖？</li><li>裁决有没有"改判条件"？</li><li>综合层是 UTF-8 吗？能回到上游 claim 吗？</li><li>自报数字重新算过吗？</li><li>公式都回页图核对过吗（不是只核 locator）？</li><li>有没有角色 0 产物？</li><li><code>gate_report.json</code> 齐吗？<code>status</code> 是从它推导的吗？</li><li>这次产出里，哪一条最可能被下一个读者打脸？<strong>先自己打一遍。</strong></li></ol>
+<hr>
+<h2>§11 资源受限的四条转移原则</h2>
+<p>（承 <code>04_playbook/11_资源受限路线_v1.md</code>，此处加两条）</p>
+<ol><li><strong>判断贵，token 便宜。</strong> 把人的判断压到最少的决策点上；其余全部机器做。</li><li><strong>重复即税。</strong> 同一个动作第二次出现，必须变成资产（脚本/模板/schema/检查器）。</li><li><strong>机器能判的不许人看。</strong> 字数、锚点数、schema、编码、公式符号一致性，全部脚本化。</li><li><strong>失败要便宜。</strong> 允许大量廉价失败，禁止昂贵的一次性完美。</li><li><strong>（新增）读者只读一次。</strong> 一页纸必须能独立成立；不能要求读者先读三份前置文档才看懂。</li><li><strong>（新增）第二次跑之前必须脚本化。</strong> "这次先手工"是本库最大的返工来源。</li></ol>
+<hr>
+<h2>§12 违规、复盘与版本</h2>
+<ul><li><strong>incident</strong>：每次红线记一条 <code>{"id","date","role","redline","evidence","fix","status"}</code>，进 <code>_meta/incidents.jsonl</code>。</li><li><strong>lesson</strong>：每条复盘必须带 <code>patch</code>（改了什么）+ <code>metric</code>（怎么知道改好了）。只写"下次注意"的，不算。</li><li><strong>版本</strong>：本文件改动须写 changelog；旧版归档，不覆盖。</li><li><strong>复审</strong>：每季度删掉一条<strong>没有证据支持</strong>的条款。规则只增不减，最后一定变成没人读的经文。</li></ul>
+<hr>
+<h2>附录 A · 判定语言（术语表）</h2>
+<table><thead><tr><th>词</th><th>在本文件里的意思</th></tr></thead><tbody><tr><td>锚点</td><td>能指向具体 PDF 页或公式号的证据坐标，格式 <code>[src p.N]</code> / <code>[eq x.y]</code></td></tr><tr><td>可解析</td><td>锚点指向的位置确实存在，且原文那一句支持该断言</td></tr><tr><td>gap</td><td>作者跳过、但补上才完整的论证步</td></tr><tr><td>obligation</td><td>挖掉结论/关键步让模型补的测试</td></tr><tr><td>变体</td><td>与正确版本接近、但含一处实质错误的样本</td></tr><tr><td>反事实</td><td>若某一步不成立，哪些结论会崩</td></tr><tr><td>高热</td><td><code>p(1−p)</code> 高，即处于能力边缘、且错误可定位可迁移</td></tr><tr><td>独立</td><td>不共享上下文、不共享草稿、不共享结论</td></tr><tr><td>认证</td><td>在新文献上跑通，而不是在原文献上重评</td></tr></tbody></table>
+<h2>附录 B · 本库实证（自证案例）</h2>
+<p><strong>SEM-9407087（Seiberg–Witten, hep-th/9407087，45 页）</strong></p>
+<ul><li>3 席通读，独立报告 5,013 / 3,674 / 4,997 汉字，19 / 26 / 33 条 claims。</li><li>30 条交叉质询，20 accept / 9 partial / 1 reject。</li><li>抓出 4 处硬错误：(5.21) 根号套错、<code>map.yaml</code> figures 误标 0、<code>core.md</code> 文献误标、(6.6) cusp 映射错。</li><li>补出 1 个引理：C 去有限点上的单值正调和函数必为常数——把用户备忘 M5 从"理由错"升级为"结论是定理"。</li><li>工程层失败：<code>argument_graph.json</code>、<code>coverage.csv</code>、<code>page_map.tsv</code>、<code>build/</code>、<code>copyright_report.md</code>、<code>validate.py</code> 六件产物全部缺失；<code>quality_gate: self-assessed</code> 从未执行；<code>merged.jsonl</code> 全乱码。</li></ul>
+<p><strong>SEM-0604151（Kapustin–Witten 解经本，219 页）</strong></p>
+<ul><li>v1.2 勘误：(3.52) 共轭位置写反，书中 5 处改正。</li><li>v1.3 勘误：§10.5 扩展 Bogomolny 方程丢横线，顺藤摸出 §4.2、§10.5、§12.3 共 5 文件 8 式。</li></ul>
+<p><strong>SEM-GL2（第二期，八轮）</strong></p>
+<ul><li>终稿 100,521 汉字（初稿 80,727），2,035 个 locator，122 条质询，272 对修订 diff。</li><li>语料 112 条 / 37,484 汉字，7 类配额（RSN/CHL/CPT/MIS/QCD/MET/CRW），444 条证据。</li><li>抓出已发布解经本 6 处实质错误。</li><li>诚实边界：锚点抽核命中 88.4%，覆盖率约 25%；无人类认证，全部只能标 <code>dev</code>。</li></ul>
+<p><strong>三份产物共同的教训</strong>：内容层是真的，工程层是空的；错误是质询抓出来的，不是写作时避免的；最值钱的不是报告，是"错 → 发现 → 改"的三元组。</p>
+<h2>附录 C · 外部证据（2026）</h2>
+<ul><li>CODER / Math-Core-700：700 条难度分层 CoT 打平 7,500 条 MATH，优化步数约 1/10。 <a href="https://www.sciencedirect.com/science/article/abs/pii/S0893608026012207">ScienceDirect</a></li><li>QuantumQA：92,749 条量子推理样本 + SES 验证器，8B 模型超 GPT-5。 <a href="https://aclanthology.org/2026.acl-long.1423/">ACL 2026</a></li><li>FormalVerse：约 367K 条验证过的 NL↔Lean 4 对，13-gram 去污染。 <a href="https://arxiv.org/html/2608.14221">arXiv 2608.14221</a></li><li>AgenticCommons formal-math-autoformalization：2,096 条配对；"稀缺的不是证明，是配对"。 <a href="https://huggingface.co/datasets/AgenticCommons/formal-math-autoformalization">数据集</a></li><li>AnnalsChallenge：50 条 Annals 主定理的 Lean 4 陈述，人工审 + AI 审计。 <a href="https://arxiv.org/abs/2610.18301v1">arXiv 2610.18301</a></li><li>SPARE：单次结构化生成做步骤对齐 + 正确性判断，16% 样本即可 OOD 泛化。 <a href="https://arxiv.org/abs/2506.15498">AAAI 2026</a></li><li>ScalePRM：无 ground truth 的 step-level 合成标签。 <a href="https://aclanthology.org/2026.emnlp-main.1452/">ACL 2026</a></li><li>Select2Reason：把自我纠错/回溯作为长 CoT 质量指标。 <a href="https://aclanthology.org/2026.findings-acl.331/">ACL 2026</a></li><li>PhysProver / PhysLeanData：首个物理领域形式化定理证明数据集。 <a href="https://aclanthology.org/2026.findings-emnlp.565/">ACL 2026</a></li><li>FrontierMath Tier 4：研究级数学仍是硬骨头（GPT-5.5 Pro 39.6%，Claude Opus 4.8 31.2%）。 <a href="https://epoch.ai/frontiermath/tiers-1-4">Epoch</a></li><li>CHIMERA：紧凑合成数据解决冷启动。 <a href="https://arxiv.org/abs/2603.00889v2">arXiv 2603.00889</a></li></ul>
+<hr>
+<p><strong>签署</strong>：本备忘录由 Lead 起草，2026-11-18 生效。下一次复审：2027-02-18。<br><strong>第一次读完请在 <code>_meta/read_receipts.jsonl</code> 记一行</strong>：<code>{"role":"...","date":"...","memo":"MEMORANDUM-01","version":"v1.0"}</code>。</p>
+</main>
+<footer><div class="wrap">数译 · 中文数学译注文献库 &nbsp;|&nbsp; 本页为内部方法论文档，可自由转载署名。</div></footer>
+</body></html>

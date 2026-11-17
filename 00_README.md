@@ -12,6 +12,8 @@
 | `06_sessions_raw/` | 全量会话语料（脱敏、zst 压缩） | 118,278 条消息 / 2.61 亿字符 ≈ 1.7 亿 token；工具轨迹 17 万条。145 MB 分片已移到 Release `v1.0.1` 附件，仓库只留抽取脚本与分片说明 |
 | `07_originals/` | 原文获取指引与书目信息（**不含原文 PDF**） | 本库不发布、不托管、不给原文直链；arXiv 原文请到 arXiv 按编号获取，图书请走出版社/图书馆 |
 | `datasets/` | 可训练数据集：`math/`（数学推理条目：命题+证明步骤+缺口+校验）、`parallel/`（原文片段↔译文↔译法理由）、`deepread/`（精读卡）、`highlights/`（高光/难证标注）、`traces/`（事件级工作流）、`kg/`（概念图谱）、`bench/`（held-out 评测） | 规则见 `datasets/README.md`；权利分 `self / arxiv / book` 三层，`book` 派生只进 `datasets/_internal/`，永不发布 |
+| `MEMORANDUM_01_论证精读与语料生产.md` | **强制前置读本**：精读与语料生产的科学规程（七条铁律、七级证据、三席三轮协议、unit 八字段、八道闸门、十条红线） | 任何人/智能体开工前必须通读；与任务书冲突时以它为准；网页版 `site/memo.html` |
+| `PLAYBOOK_02_AMS量子场与弦习题推理链_v1.md` | **任务规程**：AMS《量子场与弦》习题课——角色、L0–L5 提示阶梯、卡点冻结、C1–C8 归因、`exercise.jsonl` schema、每周 90 分钟时间盒 | 只用于习题课线；上游是 MEMORANDUM-01；网页版 `site/playbook-ams.html` |
 
 ## 大体积资产：Release 附件
 
