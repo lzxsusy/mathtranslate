@@ -1,0 +1,68 @@
+---
+id: glc/concept/locsys-on-homotopy-type
+type: concept
+track: G
+---
+
+# 同伦型上的局部系统
+
+> 同伦型 $Y$ 上的局部系统范畴，等价于 $\operatorname{Fun}(Y,\operatorname{Vect})$，从而只依赖 $Y$ 的同伦型。
+
+**问题**：为什么 $\operatorname{LocSys}(Y)$ 不能只由 $\pi_1(Y)$ 决定？
+
+## 定义
+
+令 $Y\in\operatorname{Spc}$ 为一个同伦型；例如，$Y$ 可以是某个拓扑空间的同伦型。定义
+$$\operatorname{LocSys}(Y):=\{Y\text{ 上的局部系统}\}\simeq\operatorname{Fun}(Y,\operatorname{Vect}).$$
+等价地，将 $Y$ 看作 $\infty$-群胚，并采用取值为 $\operatorname{Vect}$ 的常值图表，则
+$$\operatorname{LocSys}(Y)\simeq\lim_Y\operatorname{Vect}\simeq\operatorname{colim}_Y\operatorname{Vect}.$$
+最后一个识别使用 $\operatorname{Vect}$ 作为 DG 范畴的自对偶性。
+
+*记号*：$\operatorname{Spc}$ 为同伦型的 $\infty$-范畴（讲义记号）；$\operatorname{Vect}$ 为 DG 范畴（复向量空间复形）；$\operatorname{Fun}(Y,\operatorname{Vect})$ 为 $Y$ 到 $\operatorname{Vect}$ 的函子范畴。
+
+## 要点
+
+- $\operatorname{LocSys}(Y)$ 依赖 $Y$ 的同伦型，而不只依赖 $\pi_1(Y)$，即使 $Y$ 连通也是如此。
+- 对映射 $f:Y_1\to Y_2$，拉回给出 $f^*:\operatorname{LocSys}(Y_2)\to\operatorname{LocSys}(Y_1)$。
+- 在可呈示情形，$f^*$ 具有伴随，当这些伴随由通常的 Kan 延拓公式定义时分别记作 $f_*$ 与 $f_!$。
+- $f_!$ 即使在拓扑上也已经相当微妙：例如对 $\mathrm{pt}\to S^1$，所得结果对应一个具有无限 Jordan 块的局部系统；因此不能期待所有推前都留在较小的可构造范畴或有限秩范畴内。
+
+## 关键公式
+
+- $$\operatorname{LocSys}(Y):=\{Y\text{ 上的局部系统}\}\simeq\operatorname{Fun}(Y,\operatorname{Vect})$$
+- $$\operatorname{LocSys}(Y)\simeq\lim_Y\operatorname{Vect}\simeq\operatorname{colim}_Y\operatorname{Vect}$$
+- $$f^*:\operatorname{LocSys}(Y_2)\longrightarrow\operatorname{LocSys}(Y_1)$$
+
+## 定理与证明
+
+### 推前 $f_!$ 不保持有限性（要点（有缺口））
+
+对 $\mathrm{pt}\to S^1$，左 Kan 延拓 $f_!$ 的结果对应一个具有无限 Jordan 块的局部系统，因此所有推前并不都留在较小的可构造范畴或有限秩范畴内。
+
+1. 取 $f:\mathrm{pt}\to S^1$ 并考察 $f_!:\operatorname{LocSys}(\mathrm{pt})\to\operatorname{LocSys}(S^1)$。  
+   *为什么*：$\operatorname{LocSys}(\mathrm{pt})=\operatorname{Vect}$，可直接计算。
+2. 把结果识别为带一个无限 Jordan 块的局部系统。  
+   *为什么*：沿 $S^1$ 的单值变换在该例中不可对角化。
+
+> 缺口：讲义只给出该例并陈述结论，未给证明；Jordan 块的具体计算不在本章。
+
+*出处*：注（§12.1，讲义无编号） / 原书 p.60
+
+
+## 易错点
+
+- 不能只记住 $\pi_1$：即使 $Y$ 连通，$\operatorname{LocSys}(Y)$ 仍依赖整个同伦型；用 $\operatorname{Hom}(\pi_1(Y),\check G)$ 替代它只在刚性化经典截断的层面成立。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§12.1 同伦型上的局部系统，p.60（PDF p.60），`源码/chapters/ch12.tex:9-23（LocSys(Y) 的定义与推前，§12.1）`
+
+## 核验
+
+状态：`source-only`（2026-11-18）
+- nLab：https://ncatlab.org/nlab/show/local+system — 局部系统对应于基本无穷群胚的 (∞,1)-函子；Maps(X,LConst S) ≃ Maps(Π(X),S)，故 LocSys(Y) ≃ Fun(Y,Vect) 且只依赖同伦型。
+
+## 关联
+
+- `glc/concept/betti-spectral-stack`
+- `glc/concept/betti-local-systems`

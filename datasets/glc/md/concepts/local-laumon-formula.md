@@ -1,0 +1,82 @@
+---
+id: glc/concept/local-laumon-formula
+type: concept
+track: C
+---
+
+# Laumon 层的局部公式（命题 4.9.1）
+
+> $\mathcal{L}_{E,x}^d[-d]$ 按幂零轨道 IC 层 $B_{\lambda,x}$ 分解，系数为 $E_x$ 的最高权表示加 Tate 扭转。
+
+**问题**：$\mathcal{L}_{E,x}^d[-d]$ 如何分解为幂零轨道的 IC 层，系数 $E_x^\lambda(-n(\lambda))$ 中的 Tate 扭转从何而来？
+
+## 定义
+
+令 $V=E_x$ 为 $E$ 在 $x$ 处的纤维。对满足 $s\le n$ 的分拆 $\lambda=(\lambda_1\ge\cdots\ge\lambda_s>0)$，添零将其扩展为 $\operatorname{GL}(V)\simeq\operatorname{GL}_n$ 的优势权 $(\lambda_1,\ldots,\lambda_s,0,\ldots,0)$；令 $V^\lambda$ 为 $\operatorname{GL}(V)$ 中最高权为 $\lambda$ 的不可约最高权表示。等价地，若 $\chi^\lambda\in\operatorname{Irr}(S_d)$ 是与 $\lambda$ 对应的 Specht 表示，则 Schur–Weyl 对偶给出 $V^\lambda\simeq(V^{\otimes d}\otimes\chi^\lambda)^{S_d}$；若 $s>n$ 这个向量空间为零。置 $n(\lambda):=\sum_{i\ge1}(i-1)\lambda_i$，按通常的 Casselman–Shalala 归一化看作 $n(\lambda)=\langle\lambda,(0,1,\ldots,n-1)\rangle$。则对每个几何点 $x\in X$ 与整数 $d\ge0$，$\mathcal{L}_{E,x}^d[-d]\simeq\bigoplus_{\lambda\vdash d,\ \ell(\lambda)\le n}B_{\lambda,x}\otimes E_x^\lambda(-n(\lambda))$。
+
+*记号*：$\lambda\vdash d$，$\ell(\lambda)=s\le n$；$E_x^\lambda$ 为最高权 $\lambda$ 的不可约表示，$(m)$ 为 Tate 扭转；$B_{\lambda,x}=\operatorname{IC}_{\overline{\operatorname{Tor}_x^\lambda}}$；$n(\lambda)=\langle\lambda,(0,1,\ldots,n-1)\rangle$。
+
+## 要点
+
+- 公式把 $x$ 处的局部反常对象写成有限直和：按分拆 $\lambda\vdash d$、$\ell(\lambda)\le n$ 编号，每一项是幂零轨道闭包的 IC 层 $B_{\lambda,x}$ 张量表示 $E_x^\lambda$，再作 Tate 扭转 $(-n(\lambda))$。
+- $E_x^\lambda$ 有两种等价刻画：作为 $\operatorname{GL}_n$ 的最高权表示；或经 Schur–Weyl 对偶写成 $(E_x^{\otimes d}\otimes\chi^\lambda)^{S_d}$，后者正是 §4.11 证明中所用的形式。
+- $\ell(\lambda)>n$ 时求和项消失（$V^\lambda=0$），因此直和只到 $\ell(\lambda)\le n$ 为止，与 $E$ 的秩 $n$ 匹配。
+- $n(\lambda)$ 是 Casselman–Shalala 归一化下的 Tate 指数：它不来自 IC 层本身（§4.10 的比较里只有 $dn$），而来自 Whittaker 归一化，正如 §3.4 局部 Whittaker 函数公式中的 $q_x^{-\sum_i(i-1)\lambda_i}$。
+
+## 关键公式
+
+- $\mathcal{L}_{E,x}^d[-d]\simeq\bigoplus_{\substack{\lambda\vdash d\\ \ell(\lambda)\le n}}B_{\lambda,x}\otimes E_x^\lambda(-n(\lambda))$
+- $V^\lambda\simeq(V^{\otimes d}\otimes\chi^\lambda)^{S_d}\qquad(\text{Schur–Weyl})$
+- $n(\lambda):=\sum_{i\ge1}(i-1)\lambda_i=\langle\lambda,(0,1,\ldots,n-1)\rangle$
+- $\lambda=(\lambda_1,\ldots,\lambda_s,0,\ldots,0)\in\Lambda^+,\qquad s=\ell(\lambda)\le n$
+
+## 定理与证明
+
+### 命题 4.9.1（局部公式）（完整）
+
+对每个几何点 $x\in X$ 与整数 $d\ge0$，有 $\mathcal{L}_{E,x}^d[-d]\simeq\bigoplus_{\lambda\vdash d,\ \ell(\lambda)\le n}B_{\lambda,x}\otimes E_x^\lambda(-n(\lambda))$，其中 $n(\lambda)=\sum_{i\ge1}(i-1)\lambda_i=\langle\lambda,(0,1,\ldots,n-1)\rangle$，$E_x^\lambda$ 为最高权 $\lambda$ 的不可约表示，$(m)$ 为 Tate 扭转。
+
+1. 在 $x$ 的 étale 局部工作，或将 $X$ 替换为 $x$ 处的形式圆盘；选素元后支撑于 $x$ 的长度 $d$ 挠层就是带幂零自同态的 $d$ 维向量空间，故 $\operatorname{Tor}_x^d\simeq\mathcal{N}_d/\operatorname{GL}_d$。  
+   *为什么*：$\mathcal{N}_d\subset\mathfrak{gl}_d$ 是幂零锥；非局部陈述 $\operatorname{Tor}^d\simeq\mathfrak{gl}_d/\operatorname{GL}_d$ 只对 $X=\mathbb{A}^1$ 字面成立，一般曲线在次数 $d$ 除子附近取这个 étale 局部模型。
+2. 在该等同下 $\widetilde{\operatorname{Tor}}^d\to\operatorname{Tor}^d$ 成为 Grothendieck–Springer 解消，限制到 $\operatorname{Tor}_x^d$ 上成为幂零锥的 Springer 解消。  
+   *为什么*：这样可调用经典 Springer 对应（讲义引 [GPR20,AHJR14]）来计算局部反常层。
+3. 基变换到几何点 $\bar x$、暂时省去 Tate 扭转，局部反常 Springer 层分解为 $\operatorname{Spr}_{\bar x}^d[-d]\simeq\bigoplus_{\chi\in\operatorname{Irr}(S_d)}\chi\otimes\operatorname{IC}_{\overline{\mathcal{O}_\chi}}$。  
+   *为什么*：这是幂零锥 Springer 解消的标准分解，$\operatorname{Irr}(S_d)$、$d$ 的分拆与 $\mathfrak{gl}_d$ 的幂零轨道三者等同。
+4. 固定约定 $\lambda\leftrightarrow\mathcal{O}_\lambda$、平凡表示 $\leftrightarrow$ 正则幂零轨道 $(d)$，即「不取转置」的约定。  
+   *为什么*：没有这条约定，$\chi$ 与轨道 $\mathcal{O}_\chi$ 的对应会差一个转置，直和项就配错。
+5. 对 Laumon 层，纤维 $E_x^{\otimes d}$ 随 Springer 层一起带入，$S_d$ 通过置换 $d$ 个因子作用，故 $\operatorname{Spr}_{E,x}^d[-d]\simeq\bigoplus_\chi\chi\otimes E_x^{\otimes d}\otimes\operatorname{IC}_{\overline{\mathcal{O}_\chi}}$。  
+   *为什么*：$\operatorname{Spr}_{E,x}^d$ 是在 Springer 层上再张量常数层 $E_x^{\otimes d}$，$S_d$ 同时作用于两侧。
+6. 取 $S_d$ 不变直和项：$\big(\operatorname{Spr}_{E,x}^d[-d]\big)^{S_d}\simeq\bigoplus_\chi(\chi\otimes E_x^{\otimes d})^{S_d}\otimes\operatorname{IC}_{\overline{\mathcal{O}_\chi}}$。  
+   *为什么*：$\mathcal{L}_{E,x}^d[-d]$ 按定义就是 $\operatorname{Spr}_{E,x}^d[-d]$ 的 $S_d$ 不变部分；IC 层的系数域上取不变可逐项进行。
+7. 写 $\chi=\chi^\lambda$（$d=\lambda_1+\cdots+\lambda_s$，$\lambda_1\ge\cdots\ge\lambda_s>0$），由 Schur–Weyl 对偶 $(\chi^\lambda\otimes E_x^{\otimes d})^{S_d}\simeq E_x^\lambda$；若 $s>\dim E_x=n$ 则它消失。  
+   *为什么*：这正是命题陈述中 $V^\lambda\simeq(V^{\otimes d}\otimes\chi^\lambda)^{S_d}$ 的同一件事，添零把 $\lambda$ 扩成长度 $n$ 的优势权。
+8. 在 $\operatorname{Tor}_x^d\simeq\mathcal{N}_d/\operatorname{GL}_d$ 下 $\operatorname{IC}_{\overline{\mathcal{O}_\lambda}}=B_{\lambda,x}$；恢复 Tate 扭转（指数 $-n(\lambda)$）便得到命题关于 $\mathcal{L}_{E,x}^d[-d]$ 的公式。  
+   *为什么*：$B_{\lambda,x}$ 的定义即 $\operatorname{IC}_{\overline{\operatorname{Tor}_x^\lambda}}$；Tate 扭转按 Casselman–Shalala 归一化补回。
+
+> 缺口：讲义在 §4.11 原位给出完整证明（引用经典 Springer 对应 [GPR20,AHJR14] 作为外部工具），无证明缺口；Tate 扭转的指数由 Casselman–Shalala 归一化给出。
+
+*出处*：§4.9 命题 4.9.1（原书 p.31）、§4.11 证明（原书 p.31–32）
+
+
+## 易错点
+
+- 平移 $[-d]$ 在公式左边、不在右边：$\mathcal{L}_{E,x}^d$ 是 $\operatorname{Tor}_x^d$ 上的反常层，但按余维 $d$ 移位的对象才是与 IC 层同层的反常对象；漏掉它会把系数算错。
+- $(-n(\lambda))$ 是 Tate 扭转，不是 IC 的移位：§4.10 中 $f^*B_{\lambda,x}\simeq A_\lambda[-dn]$ 只搬 IC，不搬这个因子。
+- $\ell(\lambda)>n$ 的项为零：$E_x^\lambda$ 是 $\operatorname{GL}_n$ 的表示，添零到长度 $n$ 之后没有位置放第 $n+1$ 个非零分量。
+- 约定「不取转置」：$\lambda\leftrightarrow\mathcal{O}_\lambda$ 与「平凡表示 $\leftrightarrow$ 正则幂零轨道 $(d)$」配对，若改用转置约定，直和项会整体换成转置分拆。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§4.9 命题 4.9.1；§4.11 用 Springer 理论证明局部公式，p.31-32（PDF p.31-32），`源码/chapters/ch04.tex:156-159,171-193（§4.9 命题 4.9.1、§4.11）`
+
+## 核验
+
+状态：`external-confirmed`（2026-11-18）
+- FGKV98：https://arxiv.org/abs/alg-geom/9703022 — 卡里命题 4.9.1 与原文逐项一致：『L_{E,m,x} ≃ ⊕_{λ∈P^{++}_{n,m}} B_{λ,x}[m](−n(λ)) ⊗ E_x(λ), where n(λ)=Σ_{i=1}^n (i−1)λ_i』——讲义把 [m] 并入左边的 [−d] 归一化，求和范围 ℓ(λ)≤n 即 P^{++}_{n,m}，Tate 指数同为 −n(λ)；卡里 n(λ)=⟨λ,(0,1,…,n−1)⟩ 与 Σ(i−1)λ_i 恒等。
+- GPR20：https://arxiv.org/abs/2002.12480 — 卡里『局部对象按幂零轨道 IC 直和分解，系数是最高权表示』的分解形状对应原文『μ_*Q_Ñ[dim N] = ⊕_{(O,L)} IC(O,L) ⊗ V(O,L)』及『V(O,L) … precisely the irreducible representation of W mapping to (O,L)』。
+
+## 关联
+
+- `glc/concept/laumon-sheaf`
+- `glc/concept/b-lambda-ic`
+- `glc/concept/local-whittaker-eigenfunction`

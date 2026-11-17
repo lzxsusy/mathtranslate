@@ -1,0 +1,51 @@
+---
+id: glc/concept/ind-coherent-sheaves
+type: concept
+track: F
+---
+
+# ind-凝聚层与完美复形的差异
+
+> 奇异导出叠上 $\operatorname{Perf}\subsetneq\operatorname{Coh}$，完备化后 $\operatorname{QCoh}\subsetneq\operatorname{IndCoh}$。
+
+**问题**：为什么在奇异的导出叠上，$\operatorname{QCoh}$ 会漏掉一些凝聚对象？
+
+## 定义
+
+对于奇异导出概形或导出叠 $Y$，完美对象与凝聚对象未必相同；一般而言，只存在包含关系 $\operatorname{Perf}(Y)\subseteq\operatorname{Coh}(Y)$，而且这个包含往往是严格的。例子：取 $A=k[\varepsilon]$，其中 $\deg(\varepsilon)=-1$，并令 $Y=\operatorname{Spec}A$；则 $k\in\operatorname{Coh}(Y)$，但 $k\notin\operatorname{Perf}(Y)$，从无限周期解消 $\cdots\xrightarrow{\varepsilon}A\xrightarrow{\varepsilon}A\xrightarrow{\varepsilon}A\longrightarrow k$ 可以看出这一点。进行 ind-完备化后，对满足适当条件的 $Y$，有 $\operatorname{QCoh}(Y)=\operatorname{Ind}(\operatorname{Perf}(Y))\subseteq\operatorname{IndCoh}(Y)=\operatorname{Ind}(\operatorname{Coh}(Y))$，在上述奇异例子中，包含仍是严格的。
+
+*记号*：$\operatorname{Perf}(Y)$ 是完美复形范畴，$\operatorname{Coh}(Y)$ 是凝聚层的有界导出范畴，$\operatorname{Ind}(-)$ 表示 ind-完备化；$k$ 是基域。
+
+## 要点
+
+- 一般只有包含 $\operatorname{Perf}(Y)\subseteq\operatorname{Coh}(Y)$，且这个包含往往严格。
+- 反例：$A=k[\varepsilon]$、$\deg(\varepsilon)=-1$、$Y=\operatorname{Spec}A$ 时 $k\in\operatorname{Coh}(Y)$ 但 $k\notin\operatorname{Perf}(Y)$。
+- 该反例由无限周期解消 $\cdots\to A\xrightarrow{\varepsilon}A\xrightarrow{\varepsilon}A\to k$ 看出：$k$ 需要无限长的完美复形逼近。
+- ind-完备化后 $\operatorname{QCoh}(Y)=\operatorname{Ind}(\operatorname{Perf}(Y))\subseteq\operatorname{IndCoh}(Y)=\operatorname{Ind}(\operatorname{Coh}(Y))$，在奇异例子中仍严格。
+- 因此 $\operatorname{IndCoh}$ 保留了 $\operatorname{QCoh}$ 可能遗漏的凝聚对象——这正是范畴猜想右端用 $\operatorname{IndCoh}$ 的第一层理由。
+
+## 关键公式
+
+- $\operatorname{Perf}(Y)\subseteq\operatorname{Coh}(Y)$
+- $\operatorname{QCoh}(Y)=\operatorname{Ind}(\operatorname{Perf}(Y))\subseteq\operatorname{IndCoh}(Y)=\operatorname{Ind}(\operatorname{Coh}(Y))$
+
+## 易错点
+
+- 把 $\operatorname{IndCoh}$ 当成 $\operatorname{QCoh}$ 的另一种写法：在奇异 $Y$ 上两者真的不同，$\operatorname{Ind}(\operatorname{Perf})\subsetneq\operatorname{Ind}(\operatorname{Coh})$。
+- 反例里 $\deg(\varepsilon)=-1$ 是关键：正是这个负次数的分次结构使 $k$ 需要无限周期解消，从而不在 $\operatorname{Perf}$ 里。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§10.1 为何出现 ind-凝聚层，p.53-54（PDF p.53-54），`§10.1 为何出现 ind-凝聚层（ch10.tex:17-27，p.53-54）`
+
+## 核验
+
+状态：`source-only`（2026-11-18）
+- nLab：https://ncatlab.org/nlab/show/ind-coherent+sheaves — 页面定义 IndCoh(X) 为 coherent sheaves 的 ind-objects，即 IndCoh=Ind(Coh)，引 Gaitsgory–Rozenblyum；支持卡中 IndCoh(Y)=Ind(Coh(Y))。页面未提 Perf⊆Coh 的严格性、A=k[ε] 例或 QCoh=Ind(Perf)。
+- arXiv：https://arxiv.org/abs/1201.6343 — 摘要称在 quasi-smooth DG scheme/stack 上发展 coherent sheaf 的奇异支撑并用以表述 GLC；只支持本卡的 quasi-smooth 设定，不支持 Perf⊊Coh 的例与完备化陈述。
+
+## 关联
+
+- `glc/concept/scheme-of-singularities`
+- `glc/concept/categorical-langlands-conjecture`
+- `glc/concept/nilpotent-singular-support`

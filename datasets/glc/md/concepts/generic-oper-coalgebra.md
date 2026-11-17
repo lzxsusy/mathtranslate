@@ -1,0 +1,73 @@
+---
+id: glc/concept/generic-oper-coalgebra
+type: concept
+track: H
+---
+
+# 一般位置 oper 与有限 étale 代数
+
+> $\mathcal B_{G,\mathrm{irr}}$ 是一般位置 oper 叠的 de Rham 直接像，故 $\mathcal A_{G,\mathrm{irr}}$ 是有限 étale 交换代数。
+
+**问题**：为什么 $\mathcal A_{G,\mathrm{irr}}$ 会是有限 étale 代数？
+
+## 定义
+
+令
+$$\pi:\operatorname{Op}^{\mathrm{gen}}_{\check G,\mathrm{irr}}\longrightarrow\operatorname{LocSys}^{\mathrm{irr}}_{\check G}$$
+为不可约局部系统上的一般位置、更准确地说是扩展一般位置 $\check G$-oper 结构的叠。非正式地说，在 $\sigma\in\operatorname{LocSys}^{\mathrm{irr}}_{\check G}$ 上的纤维，是 $\sigma$ 到 $\check B$ 的一般位置约化所组成的空间，这些约化在 $X$ 的有限多个点之外满足 oper 横截条件。
+
+*记号*：$\check B\subset\check G$ 为 Borel 子群；$\omega_{\operatorname{Op}^{\mathrm{gen}}_{\check G,\mathrm{irr}}}$ 为相应的对偶化层；$\pi_{\mathrm{dR},!}$ 为 de Rham 直接像。
+
+## 要点
+
+- FLE／局部化形式体系将 $\mathcal B_{G,\mathrm{irr}}$ 识别为 de Rham 直接像 $\mathcal B_{G,\mathrm{irr}}\simeq\pi_{\mathrm{dR},!}\omega_{\operatorname{Op}^{\mathrm{gen}}_{\check G,\mathrm{irr}}}$，这是 $\operatorname{QCoh}(\operatorname{LocSys}^{\mathrm{irr}}_{\check G})$ 中的余交换余代数对象。
+- 在证明中，此对象由真空 Poincaré 核构造：局部 FLE 说明 Kac–Moody 真空对象被送到非分歧 oper 对象，而 Ran 因子化将局部的一般位置约化粘合为上述全局一般位置 oper 对应。
+- 第一，$\mathcal B_{G,\mathrm{irr}}$ 余交换，位于上同调次数 $\le0$，并沿 $\operatorname{LocSys}^{\mathrm{irr}}_{\check G}$ 带有平坦联络。
+- 第二，由自对偶性，$\mathcal A_{G,\mathrm{irr}}$ 交换，位于次数 $\ge0$；对偶将这一完美对象送回自身，反向的次数界也成立；所以 $\mathcal A_{G,\mathrm{irr}}$ 位于心范畴中，并且是带有平坦联络的向量丛。
+- 第三，$\pi_{\mathrm{dR},!}\omega$ 具有有限单值性。
+- 注 16.9.2：对经典群，Beraldo–Kazhdan–Schlank 的定理加强了这个有限单值性输入——相关的一般位置 oper 纤维是同调可缩的；因此在 $A$、$B$、$C$、$D$ 型中，该有限 étale 覆盖已被迫为平凡覆盖。证明以此为模型情形，再将一般情形归约到同样的有限 étale 论证。
+
+## 关键公式
+
+- $\mathcal B_{G,\mathrm{irr}}\simeq\pi_{\mathrm{dR},!}\omega_{\operatorname{Op}^{\mathrm{gen}}_{\check G,\mathrm{irr}}}$
+- $\mathcal A_{G,\mathrm{irr}}\simeq\mathcal A^\vee_{G,\mathrm{irr}}$，$\mathcal A_{G,\mathrm{irr}}$ 位于心范畴且为带平坦联络的向量丛
+- $\text{deg}\,\mathcal B\le0,\qquad \text{deg}\,\mathcal A\ge0$
+
+## 定理与证明
+
+### 定理 16.9.1（有限 étale 代数）（要点（有缺口））
+
+代数 $\mathcal A_{G,\mathrm{irr}}$ 是有限 étale 交换 $\mathcal O_{\operatorname{LocSys}^{\mathrm{irr}}_{\check G}}$-代数。等价地，它定义 $\operatorname{LocSys}^{\mathrm{irr}}_{\check G}$ 的有限 étale 覆盖。
+
+1. 由 $\mathcal B_{G,\mathrm{irr}}$ 余交换、次数 $\le0$、带平坦联络，以及自对偶性，得 $\mathcal A_{G,\mathrm{irr}}$ 交换、次数 $\ge0$。  
+   *为什么*：对偶把完美对象送回自身，故次数界反向也成立；$\mathcal A_{G,\mathrm{irr}}$ 落在心范畴，是带平坦联络的向量丛。
+2. 用 $\pi_{\mathrm{dR},!}\omega$ 的有限单值性。  
+   *为什么*：有限单值性使该向量丛在 étale 局部化后常值，故 $\mathcal A_{G,\mathrm{irr}}$ 是有限 étale 交换代数，对应一个有限 étale 覆盖。
+
+> 缺口：讲义以「几个初等推论」的形式给出上述三步，但有限单值性本身作为输入引用，未在此证明；细节见 [ABC24a]、[GR24b]。
+
+*出处*：定理 16.9.1 / 原书 p.82
+
+
+## 易错点
+
+- 把定理 16.9.1 的「有限 étale 覆盖」当成「覆盖平凡」：平凡性只在经典群 $A,B,C,D$ 型由注 16.9.2 的 BKS 定理强制，一般情形仍可能是非平凡有限 étale 覆盖。
+- $\pi_{\mathrm{dR},!}\omega$ 是 de Rham 直接像，不是普通推前；写成 $\pi_*\omega$ 会丢掉 de Rham 结构（也就丢掉平坦联络与有限单值性）。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§16.9 一般位置 oper 与余代数，p.82（PDF p.82），`源码/chapters/ch16.tex:197-210（$\operatorname{Op}^{\mathrm{gen}}$、$\mathcal B\simeq\pi_{\mathrm{dR},!}\omega$、定理 16.9.1 与注 16.9.2）`
+
+## 核验
+
+状态：`external-confirmed`（2026-11-18）
+- arXiv:2409.08670 (ABC24b)：https://arxiv.org/abs/2409.08670 — 原文：「The object A_{G,irred}∈QCoh(LS^irred_Ĝ) is a classical vector bundle, which is equipped with a naturally defined flat connection.」——卡「A 落在心范畴且为带平坦联络向量丛」。
+- arXiv:2409.08670 (ABC24b)：https://arxiv.org/abs/2409.08670 — 原文把 B^Op_{G,irred} 实现为 (π^irred_Ran)_!(ω_{Op^{mon-free,irred}_Ĝ(X^gen)_Ran})，并说其纤维 ≅ σ 上一般位置 oper 结构的同调——支持卡 B ≅ π_{dR,!}ω 与「纤维 = 一般位置 oper 约化」。
+- arXiv:2409.08670 (ABC24b)：https://arxiv.org/abs/2409.08670 — 原文：「The local system B^Op_{G,irred} has a finite monodromy, i.e., it trivializes over a finite étale cover of LS^irred_Ĝ.」——支持卡的有限单值性与定理 16.9.1（有限 étale 覆盖）。
+- arXiv:1801.00655 (BKS18)：https://arxiv.org/abs/1801.00655 — 原文：「for G classical and σ an arbitrary G-local system on X, the space Op̄^gen_{G,σ} of generic extended oper structures on σ is homologically contractible.」——支持注 16.9.2。
+
+## 关联
+
+- `glc/concept/double-adjunction`
+- `glc/concept/numerical-rank-one`
+- `glc/concept/cuspidal-conservativity`

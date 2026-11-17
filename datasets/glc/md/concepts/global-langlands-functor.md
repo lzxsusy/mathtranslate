@@ -1,0 +1,76 @@
+---
+id: glc/concept/global-langlands-functor
+type: concept
+track: H
+---
+
+# 整体 Langlands 函子与重整化目标
+
+> $\mathbb L_G$ 落在幂零支撑 IndCoh，粗影 $\mathbb L_G^0$ 落在 QCoh，且 $\mathbb L_G^0=\Psi\circ\mathbb L_G$（$\Psi$ 遗忘）。
+
+**问题**：$\mathbb L_G$ 与 $\mathbb L_G^0$ 的目标范畴为什么不同？
+
+## 定义
+
+在省略通常的半密度扭转、仍用 $\operatorname{DMod}(\operatorname{Bun}_G)$ 表示自守范畴的约定下，整体定理断言 Langlands 函子给出等价
+$$\mathbb L_G:\operatorname{DMod}(\operatorname{Bun}_G)\xrightarrow{\sim}\operatorname{IndCoh}_{\mathrm{Nilp}}(\operatorname{LocSys}_{\check G}),$$
+并且与导出 Satake、Eisenstein 级数、常数项函子和对偶相容。第一个构造给出粗形式 $\mathbb L_G^0:\operatorname{DMod}(\operatorname{Bun}_G)\to\operatorname{QCoh}(\operatorname{LocSys}_{\check G})$，它由广义消失定理刻画。
+
+*记号*：$\operatorname{IndCoh}_{\mathrm{Nilp}}$ 为幂零奇异支撑的 ind-凝聚层；$\Psi:\operatorname{IndCoh}_{\mathrm{Nilp}}(\operatorname{LocSys}_{\check G})\to\operatorname{QCoh}(\operatorname{LocSys}_{\check G})$ 为遗忘函子；$\operatorname{QCoh}^!$ 表示重整化谱目标；$\operatorname{CS}$ 为几何 Casselman–Shalika 等价；$\operatorname{coeff}$ 为 Whittaker 系数函子。
+
+## 要点
+
+- 粗函子由广义消失定理刻画：$\operatorname{Rep}(\check G)_{\mathrm{Ran}}$ 在 $\operatorname{DMod}(\operatorname{Bun}_G)$ 上的局部 Hecke 作用，经由 $\operatorname{QCoh}(\operatorname{LocSys}_{\check G})$ 的谱作用分解。
+- 完整 Langlands 函子是 $\mathbb L_G^0$ 通过遗忘函子 $\Psi$ 的提升，即 $\mathbb L_G^0=\Psi\circ\mathbb L_G$。
+- 在紧对象上首先落入一个下有界的凝聚子范畴；可呈示函子 $\mathbb L_G$ 通过 ind-完备化得到。用 $\operatorname{QCoh}^!(\operatorname{LocSys}_{\check G})$ 表示相应的重整化谱目标，简记 $\operatorname{DMod}(\operatorname{Bun}_G)\xrightarrow{\mathbb L_G}\operatorname{QCoh}^!(\operatorname{LocSys}_{\check G})$。
+- Whittaker 系数函子与谱作用给出图表：$\operatorname{DMod}(\operatorname{Bun}_G)\xrightarrow{\mathbb L_G^0}\operatorname{QCoh}(\operatorname{LocSys}_{\check G})$，下方 $\operatorname{Whit}(G)_{\mathrm{Ran}}\xrightarrow{\operatorname{CS}}\operatorname{Rep}(\check G)_{\mathrm{Ran}}$，两侧由 $\operatorname{coeff}$ 与 $\Gamma^{\mathrm{spec}}$ 连接。
+- 与导出 Satake 的相容性内置于构造；新的工作是与 Eisenstein 和常数项函子的相容性。
+- 证明先处理抛物部分（Eisenstein 部分），再证明剩余的尖点等价。
+
+## 关键公式
+
+- $\mathbb L_G:\operatorname{DMod}(\operatorname{Bun}_G)\xrightarrow{\sim}\operatorname{IndCoh}_{\mathrm{Nilp}}(\operatorname{LocSys}_{\check G})$
+- $\mathbb L_G^0:\operatorname{DMod}(\operatorname{Bun}_G)\longrightarrow\operatorname{QCoh}(\operatorname{LocSys}_{\check G})$
+- $\Psi:\operatorname{IndCoh}_{\mathrm{Nilp}}(\operatorname{LocSys}_{\check G})\longrightarrow\operatorname{QCoh}(\operatorname{LocSys}_{\check G}),\qquad \mathbb L_G^0=\Psi\circ\mathbb L_G$
+
+## 定理与证明
+
+### 整体范畴 Langlands 定理（章首，无编号）（要点（有缺口））
+
+Langlands 函子给出等价 $\mathbb L_G:\operatorname{DMod}(\operatorname{Bun}_G)\xrightarrow{\sim}\operatorname{IndCoh}_{\mathrm{Nilp}}(\operatorname{LocSys}_{\check G})$，并且与导出 Satake、Eisenstein 级数、常数项函子和对偶相容。
+
+1. 构造粗函子 $\mathbb L_G^0$ 并将其提升为 $\mathbb L_G$。  
+   *为什么*：广义消失定理给出 $\mathbb L_G^0$；提升经遗忘函子 $\operatorname{IndCoh}_{\mathrm{Nilp}}\to\operatorname{QCoh}$，在紧对象上先落进下有界凝聚子范畴、再 ind-完备化。
+2. 证明 Eisenstein 与常数项相容性 (16.1)、(16.2)，得到 $\mathbb L_G$ 在 Eisenstein 直和因子上的等价 (16.5)。  
+   *为什么*：这给出可约（抛物）部分的等价，并把整体问题归约到尖点部分。
+3. 在尖点上用保守性 (16.7.1)、双伴随性 (16.8.1)、$\mathcal A_{G,\mathrm{irr}}$ 的有限 étale 性 (16.9.1) 与数值秩 $n=1$（§16.10）证明 $\mathbb L_{G,\mathrm{cusp}}$ 是等价。  
+   *为什么*：保守且单子为恒等即得等价；单子由 $\mathcal A_{G,\mathrm{irr}}\simeq\mathcal O$ 识别为恒等单子。
+
+> 缺口：讲义只给证明架构，逐步细节分散在原书所引 [CCF24]、[ABC24b]、[GR24b] 中，本书未逐一展开。
+
+*出处*：章首定理（无编号）/ 原书 p.75
+
+
+## 易错点
+
+- $\mathbb L_G$ 的目标是 $\operatorname{IndCoh}_{\mathrm{Nilp}}$，$\mathbb L_G^0$ 的目标才是 $\operatorname{QCoh}$；把二者混同会误以为 $\mathbb L_G$ 落在 $\operatorname{QCoh}$。
+- $\operatorname{QCoh}^!$ 是重整化（ind-完备化）目标，不是普通 $\operatorname{QCoh}$；译注指出在紧对象上只能先落进下有界凝聚子范畴，普通 $\operatorname{QCoh}$ 不够。
+- 定理的「相容」是四条：导出 Satake、Eisenstein 级数、常数项函子、对偶；漏掉对偶相容会读不出 §16.8 的作用。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），第 16 章 整体猜想的证明（章首定理），p.75（PDF p.75），`源码/chapters/ch16.tex:3-9（整体定理的陈述与证明策略）`
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§16.1 粗 Langlands 函子，p.76（PDF p.76），`源码/chapters/ch16.tex:11-25（$\mathbb L_G^0$、提升与 $\operatorname{QCoh}^!$）`
+
+## 核验
+
+状态：`source-only`（2026-11-18）
+- nLab：https://ncatlab.org/nlab/show/geometric+Langlands+correspondence — 页面把范畴断言写成 (Ind(OMod(Loc_L G(Σ))))_{Nilp_Glob} ≅ DMod(Bun_G(Σ))（引 Arinkin–Gaitsgory 2012, Conjecture 0.1.6），并说「This form is called the categorical geometric Langlands conjecture. A proof was given by [Gaitsgory et al. 2025].」——与卡中 𝕃_G: DMod(Bun_G) ≅ IndCoh_Nilp(LocSys_Ĝ) 是同一断言（两边次序相反，IndCoh_Nilp 写作幂零 ind-对象）。
+- arXiv:2409.07051 (CCF24)：https://arxiv.org/abs/2409.07051 — 原文写 𝕃_G: Dmod_{1/2}(Bun_G) → IndCoh_Nilp(LS_Ĝ)；粗化图表用 Ψ_{LS_Ĝ}∘𝕃_G → QCoh(LS_Ĝ)，即卡的 𝕃_G^0 = Ψ∘𝕃_G 关系。
+- arXiv:2409.07051 (CCF24)：https://arxiv.org/abs/2409.07051 — 原文通篇用 QCoh、IndCoh_Nilp、IndCoh^!，未见 QCoh^! 记号；卡中「重整化目标记 QCoh^!」是讲义自设记号，外部无同名陈述。
+
+## 关联
+
+- `glc/concept/eisenstein-compatibility`
+- `glc/concept/double-adjunction`
+- `glc/concept/numerical-rank-one`

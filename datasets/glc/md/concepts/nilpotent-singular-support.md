@@ -1,0 +1,72 @@
+---
+id: glc/concept/nilpotent-singular-support
+type: concept
+track: F
+---
+
+# 谱侧的幂零奇异支撑
+
+> 由切复形定出 $\operatorname{Sing}(\operatorname{LocSys}_{\check G})$ 的点 $(E,\nabla,A)$，再要求 $A_x$ 逐点幂零得 $\mathrm{Nilp}$。
+
+**问题**：$\operatorname{Sing}(\operatorname{LocSys}_{\check G})$ 上的 $A$ 为什么住在 $H^0_{\mathrm{dR}}$ 而不是 $H^1_{\mathrm{dR}}$？
+
+## 定义
+
+令 $(E,\nabla)\in\operatorname{LocSys}_{\check G}$。伴随丛 $\check{\mathfrak g}_E$ 带有诱导的联络，切复形为 $T_{(E,\nabla)}\operatorname{LocSys}_{\check G}\simeq\mathrm{R}\Gamma_{\mathrm{dR}}(X,\check{\mathfrak g}_E)[1]\simeq\mathrm{R}\Gamma\bigl(X,\check{\mathfrak g}_E\xrightarrow{\operatorname{ad}(\nabla)}\check{\mathfrak g}_E\otimes\Omega_X\bigr)[1]$。$\operatorname{Sing}(\operatorname{LocSys}_{\check G})$ 在 $(E,\nabla)$ 上的纤维是 $H^1(T_{(E,\nabla)}\operatorname{LocSys}_{\check G})^\vee$。由于 $H^1(T)=H^2_{\mathrm{dR}}(X,\check{\mathfrak g}_E)$，Poincaré 对偶将这个对偶空间识别为 $H^0_{\mathrm{dR}}(X,\check{\mathfrak g}_E^*)$。因而经典奇异叠的点为 $\operatorname{Sing}(\operatorname{LocSys}_{\check G})=\{(E,\nabla,A)\mid A\in H^0_{\mathrm{dR}}(X,\check{\mathfrak g}_E^*)\}$；等价地，$A$ 是余伴随局部系统的水平截面。利用不变双线性形式 $\check{\mathfrak g}^*\simeq\check{\mathfrak g}$，定义 $\mathrm{Nilp}:=\{(E,\nabla,A)\mid A_x\in\check{\mathfrak g}\text{ 对每个 }x\in X\text{ 都是幂零的}\}\subset\operatorname{Sing}(\operatorname{LocSys}_{\check G})$。
+
+*记号*：$\check{\mathfrak g}$ 是 $\check G$ 的李代数，$\check{\mathfrak g}_E$ 是伴随丛，$\operatorname{ad}(\nabla)$ 是诱导联络；$\Omega_X$ 是典范丛；$H^\bullet_{\mathrm{dR}}$ 是 de Rham 上同调。
+
+## 要点
+
+- 切复形：$T_{(E,\nabla)}\operatorname{LocSys}_{\check G}\simeq\mathrm{R}\Gamma_{\mathrm{dR}}(X,\check{\mathfrak g}_E)[1]$。
+- 奇异叠在 $(E,\nabla)$ 上的纤维是 $H^1(T)^\vee$；因 $H^1(T)=H^2_{\mathrm{dR}}(X,\check{\mathfrak g}_E)$，Poincaré 对偶把它识别为 $H^0_{\mathrm{dR}}(X,\check{\mathfrak g}_E^*)$。
+- 故 $\operatorname{Sing}(\operatorname{LocSys}_{\check G})$ 的点写成三元组 $(E,\nabla,A)$，$A$ 是余伴随局部系统的水平截面。
+- $\mathrm{Nilp}$ 的定义要求 $A_x\in\check{\mathfrak g}$ 对每个 $x\in X$ 都幂零——逐点幂零，而非整体条件。
+- $\operatorname{IndCoh}_{\mathrm{Nilp}}(\operatorname{LocSys}_{\check G})$ 由奇异方向为全局幂零水平场的 ind-凝聚层组成。
+- 例：$X=\mathbb{P}^1$ 时非导出的 de Rham 局部系统叠本质上是 $\mathrm{pt}/\check G$，导出叠是导出零纤维 $\operatorname{LocSys}_{\check G}(\mathbb{P}^1)\simeq\mathrm{pt}/\check G\times_{\check{\mathfrak g}/\check G}\mathrm{pt}/\check G$。
+
+## 关键公式
+
+- $T_{(E,\nabla)}\operatorname{LocSys}_{\check G}\simeq\mathrm{R}\Gamma_{\mathrm{dR}}(X,\check{\mathfrak g}_E)[1]\simeq\mathrm{R}\Gamma\bigl(X,\check{\mathfrak g}_E\xrightarrow{\operatorname{ad}(\nabla)}\check{\mathfrak g}_E\otimes\Omega_X\bigr)[1]$
+- $\operatorname{Sing}(\operatorname{LocSys}_{\check G})=\{(E,\nabla,A)\mid A\in H^0_{\mathrm{dR}}(X,\check{\mathfrak g}_E^*)\}$
+- $\mathrm{Nilp}:=\{(E,\nabla,A)\mid A_x\in\check{\mathfrak g}\ \text{nilpotent for every}\ x\in X\}\subset\operatorname{Sing}(\operatorname{LocSys}_{\check G})$
+
+## 定理与证明
+
+### 奇异叠的描述（§10.2）（完整）
+
+$\operatorname{Sing}(\operatorname{LocSys}_{\check G})=\{(E,\nabla,A)\mid A\in H^0_{\mathrm{dR}}(X,\check{\mathfrak g}_E^*)\}$，即 $A$ 是余伴随局部系统的水平截面。
+
+1. 写出切复形 $T_{(E,\nabla)}\operatorname{LocSys}_{\check G}\simeq\mathrm{R}\Gamma_{\mathrm{dR}}(X,\check{\mathfrak g}_E)[1]$。  
+   *为什么*：局部系统的形变由带联络的伴随丛的上同调控制，移位 $[1]$ 来自叠的导出结构。
+2. 取纤维 $H^1(T)^\vee$，并用 $H^1(T)=H^2_{\mathrm{dR}}(X,\check{\mathfrak g}_E)$。  
+   *为什么*：这是切复形移位后的 $H^1$ 项，逐项对上同调次数即可。
+3. Poincaré 对偶把 $H^2_{\mathrm{dR}}(X,\check{\mathfrak g}_E)^\vee$ 识别为 $H^0_{\mathrm{dR}}(X,\check{\mathfrak g}_E^*)$。  
+   *为什么*：光滑射影曲线上的 Poincaré 对偶把 $H^{2-i}$ 的对偶配到 $H^i$ 的系数对偶丛。
+4. 于是奇异叠的点写成 $(E,\nabla,A)$，$A\in H^0_{\mathrm{dR}}(X,\check{\mathfrak g}_E^*)$，即余伴随局部系统的水平截面。  
+   *为什么*：$H^0_{\mathrm{dR}}$ 的元素正是该带联络丛的水平截面。
+
+*出处*：§10.2 / 原书 p.54
+
+
+## 易错点
+
+- $A$ 住在 $H^0_{\mathrm{dR}}$ 而不是 $H^1_{\mathrm{dR}}$：$H^1(T)=H^2_{\mathrm{dR}}$ 取对偶后才落到 $H^0_{\mathrm{dR}}$，两者的次数不要弄反。
+- $\mathrm{Nilp}$ 的条件是逐点幂零（$A_x$ 对每个 $x$），不是“整体幂零”；“全局幂零水平场”指的是水平场逐点幂零。
+- 例子里 $X=\mathbb{P}^1$：若只保留 $\operatorname{QCoh}(\mathrm{pt}/\check G)\simeq\operatorname{Rep}(\check G)$，就会丢掉自守侧可见的导出 $\operatorname{Ext}$ 数据（如球面范畴）；幂零 ind-凝聚范畴才是正确的细化。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§10.2 谱侧的幂零奇异支撑，p.54（PDF p.54），`§10.2 谱侧的幂零奇异支撑（ch10.tex:51-71，p.54）`
+
+## 核验
+
+状态：`source-only`（2026-11-18）
+- nLab：https://ncatlab.org/nlab/show/geometric+Langlands+correspondence — 页面把谱侧限制在 Nilp_Glob（全局幂零锥）上；支持本卡「全局幂零水平场」的总体条件。页面未给 T_{(E,∇)}LocSys≃RΓ_dR(X,ĝ_E)[1]、H^1(T)=H^2_dR、Poincaré 对偶到 H^0_dR 或 A_x 逐点幂零的定义。
+- arXiv：https://arxiv.org/abs/1201.6343 — 摘要支持 quasi-smooth DG 叠上的奇异支撑框架；不含本卡切复形与幂零水平场公式。
+
+## 关联
+
+- `glc/concept/scheme-of-singularities`
+- `glc/concept/categorical-langlands-conjecture`
+- `glc/concept/derived-satake`

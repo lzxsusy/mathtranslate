@@ -1,0 +1,78 @@
+---
+id: glc/concept/feigin-frenkel-center
+type: concept
+track: G
+---
+
+# Feigin–Frenkel 中心
+
+> 临界水平仿射 Kac–Moody 代数的中心（及其真空模的自同态代数）典范地同构于 oper 空间上的函数；PBW 分次给出 $W(\mathfrak c_{\check G,\Omega})$。
+
+**问题**：定理 14.3.1 把 $Z_{\mathrm{crit},x}$、$\mathfrak z_{\mathrm{crit}}(D_x)$ 与哪些 oper 空间等同起来，经典极限是什么？
+
+## 定义
+
+令 $x\in X$，$D_x=\operatorname{Spec} k[[t]]$，$D_x^\times=\operatorname{Spec} k((t))$。记 $\widehat{\mathfrak g}_{\mathrm{crit},x}$ 为临界水平的仿射 Kac–Moody 代数，$\mathbb V_{\mathrm{crit},x}:=\operatorname{Ind}_{\mathfrak g[[t]]\oplus k\mathbf{1}}^{\widehat{\mathfrak g}_{\mathrm{crit},x}}k$ 为真空模。有两个相关的中心：$Z_{\mathrm{crit},x}:=Z(\widehat U_{\mathrm{crit},x})$ 与 $\mathfrak z_{\mathrm{crit}}(D_x):=\operatorname{End}_{\widehat{\mathfrak g}_{\mathrm{crit},x}}(\mathbb V_{\mathrm{crit},x})$。真空模随 $x$ 变动，组成临界手征代数 $\mathbb V_{\mathrm{crit}}$；它的中心 $\mathfrak z_{\mathrm{crit}}:=Z(\mathbb V_{\mathrm{crit}})$ 是交换手征代数，等价地是因子化意义下的交换 $D_X$-代数，所以 $\operatorname{Spec}\mathfrak z_{\mathrm{crit}}$ 是一个 $D_X$-概形。
+
+*记号*：$\widehat U_{\mathrm{crit},x}$ 为临界水平仿射 Kac–Moody 代数的（完成）包络代数；$Z(\cdot)$ 为中心；$\operatorname{Ind}_{\cdot}^{\cdot}k$ 为从子代数诱导的模；$W(\cdot)$ 为 §14.1 中射流的 $D_X$-概形函子。
+
+## 要点
+
+- 有两个相关的中心：包络代数的中心 $Z_{\mathrm{crit},x}$ 与真空模的自同态代数 $\mathfrak z_{\mathrm{crit}}(D_x)$。
+- 真空模随 $x$ 变动组成临界手征代数 $\mathbb V_{\mathrm{crit}}$，其中心 $\mathfrak z_{\mathrm{crit}}$ 是交换手征代数（因子化意义下的交换 $D_X$-代数）。
+- 局部识别：$\operatorname{Spf}Z_{\mathrm{crit},x}\simeq\operatorname{Op}_{\check G}(D_x^\times)$ 与 $\operatorname{Spec}\mathfrak z_{\mathrm{crit}}(D_x)\simeq\operatorname{Op}_{\check G}(D_x)$。
+- 全局识别：$\operatorname{Spec}\mathfrak z_{\mathrm{crit}}\simeq\operatorname{Op}^D_{\check G}$（作为 $D_X$-概形）。
+- PBW 过滤下的经典极限：$\operatorname{Spec}\operatorname{gr}\mathfrak z_{\mathrm{crit}}\simeq W(\mathfrak c_{\check G,\Omega})$。
+
+## 关键公式
+
+- $\mathbb V_{\mathrm{crit},x}:=\operatorname{Ind}_{\mathfrak g[[t]]\oplus k\mathbf{1}}^{\widehat{\mathfrak g}_{\mathrm{crit},x}}k$
+- $\operatorname{Spf}Z_{\mathrm{crit},x}\simeq\operatorname{Op}_{\check G}(D_x^\times),\qquad \operatorname{Spec}\mathfrak z_{\mathrm{crit}}(D_x)\simeq\operatorname{Op}_{\check G}(D_x)$
+- $\operatorname{Spec}\mathfrak z_{\mathrm{crit}}\simeq\operatorname{Op}^D_{\check G},\qquad \operatorname{Spec}\operatorname{gr}\mathfrak z_{\mathrm{crit}}\simeq W(\mathfrak c_{\check G,\Omega})$
+
+## 定理与证明
+
+### 定理 14.3.1（Feigin–Frenkel）（要点（有缺口））
+
+存在典范识别 $\operatorname{Spf}Z_{\mathrm{crit},x}\simeq\operatorname{Op}_{\check G}(D_x^\times)$ 与 $\operatorname{Spec}\mathfrak z_{\mathrm{crit}}(D_x)\simeq\operatorname{Op}_{\check G}(D_x)$；全局有 $D_X$-概形的识别 $\operatorname{Spec}\mathfrak z_{\mathrm{crit}}\simeq\operatorname{Op}^D_{\check G}$；在 PBW 过滤下经典极限是 $\operatorname{Spec}\operatorname{gr}\mathfrak z_{\mathrm{crit}}\simeq W(\mathfrak c_{\check G,\Omega})$。
+
+1. $\mathbb V_{\mathrm{crit}}$ 的手征代数结构使 $\mathfrak z_{\mathrm{crit}}$ 具有因子化性质；局部这产生从通常临界中心的形式谱到穿孔圆盘中心的映射。  
+   *为什么*：因子化性质把局部中心拼成全局对象。
+2. 定理断言这个映射是同构；于是剩下的任务是把 $\operatorname{Spec}\mathfrak z_{\mathrm{crit}}(D)$ 与 $D$ 上的正则 oper 识别，并使识别与 $\operatorname{Aut}(D)$ 相容。  
+   *为什么*：这一步把中心与 oper 联系起来。
+3. 正则映射 $\operatorname{Spec}\mathfrak z_{\mathrm{crit}}(D)\to\operatorname{Op}_{\check G}(D)$ 用 Tannaka 方法构造：几何 Satake 与临界全局截面给出对称幺半函子 $F_D:\operatorname{Rep}(\check G)\to\mathfrak z_{\mathrm{crit}}(D)\text{-}\mathrm{Mod}$，由 $\Gamma(\operatorname{Gr}_G,\operatorname{Sat}(V))_{\mathrm{crit}}\simeq F_D(V)\otimes_{\mathfrak z_{\mathrm{crit}}(D)}\mathbb V_{\mathrm{crit}}$ 刻画。  
+   *为什么*：Tannaka 对偶把张量函子变成 $\check G$-挠子。
+4. $\check B$-约化从最低旋转权得到：对不可约 $V^{\check\lambda}$ 令 $\operatorname{IC}_{\check\lambda}=\operatorname{Sat}(V^{\check\lambda})$，$L_0=-t\partial_t\in\operatorname{Lie}\operatorname{Aut}^0(D)$ 的最低特征值为 $-\langle\check\lambda,\rho\rangle$，相应特征空间一维且 $\check B$-不变，这些直线满足 Plücker 关系。  
+   *为什么*：Plücker 关系保证这些直线来自一个 $\check B$-约化。
+5. 最后证明得到的到 $\operatorname{Op}_{\check G}(D)$ 的映射为同构。  
+   *为什么*：这一步完成定理。
+
+> 缺口：讲义明确写「证明思路如下」，只给思路：同构性、与 $\operatorname{Aut}(D)$ 的相容性、「直线满足 Plücker 关系」等细节均未证；完整证明见 [Fre02]（讲义引）。
+
+*出处*：定理 14.3.1 / 原书 p.69
+
+
+## 易错点
+
+- $\operatorname{Spf}$ 与 $\operatorname{Spec}$ 不同：$Z_{\mathrm{crit},x}$ 取形式谱，$\mathfrak z_{\mathrm{crit}}(D_x)$ 才取普通谱。
+- $L_0=-t\partial_t$ 最低特征值 $-\langle\check\lambda,\rho\rangle$ 中的 $\rho$ 是半和正根；按译注，临界扭转的 $\rho$-移位就来自这里。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§14.3 Feigin–Frenkel 中心，p.69（PDF p.69），`源码/chapters/ch14.tex:66-95（真空模、两个中心、定理与证明思路）`
+
+## 核验
+
+状态：`external-confirmed`（2026-11-18）
+- Frenkel05：https://arxiv.org/abs/hep-th/0512172 — “The center z(g) is canonically isomorphic to the algebra Fun OpLg(D) of Lg-opers on the formal disc D”——支持 Spec z_crit(D_x)≃Op_{Ǧ}(D_x)。
+- BD：https://math.uchicago.edu/~drinfeld/langlands/QuantizationHitchin.pdf — “a canonical isomorphism between the spectrum of the center of the critically twisted (completed) enveloping algebra of g((t)) and the moduli of Lg-opers on the punctured disc Spec C((t)). This isomorphism was established by Feigin and Frenkel [FF92]”——支持 Spf Z_{crit,x}≃Op_{Ǧ}(D_x^×) 及 [FF92] 归属。
+- BD：https://math.uchicago.edu/~drinfeld/langlands/QuantizationHitchin.pdf — “The spectrum of z identifies canonically with the moduli of Lg-opers, which is a (Lagrangian) subspace of the moduli of irreducible LG local systems on X”——支持全局 Spec z_crit≃Op^D_{Ǧ} 与 oper⊂LocSys。
+- BD：https://math.uchicago.edu/~drinfeld/langlands/QuantizationHitchin.pdf — “Tannaka … we obtain a canonical LG-torsor Fz on Spec z … the corresponding B-structure satisfies the oper condition … (Spec z,Fz)≅(Spec A,FA)”——支持证明思路（Tannaka 函子 F_D、B̌-约化、Plücker 关系）。
+- BD：https://math.uchicago.edu/~drinfeld/langlands/QuantizationHitchin.pdf — 只以 “lowest rotation weights” 概述 B-约化的来源，未逐字给出“最低 L_0-特征值 −⟨λ̌,ρ⟩、特征空间一维且 B̌-不变、满足 Plücker 关系”；该细节只见于讲义 p.69，外部无逐字对应，记 source-only 细节。
+
+## 关联
+
+- `glc/concept/g-oper`
+- `glc/concept/opers-hitchin-torsor`
+- `glc/concept/quantum-hitchin-map`
+- `glc/concept/aut-sigma-module`

@@ -1,0 +1,66 @@
+---
+id: glc/concept/affine-grassmannian
+type: concept
+track: B
+---
+
+# 仿射 Grassmann 簇的 ind-概形结构
+
+> Beilinson–Drinfeld 仿射 Grassmann 簇 $\operatorname{Gr}_{G,X}$ 是 ind-局部有限型的 ind-概形；若 $G$ 约化，则它在 $X$ 上 ind-射影。
+
+**问题**：$\operatorname{Gr}_{G,X}$ 怎样定义，为什么它是 Hecke 叠的局部模型？
+
+## 定义
+
+$X$ 上 Beilinson–Drinfeld 仿射 Grassmann 簇的 $S$-点是三元组 $(x,P,\beta)$：$x:S\to X$，$P$ 是 $X\times S$ 上的 $G$ 挠子，$\beta:P|_{X\times S-\Gamma_x}\xrightarrow{\sim}P^0|_{X\times S-\Gamma_x}$ 是与平凡 $G$ 挠子 $P^0$ 在去掉图像后的同构。定理断言：$\operatorname{Gr}_{G,X}$ 是 ind-局部有限型的 ind-概形；若 $G$ 约化，则 $\operatorname{Gr}_{G,X}$ 在 $X$ 上 ind-射影。
+
+*记号*：固定 $x:S\to X$，$D_x=\widehat{(X\times S)}_{\Gamma_x}$ 是沿图像的形式圆盘，$D_x^\circ=D_x\setminus\Gamma_x$ 是穿孔形式圆盘；$L^+G_X(S)=\{(x,\gamma)\mid\gamma:D_x\to G\}$，$LG_X(S)=\{(x,\gamma)\mid\gamma:D_x^\circ\to G\}$。
+
+## 要点
+
+- $\operatorname{Gr}_{G,X}$ 的 $S$-点是与平凡挠子 $P^0$ 在去掉图像后等同的 $G$ 挠子，这正是 Hecke 叠的局部模型。
+- $S=\operatorname{Spec} k$ 且 $x$ 有参数 $t$ 时，$D_x=\operatorname{Spec} k[[t]]$，$D_x^\circ=\operatorname{Spec} k((t))$；分类叠 $BL^+G_X$ 与 $BLG_X$ 分别分类 $D_x$ 与 $D_x^\circ$ 上的 $G$ 挠子。
+- 仿射 Grassmann 簇是商 $\operatorname{Gr}_{G,X}\simeq LG_X/L^+G_X$。
+- 无限级丛 $\operatorname{Bun}_G^\infty(S)=\{(x,P,\alpha)\mid x:S\to X,\ P\in\operatorname{Bun}_G(S),\ \alpha:P|_{D_x}\xrightarrow{\sim}P^0|_{D_x}\}$ 是 $X\times\operatorname{Bun}_G$ 上的 $L^+G_X$ 挠子。
+- 因此 $\operatorname{Hecke}_{G,X}\simeq\operatorname{Bun}_G^\infty\times^{L^+G_X}\operatorname{Gr}_{G,X}\simeq\operatorname{Gr}_{G,X}\widetilde\times\operatorname{Bun}_G$，从而是 ind-局部有限型的 ind-Artin 叠。
+
+## 关键公式
+
+- $\operatorname{Gr}_{G,X}(S)=\{(x,P,\beta)\mid x:S\to X,\ P\ \text{为}\ X\times S\ \text{上的}\ G\ \text{挠子},\ \beta:P|_{X\times S-\Gamma_x}\xrightarrow{\sim}P^0|_{X\times S-\Gamma_x}\}$
+- $\operatorname{Gr}_{G,X}\simeq LG_X/L^+G_X$
+- $\operatorname{Hecke}_{G,X}\simeq\operatorname{Bun}_G^\infty\times^{L^+G_X}\operatorname{Gr}_{G,X}\simeq\operatorname{Gr}_{G,X}\widetilde\times\operatorname{Bun}_G$
+
+## 定理与证明
+
+### 定理 2.4.1（仿射 Grassmann 簇）（要点（有缺口））
+
+$\operatorname{Gr}_{G,X}$ 是 ind-局部有限型的 ind-概形。若 $G$ 约化，则 $\operatorname{Gr}_{G,X}$ 在 $X$ 上 ind-射影。
+
+
+> 缺口：讲义只述不证：§2.4 给出定义与商描述 $\operatorname{Gr}_{G,X}\simeq LG_X/L^+G_X$，未证明 ind-概形性与 ind-射影性。
+
+*出处*：定理 2.4.1 / 原书 p.13
+
+
+## 易错点
+
+- 「ind-」不能省：$\operatorname{Gr}_{G,X}$ 是 ind-概形（ind-局部有限型），不是有限型概形；ind-射影性还需要 $G$ 约化。
+- $\widetilde\times$ 是扭曲积：$\operatorname{Gr}_{G,X}\widetilde\times\operatorname{Bun}_G$ 与 $\operatorname{Bun}_G^\infty\times^{L^+G_X}\operatorname{Gr}_{G,X}$ 是同一叠的两种写法，不是普通纤维积。
+- $D_x=\widehat{(X\times S)}_{\Gamma_x}$ 是形式圆盘；只有 $S=\operatorname{Spec} k$ 且取参数 $t$ 时才写成 $\operatorname{Spec} k[[t]]$。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§2.4 仿射 Grassmann 簇与局部模型，p.13（PDF p.13），`源码/chapters/ch02.tex:84-86（定理 2.4.1）；定义与扭曲积见 76-98 行`
+
+## 核验
+
+状态：`external-confirmed`（2026-11-18）
+- nLab：https://ncatlab.org/nlab/show/affine+Grassmannian — 定义「E a G-torsor on D_R, β a trivialization over D*_R」与卡中 Gr_{G,X}(S) 的 (x,P,β) 一致；「The affine Grassmannian is ind-representable」支持 ind-概形性。
+- arXiv：https://ar5iv.labs.arxiv.org/html/0710.5247 — 定理 1.1.2：「Gr_G is an ind-scheme of ind-finite type, and ind-projective if G is reductive」逐字支持卡中定理 2.4.1（Gr_{G,X} 为其 X-族形式）。
+- nLab：https://ncatlab.org/nlab/show/geometric+Satake+equivalence — 原文「DMod(Gr_G)^{L^+G} ≃ Rep(^L G)」为对称幺半等价，支持卡中 Gr_{G,X} ≃ LG_X/L^+G_X 的商描述所处的 Satake 语境。
+
+## 关联
+
+- `glc/concept/global-hecke-stack`
+- `glc/concept/bun-g-artin-stack`
+- `glc/concept/hecke-eigensheaf-general`

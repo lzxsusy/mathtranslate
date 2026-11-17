@@ -1,0 +1,72 @@
+---
+id: glc/concept/fourier-deligne-transform
+type: concept
+track: D
+---
+
+# 向量丛的 Fourier–Deligne 变换
+
+> 对秩 r 向量丛 V→S，把 V 上的构造层与对偶丛 V∨ 上的层互换的函子；取 [r](r/2) 归一化后对反常 t-结构 t-正合。
+
+**问题**：为什么 Fourier–Deligne 变换要取 [r](r/2) 这一归一化，它带来什么性质？
+
+## 定义
+
+设 $V\to S$ 为秩 $r$ 的向量丛，$V^{\vee}\to S$ 为其对偶，$\langle-,-\rangle:V\times_S V^{\vee}\to\mathbb{A}^1$ 为配对，$\mathcal{L}_{\psi}$ 为 $\mathbb{G}_a$ 上的 Artin–Schreier 层。Fourier–Deligne 变换定义为
+\[
+\mathsf{F}_{V/S}(\mathcal{K}):=p^{\vee}_!\,\bigl(p^*\mathcal{K}\otimes\langle-,-\rangle^*\mathcal{L}_{\psi}\bigr)[r](r/2),\qquad \mathcal{K}\in D_c^b(V),
+\]
+其中 $p:V\times_S V^{\vee}\to V$ 与 $p^{\vee}:V\times_S V^{\vee}\to V^{\vee}$ 是两个投影。采用这一归一化，它对反常 $t$-结构是 $t$-正合的，并保持单反常层的不可约性。
+
+*记号*：$[r]$ 表示移位，$(r/2)$ 表示 Tate 扭转；$D_c^b(V)$ 是 $V$ 上有界构造层的导出范畴。因 $r/2$ 可为半整数，系数域须含 $\sqrt q$（$\overline{\mathbb{Q}}_\ell$ 满足这一点）。
+
+## 要点
+
+- 变换以配对拉回的 Artin–Schreier 层 $\langle-,-\rangle^*\mathcal{L}_{\psi}$ 为核。
+- $[r](r/2)$ 归一化把对偶的两支拉平：$p^{\vee}_!$ 与 $p^{\vee}_*$ 经 Verdier 对偶只差一个移位和扭转，取该归一化后 $\mathsf{F}_{V/S}$ 对反常 $t$-结构 $t$-正合。
+- 「保持单反常层的不可约性」并非仅由 $t$-正合推出：$\mathsf{F}_{V/S}$ 同时是范畴等价（KL85；Juteau, Cor. 5.2.4），等价加 $t$-正合才保持单对象，且不产生平移。
+- 本章用它把 $\operatorname{Aut}'_E$ 的构造改写成洁净延拓的 Fourier 变换。
+
+## 关键公式
+
+- $\mathsf{F}_{V/S}(\mathcal{K})=p^{\vee}_!\,(p^*\mathcal{K}\otimes\langle-,-\rangle^*\mathcal{L}_{\psi})[r](r/2)$，$\mathcal{K}\in D_c^b(V)$
+- $p^{\vee}_!$ 与 $p^{\vee}_*$ 经 Verdier 对偶只差移位与 Tate 扭转，$[r](r/2)$ 恰好抵消之
+
+## 定理与证明
+
+### Fourier–Deligne 变换的 $t$-正合性（要点（有缺口））
+
+对秩 $r$ 向量丛 $V\to S$，采用 $[r](r/2)$ 归一化的 $\mathsf{F}_{V/S}$ 对反常 $t$-结构 $t$-正合，并把单反常层送到单反常层。
+
+1. 把 $p^{\vee}_!$ 与 $p^{\vee}_*$ 的差别归约为一次移位与一次 Tate 扭转。  
+   *为什么*：Verdier 对偶给出 $p^{\vee}_!$ 与 $p^{\vee}_*$ 的对偶关系。
+2. 取 $[r](r/2)$ 归一化把该差别拉平，得到对反常 $t$-结构的 $t$-正合性。  
+   *为什么*：归一化正好抵消相对维数带来的移位与扭转。
+3. $\mathsf{F}_{V/S}$ 是范畴等价且对反常 $t$-结构 $t$-正合，故把单反常层送到单反常层（单靠 $t$-正合不足：一般 $t$-正合函子可以不保单对象）。  
+   *为什么*：$t$-正合函子把单对象送到单对象（至多差平移）。
+
+> 缺口：讲义只述不证。$[r](r/2)$ 是本书采用的归一化：KL85 的 (2.1.1) 只含 $[r]$，其 $t$-正合性见 KL85 §2；Juteau, Cor. 5.2.4 给出等价性。
+
+*出处*：§5.2 向量丛的 Fourier 变换（未编号陈述）/ 原书 p.33
+
+
+## 易错点
+
+- 去掉 $[r](r/2)$ 归一化后 $t$-正合性不再成立；$r/2$ 可为半整数，故系数域必须含 $\sqrt q$。
+- $\mathsf{F}_{V/S}$ 定义在 $D_c^b(V)$ 上，推前沿 $p^{\vee}$ 走到对偶丛；不要把 $V$ 与 $V^{\vee}$ 的角色对调。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§5.2 向量丛的 Fourier 变换，p.33（PDF p.33），`源码/chapters/ch05.tex:27-33（§5.2 Fourier 变换的定义与归一化）`
+
+## 核验
+
+状态：`source-only`（2026-11-18）
+- Katz–Laumon 1985 (KL85)：https://pmihes.centre-mersenne.org/item/10.1007/BF02698808.pdf — KL85 (2.1.1) defines F(K)=Rpr'_!(pr^*K⊗μ^*L_ψ)[r], with no (r/2) Tate twist; (2.1.3) proves F_!→F_* is an isomorphism. The book uses an extra half Tate twist not present in KL85.
+- Juteau 2009 (arXiv:0901.3671)：https://arxiv.org/abs/0901.3671 — Def. 5.2.1 uses the same [r] normalization; Cor. 5.2.4 says F is an equivalence of triangulated categories; Thm. 5.3.4 says F is t-exact. Secondary exposition (PhD thesis, not in the lecture bibliography), used only as supporting evidence.
+
+## 关联
+
+- `glc/concept/preliminary-automorphic-sheaf`
+- `glc/concept/gl2-fourier-description`
+- `glc/concept/fourier-tower`

@@ -136,7 +136,7 @@ Bourbaki 报告、Astérisque 专辑、arXiv 预印本、论文集（proceedings
 | `papers/WIT-1989-JONES/` | **威腾 1989 CS/Jones 论文研讨班**（第二轮解经试点）：六场研讨记录、claims/questions 数据、教材核查；交付两版讲义——**49 页连续叙事讲义**（`deliverables/lecture/`，可作课程主文本）与 **97 页逐句注疏版**（`deliverables/reading_note/`），均含 LaTeX 源码、一键构建工程、协作流程记录，并有打包下载 `WIT-1989-JONES-v1.0.zip` |
 | `08_source_code/` | **每部译本的完整工程**：`工程文件/`（BRIEF、构建脚本、交付清单、术语表、校对记录、逐章报告）+ `源码/`（LaTeX 源与插图） |
 | `07_refs_nlab/` | **nLab 参考资料库**（几何 Langlands 线专用）：120 条 nLab 条目摘要（含 `last_revised`，可直接写进译注来源行）+ 37 份替代来源卡（nLab 只有存根时改引 A 级教材 / MathWorld / Stacks）+ 110 条来源真实性抽查记录 |
-| `datasets/` | **可训练数据集**：数学推理条目（`math/`，命题+证明步骤+缺口+校验）、原文片段↔译文↔译法理由（`parallel/`）、精读卡（`deepread/`）、高光与难证标注（`highlights/`）、事件级工作流（`traces/`）、概念图谱（`kg/`）、held-out 评测（`bench/`）、按概念组织的词条库（`encyclopedia/`）、单章资料卡（`geoq/`、`pathintegral/`、`csw/`）；规则见 `datasets/README.md`，权利分 `self / arxiv / book / rewritten` 四层，`book` 只进 `_internal/` |
+| `datasets/` | **可训练数据集**：数学推理条目（`math/`，命题+证明步骤+缺口+校验）、原文片段↔译文↔译法理由（`parallel/`）、精读卡（`deepread/`）、高光与难证标注（`highlights/`）、事件级工作流（`traces/`）、概念图谱（`kg/`）、held-out 评测（`bench/`）、按概念组织的词条库（`encyclopedia/`）、单章资料卡（`geoq/`、`pathintegral/`、`csw/`、`glc/`）；规则见 `datasets/README.md`，权利分 `self / arxiv / book / rewritten` 四层，`book` 只进 `_internal/` |
 | `site/` | 静态站点（`site/index.html` 双击即开，无需服务器） |
 
 ## `01_corpus_zh/`：语料的形态
@@ -267,6 +267,27 @@ python tools/gen_docs.py        # taxonomy.md + MAP.md
 ```
 
 卡片为改写（`rights: rewritten`），公式照录、出处逐条标印刷页与 tex 锚点；`proof.status=sketch` 的卡必须写缺口说明。与 [`papers/WIT-1989-JONES/`](papers/WIT-1989-JONES/README.md) 的 49 页讲义、97 页注疏本、六场研讨班记录互为“叙事 / 对照 / 原子断言”三层。
+
+### 资料卡试点：几何 Langlands（`datasets/glc/`）
+
+把陈麟《Introduction to Geometric Langlands Theory》（清华 2023 秋讲义，2025-08-08 修订，85 页、16 章 119 节）拆成 **154 张概念卡**，九条轨道：O 总览 → A 整体类域论 → B Hecke 特征层与几何 Satake → C Whittaker 与 Laumon → D Fourier 与洁净性 → E 因子化与 Ran 空间 → F 消失与范畴猜想 → G 谱侧与 Hitchin → H 局部等价与证明架构。
+
+这一批的独特点是**逐卡外部核验**：8 名 drafter 起草，16 名 verifier 一章一人独立复核，逐句对齐讲义原句后再去 nLab / Stacks Project / 讲义参考文献逐字找依据，记下「哪句支持哪条断言」。结果 **external-confirmed 66 张、source-only 88 张、rejected 0**；核验抓出 9 处实质错误（水平 vs 临界水平、Whittaker 指数符号、$\operatorname{QLisse}$ 的定义、范畴迹的单位/余单位、$t$-正合性、平均函子基础情形、消失定理秩条件、$P=G$ 归属、整体函子提升方向），已全部改正并复验。
+
+- [`README.md`](datasets/glc/README.md)：核验状态表、九条轨道、生产流程、9 条修订记录、纠错办法
+- [`taxonomy.md`](datasets/glc/taxonomy.md)：154 张卡总表，逐卡标核验状态（E / S）与出处
+- [`verification.jsonl`](datasets/glc/verification.jsonl)：一行一卡的核验台账（对齐结论、核验页面、URL、`last_revised`、支持断言、判定）
+- [`SCHEMA.md`](datasets/glc/SCHEMA.md) / [`workflow/PRODUCTION.md`](datasets/glc/workflow/PRODUCTION.md)：卡片规范（csw v1 + `verification` 扩展）与四道闸
+
+```bash
+cd datasets/glc
+python tools/lint_glc.py       # 154 卡 0 error / 0 warning
+python tools/build_index.py    # index.jsonl
+python tools/render_md.py      # md/
+python tools/gen_docs.py       # taxonomy.md + MAP.md
+```
+
+`source-only` 是诚实标注，不是错误：它表示讲义自创的构造或未成文定理在公开权威页面找不到逐字对应，卡片仍严格对齐原句，引用时按讲义页码引即可。
 
 ## 成品 PDF 与原文（合规说明）
 

@@ -32,6 +32,7 @@
 | `pathintegral/` | 单章资料卡（第 2 章路径积分）：概念卡 + 例子卡 + 框架地图 + 使用说明 + 生产工作流 | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
 | `kw06/` | 单篇论文资料卡（Kapustin–Witten 2006）：概念卡 + 推导卡 + 骨架图 + 渲染 Markdown | 一张可独立使用的卡（JSON） | 单卡 3,000 字 |
 | `csw/` | 单篇论文资料卡（Witten 1989，Chern–Simons / Jones 多项式）：31 张概念卡 + 9 张例子卡 + 依赖图 + 生产工作流 | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
+| `glc/` | 整本讲义资料卡（陈麟《几何 Langlands 讲义》，16 章）：154 张概念卡，逐卡经外部核验（`verification.jsonl` 记对齐结论与核验页面） | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
 
 `bench/` 与训练集严格隔离：出题时不得使用 `parallel/`、`deepread/` 中已出现的同一段落。
 

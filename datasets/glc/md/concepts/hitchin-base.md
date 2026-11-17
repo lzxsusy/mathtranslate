@@ -1,0 +1,53 @@
+---
+id: glc/concept/hitchin-base
+type: concept
+track: G
+---
+
+# Hitchin 底空间
+
+> Chevalley 商丛 $\mathfrak c_{\check G,\Omega}\simeq\bigoplus_i\Omega_X^{d_i+1}$ 的全局截面；经典上为 Hitchin 底空间，量子上为临界中心谱。
+
+**问题**：Hitchin 底空间 $\operatorname{Hitch}_{\check G}(X)$ 怎样用 $\check{\mathfrak g}$ 的指数写出，为什么说「同一个仿射空间出现两次」？
+
+## 定义
+
+仍记自守群为 $G$、其 Langlands 对偶群为 $\check G$，并假设 $\check G$ 为伴随型。记 $\check{\mathfrak g}=\operatorname{Lie}(\check G)$，固定 Borel 子群 $\check B\subset\check G$，置 $\mathfrak c_{\check G}:=\check{\mathfrak g}/\!/\check G=\operatorname{Spec} k[\check{\mathfrak g}]^{\check G}$ 与 $\mathfrak c_{\check G,\Omega}:=(\mathfrak c_{\check G})_{\Omega_X}$。若 $d_1,\ldots,d_r$ 为 $\check{\mathfrak g}$ 的指数，则 $\mathfrak c_{\check G,\Omega}\simeq\bigoplus_i\Omega_X^{d_i+1}$，Hitchin 底空间为 $\operatorname{Hitch}_{\check G}(X):=\Gamma(X,\mathfrak c_{\check G,\Omega})$。本章的要点是，同一个仿射空间出现两次：在经典情形，它是 Hitchin 底空间；在量子情形，它是临界水平中心的相伴分次。
+
+*记号*：$k$ 为基域；$\check{\mathfrak g}/\!/\check G$ 为 Chevalley 商；$(\cdot)_{\Omega_X}$ 表示按次数用 $\Omega_X$ 作扭转；$r=\operatorname{rank}\check{\mathfrak g}$。
+
+## 要点
+
+- $\check G$ 取伴随型是本章的 standing assumption。
+- $\mathfrak c_{\check G}$ 是 Chevalley 商 $\check{\mathfrak g}/\!/\check G=\operatorname{Spec} k[\check{\mathfrak g}]^{\check G}$，$\mathfrak c_{\check G,\Omega}$ 是它的 $\Omega_X$-扭转。
+- 用 $\check{\mathfrak g}$ 的指数 $d_1,\ldots,d_r$ 可写 $\mathfrak c_{\check G,\Omega}\simeq\bigoplus_i\Omega_X^{d_i+1}$。
+- Hitchin 底空间是全局截面 $\Gamma(X,\mathfrak c_{\check G,\Omega})$，因而是仿射空间。
+- 同一个仿射空间出现两次：经典情形是 Hitchin 底空间，量子情形是临界水平中心的相伴分次。
+
+## 关键公式
+
+- $\mathfrak c_{\check G}:=\check{\mathfrak g}/\!/\check G=\operatorname{Spec} k[\check{\mathfrak g}]^{\check G},\qquad \mathfrak c_{\check G,\Omega}:=(\mathfrak c_{\check G})_{\Omega_X}$
+- $\mathfrak c_{\check G,\Omega}\simeq\bigoplus_i\Omega_X^{d_i+1}$
+- $\operatorname{Hitch}_{\check G}(X):=\Gamma(X,\mathfrak c_{\check G,\Omega})$
+
+## 易错点
+
+- 指数 $d_i$ 是 $\check{\mathfrak g}$（对偶侧）的，不是 $G$ 的；本章一切构造都在 $\check G$ 一侧。
+- 按公式 $\mathfrak c_{\check G,\Omega}\simeq\bigoplus_i\Omega_X^{d_i+1}$，扭转是按次数逐项作，不是整体乘 $\Omega_X$。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），第 14 章 章首（Hitchin 系统的量子化），p.67（PDF p.67），`源码/chapters/ch14.tex:3-8（Chevalley 商丛与 Hitchin 底空间）`
+
+## 核验
+
+状态：`external-confirmed`（2026-11-18）
+- BD：https://math.uchicago.edu/~drinfeld/langlands/QuantizationHitchin.pdf — “Set C = Cg := Spec(Sym g)^G … CωX the ωX-twist of C … Set Hitch(X)=Hitchg(X):=Γ(X,CωX) … non-canonically isomorphic to the vector space ∏_I Γ(X,ωX^{⊗di})”——支持卡的定义 c_Ǧ=ǧ//Ǧ、c_{Ǧ,Ω} 与 Hitch_{Ǧ}(X)=Γ(X,c_{Ǧ,Ω})，以及底空间是仿射空间。
+- Frenkel05：https://arxiv.org/abs/hep-th/0512172 — “Opg(D) ≃ Proj(D) × ⊕_{j=2}^ℓ Ω^{⊗(dj+1)}(D)”，及“Opg(X) ≃ Proj(X) × ⊕_{j=2}^ℓ H^0(X,Ω^{⊗(dj+1)})”——支持 c_{Ǧ,Ω}≃⊕_i Ω_X^{d_i+1}，并说明 oper 空间是这一向量空间的挠子（Proj 项）。
+- nLab: Hitchin fibration：https://ncatlab.org/nlab/show/Hitchin+fibration — “a canonical map from the cotangent bundle of the moduli space to the so-called Hitchin base, and the map is called the Hitchin fibration”——支持“Hitchin 底空间/Hitchin 纤维化”的术语与角色，未给 ⊕Ω^{d_i+1} 公式。
+
+## 关联
+
+- `glc/concept/g-oper`
+- `glc/concept/opers-hitchin-torsor`
+- `glc/concept/feigin-frenkel-center`

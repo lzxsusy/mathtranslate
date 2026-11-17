@@ -1,0 +1,83 @@
+---
+id: glc/concept/gl2-fourier-description
+type: concept
+track: D
+---
+
+# GL_2 情形：Aut'_E 的 Fourier 描述
+
+> G=GL_2 时把 Aut'_E 写成 j_!q^*L_E 的 Fourier 变换，从而在向量丛描述成立的开部分得到不可约反常层。
+
+**问题**：GL_2 情形为什么必须用 Coh_1^+ 而不是 Coh'_1 来作 Fourier 变换？
+
+## 定义
+
+取 $G=\operatorname{GL}_2$，记
+\[
+\overline{\operatorname{Bun}}'_2=\{0\longrightarrow\Omega_X\longrightarrow M\longrightarrow L\longrightarrow0,\quad L\in\operatorname{Coh}_1\}
+\]
+为凝聚扩张叠；用于自守层的叠 $\operatorname{Bun}'_2$ 是其中中间项 $M$ 局部自由的开子叠。令 $\operatorname{Coh}_1$ 为秩一凝聚层的叠，并令
+\[
+\operatorname{Coh}_1^+:=\{(L,\ \mathcal{O}_X\xrightarrow{s}L)\},\qquad \operatorname{Coh}'_1\subset\operatorname{Coh}_1^+
+\]
+为 $s$ 在一般点单射的开子叠。在 $\operatorname{Coh}'_1$ 上 $s$ 的余核是挠层；令 $q:\operatorname{Coh}'_1\to\operatorname{Tor}$ 为这个商映射。因此下文所用的层是 $q^*\mathcal{L}_E$，而不是 $\mathcal{L}_E$ 到 $\operatorname{Coh}'_1$ 的字面限制。
+
+*记号*：$\operatorname{Coh}_1$ 是秩一凝聚层的叠；$\operatorname{Coh}_1^+\to\operatorname{Coh}_1$ 在 $H^1(X,L)=0$ 的开子叠上是纤维为 $\operatorname{Hom}(\mathcal{O}_X,L)$ 的向量丛；$j:\operatorname{Coh}'_1\hookrightarrow\operatorname{Coh}_1^+$ 为开嵌入。
+
+## 要点
+
+- 必须在 $\operatorname{Coh}_1$ 中满足 $H^1(X,L)=\operatorname{Ext}^1(\mathcal{O}_X,L)=0$ 的开子叠上工作，此时 $\operatorname{Coh}_1^+\to\operatorname{Coh}_1$ 才是向量丛。
+- 必须使用 $\operatorname{Coh}_1^+$ 而不是 $\operatorname{Coh}'_1$，因为零截面是向量丛的一部分。
+- Serre 对偶给出 $\operatorname{Ext}^1(L,\Omega_X)\simeq\operatorname{Hom}(\mathcal{O}_X,L)^{\vee}$，故纤维为 $\operatorname{Ext}^1(L,\Omega_X)$ 的扩张叠是对偶向量丛。
+- Whittaker 映射恰是配对 $\operatorname{Hom}(\mathcal{O}_X,L)\times\operatorname{Ext}^1(L,\Omega_X)\to\operatorname{Ext}^1(\mathcal{O}_X,\Omega_X)\simeq k$。
+- 结论只在 $\operatorname{Bun}'_2$ 上具有向量丛描述的开部分成立。
+
+## 关键公式
+
+- $\operatorname{Ext}^1(L,\Omega_X)\simeq\operatorname{Hom}(\mathcal{O}_X,L)^{\vee}$
+- $\operatorname{Hom}(\mathcal{O}_X,L)\times\operatorname{Ext}^1(L,\Omega_X)\longrightarrow\operatorname{Ext}^1(\mathcal{O}_X,\Omega_X)\simeq k$
+- $\operatorname{Aut}'_E\simeq\mathsf{F}(j_!q^*\mathcal{L}_E)$
+
+## 定理与证明
+
+### $\operatorname{GL}_2$ 情形的 Fourier 描述（要点（有缺口））
+
+在 $\operatorname{Coh}_1$ 中满足 $H^1(X,L)=\operatorname{Ext}^1(\mathcal{O}_X,L)=0$ 的开子叠上，
+\[
+\operatorname{Aut}'_E\simeq\mathsf{F}(j_!q^*\mathcal{L}_E),\qquad j:\operatorname{Coh}'_1\hookrightarrow\operatorname{Coh}_1^+.
+\]
+若 $j_!=j_{!*}=j_*$，则 $j_!q^*\mathcal{L}_E$ 为单反常层，因而其 Fourier 变换是不可约反常层。
+
+1. 用笛卡尔方块把 $\operatorname{Bun}'_2$ 的局部模型写成扩张 $0\to\Omega_X\to M\to L\to0$ 与 $\mathcal{O}_X\to L$ 的拉回。  
+   *为什么*：该方块中 $M'$ 按定义是拉回。
+2. 在该开子叠上把 $\operatorname{Coh}_1^+\to\operatorname{Coh}_1$ 识别为纤维 $\operatorname{Hom}(\mathcal{O}_X,L)$ 的向量丛，把扩张叠识别为纤维 $\operatorname{Ext}^1(L,\Omega_X)$ 的对偶向量丛。  
+   *为什么*：Serre 对偶给出 $\operatorname{Ext}^1(L,\Omega_X)\simeq\operatorname{Hom}(\mathcal{O}_X,L)^{\vee}$。
+3. 把 Whittaker 映射识别为该向量丛与其对偶之间的配对，从而 $\operatorname{Aut}'_E$ 等于 $j_!q^*\mathcal{L}_E$ 的 Fourier 变换。  
+   *为什么*：$\mathsf{F}$ 的核正是配对拉回的 $\mathcal{L}_{\psi}$。
+4. 若 $j_!=j_{!*}=j_*$，则 $j_!q^*\mathcal{L}_E$ 为单反常层，$t$-正合的 $\mathsf{F}$ 把它送到不可约反常层。  
+   *为什么*：$\mathsf{F}$ 保持单反常层的不可约性。
+
+> 缺口：讲义只给出上述论证，未逐项验证 Serre 对偶与配对的计算；最后一步以 $j_!=j_{!*}=j_*$ 为条件，而该洁净性只在 §5.4 对线丛（$\operatorname{Bun}_1$）情形证明，一般情形未证。
+
+*出处*：§5.3 G=GL_2 的情形（未编号陈述）/ 原书 p.33–34
+
+
+## 易错点
+
+- 若取 $\mathcal{L}_E$ 到 $\operatorname{Coh}'_1$ 的字面限制，会丢掉沿挠商的必要拉回；正确对象是 $q^*\mathcal{L}_E$。
+- $\overline{\operatorname{Bun}}'_2$ 与 $\operatorname{Bun}'_2$ 不同：后者要求中间项 $M$ 局部自由。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§5.3 G=GL_2 的情形，p.33-34（PDF p.33-34），`源码/chapters/ch05.tex:34-52（§5.3 GL_2 情形的 Fourier 描述）`
+
+## 核验
+
+状态：`source-only`（2026-11-18）
+- Stacks Project：https://stacks.math.columbia.edu/tag/0BS2 — For X proper of dimension ≤1 over a field, Ext^i_X(K,ω_X^•)≅Hom_k(H^{-i}(X,K),k); with K=L^∨⊗Ω_X this gives Ext^1(L,Ω_X)≅Hom(O_X,L)^∨.
+
+## 关联
+
+- `glc/concept/fourier-deligne-transform`
+- `glc/concept/preliminary-automorphic-sheaf`
+- `glc/concept/drinfeld-clean-extension-gl2`

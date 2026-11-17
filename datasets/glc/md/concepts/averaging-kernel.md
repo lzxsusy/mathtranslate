@@ -1,0 +1,53 @@
+---
+id: glc/concept/averaging-kernel
+type: concept
+track: F
+---
+
+# 平均核与 Cauchy 分解
+
+> 把平均函子实现为 Ran 表示范畴中 $\operatorname{Sym}^d(\mathrm{St}_m\otimes E)$ 在 $X^{(d)}$ 上的部分，并用 Cauchy 分解读出其 Satake 含义。
+
+**问题**：Cauchy 分解右边的分拆求和为什么在 $\ell(\mu)>\min(m,r)$ 处被截断？
+
+## 定义
+
+取 $G=\operatorname{GL}_m$，从而 $\check G=\operatorname{GL}_m$，令 $\mathrm{St}_m$ 为标准表示。$\operatorname{Rep}(\operatorname{GL}_m)_{\mathrm{Ran}}$ 中与平均核对应的对象为 $\mathcal{A}_{E,d}:=(\operatorname{Sym}^d(\mathrm{St}_m\otimes E))_{X^{(d)}}$，它支撑于自然映射 $X^{(d)}\to\operatorname{Ran}(X)$。采用与几何 Satake 对应相同的归一化，Ran Hecke 作用将 $\mathcal{A}_{E,d}$ 映为 $\operatorname{Av}_E^d$。原因在局部 Satake 纤维上可见：在点 $x\in X$ 上，Cauchy 分解给出 $\operatorname{Sym}^d(\mathrm{St}_m\otimes E_x)\simeq\bigoplus_{\mu\vdash d,\ \ell(\mu)\le\min(m,r)}S_\mu(\mathrm{St}_m)\otimes S_\mu(E_x)$。在几何 Satake 下，$S_\mu(\mathrm{St}_m)$ 对应于由 $\mu$ 标记的 Schubert 分层的 IC 层，而 $S_\mu(E_x)=E_x^\mu$。
+
+*记号*：$\mu\vdash d$ 表示 $d$ 的分拆，$\ell(\mu)$ 是分拆长度，$S_\mu$ 是 Schur 函子；$E^{(d)}$ 表示局部系统到 $X^{(d)}$ 的对称下降。$\mathcal{A}_{E,d}$ 是 Ran 空间上支撑在 $X^{(d)}$ 的对象。
+
+## 要点
+
+- 平均核 $\mathcal{A}_{E,d}=(\operatorname{Sym}^d(\mathrm{St}_m\otimes E))_{X^{(d)}}$ 是 Ran 表示范畴中支撑于 $X^{(d)}\to\operatorname{Ran}(X)$ 的对象。
+- 归一化取成与几何 Satake 词典一致时，Ran Hecke 作用把 $\mathcal{A}_{E,d}$ 送到 $\operatorname{Av}_E^d$。
+- Cauchy 分解按分拆 $\mu\vdash d$ 拆开，截断为 $\ell(\mu)\le\min(m,r)$。
+- 几何 Satake 下 $S_\mu(\mathrm{St}_m)$ 对应 Schubert 分层的 IC 层，$S_\mu(E_x)=E_x^\mu$；这就是修改核中 Laumon 层 $\mathcal{L}_E^d$ 的 Satake 含义。
+- 等价地，Cauchy 分解的右端是不变空间 $(\mathrm{St}_m^{\otimes d}\otimes E_x^{\otimes d})^{S_d}$，并不是对每个直和项再取一次 $S_\mu$ 不变量。
+
+## 关键公式
+
+- $\mathcal{A}_{E,d}:=(\operatorname{Sym}^d(\mathrm{St}_m\otimes E))_{X^{(d)}}$
+- $\operatorname{Sym}^d(\mathrm{St}_m\otimes E_x)\simeq\bigoplus_{\substack{\mu\vdash d\\ \ell(\mu)\le\min(m,r)}}S_\mu(\mathrm{St}_m)\otimes S_\mu(E_x)$
+
+## 易错点
+
+- 截断 $\ell(\mu)\le\min(m,r)$ 来自维数：$\wedge^i\mathrm{St}_m=0$（$i>m$）与 $\operatorname{rank}E_x=r$，长度更长的分拆没有贡献。
+- 把 Cauchy 分解读成“每项再取 $S_\mu$ 不变量”会算错：右端整体等于 $S_d$-不变空间，不能逐项再取不变。
+- $\mathcal{A}_{E,d}$ 支撑在 $X^{(d)}\to\operatorname{Ran}(X)$ 上，而不是整个 Ran 空间：Ran 上的对象允许任意有限子集，这里只用到带重数的 $d$ 点部分。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§9.4 恢复函子 Av_E^d，p.50（PDF p.50），`§9.4 恢复函子 Av_E^d（ch09.tex:73-85，未编号，p.50）`
+
+## 核验
+
+状态：`external-confirmed`（2026-11-18）
+- Gaitsgory, Recent progress in geometric Langlands theory (Seminaire Bourbaki, talk of 2016-02-16)：https://arxiv.org/abs/1606.09462 — §2.4.4「the functor Av_{E,d} is given by the action of a particular object A_{E,d} ∈ Rep(Ǧ,Ran(X))」，且「the fiber of Ev(A_{E,d}) at σ ∈ LocSys_Ǧ(X) is given by H(X^{(d)}, (E⊗E_σ)^{(d)})」，并「identifies with Sym^d(H(X, E⊗E_σ))」——支持卡中 A_{E,d}、Ran Hecke 作用送到 Av_E^d、以及纤维公式三条。
+- nLab, geometric Satake equivalence：https://ncatlab.org/nlab/show/geometric+Satake+equivalence — 「DMod(Gr_G)^{L^+G} ≃ Rep(^L G)」给出 Satake 词典的范畴层：球面 D-模 ↔ 表示，Schubert 分层的 IC 层对应 Weyl 群轨道上标准表示——支持卡中「S_μ(St_m) 对应 μ 标记的 Schubert 分层 IC 层」（方向一致；nLab 页未逐条列出 IC 对应）。
+- 标准 Cauchy 分解（无逐字外部页面）： — 卡中 Cauchy 分解及其截断 ℓ(μ)≤min(m,r) 是经典恒等式：S_μ(St_m)=0 当 ℓ(μ)>m，S_μ(E_x)=0 当 ℓ(μ)>r。已查 nLab Schur functor（2024-06-03）、Howe duality（2025-08-21）、Schur-Weyl duality（2026-01-18）三页，均无此逐字陈述，故记 partial；ch09.tex:77-78 给出同一公式。
+
+## 关联
+
+- `glc/concept/upper-modification-averaging`
+- `glc/concept/generalized-vanishing-theorem`
+- `glc/concept/elementary-vanishing-lemma`

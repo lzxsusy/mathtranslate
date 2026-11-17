@@ -1,0 +1,74 @@
+---
+id: glc/concept/elementary-vanishing-lemma
+type: concept
+track: F
+---
+
+# 初等消失引理
+
+> 秩 $m$ 的 $E'$ 与不可约秩 $r>m$ 的 $E$ 作张量后，其对称积上的整体上同调在 $d>rm(2g-2)$ 时为零。
+
+**问题**：为什么 $d$ 只要超过 $\dim H^1(X,E'\otimes E)$，$X^{(d)}$ 上的整体截面就整体消失？
+
+## 定义
+
+设 $X$ 是亏格 $g$ 的光滑射影曲线，$E$ 是不可约局部系统、$\operatorname{rank}(E)=r>m$，$E'$ 是任意秩 $m$ 局部系统。记 $L=E'\otimes E$，$L^{(d)}$ 为 $L$ 到对称积 $X^{(d)}$ 的对称下降。引理断言：若 $d>rm(2g-2)$，则 $\mathrm{R}\Gamma(X^{(d)},(E'\otimes E)^{(d)})=0$。
+
+*记号*：$(E'\otimes E)^{(d)}$ 是 $E'\otimes E$ 在 $X^{(d)}$ 上的对称下降；$\mathrm{R}\Gamma$ 是导出整体截面；$rm(2g-2)=\dim H^1(X,E'\otimes E)$。
+
+## 要点
+
+- 假设：$E$ 不可约、$\operatorname{rank}(E)=r>m$，$E'$ 为任意秩 $m$ 局部系统。
+- 结论：$d>rm(2g-2)$ 时 $\mathrm{R}\Gamma(X^{(d)},(E'\otimes E)^{(d)})=0$。
+- $H^0(X,E'\otimes E)=0$ 的理由是：任何映射 $(E')^\vee\to E$ 都为零。
+- $\mathrm{R}\Gamma(X,L)$ 集中在次数 $1$，且 $\dim H^1(X,L)=(2g-2)\operatorname{rank}(L)=rm(2g-2)$。
+- Künneth 把它化成外幂 $\bigwedge^d H^1(X,L)$，超过维数即为零；这正是定理 9.1.1 中门槛 $rm(2g-2)$ 的来源。
+
+## 关键公式
+
+- $\mathrm{R}\Gamma(X^{(d)},L^{(d)})\simeq\operatorname{Sym}^d\mathrm{R}\Gamma(X,L)\simeq\bigwedge^dH^1(X,L)[-d]$
+- $\dim H^1(X,L)=(2g-2)\operatorname{rank}(L)=rm(2g-2)$
+
+## 定理与证明
+
+### 引理 9.4.1（完整）
+
+设 $E$ 不可约且秩 $r>m$，$E'$ 是任意秩 $m$ 局部系统。若 $d>rm(2g-2)$，则 $\mathrm{R}\Gamma(X^{(d)},(E'\otimes E)^{(d)})=0$。
+
+1. 置 $L=E'\otimes E$。由于 $E$ 不可约且 $\operatorname{rank}(E)>\operatorname{rank}(E')$，任意映射 $(E')^\vee\to E$ 都为零，故 $H^0(X,L)=0$。  
+   *为什么*：非零映射的像必是 $E$ 的非零子局部系统，由不可约性只能是 $E$ 本身，于是 $\operatorname{rank}(E')\ge\operatorname{rank}(E)$，矛盾。
+2. 对 $E^\vee$ 应用同一论证得到 $H^0(X,L^\vee)=0$。  
+   *为什么*：$E^\vee$ 仍不可约、秩仍为 $r>m$，而 $L^\vee=(E')^\vee\otimes E^\vee$，论证逐字适用。
+3. Verdier 对偶给出 $H^2(X,L)=0$。  
+   *为什么*：曲线上的对偶把 $H^2(X,L)$ 识别为 $H^0(X,L^\vee)$ 的对偶，而后者已为零。
+4. 因此 $\mathrm{R}\Gamma(X,L)$ 集中在次数 $1$，且 $\dim H^1(X,L)=(2g-2)\operatorname{rank}(L)=rm(2g-2)$。  
+   *为什么*：de Rham 复形 $0\to L\to L\otimes\Omega_X^1\to0$ 的 Euler 示性数为 $-\operatorname{rank}(L)\deg\Omega_X^1=-(2g-2)\operatorname{rank}(L)$（$\deg\Omega_X^1=2g-2$）；$H^0=H^2=0$ 时它就等于 $-\dim H^1$。
+5. Künneth 公式给出 $\mathrm{R}\Gamma(X^{(d)},L^{(d)})\simeq\operatorname{Sym}^d\mathrm{R}\Gamma(X,L)\simeq\bigwedge^dH^1(X,L)[-d]$。  
+   *为什么*：对称下降与 Künneth 相容；$\mathrm{R}\Gamma(X,L)$ 只剩 $H^1$ 一项，其对称幂落在外幂上。
+6. 当 $d>\dim H^1(X,L)$ 时最后的外幂为零，引理得证。  
+   *为什么*：外幂 $\bigwedge^dV$ 的次数超过 $\dim V$ 时为零。
+
+*出处*：引理 9.4.1 / 原书 p.50
+
+
+## 易错点
+
+- $\bigwedge^dV$ 在 $d=\dim V$ 时是一维的、不为零：门槛必须是严格不等式 $d>rm(2g-2)$。
+- 第 3 步不是“由 $H^0$ 直接得 $H^2=0$”：要先用 $E^\vee$ 把 $H^0(X,L^\vee)$ 也证成零，Verdier 对偶才给出 $H^2(X,L)=0$。
+- 这里 $\deg L=0$ 是因为 $E'$、$E$ 是局部系统；Euler 示性数的贡献全部来自 $\Omega_X^1$ 的次数 $2g-2$，不是来自 $L$ 自身的次数。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§9.4 恢复函子 Av_E^d，p.50（PDF p.50），`引理 9.4.1（ch09.tex:86-96，p.50）`
+
+## 核验
+
+状态：`source-only`（2026-11-18）
+- Gaitsgory, On a vanishing conjecture appearing in the geometric Langlands correspondence, Annals 160(2) 617-682：https://arxiv.org/abs/math/0204081 — Gai04 只以同一门槛 d>(2g−2)·n·rk(E) 陈述 Av_E^d 的消失（Conj 1.3）与尖点性（Lemma 2.17），没有讲义引理 9.4.1 这条「RΓ(X^{(d)},(E'⊗E)^{(d)})=0」的独立陈述；引理的证明要素（(E')^∨→E 必为零、H^1 维数、(2g−2)rank L）在 Gai04 中未以该形式出现。故卡只能保证与讲义一致。
+- 经典代数几何（Riemann–Roch / Künneth / Verdier 对偶）： — 引理的定量内容：L=E'⊗E 次数 0，χ(L)=0，故 dim H^1=(2g−2)rank(L)=rm(2g−2)；Künneth 给 Sym^d RΓ(X,L)≃⋀^d H^1[-d]。这些是标准事实，未取到逐字页面，仅作一致性核对。
+
+## 关联
+
+- `glc/concept/averaging-kernel`
+- `glc/concept/averaging-vanishing-theorem`
+- `glc/concept/restricted-local-systems`

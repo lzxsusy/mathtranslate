@@ -1,0 +1,52 @@
+---
+id: glc/concept/whittaker-character
+type: concept
+track: C
+---
+
+# Whittaker 特征标（ρ 移位）
+
+> 由简单根坐标、留数与加性特征标 ψ 复合得到 Ṅ(K_x) 上的非退化特征标 Ψ_x；上点表示 ρ 移位。
+
+**问题**：标准非退化 Whittaker 特征标 Ψ_x 是如何从简单根坐标造出来的，上点又表示什么？
+
+## 定义
+
+令 $N\subset\operatorname{GL}_n$ 为上三角幺幂子群，固定非平凡加性特征标 $\psi:k\to\overline{\mathbb{Q}}_\ell^\times$。在 $x$ 处，标准非退化 Whittaker 特征标通过简单根坐标得到：$\dot N(K_x)\to(\dot N/[\dot N,\dot N])(K_x)\xrightarrow{\sim}\bigoplus_{\alpha\in\Delta}K_x\otimes\Omega_x\xrightarrow{\operatorname{Res}}\bigoplus_{\alpha\in\Delta}k(x)\xrightarrow{\operatorname{Tr}_{k(x)/k}\circ\Sigma}k\xrightarrow{\psi}\overline{\mathbb{Q}}_\ell^\times$，其中 $\Omega_x$ 是 $x$ 处完备化的典范线。所得特征标记为 $\Psi_x:\dot N(K_x)\to\overline{\mathbb{Q}}_\ell^\times$，上点表示 $\rho$ 移位。$\dot G(K_x)$ 上的 Whittaker 函数是满足 $W(ug)=\Psi_x(u)W(g)$（$u\in\dot N(K_x)$）的函数 $W$，通常还要求右 $\dot G(\mathcal{O}_x)$ 不变性。
+
+*记号*：$\Delta$ 为简单根集；$\Omega_x$ 为 $x$ 处完备化的典范线；$\operatorname{Res}$ 为留数；复合 $\operatorname{Tr}_{k(x)/k}\circ\Sigma$ 把 $\bigoplus_{\alpha\in\Delta}k(x)$ 送到 $k$（讲义未单独解释 $\Sigma$）。上点统一表示 $\rho$ 移位。
+
+## 要点
+
+- $\rho$ 移位在 $G=\operatorname{GL}_n$ 时局部可写成 $\dot G_n(K_x)=\{(a_{ij})\mid a_{ij}\in K_x\otimes\Omega_x^{\otimes(j-i)}\}$；因此第一条上副对角线上的元素属于 $K_x\Omega_x$，可以对其简单根坐标取留数。
+- 特征标经由 $\dot N/[\dot N,\dot N]\simeq\bigoplus_{\alpha\in\Delta}K_x\otimes\Omega_x$ 分解，即只由 $n-1$ 个简单根坐标决定；这正是它被称为「经由简单根分解」的特征标的原因。
+- Whittaker 函数由等变性 $W(ug)=\Psi_x(u)W(g)$ 定义；讲义通常还加右 $\dot G(\mathcal{O}_x)$ 不变性，于是 $W$ 实际定义在 $\dot G(K_x)/\dot G(\mathcal{O}_x)$ 上（§3.4 即如此使用）。
+
+## 关键公式
+
+- $\dot N(K_x)\longrightarrow(\dot N/[\dot N,\dot N])(K_x)\xrightarrow{\ \sim\ }\bigoplus_{\alpha\in\Delta}K_x\otimes\Omega_x\xrightarrow{\operatorname{Res}}\bigoplus_{\alpha\in\Delta}k(x)\xrightarrow{\operatorname{Tr}_{k(x)/k}\circ\Sigma}k\xrightarrow{\psi}\overline{\mathbb{Q}}_\ell^\times$
+- $\Psi_x:\dot N(K_x)\longrightarrow\overline{\mathbb{Q}}_\ell^\times$
+- $\dot G_n(K_x)=\{(a_{ij})\mid a_{ij}\in K_x\otimes\Omega_x^{\otimes(j-i)}\}$
+- $W(ug)=\Psi_x(u)W(g),\qquad u\in\dot N(K_x)$
+
+## 易错点
+
+- 上点不是笔误：$\dot N$、$\dot G$ 表示 $\rho$ 移位后的形式，$\Psi_x$ 的定义域是 $\dot N(K_x)$ 而不是 $N(K_x)$；去掉上点得到的是另一个（未扭的）对象。
+- 特征标只在 $\dot N$ 上定义，讲义没有在 $\dot G$ 上定义 $\Psi_x$；写 $W(ug)$ 时 $u$ 必须落在 $\dot N(K_x)$，$g$ 才在 $\dot G(K_x)$。
+- 留数只取在第一条上副对角线上（元素属于 $K_x\Omega_x$）；不是对 $\dot G$ 的所有矩阵元取留数。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§3.3 Whittaker 特征标与 ρ 移位，p.20-21（PDF p.20-21），`源码/chapters/ch03.tex:50-67（§3.3）`
+
+## 核验
+
+状态：`external-confirmed`（2026-11-18）
+- FGKV98：https://arxiv.org/abs/alg-geom/9703022 — ρ 移位：A_ij∈Ω_R^{j-i}（上点=Ω 扭）；Ψ_x(u)=∏_{i=1}^{n-1}ψ(Tr_{k_x/k}(Res_x u_{i,i+1}))
+- FGKV98：https://arxiv.org/abs/alg-geom/9703022 — 存在唯一 W_{γ,x}，右 GL_n^J(O_x) 不变、Ψ_x 等变、W(1)=1
+- nLab：https://ncatlab.org/nlab/show/Whittaker+function — Whittaker 函数的一般定义
+
+## 关联
+
+- `glc/concept/classical-hecke-eigenfunction`
+- `glc/concept/local-whittaker-eigenfunction`

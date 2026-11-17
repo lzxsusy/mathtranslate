@@ -1,0 +1,64 @@
+---
+id: glc/concept/adelic-uniformization
+type: concept
+track: B
+---
+
+# $k$-点上的阿代尔一致化
+
+> 在 $G$ 挠子都平凡时，$\operatorname{Bun}_G$ 的 $k$-点同构类等同于双商 $G(\mathcal{O}_X)\backslash G(\mathbb{A}_X)/G(K)$。
+
+**问题**：阿代尔一致化需要什么平凡性假设，左右挠子约定分别给出哪个次序的双商？
+
+## 定义
+
+令 $K=k(X)$，$K_x$ 为 $x\in X$ 处的完备局部域，并置 $\mathbb{A}_X=\prod'_x K_x$，$\mathcal{O}_X=\prod_x\mathcal{O}_x$。假设 $\operatorname{Spec} K$ 上、每个 $\operatorname{Spec} K_x$ 上以及每个有限扩张 $k'/k$ 的 $\operatorname{Spec} k'$ 上的所有 $G$ 挠子都是平凡的。则采用右挠子的约定，自然的粘合构造将 $\operatorname{Bun}_G$ 的 $k$-点同构类等同于双商 $G(\mathcal{O}_X)\backslash G(\mathbb{A}_X)/G(K)$；采用左挠子时，同一陈述写成通常的相反次序 $G(K)\backslash G(\mathbb{A}_X)/G(\mathcal{O}_X)$。
+
+*记号*：$\mathbb{A}_X=\prod'_x K_x$：限制积；$\mathcal{O}_X=\prod_x\mathcal{O}_x$；$G(\mathcal{O}_X)$、$G(\mathbb{A}_X)$、$G(K)$：相应环上的 $G$-值点构成的群；$k'/k$ 取遍有限扩张。
+
+## 要点
+
+- 假设是全局的：$\operatorname{Spec} K$、每个 $\operatorname{Spec} K_x$、以及每个有限扩张 $k'/k$ 的 $\operatorname{Spec} k'$ 上的 $G$ 挠子都平凡。
+- 右挠子约定给出 $G(\mathcal{O}_X)\backslash G(\mathbb{A}_X)/G(K)$；左挠子约定给出相反次序 $G(K)\backslash G(\mathbb{A}_X)/G(\mathcal{O}_X)$。
+- 当 $k$ 有限时，平凡性假设特别适用于单连通半单群（例如 $\operatorname{SL}_2$）以及 $\operatorname{GL}_n$；当 $k=\bar k$ 且特征为 $0$ 时适用于连通线性代数群，特征为 $p$ 时适用于连通约化群（注 2.2.5）。
+- 等同由自然的粘合构造给出，讲义未展开该构造。
+
+## 关键公式
+
+- $G(\mathcal{O}_X)\backslash G(\mathbb{A}_X)/G(K)$
+- $G(K)\backslash G(\mathbb{A}_X)/G(\mathcal{O}_X)$
+- $\mathbb{A}_X=\prod'_x K_x,\qquad\mathcal{O}_X=\prod_x\mathcal{O}_x$
+
+## 定理与证明
+
+### 定理 2.2.4（$k$-点上的阿代尔一致化）（要点（有缺口））
+
+在上述平凡性假设下，采用右挠子的约定，自然的粘合构造将 $\operatorname{Bun}_G$ 的 $k$-点同构类等同于双商 $G(\mathcal{O}_X)\backslash G(\mathbb{A}_X)/G(K)$；采用左挠子时，同一陈述写成相反次序 $G(K)\backslash G(\mathbb{A}_X)/G(\mathcal{O}_X)$。
+
+
+> 缺口：讲义只述不证：§2.2 称「自然的粘合构造」给出该等同，未写出构造与验证。
+
+*出处*：定理 2.2.4 / 原书 p.13
+
+
+## 易错点
+
+- 两种约定的双商次序相反：抄写公式时若不声明左右挠子约定，就会与讲义不一致。
+- 平凡性假设不是自动成立的：它是对 $G$ 与 $k$ 的条件（注 2.2.5 列出适用情形），去掉它陈述不成立。
+- 等同的是 $k$-点的同构类集合（双商是集合），不是叠的 $k$-点范畴，自同构信息不在此陈述之内。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§2.2 G 丛的模叠，p.13（PDF p.13），`源码/chapters/ch02.tex:51-55（定理 2.2.4）`
+
+## 核验
+
+状态：`external-confirmed`（2026-11-18）
+- nLab：https://ncatlab.org/nlab/show/Weil+uniformization+theorem — 原文「[X*,G]\[D*,G]/[D,G] ≃ Bun_X(G)」给出叠层面的 Weil 均匀化；取 k-点即得卡中定理 2.2.4 的双重商描述。
+- nLab：https://ncatlab.org/nlab/show/moduli+space+of+bundles — 表中「GL_n(K)\GL_n(A_K)//GL_n(O_K) … Bun_{GL_n(C)}(Σ) … by Weil uniformization theorem」把函数域双重商与 Bun 直接对应，支持卡中 G(O_X)\G(A_X)/G(K) 的写法。
+
+## 关联
+
+- `glc/concept/bun-g-artin-stack`
+- `glc/concept/tau-stack`
+- `glc/concept/global-hecke-stack`

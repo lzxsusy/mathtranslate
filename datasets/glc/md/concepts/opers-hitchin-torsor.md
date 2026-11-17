@@ -1,0 +1,75 @@
+---
+id: glc/concept/opers-hitchin-torsor
+type: concept
+track: G
+---
+
+# oper 空间是 Hitchin 底空间上的挠子
+
+> $\operatorname{Op}_{\check G}(X)$ 是 $\operatorname{Hitch}_{\check G}$ 的挠子，故 $\operatorname{gr}A\simeq A^{\mathrm{cl}}$。
+
+**问题**：命题 14.1.1 说 $\operatorname{Op}_{\check G}(X)$ 是什么的挠子，它的证明归约到哪三条引理？
+
+## 定义
+
+置 $A:=\Gamma(\operatorname{Op}_{\check G}(X),\mathcal O)$、$A^{\mathrm{cl}}:=\Gamma(\operatorname{Hitch}_{\check G}(X),\mathcal O)$。命题断言预叠 $\operatorname{Op}_{\check G}(X)$ 是向量空间 $\operatorname{Hitch}_{\check G}(X)$ 的挠子，因此 $A$ 的自然过滤的相伴分次为 $\operatorname{gr}A\simeq A^{\mathrm{cl}}$。命题的证明归约到引理 14.1.2（$\operatorname{Op}_{\check G}(X)$ 非空）、引理 14.1.3（令 $W$ 为遗忘函子 $\operatorname{Sch}_{/X_{\mathrm{dR}}}\to\operatorname{Sch}_{/X}$ 的右伴随，对 $X$ 上的向量丛 $E$ 有 $W(E)(D_x)=\operatorname{Jets}_x(E)$，而 $\operatorname{Op}^D_{\check G}$ 是 $D_X$-概形 $W(\mathfrak c_{\check G,\Omega})$ 的挠子）与引理 14.1.4（主 $\mathfrak{sl}_2$ 三元组给出 $X$ 上典范 $\check B$-挠子 $\mathcal F^{\mathrm{op}}_{\check B}$）。
+
+*记号*：$\mathcal O$ 为结构层；$\operatorname{Sch}_{/X_{\mathrm{dR}}}$ 为 $X$ 上的 $D_X$-概形范畴；$W$ 为遗忘函子 $\operatorname{Sch}_{/X_{\mathrm{dR}}}\to\operatorname{Sch}_{/X}$ 的右伴随；$\operatorname{Jets}_x(E)$ 为 $E$ 在 $x$ 处的射流空间；$\mathfrak c_{\check G,\Omega}$ 见「Hitchin 底空间」卡。
+
+## 要点
+
+- $\operatorname{Op}_{\check G}(X)$ 是 $\operatorname{Hitch}_{\check G}(X)$-挠子（就预叠而言）。
+- $\operatorname{gr}A\simeq A^{\mathrm{cl}}$ 是相伴分次层面的陈述：oper 空间上的函数与 Hitchin 底空间上的函数在该层面一致。
+- 证明分三块：非空性（引理 14.1.2）、$\operatorname{Op}^D_{\check G}$ 是 $W(\mathfrak c_{\check G,\Omega})$-挠子（引理 14.1.3）、典范 $\check B$-挠子的存在（引理 14.1.4）。
+- $W$ 把 $X$ 上的向量丛 $E$ 送到射流的 $D_X$-概形：$W(E)(D_x)=\operatorname{Jets}_x(E)$。
+
+## 关键公式
+
+- $A:=\Gamma(\operatorname{Op}_{\check G}(X),\mathcal O),\qquad A^{\mathrm{cl}}:=\Gamma(\operatorname{Hitch}_{\check G}(X),\mathcal O),\qquad \operatorname{gr}A\simeq A^{\mathrm{cl}}$
+- $W(E)(D_x)=\operatorname{Jets}_x(E),\qquad \operatorname{Op}^D_{\check G}\ \text{是}\ W(\mathfrak c_{\check G,\Omega})\ \text{的挠子}$
+
+## 定理与证明
+
+### 命题 14.1.1（oper 空间是 Hitchin 底空间上的挠子）（要点（有缺口））
+
+预叠 $\operatorname{Op}_{\check G}(X)$ 是向量空间 $\operatorname{Hitch}_{\check G}(X)$ 的挠子；因此若 $A:=\Gamma(\operatorname{Op}_{\check G}(X),\mathcal O)$、$A^{\mathrm{cl}}:=\Gamma(\operatorname{Hitch}_{\check G}(X),\mathcal O)$，则 $A$ 的自然过滤的相伴分次为 $\operatorname{gr}A\simeq A^{\mathrm{cl}}$。
+
+1. 先取 $\check G=\operatorname{PGL}_2$：oper 条件平凡化 $(\check{\mathfrak g}/\check{\mathfrak b})_{\mathcal F_{\check B}}\otimes\pi^*\Omega_X$，故 $\operatorname{Op}_{\operatorname{PGL}_2}(Y)$ 是 $\pi^*\Omega_X^{\otimes2}$ 的一个（可能为空的）挠子。  
+   *为什么*：此时简单负根方向只有一个，oper 条件退化为挠子条件。
+2. 当 $g>1$ 时由 $H^1(X,\Omega_X^{\otimes2})=0$ 得非空，$g=0,1$ 时直接构造；因此三个引理对 $\operatorname{PGL}_2$ 成立。  
+   *为什么*：这一步验证非空性（引理 14.1.2）在 $\operatorname{PGL}_2$ 情形成立。
+3. 对一般伴随型 $\check G$，沿主同态 $\operatorname{PGL}_2\to\check G$ 诱导一个 $\operatorname{PGL}_2$-oper，从而得到一个 $\check G$-oper，证明非空性。  
+   *为什么*：主同态把 $\operatorname{PGL}_2$ 的 oper 推进为 $\check G$ 的 oper。
+4. Kostant 同构 $(\check{\mathfrak g}^e)_{\mathcal F^{\mathrm{op}}_{\check B}}\otimes\Omega_X\simeq\mathfrak c_{\check G,\Omega}$ 把一般 oper 的自由参数识别为 Hitchin 向量丛。  
+   *为什么*：自由参数正是 $W(\mathfrak c_{\check G,\Omega})$-挠子的方向。
+5. 于是 $\operatorname{Op}^D_{\check G}$ 是 $W(\mathfrak c_{\check G,\Omega})$-挠子，进而 $\operatorname{Op}_{\check G}(X)$ 是 $\operatorname{Hitch}_{\check G}(X)$-挠子。  
+   *为什么*：取全局截面把 $D_X$-概形的挠子陈述化为向量空间上的挠子陈述。
+
+> 缺口：证明在 §14.2 末以 proof 环境给出，但对 $\operatorname{PGL}_2$ 只作要点式处理（$g=0,1$ 的「直接构造」未展开），三条引理未各自独立证明，$\operatorname{gr}A\simeq A^{\mathrm{cl}}$ 的过滤部分也未证；故记 sketch。
+
+*出处*：命题 14.1.1 / 原书 p.68（证明见 §14.2 末，p.69）
+
+
+## 易错点
+
+- 命题说的「挠子」是预叠意义下的，不要理解成某个具体 oper 空间被平凡化。
+- 引理 14.1.3 里的 $W$ 是遗忘函子 $\operatorname{Sch}_{/X_{\mathrm{dR}}}\to\operatorname{Sch}_{/X}$ 的右伴随，不是 Weil 限制。
+- $\operatorname{gr}A\simeq A^{\mathrm{cl}}$ 是相伴分次层面的陈述，不表示 $A$ 与 $A^{\mathrm{cl}}$ 同构。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§14.1 oper 作为 Hitchin 底空间上的挠子；§14.2 局部正规形，p.68-69（PDF p.68-69），`源码/chapters/ch14.tex:19-27（命题 14.1.1）、57-64（§14.2 末的证明）`
+
+## 核验
+
+状态：`external-confirmed`（2026-11-18）
+- BD：https://math.uchicago.edu/~drinfeld/langlands/QuantizationHitchin.pdf — “Let Opg be the VωX-torsor induced from the ωX^{⊗2}-torsor Opsl2 … we have a canonical map (43) Opg → Opg … Proposition. The mapping (43) is bijective.”——支持 Op^D_{Ǧ} 是 W(c_{Ǧ,Ω})-挠子、Op_{Ǧ}(X) 非空，从而命题 14.1.1 的挠子断言。
+- BD：https://math.uchicago.edu/~drinfeld/langlands/QuantizationHitchin.pdf — “Using 3.1.8 we identify Ag(X) with the coordinate ring of Opg(X) … canonical isomorphism gr Ag(X) −→ Acl_g(X)”——逐字支持 A:=Γ(Op,O)、A^cl:=Γ(Hitch,O)、gr A≃A^cl。
+- BD：https://math.uchicago.edu/~drinfeld/langlands/QuantizationHitchin.pdf — “for any g-oper F=(FB,∇) FB is isomorphic to a certain canonical B-bundle F0B which does not depend on F”——支持证明 step 4 的典范 B̌-挠子 F^op_{B̌}。
+
+## 关联
+
+- `glc/concept/g-oper`
+- `glc/concept/canonical-borel-torsor`
+- `glc/concept/hitchin-base`
+- `glc/concept/drinfeld-sokolov-gauge`

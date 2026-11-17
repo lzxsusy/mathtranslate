@@ -1,0 +1,72 @@
+---
+id: glc/concept/eisenstein-compatibility
+type: concept
+track: H
+---
+
+# Eisenstein 函子的 Langlands 相容性
+
+> 图表 (16.1)：自守 Eisenstein 函子 $\operatorname{Eis}_P$ 与谱侧 $\operatorname{Eis}^{\mathrm{spec}}_{\check P}$ 在 Langlands 函子下相容。
+
+**问题**：谱侧的 $\operatorname{Eis}^{\mathrm{spec}}_{\check P}$ 是由什么定义的？
+
+## 定义
+
+令 $P\subset G$ 为 Levi 商为 $M$ 的抛物子群，并令 $\check P\subset\check G$ 为对偶抛物子群。忽略标准的移位与扭转，自守 Eisenstein 函子为 $\operatorname{Eis}_P:\operatorname{DMod}(\operatorname{Bun}_M)\to\operatorname{DMod}(\operatorname{Bun}_G)$。在谱侧，它们由对应
+$$\operatorname{LocSys}_{\check M}\xleftarrow{q}\operatorname{LocSys}_{\check P}\xrightarrow{p}\operatorname{LocSys}_{\check G}$$
+定义。目标陈述是图表 (16.1) 交换。
+
+*记号*：$\operatorname{Bun}_M$、$\operatorname{Bun}_G$ 为相应群的丛叠；$\check P$ 是 $P$ 的对偶抛物，$\check M$ 为其 Levi 商；$\operatorname{QCoh}^!$ 表示重整化谱目标。
+
+## 要点
+
+- 图表 (16.1) 交换：$\mathbb L_G\circ\operatorname{Eis}_P$ 与 $\operatorname{Eis}^{\mathrm{spec}}_{\check P}\circ\mathbb L_M$ 自然同构（讲义只画方块，未写出复合等式）。
+- 谱侧函子只由对应 $q$、$p$ 定义；讲义没有写出 $q^!p_*$ 或 $p_*q^!$ 一类的显式公式。
+- 按 [CCF24] 的形式，(16.1) 的证明归约到两个方块：一个涉及 Whittaker 系数的几何方块，一个涉及表示的谱方块。
+- 在几何 Casselman–Schalika 等价 $\operatorname{Whit}(H)_x\simeq\operatorname{Rep}(\check H)_x$ 下，这一比较变为 Whittaker 系数的抛物限制与表示上相应 Chevalley 函子之间的相容性。
+- 常数项方向的对应陈述是 (16.2)，由 Kac–Moody–Whittaker 对偶证明（见「Kac–Moody–Whittaker 对偶」一卡）。
+
+## 关键公式
+
+- $\mathbb L_G\circ\operatorname{Eis}_P\simeq\operatorname{Eis}^{\mathrm{spec}}_{\check P}\circ\mathbb L_M$（图表 (16.1) 交换）
+- $\operatorname{LocSys}_{\check M}\xleftarrow{q}\operatorname{LocSys}_{\check P}\xrightarrow{p}\operatorname{LocSys}_{\check G}$
+- $\operatorname{Eis}_P:\operatorname{DMod}(\operatorname{Bun}_M)\longrightarrow\operatorname{DMod}(\operatorname{Bun}_G)$
+
+## 定理与证明
+
+### 定理（Eisenstein 相容性，图表 16.1，无编号）（要点（有缺口））
+
+图表 (16.1) 交换：自守侧 $\operatorname{Eis}_P:\operatorname{DMod}(\operatorname{Bun}_M)\to\operatorname{DMod}(\operatorname{Bun}_G)$ 与谱侧 $\operatorname{Eis}^{\mathrm{spec}}_{\check P}$ 在 Langlands 函子下相容，即 $\mathbb L_G\circ\operatorname{Eis}_P\simeq\operatorname{Eis}^{\mathrm{spec}}_{\check P}\circ\mathbb L_M$。
+
+1. 把 (16.1) 归约为几何方块与谱方块两个交换图表。  
+   *为什么*：这是 [CCF24] 的证明组织形式：几何侧比较 Whittaker 系数，谱侧比较表示。
+2. 用几何 Casselman–Shalika $\operatorname{Whit}(H)_x\simeq\operatorname{Rep}(\check H)_x$ 把几何方块化为 Whittaker 系数的抛物限制与 Chevalley 函子的相容性。  
+   *为什么*：这样两侧都落在表示范畴上，可以直接比较。
+3. 谱方块由引理 16.3.1 及其对偶（Eisenstein 方向）给出。  
+   *为什么*：引理 16.3.1 说明沿 $\operatorname{LocSys}_{\check P}\to\operatorname{LocSys}_{\check M}$ 的推前与 $\operatorname{inv}^+$ 相容；取对偶、在表示侧转到左伴随后出现相反的幺幂根基，给出 Eisenstein 方向的方块。
+
+> 缺口：讲义只述证明的归约，未展开 [CCF24] 的细节；完整证明见该文。
+
+*出处*：§16.2 图表 (16.1) / 原书 p.76
+
+
+## 易错点
+
+- 讲义把 (16.1) 写成方块而不写等式；若自行补成 $q^!p_*$ 或 $p_*q^!$ 就加了原文没有的约定——原文明确说谱侧函数「由对应定义」，未指定 $!$ 或 $*$。
+- （16.1）只是 Eisenstein 方向的相容性；常数项方向是另一个图表 (16.2)，不能由 (16.1) 直接取对偶得到（§16.5 专门说明为何更难）。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§16.2 Eisenstein 与常数项的相容性，p.76-77（PDF p.76-77），`源码/chapters/ch16.tex:27-38（$\operatorname{Eis}_P$、谱对应与图表 16.1）`
+
+## 核验
+
+状态：`external-confirmed`（2026-11-18）
+- arXiv:2409.07051 (CCF24)：https://arxiv.org/abs/2409.07051 — 原文定理作「The following diagram commutes」：Dmod_{1/2}(Bun_M) —𝕃_M→ IndCoh_Nilp(LS_M̂)，纵 Eis^-_{!,ρ_P(ω_X)}[δ] 与 Eis^{-,spec}，下方 Dmod_{1/2}(Bun_G) —𝕃_G→ IndCoh_Nilp(LS_Ĝ)——即卡 (16.1)（𝕃_G∘Eis_P ≃ Eis^spec_P̂∘𝕃_M）的带扭/移位版本；原文紧接说证明可先证粗化方块，与卡「归约到两个方块」一致。
+- arXiv:2409.07051 (CCF24)：https://arxiv.org/abs/2409.07051 — 引言明确说 𝕃_G「is compatible with the functors of Eisenstein series and constant term, see Theorems [t:L and Eis] and [t:CT compat]」，支持卡的定位。
+
+## 关联
+
+- `glc/concept/spectral-pushforward-square`
+- `glc/concept/km-whittaker-duality`
+- `glc/concept/eisenstein-reduction`

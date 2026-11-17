@@ -1,0 +1,68 @@
+---
+id: glc/concept/base-whittaker-sheaf
+type: concept
+track: D
+---
+
+# 基础 Whittaker 层 W_k
+
+> 把 exp_ψ 从 Bun_{N_k} 直像到 Bun_k 得到的层；基础情形中 q_!j_{k,!}F_k 是 Av_E^d(W_k) 的茎。
+
+**问题**：W_k 的移位与扭转为什么要与 F_k 相同？
+
+## 定义
+
+令 $W_k$ 为基础 Whittaker 层，即将 $\exp_{\psi}$ 从 $\operatorname{Bun}_{N_k}$ 取 $*$-直像到 $\operatorname{Bun}_k$ 所得的层，采用相同的移位与扭曲。这里 $\exp_{\psi}$ 指把 $\mathbb{G}_a$ 上的 Artin–Schreier 层沿 $\operatorname{Bun}_{N_k}$ 的简单根坐标拉回所得的层，其 $*$-直像即 Whittaker 层。在归一化次数 $d$ 的分支上，
+\[
+q_!j_{k,!}F_k\simeq\operatorname{Av}^d_E(W_k)|_{C_k^{\mathrm{tor}=0}}.
+\]
+
+*记号*：$\operatorname{Bun}_{N_k}\xrightarrow{\pi}\operatorname{Bun}'_k\xrightarrow{r}\operatorname{Bun}_k$ 是普通 Whittaker 叠的映射链；$N_k$ 为 $\operatorname{GL}_k$ 的极大幂幺子群。
+
+## 要点
+
+- $\exp_{\psi}$ 是 $\mathbb{G}_a$ 上 Artin–Schreier 层沿 $\operatorname{Bun}_{N_k}$ 的简单根坐标的拉回。
+- $W_k$ 的移位与扭转与 $F_k$ 相同，均与 $\operatorname{Bun}_k$ 的反常 $t$-结构对齐。
+- 在归一化次数 $d$ 的分支上，$q_!j_{k,!}F_k$ 限制为 $\operatorname{Av}^d_E(W_k)$。
+- 归一化次数约定使 $\operatorname{Bun}_{N_k}$ 位于 $\operatorname{Bun}_k$ 的次数零分支之上。
+
+## 关键公式
+
+- $W_k$：$\exp_{\psi}:\operatorname{Bun}_{N_k}\to\operatorname{Bun}_k$ 的 $*$-直像
+- $q_!j_{k,!}F_k\simeq\operatorname{Av}^d_E(W_k)|_{C_k^{\mathrm{tor}=0}}$
+
+## 定理与证明
+
+### 基础情形中的平均函子恒等式（要点（有缺口））
+
+在归一化次数 $d$ 的分支上，$q_!j_{k,!}F_k\simeq\operatorname{Av}^d_E(W_k)|_{C_k^{\mathrm{tor}=0}}$，其中 $W_k$ 是 $\exp_{\psi}$ 从 $\operatorname{Bun}_{N_k}$ 到 $\operatorname{Bun}_k$ 的 $*$-直像，采用与 $F_k$ 相同的移位与扭曲。
+
+1. 把 $F_k$ 的紧化 Whittaker 公式代入 $q_!j_{k,!}F_k$。  
+   *为什么*：$F_k$ 由 $\pi_!(p_1^*\mathcal{L}_E\otimes p_2^*\mathcal{L}_{\psi})$ 给出。
+2. 在无挠零截面边界上，紧化 Whittaker 叠限制为普通 Whittaker 叠，$p_1^*\mathcal{L}_E$ 与 $p_2^*\mathcal{L}_{\psi}$ 相乘即为 $\operatorname{Av}^d_E$ 的核。  
+   *为什么*：边界上挠商为零，$p_1$ 记录的就是 $\mathcal{L}_E$ 的拉回。
+
+> 缺口：讲义由 $F_k$ 的 Whittaker 公式直接改写得到，未逐项验证基变换；完整论证属定理 6.2.1 的基础情形（§6.3），且其结论依赖定理 5.7.2。
+
+*出处*：§6.3 基础情形：无挠层（原文未单独编号）/ 原书 p.37
+
+
+## 易错点
+
+- 译注指出这里的直像取 $*$-直像而非 $!$-直像，因为 $W_k$ 要作为非紧支撑的核参与后面的 $!$-卷积。
+- $W_k$ 的移位与扭转不能另取一套：必须与 $F_k$ 相同，否则恒等式不成立。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§6.3 基础情形：无挠层，p.37（PDF p.37），`源码/chapters/ch06.tex:61-69（§6.3 W_k 与平均函子恒等式）`
+
+## 核验
+
+状态：`source-only`（2026-11-18）
+- arXiv：https://arxiv.org/abs/alg-geom/9703022 — 摘要称『the automorphic function is obtained via Grothendieck's "faisceaux-fonctions" correspondence from a complex of sheaves on an algebraic stack』，并说明第一种构造『is based on considering the Whittaker function』：支持 Whittaker 层作为自守层构造输入的语境；但摘要未给出 W_k 为 exp_ψ 的 *-直像这一定义，也不含 q_!j_{k,!}F_k ≃ Av_E^d(W_k) 的恒等式。
+
+## 关联
+
+- `glc/concept/base-case-torsion-free`
+- `glc/concept/averaging-functor`
+- `glc/concept/cleanness-theorem`

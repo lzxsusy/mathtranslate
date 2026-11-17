@@ -1,0 +1,77 @@
+---
+id: glc/concept/deligne-trace-constancy
+type: concept
+track: E
+---
+
+# Deligne 真推前不变性与迹恒定性
+
+> 用 Deligne 真推前不变性把『$\chi(\operatorname{Aut}'_E)$ 沿纤维恒定』归约到与任一秩 $n$ 局部系统 étale 局部同构的自守函数：迹函数同，故恒定。
+
+**问题**：为什么只需对某一个精心挑选的 $E'$ 验证迹的恒定性，就能得到对任意几何不可约 $E$ 的恒定性？
+
+## 定义
+
+作为黑箱输入，使用 Deligne 的真推前不变性：若 $f:Y_1\to Y_2$ 为真态射，$\mathcal K_1,\mathcal K_2\in D(Y_1)$ 在 étale 局部同构，则 $f_!\mathcal K_1$ 与 $f_!\mathcal K_2$ 的 Euler 示性数函数相同。对任意两个秩 $n$ 局部系统 $E_1,E_2$（即使它们可约），在 $X$ 上也 étale 局部同构，因此相应的 Laumon 层 étale 局部同构：$\mathcal L_{E_1}\simeq_{\mathrm{et,loc}}\mathcal L_{E_2}$。若定义 $\operatorname{Aut}'_E$ 的映射是真态射，Deligne 定理立即给出 $\chi(\operatorname{Aut}'_{E_1})=\chi(\operatorname{Aut}'_{E_2})$。该映射并非字面上的真态射，但紧化 Whittaker 构造有 Drinfeld 紧化，所以将对应替换为其紧化版本后，同样的论证适用。于是只需对方便的秩 $n$ 局部系统 $E'$ 证明恒定性：选择 $E'$，使存在以 $E'$ 为 Hecke 特征值的尖点 Hecke 特征函数；由 Frenkel–Gaitsgory–Kazhdan–Vilonen 的比较定理，它在 $\operatorname{Bun}'_n(\mathbb F_q)$ 上的限制是迹函数 $M'\longmapsto\operatorname{Tr}(\operatorname{Frob}_{M'},\operatorname{Aut}'_{E'})$。由于这个函数从 $\operatorname{Bun}_n(\mathbb F_q)$ 拉回，它在 $\operatorname{Bun}'_n\to\operatorname{Bun}_n$ 的每个纤维上恒定。
+
+*记号*：$f_!$ 是紧支撑（$!$）推前；『Euler 示性数函数』指 $y\mapsto\chi(f_!\mathcal K_y)$；$\mathcal L_{E}$ 是 §5 的 Laumon 层；$\operatorname{Frob}_{M'}$ 是 $[\operatorname{Bun}'_n]$ 上对应的 Frobenius；『Hecke 特征值』指以该自守函数为特征的尖点 Hecke 特征函数。
+
+## 要点
+
+- 关键归约：任意两个秩 $n$ 局部系统在 $X$ 上 étale 局部同构，所以 $\operatorname{Aut}'_{E_1}$ 与 $\operatorname{Aut}'_{E_2}$ 只差 étale 局部常数——这正是 Deligne 定理的适用条件。
+- Deligne 定理要求 $f$ 真；$\operatorname{Aut}'_E$ 的定义映射不是字面真态射，必须换成 Drinfeld 紧化版本，$\chi$ 在紧化前后不变。
+- $E'$ 不是任取的：要求存在以 $E'$ 为 Hecke 特征值的尖点 Hecke 特征函数，才能把 FGKV 比较定理用上。
+- FGKV 比较给出的是 $\operatorname{Bun}'_n(\mathbb F_q)$ 上的迹函数（Whittaker 归一化），而它从 $\operatorname{Bun}_n(\mathbb F_q)$ 拉回，故在 $\operatorname{Bun}'_n\to\operatorname{Bun}_n$ 的纤维上恒定。
+- 合起来：$\chi(\operatorname{Aut}'_E)$ 沿纤维恒定，这正是 Euler 示性数判据所需的一半。
+
+## 关键公式
+
+- $f:Y_1\to Y_2\ \text{真},\ \mathcal K_1\simeq_{\mathrm{et,loc}}\mathcal K_2\ \Longrightarrow\ \chi(f_!\mathcal K_1)=\chi(f_!\mathcal K_2)$
+- $\mathcal L_{E_1}\simeq_{\mathrm{et,loc}}\mathcal L_{E_2}$
+- $\chi(\operatorname{Aut}'_{E_1})=\chi(\operatorname{Aut}'_{E_2})$
+- $M'\longmapsto\operatorname{Tr}(\operatorname{Frob}_{M'},\operatorname{Aut}'_{E'})$
+
+## 定理与证明
+
+### 迹恒定性（$\chi(\operatorname{Aut}'_E)$ 沿 $\operatorname{Bun}'_n\to\operatorname{Bun}_n$ 纤维恒定）（要点（有缺口））
+
+对任意几何不可约的秩 $n$ 局部系统 $E$，$\chi(\operatorname{Aut}'_E)$ 在 $\operatorname{Bun}'_n\to\operatorname{Bun}_n$ 的每个纤维上恒定。
+
+1. 对任意两个秩 $n$ 局部系统 $E_1,E_2$（可约亦可），它们在 $X$ 上 étale 局部同构，故 $\mathcal L_{E_1}\simeq_{\mathrm{et,loc}}\mathcal L_{E_2}$。  
+   *为什么*：秩 $n$ 局部系统是 $X$ 上 $\operatorname{GL}_n$-局部系，étale 局部地都可以平凡化，故彼此 étale 局部同构。
+2. 若定义 $\operatorname{Aut}'_E$ 的映射是真态射，Deligne 真推前不变性立即给出 $\chi(\operatorname{Aut}'_{E_1})=\chi(\operatorname{Aut}'_{E_2})$。  
+   *为什么*：$\operatorname{Aut}'_E$ 是 $\mathcal L_E$ 与固定 Whittaker 部分的 $!$ 推前，étale 局部同构的输入给出 étale 局部同构的输出。
+3. 该映射并非字面真态射，但紧化 Whittaker 构造有 Drinfeld 紧化，把对应替换为紧化版本后同样论证适用。  
+   *为什么*：Euler 示性数在紧化前后一致（边界贡献被 $\chi$ 抵消），故可用紧化版的真态射。
+4. 于是只需对方便的 $E'$ 验证：取 $E'$ 使存在以 $E'$ 为 Hecke 特征值的尖点 Hecke 特征函数，由 FGKV 比较定理，其在 $\operatorname{Bun}'_n(\mathbb F_q)$ 上的限制是 $M'\mapsto\operatorname{Tr}(\operatorname{Frob}_{M'},\operatorname{Aut}'_{E'})$。  
+   *为什么*：比较定理把几何侧的迹函数与自守侧的特征函数等同，使 $\chi$ 变成可数的量。
+5. 该迹函数从 $\operatorname{Bun}_n(\mathbb F_q)$ 拉回，故在 $\operatorname{Bun}'_n\to\operatorname{Bun}_n$ 的每个纤维上恒定；由第 1–3 步的归约，同样的恒定性对 $\operatorname{Aut}'_E$ 成立。  
+   *为什么*：拉回的函数沿纤维当然常值；归约保证『一个 $E'$ 恒定』推出『所有 $E$ 恒定』。
+
+> 缺口：Deligne 真推前不变性与 FGKV 比较定理在讲义中都是引用（黑箱），未证明；$E'$（存在以它为 Hecke 特征值的尖点 Hecke 特征函数）的存在性也只作存在性陈述。
+
+*出处*：§8.3 / 原书 p.45
+
+
+## 易错点
+
+- Deligne 定理的前提是真态射；$\operatorname{Aut}'_E$ 的定义映射不是字面真态射，必须换 Drinfeld 紧化，不能直接套用原定理。
+- $E'$ 不能任取：必须存在以 $E'$ 为 Hecke 特征值的尖点 Hecke 特征函数，否则 FGKV 比较定理无从比较。
+- 比较定理给出的是 $\operatorname{Bun}'_n(\mathbb F_q)$ 上的限制（Whittaker 归一化落在 $\operatorname{Bun}'_n$），不是 $\operatorname{Bun}_n$ 上。
+- 『$\chi$ 沿纤维恒定』与『$\chi$ 处处非零』是两件事：本节只给出前者，后者需另行处理。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§8.3 沿纤维的迹恒定性，p.45（PDF p.45），`源码/chapters/ch08.tex:38-54（Deligne 不变性、Drinfeld 紧化、$E'$ 与 FGKV 比较）`
+
+## 核验
+
+状态：`source-only`（2026-11-18）
+- nLab：https://ncatlab.org/nlab/show/six+operations — 「There is a natural transformation $f_!\to f_*$ which is a natural equivalence when $f$ is a proper map.」支持卡里以真态射为前提使用 $f_!$（此时 $f_!=f_*$）；页面不含 Deligne 的「étale 局部同构的输入给出相同 Euler 示性数函数」定理。
+- arXiv：https://arxiv.org/abs/alg-geom/9703022 — 摘要说明 Whittaker 函数构造与 Laumon 几何构造等价，后者经 Grothendieck faisceaux-fonctions 从栈上复形得到自守函数。支持卡里最后一步 FGKV 比较（几何侧迹函数 = 自守侧以 $E$ 为特征值的尖点 Hecke 特征函数）；摘要不含 Deligne 真推前不变性、Drinfeld 紧化替换与 $\chi$ 沿纤维恒定的论证。
+
+## 关联
+
+- `glc/concept/euler-characteristic-trace-test`
+- `glc/concept/descent-projective-bundle`
+- `glc/concept/aut-e-whittaker-laumon`

@@ -1,0 +1,71 @@
+---
+id: glc/concept/spectral-pushforward-square
+type: concept
+track: H
+---
+
+# 谱方块：推前与 Ran 插入
+
+> 引理 16.3.1：沿局部系统叠之间的推前与 Ran 插入 $\operatorname{inv}^+$ 使局部化方块 (16.3) 交换。
+
+**问题**：为什么不能用「沿 $\operatorname{LocSys}_{H_1}\to\operatorname{LocSys}_{H_2}$ 拉回」与「表示限制」作方块？
+
+## 定义
+
+基本问题如下。对同态 $H_1\to H_2$，有映射 $\operatorname{LocSys}_{H_1}\to\operatorname{LocSys}_{H_2}$；对点 $x\in X$，还有局部的局部化函子
+$$\operatorname{Loc}_x:\operatorname{Rep}(H_i)_x\longrightarrow\operatorname{QCoh}^!(\operatorname{LocSys}_{H_i}).$$
+这里不能朴素地用一个方块，将沿 $\operatorname{LocSys}_{H_1}\to\operatorname{LocSys}_{H_2}$ 的拉回与表示限制比较。正确的方块使用推前和 Ran 插入。
+
+*记号*：$\operatorname{Ran}(X)$ 为 $X$ 的 Ran 空间，$\operatorname{Ran}_{x,c}:=\{I\in\operatorname{Ran}(X)\mid x\in I\}$；$\mathbf 1_{y}$ 为点 $y$ 处的单位对象；$\check{\mathfrak u}=\operatorname{Lie}(\check U)$。
+
+## 要点
+
+- $\operatorname{inv}^+$ 先将对象插入标记点，再对幺幂核取导出不变量，等价地取 Chevalley 上链。
+- 若 $V_x\in\operatorname{Rep}(H_1)_x$，则在点 $(x,y_1,\ldots,y_m)\in\operatorname{Ran}_{x,c}$ 处的插入为 $\operatorname{ins}(V_x)_{(x,y_1,\ldots,y_m)}=V_x\otimes\mathbf 1_{y_1}\otimes\cdots\otimes\mathbf 1_{y_m}$。
+- 对抛物商 $\check P\to\check M$（核为幺幂根基 $\check U$），引理给出 $\operatorname{QCoh}^!(\operatorname{LocSys}_{\check P})\leftarrow\operatorname{Rep}(\check P)_x$ 与 $\operatorname{QCoh}^!(\operatorname{LocSys}_{\check M})\leftarrow\operatorname{Rep}(\check M)_{\mathrm{Ran}_{x,c}}$ 的方块。
+- 再与 $\operatorname{LocSys}_{\check P}\to\operatorname{LocSys}_{\check G}$ 复合，得到常数项方向的谱方块，其中 $\operatorname{Chev}^+(V_x)_{(x,y_1,\ldots,y_m)}=C^\bullet(\check{\mathfrak u},V_x)_x\otimes C^\bullet(\check{\mathfrak u})_{y_1}\otimes\cdots\otimes C^\bullet(\check{\mathfrak u})_{y_m}$。
+- 取对偶之后，等价地，在表示侧转到左伴随之后，出现相反的幺幂根基，给出 Eisenstein 方向的方块（右列为 $(\operatorname{Chev}^+)^L$）。
+
+## 关键公式
+
+- $\operatorname{ins}(V_x)_{(x,y_1,\ldots,y_m)}=V_x\otimes\mathbf 1_{y_1}\otimes\cdots\otimes\mathbf 1_{y_m}$
+- $\operatorname{Chev}^+(V_x)_{(x,y_1,\ldots,y_m)}=C^\bullet(\check{\mathfrak u},V_x)_x\otimes C^\bullet(\check{\mathfrak u})_{y_1}\otimes\cdots\otimes C^\bullet(\check{\mathfrak u})_{y_m}$
+- $\operatorname{push}\circ\operatorname{Loc}_x\simeq\operatorname{Loc}_{\mathrm{Ran}_{x,c}}\circ\operatorname{inv}^+$（图表 (16.3)）
+
+## 定理与证明
+
+### 引理 16.3.1（谱方块）（完整）
+
+假设 $H_1\to H_2$ 的核为幺幂群。令 $\operatorname{Ran}_{x,c}:=\{I\in\operatorname{Ran}(X)\mid x\in I\}$。则图表 (16.3) 交换：左列为沿 $\operatorname{LocSys}_{H_1}\to\operatorname{LocSys}_{H_2}$ 的推前，右列为 $\operatorname{inv}^+$，上排为 $\operatorname{Loc}_x$，下排为 $\operatorname{Loc}_{\mathrm{Ran}_{x,c}}$；即 $\operatorname{push}\circ\operatorname{Loc}_x\simeq\operatorname{Loc}_{\mathrm{Ran}_{x,c}}\circ\operatorname{inv}^+$。
+
+1. 使用初等原理：若 $\pi:Y\to X$ 是 $D$-概形，且 $Y$ 拟仿射、余仿射，或满足相同的下降条件，则 $\operatorname{QCoh}(Y)\simeq\pi_*\mathcal O_Y\text{-}\mathrm{Mod}(\operatorname{QCoh}(X))$，其中 $\pi_*\mathcal O_Y$ 一般是一个复形。  
+   *为什么*：这是证明所依据的下降原理；$\pi_*\mathcal O_Y$ 一般不是零次函数层，必须作为复形保留。
+2. 用 $\mathbb A^2\setminus\{0\}\to\mathrm{pt}$ 与 $B\mathbb G_a\to\mathrm{pt}$ 说明必须保留这个复形，而不能只保留它的零次函数。  
+   *为什么*：这两个例子显示 $\pi_*\mathcal O_Y$ 有高次上同调，丢掉复形结构原理即失效。
+3. 将这一原理应用于形式圆盘，并使用插入与 Ran 卷积的相容性。  
+   *为什么*：形式圆盘上的下降给出 $\operatorname{Loc}_{x}$ 与 $\operatorname{Loc}_{\mathrm{Ran}_{x,c}}$ 之间的交换性；插入与 Ran 卷积相容保证 $\operatorname{inv}^+$ 正好是右列。
+
+*出处*：引理 16.3.1 / 原书 p.77
+
+
+## 易错点
+
+- 用「沿 $\operatorname{LocSys}_{H_1}\to\operatorname{LocSys}_{H_2}$ 的拉回 vs 表示限制」的朴素方块代替 (16.3)：讲义明说不能这样比较，正确方块必须用推前和 Ran 插入。
+- $\operatorname{inv}^+$ 不是单纯「插入」：插入之后还要对幺幂核取导出不变量（Chevalley 上链）；只写插入会漏掉核的作用。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§16.3 谱方块：推前与局部化，p.77-78（PDF p.77-78），`源码/chapters/ch16.tex:44-59（引理 16.3.1 及其证明）`
+
+## 核验
+
+状态：`source-only`（2026-11-18）
+- nLab：https://ncatlab.org/nlab/show/Ran+space — 页面给出 Ran(X) 的定义（X 的非空有限子集，带合并点的几何结构）；支持卡的 Ran 记号，但 Ran_{x,c} := {I | x∈I} 是讲义自设。
+- arXiv:2409.07051 (CCF24)：https://arxiv.org/abs/2409.07051 — 原文把 inv_{N^-_P} 定义为 𝔫^-_P-不变量函子（a.k.a. cohomological Chevalley complex），与卡 inv^+ 的「先插入标记点、再对幺幂核取导出不变量（Chevalley 上链）」一致。
+- arXiv:2409.07051 (CCF24)：https://arxiv.org/abs/2409.07051 — 未检索到对任意 H1→H2（幺幂核）与 Ran_{x,c} 的逐字引理陈述；卡中 push∘Loc_x ≃ Loc_{Ran_{x,c}}∘inv^+ 的方块外部无对应。
+
+## 关联
+
+- `glc/concept/semi-infinite-category`
+- `glc/concept/eisenstein-compatibility`
+- `glc/concept/km-whittaker-duality`

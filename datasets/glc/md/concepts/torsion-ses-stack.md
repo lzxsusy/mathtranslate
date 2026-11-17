@@ -1,0 +1,50 @@
+---
+id: glc/concept/torsion-ses-stack
+type: concept
+track: E
+---
+
+# 挠层短正合列叠 $\operatorname{Tor}^{\mathrm{ses}}$
+
+> 以挠层短正合列为对象的叠，带中间项、子对象、商三个映射；Laumon 因子化就是沿它比较 $\mathcal L_E$ 与外积。
+
+**问题**：$\operatorname{Tor}^{\mathrm{ses}}$ 上的三个映射 $m,s,q$ 各记录短正合列的哪一部分？
+
+## 定义
+
+设 $\operatorname{Tor}$ 为 $X$ 上挠层的叠。挠层短正合列构成的叠记作 $\operatorname{Tor}^{\mathrm{ses}}$，其对象是 $\operatorname{Tor}$ 中的短正合列 $0\to J_s\to J_m\to J_q\to0$。它带三个映射 $m(J_\bullet)=J_m$、$s(J_\bullet)=J_s$、$q(J_\bullet)=J_q$，即 $m:\operatorname{Tor}^{\mathrm{ses}}\to\operatorname{Tor}$ 记中间项，$s$ 记子对象，$q$ 记商；合起来 $(s,q):\operatorname{Tor}^{\mathrm{ses}}\to\operatorname{Tor}\times\operatorname{Tor}$。在子对象长度为 $d_1$、商长度为 $d_2$ 的分支上，$(s,q)$ 落入 $\operatorname{Tor}^{d_1}\times\operatorname{Tor}^{d_2}$。
+
+*记号*：上标 ses = short exact sequence；$J_\bullet$ 记该短正合列本身。§7.4 的证明中同一对象在分支上写作 $\operatorname{Tor}^{\mathrm{ses},d_1,d_2}$。
+
+## 要点
+
+- $m$ 记中间项、$s$ 记子对象、$q$ 记商：$(s,q)$ 恰好忘记中间项 $J_m$，这就是因子化恒等式两边可以比较的原因。
+- Laumon 因子化断言的是 $(s,q)_!m^*\mathcal L_E\simeq\mathcal L_E\boxtimes\mathcal L_E$，即先沿 $m$ 拉回、再沿 $(s,q)$ 作 $!$ 推前。
+- 在支撑互不相交的开轨迹 $U_{d_1,d_2}=(\operatorname{Tor}^{d_1,\mathrm{rss}}\times\operatorname{Tor}^{d_2,\mathrm{rss}})_{\mathrm{disj}}$ 上，每条短正合列唯一分裂，$m$ 等同于除子加法。
+- 第 8 章 Hecke–Laumon 特征层的相容性条件用的是同一个叠上的同一个 $(s,q)_!m^*$。
+
+## 关键公式
+
+- $0\to J_s\to J_m\to J_q\to0$
+- $m(J_\bullet)=J_m,\quad s(J_\bullet)=J_s,\quad q(J_\bullet)=J_q$
+- $(s,q)_!m^*\mathcal L_E\simeq\mathcal L_E\boxtimes\mathcal L_E$
+
+## 易错点
+
+- $s$ 给子对象、$q$ 给商，不能颠倒；分支记号 $\operatorname{Tor}^{\mathrm{ses},d_1,d_2}$ 里 $d_1$ 是子对象长度、$d_2$ 是商长度。
+- $(s,q)$ 忘记的是中间项 $J_m$，所以它不是恒等映射；把因子化恒等式误写成 $\mathcal L_E\simeq\mathcal L_E\boxtimes\mathcal L_E$ 就丢掉了整个内容。
+- 『$m$ = 除子加法』只在支撑互不相交的轨迹上成立，支撑相交处短正合列一般不分裂。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§7.3 归约到 $M_k	o J$ 的像，p.41（PDF p.41），`源码/chapters/ch07.tex:33-40（$\operatorname{Tor}^{\mathrm{ses}}$ 的定义）`
+
+## 核验
+
+状态：`source-only`（2026-11-18）
+- nLab：https://ncatlab.org/nlab/show/algebraic+stack — 页面只给代数叠（Artin stack）的一般定义与例（BG、模叠等），未出现「挠层短正合列叠 Tor^{ses}」或 m/s/q 的命名；对卡中具体构造无逐句支持，仅确认「叠」这一层级的概念用法。
+
+## 关联
+
+- `glc/concept/laumon-factorization`
+- `glc/concept/hecke-laumon-eigensheaf`

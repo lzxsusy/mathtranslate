@@ -1,0 +1,70 @@
+---
+id: glc/concept/microlocal-index-theorem
+type: concept
+track: H
+---
+
+# 特征圈与 Færgeman–Raskin 微局部指标定理
+
+> 可构造层的特征圈在 $\mathrm{Nilp}_{\mathrm{Kos}}$ 上的整系数重数（带符号）等于 Whittaker 系数的 Euler 示性数，从而给出系数非消失的判据。
+
+**问题**：微局部指标定理把 $\chi(\operatorname{coeff}(\mathcal F))$ 与特征圈的哪个系数联系起来，由此得到什么非消失判据？
+
+## 定义
+
+对可构造对象 $\mathcal F\in\operatorname{Shv}_{\mathrm{Nilp}}(\operatorname{Bun}_G)$，将其特征圈写为 $\operatorname{CC}(\mathcal F)=\sum_{Z\subset\mathrm{Nilp}}c_Z(\mathcal F)[Z]$，$c_Z(\mathcal F)\in\mathbb Z$，其中求和遍及 $\mathrm{Nilp}$ 的不可约分支。特征圈计算首先对紧的可构造对象表述；可呈示范畴中的保守性陈述则由连续性与紧生成推出。
+
+*记号*：$\operatorname{CC}$ 为特征圈；$c_Z$ 为对应不可约分支的整系数重数；$\operatorname{SS}$ 为奇异支撑；$\chi$ 为 Euler 示性数；$\mathrm{Nilp}_{\mathrm{Kos}}$ 为 Kostant 分支。
+
+## 要点
+
+- 特征圈是 $\mathrm{Nilp}$ 各不可约分支的形式整系数线性组合，系数在 $\mathbb Z$ 中。
+- 指标定理把 $\chi(\operatorname{coeff}(\mathcal F))$ 等于 $\mathrm{Nilp}_{\mathrm{Kos}}$ 的重数乘以符号 $(-1)^{\dim\operatorname{Bun}_G}$。
+- 非消失判据：若 $\mathrm{Nilp}_{\mathrm{Kos}}$ 作为 $\operatorname{SS}(\mathcal F)$ 的不可约分支出现（等价地，以非零特征圈重数出现），则 $\operatorname{coeff}(\mathcal F)\ne0$。
+- 证明使用正则幂零轨迹的光滑性，以及全局 Kostant 截面沿特殊轨迹 $\mathfrak f^{\mathrm{glob}}$ 与 Hitchin 零纤维相交这一事实。
+- 特征圈的计算先对紧可构造对象表述，再经连续性与紧生成推广到可呈示范畴。
+
+## 关键公式
+
+- $\operatorname{CC}(\mathcal F)=\sum_{Z\subset\mathrm{Nilp}}c_Z(\mathcal F)[Z],\qquad c_Z(\mathcal F)\in\mathbb Z$
+- $\chi(\operatorname{coeff}(\mathcal F))=(-1)^{\dim\operatorname{Bun}_G}c_{\mathrm{Nilp}_{\mathrm{Kos}}}(\mathcal F)$
+
+## 定理与证明
+
+### Færgeman–Raskin 微局部指标定理（要点（有缺口））
+
+$\chi(\operatorname{coeff}(\mathcal F))=(-1)^{\dim\operatorname{Bun}_G}c_{\mathrm{Nilp}_{\mathrm{Kos}}}(\mathcal F)$。因此，若 $\mathrm{Nilp}_{\mathrm{Kos}}$ 作为 $\operatorname{SS}(\mathcal F)$ 的不可约分支出现（等价地，以非零特征圈重数出现），则 $\operatorname{coeff}(\mathcal F)\ne0$。
+
+1. 讲义交代证明所用的两个几何输入：正则幂零轨迹的光滑性，以及全局 Kostant 截面沿 $\mathfrak f^{\mathrm{glob}}$ 与 Hitchin 零纤维相交。  
+   *为什么*：这两条是 [FR25] 论证的几何基础，本章不重述其推导。
+2. 由等式右侧非零推出 $\operatorname{coeff}(\mathcal F)\ne0$。  
+   *为什么*：$\chi$ 非零则系数对象非零。
+
+> 缺口：讲义只述不证，定理引自 [FR25]；正文只交代证明所用的两个几何输入，完整证明见 [FR25]。
+
+*出处*：§13.5 定理（讲义未编号）/ 原书 p.67
+
+
+## 易错点
+
+- 定理给的是 $\chi(\operatorname{coeff}(\mathcal F))$，不是 $\operatorname{coeff}(\mathcal F)$ 本身；由它只能读非消失，不能读具体值。
+- 判据要求 $\mathrm{Nilp}_{\mathrm{Kos}}$ 以「不可约分支 + 非零重数」出现，仅仅 $Z\subset\operatorname{SS}(\mathcal F)$ 不够。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§13.5 Kostant 分支与第一个系数，p.66-67（PDF p.66-67），`源码/chapters/ch13.tex:111-118（特征圈与指标定理）`
+
+## 核验
+
+状态：`external-confirmed`（2026-11-18）
+- FR25：https://arxiv.org/abs/2207.02955 — 「CC(F)=Σ_{α∈Irr(Nilp)} c_{α,F}[α] for c_{α,F}∈Z」——支持卡的展开与「求和遍及不可约分支」
+- FR25：https://arxiv.org/abs/2207.02955 — χ(coeff(F))=ε·c_Kos,F，且明确 ε=(−1)^{dim Bun_G}——逐字支持卡定理（含符号）
+- FR25：https://arxiv.org/abs/2207.02955 — Lemma 10.1.1.1：Shv_{Nilp^{≠Kos}}(Bun_G)=ker(coeff)；Step 2：若 Nilp_Kos⊆SS(F) 则 coeff(F)≠0，并用「特征圈对奇异支撑分支给正整数重数」——支持卡的非消失判据
+- FR25：https://arxiv.org/abs/2207.02955 — coeff[dim Bun_G] t-正合、与 Verdier 对偶交换、Euler 特征等于特征圈在 Nilp_Kos 的重数——与指标公式一致
+
+## 关联
+
+- `glc/concept/kostant-component`
+- `glc/concept/whittaker-coefficient`
+- `glc/concept/hecke-moving-theorem`
+- `glc/concept/whittaker-conservativity`

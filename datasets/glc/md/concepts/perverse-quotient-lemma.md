@@ -1,0 +1,69 @@
+---
+id: glc/concept/perverse-quotient-lemma
+type: concept
+track: E
+---
+
+# 引理 8.5.2：向量丛经 $\mathbb G_m$-商的推前仍反常
+
+> 若 $\mathcal K$ 是 $\mathbb G_m$-等变、$\pi_*\mathcal K$ 反常，则下降到 $\mathbb P(\mathcal E)$ 后沿 $\bar\pi$ 的 $!$ 推前仍反常。
+
+**问题**：把 $\mathbb G_m$-等变的反常层沿零截面去掉、再沿射影丛推前，为什么反常性不会在商这一步丢掉？
+
+## 定义
+
+引理 8.5.2：设 $\mathcal E\xrightarrow{\pi}B$ 为向量丛，$\mathbb P(\mathcal E)\xrightarrow{\bar\pi}B$ 为其射影化。假设 $\mathcal K\in\operatorname{Perv}(\mathcal E)$ 是 $\mathbb G_m$-等变的，且 $\pi_!\mathcal K,\pi_*\mathcal K\in\operatorname{Perv}(B)$。令 $\overline{\mathcal K}$ 为 $\mathcal K|_{\mathcal E\setminus0}$ 到 $\mathbb P(\mathcal E)$ 的下降。则 $\bar\pi_!\overline{\mathcal K}$ 是反常层。
+
+*记号*：$\mathcal E$ 是 $B$ 上的向量丛（含零截面），$\mathcal E\setminus0$ 是去掉零截面的开子集；$\mathbb P(\mathcal E)=(\mathcal E\setminus0)/\mathbb G_m$；$\overline{\mathcal K}$ 是 $\mathcal K|_{\mathcal E\setminus0}$ 沿 $\mathbb G_m$-商下降所得的层；$\bar\pi_!$ 是沿射影化的紧支撑推前。
+
+## 要点
+
+- 引理是纯几何的局部陈述：不涉及 $\operatorname{Aut}_E$ 或 $E$，只关于一个 $\mathbb G_m$-等变反常层在向量丛/射影丛上的行为。
+- 两个前提各管一端：$\pi_!\mathcal K$ 反常控制『紧支撑方向』，$\pi_*\mathcal K$ 反常控制『星方向』；缺一个就会出现反常性缺口。
+- $\mathbb G_m$-等变性是下降的前提：去掉零截面后 $\mathbb G_m$ 自由作用，$\mathcal K$ 的等变性使它沿轨道不变，才能下降到 $\mathbb P(\mathcal E)$。
+- 引理在 §8.5 中的用途是给『商掉 $\mathbb G_m$ 后仍反常』提供依据，从而把 $\mathrm{HL}_n^{1,\circ}$ 上的 HL 特征性质搬到 $\operatorname{Hecke}_n^1$ 上。
+- 讲义没有给出这条引理的证明：紧随其后的 `proof` 环境内容是命题 8.5.1 的续证（『将引理 8.5.2 逐纤维应用于…』），不是本引理的证明。
+
+## 关键公式
+
+- $\mathcal E\xrightarrow{\pi}B,\qquad\mathbb P(\mathcal E)\xrightarrow{\bar\pi}B$
+- $\overline{\mathcal K}\ \text{是}\ \mathcal K|_{\mathcal E\setminus0}\ \text{沿}\ \mathbb P(\mathcal E)=(\mathcal E\setminus0)/\mathbb G_m\ \text{的下降}$
+- $\pi_!\mathcal K,\ \pi_*\mathcal K\in\operatorname{Perv}(B)\ \Longrightarrow\ \bar\pi_!\overline{\mathcal K}\in\operatorname{Perv}(B)$
+
+## 定理与证明
+
+### 引理 8.5.2（$\mathbb G_m$-商的 $!$ 推前保持反常性）（要点（有缺口））
+
+设 $\mathcal E\xrightarrow{\pi}B$ 为向量丛，$\mathbb P(\mathcal E)\xrightarrow{\bar\pi}B$ 为其射影化；$\mathcal K\in\operatorname{Perv}(\mathcal E)$ 是 $\mathbb G_m$-等变的且 $\pi_!\mathcal K,\pi_*\mathcal K\in\operatorname{Perv}(B)$。令 $\overline{\mathcal K}$ 为 $\mathcal K|_{\mathcal E\setminus0}$ 到 $\mathbb P(\mathcal E)$ 的下降，则 $\bar\pi_!\overline{\mathcal K}$ 是反常层。
+
+1. 引理的内容就是上面这条陈述：$\mathcal K$ 在 $\mathcal E$ 上 $\mathbb G_m$-等变、两端推前 $\pi_!\mathcal K,\pi_*\mathcal K$ 反常，结论是商后的 $\bar\pi_!\overline{\mathcal K}$ 反常。讲义只陈述、未附证明。  
+   *为什么*：这是本引理在原文中的全部内容；把它记为一步是为了让『讲义只述不证』这一点可核验。
+2. 讲义对它的唯一使用是：在把 $\mathrm{HL}_n^{1,\circ}$ 商到通常 Hecke 叠时，用 $\pi_!\mathcal K,\pi_*\mathcal K$ 的反常性（分别来自 $\mathcal S$ 与 $\mathbb D\mathcal S$ 的 HL 特征性质）保证商后的 $!$ 推前仍反常。  
+   *为什么*：这解释了为什么前提要成对出现：两端各由 $\mathcal S$ 与 $\mathbb D\mathcal S$ 供给。
+
+> 缺口：讲义只述不证。紧随引理之后的 `proof` 环境（原书 p.47）实际是命题 8.5.1 的续证——『将引理 8.5.2 逐纤维应用于从 $\mathrm{HL}_n^{1,\circ}$ 到通常 Hecke 叠的商』——并非本引理的证明；本引理在全书内没有给出证明。
+
+*出处*：§8.5 引理 8.5.2 / 原书 p.47
+
+
+## 易错点
+
+- 不要把 p.47 的 `proof` 当成引理 8.5.2 的证明：它的第一句是『将引理 8.5.2 逐纤维应用于…』，属于命题 8.5.1 的续证。
+- 前提里 $\pi_!$ 与 $\pi_*$ **同时**反常，不是『其中之一』；只用一端推不出结论。
+- $\overline{\mathcal K}$ 是 $\mathcal K|_{\mathcal E\setminus0}$ 的下降，不是 $\mathcal K$ 本身的下降——零截面上 $\mathbb G_m$ 不动，必须先去掉。
+- 结论只断言 $\bar\pi_!\overline{\mathcal K}$ 反常，不宣称它是不可约 IC 或局部系统。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§8.5 引理 8.5.2，p.47（PDF p.47），`源码/chapters/ch08.tex:102-104（引理 8.5.2 陈述）；105-110 的 proof 属命题 8.5.1`
+
+## 核验
+
+状态：`source-only`（2026-11-18）
+- nLab：https://ncatlab.org/nlab/show/perverse+sheaf — 页面只给反常层定义与 IC 的一般语境，没有「$\mathbb G_m$-等变反常层沿向量丛射影化的下降」以及「$\pi_!\mathcal K,\pi_*\mathcal K$ 反常 $\Rightarrow$ $\bar\pi_!\overline{\mathcal K}$ 反常」的引理。
+- nLab：https://ncatlab.org/nlab/show/six+operations — proper 时 $f_!\simeq f_*$：$\bar\pi:\mathbb P(\mathcal E)\to B$ 真，支持引理中把 $\bar\pi_!$ 当推前使用；但页面不含该引理的内容。
+
+## 关联
+
+- `glc/concept/hecke-laumon-to-hecke`
+- `glc/concept/hecke-laumon-eigensheaf`

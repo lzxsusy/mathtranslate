@@ -1,0 +1,86 @@
+---
+id: glc/concept/gaitsgory-original-proof
+type: concept
+track: F
+---
+
+# Gaitsgory 最初证明：伴随归约与 Euler 示性数
+
+> 用下修改函子作左右伴随把消失化到复合为零，再用 Euler 示性数与 Braverman 计算归约到平凡局部系统。
+
+**问题**：为什么证明 $\operatorname{Av}_E^d\circ\operatorname{Av}_{E^*}^{-d}=0$ 就足以推出 $\operatorname{Av}_E^d=0$？
+
+## 定义
+
+先定义下修改与函子 $\operatorname{Av}_{E^*}^{-d}$。忽略标准移位，$\operatorname{Av}_{E^*}^{-d}$ 同时是 $\operatorname{Av}_E^d$ 的左伴随和右伴随，Verdier 对偶给出 $\mathbb{D}\circ\operatorname{Av}_{E^*}^{-d}\simeq\operatorname{Av}_E^d\circ\mathbb{D}$。要证明 $\operatorname{Av}_E^d=0$，只需证明 $\operatorname{Av}_E^d\circ\operatorname{Av}_{E^*}^{-d}=0$：若 $G:=\operatorname{Av}_{E^*}^{-d}$ 是 $F:=\operatorname{Av}_E^d$ 的左伴随且 $FG=0$，则 $\operatorname{Hom}(G\mathcal{K},G\mathcal{K})\simeq\operatorname{Hom}(\mathcal{K},FG\mathcal{K})=0$，所以 $G=0$；由于 $G$ 也是 $F$ 的右伴随，便迫使 $F=0$。
+
+*记号*：$E^*$ 是 $E$ 的对偶局部系统；负次数 $-d$ 表示下修改；$\mathbb{D}$ 是 Verdier 对偶；$\mathrm{St}_m$ 是 $\operatorname{GL}_m$ 的标准表示，$\mathbf{1}$ 是平凡局部系统。
+
+## 要点
+
+- $\operatorname{Av}_{E^*}^{-d}$ 忽略标准移位后同时是 $\operatorname{Av}_E^d$ 的左伴随和右伴随，且 $\mathbb{D}\circ\operatorname{Av}_{E^*}^{-d}\simeq\operatorname{Av}_E^d\circ\mathbb{D}$。
+- 由 $FG=0$ 且 $G$ 是左伴随推出 $G=0$，再用 $G$ 也是右伴随推出 $F=0$：Hom 计算给出 $\operatorname{Hom}(G\mathcal{K},G\mathcal{K})=0$。
+- 对消失范围内的 $d$，一个归纳引理说明 $\operatorname{Av}_E^d(\mathcal{F})$ 与 $\operatorname{Av}_{E^*}^{-d}(\mathcal{F})$ 是尖点的；故只需 $\operatorname{Av}_E^d$ 消去尖点层。
+- 正合性来自辅助 Verdier 商（§9.8）：先证 $\operatorname{Av}_E^d$ 转到该商后正合，其像尖点且商在尖点对象上保守；随后标准 Euler 示性数论证把消失归约到 $\chi(\operatorname{Av}_E^d(\mathcal{F}))=0$。
+- 对 Euler 示性数可把 $E$ 换成同秩的另一局部系统，于是归约到平凡局部系统——尽管正合性输入本身用了 $E$ 的不可约性。
+- Braverman 的计算把 $\mathbf{1}^{\oplus r}$ 的情形拆成 $r$ 个 $\operatorname{Av}_{\mathbf{1}}$ 的复合，最终归结为 Jacquet–Godement 陈述：$\operatorname{GL}_m$ 尖点自守表示的标准 $L$ 函数是次数至多 $m(2g-2)$ 的多项式。
+- 尖点像（§9.7）：$\operatorname{CT}\circ\operatorname{Av}_E^d$ 有过滤，其相伴分次片为 $\bigoplus_{d_1+d_2=d}(\operatorname{Av}_E^{d_1}\boxtimes\operatorname{Av}_E^{d_2})\circ\operatorname{CT}$，归纳给出 $\operatorname{CT}\circ\operatorname{Av}_E^d=0$。
+
+## 关键公式
+
+- $\mathbb{D}\circ\operatorname{Av}_{E^*}^{-d}\simeq\operatorname{Av}_E^d\circ\mathbb{D}$
+- $\operatorname{Av}_{\mathbf{1}^{\oplus r}}^d\simeq\bigoplus_{d_1+\cdots+d_r=d}\operatorname{Av}_{\mathbf{1}}^{d_1}\circ\cdots\circ\operatorname{Av}_{\mathbf{1}}^{d_r}$
+- $\operatorname{CT}\circ\operatorname{Av}_E^d=0\quad\text{for}\quad d>rm(2g-2)$
+
+## 定理与证明
+
+### 消失的伴随归约（§9.6）（完整）
+
+设 $F=\operatorname{Av}_E^d$ 有左伴随 $G=\operatorname{Av}_{E^*}^{-d}$，且 $G$ 同时也是 $F$ 的右伴随。若 $FG=0$，则 $F=0$；因此要证 $\operatorname{Av}_E^d=0$，只需证 $\operatorname{Av}_E^d\circ\operatorname{Av}_{E^*}^{-d}=0$。
+
+1. 设 $FG=0$。对任意 $\mathcal{K}$，有 $\operatorname{Hom}(G\mathcal{K},G\mathcal{K})\simeq\operatorname{Hom}(\mathcal{K},FG\mathcal{K})=0$。  
+   *为什么*：$G$ 是 $F$ 的左伴随，故 $\operatorname{Hom}(G\mathcal{K},G\mathcal{K})\simeq\operatorname{Hom}(\mathcal{K},FG\mathcal{K})$；右端因 $FG=0$ 为零。
+2. 由 $\operatorname{Hom}(G\mathcal{K},G\mathcal{K})=0$ 得 $G\mathcal{K}=0$，故 $G=0$。  
+   *为什么*：恒等态射是 $\operatorname{Hom}(G\mathcal{K},G\mathcal{K})$ 的元素；该群为零则对象本身为零。
+3. 又 $G$ 是 $F$ 的右伴随，$G=0$ 迫使 $F=0$。  
+   *为什么*：右伴随为零时，由伴随的态射对应（取恒等）可得 $F$ 的每个值都为零。
+
+*出处*：§9.6 / 原书 p.51
+
+### 尖点像（§9.7）（要点（有缺口））
+
+令 $m=m_1+m_2$，$\operatorname{CT}:D(\operatorname{Bun}_m)\to D(\operatorname{Bun}_{m_1}\times\operatorname{Bun}_{m_2})$ 为标准抛物子群（Levi 为 $\operatorname{GL}_{m_1}\times\operatorname{GL}_{m_2}$）的常数项函子。当 $d>rm(2g-2)$ 时 $\operatorname{CT}\circ\operatorname{Av}_E^d=0$，从而 $\operatorname{Av}_E^d$ 的像是尖点的。
+
+1. $\operatorname{CT}\circ\operatorname{Av}_E^d$ 上有一个过滤，其相伴分次部分为 $\bigoplus_{d_1+d_2=d}(\operatorname{Av}_E^{d_1}\boxtimes\operatorname{Av}_E^{d_2})\circ\operatorname{CT}$。  
+   *为什么*：这是修改叠的纯几何过滤；两个因子分别记录落在两个 Levi 因子上的修改。
+2. 两个 Levi 因子都满足 $\operatorname{rank}(E)>m_i$，故对每个 $d=d_1+d_2$，至少有一个 $d_i$ 超过 $rm_i(2g-2)$，由较小秩的消失定理归纳消去该分次片。  
+   *为什么*：归纳假设可用：$m_i<m$，秩条件仍成立。
+
+> 缺口：讲义只断言“修改叠的纯几何过滤”存在，未构造该过滤，也未逐一验证归纳步；完整的过滤构造与归纳见 [Gai04]。
+
+*出处*：§9.7 / 原书 p.52
+
+
+## 易错点
+
+- “只需证明 $\operatorname{Av}_E^d\circ\operatorname{Av}_{E^*}^{-d}=0$”依赖 $\operatorname{Av}_{E^*}^{-d}$ 同时是左右伴随这一事实；只知单侧伴随推不出 $F=0$。
+- Euler 示性数论证允许把 $E$ 换成同秩局部系统，但正合性输入用的是 $E$ 的不可约性——归约只对 $\chi$ 成立，不是对函子本身成立。
+- Braverman 的拆分只对平凡系统 $\mathbf{1}^{\oplus r}$ 成立，别把它当成对任意 $E$ 的恒等式。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§9.6 Gaitsgory 最初的消失证明，p.51-52（PDF p.51-52），`§9.6 Gaitsgory 最初的消失证明（ch09.tex:110-132，p.51-52）；尖点像见 §9.7（ch09.tex:133-146）`
+
+## 核验
+
+状态：`external-confirmed`（2026-11-18）
+- Gaitsgory, On a vanishing conjecture appearing in the geometric Langlands correspondence, Annals 160(2) 617-682：https://arxiv.org/abs/math/0204081 — 「Let Av^{−d}_{E^*} be the (both left and right) adjoint functor of Av^d_E; explicitly, Av^{−d}_{E^*}(F) = h^→_!(h^←^*(F)⊗s^*(L^{−d}_{E^*})[nd])」，紧接「It is enough to show that Av^{−d}_{E^*} identically vanishes. However, by adjointness, ... the stalk of Av^{−d}_{E^*}(F) at M is isomorphic to RHom(Av^d_E(δ_M), F)」——逐字支持卡中左右伴随、只需证复合为零、Hom 计算三步。
+- Gaitsgory, On a vanishing conjecture appearing in the geometric Langlands correspondence, Annals 160(2) 617-682：https://arxiv.org/abs/math/0204081 — 「D(Av^d_E(F)) ≃ Av^d_{E^*}(D(F)), where E^* is the dual local system」——支持卡中 𝔻∘Av_{E^*}^{−d}≃Av_E^d∘𝔻 的记号与方向（Gai04 写 Av^d_{E^*}，讲义/卡写 Av_{E^*}^{−d}，同一下修改函子的两种记号）。
+- Gaitsgory, On a vanishing conjecture appearing in the geometric Langlands correspondence, Annals 160(2) 617-682：https://arxiv.org/abs/math/0204081 — 「the Euler-Poincaré characteristics of Av^d_E(F) do not depend on the local system」（E' 与 E 同秩，用 Deligne 定理）——逐字支持卡中「对 χ 可把 E 换成同秩局部系统，归约到平凡」。
+- Gaitsgory, On a vanishing conjecture appearing in the geometric Langlands correspondence, Annals 160(2) 617-682：https://arxiv.org/abs/math/0204081 — Lemma 2.17「Av^d_E(F) is cuspidal, provided that d > (2g−2)·n·rk(E)」；Prop A.3「Av^d_E(F) ≃ ⊕ Av^{d1}_{E1}∘Av^{d2}_{E2}(F)」及其对平凡系统「Av^d_E(F) ≃ ⊕_d Av^{d1}∘...∘Av^{dm}(F)」；Thm A.4「If F is cuspidal, then Av^d(F)=0 for d > (2g−2)·n」，并注明是 Jacquet–Godement 的几何化——支持卡中尖点像、Braverman 拆分与最后一步。
+
+## 关联
+
+- `glc/concept/averaging-vanishing-theorem`
+- `glc/concept/tempered-quotient`
+- `glc/concept/upper-modification-averaging`

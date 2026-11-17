@@ -1,5 +1,26 @@
 # CHANGELOG
 
+## dataset glc — 2026-11-18（陈麟《几何 Langlands 讲义》资料卡 154 张，逐卡外部核验）
+
+新增 `datasets/glc/`：把陈麟《Introduction to Geometric Langlands Theory》（清华 2023 秋讲义，
+2025-08-08 修订，85 页、16 章 119 节）逐条裁成 **154 张概念卡**，按九条轨道组织
+（O 总览 4 / A 整体类域论 4 / B Hecke 与 Satake 9 / C Whittaker 与 Laumon 20 / D Fourier 与洁净性 19 /
+E 因子化与 Ran 空间 18 / F 消失与范畴猜想 30 / G 谱侧与 Hitchin 20 / H 局部等价与证明架构 30）。
+
+- 硬要求「不能有错」的落地：**8 名 drafter 起草 + 16 名 verifier 一章一人独立核验**（两拨人不相交）。
+  verifier 逐句与译本锚点对齐，再去 nLab / Stacks Project / 讲义参考文献逐字找依据，记录「哪句支持哪条断言」。
+  结果：**external-confirmed 66 / source-only 88 / rejected 0**；`alignment=error` 9 条，已全部改正并复验。
+- 抓到的 9 处实质错误包括：量子局部 GL 的「水平 $\kappa$」与「临界水平」混用、Whittaker 特征函数的指数符号、
+  $\operatorname{QLisse}$ 的定义（应为 $\operatorname{IndLisse}$ 的左完备化）、范畴迹的单位/余单位对调、
+  Fourier–Deligne 变换的 $t$-正合性、平均函子的基础情形、消失定理的秩条件 $k<\operatorname{rank}E$、
+  $P=G$ 的归属、整体函子的提升方向。明细见 `datasets/glc/README.md` 修订表与 `verification.jsonl`。
+- 结构：`SCHEMA.md`（csw v1 + `verification` 扩展）、`cards/concepts/*.json`、`verification.jsonl`（154 行台账）、
+  `index.jsonl`、`md/`（154 个）、`taxonomy.md`、`MAP.md`、`workflow/PRODUCTION.md`（四闸 + 本批执行记录）。
+- 工具链：`tools/lint_glc.py`（含 verification 交叉校验，`published` 不得是 source-only）、`build_index.py`、
+  `render_md.py`、`gen_docs.py`，全部随仓；lint **154 卡 0 error / 0 warning**。
+- 权利：全部 `rewritten`，不复制原文；`sources` 标章、节、条目号与印刷页。
+- 根 `README.md` 新增「资料卡试点：几何 Langlands（`datasets/glc/`）」小节。
+
 ## dataset csw — 2026-11-17（Witten 1989 资料卡 40 张）
 
 新增 `datasets/csw/`：把 Witten 1989（*Quantum Field Theory and the Jones Polynomial*，CMP 121, 351–399）

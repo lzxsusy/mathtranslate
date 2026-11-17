@@ -1,0 +1,69 @@
+---
+id: glc/concept/generic-reduction-whittaker
+type: concept
+track: C
+---
+
+# 一般位置约化与整体 Whittaker 层
+
+> 用 B/N-一般位置约化的预叠与带色除子 Div_Λ 记录有理约化的缺陷除子，从而在 Bun_N 上以 Artin–Schreier 层定义整体 Whittaker 层。
+
+**问题**：一般位置约化的预叠为什么等同于 Bun_B ×_{Bun_T} Div_Λ，整体 Whittaker 层又是怎样拉回得到的？
+
+## 定义
+
+令 $\operatorname{Bun}_G^{B\text{-gen}}$ 和 $\operatorname{Bun}_G^{N\text{-gen}}$ 分别表示配备一般位置定义的 $B$ 约化和 $N$ 约化的 $G$ 丛预叠。有交换图，其中 $\mathrm{str}$ 记住底层 $G$ 丛，$L$ 忘去一般位置的 $N$ 结构。一个 $B$ 丛的一般位置 $N$ 约化，等价于它诱导的 $T$ 丛的一般位置平凡化，因此 $\operatorname{Bun}_B^{N\text{-gen}}=\operatorname{Bun}_B\times_{\operatorname{Bun}_T}\operatorname{Bun}_T^{\mathrm{rat\ triv}}\simeq\operatorname{Bun}_B\times_{\operatorname{Bun}_T}\operatorname{Div}_\Lambda$，其中 $\operatorname{Div}_\Lambda$ 是余权幺半群的带色除子空间。对 $G=\operatorname{GL}_n$，以 $\operatorname{Bun}_N$ 表示具有固定 $T$ 丛的 $\rho$ 扭曲 Whittaker 叠：$\operatorname{Bun}_N=\{0=\overline F_0\subset\overline F_1\subset\cdots\subset\overline F_n,\ \overline F_i/\overline F_{i-1}\simeq\Omega_X^{n-i}\}$。
+
+*记号*：$\operatorname{Bun}_T^{\mathrm{rat\ triv}}$ 指带有有理平凡化的 $T$-丛（除 $T$-丛 $\mathcal L$ 外还带一个在一般点处取得的同构 $\mathcal L_\eta\simeq\mathcal L^0_\eta$）；$\operatorname{Div}_\Lambda$ 是 $\Lambda$-着色的除子空间（有限个点各标一个 $\lambda\in\Lambda$），$\Lambda$ 取余权幺半群。
+
+## 要点
+
+- 简单根扩张类给出映射 $\ell:\operatorname{Bun}_N\to\prod_{i=1}^{n-1}\mathbb{G}_a\xrightarrow{\Sigma}\mathbb{G}_a$：对 $1\le i\le n-1$，第 $i$ 个相邻扩张 $0\to\Omega_X^{n-i}\to\overline F_{i+1}/\overline F_{i-1}\to\Omega_X^{n-i-1}\to0$ 定义 $\operatorname{Ext}^1(\Omega_X^{n-i-1},\Omega_X^{n-i})\simeq H^1(X,\Omega_X)\simeq k$ 中的一个元素，而 $\ell$ 是这些类的和。
+- 沿 $\ell$ 拉回 Artin–Schreier 层 $\mathcal L_\psi$ 得到整体 Whittaker 层；$D(\operatorname{Bun}_G^{N\text{-gen}})^{\mathrm{Wh}}$ 表示带有这种扭曲 $N(\mathbb{A})$ 等变性的范畴。
+- $\operatorname{Div}_\Lambda$ 记录一般位置约化在每一点「不平凡到什么程度」的缺陷除子；这是几何上替代允许有理约化并记录其缺陷除子的做法。
+- mirabolic Whittaker 展开的几何形式：$\operatorname{Av}_!:D(\operatorname{Bun}_G^{N\text{-gen}})^{\mathrm{Wh}}\xrightarrow{\sim}D(\operatorname{Bun}_G^{Q_1\text{-gen}})_{\mathrm{cusp}}$；它应与局部 Whittaker–Satake 等价以及谱一侧一起理解。
+
+## 关键公式
+
+- $\operatorname{Bun}_B^{N\text{-gen}}=\operatorname{Bun}_B\times_{\operatorname{Bun}_T}\operatorname{Bun}_T^{\mathrm{rat\ triv}}\simeq\operatorname{Bun}_B\times_{\operatorname{Bun}_T}\operatorname{Div}_\Lambda$
+- $\operatorname{Bun}_N=\{0=\overline F_0\subset\overline F_1\subset\cdots\subset\overline F_n,\quad \overline F_i/\overline F_{i-1}\simeq\Omega_X^{n-i}\}$
+- $\ell:\operatorname{Bun}_N\longrightarrow\prod_{i=1}^{n-1}\mathbb{G}_a\xrightarrow{\Sigma}\mathbb{G}_a$
+- $\operatorname{Av}_!:D(\operatorname{Bun}_G^{N\text{-gen}})^{\mathrm{Wh}}\xrightarrow{\ \sim\ }D(\operatorname{Bun}_G^{Q_1\text{-gen}})_{\mathrm{cusp}}$
+
+## 定理与证明
+
+### mirabolic Whittaker 展开的几何形式（要点（有缺口））
+
+对 $G=\operatorname{GL}_n$，$\operatorname{Av}_!:D(\operatorname{Bun}_G^{N\text{-gen}})^{\mathrm{Wh}}\xrightarrow{\sim}D(\operatorname{Bun}_G^{Q_1\text{-gen}})_{\mathrm{cusp}}$。
+
+1. 在 $\operatorname{Bun}_N$ 上沿 $\ell$ 拉回 Artin–Schreier 层，得到 Whittaker 扭曲的等变范畴。  
+   *为什么*：这是整体 Whittaker 层的定义方式。
+2. 断言 $\operatorname{Av}_!$ 是该范畴与 $Q_1$-一般位置约化范畴尖点部分之间的等价。  
+   *为什么*：讲义把它写成几何形式，未给证明。
+
+> 缺口：讲义只给出该等价作为「几何形式」，未证明；函数论原型见 §3.5，局部输入见 §3.4、§3.6。
+
+*出处*：§3.7（原书 p.23–24）
+
+
+## 易错点
+
+- $\operatorname{Bun}_B^{N\text{-gen}}$ 与 $\operatorname{Bun}_B$ 不同：前者多带一个一般位置的 $N$ 结构，等价于诱导 $T$ 丛的一般位置平凡化，所以才有 $\times_{\operatorname{Bun}_T}\operatorname{Div}_\Lambda$ 的纤维积。
+- 这里的 $\operatorname{Bun}_N$ 是 $\rho$ 扭曲的 Whittaker 叠且固定了 $T$ 丛（$\overline F_i/\overline F_{i-1}\simeq\Omega_X^{n-i}$），不是通常的 $N$-丛叠。
+- $\ell$ 是相邻扩张类之和，取值在 $\prod_{i=1}^{n-1}\mathbb{G}_a$ 再经 $\Sigma$ 求和；只取一个 $i$ 的类不是 $\ell$。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§3.7 一般位置约化与 Whittaker 特征标，p.23-24（PDF p.23-24），`源码/chapters/ch03.tex:126-151（§3.7）`
+
+## 核验
+
+状态：`source-only`（2026-11-18）
+- nLab：https://ncatlab.org/nlab/show/Whittaker+function — Bun_B^{N-gen}=Bun_B×_{Bun_T}Bun_T^{rat triv}≃Bun_B×_{Bun_T}Div_Λ；Bun_N 滤链 F̄_i/F̄_{i-1}≃Ω_X^{n-i}；ℓ:Bun_N→∏G_a→ΣG_a；Av_!
+- Gai18：https://arxiv.org/abs/1811.02468 — 同上
+
+## 关联
+
+- `glc/concept/mirabolic-whittaker-expansion`
+- `glc/concept/whittaker-category`
+- `glc/concept/degenerate-whittaker-characters`

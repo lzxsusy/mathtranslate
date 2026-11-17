@@ -1,0 +1,51 @@
+---
+id: glc/concept/upper-modification-averaging
+type: concept
+track: F
+---
+
+# 平均函子（上修改）
+
+> 沿秩 $m$ 丛的上修改对应，用 Laumon 层做拉回—张量—推前的自函子，$d$ 为修改次数。
+
+**问题**：平均函子为什么必须用 Laumon 层 $\mathcal{L}_E^d$ 当核，而不能只把 $E^{\boxtimes d}$ 拉回到修改叠上？
+
+## 定义
+
+设 $X$ 是亏格为 $g$ 的光滑射影曲线，$D(-)$ 表示所选层理论；$E$ 是秩 $r$ 的不可约局部系统，$m<r$。对 $d=d_2-d_1\ge 0$ 考虑秩 $m$ 丛的上修改：修改叠 $\operatorname{Mod}_m^{d_1,d_2}$ 带左向投影 $\overleftarrow h$ 到 $\operatorname{Bun}_m^{d_1}$、右向投影 $\overrightarrow h$ 到 $\operatorname{Bun}_m^{d_2}$，以及支撑映射 $\pi:\operatorname{Mod}_m^{d_1,d_2}\to\operatorname{Tor}^d$；$\operatorname{Mod}_m^{d_1,d_2}$ 的一点为 $M\subset M'$，$\operatorname{length}(M'/M)=d$，且 $\pi(M\subset M')=M'/M$。令 $\mathcal{L}_E^d\in D(\operatorname{Tor}^d)$ 为 Laumon 层：在支撑映射 $\operatorname{Tor}^d\to X^{(d)}$ 下无重数轨迹 $X^{(d),\circ}\subset X^{(d)}$ 的逆像上，它是 $E^{\boxtimes d}$ 的对称下降 $E^{(d)}$；整体上，它是后者到 $\operatorname{Tor}^d$ 的 Goresky–MacPherson 延拓。忽略通常的归一化移位与 Tate 扭转，定义 $\operatorname{Av}_E^d(\mathcal{F}):=\overrightarrow h_!(\overleftarrow h^*\mathcal{F}\otimes\pi^*\mathcal{L}_E^d)\in D(\operatorname{Bun}_m^{d_2})$。等价地，对各连通分支求和后，这是 $D(\operatorname{Bun}_m)$ 的自函子；称之为“由 $\mathcal{L}_E^d$ 作上修改”。
+
+*记号*：$X^{(d)}$ 是 $X$ 的 $d$ 次对称积，$X^{(d),\circ}$ 是无重数轨迹；$\operatorname{Tor}^d$ 是挠元叠；$\operatorname{Bun}_m^{d_1}$、$\operatorname{Bun}_m^{d_2}$ 是带次数偏移的秩 $m$ 丛叠；$\operatorname{Av}_E^d$ 只定义到标准移位与 Tate 扭转为止。
+
+## 要点
+
+- Laumon 层在无重数轨迹的逆像上等于 $E^{\boxtimes d}$ 的对称下降 $E^{(d)}$，整体上取它在 $\operatorname{Tor}^d$ 上的 Goresky–MacPherson 延拓。
+- 平均函子的公式只在选定通常的归一化移位与 Tate 扭转之后成立，等式本身带着这层归一化。
+- 单个分支上 $\operatorname{Av}_E^d$ 是 $D(\operatorname{Bun}_m^{d_1})\to D(\operatorname{Bun}_m^{d_2})$ 的函子；对各连通分支求和后才是 $D(\operatorname{Bun}_m)$ 的自函子。
+- 文献 [Gai16b] 从谱一侧回顾同一个平均函子。
+- 讲义随后（§9.4、§9.5）关心的是这个函子为何应当消失，而不是 $\mathcal{L}_E^d$ 的构造。
+
+## 关键公式
+
+- $\operatorname{Av}_E^d(\mathcal{F}):=\overrightarrow h_!(\overleftarrow h^*\mathcal{F}\otimes\pi^*\mathcal{L}_E^d)\in D(\operatorname{Bun}_m^{d_2})$
+
+## 易错点
+
+- 把 $\mathcal{L}_E^d$ 当成 $E^{\boxtimes d}$ 沿支撑映射的平凡拉回：讲义只在该轨迹的逆像上把它等同于 $E^{(d)}$，其余部分靠 Goresky–MacPherson 延拓补上。
+- 忘了归一化：$\operatorname{Av}_E^d$ 的移位与 Tate 扭转在 §9.6 的伴随论证中被反复用到，漏掉会得到差一个平移/扭转的假等式。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§9.1 平均函子，p.48（PDF p.48），`§9.1 平均函子（ch09.tex:7-11，未编号定义，p.48）`
+
+## 核验
+
+状态：`external-confirmed`（2026-11-18）
+- Gaitsgory, On a vanishing conjecture appearing in the geometric Langlands correspondence, Annals 160(2) 617-682：https://arxiv.org/abs/math/0204081 — §1.1 定义 Mod_n^d 分类 (M,M',β)（M⊂M'、商长 d），并令 Laumon 层 L_E^d 满足 s^*(L_E^d) ≃ j_{!*}(s^*(E^{(d)}))（j 为开嵌入、E^{(d)} 在 X^{(d),∘} 上 lisse）——支持卡中「L_E^d 在无重数轨迹逆像上是 E^{⊠d} 的对称下降 E^{(d)}，整体取 Goresky–MacPherson 延拓」及上修改叠/投影的描述。
+- Gaitsgory, Recent progress in geometric Langlands theory (Seminaire Bourbaki, talk of 2016-02-16)：https://arxiv.org/abs/1606.09462 — 原文「L_{E,d} := j_{!*}(s^*(E^{(d)})), where j_{!*} is the operation of Goresky-MacPherson extension」与「Av_{E,d}(F) := h^→_!(h^←_!(F)⊗L_{E,d})」——逐字支持卡中 GM 延拓与 Av_E^d 公式（卡写作 π^*L_E^d，即 s^*(L_E^d) 的同物）。
+- Gaitsgory, On a vanishing conjecture appearing in the geometric Langlands correspondence, Annals 160(2) 617-682：https://arxiv.org/abs/math/0204081 — 「this functor is essentially Verdier self-dual, in the sense that D(Av^d_E(F)) ≃ Av^d_{E^*}(D(F)) ... s×h^← is smooth of relative dimension nd, and h^→ is proper」——支持卡中归一化移位/Tate 扭转只差标准平移的说法（卡未把移位写死）。
+
+## 关联
+
+- `glc/concept/spectral-action`
+- `glc/concept/averaging-kernel`
+- `glc/concept/averaging-vanishing-theorem`

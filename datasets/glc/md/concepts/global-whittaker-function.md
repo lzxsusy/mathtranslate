@@ -1,0 +1,69 @@
+---
+id: glc/concept/global-whittaker-function
+type: concept
+track: C
+---
+
+# 整体 Whittaker 函数
+
+> 局部 W_{γ_x,x} 的限制乘积 W_σ：整体特征标 Ψ 在 Ṅ(F) 上平凡，W_σ 由 W(1)=1 与三条整体条件唯一刻画。
+
+**问题**：整体 Whittaker 函数 W_σ 由哪三条条件（外加 W(1)=1）唯一刻画？
+
+## 定义
+
+局部特征标相乘得到整体特征标 $\Psi=\prod_x\Psi_x:\dot N(\mathbb{A})\to\overline{\mathbb{Q}}_\ell^\times$，由留数定理，它在 $\dot N(F)$ 上平凡。上述局部定理给出定义在 $(\dot N(\mathbb{A}),\Psi)\backslash\dot G(\mathbb{A})/\dot G(\mathcal{O})$ 上的限制乘积 $W_\sigma:={\prod_x}'\,W_{\gamma_x,x}$。$\dot G(\mathbb{A})$ 上存在唯一归一化的非分歧 Hecke 特征 Whittaker 函数，由 $W(1)=1$ 及以下条件刻画：(1) 对 $h\in\dot G(\mathcal{O})$，$W(gh)=W(g)$；(2) 对 $u\in\dot N(\mathbb{A})$，$W(ug)=\Psi(u)W(g)$；(3) $T_x^dW=q_x^{d(n-d)/2}\operatorname{Tr}\bigl(\bigwedge^d\sigma(\operatorname{Fr}_x)\bigr)W$。
+
+*记号*：${\prod_x}'$ 表示限制乘积（几乎处处取 $W_{\gamma_x,x}$ 的未分歧分量）；$\dot G(\mathcal{O})$ 与 $\dot N(\mathbb{A})$ 均为 $\rho$ 移位后的形式。
+
+## 要点
+
+- 整体特征标在 $\dot N(F)$ 上平凡，依据是留数定理；这是 $W$ 能作为 $(\dot N(\mathbb{A}),\Psi)\backslash\dot G(\mathbb{A})$ 上函数的前提。
+- 整体条件 (3) 用 $\sigma(\operatorname{Fr}_x)$ 与 $q_x^{d(n-d)/2}$，局部条件 (4) 用 $\gamma$ 与 $q_x^{-d(d-1)/2}$；两处写法不同但由 $\operatorname{Tr}(\bigwedge^d\gamma_x)=q_x^{d(n-1)/2}\operatorname{Tr}(\bigwedge^d\sigma(\operatorname{Fr}_x))$ 相容。
+- $W_\sigma$ 是限制乘积，逐点由局部因子决定；整体唯一性由 $W(1)=1$ 加上三条等变性、本征性给出。
+- 几何上把 $\psi$ 换为 Artin–Schreier 层；此后讲义在整体比较中省去上点，凡出现 Whittaker 特征标 $\Psi$，对应的阿代尔群即 $\rho$ 扭曲形式。
+
+## 关键公式
+
+- $\Psi=\prod_x\Psi_x:\dot N(\mathbb{A})\longrightarrow\overline{\mathbb{Q}}_\ell^\times$
+- $W_\sigma:={\prod_x}'\,W_{\gamma_x,x}$
+- $T_x^dW=q_x^{d(n-d)/2}\operatorname{Tr}\bigl(\bigwedge^d\sigma(\operatorname{Fr}_x)\bigr)W$
+
+## 定理与证明
+
+### 整体非分歧 Hecke 特征 Whittaker 函数的唯一性（要点（有缺口））
+
+$\dot G(\mathbb{A})$ 上存在唯一归一化的非分歧 Hecke 特征 Whittaker 函数，由 $W(1)=1$ 与 (1) 右 $\dot G(\mathcal{O})$ 不变、(2) $(\dot N(\mathbb{A}),\Psi)$ 等变、(3) 对每个 $x$ 与 $d$ 的 $T_x^dW=q_x^{d(n-d)/2}\operatorname{Tr}(\bigwedge^d\sigma(\operatorname{Fr}_x))W$ 刻画。
+
+1. 把局部因子 $W_{\gamma_x,x}$ 相乘得到限制乘积。  
+   *为什么*：局部存在唯一性（§3.4）保证每个因子已归一化。
+2. 验证乘积满足整体的三条条件。  
+   *为什么*：逐点由局部性质得到；讲义未逐条验证。
+3. 断言整体唯一性。  
+   *为什么*：讲义只作断言，未给证明。
+
+> 缺口：讲义只述不证：整体唯一性由局部定理「给出」，但没有写出验证；局部输入见 §3.4，几何形式引 [FGKV98]。
+
+*出处*：§3.5（原书 p.21）
+
+
+## 易错点
+
+- 整体条件 (3) 与局部条件 (4) 的幂次不同：整体用 $q_x^{d(n-d)/2}$ 配 $\sigma(\operatorname{Fr}_x)$，局部用 $q_x^{-d(d-1)/2}$ 配 $\gamma$；混用会差一个 $q_x^{d(n-1)/2}$ 的因子。
+- $\Psi$ 在 $\dot N(F)$ 上平凡，不是在整个 $\dot N(\mathbb{A})$ 上平凡；写成 $(\dot N(F),\Psi)\backslash\dot N(\mathbb{A})$ 才对。
+- 限制乘积 ${\prod_x}'$ 只在几乎所有的 $x$ 取未分歧的 $W_{\gamma_x,x}$；漏掉撇号会把无限乘积当字面乘积。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§3.5 整体 Whittaker 函数与自守函数，p.21-22（PDF p.21-22），`源码/chapters/ch03.tex:83-105（§3.5）`
+
+## 核验
+
+状态：`source-only`（2026-11-18）
+- FGKV98：https://arxiv.org/abs/alg-geom/9703022 — W_σ=∏'_x W_{σ(Fr_x),x}；右 GL_n^J(O) 不变、W_σ(1)=1、Ψ 等变（N^J(F) 上平凡）、T_x^iW_σ=q_x^{-i(i-1)/2}Tr(Λ^iσ(Fr_x))W_σ
+- Gai18：https://arxiv.org/abs/1811.02468 — KP3：几何上把 ψ 换为 Artin–Schreier 层，此后整体比较省去上点
+
+## 关联
+
+- `glc/concept/local-whittaker-eigenfunction`
+- `glc/concept/mirabolic-whittaker-expansion`

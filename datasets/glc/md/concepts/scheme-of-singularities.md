@@ -1,0 +1,68 @@
+---
+id: glc/concept/scheme-of-singularities
+type: concept
+track: F
+---
+
+# 奇异概形与支撑子范畴
+
+> 由 $H^1(T_Y)$ 定义拟光滑导出叠的 $\operatorname{Sing}(Y)$，并据此截出 $\operatorname{Coh}_N$ 与 $\operatorname{IndCoh}_N$。
+
+**问题**：$\operatorname{Sing}(Y)$ 里的 $H^1(T_Y)$ 为什么是 $H^1$ 而不是 $H^0$？
+
+## 定义
+
+依照 Arinkin–Gaitsgory（[AG15]），若 $Y$ 是拟光滑的，定义它的奇异概形为 $\operatorname{Sing}(Y):=\operatorname{Spec}_{Y^{\mathrm{cl}}}\operatorname{Sym}_{\mathcal{O}_{Y^{\mathrm{cl}}}}\bigl(H^1(T_Y)\bigr)$。等价地，它是 $(-1)$ 次移位余切叠的底层经典叠。若 $Y$ 光滑，则 $\operatorname{Sing}(Y)$ 是 $Y$ 上的零向量丛，也就是零截面。对 $\mathcal{F}\in\operatorname{Coh}(Y)$，可以赋予一个锥形支撑 $\operatorname{supp}(\mathcal{F})\subset\operatorname{Sing}(Y)$。对锥形闭子集 $N\subset\operatorname{Sing}(Y)$，置 $\operatorname{Coh}_N(Y):=\{\mathcal{F}\in\operatorname{Coh}(Y)\mid\operatorname{supp}(\mathcal{F})\subset N\}$，$\operatorname{IndCoh}_N(Y):=\operatorname{Ind}(\operatorname{Coh}_N(Y))$。
+
+*记号*：$Y^{\mathrm{cl}}$ 是 $Y$ 的底层经典概形；$T_Y$ 是切复形；$\operatorname{Sym}_{\mathcal{O}_{Y^{\mathrm{cl}}}}$ 表示在 $\mathcal{O}_{Y^{\mathrm{cl}}}$ 上的对称代数；$N$ 取遍 $\operatorname{Sing}(Y)$ 的锥形闭子集。
+
+## 要点
+
+- 定义要求 $Y$ 拟光滑（quasi-smooth）。
+- 等价描述：$\operatorname{Sing}(Y)$ 是 $(-1)$ 次移位余切叠的底层经典叠。
+- 若 $Y$ 光滑，$H^1(T_Y)=0$，$\operatorname{Sing}(Y)$ 是 $Y$ 上的零向量丛（零截面）。
+- $\operatorname{Coh}_N(Y)$ 由锥形支撑落在 $N$ 中的凝聚对象组成，$\operatorname{IndCoh}_N(Y)$ 是它的 ind-完备化。
+- 零支撑范畴恢复完美对象：$\operatorname{Coh}_0(Y)\simeq\operatorname{Perf}(Y)$，$\operatorname{IndCoh}_0(Y)\simeq\operatorname{QCoh}(Y)$。
+- 局部模型：$Y=\mathrm{pt}\times_V\mathrm{pt}$（两个到向量空间 $V$ 的映射都是零映射）时 $H^1(T_Y)=V$、$\operatorname{Sing}(Y)=V^*$，Koszul 对偶给出 $\operatorname{IndCoh}(\mathrm{pt}\times_V\mathrm{pt})\simeq\operatorname{Sym}(V[-2])\text{-}\mathrm{Mod}$。
+
+## 关键公式
+
+- $\operatorname{Sing}(Y):=\operatorname{Spec}_{Y^{\mathrm{cl}}}\operatorname{Sym}_{\mathcal{O}_{Y^{\mathrm{cl}}}}\bigl(H^1(T_Y)\bigr)$
+- $\operatorname{Coh}_0(Y)\simeq\operatorname{Perf}(Y),\qquad\operatorname{IndCoh}_0(Y)\simeq\operatorname{QCoh}(Y)$
+
+## 定理与证明
+
+### 零支撑范畴恢复完美对象（§10.1）（要点（有缺口））
+
+$\operatorname{Coh}_0(Y)\simeq\operatorname{Perf}(Y)$ 且 $\operatorname{IndCoh}_0(Y)\simeq\operatorname{QCoh}(Y)$。
+
+1. 把支撑为零等同于“在 $\operatorname{Sing}(Y)$ 的零截面之外没有支撑”，于是 $\operatorname{Coh}_0(Y)$ 就是支撑平凡的那部分凝聚对象。  
+   *为什么*：支撑是锥形闭子集，零支撑即落在零截面内。
+2. 在奇异支撑形式体系中，这部分恰好是完美复形；再取 ind-完备化得 $\operatorname{QCoh}$。  
+   *为什么*：完美复形是凝聚对象中“局部可逆元”的部分，其 ind-完备化就是拟凝聚层。
+
+> 缺口：讲义只陈述这两个等价（原书 p.54），未给证明；它属于 Arinkin–Gaitsgory 的奇异支撑形式体系（[AG15]）。
+
+*出处*：§10.1 / 原书 p.54
+
+
+## 易错点
+
+- $\operatorname{Sing}(Y)$ 不是 $Y$ 的奇点集，而是 $(-1)$ 次移位余切叠的底层经典叠；光滑时它是零向量丛，而非 $Y$ 本身。
+- 用 $H^1(T_Y)$ 而不是 $H^0$：这正是准光滑导出概形与通常余切丛的差别所在。
+- 零支撑范畴恢复的是 $\operatorname{Perf}$ 与 $\operatorname{QCoh}$（$\operatorname{IndCoh}_0$），不是 $\operatorname{Coh}$ 与 $\operatorname{IndCoh}$ 全部。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§10.1 为何出现 ind-凝聚层，p.53-54（PDF p.53-54），`§10.1 奇异概形与支撑子范畴（ch10.tex:29-48，p.54）`
+
+## 核验
+
+状态：`source-only`（2026-11-18）
+- arXiv：https://arxiv.org/abs/1201.6343 — 摘要：在 quasi-smooth DG scheme/stack 上发展 coherent sheaf 的奇异支撑；支持本卡「拟光滑 Y、奇异支撑」的框架，但摘要没有 Sing(Y)=Spec_{Y^cl}Sym(H^1(T_Y))、Coh_0≃Perf、IndCoh_0≃QCoh 与局部模型 Sym(V[-2])-Mod。
+
+## 关联
+
+- `glc/concept/ind-coherent-sheaves`
+- `glc/concept/nilpotent-singular-support`
+- `glc/concept/derived-satake`

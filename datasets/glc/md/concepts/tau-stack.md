@@ -1,0 +1,53 @@
+---
+id: glc/concept/tau-stack
+type: concept
+track: B
+---
+
+# $\tau$-叠
+
+> 设 $\tau$ 为 $\operatorname{Aff}_k$ 上 Grothendieck 拓扑；预叠对 $\tau$-覆盖满足下降，即 $y(S)\to\lim y(S^\bullet)$ 是群胚的等价，则称它为 $\tau$-叠。
+
+**问题**：预叠成为 $\tau$-叠的判据是什么？
+
+## 定义
+
+设 $\tau$ 是 $\operatorname{Aff}_k$ 上的 Grothendieck 拓扑，例如 Zariski、étale、光滑、fppf 或 fpqc 拓扑。若预叠 $y$ 对 $\tau$-覆盖满足下降，则称它为 $\tau$-叠。等价地，对每个 $\tau$-覆盖 $S^0\to S$ 及其 Čech 神经 $S^\bullet$，自然函子 $y(S)\to\lim y(S^\bullet)$ 是群胚的等价。
+
+*记号*：$S^\bullet$：覆盖 $S^0\to S$ 的 Čech 神经；$\lim y(S^\bullet)$：该神经上群胚的极限；$\operatorname{pt}/G$：$G$ 作用在一点上的商预叠，其叠化给出分类叠 $B_\tau G$（注 2.1.3）。
+
+## 要点
+
+- 判据的形式：对每个 $\tau$-覆盖 $S^0\to S$，自然函子 $y(S)\to\lim y(S^\bullet)$ 是群胚的等价。
+- $\tau$ 可取 Zariski、étale、光滑、fppf、fpqc 等 Grothendieck 拓扑；选不同的 $\tau$ 得到不同的叠概念。
+- 分类叠 $B_\tau G$ 是商预叠 $\operatorname{pt}/G$ 的叠化，其 $S$-点分类 $S$ 上 $\tau$-局部平凡的 $G$ 挠子（注 2.1.3）。
+- 若 $G$ 在 $k$ 上光滑，则挠子在 étale 拓扑下就已局部平凡，于是 $B_{\mathrm{et}}G=B_{\mathrm{sm}}G=B_{\mathrm{fppf}}G=B_{\mathrm{fpqc}}G$（注 2.1.3）。
+
+## 关键公式
+
+- $y(S)\longrightarrow\lim y(S^{\bullet})$
+- $B_\tau G\simeq\operatorname{colim}(\operatorname{pt}\leftarrow G\leftleftarrows G\times G\cdots)$
+- $B_{\mathrm{et}}G=B_{\mathrm{sm}}G=B_{\mathrm{fppf}}G=B_{\mathrm{fpqc}}G$
+
+## 易错点
+
+- 下降不是「每个覆盖成员上分别有对象」：$y(S)\to\lim y(S^\bullet)$ 作为群胚等价，等价于粘合对象、粘合同构与余圈条件一起成立。
+- $B_\tau G$ 与 $G$ 的光滑性有关：$G$ 光滑时多个拓扑给出同一个分类叠，粗糙拓扑下则不然。
+- 叠化（stackification）不能省：$\operatorname{pt}/G$ 只是预叠，本身未必满足下降。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§2.1 预叠与叠，p.12（PDF p.12），`源码/chapters/ch02.tex:15-19（定义 2.1.2）`
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§2.1 预叠与叠，p.12（PDF p.12），`源码/chapters/ch02.tex:20-27（注 2.1.3 分类叠）`
+
+## 核验
+
+状态：`external-confirmed`（2026-11-18）
+- Stacks Project：https://stacks.math.columbia.edu/tag/02ZI — 定义 8.5.1 三条：群胚纤维范畴、Isom(x,y) 是层、每个覆盖的 descent data 有效——正是卡中「对 τ-覆盖满足下降」的判据，也是注 2.1.3 的基础。
+- nLab：https://ncatlab.org/nlab/show/algebraic+stack — 原文「every internal groupoid in algebraic spaces represents a (2,1)-presheaf … the stackification of this presheaf, called the quotient stack」支持卡中 B_τG 作为 pt/G 的堆叠化，即 colim(pt ← G ⇉ G×G …) 的表述。
+
+## 关联
+
+- `glc/concept/prestack`
+- `glc/concept/bun-g-artin-stack`
+- `glc/concept/adelic-uniformization`

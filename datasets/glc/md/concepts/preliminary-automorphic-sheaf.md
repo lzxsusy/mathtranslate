@@ -1,0 +1,59 @@
+---
+id: glc/concept/preliminary-automorphic-sheaf
+type: concept
+track: D
+---
+
+# 初步自守层 Aut'_E
+
+> GL_n 情形下，用紧化 Hecke–Whittaker 叠 Q_n 上的紧支撑推前，在 Bun'_n 上定义的层 Aut'_E（分次数 d）。
+
+**问题**：Aut'_E 为什么必须用紧支撑推前 π_! 来定义，而不能用 π_*？
+
+## 定义
+
+继续取 $G=\operatorname{GL}_n$，并令 $E$ 为 $X$ 上秩 $n$ 的局部系统；第 4 章构造了 $\mathcal{L}_E\in\operatorname{Perv}(\operatorname{Tor})$。令 $\operatorname{Bun}'_n$ 为对 $(M,s)$ 的叠，其中 $M$ 是秩 $n$ 向量丛，$s:\Omega_X^{n-1}\hookrightarrow M$ 为单射。令 $Q_n$ 为正的整体 Hecke–Whittaker 叠，其点是旗
+\[
+0=M_0\subset M_1\subset\cdots\subset M_n,\qquad M_i/M_{i-1}\simeq\Omega_X^{n-i},
+\]
+连同一个满足 $M_n\hookrightarrow M$、余核为挠层的目标 $M$（$M$ 取在开子叠 $C_n$ 中；$C_n$ 的最终定义见 §5.6–§6.1，本节先按此记号使用）。它有三个映射：$\pi:Q_n\to\operatorname{Bun}'_n$ 记住 $\Omega_X^{n-1}=M_1\hookrightarrow M$；$p_1:Q_n\to\operatorname{Tor}$ 记录挠商 $M/M_n$；$p_2:Q_n\to\operatorname{Bun}_N\to\mathbb{G}_a$ 是 Whittaker 特征标，即旗中相邻扩张类的和。令 $\mathcal{L}_{\psi}$ 为 $\mathbb{G}_a$ 上的 Artin–Schreier 层。在 $\operatorname{length}(M/M_n)=d$ 的分支上，初步对象为
+\[
+\operatorname{Aut}^{\prime,d}_E:=\pi_!\,\bigl(p_1^*\mathcal{L}_E^d\otimes p_2^*\mathcal{L}_{\psi}\bigr)[\dim_{\mathrm{rel}}](\dim_{\mathrm{rel}}/2).
+\]
+
+*记号*：方括号及圆括号表示 Fourier 归一化所用的相对移位与 Tate 扭转；感叹号表示紧支撑推前，映射 $\pi$ 一般不是真态射。$\operatorname{Bun}'_n\to\operatorname{Bun}_n^d$ 是下降所用的映射。
+
+## 要点
+
+- $Q_n$ 是紧化整体版本：旗、挠商与 Whittaker 特征标捆在同一叠里，不是局部仿射 Grassmann 簇与 $\operatorname{Bun}_N$ 的字面乘积。
+- 所希望的性质之一：若 $E$ 不可约，则对 $d\gg0$，$\operatorname{Aut}^{\prime,d}_E$ 是不可约反常层。
+- 所希望的性质之二：对 $d\gg0$，$\operatorname{Aut}^{\prime,d}_E$ 沿 $\operatorname{Bun}'_n\to\operatorname{Bun}_n^d$ 下降，得到 $\operatorname{Aut}^d_E\in\operatorname{Perv}(\operatorname{Bun}_n^d)$。
+- 所希望的性质之三是截断的最高次 Hecke 关系（见另一张卡）。
+- 困难在于：从形式上没有理由保证紧支撑推前 $\pi_!$ 保持反常性或不可约性；本章把它改写成 Fourier–Deligne 变换来处理。
+
+## 关键公式
+
+- $\operatorname{Aut}^{\prime,d}_E=\pi_!(p_1^*\mathcal{L}_E^d\otimes p_2^*\mathcal{L}_{\psi})[\dim_{\mathrm{rel}}](\dim_{\mathrm{rel}}/2)$
+- $Q_n=\{0=M_0\subset\cdots\subset M_n,\ M_i/M_{i-1}\simeq\Omega_X^{n-i},\ M_n\hookrightarrow M\text{ 的余核为挠层}\}$
+
+## 易错点
+
+- $Q_n$ 不能拆成 $\operatorname{Gr}\times\operatorname{Bun}_N$ 的直积：末项 $M_n\hookrightarrow M$ 由同一条链给出；被丢掉的正是有挠缺陷（$M/M_n\ne0$）的修改，而那恰是 $j_{k,!}$ 要延拓过去的部分。
+- 「$\rho$ 扭曲」指把 $\operatorname{Bun}_N$ 上的 Whittaker 层按半和正根 $\rho$ 作 Tate 扭转；不扭则 $p_2^*\mathcal{L}_{\psi}$ 与 $\pi$、$p_1$ 的等变性不能同时成立。
+- $\pi$ 一般不是真态射，因此 $\pi_!
+e\pi_*$；定义中取的是紧支撑推前 $\pi_!$，但它未必是 $\pi_*$。
+
+## 出处
+
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§5.1 回顾：从 Laumon 层到初步的自守层，p.32-33（PDF p.32-33），`源码/chapters/ch05.tex:4-15（§5.1 Q_n 与 Aut'_E 的定义）`
+
+## 核验
+
+状态：`source-only`（2026-11-18）
+- nLab：https://ncatlab.org/nlab/show/geometric+Langlands+correspondence — The page gives only the general local-system ↔ Hecke-eigensheaf picture; it has no Q_n, π, p_1, p_2 or Aut'_E formula.
+
+## 关联
+
+- `glc/concept/fourier-deligne-transform`
+- `glc/concept/truncated-hecke-relation`
+- `glc/concept/gl2-fourier-description`
