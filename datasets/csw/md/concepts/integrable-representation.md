@@ -1,0 +1,62 @@
+---
+id: csw/concept/integrable-representation
+type: concept
+track: D
+---
+
+# 可积表示与 $2j\le k$ 截断
+
+> 只有“可积”的表示才给出非零共形块：$SU(2)$ 时 $2j\le k$；一般 $G$ 时 $\lambda$ 属 level $k$ 的仿射 Weyl 群基本域。
+
+**问题**：为什么表示要满足 $2j\le k$？这个截断是 Borel–Weil–Bott 给的，还是别的？
+
+## 定义
+
+仿射 Lie 代数 $\hat{\mathfrak{g}}_k$ 的最高权表示称为可积的，如果 $\lambda$ 满足 $(\lambda,\theta)\le k$（$\theta$ 是最高根）。对 $SU(2)$，$\lambda=2j$，条件为 $2j\le k$。只有可积表示对应的共形块才非零；其它表示在 CS 中“退耦”。
+
+*记号*：$k$ 是 level；$\theta$ 是最高根；$j$ 是 $SU(2)$ 自旋。
+
+## 要点
+
+- 截断来自仿射代数：$\hat{\mathfrak{g}}_k$ 的可积最高权表示有限多个。
+- 它等价于“量子群 $U_q(\mathfrak{g})$ 在 $q$ 为 $k+h^\vee$ 次单位根时的可积表示”。
+- 在 CS 里表现为：可积表示之外，穿刺点上的共形块维数为零。
+- 这不是 BWB 的推论：BWB 对任意支配整权都成立，截断是额外的仿射结构。
+- 截断使维数有限；否则共形块空间会无限维。
+
+## 关键公式
+
+- $(\lambda,\theta)\le k$
+- $SU(2):\ 2j\le k$
+- $\dim\cH(S^2;R_1,R_2,R_3)=N_{ijk}$（仅可积 $i,j,k$ 非零）
+
+## 可积性判据
+
+对 $\hat{\mathfrak{su}}(2)_k$，自旋 $j$ 的最高权表示可积当且仅当 $2j\le k$；此时共形块空间维数有限且由 Verlinde 公式给出。
+
+**证明要点**（sketch）：
+
+1. 仿射 Weyl 群的基本域由 $(\lambda,\theta)\le k$ 刻画。 *（这是 Kac–Weyl 特征标公式的标准结论。）*
+2. 可积表示的特征标在模变换下封闭（模不变性）。 *（只有可积表示才构成模不变量。）*
+3. 非可积表示给出发散或退耦的共形块。 *（Witten p.372 说“其它表示退耦”。）*
+
+> **缺口**：本文只说“只有可积表示有非零截面”，未给证明；河野 §1.2 与上野 §3 有系统处理。
+
+## 陷阱
+
+- 不要把它当成“$k$ 截断就是取前 $k$ 个表示”：$SU(2)$ 的可积表示是 $j=0,\frac12,\dots,\frac{k}2$，共 $k+1$ 个。
+- 有效 level 是 $k+h^\vee$：写 $q=e^{2\pi i/(k+2)}$ 时截断是 $2j\le k$，别把两个 $k$ 混了。
+- 一般群的可积条件用最高根，不是用 $\dim G$。
+
+## 相关卡片
+
+- [borel-weil-bott](../concepts/borel-weil-bott.md)
+- [affine-lie-algebra](../concepts/affine-lie-algebra.md)
+- [verlinde-formula](../concepts/verlinde-formula.md)
+
+## 来源
+
+- 威腾 1989，Commun. Math. Phys. 121 (1989) 351–399，§3.3（可积表示，p.372），印刷页 [372, 372] / PDF 页 [22, 22]（witten1989/sections/s05-hilbert.tex（§3.3 末））
+
+---
+*本卡为改写（rewritten），不含原文复制；引用请核对原始文献。*

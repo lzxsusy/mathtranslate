@@ -1,0 +1,62 @@
+---
+id: csw/concept/cs-wzw-duality
+type: concept
+track: F
+---
+
+# CS/WZW 对偶：态空间的等同
+
+> 三维 CS 在 $\Sigma\times\mathbb{R}$ 上的量子 Hilbert 空间等于二维 WZW 在 $\Sigma$ 上的共形块空间；这是“态空间等同”，不是动力学等价。
+
+**问题**：这个“对偶”到底是什么级别的等同？与 AdS₃/CFT₂ 有什么区别？
+
+## 定义
+
+固定曲面 $\Sigma$（可带标记点与表示），CS 理论在 $\Sigma\times\mathbb{R}$ 上正则量子化给出 $\cH_\Sigma$；WZW 理论在 $\Sigma$ 上的共形块空间也是 $\cH_\Sigma$。两者作为向量空间（更精确：射影平坦丛的纤维）等同。三维配分函数只在 $X\times S^1$ 上以 $Z=\dim\cH_X$ 的方式接触二维数据，**没有**体/边界配分函数的等式。
+
+*记号*：$\cH_\Sigma$ 是态空间；$Z(X\times S^1)=\dim\cH_X$；本文没有 AdS/全息的语言。
+
+## 要点
+
+- 等同的是“态空间”，不是“配分函数”：没有边界 CFT 的动力学。
+- 原文用 “are”（p.370），不是 “isomorphic to”；只到对象级，函子性在 §5 一句带过。
+- 三维理论无度规、无局域自由度，态空间有限维；这与引力对偶的“体有引力子”根本不同。
+- “3d 引力 = CS”只是经典相空间层面的改写（非紧群），不是本文的结论。
+- 这是“拓扑量子场论”的典型结构：拓扑不变量 = 态空间的维数/迹。
+
+## 关键公式
+
+- $\cH^{CS}_\Sigma\cong\cH^{WZW}_\Sigma=H^0(\cM_J,\cL^{\otimes k})$
+- $Z_{CS}(X\times S^1)=\dim\cH_X$
+
+## 态空间等同
+
+对紧曲面 $\Sigma$ 与可积表示，CS 的量子 Hilbert 空间与 WZW 的共形块空间作为向量空间同构，且都带同一个射影平坦联络。
+
+**证明要点**（sketch）：
+
+1. CS 侧由几何量子化给出 $H^0(\cM_J,\cL^{\otimes k})$。 *（这是本文 §3 的主要结果。）*
+2. WZW 侧的共形块由 Ward 恒等式与 KZ 刻画，其空间也是 $H^0$。 *（KZ 是 Hitchin 联络在 $g=0$ 的显式形式。）*
+3. 两边维数一致（Verlinde 公式）且由同一线丛给出，故同构。 *（本文把它当作物理等同，严格证明由 Segal/TUY 补。）*
+
+> **缺口**：函数性/缝合只在 p.397 用 “It is obvious” 带过；不是范畴等价。
+
+## 陷阱
+
+- 不要说“CS 理论 = WZW 理论”：等同只在态空间层面，三维理论还有手术不变量等额外结构。
+- 不要把它与 AdS₃/CFT₂ 混为一谈：后者是动力学对偶（体引力 + 边界 CFT），前者是拓扑态空间等同。
+- 原文没有“全息”字样；1988 年也没有 AdS/CFT。
+
+## 相关卡片
+
+- [conformal-blocks](../concepts/conformal-blocks.md)
+- [mapping-class-group](../concepts/mapping-class-group.md)
+- [cs-vs-ads3-cft2](../concepts/cs-vs-ads3-cft2.md)
+- [verlinde-formula](../concepts/verlinde-formula.md)
+
+## 来源
+
+- 威腾 1989，Commun. Math. Phys. 121 (1989) 351–399，§5 Applications to Physics（p.396–397）与 §3.2（p.370），印刷页 [370, 397] / PDF 页 [20, 47]（witten1989/sections/s09-applications.tex（§5））
+
+---
+*本卡为改写（rewritten），不含原文复制；引用请核对原始文献。*

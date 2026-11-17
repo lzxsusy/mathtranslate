@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## dataset csw — 2026-11-17（Witten 1989 资料卡 40 张）
+
+新增 `datasets/csw/`：把 Witten 1989（*Quantum Field Theory and the Jones Polynomial*，CMP 121, 351–399）
+拆成 **31 张概念卡 + 9 张例子卡**，九条轨道（O 总览 / A 三维理论 / B 相空间 / C 几何量子化 / D 穿刺点与 BWB /
+E WZW / F 对偶 / G 计算 / H 边界），与 `papers/WIT-1989-JONES/` 的 49 页讲义、97 页注疏本、六场研讨班记录配套。
+
+- 结构：一卡一 JSON（`cards/`），渲染版 `md/`，索引 `index.jsonl`，依赖图 `MAP.md`，总表 `taxonomy.md`；
+  规范 `SCHEMA.md`（概念卡 17 个必填字段、例子卡 16 个，`proof.status=sketch` 必须写 `gap_note`）。
+- 工具链：`tools/_data1..5.py`（源数据）→ `build_cards.py` → `lint_csw.py` → `render_md.py` → `gen_docs.py`，
+  全部随仓，`lint` 结果 **40 卡 0 error / 0 warning**。
+- 队伍与流程：`workflow/PRODUCTION.md` 记录 Lead + historian/bibliographer/archivist/verifier 五角色、
+  四道闸（结构 / 证据 / 内容 / 入库）与纠错流程；卡片的“原子断言”来自研讨班 `sessions/s1..s6` 的 claims。
+- 权利：全部 `rewritten`，不复制原文；`sources` 逐条标印刷页与 tex 锚点。
+- 根 `README.md` 新增「资料卡试点：Chern–Simons 与共形场论」小节，`datasets/README.md` 十类数据表增 `csw/` 一行。
+
 ## translation SY02-09 — 2026-11-17（成品 PDF 随仓公开）
 
 袁瑶（Yao YUAN）*Langlands 纲领导论*（2020 年春季课程讲义，未出版，原稿 198 页）中译注本随仓发布：

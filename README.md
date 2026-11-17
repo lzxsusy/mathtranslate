@@ -124,7 +124,7 @@ Bourbaki 报告、Astérisque 专辑、arXiv 预印本、论文集（proceedings
 | `papers/WIT-1989-JONES/` | **威腾 1989 CS/Jones 论文研讨班**（第二轮解经试点）：六场研讨记录、claims/questions 数据、教材核查；交付两版讲义——**49 页连续叙事讲义**（`deliverables/lecture/`，可作课程主文本）与 **97 页逐句注疏版**（`deliverables/reading_note/`），均含 LaTeX 源码、一键构建工程、协作流程记录，并有打包下载 `WIT-1989-JONES-v1.0.zip` |
 | `08_source_code/` | **每部译本的完整工程**：`工程文件/`（BRIEF、构建脚本、交付清单、术语表、校对记录、逐章报告）+ `源码/`（LaTeX 源与插图） |
 | `07_refs_nlab/` | **nLab 参考资料库**（几何 Langlands 线专用）：120 条 nLab 条目摘要（含 `last_revised`，可直接写进译注来源行）+ 37 份替代来源卡（nLab 只有存根时改引 A 级教材 / MathWorld / Stacks）+ 110 条来源真实性抽查记录 |
-| `datasets/` | **可训练数据集**：数学推理条目（`math/`，命题+证明步骤+缺口+校验）、原文片段↔译文↔译法理由（`parallel/`）、精读卡（`deepread/`）、高光与难证标注（`highlights/`）、事件级工作流（`traces/`）、概念图谱（`kg/`）、held-out 评测（`bench/`）、按概念组织的词条库（`encyclopedia/`）、单章资料卡（`geoq/`、`pathintegral/`）；规则见 `datasets/README.md`，权利分 `self / arxiv / book / rewritten` 四层，`book` 只进 `_internal/` |
+| `datasets/` | **可训练数据集**：数学推理条目（`math/`，命题+证明步骤+缺口+校验）、原文片段↔译文↔译法理由（`parallel/`）、精读卡（`deepread/`）、高光与难证标注（`highlights/`）、事件级工作流（`traces/`）、概念图谱（`kg/`）、held-out 评测（`bench/`）、按概念组织的词条库（`encyclopedia/`）、单章资料卡（`geoq/`、`pathintegral/`、`csw/`）；规则见 `datasets/README.md`，权利分 `self / arxiv / book / rewritten` 四层，`book` 只进 `_internal/` |
 | `site/` | 静态站点（`site/index.html` 双击即开，无需服务器） |
 
 ## `01_corpus_zh/`：语料的形态
@@ -236,6 +236,25 @@ python tools/build_index.py && python tools/render_md.py
 卡片为改写（`rights: rewritten`），公式照录、出处逐条标原书印刷页（80–160）；与底本无连续 20 字相同片段。
 
 ![路径积分框架地图](datasets/pathintegral/map.png)
+
+### 资料卡试点：Chern–Simons 与共形场论（`datasets/csw/`）
+
+把 Witten 1989（*Quantum Field Theory and the Jones Polynomial*，CMP 121, 351–399）拆成 **40 张卡**：1 张总览 + 30 张概念卡 + 9 张例子卡。九条轨道：O 总览 → A 三维理论（作用量、level、Wilson 线）→ B 相空间（约束、辛商、平坦联络模空间）→ C 几何量子化机器（预量子化、极化、全纯截面、半形式）→ D 穿刺点与 Borel–Weil–Bott → E WZW 一侧（仿射代数、Sugawara、共形块、KZ、融合）→ F 对偶与映射类群 → G 计算（手术、S 矩阵、Verlinde、Jones）→ H 边界（CS/WZW 与 AdS₃/CFT₂ 的区别）。
+
+- [`README.md`](datasets/csw/README.md)：资料卡怎么用、目录、复现命令、队伍构造摘要
+- [`MAP.md`](datasets/csw/MAP.md)：卡片依赖图（mermaid）与按轨道的阅读顺序
+- [`taxonomy.md`](datasets/csw/taxonomy.md)：40 张卡总表，逐卡标类型与一句话说明
+- [`workflow/PRODUCTION.md`](datasets/csw/workflow/PRODUCTION.md)：队伍怎么构造（Lead + historian/bibliographer/archivist/verifier）、四道闸、批次清单与纠错流程
+
+```bash
+cd datasets/csw
+python tools/build_cards.py     # tools/_data1..5.py → cards/*.json + index.jsonl
+python tools/lint_csw.py        # 0 error / 0 warning
+python tools/render_md.py       # cards → md/
+python tools/gen_docs.py        # taxonomy.md + MAP.md
+```
+
+卡片为改写（`rights: rewritten`），公式照录、出处逐条标印刷页与 tex 锚点；`proof.status=sketch` 的卡必须写缺口说明。与 [`papers/WIT-1989-JONES/`](papers/WIT-1989-JONES/README.md) 的 49 页讲义、97 页注疏本、六场研讨班记录互为“叙事 / 对照 / 原子断言”三层。
 
 ## 成品 PDF 与原文（合规说明）
 
