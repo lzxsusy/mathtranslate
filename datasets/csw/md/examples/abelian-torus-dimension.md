@@ -17,12 +17,12 @@ track: C
 ## 计算
 
 1. 把联络写成 $A=\frac{\pi}{\operatorname{Im}\tau}(\bar z\,dz-z\,d\bar z)$ 的平移；模空间坐标 $(a,\bar a)\in T^2\times T^2$。 *（阿贝尔情形模空间就是平坦联络本身模去大规范变换。）*
-2. 预量子化线丛 $\cL^{\otimes k}$ 的全纯截面是 theta 函数 $\vartheta_j(z)=\sum_{m\in\mathbb{Z}}e^{\pi ik(m+j/k)^2\tau+2\pi ik(m+j/k)z}$，$j=0,\dots,k-1$。 *（全纯性与准周期性决定 theta 级数。）*
+2. 预量子化线丛 $\mathcal{L}^{\otimes k}$ 的全纯截面是 theta 函数 $\vartheta_j(z)=\sum_{m\in\mathbb{Z}}e^{\pi ik(m+j/k)^2\tau+2\pi ik(m+j/k)z}$，$j=0,\dots,k-1$。 *（全纯性与准周期性决定 theta 级数。）*
 3. 这 $k$ 个 theta 函数线性无关（不同 $j$ 的领头指数不同），故 $\dim H^0=k$。 *（线性无关性由 $q$-展开的领头项决定。）*
 
 ## 结果
 
-$\dim\cH(T^2)=k$；亏格 $g$ 时为 $k^g$（每个把手贡献一个 $k$ 维因子）。
+$\dim\mathcal{H}(T^2)=k$；亏格 $g$ 时为 $k^g$（每个把手贡献一个 $k$ 维因子）。
 
 ## 核对
 

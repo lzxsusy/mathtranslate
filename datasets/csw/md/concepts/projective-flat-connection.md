@@ -6,13 +6,13 @@ track: C
 
 # 射影平坦丛与“与 $J$ 无关”
 
-> $H^0(\cM_J,\cL^{\otimes k})$ 随 $J$ 构成 Teichmüller 空间上的向量丛，只带射影平坦联络：平行移动在整体相位上有歧义，单值性给出映射类群的射影表示。
+> $H^0(\mathcal{M}_J,\mathcal{L}^{\otimes k})$ 随 $J$ 构成 Teichmüller 空间上的向量丛，只带射影平坦联络：平行移动在整体相位上有歧义，单值性给出映射类群的射影表示。
 
 **问题**：为什么“Hilbert 空间与 $J$ 无关”只在射影意义下成立？单值性为什么与纽结不变量有关？
 
 ## 定义
 
-设 $\mathcal{T}$ 是 $\Sigma$ 的 Teichmüller 空间。$\cH_\Sigma^{(J)}=H^0(\cM_J,\cL^{\otimes k})$ 在 $\mathcal{T}$ 上构成向量丛，带一个联络 $\nabla$。该联络不是平坦的，而是射影平坦：$[\nabla_X,\nabla_Y]-\nabla_{[X,Y]}=\omega(X,Y)\cdot\mathrm{id}$，其中 $\omega$ 是 $\mathcal{T}$ 上的 Kähler 形式（Hitchin 联络）。沿闭环平行移动给出射影变换，即映射类群 $\operatorname{MCG}(\Sigma)$ 的射影表示。
+设 $\mathcal{T}$ 是 $\Sigma$ 的 Teichmüller 空间。$\mathcal{H}_\Sigma^{(J)}=H^0(\mathcal{M}_J,\mathcal{L}^{\otimes k})$ 在 $\mathcal{T}$ 上构成向量丛，带一个联络 $\nabla$。该联络不是平坦的，而是射影平坦：$[\nabla_X,\nabla_Y]-\nabla_{[X,Y]}=\omega(X,Y)\cdot\mathrm{id}$，其中 $\omega$ 是 $\mathcal{T}$ 上的 Kähler 形式（Hitchin 联络）。沿闭环平行移动给出射影变换，即映射类群 $\operatorname{MCG}(\Sigma)$ 的射影表示。
 
 *记号*：$\mathcal{T}$ 是 Teichmüller 空间；$\operatorname{MCG}(\Sigma)=\pi_0\operatorname{Diff}^+(\Sigma)$；射影平坦 = 平坦到中心扩张。
 
@@ -22,16 +22,16 @@ track: C
 - 射影因子是规范（anomaly）：它来自共形反常，不是坐标选择。
 - 单值性给出映射类群的射影表示；在三维里这就是“沿边界粘合”的运算，模函子由此而来。
 - 带标记点时联络变成 KZ 联络（在 $g=0$ 时显式可写）。
-- Witten 只给出物理论证（$\cH_\Sigma$ 应当与 $J$ 无关），严格证明由 Hitchin 与 Segal 给出。
+- Witten 只给出物理论证（$\mathcal{H}_\Sigma$ 应当与 $J$ 无关），严格证明由 Hitchin 与 Segal 给出。
 
 ## 关键公式
 
 - $[\nabla_X,\nabla_Y]-\nabla_{[X,Y]}=\omega(X,Y)\,\mathrm{id}$
-- $\operatorname{MCG}(\Sigma)\curvearrowright\mathbb{P}\cH_\Sigma$
+- $\operatorname{MCG}(\Sigma)\curvearrowright\mathbb{P}\mathcal{H}_\Sigma$
 
 ## 射影平坦性（Hitchin）
 
-$\mathcal{T}$ 上由 $H^0(\cM_J,\cL^{\otimes k})$ 构成的向量丛带自然的射影平坦联络；其单值化为 $\operatorname{MCG}(\Sigma)$ 的射影表示。
+$\mathcal{T}$ 上由 $H^0(\mathcal{M}_J,\mathcal{L}^{\otimes k})$ 构成的向量丛带自然的射影平坦联络；其单值化为 $\operatorname{MCG}(\Sigma)$ 的射影表示。
 
 **证明要点**（sketch）：
 

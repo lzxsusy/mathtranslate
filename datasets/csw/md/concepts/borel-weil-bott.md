@@ -6,33 +6,33 @@ track: D
 
 # Borel–Weil–Bott 与表示的几何化
 
-> 不可约表示 $R_\lambda$ 就是旗流形 $G/T$ 上全纯线丛 $\cL_\lambda$ 的全纯截面空间：$H^0(G/T,\cL_\lambda)=R_\lambda$（$\lambda$ 支配整）。
+> 不可约表示 $R_\lambda$ 等于旗流形 $G/T$ 上全纯线丛的全纯截面空间（$\lambda$ 支配整）。
 
 **问题**：$G/T$ 上的全纯截面为什么正好给出表示 $R_\lambda$？这里为什么 $\lambda$ 不加 $\rho$？
 
 ## 定义
 
-设 $G$ 紧连通单群，$T$ 极大环面，$G/T$ 旗流形（复结构由正根决定）。对支配整权 $\lambda$，取 $G/T$ 上辛形式 $\omega_\lambda$（其 de Rham 类为 $\lambda$）与预量子化线丛 $\cL_\lambda$。Borel–Weil–Bott 定理：$H^0(G/T,\cL_\lambda)=R_\lambda$（最高权 $\lambda$ 的不可约表示），其它上同调为零。
+设 $G$ 紧连通单群，$T$ 极大环面，$G/T$ 旗流形（复结构由正根决定）。对支配整权 $\lambda$，取 $G/T$ 上辛形式 $\omega_\lambda$（其 de Rham 类为 $\lambda$）与预量子化线丛 $\mathcal{L}_\lambda$。Borel–Weil–Bott 定理：$H^0(G/T,\mathcal{L}_\lambda)=R_\lambda$（最高权 $\lambda$ 的不可约表示），其它上同调为零。
 
-*记号*：$\lambda$ 是最高权；$\rho$ 是 Weyl 向量（正根和的一半）；$\cL_\lambda=G\times_T\mathbb{C}_\lambda$。
+*记号*：$\lambda$ 是最高权；$\rho$ 是 Weyl 向量（正根和的一半）；$\mathcal{L}_\lambda=G\times_T\mathbb{C}_\lambda$。
 
 ## 要点
 
 - 表示论被翻译成复几何：$R_\lambda$ 是某个线丛的全纯截面空间。
-- 指标是 $\lambda$ 而不是 $\lambda+\rho$：$\cL_\lambda=G\times_T\mathbb{C}_\lambda$，权重直接是 $\lambda$。
-- $\rho$ 出现在半形式修正里：$K_{G/T}^{1/2}=\cL_{-\rho}$，所以“带半形式的量子化”给出 $\lambda+\rho$ 的指标。
+- 指标是 $\lambda$ 而不是 $\lambda+\rho$：$\mathcal{L}_\lambda=G\times_T\mathbb{C}_\lambda$，权重直接是 $\lambda$。
+- $\rho$ 出现在半形式修正里：$K_{G/T}^{1/2}=\mathcal{L}_{-\rho}$，所以“带半形式的量子化”给出 $\lambda+\rho$ 的指标。
 - Witten 用它把 Wilson 线的表示“量子化”：把 $R_s$ 换成 $G/T$ 上一层几何量子化数据，从而把穿刺点约束变成经典可解的约束。
 - 可积性（$2j\le k$ 等）不是 BWB 的推论，而来自仿射代数（见 integrable-representation 卡）。
 
 ## 关键公式
 
-- $H^0(G/T,\cL_\lambda)=R_\lambda$
-- $K_{G/T}^{1/2}=\cL_{-\rho}$
+- $H^0(G/T,\mathcal{L}_\lambda)=R_\lambda$
+- $K_{G/T}^{1/2}=\mathcal{L}_{-\rho}$
 - $\dim R_\lambda=\prod_{\alpha>0}\frac{(\lambda+\rho,\alpha)}{(\rho,\alpha)}$
 
 ## Borel–Weil–Bott
 
-对支配整权 $\lambda$，$H^0(G/T,\cL_\lambda)\cong R_\lambda$，且 $H^q(G/T,\cL_\lambda)=0$（$q>0$）；若 $\lambda+\rho$ 落在 Weyl 壁另一侧，则上同调只在某个 $q$ 次非零，给出相应的对偶表示。
+对支配整权 $\lambda$，$H^0(G/T,\mathcal{L}_\lambda)\cong R_\lambda$，且 $H^q(G/T,\mathcal{L}_\lambda)=0$（$q>0$）；若 $\lambda+\rho$ 落在 Weyl 壁另一侧，则上同调只在某个 $q$ 次非零，给出相应的对偶表示。
 
 **证明要点**（sketch）：
 
@@ -44,7 +44,7 @@ track: D
 
 ## 陷阱
 
-- 不要写 $\lambda+\rho$ 当指标：$\cL_\lambda$ 的权重是 $\lambda$，$\rho$ 属于 $K^{1/2}$。
+- 不要写 $\lambda+\rho$ 当指标：$\mathcal{L}_\lambda$ 的权重是 $\lambda$，$\rho$ 属于 $K^{1/2}$。
 - BWB 给的是全纯截面，不是“所有截面”；全纯性由复结构决定。
 - 可积性 $2j\le k$ 不来自 BWB，而来自仿射代数的表示论。
 

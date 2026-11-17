@@ -5,7 +5,7 @@
 用法（在 datasets/csw 下）：
     python tools/build_cards.py
 """
-import io, json, os, sys
+import io, json, os, re, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -16,8 +16,23 @@ import _data1, _data2, _data3, _data4, _data5  # noqa: E402
 MODULES = [_data1, _data2, _data3, _data4, _data5]
 
 
+MACRO = re.compile(r'\\c([HLME])(?![A-Za-z])')
+
+
+def mathjs(obj):
+    r"""把书内自定义宏换成 MathJax 标准写法（\cH -> \mathcal{H} 等）。"""
+    if isinstance(obj, str):
+        return MACRO.sub(r'\\mathcal{\1}', obj)
+    if isinstance(obj, list):
+        return [mathjs(x) for x in obj]
+    if isinstance(obj, dict):
+        return {k: mathjs(v) for k, v in obj.items()}
+    return obj
+
+
 def normalize(c):
-    """补全证明步骤/计算步骤的编号。"""
+    """补全证明步骤/计算步骤的编号，并把自定义宏换成标准宏。"""
+    c = mathjs(c)
     if c.get('type') == 'concept':
         for t in c.get('theorems', []):
             steps = t.get('proof', {}).get('steps', [])

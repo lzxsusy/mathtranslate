@@ -28,7 +28,7 @@ CS/WZW：三维 CS 在 $\Sigma\times\mathbb{R}$ 上的态空间 = 二维 WZW 的
 
 - $c_{CS}=\frac{k\dim G}{k+h^\vee}$
 - $c_{AdS}=\frac{3l}{2G}$
-- $Z_{CS}(X\times S^1)=\dim\cH_X$
+- $Z_{CS}(X\times S^1)=\dim\mathcal{H}_X$
 
 ## 两者的区别（判据）
 

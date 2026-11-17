@@ -28,7 +28,7 @@ track: D
 
 - $(\lambda,\theta)\le k$
 - $SU(2):\ 2j\le k$
-- $\dim\cH(S^2;R_1,R_2,R_3)=N_{ijk}$（仅可积 $i,j,k$ 非零）
+- $\dim\mathcal{H}(S^2;R_1,R_2,R_3)=N_{ijk}$（仅可积 $i,j,k$ 非零）
 
 ## 可积性判据
 

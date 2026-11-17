@@ -12,34 +12,34 @@ track: O
 
 ## 定义
 
-本库把 Witten 1989 的主线拆成五步：①写作用量 $L=\frac{k}{4\pi}\int_M\operatorname{Tr}(A\wedge dA+\frac{2}{3}A^3)$ 并证明 $k\in\mathbb{Z}$；②沿 $\Sigma$ 切开，读出辛形式与高斯约束，相空间是 $M=\operatorname{Hom}(\pi_1\Sigma,G)/G$；③预量子化（行列式线丛）、极化（Kähler），得 $\cH_\Sigma=H^0(M_J,\cL^{\otimes k})$；④穿刺点上的 Wilson 线由 Borel–Weil–Bott 实现为旗流形的几何量子化；⑤证明 $\cH_\Sigma$ 与 WZW 共形块空间等同，由此算手术公式与 Verlinde 公式。
+本库把 Witten 1989 的主线拆成五步：①写作用量 $L=\frac{k}{4\pi}\int_M\operatorname{Tr}(A\wedge dA+\frac{2}{3}A^3)$ 并证明 $k\in\mathbb{Z}$；②沿 $\Sigma$ 切开，读出辛形式与高斯约束，相空间是 $M=\operatorname{Hom}(\pi_1\Sigma,G)/G$；③预量子化（行列式线丛）、极化（Kähler），得 $\mathcal{H}_\Sigma=H^0(M_J,\mathcal{L}^{\otimes k})$；④穿刺点上的 Wilson 线由 Borel–Weil–Bott 实现为旗流形的几何量子化；⑤证明 $\mathcal{H}_\Sigma$ 与 WZW 共形块空间等同，由此算手术公式与 Verlinde 公式。
 
-*记号*：$M$ 三维流形，$\Sigma$ 二维曲面，$G$ 紧单 Lie 群，$d=\dim G$，$h^\vee$ 对偶 Coxeter 数；$\cM$ 与 $\cM_J$ 分别指平坦联络模空间与选复结构 $J$ 后的 Kähler 模空间；$\cL$ 行列式线丛。
+*记号*：$M$ 三维流形，$\Sigma$ 二维曲面，$G$ 紧单 Lie 群，$d=\dim G$，$h^\vee$ 对偶 Coxeter 数；$\mathcal{M}$ 与 $\mathcal{M}_J$ 分别指平坦联络模空间与选复结构 $J$ 后的 Kähler 模空间；$\mathcal{L}$ 行列式线丛。
 
 ## 要点
 
 - 链条的入口是“作用量不含量规”：$g$ 只出现在 Yang–Mills 项里，而 CS 项是 3-形式积分，只需要定向。
 - 链条的中段是“约束 + 辛商”：$A_0$ 是拉格朗日乘子，高斯约束 $F=0$ 是第一类约束，辛商给出平坦联络模空间。
 - 链条的出口是“几何量子化”：预量子化给线丛，极化砍掉一半变量，半形式修正把 $k$ 平移为 $k+h^\vee$。
-- 每个出口的严格程度不同：$k\in\mathbb{Z}$ 是作者证明；$\cH_\Sigma$ 与共形块的等同是对象级论证（原文用 are）；函子性只到“可以想见”的纲领。
+- 每个出口的严格程度不同：$k\in\mathbb{Z}$ 是作者证明；$\mathcal{H}_\Sigma$ 与共形块的等同是对象级论证（原文用 are）；函子性只到“可以想见”的纲领。
 - 算出来的数可以独立核对：$Z(S^3)=S_{00}=\sqrt{2/(k+2)}\sin\frac{\pi}{k+2}$，$k=1$ 给 $1/\sqrt2$。
 
 ## 关键公式
 
 - $L=\frac{k}{4\pi}\int_M\operatorname{Tr}(A\wedge dA+\tfrac23A\wedge A\wedge A)$
-- $\cH_\Sigma=H^0(\cM_J,\cL^{\otimes k})$
+- $\mathcal{H}_\Sigma=H^0(\mathcal{M}_J,\mathcal{L}^{\otimes k})$
 - $N_{ijk}=\sum_l\frac{S_{il}S_{jl}S_{kl}}{S_{0l}}$
 
 ## 主线（形式陈述）
 
-设 $M=\Sigma\times\mathbb{R}$。CS 理论的正则量子化给出有限维 Hilbert 空间 $\cH_\Sigma$，它与 $\Sigma$ 上 WZW 模型的共形块空间在对象层面等同；带穿刺点的版本由 BWB 实现，整条链给出 $S^3$ 上的 Jones 多项式与三维流形的手术不变量。
+设 $M=\Sigma\times\mathbb{R}$。CS 理论的正则量子化给出有限维 Hilbert 空间 $\mathcal{H}_\Sigma$，它与 $\Sigma$ 上 WZW 模型的共形块空间在对象层面等同；带穿刺点的版本由 BWB 实现，整条链给出 $S^3$ 上的 Jones 多项式与三维流形的手术不变量。
 
 **证明要点**（sketch）：
 
 1. 作用量层面：写出 $L$，用大规范变换单值性得 $k\in\mathbb{Z}$。 *（这一步是严格计算，见 level-quantization 卡。）*
 2. 相空间层面：切 $M=\Sigma\times\mathbb{R}$，$A_0=0$ 后作用量对时间一阶，读出辛形式；高斯定律作辛商。 *（只有第一类约束才能做辛商，见 gauss-law-constraint 与 symplectic-quotient。）*
-3. 量子化层面：预量子化 + Kähler 极化 + 半形式，得到 $H^0(\cM_J,\cL^{\otimes k})$。 *（这里用到 Narasimhan–Seshadri 把平坦联络换成稳定全纯丛。）*
-4. 等同层面：把 $\cH_\Sigma$ 与共形块空间都实现为同一组全纯截面，比较 Ward 恒等式。 *（原文只到对象级，函子性未证。）*
+3. 量子化层面：预量子化 + Kähler 极化 + 半形式，得到 $H^0(\mathcal{M}_J,\mathcal{L}^{\otimes k})$。 *（这里用到 Narasimhan–Seshadri 把平坦联络换成稳定全纯丛。）*
+4. 等同层面：把 $\mathcal{H}_\Sigma$ 与共形块空间都实现为同一组全纯截面，比较 Ward 恒等式。 *（原文只到对象级，函子性未证。）*
 
 > **缺口**：函子性与缝合只在原文 §5 用 “It is obvious at this point” 带过；本卡不把它升级为定理。
 

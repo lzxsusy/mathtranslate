@@ -1,300 +1,380 @@
 # -*- coding: utf-8 -*-
-"""概念卡数据（二）：平坦联络模空间、几何量子化机器。"""
-def S(text, why): return {"text": text, "why": why}
-def T(name, statement, status, steps, source, gap=""):
-    return {"name": name, "statement": statement,
-            "proof": {"status": status, "steps": steps, "gap_note": gap},
-            "source": source}
-W = "威腾 1989，Commun. Math. Phys. 121 (1989) 351–399"
-def src(book, section, pages, pdf, anchor):
-    return {"book": book, "section": section, "pages": pages, "pdf_pages": pdf, "anchor": anchor}
-
-DATA = [
-{
-  "id": "csw/concept/flat-connection-moduli", "type": "concept", "track": "B",
-  "title": "平坦联络模空间",
-  "aliases": ["moduli of flat connections", "平坦联络模空间", "character variety"],
-  "summary": "CS 的物理相空间是 $\\Sigma$ 上平坦联络模去规范变换，即 $\\operatorname{Hom}(\\pi_1\\Sigma,G)/G$；$g>1$ 时实维数 $(2g-2)d$。",
-  "question": "为什么相空间是“表示模共轭”而不是“联络空间本身”？维数公式怎么来的？",
-  "definition": {
-    "text": "设 $\\Sigma$ 是亏格 $g$ 的紧致定向曲面。平坦 $G$-联络由和乐表示 $\\rho:\\pi_1\\Sigma\\to G$ 决定，模去规范变换即模去共轭，故 $M=\\operatorname{Hom}(\\pi_1\\Sigma,G)/G$。选复结构 $J$ 后，$M$ 又是 $\\Sigma$ 上 degree $0$ 稳定全纯 $G_{\\mathbb{C}}$-丛的模空间 $M_J$。",
-    "notation": "$d=\\dim G$；$g$ 是 $\\Sigma$ 的亏格；$M$ 常记为 $M_{\\mathrm{flat}}$，带复结构时记 $M_J$。"
-  },
-  "key_points": [
-    "平坦联络的局部数据被 $\\pi_1$ 的表示完全决定：沿每条闭链取和乐，得到群同态。",
-    "模去规范变换 = 模去共轭：换个起点或换规范，表示被共轭。",
-    "维数：$\\dim\\operatorname{Hom}(\\pi_1\\Sigma,G)=d+2g(d-\\frac12 d)$ 减去 $\\dim G$ 的共轭，得 $(2g-2)d$（$g>1$）。",
-    "$g=1$ 时公式给 0，但模空间不是点：$SU(2)$ 时是枕头套 $T^2/\\{\\pm1\\}$（实维 2）；公式只对 $g\\ge2$ 的一般位置成立。",
-    "紧致但不光滑：可约联络处有奇点，商是轨形；辛形式在光滑部分非退化。"
-  ],
-  "formulas": ["$M=\\operatorname{Hom}(\\pi_1\\Sigma,G)/G$", "$\\dim_{\\mathbb{R}}M=(2g-2)d\\quad(g\\ge2)$", "$g=1,\\ G=SU(2):\\ M\\cong T^2/\\{\\pm1\\}$"],
-  "theorems": [T("维数公式",
-    "对 $g\\ge2$ 与单连通紧单群 $G$，$M=\\operatorname{Hom}(\\pi_1\\Sigma,G)/G$ 在光滑点的实维数为 $(2g-2)d$。",
-    "sketch",
-    [S("$\\pi_1\\Sigma$ 有 $2g$ 个生成元与 1 个关系，$\\operatorname{Hom}$ 是 $G^{2g}$ 中被一个方程截出的子簇。", "表示由生成元的像决定，关系给一个矩阵方程。"),
-     S("方程 $\\prod[A_i,B_i]=1$ 的微分在光滑点满秩，故 $\\dim=d(2g-1)$。", "满秩性等价于表示不可约（稳定化子中心化子最小）。"),
-     S("再模去 $G$ 的共轭作用（$\\dim G=d$），得 $d(2g-1)-d=(2g-2)d$。", "自由作用在不可约表示上成立。")],
-    "witten1989/sections/s04-canonical.tex §3（原文 p.367）",
-    "公式只在 $g\\ge2$ 的一般位置成立；$g=1$ 的枕头套与 $g=0$ 的单点是例外，需单独算。")
-  ],
-  "pitfalls": [
-    "不要把 $g=1$ 代入 $(2g-2)d$ 得 0 就以为模空间是点：$g=1$ 时方程 $[A,B]=1$ 的微分不满秩，公式失效。",
-    "模空间不是流形而是轨形，可约联络（如 $G$ 的中心）处有奇点；辛商要改用相交上同调。",
-    "复结构 $J$ 改变的是复结构，不改变辛形式（Kähler 形式随 $J$ 变，但上同调类不变）。"
-  ],
-  "related": ["csw/concept/gauss-law-constraint", "csw/concept/narasimhan-seshadri", "csw/concept/holomorphic-sections", "csw/example/pillowcase-dimension"],
-  "sources": [src(W, "§3 相空间与模空间", [366, 368], [16, 18], "witten1989/sections/s04-canonical.tex §3.1")],
-  "rights": "rewritten", "status": "draft"
-},
-{
-  "id": "csw/concept/narasimhan-seshadri", "type": "concept", "track": "B",
-  "title": "Narasimhan–Seshadri：平坦联络与稳定全纯丛",
-  "aliases": ["Narasimhan–Seshadri", "NS 定理", "Donaldson–Uhlenbeck–Yau"],
-  "summary": "degree 0 的稳定全纯 $G_{\\mathbb{C}}$-丛与不可约平坦酉联络一一对应；它把 $M$ 变成 Kähler 模空间，从而可以谈“全纯截面”。",
-  "question": "一个平坦联络为什么等价于一整个全纯结构？这个对应为什么是几何量子化能进行的前提？",
-  "definition": {
-    "text": "设 $E$ 是 $\\Sigma$ 上 degree $0$ 的稳定全纯 $G_{\\mathbb{C}}$-丛。Narasimhan–Seshadri 定理断言：$E$ 上存在唯一的与全纯结构相容的平坦酉联络，反之不可约平坦酉联络给出唯一的稳定全纯结构。于是 $M_{\\mathrm{flat}}\\cong M_{\\mathrm{Dol}}$（稳定丛模空间），后者是复 Kähler 流形。",
-    "notation": "$G_{\\mathbb{C}}$ 是 $G$ 的复化；Dolbeault 模空间 $M_{\\mathrm{Dol}}$ 与平坦联络模空间 $M_{\\mathrm{dR}}$ 通过非阿贝尔 Hodge 对应等同。"
-  },
-  "key_points": [
-    "平坦联络 = 全纯结构 + 相容的平坦酉结构；前者是复几何数据，后者是度量数据。",
-    "“稳定”是 GIT 意义下的稳定性，等价于联络不可约；可约联络对应不稳定/半稳定点。",
-    "因此 $M$ 上有两个身份：辛流形（平坦联络）与 Kähler 流形（稳定丛）；量子化用后者。",
-    "Kähler 形式 $\\omega$ 的上同调类与预量子化线丛的 $c_1$ 一致，这是“$k$ 出现在线丛次数上”的来源。",
-    "该定理是 Donaldson–Uhlenbeck–Yau 定理的二维情形；对 $G=U(N)$ 它就是说“平坦酉联络 ↔ 稳定全纯向量丛”。"
-  ],
-  "formulas": ["$M_{\\mathrm{flat}}\\cong M_{\\mathrm{Dol}}$", "$\\omega_{\\mathrm{Kähler}}\\in H^{1,1}(M)$"],
-  "theorems": [T("Narasimhan–Seshadri 对应",
-    "在亏格 $g\\ge2$ 的紧 Riemann 面上，degree $0$ 稳定全纯 $G_{\\mathbb{C}}$-丛的模空间与不可约平坦 $G$-联络的模空间典范同构，且前者是 Kähler 流形。",
-    "sketch",
-    [S("从平坦联络取 $(0,1)$-部分，得全纯结构；联络的平坦性保证 $\\bar\\partial^2=0$。", "$D''=\\bar\\partial+A''$，$F=0$ 给出 $\\bar\\partial A''+A''\\wedge A''=0$。"),
-     S("联络的酉性给出 Hermite 度量，且该度量满足 Hermite–Yang–Mills 方程（$\\Sigma$ 上自动成立）。", "二维时 HYM 方程就是度量的相容条件，没有更高阶障碍。"),
-     S("反过来，稳定丛上的 HYM 度量给出唯一平坦酉联络（Donaldson–Uhlenbeck–Yau 的二维情形）。", "高维用 UY 定理，二维是经典结果。")],
-    "witten1989/sections/s04-canonical.tex（原文 p.368–369）",
-    "本文只引用不证明；可约（不稳定）情形的边界与抛物结构未展开。")
-  ],
-  "pitfalls": [
-    "不要把它读成“平坦联络就是全纯丛”：还要 degree 0 与稳定性，且对应是模空间层面的。",
-    "模空间在可约点有奇点，对应不稳定丛；量子化时要取相交上同调或抛物丛。",
-    "Kähler 形式随复结构变，但上同调类不变；这是“Hilbert 空间与 $J$ 无关”的几何基础。"
-  ],
-  "related": ["csw/concept/flat-connection-moduli", "csw/concept/holomorphic-sections", "csw/concept/prequantization-determinant-line"],
-  "sources": [src(W, "§3.1–3.2 全纯观点与平坦丛", [368, 369], [18, 19], "witten1989/sections/s04-canonical.tex（§3.1 末–§3.2）")],
-  "rights": "rewritten", "status": "draft"
-},
-{
-  "id": "csw/concept/prequantization-determinant-line", "type": "concept", "track": "C",
-  "title": "预量子化：行列式线丛",
-  "aliases": ["determinant line bundle", "prequantum line bundle", "行列式线丛"],
-  "summary": "在模空间上取行列式线丛 $\\cL$（Quillen 度规）；$c_1(\\cL)=[\\omega]$，所以 $[\\cL^{\\otimes k}]=k[\\omega]$，整性自动满足。",
-  "question": "为什么 CS 的预量子化不需要 Weil–Kostant 的整性条件？行列式线丛的曲率为什么正好是辛形式？",
-  "definition": {
-    "text": "设 $\\pi:\\cE\\to M$ 是模空间上的全纯向量丛族（纤维是 $\\bar\\partial$ 的核/余核），行列式线丛 $\\cL=\\det(\\ker\\bar\\partial)^*\\otimes\\det(\\operatorname{coker}\\bar\\partial)$。它带 Quillen 度规与相容联络，其曲率为 $F_\\nabla=-2\\pi i\\,\\omega$（适当归一化）。因此取 $\\cL^{\\otimes k}$ 就得到曲率 $k\\omega$ 的预量子化线丛。",
-    "notation": "$\\cL$ 是行列式线丛；$\\omega$ 是模空间的 Kähler 形式；$k$ 是 CS level，整性由大规范变换保证。"
-  },
-  "key_points": [
-    "预量子化的核心条件 $[\\omega]\\in H^2(M,\\mathbb{Z})$ 在这里不是假设，而是构造：行列式线丛的 $c_1$ 自动整。",
-    "Quillen 度规的曲率由 $\\bar\\partial$ 族的指标定理给出，正好等于模空间的 Kähler 形式。",
-    "取 $\\cL^{\\otimes k}$ 相当于把 level 提到 $k$：作用量的 $k$ 与线丛的次数是同一个整数。",
-    "这就是 Witten 说的“用行列式线丛绕过 Weil–Kostant”：不需要先验地检查整性，线丛是构造性存在的。",
-    "代价：模空间有奇点时，行列式线丛的构造要小心（可约联络处），本文不处理。"
-  ],
-  "formulas": ["$\\cL=\\det(\\ker\\bar\\partial)^*\\otimes\\det(\\operatorname{coker}\\bar\\partial)$", "$F_\\nabla=-2\\pi i\\,\\omega$", "$c_1(\\cL^{\\otimes k})=k[\\omega]$"],
-  "theorems": [T("行列式线丛的第一陈类",
-    "在光滑模空间上，行列式线丛 $\\cL$ 的第一陈类等于 Kähler 形式 $[\\omega]$（归一化相差常数 $2\\pi$）。",
-    "sketch",
-    [S("对全纯族 $\\bar\\partial_s$，曲率 $F_\\nabla=\\partial\\bar\\partial\\log\\det\\Delta$（Quillen）。", "行列式线丛的联络由 $\\bar\\partial$ 的族决定，Quillen 度规给出曲率。"),
-     S("由指标定理，$\\partial\\bar\\partial\\log\\det\\Delta$ 的积分给出模空间的 Kähler 类。", "这是 Quillen 定理与 Grothendieck–Riemann–Roch 的二维情形。"),
-     S("故 $c_1(\\cL)=[\\omega]$，取 $k$ 次幂得 $k[\\omega]$。", "线丛的 $c_1$ 相加，次数即 $k$。")],
-    "witten1989/sections/s04-canonical.tex §3.1（原文 p.368–369）",
-    "本文直接引用行列式线丛与 Quillen 度规（文献 [33][34]），未证明曲率公式；奇点处需相交上同调。")
-  ],
-  "pitfalls": [
-    "不要把 $\\cL^{\\otimes k}$ 里的 $k$ 与丛的“规范固定”混淆：这里的 $k$ 就是 CS 作用量的整数 level。",
-    "$[\\omega]$ 整并不意味着任意 $k$ 都能用：半形式修正会把有效 level 提到 $k+h^\\vee$，别把两个 $k$ 混用。",
-    "行列式线丛的曲率有 $2\\pi$ 因子，视归一化而定；比较 $c_1$ 与 $[\\omega]$ 前先对齐 $\\omega$ 的归一化。"
-  ],
-  "related": ["csw/concept/holomorphic-sections", "csw/concept/polarization", "csw/concept/half-form-correction"],
-  "sources": [src(W, "§3.1 预量子化与行列式线丛", [368, 369], [18, 19], "witten1989/sections/s04-canonical.tex（§3.1）")],
-  "rights": "rewritten", "status": "draft"
-},
-{
-  "id": "csw/concept/polarization", "type": "concept", "track": "C",
-  "title": "极化",
-  "aliases": ["polarization", "极化", "Kähler polarization"],
-  "summary": "在复化切丛里选一个拉格朗日、可积且维数为 $n$ 的子丛 $P$，把“沿 $P$ 协变常数”的截面当作量子态；它把 $2n$ 个变量砍成 $n$ 个。",
-  "question": "预量子化的 Hilbert 空间为什么太大？极化的三条条件各自排除什么？",
-  "definition": {
-    "text": "辛流形 $(M,\\omega)$ 的极化是复化切丛 $T_{\\mathbb{C}}M$ 的一个子丛 $P$，满足：①拉格朗日性 $\\omega|_P=0$；②可积性（$P$ 的截面在 Lie 括号下封闭）；③$\\dim_{\\mathbb{C}}P=\\frac12\\dim M$。量子态定义为沿 $P$ 协变常数的截面：$\\nabla_Xs=0$ 对所有 $X\\in\\Gamma(P)$。Kähler 情形取 $P=T^{0,1}M$，条件是“全纯”，量子态即全纯截面。",
-    "notation": "$P$ 常记作 $\\mathcal{P}$；$\\Gamma_P(M,\\cL)$ 表示 $P$-极化截面空间，$\\cH_P=\\Gamma_P(M,\\cL)$。"
-  },
-  "key_points": [
-    "三条条件缺一不可：拉格朗日性保证沿 $P$ 的协变导数是“半截”的；可积性保证有足够多的解；维数条件保证砍掉恰好一半。",
-    "实极化对应“位置空间或动量空间”，解只依赖一半坐标；Kähler 极化对应“全纯”，解是全纯截面。",
-    "极化不是规范选择，它是量子化方案的一部分：不同的极化给出同构的 Hilbert 空间（BKS 配对），但计算难度不同。",
-    "在紧相空间上不能用“$q$ 与 $p$ 分离”的实极化（$q$ 或 $p$ 无界），Kähler 极化是自然选择。",
-    "半形式修正把截面从 $\\cL$ 换成 $\\cL\\otimes K^{1/2}$，这一步与极化独立。"
-  ],
-  "formulas": ["$\\omega|_P=0,\\quad[P,P]\\subset P,\\quad\\dim_{\\mathbb{C}}P=\\tfrac12\\dim M$", "$\\nabla_Xs=0\\ (X\\in P)$", "$P=T^{0,1}M\\Longrightarrow s$ 全纯"],
-  "theorems": [T("Kähler 极化的量子态空间",
-    "在紧 Kähler 流形 $(M,\\omega)$ 上取 $P=T^{0,1}M$，则 $P$-极化截面就是 $\\cL$ 的全纯截面，$\\cH_P=H^0(M,\\cL)$，且 $\\dim_{\\mathbb{C}}\\cH_P<\\infty$。",
-    "complete",
-    [S("$P=T^{0,1}M$ 时，$\\nabla_Xs=0$ 对 $X=\\bar\\partial/\\partial\\bar z^k$ 即 $\\bar\\partial s=0$（用联络的 $(0,1)$ 部分刻画）。", "Kähler 情形下相容联络的 $(0,1)$ 部分就是 $\\bar\\partial$ 加上线丛的联络。"),
-     S("$\\bar\\partial s=0$ 的解正是全纯截面；$\\cL$ 正（$c_1(\\cL)$ 为 Kähler 类）时 $H^0$ 有限维。", "椭圆算子的核有限维（Hodge 理论）。"),
-     S("故 $\\cH_P=H^0(M,\\cL)$，维数有限。", "紧性给出有限维。")],
-    "witten1989/sections/s04-canonical.tex §3.1（原文 p.367–368）")
-  ],
-  "pitfalls": [
-    "不要以为“任意复结构都给极化”：$P$ 必须可积，$T^{0,1}$ 只在复结构可积时才对。",
-    "实极化在紧流形上常常不存在（叶空间非 Hausdorff），这是必须用 Kähler 极化的原因。",
-    "极化的选择影响“哪个空间与 $J$ 无关”的表述：严格说只有射影化后的空间典范。"
-  ],
-  "related": ["csw/concept/prequantization-determinant-line", "csw/concept/holomorphic-sections", "csw/concept/half-form-correction"],
-  "sources": [src(W, "§3.1 The Holomorphic Viewpoint（极化）", [367, 368], [17, 18], "witten1989/sections/s04-canonical.tex（§3.1）")],
-  "rights": "rewritten", "status": "draft"
-},
-{
-  "id": "csw/concept/holomorphic-sections", "type": "concept", "track": "C",
-  "title": "全纯截面空间作为量子 Hilbert 空间",
-  "aliases": ["holomorphic sections", "H^0(M,L^k)"],
-  "summary": "CS 的量子 Hilbert 空间是 $\\cH_\\Sigma=H^0(\\cM_J,\\cL^{\\otimes k})$：模空间上的全纯截面空间，有限维。",
-  "question": "$H^0(\\cM_J,\\cL^{\\otimes k})$ 的维数由什么决定？为什么它随 $J$ 变而物理上不该变？",
-  "definition": {
-    "text": "取 $M=\\Sigma\\times\\mathbb{R}$，相空间 $\\cM_J$ 是复结构 $J$ 下的稳定丛模空间，预量子化线丛 $\\cL^{\\otimes k}$。则量子 Hilbert 空间 $\\cH_\\Sigma=H^0(\\cM_J,\\cL^{\\otimes k})$，即全纯截面空间。大 $k$（半经典）时 $\\dim\\cH_\\Sigma\\sim\\frac{\\operatorname{Vol}(\\cM)}{(2\\pi)^n n!}k^n$（Weyl 律）。",
-    "notation": "$\\cM_J$ 与 $J$ 有关；$\\cH_\\Sigma$ 严格说是一个射影平坦丛的纤维，随 $J$ 变动。"
-  },
-  "key_points": [
-    "全纯截面空间有限维：$\\cM_J$ 紧、$\\cL$ 正，$H^0$ 是椭圆复形的核。",
-    "维数由 Riemann–Roch（指标定理）给出；对 $S^2$ 带三个标记点，$\\dim=N_{ijk}$（Verlinde 公式）。",
-    "随 $J$ 变，$H^0(\\cM_J,\\cL^{\\otimes k})$ 构成 Teichmüller 空间上的向量丛，只带射影平坦联络。",
-    "半形式修正把 $\\cL^{\\otimes k}$ 换成 $\\cL^{\\otimes k}\\otimes K^{1/2}$，维数从 $k$ 变成 $k+1$（$SU(2)$、环面）。",
-    "这就是“量子化后的模空间”与“WZW 共形块”能比较的公共语言：两边都是全纯截面。"
-  ],
-  "formulas": ["$\\cH_\\Sigma=H^0(\\cM_J,\\cL^{\\otimes k})$", "$\\dim\\cH_\\Sigma\\sim\\frac{\\operatorname{Vol}(\\cM_J)}{(2\\pi)^n n!}k^n\\ (k\\to\\infty)$", "$S^2,\\ 3\\text{ 个标记点}:\\ \\dim=N_{ijk}$"],
-  "theorems": [T("有限维性",
-    "$\\cM_J$ 紧致且 $\\cL$ 正时，$H^0(\\cM_J,\\cL^{\\otimes k})$ 是有限维复向量空间。",
-    "sketch",
-    [S("全纯截面满足椭圆方程 $\\bar\\partial s=0$。", "$\\bar\\partial$ 的主符号在 Kähler 流形上是椭圆复形。"),
-     S("紧流形上椭圆复形的核有限维（Hodge 理论）。", "这是标准结果，不需要额外的分析。"),
-     S("故 $\\dim H^0<\\infty$。", "结论直接。")],
-    "witten1989/sections/s04-canonical.tex（原文 p.368–369）",
-    "紧致性在可约联络奇点处失效；本文用“紧化/相交上同调”回避，未展开。")
-  ],
-  "pitfalls": [
-    "不要忘记 $k$：$H^0(\\cM_J,\\cL)$ 与 $H^0(\\cM_J,\\cL^{\\otimes k})$ 是不同空间，后者才对应 level $k$。",
-    "维数不是常数函数：它是 $J$ 的（射影）平坦丛的纤维维数，局部常数但整体有单值性。",
-    "大 $k$ 的 Weyl 律只给首项，不能用来算有限 $k$ 的整数维数。"
-  ],
-  "related": ["csw/concept/polarization", "csw/concept/prequantization-determinant-line", "csw/concept/projective-flat-connection", "csw/concept/verlinde-formula"],
-  "sources": [src(W, "§3.1–3.2 全纯截面与射影平坦丛", [368, 370], [18, 20], "witten1989/sections/s04-canonical.tex（§3.1–3.2）")],
-  "rights": "rewritten", "status": "draft"
-},
-{
-  "id": "csw/concept/projective-flat-connection", "type": "concept", "track": "C",
-  "title": "射影平坦丛与“与 $J$ 无关”",
-  "aliases": ["projectively flat connection", "projectively flat bundle", "射影平坦"],
-  "summary": "$H^0(\\cM_J,\\cL^{\\otimes k})$ 随 $J$ 构成 Teichmüller 空间上的向量丛，只带射影平坦联络：平行移动在整体相位上有歧义，单值性给出映射类群的射影表示。",
-  "question": "为什么“Hilbert 空间与 $J$ 无关”只在射影意义下成立？单值性为什么与纽结不变量有关？",
-  "definition": {
-    "text": "设 $\\mathcal{T}$ 是 $\\Sigma$ 的 Teichmüller 空间。$\\cH_\\Sigma^{(J)}=H^0(\\cM_J,\\cL^{\\otimes k})$ 在 $\\mathcal{T}$ 上构成向量丛，带一个联络 $\\nabla$。该联络不是平坦的，而是射影平坦：$[\\nabla_X,\\nabla_Y]-\\nabla_{[X,Y]}=\\omega(X,Y)\\cdot\\mathrm{id}$，其中 $\\omega$ 是 $\\mathcal{T}$ 上的 Kähler 形式（Hitchin 联络）。沿闭环平行移动给出射影变换，即映射类群 $\\operatorname{MCG}(\\Sigma)$ 的射影表示。",
-    "notation": "$\\mathcal{T}$ 是 Teichmüller 空间；$\\operatorname{MCG}(\\Sigma)=\\pi_0\\operatorname{Diff}^+(\\Sigma)$；射影平坦 = 平坦到中心扩张。"
-  },
-  "key_points": [
-    "“与 $J$ 无关”的准确含义：向量空间之间没有典范同构，只有射影同构。",
-    "射影因子是规范（anomaly）：它来自共形反常，不是坐标选择。",
-    "单值性给出映射类群的射影表示；在三维里这就是“沿边界粘合”的运算，模函子由此而来。",
-    "带标记点时联络变成 KZ 联络（在 $g=0$ 时显式可写）。",
-    "Witten 只给出物理论证（$\\cH_\\Sigma$ 应当与 $J$ 无关），严格证明由 Hitchin 与 Segal 给出。"
-  ],
-  "formulas": ["$[\\nabla_X,\\nabla_Y]-\\nabla_{[X,Y]}=\\omega(X,Y)\\,\\mathrm{id}$", "$\\operatorname{MCG}(\\Sigma)\\curvearrowright\\mathbb{P}\\cH_\\Sigma$"],
-  "theorems": [T("射影平坦性（Hitchin）",
-    "$\\mathcal{T}$ 上由 $H^0(\\cM_J,\\cL^{\\otimes k})$ 构成的向量丛带自然的射影平坦联络；其单值化为 $\\operatorname{MCG}(\\Sigma)$ 的射影表示。",
-    "sketch",
-    [S("用 $\\bar\\partial$ 族的行列式线丛与 Quillen 联络构造 $\\nabla$。", "联络来自“把 $J$ 变一点”时全纯截面空间的移动。"),
-     S("曲率计算给出 $[\\nabla,\\nabla]=\\omega\\cdot\\mathrm{id}$，即曲率是纯迹的。", "迹部分由 Kähler 形式给出，其余为零——这就是射影平坦。"),
-     S("沿闭环的平行移动定义射影变换，给出 $\\operatorname{MCG}$ 的作用。", "单值性只由拓扑决定。")],
-    "witten1989/sections/s04-canonical.tex §3.2（原文 p.369–370）；严格证明见 Hitchin 1990、Segal",
-    "本文自认是物理推导（p.370 说 heuristic）；Hitchin 的严格证明与 KZ 在带标记点的显式形式不在本文范围。")
-  ],
-  "pitfalls": [
-    "不要说“Hilbert 空间不依赖 $J$”：只能说射影化后不依赖；射影因子是物理的（共形反常）。",
-    "射影平坦不等于平坦：曲率不为零，只是纯迹；把它当平坦会丢掉单值性。",
-    "单值性是射影表示，不是线性表示；相位不是总能整体消掉。"
-  ],
-  "related": ["csw/concept/holomorphic-sections", "csw/concept/hitchin-connection", "csw/concept/conformal-blocks", "csw/concept/mapping-class-group"],
-  "sources": [src(W, "§3.2 模空间上的平坦向量丛", [369, 371], [19, 21], "witten1989/sections/s04-canonical.tex §3.2")],
-  "rights": "rewritten", "status": "draft"
-},
-{
-  "id": "csw/concept/hitchin-connection", "type": "concept", "track": "C",
-  "title": "Hitchin 联络与 KZ 联络",
-  "aliases": ["Hitchin connection", "KZ connection", "Knizhnik–Zamolodchikov connection"],
-  "summary": "在 Teichmüller 空间上，把全纯截面空间沿“复结构改变”的方向求导，得到 Hitchin 联络；在 $g=0$ 带标记点时它显式化为 KZ 方程。",
-  "question": "Hitchin 联络的曲率为什么只有迹部分？KZ 方程是它的哪个特例？",
-  "definition": {
-    "text": "设 $\\cH_J=H^0(\\cM_J,\\cL^{\\otimes k})$。Hitchin 联络 $\\nabla$ 在向量场 $\\partial/\\partial t$（$t$ 是 Teichmüller 坐标）上的作用由“把截面沿 $J$ 的变化平行移动”给出，其曲率纯迹：$[\\nabla_X,\\nabla_Y]-\\nabla_{[X,Y]}=\\omega_{\\mathcal{T}}(X,Y)\\mathrm{id}$。当 $g=0$ 带 $n$ 个标记点且取 $\\cM_J$ 为带标记点的模空间时，全纯截面满足 KZ 方程 $\\kappa\\partial_{z_i}\\Psi=\\sum_{j\\ne i}\\frac{\\Omega_{ij}}{z_i-z_j}\\Psi$，$\\kappa=k+h^\\vee$。",
-    "notation": "$\\Omega_{ij}=\\sum_aT^a_{(i)}T^a_{(j)}$；$\\kappa=k+h^\\vee$ 是“有效 level”。"
-  },
-  "key_points": [
-    "Hitchin 联络的曲率纯迹，是因为全纯截面空间的维数在变形下不变，只有整体相位可以变。",
-    "在 $g=0$ 时模空间的复结构由标记点位置 $z_i$ 给出，Hitchin 联络就是 KZ 方程。",
-    "KZ 的分母是 $z_i-z_j$，说明它是“两点函数”的推广；单极点结构来自算子积展开。",
-    "有效 level 是 $k+h^\\vee$，不是 $k$：半形式修正已经把 $h^\\vee$ 加进去了。",
-    "KZ 的单值性给出共形块的表示，这是“共形块 = 物理态空间”的最具体实现。"
-  ],
-  "formulas": ["$[\\nabla_X,\\nabla_Y]-\\nabla_{[X,Y]}=\\omega_{\\mathcal{T}}(X,Y)\\,\\mathrm{id}$", "$\\kappa\\partial_{z_i}\\Psi=\\sum_{j\\ne i}\\frac{\\Omega_{ij}}{z_i-z_j}\\Psi$", "$\\kappa=k+h^\\vee$"],
-  "theorems": [T("Hitchin 联络的平坦性（射影）",
-    "$\\mathcal{T}$ 上的 Hitchin 联络 $\\nabla$ 的曲率是纯迹的，因此给出射影平坦结构；其单值性为 $\\operatorname{MCG}(\\Sigma)$ 的射影表示。",
-    "sketch",
-    [S("计算 $\\nabla$ 的曲率：$[\\nabla_X,\\nabla_Y]-\\nabla_{[X,Y]}$ 的迹部分由 $\\partial\\bar\\partial$ 的 Quillen 曲率给出。", "这是 Hitchin 1990 的计算；本文只引用结论。"),
-     S("无迹部分为零，来自全纯截面空间的维数在变形下不变。", "维数局部常数意味着平行移动只差整体相位。"),
-     S("故曲率 $=\\omega\\cdot\\mathrm{id}$，射影平坦。", "纯迹曲率就是射影平坦的定义。")],
-    "witten1989/sections/s04-canonical.tex §3.2（p.369–370）；Hitchin, CMP 131 (1990) 347",
-    "本文只说“should be”；严格证明由 Hitchin 给出，KZ 显式形式见 Knizhnik–Zamolodchikov 与河野 §1.5。")
-  ],
-  "pitfalls": [
-    "把 $\\kappa$ 写成 $k$ 是常见错误：分母必须是 $k+h^\\vee$，否则 $SU(2)$、$k=1$ 的数值全错。",
-    "KZ 只在 $g=0$ 有显式的 $\\sum\\Omega_{ij}/(z_i-z_j)$ 形式；高亏格要加更多项。",
-    "Hitchin 联络与 Berry 联络不是一回事，但都描述“参数变化时的平行移动”。"
-  ],
-  "related": ["csw/concept/projective-flat-connection", "csw/concept/knizhnik-zamolodchikov", "csw/concept/conformal-blocks"],
-  "sources": [src(W, "§3.2 射影平坦联络（Hitchin）", [369, 370], [19, 20], "witten1989/sections/s04-canonical.tex §3.2")],
-  "rights": "rewritten", "status": "draft"
-},
-{
-  "id": "csw/concept/half-form-correction", "type": "concept", "track": "C",
-  "title": "半形式修正与 $k\\to k+h^\\vee$",
-  "aliases": ["half-form correction", "metaplectic correction", "半形式"],
-  "summary": "把量子态从 $\\cL^{\\otimes k}$ 的截面换成 $\\cL^{\\otimes k}\\otimes K^{1/2}$ 的截面；在 $SU(2)$ 上这把 level 平移为 $k+2$，即 $k+h^\\vee$。",
-  "question": "半形式修正为什么等于 level 平移 $h^\\vee$？$K^{1/2}$ 什么时候存在？",
-  "definition": {
-    "text": "几何量子化的标准配方要求态是半形式值的截面：$\\cH=\\Gamma_P(\\cM,\\cL^{\\otimes k}\\otimes K^{1/2})$，其中 $K=\\det T^{*}\\cM$ 是典范丛。在 CS 情形 $K^{1/2}=\\cL^{-h^\\vee}$（对 $SU(2)$，$K^{1/2}=\\cL^{-2}$），于是 $\\cL^{\\otimes k}\\otimes K^{1/2}=\\cL^{\\otimes(k-h^\\vee)}$，等价于把有效 level 写成 $k+h^\\vee$ 的共形场论。",
-    "notation": "$K^{1/2}$ 是典范丛的平方根（metaplectic 修正）；$h^\\vee$ 是对偶 Coxeter 数（$SU(N)$ 为 $N$）。"
-  },
-  "key_points": [
-    "半形式修正来自“焦散面附近的相位”：几何量子化要正确处理 Maslov 相位，必须开方。",
-    "$K^{1/2}$ 存在需要 $c_1(K)$ 为偶；模空间上这个条件与 $h^\\vee$ 的整性一致。",
-    "在 CS 里 $K=\\cL^{-2h^\\vee}$（行列式线丛的负幂），所以 $K^{1/2}=\\cL^{-h^\\vee}$，修正就是 level 平移。",
-    "修正后 $SU(2)$ 的有效 level 是 $k+2$，这解释了为什么 $q=e^{2\\pi i/(k+2)}$，以及为什么可积表示数是 $k+1$。",
-    "本文在作用量层面没有显式写出 $K^{1/2}$；平移在 (2.16)(2.17) 与 (4.21) 以 $q$ 的形式出现。"
-  ],
-  "formulas": ["$\\cH=\\Gamma_P(\\cM,\\cL^{\\otimes k}\\otimes K^{1/2})$", "$K^{1/2}=\\cL^{-h^\\vee}$", "$k_{\\mathrm{eff}}=k+h^\\vee$（$SU(2)$：$k+2$）"],
-  "theorems": [T("level 平移",
-    "在 $SU(2)$ CS 理论中，半形式修正把预量子化线丛 $\\cL^{\\otimes k}$ 换成 $\\cL^{\\otimes k}\\otimes K^{1/2}=\\cL^{\\otimes(k+2)}$，于是有效 level 为 $k+2$。",
-    "sketch",
-    [S("$\\cM_J$ 的典范丛满足 $K=\\cL^{-2h^\\vee}$。", "这是模空间的标准事实（$\\cM$ 的 Kähler 形式是 $\\cL$ 的曲率）。"),
-     S("$SU(2)$ 时 $h^\\vee=2$，故 $K^{1/2}=\\cL^{-2}$。", "对偶 Coxeter 数 $SU(2)$ 为 2。"),
-     S("$\\cL^{\\otimes k}\\otimes\\cL^{-2}=\\cL^{\\otimes(k-2)}$，与“有效 level $k+2$”的对偶描述一致：$q=e^{2\\pi i/(k+2)}$。", "共形场的 level 与线丛次数差一个 $h^\\vee$，两种记法只是把 $h^\\vee$ 放在哪边。")],
-    "witten1989/sections/s02-weak-coupling.tex（2.16)(2.17) p.359）与 s06/s08（4.21)",
-    "本文没有在几何量子化语言里显式构造 $K^{1/2}$；修正的“机制”是后世解释，本卡按原文能与不能分开标注。")
-  ],
-  "pitfalls": [
-    "不要把 $k_{\\mathrm{eff}}=k+h^\\vee$ 与原文的 $q=e^{2\\pi i/(k+2)}$ 当成两个不同的理论：它们是同一件事的两种写法。",
-    "$K^{1/2}$ 存在不是自动的：$c_1(K)$ 必须是偶类；在奇点处还要选 spin 结构。",
-    "半形式修正不改变大 $k$ 的 Weyl 律首项，只改变 $1/k$ 修正。"
-  ],
-  "related": ["csw/concept/holomorphic-sections", "csw/concept/s-matrix", "csw/concept/conformal-blocks"],
-  "sources": [src(W, "§2 单圈修正 (2.16)(2.17) 与 §4 (4.21)", [359, 382], [9, 32], "witten1989/sections/s02-weak-coupling.tex（2.16–2.17）")],
-  "rights": "rewritten", "status": "draft"
-}
-]
+"""_data2（脚本整理）。"""
+DATA = [{'id': 'csw/concept/flat-connection-moduli',
+  'type': 'concept',
+  'track': 'B',
+  'title': '平坦联络模空间',
+  'aliases': ['moduli of flat connections', '平坦联络模空间', 'character variety'],
+  'summary': 'CS 的物理相空间是 $\\Sigma$ 上平坦联络模去规范变换，即 $\\operatorname{Hom}(\\pi_1\\Sigma,G)/G$；$g>1$ 时实维数 '
+             '$(2g-2)d$。',
+  'question': '为什么相空间是“表示模共轭”而不是“联络空间本身”？维数公式怎么来的？',
+  'definition': {'text': '设 $\\Sigma$ 是亏格 $g$ 的紧致定向曲面。平坦 $G$-联络由和乐表示 $\\rho:\\pi_1\\Sigma\\to G$ '
+                         '决定，模去规范变换即模去共轭，故 $M=\\operatorname{Hom}(\\pi_1\\Sigma,G)/G$。选复结构 $J$ 后，$M$ 又是 '
+                         '$\\Sigma$ 上 degree $0$ 稳定全纯 $G_{\\mathbb{C}}$-丛的模空间 $M_J$。',
+                 'notation': '$d=\\dim G$；$g$ 是 $\\Sigma$ 的亏格；$M$ 常记为 $M_{\\mathrm{flat}}$，带复结构时记 $M_J$。'},
+  'key_points': ['平坦联络的局部数据被 $\\pi_1$ 的表示完全决定：沿每条闭链取和乐，得到群同态。',
+                 '模去规范变换 = 模去共轭：换个起点或换规范，表示被共轭。',
+                 '维数：$\\dim\\operatorname{Hom}(\\pi_1\\Sigma,G)=d+2g(d-\\frac12 d)$ 减去 $\\dim G$ 的共轭，得 '
+                 '$(2g-2)d$（$g>1$）。',
+                 '$g=1$ 时公式给 0，但模空间不是点：$SU(2)$ 时是枕头套 $T^2/\\{\\pm1\\}$（实维 2）；公式只对 $g\\ge2$ 的一般位置成立。',
+                 '紧致但不光滑：可约联络处有奇点，商是轨形；辛形式在光滑部分非退化。'],
+  'formulas': ['$M=\\operatorname{Hom}(\\pi_1\\Sigma,G)/G$',
+               '$\\dim_{\\mathbb{R}}M=(2g-2)d\\quad(g\\ge2)$',
+               '$g=1,\\ G=SU(2):\\ M\\cong T^2/\\{\\pm1\\}$'],
+  'theorems': [{'name': '维数公式',
+                'statement': '对 $g\\ge2$ 与单连通紧单群 $G$，$M=\\operatorname{Hom}(\\pi_1\\Sigma,G)/G$ 在光滑点的实维数为 '
+                             '$(2g-2)d$。',
+                'proof': {'status': 'sketch',
+                          'steps': [{'text': '$\\pi_1\\Sigma$ 有 $2g$ 个生成元与 1 个关系，$\\operatorname{Hom}$ 是 '
+                                             '$G^{2g}$ 中被一个方程截出的子簇。',
+                                     'why': '表示由生成元的像决定，关系给一个矩阵方程。'},
+                                    {'text': '方程 $\\prod[A_i,B_i]=1$ 的微分在光滑点满秩，故 $\\dim=d(2g-1)$。',
+                                     'why': '满秩性等价于表示不可约（稳定化子中心化子最小）。'},
+                                    {'text': '再模去 $G$ 的共轭作用（$\\dim G=d$），得 $d(2g-1)-d=(2g-2)d$。',
+                                     'why': '自由作用在不可约表示上成立。'}],
+                          'gap_note': '公式只在 $g\\ge2$ 的一般位置成立；$g=1$ 的枕头套与 $g=0$ 的单点是例外，需单独算。'},
+                'source': 'witten1989/sections/s04-canonical.tex §3（原文 p.367）'}],
+  'pitfalls': ['不要把 $g=1$ 代入 $(2g-2)d$ 得 0 就以为模空间是点：$g=1$ 时方程 $[A,B]=1$ 的微分不满秩，公式失效。',
+               '模空间不是流形而是轨形，可约联络（如 $G$ 的中心）处有奇点；辛商要改用相交上同调。',
+               '复结构 $J$ 改变的是复结构，不改变辛形式（Kähler 形式随 $J$ 变，但上同调类不变）。'],
+  'related': ['csw/concept/gauss-law-constraint',
+              'csw/concept/narasimhan-seshadri',
+              'csw/concept/holomorphic-sections',
+              'csw/example/pillowcase-dimension'],
+  'sources': [{'book': '威腾 1989，Commun. Math. Phys. 121 (1989) 351–399',
+               'section': '§3 相空间与模空间',
+               'pages': [366, 368],
+               'pdf_pages': [16, 18],
+               'anchor': 'witten1989/sections/s04-canonical.tex §3.1'}],
+  'rights': 'rewritten',
+  'status': 'draft'},
+ {'id': 'csw/concept/narasimhan-seshadri',
+  'type': 'concept',
+  'track': 'B',
+  'title': 'Narasimhan–Seshadri：平坦联络与稳定全纯丛',
+  'aliases': ['Narasimhan–Seshadri', 'NS 定理', 'Donaldson–Uhlenbeck–Yau'],
+  'summary': 'degree 0 的稳定全纯 $G_{\\mathbb{C}}$-丛与不可约平坦酉联络一一对应；它把 $M$ 变成 Kähler 模空间，从而可以谈“全纯截面”。',
+  'question': '一个平坦联络为什么等价于一整个全纯结构？这个对应为什么是几何量子化能进行的前提？',
+  'definition': {'text': '设 $E$ 是 $\\Sigma$ 上 degree $0$ 的稳定全纯 $G_{\\mathbb{C}}$-丛。Narasimhan–Seshadri '
+                         '定理断言：$E$ 上存在唯一的与全纯结构相容的平坦酉联络，反之不可约平坦酉联络给出唯一的稳定全纯结构。于是 $M_{\\mathrm{flat}}\\cong '
+                         'M_{\\mathrm{Dol}}$（稳定丛模空间），后者是复 Kähler 流形。',
+                 'notation': '$G_{\\mathbb{C}}$ 是 $G$ 的复化；Dolbeault 模空间 $M_{\\mathrm{Dol}}$ 与平坦联络模空间 '
+                             '$M_{\\mathrm{dR}}$ 通过非阿贝尔 Hodge 对应等同。'},
+  'key_points': ['平坦联络 = 全纯结构 + 相容的平坦酉结构；前者是复几何数据，后者是度量数据。',
+                 '“稳定”是 GIT 意义下的稳定性，等价于联络不可约；可约联络对应不稳定/半稳定点。',
+                 '因此 $M$ 上有两个身份：辛流形（平坦联络）与 Kähler 流形（稳定丛）；量子化用后者。',
+                 'Kähler 形式 $\\omega$ 的上同调类与预量子化线丛的 $c_1$ 一致，这是“$k$ 出现在线丛次数上”的来源。',
+                 '该定理是 Donaldson–Uhlenbeck–Yau 定理的二维情形；对 $G=U(N)$ 它就是说“平坦酉联络 ↔ 稳定全纯向量丛”。'],
+  'formulas': ['$M_{\\mathrm{flat}}\\cong M_{\\mathrm{Dol}}$', '$\\omega_{\\mathrm{Kähler}}\\in H^{1,1}(M)$'],
+  'theorems': [{'name': 'Narasimhan–Seshadri 对应',
+                'statement': '在亏格 $g\\ge2$ 的紧 Riemann 面上，degree $0$ 稳定全纯 $G_{\\mathbb{C}}$-丛的模空间与不可约平坦 '
+                             '$G$-联络的模空间典范同构，且前者是 Kähler 流形。',
+                'proof': {'status': 'sketch',
+                          'steps': [{'text': '从平坦联络取 $(0,1)$-部分，得全纯结构；联络的平坦性保证 $\\bar\\partial^2=0$。',
+                                     'why': "$D''=\\bar\\partial+A''$，$F=0$ 给出 $\\bar\\partial "
+                                            "A''+A''\\wedge A''=0$。"},
+                                    {'text': '联络的酉性给出 Hermite 度量，且该度量满足 Hermite–Yang–Mills 方程（$\\Sigma$ '
+                                             '上自动成立）。',
+                                     'why': '二维时 HYM 方程就是度量的相容条件，没有更高阶障碍。'},
+                                    {'text': '反过来，稳定丛上的 HYM 度量给出唯一平坦酉联络（Donaldson–Uhlenbeck–Yau 的二维情形）。',
+                                     'why': '高维用 UY 定理，二维是经典结果。'}],
+                          'gap_note': '本文只引用不证明；可约（不稳定）情形的边界与抛物结构未展开。'},
+                'source': 'witten1989/sections/s04-canonical.tex（原文 p.368–369）'}],
+  'pitfalls': ['不要把它读成“平坦联络就是全纯丛”：还要 degree 0 与稳定性，且对应是模空间层面的。',
+               '模空间在可约点有奇点，对应不稳定丛；量子化时要取相交上同调或抛物丛。',
+               'Kähler 形式随复结构变，但上同调类不变；这是“Hilbert 空间与 $J$ 无关”的几何基础。'],
+  'related': ['csw/concept/flat-connection-moduli',
+              'csw/concept/holomorphic-sections',
+              'csw/concept/prequantization-determinant-line'],
+  'sources': [{'book': '威腾 1989，Commun. Math. Phys. 121 (1989) 351–399',
+               'section': '§3.1–3.2 全纯观点与平坦丛',
+               'pages': [368, 369],
+               'pdf_pages': [18, 19],
+               'anchor': 'witten1989/sections/s04-canonical.tex（§3.1 末–§3.2）'}],
+  'rights': 'rewritten',
+  'status': 'draft'},
+ {'id': 'csw/concept/prequantization-determinant-line',
+  'type': 'concept',
+  'track': 'C',
+  'title': '预量子化：行列式线丛',
+  'aliases': ['determinant line bundle', 'prequantum line bundle', '行列式线丛'],
+  'summary': '在模空间上取行列式线丛 $\\cL$（Quillen 度规）；$c_1(\\cL)=[\\omega]$，所以 $[\\cL^{\\otimes '
+             'k}]=k[\\omega]$，整性自动满足。',
+  'question': '为什么 CS 的预量子化不需要 Weil–Kostant 的整性条件？行列式线丛的曲率为什么正好是辛形式？',
+  'definition': {'text': '设 $\\pi:\\cE\\to M$ 是模空间上的全纯向量丛族（纤维是 $\\bar\\partial$ 的核/余核），行列式线丛 '
+                         '$\\cL=\\det(\\ker\\bar\\partial)^*\\otimes\\det(\\operatorname{coker}\\bar\\partial)$。它带 '
+                         'Quillen 度规与相容联络，其曲率为 $F_\\nabla=-2\\pi i\\,\\omega$（适当归一化）。因此取 $\\cL^{\\otimes k}$ '
+                         '就得到曲率 $k\\omega$ 的预量子化线丛。',
+                 'notation': '$\\cL$ 是行列式线丛；$\\omega$ 是模空间的 Kähler 形式；$k$ 是 CS level，整性由大规范变换保证。'},
+  'key_points': ['预量子化的核心条件 $[\\omega]\\in H^2(M,\\mathbb{Z})$ 在这里不是假设，而是构造：行列式线丛的 $c_1$ 自动整。',
+                 'Quillen 度规的曲率由 $\\bar\\partial$ 族的指标定理给出，正好等于模空间的 Kähler 形式。',
+                 '取 $\\cL^{\\otimes k}$ 相当于把 level 提到 $k$：作用量的 $k$ 与线丛的次数是同一个整数。',
+                 '这就是 Witten 说的“用行列式线丛绕过 Weil–Kostant”：不需要先验地检查整性，线丛是构造性存在的。',
+                 '代价：模空间有奇点时，行列式线丛的构造要小心（可约联络处），本文不处理。'],
+  'formulas': ['$\\cL=\\det(\\ker\\bar\\partial)^*\\otimes\\det(\\operatorname{coker}\\bar\\partial)$',
+               '$F_\\nabla=-2\\pi i\\,\\omega$',
+               '$c_1(\\cL^{\\otimes k})=k[\\omega]$'],
+  'theorems': [{'name': '行列式线丛的第一陈类',
+                'statement': '在光滑模空间上，行列式线丛 $\\cL$ 的第一陈类等于 Kähler 形式 $[\\omega]$（归一化相差常数 $2\\pi$）。',
+                'proof': {'status': 'sketch',
+                          'steps': [{'text': '对全纯族 $\\bar\\partial_s$，曲率 '
+                                             '$F_\\nabla=\\partial\\bar\\partial\\log\\det\\Delta$（Quillen）。',
+                                     'why': '行列式线丛的联络由 $\\bar\\partial$ 的族决定，Quillen 度规给出曲率。'},
+                                    {'text': '由指标定理，$\\partial\\bar\\partial\\log\\det\\Delta$ 的积分给出模空间的 '
+                                             'Kähler 类。',
+                                     'why': '这是 Quillen 定理与 Grothendieck–Riemann–Roch 的二维情形。'},
+                                    {'text': '故 $c_1(\\cL)=[\\omega]$，取 $k$ 次幂得 $k[\\omega]$。',
+                                     'why': '线丛的 $c_1$ 相加，次数即 $k$。'}],
+                          'gap_note': '本文直接引用行列式线丛与 Quillen 度规（文献 [33][34]），未证明曲率公式；奇点处需相交上同调。'},
+                'source': 'witten1989/sections/s04-canonical.tex §3.1（原文 p.368–369）'}],
+  'pitfalls': ['不要把 $\\cL^{\\otimes k}$ 里的 $k$ 与丛的“规范固定”混淆：这里的 $k$ 就是 CS 作用量的整数 level。',
+               '$[\\omega]$ 整并不意味着任意 $k$ 都能用：半形式修正会把有效 level 提到 $k+h^\\vee$，别把两个 $k$ 混用。',
+               '行列式线丛的曲率有 $2\\pi$ 因子，视归一化而定；比较 $c_1$ 与 $[\\omega]$ 前先对齐 $\\omega$ 的归一化。'],
+  'related': ['csw/concept/holomorphic-sections',
+              'csw/concept/polarization',
+              'csw/concept/half-form-correction'],
+  'sources': [{'book': '威腾 1989，Commun. Math. Phys. 121 (1989) 351–399',
+               'section': '§3.1 预量子化与行列式线丛',
+               'pages': [368, 369],
+               'pdf_pages': [18, 19],
+               'anchor': 'witten1989/sections/s04-canonical.tex（§3.1）'}],
+  'rights': 'rewritten',
+  'status': 'draft'},
+ {'id': 'csw/concept/polarization',
+  'type': 'concept',
+  'track': 'C',
+  'title': '极化',
+  'aliases': ['polarization', '极化', 'Kähler polarization'],
+  'summary': '在复化切丛里选一个拉格朗日、可积且维数为 $n$ 的子丛 $P$，把“沿 $P$ 协变常数”的截面当作量子态；它把 $2n$ 个变量砍成 $n$ 个。',
+  'question': '预量子化的 Hilbert 空间为什么太大？极化的三条条件各自排除什么？',
+  'definition': {'text': '辛流形 $(M,\\omega)$ 的极化是复化切丛 $T_{\\mathbb{C}}M$ 的一个子丛 $P$，满足：①拉格朗日性 '
+                         '$\\omega|_P=0$；②可积性（$P$ 的截面在 Lie 括号下封闭）；③$\\dim_{\\mathbb{C}}P=\\frac12\\dim '
+                         'M$。量子态定义为沿 $P$ 协变常数的截面：$\\nabla_Xs=0$ 对所有 $X\\in\\Gamma(P)$。Kähler 情形取 '
+                         '$P=T^{0,1}M$，条件是“全纯”，量子态即全纯截面。',
+                 'notation': '$P$ 常记作 $\\mathcal{P}$；$\\Gamma_P(M,\\cL)$ 表示 '
+                             '$P$-极化截面空间，$\\cH_P=\\Gamma_P(M,\\cL)$。'},
+  'key_points': ['三条条件缺一不可：拉格朗日性保证沿 $P$ 的协变导数是“半截”的；可积性保证有足够多的解；维数条件保证砍掉恰好一半。',
+                 '实极化对应“位置空间或动量空间”，解只依赖一半坐标；Kähler 极化对应“全纯”，解是全纯截面。',
+                 '极化不是规范选择，它是量子化方案的一部分：不同的极化给出同构的 Hilbert 空间（BKS 配对），但计算难度不同。',
+                 '在紧相空间上不能用“$q$ 与 $p$ 分离”的实极化（$q$ 或 $p$ 无界），Kähler 极化是自然选择。',
+                 '半形式修正把截面从 $\\cL$ 换成 $\\cL\\otimes K^{1/2}$，这一步与极化独立。'],
+  'formulas': ['$\\omega|_P=0,\\quad[P,P]\\subset P,\\quad\\dim_{\\mathbb{C}}P=\\tfrac12\\dim M$',
+               '$\\nabla_Xs=0\\ (X\\in P)$',
+               '$P=T^{0,1}M\\Longrightarrow s$ 全纯'],
+  'theorems': [{'name': 'Kähler 极化的量子态空间',
+                'statement': '在紧 Kähler 流形 $(M,\\omega)$ 上取 $P=T^{0,1}M$，则 $P$-极化截面就是 $\\cL$ '
+                             '的全纯截面，$\\cH_P=H^0(M,\\cL)$，且 $\\dim_{\\mathbb{C}}\\cH_P<\\infty$。',
+                'proof': {'status': 'complete',
+                          'steps': [{'text': '$P=T^{0,1}M$ 时，$\\nabla_Xs=0$ 对 '
+                                             '$X=\\bar\\partial/\\partial\\bar z^k$ 即 $\\bar\\partial '
+                                             's=0$（用联络的 $(0,1)$ 部分刻画）。',
+                                     'why': 'Kähler 情形下相容联络的 $(0,1)$ 部分就是 $\\bar\\partial$ 加上线丛的联络。'},
+                                    {'text': '$\\bar\\partial s=0$ 的解正是全纯截面；$\\cL$ 正（$c_1(\\cL)$ 为 Kähler '
+                                             '类）时 $H^0$ 有限维。',
+                                     'why': '椭圆算子的核有限维（Hodge 理论）。'},
+                                    {'text': '故 $\\cH_P=H^0(M,\\cL)$，维数有限。', 'why': '紧性给出有限维。'}],
+                          'gap_note': ''},
+                'source': 'witten1989/sections/s04-canonical.tex §3.1（原文 p.367–368）'}],
+  'pitfalls': ['不要以为“任意复结构都给极化”：$P$ 必须可积，$T^{0,1}$ 只在复结构可积时才对。',
+               '实极化在紧流形上常常不存在（叶空间非 Hausdorff），这是必须用 Kähler 极化的原因。',
+               '极化的选择影响“哪个空间与 $J$ 无关”的表述：严格说只有射影化后的空间典范。'],
+  'related': ['csw/concept/prequantization-determinant-line',
+              'csw/concept/holomorphic-sections',
+              'csw/concept/half-form-correction'],
+  'sources': [{'book': '威腾 1989，Commun. Math. Phys. 121 (1989) 351–399',
+               'section': '§3.1 The Holomorphic Viewpoint（极化）',
+               'pages': [367, 368],
+               'pdf_pages': [17, 18],
+               'anchor': 'witten1989/sections/s04-canonical.tex（§3.1）'}],
+  'rights': 'rewritten',
+  'status': 'draft'},
+ {'id': 'csw/concept/holomorphic-sections',
+  'type': 'concept',
+  'track': 'C',
+  'title': '全纯截面空间作为量子 Hilbert 空间',
+  'aliases': ['holomorphic sections', 'H^0(M,L^k)'],
+  'summary': 'CS 的量子 Hilbert 空间是 $\\cH_\\Sigma=H^0(\\cM_J,\\cL^{\\otimes k})$：模空间上的全纯截面空间，有限维。',
+  'question': '$H^0(\\cM_J,\\cL^{\\otimes k})$ 的维数由什么决定？为什么它随 $J$ 变而物理上不该变？',
+  'definition': {'text': '取 $M=\\Sigma\\times\\mathbb{R}$，相空间 $\\cM_J$ 是复结构 $J$ 下的稳定丛模空间，预量子化线丛 '
+                         '$\\cL^{\\otimes k}$。则量子 Hilbert 空间 $\\cH_\\Sigma=H^0(\\cM_J,\\cL^{\\otimes '
+                         'k})$，即全纯截面空间。大 $k$（半经典）时 '
+                         '$\\dim\\cH_\\Sigma\\sim\\frac{\\operatorname{Vol}(\\cM)}{(2\\pi)^n n!}k^n$（Weyl '
+                         '律）。',
+                 'notation': '$\\cM_J$ 与 $J$ 有关；$\\cH_\\Sigma$ 严格说是一个射影平坦丛的纤维，随 $J$ 变动。'},
+  'key_points': ['全纯截面空间有限维：$\\cM_J$ 紧、$\\cL$ 正，$H^0$ 是椭圆复形的核。',
+                 '维数由 Riemann–Roch（指标定理）给出；对 $S^2$ 带三个标记点，$\\dim=N_{ijk}$（Verlinde 公式）。',
+                 '随 $J$ 变，$H^0(\\cM_J,\\cL^{\\otimes k})$ 构成 Teichmüller 空间上的向量丛，只带射影平坦联络。',
+                 '半形式修正把 $\\cL^{\\otimes k}$ 换成 $\\cL^{\\otimes k}\\otimes K^{1/2}$，维数从 $k$ 变成 '
+                 '$k+1$（$SU(2)$、环面）。',
+                 '这就是“量子化后的模空间”与“WZW 共形块”能比较的公共语言：两边都是全纯截面。'],
+  'formulas': ['$\\cH_\\Sigma=H^0(\\cM_J,\\cL^{\\otimes k})$',
+               '$\\dim\\cH_\\Sigma\\sim\\frac{\\operatorname{Vol}(\\cM_J)}{(2\\pi)^n n!}k^n\\ '
+               '(k\\to\\infty)$',
+               '$S^2,\\ 3\\text{ 个标记点}:\\ \\dim=N_{ijk}$'],
+  'theorems': [{'name': '有限维性',
+                'statement': '$\\cM_J$ 紧致且 $\\cL$ 正时，$H^0(\\cM_J,\\cL^{\\otimes k})$ 是有限维复向量空间。',
+                'proof': {'status': 'sketch',
+                          'steps': [{'text': '全纯截面满足椭圆方程 $\\bar\\partial s=0$。',
+                                     'why': '$\\bar\\partial$ 的主符号在 Kähler 流形上是椭圆复形。'},
+                                    {'text': '紧流形上椭圆复形的核有限维（Hodge 理论）。', 'why': '这是标准结果，不需要额外的分析。'},
+                                    {'text': '故 $\\dim H^0<\\infty$。', 'why': '结论直接。'}],
+                          'gap_note': '紧致性在可约联络奇点处失效；本文用“紧化/相交上同调”回避，未展开。'},
+                'source': 'witten1989/sections/s04-canonical.tex（原文 p.368–369）'}],
+  'pitfalls': ['不要忘记 $k$：$H^0(\\cM_J,\\cL)$ 与 $H^0(\\cM_J,\\cL^{\\otimes k})$ 是不同空间，后者才对应 level $k$。',
+               '维数不是常数函数：它是 $J$ 的（射影）平坦丛的纤维维数，局部常数但整体有单值性。',
+               '大 $k$ 的 Weyl 律只给首项，不能用来算有限 $k$ 的整数维数。'],
+  'related': ['csw/concept/polarization',
+              'csw/concept/prequantization-determinant-line',
+              'csw/concept/projective-flat-connection',
+              'csw/concept/verlinde-formula'],
+  'sources': [{'book': '威腾 1989，Commun. Math. Phys. 121 (1989) 351–399',
+               'section': '§3.1–3.2 全纯截面与射影平坦丛',
+               'pages': [368, 370],
+               'pdf_pages': [18, 20],
+               'anchor': 'witten1989/sections/s04-canonical.tex（§3.1–3.2）'}],
+  'rights': 'rewritten',
+  'status': 'draft'},
+ {'id': 'csw/concept/projective-flat-connection',
+  'type': 'concept',
+  'track': 'C',
+  'title': '射影平坦丛与“与 $J$ 无关”',
+  'aliases': ['projectively flat connection', 'projectively flat bundle', '射影平坦'],
+  'summary': '$H^0(\\cM_J,\\cL^{\\otimes k})$ 随 $J$ 构成 Teichmüller '
+             '空间上的向量丛，只带射影平坦联络：平行移动在整体相位上有歧义，单值性给出映射类群的射影表示。',
+  'question': '为什么“Hilbert 空间与 $J$ 无关”只在射影意义下成立？单值性为什么与纽结不变量有关？',
+  'definition': {'text': '设 $\\mathcal{T}$ 是 $\\Sigma$ 的 Teichmüller '
+                         '空间。$\\cH_\\Sigma^{(J)}=H^0(\\cM_J,\\cL^{\\otimes k})$ 在 $\\mathcal{T}$ '
+                         '上构成向量丛，带一个联络 '
+                         '$\\nabla$。该联络不是平坦的，而是射影平坦：$[\\nabla_X,\\nabla_Y]-\\nabla_{[X,Y]}=\\omega(X,Y)\\cdot\\mathrm{id}$，其中 '
+                         '$\\omega$ 是 $\\mathcal{T}$ 上的 Kähler 形式（Hitchin 联络）。沿闭环平行移动给出射影变换，即映射类群 '
+                         '$\\operatorname{MCG}(\\Sigma)$ 的射影表示。',
+                 'notation': '$\\mathcal{T}$ 是 Teichmüller '
+                             '空间；$\\operatorname{MCG}(\\Sigma)=\\pi_0\\operatorname{Diff}^+(\\Sigma)$；射影平坦 = '
+                             '平坦到中心扩张。'},
+  'key_points': ['“与 $J$ 无关”的准确含义：向量空间之间没有典范同构，只有射影同构。',
+                 '射影因子是规范（anomaly）：它来自共形反常，不是坐标选择。',
+                 '单值性给出映射类群的射影表示；在三维里这就是“沿边界粘合”的运算，模函子由此而来。',
+                 '带标记点时联络变成 KZ 联络（在 $g=0$ 时显式可写）。',
+                 'Witten 只给出物理论证（$\\cH_\\Sigma$ 应当与 $J$ 无关），严格证明由 Hitchin 与 Segal 给出。'],
+  'formulas': ['$[\\nabla_X,\\nabla_Y]-\\nabla_{[X,Y]}=\\omega(X,Y)\\,\\mathrm{id}$',
+               '$\\operatorname{MCG}(\\Sigma)\\curvearrowright\\mathbb{P}\\cH_\\Sigma$'],
+  'theorems': [{'name': '射影平坦性（Hitchin）',
+                'statement': '$\\mathcal{T}$ 上由 $H^0(\\cM_J,\\cL^{\\otimes k})$ 构成的向量丛带自然的射影平坦联络；其单值化为 '
+                             '$\\operatorname{MCG}(\\Sigma)$ 的射影表示。',
+                'proof': {'status': 'sketch',
+                          'steps': [{'text': '用 $\\bar\\partial$ 族的行列式线丛与 Quillen 联络构造 $\\nabla$。',
+                                     'why': '联络来自“把 $J$ 变一点”时全纯截面空间的移动。'},
+                                    {'text': '曲率计算给出 $[\\nabla,\\nabla]=\\omega\\cdot\\mathrm{id}$，即曲率是纯迹的。',
+                                     'why': '迹部分由 Kähler 形式给出，其余为零——这就是射影平坦。'},
+                                    {'text': '沿闭环的平行移动定义射影变换，给出 $\\operatorname{MCG}$ 的作用。',
+                                     'why': '单值性只由拓扑决定。'}],
+                          'gap_note': '本文自认是物理推导（p.370 说 heuristic）；Hitchin 的严格证明与 KZ 在带标记点的显式形式不在本文范围。'},
+                'source': 'witten1989/sections/s04-canonical.tex §3.2（原文 p.369–370）；严格证明见 Hitchin '
+                          '1990、Segal'}],
+  'pitfalls': ['不要说“Hilbert 空间不依赖 $J$”：只能说射影化后不依赖；射影因子是物理的（共形反常）。',
+               '射影平坦不等于平坦：曲率不为零，只是纯迹；把它当平坦会丢掉单值性。',
+               '单值性是射影表示，不是线性表示；相位不是总能整体消掉。'],
+  'related': ['csw/concept/holomorphic-sections',
+              'csw/concept/hitchin-connection',
+              'csw/concept/conformal-blocks',
+              'csw/concept/mapping-class-group'],
+  'sources': [{'book': '威腾 1989，Commun. Math. Phys. 121 (1989) 351–399',
+               'section': '§3.2 模空间上的平坦向量丛',
+               'pages': [369, 371],
+               'pdf_pages': [19, 21],
+               'anchor': 'witten1989/sections/s04-canonical.tex §3.2'}],
+  'rights': 'rewritten',
+  'status': 'draft'},
+ {'id': 'csw/concept/hitchin-connection',
+  'type': 'concept',
+  'track': 'C',
+  'title': 'Hitchin 联络与 KZ 联络',
+  'aliases': ['Hitchin connection', 'KZ connection', 'Knizhnik–Zamolodchikov connection'],
+  'summary': '在 Teichmüller 空间上，把全纯截面空间沿“复结构改变”的方向求导，得到 Hitchin 联络；在 $g=0$ 带标记点时它显式化为 KZ 方程。',
+  'question': 'Hitchin 联络的曲率为什么只有迹部分？KZ 方程是它的哪个特例？',
+  'definition': {'text': '设 $\\cH_J=H^0(\\cM_J,\\cL^{\\otimes k})$。Hitchin 联络 $\\nabla$ 在向量场 '
+                         '$\\partial/\\partial t$（$t$ 是 Teichmüller 坐标）上的作用由“把截面沿 $J$ '
+                         '的变化平行移动”给出，其曲率纯迹：$[\\nabla_X,\\nabla_Y]-\\nabla_{[X,Y]}=\\omega_{\\mathcal{T}}(X,Y)\\mathrm{id}$。当 '
+                         '$g=0$ 带 $n$ 个标记点且取 $\\cM_J$ 为带标记点的模空间时，全纯截面满足 KZ 方程 '
+                         '$\\kappa\\partial_{z_i}\\Psi=\\sum_{j\\ne '
+                         'i}\\frac{\\Omega_{ij}}{z_i-z_j}\\Psi$，$\\kappa=k+h^\\vee$。',
+                 'notation': '$\\Omega_{ij}=\\sum_aT^a_{(i)}T^a_{(j)}$；$\\kappa=k+h^\\vee$ 是“有效 level”。'},
+  'key_points': ['Hitchin 联络的曲率纯迹，是因为全纯截面空间的维数在变形下不变，只有整体相位可以变。',
+                 '在 $g=0$ 时模空间的复结构由标记点位置 $z_i$ 给出，Hitchin 联络就是 KZ 方程。',
+                 'KZ 的分母是 $z_i-z_j$，说明它是“两点函数”的推广；单极点结构来自算子积展开。',
+                 '有效 level 是 $k+h^\\vee$，不是 $k$：半形式修正已经把 $h^\\vee$ 加进去了。',
+                 'KZ 的单值性给出共形块的表示，这是“共形块 = 物理态空间”的最具体实现。'],
+  'formulas': ['$[\\nabla_X,\\nabla_Y]-\\nabla_{[X,Y]}=\\omega_{\\mathcal{T}}(X,Y)\\,\\mathrm{id}$',
+               '$\\kappa\\partial_{z_i}\\Psi=\\sum_{j\\ne i}\\frac{\\Omega_{ij}}{z_i-z_j}\\Psi$',
+               '$\\kappa=k+h^\\vee$'],
+  'theorems': [{'name': 'Hitchin 联络的平坦性（射影）',
+                'statement': '$\\mathcal{T}$ 上的 Hitchin 联络 $\\nabla$ 的曲率是纯迹的，因此给出射影平坦结构；其单值性为 '
+                             '$\\operatorname{MCG}(\\Sigma)$ 的射影表示。',
+                'proof': {'status': 'sketch',
+                          'steps': [{'text': '计算 $\\nabla$ 的曲率：$[\\nabla_X,\\nabla_Y]-\\nabla_{[X,Y]}$ 的迹部分由 '
+                                             '$\\partial\\bar\\partial$ 的 Quillen 曲率给出。',
+                                     'why': '这是 Hitchin 1990 的计算；本文只引用结论。'},
+                                    {'text': '无迹部分为零，来自全纯截面空间的维数在变形下不变。', 'why': '维数局部常数意味着平行移动只差整体相位。'},
+                                    {'text': '故曲率 $=\\omega\\cdot\\mathrm{id}$，射影平坦。',
+                                     'why': '纯迹曲率就是射影平坦的定义。'}],
+                          'gap_note': '本文只说“should be”；严格证明由 Hitchin 给出，KZ 显式形式见 Knizhnik–Zamolodchikov 与河野 '
+                                      '§1.5。'},
+                'source': 'witten1989/sections/s04-canonical.tex §3.2（p.369–370）；Hitchin, CMP 131 (1990) '
+                          '347'}],
+  'pitfalls': ['把 $\\kappa$ 写成 $k$ 是常见错误：分母必须是 $k+h^\\vee$，否则 $SU(2)$、$k=1$ 的数值全错。',
+               'KZ 只在 $g=0$ 有显式的 $\\sum\\Omega_{ij}/(z_i-z_j)$ 形式；高亏格要加更多项。',
+               'Hitchin 联络与 Berry 联络不是一回事，但都描述“参数变化时的平行移动”。'],
+  'related': ['csw/concept/projective-flat-connection',
+              'csw/concept/knizhnik-zamolodchikov',
+              'csw/concept/conformal-blocks'],
+  'sources': [{'book': '威腾 1989，Commun. Math. Phys. 121 (1989) 351–399',
+               'section': '§3.2 射影平坦联络（Hitchin）',
+               'pages': [369, 370],
+               'pdf_pages': [19, 20],
+               'anchor': 'witten1989/sections/s04-canonical.tex §3.2'}],
+  'rights': 'rewritten',
+  'status': 'draft'},
+ {'id': 'csw/concept/half-form-correction',
+  'type': 'concept',
+  'track': 'C',
+  'title': '半形式修正与 $k\\to k+h^\\vee$',
+  'aliases': ['half-form correction', 'metaplectic correction', '半形式'],
+  'summary': '半形式修正：把 $\\cL^{\\otimes k}$ 换成 $\\cL^{\\otimes k}\\otimes K^{1/2}$，令 $k\\to k+h^\\vee$。',
+  'question': '半形式修正为什么等于 level 平移 $h^\\vee$？$K^{1/2}$ 什么时候存在？',
+  'definition': {'text': '几何量子化的标准配方要求态是半形式值的截面：$\\cH=\\Gamma_P(\\cM,\\cL^{\\otimes k}\\otimes K^{1/2})$，其中 '
+                         '$K=\\det T^{*}\\cM$ 是典范丛。在 CS 情形 $K^{1/2}=\\cL^{-h^\\vee}$（对 '
+                         '$SU(2)$，$K^{1/2}=\\cL^{-2}$），于是 $\\cL^{\\otimes k}\\otimes '
+                         'K^{1/2}=\\cL^{\\otimes(k-h^\\vee)}$，等价于把有效 level 写成 $k+h^\\vee$ 的共形场论。',
+                 'notation': '$K^{1/2}$ 是典范丛的平方根（metaplectic 修正）；$h^\\vee$ 是对偶 Coxeter 数（$SU(N)$ 为 $N$）。'},
+  'key_points': ['半形式修正来自“焦散面附近的相位”：几何量子化要正确处理 Maslov 相位，必须开方。',
+                 '$K^{1/2}$ 存在需要 $c_1(K)$ 为偶；模空间上这个条件与 $h^\\vee$ 的整性一致。',
+                 '在 CS 里 $K=\\cL^{-2h^\\vee}$（行列式线丛的负幂），所以 $K^{1/2}=\\cL^{-h^\\vee}$，修正就是 level 平移。',
+                 '修正后 $SU(2)$ 的有效 level 是 $k+2$，这解释了为什么 $q=e^{2\\pi i/(k+2)}$，以及为什么可积表示数是 $k+1$。',
+                 '本文在作用量层面没有显式写出 $K^{1/2}$；平移在 (2.16)(2.17) 与 (4.21) 以 $q$ 的形式出现。'],
+  'formulas': ['$\\cH=\\Gamma_P(\\cM,\\cL^{\\otimes k}\\otimes K^{1/2})$',
+               '$K^{1/2}=\\cL^{-h^\\vee}$',
+               '$k_{\\mathrm{eff}}=k+h^\\vee$（$SU(2)$：$k+2$）'],
+  'theorems': [{'name': 'level 平移',
+                'statement': '在 $SU(2)$ CS 理论中，半形式修正把预量子化线丛 $\\cL^{\\otimes k}$ 换成 $\\cL^{\\otimes '
+                             'k}\\otimes K^{1/2}=\\cL^{\\otimes(k+2)}$，于是有效 level 为 $k+2$。',
+                'proof': {'status': 'sketch',
+                          'steps': [{'text': '$\\cM_J$ 的典范丛满足 $K=\\cL^{-2h^\\vee}$。',
+                                     'why': '这是模空间的标准事实（$\\cM$ 的 Kähler 形式是 $\\cL$ 的曲率）。'},
+                                    {'text': '$SU(2)$ 时 $h^\\vee=2$，故 $K^{1/2}=\\cL^{-2}$。',
+                                     'why': '对偶 Coxeter 数 $SU(2)$ 为 2。'},
+                                    {'text': '$\\cL^{\\otimes k}\\otimes\\cL^{-2}=\\cL^{\\otimes(k-2)}$，与“有效 '
+                                             'level $k+2$”的对偶描述一致：$q=e^{2\\pi i/(k+2)}$。',
+                                     'why': '共形场的 level 与线丛次数差一个 $h^\\vee$，两种记法只是把 $h^\\vee$ 放在哪边。'}],
+                          'gap_note': '本文没有在几何量子化语言里显式构造 $K^{1/2}$；修正的“机制”是后世解释，本卡按原文能与不能分开标注。'},
+                'source': 'witten1989/sections/s02-weak-coupling.tex（2.16)(2.17) p.359）与 s06/s08（4.21)'}],
+  'pitfalls': ['不要把 $k_{\\mathrm{eff}}=k+h^\\vee$ 与原文的 $q=e^{2\\pi i/(k+2)}$ 当成两个不同的理论：它们是同一件事的两种写法。',
+               '$K^{1/2}$ 存在不是自动的：$c_1(K)$ 必须是偶类；在奇点处还要选 spin 结构。',
+               '半形式修正不改变大 $k$ 的 Weyl 律首项，只改变 $1/k$ 修正。'],
+  'related': ['csw/concept/holomorphic-sections', 'csw/concept/s-matrix', 'csw/concept/conformal-blocks'],
+  'sources': [{'book': '威腾 1989，Commun. Math. Phys. 121 (1989) 351–399',
+               'section': '§2 单圈修正 (2.16)(2.17) 与 §4 (4.21)',
+               'pages': [359, 382],
+               'pdf_pages': [9, 32],
+               'anchor': 'witten1989/sections/s02-weak-coupling.tex（2.16–2.17）'}],
+  'rights': 'rewritten',
+  'status': 'draft'}]

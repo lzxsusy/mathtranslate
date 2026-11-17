@@ -14,7 +14,7 @@ track: C
 
 辛流形 $(M,\omega)$ 的极化是复化切丛 $T_{\mathbb{C}}M$ 的一个子丛 $P$，满足：①拉格朗日性 $\omega|_P=0$；②可积性（$P$ 的截面在 Lie 括号下封闭）；③$\dim_{\mathbb{C}}P=\frac12\dim M$。量子态定义为沿 $P$ 协变常数的截面：$\nabla_Xs=0$ 对所有 $X\in\Gamma(P)$。Kähler 情形取 $P=T^{0,1}M$，条件是“全纯”，量子态即全纯截面。
 
-*记号*：$P$ 常记作 $\mathcal{P}$；$\Gamma_P(M,\cL)$ 表示 $P$-极化截面空间，$\cH_P=\Gamma_P(M,\cL)$。
+*记号*：$P$ 常记作 $\mathcal{P}$；$\Gamma_P(M,\mathcal{L})$ 表示 $P$-极化截面空间，$\mathcal{H}_P=\Gamma_P(M,\mathcal{L})$。
 
 ## 要点
 
@@ -22,7 +22,7 @@ track: C
 - 实极化对应“位置空间或动量空间”，解只依赖一半坐标；Kähler 极化对应“全纯”，解是全纯截面。
 - 极化不是规范选择，它是量子化方案的一部分：不同的极化给出同构的 Hilbert 空间（BKS 配对），但计算难度不同。
 - 在紧相空间上不能用“$q$ 与 $p$ 分离”的实极化（$q$ 或 $p$ 无界），Kähler 极化是自然选择。
-- 半形式修正把截面从 $\cL$ 换成 $\cL\otimes K^{1/2}$，这一步与极化独立。
+- 半形式修正把截面从 $\mathcal{L}$ 换成 $\mathcal{L}\otimes K^{1/2}$，这一步与极化独立。
 
 ## 关键公式
 
@@ -32,13 +32,13 @@ track: C
 
 ## Kähler 极化的量子态空间
 
-在紧 Kähler 流形 $(M,\omega)$ 上取 $P=T^{0,1}M$，则 $P$-极化截面就是 $\cL$ 的全纯截面，$\cH_P=H^0(M,\cL)$，且 $\dim_{\mathbb{C}}\cH_P<\infty$。
+在紧 Kähler 流形 $(M,\omega)$ 上取 $P=T^{0,1}M$，则 $P$-极化截面就是 $\mathcal{L}$ 的全纯截面，$\mathcal{H}_P=H^0(M,\mathcal{L})$，且 $\dim_{\mathbb{C}}\mathcal{H}_P<\infty$。
 
 **证明**：
 
 1. $P=T^{0,1}M$ 时，$\nabla_Xs=0$ 对 $X=\bar\partial/\partial\bar z^k$ 即 $\bar\partial s=0$（用联络的 $(0,1)$ 部分刻画）。 *（Kähler 情形下相容联络的 $(0,1)$ 部分就是 $\bar\partial$ 加上线丛的联络。）*
-2. $\bar\partial s=0$ 的解正是全纯截面；$\cL$ 正（$c_1(\cL)$ 为 Kähler 类）时 $H^0$ 有限维。 *（椭圆算子的核有限维（Hodge 理论）。）*
-3. 故 $\cH_P=H^0(M,\cL)$，维数有限。 *（紧性给出有限维。）*
+2. $\bar\partial s=0$ 的解正是全纯截面；$\mathcal{L}$ 正（$c_1(\mathcal{L})$ 为 Kähler 类）时 $H^0$ 有限维。 *（椭圆算子的核有限维（Hodge 理论）。）*
+3. 故 $\mathcal{H}_P=H^0(M,\mathcal{L})$，维数有限。 *（紧性给出有限维。）*
 
 ## 陷阱
 

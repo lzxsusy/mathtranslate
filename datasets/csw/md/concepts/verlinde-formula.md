@@ -14,7 +14,7 @@ track: G
 
 对可积表示 $i,j,k$，融合系数 $N_{ijk}$（三点共形块维数）由 Verlinde 公式给出：$N_{ijk}=\sum_l\frac{S_{il}S_{jl}S_{kl}}{S_{0l}}$。等价地，Verlinde 代数 $v_iv_j=\sum_kN_{ij}^kv_k$ 在基 $w_i=S_{0i}\sum_mS_i^mv_m$ 下变成 $w_iw_j=\delta_{ij}w_j$（幂等元）。
 
-*记号*：$S$ 是模 S 矩阵；$N_{ijk}=\dim\cH(S^2;R_i,R_j,R_k)$。
+*记号*：$S$ 是模 S 矩阵；$N_{ijk}=\dim\mathcal{H}(S^2;R_i,R_j,R_k)$。
 
 ## 要点
 

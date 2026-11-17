@@ -12,7 +12,7 @@ track: G
 
 ## 定义
 
-环面 $T^2$ 的模群 $SL(2,\mathbb{Z})$ 由 $S:\tau\mapsto-1/\tau$ 与 $T:\tau\mapsto\tau+1$ 生成，作用在环面共形块空间 $\cH(T^2)$ 上。$T$ 对角（相位 $e^{2\pi i(h_j-c/24)}$），$S$ 是“傅里叶变换”。对 $SU(2)_k$，$S_{jl}=\sqrt{\frac{2}{k+2}}\sin\frac{\pi(2j+1)(2l+1)}{k+2}$，$j,l=0,\frac12,\dots,\frac k2$。
+环面 $T^2$ 的模群 $SL(2,\mathbb{Z})$ 由 $S:\tau\mapsto-1/\tau$ 与 $T:\tau\mapsto\tau+1$ 生成，作用在环面共形块空间 $\mathcal{H}(T^2)$ 上。$T$ 对角（相位 $e^{2\pi i(h_j-c/24)}$），$S$ 是“傅里叶变换”。对 $SU(2)_k$，$S_{jl}=\sqrt{\frac{2}{k+2}}\sin\frac{\pi(2j+1)(2l+1)}{k+2}$，$j,l=0,\frac12,\dots,\frac k2$。
 
 *记号*：$j,l$ 标可积表示；$c=k\dim G/(k+h^\vee)$；$S^2=(ST)^3=C$。
 

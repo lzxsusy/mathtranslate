@@ -35,7 +35,7 @@ track: G
 
 **证明要点**（sketch）：
 
-1. 在挖空的 $S^3$ 上，边界环面 $T^2$ 的态空间由 $S$ 矩阵基给出。 *（$\cH(T^2)$ 的基是 $|\lambda\rangle$，内积由 $S$ 给出。）*
+1. 在挖空的 $S^3$ 上，边界环面 $T^2$ 的态空间由 $S$ 矩阵基给出。 *（$\mathcal{H}(T^2)$ 的基是 $|\lambda\rangle$，内积由 $S$ 给出。）*
 2. 粘合映射 $\phi\in SL(2,\mathbb{Z})$ 作用在态空间上，给出 $\phi$ 的矩阵元。 *（$\operatorname{MCG}(T^2)=SL(2,\mathbb{Z})$。）*
 3. 把链环的 Wilson 线插入并收缩，得 $\sum S_{0\lambda}\langle W\rangle$ 的形式。 *（收缩用了 $S$ 的幺正性。）*
 

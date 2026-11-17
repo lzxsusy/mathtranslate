@@ -12,9 +12,9 @@ track: F
 
 ## 定义
 
-固定曲面 $\Sigma$（可带标记点与表示），CS 理论在 $\Sigma\times\mathbb{R}$ 上正则量子化给出 $\cH_\Sigma$；WZW 理论在 $\Sigma$ 上的共形块空间也是 $\cH_\Sigma$。两者作为向量空间（更精确：射影平坦丛的纤维）等同。三维配分函数只在 $X\times S^1$ 上以 $Z=\dim\cH_X$ 的方式接触二维数据，**没有**体/边界配分函数的等式。
+固定曲面 $\Sigma$（可带标记点与表示），CS 理论在 $\Sigma\times\mathbb{R}$ 上正则量子化给出 $\mathcal{H}_\Sigma$；WZW 理论在 $\Sigma$ 上的共形块空间也是 $\mathcal{H}_\Sigma$。两者作为向量空间（更精确：射影平坦丛的纤维）等同。三维配分函数只在 $X\times S^1$ 上以 $Z=\dim\mathcal{H}_X$ 的方式接触二维数据，**没有**体/边界配分函数的等式。
 
-*记号*：$\cH_\Sigma$ 是态空间；$Z(X\times S^1)=\dim\cH_X$；本文没有 AdS/全息的语言。
+*记号*：$\mathcal{H}_\Sigma$ 是态空间；$Z(X\times S^1)=\dim\mathcal{H}_X$；本文没有 AdS/全息的语言。
 
 ## 要点
 
@@ -26,8 +26,8 @@ track: F
 
 ## 关键公式
 
-- $\cH^{CS}_\Sigma\cong\cH^{WZW}_\Sigma=H^0(\cM_J,\cL^{\otimes k})$
-- $Z_{CS}(X\times S^1)=\dim\cH_X$
+- $\mathcal{H}^{CS}_\Sigma\cong\mathcal{H}^{WZW}_\Sigma=H^0(\mathcal{M}_J,\mathcal{L}^{\otimes k})$
+- $Z_{CS}(X\times S^1)=\dim\mathcal{H}_X$
 
 ## 态空间等同
 
@@ -35,7 +35,7 @@ track: F
 
 **证明要点**（sketch）：
 
-1. CS 侧由几何量子化给出 $H^0(\cM_J,\cL^{\otimes k})$。 *（这是本文 §3 的主要结果。）*
+1. CS 侧由几何量子化给出 $H^0(\mathcal{M}_J,\mathcal{L}^{\otimes k})$。 *（这是本文 §3 的主要结果。）*
 2. WZW 侧的共形块由 Ward 恒等式与 KZ 刻画，其空间也是 $H^0$。 *（KZ 是 Hitchin 联络在 $g=0$ 的显式形式。）*
 3. 两边维数一致（Verlinde 公式）且由同一线丛给出，故同构。 *（本文把它当作物理等同，严格证明由 Segal/TUY 补。）*
 

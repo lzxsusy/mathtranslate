@@ -4,15 +4,15 @@ type: example
 track: D
 ---
 
-# $SU(2)$ 的 BWB：$H^0(G/T,\cL_j)=R_j$
+# $SU(2)$ 的 BWB：$H^0(G/T,\mathcal{L}_j)=R_j$
 
-> $SU(2)$ 的旗流形是 $S^2$；$H^0(S^2,\cL_j)$ 的维数是 $2j+1$，即自旋 $j$ 表示。
+> $SU(2)$ 的旗流形是 $S^2$；$H^0(S^2,\mathcal{L}_j)$ 的维数是 $2j+1$，即自旋 $j$ 表示。
 
-**问题**：在 $S^2$ 上算 $\cL_j$ 的全纯截面维数，验证 BWB。
+**问题**：在 $S^2$ 上算 $\mathcal{L}_j$ 的全纯截面维数，验证 BWB。
 
 ## 设定
 
-$G=SU(2)$，$T=U(1)$，$G/T=S^2$。最高权 $j$ 的线丛 $\cL_j=\mathcal{O}(2j)$（度数 $2j$）。
+$G=SU(2)$，$T=U(1)$，$G/T=S^2$。最高权 $j$ 的线丛 $\mathcal{L}_j=\mathcal{O}(2j)$（度数 $2j$）。
 
 ## 计算
 
