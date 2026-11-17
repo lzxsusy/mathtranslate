@@ -1,0 +1,56 @@
+# S-对偶 = 镜像对称（全文心脏）
+
+> `kw/deriv/sdual-mirror` · 轨道 D · 二维、膜与算子 · 状态 dev · 7 步
+
+> **要回答的问题**：四维 $S$-对偶在约化后为什么表现为镜像对称，四类膜之间又如何对应？
+
+## 一句话
+
+$S$ 在参数 $\Psi$ 上作用为 $\Psi\mapsto-1/(n_g\Psi)$，交换 B-模型与 A-模型并把 $G$ 换成 ${}^LG$；复合复超凯勒旋转 $I:\varphi\mapsto\ii\varphi$ 后得到镜像对称，几何上是 SYZ 的纤维 T-对偶，膜层面交换零膜与 type F 膜。
+
+## 目标
+
+追踪 $S$、$T$ 对 $(w_+,w_-)$ 与 $\Psi$ 的作用，证明 $B_J(M_H(G))\cong A_K(M_H({}^LG))$，再旋转得到镜像陈述。
+
+## 前提
+
+- B p.70 eq (5.35)：$S$ 作用为 $\Psi\mapsto-1/(n_g\Psi)$。
+- B p.70 eq (5.36)：$T$ 作用为 $\Psi\mapsto\Psi+1$。
+- B p.71 eq (5.37)：Hitchin 纤维化 $\pi:M_H\to B$，$S$ 在底 $B$ 上经典作用、在纤维上作 T-对偶。
+
+## 推导链
+
+| # | 步骤 | 为什么 | 出处 | 可信度 |
+|---|---|---|---|---|
+| 1 | $S$ 与 $T$ 生成 $\Psi$ 上的分数线性变换：$S=(0,1/\sqrt{n_g};-\sqrt{n_g},0)$ 把 $\Psi$ 送到 $-1/(n_g\Psi)$，从而交换 $\Psi=0$ 与 $\Psi=\infty$。 | $\Psi=0,\infty$ 正是 A-模型与 B-模型的退化点，$S$ 交换它们，这是「$S$-对偶=镜像对称」的第一步。 | `B p.70 eq (5.35)` | A·原文明确写了 |
+| 2 | 起点取 $t=\ii$：此时 $(w_+,w_-)=(-\ii,-\ii)$，是复结构 $J$ 上的 B-模型。取 $\tau$ 为纯虚并作用 $S$，有 $t'=-t\,\tau/\|\tau\|=-\ii t=1$，对应 $(w_+,w_-)=(-1,1)$，即复结构 $K$ 上的 A-模型。 | 具体算一次相位就看出 $S$ 把 B-模型的点送到 A-模型的点，且复结构从 $J$ 变为 $K$。 | `B p.70 eq (5.35)` | A·原文明确写了 |
+| 3 | 把 $S$ 与 $G\leftrightarrow{}^LG$ 合起来得到 $B_J(M_H(G))\cong A_K(M_H({}^LG))$：四维 $S$-对偶在二维化身就是「B-模型对偶到另一群的 A-模型」。 | $\Psi$ 的变换同时交换模型类型与群，这个陈述是整个几何 Langlands 的核心等价。 | `B p.70` | A·原文明确写了 |
+| 4 | 复合复超凯勒旋转 $I:\varphi\mapsto\ii\varphi$（把 $K$ 转回 $J$）便得到同复结构下的镜像对称 $B_J\leftrightarrow A_J$；但 $I$ 把点移出了 $CP^1_g$ 族。 | 镜像对称要求两边模型类型互换而复结构一致，所以必须在族外做这次旋转。 | `B p.71` | A·原文明确写了 |
+| 5 | Table 2 给出全部六条对应：$I_B\to I_B$、$I_A\to I_A$、$J_B\to K_A$、$J_A\to K_B$、$K_B\to J_A$、$K_A\to J_B$；其中 $I$ 上的 B-模型自对偶。 | 这张表是 $S$ 作用在复结构与模型类型上的完整字典，检查任何一条都可用 $(w_+,w_-)$ 的相位计算验证。 | `B p.71` | A·原文明确写了 |
+| 6 | 几何图像是 SYZ：$S$ 在 Hitchin 底 $B$ 上作用平凡（记为 $\Xi$），在纤维环面上作 T-对偶；零膜的点在对偶纤维 $\tilde F=\Xi(F)$ 上对应一个 $(B,A,A)$ 膜。 | 支撑维数论证：A-膜的支撑至少是中维，而 $\tilde F$ 至多中维，故 $S$ 像恰好支撑 $\tilde F$，由此确定膜型。 | `B p.76` | A·原文明确写了 |
+| 7 | 四类膜在 $S$ 下的交换律为 $(B,B,B)\leftrightarrow(B,A,A)$，而 $(A,B,A)$ 与 $(A,A,B)$ 各自不变；原文脚注还指出不存在 $(B,B,A)$ 与 $(A,A,A)$ 型膜。 | 膜型由在三种复结构 $I,J,K$ 中复/拉格朗日的组合决定，$S$ 交换 $I$ 与 $K$ 的角色。 | `B p.77` | A·原文明确写了 |
+
+## 结论
+
+$S$ 在 $\Psi$ 上是 $\Psi\mapsto-1/(n_g\Psi)$，交换 $0$ 与 $\infty$，因而把 B-模型（复结构 $J$）送到 ${}^LG$ 上复结构 $K$ 的 A-模型：$B_J(M_H(G))\cong A_K(M_H({}^LG))$。再复合 $I:\varphi\mapsto\ii\varphi$ 得到 $B_J\leftrightarrow A_J$ 的镜像对称。几何上这就是 SYZ：底上作用平凡、纤维上 T-对偶；膜层面 $S$ 交换零膜与 Hitchin 纤维上的 type F 膜。
+
+## 缺口
+
+- $\Xi$ 在一般情形是否平凡，原文按通常假设处理，未作讨论（B p.77）。
+- 复超凯勒旋转 $I$ 不属于约化族 $CP^1_g$，镜像陈述必须在族外实施，原文对此只给出一句提示（B p.71）。
+
+## 最容易讲错的地方
+
+- $\Psi=\infty$ 对应 B-模型（复结构 $J$），$\Psi=0$ 对应 A-模型（辛形式 $\omega_K$），方向不要记反。
+- $S$ 直接给出的是 $B_J$ 与 $A_K$ 的等价；要得到同复结构下的镜像对称必须再复合 $I:\varphi\mapsto\ii\varphi$。
+- 膜型交换是 $(B,B,B)\leftrightarrow(B,A,A)$，$(A,B,A)$ 与 $(A,A,B)$ 不变；不存在 $(B,B,A)$ 型。
+
+## 相关卡
+
+[广义复几何：A/B 与 B-场的统一语言](../derivations/generalized-complex.md) · [二维理论：B-模型、A-模型与不变量 q](../derivations/two-d-theories.md) · [镜像对称（本文版本）](../concepts/mirror-symmetry.md) · [S-对偶](../concepts/s-duality.md) · [Hitchin 纤维化](../concepts/hitchin-fibration.md)
+
+## 出处（印刷页）
+
+- B p.70–77（B p.70 eq (5.35)）
+
+> 说明：steps 的 provenance 分布：A×7（共 7 步）；gaps 2 条、pitfalls 3 条。

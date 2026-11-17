@@ -30,6 +30,7 @@
 | `encyclopedia/` | 按概念词条组织的自足数学单元：定义+定理+完整证明+可算例子+物理联系+坑 | 一个可独立阅读的词条（JSON） | 正文 20,000 字 |
 | `geoq/` | 单章资料卡：概念卡 + 例子卡 + 框架地图 + 使用说明 + 生产工作流 | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
 | `pathintegral/` | 单章资料卡（第 2 章路径积分）：概念卡 + 例子卡 + 框架地图 + 使用说明 + 生产工作流 | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
+| `kw06/` | 单篇论文资料卡（Kapustin–Witten 2006）：概念卡 + 推导卡 + 骨架图 + 渲染 Markdown | 一张可独立使用的卡（JSON） | 单卡 3,000 字 |
 
 `bench/` 与训练集严格隔离：出题时不得使用 `parallel/`、`deepread/` 中已出现的同一段落。
 
@@ -51,6 +52,7 @@ datasets/
 ├── encyclopedia/              # 词条库（entries/<category>/<slug>.json + taxonomy.md）
 ├── geoq/                      # 单章资料卡（cards/ + md/ + map.png/svg + workflow/ + tools/）
 ├── pathintegral/              # 单章资料卡：第 2 章路径积分（同 geoq 结构）
+├── kw06/                      # 单篇论文资料卡：Kapustin–Witten 2006（概念卡 + 推导卡）
 ├── math/<pkg>.<split>.jsonl   # 数学推理条目（主力）
 ├── parallel/<pkg>.<split>.jsonl
 ├── deepread/<pkg>.<split>.jsonl
@@ -116,5 +118,7 @@ https://atomgit.com/lzxSUSUY/mathtranslate/blob/main/datasets/<...>.jsonl
 - `v0.6`（2026-11-16）：新增 `encyclopedia/`（按概念组织的词条库，17 条、74 定理、50 例）与 `tools/entry_lint.py`；`datasets/README.md` 升为八类。
 - `v0.7`（2026-11-16）：第一本书拆完——`encyclopedia/` 扩到 43 条、187 定理、130 例（128 complete / 59 sketch），覆盖拓扑、几何、数学物理、凝聚态、QFT。
 - `v0.8`（2026-11-16）：新增 `geoq/`——李思《量子力学与几何》第 5 章「几何量子化」的 48 张资料卡（1 总览 + 27 概念 + 20 例），附框架地图、读者版总表、渲染版 Markdown 与六路并行生产协议；`lint_geoq.py` / `audit_pages.py` 0 错。
+- `v0.10`（2026-11-17）：新增 `kw06/`——Kapustin–Witten 2006 的资料卡 67 张（40 概念 + 27 推导，约 100 步），
+  每卡带印刷页锚、常见误解与相关卡；`lint_cards.py --strict` 0 error、`audit_pages.py` 134 条 anchor 0 issue。
 - `v0.9`（2026-11-16）：新增 `pathintegral/`——同书第 2 章「路径积分形式」的 50 张资料卡（1 总览 + 29 概念 + 20 例），65 条定理、219 个证明步骤、109 个例子步骤；附五轨框架地图、读者版总表、渲染版 Markdown 与七路并行生产协议；`lint_pi.py` / `audit_pages.py` 0 错。
 - 后续见 [CHANGELOG.md](../CHANGELOG.md)。

@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## datasets v0.10 — 2026-11-17（kw06：Kapustin–Witten 资料卡 67 张）
+
+`datasets/kw06/`：把 K–W 2006 的三份工作底稿（219 页解经本、46 页导读讲义、第二期研讨班八轮报告）
+压成**概念卡 + 推导卡**：40 张概念卡、27 张推导卡、约 100 个推导步骤。
+
+- 每张卡都带印刷页锚（`B p.N`，必要时带式号）、常见误解（≥2）、相关卡；概念卡另有核心公式与
+  「定理 + 证明或缺口」（complete / sketch / gap 三态诚实标注）。
+- 推导卡每步四栏：`text`（做了什么）/ `why`（为什么必须这样）/ `locator`（原文页）/ `provenance`
+  （A 原文写了 / B 原文暗示我们补的 / C 我们的判断）。
+- 工具链：`tools/draft_cards.py`（从解经本 JSONL 起草）、`tools/lint_cards.py`（--strict 0 error）、
+  `tools/audit_pages.py`（134 条 B 底本 anchor 逐条回页文本核，0 issue）、`tools/build_index.py`、
+  `tools/render_md.py`（67 份可读 Markdown + 索引）。
+- 骨架图 `MAP.md`（mermaid，四维→扭化→紧化→二维→Langlands→回到四维）、分类 `taxonomy.md`、
+  规范 `SCHEMA.md`；全部 `rights: rewritten`、`status: dev`（机器自检 + 抽核，未人类逐卡认证）。
+
 ## lecture-notes v1.0 — 2026-11-17（Kapustin–Witten 十讲导读讲义）
 
 `05_seminar_witten/seminars/SEM-0604151/lecture_notes/`：46 页 TeX 讲义，
