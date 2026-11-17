@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## translation SY02-09 — 2026-11-17（成品 PDF 随仓公开）
+
+袁瑶（Yao YUAN）*Langlands 纲领导论*（2020 年春季课程讲义，未出版，原稿 198 页）中译注本随仓发布：
+`成品/Langlands纲领导论_中译注本.pdf`（162 页，11.3 MB）+ 两张预览图。
+
+- 由仓内 `源码/` 原样重编：`xelatex → makeindex → xelatex ×2`，0 error / 0 Overfull / 0 未定义引用。
+- 底本为公开课程讲义（未出版），台账 `成品级别=随仓公开`、`成品在仓=是`；R3 对在版图书仍不放行。
+- `.gitignore` 增该工程 `成品/*.pdf` 反向规则；`投稿信息.md` 的成品说明同步。
+
 ## translation SY07-09 — 2026-11-17（陈麟《代数几何讲义 I》中译注本 + 定义与定理资料卡 366 张）
 
 新增工程 `08_source_code/SY07-09_代数几何讲义I（陈麟）/`：Lin Chen（陈麟）*Notes for Algebraic Geometry 1*
