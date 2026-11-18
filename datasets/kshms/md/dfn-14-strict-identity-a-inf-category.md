@@ -1,0 +1,51 @@
+# 带严格单位态射的 $\mathcal{A}_\infty$-范畴
+
+`kshms/concept/dfn-14-strict-identity-a-inf-category` · track B（$A_\infty$ 形式框架） · 原文 定义 14
+
+**问题**　怎样在不破坏 $A_\infty$ 关系的前提下，把单位态射严格地加进非幺 $A_\infty$-范畴？
+
+**摘要**　在非幺 $A_\infty$-范畴的每个 $\operatorname{Hom}^0(X,X)$ 中指定 $1_X$，使 $m_2$ 以它为左右单位、且 $n\ne2$ 时任何位置插入 $1$ 都使 $m_n$ 为零，即得带严格单位态射的 $A_\infty$-范畴。
+
+**别名**　$A_\infty$-category with strict identity morphisms；带严格单位的 $A_\infty$-范畴；strictly unital $A_\infty$-category
+
+## 陈述
+
+带严格单位态射的 $A_\infty$-范畴是指这样的非幺 $A_\infty$-范畴 $\mathcal{C}$：对任意对象 $X$，存在元素 $1=1_X\in\operatorname{Hom}^0(X,X)$（单位态射），使得 $m_2(1,f)=m_2(f,1)=f$，且对任意态射 $f,f_1,\dots,f_n$ 有 $m_n(f_1,\dots,1,\dots,f_n)=0$（$n\ne2$）。
+
+## 记号
+
+$1=1_X\in\operatorname{Hom}^0(X,X)$：单位态射，上标 $0$ 记次数；$m_n$：复合映射；$m_n(f_1,\dots,1,\dots,f_n)$ 中的 $1$ 可占 $n$ 个变量位置中的任一位置。
+
+## 要点
+
+- 数据：为每个对象 $X$ 指定一个零次元素 $1_X\in\operatorname{Hom}^0(X,X)$，它是范畴结构的一部分，不是由 $m_n$ 推出的。
+- 两条公理：$m_2$ 以 $1$ 为左右单位；$n\ne2$ 时在任一位置插入 $1$ 都使 $m_n$ 为零。
+- 这类范畴是 $A_\infty$-预范畴：把横截序列 $S$ 扩充为 $(X,S,X)$，取 $X_+=X_-=X$、$f_\pm=1_X$ 即可（原文在定义后随即说明）。
+- 只有一个对象时它就是带严格单位的 $A_\infty$-代数；原文指出这类代数的形变理论因相应 operad 不自由而变复杂。
+- 原文建议用 $A_\infty$-预范畴的语言替代这一传统框架，并以猜想 4 作为佐证。
+
+## 公式
+
+$$m_2(1,f)=m_2(f,1)=f$$
+
+$$m_n(f_1,\dots,1,\dots,f_n)=0,\qquad n\ne2$$
+
+## 易错点
+
+- 公式 $m_n(f_1,\dots,1,\dots,f_n)=0$ 没有标出 $1$ 的下标：应读作「任取一个变量换成 $1$」，不是固定第一个位置。
+- $n=2$ 被排除：$m_2$ 取到 $1$ 时结果等于 $f$ 而不是零，两类情形不能合并。
+- 严格单位是额外相容条件，不是 $A_\infty$ 关系的推论：一般的非幺 $A_\infty$-范畴未必存在这样的 $1_X$。
+- 「带严格单位」只讲单位态射，不含任何关于张量结构或交换性的断言。
+
+## 相关卡
+
+- `kshms/concept/dfn-05-nonunital-a-inf-category`
+- `kshms/concept/dfn-10-extension-property`
+- `kshms/concept/dfn-13-a-inf-precategory-equivalence`
+- `kshms/concept/dfn-09-quasi-isomorphism`
+
+## 出处
+
+- Kontsevich–Soibelman, Homological mirror symmetry and torus fibrations（中译注本 SY01-25） §4.3（原文 p.27）；锚点 `源码/chunks/ch04.tex:274-278（定义 14）`
+
+> 原文 p27 §4.3；译本 ch04.tex 274–278 行；定义后「它是 $A_\infty$-预范畴」的论证见同文件 280–283 行。

@@ -1,0 +1,49 @@
+# $\mathcal{A}_\infty$-等价函子
+
+`kshms/concept/dfn-12-a-inf-equivalence-functor` · track B（$A_\infty$ 形式框架） · 原文 定义 12
+
+**问题**　一个 $A_\infty$-函子在什么条件下足以充当两个预范畴「等价」的证据？
+
+**摘要**　$A_\infty$-函子若在对象上本质满（每个对象都拟同构于某个 $\phi(X)$），且对一切横截对象序列诱导态射 $A_\infty$-代数的拟同构，则称等价函子。
+
+**别名**　$A_\infty$-equivalence functor；$A_\infty$-等价函子；预范畴的弱等价函子
+
+## 陈述
+
+称 $A_\infty$-预范畴之间的 $A_\infty$-函子 $F\colon\mathcal{C}\to\mathcal{D}$ 为 $A_\infty$-等价函子，若：\n\na) $\mathcal{D}$ 中每个对象 $Y$ 都拟同构于某个对象 $\phi(X)$，$X\in\mathcal{C}$。\n\nb) 该函子对一切横截的对象序列，诱导出相应态射的非幺 $A_\infty$-代数之间的拟同构。
+
+## 记号
+
+$\phi$：$F$ 的对象映射；「相应态射的非幺 $A_\infty$-代数」指直和 $\bigoplus_{i,j}\operatorname{Hom}(X_i,X_j)$ 连同 $m_n$ 的直和（定义 5 之后的要求）；拟同构取定义 9 的意义；$\simeq_{\mathrm{qi}}$ 为本卡的书写记号，表示拟同构。
+
+## 要点
+
+- 两个条件缺一不可：a) 是对象层面的本质满，且用拟同构而非同构来度量；b) 是态射层面的逐序列同调同构。
+- b) 严格强于定义 11 的保持性：这里要求所诱导的 $A_\infty$-态射本身是拟同构，而不只是把已有的拟同构映过去。
+- a) 中的「拟同构于 $\phi(X)$」隐含 $(\phi(X),Y)$ 是横截对，否则拟同构无从定义。
+- 原文声明这只是本文采用的定义：它在更一般的框架中其实是一个定理，细节计划在 [KoS] 中给出，本文未证。
+
+## 公式
+
+$$\forall\,Y\in\mathcal{D}\ \ \exists\,X\in\mathcal{C}:\quad Y\simeq_{\mathrm{qi}}\phi(X)$$
+
+$$H^{\bullet}\bigl(\bigoplus_{i,j}\operatorname{Hom}_{\mathcal{C}}(X_i,X_j)\bigr)\cong H^{\bullet}\bigl(\bigoplus_{i,j}\operatorname{Hom}_{\mathcal{D}}(\phi(X_i),\phi(X_j))\bigr)$$
+
+## 易错点
+
+- a) 用的是拟同构而非同构：不要求 $Y$ 真的等于某个 $\phi(X)$。
+- b) 的「一切横截对象序列」包含长度 1 与 2 的序列：长度 2 给出 $\operatorname{Hom}$ 层面的同调同构，长度 1 只涉及对象。
+- 定义没有断言存在拟逆函子，也没有断言 $F$ 在链层面可逆；「等价」是靠定义 13 的链式关系补齐的。
+- 不要把「本文的定义」读成「已证的定理」：原文明确说细节在别处，本文只把它当工作定义使用。
+
+## 相关卡
+
+- `kshms/concept/dfn-11-a-inf-functor`
+- `kshms/concept/dfn-13-a-inf-precategory-equivalence`
+- `kshms/concept/dfn-14-strict-identity-a-inf-category`
+
+## 出处
+
+- Kontsevich–Soibelman, Homological mirror symmetry and torus fibrations（中译注本 SY01-25） §4.3（原文 p.27）；锚点 `源码/chunks/ch04.tex:248-255（定义 12）`
+
+> 原文 p27 §4.3；译本 ch04.tex 248–255 行；图版 Definition 12 的 a)、b) 两项与译文逐条对应。

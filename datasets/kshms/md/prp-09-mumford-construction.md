@@ -1,0 +1,59 @@
+# 刚性解析模型：$Y^{an}\simeq\mathcal{Y}^{an}$（Mumford 构造）
+
+`kshms/concept/prp-09-mumford-construction` · track E（刚性解析与凝聚层） · 原文 命题 9
+
+**问题**　实环面 $Y$ 的刚性解析空间为什么会等于某个 $\mathbb{C}_{\varepsilon}$ 上阿贝尔簇的解析化？
+
+**摘要**　整仿射实环面 $Y$ 的刚性解析空间 $Y^{an}$ 同构于某个 $\mathbb{C}_{\varepsilon}$ 上阿贝尔簇的解析化；这让度量坍缩的黎曼几何描述与非阿基米德解析描述给出同一个对象。
+
+**别名**　Proposition 9；Mumford construction；实环面的非阿基米德解析模型
+
+## 陈述
+
+设 $Y=\mathbb{R}^n/\Lambda$ 是由 $\mathbb{Z}^n\subset\mathbb{R}^n$ 诱导的标准整仿射结构所带的 $n$ 维环面，且 $\Lambda$ 与 $\mathbb{Z}^n$ 可公度。在上述记号下，有 $Y^{an}\simeq\mathcal{Y}^{an}$，其中 $\mathcal{Y}$ 是 $\mathbb{C}_{\varepsilon}$ 上的阿贝尔簇。
+
+## 记号
+
+$Y=\mathbb{R}^n/\Lambda$：带标准整仿射结构的实环面；$Y^{an}$：把局部数据 $(U_i,\mathcal{O}_{U_i})$ 沿 $GL(n,\mathbb{Z})\ltimes\mathbb{R}^n$ 的作用粘合所得的 $\mathbb{C}_{\varepsilon}$ 上刚性解析空间；$\mathcal{Y}$：$\mathbb{C}_{\varepsilon}$ 上的阿贝尔簇，与实环面 $Y$ 不是同一个对象。
+
+## 要点
+
+- 结论对「$\Lambda$ 与 $\mathbb{Z}^n$ 可公度」的环面陈述；此时 $Y$ 的整仿射结构完整记录了阿贝尔簇 $\mathcal{Y}$ 的解析模型。
+- 两边不是同一个对象：$Y$ 是实环面（只记录整仿射数据），$\mathcal{Y}$ 是 $\mathbb{C}_{\varepsilon}$ 上的阿贝尔簇；同构发生在解析化 $Y^{an}\simeq\mathcal{Y}^{an}$ 这一层。
+- 来源是 Mumford 的构造：$\mathbb{C}_{\varepsilon}$ 上具完全退化约化的阿贝尔簇可写成 $(\mathbb{C}_{\varepsilon}^*)^n$ 对某个格的商，而赋值映射 $v^n:(\mathbb{C}_{\varepsilon}^*)^n\to\mathbb{R}^n$ 把该商投影到 $\mathbb{R}^n/\Lambda$。
+- 它是 §7 的入口：有了这条同构，阿贝尔簇情形的坍缩才有「黎曼几何」与「非阿基米德解析」两种等价描述。
+
+## 公式
+
+$$Y^{an}\simeq\mathcal{Y}^{an}$$
+
+$$Y=\mathbb{R}^n/\Lambda,\quad \Lambda\ \text{与}\ \mathbb{Z}^n\ \text{可公度}$$
+
+## 证明（sketch）
+
+1. 把 $\mathbb{C}_{\varepsilon}$ 上具完全退化约化的阿贝尔簇写成 $(\mathbb{C}_{\varepsilon}^*)^n$ 对某个格 $\Lambda$ 的商，赋值映射 $v^n$ 把它投影到 $\mathbb{R}^n/\Lambda$。
+
+   *为什么*：这是 Mumford 构造的内容（译注「命题 9 的含义」转述）：实环面上的整仿射结构由该商读出，故两侧的局部模型可以对齐。
+
+2. 把 $Y$ 的每个局部卡 $U\subset\mathbb{R}^n$ 实现为 $(\mathbb{C}_{\varepsilon}^*)^n$ 中由 $v(z_i)=y_i$ 给出的仿射型区域，再沿 $GL(n,\mathbb{Z})\ltimes\mathbb{R}^n$ 的作用粘合，得 $Y^{an}$。
+
+   *为什么*：$Y^{an}$ 的定义本身就是粘合局部数据，故局部模型与 $\mathcal{Y}^{an}$ 一致即给出整体同构。
+
+> 缺口：原文只写「可由 [Mum] 推出」，未给证明。缺口是 Mumford 构造本身：完全退化约化阿贝尔簇的刚性解析模型、$v^n$ 与商映射的相容性、以及粘合数据在 $GL(n,\mathbb{Z})\ltimes\mathbb{R}^n$ 下的不变性；见 [Mum]，另参 [BL]。译注「命题 9 的含义」只作概述，不含证明。
+
+## 易错点
+
+- 不要把 $Y^{an}\simeq\mathcal{Y}^{an}$ 读成 $Y\simeq\mathcal{Y}$：左边是 $\mathbb{C}_{\varepsilon}$ 上的刚性解析空间，$Y$ 只是提供整仿射数据的实环面，$\mathcal{Y}$ 是代数侧对象。
+- 「$\Lambda$ 与 $\mathbb{Z}^n$ 可公度」写在本命题之前的一句里，读命题时容易漏掉；它是从 [Mum] 推出同构的前提，不是装饰性假设。
+- 命题 9 只覆盖阿贝尔簇情形：对带奇异纤维的坍缩，紧接着的注 19 指出 $Y^{an}$ 是「错误」的对象，须换成扭曲层 $\mathcal{O}'_Y$ 对应的 $(Y^{an})'$。
+
+## 相关卡
+
+- `kshms/concept/prp-10-analytic-hms`
+- `kshms/remark/rmk-19-oy-tilde`
+
+## 出处
+
+- Kontsevich–Soibelman, Homological mirror symmetry and torus fibrations（中译注本 SY01-25） §7.1（原文 p.50）；锚点 `源码/chunks/ch08.tex:82-84（命题 9）`
+
+> 原文 p50 §7.1；译本 ch08.tex 第 79–84 行（第 79–80 行为整仿射环面的设定，第 82–84 行为命题）；译注「命题 9 的含义」（第 118 行起）说明 Mumford 构造与 $Y$、$\mathcal{Y}$ 的区别。

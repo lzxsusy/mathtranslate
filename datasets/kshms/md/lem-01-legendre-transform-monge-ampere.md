@@ -1,0 +1,67 @@
+# Legendre 变换保持 Monge–Ampère 方程
+
+`kshms/concept/lem-01-legendre-transform-monge-ampere` · track A（CFT 与几何退化） · 原文 引理 1
+
+**问题**　Monge–Ampère 方程的局部解在 Legendre 变换下是否仍为解，为什么？
+
+**摘要**　凸区域上满足 Monge–Ampère 方程的 $K$，其 Legendre 变换 $\widehat K$ 仍满足同一方程；证明把方程读作 $dK$ 的拉格朗日图像上两个体积形式的相等。
+
+**别名**　Lemma 1 (Legendre transform of a Monge–Ampère potential)；Legendre 对偶的 Monge–Ampère 不变性；凸共轭保持 Monge–Ampère 方程
+
+## 陈述
+
+设 $U\subset\mathbb{R}^n$ 是 $\mathbb{R}^n$ 中的凸开区域，配有标准仿射坐标 $(x_1,\dots,x_n)$，$K:U\to\mathbb{R}$ 是满足 Monge–Ampère 方程的凸函数。则 Legendre 变换 $$\widehat K(y_1,\dots,y_n)=\max_{x\in U}\Bigl(\sum_i x_iy_i-K(x_1,\dots,x_n)\Bigr)$$ 也满足 Monge–Ampère 方程。
+
+## 记号
+
+$U$：$\mathbb{R}^n$ 中的凸开区域，坐标 $(x_1,\dots,x_n)$；Monge–Ampère 方程指 $\det\bigl((\partial^2K/\partial x_i\partial x_j)\bigr)=\mathrm{const}$；$\widehat K$：$K$ 的 Legendre 变换；$L=dK$ 的图像，落在 $T^*\mathbb{R}^n=\mathbb{R}^n\oplus(\mathbb{R}^n)^*$ 中；$p_1,p_2$：到两个直和项的典范投影；$vol_{\mathbb{R}^n}$、$vol_{\mathbb{R}^{*n}}$：两个直和项上的标准体积形式。
+
+## 要点
+
+- 论证的载体是拉格朗日图像：$L=dK$ 的图像是 $T^*\mathbb{R}^n$ 中的拉格朗日子流形，且同一个 $L$ 又是 $d\widehat K$ 的图像。
+- Monge–Ampère 方程被改写成与坐标无关的形式 $p_1^*(vol_{\mathbb{R}^n})=p_2^*(vol_{\mathbb{R}^{*n}})$，因此它对 $d\widehat K$ 的图像同样成立。
+- $K$ 只定义到相差一个仿射函数，图像只定义到相差平移；这不影响体积形式等式，正是对偶可以「就地」读出的原因。
+- 由此得到 $L$ 上「一个度量、两个仿射结构」的图景（$\partial^2K$ 与 $\partial^2\widehat K$ 两套矩阵），命题 2 的对偶 Monge–Ampère 流形即由此拼贴而来。
+
+## 公式
+
+$$\widehat K(y_1,\dots,y_n)=\max_{x\in U}\Bigl(\sum_i x_iy_i-K(x_1,\dots,x_n)\Bigr)$$
+
+$$p_1^*(vol_{\mathbb{R}^n})=p_2^*(vol_{\mathbb{R}^{*n}})$$
+
+## 证明（complete）
+
+1. $L=dK$ 的图像是 $T^*\mathbb{R}^n=\mathbb{R}^n\oplus(\mathbb{R}^n)^*$ 中的拉格朗日子流形，$p_1,p_2$ 是到两个直和项的典范投影，它们都是局部微分同胚。
+
+   *为什么*：图像是闭 1-形式 $dK$ 的像，$d(dK)=0$ 使其为拉格朗日子流形；$K$ 凸使 $dK$ 的微分（即 $\partial^2K$）非退化，故两个投影局部可逆。
+
+2. $K$ 定义到相差一个仿射函数，图像本身定义到相差平移。
+
+   *为什么*：给 $K$ 加仿射函数只把图像整体平移，$p_1,p_2$ 的局部微分同胚性质与体积形式等式都不受影响。
+
+3. Monge–Ampère 方程对应于条件 $p_1^*(vol_{\mathbb{R}^n})=p_2^*(vol_{\mathbb{R}^{*n}})$。
+
+   *为什么*：该等式正是 $\det(\partial^2K/\partial x_i\partial x_j)=\mathrm{const}$ 的无坐标写法：拉回体积之比就是 $K$ 的 Hessian 行列式。
+
+4. 同一个流形 $L$ 可以看作 $d\widehat K$ 的图像，因此 $\widehat K$ 也满足 Monge–Ampère 方程，引理得证。
+
+   *为什么*：Legendre 变换只是交换 $\mathbb{R}^n$ 与 $(\mathbb{R}^n)^*$ 两个直和项，条件 $p_1^*vol=p_2^*vol$ 在这一交换下对称，故对 $d\widehat K$ 的图像自动成立。
+
+## 易错点
+
+- Legendre 变换的 $\max$ 是对 $x\in U$ 取的；若把 $\widehat K$ 的定义域换成整个 $\mathbb{R}^n$，最大值未必取到，对偶就无从谈起。
+- 条件 $p_1^*vol=p_2^*vol$ 与 $\det(\partial^2K)=\mathrm{const}$ 只差一个常数因子，不要把它偷偷规范成「$\det=1$」。
+- 不要把「$L$ 同时是 $dK$ 与 $d\widehat K$ 的图像」理解为 $L$ 上有两个度量：度量 $g_L$ 只有一个，对偶的是两套仿射结构。
+
+## 相关卡
+
+- `kshms/concept/dfn-02-monge-ampere-manifold`
+- `kshms/concept/cor-01-integral-affine-dual`
+- `kshms/remark/rmk-04-convex-potential-legendre`
+- `kshms/remark/rmk-06-legendre-idea`
+
+## 出处
+
+- Kontsevich–Soibelman, Homological mirror symmetry and torus fibrations（中译注本 SY01-25） §3.2（原文 p.18,19）；锚点 `源码/chunks/ch03.tex:238-255（引理 1 及证明）`
+
+> 原文 p18（§3.2），证明续至 p19 首段；译文把跨页的证明合并在同一 proof 环境（ch03.tex:248-255）。

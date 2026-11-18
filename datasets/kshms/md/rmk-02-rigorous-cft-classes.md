@@ -1,0 +1,34 @@
+# 严格定义的 CFT 只有两类，$\sigma$ 模型两者都不是
+
+`kshms/remark/rmk-02-rigorous-cft-classes` · track A（CFT 与几何退化） · 原文 注 2
+
+**问题**　既然 $\sigma$ 模型没有严格的数学构造，本文凭什么谈论它的模空间与退化？
+
+**摘要**　数学上严格定义的 CFT 只有有理理论与格共形场论两类，本文要谈的 $\sigma$ 模型两者都不是；路径积分构造尚缺，故改用「CFT 的退化」来谈论 $\sigma$ 模型。
+
+**别名**　Remark 2；rational CFT 与 lattice CFT；为什么用退化而不是构造来谈论 sigma 模型
+
+## 陈述
+
+数学上有严格定义的 CFT 基本上只有两类：有理理论（rational theory，RCFT）与格共形场论（lattice CFT）。本文的讨论对应于 $\sigma$ 模型的情形，而 $\sigma$ 模型不属于这两类。把 $\sigma$ 模型描述为对应于某些拉格朗日量的路径积分，迄今尚未给出数学上令人满意的构造。下文我们将说明，可以用 CFT 的退化来谈论 $\sigma$ 模型，这是另一条途径。
+
+## 这条注在全文中的作用
+
+这条注交代了全文的方法论困境与出路：$\sigma$ 模型（从而 Calabi–Yau 一侧的 CFT）没有严格的路径积分构造，所以作者不谈「构造」而谈「退化」——用一族 CFT 在 $E_{min}\to0$ 时的极限来描述 $\sigma$ 模型。§2.2 的简单坍缩与 §2.3 的多重坍缩都沿这条途径展开，它也是全文 §2–§3 只给猜想与纲领性论证的根本原因。
+
+## 易错点
+
+- 「只有两类」是 2001 年的状况陈述（有理理论与格共形场论），不是说 CFT 在数学上只能这样定义。
+- $\sigma$ 模型不属于这两类，因此 §2 的模空间 $\mathcal{M}_{c\le c_0}$ 并不以已严格构造的 CFT 为对象，这一节的框架本身是纲领性的。
+- 「用退化来谈论」不等于构造出 $\sigma$ 模型：原文只说这是「另一条途径」，没有声称解决了构造问题。
+
+## 相关卡
+
+- `kshms/remark/rmk-01-scft-vs-cft`
+- `kshms/remark/rmk-03-einstein-vs-gromov`
+
+## 出处
+
+- Kontsevich–Soibelman, Homological mirror symmetry and torus fibrations（中译注本 SY01-25） §2.1（原文 p.6）；锚点 `源码/chunks/ch02.tex:77-82（注 2）`
+
+> 原文 p6 §2.1 之末；译本 p6；紧随其后 §2.2 开始讲「简单坍缩」，正是注中所说的「另一条途径」。

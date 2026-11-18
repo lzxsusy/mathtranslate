@@ -1,0 +1,67 @@
+# Morse 范畴与 de Rham 范畴等价
+
+`kshms/concept/thm-02-morse-de-rham-equivalence` · track D（Morse 机器） · 原文 定理 2
+
+**问题**　用梯度树计数定义的 Morse 范畴，与只用微分形式外积定义的 de Rham 范畴，为什么会给出同一个 $A_\infty$-结构？
+
+**摘要**　光滑函数的 Morse $A_\infty$-预范畴 $\mathcal{M}(Y)$ 与 de Rham $A_\infty$-范畴 $\mathrm{DR}(Y)$ 等价：先用同调扰动把 de Rham 复形压到 Morse 复形上，再逐树比较高阶复合。
+
+**别名**　Theorem 2 ($\mathcal{M}(Y)$ and $\mathrm{DR}(Y)$ are equivalent)；Morse–de Rham 等价；Morse $A_\infty$-预范畴与 de Rham $A_\infty$-范畴的等价
+
+## 陈述
+
+$A_\infty$-预范畴 $\mathcal{M}(Y)$ 与 $\mathrm{DR}(Y)$ 等价。
+
+## 记号
+
+$\mathcal{M}(Y)$：对象为二元组 $(f,\rho)$（$f:Y\to\mathbb{R}$ 光滑、$\rho$ 是 $Y$ 上的局部系），态射以 $f_0-f_1$ 的临界点为基，$m_k$ 由带权 $w_\gamma$ 的梯度树计数给出；$\mathrm{DR}(Y)$：对象类相同，$\mathrm{Hom}_{\mathrm{DR}(Y)}((f_0,\rho_0),(f_1,\rho_1))=\Gamma(Y,\wedge^*T^*_Y\otimes\mathrm{Hom}(\rho_0,\rho_1))$，态射空间不依赖 $f_0,f_1$，$m_n=0$（$n\ge3$），有严格单位态射。
+
+## 要点
+
+- 两个范畴的对象类相同，差别只在态射与复合：Morse 侧计数梯度树，de Rham 侧用微分形式的外积。
+- 证明给出一条 $A_\infty$-等价链 $\mathrm{DR}(Y)\hookrightarrow\mathrm{DR}_0(Y)\hookleftarrow\mathrm{DR}^{tr}_0(Y)\hookleftarrow\mathrm{DR}^{tr,\Pi}_0(Y)\hookleftarrow\mathcal{M}(Y)$，箭头方向可交替，符合定义 13 对「等价」的链式定义；所有函子在对象上都是恒等映射。
+- 中间两步的工具都是同调扰动理论的树公式（[GS]、[Me]），其代数内核正是定理 3（子复形上的 $A_\infty$-结构）。
+- 最后一个函子 $\Psi:\mathcal{M}(Y)\to\mathrm{DR}^{tr,\Pi}_0(Y)$ 没有非平凡的高阶分量，只有 $\Psi_1([x])=R([S_x])$，它对每个横截对是复形的拟同构。
+
+## 公式
+
+$$\mathrm{DR}(Y)\hookrightarrow\mathrm{DR}_0(Y)\hookleftarrow\mathrm{DR}^{tr}_0(Y)\hookleftarrow\mathrm{DR}^{tr,\Pi}_0(Y)\hookleftarrow\mathcal{M}(Y)$$
+
+$$\mathrm{Hom}_{\mathrm{DR}(Y)}((f_0,\rho_0),(f_1,\rho_1))=\Gamma(Y,\wedge^*T^*_Y\otimes\mathrm{Hom}(\rho_0,\rho_1))$$
+
+## 证明（complete）
+
+1. 把 $\mathrm{DR}(Y)$ 嵌入 $\mathrm{DR}_0(Y)$：态射空间换成 $\varinjlim_{\delta\to0}\Omega^*(Y\times(0,\delta))=\Omega^*_0(Y)$，复合仍用外积。
+
+   *为什么*：$\Omega^*(Y)$ 是 $\Omega^*_0(Y)$ 中「$Y$ 上形式的拉回」构成的子复形且拟同构，故这是 $\mathcal{A}_\infty$-范畴的等价；$\mathrm{DR}_0(Y)$ 还是 dg-范畴，$m_k=0$（$k\ge3$）且有严格单位。
+
+2. 取满子范畴 $\mathrm{DR}^{tr}_0(Y)$（与 Morse 范畴使用同一套横截性概念），再对每个横截对 $(f_0,f_1)$ 用 $f_0-f_1$ 的投影算子 $\Pi_{f_0,f_1}$ 与同伦 $H_{f_0,f_1}$ 作同调扰动，得 $\mathrm{DR}^{tr,\Pi}_0(Y)$ 及等价 $\mathrm{DR}^{tr,\Pi}_0(Y)\to\mathrm{DR}^{tr}_0(Y)$。
+
+   *为什么*：同调扰动定理的树公式（定理 3）在子复形 $\Pi(\Omega^*_0(Y))$ 上定义出满足 $\mathcal{A}_\infty$-约束的高阶复合，并把新范畴与原范畴用拟同构连起来。
+
+3. 定义 $\Psi:\mathcal{M}(Y)\to\mathrm{DR}^{tr,\Pi}_0(Y)$：令 $\Psi_n=0$（$n\ge2$），$\Psi_1([x])=R([S_x])$。
+
+   *为什么*：$\Psi_1$ 对每个横截对 $(f_0,f_1)$ 都是复形的拟同构，因为 $\Pi$ 的像典范同构于 Morse 复形 $M^*(Y,f_0-f_1)$，而 $[x]\mapsto R([S_x])$ 正是这个同构。
+
+4. 验证 $\Psi$ 是 $\mathcal{A}_\infty$-函子：$\Psi_1$ 把 $\mathcal{M}(Y)$ 的高阶复合映为 $\mathrm{DR}^{tr,\Pi}_0(Y)$ 的高阶复合，于是 $\Psi$ 与链上其余函子一起给出等价，定理得证。
+
+   *为什么*：两个范畴的高阶复合都由平面树描述（§6.2、§6.4），对同一棵树，$\delta$ 充分小时（使引理 2 第 2) 条可用）对应的被加项逐项重合，故 $\Psi_1\circ m_k^{\mathcal{M}(Y)}=m_k^{\mathrm{DR}}\circ(\Psi_1)^{\otimes k}$。
+
+## 易错点
+
+- 「等价」按定义 13 指存在有限链、链上相邻两项之间（任一方向）有 $\mathcal{A}_\infty$-等价函子；链的箭头方向交替是正常的，不要以为必须构造一对互逆函子。
+- $\mathrm{DR}(Y)$ 的态射空间不依赖 $f_0,f_1$，但这不意味着两个范畴可以逐对象随意对齐：对齐要靠 $\Pi$ 的像与 Morse 复形之间的典范同构。
+- 原文 §6.6 开头把局部系数约化为「平凡且秩一」，一般情形只写「完全类似」；直接引用该证明时须自行补这一步。
+
+## 相关卡
+
+- `kshms/concept/dfn-07-nonunital-a-inf-pre-category`
+- `kshms/concept/dfn-20-morse-composition`
+- `kshms/concept/thm-03-subcomplex-a-inf-structure`
+- `kshms/concept/lem-02-projection-operator`
+
+## 出处
+
+- Kontsevich–Soibelman, Homological mirror symmetry and torus fibrations（中译注本 SY01-25） §6.3（原文 p.40）；锚点 `源码/chunks/ch06.tex:254-256（定理 2）`
+
+> 原文 p40（§6.3 末）；证明在 §6.6（ch07.tex:288-329，原文 §6.6），那里明确给出等价链并以「定理证毕」收尾。

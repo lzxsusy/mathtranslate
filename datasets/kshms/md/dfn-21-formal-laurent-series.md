@@ -1,0 +1,49 @@
+# 形式 Laurent 级数层 $\mathcal{O}_{\mathbb{R}^n}(U)$
+
+`kshms/concept/dfn-21-formal-laurent-series` · track E（刚性解析与凝聚层） · 原文 定义 21
+
+**问题**　$\mathbb{C}_\varepsilon$ 上的层 $\mathcal{O}_Y$ 局部上由什么样的形式级数组成？
+
+**摘要**　$\mathcal{O}_{\mathbb{R}^n}(U)$ 由在开集 $U$ 上满足增长条件的形式 Laurent 级数组成，系数在 $\mathbb{C}_\varepsilon$ 中；它是刚性解析空间 $Y^{an}$ 的局部模型。
+
+**别名**　formal Laurent series；$\mathcal{O}_{\mathbb{R}^n}(U)$；刚性解析结构的局部模型
+
+## 陈述
+
+设 $U\subset\mathbb{R}^n$ 是标准向量空间 $\mathbb{R}^n$ 的开子集。定义 $\mathcal{O}_{\mathbb{R}^n}(U)$ 为 $\mathbb{C}_\varepsilon$ 上由形式 Laurent 级数
+$$f=\sum_{k_1,\dots,k_n\in\mathbb{Z}^n}a_{k_1\dots k_n}z_1^{k_1}\cdots z_n^{k_n}$$
+构成的向量空间，其中 $z_1,\dots,z_n$ 是形式变量，$a_{k_1\dots k_n}\in\mathbb{C}_\varepsilon$，并且对任意 $(y_1,\dots,y_n)\in U$ 都有
+$$\lim_{\sum_i|k_i|\to\infty}\Bigl(v(a_{k_1\dots k_n})+\sum_i k_i y_i\Bigr)=+\infty.$$
+
+## 记号
+
+$v:\mathbb{C}_\varepsilon\to\mathbb{R}\cup\{+\infty\}$ 是非离散赋值，$v\bigl(\sum_{\lambda_1<\lambda_2<\cdots}c_ie^{-\lambda_i/\varepsilon}\bigr)=\lambda_1$（$c_1\ne0$），$v(0)=+\infty$；$z_i$ 为形式变量。
+
+## 要点
+
+- 系数取在 $\mathbb{C}_\varepsilon$ 中而非 $\mathbb{C}$ 中，赋值 $v$ 把指数衰减的阶翻译成实数，增长条件逐点 $y\in U$ 陈述。
+- 指数取遍 $\mathbb{Z}^n$，级数是 Laurent 级数，$z_i$ 因此可逆；这是构造 $\mathcal{O}_Y$ 与 $Y^{an}$ 的代数基础。
+- 增长条件保证：只要 $(v(z_1),\dots,v(z_n))\in U$，级数就在 adic 拓扑下收敛。
+- 群 $GL(n,\mathbb{Z})\ltimes\mathbb{R}^n$ 作用在 $(\mathbb{R}^n,\mathcal{O}_{\mathbb{R}^n})$ 上，正是把局部模型粘成整体层 $\mathcal{O}_Y$ 的工具。
+
+## 公式
+
+$$f=\sum_{k_1,\dots,k_n\in\mathbb{Z}^n}a_{k_1\dots k_n}z_1^{k_1}\cdots z_n^{k_n}$$
+
+$$\lim_{\sum_i|k_i|\to\infty}\Bigl(v(a_{k_1\dots k_n})+\sum_i k_i y_i\Bigr)=+\infty$$
+
+## 易错点
+
+- 增长条件对每个 $(y_1,\dots,y_n)\in U$ 分别成立，不能只在一点验证；$U$ 是开集才使逐点条件有意义。
+- 指数取遍 $\mathbb{Z}^n$（允许负幂），不是 $\mathbb{N}^n$；按幂级数理解会丢掉 $z_i^{-1}$ 项。
+- $v$ 取级数最低指数层的 $\lambda_1$，并约定 $v(0)=+\infty$；它不是通常的绝对值或复模。
+
+## 相关卡
+
+- `kshms/concept/dfn-22-rigid-analytic-space`
+
+## 出处
+
+- Kontsevich–Soibelman, Homological mirror symmetry and torus fibrations（中译注本 SY01-25） §7.1（原文 p.49）；锚点 `源码/chunks/ch08.tex:23-34（定义 21）`
+
+> 原文 p49 §7.1；定义 21 之前先给出非离散赋值 $v$，增长条件中的 $v(a_{k_1\dots k_n})$ 即取该赋值。

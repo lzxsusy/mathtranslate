@@ -1,0 +1,66 @@
+# 阿贝尔簇的同调镜像对称
+
+`kshms/concept/thm-04-abelian-hms` · track F（同调镜像猜想） · 原文 定理 4
+
+**问题**　在阿贝尔簇情形，镜像对称的 A 侧与 B 侧范畴究竟怎样等价，等价的又是哪个满子范畴？
+
+**摘要**　对阿贝尔簇的镜像对 $(X,X^\vee)$，$C(Y)$ 的满子范畴 $F(C_{unram}(Y))$ 与 $X^\vee$ 的 Fukaya–Oh 范畴 $\mathcal{A}_\infty$-等价；这是本文对同调镜像猜想的表述。
+
+**别名**　Theorem 4 (HMS for abelian varieties)；阿贝尔簇的 HMS；F(C_unram(Y)) 与 FO(X∨) 的 $A_\infty$-等价
+
+## 陈述
+
+$C(Y)$ 的满子范畴 $F(C_{unram}(Y))$ 与 $FO(X^{\vee})$ 是 $\mathcal{A}_\infty$-等价的。
+
+## 记号
+
+$Y$：紧 AK 流形（阿贝尔簇坍缩的底）；$X^\vee=T^*_Y/(T^{\mathbb{Z}}_Y)^\vee$ 是环面丛 $p^\vee:X^\vee\to Y$ 的全空间；$C(Y)$：$Y$ 上凝聚层构成的范畴（$Y^{an}$ 的解析化）；$C_{unram}(Y)$：由非分歧覆盖对应的对象组成的范畴；$F$：对象上的镜像对称函子 $(L,\rho)\mapsto F(L,\rho)$，取值为 $X$ 上的全纯向量丛；$FO(X^\vee)$：$X^\vee$ 的 Fukaya–Oh 范畴。
+
+## 要点
+
+- 等价的不是整个 $C(Y)$，而是其满子范畴 $F(C_{unram}(Y))$：只有投影 $p^\vee|_L$ 为非分歧覆盖的对象才落在镜像侧。
+- 论证链是：命题 14 把 $FO(X^\vee)$ 的 $\mathcal{A}_\infty$-结构搬到 $C^{tr,\Pi}_{unram,0}(Y)$ 上，§6.4、§6.6 的等价把 $C^{tr,\Pi}_{unram,0}(Y)$ 与 $C_{unram}(Y)$ 连起来，最后经函子 $F$ 得结论。
+- 整条论证是把 §6 的 Morse–de Rham 机器照搬、把标量域换成 $\mathbb{C}_\varepsilon$；§8.3 未另给独立证明，明言「进路与证明都与 §6 完全类似」。
+- 原文 p57 末与 p58 把 $C^{tr,\Pi}_{unram,0}(Y)$ 几处误印为 $unrum$，译文统一作 $unram$，以免读者误认为另一个范畴。
+
+## 公式
+
+$$F(C_{unram}(Y))\simeq FO(X^{\vee})$$
+
+$$m_k^{FO(X^{\vee})}:\otimes_{0\le i\le k}\mathrm{Hom}(E_i,E_{i+1})\to\mathrm{Hom}(E_0,E_k)[2-k]$$
+
+## 证明（sketch）
+
+1. 命题 14：$FO(X^\vee)$ 的高阶复合公式，在把标量从 $\mathbb{C}_\varepsilon$ 扩张到 $\mathbb{C}_\varepsilon\widehat{\otimes}\Omega^{0,*}_Y$、并经 $\nu_{X_i,X_j}$ 把态射空间等同之后，与 $C^{tr,\Pi}_{unram,0}(Y)$ 的高阶复合公式重合。
+
+   *为什么*：逐项重合使 $FO(X^\vee)$ 的 $\mathcal{A}_\infty$-结构可以照搬到 $C^{tr,\Pi}_{unram,0}(Y)$ 上；命题 14 的证明与 §6.6 中对应命题的证明完全类似。
+
+2. 由 §6.4、§6.6 的等价，$C_{unram}(Y)$ 与 $C^{tr,\Pi}_{unram,0}(Y)$ 也等价：后者是用同调扰动把前者压到投影算子的像上所得。
+
+   *为什么*：§6 的等价只用到投影算子与平面树展开，把标量域由 $\mathbb{Z}_\varepsilon$ 换成 $\mathbb{C}_\varepsilon$ 不改变这些公式的形式。
+
+3. 应用对象上的函子 $F$，得 $F(C_{unram}(Y))$ 与 $FO(X^\vee)$ 的 $\mathcal{A}_\infty$-等价。
+
+   *为什么*：$F$ 在对象上给出全纯向量丛 $E=F(L,\rho)$、在态射上给出 Dolbeault 复形之间的映射，把 B 侧的 $\mathcal{A}_\infty$-结构送回 $C(Y)$ 的满子范畴。
+
+> 缺口：§8.3 未给独立证明：作者称「进路与证明都与 §6 完全类似」、细节从略（原文 p58；译注「定理 4 证明的性质」）。缺口是命题 14 的逐树计算，以及在 $\mathbb{C}_\varepsilon$ 上重做 §6.4、§6.6 的等价；须回查 ch09.tex:278-293（命题 14）与 ch07.tex:288-329（定理 2 的证明）。
+
+## 易错点
+
+- 等价的是满子范畴 $F(C_{unram}(Y))$，不是整个 $C(Y)$；把 $C(Y)$ 整体写进结论是常见误读。
+- 这是「本文对阿贝尔簇 HMS 的表述」，其证明依赖 §6 的整套机器，不能当作独立于 §6 的新证明引用。
+- 原文 p57–p58 的 $unrum$ 是排印疏漏（应为 $unram$），照抄会与 §6 的 $C_{unram}$ 记号对不上。
+
+## 相关卡
+
+- `kshms/concept/dfn-13-a-inf-precategory-equivalence`
+- `kshms/concept/thm-02-morse-de-rham-equivalence`
+- `kshms/concept/dfn-16-fukaya-objects`
+- `kshms/concept/dfn-23-hom-dolb`
+- `kshms/concept/prp-14-mk-formulas-agree`
+
+## 出处
+
+- Kontsevich–Soibelman, Homological mirror symmetry and torus fibrations（中译注本 SY01-25） §8.3（原文 p.58）；锚点 `源码/chunks/ch09.tex:305-307（定理 4）`
+
+> 原文 p58（§8.3）；译注「定理 4 证明的性质」（ch09.tex:318-324）说明它不自带证明并给出论证链，$unrum$ 排印问题见 ch09.tex:295-299。

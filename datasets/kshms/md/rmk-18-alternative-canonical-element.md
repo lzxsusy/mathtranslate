@@ -1,0 +1,35 @@
+# 投影算子的另一典范元素 $\sum [S_x]\otimes R_\delta([U_x])$
+
+`kshms/remark/rmk-18-alternative-canonical-element` · track D（Morse 机器） · 原文 注 18
+
+**问题**　为什么投影算子 $\Pi_\delta$ 的定义里只把第二个因子 $[S_x]$ 换成 $R_\delta([S_x])$，能否把第一个也换掉？
+
+**摘要**　$\Pi_\delta$ 也可用典范元素 $\sum_x[S_x]\otimes R_\delta([U_x])$ 定义，而不必用 $\sum_x R_\delta([S_x])\otimes R_\delta([U_x])$；命题 8 的结论对新元素同样成立。
+
+**别名**　Remark 18；alternative canonical element $\sum [S_x]\otimes R_\delta([U_x])$；投影算子 $\Pi_\delta$ 的另一种定义
+
+## 陈述
+
+可以用另一个典范元素 $\sum_{x\in\operatorname{Cr}(f)}[S_x]\otimes R_\delta([U_x])$ 来定义投影算子 $\Pi_\delta$，而不必像我们这样用 $\sum_{x\in\operatorname{Cr}(f)}R_\delta([S_x])\otimes R_\delta([U_x])$。上述命题对新的典范元素同样成立。
+
+## 这条注在全文中的作用
+
+这条注说明命题 8 的关键是 $R_\delta([U_x])$ 与 $[S_x]$ 的配对，而不是 $R_\delta$ 作用在哪个因子上：把第一个因子留在 $[S_x]$ 上同样给出良定义的投影算子。它为 §6.5 后续取 $\delta\to0$ 的极限提供了少一次正则化的写法。
+
+## 易错点
+
+- 换的是第一个因子 $[S_x]$，第二个仍是 $R_\delta([U_x])$；不要写成两个都换或两个都不换。
+- 「上述命题」指命题 8（$\Pi_\delta^2=\Pi_\delta$、$\Pi_\delta d=d\Pi_\delta$、像与 Morse 复形同构），不是命题 7。
+- 两种典范元素定义的算子都叫 $\Pi_\delta$，但文中未断言逐点相等；引用时按各自满足的性质使用。
+
+## 相关卡
+
+- `kshms/concept/prp-08-morse-projector-pi-delta`
+- `kshms/concept/lem-02-projection-operator`
+- `kshms/remark/rmk-17-perturbation-general`
+
+## 出处
+
+- Kontsevich–Soibelman, Homological mirror symmetry and torus fibrations（中译注本 SY01-25） §6.5（原文 p.46）；锚点 `源码/chunks/ch07.tex:267-271（注 18）`
+
+> 原文 p46 §6.5；中译注本 ch07.tex:267-271。items.tsv 原记页码 0（推断值），经原文页图核对为 p46。

@@ -1,0 +1,49 @@
+# Fukaya 范畴的态射空间
+
+`kshms/concept/dfn-17-fukaya-morphism-spaces` · track C（Fukaya 与退化） · 原文 定义 17
+
+**问题**　两个拉格朗日对象横截时，它们的态射空间如何用交点与局部系写出？分级又从何而来？
+
+**摘要**　对支撑横截的两个对象，态射空间取各交点处局部系纤维间线性映射的直和，再张量系数域；Maslov 指标给出 $\mathbb{Z}$-分级。
+
+**别名**　morphism spaces of the Fukaya category；Fukaya 范畴的 Hom 空间；交点上的 Floer 型态射空间
+
+## 陈述
+
+对两个支撑横截的对象，我们如下定义态射空间
+$$\mathrm{Hom}_{\mathcal{F}(V,\omega)}\bigl((L_1,\rho_1,\widetilde{Arg}_1),(L_2,\rho_2,\widetilde{Arg}_2)\bigr):=\Bigl(\bigoplus_{x\in L_1\cap L_2}\mathrm{Hom}(\rho_{1x},\rho_{2x})\Bigr)\otimes\mathbb{C}_\varepsilon.$$
+于是态射构成 $\mathbb{C}_\varepsilon$ 上的有限维向量空间。态射空间有一个 $\mathbb{Z}$-分级，它由 Maslov 指标 $\operatorname{deg}:L_1\cap L_2\to\mathbb{Z}$ 给出（见 [Fu2]、[Ko]、[Se]）。Maslov 指标依赖于提升 $\widetilde{Arg}_L$ 的选取（它对应于拉格朗日 Grassmann 丛的万有覆盖中一个点的选取）。
+
+## 记号
+
+$\mathbb{C}_\varepsilon$ 是形式级数 $f=\sum_{i\ge0}c_ie^{-\lambda_i/\varepsilon}$ 构成的域；$\rho_{1x}$、$\rho_{2x}$ 是局部系在交点 $x$ 处的纤维；$L_1\cap L_2$ 要求横截。
+
+## 要点
+
+- 态射空间是「交点上的线性映射之直和」再张量 $\mathbb{C}_\varepsilon$，因此自动是有限维 $\mathbb{C}_\varepsilon$-向量空间。
+- 该写法以 $L_1,L_2$ 的支撑横截为前提；非横截情形须先作小哈密顿形变，再由命题 4 的延拓性质处理。
+- 分级由 Maslov 指标 $\operatorname{deg}$ 给出，而 $\operatorname{deg}$ 依赖 $\widetilde{Arg}_L$ 的提升；换提升会使次数整体平移。
+- 交点 $x$ 处取的是 $\mathrm{Hom}(\rho_{1x},\rho_{2x})$，与局部系的秩无关；局部系非平凡时它一般不是一维的。
+
+## 公式
+
+$$\mathrm{Hom}_{\mathcal{F}(V,\omega)}\bigl((L_1,\rho_1,\widetilde{Arg}_1),(L_2,\rho_2,\widetilde{Arg}_2)\bigr)=\Bigl(\bigoplus_{x\in L_1\cap L_2}\mathrm{Hom}(\rho_{1x},\rho_{2x})\Bigr)\otimes\mathbb{C}_\varepsilon$$
+
+$$\operatorname{deg}:L_1\cap L_2\longrightarrow\mathbb{Z}$$
+
+## 易错点
+
+- 定义只在「两个支撑横截的对象」上直接给出；对象的三元组本身不含横截性，横截是选取对象对之后才能检验的关系。
+- Maslov 指标的零点依赖 $\widetilde{Arg}_L$ 的选取，因此 $\mathbb{Z}$-分级不是对象数据的绝对分级；讨论拟同构时要注意提升的更换。
+- $\bigoplus_{x\in L_1\cap L_2}$ 是有限直和（横截紧拉格朗日的交点有限），但每个被加项 $\mathrm{Hom}(\rho_{1x},\rho_{2x})$ 的维数是局部系的秩的平方，不能默认是一维。
+
+## 相关卡
+
+- `kshms/concept/dfn-16-fukaya-objects`
+- `kshms/concept/dfn-19-transversal-objects`
+
+## 出处
+
+- Kontsevich–Soibelman, Homological mirror symmetry and torus fibrations（中译注本 SY01-25） §5.1（原文 p.29）；锚点 `源码/chunks/ch05.tex:36-45（定义 17）`
+
+> 原文 p29 §5.1；定义 17 紧接 $\mathbb{C}_\varepsilon$ 与 adic 拓扑的约定，态射空间的分级依赖 Maslov 指标。

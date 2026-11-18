@@ -1,0 +1,34 @@
+# 用 Legendre 变换做镜像对称的想法早已有之
+
+`kshms/remark/rmk-06-legendre-idea` · track A（CFT 与几何退化） · 原文 注 6
+
+**问题**　§3.2 用 Legendre 变换造对偶 Monge–Ampère 流形，这个想法是本文首创的吗？
+
+**摘要**　文献归属注：把 Legendre 变换用于镜像对称的想法此前已有（[H]、[Le]）；本文的新意是把它与整仿射结构、环面纤维化的对偶接起来。
+
+**别名**　Remark 6；Legendre transform in mirror symmetry；文献归属
+
+## 陈述
+
+把 Legendre 变换用于镜像对称的想法已存在一段时间（例如见 [H]、[Le]）。
+
+## 这条注在全文中的作用
+
+一句话的文献归属注：§3.2 用 Legendre 变换把 $K$ 的对偶势 $\widehat K$ 变成对偶流形的势（引理 1、命题 2），这条注说明该技巧不是本文首创，本文的新意在于把它与整仿射结构、环面纤维化的对偶接起来（推论 1、猜想 3），从而把它变成几何镜像对称的陈述。
+
+## 易错点
+
+- 注只做文献归属，不含数学内容；引理 1 与命题 2 在本节都有完整证明，不能因为这条注就以为它们是引用来的。
+- 原文举 [H]、[Le] 两例，是「例如」，不是说只有这两处。
+- 「想法已存在」针对的是镜像对称的物理/几何动机，与本节「Monge–Ampère 流形的对偶」这一确切陈述不是同一件事。
+
+## 相关卡
+
+- `kshms/concept/conj-03-dual-ma-manifolds`
+- `kshms/concept/dfn-02-monge-ampere-manifold`
+
+## 出处
+
+- Kontsevich–Soibelman, Homological mirror symmetry and torus fibrations（中译注本 SY01-25） §3.2（原文 p.20）；锚点 `源码/chunks/ch03.tex:297-299（注 6）`
+
+> 原文 p20 §3.2 之末（AK-流形一段之后）；译本 p20；紧跟其后是注 7（忽略 $B$ 场）。

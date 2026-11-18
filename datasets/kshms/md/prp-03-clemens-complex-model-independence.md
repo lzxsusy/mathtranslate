@@ -1,0 +1,67 @@
+# Clemens 复形 $\bar Y(X_0)$ 与稳定约化模型的选取无关
+
+`kshms/concept/prp-03-clemens-complex-model-independence` · track A（CFT 与几何退化） · 原文 命题 3
+
+**问题**　换一个稳定约化模型，特殊纤维整个变了，Clemens 复形凭什么还是同一个空间？
+
+**摘要**　对具稳定约化的模型作不同选取，由本质除子张成的 Clemens 复形 $\bar Y(X_0)$ 可以典范等同；于是 $\bar Y$ 只依赖 $X$ 与体积形式，不依赖模型。
+
+**别名**　Clemens complex；Clemens 复形；稳定约化模型的典范等同
+
+## 陈述
+
+对具稳定约化的模型的不同选取，空间 $\bar Y(X_0)$ 可以典范地等同。
+
+## 记号
+
+$K=\mathbb{C}((q))$；$X$：$K$ 上的 $n$ 维代数 Calabi–Yau 流形；$X_0$：稳定约化模型的特殊纤维；本质除子：整体体积形式在其处极点阶达到最大的不可约分支 $D\subset X_0$；$\bar Y(X_0)$：由本质除子张成的 Clemens 复形；$D(X)$：除子型点集。
+
+## 要点
+
+- 论断是「典范等同」，比同胚或同伦等价更强：存在不依赖模型选取的等同映射。
+- $\bar Y(X_0)$ 是拓扑空间（Clemens 复形）：$k$-胞腔对应本质除子的 $(k+1)$ 重相交分支，它由特殊纤维的本质除子张成。
+- 证明把 $\bar Y(X_0)$ 实现为 Berkovich 解析空间 $X^{an}$ 中使 $v(vol,D)$ 取极小的除子型点集的闭包，闭包只依赖 $X^{an}$ 与体积形式。
+- 命题服务于 §3.3 的猜想：$(Y,T^{\mathbb{Z}}_Y)$ 是极大退化 Calabi–Yau 簇的组合不变量，应当可以纯代数地算出。
+
+## 公式
+
+$$v(vol,D)=\frac{\operatorname{ord}_{(X\otimes K',D)}(vol)+1}{\operatorname{ram}(K'/K)}$$
+
+$$\bar Y(X_0)=\overline{\{D\in D(X)\mid v(vol,D)\text{ 取极小}\}}\subset X^{an}$$
+
+## 证明（sketch）
+
+1. 对 $K$ 上的簇 $X$ 取 Berkovich 解析空间 $X^{an}$，并定义除子型点集 $D(X,K)$ 为一切模型（不必光滑）的特殊纤维不可约分支之集的正向极限，得到嵌入 $D(X,K)\subset X^{an}$。
+
+   *为什么*：与除子 $D$ 对应的半范数取值为体积形式在 $D$ 上的极点阶的指数，故每个除子给出 $X^{an}$ 的一个点。
+
+2. 对有限 Galois 扩域 $K'/K$ 取不变量，再对一切 $K'$ 取正向极限，得到 $D(X)$，并验证 $D(X)$ 在 $X^{an}$ 中稠密。
+
+   *为什么*：剩余域有限或可数时 $D(X)$ 可数，而 $X^{an}$ 连通，故稠密性成立。
+
+3. 定义 $v(vol,D)=(\operatorname{ord}_{(X\otimes K',D)}(vol)+1)/\operatorname{ram}(K'/K)$，并验证它与除子、扩域的选取无关。
+
+   *为什么*：换模型或换扩域时分子（零点阶）与分歧指数同步变化，商不变；$p$ 进情形下这个数也可由 $D$ 对积分 $\int_{X(K)}|vol|_K$ 的贡献读出。
+
+4. 验证 $\bar Y(X_0)$ 恰是 $D(X)$ 中使 $v(vol,D)$ 取极小的点集在 $X^{an}$ 中的闭包，从而与模型选取无关。
+
+   *为什么*：体积形式的极点阶最大等价于 $v(vol,D)$ 最小，而闭包只依赖 $X^{an}$ 与体积形式，不依赖特殊纤维的模型。
+
+> 缺口：原文自述「我们简述证明的想法」，四步都只写到「可以验证」：$D(X)$ 的稠密性、$v(vol,D)$ 的良定义、闭包等式的论证均未展开，依据是 Berkovich 非阿基米德解析空间理论（[Be]），Clemens 复形的定义则引 [LTY]；完整论证不在本文。
+
+## 易错点
+
+- 原文证明末句写「这解释了定理的陈述」（p20），但紧邻陈述的是命题 3；译注已指出「定理」应为「命题 3」，本节并没有对应的定理。
+- 本质除子的判据是体积形式的极点阶「最大」；换到 $v(vol,D)$ 后要取「最小」，方向反了会把非本质分支一并算进来。
+- $\bar Y(X_0)$ 是 Clemens 复形而非 $X_0$ 的子簇；把「典范等同」读成两个 $X_0$ 之间的同构会误解命题。
+
+## 相关卡
+
+- `kshms/concept/dfn-01-maximal-degeneration`
+- `kshms/concept/prp-01-maximal-degeneration-nilpotent`
+
+## 出处
+
+- Kontsevich–Soibelman, Homological mirror symmetry and torus fibrations（中译注本 SY01-25） §3.3（原文 p.20）；锚点 `源码/chunks/ch03.tex:325-363（命题 3）`
+
+> 原文 p20 §3.3，证明续至 p21；译文见 ch03.tex:325-363（共 4 步）。译注「『定理』应为命题 3」见 365-368，「$Z\subset K$ 应为 $Z\subset X$」见 379-383。

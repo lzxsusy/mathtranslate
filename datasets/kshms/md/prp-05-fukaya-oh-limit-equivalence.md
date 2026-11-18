@@ -1,0 +1,64 @@
+# Fukaya–Oh 范畴：$\eta\to0$ 的极限与 $\mathcal{F}^\eta_{unram}$ 等价
+
+`kshms/concept/prp-05-fukaya-oh-limit-equivalence` · track C（Fukaya 与退化） · 原文 命题 5
+
+**问题**　把环面纤维化的复结构参数 $\eta$ 推向 $0$，Fukaya 范畴退化成什么？
+
+**摘要**　$\mathcal{F}^\eta_{unram}(X^{\vee})$ 的复合映射在 $\eta\to0$ 时于 $\mathbb{C}_\varepsilon$ 的 adic 拓扑下收敛，所得极限 $A_\infty$-预范畴对充分小的 $\eta$ 与原范畴等价，记为 $FO(X^{\vee})$。
+
+**别名**　Fukaya–Oh category；Fukaya–Oh 范畴；退化 Fukaya 范畴
+
+## 陈述
+
+对充分小的 $\eta$，极限 $A_\infty$-预范畴与 $\mathcal{F}^\eta_{unram}(X^{\vee})$ 等价。
+
+## 记号
+
+$X^{\vee}=T^*_Y/(T^{\mathbb{Z}}_Y)^{\vee}$，$p^{\vee}:X^{\vee}\to Y$ 为环面丛投影；$J_\eta$、$\Omega_\eta$：单参数复结构与相应的 $(n,0)$-形式；$\mathcal{F}^\eta_{unram}(X^{\vee})$：对象为 $(L,\rho,\widetilde{Arg}^{can}_L)$ 的满 $A_\infty$-预子范畴，其中 $L$ 是定向由 $Y$ 诱导的紧拉格朗日子流形、$p^{\vee}|_L$ 为非分支覆盖；$\mathbb{C}_\varepsilon$：由形式级数 $\sum_i c_ie^{-\lambda_i/\varepsilon}$（$\lambda_i\to+\infty$）组成的域，配 adic 拓扑；当 $[\omega]\in H^2(V,\mathbb{Z})$ 时可改用 $\mathbb{C}((q))$，$q=\exp(-1/\varepsilon)$。
+
+## 要点
+
+- 极限在 $\mathbb{C}_\varepsilon$ 的 adic 拓扑下取：对象与态射不随 $\eta$ 变，只有复合 $m_k$ 随 $\eta\to0$ 收敛。
+- 「对充分小的 $\eta$ 等价」说明极限范畴是原范畴在小 $\eta$ 处的模型，而不是仅在形式上取极限。
+- 极限范畴命名为 $FO(X^{\vee})$（Fukaya–Oh 范畴，或退化 Fukaya 范畴）；其 $m_k$ 由 $Y$ 中带三价树的二维曲面给出显式公式。
+- 使用前提是 $\dim Y>1$；$\dim Y=1$ 时 $\mathcal{F}^\eta_{unram}(X^{\vee})$ 不依赖 $\eta$（注 14）。
+
+## 公式
+
+$$FO(X^{\vee}):=\lim_{\eta\to0}\mathcal{F}^\eta_{unram}(X^{\vee})$$
+
+$$m_k^{\mathcal{F}^\eta_{unram}}\longrightarrow m_k^{FO}\quad(\eta\to0)$$
+
+## 证明（sketch）
+
+1. 先固定对象与态射：它们不随 $\eta$ 变，$L$ 的横截性与 $\widetilde{Arg}^{can}_L$ 的构造都只用 $Y$ 的定向与 $p^{\vee}$ 的纤维结构。
+
+   *为什么*：原文在命题前已说明这一点：对象与态射在极限中保持，随 $\eta$ 变化的只有复合映射。
+
+2. 让各阶复合 $m_k$ 在 $\mathbb{C}_\varepsilon$ 的 adic 拓扑下取极限，得到极限 $A_\infty$-预范畴。
+
+   *为什么*：$m_k$ 是按 $\varepsilon$ 展开的级数，逐阶收敛保证 $A_\infty$ 关系在极限中仍然成立。
+
+3. 引用 [FuO] 的结果，把极限范畴与 $\eta$ 充分小时的 $\mathcal{F}^\eta_{unram}(X^{\vee})$ 等同。
+
+   *为什么*：极限是 $\eta\to0$ 的形变，[FuO] 证明该形变在充分小的 $\eta$ 处由 $A_\infty$-预范畴的等价实现。
+
+> 缺口：原文未给证明，直接写「下面的结果可由 [FuO] 推出」（p33）：收敛性与「对充分小 $\eta$ 的等价」都依赖 Fukaya–Oh 的论文 [FuO]，本文只作引用；下文用平面树写出的 $m_k$ 公式是显式描述，不构成等价性的证明。
+
+## 易错点
+
+- 极限不在通常的代数范畴中取，而在 $\mathbb{C}_\varepsilon$ 的 adic 拓扑下取；忽略拓扑会把形式级数当成普通级数。
+- 命题只对充分小的 $\eta$ 成立，不含 $\eta=0$；不要把 $FO(X^{\vee})$ 说成 $\eta=0$ 处的纤维。
+- $\dim Y=1$ 是例外（注 14）：此时范畴本身不随 $\eta$ 变，不能用本命题的「极限」语言硬套。
+
+## 相关卡
+
+- `kshms/concept/prp-04-fukaya-hamiltonian-deformation-quasi-iso`
+- `kshms/concept/dfn-16-fukaya-objects`
+- `kshms/remark/rmk-21-truncated-theta`
+
+## 出处
+
+- Kontsevich–Soibelman, Homological mirror symmetry and torus fibrations（中译注本 SY01-25） §5.2（原文 p.33）；锚点 `源码/chunks/ch05.tex:145-147（命题 5）`
+
+> 原文 p33 §5.2；极限的取法见上文 ch05.tex:141，$FO(X^{\vee})$ 的命名见 149 行，注 14（$\dim Y=1$ 的例外）见 151-153。

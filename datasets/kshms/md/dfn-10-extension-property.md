@@ -1,0 +1,51 @@
+# 扩张性质与 $A_\infty$-预范畴
+
+`kshms/concept/dfn-10-extension-property` · track B（$A_\infty$ 形式框架） · 原文 定义 10
+
+**问题**　单位态射不存在时，怎样在范畴层面把「单位」的作用补回来？
+
+**摘要**　要求任意有限族横截序列都能在两端各接上一个与给定对象拟同构的对象而仍保持横截；满足此性质的非幺预范畴称为 $A_\infty$-预范畴，这是单位态射的同伦替代。
+
+**别名**　extension property；扩张性质；$A_\infty$-pre-category（满足扩张性质者）
+
+## 陈述
+
+$A_\infty$-预范畴是指满足以下扩张性质（extension property）的非幺 $A_\infty$-预范畴 $\mathcal{C}$：\n\n对 $\mathcal{C}$ 中任意有限族横截序列 $(S_i)_{i\in I}$ 与任意对象 $X$，存在对象 $X_+$ 与 $X_-$，以及拟同构 $f_-\colon X_-\to X$、$f_+\colon X\to X_+$，使得对一切 $i\in I$，扩充后的序列 $(X_-,S_i,X_+)$ 都是横截的。
+
+## 记号
+
+$\mathcal{C}^{\mathrm{tr}}_n$：横截序列类；$(S_i)_{i\in I}$：有限族横截序列，各 $S_i$ 允许长度不同；$X_\pm$：$X$ 的「扰动」；$f_\pm$：扰动与原对象之间的拟同构（定义 9 意义）。
+
+## 要点
+
+- 扩张性质是一条存在性公理：对每个对象 $X$ 与每个有限族 $(S_i)_{i\in I}$，都要存在 $X_-,X_+$ 使 $(X_-,S_i,X_+)$ 横截。
+- $f_\pm$ 是拟同构，所以 $X_\pm$ 与 $X$ 在 $H(\mathcal{C})$ 中同构，可以当作「同一个对象的两个位置」来用。
+- 命名上：满足扩张性质的非幺 $A_\infty$-预范畴才叫 $A_\infty$-预范畴；不满足时只有预范畴结构。
+- 有了这条性质，$H(\mathcal{C})$ 上部分定义的 $m_2$ 可唯一延拓为范畴结构（注 10），这正是「同伦意义下的单位」。
+- 译注 20 指出其几何来源：用哈密顿同痕把拉格朗日子流形微扰到横截位置；该注为译者补充，原文未点明。
+
+## 公式
+
+$$f_-\colon X_-\longrightarrow X,\qquad f_+\colon X\longrightarrow X_+$$
+
+$$(X_-,S_i,X_+)\in\mathcal{C}^{\mathrm{tr}}_{|S_i|+2},\qquad \forall\,i\in I$$
+
+## 易错点
+
+- $X_\pm$ 依赖 $(X,(S_i)_{i\in I})$：定义只断言存在，不要求函子性，也不保证同一个 $X_+$ 能对所有序列通用。
+- 扩充的位置固定：$X_-$ 放最左、$X_+$ 放最右，而不是插在序列中间；因此 $S_i$ 的首、尾元素要分别与 $X_-$、$X_+$ 横截。
+- 扩张性质不蕴含 $(X_-,X_+)$ 或 $(X,X)$ 横截，$\operatorname{Hom}(X,X)$ 仍可能不存在。
+- $I$ 是有限集：这是「有限族」，不等于对全部横截序列同时取一个统一扩充。
+
+## 相关卡
+
+- `kshms/concept/dfn-07-nonunital-a-inf-pre-category`
+- `kshms/concept/dfn-09-quasi-isomorphism`
+- `kshms/concept/dfn-14-strict-identity-a-inf-category`
+- `kshms/concept/dfn-15-directed-a-inf-precategory`
+
+## 出处
+
+- Kontsevich–Soibelman, Homological mirror symmetry and torus fibrations（中译注本 SY01-25） §4.3（原文 p.26）；锚点 `源码/chunks/ch04.tex:216-223（定义 10）`
+
+> 原文 p26 §4.3；译本 ch04.tex 216–223 行；译注 20（扩张性质的几何来源）为译者补充，不属原文。

@@ -1,0 +1,35 @@
+# 取 $m_1$ 上同调得到非幺范畴 $H(\mathcal{C})$
+
+`kshms/remark/rmk-09-cohomology-category` · track B（$A_\infty$ 形式框架） · 原文 注 9
+
+**问题**　怎样从一个非幺 $A_\infty$-范畴得到普通范畴，而又不丢掉 $m_2$ 的信息？
+
+**摘要**　把非幺 $A_\infty$-范畴的态射空间换成 $m_1$ 的上同调、复合改由 $m_2$ 诱导，得到非幺范畴 $H(\mathcal{C})$；对象不变，高阶运算不再出现。
+
+**别名**　Remark 9；cohomology category $H(\mathcal{C})$；以 $m_1$ 上同调替换态射空间
+
+## 陈述
+
+设 $\mathcal{C}$ 是非幺 $A_\infty$-范畴。把态射空间替换为它关于 $m_1$ 的上同调。换言之，定义 $\operatorname{Hom}_{H(\mathcal{C})}(X,Y):={\ker m_1}/{\operatorname{im} m_1}$，其中 $m_1$ 是复合映射 $\operatorname{Hom}_{\mathcal{C}}(X,Y)\to\operatorname{Hom}_{\mathcal{C}}(X,Y)[1]$。于是 $H(\mathcal{C})=(\mathcal{C},\operatorname{Hom}_{H(\mathcal{C})}(\cdot,\cdot))$ 给出一个「非幺」范畴结构，其对象类为 $\mathcal{C}$，态射的复合由 $m_2$ 诱导。这里说「非幺」，是因为没有单位态射 $\mathrm{id}_X\in\operatorname{Hom}_{H(\mathcal{C})}(X,X)$。
+
+## 这条注在全文中的作用
+
+这是全文反复使用的「取同调」操作：Fukaya 侧的对象先过 $H(\mathcal{C})$ 才成为通常范畴，拟同构与等价的比较也在这一层进行。注 10 随后说明，预范畴情形只需把部分定义的 $m_2$ 延拓过来。
+
+## 易错点
+
+- $H(\mathcal{C})$ 的对象类不变，变的是态射：只保留 $m_1$-闭模去 $m_1$-边缘，$m_3,m_4,\dots$ 不再进入复合。
+- 这是「取上同调」，不是「取拟同构类」；对象间的拟同构并未被可逆化。
+- 一般没有 $\mathrm{id}_X$，所以只能得到非幺范畴；不要把它说成有单位的范畴。
+
+## 相关卡
+
+- `kshms/concept/dfn-05-nonunital-a-inf-category`
+- `kshms/concept/dfn-09-quasi-isomorphism`
+- `kshms/remark/rmk-10-precategory-extension`
+
+## 出处
+
+- Kontsevich–Soibelman, Homological mirror symmetry and torus fibrations（中译注本 SY01-25） §4.2（原文 p.24）；锚点 `源码/chunks/ch04.tex:131-138（注 9）`
+
+> 原文 p24 §4.2，紧接定义 6（函子）之后；中译注本 ch04.tex:131-138。

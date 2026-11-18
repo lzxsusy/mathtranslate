@@ -1,0 +1,58 @@
+# Poincaré 丛上的典范联络
+
+`kshms/concept/lem-03-connection-on-poincare-bundle` · track G（复情形附录） · 原文 引理 3
+
+**问题**　Poincaré 丛 $P$ 上的典范联络在坐标里该写成什么，为什么它在甲板变换下良定义？
+
+**摘要**　在 $T_Y\times_YT^*_Y$ 的典范平凡化上用 $\overline{\nabla}=\nabla_0+\frac{2\pi i}{\varepsilon}\sum_jx_j^\vee dx_j$ 定义的联络，在两组甲板变换下都不变，故下降为 Poincaré 丛 $P$ 上的联络。
+
+**别名**　Lemma 3 (connection on the Poincaré bundle)；Poincaré 线丛上的典范联络 $\overline{\nabla}$；$\overline{\nabla}$ 下降为 $P$ 上的联络
+
+## 陈述
+
+联络 $\overline{\nabla}$ 给出 $P$ 上的一个联络。
+
+## 记号
+
+$P$：$X\times_YX^\vee$ 上的典范 $U(1)$-丛（Poincaré 线丛）；$r:T_Y\to T_Y/T^{\mathbb{Z}}_Y$、$r^\vee:T^*_Y\to T^*_Y/(T^{\mathbb{Z}}_Y)^\vee$：纤维方向的万有覆盖；$\tilde P$：$P$ 到 $T_Y\times_YT^*_Y$ 的拉回，可典范平凡化；坐标 $(y,x,x^\vee)$，甲板变换为 $x_j\mapsto x_j+\varepsilon n_j$ 与 $x_j^\vee\mapsto x_j^\vee+n_j^\vee$（$n_j,n_j^\vee\in\mathbb{Z}$）；$\nabla_0$：$\tilde P$ 上的平凡联络。
+
+## 要点
+
+- $\tilde P$ 在万有覆盖 $T_Y\times_YT^*_Y$ 上典范平凡化，故联络可以在坐标中直接写出，无需选局部平凡化。
+- 第一组甲板变换 $x_j\mapsto x_j+\varepsilon n_j$ 不改变 $dx_j$，故 $\overline{\nabla}$ 在该变换下不变。
+- 第二组 $x_j^\vee\mapsto x_j^\vee+n_j^\vee$ 会改变 $\overline{\nabla}$，但恰被规范变换 $h=\exp\bigl((2\pi i/\varepsilon)\sum_jn_j^\vee x_j\bigr)$ 抵消，故 $\overline{\nabla}$ 在 $\tilde P$ 上不变、下降为 $P$ 上的联络。
+- 这个联络是 §9.1 中向量丛 $E(y,x)=\bigoplus_{x^\vee\in L,\,p^\vee(x^\vee)=y}\rho(x^\vee)\otimes P(x,x^\vee)$ 上诱导联络 $\nabla_E$ 的来源，命题 15 再由 $L$ 是拉格朗日的事实推出 $\nabla_E$ 全纯。
+
+## 公式
+
+$$\overline{\nabla}=\nabla_0+\frac{2\pi i}{\varepsilon}\sum_{1\le j\le n}x_j^{\vee}\,dx_j$$
+
+$$h=\exp\Bigl(\frac{2\pi i}{\varepsilon}\sum_j n_j^{\vee}x_j\Bigr)$$
+
+## 证明（complete）
+
+1. 第一组甲板变换 $x_j\mapsto x_j+\varepsilon n_j$（$n_j\in\mathbb{Z}$）作用在 $\tilde P$ 上并保持平凡化，在此变换下 $\overline{\nabla}$ 不变。
+
+   *为什么*：$\overline{\nabla}$ 只通过 $dx_j$ 与 $x_j^\vee$ 依赖坐标，$x_j$ 的平移使 $dx_j$ 不变、$x_j^\vee$ 不动，故联络形式逐项不变。
+
+2. 第二组变换 $x_j^\vee\mapsto x_j^\vee+n_j^\vee$ 以乘子 $h=\exp\bigl((2\pi i/\varepsilon)\sum_jn_j^\vee x_j\bigr)$ 作用在 $\tilde P$ 上；连同该规范变换，$\overline{\nabla}$ 仍不变。
+
+   *为什么*：规范变换 $h$ 把联络形式改写为 $\overline{\nabla}+h^{-1}dh$，而 $h^{-1}dh=\frac{2\pi i}{\varepsilon}\sum_jn_j^\vee dx_j$ 恰好抵消 $x_j^\vee$ 平移带来的增量；故 $\overline{\nabla}$ 在 $\tilde P$ 上甲板不变，下降为 $P$ 上的联络。
+
+## 易错点
+
+- 两组甲板变换的作用方式不同：$x_j$ 的平移保持平凡化不变，$x_j^\vee$ 的平移必须配一个规范变换才能保持联络；把两者都当作「不变」会算错下降数据。
+- 因子 $2\pi i/\varepsilon$ 与 $\varepsilon$ 绑定：§9 固定 $\varepsilon>0$ 的复情形，同一公式在主体部分的 $\mathbb{C}_\varepsilon$ 上对应的整结构不同。
+- $P$ 是 $U(1)$-丛，$\overline{\nabla}$ 是 $\mathfrak{u}(1)$-值联络；不要把它误当成 $X\times_YX^\vee$ 上某个全纯线丛的全纯联络——全纯性要到命题 15 才讨论。
+
+## 相关卡
+
+- `kshms/concept/thm-04-abelian-hms`
+- `kshms/concept/prp-15-holomorphic-connection`
+- `kshms/concept/dfn-02-monge-ampere-manifold`
+
+## 出处
+
+- Kontsevich–Soibelman, Homological mirror symmetry and torus fibrations（中译注本 SY01-25） §9.1（原文 p.60）；锚点 `源码/chunks/ch10.tex:19-25（引理 3 及证明）`
+
+> 原文 p60（§9.1）；证明只核对两组甲板变换下的不变性，译文与原文一致（ch10.tex:23-25）。

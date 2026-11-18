@@ -1,0 +1,71 @@
+# Morse 投影算子 $\Pi_\delta$：幂等、与 $d$ 交换、像同构于 Morse 复形
+
+`kshms/concept/prp-08-morse-projector-pi-delta` · track D（Morse 机器） · 原文 命题 8
+
+**问题**　如何把 de Rham 复形典范地投影到 Morse 复形上，并使投影与微分交换？
+
+**摘要**　用磨光核 $R_\delta$ 与临界点的稳定、不稳定流定义的算子 $\Pi_\delta$ 是投影：$\Pi_\delta^2=\Pi_\delta$、$\Pi_\delta d=d\Pi_\delta$，且它在 Morse 复形上的像典范同构于 $M^*(Y,f)$。
+
+**别名**　Morse projector Pi_delta；Morse 投影算子；de Rham 复形到 Morse 复形的投影
+
+## 陈述
+
+对充分小的 $\delta$，用公式
+$$\Pi_\delta(\alpha)=\sum_{x\in\operatorname{Cr}(f)}\bigl(\int_Y\alpha\wedge R_\delta([S_x])\bigr)\cdot R_\delta([U_x])$$
+定义线性算子 $D'(Y)\to\Omega^*(Y)$。则
+1. 若 $\alpha\in\Omega^*(Y)$，则 $\Pi_\delta^2(\alpha)=\Pi_\delta(\alpha)$，且 $\Pi_\delta d=d\Pi_\delta$。
+2. 像 $\Pi_\delta(M^*(Y,f))$ 是 $\Omega^*(Y)$ 中的子复形，典范同构于 Morse 复形 $M^*(Y,f)$。
+
+## 记号
+
+$Y$：紧定向光滑流形，$\dim Y=n$；$f$：Morse–Smale 函数，$\operatorname{Cr}(f)$ 为临界点集；$S_x$、$U_x$：临界点 $x$ 的稳定与不稳定子流形；$R_\delta$：核为 $\rho_\delta$ 的磨光算子；$D'(Y)$：$Y$ 上的流空间。
+
+## 要点
+
+- $\Pi_\delta$ 的定义用了两次 $R_\delta$：内层积分 $\int_Y\alpha\wedge R_\delta([S_x])$ 给出系数，外层乘 $R_\delta([U_x])$ 再对临界点求和；$\delta$ 必须充分小。
+- 幂等性来自 Kronecker 型恒等式 $\int_Y R_\delta([S_x])\wedge R_\delta([U_y])=\delta_{xy}$，它由 $\deg(S_x\cap U_y)=\delta_{xy}$ 与引理 2 第 2) 部分推出。
+- 与 $d$ 交换是因为 $R_\delta$ 是复形同态（引理 2 第 1) 部分），且 $[S_x]$、$[U_x]$ 都是闭流。
+- 像 $\Pi_\delta(M^*(Y,f))$ 是子复形且典范同构于 $M^*(Y,f)$；随后的同伦 $H_\delta$ 满足 $\operatorname{id}-\Pi_\delta=dH_\delta+H_\delta d$，这正是 §6 同调扰动理论所需的输入。
+
+## 公式
+
+$$\Pi_\delta(\alpha)=\sum_{x\in\operatorname{Cr}(f)}\bigl(\int_Y\alpha\wedge R_\delta([S_x])\bigr)\cdot R_\delta([U_x])$$
+
+$$\int_Y R_\delta([S_x])\wedge R_\delta([U_y])=\delta_{xy}$$
+
+$$\operatorname{id}-\Pi_\delta=dH_\delta+H_\delta d,\qquad H_\delta\ \text{的核}=(R_\delta\boxtimes R_\delta)[Z_\infty]+(h_\delta\boxtimes h_\delta)([\operatorname{diag}])$$
+
+## 证明（sketch）
+
+1. 由 $\deg(S_x\cap U_y)=\delta_{xy}$ 与引理 2 第 2) 部分，得 $\int_Y R_\delta([S_x])\wedge R_\delta([U_y])=\delta_{xy}$。
+
+   *为什么*：引理 2 第 2) 部分把相交数写成两个磨光流的外积积分，故 Kronecker 符号被搬到积分层面。
+
+2. 对 $\alpha\in\Omega^*(Y)$ 计算 $\Pi_\delta^2$：内层积分对 $R_\delta([U_x])$ 取值时由上式化为 $\delta_{xy}$，只剩对角项，故 $\Pi_\delta^2=\Pi_\delta$。
+
+   *为什么*：$\Pi_\delta(\alpha)$ 是各 $R_\delta([U_x])$ 的线性组合，再作用一次 $\Pi_\delta$ 时非对角项全部消失。
+
+3. $R_\delta$ 与 $d$ 交换而 $[S_x]$ 闭，故 $\Pi_\delta d=d\Pi_\delta$；由此 $\Pi_\delta(M^*(Y,f))$ 是子复形，并按 Morse 指标与 $M^*(Y,f)$ 的基一一对应。
+
+   *为什么*：临界点按 Morse 指标分级，代表元 $R_\delta([S_x])$ 的次数与指标匹配，交配 $\delta_{xy}$ 表明这组代表元给出同构。
+
+> 缺口：原文在 p46 只做到恒等式 $\int_Y R_\delta([S_x])\wedge R_\delta([U_y])=\delta_{xy}$ 并写「这蕴含下述结果」：第 1) 条的两个断言与第 2) 条的「典范同构」都未逐项验证；同页给出 $H_\delta$ 的核后，同伦等式 $\operatorname{id}-\Pi_\delta=dH_\delta+H_\delta d$ 也只以一句断言带过，细节见 [HL]（译注「流与 Schwartz 核」ch07.tex:227-232）。
+
+## 易错点
+
+- 求和遍历全部临界点，但 $\alpha$ 为 $k$-形式时只有指标为 $k$ 的 $x$ 有贡献（次数配对迫使 $\dim S_x=n-k$）；漏掉这个按次数的筛选会以为 $\Pi_\delta$ 改变次数。
+- 第 1) 条的 $\Pi_\delta d=d\Pi_\delta$ 只在 $\alpha\in\Omega^*(Y)$（光滑形式）上陈述，而 $\Pi_\delta$ 的定义域是流空间 $D'(Y)$，两者不可混用。
+- $\delta$ 必须充分小：只有此时引理 2 的恒等式与流的横截性才成立。
+- 原文同页的变体写 $H^n_c(Y\times Y\times(0,1))$，而 $\rho$ 是 $n+1$-形式（译注已标为存疑，疑应为 $n+1$）；这与本命题的 $\Pi_\delta$ 无关，但同段出现，阅读时容易串行。
+
+## 相关卡
+
+- `kshms/concept/dfn-20-morse-composition`
+- `kshms/concept/prp-06-m1b-differential`
+- `kshms/concept/prp-07-a-inf-quasi-isomorphism-b-to-a`
+
+## 出处
+
+- Kontsevich–Soibelman, Homological mirror symmetry and torus fibrations（中译注本 SY01-25） §6.5（原文 p.46）；锚点 `源码/chunks/ch07.tex:241-254（命题 8）`
+
+> 原文 p46 §6.5；恒等式 $\int_Y R_\delta([S_x])\wedge R_\delta([U_y])=\delta_{xy}$ 见上文 ch07.tex:234-238，同伦 $H_\delta$ 的核与 $\operatorname{id}-\Pi_\delta=dH_\delta+H_\delta d$ 见 256-264，注 18 见 267-271。引理 2 第 2) 条原文把 $Z_i$ 与 $Y$ 的关系误作 $\in$，应为 $\subset$（译注「原文的排版疏漏」ch07.tex:283-286），本卡按订正后的版本引用。

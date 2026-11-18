@@ -1,0 +1,59 @@
+# $m_1^B$ 定义了 $B$ 上的微分
+
+`kshms/concept/prp-06-m1b-differential` · track D（Morse 机器） · 原文 命题 6
+
+**问题**　把 $A_\infty$-代数沿投影与同伦压到子复形上，压过来的 $m_1^B$ 还是微分吗？
+
+**摘要**　把 $m_1$ 沿投影 $\Pi$ 与嵌入 $i$ 压到子复形 $B=\Pi(A)$ 上，得到 $m_1^B=p\circ m_1\circ i$，它满足 $(m_1^B)^2=0$，故 $B$ 上有一个微分。
+
+**别名**　m_1^B defines a differential on B；$m_1^B$ 是微分；同调扰动的第一步
+
+## 陈述
+
+线性映射 $m_1^B$ 定义了 $B$ 中的一个微分。
+
+## 记号
+
+$A$：非幺 $A_\infty$-代数；$\Pi:A\to A$：零次线性投影，$\Pi^2=\Pi$ 且 $d\Pi=\Pi d$；$H:A\to A[-1]$：同伦，满足 $1-\Pi=dH+Hd$；$B=\Pi(A)$，$i:B\to A$ 为嵌入，$p:A\to B$ 为投影，$\Pi=i\circ p$；$m_1^B=p\circ m_1\circ i$。
+
+## 要点
+
+- 命题只断言 $m_1^B$ 是 $B$ 上的微分，即 $(m_1^B)^2=0$；$B$ 上完整的 $A_\infty$-结构是随后定理 3 的内容。
+- 关键在于 $i$、$p$ 都是复形同态且 $p\circ i=\operatorname{id}_B$：$m_1^B$ 就是 $m_1$ 在直和项 $B$ 上的压缩。
+- 原文证明在 p42 只有 "Proof. Clear." 一句，实际计算要用同伦等式 $1-\Pi=dH+Hd$，不是形式推论。
+- 这是同调扰动理论的起点：先让 $B$ 成为复形，才谈得上把高阶 $m_n$ 搬到 $B$ 上。
+
+## 公式
+
+$$m_1^B=p\circ m_1\circ i,\qquad (m_1^B)^2=0$$
+
+$$1-\Pi=dH+Hd,\qquad \Pi=i\circ p$$
+
+## 证明（sketch）
+
+1. 注意 $i$、$p$ 是复形同态：$i\,d^B=d\,i$，$p\,d=d^B\,p$，且 $p\circ i=\operatorname{id}_B$。
+
+   *为什么*：由 $\Pi=i\circ p$、$d\Pi=\Pi d$ 与 $\Pi^2=\Pi$ 直接读出；这三条正是 $\Pi$ 作为「投影」的全部假设。
+
+2. 计算 $(m_1^B)^2=p\,m_1\,i\,p\,m_1\,i=p\,m_1\,\Pi\,m_1\,i$，再用 $\Pi=\operatorname{id}-(dH+Hd)$ 与 $m_1^2=0$ 把右端化归为零。
+
+   *为什么*：同伦等式把 $\Pi$ 换成 $\operatorname{id}$ 与 $dH+Hd$ 之和：$\operatorname{id}$ 项由 $m_1^2=0$ 消失，含 $d$ 的项按次数成对抵消。
+
+> 缺口：原文证明只写 "Proof. Clear."（p42），没有写出 $(m_1^B)^2$ 化归为零的计算；该计算要用 $i$、$p$ 是复形同态、$d\Pi=\Pi d$ 与 $1-\Pi=dH+Hd$。完整处理见同调扰动理论的文献（[GS]、[Me]），译注「同调扰动理论」见 ch07.tex:138。
+
+## 易错点
+
+- 不能把证明当成形式推论：$(m_1^B)^2=0$ 用到 $1-\Pi=dH+Hd$；只验 $p\circ i=\operatorname{id}_B$ 不够。
+- 这里只证 $m_1^B$ 是微分；$B$ 上的 $A_\infty$ 关系要等定理 3，不能提前引用。
+- $\Pi$ 只假定是零次线性投影且与 $d$ 交换，不假定是正交投影，也不假定 $H$ 与 $\Pi$ 有别的相容性。
+
+## 相关卡
+
+- `kshms/concept/dfn-03-nonunital-a-inf-algebra`
+- `kshms/concept/prp-07-a-inf-quasi-isomorphism-b-to-a`
+
+## 出处
+
+- Kontsevich–Soibelman, Homological mirror symmetry and torus fibrations（中译注本 SY01-25） §6.4（原文 p.42）；锚点 `源码/chunks/ch07.tex:83-89（命题 6）`
+
+> 原文 p42 §6.4；$m_n^B$ 的树公式见同页 ch07.tex:14-29，定理 3 见 91-124，其证明概要给出 $d(m_n^B)=m_n^{B,\Pi}$。

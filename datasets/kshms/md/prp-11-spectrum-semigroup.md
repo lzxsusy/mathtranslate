@@ -1,0 +1,64 @@
+# 半群 $\psi^t$ 使滤过下降
+
+`kshms/concept/prp-11-spectrum-semigroup` · track F（同调镜像猜想） · 原文 命题 11
+
+**问题**　沿梯度流推动态射，为什么恰好使滤过整体下移 $\int_0^t\mu$，而不是打乱滤过结构？
+
+**摘要**　由 $1$-形式 $\mu$ 对应的向量场 $\xi$ 生成的半群 $\psi^t$，把态射层茎上的 $\mathbb{R}$-滤过整体下移 $\int_0^t\mu$；这是 $\phi^t$ 能连续延拓到完备化的关键。
+
+**别名**　Proposition 11；$\psi^t$ decreases the filtration；梯度流半群与 $\mathbb{R}$-滤过的相容性
+
+## 陈述
+
+单参数半群 $\psi^t$ 在不属于 $L_1\cap L_2$ 的点的茎上使滤过下降。更确切地说，
+$$\psi^t\bigl(\underline{\mathrm{Hom}}^{alg}_p(E_1,E_2)^s\bigr)\subset\underline{\mathrm{Hom}}^{alg}_{\psi^t(p)}(E_1,E_2)^{s-\int_0^t\mu},$$
+其中 $p\in P(L_1,L_2)$ 是任意一点。
+
+## 记号
+
+$\psi^t$：由 $\mu$ 对应的向量场 $\xi$ 生成的 $P(L_1,L_2)$ 上的单参数半群（$t\ge0$）；$\underline{\mathrm{Hom}}^{alg}_p(E_1,E_2)^s$：层 $\underline{\mathrm{Hom}}^{alg}(E_1,E_2)$ 在 $p$ 处茎的第 $s$ 层（由 $\mathcal{C}^{tw}_{\varepsilon}$ 上的滤过诱导，其余张量因子取平凡滤过）；$\int_0^t\mu$：$\mu$ 沿 $\psi^t$ 的流线从 $0$ 到 $t$ 的积分。
+
+## 要点
+
+- $\xi$ 局部是 $f_1-f_2+l$ 的梯度流的生成元，故 $\psi^t$ 就是把点沿该梯度流推送 $t$ 时间；流线不会在有限时间内跑向无穷远，半群才整体定义在 $P(L_1,L_2)$ 上。
+- 结论是一条逐项的包含关系：第 $s$ 层的元素被推到 $\psi^t(p)$ 处第 $s-\int_0^t\mu$ 层，滤过指标整体减 $\int_0^t\mu$，重数结构不变。
+- 命题把 $L_1\cap L_2$ 上的点排除在外：交点处 $f_1-f_2+l$ 的梯度退化，$\xi$ 不再给出有效推移，故只在其余点上下结论。
+- 这条「只下降、不上升」的性质是命题 12 的前提：$\psi^t$ 关于滤过连续，才能过渡到完备化并下降为 $\phi^t$。
+
+## 公式
+
+$$\psi^t\bigl(\underline{\mathrm{Hom}}^{alg}_p(E_1,E_2)^s\bigr)\subset\underline{\mathrm{Hom}}^{alg}_{\psi^t(p)}(E_1,E_2)^{s-\int_0^t\mu}$$
+
+## 证明（sketch）
+
+1. 局部取 $f=f_1-f_2+l$ 使 $\mu=df$，则 $\xi$ 是 $f$ 的梯度流的生成元，$\psi^t$ 沿 $f$ 的流线移动点。
+
+   *为什么*：这是 §8.2 对 $\mu$ 与 $\xi$ 的局部描述：$\xi$ 由 $\mu$ 经 $Y$ 上的度量对偶得到。
+
+2. $\underline{\mathrm{Hom}}^{alg}$ 的茎按指数 $-\lambda_{j,i_1\dots i_n}+\sum_k i_ky_k+f_1(y)-f_2(y)$ 分层；沿流线走 $t$ 时间，该指数恰好减少 $\int_0^t\mu$。
+
+   *为什么*：指数正是 $\mathcal{C}^{tw}_{\varepsilon}$ 的滤过变量，$\psi^t$ 的作用就是沿梯度流平移它，故平移量等于 $\mu$ 沿流线的积分。
+
+3. 于是 $s$ 层的元素落在 $\psi^t(p)$ 的 $s-\int_0^t\mu$ 层，得到包含关系。
+
+   *为什么*：滤过由指数上界定义，指数整体减同一个量即层号整体下移。
+
+> 缺口：原文只写「下述结果容易证明」（The following result is easy to prove），未给细节。缺口是两步核对：其一，$\mu$ 沿流线的积分与滤过指数的下降量相等，这只有局部坐标中的说法；其二，该等式与局部平凡化选取无关（滤过本身已证良定义，故这一步是相容性核对）。整体证明须回到 §8.2 对 $\xi$、$\mu$ 的定义逐项验算。
+
+## 易错点
+
+- 不等式的方向：滤过随 $t$ 下移（层号变小），不是上移；抄成 $s+\int_0^t\mu$ 就把结论反了过来。
+- $\int_0^t\mu$ 是 $1$-形式 $\mu$ 沿流线的积分，不是 $\mu$ 在 $p$ 处的取值；$\mu$ 由 $\mu=\int_{\gamma}\omega$ 定义在 $P(L_1,L_2)$ 上，是闭 $1$-形式。
+- 这是层 $\underline{\mathrm{Hom}}^{alg}$ 的茎上的陈述，不是整体态射空间上的陈述；整体化要靠 $\pi_!$ 的相容性与命题 12。
+- 命题前半句把点限制在 $L_1\cap L_2$ 之外，而「更确切地说」的包含式对任意 $p\in P(L_1,L_2)$ 陈述；在交点处 $\int_0^t\mu=0$，包含式退化为恒等，故两句话并不矛盾，但不能据此以为滤过在每一点都严格下降。
+
+## 相关卡
+
+- `kshms/concept/prp-12-continuous-extension`
+- `kshms/remark/rmk-20-spectrum-filtration`
+
+## 出处
+
+- Kontsevich–Soibelman, Homological mirror symmetry and torus fibrations（中译注本 SY01-25） §8.2（原文 p.56）；锚点 `源码/chunks/ch09.tex:193-200（命题 11）`
+
+> 原文 p56 §8.2；译本 ch09.tex 第 193–200 行；译注「谱的读法」（第 93 行）说明谱与 $\mathbb{R}$-滤过的关系，命题前的第 188–191 行说明 $\xi$ 与 $\psi^t$ 的构造。

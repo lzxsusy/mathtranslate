@@ -1,0 +1,65 @@
+# 曲率 $(0,2)$-部分平凡：$\nabla_E$ 是全纯联络
+
+`kshms/concept/prp-15-holomorphic-connection` · track G（复情形附录） · 原文 命题 15
+
+**问题**　为什么 $L$ 是拉格朗日子流形就足以让 $F(L,\rho)$ 上的诱导联络全纯？
+
+**摘要**　复情形中 $F(L,\rho)$ 上的诱导联络 $\nabla_E$ 的曲率 $(0,2)$-部分为零，故 $\nabla_E$ 全纯；这使镜像函子的像落在全纯向量丛范畴里。
+
+**别名**　Proposition 15；holomorphic connection on $F(L,\rho)$；复情形下镜像函子的全纯性
+
+## 陈述
+
+$\operatorname{curv}(\nabla_E)$ 的 $(0,2)$-部分是平凡的。特别地，$\nabla_E$ 是全纯联络。
+
+## 记号
+
+$P$：$X\times_Y X^{\vee}$ 上的 Poincaré $U(1)$-丛；$E=F(L,\rho)$：纤维为 $\bigoplus_{x^{\vee}\in L,\ p^{\vee}(x^{\vee})=y}\rho(x^{\vee})\otimes P(x,x^{\vee})$ 的全纯向量丛；$\nabla_E$：其上的诱导联络；$z_j=y_j+i\,x_j$（$i=\sqrt{-1}$）：$T_Y$ 上的全纯坐标。
+
+## 要点
+
+- 证明只用到 $L$ 是拉格朗日：把 $L$ 提升到 $T^{*}_Y$，在连通分支的局部邻域内写成 $L=df$，即 $x^{\vee}_j=\partial f/\partial y_j$。
+- 把 $x^{\vee}_j=\partial f/\partial y_j$ 代入 $\nabla_E$，曲率的 $(0,2)$-部分化为 Hessian $\partial^2f/\partial y_j\partial y_k$ 与 $d\overline{z}_j\,d\overline{z}_k$ 的缩并。
+- Hessian 关于 $j,k$ 对称、$d\overline{z}_j\,d\overline{z}_k$ 反对称，缩并为零，故 $\operatorname{curv}(\nabla_E)^{(0,2)}=0$，$\nabla_E$ 全纯。
+- 这是附录复情形构造的关键一步：$E$ 因此是 $X$ 上的全纯向量丛，§9.2 的 $\mathcal{A}(Y)$ 才有与 $\mathcal{C}(Y)$ 平行的对象类。
+
+## 公式
+
+$$\operatorname{curv}(\nabla_E)^{(0,2)}=0$$
+
+$$\operatorname{curv}(\nabla_E)^{(0,2)}=\text{const}\times\bigl(\sum_{j,k}\frac{\partial^2 f}{\partial y_j\,\partial y_k}\,d\overline{z}_j\,d\overline{z}_k\bigr)=0$$
+
+## 证明（complete）
+
+1. 把 $L$ 提升到 $T^{*}_Y$；在 $L$ 的任一连通分支的局部邻域内取光滑实函数 $f=f(y)$ 使 $L=df$，即 $L$ 的局部方程为 $x^{\vee}_j=\partial f/\partial y_j$（$1\le j\le n$）。
+
+   *为什么*：拉格朗日条件使 $L$ 局部是闭 $1$-形式 $df$ 的图像（模 $(T^{\mathbb{Z}}_Y)^{\vee}$），这是后面代入的前提。
+
+2. 在此局部坐标下 $\nabla_E=\nabla_{E,0}+i\,d_E\otimes\bigl((2\pi i/\varepsilon)\sum_j(\partial f/\partial y_j)\,dx_j\bigr)$，其中 $\nabla_{E,0}$ 是 $E$ 上的平凡平坦联络。
+
+   *为什么*：$\nabla_E$ 是把 Poincaré 丛上的联络 $\overline{\nabla}$ 限制到 $L$ 所得，把 $x^{\vee}_j$ 换成 $\partial f/\partial y_j$ 即为该式。
+
+3. 由 $T_Y$ 上的全纯坐标 $z_j=y_j+i\,x_j$ 读出曲率的 $(0,2)$-部分为 $\operatorname{curv}(\nabla_E)^{(0,2)}=\text{const}\times\bigl(\sum_{j,k}\frac{\partial^2 f}{\partial y_j\,\partial y_k}\,d\overline{z}_j\,d\overline{z}_k\bigr)$。
+
+   *为什么*：只有 $d\overline{z}$ 方向的分量属于 $(0,2)$ 型，故 $(0,2)$-部分只能取这个形状。
+
+4. 右端为零：$\partial^2f/\partial y_j\partial y_k$ 关于 $j,k$ 对称而 $d\overline{z}_j\,d\overline{z}_k$ 反对称，缩并相消；于是 $\operatorname{curv}(\nabla_E)^{(0,2)}=0$，$\nabla_E$ 是全纯联络。
+
+   *为什么*：对称与反对称的缩并为零；$(0,2)$-曲率消失正是联络全纯的判据，命题得证。
+
+## 易错点
+
+- 「$(0,2)$-部分平凡」不等于「曲率为零」：$\nabla_E$ 一般有 $(1,1)$-曲率；全纯联络只要求 $(0,2)$-分量为零。
+- 全纯性的论证是局部的：只在 $L$ 的连通分支的局部邻域内取到 $f$，整体上要按覆盖逐块拼接，不能指望一个整体的函数 $f$。
+- 原文把系数留作 $\text{const}$，译注指出其具体值为 $\pm\pi/\varepsilon$ 量级、与结论无关；只用到对称—反对称缩并，不必去核这个常数的精确数值。
+
+## 相关卡
+
+- `kshms/concept/prp-14-mk-formulas-agree`
+- `kshms/concept/dfn-23-hom-dolb`
+
+## 出处
+
+- Kontsevich–Soibelman, Homological mirror symmetry and torus fibrations（中译注本 SY01-25） §9.1（原文 p.60）；锚点 `源码/chunks/ch10.tex:33-35（命题 15）`
+
+> 原文 p60 §9.1（证明续至 p61）；译本 ch10.tex 第 33–35 行为命题、第 37–44 行为证明；译注「万有丛与平凡化」（第 104 行）与「$(0,2)$-部分为何为零」（第 108 行）补充细节。

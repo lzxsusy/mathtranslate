@@ -1,0 +1,34 @@
+# 条件 $([\omega],\beta)=0$：为绕开 $m_0$ 而设的方便假设
+
+`kshms/remark/rmk-11-zero-pairing-condition` · track C（Fukaya 与退化） · 原文 注 11
+
+**问题**　定义 16 为什么额外要求 $([\omega],\beta)=0$，本文的主要应用自动满足它吗？
+
+**摘要**　要求 $([\omega],\beta)=0$ 只是为避免非平凡 $m_0$ 带来的复合问题；环面与拉格朗日子环面满足它，adic 拓扑下足够小的 $m_0$ 也有替代处理。
+
+**别名**　Remark 11；condition $([\omega],\beta)=0$；避开 $m_0$ 的技术约定
+
+## 陈述
+
+条件 $([\omega],\beta)=0$ 只是为了方便而引入的。它有助于避开我们前面提到的、关于复合 $m_0$ 的问题。当 $V$ 是带常值辛形式的环面、$L$ 是拉格朗日子环面时，该条件成立，而这是本文的主要应用。一般地，只要 $m_0$ 在 adic 拓扑下足够小，就有办法处理非平凡的 $m_0$。
+
+## 这条注在全文中的作用
+
+它把 Fukaya 范畴的 $m_0$ 问题显式隔离：有了这条，后文可以只处理 $m_1,m_2,\dots$，不必先讨论带 $m_0$ 的 $A_\infty$-范畴。同时它声明本文主情形（环面纤维化的环面纤维）自动满足，因此不是实质限制。
+
+## 易错点
+
+- 这是充分而非必要的便利条件：一般 $m_0$ 在 adic 拓扑下足够小时仍可工作，别把它当成 $m_0=0$ 的定理。
+- $\beta$ 取在 $\pi_2^{free}(V,L)$，配对是 $[\omega]$ 与相对同伦类的配对；条件要求对所有 $\beta$ 成立，不是只对某一个圆盘。
+- 环面与子环面情形成立是本文主应用，不意味着任意 Lagrange 子流形都满足。
+
+## 相关卡
+
+- `kshms/concept/dfn-16-fukaya-objects`
+- `kshms/remark/rmk-12-b-field-omitted`
+
+## 出处
+
+- Kontsevich–Soibelman, Homological mirror symmetry and torus fibrations（中译注本 SY01-25） §5.1（原文 p.29,30）；锚点 `源码/chunks/ch05.tex:47-49（注 11）`
+
+> 原文 p29 §5.1，注文续至 p30；中译注本 ch05.tex:47-49。

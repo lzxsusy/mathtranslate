@@ -1,0 +1,59 @@
+# 对偶 Monge–Ampère 流形的典范存在性
+
+`kshms/concept/prp-02-dual-monge-ampere-manifold` · track A（CFT 与几何退化） · 原文 命题 2
+
+**问题**　Legendre 变换把势函数 $K$ 换成 $\widehat K$，它对整仿射结构究竟做了什么？
+
+**摘要**　每个 Monge–Ampère 流形 $(Y,g_Y,\nabla_Y)$ 都有典范对偶 $(Y^{\vee},g^{\vee}_Y,\nabla^{\vee}_Y)$：底流形与度量不变，只把平坦联络换成对偶联络，切局部系随之换成对偶局部系。
+
+**别名**　dual Monge–Ampère manifold；对偶 Monge–Ampère 流形；Legendre 对偶给出的镜像流形
+
+## 陈述
+
+对给定的 Monge–Ampère 流形 $(Y,g_Y,\nabla_Y)$，存在典范定义的对偶 Monge–Ampère 流形 $(Y^{\vee},g^{\vee}_Y,\nabla^{\vee}_Y)$，使得 $(Y,g_Y)$ 与 $(Y^{\vee},g^{\vee}_Y)$ 作为黎曼流形等同，且局部系 $(T_{Y^{\vee}},\nabla^{\vee}_Y)$ 自然同构于与 $(T_Y,\nabla_Y)$ 对偶的局部系。
+
+## 记号
+
+$(Y,g_Y,\nabla_Y)$：Monge–Ampère 流形（定义 2），$g_Y$ 在仿射坐标下有局部势 $K$，$\nabla_Y$ 为无挠平坦联络；$\widehat K$：$K$ 的 Legendre 变换；$T_Y$、$T_{Y^{\vee}}$：切局部系。
+
+## 要点
+
+- 对偶只改平坦联络与局部系，不改底流形与度量：$(Y,g_Y)$ 与 $(Y^{\vee},g^{\vee}_Y)$ 作为黎曼流形等同，这一点由译注「『对偶』改变的是什么」点明。
+- 构造是局部的：在坐标卡上取 Legendre 变换把 $dK$ 的图像换成 $d\widehat K$ 的图像，度量矩阵由 $(\partial^2K/\partial x_i\partial x_j)$ 换成 $(\partial^2\widehat K/\partial y_i\partial y_j)$。
+- $\nabla^{\vee}_Y$ 是 $\nabla_Y$ 的对偶联络：借 $g_Y$ 把 $T_Y$ 与 $T^*_Y$ 等同后取对偶；推论 1 进一步说明整仿射结构在对偶下保持，对偶协变格为 $(T^{\mathbb{Z}}_Y)^{\vee}$。
+- 译注指出这正是本节「环面纤维化之对偶」的来源：纤维 $T_{Y,y}/\varepsilon T^{\mathbb{Z}}_{Y,y}$ 的对偶纤维是 $T^*_{Y,y}/\varepsilon(T^{\mathbb{Z}}_Y)^{\vee}_y$，镜像两侧的复结构数据就藏在这两个对偶联络里。
+
+## 公式
+
+$$\widehat K(y)=\max_{x}\bigl(\sum_i x_iy_i-K(x)\bigr)$$
+
+$$g_{ij}=\frac{\partial^2K}{\partial x_i\partial x_j},\qquad g^{\vee}_{ij}=\frac{\partial^2\widehat K}{\partial y_i\partial y_j}$$
+
+## 证明（sketch）
+
+1. 局部上取仿射坐标与势 $K$，把 $dK$ 的图像 $L\subset T^*\mathbb{R}^n$ 看作流形；Legendre 变换使它同时是 $d\widehat K$ 的图像。
+
+   *为什么*：$\widehat K$ 定义为 $K$ 的 Legendre 变换，其微分与 $K$ 的微分互为逆图，故同一条 $L$ 给出两套仿射坐标。
+
+2. 在 $L$ 上读出度量与两个仿射结构，再把各坐标卡的局部图景拼贴成 $Y^{\vee}$。
+
+   *为什么*：度量在 $x$ 坐标下是 $(\partial^2K)$、在 $y$ 坐标下是 $(\partial^2\widehat K)$，两种仿射结构由到两个 $\mathbb{R}^n$ 的投影给出。
+
+> 缺口：原文未单列证明：p19 只给出局部构造，整体化只有一句断言（局部图景可以拼贴），拼贴所需的转移相容性（$\widehat K$ 在坐标变换下的变换规律）并未写出。依据是 Monge–Ampère 流形的定义 2 与引理 1 的 Legendre 变换计算（原文引 [Mo]，并见译注 ch03.tex:277-283）。
+
+## 易错点
+
+- 「对偶」不改度量：若以为 $(Y^{\vee},g^{\vee}_Y)$ 另配了一个度量，就与推论 1 的整仿射对偶冲突。
+- 原文写 $(T_{Y^{\vee}},\nabla^{\vee}_Y)$，连接的下标是原流形 $Y$；$\nabla^{\vee}_Y$ 是 $\nabla_Y$ 的对偶联络，不是 $Y^{\vee}$ 上另取的联络。
+- Legendre 变换只在 $K$ 凸、$dK$ 为微分同胚时局部有定义；整体存在性依赖拼贴，不能由逐点公式直接读出。
+
+## 相关卡
+
+- `kshms/concept/dfn-02-monge-ampere-manifold`
+- `kshms/concept/prp-01-maximal-degeneration-nilpotent`
+
+## 出处
+
+- Kontsevich–Soibelman, Homological mirror symmetry and torus fibrations（中译注本 SY01-25） §3.2（原文 p.19）；锚点 `源码/chunks/ch03.tex:264-269（命题 2）`
+
+> 原文 p19 §3.2；局部构造（Legendre 变换与两个仿射结构）见同页 ch03.tex:257-262，译注「『对偶』改变的是什么」见 277-283。

@@ -1,0 +1,34 @@
+# 平坦环面上的截断 theta 级数
+
+`kshms/remark/rmk-21-truncated-theta` · track F（同调镜像猜想） · 原文 注 21
+
+**问题**　在什么特殊情形下，Fukaya–Oh 范畴的高次复合可以写出显式封闭公式？
+
+**摘要**　若把环面 $Y=\mathbb{R}^n/\mathbb{Z}^n$ 配上平坦度量、只取 $X^{\vee}$ 中的平坦拉格朗日子环面，则 $FO(X^{\vee})$ 的全部高次复合都能写成显式的「截断 theta 级数」，与椭圆曲线情形所见的级数同型。
+
+**别名**　Remark 21；truncated theta series；椭圆曲线情形的类比
+
+## 陈述
+
+若给环面 $Y=\mathbb{R}^n/\mathbb{Z}^n$ 配上平坦度量，并且只考虑 $X^{\vee}$ 中的平坦拉格朗日子环面，则 $\mathcal{A}_\infty$-预范畴 $FO(X^{\vee})$ 中所有高次复合都可以用显式的「截断 theta 级数」（truncated theta series）写出，与 [Ko]、[P1] 在椭圆曲线情形所考虑的那些级数类似。
+
+## 这条注在全文中的作用
+
+这条注把全篇最抽象的 $A_\infty$-结构在最具体的例子上「落地」：它说明平面树求和不必是形式幂级数，在平坦环面上会截断成可计算的 theta 级数。这也是把本文与 Kontsevich 1994 报告、Polishchuk 的椭圆曲线计算对接的地方，可作为检验 $\mathcal{A}_\infty$-公式的算例入口。
+
+## 易错点
+
+- 前提有三条：$Y$ 是平坦环面、只取**平坦**拉格朗日子环面、度量平坦；去掉任一条，「截断」就不成立（级数不再有限）。
+- 「截断 theta 级数」不是经典 theta 函数：它按 $\beta\in H_2$ 的权重 $q^{\int_\beta\omega^{\vee}}$ 逐项截断，只在上述平坦情形与经典 theta 级数同型。
+- 这是注，不是定理：作者没有在此给证明，只是指出与 [Ko]、[P1] 的级数同型。
+
+## 相关卡
+
+- `kshms/concept/prp-05-fukaya-oh-limit-equivalence`
+- `kshms/concept/thm-04-abelian-hms`
+
+## 出处
+
+- Kontsevich–Soibelman, Homological mirror symmetry and torus fibrations（中译注本 SY01-25） §8.3（原文 p.59）；锚点 `源码/chunks/ch09.tex:312-316（注 21）`
+
+> 原文 p59 顶部（§8 收尾，§9 标题之前）；译本 p43。
