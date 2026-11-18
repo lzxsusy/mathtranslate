@@ -1,0 +1,84 @@
+---
+id: dmod/concept/flat-connection
+type: concept
+track: G
+---
+
+# 平坦联络（可积联络）
+
+> 联络是作为 $\mathcal O_X$-模凝聚的 $\mathcal D_X$-模；局部矩阵满足 $D_jA_i-D_iA_j=[A_i,A_j]$ 时称平坦，此时它等价于局部系。
+
+**问题**：为什么 $\mathcal D_X$-模的联络概念会归结为局部矩阵的可积性方程，平坦性又在什么意义下等价于局部系？
+
+## 定义
+
+设 $X$ 是特征零代数闭域上的光滑代数簇。$\mathcal D_X$-模 $\mathcal V$ 若作为 $\mathcal O_X$-模是凝聚的，则称为联络（connection）。在 $X$ 足够小的仿射开集上取 $\mathcal V$ 的一组 $\mathcal O_X$-基 $s_1,\dots,s_q$，令 $D_i=\partial/\partial x_i$ 是整体坐标对应的向量场；则存在 $q\times q$ 矩阵 $A_i=(A^i_{kj})$（元素在 $R(X)$ 中）使得 $D_is_j=\sum_{k=1}^qA^i_{kj}s_k$，于是 $\Psi^{-1}\circ D_i\circ\Psi=D_i+A_i$，其中 $\Psi:\mathcal O_X^q\to\mathcal V$ 由 $s_1,\dots,s_q$ 给出。由 $\mathcal V$ 上 $[D_i,D_j]=0$ 推出 $D_j(A_i)-D_i(A_j)=[A_i,A_j]$（$1\le i,j\le n$）：这就是平坦性（可积性）条件，配上满足它的联络 $\nabla$ 的 $\mathcal O_X$-模就是平坦联络。讲义据此说，联络局部地对应于经典的可积联络概念。
+
+*记号*：$D_i=\partial/\partial x_i$：局部坐标向量场；$A_i=(A^i_{kj})$：局部联络矩阵，元素在 $R(X)=\Gamma(X,\mathcal D_X)$ 中；$\Psi:\mathcal O_X^q\to\mathcal V$：由基 $s_1,\dots,s_q$ 给出的 $\mathcal O_X$-模同构；$\nabla$：$\mathcal O_X$-模上的联络。
+
+## 要点
+
+- 讲义把「联络」定义为作为 $\mathcal O_X$-模凝聚的 $\mathcal D_X$-模；定理 5.2.1 证明，在 $X$ 连通且 $\mathcal V\neq0$ 时这等价于 $\mathcal V$ 是有限秩局部自由 $\mathcal O_X$-模。
+- 局部选基后有 $\Psi^{-1}\circ D_i\circ\Psi=D_i+A_i$；$[D_i,D_j]=0$ 迫使 $D_j(A_i)-D_i(A_j)=[A_i,A_j]$ 对所有 $1\le i,j\le n$ 成立。
+- 该方程就是经典的可积（平坦）条件，讲义据此说联络局部地对应于可积联络的经典概念。
+- $\mathcal O_X$-模配平坦联络 $\nabla$ 等价于局部系（局部常值层）；取 de Rham 复形得到 $\mathrm{dR}:D^b_{rh}(X)\cong D^b_c(X^{an},\mathbb C)$（§2 批注）。
+- 联络自动完整：推论 5.2.2 说联络是完整 $\mathcal D_X$-模，因为其特征簇是余切丛的零截面。
+
+## 关键公式
+
+- $\Psi^{-1}\circ D_i\circ\Psi=D_i+A_i$
+- $D_is_j=\sum_{k=1}^qA^i_{kj}s_k$
+- $D_j(A_i)-D_i(A_j)=[A_i,A_j],\qquad 1\le i,j\le n$
+
+## 定理与证明
+
+### 定理 5.2.1（联络的四种刻画）（完整）
+
+设 $X$ 是连通光滑代数簇，$\mathcal V$ 是非零凝聚 $\mathcal D_X$-模。则以下条件等价：(i) $\mathcal V$ 是联络；(ii) $\operatorname{Ch}(\mathcal V)$ 含于余切丛 $T^*(X)$ 的零截面中；(iii) $\operatorname{Ch}(\mathcal V)$ 就是零截面；(iv) $\mathcal V$ 是有限秩局部自由 $\mathcal O_X$-模。
+
+1. 先处理无需论证的方向：(iv)$\Rightarrow$(i) 与 (iii)$\Rightarrow$(ii)。  
+   *为什么*：有限秩局部自由 $\mathcal O_X$-模当然是 $\mathcal O_X$-凝聚的；特征簇等于零截面当然含于零截面。
+2. (iv)$\Rightarrow$(iii)：取平凡滤过 $F_p\mathcal V=0$（$p<0$）、$F_p\mathcal V=\mathcal V$（$p\ge0$），则 $\operatorname{Gr}\mathcal V$ 只在次数 $0$ 非零，其零化子含 $\bigoplus_{p\ge1}\operatorname{Gr}_p\mathcal D_X$，故 $\operatorname{Ch}(\mathcal V)$ 含于零截面；又 $\operatorname{Ch}(\mathcal V)$ 投射到 $\operatorname{supp}(\mathcal V)$ 上。  
+   *为什么*：$X$ 连通时几何纤维 $T_x(\mathcal V)=\mathcal V_x/\mathfrak m_x\mathcal V_x$ 的维数非零且局部常值，故 $\operatorname{supp}(\mathcal V)=X$；再用 III.3.9 的投射性质得 $\operatorname{Ch}(\mathcal V)$ 等于零截面。
+3. (ii)$\Rightarrow$(i)：仿射化并取好滤过 $F\mathcal V$；$\operatorname{Ch}(\mathcal V)$ 含于零截面意味着 $\operatorname{Gr}\mathcal V$ 的零化子在 $T^*(X)$ 中的零点集含于零截面，由 Hilbert 零点定理某个 $D_1^m,\dots,D_n^m$ 的主符号零化 $\operatorname{Gr}\mathcal V$，于是 $\operatorname{Gr}_p\mathcal V=0$（$p\gg0$）。  
+   *为什么*：好滤过使 $\operatorname{Gr}\mathcal V$ 成为有限生成 $\operatorname{Gr}\mathcal D_X$-模；零点集条件给出零化子包含 $(D_1,\dots,D_n)$ 的某个幂，故滤过有限终止，$\mathcal V$ 是凝聚 $\mathcal O_X$-模。
+4. (i)$\Rightarrow$(iv)：仿射局部取整体截面 $s_1,\dots,s_q$ 使其像构成几何纤维 $T_x(\mathcal V)$ 的基，Nakayama 引理给出 $\mathcal O_X^q\to\mathcal V$ 满射；再对 $p$ 归纳证明 $\sum_ig_is_i=0$ 迫使所有 $g_i\in\mathfrak m_x^p$，故 $s_i$ 是 $\mathcal V_x$ 的自由基，缩小时得 $\mathcal V\cong\mathcal O_X^q$。  
+   *为什么*：$\mathcal V$ 作为 $\mathcal O_X$-模凝聚，几何纤维有限维；归纳步对 $\sum g_is_i=0$ 作用向量场 $T$，用 $Ts_i=\sum a^i_js_j$ 与 II.2.15 的 $D^I$ 判别法。
+
+*出处*：定理 5.2.1 / 原书 V §2, p.135–136
+
+### 推论 5.2.2（联络是完整模）（完整）
+
+若 $\mathcal V$ 是 $X$ 上的联络，则 $\mathcal V$ 是完整 $\mathcal D_X$-模。
+
+1. 由定理 5.2.1 的 (i)$\Leftrightarrow$(iii)，$\mathcal V$ 的特征簇等于 $T^*(X)$ 的零截面。  
+   *为什么*：定理 5.2.1 已证四条等价，联络即 (i)。
+2. 零截面在 $T^*(X)\to X$ 下同构于 $X$，其维数为 $\dim X$，而 $\operatorname{supp}(\mathcal V)=X$，故 $\dim\operatorname{Ch}(\mathcal V)=\dim X$ 在每点成立。  
+   *为什么*：完整性的判据是特征簇维数等于 $\dim X$（I §8 的定义，定理 5.1.1 之前已回顾）。
+
+*出处*：推论 5.2.2 / 原书 V §2, p.136
+
+
+## 易错点
+
+- 「联络」在讲义里指 $\mathcal O_X$-凝聚的 $\mathcal D_X$-模（定理 5.2.1 说明它等价于有限秩局部自由），并不预设一个显式的 $\nabla$；把二者混为一谈会漏掉这层等价。
+- 平坦性不是任意联络都自动满足的：一般联络的曲率可以非零；讲义里的 $D_j(A_i)-D_i(A_j)=[A_i,A_j]$ 是由 $\mathcal D_X$-模结构 $[D_i,D_j]=0$ 推出的。
+- 定理 5.2.1 要求 $X$ 连通且 $\mathcal V\neq0$；(iii) 与 (iv) 中的秩是常值，去掉连通性后只能得到局部常值的秩。
+- 局部矩阵 $A_i$ 依赖基 $s_1,\dots,s_q$ 的选取，不是 $\mathcal V$ 的不变量；可积性方程在换基下保持形状，但某个具体的 $A_i$ 不能当作模的固有数据。
+
+## 出处
+
+- Miličić《Lectures on the Algebraic Theory of D-Modules》中译本（校订批注本），V §2 联络（Connections），p.135-136（PDF p.141-142），`源码/chapters/chap5.tex:66-110（定理 5.2.1）`
+- Miličić《Lectures on the Algebraic Theory of D-Modules》中译本（校订批注本），V §2 联络（Connections），批注，p.136（PDF p.142），`源码/chapters/chap5.tex:132-134（批注：平坦联络与局部系）`
+
+## 核验
+
+状态：`external-confirmed`（2026-11-19）
+- nLab：https://ncatlab.org/nlab/show/flat+connection — 条目断言平坦联络等价于局部系统，即 Riemann–Hilbert 对应的经典情形；支持卡中「平坦联络 $\Leftrightarrow$ 局部系」一条。
+- nLab：https://ncatlab.org/nlab/show/de+Rham+complex — 条目给出平坦联络的 de Rham 复形；支持卡中「取 de Rham 复形进入 $\mathrm{dR}:D^b_{rh}(X)\cong D^b_c(X^{an},\mathbb C)$」一条。
+
+## 关联
+
+- `dmod/concept/local-system`
+- `dmod/concept/riemann-hilbert-correspondence`
+- `dmod/concept/d-module-on-affine-line`

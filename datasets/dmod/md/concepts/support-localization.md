@@ -1,0 +1,84 @@
+---
+id: dmod/concept/support-localization
+type: concept
+track: F
+---
+
+# 支集局部化 $\Gamma_{[Y]}$
+
+> 沿闭光滑子簇的支集局部化 $\Gamma_{[Y]}$ 由「被 $\mathcal J^p$ 零化」的截面穷尽，等于 $i_+i^!$，拟凝聚时更与 $\Gamma_Y$ 一致。
+
+**问题**：如何用理想层 $\mathcal J$ 的幂零化阶描述「支集落在 $Y$ 的截面」这个子模？
+
+## 定义
+
+设 $Y\subset X$ 是光滑簇的闭光滑子簇，$\mathcal J=\mathcal I(Y)$ 是其理想层。归纳定义 $\mathcal J^0=\mathcal O_X$，$\mathcal J^p$ 为 $\mathcal J^{p-1}\otimes_{\mathcal O_X}\mathcal J\to\mathcal O_X$ 的像。对 $\mathcal O_X$-模 $\mathcal V$，令 $\mathcal V[Y,p]$ 为被 $\mathcal J^p$ 的所有元素零化的截面构成的子层，则 $\mathcal V[Y,p]\subset\mathcal V[Y,p+1]$ 且 $\mathcal V[Y,p]\subset\Gamma_Y(\mathcal V)$。置 $\Gamma_{[Y]}(\mathcal V)=\bigcup_{p\ge0}\mathcal V[Y,p]$。
+
+*记号*：$\mathcal J=\mathcal I(Y)$：$Y$ 的理想层；$\mathcal V[Y,p]$：被 $\mathcal J^p$ 零化的截面；$\Gamma_Y(\mathcal V)$：$\mathcal V$ 中所有支集在 $Y$ 的局部截面构成的层；$\Gamma_{[Y]}$：代数局部上同调子。
+
+## 要点
+
+- $\Gamma_{[Y]}(\mathcal V)$ 是 $\Gamma_Y(\mathcal V)$ 的 $\mathcal O_X$-子模，且被递增的 $\mathcal V[Y,p]$ 穷尽。
+- 引理 4.8.8：对右 $\mathcal D_X$-模 $\mathcal W$ 有 $\Gamma_{[Y]}(\mathcal W)=i_+(i^!(\mathcal W))$，故 $\Gamma_{[Y]}$ 给出 $\mathcal D_X$-子模。
+- 命题 4.8.9：$\Gamma_{[Y]}$ 左正合（$i_+$ 正合、$i^!$ 左正合）。
+- 定理 4.8.10：$i^!\circ i_+\cong\operatorname{id}$ 且 $i_+\circ i^!\cong\Gamma_{[Y]}$。
+- 引理 4.8.11：拟凝聚 $\mathcal O_X$-模上 $\Gamma_{[Y]}(\mathcal V)=\Gamma_Y(\mathcal V)$；证明用仿射情形下 $g^pv=0$（$g$ 在 $Y$ 上消没）。
+- 命题 4.8.12：拟凝聚右 $\mathcal D_X$-模上 $\Gamma_Y(\mathcal V)=i_+(i^!(\mathcal V))$。
+
+## 关键公式
+
+- $\Gamma_{[Y]}(\mathcal V)=\bigcup_{p\ge0}\mathcal V[Y,p]$
+- $\mathcal J^p=\operatorname{im}\bigl(\mathcal J^{p-1}\otimes_{\mathcal O_X}\mathcal J\to\mathcal O_X\bigr)$
+- $\Gamma_{[Y]}(\mathcal W)=i_+\bigl(i^!(\mathcal W)\bigr)$
+- $\Gamma_Y(\mathcal V)=i_+\bigl(i^!(\mathcal V)\bigr)$
+
+## 定理与证明
+
+### 引理 4.8.8（$\Gamma_{[Y]}$ 与 $i_+i^!$ 重合）（完整）
+
+设 $\mathcal W$ 是右 $\mathcal D_X$-模。则 $\Gamma_{[Y]}(\mathcal W)=i_+(i^!(\mathcal W))$。
+
+1. 对 $y\in Y$ 断言 $\{v\in i_+(i^!(\mathcal W))_y:\operatorname{ord}(v)<p\}=\mathcal W[Y,p]_y$，并对 $p$ 归纳。  
+   *为什么*：这把「被 $\mathcal J^p$ 零化」翻译成 $\operatorname{ord}$ 的阶数条件，两边都是 $\mathcal W_y$ 的递增滤过。
+2. $p=1$：$\operatorname{ord}(v)=0$ 当且仅当 $v\in i^!(\mathcal W)_y=\mathcal W[Y,1]_y$。  
+   *为什么*：给出归纳起点。
+3. 归纳步：若 $\operatorname{ord}(v)=p+1$，由引理 4.8.5(i) 有 $\operatorname{ord}(vf_j)\le p$，故 $v\in\mathcal W[Y,p+1]_y$；反向由 $vE=\sum_j vf_jD^j$ 与引理 4.8.5(ii) 得 $pv=vE-v(E-p)$ 的阶 $\le p$，故 $v\in i_+(i^!(\mathcal W))_y$。  
+   *为什么*：两个方向合起来给出 $p+1$ 情形；对 $p$ 取并即得 $\Gamma_{[Y]}(\mathcal W)=i_+(i^!(\mathcal W))$。
+
+*出处*：引理 4.8.8 / 原书 §8, p.123
+
+### 定理 4.8.10（两个伴随态射的描述）（要点（有缺口））
+
+设 $Y$ 是光滑簇 $X$ 的闭光滑子簇，$i:Y\to X$ 是自然包含。则 $i^!\circ i_+\cong\operatorname{id}$ 且 $i_+\circ i^!\cong\Gamma_{[Y]}$。
+
+1. $i_+\circ i^!\cong\Gamma_{[Y]}$ 由引理 4.8.8 逐点给出：对右 $\mathcal D_X$-模 $\mathcal W$ 有 $\Gamma_{[Y]}(\mathcal W)=i_+(i^!(\mathcal W))$。  
+   *为什么*：这一侧是余单位方向，直接由阶数条件刻画。
+2. $i^!\circ i_+\cong\operatorname{id}$ 来自引理 4.8.6：典范态射 $\alpha_{\mathcal V}:\mathcal V\to i^!(i_+(\mathcal V))$ 对凝聚右 $\mathcal D_Y$-模是同构。  
+   *为什么*：这一侧是单位方向，其逆由 $E=\sum_j f_jD_j$ 的阶数估计构造。
+
+> 缺口：讲义在本定理处未给证明，只写「它给出了两个伴随态射的描述」；本卡按引理 4.8.6、引理 4.8.7、引理 4.8.8 复原两条等式，未补出自然性的核对。
+
+*出处*：定理 4.8.10 / 原书 §8, p.124
+
+
+## 易错点
+
+- $\mathcal V[Y,p]$ 是「被 $\mathcal J^p$ 零化」的截面，不是「$\mathcal J^p$ 的像」；两者容易混。
+- $\Gamma_{[Y]}=\Gamma_Y$ 只在拟凝聚时成立（引理 4.8.11）；一般 $\mathcal D_X$-模上 $\Gamma_{[Y]}$ 只是 $\Gamma_Y$ 的子模。
+- $\Gamma_{[Y]}$ 只左正合；把它写成 $H^0R\Gamma_Y$ 需要先导出化，未导出的函子不能当正合函子用。
+- 定理 4.8.10 讲义未给证明，引用时要补上引理 4.8.6 与引理 4.8.7。
+- $\Gamma_{[Y]}$ 只对闭光滑子簇定义；开浸入方向的对应物是 $j_\bullet$，不能与它混用。
+
+## 出处
+
+- Miličić《Lectures on the Algebraic Theory of D-Modules》（中译本，校订批注本），§8 闭浸入与 Kashiwara 定理，p.123–124（PDF p.129–130），`源码/chapters/chap4.tex:1157-1210（引理 4.8.8、定理 4.8.10、命题 4.8.12）`
+
+## 核验
+
+状态：`source-only`（2026-11-19）
+
+## 关联
+
+- `dmod/concept/local-cohomology-d-module`
+- `dmod/concept/kashiwara-theorem`
+- `dmod/concept/base-change-for-d-modules`

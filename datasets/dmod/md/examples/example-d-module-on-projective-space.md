@@ -1,0 +1,62 @@
+---
+id: dmod/example/example-d-module-on-projective-space
+type: example
+track: H
+---
+
+# 射影空间 $P^n$ 上拟凝聚 $\mathcal D$-模的整体截面
+
+> $P^n$ 上拟凝聚 $\mathcal D$-模由整体截面决定：$\Gamma(X,-)$ 与 $\Delta$ 互逆，且 $H^p(X,V)=0$（$p>0$）。
+
+**问题**：为什么 $P^n$ 上拟凝聚 $\mathcal D$-模在 $p>0$ 时的上同调为零，$\Gamma(X,-)$ 又为什么与 $\Delta$ 互逆？
+
+## 设定
+
+取 $X=P^n$，$Y=k^{n+1}$，$Y^*=Y\setminus\{0\}$，$\pi:Y^*\to X$ 是自然投射 $\pi(y_0,\dots,y_n)=[y_0:\dots:y_n]$。$U_0=\{x_0\neq0\}\cong k^n$，由 $\alpha(t,[1,x_1,\dots,x_n])=(t,tx_1,\dots,tx_n)$ 给出的 $\alpha:k^*\times U_0\to\pi^{-1}(U_0)$ 是纤维化 $\pi$ 在 $U_0$ 上的平凡化；$\pi$ 的纤维是 $k^*$。令 $E=\sum_{i=0}^ny_i\partial/\partial y_i$。要证 $\Gamma(X,-)$ 在拟凝聚 $\mathcal D_X$-模上正合，并与 $\Delta(V)=D_X\otimes_{D_X}V$ 互逆。
+
+## 计算
+
+1. 局部化：$\Gamma(\pi^{-1}(U_0),\pi^+(V))=R(\pi^{-1}(U_0))\otimes_{R(U_0)}\Gamma(U_0,V)$，经 $\alpha$ 化为 $R(k^*)\otimes_k\Gamma(U_0,V)=k((t))\otimes_k\Gamma(U_0,V)$，其中 $E$ 对应 $t\partial_t$。  
+   *为什么*：$\pi^{-1}(U_0)$ 与 $U_0$ 都是仿射簇，逆像在仿射上是张量积；$E$ 沿纤维方向就是 $k^*$ 的 Euler 向量场，$R(k^*)=k((t))$ 是 $k[t]$ 对 $t$ 的局部化。
+2. 特征分解：$[E,y_i]=y_i$、$[E,\partial/\partial y_i]=-\partial/\partial y_i$，且每个截面被某个 $\prod_{p\in S}(E-p)$ 零化（$S\subset\mathbb Z$ 有限），故 $\Gamma(Y^*,\pi^+(V))=\bigoplus_{p\in\mathbb Z}\Gamma(Y^*,\pi^+(V))_{(p)}$。  
+   *为什么*：在 $k((t))\otimes_k\Gamma(U_0,V)$ 上 $t\partial_t$ 的特征值是整数，$t^p$ 给出特征空间；$U_0$ 在 $\operatorname{GL}(n+1,k)$ 下的有限多个平移覆盖 $X$，把局部的零化多项式拼成整体的。
+3. 识别 $0$ 次特征空间：$\gamma:\Gamma(X,V)\to\Gamma(Y^*,\pi^+(V))_{(0)}$ 由 $v\mapsto1\otimes v$ 给出，是单射且满射，故为同构。  
+   *为什么*：$\gamma_{U_0}$ 是 $\Gamma(U_0,V)\to\Gamma(\pi^{-1}(U_0),\pi^+(V))_{(0)}$ 的同构，单射性用 $\operatorname{GL}(n+1,k)$ 的传递性，满射性用 $U_0$ 的有限平移覆盖拼接截面。
+4. 消去 $\{0\}$ 处的项：若 $K$ 支集在 $\{0\}$，则 $\Gamma(Y,K)$ 的特征值属于 $\{-(n+1+k);k\in\mathbb N\}$，故 $\Gamma(Y,K)_{(0)}=0$；于是 $0\to\Gamma(X,V_1)\to\Gamma(X,V_2)\to\Gamma(X,V_3)\to0$ 正合，$\Gamma(X,-)$ 在 $\mathcal M_{qc}(\mathcal D_X)$ 上正合。  
+   *为什么*：支集在 $\{0\}$ 的模由被所有 $y_i$ 零化的截面 $W$ 生成，$Ev=-(n+1)v$，$\partial^I$ 把特征值再降 $|I|$，故没有 $0$ 次部分。
+5. 结论：正合性给出 $H^p(X,V)=0$（$p>0$，用入射拟凝聚模的 $\Gamma$-无环性）；再由自然变换 $\lambda:\mathrm{id}\to\Gamma\circ\Delta$ 与 $\mu:\Delta\circ\Gamma\to\mathrm{id}$ 都是同构，得 $\mathcal M_{qc}(\mathcal D_X)\cong\mathcal M(D_X)$，逆为 $\Delta$。  
+   *为什么*：$\lambda$ 在自由 $D_X$-模上验证后用正合列比较；$\mu$ 由 $\Gamma$ 正合与 $\Gamma(X,V)=0\Rightarrow V=0$ 得到。
+
+## 结果
+
+对 $P^n$ 上拟凝聚 $\mathcal D_X$-模 $V$ 有 $H^p(X,V)=0$（$p>0$）；$\Gamma(X,-):\mathcal M_{qc}(\mathcal D_X)\to\mathcal M(D_X)$ 是范畴等价，逆为 $\Delta$；故 $P^n$ 上拟凝聚 $\mathcal D$-模由其整体截面生成。机制是 $k^*$-纤维化上的 Euler 算子特征分解：$X$ 上的截面恰是 $E$-特征值 $0$ 的部分，支集在 $\{0\}$ 的项只贡献负特征值。
+
+## 核对
+
+在 $U_0\cong k^n$ 上取 $V=\mathcal O_{U_0}=\mathcal D_{U_0}/\mathcal D_{U_0}(\partial_1,\dots,\partial_n)$（常数层），则 $\Gamma(U_0,V)=k$、$\Delta(k)=\mathcal D_{U_0}$、$\Gamma(U_0,\Delta(k))=k$，与 $\lambda$、$\mu$ 均为同构一致。再用特征值核对步骤 3：$t^p\otimes f$ 的特征值为 $p$，故 $0$ 次部分正是 $1\otimes\Gamma(U_0,V)\cong\Gamma(U_0,V)$。
+
+**相关概念卡**：dmod/concept/d-module-on-affine-line、dmod/concept/flat-connection
+
+## 易错点
+
+- $\pi:Y^*\to X$ 的纤维是 $k^*$，不是 $k$；$E$ 只在 $0$ 次特征空间上对应 $X$ 上的截面，负次数对应 $\{0\}$ 处的项。
+- $\Gamma(X,-)$ 的正合性只对拟凝聚 $\mathcal D_X$-模成立；$\Delta$ 只是右正合，不要把它当成对任意 $\mathcal D_X$-模的正合逆。
+- $H^p(X,V)=0$（$p>0$）用的是入射拟凝聚模的 $\Gamma$-无环性；一般 $\mathcal D_X$-模没有这个性质。
+- 「$0$ 次特征空间」是关键：只有 $E$-特征值 $0$ 的部分才对应 $X$ 上的截面，其余整数特征值属于 $Y^*$ 上沿纤维的项。
+
+## 出处
+
+- Miličić《Lectures on the Algebraic Theory of D-Modules》中译本（校订批注本），III §5 射影空间上的 D-模，p.91-92（PDF p.97-98），`源码/chapters/chap3.tex:496-543（$k^*$-纤维化与 Euler 算子）`
+- Miličić《Lectures on the Algebraic Theory of D-Modules》中译本（校订批注本），III §5 射影空间上的 D-模，p.93-94（PDF p.99-100），`源码/chapters/chap3.tex:599-651（定理：$H^p=0$ 与 $\Gamma$、$\Delta$ 互逆）`
+
+## 核验
+
+状态：`source-only`（2026-11-19）
+
+## 关联
+
+- `dmod/concept/d-module-on-affine-line`
+- `dmod/concept/flat-connection`
+- `dmod/concept/holonomicity-preserved-by-direct-image`
+- `dmod/example/example-euler-operator-on-a1`
+- `dmod/concept/d-module-on-projective-space`

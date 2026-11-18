@@ -1,0 +1,77 @@
+---
+id: dmod/concept/kashiwara-theorem-statement
+type: concept
+track: B
+---
+
+# Kashiwara 定理（第 I 章 §12 的陈述）
+
+> Kashiwara 定理：沿闭子簇 $Y\subset X$ 的直像 $i_+$ 给出 $D_Y$-模与支集含于 $Y$ 的 $D_X$-模的等价，逆为 $L^{-1}i^+$。
+
+**问题**：为什么沿闭子簇的直像 $i_+$ 是范畴等价，它的逆为什么是 $L^{-1}i^+$ 而不是 $i^+$？
+
+## 定义
+
+设 $X=k^n$，$Y=\{x_n=0\}\subset X$，$i:Y\hookrightarrow X$ 为自然包含，$Z=\{x_1=\cdots=x_{n-1}=0\}\cong k$，故 $X=Y\times Z$、$D_X=D_Y\boxtimes D_Z$。对 $D_X$-模 $M$ 令 $$\Gamma_{[Y]}(M)=\{m\in M\mid x_n^pm=0\ \text{对某}\ p\in\mathbb N\},\qquad M_0=\ker x_n,\qquad M_1=\operatorname{coker}x_n.$$ 则 $\Gamma_{[Y]}(M)$ 是 $M$ 中支集含于 $Y$ 的最大 $D_X$-子模（引理 12.1），且 $i_+(M_0)\cong\Gamma_{[Y]}(M)$（引理 12.2）。以 $\mathcal M_Y(D_X)$ 记支集含于 $Y$ 的 $D_X$-模构成的全子范畴。
+
+*记号*：$\mathcal M_{fg,Y}(D_X)$、$\operatorname{Hol}_Y(D_X)$ 分别是支集含于 $Y$ 的有限生成、完整 $D_X$-模全子范畴；$i_+$ 是直像、$i^+$ 是逆像、$L^{-1}i^+$ 是其第 $-1$ 个导出函子；$x_n$ 是定义 $Y$ 的坐标函数。
+
+## 要点
+
+- 引理 12.2：自然态射 $i_+(M_0)\to\Gamma_{[Y]}(M)$ 是 $D_X$-模同构，故 $\Gamma_{[Y]}(M)=i_+(\ker x_n)$。
+- 推论 12.3：$x_n\Gamma_{[Y]}(M)=\Gamma_{[Y]}(M)$，即乘以 $x_n$ 在 $\Gamma_{[Y]}(M)$ 上满射。
+- 推论 12.4：$d(\Gamma_{[Y]}(M))=d(M_0)+1$；特别地 $\Gamma_{[Y]}(M)$ 完整当且仅当 $M_0=L^{-1}i^+(M)$ 完整。
+- 推论 12.5：$M$ 完整 ⇒ $M_0$ 完整。
+- 定理 12.6：$i_+$ 给出 $\mathcal M(D_Y)\to\mathcal M_Y(D_X)$ 的等价，逆为 $L^{-1}i^+$；并限制为 $\mathcal M_{fg}(D_Y)\cong\mathcal M_{fg,Y}(D_X)$ 与 $\operatorname{Hol}(D_Y)\cong\operatorname{Hol}_Y(D_X)$。
+- 这是「沿闭子簇的浸入」版本；一般多项式映射的完整性保持由 §13 的定理 13.3、13.5 另行处理。
+
+## 关键公式
+
+- $\Gamma_{[Y]}(M)=\{m\in M\mid x_n^pm=0\ \text{对某}\ p\in\mathbb N\}$
+- $i_+(M_0)\cong\Gamma_{[Y]}(M)$
+- $d(\Gamma_{[Y]}(M))=d(M_0)+1$
+- $i_+:\mathcal M(D_Y)\xrightarrow{\ \sim\ }\mathcal M_Y(D_X),\qquad (i_+)^{-1}=L^{-1}i^+$
+
+## 定理与证明
+
+### 定理 12.6（Kashiwara）（完整）
+
+直像函子 $i_+$ 定义范畴 $\mathcal M(D_Y)$（相应地 $\mathcal M_{fg}(D_Y)$、$\operatorname{Hol}(D_Y)$）与范畴 $\mathcal M_Y(D_X)$（相应地 $\mathcal M_{fg,Y}(D_X)$、$\operatorname{Hol}_Y(D_X)$）的等价，其逆为 $L^{-1}i^+$。
+
+1. 对 $\mathcal M_Y(D_X)$ 中任意 $M$，由引理 12.1 有 $M=\Gamma_{[Y]}(M)$（支集含于 $Y$ 的模等于其最大这样的子模）。  
+   *为什么*：$\Gamma_{[Y]}$ 取的是支集含于 $Y$ 的最大 $D_X$-子模，支集已在 $Y$ 中的模不再被放大。
+2. 由 10.6 与 12.3 得 $i^+(M)=M/x_nM=0$，故 $i^+$ 在 $\mathcal M_Y(D_X)$ 上是零函子，从而 $L^{-1}i^+$ 是从 $\mathcal M_Y(D_X)$ 到 $\mathcal M(D_Y)$ 的正合函子。  
+   *为什么*：$x_nM=M$ 使余核为零；零函子正合，其导出长正合列给出 $L^{-1}i^+$ 的正合性。
+3. $i_+$ 是反方向的正合函子，且由引理 12.2，$i_+\circ L^{-1}i^+\cong\operatorname{id}_{\mathcal M_Y(D_X)}$。  
+   *为什么*：12.2 给出 $i_+(M_0)=i_+(L^{-1}i^+(M))\cong\Gamma_{[Y]}(M)=M$。
+4. 另一方向，$L^{-1}i^+\circ i_+\cong\operatorname{id}_{\mathcal M(D_Y)}$：对 $D_Y$-模先沿 $Y\hookrightarrow X$ 直像再取 $\ker x_n$ 回到自身。  
+   *为什么*：$i_+(N)$ 中 $x_n$ 的核恰是 $N$ 的像，直像的构造保证这一点。
+5. 于是 $i_+$ 与 $L^{-1}i^+$ 互为逆等价。由 12.4(与 12.5)，该等价把有限生成子范畴对应起来，并把完整性对应起来，故括号中的陈述成立。  
+   *为什么*：等价保持「有限生成」；$d(\Gamma_{[Y]})=d(M_0)+1$ 使 $\dim Y$ 与 $\dim X$ 两边的完整性判据一致。
+
+*出处*：定理 12.6 / 原书 p.51
+
+
+## 易错点
+
+- 这是沿闭子簇的浸入版本（$Y=\{x_n=0\}$）；不要把它当成任意态射的 Kashiwara 定理——一般映射的完整性保持是 §13 的定理 13.3、13.5。
+- 逆是 $L^{-1}i^+$ 而不是 $i^+$：$i^+$ 在 $\mathcal M_Y(D_X)$ 上恒为零（10.6、12.3），不能作逆。
+- $M_0=\ker x_n$ 是 $D_Y$-模，但不是 $D_X$-子模；$D_X$-子模是 $\Gamma_{[Y]}(M)=i_+(M_0)$。
+- 完整性通过 $d(\Gamma_{[Y]}(M))=d(M_0)+1$ 传递，只用 12.4 的维数等式而不看 12.5，会漏掉「$M$ 完整 ⇒ $M_0$ 完整」这一环。
+
+## 出处
+
+- Miličić《Lectures on the Algebraic Theory of D-Modules》（中译校订批注本，150 页），§12 Kashiwara 定理，p.49-50-51（PDF p.55-56-57），`源码/chapters/chap1.tex:1791-1896（引理 12.1–定理 12.6）`
+
+## 核验
+
+状态：`source-only`（2026-11-19）
+
+## 关联
+
+- `dmod/concept/holonomic-module`
+- `dmod/concept/preservation-of-holonomicity`
+- `dmod/concept/finite-length-of-holonomic`
+- `dmod/concept/local-cohomology-d-module`
+- `dmod/concept/kashiwara-theorem`
+- `dmod/concept/kashiwara-base-change`

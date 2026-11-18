@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## SY07-10 Miličić《D-模的代数理论讲义》中文校订批注本 — 2026-11-19
+
+- 新增 `08_source_code/SY07-10_D-模的代数理论讲义（Miličić）/`：英文讲义 150 页 → 中译本校订批注本 **153 页**（源码 / 工程文件 / 成品）。
+- 校订：283 条编号条目与原文**逐条对齐（37 节零差异）**；改动 **79 处**（P1 25 / P2 44 / P3 10）。最重的是第 I 章 §10 整段漏译 6 条（10.5–10.10，已补译）与 §12–§13 把逆像 $i^+$ 全按直像 $i_+$ 录入 33 处（Kashiwara 定理陈述因此失真）。
+- 体系：定理编号由 `[chapter]`（显示 1.1…1.79、与正文「节.序号」引用全盘错位）改为节内编号，恢复原书体系；术语统一（holonomic→完整、正像→直像）。
+- 校注 **17 条**（I8/II2/III2/IV3/V2），每条末句标来源：Stacks Tag 00IN/00IP/00KE/0055/00LA/07BK/01BD/01BU/0A6Y 与 8 个 nLab 条目（附 Last revised）。
+- 新增 `datasets/dmod/`：**61 张** D-模资料卡（59 概念 + 2 例子，九轨 O–H）；lint 0 错、原文对齐 `match 61 ／ broken 0`、`external-confirmed` 17 ／ `source-only` 44 ／ `rejected` 0。
+- 台账 `RELEASE_REGISTER.csv` 追加 SY07-10（随仓公开，成品在仓=是）；`tools/check_compliance.py` 通过。
+
+## dataset seidel 复核与扩卡 — 2026-11-19（70 张）
+
+- 规模：54 → **70 张**（32 概念 + 8 推导 + 30 校订），补 operad、HPT、Kadeishvili、Yoneda、映射锥、拟同构、例外对象、directed A∞、Maslov 类、谱序列、Pin、Serre 函子、Dehn 扭转、PL 公式、LF 的 Fukaya 范畴、A_m 奇点 16 张概念卡。
+- 复核：24 张旧概念/推导卡对照原书页图与 nLab/arXiv 逐条重审，**全部查出错误并改正**（含 theorem-b-construction 的包含方向、split-generation 的分裂闭包、matching-cycle 的构造、A∞ 符号约定）。
+- 校订卡：30 张覆盖 `修订总表.tsv` 40/40 行，逐张回页图；12 张页码修正；新增 p183 `\subset`→`\in` 原书排印笔误登记。
+- 两处拟修订经核不成立，正文已回退、卡改为“复核否决”记录：`section-6.tex:7`（p87 作 In fact）、`section-14-a.tex:44`（p199 作 explains）。有效修订 31 → **29**。
+- 证据：`work/review/verification*.jsonl`、`report-verify-*.md`、`correction-coverage.tsv`；`lint_cards.py --strict` 0 error。
+
 ## dataset seidel — 2026-11-19（Seidel《Fukaya categories and Picard–Lefschetz theory》资料卡 54 张）
 
 新增 `datasets/seidel/`：把全书校订工程（301 页译注本、187 条译者注、31 处译文修订 + 9 条术语统一）

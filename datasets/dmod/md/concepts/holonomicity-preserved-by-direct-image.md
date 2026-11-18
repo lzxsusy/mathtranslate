@@ -1,0 +1,91 @@
+---
+id: dmod/concept/holonomicity-preserved-by-direct-image
+type: concept
+track: E
+---
+
+# 完整模在直像下的保持（第 V 章）
+
+> 光滑簇态射的直像把完整模的每一阶导出直像映为完整模，并把有界完整复形映为有界完整复形。
+
+**问题**：完整模沿任意光滑簇态射的直像还是完整的吗？
+
+## 定义
+
+设 $X,Y$ 是光滑簇，$\varphi:X\to Y$ 是态射，$\varphi_+$ 是直像函子、$L^p\varphi_+$ 是其左导出函子。若 $\mathcal D_X$-模复形 $\mathcal V^\cdot$ 的各阶上同调 $H^p(\mathcal V^\cdot)$ 都是完整模，则称它为完整复形；有界完整复形构成 $D^b(\mathcal M(\mathcal D_X))$ 的三角子范畴 $D^b_{hol}(\mathcal M(\mathcal D_X))$。保持性有两层：仿射情形下 $L^p\varphi_+$ 逐阶保持完整（定理 5.3.1），一般情形下 $\varphi_+$ 把有界完整复形映为有界完整复形（定理 5.3.4）。
+
+*记号*：$D^b_{hol}(\mathcal M(\mathcal D_X))$：有界完整复形的三角子范畴；$L^p\varphi_+$：$\varphi_+$ 的左导出函子；$i_\bullet$：开浸入 $i$ 的直像（即 $i_+$）；$i_{X,+}$、$i_{Y,+}$：闭嵌入的直像。
+
+## 要点
+
+- 定理 5.3.1 是逐阶断言：每个 $L^p\varphi_+(\mathcal V)$ 都完整，而不是 $\varphi_+\mathcal V$ 本身完整（$\varphi_+$ 一般不正合）。
+- 定理 5.3.4 是复形版本：$\mathcal V^\cdot$ 有界完整 $\Rightarrow$ $\varphi_+(\mathcal V^\cdot)$ 有界完整。
+- 归约到 $k^n\to k^m$：用闭嵌入 $i_X,i_Y$ 与 Kashiwara 定理把 $i_{X,+}$ 变成与支集在 $X$ 的子范畴的等价，再用 $L^p\Phi_+\circ i_{X,+}=i_{Y,+}\circ L^p\varphi_+$（IV.2.7）。
+- 完整模是 $D^b_{hol}$ 的生成类（命题 5.3.2）；仿射开覆盖的 $i_{j,\bullet}(\mathcal V)$ 构成生成族（命题 5.3.3），定理 5.3.4 靠它们归约到定理 5.3.1。
+- 完整性是局部性质，故定理 5.3.4 的证明可先设 $Y$ 仿射。
+- 背景：完整复形正是 Riemann–Hilbert 对应 $dR$ 的定义域（讲义 §2 批注），nLab 的 RH 条目对正则完整情形陈述这一点。
+
+## 关键公式
+
+- $L^p\varphi_+(\mathcal V)\in\operatorname{Hol}(\mathcal D_Y)$
+- $\varphi_+(\mathcal V^\cdot)\in D^b_{hol}(\mathcal M(\mathcal D_Y))$
+- $L^p\Phi_+\circ i_{X,+}=i_{Y,+}\circ L^p\varphi_+$
+- $i_+\bigl(\mathcal D(\mathcal V)\bigr)=\mathcal D\bigl(i_\bullet(\mathcal V)\bigr)$
+
+## 定理与证明
+
+### 定理 5.3.1（仿射情形：逐阶直像保持完整）（完整）
+
+设 $X,Y$ 是光滑仿射簇，$\varphi:X\to Y$ 是态射，$\mathcal V$ 是完整右 $D_X$-模。则对所有 $p$，$L^p\varphi_+(\mathcal V)$ 是完整右 $D_Y$-模。
+
+1. 把 $X,Y$ 闭嵌入仿射空间 $k^n,k^m$，记 $i_X:X\to k^n$、$i_Y:Y\to k^m$；由 Kashiwara 定理 $i_{X,+}$、$i_{Y,+}$ 正合，且正合函子的交换图与局部化等价合成后表明 $i_{X,+}$ 完全忠实，建立 $\mathcal M_R(D_X)$ 与 $D^{(n)}$ 上支集在 $X$ 的模的等价。  
+   *为什么*：仿射空间情形已在 I.13.5 证明；本步把一般 $X,Y$ 的定理归结到该情形，用的是 Kashiwara 定理。
+2. 设 $\Phi:k^n\to k^m$ 是诱导 $\varphi$ 的多项式映射，由 IV.2.7 有 $L^p\Phi_+\circ i_{X,+}=i_{Y,+}\circ L^p\varphi_+$。  
+   *为什么*：这是把「$\varphi$ 的直像」与「$\Phi$ 的直像」互相翻译的交换关系，是归约的技术核心。
+3. $i_{X,+}(\mathcal V)$ 是完整右 $D^{(n)}$-模（引理 5.1.2），故由 I.13.5，$L^p\Phi_+(i_{X,+}(\mathcal V))$ 对每个 $p$ 都完整。  
+   *为什么*：把第一步的等价与仿射空间情形接上：$\Phi$ 的直像逐阶保持完整。
+4. 由交换关系，$i_{Y,+}(L^p\varphi_+(\mathcal V))$ 完整；再用一次引理 5.1.2 反推 $L^p\varphi_+(\mathcal V)$ 完整。  
+   *为什么*：引理 5.1.2 说 $\mathcal V$ 完整与 $i_+(\mathcal V)$ 完整等价，故完整性能沿 $i_{Y,+}$ 双向传递。
+
+*出处*：定理 5.3.1 / 原书 §3, p.139–140
+
+### 定理 5.3.4（复形版本：直像保持有界完整）（完整）
+
+设 $X,Y$ 是光滑代数簇，$\varphi:X\to Y$ 是态射。若 $\mathcal V^\cdot$ 是有界完整 $\mathcal D_X$-模复形，则 $\varphi_+(\mathcal V^\cdot)$ 是有界完整 $\mathcal D_Y$-模复形。
+
+1. 完整性是局部性质，故可设 $Y$ 是光滑仿射簇。  
+   *为什么*：局部化不改变「各阶上同调是否完整」这一逐点条件。
+2. 取 $X$ 的仿射开集 $i:U\to X$ 与 $U$ 上完整模 $\mathcal V$；由前文 $i_+(\mathcal V)$ 完整，且由 IV.5.7 有 $i_+(\mathcal D(\mathcal V))=\mathcal D(i_\bullet(\mathcal V))$。  
+   *为什么*：仿射开覆盖的 $i_{j,\bullet}(\mathcal V)$ 构成 $D^b_{hol}$ 的生成族（命题 5.3.3），故只需在这种生成元上验证。
+3. 于是 $\varphi_+(\mathcal D(i_\bullet(\mathcal V)))=\varphi_+(i_+(\mathcal D(\mathcal V)))=(\varphi\circ i)_+(\mathcal D(\mathcal V))$。  
+   *为什么*：把 $i_\bullet$ 的直像与复形 $\mathcal D(\cdot)$ 交换，问题回到单个完整模沿 $\varphi\circ i$ 的直像。
+4. $\varphi\circ i:U\to Y$ 是仿射簇之间的态射，由定理 5.3.1 的局部化形式，$H^p(\varphi_+(\mathcal D(i_\bullet(\mathcal V))))$ 是 $Y$ 上完整模；再由生成族（命题 5.3.3）得 $\varphi_+(\mathcal V^\cdot)$ 有界完整。  
+   *为什么*：生成族的逐项完整性推出整个复形的完整性，有界性由 $\mathcal V^\cdot$ 有界与直像的有限性给出。
+
+*出处*：定理 5.3.4 / 原书 §3, p.141
+
+
+## 易错点
+
+- 不能把定理 5.3.1 换成「$\varphi_+(\mathcal V)$ 完整」：直像不正合，只有逐阶导出函子才有意义。
+- 定理 5.3.4 只对**有界**完整复形成立；无界复形的直像未必有界完整。
+- 归约里两次用到 Kashiwara 定理与引理 5.1.2（$i_+$ 保完整），去掉闭嵌入这一步论证不成立。
+- 复形层面的完整性要逐阶上同调验证，不能只看 $\operatorname{Ch}$ 的总维数。
+- 定理 5.3.1 的假设是光滑**仿射**簇；一般簇上的断言是定理 5.3.4，不要混用编号。
+
+## 出处
+
+- Miličić《Lectures on the Algebraic Theory of D-Modules》（中译本，校订批注本），§3 完整性与直像，p.139–141（PDF p.145–147），`源码/chapters/chap5.tex:138-208（定理 5.3.1、定理 5.3.4）`
+
+## 核验
+
+状态：`external-confirmed`（2026-11-19）
+- nLab：https://ncatlab.org/nlab/show/holonomic+D-module — 该页 Idea 段原文：「A D-module $M$ on a smooth complex analytic variety $X$ of dimension $n$ is holonomic if its characteristic variety is of dimension $n$. It follows that the characteristic variety of a holonomic D-module is conic and lagrangian.」这一句支持本卡把「完整」等价地读作「特征簇维数 = 底维数」，即 $\operatorname{holdef}=0$；也就是本卡所讨论的被保持的不变量。需要说明：该页在复解析簇上陈述，讲义在特征零的光滑代数簇上工作，两者设定不同，本卡不据此改动讲义陈述。
+- nLab：https://ncatlab.org/nlab/show/Riemann-Hilbert+correspondence — 该页 Statement 段的 Proposition（Mebkhout, Kashiwara, Beilinson–Bernstein）原文：「The restriction of the functor $dR$ gives an equivalence of categories $D_{rh}^{b}(X^{Zar},\mathcal{D}_{X})\to D_{c}^{b}(X^{an},\mathbb{C})$」。这一句支持本卡「完整（复形）正是 $dR$ 对应的定义域」这一背景断言。该命题要求正则性（下标 $rh$），是讲义 $D^b_{hol}$ 的加条件版本，故只作背景确认，不用来替代定理本身。
+
+## 关联
+
+- `dmod/concept/kashiwara-theorem`
+- `dmod/concept/local-cohomology-d-module`
+- `dmod/concept/bernstein-inequality`
+- `dmod/concept/preservation-of-holonomicity`

@@ -1,0 +1,83 @@
+---
+id: dmod/concept/dz-structure-sheaf
+type: concept
+track: C
+---
+
+# 局部微分算子层 $\mathcal D_X$
+
+> $\mathcal D_X$ 由仿射开集上的 $D(U)$ 沿包含取逆极限粘成，是 $X$ 上的环层；它的阶数片段拟凝聚，$F_p\mathcal D_X$ 与 $\operatorname{Gr}_p\mathcal D_X$ 凝聚。
+
+**问题**：$D(U)$ 只在仿射开集上有定义，如何把它粘成所有开集上的环层，并说明它作为 $\mathcal O_X$-模是拟凝聚的？
+
+## 定义
+
+设 $X$ 是特征零代数闭域 $k$ 上的代数簇。对开集 $U\subset X$，令 $D(U)$ 为含于 $U$ 的所有仿射开集 $V$ 的环 $D(V)$ 沿包含的逆极限；赋值 $U\mapsto D(U)$ 给出 $X$ 上的环预层，它实际是环层，记为 $\mathcal D_X$，称为 $X$ 上的局部微分算子层。$T\in\mathcal D_X(U)$ 称为阶数 $\le p$，若对每个仿射开 $V\subset U$，$T|_V$ 的阶数 $\le p$；这给出递增滤过 $F\mathcal D_X$，它在仿射开集上与 $FD(U)$ 一致，并满足第一章 §3 的性质 (i)--(v)。
+
+*记号*：$D(U)$：$U$ 上微分算子环（仿射开集上的逆极限）；$F_p\mathcal D_X$：阶数 $\le p$ 的片段；$\operatorname{Gr}\mathcal D_X=\bigoplus_p\operatorname{Gr}_p\mathcal D_X$，其中 $\operatorname{Gr}_p\mathcal D_X=F_p\mathcal D_X/F_{p-1}\mathcal D_X$。
+
+## 要点
+
+- $\mathcal D_X$ 是环层：仿射时基上的预层满足引理 (F) 的层条件（命题 1.10），一般 $X$ 上同法（命题 1.12）。
+- 仿射开集上整体截面就是微分算子环：$\Gamma(U,\mathcal D_X)=D(U)$（定理 1.11）。
+- $\mathcal D_X$ 对左乘、右乘都是拟凝聚 $\mathcal O_X$-模；$F_p\mathcal D_X$、$\operatorname{Gr}_p\mathcal D_X$ 是凝聚 $\mathcal O_X$-模（定理 1.15）。
+- $\operatorname{Gr}_0\mathcal D_X=\mathcal O_X$，且 $\operatorname{Gr}\mathcal D_X$ 是交换环层（chap2.tex:217）。
+- 阶数滤过是穷尽的（引理 1.14），且在仿射开集上 $F_p\mathcal D_X(U)=D_p(U)$。
+
+## 关键公式
+
+- $\mathcal D_X(U)=\varprojlim_{V\subset U,\ V\ \text{仿射}}D(V)$
+- $F_p\mathcal D_X(U)=D_p(U)\quad(U\ \text{仿射})$
+- $\operatorname{Gr}_0\mathcal D_X=\mathcal O_X$
+- $0\longrightarrow F_{p-1}\mathcal D_X\longrightarrow F_p\mathcal D_X\longrightarrow\operatorname{Gr}_p\mathcal D_X\longrightarrow 0$
+
+## 定理与证明
+
+### 定理 1.15（$\mathcal D_X$ 的拟凝聚性与阶数片段的凝聚性）（完整）
+
+设 $X$ 是 $k$ 上的代数簇。则 (i) $\mathcal D_X$ 是拟凝聚 $\mathcal O_X$-模（对左乘和右乘）；(ii) $F_p\mathcal D_X$（$p\in\mathbb Z$）是凝聚 $\mathcal O_X$-模（对左乘和右乘）；(iii) $\operatorname{Gr}_p\mathcal D_X$ 是凝聚 $\mathcal O_X$-模。
+
+1. 断言是局部的，可设 $X$ 仿射，此时只需在 $D(X)$ 的阶数片段上验证。  
+   *为什么*：拟凝聚与凝聚都是局部性质，仿射开覆盖上成立即整体成立。
+2. 对左乘，(i) 由 $D(X)=\varinjlim_pD_p(X)$ 与 $D_p(X)$ 是有限生成 $R(X)$-模（推论 1.4）得到。  
+   *为什么*：有限生成模的局部化拟凝聚，而拟凝聚模的直极限仍拟凝聚，故 $\mathcal D_X$ 拟凝聚。
+3. (ii) 由引理 1.3 得到：阶数 $\le p$ 的算子由它在 $X^I$（$|I|\le p$）上的值刻画，故 $F_p\mathcal D_X$ 是有限个 $\mathcal O_X$ 的直和项的商；(iii) 由 (ii) 及 $\operatorname{Gr}_p\mathcal D_X$ 上左乘右乘给出同一 $\mathcal O_X$-模结构得到。  
+   *为什么*：凝聚性在商与有限扩张下保持：先有 $F_p$ 的有限表示，商 $\operatorname{Gr}_p$ 自动凝聚。
+4. 右乘情形用正合列 $0\to F_{p-1}\mathcal D_X\to F_p\mathcal D_X\to\operatorname{Gr}_p\mathcal D_X\to0$ 对 $p$ 归纳。  
+   *为什么*：该正合列在右乘结构下同样成立，故归纳可从 $\operatorname{Gr}_p$ 的凝聚性回到 $F_p$ 的凝聚性。
+
+*出处*：定理 1.15 / chap2.tex:219-232
+
+### 定理 1.11（仿射开集上的整体截面）（完整）
+
+设 $X$ 是仿射簇，$\mathcal D_X$ 是 $X$ 上局部微分算子层。则对任意仿射开子集 $U\subset X$ 有 $\Gamma(U,\mathcal D_X)=D(U)$。
+
+1. $U$ 是主开集 $X_f$ 时，由 $\beta_f:D(X)_f\cong D(X_f)$（引理 1.9）得 $\Gamma(X_f,\mathcal D_X)=D(X_f)$。  
+   *为什么*：主开集上的截面按逆极限定义就等于 $D(X_f)$，而 $\beta_f$ 把 $D(X)_f$ 与之等同。
+2. 一般仿射开 $U$ 取 $f\in R(X)$ 使 $X_f\subset U$，记 $g=f|_U$，则 $U_g=X_f$，于是 $\Gamma(U_g,\mathcal D_U)=D(U_g)=D(X_f)=\Gamma(X_f,\mathcal D_X)$，且这些同构与限制相容。  
+   *为什么*：限制在仿射开集内部化为同一个环，相容性保证可以沿基粘合。
+3. 含于 $U$ 的主开集构成 $U$ 拓扑的基，$\mathcal D_X|_U$ 与 $\mathcal D_U$ 在基上一致，故两层相等，从而 $\Gamma(U,\mathcal D_X)=D(U)$。  
+   *为什么*：两个层在一组拓扑基上取值相同即相等。
+
+*出处*：定理 1.11 / chap2.tex:172-180
+
+
+## 易错点
+
+- $\mathcal D_X(U)$ 是逆极限而不是并：一般开集上的算子不必是某个 $D(V)$ 的元素，只能由它在一族仿射开集上的限制来描述。
+- 阶数在一般开集上要逐个仿射开集检验；先声明「某算子阶数 $\le p$」再用穷尽性论证，顺序不能反（引理 1.14 的证明用的正是 $U$ 的有限仿射覆盖）。
+- $\mathcal D_X$ 作为 $\mathcal O_X$-模只是拟凝聚而非凝聚：它是 $F_p\mathcal D_X$ 的直极限，而直极限一般不保持凝聚性。
+
+## 出处
+
+- Miličić《Lectures on the Algebraic Theory of D-Modules》中译本，第 II 章 §1 代数簇上的微分算子，p.55（PDF p.61），`源码/chapters/chap2.tex:164-232（$\mathcal D_X$ 的构造与定理 1.15）`
+
+## 核验
+
+状态：`source-only`（2026-11-19）
+
+## 关联
+
+- `dmod/concept/smooth-point`
+- `dmod/concept/relative-differential-operators`
+- `dmod/concept/module-over-algebraic-variety`

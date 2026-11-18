@@ -1,0 +1,86 @@
+---
+id: dmod/concept/associated-graded-ring
+type: concept
+track: O
+---
+
+# 伴随分次环 $\operatorname{Gr}D$
+
+> 滤过环 $D$ 的伴随分次环 $\operatorname{Gr}D=\bigoplus D_n/D_{n-1}$ 是交换分次环，第 $n$ 阶由 $D_1$ 生成，于是环上的问题化归为多项式环的问题。
+
+**问题**：把一个非交换滤过环 $D$ 变成交换分次环，需要什么条件？这个分次环保留了 $D$ 的哪些信息？
+
+## 定义
+
+设 $D$ 是带单位环，$(D_n;\ n\in\mathbb{Z})$ 是递增加法滤过，满足 (i) $D_n=0$（$n<0$），(ii) $\bigcup_nD_n=D$，(iii) $1\in D_0$，(iv) $D_nD_m\subset D_{n+m}$，(v) $[D_n,D_m]\subset D_{n+m-1}$。定义 $$\operatorname{Gr}D=\bigoplus_{n\in\mathbb{Z}}\operatorname{Gr}_nD,\qquad \operatorname{Gr}_nD=D_n/D_{n-1},$$ 乘法为 $\bar x\cdot\bar y=\overline{xy}$（$x\in D_n$，$y\in D_m$）。再假设 (vi) $\operatorname{Gr}D$ 是诺特环，(vii) $\operatorname{Gr}_1D$ 作为 $D_0$-代数生成 $\operatorname{Gr}D$。
+
+*记号*：$\operatorname{Gr}_nD=D_n/D_{n-1}$；$\bar x$：$x\in D_n$ 在 $\operatorname{Gr}_nD$ 中的像；$D^\circ$：$D$ 的反环；$D_0=\operatorname{Gr}_0D$ 作为环。
+
+## 要点
+
+- 由 (v)，$x\in D_n$、$y\in D_m$ 的交换子落在 $D_{n+m-1}$ 中，故在 $\operatorname{Gr}_{n+m}D$ 里 $\bar x\bar y=\bar y\bar x$：$\operatorname{Gr}D$ 是交换分次环。
+- 特别地 $D_0=\operatorname{Gr}_0D$ 是带单位的交换环，$\operatorname{Gr}D$ 是 $D_0$-代数。
+- 由 (vi)、(vii) 与 1.2，$\operatorname{Gr}_1D$ 是有限生成 $D_0$-模，故可取有限多个 $x_1,\dots,x_s\in\operatorname{Gr}_1D$ 使 $\operatorname{Gr}D=D_0[x_1,\dots,x_s]$ 是有限生成 $D_0$-代数；再由 Hilbert 基定理（1.1 的逆命题）得 $D_0$ 诺特。
+- 由 (vii) 得 $\operatorname{Gr}_{n+1}D=\operatorname{Gr}_1D\cdot\operatorname{Gr}_nD$，从而 $D_{n+1}=D_n\cdot D_1$（$n\in\mathbb{Z}_+$）。
+- 恒等映射 $D\to D^\circ$ 诱导分次环同构 $\operatorname{Gr}D\cong\operatorname{Gr}D^\circ$，故右模理论可由左模理论得到。
+
+## 关键公式
+
+- $\operatorname{Gr}D=\bigoplus_{n\in\mathbb{Z}}\operatorname{Gr}_nD,\qquad \operatorname{Gr}_nD=D_n/D_{n-1}$
+- $[D_n,D_m]\subset D_{n+m-1}\ \Longrightarrow\ \operatorname{Gr}D\ \text{交换}$
+- $\operatorname{Gr}_{n+1}D=\operatorname{Gr}_1D\cdot\operatorname{Gr}_nD$
+- $D_{n+1}=D_n\cdot D_1\quad(n\in\mathbb{Z}_+)$
+- $\operatorname{Gr}D\cong\operatorname{Gr}D^\circ$
+
+## 定理与证明
+
+### 命题（$\operatorname{Gr}D$ 的交换性）（完整）
+
+在 (i)–(v) 下，$\operatorname{Gr}D$ 是交换分次环，且 $D_0$ 是其单位元所在的交换子环。
+
+1. 取 $x\in D_n$、$y\in D_m$，令 $\bar x,\bar y$ 为它们在 $\operatorname{Gr}_nD,\operatorname{Gr}_mD$ 中的像。则 $\bar x\bar y=\overline{xy}$、$\bar y\bar x=\overline{yx}$，二者都在 $\operatorname{Gr}_{n+m}D=D_{n+m}/D_{n+m-1}$ 中。  
+   *为什么*：$\operatorname{Gr}D$ 的乘法按 $\bar x\bar y=\overline{xy}$ 定义，需先验证它与代表元选取无关，这由 $D_{n-1}D_m\subset D_{n+m-1}$ 与 $D_nD_{m-1}\subset D_{n+m-1}$ 保证。
+2. 由 (v)，$[x,y]=xy-yx\in D_{n+m-1}$，故 $xy$ 与 $yx$ 在商 $D_{n+m}/D_{n+m-1}$ 中有相同的像。  
+   *为什么*：商映射把 $D_{n+m-1}$ 打到零。
+3. 于是 $\bar x\bar y=\bar y\bar x$；由于 $\operatorname{Gr}_nD$ 由这样的 $\bar x$ 生成、$\operatorname{Gr}D$ 是它们的直和，$\operatorname{Gr}D$ 交换。取 $n=m=0$ 得 $D_0$ 交换。  
+   *为什么*：分次环的交换性只需逐对齐次元验证；$\operatorname{Gr}_0D=D_0/D_{-1}=D_0$。
+
+*出处*：§3 开头 / 原书 p.9
+
+### 命题（$D_0$ 的诺特性与 $D_{n+1}=D_nD_1$）（完整）
+
+在 (i)–(vii) 下，$D_0$ 是诺特环，且 $D_{n+1}=D_n\cdot D_1$ 对一切 $n\in\mathbb{Z}_+$ 成立。
+
+1. 把引理 1.2 用于分次 $\operatorname{Gr}D$-模 $M=\operatorname{Gr}D$：每个 $\operatorname{Gr}_nD$ 是有限生成 $D_0$-模，特别地 $\operatorname{Gr}_1D$ 有限生成。取生成元 $x_1,\dots,x_s$。  
+   *为什么*：1.2 断言有限生成分次模的每个齐次分量是有限生成 $A^0$-模，这里 $A^0=D_0$、$A=\operatorname{Gr}D$。
+2. 由 (vii)，$\operatorname{Gr}D=D_0[x_1,\dots,x_s]$，即 $\operatorname{Gr}D$ 是有限生成 $D_0$-代数。  
+   *为什么*：$\operatorname{Gr}_1D$ 作为 $D_0$-代数生成 $\operatorname{Gr}D$，而 $\operatorname{Gr}_1D$ 由 $x_1,\dots,x_s$ 作为 $D_0$-模生成。
+3. 对 $A=\operatorname{Gr}D$、$A^0=D_0$ 用 1.1 的逆命题（Hilbert 基定理）：$D_0$ 诺特。  
+   *为什么*：1.1 断言分次诺特环的零次部分是诺特环、且整体是零次部分的有限生成代数；Hilbert 基定理给出其逆。
+4. 由 (vii) 逐次得 $\operatorname{Gr}_{n+1}D=\operatorname{Gr}_1D\cdot\operatorname{Gr}_nD$；翻译回 $D$ 即 $D_{n+1}/D_n=(D_1/D_0)(D_n/D_{n-1})$，故 $D_{n+1}=D_n+D_1D_n=D_nD_1$。  
+   *为什么*：$D_n\subset D_1D_n$（因 $1\in D_1$），故和等于 $D_1D_n$；再用 (iv) 的反向包含。
+
+*出处*：§3 开头 / 原书 p.10
+
+
+## 易错点
+
+- $\operatorname{Gr}D$ 的交换性是 (v) 的推论而非假设；若只有 (iv) 而没有 $[D_n,D_m]\subset D_{n+m-1}$，$\operatorname{Gr}D$ 一般非交换，$D_0$ 也未必交换。
+- $\operatorname{Gr}D$ 的乘法不是 $D$ 的乘法，而是“先相乘、再取所在滤过层的最低次项”；把 $\operatorname{Gr}D$ 等同于 $D$ 会丢掉全部低次信息。
+- (vi)、(vii) 是加在滤过定义之外的额外条件，$\operatorname{Gr}D$ 诺特不会自动成立；对 $D(n)$ 必须另行验证（见定理 5.6）。
+- $\operatorname{Gr}D\cong\operatorname{Gr}D^\circ$ 由恒等映射诱导，并不意味着 $D\cong D^\circ$；反环同构只在分次层成立。
+
+## 出处
+
+- Miličić《Lectures on the Algebraic Theory of D-Modules》（中译本，校订批注本），§3 滤过环上模的维数，p.9-10（PDF p.15-16），`源码/chapters/chap1.tex:325-345（§3 开头 (i)–(vii)）`
+
+## 核验
+
+状态：`source-only`（2026-11-19）
+
+## 关联
+
+- `dmod/concept/good-filtration`
+- `dmod/concept/symbol-and-principal-symbol`
+- `dmod/concept/hilbert-polynomial`
+- `dmod/concept/noetherianity-of-dn`

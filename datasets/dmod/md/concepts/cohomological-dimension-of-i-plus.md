@@ -1,0 +1,78 @@
+---
+id: dmod/concept/cohomological-dimension-of-i-plus
+type: concept
+track: D
+---
+
+# $i^+$ 的左同调维数
+
+> 沿坐标注入的逆像只在有限多个阶上有同调；一般情形由逐坐标分解与复合谱序列归纳，得上界不超过目标簇的维数。
+
+**问题**：为什么沿注入的逆像只在有限多个阶上有同调，这个上界为什么恰好是 $\dim Y$？
+
+## 定义
+
+设 $X$ 仿射、$Y=\mathbb A^m$、$i:X\to X\times Y$ 为 $i(x)=(x,0)$，坐标为 $y_1,\dots,y_m$。对左 $\mathcal D_{X\times Y}$-模 $N$，用 $y_1$ 的乘法作两项复形 $0\to\mathcal D_{X\times Y}\xrightarrow{y_1}\mathcal D_{X\times Y}\to\mathcal D_{X\times Y\to X}\to0$，得 $$\operatorname{coker}(y_1)=i^+(N),\qquad L^{-1}i^+(N)=\ker(y_1),$$ 其余 $L^pi^+(N)=0$；即 $\dim Y=1$ 时 $i^+$ 的左同调维数 $\le1$。一般 $\dim Y=m$ 时把 $i$ 分解为 $i=j\circ i'$（$j$ 只增加最后一个坐标），对 $j$ 用 $\dim=1$ 情形、对 $i'$ 用归纳，再用复合谱序列 $E_2^{pq}=L^pF^+(L^qG^+N)\Rightarrow L^{p+q}(G\circ F)^+$，得 $i^+$ 的左同调维数 $\le\dim Y$。对一般态射 $F$，图像分解 $F=p\circ\Phi\circ i$（$p$ 投影、$\Phi$ 同构、$i$ 图像注入）给出同样的上界。
+
+*记号*：$L^pi^+$：第 $p$ 个左导出（上同调编号），$L^{-1}$ 表示同调次数 $-1$；$\operatorname{lhd}(\varphi^+)$：使 $L^p\varphi^+=0$（$p<-d$）的最小 $d$；$\mathcal D_{X\times Y\to X}$：沿 $i$ 的相对双模。
+
+## 要点
+
+- $\dim Y=1$：$i^+(N)=\operatorname{coker}y_1$、$L^{-1}i^+(N)=\ker y_1$、其余 $L^p=0$，故左同调维数 $\le1$（chap1.tex 第 1575–1582 行）。
+- 一般 $i$：按坐标逐个添加分解为 $i=j\circ i'$，对 $j$ 用 $\dim=1$ 情形、对 $i'$ 用归纳，复合谱序列的 $E_2$ 项只在 $p\in\{0,-1\}$ 且 $q\ge-(m-1)$ 上非零，故 $L^{p+q}=0$（$p+q<-m$）。
+- 一般态射 $F$：图像分解 $F=p\circ\Phi\circ i$ 中 $p$ 是投影、$\Phi$ 是同构（引理 10.7）、$i$ 是图像注入，三者上界已知，得 $F^+$ 的左同调维数 $\le\dim Y$（chap1.tex 第 1647–1655 行）。
+- 层版本给出更粗但无条件的界：$\varphi^+$ 的左同调维数 $\le2\dim Y$（引理 4.3.3），依据是 $\mathcal D_{Y,\varphi(x)}$ 的同调维数 $\le2\dim Y$。
+
+## 关键公式
+
+- $i^+(N)=\operatorname{coker}y_1,\qquad L^{-1}i^+(N)=\ker y_1,\qquad L^pi^+(N)=0\ (p\neq 0,-1)$
+- $\operatorname{lhd}(i^+)\le\dim Y$
+- $E_2^{pq}=L^pF^+\bigl(L^qG^+N\bigr)\ \Rightarrow\ L^{p+q}(G\circ F)^+$
+- $F=p\circ\Phi\circ i,\qquad \operatorname{lhd}(\varphi^+)\le2\dim Y$
+
+## 定理与证明
+
+### 定理（$i^+$ 的左同调维数 $\le\dim Y$）（完整）
+
+设 $i:X\to X\times Y$ 为 $i(x)=(x,0)$ 的坐标注入，则 $L^pi^+=0$（$p<-\dim Y$），即 $i^+$ 的左同调维数不超过 $\dim Y$；对一般态射 $F$，$F^+$ 的左同调维数同样不超过 $\dim Y$（$Y$ 为目标）。
+
+1. $\dim Y=1$：$\mathcal D_{X\times Y}=\mathcal D_X\otimes_k\mathcal D_{k[y]}$，故有分解 $0\to\mathcal D_{X\times Y}\xrightarrow{y}\mathcal D_{X\times Y}\to\mathcal D_{X\times Y\to X}\to0$；张量上 $N$ 得 $i^+(N)=\operatorname{coker}y$、$L^{-1}i^+(N)=\ker y$，其余为零。  
+   *为什么*：一维情形 $\mathcal D_{k[y]}=k[y,\partial_y]$，$\mathcal D_{X\times Y\to X}=\mathcal D_X\otimes_kk[y]$，而上述两项复形正是 $\mathcal D_{X\times Y\to X}$ 的自由分解。
+2. 一般 $\dim Y=m$：把 $i$ 分解为 $i=j\circ i'$，其中 $i'$ 增加前 $m-1$ 个坐标、$j$ 增加最后一个坐标，二者都是坐标注入。  
+   *为什么*：坐标注入可以逐个坐标添加，且 $i=j\circ i'$ 在 $X$ 上逐点成立。
+3. 对 $j$ 用第 1 步（左同调维数 $\le1$），对 $i'$ 用归纳假设（$\le m-1$）；复合谱序列 $E_2^{pq}=L^pF^+(L^qG^+N)$ 中 $E_2^{pq}=0$ 当 $p<-1$ 或 $q<-(m-1)$。  
+   *为什么*：定理 10.2 给出 $L^pF^+(L^qG^+N)\Rightarrow L^{p+q}(G\circ F)^+$，故只需看 $E_2$ 的非零范围。
+4. 由 $p\ge-1$、$q\ge-(m-1)$ 得 $p+q\ge-m$，即 $L^{p+q}(G\circ F)^+=0$（$p+q<-m$）；再由 $(G\circ F)^+\cong F^+\circ G^+$ 与 $i=j\circ i'$ 得 $i^+$ 的左同调维数 $\le m=\dim Y$。  
+   *为什么*：谱序列收敛到复合函子的导出，$E_2$ 的非零范围给出收敛极限的消失范围；复合的次序由定理 10.2 的公式确定。
+
+*出处*：chap1 定理（左同调维数 $\le\dim Y$）/ 原书 §10，p.45–46
+
+### 引理 4.3.3（层版本的粗界）（要点（有缺口））
+
+$\varphi^+$ 的左同调维数 $\le2\dim Y$。
+
+
+> 缺口：讲义把界归到「$\mathcal D_{Y,\varphi(x)}$ 的同调维数 $\le2\dim Y$」这一整体维数事实，未逐点验证该局部化的同调维数估计。
+
+*出处*：引理 4.3.3 / 原书 §3，p.105
+
+
+## 易错点
+
+- 把这个界读成「$i^+$ 正合」是错的：$\dim Y\ge1$ 时 $L^{-1}i^+\neq0$ 是常态，界只说明非零同调只有有限多个。
+- 界是 $\dim Y$（目标维数）而不是余维数；层版本给的是更粗的 $2\dim Y$，两个界不能互换使用。
+- 归纳用的是分解 $i=j\circ i'$ 与复合谱序列的方向；把 $F^+$ 与 $F_+$ 的谱序列混用会得出 $\dim X$ 的错误上界。
+
+## 出处
+
+- Miličić《Lectures on the Algebraic Theory of D-Modules》（中译本，校订批注本），§10 逆像（同调维数），p.41-42-43-44-45-46（PDF p.47-48-49-50-51-52），`源码/chapters/chap1.tex:1575-1655（$\dim Y=1$ 情形；$F^+$ 的左同调维数 $\le\dim Y$）`
+- Miličić《Lectures on the Algebraic Theory of D-Modules》（中译本，校订批注本），§3 逆像函子（层版本），p.105-106-107-108（PDF p.111-112-113-114），`源码/chapters/chap4.tex:379-395（引理 4.3.3）`
+
+## 核验
+
+状态：`source-only`（2026-11-19）
+
+## 关联
+
+- `dmod/concept/inverse-image-functor`
+- `dmod/concept/derived-inverse-image`

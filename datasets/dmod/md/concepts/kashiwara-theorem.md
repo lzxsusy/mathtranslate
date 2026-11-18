@@ -1,0 +1,87 @@
+---
+id: dmod/concept/kashiwara-theorem
+type: concept
+track: E
+---
+
+# Kashiwara 定理（第 IV 章：$i_+$ 与 $i^!$ 互逆）
+
+> 沿闭光滑浸入 $i:Y\to X$，直像 $i_+$ 与其余伴随 $i^!$ 在拟凝聚层面互为拟逆，并在凝聚层面给出保持完整亏格的等价。
+
+**问题**：支集落在闭光滑子簇 $Y$ 内的 $\mathcal D_X$-模，能否完全由 $Y$ 上的数据描述？
+
+## 定义
+
+设 $Y\subset X$ 是光滑簇的闭光滑子簇，$i:Y\to X$ 是自然包含。以 $\mathcal M^R_{qc,Y}(\mathcal D_X)$（相应地 $\mathcal M^R_{coh,Y}(\mathcal D_X)$、$\operatorname{Hol}_Y(\mathcal D_X)$）记右 $\mathcal D_X$-模中由支集在 $Y$ 里的模构成的全子范畴。Kashiwara 定理：(i) $i_+:\mathcal M^R_{qc}(\mathcal D_Y)\to\mathcal M^R_{qc,Y}(\mathcal D_X)$ 是范畴等价，$i^!$ 是它的拟逆；(ii) 这些等价诱导 $\mathcal M^R_{coh}(\mathcal D_Y)$ 与 $\mathcal M^R_{coh,Y}(\mathcal D_X)$ 之间保持完整亏格的等价。
+
+*记号*：$i_+$：沿 $i$ 的直像；$i^!$：$i_+$ 的右伴随，$i^!(\mathcal W)=\operatorname{Hom}_{i^{-1}(\mathcal D_X)}(\mathcal D_{Y\to X},i^{-1}(\mathcal W))$；$\Gamma_{[Y]}$：支集局部化子；$\operatorname{holdef}$：完整亏格。
+
+## 要点
+
+- 两个复合都得到恒等：$i^!\circ i_+\cong\operatorname{id}$ 与 $i_+\circ i^!\cong\Gamma_{[Y]}$，而在支集含于 $Y$ 的模上 $\Gamma_{[Y]}$ 就是恒等。
+- 等价只在右模、且只在拟凝聚对象上陈述；凝聚部分 (ii) 额外保持完整亏格。
+- 证明链：伴随性（命题 4.8.1）、$\alpha_{\mathcal V}:\mathcal V\to i^!i_+(\mathcal V)$ 是同构（引理 4.8.6，用 $E=\sum_j f_jD_j$ 的阶数估计）、$\Gamma_{[Y]}=i_+i^!$（引理 4.8.8）。
+- 价值是把 $X$ 上支集受限的问题搬到 $Y$、再搬到 $k^n$；Bernstein 不等式与第五章完整模理论的归约都依赖它。
+- $\alpha_{\mathcal V}$ 的同构性依赖 $E$ 与坐标的交换关系 $[E,f_j]=f_j$、$[E,D^I]=-|I|D^I$（引理 4.8.4）。
+
+## 关键公式
+
+- $i^!\circ i_+\cong\operatorname{id}$
+- $i_+\circ i^!\cong\Gamma_{[Y]}$
+- $\Gamma_{[Y]}(\mathcal W)=\bigcup_{p\ge0}\mathcal W[Y,p]$
+- $i^!(\mathcal W)=\operatorname{Hom}_{i^{-1}(\mathcal D_X)}(\mathcal D_{Y\to X},i^{-1}(\mathcal W))$
+
+## 定理与证明
+
+### 定理 4.8.13(i)（Kashiwara 定理，拟凝聚等价）（完整）
+
+函子 $i_+:\mathcal M^R_{qc}(\mathcal D_Y)\to\mathcal M^R_{qc,Y}(\mathcal D_X)$ 是范畴等价，$i^!$ 是它的拟逆。
+
+1. 由定理 4.8.10 得 $i_+\circ i^!\cong\Gamma_{[Y]}$，再由引理 4.8.8 把 $\Gamma_{[Y]}$ 认成 $i_+(i^!(-))$。  
+   *为什么*：这一步给出一个复合的显式描述，并把 $\Gamma_{[Y]}$ 纳入讨论。
+2. 在支集含于 $Y$ 的拟凝聚右模上 $\Gamma_{[Y]}$ 是恒等：由引理 4.8.11 与命题 4.8.12，$\Gamma_{[Y]}(\mathcal V)=\Gamma_Y(\mathcal V)=i_+(i^!(\mathcal V))$，而 $\operatorname{supp}(\mathcal V)\subset Y$ 时 $\Gamma_Y(\mathcal V)=\mathcal V$。  
+   *为什么*：这说明 $i_+\circ i^!$ 在目标子范畴上是恒等；同时命题 4.8.3 保证 $i^!$ 拟凝聚，故复合落在该子范畴内。
+3. 由定理 4.8.10 的另一半得 $i^!\circ i_+\cong\operatorname{id}$；其显式形式是引理 4.8.6：典范态射 $\alpha_{\mathcal V}:\mathcal V\to i^!(i_+(\mathcal V))$ 对凝聚 $\mathcal V$ 是同构。  
+   *为什么*：这是单位态射一侧；引理 4.8.6 的同构性由 $E$ 的阶数估计给出，从而两个复合都化成恒等。
+4. 于是 $i_+$ 与 $i^!$ 互为拟逆，$i_+$ 是范畴等价（$i_+$ 正合由推论 4.6.6，$i^!$ 左正合且给出拟逆）。  
+   *为什么*：两条等式合起来正是「互为拟逆」的定义，范畴等价随之成立。
+
+*出处*：定理 4.8.13(i) / 原书 §8, p.124
+
+### 定理 4.8.13(ii)（凝聚层面保持完整亏格）（要点（有缺口））
+
+(i) 的等价诱导出 $\mathcal M^R_{coh}(\mathcal D_Y)$ 与 $\mathcal M^R_{coh,Y}(\mathcal D_X)$ 之间保持完整亏格的等价。
+
+1. 凝聚性：$i_+$ 把凝聚映为凝聚（命题 4.6.7），$i^!$ 把凝聚映为拟凝聚（命题 4.8.3）。  
+   *为什么*：两边的函子都落在可讨论凝聚性的范围内，等价才能限制到凝聚对象上。
+2. 完整亏格：由推论 4.6.9，$\operatorname{holdef}_x(\mathcal V)=\operatorname{holdef}_x(i_+(\mathcal V))$，故 (i) 的等价保持 $\operatorname{holdef}$。  
+   *为什么*：这是本卡所称「保持完整亏格」的确切含义。
+
+> 缺口：讲义对 (ii) 只写「由前述结果得出」，未展开：所需的凝聚性传递（命题 4.6.7、命题 4.8.3）与完整亏格传递（推论 4.6.9）散在前文，本卡按这三条复原；$i^!$ 是否在凝聚层面严格落在凝聚对象内，讲义未单独核对。
+
+*出处*：定理 4.8.13(ii) / 原书 §8, p.124
+
+
+## 易错点
+
+- 只对闭光滑浸入成立：闭浸入若不光滑，$i_+$ 不正合，等价不成立。
+- 定理在右模上陈述；换到左模要经主反自同构 $M\mapsto M^t$，直接照搬到左模会改变 $i^!$ 的定义。
+- $\Gamma_{[Y]}=i_+i^!$ 是 $\mathcal D_X$-模层面的代数局部化，不是导出的 $R\Gamma_Y$；后者要用 $Ri^!$（定理 4.9.3）。
+- 「保持完整亏格」不等于「保持特征簇」：$i_+(\mathcal V)$ 的特征簇一般比 $\operatorname{Ch}(\mathcal V)$ 大（多出法向），只有 $\operatorname{holdef}$ 相等。
+- 等价的是一般拟凝聚对象；要得到凝聚层面的等价还需 (ii)，而 (ii) 讲义只以一句话带过。
+
+## 出处
+
+- Miličić《Lectures on the Algebraic Theory of D-Modules》（中译本，校订批注本），§8 闭浸入与 Kashiwara 定理，p.124（PDF p.130），`源码/chapters/chap4.tex:1217-1228（定理 4.8.13）`
+
+## 核验
+
+状态：`external-confirmed`（2026-11-19）
+- nLab：https://ncatlab.org/nlab/show/holonomic+D-module — 该页 Idea 段原文：「A D-module $M$ on a smooth complex analytic variety $X$ of dimension $n$ is holonomic if its characteristic variety is of dimension $n$. It follows that the characteristic variety of a holonomic D-module is conic and lagrangian.」这一句支持本卡把「完整」等价地读作「特征簇维数 = 底维数」，即 $\operatorname{holdef}=0$；也就是本卡所讨论的被保持的不变量。需要说明：该页在复解析簇上陈述，讲义在特征零的光滑代数簇上工作，两者设定不同，本卡不据此改动讲义陈述。
+
+## 关联
+
+- `dmod/concept/holonomic-defect`
+- `dmod/concept/local-cohomology-d-module`
+- `dmod/concept/support-localization`
+- `dmod/concept/kashiwara-theorem-statement`

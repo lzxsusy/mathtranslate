@@ -1,0 +1,84 @@
+---
+id: dmod/concept/characteristic-variety-sheaf
+type: concept
+track: C
+---
+
+# 特征簇（$\mathcal D_X$-模层，第 III 章）
+
+> 好滤过把凝聚模变成 $T^*(X)$ 上唯一的凝聚模 $\widetilde V$，且 $\operatorname{Ch}(V)=\operatorname{supp}\widetilde V$ 是锥形子簇。
+
+**问题**：$\operatorname{Ch}(V)$ 依赖滤过的选取吗，为什么它仍是 $T^*(X)$ 中与滤过无关的闭子簇？
+
+## 定义
+
+设 $X$ 是光滑代数簇，$V$ 是凝聚 $\mathcal D_X$-模。$V$ 的滤过 $(F_nV)_{n\in\mathbb Z}$ 称为好滤过，若：$F_nV=0$ 对充分负的 $n$；$\bigcup_nF_nV=V$；存在 $m_0$ 使对 $m\ge m_0$ 与 $n\in\mathbb Z_+$ 有 $F_n\mathcal D_X\cdot F_mV=F_{m+n}V$。此时 $\operatorname{Gr}V=\bigoplus_nF_nV/F_{n-1}V$ 是有限生成分次 $\operatorname{Gr}\mathcal D_X$-模；由命题 3.6，存在唯一凝聚 $\mathcal O_{T^*(X)}$-模 $\widetilde V$ 使 $\pi_*\widetilde V=\operatorname{Gr}V$，于是定义 $\operatorname{Ch}(V)=\operatorname{supp}\widetilde V\subset T^*(X)$。
+
+*记号*：$T^*(X)$：余切丛；$\pi:T^*(X)\to X$：投射；$\operatorname{Gr}V$：关于好滤过的分次模；$\widetilde V$：对应的 $T^*(X)$ 上凝聚 $\mathcal O_{T^*(X)}$-模。
+
+## 要点
+
+- 凝聚 $\mathcal D_X$-模总有好滤过（定理 3.5），因此 $\operatorname{Ch}(V)$ 对每个凝聚模都有定义。
+- 命题 3.6：存在唯一凝聚 $\mathcal O_{T^*(X)}$-模 $\widetilde V$ 使 $\pi_*\widetilde V=\operatorname{Gr}V$，且 $\operatorname{Ch}(V)=\operatorname{supp}(\widetilde V)$；唯一性正是「不依赖滤过」的准确含义。
+- 命题 3.7：短正合列 $0\to V_1\to V_2\to V_3\to0$ 给出 $\operatorname{Ch}(V_2)=\operatorname{Ch}(V_1)\cup\operatorname{Ch}(V_3)$。
+- 命题 3.8：$\operatorname{Ch}(V)$ 是 $T^*(X)$ 的锥形子簇，即关于纤维方向的 $k^*$-作用稳定（锥形定义见 chap3.tex:318）。
+- 定理 3.9：$\pi(\operatorname{Ch}(V))=\operatorname{supp}(V)$，即特征簇投影回 $X$ 恰是支集。
+
+## 关键公式
+
+- $F_n\mathcal D_X\cdot F_mV=F_{m+n}V\quad(m\ge m_0,\ n\in\mathbb Z_+)$
+- $\pi_*\widetilde V=\operatorname{Gr}V,\qquad \operatorname{Ch}(V)=\operatorname{supp}(\widetilde V)$
+- $\operatorname{Ch}(V_2)=\operatorname{Ch}(V_1)\cup\operatorname{Ch}(V_3)$
+- $\pi(\operatorname{Ch}(V))=\operatorname{supp}(V)$
+
+## 定理与证明
+
+### 命题 3.6（特征簇的层化刻画）（完整）
+
+设 $V$ 是光滑代数簇 $X$ 上的凝聚 $\mathcal D_X$-模，取定 $V$ 的一个好滤过。则存在唯一 $T^*(X)$ 上的凝聚 $\mathcal O_{T^*(X)}$-模 $\widetilde V$ 使 $\pi_*\widetilde V=\operatorname{Gr}V$；并且 $\operatorname{Ch}(V)=\operatorname{supp}(\widetilde V)$。
+
+1. 化到仿射情形：设 $X$ 仿射，$U$ 是仿射开子集。由 $\operatorname{Gr}V|_U=\operatorname{Gr}(V|_U)$ 与 $\Gamma(U,\operatorname{Gr}V)=\operatorname{Gr}\Gamma(U,V)$，后者是有限生成分次 $R(T^*(U))$-模。  
+   *为什么*：局部化与分次化在仿射开集上交换，且有限生成性可局部检验，故可在仿射开集上逐块构造。
+2. 把 $R(T^*(U))$-模 $\Gamma(U,\operatorname{Gr}V)$ 局部化，得 $T^*(U)$ 上的拟凝聚模 $\widetilde V_U$；由于 $\Gamma(U,\operatorname{Gr}V)$ 有限生成，$\widetilde V_U$ 还是凝聚的。  
+   *为什么*：仿射概型上有限生成模的局部化正是凝聚层，这一步把整体截面搬成层。
+3. 这些 $\widetilde V_U$ 在重叠处自然同构（都等于同一个 $\operatorname{Gr}V$ 的局部化），故可粘成 $T^*(X)$ 上唯一的凝聚模 $\widetilde V$，且 $\pi_*\widetilde V=\operatorname{Gr}V$。  
+   *为什么*：层由仿射开覆盖上的局部数据加黏合同构唯一确定，唯一性同时给出与滤过选取无关。
+4. 支集与纤维化相容：$\operatorname{supp}(\widetilde V)\cap\pi^{-1}(U)=\operatorname{supp}(\widetilde V_U)$，而 $\widetilde V_U$ 是 $\operatorname{Gr}\Gamma(U,V)$ 的局部化，其支集正是 $\operatorname{Ch}(V)$ 在 $\pi^{-1}(U)$ 上的部分，故 $\operatorname{Ch}(V)=\operatorname{supp}(\widetilde V)$。  
+   *为什么*：命题 3.2 已证 $\operatorname{Ch}(V|_U)=\operatorname{Ch}(V)\cap\pi^{-1}(U)$，两道局部化互相吻合。
+
+*出处*：命题 3.6 / chap3.tex:301-309
+
+### 定理 3.9（特征簇的投影是支集）（要点（有缺口））
+
+设 $V$ 是光滑代数簇 $X$ 上的凝聚 $\mathcal D_X$-模。则 $\pi(\operatorname{Ch}(V))=\operatorname{supp}(V)$。
+
+1. 断言是局部的：可在 $X$ 的仿射开覆盖上分别验证，两侧都按开子集限制。  
+   *为什么*：特征簇与支集都满足限制相容性，故可局部化。
+2. 在充分小的仿射开集上化归第一、二章的包含关系（chap3.tex:320 指向 I.10.3 与 I.10.7）。  
+   *为什么*：小仿射开集上可用坐标把 $\operatorname{Ch}$ 与支集都算成显式闭集。
+
+> 缺口：讲义在 chap3.tex:320-330 只给出化归路线（化到 II.2.10 意义下「小」的仿射开集后用 I.10.3、I.10.7），未在本章重写细节；本卡按讲义原话记为 sketch。
+
+*出处*：定理 3.9 / chap3.tex:326-329
+
+
+## 易错点
+
+- $\operatorname{Gr}V$ 依赖好滤过的选取；不依赖滤过的是 $\widetilde V$ 的支集 $\operatorname{Ch}(V)$，不是分次模本身。把某个 $\operatorname{Gr}V$ 当作 $V$ 的不变量是错的。
+- $\operatorname{Ch}(V)$ 是 $T^*(X)$ 的子簇，不能由 $\operatorname{supp}(V)$ 反推：$\pi^{-1}(\operatorname{supp}V)$ 一般比 $\operatorname{Ch}(V)$ 大，定理 3.9 只给出投影相等。
+- 命题 3.6 要求 $V$ 凝聚且滤过为好滤过；对拟凝聚而不凝聚的模，$\operatorname{Gr}V$ 未必有限生成，$\widetilde V$ 可能不存在。
+
+## 出处
+
+- Miličić《Lectures on the Algebraic Theory of D-Modules》中译本，第 III 章 §3 特征簇，p.83（PDF p.89），`源码/chapters/chap3.tex:224-307（好滤过与命题 3.6）`
+
+## 核验
+
+状态：`source-only`（2026-11-19）
+
+## 关联
+
+- `dmod/concept/coherent-d-module`
+- `dmod/concept/support-and-irreducibility`
+- `dmod/concept/graded-dz-on-smooth`
+- `dmod/concept/characteristic-variety`
