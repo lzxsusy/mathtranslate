@@ -1,0 +1,300 @@
+{
+  "id": "algebra/l-function",
+  "title": "L 函数",
+  "aliases": [
+    "L-function",
+    "Hasse-Weil L 函数",
+    "Euler 乘积",
+    "函数方程"
+  ],
+  "category": "algebra",
+  "summary": "把每个素位的局部数据（Frobenius 的特征多项式或球面 Hecke 特征值）打包成 Euler 乘积的 Dirichlet 级数；完成化后满足函数方程，是 Langlands 对应要比对的对象。",
+  "definition": {
+    "text": "L 函数是\"局部因子的乘积\"。设 $F$ 为整体域，$v$ 跑遍素位，$q_v$ 为剩余域大小。\n**Galois 侧**：设 $\\rho:G_F\\to\\mathrm{GL}_n(\\overline{\\mathbb Q}_\\ell)$ 连续、除有限多个 $v$ 外非分歧，则\n$$L(\\rho,s):=\\prod_v\\det\\bigl(1-q_v^{-s}\\rho(\\mathrm{Fr}_v)\\mid V^{I_v}\\bigr)^{-1},$$\n其中 $I_v\\subset D_v$ 是惯性群，$\\mathrm{Fr}_v$ 是 Frobenius 共轭类，$V=\\overline{\\mathbb Q}_\\ell^{\\oplus n}$。\n**自守侧**：设 $\\pi=\\otimes'\\pi_v$ 为 $\\mathrm{GL}_n(\\mathbb A_F)$ 的不可约自守表示，球面处 $\\pi_v$ 对应半单共轭类 $\\gamma_v=\\mathrm{diag}(\\alpha_1(v),\\dots,\\alpha_n(v))$，则\n$$L(\\pi,s):=\\prod_vL(\\pi_v,s),\\qquad L(\\pi_v,s)=\\prod_{j=1}^n\\bigl(1-\\alpha_j(v)q_v^{-s}\\bigr)^{-1}.$$\n**椭圆曲线**：$L(E,s)=\\prod_pL_p(E,s)$，好素数处 $L_p=(1-a_pp^{-s}+p^{1-2s})^{-1}$、$a_p=p+1-\\#E(\\mathbb F_p)$；坏素数处按分裂乘法、非分裂乘法、加法约化分别取 $(1-p^{-s})^{-1}$、$(1+p^{-s})^{-1}$、$1$。\n**完成化**：权 $k$、级 $N$、特征标 $\\chi$ 的特征形式 $f$ 取\n$$\\Lambda(f,s):=N^{s/2}(2\\pi)^{-s}\\Gamma(s)L(f,s),$$\n则 $\\Lambda(f,s)=\\varepsilon(f)\\,\\Lambda(f,k-s)$，$|\\varepsilon(f)|=1$（函数方程）。椭圆曲线情形 $L(E,s)=L(f_E,s)$，中心在 $s=1$。",
+    "notation": "$F$（整体域）, $v$（素位）, $q_v$（剩余域大小）, $\\rho$（$\\ell$ 进 Galois 表示）, $\\mathrm{Fr}_v$（Frobenius 共轭类）, $I_v$（惯性群）, $V^{I_v}$（惯性不变量）, $\\pi$（自守表示）, $\\gamma_v$（球面参数，$\\mathrm{diag}(\\alpha_j)$）, $L(\\rho,s)$、$L(\\pi,s)$、$L(E,s)$（L 函数）, $a_p$（$q$ 展开系数，$a_p=p+1-\\#E(\\mathbb F_p)$）, $\\Lambda(s)$（完成化 L 函数）, $\\varepsilon$（函数方程符号/$\\varepsilon$ 因子）, $N$（级/导子）, $k$（权）"
+  },
+  "theorems": [
+    {
+      "name": "Euler 乘积：局部因子决定整体 L 函数",
+      "statement": "设 $f=\\sum_{n\\ge1}a_nq^n\\in S_k(\\Gamma_1(N))$ 为归一化特征形式（$a_1=1$），特征标 $\\chi$。则\n$$L(f,s)=\\sum_{n\\ge1}a_nn^{-s}=\\prod_{p\\nmid N}\\bigl(1-a_pp^{-s}+\\chi(p)p^{k-1-2s}\\bigr)^{-1}\\prod_{p\\mid N}\\bigl(1-a_pp^{-s}\\bigr)^{-1},$$\n在 $\\operatorname{Re}s>\\frac{k+1}{2}$ 上绝对收敛。特别地 $a_{mn}=a_ma_n$（$(m,n)=1$），$a_{p^{r+1}}=a_pa_{p^r}-\\chi(p)p^{k-1}a_{p^{r-1}}$（$p\\nmid N$）。",
+      "proof": {
+        "status": "complete",
+        "steps": [
+          {
+            "no": 1,
+            "text": "乘法性：$(m,n)=1$ 时 $a_{mn}=a_ma_n$。",
+            "why": "Hecke 关系 $T_mT_n=\\sum_{d\\mid(m,n),(d,N)=1}d^{k-1}\\langle d\\rangle T_{mn/d^2}$ 在 $(m,n)=1$ 时右端只剩 $T_{mn}$；作用到特征形式 $f$ 上得 $a_ma_n=a_{mn}$。"
+          },
+          {
+            "no": 2,
+            "text": "素数幂的递推：$p\\nmid N$ 时 $T_{p^{r+1}}=T_pT_{p^r}-p^{k-1}\\langle p\\rangle T_{p^{r-1}}$，作用于 $f$ 得 $a_{p^{r+1}}=a_pa_{p^r}-\\chi(p)p^{k-1}a_{p^{r-1}}$；$p\\mid N$ 时 $T_{p^r}=T_p^r$ 给 $a_{p^r}=a_p^r$。",
+            "why": "$T_{p^{r+1}}=T_pT_{p^r}-p^{k-1}\\langle p\\rangle T_{p^{r-1}}$ 是 Hecke 关系在 $(m,n)=(p^{r+1},p)$ 的特例（唯二可行的 $d$ 是 $1$ 与 $p$）。"
+          },
+          {
+            "no": 3,
+            "text": "把 $\\sum_na_nn^{-s}$ 按素数分解重排：$n=\\prod_pp^{e_p}$ 的分解唯一，且 $a_n=\\prod_pa_{p^{e_p}}$（乘法性），故 $\\sum_na_nn^{-s}=\\prod_p\\bigl(\\sum_{e\\ge0}a_{p^e}p^{-es}\\bigr)$。",
+            "why": "算术基本定理 + 绝对收敛（重排合法）。"
+          },
+          {
+            "no": 4,
+            "text": "对每个 $p$ 算内层：$p\\nmid N$ 时由递推得 $\\sum_ea_{p^e}t^e=\\bigl(1-a_pt+\\chi(p)p^{k-1}t^2\\bigr)^{-1}$（$t=p^{-s}$）；$p\\mid N$ 时得 $(1-a_pt)^{-1}$。",
+            "why": "几何级数：$\\sum_ea_{p^e}t^e$ 满足与 $a_{p^e}$ 相同的二阶递推，故等于对应的有理函数。"
+          },
+          {
+            "no": 5,
+            "text": "收敛性：$|a_n|\\ll n^{(k-1)/2+\\epsilon}$（Hecke 界 / Deligne 界），故 $\\sum|a_n|n^{-\\sigma}$ 在 $\\sigma>\\frac{k+1}{2}$ 收敛。",
+            "why": "$|a_n|n^{-\\sigma}\\le Cn^{(k-1)/2+\\epsilon-\\sigma}$，指数小于 $-1$ 时求和收敛。"
+          }
+        ],
+        "gap_note": ""
+      },
+      "sources": [
+        {
+          "book": "袁瑶, Langlands 纲领导论",
+          "section": "第7讲 §2",
+          "pages": [
+            58,
+            59
+          ]
+        }
+      ]
+    },
+    {
+      "name": "$L(E,s)$ 的局部因子与 $\\ell$ 无关",
+      "statement": "设 $E/\\mathbb Q$，$p$ 为素数，$\\ell\\ne p$。则\n$$L_p(E,s)=\\det\\bigl(1-p^{-s}\\sigma_\\ell(\\mathrm{Fr}_p)\\mid(T_\\ell E\\otimes\\mathbb Q_\\ell)^{I_p}\\bigr)^{-1}$$\n只依赖 $p$ 与 $E$ 在 $p$ 的约化型，与 $\\ell$ 的选取无关；且\n$$L_p=\\begin{cases}\\bigl(1-a_pp^{-s}+p^{1-2s}\\bigr)^{-1},&\\text{良约化},\\ a_p=p+1-\\#E(\\mathbb F_p),\\\\ \\bigl(1-p^{-s}\\bigr)^{-1},&\\text{分裂乘法约化},\\\\ \\bigl(1+p^{-s}\\bigr)^{-1},&\\text{非分裂乘法约化},\\\\ 1,&\\text{加法约化}.\\end{cases}$$",
+      "proof": {
+        "status": "complete",
+        "steps": [
+          {
+            "no": 1,
+            "text": "由 Tate 模条目：$\\det\\bigl(tI-\\sigma_\\ell(\\mathrm{Fr}_p)\\bigr)=t^2-a_pt+p$，系数在 $\\mathbb Z$ 中且不依赖 $\\ell$。",
+            "why": "特征多项式 $f_\\alpha(t)=\\det(tI-T_\\ell\\alpha)$ 的系数是 $\\deg$ 型整量（$f_\\alpha(n)=\\deg(n-\\alpha)$），故与 $\\ell$ 的选取无关。"
+          },
+          {
+            "no": 2,
+            "text": "良约化：$I_p$ 在 $T_\\ell E$ 上作用平凡（$p\\nmid N_E$ ⟺ 良约化），故 $V^{I_p}=V$，$L_p=\\det(1-p^{-s}\\mathrm{Fr}_p)^{-1}=(1-a_pp^{-s}+p^{1-2s})^{-1}$。",
+            "why": "Ogg–Néron–Shafarevich：$p\\nmid N_E$ 时 $\\sigma_\\ell$ 在 $p$ 非分歧，即 $I_p$ 作用平凡。"
+          },
+          {
+            "no": 3,
+            "text": "乘法约化：$T_\\ell E\\otimes\\mathbb Q_\\ell$ 的惯性不变量是一维的，$\\mathrm{Fr}_p$ 在其上作用为 $\\pm1$（分裂约化取 $+1$，非分裂取 $-1$），故局部因子是 $(1-p^{-s})^{-1}$ 或 $(1+p^{-s})^{-1}$ 而非二次因子。",
+            "why": "乘法约化时 Néron 模型的特殊纤维是节点，$T_\\ell$ 的惯性不变部分同构于节点的 Tate 模 $\\mathbb Z_\\ell(1)$ 或其二次扭。"
+          },
+          {
+            "no": 4,
+            "text": "核对符号：分裂约化时 $\\#E(\\mathbb F_p)=p$（节点计一个点，光滑部分 $\\cong\\mathbb G_m$ 有 $p-1$ 个点），故 $a_p=p+1-p=1$，局部因子 $(1-p^{-s})^{-1}$；非分裂时 $\\#E(\\mathbb F_p)=p+2$，$a_p=-1$，局部因子 $(1+p^{-s})^{-1}$。",
+            "why": "光滑点群：分裂为 $\\mathbb G_m(\\mathbb F_p)$（$p-1$ 个），非分裂为范数 $1$ 群（$p+1$ 个）；再加节点本身。"
+          },
+          {
+            "no": 5,
+            "text": "加法约化：$V^{I_p}=0$，故 $L_p=1$（$a_p=0$，即 $p+1-\\#E(\\mathbb F_p)=0$）。",
+            "why": "$T_\\ell E$ 在加法约化处无惯性不变量（潜在良约化后惯性作用无不动向量）。"
+          }
+        ],
+        "gap_note": ""
+      },
+      "sources": [
+        {
+          "book": "袁瑶, Langlands 纲领导论",
+          "section": "第7讲 §2",
+          "pages": [
+            57,
+            58
+          ]
+        }
+      ]
+    },
+    {
+      "name": "函数方程：完成化后 $s\\leftrightarrow k-s$ 对称",
+      "statement": "设 $f\\in S_k(\\Gamma_1(N),\\chi)$ 为归一化特征形式，$\\Lambda(f,s)=N^{s/2}(2\\pi)^{-s}\\Gamma(s)L(f,s)$。则 $\\Lambda$ 延拓为整函数且满足\n$$\\Lambda(f,s)=\\varepsilon(f)\\,\\Lambda(f,k-s),\\qquad|\\varepsilon(f)|=1.$$\n更一般地，对任意 $\\rho$（或 $\\pi$）存在局部 $\\varepsilon$ 因子 $\\varepsilon_v(s,\\rho_v,\\psi)$（$\\psi$ 为加性特征），使得完成化 $\\Lambda(\\rho,s)$ 满足\n$$\\Lambda(\\rho,s)=\\varepsilon(\\rho,s)\\,\\Lambda(\\rho^\\vee,1-s).$$",
+      "proof": {
+        "status": "sketch",
+        "steps": [
+          {
+            "no": 1,
+            "text": "把 $\\Lambda$ 写成 Mellin 变换：$\\Lambda(f,s)=\\int_0^\\infty f(iy)y^{s-1}\\,dy$（$f$ 为 $q$ 展开，$\\Gamma$ 因子来自 $y^{s-1}$ 的积分）。",
+            "why": "Mellin 变换：$\\int_0^\\infty e^{-2\\pi ny}y^{s-1}dy=(2\\pi n)^{-s}\\Gamma(s)$，逐项求和得 $N^{s/2}$ 因子后的表达式。"
+          },
+          {
+            "no": 2,
+            "text": "用 $f$ 在 $\\Gamma_0(N)$ 下的模性与 Atkin–Lehner 对合 $w_N:\\tau\\mapsto-\\frac{1}{N\\tau}$，把 $\\int_0^{1/\\sqrt N}$ 的部分换成 $\\int_{1/\\sqrt N}^\\infty$ 的部分，得到 $\\Lambda(s)$ 与 $\\Lambda(k-s)$ 的关系。",
+            "why": "$w_N$ 把 $\\tau=i/\\sqrt N$ 固定不动，正好是把积分区间 $[0,1/\\sqrt N]$ 映到 $[1/\\sqrt N,\\infty]$ 的对称点；模性给出被积函数的变换公式。"
+          }
+        ],
+        "gap_note": "原书 L9 §2 只把\"匹配 $L$ 函数与 $\\varepsilon$ 因子\"列为 Langlands 对应的要求，未给推导。完整证明需写出 $w_N$ 在 $S_k(\\Gamma_1(N))$ 上的作用（Fricke 对合，特征值 $\\pm1$）并逐项核对 $\\Gamma$ 因子的变换，参见 Shimura《Introduction to the Arithmetic Theory of Automorphic Functions》§3.6 或 Diamond–Shurman GTM 228 §5.10；一般 $n$ 维情形需 Tate 的局部函数方程（Tate  thesis, 1950）。"
+      },
+      "sources": [
+        {
+          "book": "袁瑶, Langlands 纲领导论",
+          "section": "第9讲 §2",
+          "pages": [
+            78,
+            79
+          ]
+        }
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "name": "$E:y^2=x^3-x$ 的 $L(E,s)$",
+      "setup": "$E:y^2=x^3-x$（$j=1728$，导子 $32$，在 $2,3$ 处加法约化）。逐素数算 $a_p$ 并写出局部因子。",
+      "computation": [
+        {
+          "no": 1,
+          "text": "$p=2$：$y^2=x^3-x\\equiv x^3+x$ 于 $\\mathbb F_2$：$x=0$ 给 $y=0$、$x=1$ 给 $y^2=0$ 即 $y=0$，仿射 $2$ 点，加 $O$ 共 $3$ 点，$a_2=2+1-3=0$，故 $L_2=1$。",
+          "why": "加法约化处 $L_p=1$（上一条定理）。"
+        },
+        {
+          "no": 2,
+          "text": "$p=3$：$x=0,1,2$ 时 $x^3-x\\equiv0$，各给 $y=0$ 一点，仿射 $3$ 点加 $O$ 共 $4$ 点，$a_3=3+1-4=0$，$L_3=1$。",
+          "why": "同上（$3\\mid 32$，加法约化）。"
+        },
+        {
+          "no": 3,
+          "text": "$p=5$：平方剩余为 $\\{0,1,4\\}$；$x=0,1,4$ 各给 $1$ 个 $y$（$x^3-x\\equiv0$），$x=2$ 给 $2$ 个（$x^3-x\\equiv1$），$x=3$ 给 $2$ 个（$\\equiv4$），仿射 $7$ 点加 $O$ 共 $8$ 点，$a_5=5+1-8=-2$，$L_5=(1+2\\cdot5^{-s}+5^{1-2s})^{-1}$。",
+          "why": "良约化：$a_p=p+1-\\#E(\\mathbb F_p)$。"
+        },
+        {
+          "no": 4,
+          "text": "$p=7$：仿射 $7$ 点加 $O$ 共 $8$ 点，$a_7=7+1-8=0$，$L_7=(1+7^{1-2s})^{-1}$；$p=11$：仿射 $11$ 点加 $O$ 共 $12$ 点，$a_{11}=11+1-12=0$，$L_{11}=(1+11^{1-2s})^{-1}$。",
+          "why": "良约化；$a_p=0$ 时局部因子退化为 $p^{1-2s}$ 项。"
+        }
+      ],
+      "result": "$L(E,s)=\\bigl(1+2\\cdot5^{-s}+5^{1-2s}\\bigr)^{-1}\\bigl(1+7^{1-2s}\\bigr)^{-1}\\bigl(1+11^{1-2s}\\bigr)^{-1}\\cdots$，两个坏素数 $2,3$ 处因子为 $1$；$L(E,s)=L(f_E,s)$，$f_E$ 为权 $2$、级 $32$ 的新形式。",
+      "sources": [
+        {
+          "book": "袁瑶, Langlands 纲领导论",
+          "section": "第7讲 §2",
+          "pages": [
+            57,
+            59
+          ]
+        }
+      ]
+    },
+    {
+      "name": "$L(\\Delta,s)$：Euler 乘积与 $\\tau$ 的递推",
+      "setup": "$\\Delta=\\sum\\tau(n)q^n\\in S_{12}(\\mathrm{SL}_2(\\mathbb Z))$，$k=12$、$N=1$、$\\chi$ 平凡，$\\tau(2)=-24$、$\\tau(3)=252$、$\\tau(5)=4830$。写出 $L(\\Delta,s)$ 的前几个系数。",
+      "computation": [
+        {
+          "no": 1,
+          "text": "局部因子 $L_p=(1-\\tau(p)p^{-s}+p^{11-2s})^{-1}$（$p\\nmid N=1$ 恒成立）。",
+          "why": "公式 $(1-a_pp^{-s}+\\chi(p)p^{k-1-2s})^{-1}$，$k-1=11$、$\\chi=1$。"
+        },
+        {
+          "no": 2,
+          "text": "$a_4=\\tau(4)=\\tau(2)^2-2^{11}=576-2048=-1472$。",
+          "why": "$p=2$ 的递推 $a_{p^2}=a_p^2-p^{k-1}$（$\\chi$ 平凡）。"
+        },
+        {
+          "no": 3,
+          "text": "$a_6=\\tau(6)=\\tau(2)\\tau(3)=(-24)(252)=-6048$。",
+          "why": "$(2,3)=1$ 的乘法性。"
+        },
+        {
+          "no": 4,
+          "text": "于是 $L(\\Delta,s)=1-24\\cdot2^{-s}+252\\cdot3^{-s}-1472\\cdot4^{-s}+4830\\cdot5^{-s}-6048\\cdot6^{-s}+\\cdots$，其中每个系数都由 $\\tau(p)$ 与递推决定。",
+          "why": "$L$ 函数的系数就是 $q$ 展开系数。"
+        }
+      ],
+      "result": "$L(\\Delta,s)=\\prod_p(1-\\tau(p)p^{-s}+p^{11-2s})^{-1}$，且 $\\tau(4)=\\tau(2)^2-2^{11}$、$\\tau(6)=\\tau(2)\\tau(3)$ 说明 Euler 乘积的局部因子与乘法性完全由 $\\tau$ 的 Hecke 关系编码。",
+      "sources": [
+        {
+          "book": "袁瑶, Langlands 纲领导论",
+          "section": "第7讲 §2",
+          "pages": [
+            59,
+            59
+          ]
+        }
+      ]
+    },
+    {
+      "name": "11a1：三种约化型的局部因子与 $a_p$ 匹配",
+      "setup": "$E:y^2+y=x^3-x^2-10x-20$（$11a1$，导子 $11$），$f_E=q-2q^2-q^3+2q^4+q^5-2q^6+\\cdots$。核对 $p=2,3,5$ 的 $a_p$ 与 $F_p$ 上点数，并写出 $p=11$ 的局部因子。",
+      "computation": [
+        {
+          "no": 1,
+          "text": "$p=2$：$y^2+y\\equiv x^3+x^2$，$x=0,1$ 各给 $2$ 个 $y$，仿射 $4$ 点加 $O$ 共 $5$ 点，$a_2=2+1-5=-2$。",
+          "why": "$y^2+y=c$ 在 $\\mathbb F_2$ 上恒有 $2$ 解（$y=0,1$ 都给 $0$）。"
+        },
+        {
+          "no": 2,
+          "text": "$p=3$：$y^2+y=x^3-x^2+2x+1$，$y^2+y\\in\\{0,2\\}$，数得仿射 $4$ 点加 $O$ 共 $5$ 点，$a_3=3+1-5=-1$。",
+          "why": "$y^2+y=c$ 可解 $\\iff 1+4c\\in\\{0,1\\}$。"
+        },
+        {
+          "no": 3,
+          "text": "$p=5$：仿射 $4$ 点加 $O$ 共 $5$ 点，$a_5=5+1-5=1$。",
+          "why": "逐 $x$ 代入。"
+        },
+        {
+          "no": 4,
+          "text": "三个值与 $f_E$ 的系数 $a_2=-2$、$a_3=-1$、$a_5=1$ 完全一致，故 $L_p(E,s)=L_p(f_E,s)$（$p=2,3,5$）。",
+          "why": "模性定理（$L(E,s)=L(f_E,s)$）在好素数处的显式形式。"
+        },
+        {
+          "no": 5,
+          "text": "$p=11$：$11a1$ 在 $11$ 处分裂乘法约化，$\\#E(\\mathbb F_{11})=11$（$\\mathbb G_m$ 部分 $10$ 点 + 节点 $1$ 点），故 $a_{11}=11+1-11=1$，$L_{11}=(1-11^{-s})^{-1}$。",
+          "why": "分裂乘法约化的光滑点群 $\\cong\\mathbb G_m$；节点本身计一个点。"
+        }
+      ],
+      "result": "$L(E,s)=(1+2\\cdot2^{-s}+2^{1-2s})^{-1}(1+3^{-s}+3^{1-2s})^{-1}(1-5^{-s}+5^{1-2s})^{-1}(1-11^{-s})^{-1}\\cdots$：好素数处是二次因子、坏素数分裂处是一次因子，二者与 $f_E$ 的 Hecke 局部因子逐项相同。",
+      "sources": [
+        {
+          "book": "袁瑶, Langlands 纲领导论",
+          "section": "第7讲 §2",
+          "pages": [
+            58,
+            59
+          ]
+        }
+      ]
+    }
+  ],
+  "pitfalls": [
+    "函数方程是给\"完成化\"的 $\\Lambda(s)=N^{s/2}(2\\pi)^{-s}\\Gamma(s)L(s)$ 的；裸的 $L(s)$ 本身不满足 $s\\leftrightarrow k-s$ 对称，$\\Gamma$ 因子与 $N^{s/2}$ 不能省。",
+    "中心位置依约定而变：$L(f,s)$ 的中心在 $s=k/2$，而 $L(E,s)$ 的中心在 $s=1$；有的文献把 $L$ 平移成中心在 $1/2$，比较不同书的函数方程前先核对约定。",
+    "$\\varepsilon$ 因子是 $s$ 的函数（含 $N^{s}$ 型的指数因子），不是常数；只有 $|\\varepsilon|=1$ 这一句在 $s=k/2$ 处才有直接的\"符号\"意义。",
+    "坏素数的局部因子有三种形态（分裂乘法 $(1-p^{-s})^{-1}$、非分裂 $(1+p^{-s})^{-1}$、加法 $1$），不能一律用 $(1-a_pp^{-s}+p^{1-2s})^{-1}$；$p\\mid N$ 时没有 $p^{1-2s}$ 项。",
+    "$L(E,s)$ 的 $a_p$ 约定是 $a_p=p+1-\\#E(\\mathbb F_p)$，符号极易写反；$\\#E(\\mathbb F_p)$ 含无穷远点 $O$，逐点数点时别漏。",
+    "函数域的 $L$ 函数用 $N(v)^{-s}$ 且与数域情形差一个\"倒数\"约定（原书 p58 约定 $\\zeta$ 为通常 $\\zeta$ 的倒数），比对函数域与数域的 Euler 乘积时要先统一。"
+  ],
+  "related": [
+    {
+      "id": "algebra/elliptic-curve",
+      "why": "$L(E,s)$ 由 $E$ 的局部 $a_p$ 打包而成，模性定理说它等于新形式的 $L$ 函数"
+    },
+    {
+      "id": "algebra/l-adic-representation",
+      "why": "Galois 侧的局部因子由 $\\ell$ 进表示在 Frobenius 上的特征多项式给出"
+    },
+    {
+      "id": "algebra/hecke-algebra",
+      "why": "自守侧的局部因子由 Hecke 特征值 $a_p=\\varphi(T_p)$ 给出"
+    },
+    {
+      "id": "algebra/langlands-correspondence",
+      "why": "对应的核心要求就是 $L(\\pi,s)=L(\\sigma_\\pi,s)$（含 $\\varepsilon$ 因子）"
+    },
+    {
+      "id": "algebra/automorphic-representation",
+      "why": "$L(\\pi,s)$ 的局部因子由 $\\pi_v$ 的球面参数（Satake 参数）定义"
+    }
+  ],
+  "sources": [
+    {
+      "book": "袁瑶, Langlands 纲领导论",
+      "edition": "中译注本（2020 年春季课程，23 讲）",
+      "url": "",
+      "pages": [
+        57,
+        79
+      ]
+    }
+  ],
+  "rights": "rewritten",
+  "status": "draft",
+  "reviewed_by": []
+}

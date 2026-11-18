@@ -101,3 +101,79 @@
 
 统稿后再补：qft/instanton（ch4.7、ch8）、condensed/toric-code（ch6.6）、热核/指标细节（ch12）。
 
+
+## Langlands 纲领导论（袁瑶，2020 春季课程，23 讲）
+
+袁瑶老师课程讲义的中译注本（原书 PDF 198 页，译本 162 页）。这一批 **45 个词条按概念切，不按讲切**：一个词条吸收多讲的相关段落，写成脱离原书也能独立读懂的单元。页码为原书 PDF 页（印刷页 = PDF − 2，见 `08_source_code/SY02-09_Langlands纲领导论/源码/page-map.tsv`）。
+
+### 数论侧 I：Galois、类域论、阿代尔（L1–L3）
+
+| id | 词条 | 主要出处（PDF 页） | 状态 |
+|---|---|---|---|
+| algebra/galois-extension | Galois 扩张与 Galois 群 | L1（3–10） | draft |
+| algebra/krull-topology | Krull 拓扑与射有限群 | L1（3–10） | draft |
+| algebra/frobenius-automorphism | Frobenius 自同构 | L2（11–18） | draft |
+| algebra/class-field-theory | 类域论与 Artin 互反律 | L2–L3（11–26） | draft |
+| algebra/adele-ring | 阿代尔环 | L3（19–26） | draft |
+| algebra/idele-group | 伊代尔群 | L3（19–26） | draft |
+
+### 数论侧 II：自守表示、模形式、L 函数（L4–L9）
+
+| id | 词条 | 主要出处（PDF 页） | 状态 |
+|---|---|---|---|
+| algebra/automorphic-representation | 自守表示 | L4（27–35） | draft |
+| algebra/g-k-module | (g,K)-模 | L5（36–42） | draft |
+| algebra/cuspidal-representation | 尖点表示 | L5（36–42） | draft |
+| algebra/automorphic-form | 自守形式 | L6（43–52） | draft |
+| algebra/modular-form | 模形式 | L6（43–52） | draft |
+| algebra/elliptic-curve | 椭圆曲线 | L7（53–63） | draft |
+| algebra/tate-module | Tate 模 | L7（53–63） | draft |
+| algebra/l-adic-representation | ℓ 进 Galois 表示 | L7–L8（53–71） | draft |
+| algebra/hecke-operator | Hecke 算子 | L8（64–71） | draft |
+| algebra/hecke-algebra | Hecke 代数 | L8（64–71） | draft |
+| algebra/l-function | L 函数 | L9（72–79） | draft |
+| algebra/langlands-correspondence | Langlands 对应（整体） | L4–L9（27–79） | draft |
+
+### 几何侧 I：重述、反常层、D 模（L10–L14）
+
+| id | 词条 | 主要出处（PDF 页） | 状态 |
+|---|---|---|---|
+| geometry/etale-fundamental-group | 平展基本群 | L10（80–88） | draft |
+| geometry/local-system | 局部系统与光滑层 | L10（80–88） | draft |
+| geometry/bun-n | Bun_n 模叠 | L11（89–97） | draft |
+| geometry/hecke-correspondence | Hecke 对应 | L12（98–104） | draft |
+| geometry/hecke-eigensheaf | Hecke 特征层 | L12（98–104） | draft |
+| geometry/geometric-langlands | 几何 Langlands 对应 | L12（98–104） | draft |
+| geometry/perverse-sheaf | 反常层 | L13（105–114） | draft |
+| geometry/ic-sheaf | 交复形与中间延拓 | L13（105–114） | draft |
+| geometry/verdier-duality | Verdier 对偶 | L13（105–114） | draft |
+| geometry/d-module | D 模 | L14（115–124） | draft |
+| geometry/riemann-hilbert | Riemann–Hilbert 对应 | L14（115–124） | draft |
+
+### 几何侧 II：几何类域论（L15–L17）
+
+| id | 词条 | 主要出处（PDF 页） | 状态 |
+|---|---|---|---|
+| geometry/geometric-class-field-theory | 几何类域论 | L15（125–131） | draft |
+| geometry/symmetric-power | 对称幂 | L15（125–131） | draft |
+| geometry/geometric-artin-reciprocity | 几何 Artin 互反律 | L16（132–139） | draft |
+| geometry/fourier-mukai | Fourier–Mukai 变换 | L17（140–147） | draft |
+| geometry/picard-variety | Picard 簇与对偶环面 | L17（140–147） | draft |
+
+### 约化群与几何 Satake（L18–L23）
+
+| id | 词条 | 主要出处（PDF 页） | 状态 |
+|---|---|---|---|
+| algebra/root-datum | 根数据 | L18（148–156） | draft |
+| algebra/reductive-group | 约化群 | L18（148–156） | draft |
+| algebra/bruhat-decomposition | Bruhat 分解 | L19（157–164） | draft |
+| algebra/spherical-hecke-algebra | 球面 Hecke 代数 | L19（157–164） | draft |
+| algebra/satake-isomorphism | Satake 同构 | L19（157–164） | draft |
+| algebra/l-group | L 群与 Langlands 函子性 | L20（165–172） | draft |
+| geometry/affine-grassmannian | 仿射 Grassmannian | L21（173–181） | draft |
+| algebra/loop-group | 环群与中心扩张 | L21（173–181） | draft |
+| algebra/kac-moody | Kac–Moody 代数 | L21（173–181） | draft |
+| geometry/geometric-satake | 几何 Satake 等价 | L21–L23（173–198） | draft |
+| geometry/equivariant-sheaf | 等变层 | L22（182–190） | draft |
+
+> 这一批词条与 `datasets/glc/`（陈麟《几何 Langlands 讲义》按书资料卡）互补：`glc` 是「一本书一章」的卡片，本批是「一个概念跨讲」的词条。后续翻译 Beilinson–Drinfeld、Kapustin–Witten、Zhu 时，同一概念继续往这些词条里供给出处即可。

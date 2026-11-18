@@ -61,7 +61,10 @@
   - 数学物理（4）：旋量、Clifford 代数、Bott 周期、eta 不变量；
   - 凝聚态（2）：十重分类、toric code；
   - 量子场论（2）：反常、瞬子。
-- 状态：`manifold` 为 `reviewed`，其余 42 条为 `draft`，等独立复核后逐条升级；复核重点仍是「补证」部分与页码。
+- **第二本已拆完（袁瑶《Langlands 纲领导论》，2020 年春季课程 23 讲）**：45 个词条、158 条定理、110 个例子；111 条证明为 `complete`，47 条为 `sketch`（均写 `gap_note`）。按**概念**切、不按讲切：一个词条吸收多讲的相关段落，页码用原书 PDF 页（印刷页 = PDF − 2）。
+  - 数论侧（`algebra`，26）：Galois 扩张、Krull 拓扑、Frobenius、类域论、阿代尔环、伊代尔群、自守表示、(g,K)-模、尖点表示、自守形式、模形式、椭圆曲线、Tate 模、ℓ 进表示、Hecke 算子、Hecke 代数、L 函数、Langlands 对应、根数据、约化群、Bruhat 分解、球面 Hecke 代数、Satake 同构、L 群、环群、Kac–Moody；
+  - 几何侧（`geometry`，19）：平展基本群、局部系统、Bun_n、Hecke 对应、Hecke 特征层、几何 Langlands、反常层、IC 层、Verdier 对偶、D 模、Riemann–Hilbert、几何类域论、几何 Artin 互反、Fourier–Mukai、Picard 簇、对称幂、仿射 Grassmannian、几何 Satake、等变层。
+- 状态：`manifold` 为 `reviewed`，其余 87 条为 `draft`，等独立复核后逐条升级；复核重点仍是「补证」部分与页码。
 - 后续：同调与示性类、Chern–Simons、K 理论与十重分类、指标定理；超对称场论词条（用户指定的长期重点）。
 
 ## 校验

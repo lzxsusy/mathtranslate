@@ -1,0 +1,294 @@
+{
+  "id": "algebra/elliptic-curve",
+  "title": "椭圆曲线",
+  "aliases": [
+    "elliptic curve",
+    "Weierstrass 形式",
+    "j 不变量"
+  ],
+  "category": "algebra",
+  "summary": "亏格 1、带一个有理基点的光滑射影曲线，可写成 Weierstrass 三次方程；其 j 不变量与判别式决定同构类与奇异性。",
+  "definition": {
+    "text": "设 $F$ 为域。$F$ 上的椭圆曲线（elliptic curve）指亏格 $1$、几何不可约、光滑的射影曲线 $E$，并指定一个 $F$ 有理点 $O$ 作为基点；等价地，$E$ 是一维阿贝尔簇。当 $\\operatorname{char}F\\ne2,3$ 时，$E$ 可写成短 Weierstrass 形式\n$$E:\\ y^2=x^3+ax+b,\\qquad a,b\\in F,$$\n其判别式 $\\Delta=-16(4a^3+27b^2)$，非奇异当且仅当 $\\Delta\\ne0$。一般特征下需用 $y^2+a_1xy+a_3y=x^3+a_2x^2+a_4x+a_6$，判别式是系数的某个整系数多项式，仍要求 $\\Delta\\ne0$。$E$ 的 $j$ 不变量定义为\n$$j(E)=1728\\,\\frac{4a^3}{4a^3+27b^2},$$\n它对 $F$ 上保持 Weierstrass 形式的代换 $x=u^2x'$、$y=u^3y'$ 不变，因而只依赖 $E$ 在 $\\overline F$ 上的同构类。点集 $E$ 上按弦切法成群：过 $P\\ne Q$ 的直线与 $E$ 交于第三点 $R'$，令 $P+Q$ 为 $R'$ 关于 $x$ 轴的对称点；$P=Q$ 时用 $P$ 处的切线代替割线；$O=\\infty$ 是零元。",
+    "notation": "$F$（基域）, $E$（椭圆曲线）, $O=\\infty$（基点/零元）, $a,b$（短 Weierstrass 系数）, $\\Delta$（判别式）, $j$（$j$ 不变量）, $E(F)$（有理点群）, $E[n]$（$n$ 挠子群）, $E_p$（模 $p$ 约化）, $\\Lambda\\subset\\mathbb C$（秩 $2$ 格）, $\\wp_\\Lambda$（Weierstrass 椭圆函数）, $g_2,g_3$（$\\Lambda$ 的模形式系数）, $\\tau\\in\\mathcal H$（上半平面参数）, $\\omega_1,\\omega_2$（格的基）"
+  },
+  "theorems": [
+    {
+      "name": "判别式与非奇异性的等价",
+      "statement": "设 $\\operatorname{char}F\\ne2,3$，$E:\\ y^2=x^3+ax+b$，$a,b\\in F$。则 $E$ 非奇异当且仅当 $4a^3+27b^2\\ne0$，当且仅当 $\\Delta=-16(4a^3+27b^2)\\ne0$，当且仅当三次多项式 $x^3+ax+b$ 无重根。",
+      "proof": {
+        "status": "complete",
+        "steps": [
+          {
+            "no": 1,
+            "text": "令 $f(x,y)=x^3+ax+b-y^2$。点 $(x,y)\\in E$ 奇异当且仅当 $f=f_x=f_y=0$，其中 $f_y=-2y$，故 $\\operatorname{char}F\\ne2$ 时必有 $y=0$。",
+            "why": "光滑等价于梯度不为零；$\\operatorname{char}F\\ne2$ 使 $2$ 可逆，$-2y=0$ 推出 $y=0$。"
+          },
+          {
+            "no": 2,
+            "text": "于是奇异点只能形如 $(x,0)$，且 $x$ 同时满足 $x^3+ax+b=0$ 与 $3x^2+a=0$：即 $x^3+ax+b$ 有重根。",
+            "why": "重根的定义就是多项式与其导数有公共零点。"
+          },
+          {
+            "no": 3,
+            "text": "消去 $x$：由 $3x^2=-a$ 得 $x(x^2+a)=x\\left(-\\frac a3+a\\right)=\\frac{2a}{3}x$，故 $f(x,0)=\\frac{2a}{3}x+b$。若 $a\\ne0$，则 $x=-\\frac{3b}{2a}$，代回 $x^2=-\\frac a3$ 得 $27b^2=-4a^3$。",
+            "why": "直接代入消元；$a\\ne0$ 时 $\\frac{2a}{3}$ 可逆。"
+          },
+          {
+            "no": 4,
+            "text": "若 $a=0$，则 $3x^2=0$ 给出 $x=0$，再由 $f=0$ 得 $b=0$，同样满足 $4a^3+27b^2=0$。故奇异 $\\iff 4a^3+27b^2=0$；又 $\\operatorname{char}F\\ne2$ 使 $-16$ 可逆，这等价于 $\\Delta\\ne0$。",
+            "why": "两个方向都已得：奇异推出判别式为零，判别式为零时第 3、4 步的 $x$ 就是公共零点。"
+          }
+        ],
+        "gap_note": ""
+      },
+      "sources": [
+        {
+          "book": "袁瑶, Langlands 纲领导论",
+          "section": "第7讲 §1",
+          "pages": [
+            53,
+            54
+          ]
+        }
+      ]
+    },
+    {
+      "name": "j 不变量的同构判据",
+      "statement": "设 $E,E'$ 是 $F$ 上的椭圆曲线，$\\operatorname{char}F\\ne2,3$。则 $E$ 与 $E'$ 在 $\\overline F$ 上同构当且仅当 $j(E)=j(E')$。注意这**不**保证在 $F$ 上同构。",
+      "proof": {
+        "status": "complete",
+        "steps": [
+          {
+            "no": 1,
+            "text": "$\\operatorname{char}\\overline F\\ne2,3$ 时，任意两条短 Weierstrass 曲线之间的同构必形如 $x=u^2x'$、$y=u^3y'$，$u\\in\\overline F^\\times$；代入得 $a'=a/u^4$、$b'=b/u^6$。",
+            "why": "保持 $y^2=x^3+ax+b$ 形状的代换只有伸缩（配方与平移已用掉，平移会改变 $a,b$ 但可并入 $u$ 的选择）。"
+          },
+          {
+            "no": 2,
+            "text": "在此代换下 $4a^3+27b^2$ 变为 $(4a^3+27b^2)/u^{12}$，故 $j=1728\\cdot4a^3/(4a^3+27b^2)$ 不变。于是 $\\overline F$ 上同构 $\\Rightarrow j$ 相等。",
+            "why": "$j$ 的分子分母同乘 $u^{-12}$，比值不变。"
+          },
+          {
+            "no": 3,
+            "text": "反之设 $j(E)=j(E')$ 且 $j\\ne0,1728$，此时 $a,b,a',b'$ 全非零。取 $u$ 使 $u^4=a/a'$；由 $j$ 相等得 $\\frac{b^2}{a^3}=\\frac{b'^2}{a'^3}$，故 $u^{12}=\\left(\\frac{a}{a'}\\right)^3=\\left(\\frac{b}{b'}\\right)^2$，即 $u^6=\\pm\\frac{b}{b'}$。若取到负号，把 $u$ 换成 $iu$（$i^2=-1\\in\\overline F$）：$4$ 次幂不变而 $6$ 次幂变号，于是 $a'=a/u^4$、$b'=b/u^6$ 同时成立。",
+            "why": "$\\operatorname{char}F\\ne2$ 给出 $i\\in\\overline F$；$i^6=-1$。"
+          },
+          {
+            "no": 4,
+            "text": "若 $j=0$ 则 $a=a'=0$，取 $u^6=b/b'$；若 $j=1728$ 则 $b=b'=0$，取 $u^4=a/a'$。$\\overline F$ 代数闭且 $\\operatorname{char}F\\nmid 4,6$，故这样的 $u$ 总存在，得到同构。",
+            "why": "代数闭域上 $u^n=c$（$c\\ne0$，$n$ 与特征互素）总有解。"
+          }
+        ],
+        "gap_note": ""
+      },
+      "sources": [
+        {
+          "book": "袁瑶, Langlands 纲领导论",
+          "section": "第7讲 §1",
+          "pages": [
+            54,
+            54
+          ]
+        }
+      ]
+    },
+    {
+      "name": "复均匀化：\\mathbb C/\\Lambda 与 E_\\Lambda(\\mathbb C)",
+      "statement": "设 $\\Lambda\\subset\\mathbb C$ 是秩 $2$ 格，$g_2=60\\sum_{\\omega\\ne0}\\omega^{-4}$、$g_3=140\\sum_{\\omega\\ne0}\\omega^{-6}$，$E_\\Lambda:\\ y^2=4x^3-g_2x-g_3$。则 $z\\mapsto(\\wp_\\Lambda(z),\\wp'_\\Lambda(z))$（$z\\notin\\Lambda$）、$z\\mapsto\\infty$（$z\\in\\Lambda$）给出复 Lie 群同构 $\\mathbb C/\\Lambda\\cong E_\\Lambda(\\mathbb C)$。反之每条 $\\mathbb C$ 上的椭圆曲线都同构于某个 $\\mathbb C/\\Lambda$，其中 $\\Lambda$ 由 $\\omega_j=\\int_{\\alpha_j}dx/y$ 生成，$\\alpha_1,\\alpha_2$ 是 $H_1(E(\\mathbb C),\\mathbb Z)$ 的基。",
+      "proof": {
+        "status": "complete",
+        "steps": [
+          {
+            "no": 1,
+            "text": "$\\wp_\\Lambda(z)=z^{-2}+\\sum_{\\omega\\ne0}\\bigl((z-\\omega)^{-2}-\\omega^{-2}\\bigr)$ 在 $\\mathbb C\\setminus\\Lambda$ 的紧集上一致收敛（通项为 $O(|\\omega|^{-3})$），故 $\\wp$ 亚纯、以 $\\Lambda$ 为周期、为偶函数；逐项求导得 $\\wp'=-2\\sum_{\\omega\\in\\Lambda}(z-\\omega)^{-3}$，它是奇函数。",
+            "why": "对大的 $|\\omega|$ 作 Taylor 展开控制通项；求和指标平移不变给出周期性。"
+          },
+          {
+            "no": 2,
+            "text": "由 Laurent 展开 $\\wp=z^{-2}+3G_2z^2+5G_3z^4+\\cdots$（$G_{2k}=\\sum\\omega^{-2k}$）逐项代入，得恒等式 $\\wp'^2=4\\wp^3-g_2\\wp-g_3$，其中 $g_2=60G_4$、$g_3=140G_6$。",
+            "why": "$\\wp'^2-4\\wp^3+g_2\\wp+g_3$ 是 $\\Lambda$ 周期的亚纯函数，在 $z=0$ 处无极点且常数项为零，故恒为零。"
+          },
+          {
+            "no": 3,
+            "text": "满射：固定 $x\\in\\mathbb C$，$\\wp-x$ 在 $\\mathbb C/\\Lambda$ 上只有一个二重极点，故诱导 $2$ 次映射 $\\mathbb C/\\Lambda\\to\\mathbb P^1$，从而取到 $x$。取 $z$ 使 $\\wp(z)=x$，由第 2 步 $\\wp'(z)^2=4x^3-g_2x-g_3=y^2$，故 $\\wp'(z)=\\pm y$；若为 $-y$ 则用 $-z$ 代替 $z$（$\\wp$ 偶、$\\wp'$ 奇）。",
+            "why": "阶为 $2$ 的极点给出 $2$ 次映射，$2$ 次映射在 $\\mathbb P^1$ 上满；偶/奇性给出符号调整。"
+          },
+          {
+            "no": 4,
+            "text": "单射：$\\wp(z)-\\wp(w)$ 作为 $z$ 的函数是二阶椭圆函数，零点集为 $z\\equiv\\pm w\\pmod\\Lambda$；若同时 $\\wp'(z)=\\wp'(w)$，则 $z\\equiv w$（$z\\equiv-w$ 时 $\\wp'$ 变号，除非 $\\wp'(z)=0$）。故映射是双射。再用 $\\wp$ 的加法定理（$\\wp(z+w)$ 可由 $\\wp,\\wp'$ 有理表出）得群同构。",
+            "why": "二阶椭圆函数的零点个数等于极点数；加法定理是 $\\wp$ 的标准性质。"
+          },
+          {
+            "no": 5,
+            "text": "反向：给定 $E/\\mathbb C$，取 $H_1(E(\\mathbb C),\\mathbb Z)$ 的基 $\\alpha_1,\\alpha_2$，令 $\\omega_j=\\int_{\\alpha_j}dx/y$。$\\omega_1,\\omega_2$ 在 $\\mathbb R$ 上线性无关（否则 $dx/y$ 的周期全在一条实线上，与 $\\int_E\\frac{i}{2}\\int\\bar\\omega\\wedge\\omega>0$ 矛盾），故 $\\Lambda=\\omega_1\\mathbb Z\\oplus\\omega_2\\mathbb Z$ 是格，且 $\\int: E(\\mathbb C)\\to\\mathbb C/\\Lambda$ 是群同构。",
+            "why": "$∫ dx/y$ 是 $E$ 上的全纯微分、处处非零，其周期格给出 Abel–Jacobi 型同构；正性来自 $∫ i\\omega\\wedge\\bar\\omega>0$。"
+          }
+        ],
+        "gap_note": ""
+      },
+      "sources": [
+        {
+          "book": "袁瑶, Langlands 纲领导论",
+          "section": "第7讲 §1",
+          "pages": [
+            54,
+            55
+          ]
+        }
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "name": "j 相同但在 Q 上不同构：y^2=x^3+x 与 y^2=x^3+49x",
+      "setup": "取 $E:\\ y^2=x^3+x$ 与 $E':\\ y^2=x^3+49x$，均在 $\\mathbb Q$ 上、$\\operatorname{char}0$。计算 $\\Delta$ 与 $j$，再判断 $\\mathbb Q$ 上是否同构。",
+      "computation": [
+        {
+          "no": 1,
+          "text": "$E$：$a=1,b=0$，$4a^3+27b^2=4$，$\\Delta=-16\\cdot4=-64\\ne0$，$j=1728\\cdot\\frac{4\\cdot1}{4}=1728$。",
+          "why": "代入 $j=1728\\cdot4a^3/(4a^3+27b^2)$。"
+        },
+        {
+          "no": 2,
+          "text": "$E'$：$a=49,b=0$，$4a^3+27b^2=4\\cdot49^3$，$\\Delta=-16\\cdot4\\cdot49^3$，$j=1728\\cdot\\frac{4\\cdot49^3}{4\\cdot49^3}=1728$。",
+          "why": "$b=0$ 时 $j$ 与 $a$ 无关。"
+        },
+        {
+          "no": 3,
+          "text": "代换 $x'=7x,\\ y'=7\\sqrt7\\,y$ 把 $E$ 变成 $E'$：左边 $(7\\sqrt7)^2y^2=343\\,y^2$，右边 $343x^3+343x=343(x^3+x)$。故 $E,E'$ 在 $\\mathbb Q(\\sqrt7)$ 上同构。",
+          "why": "直接代入验证。"
+        },
+        {
+          "no": 4,
+          "text": "$\\mathbb Q$ 上的同构必形如 $x=u^2x'$、$y=u^3y'$（$u\\in\\mathbb Q^\\times$），比较 $x$ 的系数得 $u^4=49$，即 $u^2=\\pm7$；两者都不是有理数的平方，矛盾。",
+          "why": "$u^4=49$ 在 $\\mathbb Q$ 中无解（$7$ 不是平方数，$-7$ 更不是）。"
+        }
+      ],
+      "result": "$j(E)=j(E')=1728$，$\\Delta(E)=-64$；两条曲线在 $\\mathbb Q(\\sqrt7)$ 上同构，在 $\\mathbb Q$ 上不同构。故 $j$ 相等只是 $\\overline F$ 上同构的判据。",
+      "sources": [
+        {
+          "book": "袁瑶, Langlands 纲领导论",
+          "section": "第7讲 §1",
+          "pages": [
+            54,
+            54
+          ]
+        }
+      ]
+    },
+    {
+      "name": "两个特殊格：j(i)=1728 与 j(\\rho)=0",
+      "setup": "设 $\\Lambda_\\tau=\\mathbb Z+\\tau\\mathbb Z$，$\\tau\\in\\mathcal H$，$g_k(\\Lambda)=\\sum_{\\omega\\in\\Lambda\\setminus0}\\omega^{-k}$。用格的自同构对称性算 $g_2,g_3$，从而算 $j$。",
+      "computation": [
+        {
+          "no": 1,
+          "text": "$g_k$ 是权重 $k$ 的齐次函数：$g_k(c\\Lambda)=c^{-k}g_k(\\Lambda)$。",
+          "why": "换元 $\\omega\\mapsto c\\omega$。"
+        },
+        {
+          "no": 2,
+          "text": "$\\tau=i$ 时 $i\\Lambda=\\Lambda$，故 $g_3(\\Lambda)=g_3(i\\Lambda)=i^{-6}g_3(\\Lambda)=-g_3(\\Lambda)$，得 $g_3=0$。于是 $E_\\Lambda:\\ y^2=4x^3-g_2x$，$b=0$，$j=1728$。",
+          "why": "$i^6=-1$；$b=0$ 时 $j=1728\\cdot4a^3/(4a^3)=1728$。"
+        },
+        {
+          "no": 3,
+          "text": "$\\tau=\\rho=e^{2\\pi i/3}$ 满足 $\\rho^2+\\rho+1=0$。$\\rho\\Lambda=\\rho\\mathbb Z+\\rho^2\\mathbb Z=\\rho\\mathbb Z+(-1-\\rho)\\mathbb Z=\\mathbb Z+\\rho\\mathbb Z=\\Lambda$，故 $g_2=\\rho^{-4}g_2=\\rho^2g_2$；$\\rho^2\\ne1$ 给出 $g_2=0$，于是 $a=0$、$j=0$。",
+          "why": "$\\rho^3=1$ 使 $\\rho^{-4}=\\rho^2\\ne1$；$a=0$ 时 $j=0$。"
+        },
+        {
+          "no": 4,
+          "text": "$\\Lambda=\\mathbb Z+i\\mathbb Z$ 的自同构群为 $\\{\\pm1,\\pm i\\}\\cong\\mathbb Z/4$，$\\Lambda=\\mathbb Z+\\rho\\mathbb Z$ 的为 $\\langle-\\rho\\rangle\\cong\\mathbb Z/6$；其余格的只有 $\\{\\pm1\\}$。",
+          "why": "保持格不变的复数只能是单位根，且必须把 $\\Lambda$ 送到自身。"
+        }
+      ],
+      "result": "$j(i)=1728$（格 $\\mathbb Z+\\mathbb Z i$，自同构群 $\\mathbb Z/4$），$j(\\rho)=0$（格 $\\mathbb Z+\\mathbb Z\\rho$，自同构群 $\\mathbb Z/6$）。$j$ 作为 $\\mathcal H$ 上的函数在 $\\mathrm{SL}_2(\\mathbb Z)$ 下不变。",
+      "sources": [
+        {
+          "book": "袁瑶, Langlands 纲领导论",
+          "section": "第7讲 §1",
+          "pages": [
+            54,
+            55
+          ]
+        }
+      ]
+    },
+    {
+      "name": "F_5 上 y^2=x^3-x 的点数与群结构",
+      "setup": "$E:\\ y^2=x^3-x$ 定义在 $\\mathbb F_5$ 上。数点、定群结构，并算 $a_5=5+1-\\#E(\\mathbb F_5)$。",
+      "computation": [
+        {
+          "no": 1,
+          "text": "逐个 $x\\in\\mathbb F_5$ 算 $x^3-x$：$0\\mapsto0$，$1\\mapsto0$，$2\\mapsto6\\equiv1$，$3\\mapsto24\\equiv4$，$4\\mapsto60\\equiv0$。",
+          "why": "直接代入模 $5$。"
+        },
+        {
+          "no": 2,
+          "text": "$\\mathbb F_5$ 中的平方剩余为 $\\{0,1,4\\}$，非零剩余各有两个平方根。$x=0,1,4$ 时 $y=0$，各 $1$ 点；$x=2$ 时 $y^2=1$，$2$ 点；$x=3$ 时 $y^2=4$，$2$ 点。仿射点共 $1+1+1+2+2=7$ 个。",
+          "why": "$\\mathbb F_5^\\times$ 的平方剩余是 $\\{1,4\\}$，每个有两个平方根。"
+        },
+        {
+          "no": 3,
+          "text": "加上无穷远点得 $\\#E(\\mathbb F_5)=8$。$2$ 挠点有 $O,(0,0),(1,0),(4,0)$，即 $E[2]\\cong(\\mathbb Z/2)^2$；阶 $8$ 的群若 $2$-挠为 $(\\mathbb Z/2)^2$，只能是 $\\mathbb Z/2\\times\\mathbb Z/4$。",
+          "why": "Weierstrass 三次式的三个根给出三个非零 $2$ 挠点；阶 $8$ 的群只有 $\\mathbb Z/8,(\\mathbb Z/2)^2\\times\\mathbb Z/2$、$\\mathbb Z/4\\times\\mathbb Z/2$ 三种，前两种的 $2$-挠分别为 $\\mathbb Z/2$ 与 $(\\mathbb Z/2)^3$。"
+        },
+        {
+          "no": 4,
+          "text": "$a_5=p+1-\\#E(\\mathbb F_p)=5+1-8=-2$，对应局部因子 $L_5=(1+2\\cdot5^{-s}+5^{1-2s})^{-1}$。",
+          "why": "由 $a_p$ 的定义与 $\\lambda_5\\lambda'_5=p$（见 Tate 模词条）。"
+        }
+      ],
+      "result": "$\\#E(\\mathbb F_5)=8$，$E(\\mathbb F_5)\\cong\\mathbb Z/2\\times\\mathbb Z/4$，$a_5=-2$。",
+      "sources": [
+        {
+          "book": "袁瑶, Langlands 纲领导论",
+          "section": "第7讲 §2",
+          "pages": [
+            58,
+            59
+          ]
+        }
+      ]
+    }
+  ],
+  "pitfalls": [
+    "$j(E)=j(E')$ 只保证在 $\\overline F$ 上同构。$\\mathbb Q$ 上的二次扭曲可以保持 $j$ 而改变 $E(\\mathbb Q)$，见本词条第一个例子。",
+    "「椭圆曲线」不是椭圆，也不是 $y^2=x^3+ax+b$ 的实图像；它指亏格 $1$ 的射影曲线，$F$ 为数域时 $E(F)$ 是有限生成阿贝尔群（Mordell–Weil）。",
+    "$\\operatorname{char}F=2,3$ 时短 Weierstrass 形式不覆盖所有椭圆曲线，$\\Delta$ 与 $j$ 必须用一般 Weierstrass 形式；照搬 $4a^3+27b^2$ 会漏掉曲线。",
+    "弦切法里 $P+P$ 一般不等于 $\\infty$：只有 $y(P)=0$（$2$ 挠点）时才是 $\\infty$，一般要取 $P$ 处切线与曲线的第三交点再对称。",
+    "基点 $O$ 是数据的一部分。亏格 $1$ 曲线若只给方程而不指定有理点，就只是一个 torsor，群律要等有了 $O$ 才定义。"
+  ],
+  "related": [
+    {
+      "id": "algebra/tate-module",
+      "why": "$T_\\ell E$ 把 $E$ 的 $\\ell$ 幂挠点拼成 $\\mathrm{Gal}(\\overline F/F)$ 的表示"
+    },
+    {
+      "id": "algebra/l-function",
+      "why": "Hasse–Weil $L$ 函数由各素数的局部因子拼成，坏素数的因子由约化类型决定"
+    },
+    {
+      "id": "algebra/modular-form",
+      "why": "模性定理把 $\\mathbb Q$ 上的每条椭圆曲线与一个权 $2$ 新形式对应"
+    },
+    {
+      "id": "algebra/galois-extension",
+      "why": "$E$ 的 $\\ell$ 进 Galois 表示以 $\\operatorname{Gal}(\\overline F/F)$ 为定义域"
+    }
+  ],
+  "sources": [
+    {
+      "book": "袁瑶, Langlands 纲领导论",
+      "edition": "中译注本（2020 年春季课程，23 讲）",
+      "url": "",
+      "pages": [
+        53,
+        59
+      ]
+    }
+  ],
+  "rights": "rewritten",
+  "status": "draft",
+  "reviewed_by": []
+}
