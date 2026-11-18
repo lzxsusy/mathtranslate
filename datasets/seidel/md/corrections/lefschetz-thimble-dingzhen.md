@@ -1,6 +1,6 @@
 # 术语：Lefschetz thimble 由「指套」改为「顶针」
 
-> `seidel/correction/lefschetz-thimble-dingzhen` ｜ 原书 p.266 ｜ draft
+> `seidel/correction/lefschetz-thimble-dingzhen` ｜ 原书 p.267 ｜ draft
 
 **一句话**：初版「指套」改为「顶针（thimble）」：thimble 的数学含义是临界点上方沿道路的消失盘，标准译名是「顶针」；「指套」是 finger cot，与数学对象无关
 
@@ -9,22 +9,22 @@
 ## 初版
 
 ```
-指套
+Lefschetz 指套
 ```
 
 ## 改后
 
 ```
-顶针（thimble）
+Lefschetz 顶针
 ```
 
 ## 为什么改
 
-thimble 的数学含义是临界点上方沿道路的消失盘，标准译名是「顶针」；「指套」是 finger cot，与数学对象无关。
+thimble 的数学含义是临界点上方沿道路的消失盘，标准译名是「顶针」；「指套」是 finger cot，与数学对象无关。全书共 9 条修订、12 处「指套」，横跨印刷页 267–291（见 note）。
 
 ## 补注
 
-涉及 §18 的 9 处（p.266–291）及索引；《译校说明》已说明该改动。
+修订总表第 30–38 条，共 9 条修订、12 处「指套」：section-18-a.tex:53（p.267，1 处）、:57（p.267，2 处）；18-c.tex:10（p.272，1 处，另清「原『指套』」夹注）、:15（p.272，2 处）；18-d.tex:28（p.275，1 处）；18-eb.tex:2（p.278，1 处；page_map 写 279，以页图为准）；18-l.tex:15（p.290，1 处）、:21（p.290，2 处）、:34（p.291，1 处）。本卡 original/corrected 取第 30 条；《译校说明》第 12 行已说明该改动。
 
 ## 易错点
 
@@ -33,8 +33,8 @@ thimble 的数学含义是临界点上方沿道路的消失盘，标准译名是
 
 ## 参考与关联
 
-- Seidel, Fukaya categories and Picard–Lefschetz theory，§18，p.266–266（原书 p.266）
+- Seidel, Fukaya categories and Picard–Lefschetz theory，§18，p.267–291（原书 p.267）
 
 关联：`seidel/concept/thimble`、`seidel/concept/vanishing-cycle`
 
-来源说明：据分章报告 A11 与修订总表 A11 各行。
+来源说明：据修订总表、分章报告与原书印刷页图逐条核对（PDF 页 = 印刷页 + 8）；页码已回页确认。

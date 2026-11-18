@@ -10,7 +10,7 @@
 
 三角范畴是带平移自等价 $T$ 的加性范畴，连同一族殊三角
 $$X\xrightarrow{f}Y\xrightarrow{g}Z\xrightarrow{h}TX,$$
-满足：TR1 每个态射可补全为殊三角；TR2 旋转后仍是殊三角；TR3 态射之间的交换方块可补成态射；TR4（八面体公理）保证锥的复合相容。在 $\Tw\A$ 中，殊三角取映射锥
+满足：TR1 恒等三角 $X\xrightarrow{\id}X\to0\to TX$ 是殊三角，且每个态射可补全为殊三角；TR2 旋转后仍是殊三角；TR3 态射之间的交换方块可补成态射；TR4（八面体公理）保证锥的复合相容。在 $\Tw\A$ 中，殊三角取映射锥
 $$X\xrightarrow{f}Y\to\Cone(f)\to TX .$$
 
 记号：$T$ 也记作 $[1]$ 或 $S$；$\Cone(f)$ 是 $f$ 的映射锥。
@@ -24,23 +24,26 @@ $$X\xrightarrow{f}Y\to\Cone(f)\to TX .$$
 ## 公式
 
 $$X\xrightarrow{f}Y\xrightarrow{g}Z\xrightarrow{h}TX,\qquad h\in\hom(Z,TX)$$
-$$\cdots\to H^i(X)\to H^i(Y)\to H^i(Z)\xrightarrow{h_*}H^{i+1}(X)\to\cdots$$
+$$(X\xrightarrow{f}Y\xrightarrow{g}Z\xrightarrow{h}TX)\ \text{殊}\iff (Y\xrightarrow{g}Z\xrightarrow{h}TX\xrightarrow{-Tf}TY)\ \text{殊}$$
 
 ## 定理与证明
 
 ### 殊三角给出长正合列
 
-对三角范畴中的殊三角 $X\xrightarrow{f}Y\xrightarrow{g}Z\xrightarrow{h}TX$，取 $\Hom(W,-)$ 得长正合列
-$$\cdots\to\Hom(W,X)\to\Hom(W,Y)\to\Hom(W,Z)\xrightarrow{h_*}\Hom(W,TX)\to\cdots .$$
+对三角范畴中的殊三角 $X\xrightarrow{f}Y\xrightarrow{g}Z\xrightarrow{h}TX$ 与任意对象 $W$，有两条长正合列
+$$\cdots\to\Hom(W,X)\to\Hom(W,Y)\to\Hom(W,Z)\xrightarrow{h_*}\Hom(W,TX)\to\cdots,$$
+$$\cdots\to\Hom(TX,W)\to\Hom(Z,W)\to\Hom(Y,W)\to\Hom(X,W)\to\cdots .$$
 
-（complete；来源：原书 p.34–40 §3）
+（sketch；来源：原书 p.40 Cor 3.15、p.41 §3i）
 
-1. $g\circ f=0$ 与 $h\circ g=0$ 是殊三角的公理，故复合为零。  
-   为什么：TR1 的一部分；在 $\Tw\A$ 中由锥的构造直接验证。
-2. 对任意 $a:W\to Z$ 使 $h\circ a=0$，由 TR3 的补全性质，$a$ 经过 $g$ 分解。  
-   为什么：把 $a$ 与零态射组成交换方块，用三角的补全公理。
-3. 正合性在 $\Hom(W,-)$ 上逐点成立，故得长正合列。  
-   为什么：第 1、2 步分别给「复合为零」与「核包含像」，反向包含由旋转三角重复同样论证。
+1. $g\circ f=0$：把恒等三角 $X\xrightarrow{\id}X\to0\to TX$ 用 $(\id_X,f)$ 映入 $X\xrightarrow{f}Y\xrightarrow{g}Z\xrightarrow{h}TX$，由 TR3 补全后中间方块的交换性给出 $g f=0$。  
+   为什么：这是 TR1 与 TR3 的标准推论（先在恒等三角上补全，再读中间的方块）。
+2. 反变情形：设 $\psi:Y\to W$ 满足 $\psi\circ f=0$。把 $X\to Y\to Z\to TX$ 与 $0\to W\xrightarrow{\id}W\to0$ 用 $(0,\psi)$ 作成三角态射，TR3 补出 $\gamma:Z\to W$ 使 $\gamma\circ g=\psi$。  
+   为什么：第一个方块 $0=\psi\circ f$ 交换；补全后的第二个方块正是所求的分解。
+3. 协变情形由旋转（TR2，原书 Cor 3.17）后对反变情形重复同一论证得到；再对旋转迭代，即得两条含所有平移的长正合列。  
+   为什么：旋转后的三角仍殊（原书 Cor 3.17 即 TR2），故同一 TR3 论证可用。
+
+缺口：第 3 步只说明路线；两条长正合列的完整链条（含 $T^{\pm1}$ 的平移）没有逐项写出。
 
 ## 易错点
 

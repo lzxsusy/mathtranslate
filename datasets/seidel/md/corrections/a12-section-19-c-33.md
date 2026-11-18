@@ -2,14 +2,14 @@
 
 > `seidel/correction/a12-section-19-c-33` ｜ 原书 p.300 ｜ draft
 
-**一句话**：初版此处误译：英文 p300 作 "unique up to isotopy and orientation-reversal"
+**一句话**：初版「反转定向」改为「反向」：原文 unique up to isotopy and orientation-reversal；这里反向的是匹配路径的参数方向，不是流形定向。
 
 **自测**：初版这里错在哪，为什么必须改？
 
 ## 初版
 
 ```
-"……满足 $(\mu_j^{k+1})^{-1}(C^{k+1})=\{-1,1\}$，在同痕及**反转定向**…
+"……满足 $(\mu_j^{k+1})^{-1}(C^{k+1})=\{-1,1\}$，在同痕及**反转定向**意义下唯一。"
 ```
 
 ## 改后
@@ -24,7 +24,7 @@
 
 ## 补注
 
-见分章报告 A12；修订总表第 28 条。 引文截取至 60 字以内。
+见分章报告 A12；修订总表第 39 条（section-19-c.tex:33，印刷页 300）。
 
 ## 易错点
 
@@ -37,4 +37,4 @@
 
 关联：`seidel/concept/fukaya-category`、`seidel/concept/a-infinity-category`
 
-来源说明：据 A12 分章报告与修订总表；原文页码由 reason 或 page_map 推出。
+来源说明：据修订总表、分章报告与原书印刷页图逐条核对（PDF 页 = 印刷页 + 8）；页码已回页确认。

@@ -24,7 +24,7 @@
 
 ## 补注
 
-见分章报告 A08；修订总表第 17 条。
+见分章报告 A08；修订总表第 19 条（section-14-c.tex:15，印刷页 203）。page_map 的 printed_first=204 与正文差一页，以页图为准。
 
 ## 易错点
 
@@ -37,4 +37,4 @@
 
 关联：`seidel/concept/fukaya-category`、`seidel/concept/a-infinity-category`
 
-来源说明：据 A08 分章报告与修订总表；原文页码由 reason 或 page_map 推出。
+来源说明：据修订总表、分章报告与原书印刷页图逐条核对（PDF 页 = 印刷页 + 8）；页码已回页确认。

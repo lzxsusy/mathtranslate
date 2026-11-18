@@ -2,7 +2,7 @@
 
 > `seidel/correction/a10-section-17-k-41` ｜ 原书 p.265 ｜ draft
 
-**一句话**：初版此处误译：原书 p265 方框内第二式为 $-\epsilon_{\mathcal A}(\kappa(\epsilon_{\mathcal A}(c_0)))+\kappa(c_0)=0$（已裁图放大核对）
+**一句话**：初版把同伦修正项误作 $k$，改为 $\kappa$：原书 p265 方框内第二式作 $\kappa(\epsilon_{\mathcal A}(c_0))$ 与 $\kappa(c_0)$，与前文「得到 $(\gamma,\kappa)$」一致；$k$ 是原链映射，$\kappa$ 是其修正。
 
 **自测**：初版这里错在哪，为什么必须改？
 
@@ -24,7 +24,7 @@
 
 ## 补注
 
-见分章报告 A10；修订总表第 27 条。
+见分章报告 A10；修订总表第 29 条（section-17-k.tex:41，印刷页 265）。
 
 ## 易错点
 
@@ -37,4 +37,4 @@
 
 关联：`seidel/concept/fukaya-category`、`seidel/concept/a-infinity-category`
 
-来源说明：据 A10 分章报告与修订总表；原文页码由 reason 或 page_map 推出。
+来源说明：据修订总表、分章报告与原书印刷页图逐条核对（PDF 页 = 印刷页 + 8）；页码已回页确认。

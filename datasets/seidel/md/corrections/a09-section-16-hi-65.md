@@ -2,7 +2,7 @@
 
 > `seidel/correction/a09-section-16-hi-65` ｜ 原书 p.234 ｜ draft
 
-**一句话**：初版此处误译：原书 p234 放大确认为 $S^n\subset\CC^{n+1}$；消失圈在 $2n$ 维全空间中是 $n$ 维球面，维数写错会破坏引理 16.15 的整个论证
+**一句话**：初版 $S^{n+1}\subset\CC^{n+2}$ 改为 $S^n\subset\CC^{n+1}$：原书 p234 页图作 $\sqrt{1-s}\,S^n\subset\CC^{n+1}$；消失圈在 $2n$ 维全空间中是 $n$ 维球面。
 
 **自测**：初版这里错在哪，为什么必须改？
 
@@ -20,11 +20,11 @@ $V_{\gamma\vert[s,1]}=\sqrt{1-s}\,S^n\subset\CC^{n+1}$
 
 ## 为什么改
 
-原书 p234 放大确认为 $S^n\subset\CC^{n+1}$；消失圈在 $2n$ 维全空间中是 $n$ 维球面，维数写错会破坏引理 16.15 的整个论证
+原书 p234 放大确认为 $S^n\subset\CC^{n+1}$；消失圈在 $2n$ 维全空间中是 $n$ 维球面，维数写错会破坏引理 16.15 的整个论证。
 
 ## 补注
 
-见分章报告 A09；修订总表第 24 条。
+见分章报告 A09；修订总表第 26 条（section-16-hi.tex:65，印刷页 234）。
 
 ## 易错点
 
@@ -37,4 +37,4 @@ $V_{\gamma\vert[s,1]}=\sqrt{1-s}\,S^n\subset\CC^{n+1}$
 
 关联：`seidel/concept/fukaya-category`、`seidel/concept/a-infinity-category`
 
-来源说明：据 A09 分章报告与修订总表；原文页码由 reason 或 page_map 推出。
+来源说明：据修订总表、分章报告与原书印刷页图逐条核对（PDF 页 = 印刷页 + 8）；页码已回页确认。

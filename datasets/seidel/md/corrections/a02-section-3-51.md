@@ -24,7 +24,7 @@
 
 ## 补注
 
-见分章报告 A02；修订总表第 2 条。
+见分章报告 A02；修订总表第 4 条（section-3.tex:51，印刷页 33）。
 
 ## 易错点
 
@@ -37,4 +37,4 @@
 
 关联：`seidel/concept/fukaya-category`、`seidel/concept/a-infinity-category`
 
-来源说明：据 A02 分章报告与修订总表；原文页码由 reason 或 page_map 推出。
+来源说明：据修订总表、分章报告与原书印刷页图逐条核对（PDF 页 = 印刷页 + 8）；页码已回页确认。

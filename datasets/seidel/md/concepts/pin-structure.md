@@ -1,0 +1,85 @@
+# Pin 结构
+
+> `seidel/concept/pin-structure` ｜ track B ｜ draft
+
+**一句话**：正交标架丛到 Pin_n 主丛的提升；障碍是 w₂，存在时全体 Pin 结构恰构成 H¹(B;Z/2) 的 torsor。
+
+**自测**：为什么 Pin 结构的存在只卡在 $w_2$，而一旦存在，所有 Pin 结构又恰好差一个 $H^1(B;\Z/2)$？
+
+## 定义
+
+设 $F\to B$ 是秩 $n$ 的实内积向量丛，$P\to B$ 为其正交标架丛。$\mathrm{Pin}_n$ 是 $O_n$ 的中心扩张
+$$1\to\Z/2\to\mathrm{Pin}_n\to O_n\to1,$$
+本书取由 $w_2\in H^2(BO_n;\Z/2)$ 分类的那一个（即 $\mathrm{Pin}_{0,n}=\mathrm{Pin}^+_n$）：把 $\R^n$ 嵌入满足 $v^2=\|v\|^2e$ 的 Clifford 代数 $\mathrm{Cl}(\R^n)$，$\mathrm{Pin}_n\subset\mathrm{Cl}(\R^n)^\times$ 是由单位球面 $S^{n-1}\subset\R^n$ 生成的乘法子群；$\mathrm{Pin}_n\to O_n$ 是扭曲共轭作用在 $\R^n$ 上的限制，$v\in S^{n-1}$ 对应关于 $v^\perp$ 的反射 $w\mapsto -vwv$。
+$F$ 上的 Pin 结构是主 $\mathrm{Pin}_n$ 丛 $P^\#\to B$ 连同同构
+$$P^\#\times_{\mathrm{Pin}_n}\R^n\cong F;$$
+它诱导二重覆叠 $P^\#\to P$。存在性障碍是 $w_2(F)$；若消失，Pin 结构的同构类集合是 $H^1(B;\Z/2)$ 上的仿射空间（torsor）：给定 $P^\#$ 与实线丛 $\beta$，扭出 $P^\#\otimes\beta:=P^\#\times_{\Z/2}S(\beta)$。
+
+记号：$P^\#$ 记 Pin 主丛，$P$ 记正交标架丛，$S(\beta)$ 是 $\beta$ 对应的二重覆叠；$\Z/2$ 以 $\pm1$ 作用在 $S(\beta)$ 上，并以中心子群 $\ker(\mathrm{Pin}_n\to O_n)=\{\pm e\}$ 作用在 $P^\#$ 上。另一版本 $\mathrm{Pin}^-_n=\mathrm{Pin}_{n,0}$ 由 $w_2+w_1^2$ 分类。
+
+## 要点
+
+- 存在性障碍恰是 $w_2(F)\in H^2(B;\Z/2)$：$\mathrm{Pin}_n\to O_n$ 是 $\Z/2$ 中心扩张，Pin 结构是标架丛分类映射穿过 $B\mathrm{Pin}_n\to BO_n$ 的提升，提升的障碍就是该扩张的分类类拉回。
+- 若 $w_2(F)=0$，Pin 结构之间的同构类集合是 $H^1(B;\Z/2)$ 的 torsor：任取一个 $P^\#$，用实线丛 $\beta$ 扭出 $P^\#\otimes\beta$，作用自由且传递。
+- 扭操作是显式的：$P^\#\otimes\beta:=P^\#\times_{\Z/2}S(\beta)$，$\Z/2$ 一方面以 $\pm1$ 作用在二重覆叠 $S(\beta)$ 上，另一方面以 $\{\pm e\}=\ker(\mathrm{Pin}_n\to O_n)$ 作用在 $P^\#$ 上。
+- 自同构群不是 $\mathrm{Pin}(F)$ 而是 $\mathrm{Pin}(F\otimes\Lambda^{\mathrm{top}}F)$：扭曲共轭使反射原像多出 $\Lambda^{\mathrm{top}}$ 因子（11.30）；这是 Pin 与 Spin 最易混之处。
+- 与膜结构卡的分工：膜结构卡讲「分次 $+$ 相对 Pin 结构」如何给 Floer 复形定向；本卡只讲 Pin 群、提升与 $w_2$ 障碍本身。
+
+## 公式
+
+$$1\to\Z/2\to\mathrm{Pin}_n\to O_n\to1,\qquad \mathrm{Pin}_n=\langle S^{n-1}\rangle\subset\mathrm{Cl}(\R^n)^\times$$
+$$P^\#\times_{\mathrm{Pin}_n}\R^n\cong F,\qquad \mathrm{obstruction}(P^\#)=w_2(F)\in H^2(B;\Z/2)$$
+$$P^\#\otimes\beta=P^\#\times_{\Z/2}S(\beta),\qquad \mathrm{Aut}(P^\#)\cong\mathrm{Pin}(F\otimes\Lambda^{\mathrm{top}}F)$$
+$$\tilde A^{\,2}=(-1)^{\frac12 r(r-1)}e,\qquad r=\mathrm{rank}\,F^{\mathrm{anti}}=\mathrm{rank}\ker(\mathrm{Id}+A)$$
+
+## 定理与证明
+
+### Lemma 11.14：对合的原像与平方
+
+设 $A\in O(F)$ 是对合，$F^{\mathrm{anti}}=\ker(\mathrm{Id}+A)$，$r=\mathrm{rank}\,F^{\mathrm{anti}}$。则 $A$ 在 $\mathrm{Pin}(F)$ 中的原像与 $F^{\mathrm{anti}}$ 的定向一一对应；任一原像 $\tilde A$ 满足
+$$\tilde A^{\,2}=(-1)^{\frac12 r(r-1)}e.$$
+特别地，反射（$r=1$）的原像阶为 $2$。
+
+（complete；来源：原书 p.166 Lemma 11.14）
+
+1. 按 $A$ 的 $\pm1$ 特征空间正交分解 $F=F^{\mathrm{anti}}\oplus F^{\mathrm{fix}}$，其中 $A|_{F^{\mathrm{anti}}}=-\mathrm{Id}$、$A|_{F^{\mathrm{fix}}}=\mathrm{Id}$。  
+   为什么：$A$ 是对合故可对角化，特征值只能是 $\pm1$，且不同特征空间正交。
+2. $A|_{F^{\mathrm{anti}}}=-\mathrm{Id}$ 在 $\mathrm{Pin}(F^{\mathrm{anti}})$ 中的原像恰是 $F^{\mathrm{anti}}$ 的单位球面生成的「体积元」的两个分支，二者相差 $e$，对应 $F^{\mathrm{anti}}$ 的两个定向。  
+   为什么：$\mathrm{Pin}$ 由 $S^{r-1}$ 生成，$-\mathrm{Id}$ 的原像为 $u_1\cdots u_r$ 及其负元；交换定向即换一个分支。
+3. 取标准正交基 $u_1,\dots,u_r$，令 $\tilde A=u_1\cdots u_r$，则 $\tilde A^{\,2}=(-1)^{\frac12 r(r-1)}e$。  
+   为什么：把第二个乘积反序得 $u_r\cdots u_1=(-1)^{\frac12 r(r-1)}u_1\cdots u_r$，而每个 $u_i^2=\|u_i\|^2e=e$（本书的 $\mathrm{Pin}^+$ 约定）。
+4. $r=1$ 时 $\tilde A^{\,2}=e$，故反射的原像阶为 $2$；$r\ge2$ 时平方为 $\pm e$，未必是 $1$，原像的阶可以是 $4$ 或 $2$（视 $r$ 而定）。  
+   为什么：直接代入第 3 步的公式；$(-1)^{r(r-1)/2}$ 只依赖 $r\bmod 4$。
+
+### Pin 结构的障碍与 $H^1(B;\Z/2)$-torsor 结构
+
+对实内积向量丛 $F^n\to B$：(i) $F$ 上有 Pin 结构当且仅当 $w_2(F)=0$；(ii) 若存在，则 Pin 结构的同构类集合是 $H^1(B;\Z/2)$ 上的仿射空间，作用为 $\beta\mapsto P^\#\otimes\beta$。
+
+（sketch；来源：原书 p.167 §11i）
+
+1. 取标架丛的分类映射 $f:B\to BO_n$；Pin 结构即 $f$ 穿过 $\pi:B\mathrm{Pin}_n\to BO_n$ 的提升。  
+   为什么：主丛的同构类由分类映射给出，结构群从 $O_n$ 约化到 $\mathrm{Pin}_n$ 正是提升。
+2. 纤维化 $K(\Z/2,1)\to B\mathrm{Pin}_n\to BO_n$ 的提升障碍是 $w_2$，故存在性等价于 $w_2(F)=0$。  
+   为什么：该纤维化的 $k$-不变量就是 $\mathrm{Pin}_n$ 扩张的分类类 $w_2$；拉回到 $B$ 即 $w_2(F)$。
+3. 两个提升之差给出映射 $B\to K(\Z/2,1)$，即 $H^1(B;\Z/2)$ 中的类；反之，用实线丛 $\beta$ 作 $P^\#\otimes\beta$ 可把任一此类加到给定提升上。  
+   为什么：$\Z/2$-torsor 的差异由 $\Z/2$ 值 $1$-闭上链刻画，而 $P^\#\otimes\beta$ 的构造正是沿该上链扭转纤维。
+4. 于是作用自由且传递，集合是 $H^1(B;\Z/2)$ 的 torsor。  
+   为什么：传递性由第 3 步；自由性因为非平凡 $\beta$ 使 $S(\beta)$ 不整体平凡，扭转后的主丛不同构。
+
+缺口：原书 p.167 只陈述结论并给出 $\beta$-twist 的构造；$B\mathrm{Pin}_n\to BO_n$ 的分类空间模型与障碍的严格论证此处未逐项验证。
+
+## 易错点
+
+- $\mathrm{Pin}\ne\mathrm{Spin}$：$\mathrm{Spin}_n$ 只覆盖 $SO_n$（$n\ge3$ 时二重覆叠），Pin 覆盖整个 $O_n$ 且包含反射；把 Pin 结构当 Spin 结构会直接排除不可定向的 Lagrangian。
+- 两个 Pin 版本不能混用：$\mathrm{Pin}^+$（本书，障碍 $w_2$，反射原像阶 $2$）与 $\mathrm{Pin}^-$（障碍 $w_2+w_1^2$，反射原像阶 $4$）；换版本会改变障碍类。
+- $H^1(B;\Z/2)$ 的作用是 torsor 而非典范群结构：没有典范的「零 Pin 结构」，除非先固定一个参考结构；谈论「相对 Pin 结构」时必须说明参考。
+- 相对版本：相对于参考类 $w\in H^2(B;\Z/2)$ 的扭曲 Pin 结构障碍为 $w_2(F)+w$（Remark 11.16），不要把它与绝对 $w_2$ 混为一谈。
+
+## 参考与关联
+
+- Seidel, Fukaya categories and Picard–Lefschetz theory，§11i，p.166–167（原书 p.166 §11i）
+- Seidel, Fukaya categories and Picard–Lefschetz theory，§11i，p.167–168（原书 p.167–168 §11i）
+
+关联：`seidel/concept/brane-structure`、`seidel/concept/maslov-index`、`seidel/concept/exact-lagrangian`
+
+来源说明：据原书 §11i（p.166–168，含 Lemma 11.14、Remark 11.15–11.16）转述；译者注 A06-10、A06-11。外部：nLab「pin group」https://ncatlab.org/nlab/show/pin+group，支持句「A Pin-group is a double cover of an orthogonal group. Its restriction … is a Spin group. Hence a Pin-group is 'like the corresponding Spin group, but including reflections'.」；「twisted spin structure」https://ncatlab.org/nlab/show/twisted+spin+structure（把 spin 结构刻画为穿过 $B\mathrm{Spin}\to B\mathrm{SO}$ 的提升，障碍 $w_2$）；nLab 无独立的「Pin structure」页（404）。

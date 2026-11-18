@@ -2,7 +2,7 @@
 
 > `seidel/concept/karoubi-envelope` ｜ track A ｜ draft
 
-**一句话**：把每个幂等态射 e 形式地分裂成对象 (X,e)；三角范畴的幂等完备化仍是三角范畴，且函子保持三角结构。
+**一句话**：把每个幂等态射 $e$ 形式地分裂成对象 $(X,e)$；三角范畴的幂等完备化仍是三角范畴，且完备化函子保持三角结构（原书 p.56）。
 
 **自测**：为什么「分裂闭包」不是再添几个对象，而是把幂等态射当对象？
 
@@ -26,7 +26,7 @@ $$\mathrm{Ob}(P\A)=\{(X,e):X\in\A,\ e^2=e\},\qquad \hom_{P\A}((X,e),(Y,e'))=\{f:
 
 ### 幂等在完备化中分裂
 
-在 $P\A$ 中，每个幂等态射 $f:(X,e)\to(X,e)$ 都有核（像），即存在对象 $(Y,p)$ 使 $f$ 分解为投影与包含。
+在 $P\A$ 中，每个幂等态射 $f:(X,e)\to(X,e)$ 都分裂：存在对象 $(Y,p)$ 与态射 $i:(Y,p)\to(X,e)$、$q:(X,e)\to(Y,p)$，使 $q\circ i=\id_{(Y,p)}$ 且 $i\circ q=f$。
 
 （sketch；来源：原书 p.55–56 §4）
 
@@ -46,7 +46,7 @@ $$\mathrm{Ob}(P\A)=\{(X,e):X\in\A,\ e^2=e\},\qquad \hom_{P\A}((X,e),(Y,e'))=\{f:
 
 ## 参考与关联
 
-- Seidel, Fukaya categories and Picard–Lefschetz theory，§3–4，p.3–56（原书 p.3、p.41–56 §4）
+- Seidel, Fukaya categories and Picard–Lefschetz theory，§3–4，p.3–56（原书 p.3、p.55–56 §4）
 
 关联：`seidel/concept/twisted-complex`、`seidel/concept/split-generation`、`seidel/concept/exact-triangle`
 

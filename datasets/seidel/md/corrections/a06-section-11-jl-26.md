@@ -2,7 +2,7 @@
 
 > `seidel/correction/a06-section-11-jl-26` ｜ 原书 p.170 ｜ draft
 
-**一句话**：初版此处误译：原文 mostly but not entirely satisfactory
+**一句话**：初版「虽大体令人满意，却并不完全令人满意」改为「虽大体令人满意，但并不完全」：原文 mostly but not entirely satisfactory，「令人满意」重复，删后保留余地的语气不变。
 
 **自测**：初版这里错在哪，为什么必须改？
 
@@ -20,11 +20,11 @@
 
 ## 为什么改
 
-原文 mostly but not entirely satisfactory。旧译「虽……却并不完全令人满意」重复「令人满意」两次，语感滞涩；删去重复后与原文的让步结构一致，且「并不完全」保留了原文留有余地的语气。
+原文 p170 mostly but not entirely satisfactory。旧译「虽……却并不完全令人满意」重复「令人满意」两次，语感滞涩；删去重复后与原文的让步结构一致，且「并不完全」保留了原文留有余地的语气。
 
 ## 补注
 
-见分章报告 A06；修订总表第 11 条。
+见分章报告 A06；修订总表第 13 条（section-11-jl.tex:26，印刷页 170）。
 
 ## 易错点
 
@@ -37,4 +37,4 @@
 
 关联：`seidel/concept/fukaya-category`、`seidel/concept/a-infinity-category`
 
-来源说明：据 A06 分章报告与修订总表；原文页码由 reason 或 page_map 推出。
+来源说明：据修订总表、分章报告与原书印刷页图逐条核对（PDF 页 = 印刷页 + 8）；页码已回页确认。

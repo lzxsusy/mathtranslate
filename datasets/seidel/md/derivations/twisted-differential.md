@@ -2,7 +2,7 @@
 
 > `seidel/deriv/twisted-differential` ｜ track A ｜ draft
 
-**目标**：证明：在 $\Tw\A$ 中，$d_T=d+\delta$ 满足 $d_T^2=0$ 当且仅当 $\delta$ 满足广义 Maurer–Cartan 方程。
+**目标**：证明：在 $\Tw\A$ 中 $\mu^1_{\Tw\A}$ 的平方为零，当且仅当 $\delta$ 满足 (3.19) 的广义 Maurer–Cartan 方程；dg 情形下这就是 $d_T=d+\delta$ 的展开。
 
 **自测**：为什么扭曲复形的微分不是 $d+\delta$ 的简单相加，而要求 $\delta$ 解 MC 方程？
 
@@ -13,29 +13,30 @@
 
 ## 步骤
 
-1. **$d_T^2=(d+\delta)^2=d^2+d\delta+\delta d+\delta^2$。**  
-   为什么：直接展开；$d$ 是 $\A$ 诱导的微分。  
+1. **由 (3.20)，$\mu^1_{\Tw\A}(a)=d a+\sum_{s\ge1}\mu^{1+s}(\delta,\ldots,\delta,a,\ldots)$（$\delta$ 共插入 $s$ 次）；$\A$ 为 dg（$\mu^{\ge3}=0$）时只剩 $d_T=d+[\delta,\cdot\,]$。**  
+   为什么：把 (3.20) 中 $d=1$ 的项按 $\delta$ 的插入次数 $s=i_0+i_1$ 归类；$\delta$ 每插入一次，复合阶就升一次。  
    锚点：原书 p.44 §3l（证据 A）
 
-2. **$d^2=0$ 且 $d\delta+\delta d$ 是 $\delta$ 的微分 $d_{\Tw}\delta$。**  
-   为什么：$\Tw\A$ 的微分按分次 Leibniz 规则作用。  
-   锚点：原书 p.44 §3l（证据 A）
-
-3. **$\delta^2$ 不是零：它等于 $\mu^2(\delta,\delta)$ 加上高阶修正；一般地，$d_T^2=\sum_{r\ge1}\mu^r(\delta,\ldots,\delta)$。**  
-   为什么：这是 $\Tw\A$ 复合公式 (3.20) 的直接推论；$r$ 项对应 $\delta$ 的 $r$ 次复合。  
+2. **展开 $d_T^2$：按 (3.20) 逐个复合后，$\delta$ 出现 $r$ 次的项合计为 $\mu^r(\delta,\ldots,\delta)$；dg 情形（$\mu^{\ge3}=0$）只剩 $d\delta+\delta d$ 与 $\mu^2(\delta,\delta)$。**  
+   为什么：$\delta$ 的次数为 $1$，故 $d\delta+\delta d$ 无符号歧义；每一项对应 $\delta$ 的一次组合。  
    锚点：原书 p.44 §3l（证据 B）
 
-4. **故 $d_T^2=0$ 等价于 $\sum_{r\ge1}\mu^r(\delta,\ldots,\delta)=0$，即 $\delta$ 的 MC 方程。**  
-   为什么：移项即得；严格下三角保证求和有限。  
+3. **(3.19) 正是 $\sum_{r=1}^{\infty}\mu^r_{\Sigma\A}(\delta_X,\ldots,\delta_X)=0$；p.44 明言 (1.2) 在 $\Tw\A$ 中成立恰好等价于 (3.19)。**  
+   为什么：原文把 (3.19) 作为扭曲复形的定义条件之一，并指出 TwA 的结合律 (1.2) 归结为它。  
+   锚点：原书 p.44 §3l（证据 A）
+
+4. **故 $d_T^2=0\iff\delta$ 满足 (3.19)；严格下三角保证求和只有有限项非零。**  
+   为什么：移项即得；有限性是「严格下三角」的直接推论，也是 (3.19) 有意义的前提。  
    锚点：原书 p.44 §3l（证据 A）
 
 ## 结果
 
-$d_T^2=0\iff \delta$ 满足广义 MC 方程；这就是扭曲复形的定义条件。
+$d_T^2=0\iff\delta$ 满足 (3.19) 的广义 MC 方程；dg 情形即 $d\delta+\delta^2=0$，这正是扭曲复形的定义条件。
 
 ## 缺口
 
 - 下三角性是求和有限的关键；一般 $\delta$ 的 MC 方程只是形式级数。
+- $d_T=d+\delta$ 只在 $\mu^{\ge3}=0$ 的 dg 情形成立；一般情形 $d_T$ 含 $\delta$ 的任意次插入。
 
 ## 易错点
 
@@ -49,4 +50,4 @@ $d_T^2=0\iff \delta$ 满足广义 MC 方程；这就是扭曲复形的定义条�
 
 关联：`seidel/concept/twisted-complex`、`seidel/deriv/mapping-cone`、`seidel/concept/a-infinity-category`
 
-来源说明：据原书 §3l（p.43–44）与译者注 A05-09 转述；(3.20) 的展开为本书约定下的标准计算。
+来源说明：据原书 §3l（p.43–44）(3.19)(3.20) 转述；译者注 A01-02。$d_T=d+\delta$ 的展开是我们按 (3.20) 补的 dg 特例。

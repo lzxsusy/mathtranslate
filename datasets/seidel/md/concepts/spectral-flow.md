@@ -1,0 +1,86 @@
+# 谱流
+
+> `seidel/concept/spectral-flow` ｜ track B ｜ draft
+
+**一句话**：自伴 Fredholm 算子族随参数变化时特征值穿零的带符号净数；在 Lagrangian 路径上它等于 Maslov 指标，并识别 determinant line。
+
+**自测**：谱流只是一个整数，为什么它能同时算出 Fredholm 指数和 Lagrangian 路径的 Maslov 指标？
+
+## 定义
+
+设 $\{A_s\}_{s\in[0,1]}$ 是 Hilbert 空间上一族自伴 Fredholm 算子，端点 $A_0,A_1$ 可逆。除有限个 $s_j$ 外 $A_s$ 可逆；在每个穿零时刻，$\ker A_{s_j}$ 有限维并带非退化二次型 $q_j$（由 $A_s$ 在 $s_j$ 的导数限制到核上给出）。定义谱流
+$$\mathrm{sf}(\{A_s\})=\sum_j\mathrm{sign}\,q_j\in\Z,$$
+约定特征值由负侧穿向正侧（$q_j$ 正定）记 $+1$，反向记 $-1$。对闭环 $S^1$ 同样定义，得净穿零数。
+本书 §11b 的具体模型：$N=\mathrm{sym}^2(\R^n)^\vee$ 按 corank 分层 $\Sigma_0\cup\Sigma_1\cup\cdots$，$\xi_d\to\Sigma_d$ 为零空间丛且 $(\mathrm{Sym}^2\xi_d)^\vee\cong\nu_{\Sigma_d}$；对端点落在非退化层 $\Sigma_0$ 的路径 $\alpha$ 得 $I(\alpha)\in\Z$ 与线丛 $\eta_\alpha$，并令
+$$d_\alpha=\frac{d}{ds}+\alpha(\cdot\,\chi(s))\in\mathcal F(W^{1,2}(\R;\R^n),L^2(\R;\R^n)),$$
+$\chi$ 为在 $-\infty$ 取 $0$、$+\infty$ 取 $1$ 的单调截断函数。
+
+记号：$I(\alpha)$ 是本书对模型路径的记法，恰是 $\{d_\alpha\}$ 的谱流；$\eta_\alpha$ 是穿零线丛的张量积，$\det(d_\alpha)$ 是行列式线丛。$\mathrm{sf}$ 只依赖族的端点与同伦类。
+
+## 要点
+
+- 谱流是「带符号的穿零计数」：只看特征值穿过 $0$ 的方向，不看大小与重数以外的信息，因此是整值且在小形变下不变。
+- 闭路情形下 $\mathrm{sf}$ 只依赖环路的同伦类，故是 $\pi_1$ 上的整值不变量；在自伴 Fredholm 算子空间上它正是 Atiyah–Patodi–Singer 的谱流。
+- 与指数：$I(\alpha)=\mathrm{index}(d_\alpha)$（Lemma 11.2）；指数只依赖族的端点，故谱流也只依赖端点，这解释了它的同伦不变性。
+- 与 Maslov：在 Lagrangian 路径的模型里 $\mathrm{sf}$ 等于该路径的 Maslov 指标 $\mu(\rho)$（Robbin–Salamon），这是「算子族」与「Lagrangian 族」两套语言的桥。
+- 与 determinant line：$\eta_\alpha\cong\det(d_\alpha)$；每次穿零给 $\Lambda^{\mathrm{top}}\Theta_\alpha(0)\cong\det(d_\alpha)\otimes\Lambda^{\mathrm{top}}\Theta_\alpha(1)$（11.7），线丛的符号累积与计数同步。
+
+## 公式
+
+$$\mathrm{sf}(\{A_s\})=\sum_j\mathrm{sign}\,q_j\in\Z$$
+$$d_\alpha=\frac{d}{ds}+\alpha(\cdot\,\chi(s)),\qquad I(\alpha)=\mathrm{index}(d_\alpha)$$
+$$\Lambda^{\mathrm{top}}\Theta_\alpha(0)\cong\det(d_\alpha)\otimes\Lambda^{\mathrm{top}}\Theta_\alpha(1)$$
+$$\eta_\alpha\cong\bigotimes_j\xi_{\alpha(s_j)}^{\mathrm{sign}\,q_{\alpha}(s_j)}$$
+
+## 定理与证明
+
+### Lemma 11.2：谱流等于指数并识别 determinant line
+
+设 $\alpha$ 横截于各层 $\Sigma_d$（从而 $\alpha^{-1}(\Sigma_d)=\emptyset$，$d\ge2$），$d_\alpha$ 如上。则
+$$I(\alpha)=\mathrm{index}(d_\alpha),$$
+且线丛 $\eta$ 与族 $\{d_\alpha\}$ 的行列式线丛 $\det(d_\alpha)$ 典范同构。
+
+（complete；来源：原书 p.152–153 Lemma 11.2）
+
+1. 把 $d_\alpha$ 的定义域扩大为 $W^{1,2}(\R;\R^n)\oplus\Theta_\alpha(1)$，其中 $\Theta_\alpha(1)$ 是 $\alpha(1)$ 的负特征空间；扩大后的算子满射。  
+   为什么：沿 $-\infty$ 方向积分可解出任意右端，故满射；加负特征空间不改变指数。
+2. 扩大后算子的核由在 $-\infty$ 附近的取值等同于 $\Theta_\alpha(0)$，于是
+$$\dim\Theta_\alpha(0)=\mathrm{index}(d_\alpha)+\dim\Theta_\alpha(1),\quad \Lambda^{\mathrm{top}}\Theta_\alpha(0)\cong\det(d_\alpha)\otimes\Lambda^{\mathrm{top}}\Theta_\alpha(1).$$  
+   为什么：齐次解由初值唯一决定（一阶 ODE），故核与 $\Theta_\alpha(0)$ 同构；取 top exterior power 即 (11.7)。
+3. 在每个穿零时刻 $s_j$，核 $\ker\alpha(s_j)$ 一维并带二次型 $q_{\alpha(s_j)}=\alpha'(s_j)|$；$q>0$ 时 $\Theta(s_j+\epsilon)=\ker\alpha(s_j)\oplus\Theta(s_j-\epsilon)$，$q<0$ 时 $\Theta(s_j-\epsilon)=\ker\alpha(s_j)\oplus\Theta(s_j+\epsilon)$。  
+   为什么：特征值穿过 $0$ 的方向由 $\alpha'$ 在核上的符号决定，故负特征空间的维数恰改变 $\mathrm{sign}\,q$。
+4. 累加得 $\dim\Theta_\alpha(0)=\sum_j\mathrm{sign}\,q_{\alpha(s_j)}+\dim\Theta_\alpha(1)$，与第 2 步比较即得 $I=\mathrm{index}$；同时 $\eta_\alpha=\bigotimes_j\xi_{\alpha(s_j)}^{\mathrm{sign}\,q_j}$ 逐因子同构于 $\det(d_\alpha)$。  
+   为什么：维数等式给出指数；线丛的每个张量因子 $\xi_{\alpha(s_j)}^{\pm1}$ 对应一次穿零，与 $\Lambda^{\mathrm{top}}\Theta$ 的变化一致。
+
+### 谱流等于路径的 Maslov 指标
+
+设 $\Lambda(s)$ 是辛空间 $V$ 中横截于 $\Sigma_1$ 的 Lagrangian 路径，$\{A_s\}$ 为相应的自伴 Fredholm 算子族（由 $\bar\partial$ 沿条带、边界条件 $\Lambda(s)$ 给出）。在一致的符号约定下
+$$\mathrm{sf}(\{A_s\})=\mu(\Lambda):=\sum_s\mathrm{sign}\,q_{\Lambda}(s).$$
+
+（sketch；来源：原书 p.152 §11b；p.159–160 §11f（路径的 Maslov 指标）；谱流=Maslov 指标见 Robbin–Salamon（转引））
+
+1. 两边都在路径的同伦下不变、对直和可加：谱流按定义逐穿零点相加，Maslov 指标按交叉型符号相加。  
+   为什么：同伦只扫过余维 $\ge2$ 的退化层，不改变计数；直和时核与交叉型都直和。
+2. 化到单次穿越的模型：$V=\R^2$，$\Lambda(s)$ 在 $s=0$ 穿过固定的 $\Lambda_0$ 一次，交叉型 $q$ 与算子核上的二次型同号。  
+   为什么：一维核是唯一可能有符号的情形，高维可分解为若干二维块的直和。
+3. 把一般路径扰动为横截并分解成若干单次穿越段的拼接，逐段用第 2 步并求和。  
+   为什么：横截路径的穿越点有限，拼接可加性把局部等式累加成整体等式。
+
+缺口：完整证明见 Robbin–Salamon, Topology 32 (1993) 827–844 与 Bull. LMS 27 (1995) 1–33；原书 §11b 只在模型 $N=\mathrm{sym}^2(\R^n)^\vee$ 上验证，未给出一般算子族的证明。
+
+## 易错点
+
+- 谱流只在端点可逆、且族在 $0$ 处只有有限维核时才有定义；若本质谱穿过 $0$ 或端点不可逆，必须先作相对紧扰动，否则计数无意义。
+- 符号约定：负 $\to$ 正记 $+1$；不同文献整体差一个符号，与 Maslov 类、Floer 分次的约定绑定时必须统一。
+- 谱流不是「穿零特征值的个数」：它按二次型符号计数；若一次穿零的核维数 $>1$，要计的是 $q$ 的符号差（正、负特征子空间维数之差），不能整体算一个 $\pm1$。
+- 本书的 $I(\alpha)$ 是模型 $N=\mathrm{sym}^2(\R^n)^\vee$ 上的构造，不是任意算子族；把一般定理套进来前要先验证 $\alpha$ 的横截性与截断函数 $\chi$ 的选取。
+
+## 参考与关联
+
+- Seidel, Fukaya categories and Picard–Lefschetz theory，§11b，p.151–152（原书 p.151 §11b）
+- Seidel, Fukaya categories and Picard–Lefschetz theory，§11b Lemma 11.2，p.152–153（原书 p.152 Lemma 11.2）
+- Seidel, Fukaya categories and Picard–Lefschetz theory，§11f 路径的 Maslov 指标，p.159–160（原书 p.159–160 §11f）
+
+关联：`seidel/concept/maslov-index`、`seidel/concept/determinant-line`、`seidel/concept/brane-structure`
+
+来源说明：据原书 §11b（p.151–153）转述；译者注 A06-02、A06-03。外部：nLab「spectral flow」https://ncatlab.org/nlab/show/spectral+flow，支持句「for closed paths (loops) of self-adjoint Fredholm operators their spectral flow is essentially the number of eigenvalues … that crosses from positive to negative as one goes around the loop.」；Maslov 一侧见 Robbin–Salamon, Topology 32 (1993) 827–844（译者注 A06-03 转引）。

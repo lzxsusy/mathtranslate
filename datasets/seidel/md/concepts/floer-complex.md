@@ -2,19 +2,19 @@
 
 > `seidel/concept/floer-complex` ｜ track B ｜ draft
 
-**一句话**：由两条 Lagrangian 的横截交点生成的链复形，微分计数指数差 1 的全纯条带；其同调 HF* 在同痕下不变。
+**一句话**：由两条正合 Lagrangian 膜的横截交点生成的链复形，微分计数指数差 1 的全纯条带；其同调 HF* 在同痕下不变。
 
 **自测**：交点之间的全纯条带为什么能给出一个微分，而且平方为零？
 
 ## 定义
 
-设 $L_0,L_1\subset M$ 是紧致 Lagrangian，横截相交。取系数域 $\K$。作为分次向量空间
+设 $L_0,L_1\subset M$ 是横截相交的紧致正合 Lagrangian 膜（带分次与 Pin 结构）。取系数域 $\K$。作为分次向量空间
 $$CF^*(L_0,L_1)=\bigoplus_{x\in L_0\cap L_1}o_x ,$$
 其中 $o_x$ 是由膜结构给出的定向线。微分
 $$\mu^1(x)=\sum_{y\in L_0\cap L_1}\#\bigl(\M(x,y)/\R\bigr)\,y ,$$
-计数满足 $\mu(x)=1$ 的有限能量全纯条带，按其 $1$ 维模空间模去 $\R$ 平移后的点数（带符号）计算。
+计数 Maslov 指标差为 $1$ 的有限能量全纯条带，按其 $1$ 维模空间模去 $\R$ 平移后的点数（带符号）计算。
 
-记号：$\M(x,y)$ 是连接 $x$ 到 $y$ 的全纯条带的模空间；$\#(\M(x,y)/\R)$ 取代数计数。$\mu$ 是 Maslov 分次。
+记号：$\M(x,y)$ 是连接 $x$ 到 $y$ 的全纯条带的模空间；$\#(\M(x,y)/\R)$ 取代数计数。$\mu$ 既指 Maslov 指标也指交点分次。
 
 ## 要点
 
@@ -31,9 +31,9 @@ $$HF^*(L_0,L_1)=H^*\bigl(CF^*(L_0,L_1),\mu^1\bigr)$$
 
 ### $\mu^1$ 的平方为零
 
-对横截的紧致 Lagrangian 对，$\mu^1\circ\mu^1=0$。
+对横截的紧致正合 Lagrangian 膜对，$\mu^1\circ\mu^1=0$。
 
-（sketch；来源：原书 p.101–107 §8）
+（sketch；来源：原书 p.179–182 §12e–12f）
 
 1. 取指数差 $2$ 的两点 $x,z$，考察 $2$ 维模空间 $\M(x,z)$ 的紧化。  
    为什么：$\mu^1\mu^1$ 的矩阵元正是把 $\M(x,z)$ 按中间点 $y$ 分解的计数。
@@ -42,18 +42,19 @@ $$HF^*(L_0,L_1)=H^*\bigl(CF^*(L_0,L_1),\mu^1\bigr)$$
 3. 带符号计数相消，故 $\mu^1\mu^1=0$。  
    为什么：一维紧致带边流形的边界点数（带定向）为零。
 
-缺口：完整证明需横截性、单值化与定向的细节，原书 §8 给出。
+缺口：完整证明需横截性、单值化与定向的细节；原书 §12f 给出带符号版本，§8 是其 char 2 简化版。
 
 ## 易错点
 
 - 未作哈密顿扰动时交点可能不横截，需先扰动；HF 与扰动无关。
-- 系数域 $\operatorname{char}\K\ne2$ 与定向线的符号约定必须与全书一致，否则 $\mu^1$ 差符号。
+- 全书 §8 的简化版取 $\operatorname{char}\K=2$（无符号、无分次）；带符号分次版本见 §12，对任意系数域 $K$ 成立。
 - $CF$ 依赖辅助数据，$HF$ 才是拓扑不变量；不要把两者混同。
 
 ## 参考与关联
 
 - Seidel, Fukaya categories and Picard–Lefschetz theory，§8，p.101–107（原书 p.101 §8）
+- Seidel, Fukaya categories and Picard–Lefschetz theory，§12e–12f，p.179–182（原书 p.179 §12e）
 
 关联：`seidel/concept/maslov-index`、`seidel/concept/determinant-line`、`seidel/concept/fukaya-category`
 
-来源说明：据原书 §8（p.101–107）转述；译者注 A05-xx。
+来源说明：据原书 §8（p.101–107）与 §12e–12f（p.179–182）转述；译者注 A05-xx。

@@ -1,0 +1,92 @@
+# Lefschetz 纤维化的 Fukaya 范畴
+
+> `seidel/concept/lefschetz-fibration-fukaya-category` ｜ track C ｜ draft
+
+**一句话**：把纤维中的 exact Lagrangian 膜沿纤维化提升、再取 Z/2 不变部分得到的 A∞ 范畴；纤维内一列消失球面 split-generate 它，并与全空间 F(X) 拟满忠实。
+
+**自测**：全空间 X 的 Fukaya 范畴，为什么可以由纤维里的一列消失球面完全承载？
+
+## 定义
+
+设 $\pi:E\to\C$ 是 Lefschetz 纤维化，$\widetilde E$ 为其二重分歧覆盖（$w\mapsto w^2$ 的拉回），$\iota_{\widetilde E}$ 为覆盖变换。取 $\widetilde{\mathcal A}\subset F(\widetilde E)^{\mathrm{naive}}$ 为由前等变膜 $\widetilde L_\pm^{\#}$ 与等变膜 $\widetilde L^{\#},\widetilde\Delta^{\#}$ 生成的全 A∞ 子范畴（要求 $\mathrm{char}\,K\ne2$）。定义 18.12 令
+$$F(\pi):=\widetilde{\mathcal A}^{\mathrm{inv}}$$
+为其中 $\iota_{\widetilde E}$ 不变的部分：对象是等变膜，态射取 $\mathbb Z/2$-不变量。
+
+记号：$\widetilde L^{\#}$ 是 $L^{\#}\subset E^{\mathrm{shrink}}$ 的提升；$\widetilde\Delta^{\#}_k$ 是第 $k$ 条消失路径对应的等变球面；$F(\pi)$ 由这些对象生成。
+
+## 要点
+
+- $F(\pi)$ 的对象不是 $E$ 中的膜，而是 $\widetilde E$ 中的等变膜；$\mathbb Z/2$-不变部分把上同调上 $\iota_{\widetilde E}$ 作用为恒等的态射挑出来。
+- 命题 18.13：存在 cohomologically full and faithful 的 A∞-函子 $F(E)\to F(\pi)$，把 $E^{\mathrm{shrink}}$ 内的 $L^{\#}$ 送到提升 $\widetilde L^{\#}$。
+- 命题 18.14：$\widetilde\Delta^{\#}$ 是 $F(\pi)$ 的 exceptional collection，且 $F^\to(\widetilde\Delta^{\#})\simeq F^\to(V^{\#})$，故 $F^\to(V^{\#})\to F(\pi)$ 拟满忠实。
+- 定理 18.24：$\mathrm{Tw}\,F^\to(V^{\#}_\beta)$ 与 $\mathrm{Tw}\,F(\pi)$ 拟等价；即全空间侧的扭曲范畴由纤维中一列消失球面生成。
+- 推论 18.25：$F(E)$ cohomologically full and faithfully 嵌入 $\mathrm{Tw}\,F^\to(V^{\#}_\beta)$——是嵌入不是等价，全空间的对象未必都来自 $E$。
+- 代价是 $\mathrm{char}\,K\ne2$（二重分歧覆盖技巧），这是定理 18.24 唯一的技术假设。
+
+## 公式
+
+$$F(\pi):=\widetilde{\mathcal A}^{\mathrm{inv}}$$
+$$F^\to(V^{\#})\hookrightarrow F(\pi)\quad\text{(cohomologically full and faithful)}$$
+$$\mathrm{Tw}\,F^\to(V^{\#}_\beta)\simeq\mathrm{Tw}\,F(\pi)$$
+$$F(E)\hookrightarrow\mathrm{Tw}\,F^\to(V^{\#}_\beta)$$
+
+## 定理与证明
+
+### 命题 18.13：纤维内的膜嵌入 F(π)
+
+存在 cohomologically full and faithful 的 A∞-函子 $F(E)\to F(\pi)$，把 $E^{\mathrm{shrink}}$ 内的 exact Lagrangian 膜 $L^{\#}$ 送到其原像 $\widetilde L^{\#}$。
+
+（complete；来源：原书 p.282 §18f）
+
+1. 每个 $E$ 上的 exact Lagrangian 膜都同痕于 $E^{\mathrm{shrink}}$ 内的一个。  
+   为什么：假设给出同痕，$E^{\mathrm{shrink}}$ 留出的余量足以容纳它。
+2. 这些膜构成的全子范畴嵌入 $F(E)$ 是拟等价，可用定理 2.9 取逆。  
+   为什么：包含在全子范畴上的 A∞-函子在 cohomology 上是同构。
+3. 同一子范畴在 $F(\pi)$ 中对应对象 $\widetilde L^{\#}$，由 (18.20) 的 Floer 复形同构识别。  
+   为什么：(18.20) 给出 $HF(\widetilde L^{\#}_0,\widetilde L^{\#}_1)\cong HF(L^{\#}_0,L^{\#}_1)$。
+4. 复合得 cohomologically full and faithful 的 $F(E)\to F(\pi)$。  
+   为什么：拟等价的逆与全子范畴嵌入复合仍保 Hom 同构。
+
+### 定理 18.24：扭曲范畴的拟等价
+
+对任意特选基 $\beta$，$\mathrm{Tw}\,F^\to(V^{\#}_\beta)$ 与 $\mathrm{Tw}\,F(\pi)$ 拟等价（$\mathrm{char}\,K\ne2$）。
+
+（complete；来源：原书 p.287–288 §18j）
+
+1. 命题 18.23 把基上的 Hurwitz 移动实现为 exceptional collection 的初等变异：$\widetilde\Delta^{\#}_{L_k\beta}\cong L_k\widetilde\Delta^{\#}_\beta$（式 18.29）。  
+   为什么：代数侧的变异与几何侧的 Hurwitz 移动逐字对应。
+2. Hurwitz 移动在特选基上可迁，故由 $\widetilde\Delta^{\#}_\beta$ 生成的三角子范畴 $T$ 与基无关。  
+   为什么：任意两个基由一串 Hurwitz 移动连接。
+3. 命题 18.17 说明任意 (U) 型等变膜都在 $T$ 中，故 $T=\mathrm{Tw}\,F(\pi)$。  
+   为什么：$F(\pi)$ 由这些膜生成，$T$ 又是三角子范畴。
+4. 引理 5.22 把 $T$ 实现为 $\widetilde\Delta^{\#}_\beta$ 上的扭曲复形，再由命题 18.14 换成 $\mathrm{Tw}\,F^\to(V^{\#}_\beta)$。  
+   为什么：扭曲复形范畴与生成元的 directed 子范畴等价。
+
+### 推论 18.25：全空间范畴的嵌入
+
+对任意 $\beta$，存在 $F(E)$ 到 $\mathrm{Tw}\,F^\to(V^{\#}_\beta)$ 的 cohomologically full and faithful 嵌入。
+
+（complete；来源：原书 p.288 §18j）
+
+1. 命题 18.13 与引理 3.23 给出 $\mathrm{Tw}\,F(E)\to\mathrm{Tw}\,F(\pi)$ 的 cohomologically full and faithful 函子。  
+   为什么：扭曲复形函子保持 Hom 同构。
+2. 定理 18.24 把目标 $\mathrm{Tw}\,F(\pi)$ 换成 $\mathrm{Tw}\,F^\to(V^{\#}_\beta)$。  
+   为什么：拟等价两侧的 Hom 复形同构。
+3. 复合即得所需嵌入。  
+   为什么：cohomologically full and faithful 在复合下保持。
+
+## 易错点
+
+- $F(\pi)$ 不是 $F(E)$：它的对象住在二重覆盖 $\widetilde E$ 里，态射取 $\mathbb Z/2$-不变部分；把它当成「$E$ 中膜的范畴」会漏掉等变结构。
+- 推论 18.25 是拟满忠实嵌入，不是等价：它只保证 Hom 空间同构，不保证每个对象都来自 $E$（注 A11-14）。
+- $\mathrm{char}\,K\ne2$ 不是装饰：引理 18.9 中 $\mathrm{Id}$ 与 $-\mathrm{Id}$ 的区分、以及二重分歧覆盖的构造都要它。
+- 消失路径的次序决定 $\widetilde\Delta^{\#}$ 的分次；换基要做 Hurwitz 移动，$\mathrm{Tw}\,F^\to(V^{\#}_\beta)$ 虽与 $\mathrm{Tw}\,F(\pi)$ 拟等价，具体对象却按 (18.30) 改变。
+
+## 参考与关联
+
+- Seidel, Fukaya categories and Picard–Lefschetz theory，§18f，p.281–282（原书 p.282 §18f）
+- Seidel, Fukaya categories and Picard–Lefschetz theory，§18j，p.286–288（原书 p.286–288 §18j）
+
+关联：`seidel/concept/lefschetz-fibration`、`seidel/concept/vanishing-cycle`、`seidel/concept/thimble`、`seidel/concept/fukaya-category`、`seidel/concept/split-generation`、`seidel/deriv/twisted-differential`
+
+来源说明：据原书 §18f（p.281–282）与 §18j（p.287–288）转述；译者注 A11-13、A11-14；外部参考 Seidel《More about vanishing cycles and mutation》（arXiv:math/0010032）。

@@ -2,7 +2,7 @@
 
 > `seidel/correction/a07-section-13-c-25` ｜ 原书 p.196 ｜ draft
 
-**一句话**：初版「图 13.2 把它画成两个竖直边相识别的正方形」改为「改为「两个竖直边相粘合的正方形」」：英文为 `a square with the two vertical sides identified`
+**一句话**：初版「图 13.2 把它画成两个竖直边相识别的正方形」改为「两个竖直边相粘合的正方形」：英文 p196 作 a square with the two vertical sides identified；「相识别」不成词，且与图 13.2 的构造不符。
 
 **自测**：初版这里错在哪，为什么必须改？
 
@@ -24,7 +24,7 @@
 
 ## 补注
 
-见分章报告 A07；修订总表第 15 条。
+见分章报告 A07；修订总表第 17 条（section-13-c.tex:25，印刷页 196）。
 
 ## 易错点
 
@@ -37,4 +37,4 @@
 
 关联：`seidel/concept/fukaya-category`、`seidel/concept/a-infinity-category`
 
-来源说明：据 A07 分章报告与修订总表；原文页码由 reason 或 page_map 推出。
+来源说明：据修订总表、分章报告与原书印刷页图逐条核对（PDF 页 = 印刷页 + 8）；页码已回页确认。

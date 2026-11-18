@@ -9,10 +9,10 @@
 ## 定义
 
 $A=\bigoplus_{k\in\Z}A^k$ 是分次向量空间，带一族多重线性映射 $\mu^d:A^{\otimes d}\to A$（$d\ge1$），$\deg\mu^d=2-d$，并对每个 $d\ge1$ 满足
-$$\sum_{r+s+t=d}(-1)^{r+st}\mu^{r+1+t}(a_d,\ldots,a_{r+s+1},\mu^s(a_{r+s},\ldots,a_{r+1}),a_r,\ldots,a_1)=0 .$$
+$$\sum_{r+s+t=d}(-1)^{\star_r}\mu^{r+1+t}(a_d,\ldots,a_{r+s+1},\mu^s(a_{r+s},\ldots,a_{r+1}),a_r,\ldots,a_1)=0,\qquad \star_r=|a_1|+\cdots+|a_r|-r .$$
 $d=1$ 时化为 $\mu^1\mu^1=0$；$d=2$ 时化为带 Koszul 符号的 Leibniz 规则；$d\ge3$ 的项度量 $\mu^2$ 偏离严格结合律的程度。
 
-记号：$\mu^d$ 的次数是 $2-d$；$a_i$ 的次数记作 $|a_i|$。
+记号：$\mu^d$ 的次数是 $2-d$；$a_i$ 的次数记作 $|a_i|$；$\star_r=|a_1|+\cdots+|a_r|-r$，其中 $r$ 是内层运算右侧的元素个数（原书 (1.2) 的这个符号记作 $\star_n$）。
 
 ## 要点
 
@@ -22,8 +22,8 @@ $d=1$ 时化为 $\mu^1\mu^1=0$；$d=2$ 时化为带 Koszul 符号的 Leibniz 规
 
 ## 公式
 
-$$\sum_{r+s+t=d}(-1)^{r+st}\mu^{r+1+t}(a_d,\ldots,a_{r+s+1},\mu^s(a_{r+s},\ldots,a_{r+1}),a_r,\ldots,a_1)=0$$
-$$\mu^1\circ\mu^1=0,\qquad \mu^1\mu^2=\mu^2(\mu^1\otimes\id)+(-1)^{|a|}\mu^2(\id\otimes\mu^1)$$
+$$\sum_{r+s+t=d}(-1)^{\star_r}\mu^{r+1+t}(a_d,\ldots,a_{r+s+1},\mu^s(a_{r+s},\ldots,a_{r+1}),a_r,\ldots,a_1)=0,\qquad \star_r=|a_1|+\cdots+|a_r|-r$$
+$$\mu^1\circ\mu^1=0,\qquad \mu^1\mu^2(a_2,a_1)=(-1)^{|a_1|}\mu^2(\mu^1a_2,a_1)-\mu^2(a_2,\mu^1a_1)$$
 
 ## 定理与证明
 
@@ -38,13 +38,13 @@ $d=1$ 的 A∞ 关系等价于 $\mu^1\mu^1=0$；$d=2$ 的关系等价于 $\mu^1$
 2. 这一项就是 $\mu^1(\mu^1(a_1))=0$，即 $(\mu^1)^2=0$。  
    为什么：代入关系式，外层取 $\mu^{1}$、内层取 $\mu^{1}$。
 3. $d=2$ 时合法的 $(r,s,t)$ 为 $(0,2,0)$、$(0,1,1)$、$(1,1,0)$，分别给 $\mu^1\mu^2$ 与两个 $\mu^2(\mu^1\otimes\id)$、$\mu^2(\id\otimes\mu^1)$ 项。  
-   为什么：把三项移到等号同一侧即得 Leibniz 规则；符号由 $(-1)^{r+st}$ 给出。
+   为什么：三项相加为零，移项并用 $\star_r=|a_1|+\cdots+|a_r|-r$ 定符号，即得 $\mu^1\mu^2(a_2,a_1)=(-1)^{|a_1|}\mu^2(\mu^1a_2,a_1)-\mu^2(a_2,\mu^1a_1)$。
 
 ## 易错点
 
 - $\mu^d$ 的次数是 $2-d$；写成 $d-2$ 会把所有公式的次数弄反。
-- 符号约定因作者而异。本书用 $\dagger$ 记账（原书 p.11），直接套用别处的 A∞ 关系常差一个 $(-1)^{|a|}$。
-- 「非含幺」只表示定义里不把单位元列为数据，不表示单位元不存在（原书 p.8）。
+- 符号约定因作者而异。本书采用 “bar-convention”（原书 p.9 注 (iv)），符号由 $\star_r=|a_1|+\cdots+|a_r|-r$ 给出，而不是常见的 $(-1)^{r+st}$；直接套用别处的 A∞ 关系常差一个符号。
+- 「非含幺」只表示定义里不把单位元列为数据，不表示单位元不存在（原书 p.8 Remark 1.1(i)：应读作 “not necessarily unital”）。
 
 ## 参考与关联
 

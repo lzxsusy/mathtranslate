@@ -2,7 +2,7 @@
 
 > `seidel/correction/a10-section-17-j-2` ｜ 原书 p.261 ｜ draft
 
-**一句话**：初版「在剩下的情形中，\stref{例题}{17.15}适用」改为「在剩下的情形中，\stref{例题}{17.14}适用」：原书 p261 作 “In the remaining case, Example 17.14…
+**一句话**：初版「\stref{例题}{17.15}适用」改为「17.14 适用」：原书 p261 作 "In the remaining case, Example 17.14 applies"；此句正讲例 17.14 的非平凡 Pin 结构结论。
 
 **自测**：初版这里错在哪，为什么必须改？
 
@@ -24,7 +24,7 @@
 
 ## 补注
 
-见分章报告 A10；修订总表第 26 条。
+见分章报告 A10；修订总表第 28 条（section-17-j.tex:2，印刷页 261）。page_map 写 262，以正文页图为准。
 
 ## 易错点
 
@@ -37,4 +37,4 @@
 
 关联：`seidel/concept/fukaya-category`、`seidel/concept/a-infinity-category`
 
-来源说明：据 A10 分章报告与修订总表；原文页码由 reason 或 page_map 推出。
+来源说明：据修订总表、分章报告与原书印刷页图逐条核对（PDF 页 = 印刷页 + 8）；页码已回页确认。

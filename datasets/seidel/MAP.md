@@ -30,7 +30,7 @@ flowchart TD
     subgraph CH3["第三章：Picard–Lefschetz（p.211–314）"]
         C1["Lefschetz 纤维化<br/>z1²+…+zn²<br/>p.213（lefschetz-fibration）"]
         C2["消失圈<br/>S^{n−1}<br/>p.221（vanishing-cycle）"]
-        C3["匹配圈<br/>两个消失圈之并<br/>p.224（matching-cycle）"]
+        C3["匹配圈<br/>两顶针沿消失圈粘成 S^{n+1}<br/>p.224（matching-cycle）"]
         C4["顶针<br/>Lagrangian 盘<br/>p.229（thimble）"]
         C5["定理 A 归纳<br/>维数下降<br/>p.303（lefschetz-induction）"]
         C6["定理 B 构造 B<br/>directed A∞<br/>p.5 / §19（theorem-b-construction）"]
@@ -44,19 +44,34 @@ flowchart TD
     A3 -.->|"Tw 是三角化的容器"| B6
     A5 -.->|"分裂闭包"| C6
     B6 -.->|"F(X) 由消失圈生成"| C5
-    C6 -.->|"Tw B ≃ F(X)"| A3
+    C6 -.->|"F(X) → Tw B"| A3
 ```
 
 ## 三章各回答什么
 
 | 章 | 问题 | 关键机器 | 卡 |
 |---|---|---|---|
-| 第一章 | 链层次的复合不严格结合，怎么还能算？ | μ^d、Tw、Karoubi、分裂生成 | 6 概念 + 4 推导 |
-| 第二章 | 辛流形的几何怎么变成 A∞ 范畴？ | 正合性、Floer 复形、Maslov、行列式线、膜结构 | 6 概念 |
-| 第三章 | 怎么从 PL 数据真的算出 F(X)？ | 消失圈/匹配圈/顶针、归纳、directed A∞ | 4 概念 + 4 推导 |
+| 第一章 | 链层次的复合不严格结合，怎么还能算？ | μ^d、Tw、Karoubi、分裂生成、operad/HPT | 14 概念 + 6 推导 |
+| 第二章 | 辛流形的几何怎么变成 A∞ 范畴？ | 正合性、Floer 复形、Maslov、行列式线、Pin 与膜结构 | 10 概念 |
+| 第三章 | 怎么从 PL 数据真的算出 F(X)？ | 消失圈/匹配圈/顶针、Dehn 扭转、归纳、directed A∞ | 8 概念 + 2 推导 |
+
+## 三轨卡片索引
+
+### A 轨：A∞ 代数与三角范畴（14 概念 + 6 推导 + 5 勘误）
+
+`a-infinity-algebra`、`a-infinity-category`、`operad`、`homological-perturbation-lemma`、`kadeishvili-theorem`、`twisted-complex`、`mapping-cone`、`quasi-isomorphism`、`exact-triangle`、`karoubi-envelope`、`split-generation`、`yoneda-embedding`、`exceptional-object`、`directed-a-infinity-category`；推导：`mu-d-grading`、`twisted-differential`、`mapping-cone`、`split-generation`、`theorem-b-construction`、`directed-dg`。
+
+### B 轨：Floer 与 Fukaya（10 概念 + 12 勘误）
+
+`exact-lagrangian`、`floer-complex`、`maslov-index`、`maslov-class`、`determinant-line`、`pin-structure`、`brane-structure`、`spectral-flow`、`serre-functor`、`fukaya-category`。
+
+### C 轨：Picard–Lefschetz（8 概念 + 2 推导 + 13 勘误）
+
+`lefschetz-fibration`、`vanishing-cycle`、`matching-cycle`、`thimble`、`dehn-twist`、`picard-lefschetz-formula`、`lefschetz-fibration-fukaya-category`、`a-m-singularity`；推导：`lefschetz-induction`、`mutation`。
 
 ## 读法
 
 - 只想抓定理 A/B：先读 `lefschetz-induction`、`theorem-b-construction`，再回 `twisted-complex` 与 `fukaya-category` 补语言。
-- 想补 A∞ 基础：按 A1 → A2 → A3 → A4 → A5 顺序；`exact-triangle` 可最后读。
+- 想补 A∞ 基础：按 A1 → A2 → A3 → A4 → A5 顺序；`exact-triangle`、`operad`、`HPT` 可最后读。
 - 想理解「为什么能算」：`vanishing-cycle` → `matching-cycle` → `thimble` → `mutation` → `lefschetz-induction`。
+- 想查初版错译：直接进 `md/corrections/`，每张卡给页码与「初版—改后—为什么」。

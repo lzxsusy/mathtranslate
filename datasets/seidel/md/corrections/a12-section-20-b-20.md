@@ -2,7 +2,7 @@
 
 > `seidel/correction/a12-section-20-b-20` ｜ 原书 p.306 ｜ draft
 
-**一句话**：初版此处误译：英文 p306 作 "at least once one has made the $A_\infty$-structure strictly unital"
+**一句话**：初版「至少将 $A_\infty$ 结构变成严格含幺后如此」改为「至少在把 $A_\infty$ 结构做成严格含幺之后是如此」：原文 once one has made …，改后句子完整、once 从句对应。
 
 **自测**：初版这里错在哪，为什么必须改？
 
@@ -20,11 +20,11 @@
 
 ## 为什么改
 
-英文 p306 作 "at least once one has made the $A_\infty$-structure strictly unital"。原译"至少……后如此"缺谓语，"变成……后如此"不成句，且"至少"的辖域不清；改后与英文的 once-从句对应。
+英文 p306 作 "at least once one has made the $A_\infty$-structure strictly unital"。原译「至少将 $A_\infty$ 结构变成严格含幺后如此」把 once-从句压成「后如此」，句子收尾生硬，「至少」的辖域也不清（是至少做一次，还是至少在此条件下）；改后与英文的 once 从句对应。
 
 ## 补注
 
-见分章报告 A12；修订总表第 29 条。
+见分章报告 A12；修订总表第 40 条（section-20-b.tex:20，印刷页 306）。
 
 ## 易错点
 
@@ -37,4 +37,4 @@
 
 关联：`seidel/concept/fukaya-category`、`seidel/concept/a-infinity-category`
 
-来源说明：据 A12 分章报告与修订总表；原文页码由 reason 或 page_map 推出。
+来源说明：据修订总表、分章报告与原书印刷页图逐条核对（PDF 页 = 印刷页 + 8）；页码已回页确认。

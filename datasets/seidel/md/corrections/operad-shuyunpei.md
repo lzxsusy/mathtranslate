@@ -9,13 +9,13 @@
 ## 初版
 
 ```
-运算胚
+不使用运算胚或非交换几何
 ```
 
 ## 改后
 
 ```
-操作子（operad）
+不使用操作子（operad）或非交换几何
 ```
 
 ## 为什么改
@@ -24,7 +24,7 @@ operad 的通行中文译名是「操作子」；「运算胚」不是标准术�
 
 ## 补注
 
-涉及 chapter-i.tex:4、section-1.tex:407，全书仅此两处；首处加夹注。
+修订总表第 2、3 条（chapter-i.tex:4，印刷页 7；section-1.tex:407，印刷页 19），全书仅此两处。本卡 original/corrected 取第 2 条；第 3 条作「控制 $\Ai$ 结构的运算胚的“余纤维性”」→「…操作子的“余纤维性”」，同改。
 
 ## 易错点
 
@@ -33,8 +33,8 @@ operad 的通行中文译名是「操作子」；「运算胚」不是标准术�
 
 ## 参考与关联
 
-- Seidel, Fukaya categories and Picard–Lefschetz theory，校订，p.7–7（原书 p.7）
+- Seidel, Fukaya categories and Picard–Lefschetz theory，校订，p.7–19（原书 p.7）
 
 关联：`seidel/concept/a-infinity-algebra`、`seidel/concept/a-infinity-category`
 
-来源说明：据分章报告 A01 与修订总表第 2、3 行。
+来源说明：据修订总表、分章报告与原书印刷页图逐条核对（PDF 页 = 印刷页 + 8）；页码已回页确认。
