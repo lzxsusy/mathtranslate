@@ -33,6 +33,7 @@
 | `kw06/` | 单篇论文资料卡（Kapustin–Witten 2006）：概念卡 + 推导卡 + 骨架图 + 渲染 Markdown | 一张可独立使用的卡（JSON） | 单卡 3,000 字 |
 | `csw/` | 单篇论文资料卡（Witten 1989，Chern–Simons / Jones 多项式）：31 张概念卡 + 9 张例子卡 + 依赖图 + 生产工作流 | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
 | `glc/` | 整本讲义资料卡（陈麟《几何 Langlands 讲义》，16 章）：154 张概念卡，逐卡经外部核验（`verification.jsonl` 记对齐结论与核验页面） | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
+| `seidel/` | 专著资料卡（Seidel《Fukaya categories and Picard–Lefschetz theory》）：16 张概念卡 + 8 张推导卡 + 30 张校订卡（初版错译→改译→理由），三轨 A/B/C | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
 
 `bench/` 与训练集严格隔离：出题时不得使用 `parallel/`、`deepread/` 中已出现的同一段落。
 
@@ -55,6 +56,7 @@ datasets/
 ├── geoq/                      # 单章资料卡（cards/ + md/ + map.png/svg + workflow/ + tools/）
 ├── pathintegral/              # 单章资料卡：第 2 章路径积分（同 geoq 结构）
 ├── kw06/                      # 单篇论文资料卡：Kapustin–Witten 2006（概念卡 + 推导卡）
+├── seidel/                    # 专著资料卡：Seidel《Fukaya categories and P–L theory》（概念/推导/校订）
 ├── math/<pkg>.<split>.jsonl   # 数学推理条目（主力）
 ├── parallel/<pkg>.<split>.jsonl
 ├── deepread/<pkg>.<split>.jsonl
@@ -123,4 +125,6 @@ https://atomgit.com/lzxSUSUY/mathtranslate/blob/main/datasets/<...>.jsonl
 - `v0.10`（2026-11-17）：新增 `kw06/`——Kapustin–Witten 2006 的资料卡 67 张（40 概念 + 27 推导，约 100 步），
   每卡带印刷页锚、常见误解与相关卡；`lint_cards.py --strict` 0 error、`audit_pages.py` 134 条 anchor 0 issue。
 - `v0.9`（2026-11-16）：新增 `pathintegral/`——同书第 2 章「路径积分形式」的 50 张资料卡（1 总览 + 29 概念 + 20 例），65 条定理、219 个证明步骤、109 个例子步骤；附五轨框架地图、读者版总表、渲染版 Markdown 与七路并行生产协议；`lint_pi.py` / `audit_pages.py` 0 错。
+- `v0.11`（2026-11-19）：新增 `seidel/`——Seidel《Fukaya categories and Picard–Lefschetz theory》的 54 张资料卡（16 概念 + 8 推导 + 30 校订），
+  三轨 A（A∞/三角范畴）/B（Floer/Fukaya）/C（Picard–Lefschetz），每卡带印刷页锚与 nLab/原书来源；`lint_cards.py --strict` 0 error、`render_md.py` 54 卡。
 - 后续见 [CHANGELOG.md](../CHANGELOG.md)。

@@ -1,5 +1,26 @@
 # CHANGELOG
 
+## dataset seidel — 2026-11-19（Seidel《Fukaya categories and Picard–Lefschetz theory》资料卡 54 张）
+
+新增 `datasets/seidel/`：把全书校订工程（301 页译注本、187 条译者注、31 处译文修订 + 9 条术语统一）
+裁成 **54 张资料卡**，按三条轨道组织（A：A∞ 与三角范畴；B：Floer 与 Fukaya 范畴；C：Picard–Lefschetz 理论）：
+
+- 概念卡 16（A 6 / B 6 / C 4）：A∞ 代数与范畴、扭曲复形、Karoubi 完备化、分裂生成、正合三角；正合 Lagrangian、
+  Floer 复形、Maslov 指标、行列式线、膜结构、Fukaya 范畴；Lefschetz 纤维化、消失圈、匹配圈、顶针。
+- 推导卡 8（A 6 / C 2）：μ^d 分次、扭曲微分、映射锥、分裂生成、PL 归纳、定理 B 构造、变异、directed dg。
+  每步带 `text/why/locator/provenance`，provenance 分 A（原书）/B（由原文推出）/C（上下文推断）。
+- 校订卡 30（A 5 / B 12 / C 13）：一卡记一处初版错译，字段 `page/original/corrected/why/note`；
+  由 `精选数据/修订总表.tsv` 的 40 行机械聚合（operad 2 条并 1、thimble 9 条并 1），页码取修订理由中的印刷页或
+  `page_map.csv`，不手填。已知缺口：`section-10-cd.tex:41` 两条 H³→H² 因同 slug 合并为 1 卡。
+- 结构：`SCHEMA.md`（csw 体系的 seidel 版，三卡型 + 三轨）、`cards/{concepts,derivations,corrections}/`、
+  `index.jsonl`（54 行）、`md/`（54 卡 + index.md，按类型分目录）、`MAP.md`（三章骨架图）、
+  `workflow/PRODUCTION.md`（输入、写卡规则、G0–G5 门禁）、`tools/{lint_cards,build_index,render_md}.py`。
+- 工具链自检：`lint_cards.py --strict` **54 卡 0 error / 0 warn**；`render_md.py` 54 卡 + 索引。
+- 权利：全部 `rewritten`；单处引文 ≤60 字（超长截断并在 `note` 注明），不复制原文段落；底本为 EMS 在版图书，
+  译文与 PDF 不入公开仓库，只有卡片以 CC BY 4.0 发布。
+- 材料来源：校订工程的 12 份分章报告、`译者注总表.tsv`（187 行）、`修订总表.tsv`（40 行）、`errata.md`；
+  卡片与注文共享同一页码锚（印刷页 = PDF 页 − 8）。
+
 ## dataset glc — 2026-11-18（陈麟《几何 Langlands 讲义》资料卡 154 张，逐卡外部核验）
 
 新增 `datasets/glc/`：把陈麟《Introduction to Geometric Langlands Theory》（清华 2023 秋讲义，
