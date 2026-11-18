@@ -59,6 +59,7 @@ datasets/
 ├── pathintegral/              # 单章资料卡：第 2 章路径积分（同 geoq 结构）
 ├── kw06/                      # 单篇论文资料卡：Kapustin–Witten 2006（概念卡 + 推导卡）
 ├── seidel/                    # 专著资料卡：Seidel《Fukaya categories and P–L theory》（概念/推导/校订）
+├── kshms/                     # 单篇论文资料卡：Kontsevich–Soibelman《同调镜像对称与环面纤维化》（73 条款卡 + 10 勘误卡，八轨 O–G）
 ├── math/<pkg>.<split>.jsonl   # 数学推理条目（主力）
 ├── parallel/<pkg>.<split>.jsonl
 ├── deepread/<pkg>.<split>.jsonl
