@@ -1,0 +1,59 @@
+# 模空间与模函子
+
+> `siebert/concept/moduli-space` ｜ track B ｜ draft
+
+**一句话**：模空间是表示模函子的概形：$T\to M$ 的映射分类 $T$ 上的族；曲线模函子 $F_g$ 因存在等平凡族而不可表，只能改用叠。
+
+**自测**：曲线模函子 $F_g$ 为什么不能由一个概形表示？
+
+## 定义
+
+一个模问题给出两样东西：待分类的几何对象（例如亏格 $g$ 的光滑曲线、$\mathbb{P}^N$ 中的闭子概形），以及「$T$ 上的族」的概念。模函子是反变函子 $F:\mathsf{Sch}_S^{\mathrm{op}}\to\mathsf{Set}$，$F(T)=\{T\ \text{上的族}\}/\cong$。模空间是表示 $F$ 的 $S$-概形 $M$：存在自然同构 $F\cong\operatorname{Hom}_S(-,M)$。此时恒等态射 $\mathrm{id}_M$ 对应 $F(M)$ 中的一个万有族，任意族的分类映射由「拉回万有族」唯一确定。讲义的范例是 Hilbert 概形：闭子概形 $Z\hookrightarrow T\times\mathbb{P}^N$（$Z/T$ 平坦且固有）由 $T\to\operatorname{Hilb}(\mathbb{P}^N)$ 分类，$\mathrm{id}$ 对应万有子概形（例 2.2）。
+
+记号：$F_g$：亏格 $g$ 光滑曲线族的模函子；$M_g$：若存在则是表示 $F_g$ 的概形；$\operatorname{Hilb}(\mathbb{P}^N)$：Hilbert 概形；$\mathcal{M}_g$：模群胚（模叠），对象是曲线族、态射是笛卡尔方块，不是概形。
+
+## 要点
+
+- 可表性的内容是「万有族 + 自然同构」：$F\cong\operatorname{Hom}(-,M)$ 等价于在 $M$ 上给出一族，使每个族都是它沿唯一分类映射的拉回。Hilbert 概形靠 $Z\hookrightarrow T\times\mathbb{P}^N$ 的泛性质做到这一点，这是「模空间存在」的样板。
+- 曲线模函子 $F_g$ 不可表。反证的结构是：若 $F_g=\operatorname{Hom}(-,M_g)$，取等平凡族 $\pi:X\to S$（所有纤维都同构于同一条 $C_0$，但整体不是 $C_0\times S$），则任意 $T\to S$ 拉回的都是平凡族，于是分类映射 $S\to M_g$ 必为常值映射；常值映射只能拉回 $C_0\times M_g$ 的拉回，迫使 $X\cong C_0\times S$，矛盾（式 (2.7)）。
+- 病根是自同构。设 $C_0$ 有自同构 $\varphi$ 满足 $\varphi^a=\mathrm{id}$，$\zeta$ 为本原 $a$ 次单位根，则 $(\varphi,\zeta):(z,t)\mapsto(\varphi(z),\zeta t)$ 生成 $C_0\times\mathbb{G}_m$ 上的 $\mathbb{Z}/a$ 作用，商 $(C_0\times\mathbb{G}_m)/(\mathbb{Z}/a)$ 每条纤维仍同构于 $C_0$，但在 $\mathbb{G}_m$ 上不平凡（例 2.3）。
+- 所以补救办法不是排除自同构：把曲线限制到 $\operatorname{Aut}(C_s)=\{1\}$ 确实能让 $F_g$ 可表，但那样剩下的曲线不足以做几何（注 2.1）。正确做法是把「同构类集合」换成「群胚」：$\mathcal{M}_g$ 的对象是族本身、态射是笛卡尔方块，自同构作为对象的一部分被保留下来。
+- 换成群胚还不够：$F_g$ 一般不是平展拓扑下的层（例 2.16），所以由它关联出的群胚连叠都不是；真正成为叠的是模群胚 $\mathcal{M}_g$（例 2.17），它的对象下降条件恰好吸收了「族可以只在平展局部平凡」这一现象。
+
+## 公式
+
+$$F_g:\mathsf{Sch}^{\mathrm{op}}\longrightarrow\mathsf{Set},\qquad T\longmapsto\{\,X\to T\ \text{亏格 }g\text{ 的光滑曲线族}\,\}/\cong$$
+$$F\cong\operatorname{Hom}_S(-,M),\qquad \mathrm{id}_M\ \longleftrightarrow\ \text{万有族}\in F(M)$$
+$$(\varphi,\zeta):(z,t)\longmapsto(\varphi(z),\zeta t),\qquad X=(C_0\times\mathbb{G}_m)/(\mathbb{Z}/a)\ \text{在}\ \mathbb{G}_m\ \text{上非平凡}$$
+
+## 定理与证明
+
+### 曲线模函子 $F_g$ 不可表
+
+设 $g\ge2$。函子 $F_g(T)=\{T$ 上亏格 $g$ 的光滑曲线族$\}/\cong$ 不能被任何 $S$-概形表示。
+
+（sketch；来源：原书 p.26 式 (2.7)、例 2.3）
+
+1. 设存在概形 $M_g$ 与自然同构 $F_g\cong\operatorname{Hom}_S(-,M_g)$；取等平凡族 $\pi:X\to S$ 与它的分类映射 $\varphi:S\to M_g$。  
+   为什么：可表性把「族」换成「分类映射」，这是唯一能对族作函子式操作的方式；等平凡族的存在性由例 2.3 的 $\mathbb{Z}/a$ 商给出。
+2. 对任意 $T\to S$，拉回族 $X_T$ 是平凡族 $T\times C_0$，故 $\varphi$ 复合 $T\to S$ 后是常值映射。  
+   为什么：等平凡的定义就是所有纤维同构于 $C_0$，而 $F_g$ 的拉回按纤维计算，所以 $X_T\cong T\times C_0$；可表性又使「分类映射相同」等价于「族同构」。
+3. 于是 $\varphi$ 是常值映射，$X\cong S\times C_0$ 平凡，与 $X$ 的非平凡性矛盾。  
+   为什么：常值映射只能把万有族拉回成乘积族；这一步用到 $S$ 上「映射常值 ⇒ 拉回平凡」的方向，是反证的核心。
+
+缺口：讲义只给出反证骨架（式 (2.7)）与例 2.3 的构造，没有逐条验证 $(C_0\times\mathbb{G}_m)/(\mathbb{Z}/a)$ 在 $\mathbb{G}_m$ 上确实不平凡（需要检查该 $\mathbb{Z}/a$ 作用在 $\mathbb{G}_m$ 上没有截面）。
+
+## 易错点
+
+- 「$F_g$ 不可表」不等于「模空间不存在」：粗模空间（coarse moduli space）作为 $\mathcal{M}_g$ 的层化是存在的，但它不表示 $F_g$，不携带万有族。
+- 等平凡族的非平凡性是整体的：每条纤维都同构于 $C_0$，不能由此推出族同构于乘积族；差别正是「自同构的粘合数据」。
+- 例 2.3 的条件是 $\varphi^a=\mathrm{id}$，不是「$\varphi$ 的阶恰为 $a$」；取 $a$ 为阶的倍数同样可用，把它读成「阶为 $a$」会无谓缩小构造（见勘误卡 order-vs-power）。
+- 「可表」在本章有两个层次：函子可表（$F\cong\operatorname{Hom}(-,M)$）与叠的态射可表（纤维积是概形）。说「$F_g$ 不可表」用的是前者，不要与后者的失败混为一谈。
+
+## 参考与关联
+
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，第 2 章 §1 模空间，p.24–26（原书 p.24）
+
+关联：`siebert/deriv/dm-stack-from-groupoid`、`siebert/concept/stable-curve`、`siebert/correction/order-vs-power`
+
+来源说明：原书 p.24–26 §1（定义 2.1 之前的模函数框架、例 2.2 Hilbert 概形、式 (2.1)–(2.7)、例 2.3、注 2.1）。「模函子 / 可表」口径按 nLab「moduli space of curves」（last revised 2026-03-02）与讲义式 (2.3) 的万有族表述核对；集合值层与叠的对照按 Stacks Project tag 026F（定义 8.4.1）。

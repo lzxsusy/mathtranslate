@@ -1,0 +1,90 @@
+# 内蕴法锥
+
+> `siebert/concept/intrinsic-normal-cone` ｜ track C ｜ draft
+
+**一句话**：把局部法锥按切丛的平移作用取商，得到与嵌入无关的锥叠；虚拟基本类就从这个锥经零截面的 Gysin 拉回得到。
+
+**自测**：内蕴法锥为什么必须做成叠，而不能直接取一个锥？
+
+## 定义
+
+设 $X\hookrightarrow Z$ 是相对 $Y$ 的光滑局部嵌入，$\mathcal I=\mathcal I_{X/Z}$。把 $T_{Z/Y}|_X$ 的平移作用从 $N_{X/Z}$ 与 $C_{X/Z}$ 里商掉，得\textbf{内蕴法层} $\mathcal M_{X/Y}=[N_{X/Z}/T_{Z/Y}|_X]$ 与\textbf{内蕴法锥} $\mathcal C_{X/Y}=[C_{X/Z}/T_{Z/Y}|_X]$（式 (3.93)(3.94)）；绝对情形（$Y=\mathrm{pt}$）下 $\mathcal C_{X/Y}$ 为纯 $0$ 维。复形 $\mathcal F^\bullet$ 给出一族向量丛叠 $h^0/h^1(\mathcal F^\bullet)=[F_1/F_0]$，而 $\phi^\bullet:\mathcal F^\bullet\to L^\bullet_{X/Y}$ 是完美障碍理论当且仅当 $\mathcal M_{X/Y}\hookrightarrow h^0/h^1(\mathcal F^\bullet)$ 为单态射（式 (3.96)）；此时 $C_{\phi^\bullet}\subset F_1$ 由笛卡尔图 (3.97) 定义为 $\mathcal C_{X/Y}$ 沿该单态射的拉回。
+
+记号：$N_{X/Z}=\Spec_X\Sym^\bullet(\mathcal I/\mathcal I^2)$ 法丛；$C_{X/Z}=\Spec_X\bigoplus_{m\ge0}\mathcal I^m/\mathcal I^{m+1}$ 法锥；$T_{Z/Y}|_X$ 相对切丛在 $X$ 上的限制；$[E/\cdot]$ 表示按 $E$ 的平移作用取商得到的叠；$h^0/h^1(\mathcal F^\bullet)=[F_1/F_0]$ 向量丛叠。
+
+## 要点
+
+- 为什么要商掉 $T_{Z/Y}|_X$：$T_{Z/Y}|_X$ 的加法作用保持 $C_{X/Z}$ 不变（原书 p.52 图 (3.69)）；换一个嵌入 $Z$ 时 $N_{X/Z}$ 与 $T_{Z/Y}|_X$ 同时变化，只有商才不变（Lemma 3.8(b)，原书 p.55）。
+- 「纯 $0$ 维」是叠意义下的维数：$\mathcal C_{X/Y}$ 的每个纤维是 $0$ 维锥，所以它能与 $[F_1/F_0]$ 这种纯 $0$ 维向量丛叠比较；这不是说 $\mathcal C_{X/Y}$ 是某个 $0$ 维概形。
+- 它是泛（最小）障碍理论（Thm 3.10，原书 p.56）：任何完美障碍理论都给出 $\mathcal M_{X/Y}\hookrightarrow[F_1/F_0]$ 的嵌入，故 $C_{\phi^\bullet}$ 是 $\mathcal C_{X/Y}$ 的拉回，而 $\mathcal C_{X/Y}$ 本身只在愿意用 Artin 叠时才好用——定理明说不 lci 时它不是向量丛叠。
+- 与 $C_{\phi^\bullet}$ 的分工：$C_{\phi^\bullet}$ 是「某个 $\phi^\bullet$ 在 $F_1$ 里的具体实现」（依赖 $Z$ 与 $\phi^\bullet$ 的表示），$\mathcal C_{X/Y}$ 是「与嵌入无关的典范版本」；Lemma 3.8 保证前者良定义，式 (3.97) 保证它与后者一致。
+- 与虚拟类的关系：$[X]^{virt,\phi^\bullet}=s_0^![C_{\phi^\bullet}]$（式 (3.102)）。必须有 $C_{\phi^\bullet}\subset F_1$ 这一「落在向量丛里」的形态，零截面 $s_0$ 与 Gysin 拉回才有定义；直接在 $\mathcal C_{X/Y}$ 上做需要向量丛叠上的整性理论。
+- 构造顺序不能反：先有完美障碍理论（Def 3.5），才有单态射 (3.96) 与 $C_{\phi^\bullet}$；反过来从 $\mathcal C_{X/Y}$ 出发只能得到「最小障碍理论」，它未必是虚拟类所需的那一个。
+
+## 公式
+
+$$0\longrightarrow T_{Z/Y}|_X\longrightarrow F_0\oplus N_{X/Z}\longrightarrow F_1$$
+$$0\longrightarrow T_{Z/Y}|_X\longrightarrow F_0\oplus C_{X/Z}\longrightarrow C_{\phi^\bullet}\longrightarrow0$$
+$$\mathcal M_{X/Y}=[N_{X/Z}/T_{Z/Y}|_X]$$
+$$\mathcal C_{X/Y}=[C_{X/Z}/T_{Z/Y}|_X]$$
+$$\begin{tikzcd}C_{\phi^\bullet}\arrow[r,hook]\arrow[d]\&F_1\arrow[d]\\\mathcal C_{X/Y}\arrow[r,hook]\&\mathcal M_{X/Y}\arrow[r,hook]\&h^0/h^1(\mathcal F^\bullet)\end{tikzcd}$$
+
+## 定理与证明
+
+### Lemma 3.8：障碍锥的存在唯一性与无关性
+
+(a) 存在唯一的锥 $C_{\phi^\bullet}\subset F_1$ 使 $0\to T_{Z/Y}|_X\to F_0\oplus C_{X/Z}\to C_{\phi^\bullet}\to0$ 正合；(b) $C_{\phi^\bullet}$ 与 $Z$ 的选择无关，且在复形同伦下不变。
+
+（sketch；来源：原书 p.54–55（式 (3.90)(3.91)(3.92)、Lemma 3.8））
+
+1. (a) 序列 $0\to T_{Z/Y}|_X\to F_0\oplus N_{X/Z}\to F_1$ 正合（式 (3.90)），而 $F_1$ 局部自由，故可局部分裂；于是 $C_{X/Z}$ 的像在 $F_1$ 里被显式切出，得到唯一的锥。  
+   为什么：「唯一」来自分裂后像的唯一性；「锥」而非子空间，是因为 $C_{X/Z}$ 不是代数（$\mathcal I/\mathcal I^2$ 未必自由）。
+2. (b) 对两个选择 $Z,Z'$ 取它们在 $Y$ 上的共同光滑加细，把比较图 (3.92) 化成同一张图上的两次局部构造。  
+   为什么：只要在加细上锥相同，两次构造就一致；这是「与嵌入无关」的标准做法。
+3. 同伦不变性：$\phi^\bullet$ 换一个同伦代表时比较图只差同伦，$C_{\phi^\bullet}$ 不变。  
+   为什么：虚拟类必须只依赖 $\phi^\bullet$ 所在的同伦类，否则定义不唯一。
+
+缺口：讲义 (a) 只写「利用局部自由性局部分裂，结论便显然成立」，(b) 只给比较图 (3.92) 就结束；局部到整体的粘合与同伦不变性的细节未展开。
+
+### Prop 3.9：完美障碍理论的等价刻画
+
+$\phi^\bullet:\mathcal F^\bullet\to L^\bullet_{X/Y}$ 是完美障碍理论，当且仅当对所有平方零扩张的提升问题，$\phi^*\mathrm{Ob}(h)\in\Ext^1(h^*\mathcal F^\bullet,\mathcal I)$ 为零当且仅当提升存在，且提升构成 $\Ext^0(h^*\mathcal F^\bullet,\mathcal I)$-挠子；这也等价于 $\mathcal M_{X/Y}\to[F_1/F_0]=h^0/h^1(\mathcal F^\bullet)$ 为嵌入。
+
+（sketch；来源：原书 p.56（Prop 3.9、式 (3.100)(3.101)））
+
+1. 把障碍类 (3.99) 沿 $\phi^\bullet$ 推前，得到 $\phi^*\mathrm{Ob}(h)\in\Ext^1(h^*\mathcal F^\bullet,\mathcal I)$（式 (3.100)）；两条完美性条件恰好对应「这个类控制提升的存在性/唯一性」。  
+   为什么：这是把「$h^0$ 同构、$h^{-1}$ 满射」翻译成「障碍理论确实能回答提升问题」，也是 Prop 3.9 的第一种表述。
+2. 等价地，$\mathcal M_{X/Y}\to[F_1/F_0]$ 是嵌入（式 (3.101)）：单态射的几何意义是「内蕴法层不比 $[F_1/F_0]$ 多出方向」。  
+   为什么：只有嵌入才能把 $\mathcal C_{X/Y}$ 拉回成 $F_1$ 里的锥，从而定义虚拟类；这就是本卡与 Behrend–Fantechi 推导卡的连接点。
+
+缺口：讲义注明该命题引自 Behrend–Fantechi（文献 [ref3]），没有给证明；本卡只记录两种等价表述。
+
+### Thm 3.10：内蕴法层是泛的、最小的障碍理论
+
+$\mathcal M_{X/Y}$ 是泛的、最小的「障碍理论」；除非 $X/Y$ 为局部完全交，它一般不是向量丛叠。$\mathcal F^\bullet\to L^\bullet_{X/Y}$ 给出把 $\mathcal C_{X/Y}$（等价地 $\mathcal M_{X/Y}$）嵌入向量丛叠 $[F_1/F_0]$ 的嵌入。
+
+（sketch；来源：原书 p.56（Thm 3.10））
+
+1. 泛性：任一完美障碍理论给出单态射 $\mathcal M_{X/Y}\hookrightarrow h^0/h^1(\mathcal F^\bullet)$（式 (3.96)），即 $\mathcal M_{X/Y}$ 通过所有障碍理论分解。  
+   为什么：「最小」指它给出的信息最少、又足以控制全部提升问题；这正是定理的断言。
+2. 非向量丛叠：$\mathcal M_{X/Y}=[N_{X/Z}/T_{Z/Y}|_X]$ 只有在 $N_{X/Z}$ 为向量丛（即 $X\subset Z$ 正则/局部完全交）时才是向量丛叠。  
+   为什么：商一个向量丛得到向量丛叠，商一个锥只能得到 Artin 叠；这就是「愿意用 Artin 叠就不难」的含义。
+
+缺口：讲义把泛性与「lci 才向量丛叠」作为结论给出，证明归于文献 [ref3]。
+
+## 易错点
+
+- 把 $\mathcal C_{X/Y}$ 当成 $X$ 上的锥（概形）：它是按 $T_{Z/Y}|_X$ 作用取的商叠，离开了叠的语言「与嵌入无关」这句话就没有意义。
+- 「纯 $0$ 维」不等于「$0$ 维概形」：这是锥叠的相对维数说法，用来保证它落在 $[F_1/F_0]$ 里。
+- 不要用 $\mathcal C_{X/Y}$ 直接当虚拟类：$s_0^!$ 需要零截面，而零截面只在向量丛（$F_1$）里有；先经 $\phi^\bullet$ 把锥放进 $F_1$。
+- Lemma 3.8 的唯一性是「给定 $\phi^\bullet$ 与 $Z$」下的唯一，换 $\phi^\bullet$ 会换锥。
+- 次序：Def 3.5（完美障碍理论）→ (3.96) 单态射 → (3.97) 拉回 → (3.102) 虚拟类；反过来从锥出发会漏掉「障碍理论必须是完美（两项局部自由）」这一条。
+
+## 参考与关联
+
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，第 3 章 §4 障碍理论与虚拟基本类，p.52–52（原书 p.52）
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，第 3 章 §4 障碍理论与虚拟基本类，p.54–56（原书 p.54–56）
+
+关联：`siebert/deriv/behrend-fantechi`、`siebert/concept/obstruction-theory`、`siebert/concept/virtual-fundamental-class`、`siebert/concept/gysin-map`
+
+来源说明：原书 p.52（$T_V|_U$ 在 $C_{U/V}$ 上的作用与粘合数据 (3.69)–(3.71)）、p.54–56（Lemma 3.8、式 (3.93)(3.94)、Prop 3.9、Thm 3.10、式 (3.102)）。nLab「perfect obstruction theory」（last revised 2019-04-08；条目引用 Behrend–Fantechi, The intrinsic normal cone, Invent. Math. 128 (1997) 45–88, arXiv:alg-geom/9601010，并说明「用内蕴法锥构造虚拟基本类」）核过两步构造；nLab 无「intrinsic normal cone」独立条目（试 intrinsic normal cone、normal cone、intrinsic normal sheaf 均返回 404），故以该参考文献条与讲义原文互证。

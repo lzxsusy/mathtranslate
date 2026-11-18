@@ -1,0 +1,77 @@
+# Gysin 拉回（局部完全交的 Umkehr 映射）
+
+> `siebert/concept/gysin-map` ｜ track C ｜ draft
+
+**一句话**：对局部完全交嵌入 $\iota$，先把类推到法丛、再与零截面相交，得到降低 $d$ 阶的类；形变到法锥保证它只依赖锥。
+
+**自测**：Gysin 拉回为什么必须先把类推到法丛上再作相交，而不能直接在 $X$ 上把余维 $d$ 的类‘除下去’？
+
+## 定义
+
+设 $\iota:X\hookrightarrow Y$ 是余维 $d$ 的正则（局部完全交）嵌入，$\mathcal I$ 为理想层，$N_{X/Y}=\Spec_X\Sym^\bullet(\mathcal I/\mathcal I^2)$ 为法丛，$C_{W/V}\hookrightarrow N_{W/V}$ 为法锥（式 (3.53)–(3.55)），$s_0:X\to N_{X/Y}$ 为零截面。对任意整维子簇 $V\subset Y$，令 $g:W\to X$ 与 $\phi:W\to V$ 取自 $W:=X\times_YV$（$\phi$ 为闭嵌入），记 $E:=g^*N_{X/Y}$、$\pi:E\to W$ 为投影，则\textbf{Gysin 拉回}（Def 3.4）定义为 $\iota^![V]:=s_0^*[C_{W/V}]=s_0^\ast[C_{W/V}]\in A_{k-d}(X)$（式 (3.58)(3.59)），其中 $s_0^*:=(\pi^*)^{-1}$。一般情形只要求 $\iota$ 是局部完全交嵌入 $(X\subset W_Z\subset Z\to Y)$，则 $\iota^![W]:=\tilde s_0^*[C_{W_Z/W}]\in A_{d-c}(W_Z)$ 后再推前到 $X$（式 (3.60)–(3.64)）。几何上它就是「与 $\iota$ 的像相交」，再用形变到法锥 (3.65) 把 $[V]$ 换成 $[C_{V_Y/Y}]$ 而只依赖法锥。
+
+记号：$\iota:X\hookrightarrow Y$ lci 嵌入；$d=\mathrm{codim}$；$A_k$ Chow 群；$N_{X/Y}$ 法丛；$C_{W/V}$ 法锥；$s_0$ 零截面；$s_0^*=(\pi^*)^{-1}$ 由 Prop 3.7 定义；$\tau_{\ge-1}$ 与 $\DQCoh$ 同第 4 节。
+
+## 要点
+
+- 为什么用锥而不是直接用丛：$\iota$ 只 lci 时，乘积 $W=X\times_YV$ 的理想 $\mathcal J$ 的 $\mathcal J/\mathcal J^2$ 未必局部自由，$N_{W/V}$ 可能不是丛；但法锥 $C_{W/V}$ 总是纯 $k$ 维（Prop 3.6），所以「取锥再推前」是唯一可靠的路子（原书 p.49–50）。
+- 为什么必须先推到 $E=g^*N_{X/Y}$：$\pi^*:A_{k-d}(W)\to A_k(E)$ 是同构（Prop 3.7），这个同构才能把一个 $k-d$ 维类无损地搬成 $E$ 中 $k$ 维的类——也就是补回被切掉的 $d$ 个维数；不经过这一步，$A_{k-d}(W)$ 里的类无从上（原书 p.51）。
+- 为什么在 $E$ 里与零截面相交就是正确的「相交」：$E$ 是 $N_{X/Y}$ 的拉回，零截面 $s_0(W)\subset E$ 正是 $X\cap V$（在法方向上无穷逼近时）的模型；$s_0^!$ 的定义就是读这个交（式 (3.57) 链 $C_{W/V}\hookrightarrow N_{W/V}\hookrightarrow g^*N_{X/Y}$ 说明锥落在 $E$ 里）。
+- 形变到法锥 (3.65) 的作用：$\iota^![V]$ 的定义用了 $C_{W/V}$ 而不是 $[V]$ 本身，这个替换的合法性靠 $M=\operatorname{Bl}_{X\times\{0\}}(Y\times\mathbb A^1)$：一般纤维上 $X\hookrightarrow Y$，特殊纤维上 $X\hookrightarrow C_{X/Y}$，于是两类在 $A_*$ 中代数等价（脚注：严格说该叫退化 deformation to the normal cone）。
+- lci 是最自然的适用边界：Stacks §42.59 只在局部完全交态射上定义 $f^!=i^!\circ g^*$（$i$ 正则嵌入、$g$ 光滑），与式 (3.58)+(3.64) 的结构一致；对非 lci 的 $\iota$ 这套构造整体失效。
+- 与 Segre/Chern 的关系：法锥的 Segre 类 $s(E)$ 与 Chern 类满足 $c_t(E)=s_t(E)^{-1}$（式 (3.49)(3.50)），所以 $s_0^!$ 与「除以 $c_t$」是一回事；第 2 节与 (3.66)–(3.68) 的 $s_0^![M]$ 正是把「与零截面相交」写成「乘以最高 Chern 类」的几何版本。
+
+## 公式
+
+$$C_{W/V}:=\Spec_W\bigoplus_{m\ge0}\mathcal J^m/\mathcal J^{m+1}\hookrightarrow N_{W/V}$$
+$$\iota^![V]:=s_0^*[C_{W/V}]\in A_{k-d}(X)$$
+$$\pi^*:A_{k-d}(W)\;\xrightarrow{\ \sim\ }\;A_k(E),\qquad E=g^*N_{X/Y}$$
+$$\iota^![W]:=\tilde s_0^*[C_{W_Z/W}]\in A_{d-c}(W_Z)\longrightarrow A_{d-c}(X)$$
+$$M:=\operatorname{Bl}_{X\times\{0\}}(Y\times\mathbb A^1)$$
+$$s_0^![M]\in A_{\dim M-r}(\mathcal M_0(X)),\qquad r=\rank E$$
+
+## 定理与证明
+
+### Prop 3.7：$\pi^*:A_{k-d}(W)\to A_k(E)$ 是同构
+
+设 $E\to W$ 为秩 $d$ 向量丛，$\pi:E\to W$ 投影，则对每个 $k$，$\pi^*:A_{k-d}(W)\to A_k(E)$ 为同构。
+
+（sketch；来源：原书 p.51（Prop 3.7））
+
+1. 满射：用切除（excision）把 $E$ 约化到 $W$ 上，再用 $E$ 的仿射丛结构把 $A_k(E)$ 的每个类搬到截面附近。  
+   为什么：讲义在证明开头明确说「满射性由切除得到」，这与 (3.31)(3.32) 的切除正合列是同一套工具。
+2. 单射：讲义只说「较难」，用 $E$ 上的 Chow 群按「沿纤维的次数」作分次，$\pi^*$ 提升次数，再用归纳把高次部分消掉。  
+   为什么：只有单射成立，$s_0^*=(\pi^*)^{-1}$ 才良定义；这是 Def 3.4 合法的关键，也是本卡第 2 条 key_point 的依据。
+
+缺口：讲义只写「满射性由切除得到，单射性较难」，没有给出单射的证明；本卡第 2 步是按向量丛 Chow 群的标准处理补的，未逐行对照原文。
+
+### Prop 3.6：法锥是纯维的
+
+若 $W\subset V$ 是余维 $k$ 的闭嵌入，则法锥 $C_{W/V}$ 纯 $k$ 维。
+
+（sketch；来源：原书 p.49（Prop 3.6））
+
+1. 局部把 $W\subset V$ 写成 $V$ 上 $k$ 个方程定义的闭子概形，法锥继承 $\bigoplus\mathcal J^m/\mathcal J^{m+1}$ 的 $k$ 个生成元。  
+   为什么：纯维性来自生成元的个数＝余维，与是否正则无关。
+2. 逐块验证 $C_{W/V}$ 的每个不可约分支维数都是 $k$，于是「纯 $k$ 维」。  
+   为什么：这一步正是 $C_{W/V}$ 能替代 $N_{W/V}$（后者可能不是丛）的原因：维数仍然可控。
+
+缺口：讲义把纯维性作为命题陈述并说证明是局部的，未展开分支分解。
+
+## 易错点
+
+- 别把 $\iota^!$ 与 $\iota^*$（限制）混为一谈：$\iota^!$ 降维 $d$ 且依赖 $X$ 在 $Y$ 中的法向信息，$\iota^*$ 保维且只看到交集。
+- $s_0^*$ 不是「零截面上的拉回」这种几何直觉就够的对象：它是 $(\pi^*)^{-1}$，存在性由 Prop 3.7 保证；写反方向（$s_0^*$ 当推前）会差一个符号/维数。
+- 法锥的下标要写全：$C_{W/V}$ 是 $W$ 在 $V$ 里的锥，$\iota^![V]$ 用的是 $C_{W/V}$ 而不是 $C_{X/Y}$。
+- 只有 lci 才有这套构造；把 (3.58) 用在任意闭嵌入上，$\mathcal J/\mathcal J^2$ 非自由会让 $E$ 不是丛、Prop 3.7 失效。
+- 形变到法锥给出的是代数等价而非相等：用它替换类时只能保留 $A_*$ 里的等价类信息。
+
+## 参考与关联
+
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，第 3 章 §3 相交理论补充，p.47–50（原书 p.47）
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，第 3 章 §3 相交理论补充，p.50–51（原书 p.50–51）
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，第 3 章 §3 相交理论补充，p.51–52（原书 p.51–52）
+
+关联：`siebert/concept/virtual-fundamental-class`、`siebert/concept/expected-dimension`、`siebert/concept/obstruction-theory`
+
+来源说明：原书 p.47–52 §3（Chow 群与切除、法丛/法锥 (3.53)–(3.57)、Def 3.4 (3.58)(3.59)、Prop 3.7、lci 推广 (3.60)–(3.64)、形变到法锥 (3.65)、应用 (3.66)–(3.68)）；p.56 §4.3 的 $s_0^!$ 用法。nLab「Gysin homomorphism」（last revised 2014-12-27，与 Umkehr map 同一页）与「intersection theory」（2022-06-18）、「Segre class」（2026-01-06，总 Segre 类为总 Chern 类之逆）、「Chern class」（2026-07-26）核过术语与 $c_t=s_t^{-1}$；Stacks tag 0FEZ（§42.59 Gysin maps for local complete intersection morphisms，Def 42.59.4 的 $f^!=i^!\circ g^*$）核过 lci 适用边界，tag 0FF4 核过「光滑时等于平坦拉回」。

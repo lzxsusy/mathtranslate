@@ -1,0 +1,76 @@
+# Gromov–Witten 不变量
+
+> `siebert/concept/gromov-witten-invariant` ｜ track C ｜ draft
+
+**一句话**：稳定映射模叠上的虚拟积分：亏格零超曲面情形化为 M̄₀(Pⁿ⁺¹,d) 上的 Chern 类，n_d 数有理曲线。
+
+**自测**：为什么数有理曲线必须先把模空间『虚拟化』，而不能直接在曲线空间上积分？
+
+## 定义
+
+设 $X$ 射影、$\beta\in H_2(X,\ZZ)$。稳定映射模叠 $\Mbar_{g,k}(X,\beta)$ 的对象是 $(C\to X,\pi,x)$：$(C,x)$ 是 $k$ 点稳定曲线、$f:C\to X$ 满足 $f_*[C]=\beta$、且每个几何点 $\#\Aut(C_s,x_s,f_s)<\infty$（Def 3.1）。GW 不变量定义为\n$$\langle\alpha_1,\ldots,\alpha_k;\gamma\rangle^{g,k,\beta}_{GW}=\int_{[\Mbar]^{virt}}ev^*(\alpha_1\times\cdots\times\alpha_k)\cup p^*\gamma,$$\n其中 $ev$ 是求值映射、$p$ 是遗忘映射（3.117）。
+
+记号：$\Mbar_{g,k}(X,\beta)$ 稳定映射模叠；$[\Mbar]^{virt}$ 虚拟基本类；$n_d$ 次数 $d$ 的本原有理曲线数；$N_d$ 含覆盖重数。
+
+## 要点
+
+- 稳定映射模叠是固有分离 DM 叠（Thm 3.2）；固定 $\beta$ 后只有有限多组合类型，故拟紧，但不光滑、维数也不对。
+- 虚维数：$d=3g-3+k+c_1(X)\cdot\beta+n(1-g)=c_1(X)\cdot\beta+(n-3)(1-g)+k$（3.114–3.115），等于预期维数；CY 三维且 $k=0$ 时 $d=0$。
+- 超曲面亏格零：$X=Z(F)\subset\PP^{n+1}$ 次数 $l$，$E=\pi_*f^*\mathcal O(l)$ 秩 $dl+1$，$[\Mbar_0(X,d)]^{virt}=c_{dl+1}(E)\cap[\Mbar_0(\PP^{n+1},d)]$（Kontsevich，Def 3.2）。
+- 五次超曲面：$n=3,l=5$ 时 $\operatorname{rank}E=5d+1$、$\dim\Mbar_0(\PP^4,d)=5d+1$，两个数相等，故虚拟类就是最高次 Chern 类。
+- 五次超曲面的 $n_1=2875$、$n_2=609250$、$n_3=317206375$ 就是这样算出来的，并与镜像预测对照（p.17、p.23）。
+
+## 公式
+
+$$[\Mbar_0(X,d)]^{virt}=c_{dl+1}(E)\cap[\Mbar_0(\PP^{n+1},d)],\qquad \operatorname{rank}E=dl+1$$
+$$d=c_1(X)\cdot\beta+(n-3)(1-g)+k$$
+$$\langle\alpha_1,\ldots,\alpha_k;\gamma\rangle_{GW}=\int_{[\Mbar]^{virt}}ev^*(\alpha_1\times\cdots\times\alpha_k)\cup p^*\gamma$$
+$$\dim\Mbar_0(\PP^{n+1},d)=d(n+2)+n-2$$
+
+## 定理与证明
+
+### Thm 3.2：稳定映射模叠是固有分离 DM 叠
+
+$X$ 射影时，$\Mbar_{g,k}(X,\beta)$ 是固有、分离的 DM 叠。
+
+（sketch；来源：原书 p.43–45（Thm 3.2、Lemma 3.3））
+
+1. 把稳定映射嵌入相对 Hom 叠 $\Hom_{\Mbar_{g,k}}(C,X)$：先取稳定曲线模叠、再取到 $X$ 的映射。  
+   为什么：这样把『曲线 + 映射』拆成两层模问题，分别可用已知的 DM 叠理论。
+2. 稳定性是开条件（Lemma 3.3），故稳定映射构成开子叠；固定 $\beta$ 后组合类型有限，得拟紧。  
+   为什么：开条件保证『稳定』不会在极限处突然失效，拟紧保证模空间不会无穷大。
+3. 固有性用稳定约化（Fulton–Pandharipande）：取相对丰线丛 $L=\omega_{C/T}(x)\otimes f^*\mathcal O(3)$，把不稳定分支收缩掉。  
+   为什么：普通稳定曲线在映射退化时未必稳定，必须允许按映射收缩分支（被收缩分支需满足稳定条件）。
+
+缺口：讲义给证明骨架；相对 Hom 叠的构造细节与稳定约化的具体计算未展开。
+
+### 五次超曲面的亏格零 GW 不变量（Kontsevich 公式）
+
+$X=Z(F)\subset\PP^4$ 光滑五次超曲面，则 $[\Mbar_0(X,d)]^{virt}=c_{5d+1}(E)\cap[\Mbar_0(\PP^4,d)]$，$E=\pi_*f^*\mathcal O(5)$。
+
+（complete；来源：原书 p.46（Def 3.2、3.15–3.22））
+
+1. $\Mbar_0(X,d)$ 是 $\Mbar_0(\PP^4,d)$ 中满足 $F\circ f=0$ 的点的子概形，而 $F\circ f$ 是 $\pi_*f^*\mathcal O(5)$ 的一个截面。  
+   为什么：『映射的像落在超曲面里』是一个线性条件，写成向量丛截面的零点集。
+2. $\operatorname{rank}E=h^0(\PP^1,f^*\mathcal O(5))=5d+1$（$g=0$），且 $E$ 局部自由。  
+   为什么：次数 $d$ 的 $\PP^1$ 上，$\mathcal O(5)$ 的拉回次数是 $5d$，其 $h^0=5d+1$。
+3. $\Mbar_0(X,d)$ 就是该截面的零点集，故其虚拟基本类是 $c_{5d+1}(E)\cap[\Mbar_0(\PP^4,d)]$；再用 $\dim\Mbar_0(\PP^4,d)=5d+1$ 核对维数一致。  
+   为什么：$\Mbar_0(\PP^4,d)$ 光滑、$E$ 局部自由时，零点集的类就是最高次 Chern 类；$5d+1=5d+1$ 保证它与虚拟维数匹配，故不需要额外的虚拟修正。
+
+## 易错点
+
+- 不能拿 $[\Mbar_0(X,d)]$ 的普通基本类：模空间的实际维数大于虚拟维数，且曲线不处于一般位置——p.24 的 Dwork 族有 375 条孤立直线外加两个不可约直线族，就是『没有一般位置』的实例。
+- $n_d$ 是本原曲线数，$N_d$ 含多重覆盖：由 $5+\sum d^3N_dq^d=5+\sum d^3n_dq^d/(1-q^d)$ 得 $N_d=\sum_{k\mid d}n_{d/k}/k^3$（等价于 $d^3N_d=\sum_{e\mid d}e^3n_e$），故 $N_d$ 一般是有理数（如 $N_2=n_2+n_1/8$），不要混用。
+- 只有虚维数为 0 时 GW 不变量才是『数点』；CY 三维且 $k=0$ 才有 $d=0$，其他情形必须插入插入子 $\gamma$（或 $\alpha_i$）。
+- $\beta$ 必须固定：$\Mbar_{g,k}(X)$ 是各 $\beta$ 的无交并，不固定就得到无穷多个分支，积分没有意义。
+- GW 不变量的形变不变性只在『连通基底 + 代数等价』的意义下成立（Prop 3.12），不是任意同调类扰动下不变。
+
+## 参考与关联
+
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，第 3 章 §1 稳定映射，p.42–45（原书 p.42–45）
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，第 3 章 §2 超曲面的亏格零 Gromov–Witten 不变量，p.46–46（原书 p.46）
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，第 3 章 §4 障碍理论与虚拟基本类，p.57–58（原书 p.57–58）
+
+关联：`siebert/concept/virtual-fundamental-class`、`siebert/concept/quintic-threefold`、`siebert/concept/yukawa-coupling`
+
+来源说明：原书 p.42–46（Def 3.1、Thm 3.1–3.2、Lemma 3.3、Def 3.2、3.15–3.22）、p.57–58（3.114–3.117、Prop 3.12）。nLab「Gromov-Witten invariants」（last revised 2024-12-07）核过定义与虚拟类的关系；Stacks Project 无 GW 章节。

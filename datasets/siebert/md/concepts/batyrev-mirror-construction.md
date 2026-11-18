@@ -1,0 +1,82 @@
+# Batyrev 镜像构造
+
+> `siebert/concept/batyrev-mirror-construction` ｜ track E ｜ draft
+
+**一句话**：用反身多胞体造 Fano 环面簇，取 MPCP 细分得 crepant 消解，再用反典范丛的一般截面切出 Calabi–Yau 超曲面；对偶多胞体一侧给出镜像族。
+
+**自测**：为什么反身多胞体的对偶能自动给出镜像族，而不需要额外的对应规则？
+
+## 定义
+
+取 $d$ 维反身多胞体 $\Xi\subset M_{\RR}$（Def 5.1：$\Int(\Xi)\cap M=\{0\}$，且 $\Xi$ 的每个侧面到原点的整仿射距离为 $1$）。记 $\Sigma_\Xi$ 为在 $\Xi^\circ$ 的各个面上取锥得到的扇，则 $X(\Sigma_\Xi)$ 是 Fano 环面簇（Prop 5.1）。取 $\Sigma_\Xi$ 的 MPCP 细分 $\Sigma$（Def 5.3），得 crepant 消解 $f:X_\Sigma\to X(\Sigma_\Xi)$，$X_\Sigma$ 是 Gorenstein 轨形（Prop 5.2）。对一般截面 $s\in\Gamma(X_\Sigma,-K_{X_\Sigma})$，$Z(s)\subset X_\Sigma$ 是 Calabi–Yau 超曲面：$K_{Z(s)}=(-K_X+K_X)|_{Z(s)}=0$（式 5.3）。镜像侧对 $\Xi^\circ$ 重复同一构造，得 $\check X=X(\Sigma_{\check\Xi})$ 与 $Z(\check s)\subset\check X$（式 5.5–5.6）；Batyrev 定理断言 $h^{1,1}(X)=h^{n-1,1}(\check X)$（光滑情形，Thm 5.3）。
+
+记号：$\Xi\subset M_{\RR}$ 与 $\Xi^\circ\subset N_{\RR}$ 为对偶多胞体；$\Sigma_\Xi$、$\Sigma_{\check\Xi}$ 为面的锥给出的扇，$\Sigma$、$\check\Sigma$ 为它们的 MPCP 细分；$X=X_\Sigma$、$\check X=X_{\check\Sigma}$；$Z(s)$ 记超曲面切片，$n=\dim X$。
+
+## 要点
+
+- 构造是自反的：$\Xi$ 反身当且仅当 $\Xi^\circ$ 反身（Def 5.1 后的注），所以对 $\Xi$ 与 $\Xi^\circ$ 各做一次同样构造，就得到地位完全对称的两个族——这就是『镜像对偶』，不需要额外的对应规则。
+- 反典范截面的空间由多胞体决定：$\Gamma(X,-K_X)=\operatorname{Map}(\Xi\cap M,k)$（p.83）。即 $s$ 就是 $\Xi$ 的格点上的函数，族参数空间是多胞体的格点集，而不是任意参数空间。
+- $K_{X(\Sigma_\Xi)}=-\sum_\rho D_\rho$ 与『侧面到原点整距离 1』是同一条件：Prop 5.1 的证明把 $K_U$ 为 Cartier（存在 $m_\sigma\in M$ 使每条射线本原生成元满足 $\langle m_\sigma,v_i\rangle=1$）翻译成 $\Xi=\operatorname{conv}\{m_\sigma\}$ 且侧面到原点整距离为 1。
+- $d\ge3$ 时 MPCP 细分不唯一（Note 5.1）：不同的 $\Sigma$ 给出不同的 crepant 消解，但它们互为 flop，对应的镜像族只是同一族的双有理模型；所以『镜像族』只在双有理/极化意义下唯一。
+- $Z(s)$ 的 Calabi–Yau 性只用一次伴随公式；光滑性另需 Bertini：$-K_X$ 无基点、$s$ 取一般截面，才有 $Z(s)$ 光滑。
+- 光滑性是 Thm 5.3 的前提：$h^{1,1}(X)=h^{n-1,1}(\check X)$ 只对光滑 Calabi–Yau 陈述；一般轨形要换成弦论精化的 Hodge 数 $h^{p,q}_{\mathrm{st}}$（Thm 5.4）。
+
+## 公式
+
+$$K_{X(\Sigma_\Xi)}=-\sum_{\rho}D_\rho$$
+$$\Gamma(X,-K_X)=\operatorname{Map}(\Xi\cap M,k),\qquad K_{Z(s)}=(-K_X+K_X)|_{Z(s)}=0$$
+$$h^{1,1}(X)=h^{n-1,1}(\check X)\quad(X,\check X\ \text{光滑}),\qquad h^{p,q}_{\mathrm{st}}(X)=h^{n-p,q}_{\mathrm{st}}(\check X)$$
+
+## 定理与证明
+
+### Prop 5.1：完备环面簇 Fano 当且仅当多胞体反身
+
+完备环面簇 $X$ 是 Fano 簇（Gorenstein 且 $-K_X$ 丰），当且仅当 $X\simeq X(\Sigma_\Xi)$，其中 $\Xi$ 是反身多胞体。
+
+（sketch；来源：原书 p.82）
+
+1. 在仿射图 $U=\Spec k[\sigma^\vee\cap M]$ 上，典范除子是 $K_U=-\sum_iD_i$，全纯体积形式 $z_1^{-1}dz_1\wedge\cdots\wedge z_d^{-1}dz_d$ 沿每个环面除子恰有一阶极点。  
+   为什么：这给出 $K_U$ 的显式表示，是把几何条件代数化的起点。
+2. $K_U$ 是 Cartier 除子，当且仅当存在 $m_\sigma\in M$ 使每条射线的本原生成向量 $v_i$ 都满足 $\langle m_\sigma,v_i\rangle=1$。  
+   为什么：Cartier 意味着 $K_U$ 在局部是主除子，即 $K_U=\operatorname{div}(\chi^{m_\sigma})$ 对某个单项式成立。
+3. 把条件译成多胞体语言：$\Xi$ 是各 $m_\sigma$ 的凸包，而 $\langle m_\sigma,v_i\rangle=1$ 正是每个侧面到原点的整仿射距离为 $1$，故 $\Xi$ 反身；反向逐条倒推即得 $-K_X$ 丰。  
+   为什么：射线的本原生成元就是对偶多胞体侧面的法向，『距离 1』与『配对为 1』等价。
+
+缺口：讲义只写『把这一条件译成多胞体语言』，未逐项验证 $\Xi$ 满维、$0\in\Int(\Xi)$，也未证丰性（需要 $\Xi$ 的格点多面体给出足够多的截面）。
+
+### Thm 5.3：光滑情形下的 Hodge 数互换
+
+若 $X$ 与 $\check X$ 均为光滑 Calabi–Yau 簇，则 $h^{1,1}(X)=h^{n-1,1}(\check X)$。
+
+（none；来源：原书 p.83）
+
+
+缺口：证明见文献 [6] 的定理 4.15，或文献 [2]；讲义未展开。注意光滑性假设是定理的一部分，不能省略（否则要用 Thm 5.4 的弦论 Hodge 数）。
+
+### Thm 5.4：弦论 Hodge 数的互换
+
+对轨形奇点存在 Hodge 数的『弦论』精化 $h^{p,q}_{\mathrm{st}}$，满足 $h^{p,q}_{\mathrm{st}}(X)=h^{n-p,q}_{\mathrm{st}}(\check X)$（Batyrev）。
+
+（none；来源：原书 p.83）
+
+
+缺口：与动机积分（stringy $E$-函数）有关，讲义未给证明；它把 Thm 5.3 推广到有轨形奇点的镜像对。
+
+## 易错点
+
+- $\Xi$ 与 $\Xi^\circ$ 不能互换着用：$X(\Sigma_\Xi)$ 用的是 $\Xi^\circ$ 的面的锥（即 $\Xi$ 的法扇）；写成『$\Xi$ 的面的锥』会把镜像两侧对调。
+- Thm 5.3 必须带光滑性假设：把它当成对任意轨形成立是错的，否则就不需要 Thm 5.4 的弦论 Hodge 数了。
+- 结论是 $h^{1,1}(X)=h^{n-1,1}(\check X)$，不是 $h^{2,1}$；只有三维（$n=3$）时才与常见的 $h^{1,1}\leftrightarrow h^{2,1}$ 说法对上。
+- 式 5.3 的 $K_{Z(s)}=0$ 只用了一次伴随公式，它不保证 $Z(s)$ 光滑；光滑要 Bertini 的一般性。
+- $\Gamma(X,-K_X)=\operatorname{Map}(\Xi\cap M,k)$ 中写的是 $\Xi\cap M$（讲义 p.83 原文如此）；不要按英文 OCR 的 $\Delta^\circ\cap M$ 抄。
+- MPCP 细分不唯一（$d\ge3$），所以『镜像族』不是唯一确定的族，而是一族双有理等价的模型。
+
+## 参考与关联
+
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，第 5 章 §1.1–1.2 反身多胞体与 Fano 环面簇，p.81–82（原书 p.81–82）
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，第 5 章 §1.3–1.5 Calabi–Yau 超曲面、MPCP 细分与 Batyrev 超曲面镜像，p.82–83（原书 p.82–83）
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，第 5 章 §1.6 镜像定理，p.83–83（原书 p.83）
+
+关联：`siebert/concept/reflexive-polytope`、`siebert/concept/reflexive-pair`、`siebert/concept/crepant-resolution`、`siebert/concept/mirror-symmetry`、`siebert/deriv/polytope-to-fan`
+
+来源说明：原书 p.81–83：Def 5.1、Ex 5.1–5.2、Def 5.2、Prop 5.1、§1.3 式 5.3、Def 5.3、Note 5.1、Prop 5.2、§1.5 式 5.5–5.6、Thm 5.3–5.5、Ex 5.3。外部核对：Batyrev, Dual polyhedra and mirror symmetry for Calabi–Yau hypersurfaces in toric varieties, JAG 3 (1994) 493–535（arXiv:alg-geom/9310003），即本章的原始构造；nLab 无 Batyrev / reflexive polytope 条目（站内检索 0 结果），只能用 nLab『mirror symmetry』『toric variety』作术语旁证。

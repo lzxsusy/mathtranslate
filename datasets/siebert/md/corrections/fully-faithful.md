@@ -1,0 +1,41 @@
+# 「充分忠实」应为「完全忠实」
+
+> `siebert/correction/fully-faithful` ｜ 原书 p.39 ｜ draft
+
+**一句话**：初版把 fully faithful 译成「充分忠实」，丢掉「完全（full）」这一半；fully faithful = 忠实且完全，正是定理 2.10 里对齐自同构的那一步。
+
+**自测**：「充分忠实」为什么不是 fully faithful 的对译，丢掉「完全」会损失什么？
+
+## 初版
+
+```
+$p$ 充分忠实且本质满
+```
+
+## 改后
+
+```
+$p$ 完全忠实且本质满
+```
+
+## 为什么改
+
+讲义原文（原书 p.39，定理 2.10 证明的收尾）作「p is fully faithful and essentially surjective」。fully faithful 是标准术语，由两条组成：忠实（faithful，$\operatorname{Hom}_{\mathcal C}(X,Y)\to\operatorname{Hom}_{\mathcal D}(FX,FY)$ 是单射）与完全（full，同一个映射是满射），合起来是双射。「充分」在中文里只是「足够」，既不是单射也不是满射，无法拆回这一对，也不对应任何标准术语。而这一步的论证两部分都用得上：忠实性保证 $C$ 的非平凡自同构在 $\mathbb{P}(H^0(C,\omega_C^{\otimes n}))$ 上的作用仍非平凡（稳定子不塌缩），完全性保证 $\mathrm{PGL}(N+1)$ 中把 $n$-典范嵌入的像送回自身的自同构都来自 $\operatorname{Aut}(C)$（稳定子被填满）；两者合起来才有 $\mathrm{Stab}_{\mathrm{PGL}}(C)\cong\operatorname{Aut}(C)$，再由注 2.9 的自同构有限推出对角非分歧。依据：讲义原句 + nLab「equivalence of categories」（last revised 2026-01-19）：「a functor exhibits an equivalence of categories precisely if it is both essentially surjective and fully faithful」。
+
+## 补注
+
+「完全忠实」是 fully faithful 的通行译名（中文范畴论文献与教材通用），「本质满」已正确对译 essentially surjective；完全忠实 + 本质满合起来才是范畴等价，缺一条都不行。本条对应校订记录 ch02.tex:442。
+
+## 易错点
+
+- 不要改成「充分且忠实」：full 与 faithful 是两个独立的 $\operatorname{Hom}$ 条件（满射 / 单射），不是「充分 + 忠实」的并列。
+- 完全忠实 + 本质满才是范畴等价；只有完全忠实只能给出与满子范畴的等价，差的就是本质满。
+- 不要把 full 简译成「满」：中文里孤立的「满」常被读成「满射」，容易与「本质满」混在一起，标准译名是「完全」。
+
+## 参考与关联
+
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，校订，p.39–39（原书 p.39）
+
+关联：`siebert/deriv/stable-curve-automorphism`、`siebert/concept/stable-curve`、`siebert/concept/moduli-space`
+
+来源说明：据第 2 章校订记录（ch02.tex:442，已 applied）与讲义原 PDF p.39 定理 2.10 证明收尾的英文原句「p is fully faithful and essentially surjective」核对；fully faithful 的组成与「等价 = 完全忠实 + 本质满」按 nLab「equivalence of categories」（last revised 2026-01-19）。

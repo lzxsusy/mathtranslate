@@ -1,0 +1,43 @@
+# 「Dwork 笔形」→「Dwork 族」（pencil）
+
+> `siebert/correction/dwork-pencil` ｜ 原书 p.86 ｜ draft
+
+**一句话**：原文 Dwork pencil 的 pencil 指参数族（严格说是一维线性系），初译「笔形」读作笔画的形状，与术语表已立的「Dwork 族」不一致。
+
+**自测**：pencil 在代数几何里到底指什么，为什么本书把它统一译作「族」而不是「铅笔」或「笔形」？
+
+## 初版
+
+```
+\subsection{Dwork 笔形与\texorpdfstring{$A_1$}{A₁} 奇点}（§3.1 的节标题，ch05.tex:155）
+```
+
+## 改后
+
+```
+\subsection{Dwork 族与\texorpdfstring{$A_1$}{A₁} 奇点}
+```
+
+## 为什么改
+
+英文原文的节标题是「3.1. The Dwork pencil and $A_1$-singularities」（orig_full.txt:3940）。pencil 在代数几何里的意思是「一维线性系」：由两个截面张成的线性系 $\{s+\lambda s'\}_{\lambda\in k}$，Dwork pencil 正是由 Fermat 形式 $x_0^5+\cdots+x_4^5$ 与乘积单项式 $x_0x_1x_2x_3x_4$ 张成的这一族。所以 pencil 既不指「笔的形状」，也不完全是泛指的「族」；取「族」的目的是与全书术语一致：ch01.tex:139 已立 \Term{dworkzu}{Dwork 族}，ch02.tex:11 沿用，术语表 dworkzu = Dwork 族。若单看原文，更贴切的直译是「Dwork 束」或「Dwork 铅笔」；本书选择「族」，是术语统一优先于字面对应，读者只要知道它是一条参数 $\psi$ 的族即可。
+
+## 补注
+
+页码：这条改动的错词在 §3.1 的节标题，按英文原书目录 §3 = p.86、§3.1 = p.86（\SourcePage{86} 在 ch05.tex:146，下一条 \SourcePage{87} 在 ch05.tex:165），故 page 取 86；任务清单把这一条记作 p.87，是按 §3.2 的页边界推的，略偏一页，卡中按目录订正。校对/ch05.jsonl 的 applied=true 记录（第 1 条）：zh_before 为「Dwork 笔形」、zh_after 为「Dwork 族」，severity 为 mid。现文 ch05.tex:155 已是「Dwork 族」。
+
+## 易错点
+
+- 「笔形」不是「铅笔」的简写：它在中文里读作笔画的形状，与 pencil 无关，这是误译而非风格问题。
+- pencil 严格指一维线性系，不是任意的一参数族；说「Dwork 族」在本书语境下可用，但若在别处强调线性系结构，应写「Dwork 束」。
+- 同章 §4.1 的「二次曲线退化族」与本条同属「族」的用法，不要一处改「族」、另一处保留「笔形」，否则同章两套说法。
+- 改成「族」后，节标题的正文叙述仍称「Dwork 型」的族（式 5.21 是低一维的类比），不要把「Dwork 族」与式 5.21 的四次族混为一谈。
+
+## 参考与关联
+
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，校订：第 5 章 §3.1 节标题（ch05.tex:155），p.86–86（原书 p.86）
+
+关联：`siebert/deriv/dwork-a1`、`siebert/concept/mirror-quintic`、`siebert/concept/batyrev-mirror-construction`、`siebert/correction/quadric-curve`
+
+来源说明：校对/ch05.jsonl 第 1 条（line 155，kind term，applied=true，severity mid）与校对/ch05.md 第 34 行；
+英文原书 orig_full.txt:3940「3.1. The Dwork pencil and $A_1$-singularities.」；本书 ch01.tex:139 的 \Term{dworkzu}{Dwork 族} 与 ch02.tex:11 的沿用；术语表 dworkzu = Dwork 族。pencil 的线性系含义按 Batyrev, Dual polyhedra and mirror symmetry for Calabi–Yau hypersurfaces in toric varieties（arXiv:alg-geom/9310003）与 Gross–Siebert（arXiv:math/0703822）中的用法核对。nLab 无 Dwork pencil 条目（站内检索 0 结果）。

@@ -59,7 +59,7 @@ datasets/
 ├── pathintegral/              # 单章资料卡：第 2 章路径积分（同 geoq 结构）
 ├── kw06/                      # 单篇论文资料卡：Kapustin–Witten 2006（概念卡 + 推导卡）
 ├── seidel/                    # 专著资料卡：Seidel《Fukaya categories and P–L theory》（概念/推导/校订）
-├── kshms/                     # 单篇论文资料卡：Kontsevich–Soibelman《同调镜像对称与环面纤维化》（73 条款卡 + 10 勘误卡，八轨 O–G）
+├── siebert/                   # 讲义资料卡：Siebert《镜像对称》（概念/推导/勘误，七轨 A–F+O）
 ├── math/<pkg>.<split>.jsonl   # 数学推理条目（主力）
 ├── parallel/<pkg>.<split>.jsonl
 ├── deepread/<pkg>.<split>.jsonl
@@ -130,4 +130,8 @@ https://atomgit.com/lzxSUSUY/mathtranslate/blob/main/datasets/<...>.jsonl
 - `v0.9`（2026-11-16）：新增 `pathintegral/`——同书第 2 章「路径积分形式」的 50 张资料卡（1 总览 + 29 概念 + 20 例），65 条定理、219 个证明步骤、109 个例子步骤；附五轨框架地图、读者版总表、渲染版 Markdown 与七路并行生产协议；`lint_pi.py` / `audit_pages.py` 0 错。
 - `v0.11`（2026-11-19）：新增 `seidel/`——Seidel《Fukaya categories and Picard–Lefschetz theory》的 70 张资料卡（32 概念 + 8 推导 + 30 校订，2026-11-19 复核后），
   三轨 A（A∞/三角范畴）/B（Floer/Fukaya）/C（Picard–Lefschetz），每卡带印刷页锚与 nLab/原书来源；`lint_cards.py --strict` 0 error、`render_md.py` 54 卡。
+- `v0.12`（2026-11-19）：新增 `siebert/`——Siebert 讲授、Van Dyke 记录《Mirror Symmetry》（2019 年秋课程讲义）中文译本《镜像对称：代数几何专题讲义》的 75 张资料卡
+  （46 概念 + 14 推导 + 15 勘误），七轨 A（数值镜像）/B（叠）/C（GW 与虚技术）/D（环面几何）/E（环面退化）/F（HMS）/O（术语）；
+  印刷页 7–106 覆盖 84 页，每卡带「原书 p.N」锚与 nLab / Stacks Project / 原文依据，324 条 pitfalls、61 条 gaps；
+  `lint_cards.py --strict` 0 error、`index.jsonl` 75 条、`render_md.py` 75 卡。同批入库 SY01-24 中译注本（103 页，讲义类，L2 公开·受限，随仓公开）。
 - 后续见 [CHANGELOG.md](../CHANGELOG.md)。

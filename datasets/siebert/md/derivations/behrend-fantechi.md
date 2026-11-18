@@ -1,0 +1,73 @@
+# Behrend–Fantechi 定义：由完美障碍理论造虚拟基本类
+
+> `siebert/deriv/behrend-fantechi` ｜ track C ｜ draft
+
+**目标**：把 Behrend–Fantechi 的构造讲成一条可核算的链：完美障碍理论（Def 3.5）→ 局部分裂得唯一的锥 $C_{\phi^\bullet}\subset F_1$（Lemma 3.8）→ 该锥是内蕴法锥 $\mathcal C_{X/Y}$ 的拉回（式 (3.97)）→ 用零截面 $s_0$ 的 Gysin 拉回得到 $[X]^{virt,\phi^\bullet}=s_0^![C_{\phi^\bullet}]$（式 (3.102)），并核出它的维数阶恰是 $\rank F_0-\rank F_1+\dim Y$。
+
+**自测**：只给一个完美障碍理论 $\phi^\bullet:\mathcal F^\bullet\to L^\bullet_{X/Y}$，怎样一步步造出虚拟基本类，且保证它与 $Z$ 的选取无关？
+
+## 前提
+
+- $X\hookrightarrow Z$ 是相对基 $Y$ 的光滑局部嵌入，$\mathcal I=\mathcal I_{X/Z}$，$N_{X/Z}=\Spec_X\Sym^\bullet(\mathcal I/\mathcal I^2)$、$C_{X/Z}=\Spec_X\bigoplus_{m\ge0}\mathcal I^m/\mathcal I^{m+1}$；$F_i=L(\mathcal F^{-i})=\Spec_X\Sym^\bullet\mathcal F^{-i}$ 是 $\mathcal F^\bullet$ 对应的线性纤维空间。
+- 完美障碍理论：两项局部自由复形 $\mathcal F^\bullet=[\mathcal F^{-1}\to\mathcal F^0]$ 与 $\phi^\bullet:\mathcal F^\bullet\to L^\bullet_{X/Y}$，满足 $h^0(\phi^\bullet)$ 同构、$h^{-1}(\phi^\bullet)$ 满射（Def 3.5，$\DQCoh(\OO_X)$ 中的态射）。
+- 余切复形的两项局部模型：$\tau_{\ge-1}L^\bullet_{X/Y}=[\mathcal I/\mathcal I^2\to\Omega_{Z/Y}|_X]$（式 (3.84)），其对偶的线性纤维空间是 $[T_{Z/Y}|_X\to N_{X/Z}]$；于是 $\phi^\bullet$ 可写成交换图 (3.88) 与四项复形 (3.89)。
+
+## 步骤
+
+1. **把 $\phi^\bullet$ 摊成显式图：以 $\mathcal F^0\to\Omega_{Z/Y}|_X$ 与 $\mathcal F^{-1}\to\mathcal I/\mathcal I^2$ 的交换图 (3.88) 表示，并拼成四项复形 $\mathcal F^\bullet\to[\mathcal I/\mathcal I^2\to\Omega_{Z/Y}|_X]$。**  
+   为什么：这一步把「抽象的复形态射」变成两个可算的映射：一个管切向（形变），一个管法向（障碍）；后面的所有构造都只用到这两张映射的纤维积性质。  
+   锚点：原书 p.54（式 (3.88)(3.89)）（证据 A）
+
+2. **把完美性翻译成一条短正合列：由 $h^0$ 同构、$h^{-1}$ 满射，得到 $0\to T_{Z/Y}|_X\to F_0\oplus N_{X/Z}\to F_1$ 正合（式 (3.90)）。**  
+   为什么：$h^0$ 同构给出中间项满射到 $F_1$ 的像、$h^{-1}$ 满射保证 $F_0$ 的像盖住 $\Omega_{Z/Y}|_X$ 的商；两者合起来正是「法向数据被 $F_1$ 完全承接」。这是全卡的关键技术条件：没有 (3.90)，第 3 步的分裂无从下手。  
+   锚点：原书 p.54（式 (3.90)）（证据 A）
+
+3. **局部分裂取锥：$F_1$ 局部自由，故 (3.90) 可局部截面分裂，于是 $C_{X/Z}$ 在 $F_1$ 里的像被唯一地切出，记 $C_{\phi^\bullet}$；它满足 $0\to T_{Z/Y}|_X\to F_0\oplus C_{X/Z}\to C_{\phi^\bullet}\to0$（式 (3.91)），且 $C_{\phi^\bullet}\subset F_1$。**  
+   为什么：用 $C_{X/Z}$ 而不是 $N_{X/Z}$，是因为 $\mathcal I/\mathcal I^2$ 未必自由、$N$ 未必是丛；锥总能与 $F_1$ 比较。而「唯一」来自分裂后像的唯一性——这保证 $C_{\phi^\bullet}$ 是对象而不是选择。  
+   锚点：原书 p.54–55（Lemma 3.8(a)、式 (3.91)）（证据 A）
+
+4. **验证与嵌入无关、与同伦无关：换 $Z$ 或换 $\phi^\bullet$ 的同伦代表时，比较图 (3.92)（由 $X\hookrightarrow Z$ 与 $X\hookrightarrow Z'$ 的共同光滑加细给出）说明 $C_{\phi^\bullet}$ 不变（Lemma 3.8(b)）。**  
+   为什么：虚拟基本类必须只依赖 $(\mathcal F^\bullet,\phi^\bullet)$ 的类；若不与 $Z$ 无关，「$[X]^{virt}$」就不是 $X$ 的类而是某个嵌入的类。共同加细是标准手段：两张构造在同一张图上各做一次，自然一致。  
+   锚点：原书 p.55（Lemma 3.8(b)、式 (3.92)）（证据 A）
+
+5. **把 $C_{\phi^\bullet}$ 认成内蕴法锥的拉回：$\mathcal M_{X/Y}=[N_{X/Z}/T_{Z/Y}|_X]$、$\mathcal C_{X/Y}=[C_{X/Z}/T_{Z/Y}|_X]$（式 (3.93)(3.94)），完美性等价于单态射 $\mathcal M_{X/Y}\hookrightarrow h^0/h^1(\mathcal F^\bullet)=[F_1/F_0]$（式 (3.96)），而 $C_{\phi^\bullet}$ 正是 $\mathcal C_{X/Y}$ 沿它拉回得到的锥（笛卡尔图 (3.97)）。**  
+   为什么：这一步是「两步法」的接缝：第一步（第 2–4 步）在 $F_1$ 里造锥，第二步（第 6 步）要在向量丛里与零截面相交；式 (3.96) 的单态射保证 $\mathcal C_{X/Y}$ 的信息不会超出 $[F_1/F_0]$，于是 $C_{\phi^\bullet}$ 既有内蕴含义（与 $Z$ 无关），又是 $F_1$ 里的具体锥。  
+   锚点：原书 p.55（式 (3.93)–(3.97)）（证据 A）
+
+6. **与零截面相交：$F_1$ 是秩 $r_1$ 的向量丛，$F_0$ 秩 $r_0$，$C_{\phi^\bullet}\subset F_1$ 纯 $(r_0+\dim Y)$ 维；取零截面 $s_0:X\to F_1$ 的 Gysin 拉回得 $[X]^{virt,\phi^\bullet}:=s_0^![C_{\phi^\bullet}]\in A_*(X)$（式 (3.102)）。**  
+   为什么：Gysin 拉回 $s_0^!$ 只在向量丛上定义（要 Prop 3.7 的 $\pi^*$ 同构），这正是必须把锥放进 $F_1$ 而不能留在 $\mathcal C_{X/Y}$ 的原因；「纯维」保证这个交是有限次的类而不是零。  
+   锚点：原书 p.56（式 (3.102)）；Gysin 的定义见 p.50（式 (3.58)）（证据 A）
+
+7. **核维数：$s_0^!$ 把 $k$ 维类降到 $k-r_1$ 维，故 $[X]^{virt}$ 落在 $A_{(r_0+\dim Y)-r_1}(X)=A_{\rank F_0-\rank F_1+\dim Y}(X)$，与 §4.5 的预期维数一致（式 (3.115)）。**  
+   为什么：这是全构造的验收条件：若维数对不上，虚拟类就无法用于 GW 不变量（$d=0$ 时才能积成数）。它也解释了「预期维数＝秩差」这个式子的来历——不是定义出来的，是从 $s_0^!$ 的维数账算出来的。  
+   锚点：原书 p.56（式 (3.102)）与 p.57（式 (3.115)）（证据 B）
+
+## 结果
+
+给定 $X/Y$ 上的完美障碍理论 $\phi^\bullet:\mathcal F^\bullet\to L^\bullet_{X/Y}$，虚拟基本类为 $[X]^{virt,\phi^\bullet}=s_0^![C_{\phi^\bullet}]\in A_{\rank F_0-\rank F_1+\dim Y}(X)$（式 (3.102)），其中 $C_{\phi^\bullet}\subset F_1$ 是 $\mathcal C_{X/Y}$ 沿单态射 (3.96) 的拉回。它只依赖 $(\mathcal F^\bullet,\phi^\bullet)$ 的类（与 $Z$ 无关、同伦不变），维数阶等于秩差；当 $F$ 就是某个向量丛 $E$ 的最高 Chern 类情形（超曲面 $g=0$）时退化为 $c_{\rank E}(E)\cap[\,\cdot\,]$。
+
+## 缺口
+
+- 式 (3.97) 的笛卡尔性（即 $C_{\phi^\bullet}$ 确实是 $\mathcal C_{X/Y}$ 沿 (3.96) 的拉回）讲义只以「由定义即可」带过，没有给出纤维积的逐点验证；本卡第 5 步把它当作构造的定义读，未独立证明。
+- 「$\mathcal M_{X/Y}\hookrightarrow h^0/h^1(\mathcal F^\bullet)$ 为单态射 ⟺ $\phi^\bullet$ 是完美障碍理论」这一等价（Prop 3.9 / 式 (3.96)）讲义明确引自 Behrend–Fantechi [ref3]，未给证明；本卡只使用它的结论方向。
+- 「$C_{X/Z}$ 纯 $k$ 维」「$\mathcal C_{X/Y}$ 纯 $0$ 维」的维数陈述讲义按绝对情形（$Y=\mathrm{pt}$）写，相对基 $Y$ 的情形需要额外加 $\dim Y$；本卡第 6–7 步的维数账按相对情形补了 $\dim Y$，与式 (3.115) 的 $\dim Y$ 项一致，但讲义没有明写这一步换算。
+- 当 $\phi^\bullet$ 不能由 $\mathcal F^\bullet$ 与 $L^\bullet_{X/Y}$ 的真复形态射表示、只能在 $\DQCoh$ 的同伦范畴里给时（式 (3.77) 的屋顶与同伦），$C_{\phi^\bullet}$ 的构造需先取同伦代表；讲义在 §4.2 讨论了同伦的定义，但没回到 §4.3 说明这一步。
+- 讲义没有给任何具体例子里 $C_{\phi^\bullet}$ 的显式计算（如 GW 的 $\phi^\bullet=R\pi_*(f^*\Omega_X\otimes\omega_\pi)$，式 (3.106)），所以「锥是否真落在 $F_1$ 里纯维」只能靠 Lemma 3.8 的抽象论证。
+
+## 易错点
+
+- 别把 $C_{\phi^\bullet}$ 与 $\mathcal C_{X/Y}$ 混为一谈：前者是 $F_1$ 里的具体锥、依赖 $\phi^\bullet$ 的表示；后者才是与嵌入无关的典范对象。
+- 完美性的第二条是 $h^{-1}$ 满射而非同构：若要求同构就只剩 lci 情形，一般 GW 模空间不满足。
+- $s_0^!$ 只在向量丛上有定义：所以必须先经 (3.96) 把锥放进 $F_1$，不能直接在 $\mathcal C_{X/Y}$ 上取零截面。
+- 虚拟类是依赖 $\phi^\bullet$ 的：换一个完美障碍理论（哪怕同一 $X/Y$）会换 $C_{\phi^\bullet}$ 与虚拟类，所以记号里总带着 $\phi^\bullet$。
+- 维数账别漏 $\dim Y$：$F_0\oplus N_{X/Z}$ 的秩含基的维数，相对情形与绝对情形差 $\dim Y$。
+
+## 参考与关联
+
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，第 3 章 §4 障碍理论与虚拟基本类，p.53–54（原书 p.53–54）
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，第 3 章 §4 障碍理论与虚拟基本类，p.55–55（原书 p.55）
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，第 3 章 §4 障碍理论与虚拟基本类，p.56–56（原书 p.56）
+
+关联：`siebert/concept/intrinsic-normal-cone`、`siebert/concept/obstruction-theory`、`siebert/concept/gysin-map`、`siebert/concept/virtual-fundamental-class`、`siebert/deriv/gw-virtual-class`
+
+来源说明：原书 p.53–56 §4.2–4.3（式 (3.84)(3.85) 局部模型、(3.88)–(3.94) 交换图与锥、Lemma 3.8、式 (3.96)(3.97)、Prop 3.9、Thm 3.10、式 (3.102)）。nLab「perfect obstruction theory」（last revised 2019-04-08）核过 Def 3.5 的两条条件与「由内蕴法锥构造虚拟基本类」的定位，该条目引用 Behrend–Fantechi, The intrinsic normal cone, Invent. Math. 128 (1997) 45–88, arXiv:alg-geom/9601010；Stacks tag 08G4（§21.47 Perfect complexes）核过「完美复形」的术语用法。

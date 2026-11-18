@@ -1,0 +1,42 @@
+# 「局部可通过」应为「局部同构于」（刚化空间）
+
+> `siebert/correction/local-isomorphic` ｜ 原书 p.45 ｜ draft
+
+**一句话**：原文是「局部同构于刚化空间」，译成「局部可通过……来描述」把结构断言弱化成了存在性陈述。
+
+**自测**：把「局部同构于」译成「局部可通过……来描述」，为什么是数学强度的损失而不只是措辞问题？
+
+## 初版
+
+```
+「$\overline{\mathcal M}(\PP^r,d)$ 局部可通过刚化空间 $R$ 来描述」
+```
+
+## 改后
+
+```
+「$\overline{\mathcal M}(\PP^r,d)$ 局部同构于刚化空间 $R$」
+```
+
+## 为什么改
+
+讲义 p.45 原文是 Then locally $\overline{\mathcal M}(\PP^r,d)$ is isomorphic to the rigidified space $R$ with objects ...（orig_full.txt 行 2088）：主句是\emph{同构}，$R$ 是与之同构的对象，而不是一个「可用来描述」的辅助工具。「局部同构」是结构断言，给出两个模叠之间可逆的态射；「可通过……来描述」只断言存在某种描述方式，既不保证唯一，也不保证可逆，因此弱化为存在性。这一步不能弱化，因为紧接着的论证（同页往下：Now the idea is to do stable reduction on the rigidified level，行 2109）正是要把 $R$ 上建立的分离性与固有性经这个同构搬回 $\overline{\mathcal M}(\PP^r,d)$；没有可逆态射，稳定性结论无法回迁。译法依据：rigidified 指商掉稳定映射的一般稳定化子 $\mathbb G_m$（常数标量）后得到的空间，译「刚化」；把「刚化空间」与 $\overline{\mathcal M}(\PP^r,d)$ 的关系写成「可通过……描述」，读者会误以为二者只是辅助对应。
+
+## 补注
+
+校订层级：译文修订（初版译法 → 改后译法），非讲义笔误。校对记录 ch03.jsonl 该条 applied=true、severity mid；ch03.tex:60 现为「$\overline{\mathcal M}(\PP^r,d)$ 局部同构于刚化空间 $R$，其对象为」。三校汇总 §2.3 记录同一处改动，理由「模叠层面的同构断言不能被弱化成『描述』」。
+
+## 易错点
+
+- 不要反过来把「局部同构」译成「同构」：原文确有 locally 一词，只在局部成立，$R$ 只覆盖 $\PP^r$ 的情形（$X\subset\PP^r$ 时才经闭嵌入化归）。
+- 刚化不是「去掉所有自同构」：它商掉的是一般稳定化子 $\mathbb G_m$，对 $\PP^r$ 里的稳定映射这就是常数标量变换。
+- 「局部同构于 $R$」不是「$R$ 是 $\overline{\mathcal M}(\PP^r,d)$ 的模型」这种单向说法：同构可逆，两个方向都要用（建立结论在 $R$ 上、搬回在 $\overline M$ 上）。
+- 这条改动与「同一连通分支」「lci 收窄成光滑」是彼此独立的勘误，不要合并成一条。
+
+## 参考与关联
+
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，第 3 章 校订，p.45–45（原书 p.45）
+
+关联：`siebert/concept/stable-map`、`siebert/correction/prop-3-12-lci`、`siebert/concept/deligne-mumford-stack`
+
+来源说明：原书 p.45（「Then locally $\overline{\mathcal M}(\PP^r,d)$ is isomorphic to the rigidified space $R$」，orig_full.txt 行 2088；下一段的稳定约化在刚化层面进行，行 2109）。nLab「Deligne-Mumford stack」（last revised 2023-04-16）核过「稳定化子有限、刚化即商掉一般稳定化子」的术语背景，与模叠间「同构」的用法。

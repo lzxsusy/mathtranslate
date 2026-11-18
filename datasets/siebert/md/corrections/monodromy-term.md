@@ -1,0 +1,42 @@
+# 「单值化」应为「单值变换」（monodromy）
+
+> `siebert/correction/monodromy-term` ｜ 原书 p.21 ｜ draft
+
+**一句话**：第 1 章把 monodromy 译成「单值化」，与 uniformization 的固定译名冲突；应改为「单值变换」，正文 4 处并同步索引。
+
+**自测**：为什么 monodromy 应译作「单值变换」而不是「单值化」，这一处改动要连带改哪些地方？
+
+## 初版
+
+```
+这与单值化有关。特别地，$z^{A(0)}$ 的单值化反映了 $H^3(Y_z,\mathbb{C})$ 绕 $z=0$，即 $\psi=\infty$ 的单值化算子 $T$。
+```
+
+## 改后
+
+```
+这与单值变换有关。特别地，$z^{A(0)}$ 的单值变换反映了 $H^3(Y_z,\mathbb{C})$ 绕 $z=0$，即 $\psi=\infty$ 的单值变换算子 $T$。
+```
+
+## 为什么改
+
+英文原文 p.21 用的是 monodromy（"This has something to do with monodromy … the monodromy of $z^{A(0)}$ reflects the monodromy $T$"），monodromy 的标准含义是沿环路搬运纤维的变换，即基本群在纤维（上同调）上的作用（nLab「monodromy」条目，Last revised 2026-11-09：monodromy is the action of the homotopy groups … on fibers）。而中文数学里「单值化」是 uniformization 的固定译名（单值化定理、单值化群），与 monodromy 是两个不同的概念。术语表第 18 条已定为「单值变换 / monodromy」，并明确注明「单值化在中文数学里另指 uniformization」；三校汇总 §4 与 CHANGELOG 记录库内「单值变换」用量为 272:78（01_corpus_zh，08_source_code 为 361:188）；第 3 章译本 ch03.tex:401 也已统一用「单值变换」。
+
+## 补注
+
+第 1 章正文共 4 处需一并改：ch01.tex:277 有三处（本卡 original 引的整句），ch01.tex:330 有一处（"…中的单值化，对应于…"），以及索引词条 \Term{danzhi}{单值变换}。注意同页 (1.82) 的「（单值）」是 single-valued（单值的），不是 monodromy，不要一起改。
+
+## 易错点
+
+- 只改 monodromy 的译名，不要把中文里所有「单值」字样都替换掉：single-valued、单值分支等用法与 monodromy 无关。
+- 不要保留「单值化」作为「单值变换」的同义替换：uniformization 在复分析/双曲几何里是另一个概念，混用会让读者误以为在讲单值化定理。
+- 索引词条 \Term{danzhi} 的显示文字要与正文同步，否则索引指向的术语与正文不一致。
+- 改动只在本章范围内核对过；其它章若也出现 monodromy 的「单值化」译法，应各自按术语表处理，不要在本卡里越界修改。
+
+## 参考与关联
+
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，第 1 章 §10 典范坐标与镜像映射，p.21–21（原书 p.21）
+
+关联：`siebert/concept/mirror-map`、`siebert/deriv/picard-fuchs-derivation`、`siebert/concept/b-model`
+
+来源说明：校订依据：原书 p.21 的 monodromy 原句；nLab「monodromy」（2026-11-09）；译本术语表第 18 条；三校汇总 §4 与库内用量统计（01_corpus_zh 272:78）；ch03.tex:401 的先例。校对记录 校对\overview-ch01.jsonl 第 277 行（applied=true, severity=high）。

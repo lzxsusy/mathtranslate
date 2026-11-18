@@ -1,0 +1,74 @@
+# Mumford 型环面退化的构造
+
+> `siebert/deriv/mumford-degeneration` ｜ track E ｜ draft
+
+**目标**：从 $\Omega\subset N_{\mathbb R}$ 与有理多面体分解 $\mathscr P=\{\sigma\}$ 出发，构造 $d+1$ 维的族 $\pi:X(\Sigma_{\mathscr P})\to\mathbb A^1$，使一般纤维是 $(\mathbb A^1\setminus\{0\})\times X(\Sigma_{\mathscr P\cap N})$、中心纤维是分层环面簇 $\bigcup_{v\text{ 顶点}}D_v$，并算出每个分支的重数；由此得到「Mumford 型」退化，作为 Gross–Siebert 构造的出发点与对照。
+
+**自测**：怎样只用一个凸集 $\Omega$ 的多面体分解，就造出一个中心纤维为若干环面簇之并的平坦族？
+
+## 前提
+
+- $N\cong\ZZ^d$ 为格，$N_{\mathbb R}=N\otimes\mathbb R$；$M=N^*$ 为其对偶格。
+- $\Omega\subset N_{\mathbb R}$ 是凸闭子集（通常是多胞体），$\mathscr P=\{\sigma\}$ 是其有理多面体分解：局部有限、各胞腔沿共同的面相交（式 5.9）。
+- 取锥得扇 $\Sigma_{\mathscr P}=\{C(\sigma)\subset N_{\mathbb R}\oplus\mathbb R\}\cup\{\text{这些锥的所有面}\}$（式 5.10），其中 $C(\sigma)$ 是 $\sigma\times\{1\}$ 上的锥；高度投影诱导 $\pi:X(\Sigma_{\mathscr P})\to\mathbb A^1$。
+- $\Xi\subset M_{\mathbb R}$ 为有理多胞体（镜像侧），$\check{\mathscr P}$ 为其分解；若细分正则，取严格凸整分段仿射函数 $\check\varphi:\Xi\to\mathbb R$，其上图凸包 $B_{\check\varphi}=\Gamma_{\check\varphi}+(0\oplus\mathbb R_{\ge0})$（式 5.16）。
+
+## 步骤
+
+1. **把 $\Omega$ 抬到高度 $1$ 处取锥，得到扇 $\Sigma_{\mathscr P}$；$\Sigma_{\mathscr P}$ 上的分段线性函数「高度」给出射影态射 $\pi:X(\Sigma_{\mathscr P})\to\mathbb A^1$，一般纤维的维数是 $d$。**  
+   为什么：环面簇之间的态射就是扇之间的态射：高度投影 $N\oplus\ZZ\to\ZZ$ 是分次映射，它给出 $\mathbb G_m$-不变的态射；每个锥 $C(\sigma)$ 映到 $\mathbb R_{\ge0}$ 的某个格点高度，故 $\pi$ 的纤维维数为 $\dim C(\sigma)-1=d$。这就是「把 $\Omega$ 放在高度一处取锥」的精确含义。  
+   锚点：原书 p.84（式 5.9–5.10）（证据 A）
+
+2. **一般纤维：$\pi^{-1}(\mathbb A^1\setminus\{0\})\simeq(\mathbb A^1\setminus\{0\})\times X(\Sigma_{\mathscr P}\cap(N_{\mathbb R}\times\{0\}))$，总维数为 $d+1$。**  
+   为什么：在 $t\ne0$ 处局部化，扇变成 $\{C(\sigma)\cap(N_{\mathbb R}\times\{0\})\}$（即把每个胞腔压到高度 $0$ 的方向），于是族成为「去掉原点的参数空间」乘上一个固定环面簇的平凡乘积。讲义把这步写在 Prop 5.6(a) 的证明里：局部化把高度坐标消掉。  
+   锚点：原书 p.85（Prop 5.6(a)）（证据 A）
+
+3. **中心纤维：$\pi^{-1}(0)=\bigcup_{v\text{ 为 }\mathscr P\text{ 的顶点}}X((\Sigma_{\mathscr P})_v)=:\bigcup_vD_v$（式 5.11）。**  
+   为什么：$\pi^{-1}(0)$ 正是那些映到 $\mathbb A^1$ 原点的环面素除子 $D_w$ 的并，而这样的射线 $w$ 在高度投影下非零，对应 $\Omega$ 上的一点（顶点）。每个 $D_v$ 是扇 $\Sigma_{\mathscr P}$ 在射线 $v$ 处的星形扇给出的环面簇，维数 $d$；不同 $D_v$ 沿 $\Omega$ 的棱对应的环面簇粘合，这就是「分层环面簇」。  
+   锚点：原书 p.85（式 5.11 与证明 (b)）（证据 A）
+
+4. **重数：$\operatorname{mult}_{D_v}(\pi^{-1}(0))=\min\{d\in\NN\setminus\{0\}:dv\in N\}$（式 5.12），这里射线由本原格向量生成。**  
+   为什么：射线由 $(n,d)$ 生成、$v=n/d$ 且 $d>0$ 取最小，则 $\operatorname{ord}_{D_w}\pi^*(t)=d$（式 5.13）；$\pi^*(t)$ 在 $D_v$ 上的消失阶就是 $D_v$ 在中心纤维中的重数。若某个顶点不是格点（$d>1$），中心纤维在该分支上非既约——这正是 Mumford 型退化的典型特征（图 5.3 的例子 $d=3$）。  
+   锚点：原书 p.85（式 5.12–5.13）（证据 A）
+
+5. **例子：$\Omega$ 取三角形、分解为一个 $2$ 维胞腔加三个顶点，则 $t\ne0$ 时 $\pi^{-1}(t)=\PP^2$，$t=0$ 时 $\pi^{-1}(0)$ 是三个分支之并，每个分支 $\PP^2\xrightarrow{/(\ZZ/3)}D_v\simeq\PP(1,1,3)$（式 5.14–5.15）。**  
+   为什么：顶点的重数全为 $3$（如 $v=(1,0)$ 需 $3v\in N$），故分支是 $\PP^2$ 被 $\ZZ/3$ 作用后的商，即加权射影空间 $\PP(1,1,3)$。这说明中心纤维的奇点全是环面商奇点，是「Mumford 型」的标志：局部模型完全由 $\Omega$ 的组合决定。  
+   锚点：原书 p.85（式 5.14–5.15、图 5.3）（证据 A）
+
+6. **极化版本：若细分正则，取 $\check\varphi$ 的凸包 $B_{\check\varphi}=\Gamma_{\check\varphi}+(0\oplus\mathbb R_{\ge0})$（式 5.16），则得带极化的 Mumford 退化 $X(\Sigma_{B_{\check\varphi}})$（式 5.17），并可用 $\operatorname{Proj}k[C(B_{\check\varphi})\cap(M\oplus\ZZ\oplus\ZZ)]$ 描述（式 5.18）。**  
+   为什么：镜像对称需要的不只是族，还有相对丰线丛 $\mathcal L$；$\check\varphi$ 正是极化的数据（$\mathcal L|_{P(\sigma)}=\OO_{P(\sigma)}(1)$）。用 $B_{\check\varphi}$ 代替 $\Omega$ 就把「极化」编码进多胞体，Proj 描述则说明这个族是射影的、由格点多面体的齐次坐标环切出。  
+   锚点：原书 p.85–86（式 5.16–5.18）（证据 A）
+
+7. **对照 Gross–Siebert：Mumford 型只给出「每个分支各自环面」的族；要在中心纤维的奇异轨迹（实余维 $2$）附近把不同分支沿非环面方式粘起来，就必须放弃「族本身是环面的」而只保留 $(B,\mathscr P,\varphi)$ 加壁函数，这正是第 5 章 §3 之后的路线。**  
+   为什么：Mumford 型退化的粘合都是环面粘合（沿环面除子），而镜像对偶要求一般纤维是同一个光滑 Calabi–Yau 的形变；中心纤维的奇异轨迹上必须出现 $A_1$ 这类非环面奇点（式 5.22–5.24），其粘合图不是单项式的（式 5.27、5.51）。所以 Mumford 构造只解决「环面部分」，剩余信息正是壁结构。  
+   锚点：原书 p.86–88（§3.1–§3.2）（证据 B）
+
+## 结果
+
+得到 $d+1$ 维平坦族 $\pi:X(\Sigma_{\mathscr P})\to\mathbb A^1$：一般纤维为 $(\mathbb A^1\setminus\{0\})\times X(\Sigma_{\mathscr P\cap N})$，中心纤维为分层环面簇 $\bigcup_vD_v$，各分支重数为 $\min\{d:dv\in N\}$；极化版本由 $B_{\check\varphi}$ 与式 5.17–5.18 给出。中心纤维的分支与粘合完全由 $(B,\mathscr P,\varphi)$ 的组合数据决定，但粘合在余维 $2$ 以上不是环面的，这部分需要壁结构（第 5 章 §4–§5）。
+
+## 缺口
+
+- 讲义没有证明 $\pi$ 平坦、也没有讨论中心纤维何时既约：由重数公式，只有所有顶点都是格点（$d=1$）时中心纤维才既约；一般情形必须按重数理解，或先作细分。
+- 式 5.14 的分支图以图片给出，正文只写「每个不可约分支都满足 $\PP^2\xrightarrow{/(\ZZ/3)}D_v$」，商的构造（$\ZZ/3$ 如何作用）未展开。
+- 「沿余维一分层作纤维余积粘合」（p.84）只在环面/轨形意义下成立；讲义未说明目标范畴（scheme 还是 stack），而 GS 构造中这一步正是要换成非环面粘合。
+- 式 5.17–5.18 的 Proj 描述未给证明：为何 $X(\Sigma_{B_{\check\varphi}})$ 等于该 Proj，需要环面簇的齐次坐标环理论（Cox 环），讲义未引用。
+- $\Omega$ 取一般凸闭集（非多胞体）时，$\mathscr P$ 的分解与 $X(\Sigma_{\mathscr P})$ 的射影性都需要额外条件；讲义默认 $\Omega$ 是有界多胞体且分解有限。
+
+## 易错点
+
+- $\Omega$ 是放在高度 $1$ 处取锥的，不是放在高度 $0$；放到 $0$ 会得到退化的扇（锥不尖），$\pi$ 也就不再是族。
+- 中心纤维的分支标号是 $\Omega$ 的顶点，不是 $\mathscr P$ 的极大胞腔；极大胞腔给的是 $X_0$ 的稠密开集（一般纤维的极限），别把两者混为一谈。
+- 重数公式里的 $d$ 是「使 $dv$ 为格点的最小正整数」，与 $v$ 的坐标分母一致；写成 $\operatorname{mult}=\min\{d:dv\in\ZZ^d\}$ 时别漏掉取最小。
+- 式 5.13 的 $\operatorname{ord}_{D_w}\pi^*(t)=d$ 是「$\pi^*(t)$ 沿除子的消失阶」，等于重数；把 $d$ 当成 $\pi$ 的纤维重数会与中心纤维的 scheme 结构混淆。
+- Mumford 型的粘合全是环面的；不要以为它已经给出了 GS 的族——GS 的中心纤维粘合在余维 $2$ 处是非环面的（$A_1$ 型），这正是 §3 之后的全部内容。
+
+## 参考与关联
+
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，第 5 章 §2.1 构造：式 5.9–5.10 与 Prop 5.6，p.84–85（原书 p.84–85）
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，第 5 章 §2.1 图 5.3 的例子与式 5.14–5.15，p.85–85（原书 p.85）
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，第 5 章 §2.2 多胞体图景：式 5.16–5.18；§2.4 环面退化式 5.20，p.85–86（原书 p.85–86）
+
+关联：`siebert/concept/wall-structure`、`siebert/deriv/dwork-a1`、`siebert/deriv/scattering-consistency`、`siebert/concept/batyrev-mirror-construction`、`siebert/concept/rational-polyhedral-cone`、`siebert/concept/mirror-symmetry`
+
+来源说明：原书 p.84–88：§2.1 构造（式 5.9–5.10）、Prop 5.6 与证明（式 5.11–5.13）、图 5.3 的例子（式 5.14–5.15，p.85）、§2.2 多胞体图景（式 5.16–5.18，p.85–86）、§2.3 离散 Legendre 变换（式 5.19）、§2.4 环面退化（式 5.20，p.86）、§3.1 与 §3.2 的对照（式 5.21–5.30，p.86–88）。外部核对：Mumford, Toroidal compactification without toroidal boundary（1972）的原始构造；Gross–Siebert, From real affine geometry to complex geometry, Ann. of Math. 174 (2011) 1301–1428（arXiv:math/0703822）§1–§2 对 Mumford 型与 GS 型退化的对照。nLab 无 toric degeneration 条目（站内检索 0 结果）。

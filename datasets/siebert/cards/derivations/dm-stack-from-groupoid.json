@@ -1,0 +1,96 @@
+{
+  "id": "siebert/deriv/dm-stack-from-groupoid",
+  "type": "derivation",
+  "track": "B",
+  "title": "从模函数到叠：为什么模问题要取群胚值",
+  "aliases": ["moduli functor to stack", "为什么用群胚", "from F_g to M_g", "叠的定义的来由"],
+  "summary": "集合值模函数 $F_g$ 因自同构导致等平凡族而不可表；把它换成群胚值的模群胚，再补上平展下降条件，就得到叠。",
+  "question": "为什么模函数一旦在值里换成群胚就「修好」了，而群胚值还不够、还要加平展下降？",
+  "goal": "说明曲线模问题的正确承载对象为什么是群胚值（而不是集合值）的模函数，并从纤维群胚的两条提升条件走到叠的定义，最后指出 DM 叠额外要求的平展图册。",
+  "setup": [
+    "模函数 $F_g:\\mathsf{Sch}^{\\mathrm{op}}\\to\\mathsf{Set}$，$F_g(B)=\\{B$ 上亏格 $g$ 的光滑曲线族 $X\\to B\\}/\\cong$；可表性指存在 $M_g$ 与自然同构 $F_g\\cong\\operatorname{Hom}(-,M_g)$（原书 p.24 例 2.2、p.26 式 (2.7)）。",
+    "存在等平凡族：$C_0$ 有自同构 $\\varphi$ 满足 $\\varphi^a=\\mathrm{id}$，$\\zeta$ 为本原 $a$ 次单位根，则 $X=(C_0\\times\\mathbb{G}_m)/(\\mathbb{Z}/a)$ 每条纤维都同构于 $C_0$，但在 $\\mathbb{G}_m$ 上不是乘积（原书 p.26 例 2.3）。",
+    "2-范畴的语言已经备好：$\\mathsf{Sch}/S$ 上的纤维群胚、群胚态射（要求 $p_{\\mathcal F_1}=p_{\\mathcal F_2}\\circ p$ 严格交换）、2-态射、2-纤维积；不引入 2-态射连笛卡尔图都无法定义（原书 p.28–30 定义 2.2、定义 2.3、注 2.4、Warning 2.1）。"
+  ],
+  "steps": [
+    {
+      "no": 1,
+      "text": "先把模问题写成函数：$B\\mapsto\\{$族$\\}/\\cong$，并回到最基本的成功案例：$\\mathbb{P}^N$ 的闭子概形由 Hilbert 概形表示，$F\\cong\\operatorname{Hom}(-,\\operatorname{Hilb}(\\mathbb{P}^N))$，$\\mathrm{id}$ 对应万有子概形。",
+      "why": "可表性的定义本身就是「族 = 分类映射」，只有先明确对象的族是什么、分类映射怎么来，才能判断哪一步坏掉。Hilbert 概形说明当对象没有自同构时这条路完全走得通。",
+      "locator": "原书 p.24–25 例 2.2、式 (2.1)–(2.3)",
+      "provenance": "A"
+    },
+    {
+      "no": 2,
+      "text": "证明 $F_g$ 不可表：反设 $F_g=\\operatorname{Hom}(-,M_g)$，取等平凡族 $\\pi:X\\to S$ 的分类映射 $\\varphi:S\\to M_g$；对任意 $T\\to S$，拉回都是平凡族 $T\\times C_0$，故 $\\varphi$ 与任意映射复合后常值，于是 $\\varphi$ 常值，迫使 $X\\cong C_0\\times S$，矛盾。",
+      "why": "可表性把「族」等同于「分类映射」，而「常值映射只能拉回乘积族」。等平凡族的存在正是让这条推理断裂的东西：它每条纤维都同构，却在整体上不同构于乘积。",
+      "locator": "原书 p.26 式 (2.7) 的图表与反证",
+      "provenance": "A"
+    },
+    {
+      "no": 3,
+      "text": "定位病根：自同构。构造 $(\\varphi,\\zeta):(z,t)\\mapsto(\\varphi(z),\\zeta t)$ 在 $C_0\\times\\mathbb{G}_m$ 上的 $\\mathbb{Z}/a$ 作用，商 $X=(C_0\\times\\mathbb{G}_m)/(\\mathbb{Z}/a)$ 给出 $\\mathbb{G}_m$ 上每条纤维为 $C_0$ 的非平凡族。",
+      "why": "若 $C_0$ 的自同构只有恒等，就造不出这种族：自由度全部来自「纤维内部的对称被用来把整体扭一下」。这说明不可表的根源不是某个技术漏洞，而是集合值函子把自同构商掉了。",
+      "locator": "原书 p.26 例 2.3",
+      "provenance": "A"
+    },
+    {
+      "no": 4,
+      "text": "换值范畴：把「同构类的集合」换成「对象与同构的群胚」。模群胚 $\\mathcal M_g$：对象是曲线族 $X\\to B$，态射是笛卡尔方块（$B$ 上族之间的同构）。",
+      "why": "群胚值函子不再把自同构商掉，而是把它保留为对象的自同构；等平凡族 $(C_0\\times\\mathbb{G}_m)/(\\mathbb{Z}/a)$ 从「反例」变成一个合法的对象，$(\\varphi,\\zeta)$ 成为它的自同构。这一步只解决了「同构类丢信息」，还没有解决「能否在局部计算」。",
+      "locator": "原书 p.28 模群胚 $\\mathcal M_g$（与 $F_g$ 的对照）",
+      "provenance": "A"
+    },
+    {
+      "no": 5,
+      "text": "给群胚值函子加上几何条件，定义叠：$\\mathcal F$ 是叠，若 (1) 对 $X,X'\\in\\mathcal F(B)$，$\\operatorname{Iso}_B(X,X')$ 是平展拓扑下的层；(2) 对平展覆盖 $\\{B_i\\to B\\}$，给定 $X_i\\in\\mathcal F(B_i)$ 与余循环同构 $\\varphi_{ij}$，能粘出唯一的 $X\\in\\mathcal F(B)$。",
+      "why": "群胚值本身不保证能「在局部计算」：(1) 是态射的下降，(2) 是对象的下降，正是 Grothendieck 拓扑下「层」的群胚（2-范畴）版本；缺了它们，模群胚只是一个 2-预层，无法用概形局部数据描述。",
+      "locator": "原书 p.31–32 定义 2.5",
+      "provenance": "A"
+    },
+    {
+      "no": 6,
+      "text": "验证模群胚满足两条：(2) 曲线族的平展下降由「固有平坦态射的下降 + 纤维条件在平展局部可检验」给出；(1) $\\operatorname{Iso}_B(X,X')$ 由概形表示（定理 2.2），而概形表示的函子对平展覆盖满足态射下降，故是平展层。",
+      "why": "这是把抽象的叠定义落到模问题上的关键一步：(2) 用的是曲线族的「固有 + 平坦 + 纤维条件局部」，(1) 用的是同构函子的可表性。反过来，$F_g$ 作为集合值函数一般不是平展层（例 2.16），所以不能靠「把 $\\mathcal M_g$ 逐点取同构类」得到它。",
+      "locator": "原书 p.32 例 2.16、例 2.17（$\\mathcal M_g$ 是叠）与定理 2.2",
+      "provenance": "B"
+    },
+    {
+      "no": 7,
+      "text": "收束到 DM：叠还不够，再要求存在平展满射的图册 $\\varphi:U\\to\\mathcal X$（$U$ 概形）且 $\\Delta_{\\mathcal X}$ 可表、拟紧、分离；图册平展即 $\\Delta$ 非分歧，等价于稳定子（自同构）离散。",
+      "why": "图册是「局部用概形坐标」的意思，它让叠上的代数几何（层、上同调、态射性质）可以做；平展性而不是光滑性，是把 Artin 叠收窄到 DM 叠的唯一条件，背后就是「自同构有限」。",
+      "locator": "原书 p.35 定义 2.9 及其后的说明（定理 2.6 判据）",
+      "provenance": "A"
+    }
+  ],
+  "result": "模问题的承载对象必须是群胚值：$\\mathcal M_g(B)=\\{B$ 上曲线族$\\}$（群胚），而不是 $F_g(B)=\\{$族$\\}/\\cong$（集合）。叠 = 满足「$\\operatorname{Iso}$ 是平展层」与「平展覆盖上有效下降」的纤维群胚；DM 叠 = 再带平展满射图册（自同构有限）。这条链条是：模函数 $\\to$ 纤维群胚 $\\to$ 叠 $\\to$ 可表态射 $\\to$ DM 叠 $\\to$ 稳定曲线 $\\to\\overline{\\mathcal M}_g$。",
+  "gaps": [
+    "例 2.3 只说「这样得到一个 $\\mathbb{G}_m$ 上的非平凡丛」，没有验证该 $\\mathbb{Z}/a$ 作用在 $\\mathbb{G}_m$ 上无截面（从而商在 $\\mathbb{G}_m$ 上不平凡）；这是等平凡族非平凡性的关键细节。",
+    "例 2.17「$\\mathcal M_g$ 是叠」只是一句断言；本卡第 6 步按定理 2.2 与下降的一般理论补出对象下降与态射下降两条，讲义本身没有逐条验证。",
+    "讲义没有讨论 $g=0,1$：$\\mathcal M_0,\\mathcal M_1$ 的自同构不有限，它们的 DM 性需要另作处理（标记点数的限制），本卡不覆盖。",
+    "「$F_g$ 不是平展层」只由例 2.16 的一般性陈述带过，讲义未给出「$F_g$ 层化后得到粗模空间」的具体构造。"
+  ],
+  "pitfalls": [
+    "「$F_g$ 不可表」不等于「模空间不存在」：粗模空间存在但不携带万有族；把「不可表」读成「没有模空间」会错过整个叠的观点。",
+    "群胚值不是「把集合换成范畴」这么简单：必须同时带纤维群胚结构、群胚态射与 2-态射，否则纤维积（笛卡尔图）无法定义（注 2.4），「可表性」也就无从谈起。",
+    "例 2.3 的条件是 $\\varphi^a=\\mathrm{id}$ 而不是「$\\varphi$ 的阶为 $a$」；$a$ 取阶的倍数同样可用，若按「阶为 $a$」读，可用的 $a$ 会被无谓砍掉（见勘误卡 order-vs-power）。",
+    "「$\\operatorname{Iso}$ 是层」与「对象能粘合」是两条独立条件：只验证后者不能推出前者（对照校订记录中「上述唯一提升条件」应为「上述两条提升条件」这一处）。"
+  ],
+  "related": [
+    "siebert/concept/moduli-space",
+    "siebert/concept/stable-curve",
+    "siebert/concept/representable-morphism",
+    "siebert/correction/order-vs-power"
+  ],
+  "sources": [
+    {
+      "book": "Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)",
+      "section": "第 2 章 §2 叠",
+      "pages": [26, 32],
+      "anchor": "原书 p.26"
+    }
+  ],
+  "rights": "rewritten",
+  "status": "draft",
+  "provenance_note": "原书 p.26–32（例 2.3、式 (2.7)、定义 2.1 与注 2.2、定义 2.2–2.3、定义 2.5、例 2.16–2.17）。「叠 = 纤维群胚 + $\\operatorname{Iso}$ 层 + 有效下降」按 Stacks Project tag 026F（定义 8.4.1）、tag 026B（定义 8.3.1 下降数据）、tag 026E（定义 8.3.5 有效下降）与 nLab「stack」（last revised 2025-11-04）、「descent」（2024-09-12）核对。"
+}

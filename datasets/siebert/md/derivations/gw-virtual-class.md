@@ -1,0 +1,74 @@
+# 超曲面亏格零 GW 不变量为什么需要虚拟基本类
+
+> `siebert/deriv/gw-virtual-class` ｜ track C ｜ draft
+
+**目标**：把超曲面 $X\subset\PP^{n+1}$ 的次数 $d$（亏格 $0$）GW 不变量 $n_d$ 的计数对象说清楚：为什么 $\overline{\mathcal M}_0(X,d)$ 是截面 $\sigma$ 的零点集、它的「应有维数」是多少、为什么这个应有维数会小于实际维数甚至为负，从而必须用虚拟基本类（Def 3.2 的 $c_{dl+1}(E)\cap[\,\cdot\,]$）代替拓扑基本类。
+
+**自测**：为什么不能直接用 $[\overline{\mathcal M}_0(X,d)]$ 的拓扑基本类来数次数 $d$ 的有理曲线？
+
+## 前提
+
+- $X=Z(F)\subset\PP^{n+1}$ 是次数 $l$ 的光滑超曲面，$H$ 为超平面类，$\beta=dH$；$g=0$。$\overline{\mathcal M}_0(\PP^{n+1},d)$ 光滑（Thm 3.1），所以它的拓扑（有理）基本类就是 $[\overline{\mathcal M}_0(\PP^{n+1},d)]$，维数由式 (3.21) 给出。
+- 万有图 (3.15)：$\mathcal C_0(\PP^{n+1})\xrightarrow{\ f\ }\PP^{n+1}$ 与 $\pi:\mathcal C_0(\PP^{n+1})\to\overline{\mathcal M}_0(\PP^{n+1},d)$，$\pi$ 的纤维是稳定曲线 $C_s$。
+- 丛与其秩：$R^1\pi_*f^*\OO(l)=0$（$g=0$ 与 $\deg f_s^*\OO(l)\ge0$），故 $E:=\pi_*f^*\OO(l)$ 局部自由、$\rank E=dl+1$（式 (3.16)(3.17)）。
+- 截面：$F$ 通过 $\OO(l)$ 的截面给出 $E$ 的截面 $\sigma$，且 $\sigma(s)=0\iff f_s(C_s)\subset X$，即 $(\sigma=0)=\overline{\mathcal M}_0(X,d)$（原书 p.46）。
+
+## 步骤
+
+1. **把计数对象写成「丛的截面零点集」：$\overline{\mathcal M}_0(X,d)=\{\sigma=0\}\subset\overline{\mathcal M}_0(\PP^{n+1},d)$，其中 $E=\pi_*f^*\OO(l)$、$\sigma$ 由 $F$ 拉回得到。**  
+   为什么：这是整套推导的入口：不变量要数的是「落在 $X$ 里的稳定映射」，而 $f(C_s)\subset X$ 等价于方程 $F$ 在整个纤维上恒为零，即 $\sigma(s)=0$。把几何条件翻成零点集，才能用向量丛的 Chern 类去「数」它。  
+   锚点：原书 p.46（式 (3.15)–(3.17)）（证据 A）
+
+2. **算环境空间的实际维数：$\dim\overline{\mathcal M}_0(\PP^{n+1},d)=\deg f_s^*\Theta_{\PP^{n+1}}+(n+1)(1-g)-3=d(n+2)+n-2$（$g=0$）。**  
+   为什么：这个模空间光滑（Thm 3.1），所以式 (3.21) 是实际维数而非预期维数，可以作为「环境」的基准；减去的 $3$ 是 $\dim\Aut(\PP^1)$，即每个稳定映射的自同构方向。  
+   锚点：原书 p.46（式 (3.20)(3.21)）（证据 A）
+
+3. **算被切掉的维数：$\rank E=h^0(f_s^*\OO(l))=\deg f_s^*\OO(l)+(1-g)=dl+1$（式 (3.17)），于是「应有维数」$=\dim\overline{\mathcal M}_0(\PP^{n+1},d)-\rank E=d(n+2)+n-2-(dl+1)=d(n+2-l)+n-3$。**  
+   为什么：零点集若由一条方程横截切出，维数就降 $\rank E$；$h^1=0$ 保证 $E$ 是丛（每条纤维上障碍为零），这正是超曲面、$g=0$ 情形「可以说清维数」的原因。  
+   锚点：原书 p.46（式 (3.17)(3.20)–(3.22)）（证据 A）
+
+4. **关键困难：$\sigma$ 一般不正则，$(\sigma=0)$ 的实际维数可以严格大于 $d(n+2-l)+n-3$；于是 $[\overline{\mathcal M}_0(X,d)]$ 这个拓扑基本类落在 $A_{\dim}$ 里，而 $\dim$ 不是预期维数，按它积分得到的数没有形变不变性。**  
+   为什么：零点集维数 $\ge$ 丛秩的余维（每个零点至少贡献一条方程），等号只在正则时成立；边界分支常整块被映进 $X$，使维数跳高。讲义定义的「预期维数」之所以叫 expected，正因为它只是「期望」值。nLab 的虚拟基本类条目用 $\overline M_{1,0}(\PP^2,3)$ 给了具体落差：整体 $10$ 维、预期 $9$ 维。  
+   锚点：原书 p.57（式 (3.115) 之后对预期维数的说明）（证据 C）
+
+5. **更极端的情形：$n=3$、$l\ge6$、$d\ge1$ 时 $d(n+2-l)+n-3=d(5-l)<0$。按 Chow 群的约定 $A_{d}=0\ (d<0)$，所以任何落在负维数阶的类都是 $0$；不变量自动为 $0$。**  
+   为什么：这正是几何上的正确断言：一般型的次数 $\ge6$ 三次/四次/五次…超曲面（如五次超曲面之外的更高次）不含次数 $d$ 的有理曲线。若硬用拓扑基本类（维数非负），就得不到这个「不存在」的结论。  
+   锚点：原书 p.46（式 (3.22) 把 $l=5,n=3$ 的算式一般化的直接后果）（证据 B）
+
+6. **Kontsevich 的替代定义：不取 $[\overline{\mathcal M}_0(X,d)]$，而取 $[\overline{\mathcal M}_0(X,d)]^{virt}:=c_{dl+1}(E)\cap[\overline{\mathcal M}_0(\PP^{n+1},d)]$（式 (3.18)），即用 $E$ 的最高 Chern 类与零截面的相交代替拓扑基本类。**  
+   为什么：$c_{\rank E}(E)$ 是「与零截面相交」在 Chow 环上的写法，而式 (3.68) 的 $s_0^![M]\in A_{\dim M-r}$ 说明这个相交恰好把维数降 $r=\rank E$；因此得到的类落在 $A_{d(n+2-l)+n-3}$，无论 $\sigma$ 是否正则都有正确的维数阶。$d<0$ 时它自动为 $0$。  
+   锚点：原书 p.46（Def 3.2、式 (3.18)(3.19)）；对照 p.51（式 (3.68)）（证据 A）
+
+7. **推广到一般靶空间：对任意光滑 $X$（不限于超曲面），用 GW 的完美障碍理论 $\phi^\bullet:\mathcal F^\bullet=R\pi_*(f^*\Omega_X\otimes\omega_\pi)\to L^\bullet_{\mathcal M/\mathfrak m}$，取 $[\mathcal M_{g,k}(X,\beta)]^{virt}=s_0^![C_{\phi^\bullet}]$（式 (3.102)(3.113)），维数阶由秩差 $\rank F_0-\rank F_1+\dim Y$ 给出。**  
+   为什么：超曲面情形能用 $c_{dl+1}(E)$ 是因为「$X$ 是 $\PP^{n+1}$ 里的零点集」这一特殊结构；一般 $X$ 没有环境空间可用，只剩障碍理论这条唯一的路。两条路在超曲面情形应当一致（都是「与零截面相交」），但讲义只把 (3.18) 作为特例陈述，没有逐条对上。  
+   锚点：原书 p.56（式 (3.102)）与 p.57（式 (3.113)(3.115)）（证据 A）
+
+## 结果
+
+次数 $d$ 的亏格零 GW 不变量是 $n_d=\int_{[\overline{\mathcal M}_0(X,d)]^{virt}}1$，其中虚拟基本类由 $c_{dl+1}(E)\cap[\overline{\mathcal M}_0(\PP^{n+1},d)]$ 给出（一般 $X$ 用 $s_0^![C_{\phi^\bullet}]$）；它落在 $A_{d(n+2-l)+n-3}$，$d(n+2-l)+n-3<0$ 时为 $0$。这样得到的数在 $X$ 的形变下不变，正是要的「数有理曲线」。
+
+## 缺口
+
+- 「$\sigma$ 不正则时零点集维数严格大于 $\rank E$ 的余维」是本卡第 4 步的独立判断（provenance C）：讲义只给出预期维数的定义，没有证明实际维数 $\ge$ 预期，也没有讨论零点集可能更大时拓扑类为何不可用；本卡依据无零截面的标准现象补足。
+- 讲义没有把式 (3.18)（$c_{dl+1}(E)\cap[\,\cdot\,]$）与式 (3.102)（$s_0^![C_{\phi^\bullet}]$）显式对上，只说前者是超曲面情形的构造；两者一致的论证（$X\subset\PP^{n+1}$ 时 $E$ 就是法丛的障碍复形）在讲义里缺失。
+- 第 5 步「$d<0$ 时不变量为 $0$」依赖 Chow 群 $A_d=0\ (d<0)$ 的约定；讲义在 (3.18) 附近没有明说这一条，只在式 (3.113) 说虚拟类属于 $A_d$。
+- nLab 的维数落差例子是 $\overline M_{1,0}(\PP^2,3)$（$g=1$），而讲义 §2 只处理 $g=0$ 超曲面；$g\ge1$ 时 $R^1\pi_*\ne0$、$E$ 不再是丛，本卡的「零点集」图像不能直接套用。
+- 本卡只覆盖光滑 $X$；若 $X$ 奇异（如退化超曲面），$\mathrm{ev}$ 与 $\pi$ 的障碍理论要重做，讲义在 §4.4 只对光滑 $X$ 陈述（$n=\dim X$、$f^*\Omega_X$ 局部自由）。
+
+## 易错点
+
+- $c_{dl+1}(E)\cap[\,\cdot\,]$ 不是普通的「横截相交」：截面 $\sigma$ 一般不正则，用最高 Chern 类是在算虚拟交，别拿几何横截的直觉去验算维数。
+- 预期维数为负时虚拟类为 $0$ 不是「没算出来」：这是「不存在这类曲线」的正确表述，$A_d=0\ (d<0)$。
+- 拓扑基本类与虚拟基本类维数不同：$\overline{\mathcal M}_0(X,d)\subset\overline{\mathcal M}_0(\PP^{n+1},d)$ 的实际维数可严格大于预期（nLab 的 $\overline M_{1,0}(\PP^2,3)$ 是 $10$ vs $9$）。
+- 超曲面公式 (3.18) 只对 $g=0$、$X$ 光滑成立：$g\ge1$ 时 $R^1\pi_*\ne0$，$E$ 不再是丛，零点集图像失效。
+- $d$ 是次数（$\beta=dH$），不是曲线类的一般记号：换成一般 $\beta$ 时 $dl$ 要换成 $c_1(\OO(l))\cdot\beta$。
+
+## 参考与关联
+
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，第 3 章 §2 超曲面亏格零 GW 不变量，p.44–45（原书 p.44）
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，第 3 章 §2 超曲面亏格零 GW 不变量，p.46–46（原书 p.46）
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，第 3 章 §4 障碍理论与虚拟基本类，p.56–58（原书 p.56–58）
+
+关联：`siebert/concept/virtual-fundamental-class`、`siebert/concept/expected-dimension`、`siebert/concept/gysin-map`、`siebert/concept/gromov-witten-invariant`、`siebert/deriv/behrend-fantechi`
+
+来源说明：原书 p.44–46 §2（万有图 (3.15)、$E$ 与秩 (3.16)(3.17)、Def 3.2 与式 (3.18)–(3.22)）与 p.56–58 §4.4–4.5（式 (3.102)(3.113)–(3.115)）。nLab「virtual fundamental class」（last revised 2015-08-15）核过「预期维数 = $\dim H^0(C,N_f)$ 当 $H^1=0$」、$\overline M_{1,0}(\PP^2,3)$ 的 10 维 vs 9 维落差，以及「非正则截面的零点集该用丛的最高 Chern 类」这一类比；nLab「Gromov-Witten invariant」与「stable map」（2021-08-01，Kontsevich 出处）核过术语。

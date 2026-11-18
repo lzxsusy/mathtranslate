@@ -1,0 +1,70 @@
+# 有理多面锥
+
+> `siebert/concept/rational-polyhedral-cone` ｜ track D ｜ draft
+
+**一句话**：由 $M_{\QQ}$ 中有限个向量张成的闭凸锥；对偶锥刻画面与极射线，Gordan 引理把它换成有限生成性。
+
+**自测**：为什么必须要求锥「有理多面」，才能保证 $k[\sigma^{\vee}\cap M]$ 是有限生成代数？
+
+## 定义
+
+$C\subset M_{\RR}$ 称为有理多面锥，若存在 $m_1,\ldots,m_r\in M_{\QQ}$ 使 $C=\RR_{\ge0}m_1+\cdots+\RR_{\ge0}m_r$；这样的 $C$ 自动闭且凸。$C$ 称为尖锥，若 $C\cap(-C)=\{0\}$。在环面几何中，$N_{\RR}$ 中的锥总是尖锥，对应的 $M_{\RR}$ 中的锥总是 $d$ 维的。对偶锥为 $\sigma^{\vee}=\{u\in M_{\RR}:\langle u,v\rangle\ge0\ \text{对每个}\ v\in\sigma\}$。
+
+记号：$\sigma\subset N_{\RR}$；$M_{\RR}=N_{\RR}^{*}$；$\langle\cdot,\cdot\rangle$ 是 $M$ 与 $N$ 的配对；$\dim\sigma=\dim_{\RR}(\RR\sigma)$；$\sigma[k]$ 记 $k$ 维锥。
+
+## 要点
+
+- 对偶的基本恒等式（事实 3）：$\sigma$ 是多面锥蕴含 $\sigma^{\vee}$ 也是多面锥；$\sigma=(\sigma^{\vee})^{\vee}$；$(\sigma_1\cap\sigma_2)^{\vee}=\sigma_1^{\vee}+\sigma_2^{\vee}$。
+- 尖性的三条等价刻画（事实 4）：$\sigma\cap(-\sigma)=\{0\}$ 当且仅当 $\dim\sigma^{\vee}=d$，当且仅当存在 $u\in\sigma^{\vee}$ 使 $\sigma\cap u^{\perp}=\{0\}$。非尖时先商掉最大的线性子空间 $L=\sigma\cap(-\sigma)=\sigma^{\perp}$，商空间里得到尖锥。
+- 面与极射线：$u\in\sigma^{\vee}$ 给出面 $\tau=u^{\perp}\cap\sigma$；余维一的面叫侧面；一维面叫极射线。若 $\sigma=\RR_{\ge0}n_1+\cdots+\RR_{\ge0}n_r$，则去掉零向量与重复射线后 $r$ 最小，当且仅当每个 $\RR_{\ge0}n_i$ 都是极射线（(4.10)）。
+- 对偶把面翻过来（事实 (j)）：$\tau\mapsto\tau^{\perp}\cap\sigma^{\vee}$ 是 $\sigma$ 的面与 $\sigma^{\vee}$ 的面之间的双射，反转包含关系，并使 $\dim\tau+\dim(\tau^{\perp}\cap\sigma^{\vee})=d$。
+- 「有理多面」是可数性的入口：Gordan 引理把它变成 $C\cap M$ 有限生成。去掉这条假设，整点幺半群可能不有限生成（例 4.3 的 $C=\{0\}\cup(\RR_{\ge0}\times\RR_{>0})$），$\Spec k[\sigma^{\vee}\cap M]$ 就不再有限型。
+
+## 公式
+
+$\sigma=\RR_{\ge0}m_1+\cdots+\RR_{\ge0}m_r,\qquad \sigma^{\vee}=\{u\in M_{\RR}:\langle u,v\rangle\ge0\ \ \forall v\in\sigma\}$
+$\sigma=(\sigma^{\vee})^{\vee},\qquad (\sigma_1\cap\sigma_2)^{\vee}=\sigma_1^{\vee}+\sigma_2^{\vee}$
+$\dim\tau+\dim(\tau^{\perp}\cap\sigma^{\vee})=d$
+
+## 定理与证明
+
+### 命题 4.2（Gordan 引理）
+
+若 $C\subset M_{\RR}$ 是有理多面锥，则 $C\cap M$ 有限生成，从而 $k[C\cap M]$ 是有限生成 $k$ 代数。
+
+（complete；来源：原书 p.60）
+
+1. 把生成向量按正整数倍放大，使 $m_i\in M$（$m_i\in M_{\QQ}$ 原设）。  
+   为什么：论证要在整格 $M$ 上做，放大只换生成元、不换锥。
+2. 取 $K=\{\sum t_im_i:0\le t_i\le1\}$，紧，故 $K\cap M$ 有限。  
+   为什么：紧集里只有有限多个整点，这是有限生成的来源。
+3. 对 $u=\sum r_im_i$ 写 $r_i=s_i+t_i$（$s_i\in\NN$，$t_i\in[0,1)$），得 $u=\sum s_im_i+\sum t_im_i$，故 $K\cap M$ 生成 $C\cap M$。  
+   为什么：整数部分由生成元贡献，小数部分被压进固定的有限集 $K\cap M$。
+
+### 事实 3、4：对偶与尖性
+
+多面锥的对偶仍多面；$\sigma=(\sigma^{\vee})^{\vee}$；$(\sigma_1\cap\sigma_2)^{\vee}=\sigma_1^{\vee}+\sigma_2^{\vee}$。且 $\sigma$ 尖、$\dim\sigma^{\vee}=d$、存在 $u\in\sigma^{\vee}$ 使 $\sigma\cap u^{\perp}=\{0\}$ 三者等价。
+
+（sketch；来源：原书 p.61）
+
+1. $\sigma^{\vee}$ 是多面锥：由 (g)，$\sigma$ 是有限个半空间的交，对偶回 $\sigma^{\vee}$ 的有限生成表示。  
+   为什么：多面性与有限生成性互为对偶，这一条支撑后面所有「对偶锥也是扇里的锥」的论证。
+2. 尖性等价于 $\dim\sigma^{\vee}=d$：若 $\sigma$ 含直线则 $\sigma^{\vee}$ 落在超平面里，维数下降；反之若 $\sigma^{\vee}$ 不满维，其正交补给出 $\sigma$ 中的直线。  
+   为什么：这是把「几何上的尖」翻译成「对偶锥满维」，后面取 $U_\sigma$ 为 $d$ 维时一直用它。
+
+缺口：讲义把这三条列为「事实」，只给出 (g) 的证明概要，尖性等价性未逐条证明；这里补的是标准论证思路，严格证明需分别验证两个方向。
+
+## 易错点
+
+- 锥的方向不要搞反：$\sigma\subset N_{\RR}$，其对偶 $\sigma^{\vee}\subset M_{\RR}$；$\Spec k[\sigma^{\vee}\cap M]$ 用的是 $M$ 里的整点，写成 $\sigma\cap M$ 就错了。
+- $(\sigma_1\cap\sigma_2)^{\vee}=\sigma_1^{\vee}+\sigma_2^{\vee}$ 里的和是锥的和，不是并；把对偶写成交是常见笔误。
+- 尖锥假设不能省：不尖的锥给 $\Spec k[\sigma^{\vee}\cap M]$ 带上环面因子（正维数的可逆元群），维数就不是 $d$ 了。
+
+## 参考与关联
+
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，第 4 章 §3 有理多面锥与 Gordan 引理，p.60–60（原书 p.60）
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，第 4 章 §4 凸几何中的若干事实，p.60–61（原书 p.60–61）
+
+关联：`siebert/concept/monoid`、`siebert/concept/affine-toric-variety`、`siebert/concept/fan`
+
+来源说明：原书 p.60–61（Def 4.3、Prop 4.2（Gordan 引理）、事实 3–6、极射线 (4.10)、对偶面双射）。核过 nLab「polytope」（last revised 2024-06-30：convex $k$-polytope 的维数约定与 polyhedron 之别）与「monoid」（2026-11-07）；nLab 无「rational polyhedral cone」「Gordan lemma」条目（实测 404），这两条依原文。Stacks Project 无环面锥章节。

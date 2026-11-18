@@ -1,0 +1,41 @@
+# 「上边界」→「上边缘」（coboundary）
+
+> `siebert/correction/coboundary-term` ｜ 原书 p.103 ｜ draft
+
+**一句话**：coboundary 的通行中文是「上边缘」，与 cocycle「上闭链」成对；初版作「上边界」，会与拓扑的 boundary 混同。
+
+**自测**：为什么 coboundary 该译「上边缘」而不是「上边界」，这与同页的「上闭链」有什么关系？
+
+## 初版
+
+```
+其上边界算子为 $\delta$（同页另有「只会给 $c$ 加上一个 Hochschild 上边界」「右侧第一项是上边界」）。
+```
+
+## 改后
+
+```
+其上边缘算子为 $\delta$（相应地「加上一个 Hochschild 上边缘」「右侧第一项是上边缘」）。
+```
+
+## 为什么改
+
+这是术语约定，不是行文偏好：cochain 复形里 $\delta$ 的像叫 coboundary，通行中文译「上边缘」，其对偶 cocycle 译「上闭链」，两者成对；「边界」（boundary）对应链复形里的 $\partial$ 及其像，正是拓扑中 boundary 的译名。本章式 6.45 的 $\delta$ 是 Hochschild 上边缘算子 $\delta c(a_1,\ldots,a_{n+1})=\cdots$，式 6.9 后面的「右侧第一项」也是 $m_1m_3$ 的像即上边缘，二者都是 coboundary；译作「上边界」既与同页「上闭链」不成对，又与拓扑边界同形，读者会误以为在谈链复形的 $\partial$。校对/ch06.md 第 50 行把这一条列为全书 GLOBAL 术语建议「上边界→上边缘」，并注明本章不单独改、请主控统一处理。
+
+## 补注
+
+第 6 章初版在 4 处作「上边界」：p.98（式 6.9 后「右侧第一项是上边界」）、p.103（§3.3 第 (i) 条「其上边界算子为 $\delta$」与第 (ii) 条「加上一个 Hochschild 上边界」）、p.104（§3.5「它与上边缘算子 $\delta$ 构成复形，称为 cobar 复形」）。因 page 只能填一个整数，取定义处 §3.3 的 p.103。校对时 ch06.tex 已统一为「上边缘」（现文如此），但校对记录仍把该项记为 GLOBAL 未决；若全书其它章仍作「上边界」，需一并统一，否则读者在章间会遇到两套译名。
+
+## 易错点
+
+- 「上边缘」与「上边界」是纯术语差异，不改变数学；但 coboundary 与 boundary 在 §3.6 的双复形里同时出现（$\delta$ 与 $\partial$），混用会指错算子。
+- 「上闭链」（cocycle）必须与「上边缘」（coboundary）配对；只改一处会造成同页两套译名。
+- 拓扑里 boundary 通常译「边界」，链复形里常译「边缘」；本章取「上边缘」，正是为了与「上闭链」配对并与拓扑边界区分。
+
+## 参考与关联
+
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，校订，p.103–104（原书 p.103–104）
+
+关联：`siebert/concept/hochschild-cohomology`、`siebert/deriv/rigidity-theorem`
+
+来源说明：原书 p.98、p.103（两处）、p.104 四处「上边界」；校对/ch06.md 第 50 行的 GLOBAL 术语建议（上边界→上边缘）。术语依据：nLab「Hochschild cohomology」（last revised 2026-06-23）用 coboundary 指 $\delta$ 的像、cocycle 指 $\delta c=0$；中文「上边缘/上闭链」的配对见同书第 6 章 §3.3 译名。

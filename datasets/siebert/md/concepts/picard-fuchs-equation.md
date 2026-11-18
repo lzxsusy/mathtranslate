@@ -1,0 +1,76 @@
+# Picard–Fuchs 方程
+
+> `siebert/concept/picard-fuchs-equation` ｜ track A ｜ draft
+
+**一句话**：镜像五次超曲面的周期所满足的四阶常微分方程 [θ⁴−5z∏(5θ+i)]φ=0，由 Griffiths 极点阶数约化算出。
+
+**自测**：为什么周期会自动满足一个四阶方程，而且系数可以完全算出来？
+
+## 定义
+
+设 $\varphi(z)=\int_\gamma\Omega$ 是 $\Omega\in H^{3,0}(Y_\psi)$ 沿 $\gamma\in H_3(Y_\psi,\ZZ)$ 的周期，$\theta=z\,\partial/\partial z$。则 $\varphi$ 满足\n$$\bigl[\theta^4-5z(5\theta+1)(5\theta+2)(5\theta+3)(5\theta+4)\bigr]\varphi(z)=0$$\n（1.76，Prop 1.4）。系数由 $\Omega,\partial_z\Omega,\ldots,\partial_z^4\Omega$ 之间的线性关系（1.70）与 Griffiths 极点阶数约化确定。
+
+记号：$\theta=z\partial_z$ 是对数导数；$z=(5\psi)^{-5}$；$J(f)=(\partial_{x_i}f)$ 是 Jacobi 理想；$W_k=\int\Omega\wedge\partial_z^k\Omega$。
+
+## 要点
+
+- $H^3(Y_\psi,\CC)$ 局部是秩 4 的常值系统，带 Gauss–Manin 平坦联络 $
+abla^{GM}$；$\Omega$ 的前五阶导数 $\Omega,\partial_z\Omega,\ldots,\partial_z^4\Omega$ 在 4 维空间里必线性相关，给出四阶 ODE（1.68–1.70）。
+- 求系数的算法：把 $\partial_z^k\Omega$ 写成 $g_k\widetilde\Omega/f_\psi^{l_k}$。Griffiths 说 $g\widetilde\Omega/f^l$ 要沿 $X_\psi$ 全纯必须 $\deg g=5l-5$（1.72）；若分子 $g\in J(f_\psi)$，则存在恰当形式把极点阶数降一格（1.73–1.74）。算到 $\partial_z^4$ 时必然落到 $J(f_\psi)$。
+- 首解：$\varthetaarphi_0(z)=\sum_{n\ge0}rac{(5n)!}{(n!)^5}z^n$（Note 1.2）。系数 $(5n)!/(n!)^5$ 正是 $x_0^{5n}\cdots x_3^{5n}$ 在 $(1+x_0^5+\cdots+x_3^5)^{5n}$ 中出现的次数。
+- $z=0$ 是正则奇点，四个指标全为 0，故单值算子极大单值：基本解含 $\log z,(\log z)^2,(\log z)^3$（Thm 1.5、1.82–1.85）。
+- 与 Yukawa 耦合的关系：把 PF 方程改写成 $W_4+\sum c_kW_k=0$（1.94），再配合 Griffiths 横截性消去 $W_0,W_1,W_2$，得到 $W_3$ 的一阶方程（1.99）。
+
+## 公式
+
+$$\bigl[\theta^4-5z(5\theta+1)(5\theta+2)(5\theta+3)(5\theta+4)\bigr]\varphi(z)=0,\qquad \theta=z\partial_z$$
+$$\varphi_0(z)=\sum_{n\ge0}\frac{(5n)!}{(n!)^5}z^n$$
+$$g\,\widetilde\Omega/f^l\in\Gamma(X,\Omega^3)\ \Longrightarrow\ \deg g=5l-5$$
+$$\theta\varphi=A(z)\varphi\qquad(\text{一阶系统，第 1.78 式})$$
+
+## 定理与证明
+
+### Prop 1.4：周期满足 Picard–Fuchs 方程
+
+镜像五次超曲面的任一周期 $\varphi(z)=\int_\gamma\Omega$ 满足 $\bigl[\theta^4-5z(5\theta+1)(5\theta+2)(5\theta+3)(5\theta+4)\bigr]\varphi=0$。
+
+（complete；来源：原书 p.20（1.70–1.76））
+
+1. 把 $\partial_z^k\Omega$（$k=0,\ldots,4$）都表示为 $g_k\widetilde\Omega/f_\psi^{l_k}$，逐次用 Griffiths 的极点阶数约化把 $l_k$ 压到最小。  
+   为什么：每一次求导会提高极点阶数，必须降回来才能比较系数。
+2. 算到 $\partial_z^4$ 时分子落在 $J(f_\psi)$ 里，故可表成低阶导数的线性组合，得到 $c_k(z)$ 使得 $\partial_z^4\Omega=\sum_{k<4}c_k(z)\partial_z^k\Omega$。  
+   为什么：$J(f_\psi)$ 里的分子对应恰当形式，沿闭链积分为零，这正是阶数能降下来的原因。
+3. 沿 $\gamma$ 积分，把 $\partial_z$ 换成 $	heta=z\partial_z$（乘 $z$ 的幂），系数化为 $6/z$ 与 $2\cdot5^5/(1-5^5z)$ 等项。  
+   为什么：方程写成 $	heta$ 形式后系数是有理函数，且 $z=0$ 处正则奇点的指标一目了然。
+4. 整理得 $igl[	heta^4-5z\prod_{i=1}^4(5	heta+i)igr]\varthetaarphi=0$。  
+   为什么：这是把第 2、3 步的系数按 $	heta$ 的幂次归并后的结果，可用 $\varthetaarphi_0$ 逐项验证（Note 1.2）。
+
+### Note 1.2：$\varthetaarphi_0$ 的显式解
+
+$\varphi_0(z)=\sum_{n\ge0}\frac{(5n)!}{(n!)^5}z^n$ 满足上述方程，且在 $z=0$ 全纯、$\varphi_0(0)=1$。
+
+（complete；来源：原书 p.21（Note 1.2））
+
+1. 把 $\varthetaarphi_0=\sum a_nz^n$ 代入，用 $	heta z^n=nz^n$ 逐项作用。  
+   为什么：$	heta$ 在单项式上是对角算子，方程逐项化成 $a_n$ 的递推。
+2. 得到递推 $a_{n+1}(5n+5)^4=5^5(n+1)^4a_n\cdot(	ext{系数比})$，即 $a_n=(5n)!/(n!)^5$。  
+   为什么：这正是留数计算 1.66 给出的系数，两条路线互相验证。
+
+缺口：讲义说『可直接验证』，未写出递推；这里的递推是把 $	heta^4$ 作用在单项式上直接算出的。
+
+## 易错点
+
+- $	heta$ 是 $z\partial_z$ 而不是 $\partial_z$：把它当普通导数会让整个方程差 $z$ 的幂次，$z=0$ 处的指标也会算错。
+- $z=0$ 是极大退化点（对应 $\psi=\infty$），不是 Fermat 点；Fermat 点在 $z=\infty$（$\psi=0$）。
+- 四个指标全为 0，所以解必然含 $\log$ 项；不要写成『四个独立的全纯解』。
+- 极点阶数约化中 $\deg g=5l-5$ 只是最低次数要求；若要把阶数降低，必须把恰当形式 $d(\cdots)$ 的边界项算准确，否则系数会差整倍数。
+- $z=(5\psi)^{-5}$ 里的 $5$ 与方程中 $5z$ 的 $5$ 来源不同（前者是 $\psi\mapsto\zeta\psi$ 的归一化，后者是五次多项式的次数），不要互相抵消。
+
+## 参考与关联
+
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，第 1 章 §9 其他周期，p.19–21（原书 p.19–21）
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，第 1 章 §7 全纯三形式，p.18–19（原书 p.18–19）
+
+关联：`siebert/concept/mirror-quintic`、`siebert/concept/yukawa-coupling`、`siebert/concept/local-mirror-symmetry`
+
+来源说明：原书 p.18–19（1.57–1.70，$\Omega$ 的留数构造与归一化）、p.20–21（1.71–1.76、Prop 1.4、Note 1.2、Thm 1.5）。nLab「Picard-Fuchs equation」（last revised 2023-10-15）核过定义与超几何特例；nLab「Calabi-Yau variety」（2026-01-06）。Stacks Project 无对应章节。

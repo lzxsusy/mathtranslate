@@ -1,0 +1,79 @@
+# 同调扰动引理（HPL）
+
+> `siebert/concept/homological-perturbation-lemma` ｜ track F ｜ draft
+
+**一句话**：在收缩数据 $p,i,h$ 下把复形的微分与高阶运算搬到上同调上：$m_2=p\,m\,i$，$m_k$ 由带根带状树的求和递归给出。
+
+**自测**：为什么把 dg 范畴搬到上同调上以后，得到的结构一般只是 $A_\infty$ 的而不是 dg 的？
+
+## 定义
+
+设 $\mathcal A$ 是域上的 $A_\infty$ 范畴。定理 6.1：$H(\mathcal A)$ 上存在 $m_1=0$ 的 $A_\infty$ 范畴结构（极小 $A_\infty$ 范畴），并有 $A_\infty$ 拟等价 $H(\mathcal A)\to\mathcal A$。构造对每对对象取 $\Pi:\Hom(X,Y)\to\Hom(X,Y)$（次数 $0$、$\Pi^2=\Pi$、$\Pi-\id=m_1H+Hm_1$，式 6.31）与 $H:\Hom(X,Y)\to\Hom(X,Y)[-1]$，令 $\Hom_{\Pi\mathcal A}=\Pi\Hom_{\mathcal A}$，$m_2^\Pi=\Pi\circ m_2$，$m_k^\Pi=\sum_{T}m_{k,T}$（$k\ge3$，$T$ 过带根带状树）。
+
+记号：$\Pi$ 是投影（拆成 $i p$），$H$ 是收缩同伦（即 $h$）；Feynman 规则：内部顶点放 $m_r$、内部边放 $H\circ$、根端放 $\Pi\circ$；$m_{k,T}$ 记树 $T$ 给出的复合。
+
+## 要点
+
+- 定理陈述（p.101 定理 6.1）：底域即可，$\mathcal A$ 是任意 $A_\infty$ 范畴；结论是 $H(\mathcal A)$ 上有极小 $A_\infty$ 结构，且有 $A_\infty$ 拟等价 $H(\mathcal A)\to\mathcal A$。
+- 数据：$\Pi$ 取到「上同调类的闭代表元所成子空间」的投影，$H$ 是收缩同伦；$\Pi$ 不典范、$H$ 更不唯一，但不同选取给出的结构只差 $A_\infty$ 同构。
+- 公式：$m_1^\Pi=m_1$（转移到 $H$ 上就是 $0$）、$m_2^\Pi=\Pi\circ m_2$（写成收缩数据即 $p\,m_2\,(i\otimes i)$）、$m_k^\Pi=\sum_T m_{k,T}$。
+- 树：例 6.3 给出 $k=6$ 的一项 $m_{6,T}(a_1,\ldots,a_6)=\Pi m_3(a_1,Hm_2(Hm_3(a_2,a_3,a_4),a_5),a_6)$，可见高阶项是 $m_r$ 与 $H$ 的交替复合。
+- 两条引理：引理 6.2 说树求和满足 $A_\infty$ 关系（把 $H$ 换成 $\Pi-\id$ 或用 $m_1H+Hm_1$，按边分类得 6.39–6.41）；引理 6.3 说 $(i_k)$ 是 $A_\infty$ 函子，$i_1$ 为含入，故是拟等价。
+- 用途：把 Čech 模型（严格 dg）的运算转移到 $D^b(X)$ 上，得到极小 $A_\infty$ 结构；这就是原书 §2.2 的全部动机。
+
+## 公式
+
+$$\Pi-\id=m_1H+Hm_1,\qquad \Pi^2=\Pi,\qquad \deg\Pi=0,\ \deg H=-1\qquad(6.31)$$
+$$m_2^\Pi=\Pi\circ m_2,\qquad m_k^\Pi=\sum_{\substack{T\text{ 带根带状树}\\T\text{ 有 }k\text{ 个叶子}}}m_{k,T}\ (k\ge3)\qquad(6.34\text{–}6.35)$$
+$$m_{6,T}(a_1,\ldots,a_6)=\Pi\,m_3\bigl(a_1,\,H m_2(H m_3(a_2,a_3,a_4),a_5),\,a_6\bigr)\qquad(6.36)$$
+
+## 定理与证明
+
+### 定理 6.1（同调扰动引理）
+
+对任意定义在域上的 $A_\infty$ 范畴 $\mathcal A$，$H(\mathcal A)$ 上存在 $m_1=0$ 的 $A_\infty$ 范畴结构，并且有 $A_\infty$ 拟等价 $H(\mathcal A)\to\mathcal A$。
+
+（sketch；来源：原书 p.101–102）
+
+1. 对每对对象选 $\Pi$ 与 $H$：$\Pi$ 是到闭代表元子空间的投影，$H$ 是收缩同伦，满足 6.31。  
+   为什么：域上每个上同调类都可选代表元，故这样的投影与同伦存在；这是把复形换成其上同调所需的唯一额外数据。
+2. 令 $\Hom_{\Pi\mathcal A}=\Pi\Hom_{\mathcal A}$，则 $H(\Pi\mathcal A)=H(\mathcal A)$。  
+   为什么：$\Pi$ 的像正好是每个上同调类的代表元，所以取 $\Pi$ 的像再取上同调与直接取上同调一致。
+3. 按树公式 6.35 定义 $m_k^\Pi$，再用引理 6.2（按边分类 $\mu_k$，6.39–6.41）验证 $A_\infty$ 关系。  
+   为什么：把每棵树的内部边分成「放 $H$」与「放 $\Pi-\id$」两类，前者给出 $m^\Pi$、后者用 $m_1H+Hm_1$ 化成 $m_1$ 的复合；再用 $m_r$ 的 $A_\infty$ 关系重排即得 $\mu_k^{m_1}+\mu_k^\Pi=0$。
+4. 令 $i_1$ 为含入、$i_k$ 把 $m_{k,T}$ 的根端 $\Pi$ 换成 $H$（6.38），由引理 6.3 得 $A_\infty$ 函子 $(i_k):\Pi\mathcal A\to\mathcal A$，其在 $H$ 上是同构，故为拟等价。  
+   为什么：拟等价只需上同调层面可逆；$i_1$ 就是 $H(\mathcal A)\hookrightarrow\mathcal A$ 的含入，在 $H$ 上取同构。
+
+缺口：讲义只给「证明概要」（p.102），未逐步核对 6.39–6.41 的符号与树计数；也没写出 $i,p,h$ 三元组，只写 $\Pi,H$。
+
+### 引理 6.2 与 6.3
+
+$m_k^\Pi$ 满足 $A_\infty$ 关系；并且 $(i_k)$ 是 $A_\infty$ 函子，$i_1$ 为含入。
+
+（sketch；来源：原书 p.102）
+
+1. 把 $A_\infty$ 关系的每项按树解释，得到 $\mu_k=\sum_{T,e}\mu_{k,(T,e)}$（6.39）。  
+   为什么：这是把「对每个 $r$ 用一次 $A_\infty$ 关系」翻译成「对树的每条边标记一处替代」的标准做法。
+2. 对内部边用 $\Pi-\id$ 或 $m_1H+Hm_1$ 两种方式整理，分别得 6.40 的 $\mu_k^{m_1}$ 与 $\mu_k^\Pi-\mu_k^\id$。  
+   为什么：两种整理是同一个和的两种分组，故相等；这正是 6.41 的来源。
+3. 核对符号得 $\mu_k=-\mu_k^\id$，于是 $\mu_k^{m_1}+\mu_k^\Pi=0$，即 $A_\infty$ 关系。  
+   为什么：6.41 恰好是 $m_k^\Pi$ 的 $A_\infty$ 关系；这一步把树求和与代数关系接上。
+
+缺口：「核对分次符号」一句带过，符号细节未展开；$i_k$ 满足 $A_\infty$ 函子关系式的验证同样只给结论。
+
+## 易错点
+
+- $\Pi$ 不是典范映射：它依赖「上同调类取哪个闭代表元」的选取，不同选取给出不同 $\Pi,H$，结论只在 $A_\infty$ 同构意义下唯一。
+- 6.34 的 $m_2^\Pi=\Pi\circ m_2$ 省略了 $i\otimes i$（$i$ 是 $\Pi\Hom\subset\Hom$ 的含入）；完整写法是 $m_2=p\,m_2\,(i\otimes i)$。
+- $m_k^\Pi$ 一般不为零，所以 $H(\mathcal A)$ 上的结构一般不是 dg 的；只有所有高阶树都消失时才退回 dg。
+- $H$ 的次数是 $-1$ 不是 $+1$：次数搞错时 6.41 的符号关系不成立，$A_\infty$ 关系差一个负号。
+- 无穷树求和需要收敛条件（滤过有界，$\Phi(1+d^\tau\Phi)^r$ 可和；见 nLab 版）；讲义未讨论，Čech 模型上若要严格使用需补这一步。
+
+## 参考与关联
+
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，第 6 章 §2.2 同调扰动引理，p.101–102（原书 p.101–102）
+- Siebert, Mirror Symmetry (lectures, Fall 2019; notes by Jackson Van Dyke)，第 6 章 §2.1 导出范畴的 Čech 模型，p.100–100（原书 p.100）
+
+关联：`siebert/concept/dg-category`、`siebert/deriv/hpl-deformation`、`siebert/concept/cech-model`、`siebert/concept/hochschild-cohomology`
+
+来源说明：原书 p.101–102 §2.2（定理 6.1、6.29–6.41、例 6.3、引理 6.2–6.3）。nLab「homological perturbation theory」（last revised 2025-04-12）核对标准收缩三元组 $(f,\nabla,\Phi)$、恒等式 $\nabla f=1+d\Phi+\Phi d$ 与扰动微分 $d^\tau$、$\Phi^\tau=\sum_r\Phi(1+d^\tau\Phi)^r$；nLab「A-infinity algebra」（2026-07-09）核对树公式即 $A_\infty$ 关系的展开。
