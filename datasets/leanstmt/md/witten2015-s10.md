@@ -1,6 +1,6 @@
 # 分歧除子的次数 = 2N(N−1)(g−1)
 
-- 卡号：`leanstmt/witten2015-s10`　轨道：W　scope：`arithmetic-core`　验证：**certified**
+- 卡号：`leanstmt/witten2015-s10`　轨道：W15　scope：`arithmetic-core`　验证：**certified**
 - 来源：Witten, More On Gauge Theory And Geometric Langlands（arXiv:1506.04293v3）2.6.1，印刷页 10–12
 - 锚点：§2.6.1（谱曲线的 Riemann–Hurwitz 计算）
 

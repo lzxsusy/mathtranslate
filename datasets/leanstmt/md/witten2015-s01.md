@@ -1,6 +1,6 @@
 # 't Hooft 磁通所在的群 ℤ_N 有 N 个元素
 
-- 卡号：`leanstmt/witten2015-s01`　轨道：W　scope：`discrete-core`　验证：**certified**
+- 卡号：`leanstmt/witten2015-s01`　轨道：W15　scope：`discrete-core`　验证：**certified**
 - 来源：Witten, More On Gauge Theory And Geometric Langlands（arXiv:1506.04293v3）2.6.6，印刷页 14–16
 - 锚点：§2.6.6 关于 PSU(N) 与 't Hooft flux 的段落
 

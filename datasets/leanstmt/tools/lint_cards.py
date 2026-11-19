@@ -33,6 +33,12 @@ SCOPES = {"discrete-core", "algebraic-core", "arithmetic-core", "gap"}
 VSTATUS = {"certified", "gap"}
 STATUS = {"draft", "dev"}
 SORRY_RE = re.compile(r"\bsorry\b")
+COMMENT_RE = re.compile(r"/-.*?-/|--[^\n]*", re.S)
+
+
+def strip_comments(text: str) -> str:
+    """粗略剥掉 Lean 注释（与 check_lean.py 同一策略，够用）。"""
+    return COMMENT_RE.sub(" ", text)
 
 
 def norm(s: str) -> str:
@@ -40,7 +46,8 @@ def norm(s: str) -> str:
 
 
 def count_sorry_in(text: str) -> int:
-    return len(SORRY_RE.findall(text))
+    """统计真正的 sorry 占位（先剥注释，避免文档里提到 sorry 被误计）。"""
+    return len(SORRY_RE.findall(strip_comments(text)))
 
 
 def main() -> int:

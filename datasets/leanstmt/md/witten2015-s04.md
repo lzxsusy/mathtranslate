@@ -1,6 +1,6 @@
 # N 次单位根的刻画
 
-- 卡号：`leanstmt/witten2015-s04`　轨道：W　scope：`discrete-core`　验证：**certified**
+- 卡号：`leanstmt/witten2015-s04`　轨道：W15　scope：`discrete-core`　验证：**certified**
 - 来源：Witten, More On Gauge Theory And Geometric Langlands（arXiv:1506.04293v3）7.1，印刷页 66–67
 - 锚点：§7.1（'t Hooft 算符本征值的讨论）
 

@@ -1,6 +1,6 @@
 # 电荷格的双对偶回到自身
 
-- 卡号：`leanstmt/witten2015-s06`　轨道：W　scope：`algebraic-core`　验证：**certified**
+- 卡号：`leanstmt/witten2015-s06`　轨道：W15　scope：`algebraic-core`　验证：**certified**
 - 来源：Witten, More On Gauge Theory And Geometric Langlands（arXiv:1506.04293v3）3.2，印刷页 20–24
 - 锚点：§3.2–§3.3（对偶环面与 GNO 对偶）
 

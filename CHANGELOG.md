@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## leanstmt B 批：Witten 2008 陈述层形式化（14 卡） — 2026-11-19
+
+- 新增 `datasets/leanstmt/cards/statements/witten2008-{s01..s05,g01..g09}.json`：据 Witten, *Mirror Symmetry, Hitchin's Equations, and Langlands Duality*（arXiv:0802.0999v1，15 页；**印刷页 = PDF 页**）裁出 **14 张陈述卡**（5 `certified` + 9 `gap`），轨道 `W08`；与 A 批合计 26 卡（15 certified + 11 gap）。
+- certified 5 条（都真编译、0 sorry）：① SL(N,ℂ) 的中心 = μ_N（`center_sl`，原文 §2：SU(N) 的对偶 PSU(N) 的离散核）；② 有限字符群基数 `|Hom(ℤ_N,U(1))| = N`（`card_dual_zmod`）；③ 典范同构 `ℤ_N ≃+ Hom(ℤ_N,U(1))`（`dual_zmod_equiv`）；④ 非正则奇点系数在 z = λw 下的伸缩律 `λ·(c/λ^{m+1}) = c/λ^m`（`coefficient_scaling`，§5 式 (5.1) 的重标度）；⑤ `Maps(Σ, Maps(C,G)) ≃ Maps(Σ×C, G)`（`gauge_maps_curry`，§6.1）。
+- gap 9 条（各带中文 docstring 说明缺什么）：Y(G,C) 复辛与维数、A/B 模型、Hitchin 方程 (2.1)、解 ↔ 平坦联络 ↔ 希格斯丛、Hitchin 纤维化、**主定理镜像对称**、tame ramification 单值、wild/辫群、四维提升与 `Bun_G` 无整体商。
+- 环境与复核：`leanprover/lean4:v4.36.0`、mathlib `d33c49ca43873d3746194325da62640cc893c9d9`；`lake env lean` 四个文件全部 exit 0（Statements 0 sorry、Gaps 2 / 9），`verification.jsonl` 26 行机器可复算；`lint_cards.py --strict` → `cards=26 ids=26 errors=0 warnings=0`；`build_index.py` 26 行、`render_md.py` 26 篇。
+- 工程改动：轨道拆为 `W15`/`W08`，`SCHEMA.md` 升 v0.2（`source.pages` 两批约定：2015 印刷页 = PDF 页 − 1、2008 印刷页 = PDF 页；`leanstmt/witten2008-<key>` id 前缀），`README.md`/`MAP.md`/`ROADMAP.md`/`workflow/PRODUCTION.md` §六 同步；`tools/make_cards.py` 重写为两批生成、2008 批数据内联，A 批数据抽到 `tools/cards15_data.py`；`tools/lint_cards.py` 的 sorry 计数改为先剥注释（避免注释里提到 "sorry" 被判成 certified 卡所在文件含 sorry）。同批更新 `datasets/README.md` v0.19。
+
 ## dataset cdm14《晶体与 D-模》资料卡（35 张） — 2026-11-19
 
 - 新增 `datasets/cdm14/`：据 SY02-12 译注本裁出 **35 张**资料卡（27 概念 + 8 推导），八轨 A（de Rham 预栈与晶体定义 4）/B（左/右晶体、$\Upsilon$、Kashiwara 6）/C（下降与归纳函子 6）/D（$t$-结构 8）/E（与 D-模的关系 4）/F（扭化 4）/G（扭晶体 2）/O（总览 1）。每卡一 JSON，字段与 gtgl15 同规范（`SCHEMA.md` 已改写为 cdm14 版：id 前缀 `cdm14`、页 1–65、来源 A/B/C/D）。

@@ -1,17 +1,17 @@
-# leanstmt 卡 schema（v0.1）
+# leanstmt 卡 schema（v0.2）
 
 一卡一 JSON，UTF-8、缩进 2 空格、`ensure_ascii=false`；字段顺序不强制，但下列字段必须有。
 
 | 字段 | 类型 | 约束 |
 | --- | --- | --- |
-| `id` | string | `leanstmt/witten2015-<key>`，`<key>` 小写字母数字，全包唯一 |
+| `id` | string | `leanstmt/witten2015-<key>` 或 `leanstmt/witten2008-<key>`，`<key>` 小写字母数字，全包唯一 |
 | `type` | string | 固定 `"statement"` |
 | `title` | string | 中文短标题，≤ 40 字 |
-| `track` | string | 试点期固定 `"W"`（Witten 2015）；后续论文加新字母 |
+| `track` | string | `W15`（Witten 2015）/ `W08`（Witten 2008）；后续论文加新标签 |
 | `source.paper` | string | 原题名 |
 | `source.arxiv` | string | `arXiv:<id>v<版>`，版次必须写明 |
-| `source.section` | string | 原文节号，如 `2.6.6` |
-| `source.pages` | [int,int] | **印刷页**区间闭区间；印刷页 = PDF 页 − 1 |
+| `source.section` | string | 原文节号，如 `2.6.6`、`5` |
+| `source.pages` | [int,int] | **印刷页**区间闭区间。Witten 2015：印刷页 = PDF 页 − 1；Witten 2008：印刷页 = PDF 页 |
 | `source.anchor` | string | 更细的锚（式号/定理名/段落），不许写「见正文」 |
 | `natural_language.zh` | string | 译文的陈述句（一至两句，量词与假设写全） |
 | `natural_language.en` | string | 英文原文的紧缩版（≤ 200 字符，只作对照） |
@@ -19,7 +19,7 @@
 | `lean.name` | string | 全限定声明名（`Namespace.name`），必须能在 `lean.file` 里 grep 到 |
 | `lean.statement` | string | Lean 语句源码（可含换行），必须与文件中声明一致 |
 | `lean.imports` | [string] | 该文件实际 import 的模块名（`Mathlib.X.Y`） |
-| `dependencies[]` | [{name,module,kind}] | 用到的 mathlib/自有引理；`kind ∈ {mathlib,local}` |
+| `dependencies[]` | [{name,module,kind}] | 用到的 mathlib/自有引理；`kind ∈ {mathlib,local}`；gap 卡可为空 |
 | `hypotheses` | [string] | Lean 语句里显式/隐式假设的中文说明（空数组表示无） |
 | `scope` | string | `discrete-core` / `algebraic-core` / `arithmetic-core` / `gap` |
 | `backtranslation.zh` | string | 只读 Lean 语句写出的回译（不看中文陈述） |

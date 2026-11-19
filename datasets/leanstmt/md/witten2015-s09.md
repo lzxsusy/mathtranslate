@@ -1,6 +1,6 @@
 # Prym 的维数 = (N²−1)(g−1)
 
-- 卡号：`leanstmt/witten2015-s09`　轨道：W　scope：`arithmetic-core`　验证：**certified**
+- 卡号：`leanstmt/witten2015-s09`　轨道：W15　scope：`arithmetic-core`　验证：**certified**
 - 来源：Witten, More On Gauge Theory And Geometric Langlands（arXiv:1506.04293v3）2.6.2，印刷页 11–13
 - 锚点：§2.6.2（阿贝尔化与 Prym）
 

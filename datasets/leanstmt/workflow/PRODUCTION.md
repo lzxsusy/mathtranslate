@@ -47,3 +47,11 @@
 - 本批 12 条全部是 **statement-level**（陈述层），没有证明层价值；`certified` 的含义是"陈述类型正确且假设写清"，不是"陈述已被证明"。
 - `certified` 的语义验证目前是单人自查 + 回译，尚未做外部专家盲审（`verification.checker` 如实写 `lead`/`kaduika`，不虚构头衔）。
 - 原文锚用 arXiv v3 印刷页（79 页版），与 SY03-20 中文译注本的页（来自同一 PDF）一致；引用时以 `source.anchor` 的节号为准，页码只作定位提示。
+
+## 六、B 批：Witten 2008（2026-11-19 增补）
+
+- 底本：Witten, *Mirror Symmetry, Hitchin's Equations, and Langlands Duality*，arXiv:0802.0999v1（15 页；**印刷页 = PDF 页**，与 A 批差 1）。
+- Lean：`formal/ShuyiFormal/Witten2008/{Statements,Gaps}.lean`。Statements 共 6 个声明（5 张卡 + 1 个同节特例 `residue_invariant`）；Gaps 9 条，均带中文 docstring 说明缺什么。
+- 选卡原则同 A 批：只把「能落在现有 mathlib 上」的离散/代数骨架写成 certified；本文主定理（Hitchin 纤维化上的镜像对称）落在模空间/复辛/镜像对称层，mathlib 完全缺失，如实记为 G06 gap，不写「近似」。
+- 复核命令与结果：`python tools/check_lean.py --project "C:/Users/admin/Desktop/数译发布/shuyi/formal" --run --write-verification` → 4 个文件全部 exit 0（Witten2015/Statements 0 sorry、Witten2015/Gaps 2、Witten2008/Statements 0 sorry、Witten2008/Gaps 9），`verification.jsonl` 26 行。
+- 工程备注：S02/S03 是有限 Pontryagin 对偶的两面（基数 vs 典范同构）；S04 刻意用 `(m+1)` 指标（避免 `k−1` 的指数算术，`1+(k−1)-1` 难证）；`lint_cards.py` 的 sorry 计数改为先剥注释（A 批文件注释里提到 "sorry" 会误判为 certified 卡所在文件含 sorry）。

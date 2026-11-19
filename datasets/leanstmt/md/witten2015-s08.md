@@ -1,6 +1,6 @@
 # 典范丛次数为偶数，自旋结构存在
 
-- 卡号：`leanstmt/witten2015-s08`　轨道：W　scope：`arithmetic-core`　验证：**certified**
+- 卡号：`leanstmt/witten2015-s08`　轨道：W15　scope：`arithmetic-core`　验证：**certified**
 - 来源：Witten, More On Gauge Theory And Geometric Langlands（arXiv:1506.04293v3）2.6.5，印刷页 16–18
 - 锚点：§2.6.5（酉群的谱覆盖与 K^{1/2} 的选择）
 

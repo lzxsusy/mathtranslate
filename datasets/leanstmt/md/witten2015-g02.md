@@ -1,6 +1,6 @@
 # 缺口：Hitchin 纤维维数 (g−1)·dim G
 
-- 卡号：`leanstmt/witten2015-g02`　轨道：W　scope：`gap`　验证：**gap**
+- 卡号：`leanstmt/witten2015-g02`　轨道：W15　scope：`gap`　验证：**gap**
 - 来源：Witten, More On Gauge Theory And Geometric Langlands（arXiv:1506.04293v3）2.4，印刷页 8–10
 - 锚点：§2.4–§2.6
 

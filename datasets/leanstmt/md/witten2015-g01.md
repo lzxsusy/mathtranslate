@@ -1,6 +1,6 @@
 # 缺口：谱曲线的亏格 N²(g−1)+1
 
-- 卡号：`leanstmt/witten2015-g01`　轨道：W　scope：`gap`　验证：**gap**
+- 卡号：`leanstmt/witten2015-g01`　轨道：W15　scope：`gap`　验证：**gap**
 - 来源：Witten, More On Gauge Theory And Geometric Langlands（arXiv:1506.04293v3）2.6.1，印刷页 10–13
 - 锚点：§2.6.1–§2.6.2
 

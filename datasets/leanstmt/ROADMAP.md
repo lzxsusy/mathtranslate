@@ -4,6 +4,13 @@
 建设一条从「原文 → 翻译/阅读 → 语料 → 资料卡 → Lean 陈述」的生产线。
 下面按**先做 / 缓做 / 暂不做**三分，每条给出：为什么、能产出什么、卡在哪。
 
+## 〇、已落地（2026-11-19）
+
+- **Witten 2008**（下栏 4.B）已做成 `leanstmt` 的 **B 批**：14 张卡（5 `certified` + 9 `gap`，轨道 `W08`）。
+  certified 只有离散/代数影子（SL(N,ℂ) 中心 = μ_N、有限 Pontryagin 对偶两条、非正则奇点系数伸缩律、函数空间 currying）；
+  本文主定理（Hitchin 纤维化上的镜像对称）如实进 G06 gap——它正好是 mathlib 缺口最深的一层。
+  见 `datasets/leanstmt/README.md` 与 `workflow/PRODUCTION.md` §六。
+
 ## 一、先做（6–12 个月内，statements 能落在现有 mathlib 上）
 
 ### 1. GNO 1977：Gods, Nuyts, Olive, *Gauge theories and magnetic charge*
@@ -24,7 +31,7 @@
 
 ### 4. 现代"陈述密集"综述（不做全文形式化，做语料 + 资料卡 + 挑选条目）
 - A. Frenkel, *Langlands program and conformal field theory*（arXiv:hep-th/0512172，90 余页）——本库已有中译，statement 密度高，是"该形式化什么"的选题地图。
-- B. Witten 2008, *Mirror symmetry, Hitchin's equations, and Langlands duality*（arXiv:0802.0999）——本库有原文，是 SY03-20 的直接前身，属同一选题簇。
+- B. Witten 2008, *Mirror symmetry, Hitchin's equations, and Langlands duality*（arXiv:0802.0999）——本库有原文，是 SY03-20 的直接前身，属同一选题簇。**（已落地为 B 批 14 卡，见上栏〇）**
 - C. Frenkel–Witten 2007, *Geometric endoscopy and mirror symmetry*（arXiv:0710.5939）。
 - D. Ben-Zvi, *What is a geometric Langlands dual?*（本库已有译注）。
 - E. 陈麟《Introduction to Geometric Langlands Theory》（清华 2023，本库 `datasets/glc` 154 卡）与袁耀《Langlands 纲领导论》（SY02-09）——**只做"语料与资料卡"，不做形式化**，因为它们进入 Hitchin 模空间 / D-模 / 曲线亏格层，全部是 gap。

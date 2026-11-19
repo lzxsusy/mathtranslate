@@ -1,6 +1,6 @@
 # ℂ 中 N 次单位根恰有 N 个
 
-- 卡号：`leanstmt/witten2015-s05`　轨道：W　scope：`discrete-core`　验证：**certified**
+- 卡号：`leanstmt/witten2015-s05`　轨道：W15　scope：`discrete-core`　验证：**certified**
 - 来源：Witten, More On Gauge Theory And Geometric Langlands（arXiv:1506.04293v3）4.1，印刷页 18–20
 - 锚点：§4.1（本征膜与 't Hooft 算符的本征值）
 

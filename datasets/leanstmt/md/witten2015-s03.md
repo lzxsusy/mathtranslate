@@ -1,6 +1,6 @@
 # ℤ_N 中每个元素都是 N-挠的
 
-- 卡号：`leanstmt/witten2015-s03`　轨道：W　scope：`discrete-core`　验证：**certified**
+- 卡号：`leanstmt/witten2015-s03`　轨道：W15　scope：`discrete-core`　验证：**certified**
 - 来源：Witten, More On Gauge Theory And Geometric Langlands（arXiv:1506.04293v3）2.6.6，印刷页 14–16
 - 锚点：§2.6.6
 
