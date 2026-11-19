@@ -1,0 +1,220 @@
+% =============================================================================
+%  导言区：中文译注本《给数学家的导出范畴》
+%  原文：R. P. Thomas, "Derived categories for the working mathematician",
+%        arXiv:math/0001045（v1 2000-01-07，v2 2001-10-17），13 pp.
+%        会议版：Winter School on Mirror Symmetry, Vector Bundles and
+%        Lagrangian Submanifolds（Harvard, 1999），
+%        AMS/IP Stud. Adv. Math. 23, 349--361 (2001).
+%  编译：xelatex main.tex（两遍）
+% =============================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[UTF8, fontset=fandol, heading=true]{ctex}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage[a4paper,left=2.5cm,right=2.5cm,top=2.6cm,bottom=2.6cm]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usetikzlibrary{shapes.geometric,arrows.meta,positioning,calc,decorations.pathmorphing}
+\usepackage[font=small,labelfont=bf,labelsep=quad]{caption}
+\usepackage{fancyhdr}
+\usepackage[colorlinks=true,
+            linkcolor=blue!45!black,
+            citecolor=blue!45!black,
+            urlcolor=blue!45!black]{hyperref}
+
+\linespread{1.15}
+\setlength{\emergencystretch}{3em}
+\allowdisplaybreaks[3]
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+\renewcommand{\refname}{参考文献}
+\renewcommand{\contentsname}{目录}
+\renewcommand{\appendixname}{附录}
+\renewcommand{\proofname}{证明}
+\renewcommand{\abstractname}{摘要}
+
+% 页眉页脚：双面排印时左页书名、右页节名
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape 给数学家的导出范畴}
+\fancyhead[R]{\small\itshape\leftmark}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}%
+  \renewcommand{\headrulewidth}{0pt}}
+
+% ---------------------------------------------------------------------------
+% 原文字体约定：原稿把 \emph 重定义为无衬线粗体（amsproc + 作者宏），
+% 中译本改作粗体，用于标记作者强调的关键术语。
+% ---------------------------------------------------------------------------
+\renewcommand{\emph}[1]{{\bfseries #1}}
+
+% ---------------------------------------------------------------------------
+% 原文数学宏（与原文 preamble 逐一对应，保证公式可逐符号对照）
+%   \Z \C \R \OO \A \B \F \RR \Hom \udot \ldot \Ltimes \ve \res \To \into
+% ---------------------------------------------------------------------------
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbf{R}}
+\newcommand{\OO}{\mathcal{O}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\RR}{\mathcal{R}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\Ext}{\operatorname{Ext}}
+\newcommand{\SheafExt}{\mathcal{E}xt}
+\newcommand{\Tor}{\operatorname{Tor}}
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\cyl}{\operatorname{cyl}}
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\into}{\hookrightarrow}
+\newcommand{\To}{\longrightarrow}
+\newcommand{\ot}{\leftarrow}
+\newcommand{\oT}{\longleftarrow}
+\newcommand{\udot}{^{\scriptscriptstyle\bullet}}
+\newcommand{\ldot}{_{\scriptscriptstyle\bullet}}
+\newcommand{\Ltimes}{\mathbin{\buildrel{\mathbf L}\over{\otimes}}}
+\newcommand{\ve}{^{\vee}}
+\newcommand{\res}{\arrowvert}
+\newcommand{\Aut}{\operatorname{Aut}}
+
+% ---------------------------------------------------------------------------
+% 定理类环境：与原文一致——共享一个计数器、按节编号。
+% 原文仅用 theorem/definition/eg/remark 四种，中译本补上引理与命题以备引用。
+% ---------------------------------------------------------------------------
+\newtheoremstyle{cnth}%
+  {6pt}% above
+  {6pt}% below
+  {\normalfont}% body
+  {}% indent
+  {\bfseries}% head font
+  {.}% punctuation
+  {0.5em}% space after head
+  {}% head spec
+
+\theoremstyle{cnth}
+\newtheorem{thm}{定理}[section]
+\newtheorem{lemma}[thm]{引理}
+\newtheorem{prop}[thm]{命题}
+\newtheorem{cor}[thm]{推论}
+\newtheorem{definition}[thm]{定义}
+\newtheorem{eg}[thm]{例}
+\newtheorem{remark}[thm]{注}
+
+% ---------------------------------------------------------------------------
+% 三类译者方框：yizhu（橙色，编号"译注 N"）、conceptbox（紫色，概念卡片）、
+% keytakeaways（蓝色，本节重点）。三个 \ifshow* 开关可一键关闭。
+% ---------------------------------------------------------------------------
+\newif\ifshowyizhu
+\showyizhutrue
+\newcounter{yizhu}
+
+\newenvironment{yizhu}[1][]{%
+    \refstepcounter{yizhu}%
+    \par\medskip
+    \ifshowyizhu
+        \begin{tcolorbox}[enhanced, breakable,
+            colback=orange!4!white, colframe=orange!55!black,
+            boxrule=0.5pt, arc=2pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+            title={\small\textbf{译注 \theyizhu\if\relax\detokenize{#1}\relax\else\ ——#1\fi}},
+            fonttitle=\bfseries, coltitle=black, colbacktitle=orange!12!white,
+            toptitle=1pt, bottomtitle=1pt]
+    \fi
+}{%
+    \ifshowyizhu
+        \end{tcolorbox}%
+    \fi
+    \par\smallskip
+}
+
+\newif\ifshowconcept
+\showconcepttrue
+
+\newenvironment{conceptbox}[1]{%
+    \par\medskip
+    \ifshowconcept
+        \begin{tcolorbox}[enhanced, breakable,
+            colback=violet!3!white, colframe=violet!55!black,
+            boxrule=0.5pt, arc=2pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+            title={\small\textbf{概念卡片：#1}\quad{\footnotesize（译者所加）}},
+            fonttitle=\bfseries, coltitle=black, colbacktitle=violet!12!white,
+            toptitle=1pt, bottomtitle=1pt]
+    \fi
+}{%
+    \ifshowconcept
+        \end{tcolorbox}%
+    \fi
+    \par\medskip
+}
+
+\newif\ifshowkey
+\showkeytrue
+
+\newenvironment{keytakeaways}{%
+    \par\medskip
+    \ifshowkey
+        \begin{tcolorbox}[enhanced, breakable,
+            colback=blue!3!white, colframe=blue!35!black,
+            boxrule=0.5pt, arc=2pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+            title={\small\textbf{本节重点}\quad{\footnotesize（译者所加）}},
+            fonttitle=\bfseries, coltitle=black, colbacktitle=blue!10!white,
+            toptitle=1pt, bottomtitle=1pt]
+    \fi
+    \begin{itemize}[leftmargin=1.4em,itemsep=0.15em,topsep=2pt]
+}{%
+    \end{itemize}%
+    \ifshowkey
+        \end{tcolorbox}%
+    \fi
+    \par\medskip
+}
+
+% ---------------------------------------------------------------------------
+% 校勘框：标出原文疑误之处，正文用脚注体例 N，详情见附录 B。
+% ---------------------------------------------------------------------------
+\newif\ifshowkanwu
+\showkanwutrue
+\newcounter{kanwu}
+
+\newenvironment{kanwu}[1][]{%
+    \refstepcounter{kanwu}%
+    \par\medskip
+    \ifshowkanwu
+        \begin{tcolorbox}[enhanced, breakable,
+            colback=red!3!white, colframe=red!50!black,
+            boxrule=0.5pt, arc=2pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+            title={\small\textbf{校勘 \thekanwu\if\relax\detokenize{#1}\relax\else\ ——#1\fi}},
+            fonttitle=\bfseries, coltitle=black, colbacktitle=red!10!white,
+            toptitle=1pt, bottomtitle=1pt]
+    \fi
+}{%
+    \ifshowkanwu
+        \end{tcolorbox}%
+    \fi
+    \par\smallskip
+}
+
+% 译注/校勘交叉标记
+\newcommand{\yizhuRef}[1]{{\color{orange!70!black}\textsuperscript{译注~#1}}}
+\newcommand{\kanwuRef}[1]{{\color{red!70!black}\textsuperscript{校勘~#1}}}
+
+% 术语首次出现：中文（English）
+\newcommand{\term}[2]{#1（\textit{#2}）}
+
+% 引用文献的短命令（与原文 \cite 对应）
+\newcommand{\cGM}{\cite{GM}}
+\newcommand{\cHRD}{\cite{HRD}}
+\newcommand{\cK}{\cite{K}}
+\newcommand{\cMa}{\cite{Ma}}

@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## SY08-03 Thomas《给数学家的导出范畴》中译注本（28 页）+ 校勘 10 条 + 精读指南 — 2026-11-20
+
+- 新增 `08_source_code/SY08-03_给数学家的导出范畴/`：R. P. Thomas, *Derived categories for the working mathematician*（arXiv:math/0001045，v1 2000-01-07 / v2 2001-10-17，13 页；会议版 Winter School on Mirror Symmetry, Harvard 1999，AMS/IP Stud. Adv. Math. 23 (2001) 349–361，Zbl 1008.18011）全文中译，`ctex` + XeLaTeX，成品 **28 页**（书名页、译序、目录、正文 6 节、附录 A–D、文献）。
+- 选篇理由：这是“导出范畴”最常被引用的一篇讲稿，作者是 Donaldson 的学生；全文 13 页却把链复形、拟同构、局部化、锥与三角、导出函子五件事串成一条线，适合作为进入导出范畴的第一篇精读材料，也与既有 SY08-02（Orlov《凝聚层的导出范畴》）互补。
+- 工序：原文两遍通读 → `工程文件/work/通读笔记.md`（六节论证地图）与 `疑点清单.tsv`（D01–D15，`未解`=0）→ 术语冻结 76 条（`work/glossary.tsv`，与 SY08-02 译法对齐）→ 分块落盘 `sections/01_intro … 06_derived` → 三遍 xelatex。
+- 质量：0 error / 0 undefined / 0 overfull / 0 缺字；逐页 110 dpi 目检书名页、译序、§4、§5 两图、附录 A/B/D。自查脚本 `work/check.py`：黑名单来源 0 处、译注与概念卡片来源标记 100%、标签全部有定义、禁用句式 0 处、术语均有表。
+- 译注 20 条（橙框，每条末句带 `[来源：…]`）、概念卡片 3 张、本节重点 6 段、“校勘”红框 7 个；附录 B 逐条校勘记 **K1–K8 + S1–S2**：K1 引言节号错位（实为 §2–§6）；K2 “末三个箭头”应为“末三项”；K3 §3 的“同调相同却不同构”例子不成立（给正确反例 $A=\C[\epsilon]/\epsilon^2$）；K4 全纯 de Rham 复形被误称 Dolbeault、Hodge 指标互换；K5 “内射层 $\subset$ 拟凝聚层”应为拟凝聚层中的内射对象；K6 Leray 与 local-to-global 谱序列记号残缺；K7 对偶公式 $\R\mathcal Hom(A,B)\cong B\Ltimes A^\vee$ 缺“$A$ 完美”条件（反例：光滑曲线上 $A=B=k_x$，左边 $k\oplus k[1]$，右边 $k[1]\oplus k[2]$）；K8 “rather then”拼写。S1 $\R\Gamma=\R H^\bullet$ 记号、S2 同调/上同调指标混用，标“存疑”保留原文。
+- 精读：附录 D 给论证地图、逐节导读、五个关键论证拆解（Whitehead 用锥证明、锥的两种上同调、分数演算、阿贝尔范畴为何无核余核、de Rham 即导出函子）、后续三条线（dg 范畴、稳定 $\infty$-范畴、导出代数几何）与五道带提示的习题。
+- 图：原文两张 EPS（fig2dev）转 PNG 目检后，用 TikZ 重绘（X—f→Y→C_f 的锥、以及 Dold–Puppe 序列的悬挂双锥），不携带原始 EPS。
+- 合规：底本为 arXiv 预印本，按 COMPLIANCE R3 登记 `RELEASE_REGISTER.csv`（源码 L2 公开·受限，成品 Release 外链，原文 L4 禁入，`auto` 判定，合规）；`03_translations_meta/SY08-03/投稿信息.md` 与 `_PDF清单.tsv` 已登记；成品 PDF 不随仓（`源码/` 内已清编译产物）。`tools/check_compliance.py` 通过（仅 3 条既有/预期 WARN）。
+
 ## leanstmt C 批：GNO 1977 陈述对照语料 13 卡 + 扫描件 OCR 管线 — 2026-11-19
 
 - 底本：R. Goddard, J. Nuyts, B. S. Olive, *Gauge Theories and Magnetic Charge*, Nucl. Phys. **B125** (1977) 1–28（DOI 10.1016/0550-3213(77)90221-8；报告号 CERN-TH-2255）。原文无公开 arXiv 号；从 CERN CDS record 422230 取影印 PDF（38 页、600 dpi 1-bit 扫描、无文字层），自解 Anubis v1.27 challenge 后下载。
