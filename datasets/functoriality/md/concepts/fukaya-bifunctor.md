@@ -39,7 +39,7 @@ $\CF^*(L_{ij},L_{jk},L_{ik}^T)$
 \begin{tikzcd}[column sep=1.3em,row sep=large]
 \begin{gathered}(\Fuk(M_0^-\times M_1),\Fuk(M_1^-\times M_2),\\\Fuk(M_2^-\times M_3))\end{gathered}\arrow[r]\arrow[d]
 &\bigl(\Fuk(M_0^-\times M_1),\Fuk(M_1^-\times M_3)\bigr)\arrow[d]\\
-\bigl(\Fuk(M_0^-\times M_2),\Fuk(M_2^-\times M_3)\bigr)\arrow[r]&\Fuk(M_0^-\times M_3).
+\bigl(\Fuk(M_0^-\times M_2),\Fuk(M_2^-\times M_3)\bigr)\arrow[r]&\Fuk(M_0^-\times M_3)
 \end{tikzcd}
 ```
 

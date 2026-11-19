@@ -36,7 +36,7 @@ $\CF^*(L_0,\tau_C L_1)$
 ```tikz
 \begin{tikzcd}[column sep=0.8em,row sep=1.2em]
 \operatorname{CF}^*(L_0,C)\otimes\operatorname{CF}^*(L_1,C) \arrow[rr] && \operatorname{CF}^*(L_0,L_1) \arrow[dl] \\
-& \operatorname{CF}^*(L_0,\tau_C L_1). \arrow[ul] &
+& \operatorname{CF}^*(L_0,\tau_C L_1) \arrow[ul] &
 \end{tikzcd}
 ```
 

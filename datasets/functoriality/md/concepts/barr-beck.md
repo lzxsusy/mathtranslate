@@ -38,7 +38,7 @@ $\Mod T$
 ```tikz
 \begin{tikzcd}[column sep=2em,row sep=1.5em]
 A \arrow[r,shift left=.6ex,"f"] \arrow[r,shift right=.6ex,"g"'] & B \arrow[r,"h"] \arrow[dr,"h'"'] & C \arrow[d,dashed] \\
-&& C'.
+&& C'
 \end{tikzcd}
 ```
 
