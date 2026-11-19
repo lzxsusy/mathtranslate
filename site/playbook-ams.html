@@ -1,0 +1,131 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AMS 量子场与弦 · 习题课推理链 · 数译</title><link rel="stylesheet" href="./assets/style.css"></head>
+<body>
+<header class="top"><div class="wrap"><div class="brand">
+  <div class="logo">译</div>
+  <div><h1>AMS 量子场与弦 · 习题课推理链</h1><div class="sub">MEMORANDUM-01 · 强制前置读本 · 数译</div></div>
+  <nav class="meta"><a href="./index.html">← 返回文献库</a><br>2026-11-18</nav>
+</div></div></header>
+<main class="wrap doc">
+<h1>PLAYBOOK-02 · AMS《量子场与弦》习题课推理链采集 v1.0</h1>
+<p><strong>PLAYBOOK-02 ｜ v1.0 ｜ 2026-11-18 ｜ 强制前置：MEMORANDUM-01</strong></p>
+<blockquote><p><strong>适用对象</strong>：Deligne, Etingof, Freed, Jeffrey, Kazhdan, Morgan, Morrison, Witten, <em>Quantum Fields and Strings: A Course for Mathematicians</em>, Vol. 1–2, AMS 1999（IAS 1996–97 专题年讲义）。Vol. 2 收录 Witten 整理的 <strong>Homework</strong>（pp. 609–717：秋季题单、Fall exam、Superhomework 等），以及 D'Hoker（pp. 807–1011）、Witten（pp. 1119–1424）、Seiberg（pp. 1425–1495）的题单；这套题<strong>附解答</strong>。</p><p><strong>效力</strong>：本文件是 MEMORANDUM-01 在"习题课"场景下的实例化。两者冲突时以 MEMORANDUM-01 为准；本文件可以更严，不可以更松。</p><p><strong>开工条件</strong>：<code>python tools/check_memo_gate.py --role &lt;你的角色&gt;</code> 返回 OK。没有回执不许开工。</p></blockquote>
+<hr>
+<h2>§0 一句话</h2>
+<p><strong>把"学生卡在哪一步"变成可复现的坐标，而不是一句感慨。</strong></p>
+<p>不是"学生做不出题"这件事值钱，是"卡点 + 最小能解开它的提示 + 事后归因"这三样合起来值钱。只统计做对做错，这数据一文不值。</p>
+<hr>
+<h2>§1 为什么这件事值得做（三条，每条都有代价）</h2>
+<p><strong>1.1 这套题自带答案——ground truth 不需要我们造。</strong><br>本库最贵的东西是"判断的轨迹"（MEMO §1.1），而这道题的成本结构罕见地对：题面是现成的、答案是有出处的、难度是作者设计过的。相比自己出题再自己判卷，这里每一步都有第三方锚点（书页）。</p>
+<p><strong>1.2 卡点是天然的难度标签，提示是天然的过程标签。</strong><br>MEMO §5 的 obligation 测试要我们"挖掉结论让模型补、数失败次数"；这套题不用挖——学生本来就要补。而<strong>最小能让对话继续的那一级提示</strong>，就是"缺口有多大"的度量：</p>
+<ul><li>一级都不用 → 题目在能力之内，只值一条"已会"；</li><li>要到 L3（命名技巧）才通 → 缺口是"没想到那个招"，这是最值钱的一类；</li><li>要到 L4（给第一步式子）才通 → 缺口是"不会起手"；</li><li>到 L5 才懂 → 不算解出，但这是<strong>负样本</strong>，同样要留。</li></ul>
+<p><strong>1.3 三个人卡在同一处，那个 locator 就是正文的缺口。</strong><br>这是本工程最想拿的副产品：三个独立学生、同一道题、卡在同一页同一行，说明<strong>正文那一处在数学上跳了一步</strong>——正好填 <code>datasets/math/</code> 的 <code>gap</code> 字段和 <code>datasets/deepread/</code> 精读卡。你原来靠人工找"作者跳过的那一步"，现在有机器帮你指出来。</p>
+<blockquote><p><strong>反向警告（写在最前）</strong>：如果这一周只产出"4 题全对"或"2 题没做出来"这种结论，说明流程没设计对。没有 <code>stuck_at</code>、没有 <code>minimal_rung</code>、没有归因，就等于没做。</p></blockquote>
+<hr>
+<h2>§2 角色（五个机器角色 + 你）</h2>
+<table><thead><tr><th>角色</th><th>谁</th><th>干什么</th><th>绝不能干什么</th></tr></thead><tbody><tr><td><strong>主持人</strong></td><td>你（人）</td><td>每周一次课，只做三件事：定题、看卡点、裁决争议</td><td><strong>不给提示</strong>。你一旦提示，样本就废了</td></tr><tr><td><strong>题库官</strong></td><td>机器</td><td>按 section 选题、逐字抽题面与答案、标 <code>rights</code> 与 <code>depends_on</code></td><td>不改写题面；不挑"看起来好做"的题</td></tr><tr><td><strong>提示作者</strong></td><td>机器</td><td><strong>不看学生任何尝试</strong>，只据题面+答案写 L0–L5 阶梯</td><td>不得事后改阶梯；不得因某学生卡住而特调</td></tr><tr><td><strong>复算员</strong></td><td>机器</td><td>独立复算书中答案，标 <code>verified / as_printed / disputed</code></td><td>不得参考学生解答；不得"照抄答案当验证"</td></tr><tr><td><strong>学生 ×3</strong></td><td>机器</td><td>只拿正文 + 题面，独立 session，尝试并<strong>当场报告卡点</strong></td><td>不得看答案、不得看别人 transcript、不得看提示阶梯全文</td></tr><tr><td><strong>审计员</strong></td><td>机器</td><td>课后读 transcript：卡点归类、泄漏检查、假解判定</td><td>不得参与出题、出提示、当学生</td></tr></tbody></table>
+<p><strong>模型分配硬规矩</strong>：教师（提示作者/复算员）与学生<strong>必须不同模型族</strong>（MEMO §6 角色分离）。同一模型既当学生又当老师，学生的"卡点"会退化成"老师没想到的点"，不是认知卡点。</p>
+<hr>
+<h2>§3 选题：按 section 抽，不按难度抽</h2>
+<p>每周 <strong>4 道</strong>，同一节内：</p>
+<table><thead><tr><th>配额</th><th>类型</th><th>目的</th></tr></thead><tbody><tr><td>2 道</td><td>正文可直接推</td><td>基线；用来确认学生真的读了正文</td></tr><tr><td>1 道</td><td>需要组合正文两处</td><td>抓"跨段引用"缺口</td></tr><tr><td>1 道</td><td>原文没给动机/没给起手</td><td>抓"未见技巧"缺口（C3 的主要来源）</td></tr></tbody></table>
+<p><strong>排除</strong>：纯体力计算题（除非这周就想练规范化）、依赖未译章节的题、题面本身有歧义的题。</p>
+<p>每题必须记：<code>src_page</code>（题面页）、<code>answer_page</code>、<code>rights</code>、<code>depends_on</code>（正文哪几页）、<code>section</code>。</p>
+<p><strong>权利口径</strong>：题面与答案都是商书内容，<strong>只进 <code>_internal/</code></strong>；对外只发布"卡点坐标 + 归因 + 补法"，不复制题面（COMPLIANCE 第 3 类，"book 派生只进 _internal"）。</p>
+<hr>
+<h2>§4 提示阶梯 L0–L5（预注册，不许临场加级）</h2>
+<table><thead><tr><th>级</th><th>给什么</th><th>判据（给完看学生能不能往下走）</th></tr></thead><tbody><tr><td><strong>L0</strong></td><td>复述题意：确认对象、指标、要证的结论</td><td>学生能用自己的话重述</td></tr><tr><td><strong>L1</strong></td><td>回指定义/定理：只给正文 locator，不给内容</td><td>学生能自己翻到并引用</td></tr><tr><td><strong>L2</strong></td><td>给同类已解例子：书内或本库的<strong>结构同型</strong>例子</td><td>学生能说出"这里对应哪一步"</td></tr><tr><td><strong>L3</strong></td><td>命名技巧/ansatz：<strong>只给名字，不给式子</strong></td><td>学生能自己写出起手式</td></tr><tr><td><strong>L4</strong></td><td>给第一步式子 / 给关键恒等式</td><td>学生能续到收尾</td></tr><tr><td><strong>L5</strong></td><td>全解</td><td>本轮记 <code>solved: false</code>，但<strong>轨迹全留</strong></td></tr></tbody></table>
+<p><strong>五条硬规矩</strong>：</p>
+<ol><li>一次只给一级，给完<strong>必须等学生的下一步</strong>再决定是否升级；</li><li>教师<strong>不得跳级</strong>（不许 L1 直接到 L4）；</li><li>教师<strong>不得临场编造</strong>阶梯外的提示；实在需要，标 <code>improvised: true</code>，单独统计，不进主表；</li><li>学生<strong>不得先看阶梯全文</strong>再描述卡点（顺序反了，卡点数据就废——他描述的是"看完提示后的卡点"）；</li><li>L5 之后不再追问，直接进入课后复盘。</li></ol>
+<hr>
+<h2>§5 卡点冻结（全流程最关键的一步）</h2>
+<p>学生一旦说出"我不知道下一步""这里应该用什么"，<strong>立刻</strong>执行冻结，顺序不能反：</p>
+<ol><li><strong><code>stuck_at</code></strong>：他自己认为卡在哪——必须带 locator（题号/小问/自己推到的式子）；</li><li><strong><code>claim</code></strong>：原话照抄，不改写、不润色；</li><li><strong><code>student_state</code></strong>：三个字段——已建立的对象、已用的公式、当前目标；</li><li><strong>然后</strong>才允许教师给下一级提示。</li></ol>
+<p>审计员事后要分两栏记：</p>
+<table><thead><tr><th>字段</th><th>含义</th></tr></thead><tbody><tr><td><code>self_reported</code></td><td>学生自己说的卡点</td></tr><tr><td><code>audited</code></td><td>审计员读 transcript 后判定的<strong>实际断点</strong></td></tr></tbody></table>
+<p><strong>两者不一致本身是高价值标签</strong>（元认知缺口）：学生以为卡在"不会算积分"，实际卡在"没意识到该用哪个守恒量"——这类错位，恰好是训练"自我诊断"最缺的样本。</p>
+<hr>
+<h2>§6 归因：7 类 + 1 类假解</h2>
+<table><thead><tr><th>代号</th><th>类别</th><th>判据（怎么认出它）</th><th>修复动作</th></tr></thead><tbody><tr><td><strong>C1</strong></td><td>前提缺失</td><td>缺一个定义/定理，题面用了但正文在后面才给</td><td>补 prereq，记 locator</td></tr><tr><td><strong>C2</strong></td><td>记号/约定</td><td>指标、符号、归一化、约定（如 $i\epsilon$）不一致</td><td>补一页"约定卡"</td></tr><tr><td><strong>C3</strong></td><td>未见技巧</td><td>全对但想不到 ansatz / 对偶 / 变换</td><td>记"技巧名 + 触发条件"</td></tr><tr><td><strong>C4</strong></td><td>计算滑步</td><td>方法对，算错（因子、符号、指标）</td><td>记错误类型，不记题</td></tr><tr><td><strong>C5</strong></td><td>逻辑跳跃</td><td>不知道"凭什么这一步成立"（交换极限、取值域、收敛）</td><td>补 warrant（MEMO §3）</td></tr><tr><td><strong>C6</strong></td><td>目标误解</td><td>解错了对象/答非所问/漏小问</td><td>记"他以为要证什么"</td></tr><tr><td><strong>C7</strong></td><td>不知何时停止</td><td>过度计算 / 不知道完成判据</td><td>补"done 判据"</td></tr><tr><td><strong>C8</strong></td><td>假解</td><td>自认为做完，实际错；且无自检</td><td><strong>最高权重</strong>（判别力样本）</td></tr></tbody></table>
+<p>每条归因必须三件套：<code>class</code> + <code>locator</code>（正文/题面/答案的页行）+ <code>evidence</code>（原话）。<strong>没有 locator 的归因不入库</strong>（MEMO §0 铁律 1）。</p>
+<p><strong>一致性门槛</strong>：两个审计员独立标 30 条，<code>κ ≥ 0.6</code> 才允许把归因当标签用；不到就回去改判据，不是改数据（MEMO §9）。</p>
+<hr>
+<h2>§7 数据 schema：<code>datasets/exercise/exercise.jsonl</code></h2>
+<p>一条记录 = <strong>一道题 × 一个学生 × 一次运行</strong>。</p>
+<pre><code class="language-json">{
+  &quot;ex_id&quot;: &quot;QFS2-HW-&lt;页&gt;-&lt;题号&gt;&quot;,
+  &quot;book&quot;: &quot;QFS-1999&quot;,
+  &quot;volume&quot;: 2,
+  &quot;section&quot;: &quot;&lt;节标题&gt;&quot;,
+  &quot;src_page&quot;: 000,
+  &quot;answer_page&quot;: 000,
+  &quot;rights&quot;: &quot;book&quot;,
+  &quot;depends_on&quot;: [000, 000],
+  &quot;statement_verbatim&quot;: &quot;&lt;逐字抄录，不改写&gt;&quot;,
+  &quot;answer_status&quot;: &quot;verified|as_printed|disputed&quot;,
+  &quot;answer_sha&quot;: &quot;&lt;前 16 位&gt;&quot;,
+  &quot;hints&quot;: [
+    {&quot;level&quot;: &quot;L0&quot;, &quot;text&quot;: &quot;...&quot;},
+    {&quot;level&quot;: &quot;L1&quot;, &quot;text&quot;: &quot;...&quot;, &quot;locator&quot;: &quot;[src p.000]&quot;}
+  ],
+  &quot;student_model&quot;: &quot;&lt;族/版本/温度/上下文预算&gt;&quot;,
+  &quot;turns&quot;: 0,
+  &quot;stuck_at&quot;: {&quot;locator&quot;: &quot;[src p.000, eq x.y]&quot;, &quot;claim&quot;: &quot;&lt;原话&gt;&quot;},
+  &quot;self_reported&quot;: &quot;C1..C8&quot;,
+  &quot;audited&quot;: &quot;C1..C8&quot;,
+  &quot;minimal_rung&quot;: &quot;L0..L5&quot;,
+  &quot;solved&quot;: true,
+  &quot;wallclock_s&quot;: 0,
+  &quot;tokens&quot;: {&quot;student&quot;: 0, &quot;teacher&quot;: 0},
+  &quot;leak_check&quot;: &quot;pass|fail&quot;,
+  &quot;auditor_note&quot;: &quot;&lt;为什么这么归类&gt;&quot;
+}</code></pre>
+<p><strong>入库门槛</strong>：<code>stuck_at</code> 有 locator、<code>audited</code> 有 evidence、<code>leak_check=pass</code>、<code>answer_status≠disputed</code>（disputed 先挂起）。四条缺一条不入库。</p>
+<hr>
+<h2>§8 每周一次课：90 分钟时间盒</h2>
+<p>你只有每周一次讨论，所以流程必须<strong>课前机器跑完、课上只看人</strong>。</p>
+<p><strong>T−1 天（机器，约 30 分钟，不占你的时间）</strong></p>
+<ol><li>题库官：按 §3 抽 4 题，抽题面/答案/依赖页，写 <code>week_XX/intake.json</code>；</li><li>提示作者：盲写 4 套 L0–L5 阶梯（<strong>不接触学生</strong>）；</li><li>复算员：独立复算 4 个答案，标 <code>answer_status</code>；</li><li>起 3 个学生 session（互不可见），每人拿 1–2 题，只给正文页。</li></ol>
+<p><strong>课上（60–75 分钟，你在场）</strong></p>
+<ul><li>三个学生并行尝试，教师按阶梯逐级给提示；</li><li><strong>你只看两件事</strong>：卡点落在哪一页；提示有没有越级。看到越级就喊停；</li><li>每题 10–15 分钟封顶，到点未解 → L5 + 记负样本，不恋战。</li></ul>
+<p><strong>课后 20 分钟（机器）</strong></p>
+<ul><li>审计员：归类 + 泄漏检查 + 判定 C8 假解；</li><li>产出 <code>week_XX/report.md</code>：卡点地图（按 locator 聚合）+ 3 条"正文缺口待补" + 本周 <code>minimal_rung</code> 分布；</li><li>你周末花 10 分钟读这一页，决定下周是换 section 还是回补。</li></ul>
+<p><strong>一学期（约 16 周）</strong>：4 题 × 16 周 = 64 道题 × 3 学生 ≈ <strong>190 条轨迹</strong>；一学年 ~380 条。这个量不够训模型，<strong>够做评测集、够训提示模型、够定位正文缺口</strong>——定位要诚实（MEMO §1.2 推论三）。</p>
+<hr>
+<h2>§9 费用与规模（学生预算版）</h2>
+<table><thead><tr><th>项</th><th>预算</th><th>说明</th></tr></thead><tbody><tr><td>学生每回合</td><td>≤1.5K token</td><td>学生不需要长篇推理，要的是"下手"</td></tr><tr><td>教师每回合</td><td>≤3K token</td><td>只输出一级提示，禁止讲解全文</td></tr><tr><td>单题单学生</td><td>≈8 回合 ≈ 40K token</td><td>4 题 × 3 学生 ≈ 480K token/周</td></tr><tr><td>模型档位</td><td>学生用便宜档/本机小模型；教师中档；<strong>L0–L2 绝不用贵档</strong></td><td>贵档只在 L3+ 的一两轮用</td></tr></tbody></table>
+<p><strong>明确不做</strong>（与 MEMO §8 一致）：</p>
+<ul><li>不并行多 agent 解同一题（12 人并行 = 八个自说自话，本库实证）；</li><li>不追求"每题都解出"（解出率 100% 说明题选得太水）；</li><li>不为省钱删掉"卡点冻结"和"归因"（那等于删掉全部价值）。</li></ul>
+<hr>
+<h2>§10 怎么算成功（四条，少一条都不算）</h2>
+<ol><li><strong>可复核卡点</strong>：30 条轨迹里 ≥20 条有能被人复现的 <code>stuck_at</code> 坐标；</li><li><strong>归因一致</strong>：C1–C8 的 κ ≥ 0.6；</li><li><strong>正文缺口</strong>：同一 locator 被 ≥2 个学生卡住的地方 ≥5 处（这是给 <code>datasets/math</code> 的 gap 条目）；</li><li><strong>提示分布</strong>：L3 以上占比稳定在 30–60%——太高说明题太难或正文没读，太低说明题太水。</li></ol>
+<p>第 8 周做一次中期校准：抽 10 条人审，若和审计员判定差太多，先修判据再继续。</p>
+<hr>
+<h2>§11 与现有流水线对接</h2>
+<pre><code>week_XX/                      →  数据集
+  intake.json                 →  datasets/exercise/exercise.jsonl（主表）
+  hints/（4 套阶梯）           →  exercise.jsonl 的 hints 字段
+  transcript/（3 学生）        →  turns / stuck_at / minimal_rung
+  report.md                   →  卡点地图 → datasets/math 的 gap_filling
+                              →  datasets/deepread 的精读卡（正文缺口）</code></pre>
+<ul><li><strong>每周报告</strong>存 <code>_meta/weeks/week_XX/</code>，不进发布层；</li><li><strong>正文缺口</strong>每条单独开一条 <code>datasets/math</code> 候选，走 MEMO §4 的八字段；</li><li>每周末在 <code>_meta/read_receipts.jsonl</code> 追加本周回执（见 §13）。</li></ul>
+<hr>
+<h2>§12 红线（本文件增量，不替代 MEMO §8）</h2>
+<table><thead><tr><th>#</th><th>红线</th></tr></thead><tbody><tr><td>R1</td><td>学生 session 的上下文里<strong>不得出现</strong>答案文件、答案页、阶梯全文</td></tr><tr><td>R2</td><td>提示只能从预注册阶梯里选；临场编造必须标 <code>improvised: true</code> 并单独统计</td></tr><tr><td>R3</td><td>不许把"做出来"当唯一成功；失败轨迹必须保留（负样本是资产）</td></tr><tr><td>R4</td><td>不许同一模型同时当学生和教师</td></tr><tr><td>R5</td><td>学生模型版本、温度、上下文预算必须记录，否则以后无法复现</td></tr><tr><td>R6</td><td>书中答案与复算不符，先记 <code>disputed</code> 并挂起，<strong>不得悄悄改书</strong></td></tr><tr><td>R7</td><td>题目/答案不进发布层；对外只发卡点坐标与归因（版权口径见 COMPLIANCE）</td></tr></tbody></table>
+<hr>
+<h2>§13 开工前 8 问 / 交付前 6 检</h2>
+<p><strong>开工前</strong></p>
+<ol><li><code>check_memo_gate.py</code> 通过了吗？本周回执记了吗？</li><li>这 4 道题的答案 status 是 <code>verified</code> 吗？</li><li>三个学生是不是独立 session、互不可见？</li><li>学生上下文里有没有答案页？</li><li>阶梯写完了吗？是<strong>先写阶梯再开课</strong>吗？</li><li>教师和学生是不同模型族吗？</li><li>每题的 <code>depends_on</code> 页在正文里都有吗？</li><li>时间盒定了吗（每题 15 分钟封顶）？</li></ol>
+<p><strong>交付前</strong></p>
+<ol><li>每条回合一都有 <code>turns</code> 与 token 数？2. 每条 <code>stuck_at</code> 都有 locator？3. 每条 <code>audited</code> 都有 evidence？</li><li><code>leak_check</code> 全 pass？5. <code>report.md</code> 聚合了卡点地图？6. 本周回执已写？</li></ol>
+<hr>
+<h2>§14 第一周最小可行版（先跑通，再谈规模）</h2>
+<p><strong>只做 1 道题、2 个学生、1 个教师、1 个审计员。</strong><br>目标不是数据量，是验证三件事：</p>
+<ol><li>学生会不会<strong>当场</strong>说卡点（还是事后编）；</li><li>教师会不会<strong>越级</strong>（大概率会，这是第一周要发现的）；</li><li>审计员的 <code>audited</code> 能不能对上 <code>self_reported</code>（对不上是正常的，记录差在哪）。</li></ol>
+<p>跑通这一周，再上 4 题 × 3 学生。<strong>第一周失败是廉价失败，规模上去以后失败才贵</strong>（MEMO §11 第 4 条）。</p>
+<hr>
+<p><strong>签署</strong>：PLAYBOOK-02 由 Lead 起草，2026-11-18；随 MEMORANDUM-01 版本联动复审。</p>
+</main>
+<footer><div class="wrap">数译 · 中文数学译注文献库 &nbsp;|&nbsp; 本页为内部方法论文档，可自由转载署名。</div></footer>
+</body></html>
