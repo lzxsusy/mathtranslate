@@ -14,7 +14,7 @@ track: G
 
 仍记自守群为 $G$、其 Langlands 对偶群为 $\check G$，并假设 $\check G$ 为伴随型。记 $\check{\mathfrak g}=\operatorname{Lie}(\check G)$，固定 Borel 子群 $\check B\subset\check G$，置 $\mathfrak c_{\check G}:=\check{\mathfrak g}/\!/\check G=\operatorname{Spec} k[\check{\mathfrak g}]^{\check G}$ 与 $\mathfrak c_{\check G,\Omega}:=(\mathfrak c_{\check G})_{\Omega_X}$。若 $d_1,\ldots,d_r$ 为 $\check{\mathfrak g}$ 的指数，则 $\mathfrak c_{\check G,\Omega}\simeq\bigoplus_i\Omega_X^{d_i+1}$，Hitchin 底空间为 $\operatorname{Hitch}_{\check G}(X):=\Gamma(X,\mathfrak c_{\check G,\Omega})$。本章的要点是，同一个仿射空间出现两次：在经典情形，它是 Hitchin 底空间；在量子情形，它是临界水平中心的相伴分次。
 
-*记号*：$k$ 为基域；$\check{\mathfrak g}/\!/\check G$ 为 Chevalley 商；$(\cdot)_{\Omega_X}$ 表示按次数用 $\Omega_X$ 作扭转；$r=\operatorname{rank}\check{\mathfrak g}$。
+*记号*：$k$ 为基域；$\check{\mathfrak g}/\!/\check G$ 为 Chevalley 商；$(\cdot)_{\Omega_X}$ 表示按次数用 $\Omega_X$ 作扭转；$r=\operatorname{rank}\check{\mathfrak g}$。本卡 $d_i$ 取指数（$\mathfrak c_{\check G,\Omega}\simeq\bigoplus_i\Omega_X^{d_i+1}$，讲义 ch14 约定）；讲义 ch11 与 Beilinson–Drinfeld 取次数 $d_i^{\deg}=d_i+1$，写 $\bigoplus_i\Omega_X^{d_i^{\deg}}$（参 `hitchin-fibration` 卡），两套约定差 1。
 
 ## 要点
 

@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 # 校订译注版构建脚本：xelatex ×3 + makeindex，审计 0 error / 0 undefined，产出成品 PDF 与预览图。
-# 用法： bash 工程文件/tools/build.sh
+# 用法： bash 工程文件/tools/build.sh   （ROOT 由脚本位置推出，也可用 WITTEN_ROOT 覆盖）
 set -uo pipefail
 
-ROOT="/c/Users/admin/Desktop/Witten2015_校注"
+TOOLS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT="${WITTEN_ROOT:-$(cd "$TOOLS_DIR/../.." && pwd)}"
 SRC="$ROOT/源码"
 OUT="$ROOT/成品"
 NAME="Witten2015_规范理论与几何朗兰兹续谈_校订译注版"
@@ -42,7 +43,7 @@ if [ -f main.pdf ]; then
   echo "pages: $pages"
   mkdir -p "$OUT"
   cp -f main.pdf "$OUT/$NAME.pdf"
-  # 预览图：第 1 页（封面/摘要）与正文抽样页
+  # 预览图：第 1 页（封面/摘要）与第 3 页（目录）
   pdftoppm -f 1 -l 1 -r 100 -png main.pdf "$OUT/预览-封面" 2>/dev/null
   pdftoppm -f 3 -l 3 -r 100 -png main.pdf "$OUT/预览-正文" 2>/dev/null
   cd "$OUT"

@@ -98,10 +98,15 @@ def check_environment(tex_only: bool):
             "缺少 PDF 核验或 Unicode 补全依赖. 请先运行：\n"
             "python -m pip install -r unicode_tools/requirements.txt"
         )
-    manifest = json.loads((ROOT / "fonts/font_manifest.json").read_text(encoding="utf-8"))
-    for font in manifest["fonts"]:
-        if digest(ROOT / font["file"]) != font["sha256"]:
-            raise SystemExit(f"字体文件缺失或已更改：{font['file']}")
+    manifest_path = ROOT / "fonts/font_manifest.json"
+    if manifest_path.exists():
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        for font in manifest["fonts"]:
+            if digest(ROOT / font["file"]) != font["sha256"]:
+                raise SystemExit(f"字体文件缺失或已更改：{font['file']}")
+    else:
+        print("提示：本包不随带字体（fonts/ 不存在），中文使用系统字体 "
+              "SimSun/SimHei（缺则 Noto Serif SC）；请确认系统中已安装。")
 
 
 def compile_document():

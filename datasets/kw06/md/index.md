@@ -21,7 +21,7 @@
 
 - [从 GNO 对偶群到 Langlands 对偶群](derivations/gno-to-langlands.md) —— 从 GNO 关于电荷取权格、磁荷取对偶群权格的结果出发，经 Montonen–Olive 的耦合反演与群交换、Atiyah 的指认，得到 N=4 SYM 的 S-对偶是几何 Langlands 对偶的物理来源。
 - [S-对偶生成元、SL(2,Z) 与超荷的双覆盖](derivations/sdual-sl2z.md) —— 从 $\mathrm{SL}(2,\mathbb Z)$ 的生成元 $S,T$ 出发，经中心荷的协变变换得到超荷在 $S$ 下的相位；该相位的平方根使对偶群须由 $(-1)^F$ 双覆盖，并定出 $S$ 在扭化参数 $t$ 上的作用。
-- [非单连通群的 n_g 修正与 Table 1](derivations/table1-and-ng.md) —— 从 Table 1 的七行对偶出发，说明 $n_g$ 只在 $\mathrm{Sp}(k)\leftrightarrow\mathrm{Spin}(2k+1)$ 这类李代数不同构的群对上出现，并由 $\tau$ 的归一化定出 $n_g=2$（$F_4$）与 $n_g=3$（$G_2$）。
+- [非单边（non-simply-laced）群的 $n_g$ 修正与 Table 1](derivations/table1-and-ng.md) —— 从 Table 1 的七行对偶出发，说明 $n_g$ 只在 $\mathrm{Sp}(k)\leftrightarrow\mathrm{Spin}(2k+1)$ 这类李代数不同构的群对上出现，并由 $\tau$ 的归一化定出 $n_g=2$（$F_4$）与 $n_g=3$（$G_2$）。
 
 ## 轨道 B · 扭化与拓扑
 
@@ -51,11 +51,11 @@
 - [复结构](concepts/complex-structure.md) —— 切丛上满足 $I^2=-1$ 且可积的自同态；B-模型只依赖一个复结构，而 $M_H$ 上有一整族由 $S^2$ 参数化的复结构，扭化参数正是选它的参数。
 - [希格斯丛](concepts/higgs-bundle.md) —— 曲线 $C$ 上的对 $(E,\varphi)$：$E$ 是 $G$-丛，希格斯场 $\varphi\in H^0(C,K_C\otimes\mathrm{ad}E)$；稳定对构成 $M_H$ 在复结构 $I$ 下的模型。
 - [希格斯场](concepts/higgs-field.md) —— 紧化后在 $C$ 上留下的 $(1,0)$-形式场 $\varphi$，即 $K_C\otimes\mathrm{ad}E$ 的全纯截面；它与联络 $A$ 一起编码 Hitchin 方程，并在复结构 $J$ 下与 $A$ 合成平坦 $G_{\mathbb C}$ 联络。
-- [Hitchin 纤维化](concepts/hitchin-fibration.md) —— 把 $(E,\varphi)$ 送到 Casimir 不变量的映射 $\pi:M_H\to B$：底与一般纤维的复维都占一半、纤维是复环面，使其成为完全可积系统，也是 SYZ 镜像的几何基础。
+- [Hitchin 纤维化](concepts/hitchin-fibration.md) —— 把 $(E,\varphi)$ 送到 Casimir 不变量的映射 $\pi:M_H\to B$：底与一般纤维的复维都占一半、一般纤维是复环面，使其成为完全可积系统，也是 SYZ 镜像的几何基础。
 - [Hitchin 模空间](concepts/hitchin-moduli.md) —— Hitchin 方程 $F-\varphi\wedge\varphi=0,\ D\star\varphi=0$ 的解模规范群得到的空间 $M_H(G,C)$：复维 $(2g-2)\dim G$ 的超凯勒流形，是紧化后二维 sigma 模型的靶空间。
 - [超凯勒流形](concepts/hyperkahler-manifold.md) —— 带三个复结构 $I,J,K$（满足四元数关系）与相容度量、且三个辛形式都闭的流形；超凯勒性使同一流形上有一整族复结构，是二维 A/B 模型可以互换的几何前提。
 - [超凯勒商](concepts/hyperkahler-quotient.md) —— 对超凯勒流形取三个矩映射同时为零、再模去群作用，得 $X/\!/\!/H=\vec\mu^{-1}(0)/H$；它自动继承超凯勒结构，$M_H=\mathcal W/\!/\!/G$ 是主要例子。
-- [可积系统](concepts/integrable-system.md) —— 有足够多（半维数）两两 Poisson 交换的 Hamilton 量的辛流形；$M_H$ 在复结构 $I$ 下完全可积，等值面就是 Hitchin 纤维，是紧复环面。
+- [可积系统](concepts/integrable-system.md) —— 有足够多（半维数）两两 Poisson 交换的 Hamilton 量的辛流形；$M_H$ 在复结构 $I$ 下完全可积，等值面就是 Hitchin 纤维，一般纤维是紧复环面。
 - [矩映射](concepts/moment-map.md) —— 群作用在辛流形上给出的守恒量映射 $\mu:X\to\mathfrak h^*$，由 $\iota_{V(\epsilon)}\omega=\delta\mu_\epsilon$ 定义；Hitchin 方程正是三个矩映射同时为零。
 - [Riemann 面](concepts/riemann-surface.md) —— 紧致的一维复流形（复代数曲线）；本文取亏格 $g>1$，使半单群 $G$ 的平坦联络一般不可约，它是 Hitchin 方程与几何 Langlands 的共同舞台。
 

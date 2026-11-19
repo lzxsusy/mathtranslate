@@ -20,7 +20,7 @@ $$h:T^*\operatorname{Bun}_G\longrightarrow\mathcal A_G,\qquad(P,\varphi)\longmap
 $$\Gamma(X,\mathfrak g_P^*\otimes\Omega_X)\longrightarrow\Gamma(X,(\mathfrak g^*\!/\!/ G)_{\Omega_X}),$$
 其中 $({-})_{\Omega_X}$ 表示由 $\mathfrak g^*$ 上的伸缩作用产生的 $\mathbb G_m$-扭转；取次数为 $d_i$ 的齐次生成元 $p_i$ 后，该目标为 $\bigoplus_i H^0(X,\Omega_X^{d_i})$。
 
-*记号*：$\mathcal A_G$ 称为 Hitchin 基；$p_i$ 是 $\mathbb C[\mathfrak g^*]^G$ 的次数 $d_i$ 齐次生成元；$\Omega_X^{d_i}=\Omega_X^{\otimes d_i}$；$\mathfrak g^*\!/\!/G=\operatorname{Spec}\mathbb C[\mathfrak g^*]^G$ 为不变量商。
+*记号*：$\mathcal A_G$ 称为 Hitchin 基；$p_i$ 是 $\mathbb C[\mathfrak g^*]^G$ 的次数 $d_i$ 齐次生成元；$\Omega_X^{d_i}=\Omega_X^{\otimes d_i}$；$\mathfrak g^*\!/\!/G=\operatorname{Spec}\mathbb C[\mathfrak g^*]^G$ 为不变量商。本卡 $d_i$ 取次数（讲义 ch11 约定）；讲义 ch14 与 Frenkel 取指数 $d_i^{\mathrm{exp}}=d_i-1$，把底空间写成 $\bigoplus_i\Omega_X^{d_i^{\mathrm{exp}}+1}$（参 `hitchin-base` 卡），两套约定差 1。
 
 ## 要点
 

@@ -5,18 +5,32 @@
 \PassOptionsToPackage{no-math}{fontspec}
 \usepackage{fontspec}
 \usepackage{xeCJK}
-\setCJKmainfont{FandolSong-Regular.otf}[
-  BoldFont=FandolSong-Bold.otf,
-  ItalicFont=FandolSong-Regular.otf,
-  BoldItalicFont=FandolSong-Bold.otf
-]
-\setCJKsansfont{FandolHei-Regular.otf}[
-  BoldFont=FandolHei-Bold.otf,
-  ItalicFont=FandolHei-Regular.otf,
-  BoldItalicFont=FandolHei-Bold.otf
-]
-\setCJKmonofont{FandolSong-Regular.otf}[BoldFont=FandolSong-Bold.otf,ItalicFont=FandolSong-Regular.otf,BoldItalicFont=FandolSong-Bold.otf]
-\setCJKfamilyfont{kaishu}{FandolKai-Regular.otf}[]
+% ---- 中文字体（2026-11-19：由 Fandol 改为系统宋体/黑体/楷体）----
+% 动机：Fandol 系列 OTF 缺 post 字形名，xdvipdfmx 写不出 ToUnicode CMap，
+% 成品 PDF 的中文不可复制/不可检索（pdftotext 只能抽出西文与公式）。
+% 方案：Windows 宋体 + 黑体（与库内 SY02-09 先例一致）；无则退 Noto Serif SC；
+% 两者都无时才退回 Fandol 并给出警告（此时 PDF 文本不可检索）。
+\IfFontExistsTF{SimSun}{%
+  \setCJKmainfont{SimSun}[BoldFont=SimHei,ItalicFont=SimSun,BoldItalicFont=SimHei]%
+  \setCJKsansfont{SimHei}[BoldFont=SimHei,ItalicFont=SimHei,BoldItalicFont=SimHei]%
+  \setCJKmonofont{SimSun}[BoldFont=SimHei,ItalicFont=SimSun,BoldItalicFont=SimHei]%
+  \IfFontExistsTF{KaiTi}%
+    {\setCJKfamilyfont{kaishu}{KaiTi}[]}%
+    {\setCJKfamilyfont{kaishu}{SimSun}[]}%
+}{%
+  \IfFontExistsTF{Noto Serif SC}{%
+    \setCJKmainfont{Noto Serif SC}[AutoFakeBold=2,ItalicFont=Noto Serif SC]%
+    \setCJKsansfont{Noto Sans SC}[AutoFakeBold=2,ItalicFont=Noto Sans SC]%
+    \setCJKmonofont{Noto Serif SC}[]%
+    \setCJKfamilyfont{kaishu}{Noto Serif SC}[]%
+  }{%
+    \PackageWarning{wu2015}{SimSun / Noto Serif SC not found; falling back to Fandol (PDF text NOT extractable)}%
+    \setCJKmainfont{FandolSong-Regular.otf}[BoldFont=FandolSong-Bold.otf,ItalicFont=FandolSong-Regular.otf,BoldItalicFont=FandolSong-Bold.otf]%
+    \setCJKsansfont{FandolHei-Regular.otf}[BoldFont=FandolHei-Bold.otf,ItalicFont=FandolHei-Regular.otf,BoldItalicFont=FandolHei-Bold.otf]%
+    \setCJKmonofont{FandolSong-Regular.otf}[BoldFont=FandolSong-Bold.otf]%
+    \setCJKfamilyfont{kaishu}{FandolKai-Regular.otf}[]%
+  }%
+}%
 \newcommand{\kaishu}{\CJKfamily{kaishu}}
 \xeCJKsetup{AutoFakeBold=false,AutoFakeSlant=false}
 \setmainfont{cmunrm.otf}[

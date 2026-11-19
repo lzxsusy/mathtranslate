@@ -15,13 +15,13 @@
 ## 前提
 
 - $N=4$ SYM 的耦合 $\tau=\theta/2\pi+4\pi i/e^2$ 与超代数 eq (2.15) 见 `B p.11`。
-- 单连通群的 $S$ 生成元 eq (2.16)，非单连通时 $n_g$ 的修正 eq (2.17)，见 `B p.11`。
+- 单边（simply-laced）群的 $S$ 生成元 eq (2.16)，非单边时 $n_g$ 的修正 eq (2.17)，见 `B p.11`。
 
 ## 推导链
 
 | # | 步骤 | 为什么 | 出处 | 可信度 |
 |---|---|---|---|---|
-| 1 | $T:\tau\mapsto\tau+1$ 是 $\theta$ 平移 $2\pi$ 的经典对称，对所有 $G$ 成立；$S:\tau\mapsto-1/(n_g\tau)$ 是量子对偶，二者生成 $\mathrm{SL}(2,\mathbb Z)$（单连通）或相应的离散子群 $\Gamma$。 | 先明确 $\Gamma$ 的生成元，才能把对偶写成对 $(\tau,t,\text{超荷})$ 的具体变换，而不是泛泛的「强弱互换」。 | `B p.11` | A·原文明确写了 |
+| 1 | $T:\tau\mapsto\tau+1$ 是 $\theta$ 平移 $2\pi$ 的经典对称，对所有 $G$ 成立；$S:\tau\mapsto-1/(n_g\tau)$ 是量子对偶，二者生成 $\mathrm{SL}(2,\mathbb Z)$（单边情形）或相应的离散子群 $\Gamma$。 | 先明确 $\Gamma$ 的生成元，才能把对偶写成对 $(\tau,t,\text{超荷})$ 的具体变换，而不是泛泛的「强弱互换」。 | `B p.11` | A·原文明确写了 |
 | 2 | 在 Coulomb 分支上，电、磁荷与复标量按 eq (2.22)–(2.24) 随 $M=\begin{pmatrix}a&b\\c&d\end{pmatrix}$ 协变：$\tau\to(a\tau+b)/(c\tau+d)$，$(\tilde m,\tilde n)\to(\tilde m,\tilde n)M^{-1}$，中心荷的相位也随 $c\tau+d$ 变换。 | 正是中心荷的变换给出超荷相位的具体形式；跳过它就只能猜相位。 | `B p.15 eq (2.22)` | A·原文明确写了 |
 | 3 | 由中心荷的变换可解出 eq (2.25)：$e^{-i\hat\varphi(\gamma)}=(\|c\tau+d\|/(c\tau+d))^{1/2}$。平方根表示作用在超荷上的群是 $\Gamma$ 的双覆盖，扩展由改变所有费米子符号的 $(-1)^F$ 给出。 | 没有平方根，$\hat\varphi$ 只能是 $c\tau+d$ 的相位的一半，无法在 $\Gamma$ 上单值化；这就是必须取双覆盖的原因。 | `B p.16 eq (2.25)` | A·原文明确写了 |
 | 4 | 把相位用到扭化参数上：$\varepsilon_\ell\to e^{i\hat\varphi}\varepsilon_\ell$、$\varepsilon_r\to e^{-i\hat\varphi}\varepsilon_r$，为保持 $\varepsilon=u\varepsilon_\ell+v\varepsilon_r$ 不变须 $t=v/u\to e^{2i\hat\varphi}t$，即 eq (3.13)；中心元 $I$ 给 $I(t)=-t$。 | 这一步说明 $S$ 不是 $t$ 的经典对称：它同时转动 $t$ 与超荷，$t$ 的 CP¹ 坐标只是在忽略相位后才可用。 | `B p.22 eq (3.13)` | A·原文明确写了 |

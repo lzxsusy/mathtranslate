@@ -1,4 +1,4 @@
-# 非单连通群的 n_g 修正与 Table 1
+# 非单边（non-simply-laced）群的 $n_g$ 修正与 Table 1
 
 > `kw/deriv/table1-and-ng` · 轨道 A · 四维物理与对偶 · 状态 dev · 4 步
 
@@ -24,7 +24,7 @@
 | 1 | 逐行读出 Table 1：$\mathrm{U}(N)\leftrightarrow\mathrm{U}(N)$、$\mathrm{SU}(N)\leftrightarrow\mathrm{PSU}(N)$、$\mathrm{Spin}(2n)\leftrightarrow\mathrm{SO}(2n)/\mathbb Z_2$、$\mathrm{Sp}(n)\leftrightarrow\mathrm{SO}(2n+1)$、$\mathrm{Spin}(2n+1)\leftrightarrow\mathrm{Sp}(n)/\mathbb Z_2$、$G_2$ 与 $E_8$ 自对偶。这些群对的根格与余根格互换，是 GNO 荷格规则的逐群实现。 | 先把表读全，才能看出哪些行两边李代数同构、哪些不同构；后者才是 $n_g$ 的来源。 | `B p.3` | A·原文明确写了 |
 | 2 | $n_g$ 只在李代数不同构的群对上出现：$\mathrm{Sp}(k)$ 与 $\mathrm{Spin}(2k+1)$ 是唯二这样的单群对，因为 YM 作用量与 $\tau$ 只依赖李代数，所以必须分别设 $\tau$ 与 $\tau'$ 再比较。 | 若两边李代数同构，可直接用同一个 $\tau$；不同构时直接比较会把归一化因子误当成物理效应。 | `B p.12` | A·原文明确写了 |
 | 3 | 归一化使 $T$ 为 $\tau\to\tau+1$、$\tau'\to\tau'+1$，则 $S$ 作用为 $\tau=-1/(2\tau')$、$\tau'=-1/(2\tau)$，与 $F_4$ 的 $n_g=2$ 同型。换成 $\tilde\tau=2\tau$ 可消去因子，但此时 $T:\tilde\tau\to\tilde\tau+2$。 | 这一步说明 $n_g$ 不是物理常数，而是 $S$ 与 $T$ 的相对归一化；换归一化会把它移到 $T$ 上。 | `B p.12` | A·原文明确写了 |
-| 4 | $n_g$ 的完整取值：单边（单连通）为 $1$，$F_4$ 为 $2$，$G_2$ 为 $3$；后两者的对偶群不是 $\mathrm{SL}(2,\mathbb Z)$ 而是 Hecke 群。 | 若不区分单边与非单边，就会把 $S:\tau\mapsto-1/\tau$ 错用到所有群上，导致 Table 1 中 $G_2$、$F_4$ 两行无法自洽。 | `B p.12` | A·原文明确写了 |
+| 4 | $n_g$ 的完整取值：simply-laced（$A_n,D_n,E_6,E_7,E_8$）为 $1$，$F_4$ 为 $2$，$G_2$ 为 $3$，$\mathrm{Spin}(2k+1)$ 与 $\mathrm{Sp}(k)$ 为 $2$；注意 $F_4,G_2,\mathrm{Spin}(2k+1),\mathrm{Sp}(k)$ 都是单连通群，但 $n_g$ 并不为 $1$；后两者的对偶群不是 $\mathrm{SL}(2,\mathbb Z)$ 而是 Hecke 群。 | 若不区分单边与非单边，就会把 $S:\tau\mapsto-1/\tau$ 错用到所有群上，导致 Table 1 中 $G_2$、$F_4$ 两行无法自洽。 | `B p.12` | A·原文明确写了 |
 
 ## 结论
 
@@ -32,7 +32,7 @@ Table 1 的每一行都由 GNO 荷格配对给出；$n_g$ 修正只在李代数�
 
 ## 缺口
 
-- 原文明说非单连通情形的完整故事还要特征类 $\xi\in H^2(M,\pi_1(G))$，本文不做，留给 §7。
+- 原文明说非单连通（$\pi_1(G)\neq1$，与 $n_g$ 无关）情形的完整故事还要特征类 $\xi\in H^2(M,\pi_1(G))$，本文不做，留给 §7。
 
 ## 最容易讲错的地方
 

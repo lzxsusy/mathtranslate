@@ -19,7 +19,7 @@ Langlands 对偶群 ${}^LG$ 是根数据 $(X^*,X_*,\dots)$ 取对偶所得的群
 1. 几何 Langlands 的陈述两侧是 $G$-丛与 ${}^LG$-局部系统，没有 ${}^LG$ 就无法写出这个对应。
 2. 它把 S-对偶中『群被替换』说清楚：换群不是任意的，而是根数据对偶。
 3. Table 1 的对应（如 $\mathrm{Spin}(2n)\leftrightarrow\mathrm{SO}(2n)/\mathbb Z_2$）是检验物理对偶的离散数据。
-4. 它统一自对偶（$E_8$、$G_2$）与非自对偶情形，并解释非 simply-laced 的 $n_g$ 修正来自根与余根长度不同。
+4. 它统一自对偶（$E_8$、$G_2$）与非自对偶情形，并解释非单边（non-simply-laced）的 $n_g$ 修正来自根与余根长度不同。
 
 ## 核心公式
 
@@ -41,9 +41,9 @@ GNO/Langlands 对偶给出：$\mathrm{U}(N)\leftrightarrow\mathrm{U}(N)$、$\mat
 
 出处：`B p.3`
 
-### 非 simply-laced 的 $n_g$ 修正
+### 非单边的 $n_g$ 修正
 
-$S$ 变换在非 simply-laced 群上为 $\tau\mapsto-1/(n_g\tau)$，$n_g=2$ 对 $F_4$、$n_g=3$ 对 $G_2$；这反映根与余根长度之比。
+$S$ 变换在非单边群上为 $\tau\mapsto-1/(n_g\tau)$，$n_g=2$ 对 $F_4$、$n_g=3$ 对 $G_2$；这反映根与余根长度之比。
 
 > 证明状态：**sketch**。原文 p.11 只给出结果与矩阵 (2.17)，未证明；p.13 说也可由 BPS 质量公式看出。
 
@@ -57,7 +57,7 @@ $S$ 变换在非 simply-laced 群上为 $\tau\mapsto-1/(n_g\tau)$，$n_g=2$ 对 
 
 ## 相关卡
 
-[GNO 对偶群](../concepts/gno-dual-group.md) · [S-对偶](../concepts/s-duality.md) · [几何 Langlands 对应](../concepts/geometric-langlands.md) · [非单连通群的 n_g 修正与 Table 1](../derivations/table1-and-ng.md)
+[GNO 对偶群](../concepts/gno-dual-group.md) · [S-对偶](../concepts/s-duality.md) · [几何 Langlands 对应](../concepts/geometric-langlands.md) · [非单边（non-simply-laced）群的 $n_g$ 修正与 Table 1](../derivations/table1-and-ng.md)
 
 ## 出处（印刷页）
 

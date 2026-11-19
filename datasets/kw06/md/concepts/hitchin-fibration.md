@@ -6,13 +6,13 @@
 
 ## 一句话
 
-把 $(E,\varphi)$ 送到 Casimir 不变量的映射 $\pi:M_H\to B$：底与一般纤维的复维都占一半、纤维是复环面，使其成为完全可积系统，也是 SYZ 镜像的几何基础。
+把 $(E,\varphi)$ 送到 Casimir 不变量的映射 $\pi:M_H\to B$：底与一般纤维的复维都占一半、一般纤维是复环面，使其成为完全可积系统，也是 SYZ 镜像的几何基础。
 
 ## 定义
 
 设 $G$ 的秩为 $r$、基本不变多项式为 $P_i$（相应次数 $d_i$），Hitchin 纤维化定义为 $\pi:M_H(G,C)\to B=\bigoplus_{i=1}^{r}H^0(C,K_C^{d_i})$，$(E,\varphi)\mapsto(P_1(\varphi),\dots,P_r(\varphi))$。它在复结构 $I$ 下全纯并且满射，底与一般纤维的复维都等于 $(g-1)\dim G=\frac{1}{2}\dim M_H$。一般纤维是紧复环面，并且对 $\omega_J,\omega_K$ 是 Lagrangian 子流形。
 
-**记号**：$\pi:M_H\to B$；$B=\bigoplus_{i=1}^{r}H^0(C,K_C^{d_i})$；$P_i$：基本不变多项式；$\mathcal F_b=\pi^{-1}(b)$。
+**记号**：$\pi:M_H\to B$；$B=\bigoplus_{i=1}^{r}H^0(C,K_C^{d_i})$；$P_i$：基本不变多项式；$\mathcal F_b=\pi^{-1}(b)$。$d_i$ 取次数（与 Witten 2015 式 (2.5)–(2.6) 的约定一致）；若改用指数 $d_i^{\mathrm{exp}}$（$=$ 次数 $-1$），底空间应写作 $\bigoplus_i H^0(C,K_C^{d_i^{\mathrm{exp}}+1})$，两种约定差 1。
 
 ## 要点（为什么需要它）
 

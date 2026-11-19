@@ -12,13 +12,13 @@
 
 S-对偶猜想断言四维 $\mathcal N=4$ 超杨–米尔斯理论存在一个量子对称 $S$，它把 $\tau$ 变为 $-1/(n_g\tau)$、把规范群 $G$ 换成 Langlands 对偶群 ${}^LG$ 并交换电与磁荷；$S$ 与经典对称 $T:\tau\mapsto\tau+1$ 一起生成子群 $\Gamma\subset\mathrm{SL}(2,\mathbb R)$。
 
-**记号**：$n_g$ 为花边数（ADE 为 1，$B,C,F_4$ 为 2，$G_2$ 为 3）；$\tau=\theta/2\pi+4\pi\ii/e^2$；$\Gamma$ 为 $\mathrm{SL}(2,\mathbb Z)$ 或其非 simply-laced 变体。
+**记号**：$n_g$ 为 lacing number（$ADE$ 为 1，$B,C,F_4$ 为 2，$G_2$ 为 3）；$\tau=\theta/2\pi+4\pi\ii/e^2$；$\Gamma$ 为 $\mathrm{SL}(2,\mathbb Z)$ 或其非单边变体。
 
 ## 要点（为什么需要它）
 
 1. 全文的关键物理输入：二维极限下 $S$ 变成 $M_H(G,C)$ 与 $M_H({}^LG,C)$ 之间的镜像对称，两个几何由此连接。
 2. 只有把 $\theta$ 与 $e$ 合成 $\tau$，强弱对偶才成为 $\mathrm{SL}(2,\mathbb Z)$ 的算术作用，这是 $\theta$ 角在本文中不可省的原因。
-3. 非 simply-laced 群必须用 $n_g$ 修正反演：$S:\tau\mapsto-1/(n_g\tau)$，$n_g=2,3$ 正对应 $F_4$、$G_2$。
+3. 非单边群必须用 $n_g$ 修正反演：$S:\tau\mapsto-1/(n_g\tau)$，$n_g=2,3$ 正对应 $F_4$、$G_2$（$\mathrm{Spin}(2k+1)$ 与 $\mathrm{Sp}(k)$ 也取 $n_g=2$，见 KW2006 p.12）。
 4. $S$ 在超荷上不是经典作用，而是手征旋转；其相因子含平方根，故作用群是 $\Gamma$ 的双覆盖，需用 $(-1)^F$ 扩张。
 
 ## 核心公式
@@ -57,7 +57,7 @@ $$
 
 - 把 S-对偶说成只是 $\tau\mapsto-1/\tau$：必须同时把 $G$ 换成 ${}^LG$ 并交换电/磁荷，漏掉群的对偶就只剩算术作用。
 - 以为 $S$ 是经典拉氏量的对称：除 $T$ 外 $\Gamma$ 不含经典对称，$S$ 是量子对称，只能在 BPS 谱等量子数据上检验。
-- 忽略 $n_g$：非 simply-laced 时反演是 $-1/(n_g\tau)$；把 $F_4$ 也写成 $-1/\tau$ 是常见错误。
+- 忽略 $n_g$：非单边时反演是 $-1/(n_g\tau)$；把 $F_4$ 也写成 $-1/\tau$ 是常见错误。
 
 ## 相关卡
 

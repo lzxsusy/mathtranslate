@@ -5,9 +5,10 @@
 原文题名：More On Gauge Theory And Geometric Langlands
 版本：arXiv:1506.04293v3，2017 年 7 月 28 日
 
-本目录包含完整中文正文、原文参考文献、术语索引、两张矢量图、规定字体、
-编译入口及 PDF Unicode 映射补全工具. 所有项目资源均通过相对路径引用，
-无需原工作区，也无需在系统中安装本包提供的 OpenType 字体.
+本目录包含完整中文正文、原文参考文献、术语索引、两张矢量图、编译入口及
+PDF 核验/Unicode 工具. 所有项目资源均通过相对路径引用，无需原工作区.
+中文字体使用系统的宋体（SimSun）、黑体（SimHei）与楷体（KaiTi），不再随包
+分发字体文件；字体缺失时的回退见第四节.
 
 一、环境要求
 ------------
@@ -21,6 +22,12 @@
    xr、eucal、titlesec、tocbibind、imakeidx、hyperref、bookmark、cleveref.
    请使用这些包相互兼容的发行版本. 原 Computer Modern / AMS / Euler
    数学字体及其 TeX 字体映射由 TeX 发行版提供.
+
+   中文字体（不随包，需系统已安装其一）：
+     首选  SimSun（宋体，正文）、SimHei（黑体，粗体与标题）、KaiTi（楷体）；
+     备选  Noto Serif SC / Noto Sans SC（免费字体，跨平台可用）；
+     两者皆无时自动回退 TeX 发行版自带的 Fandol 系列，但 Fandol 生成的 PDF
+     文本不可复制/不可检索，此时请先安装上述任一字体再编译.
 
 2. Python 3.10 或更新版本.
 
@@ -84,25 +91,23 @@ main.log 及 main-build-*.txt.
    bibliography.tex         原文参考文献与引用页回链
    index.ist                术语索引点线引导与链接格式
    gla8-1.pdf, gla8-2.pdf    保留矢量文字与嵌入字体的原图
-   appendix_notes.tex       附录 A 译注汇总（由 工程文件/tools/gen_appendix.py 生成）
-   appendix_glossary.tex    附录 B 中英术语对照表（同上，机械生成）
    compile.py, build.sh     可移植构建入口
    unicode_tools/           Unicode 补全工具、数据与 Python 依赖版本
 
 四、字体与版式
 --------------
 
-中文正文使用 FandolSong，粗体使用相应真实粗体；标题使用 FandolHei.
-FandolKai 用于指定楷体命令. 中文处于斜体环境时保持对应直立字形，
-不生成伪斜体. 西文正文使用 CMU Serif，西文标题使用 Latin Modern Sans，
-URL 等等宽文字使用 Latin Modern Mono.
+中文正文使用 SimSun（宋体），粗体与标题使用 SimHei（黑体），楷体命令
+使用 KaiTi；中文处于斜体环境时保持对应直立字形，不生成伪斜体. 西文正文
+使用 CMU Serif，西文标题使用 Latin Modern Sans，URL 等等宽文字使用
+Latin Modern Mono，均由 TeX 发行版提供.
 
-【2026-11 校订译注版改动】本包不再随附字体：原先 fonts/ 下 15 个
-OpenType 字体（29 MB）已移除，preamble.tex 改由 kpathsea 从 TeX 发行版
-解析（TeX Live / MiKTeX 的 fandol、cm-unicode、lm 包；实测 MiKTeX 26.5
-可编译）。同时新增 booktabs / longtable / enumitem / xurl 四个宏包，
-\transnote{} 译为脚注「译注｜」，附录 A/B 由各 part 文件机械生成，
-正文末尾为中文概念索引.
+字体选择由 preamble.tex 开头的 \IfFontExistsTF 链决定：SimSun 存在时用
+宋体/黑体/楷体；否则若存在 Noto Serif SC 则用之；两者都无才退回 Fandol
+并给出警告. 之所以不再用 Fandol：Fandol 的 OTF 缺少 post 字形名，
+xdvipdfmx 无法写出 ToUnicode CMap，成品 PDF 的中文不能被复制或检索
+（pdftotext 只能抽到西文与公式）。SimSun/SimHei/Noto Serif SC 均能生成
+ToUnicode，故本版 PDF 的中文、公式与「译注｜」脚注均可复制、可全文检索.
 
 数学公式保留原文 Computer Modern / AMS / Euler 字体与原数学宏.
 文档使用 article、letterpaper、reqno、11pt、四边 1 英寸页边距与
@@ -111,8 +116,11 @@ OpenType 字体（29 MB）已移除，preamble.tex 改由 kpathsea 从 TeX 发�
 
 字体的版权和再分发条件以 licenses/ 中的原始文件为准.
 
-五、Unicode 补全工具
--------------------
+五、Unicode 补全工具（本版通常不再需要）
+------------------------------------
+
+本版字体已自带 ToUnicode 映射（pdffonts 各字体 uni 列为 yes），无需再补.
+下列工具保留给未切换字体的旧 PDF 或需要在外部 PDF 上补映射的场合：
 
 也可对本项目编译得到的 PDF 单独运行：
 

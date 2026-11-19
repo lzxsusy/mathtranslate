@@ -57,7 +57,7 @@ $$
 
 ## 相关卡
 
-[Langlands 对偶群](../concepts/langlands-dual-group.md) · [电磁对偶](../concepts/electromagnetic-duality.md) · [从 GNO 对偶群到 Langlands 对偶群](../derivations/gno-to-langlands.md) · [非单连通群的 n_g 修正与 Table 1](../derivations/table1-and-ng.md)
+[Langlands 对偶群](../concepts/langlands-dual-group.md) · [电磁对偶](../concepts/electromagnetic-duality.md) · [从 GNO 对偶群到 Langlands 对偶群](../derivations/gno-to-langlands.md) · [非单边（non-simply-laced）群的 $n_g$ 修正与 Table 1](../derivations/table1-and-ng.md)
 
 ## 出处（印刷页）
 
