@@ -1,0 +1,62 @@
+# Pfaffian 线丛与 theta 函数
+
+> `gtgl15/concept/pfaffian-theta` · 轨道 E · 行列式线丛与本征值 · 状态 dev
+
+> **先自测**：为什么在自对偶的纤维上真正良定义的对象往往只是“线丛的平方根”（Pfaffian），而 theta 函数正是它的截面？
+
+## 一句话
+
+Pfaffian 线丛是行列式线丛在 spin 结构下的“平方根”，其截面给 theta 函数；$K^{1/2}$ 的选取（偶 $N$）与它对偶侧的 $Z_2$ gerbe 都由此而来（背景补全，原文未用此名）。
+
+## 定义
+
+给定 $C$ 上的 spin 结构 $K^{1/2}$，$H^0(C,K^{1/2})$ 上的自然配对是反对称的，其行列式线丛有一个典范的平方根，称 Pfaffian 线丛。在 Hitchin 系统里，偶 $N$ 的谱覆盖需要选 $K^{1/2}$ 才能把纤维写成典范阿贝尔簇；两种选取差一个 $2$-torsion 平坦线丛（$\S2.6.3$）。Pfaffian 线丛的截面就是 theta 函数，theta divisor 给出主极化。原文没有使用“Pfaffian/theta”这两个词，本卡按 $\S2.6.3$ 的 $K^{1/2}$、$\S3.2$ 脚注 11 的偶 $N$ gerbe 与 $\S6.3$ 的 $Z_2$ gerbe（spin 结构）重建。
+
+**记号**：$K^{1/2}$；Pfaffian 线丛；$\theta$；$2$-torsion；theta divisor。
+
+## 要点（为什么需要它）
+
+1. spin 结构 $K^{1/2}$ 的两种选取差一个 $2$-torsion 线丛；这是 Hitchin 纤维“自然阿贝尔簇”陈述中的歧义来源。
+2. Pfaffian 线丛 = 行列式线丛的平方根；它只在选了 spin 结构后才有典范意义。
+3. theta 函数是 Pfaffian（或主极化线丛）的截面；theta divisor 是 Prym 上的主除子。
+4. 偶 $N$ 的 S-对偶产生“平凡但不典范平凡”的 gerbe（$\S3.2$ 脚注 11），与 $K^{1/2}$ 的选取同源。
+5. $C$ 上的 $Z_2$ gerbe（$\S6.3$ 例 1）就是 spin 结构的分类空间；两个 spin 结构差 $2$-阶线丛。
+
+## 核心公式
+
+$$
+$$\mathrm{Pf}(K^{1/2})^2=\det H^0(C,K^{1/2}),\qquad K^{1/2}\ \text{的两种选取差 }2\text{-torsion}$$$$\theta\text{ 函数}\in H^0(\mathrm{Prym}(D/C),\mathcal L_\theta),\qquad \mathcal L_\theta\ \text{主极化}$$
+$$
+
+$$
+$$\theta\text{ 函数}\in H^0(\mathrm{Prym}(D/C),\mathcal L_\theta),\qquad \mathcal L_\theta\ \text{主极化}$$
+$$
+
+## 定理与证明（或缺口）
+
+### $K^{1/2}$ 与 $Z_2$ gerbe 的同源
+
+偶 $N$ 时 $K^{1/2}$ 的选取分歧与 $\S6.3$ 例 1 的 $Z_2$ gerbe 是同一现象的两个面向。
+
+> 证明状态：**sketch**。此卡的 Pfaffian/theta 语言是背景补全：原文全文未出现这两个词，只有 $K^{1/2}$ 与 $Z_2$ gerbe 的论述（已 grep 核实）。
+
+出处：`A p.63`
+
+## 常见误解
+
+- 原文没有“Pfaffian 线丛”这个词：本卡是 C 级背景补全，不要把术语当成 Witten 2015 的原文术语。
+- theta 函数依赖 spin 结构的选择；换了 $K^{1/2}$，theta 特征标会变。
+- Pfaffian 不是 $\det$：它是行列式线丛的平方根，只在 spin 情形有典范选择。
+- $2$-torsion 线丛不影响李代数层面的对偶，但影响“典范”陈述：不能忽略。
+
+## 相关卡
+
+[谱覆盖、判别式与分歧除子](../concepts/spectral-cover.md) · [Gerbe 与 $B$-场（离散电/磁荷）](../concepts/gerbe-bfield.md) · [行列式线丛与配对 $\langle\mathcal L,\mathcal M\rangle$](../concepts/determinant-line-pairing.md) · [阿贝尔化与 Prym 簇](../concepts/abelianization-prym.md) · [对偶环面纤维化与 T-对偶](../concepts/dual-torus-fibration.md)
+
+## 出处（印刷页）
+
+- A p.15–16（A p.15 eq (2.33)）
+- A p.26（A p.26）
+- A p.63（A p.63）
+
+> 说明：A=原文 $\S2.6.3$ 的 $K^{1/2}$ 与 $\Lambda^{-1}$、$\S3.2$ 脚注 11 的偶 $N$ gerbe、$\S6.3$ 例 1 的 $Z_2$ gerbe；B=$K^{1/2}$ 与 spin 结构的对应；C=Pfaffian/theta 语言整体为背景补全（原文未用此名，已用全文搜索确认）。最没把握处：theta divisor 与 Hitchin 纤维的精确关系原文未讨论。

@@ -1,0 +1,64 @@
+# 电本征膜
+
+> `gtgl15/concept/electric-eigenbranes` · 轨道 C · 膜、线算符与本征膜 · 状态 dev
+
+> **先自测**：为什么 Wilson 线对零维膜只是张量上一个固定的向量空间，而对一般膜却不是本征的？
+
+## 一句话
+
+对 Wilson 线同时本征的膜叫电本征膜；零维膜（摩天楼层）是典型例子，Wilson 作用为 $U\mapsto U\otimes E_{H,{}^LR}|_{p\times\MH}$。
+
+## 定义
+
+设 ${}^LG$ 是规范群，$M$ 是其丛模空间，$\mathcal E\to C\times M$ 是万有丛（联络 $A$），对表示 ${}^LR$ 取伴丛 $\mathcal E_{{}^{L}R}$（中心作用非平凡时是 twisted bundle）。万有希格斯丛 $\mathcal E_H\to C\times M_H$ 把 $\varphi$ 也包含进来。Wilson 线的作用是（eq (4.4)）：$\mathcal U\mapsto\mathcal U\otimes\mathcal E_{H,{}^LR}|_{p\times M_H}$。更强的条件（eq (4.7)）要求 $\mathcal U\otimes\mathcal E_{H,{}^LR}|_{C\times M_H}\cong\mathcal U\otimes V_{{}^LR}$，其中 $V_{{}^LR}$ 是 $C$ 上主 ${}^LG$ 丛的平坦伴丛。零维膜 $B=\delta_m$（在点 $m\in M_H$ 的摩天楼层）满足该条件，因为 $\mathcal E_{H,{}^LR}|_{p\times m}$ 就是固定向量空间。
+
+**记号**：${}^LG$；$\mathcal E_{H,{}^LR}$；$p\in C$；$V_{{}^LR}$；$\delta_m$。
+
+## 要点（为什么需要它）
+
+1. 电本征膜 = 对 Wilson 线本征的膜；零维膜是最简单的例子。
+2. Wilson 作用张量的是万有希格斯丛在 $p\times\MH$ 上的纤维，它是一个“位置 $p$ 处取值”的向量空间。
+3. 强条件（eq (4.7)）要求乘上的丛在 $C$ 上平坦（$V_{{}^LR}$ 是平坦伴丛），这把电本征性变成拓扑条件。
+4. 几何 Langlands 关心的电本征膜取 $I$ 或 $J$ 复结构的 B-膜；零维膜是 $(B,B,B)$ 型。
+5. 电本征膜在 S-对偶下变成磁本征膜（$G$ 侧），这是 §5 的主题。
+
+## 核心公式
+
+$$
+$$\mathcal U\mapsto\mathcal U\otimes\mathcal E_{H,{}^LR}|_{p\times M_H}$$$$\mathcal U\otimes\mathcal E_{H,{}^LR}|_{C\times M_H}\cong\mathcal U\otimes V_{{}^LR}\qquad(\text{平坦 !})$$
+$$
+
+$$
+$$\mathcal U\otimes\mathcal E_{H,{}^LR}|_{C\times M_H}\cong\mathcal U\otimes V_{{}^LR}\qquad(\text{平坦 !})$$
+$$
+
+## 定理与证明（或缺口）
+
+### 零维膜是电本征膜
+
+摩天楼层 $\delta_m$ 对 Wilson 线本征，本征值为 $\mathcal E_{H,{}^LR}|_{p\times m}$。
+
+1. $\delta_m$ 的 Chan–Paton sheaf 只在 $m$ 处有支撑，作用 $U\mapsto U\otimes\mathcal E_{H,{}^LR}|_{p\times M_H}$ 在 $m$ 处就是 $U\otimes\mathcal E_{H,{}^LR}|_{p\times m}$。
+   - *为什么*：支撑点处张量一个固定向量空间。
+2. $\mathcal E_{H,{}^LR}|_{p\times m}$ 与 $\mathcal U$ 的选择无关，只依赖 $m$ 与 $p$，故是固定向量空间。
+   - *为什么*：这正是本征膜定义 eq (4.3) 的要求。
+
+出处：`A p.38`
+
+## 常见误解
+
+- 零维膜是 $(B,B,B)$ 型，不是 $(B,A,A)$ 型；类型与是否电本征是两个独立标签。
+- $\mathcal E_{H,{}^LR}|_{p\times\MH}$ 是 $C$ 上丛的伴丛限制，不能与 $\MH$ 的切丛混淆。
+- 强条件 eq (4.7) 里的 $V_{{}^LR}$ 必须是平坦的；只满足 eq (4.4) 的膜未必是本征膜。
+- 中心作用非平凡时万有丛是 twisted 的（gerbe），不能当普通丛用。
+
+## 相关卡
+
+[本征膜](../concepts/eigenbranes.md) · [摩天楼层（零维膜）](../concepts/skyscraper-zero-brane.md) · [万有丛、万有希格斯丛与陈–帕顿丛](../concepts/universal-bundles.md) · [磁本征膜](../concepts/magnetic-eigenbranes.md) · [电本征膜的作用公式与零维膜](../derivations/electric-action-formula.md)
+
+## 出处（印刷页）
+
+- A p.37–39（A p.38 eq (4.4)）
+- A p.38（A p.38 eq (4.7)）
+
+> 说明：A=原文 $\S4.2$ 的 eq (4.4)–(4.7) 与零维膜论证；B=把零维膜本征性写成两步直接证明；C=强条件的拓扑解读按原文“平坦伴丛”一句补。最没把握处：eq (4.7) 中 $V_{{}^LR}$ 的确切范畴地位原文只给了一句解释。

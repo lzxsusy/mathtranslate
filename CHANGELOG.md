@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## SY03-20 Witten《规范理论与几何朗兰兹续谈》校订译注本 + dataset gtgl15（40 卡） — 2026-11-19
+
+- 新增 `08_source_code/SY03-20_规范理论与几何朗兰兹续谈/`：Edward Witten, *More On Gauge Theory And Geometric Langlands*（arXiv:1506.04293v3，2017-07-28，79 页，未正式出版预印本）既有中译（62 页）→ **校订译注版 77 页**（源码 50 项 / 工程文件 / 成品）。正文 62 页 + 附录 A 译注汇总 8 页 + 附录 B 术语对照表 3 页 + 中文概念索引 4 页。
+- 校订：四位校订译手一人一章（§1–2.6.3 / §2.6.4–3.4.1 / §4–5 / §6–7）逐段对照 79 页原文，正文改动 **12 处**（P1 3 / P2 9）。最重的是 §3 开头 "which was essentially described" 的限定词 essentially 原译漏（「实际上」→「实质上」）、"one-form" 原译「单形式」2 处；另有宏与记号统一、Stiefel–Whitney 专名、其余 5 处「一形式」统一为「1-形式」。逐条见 `工程文件/reports/ch0N_issues.md`。
+- 译注 **57 条**（part1 15 / part2 13 / part3 17 / part4 12），每条带 `[来源：…]`：A 级原始文献为主（Witten 1988/1998/2008、KW 2006、Hitchin 1987×2、GNO 1977、Deligne 1987、Quillen 1985、RSW 1989、Donagi–Gaitsgory、Frenkel–Witten、Hausel–Thaddeus 等），B 级 nLab/Stacks 少量且均 web_fetch 实测 200、记 Last revised 与 2026-11-19 访问日期并与 A 级互证；黑名单来源 0 命中、「译者按（无外部依据）」0 条。附录 A 按节重列，编号「节号-序号」；附录 B 92 条中英对照（中文/英文/首见节），由 `\index{english@中文}` 机械生成。
+- 原文疑误 **27 处**只登记不改（保留译文原样），其中特别影响阅读的 3 处加译注说明：$q'$/$q''$ 重复、§2.6.5 偶 $N$ 的 $K^{1/2}$ 依赖、§3.4.1 脚注曲率 $2\pi i\Sigma$ 与式 (3.38) 的 $i\pi$ 归一化差因子 2。
+- 工程工具：`工程文件/tools/` 新增 `check_part.py`（UTF-8/LF/括号/$/环境配对/未转义 %）、`gen_appendix.py`（由 part 文件机械生成附录 A/B 与 `译注清单.tsv`）、`wrap_urls.py`（译注内裸 URL 包 `\url{}`）、`build.sh`（xelatex→makeindex→xelatex→xelatex + 日志审计 + 预览 PNG）。最终编译 **0 error / 0 undefined / 0 overfull**（109 条 warning 全为既有 hyperref PDF 字符串与 `\large` in math mode 字体警告，已登记疑点清单）。
+- 源码不再随包字体：`preamble.tex` 的 Fandol/CMU/LM 字体改由 kpathsea 解析（TeX Live / MiKTeX 自带），已在无 `fonts/` 的干净目录实测编译通过（77 页、0 error）；源码仅 768 KB。
+- 新增 `datasets/gtgl15/`：据本文裁切的 **40 张**资料卡（30 概念 + 10 推导），六轨 A（Hitchin 几何与谱曲线 17）/B（对偶环面与 T-对偶 4）/C（膜、线算符与本征膜 10）/D（'t Hooft 算符与赫克修正 3）/E（行列式线丛与本征值 4）/O（总览 2）；每卡带 arXiv 印刷页锚（印刷页 = PDF 页 − 1）、来源定位、pitfalls 与 provenance A/B/C；`lint_cards.py --strict` 0 error、`index.jsonl` 40 条、`render_md.py` 40 卡。维数类断言经复核按原文 eq (2.6) 更正（$\dim_{\mathbb C}M_H=2(g-1)\dim G$、$\dim_{\mathbb R}M_H=4(g-1)\dim G$；$\mathcal M\subset M_H$ 为复 Lagrangian、复维是环境的一半），修订记录见其 `workflow/PRODUCTION.md`。
+- 既有资料卡核验（仓主要求保证正确性）：独立核验员交叉核对 `datasets/kw06/`（67 卡）与 `datasets/glc/`（154 卡，重点 53 张），结论见 `工程文件/校对记录/既有资料卡问题上报.md`。**A 类已确认错误 4 条、全部在 kw06**：把 *simply-laced*（单边）系统性误译为「单连通」（`mirror-symmetry.json`、`table1-and-ng.json`、`sdual-sl2z.json`，7 个文本点；反证 KW2006 印刷 pp.11–12 $n_g=2$ for $F_4,G_2$）、`geometric-langlands.json` 把 $M(G,C)$ 误注为「稳定 Higgs 丛」（原文 p.5 为 holomorphic $G$-bundles）；另 5 条 C 类表述过强、3 项 D 类待核。glc 数据集未见确定错误（唯一实质问题是 $d_i$ 在 `hitchin-base` 按指数、`hitchin-fibration` 按次数，属约定差异，建议两卡互注；另发现 `LinChenGLC2023` 讲义 ch14.tex 第 23 行译注「次数」是口误，英文原书 p.67 作 exponents）。**本轮只上报、未改既有卡**。
+- 台账 `RELEASE_REGISTER.csv`：SY03-20 由「成品不公开/成品在仓=否」改为 **随仓公开、成品在仓=是**、复核日期 2026-11-19（底本为未正式出版 arXiv 预印本，依 COMPLIANCE R3 第二款）；`tools/build_release_register.py` 的 SY03-20 人工判定同步更新，并修正「随仓公开」工程的成品在仓状态判定（原先一律标「违规待清」）。
+- 同步更新：`03_translations_meta/SY03-20/投稿信息.md`（与工程内同名文件一致，补齐 arXiv 编号与版本、译者署名、版本号、术语索引、分类）；`datasets/README.md` 十类表、目录树与版本记录 `v0.15`。
+
 ## dataset functoriality 补交换图（42 张）+ 术语/记号冻结表入库 — 2026-11-19
 
 - **交换图**：仓主要求「复杂交换图不画出来就没用」。资料卡 schema 新增可选字段 `diagrams`（tikz-cd 自足源码，≤4 张/卡，禁 `%`/`$$`/equation，标题 ≤40 字），并在 `SCHEMA.md` 写死原则「凡是原文用交换图讲清的一步，卡里必须把图也画出来，只写文字的『复合满足结合律』读者无法复核」。本轮给 **14 张推导卡**（26 图）与 **14 张概念卡**（16 图）补图：其中 18 张直取原文/中译本的交换图（式 (20)(54)(76)(80)(93)(95)(107)(111)(112)(113)(133)(135)(136)(140)(144) 等），其余按定义/定理重排为论证骨架并在 `note` 注明「原文未画」，不改箭头方向、标号与同伦标记。

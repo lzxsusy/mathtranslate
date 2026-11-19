@@ -64,7 +64,8 @@ MANUAL = {
     "SY03-08": ("讲义", "Chern–Simons 理论导论（TASI 2019）", "中", "成品不公开"),
     "SY03-10": ("讲义", "量子场论讲义（2025）", "中", "成品不公开"),
     "SY03-13": ("讲义", "arXiv:2307.09215", "低", "Release 外链"),
-    "SY03-20": ("讲义", "Witten 2015 规范理论与几何朗兰兹续谈", "中", "成品不公开"),
+    # 2026-11-19：底本为未正式出版的 arXiv 预印本（Witten 2015），校订译注版成品随仓公开
+    "SY03-20": ("讲义", "arXiv:1506.04293v3（未正式出版预印本，79 页）", "中", "随仓公开"),
     "SY05-13": ("讲义", "Hines 拓扑 K 理论讲义（2016）", "中", "成品不公开"),
     "SY05-25": ("讲义", "Witten 0802.0999 镜像对称、Hitchin 方程与朗兰兹对偶", "低", "Release 外链"),
     "SY07-03": ("讲义", "李思《量子力学与几何》（2025）", "中", "成品不公开"),
@@ -137,6 +138,8 @@ def main():
         pdfs = []
         if os.path.isdir(chengpin):
             pdfs = [f for f in os.listdir(chengpin) if f.lower().endswith(".pdf")]
+        # 台账登记为「随仓公开」的工程，成品 PDF 在仓是合规状态（R3 第二款）
+        in_repo_ok = plevel == "随仓公开"
         yuanben = os.path.join(full, "原本")
         has_yuanben = os.path.isdir(yuanben) and any(
             f.lower().endswith(".pdf") for f in os.listdir(yuanben)
@@ -152,11 +155,11 @@ def main():
             "风险": risk,
             "源码级别": "L2 公开·受限（可撤下）",
             "成品级别": plevel if not (plevel == "Release 外链" and not link.startswith("http")) else "申请获取（暂无外链）",
-            "成品在仓": "是（违规待清）" if pdfs else "否",
+            "成品在仓": ("是" if in_repo_ok else "是（违规待清）") if pdfs else "否",
             "成品直链": link if link.startswith("http") else "",
             "原文级别": "L4 禁入（原本 PDF 待清）" if has_yuanben else "L4 禁入",
             "判定方式": how,
-            "状态": "待整改" if (pdfs or has_yuanben) else "合规",
+            "状态": "待整改" if ((pdfs and not in_repo_ok) or has_yuanben) else "合规",
             "复核日期": "2026-11-16",
             "备注": "",
         })
