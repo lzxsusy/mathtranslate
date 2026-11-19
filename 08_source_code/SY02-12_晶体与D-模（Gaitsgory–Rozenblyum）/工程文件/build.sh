@@ -11,6 +11,12 @@ XELATEX="$MIX/xelatex.exe"
 PDFINFO="$MIX/pdfinfo.exe"
 
 SRC="$(cd "$SRC" && pwd)"
+if [ -n "$OUT" ]; then
+  case "$OUT" in
+    /*|[A-Za-z]:*) ;;
+    *) OUT="$(pwd)/$OUT" ;;
+  esac
+fi
 WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT
 cp -r "$SRC"/. "$WORK"/
