@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## SY02-12 Gaitsgory–Rozenblyum《晶体与 D-模》中译注本（73 页） — 2026-11-19
+
+- 新增 `08_source_code/SY02-12_晶体与D-模（Gaitsgory–Rozenblyum）/`：Dennis Gaitsgory, Nick Rozenblyum, *Crystals and D-modules*（arXiv:1111.2087v4，2014-10-02，65 页，未正式出版预印本）全书中译，`ctexbook` + XeLaTeX，成品 **73 页 A4**（正文 67 页 + 前置 4 页 + 参考文献 2 页），含译注 10 条、重画交换图 33 幅。
+- 底本是导出代数几何里「晶体 = de Rham 预栈上的（归纳）凝聚层」这一路线的纲领性文本：§1 定义 de Rham 预栈 $Y_{\mathrm{dR}}$ 并证 laft 保持性；§2 左/右晶体与 $\Upsilon:\mathrm{Crys}^l\to\mathrm{Crys}^r$ 的等价、Kashiwara 引理；§3 h/fppf 下降与归纳函子；§4 两个 t-结构、$\mathrm{Crys}^r\simeq D(\mathrm{Crys}^r)^\heartsuit$；§5 与 D-模的等价；§6 扭化的 Picard 群胚 $\mathrm{Tw}(Y)\simeq\tau^{\le2}(H_{\mathrm{dR}}(Y)\times_{H(Y)}*)[2]$；§7 扭晶体。全书编号 277 条（编号段 174 + 定理类 103），中译本逐条沿用原编号，`\ref` 回指原书。
+- 工序按 v2.1：先通读并交 `工程文件/work/通读笔记.md`（论证地图 + 20 条卡点）与 `工程文件/work/疑点清单.tsv`（58 条，8 列，`未解`=0）；术语先冻结（`工程文件/work/术语表.tsv`，133 条，列 en/zh/依据/备注）；每章对照 `工程文件/work/pages/` 的 65 页 150 dpi 页面图逐符号核公式，`pdftotext` 文本只作索引；交换图全部 `tikz-cd` 重画，不截图。
+- 译注 10 条，全部带来源：9 条 A 级（原书节号、[GR1]、[IndCoh]、[GL:Stacks]、[BB]），1 条「译者按（上下文推断）」解释 §3.4.5 的 $k[\alpha]$（$\deg\alpha=-2$）反例机制；B 级来源 0 条、黑名单来源 0 条。主题覆盖：为何需要导出环、右晶体为何必须用 $\mathrm{IndCoh}$、形式邻域与形式完备化技巧、「那个」t-结构与反常 t-结构、Gorenstein 的「分次线丛」、晶体对 D-模的推广、扭化群胚与 TDO。
+- 原文笔误 **13 处**只登记不改（`comaptible` p.9、`aribitrary` p.12、`th n-coconnective` p.14、`duaizing` p.21、`Corollaty` p.31、`indices` p.33、`functior` p.35、`ket(j` p.36、`Expilcitly` p.42、`amplidude` p.62、`forgeftul` p.63、`an an equivalence` p.63、脚注 12 `footnone`），译文按原意处理；另有一处 `transpoistion` 经检索确认原文并无此词，早先记录撤回。
+- 成品：`成品/晶体与D-模（Gaitsgory–Rozenblyum）-译注本.pdf`（73 页，随仓入库）；`成品/SY02-12_交付报告.md`（交付物、关键数字、六道工序、译注表、笔误表、校订层次、遗留问题）；`工程文件/build.sh`（干净目录三遍 xelatex + 页数/Overfull/未定义引用检查，当前 **Overfull 0 / 未定义引用 0**）。
+- 台账与元数据：`RELEASE_REGISTER.csv` 新增 SY02-12（arXiv 预印本，风险低，源码 L2 公开·受限，**随仓公开 / 成品在仓=是**，原文 L4 禁入，人工判定，合规，2026-11-19）；`03_translations_meta/SY02-12/投稿信息.md` 与工程根同名文件一致；README 主题分布表更新为 84 部 / 10,376 页（SY02 9 部 / 1,078 页）。`tools/check_compliance.py` 通过（2 条既有提示）。
+- 合规：底本 PDF、`en_full.txt`/`en_raw.txt` 文本层抽取与 `work/pages/` 页面图均属 L4，未入仓；`.gitignore` 新增 `08_source_code/**/工程文件/work/en_*.txt` 与 `*_raw.txt` 两条排除规则，并为 SY02-12 成品 PDF 增加随仓例外（与 SY03-20 同属未正式发表 arXiv 预印本，台账登记「随仓公开」）。
+- 遗留：术语索引与资料卡按约定等主人验收后再裁；本工程未做 index，未附预览 PNG。
+
 ## SY03-20 Witten《规范理论与几何朗兰兹续谈》校订译注本 + dataset gtgl15（40 卡） — 2026-11-19
 
 - 新增 `08_source_code/SY03-20_规范理论与几何朗兰兹续谈/`：Edward Witten, *More On Gauge Theory And Geometric Langlands*（arXiv:1506.04293v3，2017-07-28，79 页，未正式出版预印本）既有中译（62 页）→ **校订译注版 77 页**（源码 50 项 / 工程文件 / 成品）。正文 62 页 + 参考文献 2 页 + 附录 A 译注汇总 8 页 + 附录 B 术语对照表 3 页 + 中文概念索引 2 页。
