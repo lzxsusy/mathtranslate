@@ -40,7 +40,7 @@
 | `gtgl15/` | 单篇论文资料卡（Witten《More On Gauge Theory And Geometric Langlands》，arXiv:1506.04293v3，79 页，与 SY03-20 校订译注版同批）：30 张概念卡 + 10 张推导卡，六轨 A（Hitchin 几何与谱曲线）/B（对偶环面与 T-对偶）/C（膜、线算符与本征膜）/D（'t Hooft 算符与赫克修正）/E（行列式线丛与本征值）/O（总览）；每卡带 arXiv 印刷页锚（印刷页 = PDF 页 − 1） | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
 | `cdm14/` | 单篇论文资料卡（Gaitsgory–Rozenblyum《晶体与 D-模》，arXiv:1111.2087v4，65 页，与 SY02-12 译注本同批）：27 张概念卡 + 8 张推导卡，八轨 A（de Rham 预栈）/B（左/右晶体与 Kashiwara）/C（下降与归纳函子）/D（$t$-结构）/E（与 D-模的关系）/F（扭化）/G（扭晶体）/O（总览）；每卡带 arXiv 印刷页锚（印刷页 = PDF 页）与 A/B/C 来源标注 | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
 | `gaits04/` | 单章资料卡（Gaitsgory《几何朗兰兹的非正式导论》，《朗兰兹纲领导论》第 12 章，13 页，与 SY02-13 译注本同批）：23 张概念卡，六轨 O/A/B/C/D/E；**每卡携带批注**（易错预警 / 含糊点拨 / 背景直觉，共 23 条）；每卡带原书页锚与中译本源码行号锚（`ch12_sec*.tex:A-B`）；全部 `reviewed` + `source-only` | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
-| `leanstmt/` | 自然语言 ↔ Lean 陈述对照语料：26 张陈述卡（15 certified + 11 gap；Witten 2015 ×12 + Witten 2008 ×14），每卡含原文页/式锚、规范化中英陈述、Lean 4 语句、mathlib 依赖、假设、盲验回译、`verification.jsonl` 机器可复算；`lean/` 存源码快照，`tools/` 可一键复跑 | 一条可编译、可复算的陈述 | 单卡 3,000 字 |
+| `leanstmt/` | 自然语言 ↔ Lean 陈述对照语料：39 张陈述卡（21 certified + 18 gap；Witten 2015 ×12 + Witten 2008 ×14 + GNO 1977 ×13），每卡含原文页/式锚、规范化中英陈述、Lean 4 语句、mathlib 依赖、假设、盲验回译、`verification.jsonl` 机器可复算；`lean/` 存源码快照，`tools/` 可一键复跑 | 一条可编译、可复算的陈述 | 单卡 3,000 字 |
 
 `bench/` 与训练集严格隔离：出题时不得使用 `parallel/`、`deepread/` 中已出现的同一段落。
 
@@ -67,7 +67,7 @@ datasets/
 ├── siebert/                   # 讲义资料卡：Siebert《镜像对称》（概念/推导/勘误，七轨 A–F+O）
 ├── functoriality/             # 单篇论文资料卡：Abouzaid–Bottman《范畴辛几何中的函子性》（概念/推导/勘误，四轨 A–D，42 张交换图）
 ├── gtgl15/                    # 单篇论文资料卡：Witten 2015《More On Gauge Theory And Geometric Langlands》（概念/推导，六轨 A–E+O）
-├── leanstmt/                  # 自然语言 ↔ Lean 陈述对照语料（Witten 2015 ×12 + 2008 ×14；15 certified + 11 gap）
+├── leanstmt/                  # 自然语言 ↔ Lean 陈述对照语料（Witten 2015 ×12 + 2008 ×14 + GNO 1977 ×13；21 certified + 18 gap）
 ├── cdm14/                     # 单篇论文资料卡：Gaitsgory–Rozenblyum《晶体与 D-模》（概念/推导，八轨 A–G+O）
 ├── math/<pkg>.<split>.jsonl   # 数学推理条目（主力）
 ├── parallel/<pkg>.<split>.jsonl
@@ -152,4 +152,5 @@ https://atomgit.com/lzxSUSUY/mathtranslate/blob/main/datasets/<...>.jsonl
 - `v0.17`（2026-11-19）：新增 `leanstmt/`——**自然语言 ↔ Lean 陈述对照语料**（首批 Witten 2015 试点 12 条：10 `certified` + 2 `gap`）。钉死验证环境：`leanprover/lean4:v4.36.0`、mathlib `d33c49ca43873d3746194325da62640cc893c9d9`；`lake env lean` 两文件均 exit 0（Statements 0 sorry、Gaps 2 sorry），`verification.jsonl` 12 行机器可复算；`lint_cards.py --strict` 0 error 0 warning；附 `SCHEMA.md` 五条硬性纪律（不虚标/不掺沙/不越界/盲验回译/缺口照登）、`workflow/PRODUCTION.md`（含 18:31 内存耗尽事故记录与复现教训）、`ROADMAP.md`（先做/缓做/暂不做三分与下一批选题）。同批：lean 源码快照 `lean/ShuyiFormal/Witten2015/{Statements,Gaps}.lean`，工具链 `tools/{make_cards,lint_cards,build_index,render_md,check_lean}.py`。
 - `v0.18`（2026-11-19）：新增 `cdm14/`——Gaitsgory–Rozenblyum《Crystals and D-modules》（arXiv:1111.2087v4，65 页）的 **35 张资料卡**（27 概念 + 8 推导），八轨 A（de Rham 预栈）/B（左/右晶体与 Kashiwara）/C（下降与归纳函子）/D（$t$-结构）/E（与 D-模的关系）/F（扭化）/G（扭晶体）/O（总览）；每卡带印刷页锚（印刷页 = PDF 页）、来源定位与 pitfalls，推导卡逐步标 locator 与 A/B/C 可信度；`lint_cards.py --strict` 0 error、`index.jsonl` 35 条、`render_md.py` 35 卡。与 SY02-12 译注本（73 页）同批，卡内术语与译注本一致。
 - `v0.19`（2026-11-19）：`leanstmt/` 加入 **B 批 Witten 2008**（*Mirror Symmetry, Hitchin's Equations, and Langlands Duality*，arXiv:0802.0999v1，15 页）14 张陈述卡（5 `certified` + 9 `gap`），两批合计 **26 卡 = 15 certified + 11 gap**；轨道拆为 `W15`/`W08`，SCHEMA 升 v0.2（`source.pages` 分两批约定：2015 印刷页 = PDF 页 − 1、2008 印刷页 = PDF 页）。`lake env lean` 四个 Lean 文件全部 exit 0（Witten2015/Statements 0 sorry、Gaps 2；Witten2008/Statements 0 sorry、Gaps 9），`verification.jsonl` 26 行重跑核验；`lint_cards.py --strict` 0 error 0 warning；`lint_cards.py` 的 sorry 计数改为先剥注释（避免文档提到 sorry 被误判）。B 批的 5 条 certified 只是离散/代数影子（SL(N,ℂ) 中心 = μ_N、有限 Pontryagin 对偶的两条、非正则奇点系数伸缩律、函数空间 currying），本文主定理（Hitchin 纤维化上的镜像对称）如实记为 G06 gap。
+- `v0.20`（2026-11-19）：`leanstmt/` 加入 **C 批 GNO 1977**（Goddard–Nuyts–Olive, *Gauge Theories and Magnetic Charge*, Nucl. Phys. B125 (1977) 1–28；CERN-TH-2255 影印本 38 页）13 张陈述卡（6 `certified` + 7 `gap`），三批合计 **39 卡 = 21 certified + 18 gap**；轨道加 `GNO77`，SCHEMA 升 v0.3（`source.pages` 记 CERN 影印 PDF 页、注明页脚数字不可靠故引用以节/式号为准；`source.arxiv` 放宽为 arXiv 号或 `Nucl. Phys. …` 起头）。原文为无文字层扫描件，经 `mutool` 渲图 + PIL 合成 300 dpi PDF + tesseract.js OCR（`workflow/PRODUCTION.md` §七 有完整管线）；`lake env lean` 六个 Lean 文件全部 exit 0（GNO1977/Statements 0 sorry、Gaps 7；其余不变），`verification.jsonl` **39 行**重跑核验；`lint_cards.py --strict` 0 error 0 warning。C 批 certified 只是群论/单变量骨架（权整性、式 (1.3) 的 U(1) 特例、中心元幂、有限对偶同阶、式 (1.6) 有限群双对偶、Weyl 反射 p↦−p 不变），GNO 的主定理（磁权 = H^∨ 的权）如实记为 G02 gap。
 - 后续见 [CHANGELOG.md](../CHANGELOG.md)。

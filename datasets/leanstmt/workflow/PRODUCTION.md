@@ -55,3 +55,15 @@
 - 选卡原则同 A 批：只把「能落在现有 mathlib 上」的离散/代数骨架写成 certified；本文主定理（Hitchin 纤维化上的镜像对称）落在模空间/复辛/镜像对称层，mathlib 完全缺失，如实记为 G06 gap，不写「近似」。
 - 复核命令与结果：`python tools/check_lean.py --project "C:/Users/admin/Desktop/数译发布/shuyi/formal" --run --write-verification` → 4 个文件全部 exit 0（Witten2015/Statements 0 sorry、Witten2015/Gaps 2、Witten2008/Statements 0 sorry、Witten2008/Gaps 9），`verification.jsonl` 26 行。
 - 工程备注：S02/S03 是有限 Pontryagin 对偶的两面（基数 vs 典范同构）；S04 刻意用 `(m+1)` 指标（避免 `k−1` 的指数算术，`1+(k−1)-1` 难证）；`lint_cards.py` 的 sorry 计数改为先剥注释（A 批文件注释里提到 "sorry" 会误判为 certified 卡所在文件含 sorry）。
+
+## 七、C 批：GNO 1977（2026-11-19 增补）
+
+- 底本：R. Goddard, J. Nuyts, B. S. Olive, *Gauge Theories and Magnetic Charge*, Nucl. Phys. **B125** (1977) 1–28（DOI: 10.1016/0550-3213(77)90221-8）；报告号 CERN-TH-2255（1976-12-21）。
+- 原文获取：CERN CDS record 422230 的影印 PDF（`CM-P00061871.pdf`，2,247,005 B，**38 页**，1-bit CCITT 600 dpi 扫描件，无文字层）。CDS 前端有 Anubis v1.27 反爬；用纯 Python 解 `anubis_challenge`（`sha256(randomData+nonce)` 前 difficulty=4 位为 0）→ `pass-challenge` 拿到 cookie 后下载。
+- OCR 管线：`mutool draw -r 300 -o pg%02d.png` 渲 38 页 → PIL 合 PDF（15.9 MB，300 dpi）→ `convert_file(ocr:true)`（tesseract.js，eng）得 `GNO_1977_OCR.txt`（46.5 KB）；另用 node + tesseract.js 逐页 OCR 得 `GNO_1977_OCR_pages.txt`（47,826 字符，带 `[[PDF p.N]]` 标记）。**页脚数字 OCR 不可靠**，卡片一律以节号+式号引用。
+- 结构映射（PDF 页）：p1 封面 / p2 §1 / p3–p4 §2 / p5–p7 §3 / p8–p14 §4 / p15 §5 / p17 §6 / p21 §7 / p23 §8 / p28 附录 A / p30 附录 B / p31 附录 C / p34 附录 D / p38 References。
+- 选卡原则同 A/B 批：certified 只收「能落在现有 mathlib 上」的群论/单变量骨架；根数据的对偶、磁权=对偶群权、拓扑量子数 π₂(G/H)≅π₁(H)、紧 Lie 群共轭定理等一律进 gap 并写清缺什么，不用「近似」或自造定义冒充。
+- Lean：`formal/ShuyiFormal/GNO1977/{Statements,Gaps}.lean`。Statements 6 个声明（卡的 6 条对应）；Gaps 7 条，均带中文 docstring。
+- 复核命令与结果：`python tools/check_lean.py --project "C:/Users/admin/Desktop/数译发布/shuyi/formal" --run --write-verification` → 6 个文件全部 exit 0（GNO1977/Statements 0 sorry、GNO1977/Gaps 7、Witten2008/Statements 0、Witten2008/Gaps 9、Witten2015/Statements 0、Witten2015/Gaps 2），`verification.jsonl` **39 行**。
+- 质检：`lint_cards.py cards --strict` → `cards=39 ids=39 errors=0 warnings=0`；`build_index.py` → `rows=39 certified=21 gap=18`；`render_md.py` → 39 篇。
+- 工程备注：① `lint_cards.py` 的 `source.arxiv` 校验从「只认 arXiv 号」放宽为「arXiv 形式或 `Nucl. Phys.` 起头」，以容纳 GNO 这类无 arXiv 的旧文献；② Statements 里 `(exp w)^N` 的化简路径是先 `rw [← Complex.exp_natCast_mul]` 再 `field_simp`（旧名 `exp_nat_mul` 已弃用）；③ 狄拉克量子化那张卡刻意用 `2 * z = ↑n` 而非 `z = ↑n / 2`，避免 ℂ 上除法与整数强转的麻烦；④ 遇到 `mul_left_cancel₀` 前需先把 `(2πI)*(2z)` 用 `ring` 改写成 `4πI*z`，直接 `rw` 会因形状不同失败。

@@ -1,17 +1,17 @@
-# leanstmt 卡 schema（v0.2）
+# leanstmt 卡 schema（v0.3）
 
 一卡一 JSON，UTF-8、缩进 2 空格、`ensure_ascii=false`；字段顺序不强制，但下列字段必须有。
 
 | 字段 | 类型 | 约束 |
 | --- | --- | --- |
-| `id` | string | `leanstmt/witten2015-<key>` 或 `leanstmt/witten2008-<key>`，`<key>` 小写字母数字，全包唯一 |
+| `id` | string | `leanstmt/witten2015-<key>` / `leanstmt/witten2008-<key>` / `leanstmt/gno1977-<key>`，`<key>` 小写字母数字，全包唯一 |
 | `type` | string | 固定 `"statement"` |
 | `title` | string | 中文短标题，≤ 40 字 |
-| `track` | string | `W15`（Witten 2015）/ `W08`（Witten 2008）；后续论文加新标签 |
+| `track` | string | `W15`（Witten 2015）/ `W08`（Witten 2008）/ `GNO77`（GNO 1977）；后续论文加新标签 |
 | `source.paper` | string | 原题名 |
 | `source.arxiv` | string | `arXiv:<id>v<版>`，版次必须写明 |
-| `source.section` | string | 原文节号，如 `2.6.6`、`5` |
-| `source.pages` | [int,int] | **印刷页**区间闭区间。Witten 2015：印刷页 = PDF 页 − 1；Witten 2008：印刷页 = PDF 页 |
+| `source.section` | string | 原文节号，如 `2.6.6`、`5`、`C`（附录） |
+| `source.pages` | [int,int] | 原文页区间（闭区间）。Witten 2015：印刷页 = PDF 页 − 1；Witten 2008：印刷页 = PDF 页；GNO 1977：CERN 影印 PDF 页（页脚数字 OCR 不可靠，以节/式号为准） |
 | `source.anchor` | string | 更细的锚（式号/定理名/段落），不许写「见正文」 |
 | `natural_language.zh` | string | 译文的陈述句（一至两句，量词与假设写全） |
 | `natural_language.en` | string | 英文原文的紧缩版（≤ 200 字符，只作对照） |

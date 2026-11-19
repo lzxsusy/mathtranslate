@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-"""生成 leanstmt 两批陈述卡（witten2015 12 张 + witten2008 14 张）与 README/SCHEMA/MAP。
+"""生成 leanstmt 三批陈述卡（witten2015 12 + witten2008 14 + gno1977 13）与 README/SCHEMA/MAP。
 
 用法：
   python tools/make_cards.py            # 写文件
   python tools/make_cards.py --check    # 只校验不写（比较现有文件与本文件生成结果）
 
-卡片数据：witten2015 批在 tools/cards15_data.py；witten2008 批在本文件 DATA08。
+卡片数据：witten2015 批在 tools/cards15_data.py；witten2008 批在本文件 DATA08；gno1977 批在 tools/gno77_data.py。
 index.jsonl 与 md/ 由 build_index.py / render_md.py 生成，勿手改。
 """
 from __future__ import annotations
@@ -17,6 +17,7 @@ import os
 import sys
 
 from cards15_data import DATA as DATA15, GAP_KEYS as GAP_KEYS15
+from gno77_data import DATA as DATA77, META_GNO
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -44,6 +45,7 @@ META = {
         pages_note="印刷页 = PDF 页",
     ),
 }
+META["gno1977"] = META_GNO
 
 IMPORTS08 = [
     "Mathlib.Analysis.Fourier.FiniteAbelian.PontryaginDuality",
@@ -373,8 +375,22 @@ def batch08_entries():
     return out
 
 
+def batch77_entries():
+    out = []
+    for d in DATA77:
+        e = dict(d)
+        e["batch"] = "gno1977"
+        e["status"] = "gap" if d["scope"] == "gap" else "certified"
+        e["lean_file"] = "Gaps.lean" if e["status"] == "gap" else "Statements.lean"
+        e["sorry"] = 1 if e["status"] == "gap" else 0
+        e["gaps"] = ([dict(reason=d.get("gap_reason", d["notes"]), blocked_by="mathlib 基础设施缺失")]
+                     if e["status"] == "gap" else [])
+        out.append(e)
+    return out
+
+
 def entries():
-    return batch15_entries() + batch08_entries()
+    return batch15_entries() + batch08_entries() + batch77_entries()
 
 
 def card_json(e):
@@ -485,8 +501,11 @@ def build_readme():
     n08 = sum(1 for e in es if e["batch"] == "witten2008")
     c15 = sum(1 for e in es if e["batch"] == "witten2015" and e["status"] == "certified")
     c08 = sum(1 for e in es if e["batch"] == "witten2008" and e["status"] == "certified")
+    n77 = sum(1 for e in es if e["batch"] == "gno1977")
+    c77 = sum(1 for e in es if e["batch"] == "gno1977" and e["status"] == "certified")
     g15 = n15 - c15
     g08 = n08 - c08
+    g77 = n77 - c77
     return """# leanstmt —— 自然语言陈述 ↔ Lean 陈述对照语料
 
 研究级论文里的**陈述**（定义/命题/定理）与其 Lean 4 转写之间的逐条对照语料。
@@ -517,7 +536,12 @@ def build_readme():
 因此 B 批的 certified 卡只是若干离散/代数影子（中心 μ_N、有限 Pontryagin 对偶、
 非正则奇点系数的伸缩律、函数空间 currying）。
 
-- 轨道：`W15`（Witten 2015）、`W08`（Witten 2008）。
+**C 批：Goddard–Nuyts–Olive 1977**（{n77} 卡，{c77} certified + {g77} gap）
+底本 *Gauge Theories and Magnetic Charge*，Nucl. Phys. B125 (1977) 1–28（CERN-TH-2255 影印本；无文字层，经 OCR）。
+certified 卡是量子化条件与对偶群的离散影子（整数权、狄拉克量子化、中心元 N 次幂、对偶群同阶、
+双对偶、Weyl 反射不变性）；磁权的根格/权格构造、GNO 主定理与附录 D 的具体表见 G01–G07。
+
+- 轨道：`W15`（Witten 2015）、`W08`（Witten 2008）、`GNO77`（Goddard–Nuyts–Olive 1977）。
 - scope 四值：`discrete-core`（有限群/单位根）、`algebraic-core`（对偶空间/维数/群中心）、
   `arithmetic-core`（维数账与 RH 推论）、`gap`（mathlib 缺口，`sorry` 占位）。
 - certified 判据：`lake env lean` 对该文件 **0 error**、`sorry` 计数为 0、声明的 mathlib
@@ -555,27 +579,28 @@ python tools/check_lean.py --project <formal 工程路径> --run   # 真跑 Lean
 ## 版本
 
 - v0.1（2026-11-19）：试点 12 卡（10 certified + 2 gap）、Lean 快照入库、工具与规范落地。
-- v0.2（2026-11-19）：加入 Witten 2008 批 14 卡（5 certified + 9 gap）；轨道改为 `W15`/`W08`；
-  两批合计 {n} 卡（{cert} certified + {gap} gap）。
-""".format(n=n, cert=c15 + c08, gap=g15 + g08, n15=n15, n08=n08,
-           c15=c15, c08=c08, g15=g15, g08=g08)
+- v0.2（2026-11-19）：加入 Witten 2008 批 14 卡（5 certified + 9 gap）；轨道改为 `W15`/`W08`。
+- v0.3（2026-11-19）：加入 GNO 1977 批 13 卡（6 certified + 7 gap），新增轨道 `GNO77`；
+  原文为 CERN 扫描件（无文字层），经 OCR 重排后按节/式号抽取；合计 {n} 卡（{cert} certified + {gap} gap）。
+""".format(n=n, cert=c15 + c08 + c77, gap=g15 + g08 + g77, n15=n15, n08=n08, n77=n77,
+           c15=c15, c08=c08, c77=c77, g15=g15, g08=g08, g77=g77)
 
 
 def build_schema():
-    return """# leanstmt 卡 schema（v0.2）
+    return """# leanstmt 卡 schema（v0.3）
 
 一卡一 JSON，UTF-8、缩进 2 空格、`ensure_ascii=false`；字段顺序不强制，但下列字段必须有。
 
 | 字段 | 类型 | 约束 |
 | --- | --- | --- |
-| `id` | string | `leanstmt/witten2015-<key>` 或 `leanstmt/witten2008-<key>`，`<key>` 小写字母数字，全包唯一 |
+| `id` | string | `leanstmt/witten2015-<key>` / `leanstmt/witten2008-<key>` / `leanstmt/gno1977-<key>`，`<key>` 小写字母数字，全包唯一 |
 | `type` | string | 固定 `"statement"` |
 | `title` | string | 中文短标题，≤ 40 字 |
-| `track` | string | `W15`（Witten 2015）/ `W08`（Witten 2008）；后续论文加新标签 |
+| `track` | string | `W15`（Witten 2015）/ `W08`（Witten 2008）/ `GNO77`（GNO 1977）；后续论文加新标签 |
 | `source.paper` | string | 原题名 |
 | `source.arxiv` | string | `arXiv:<id>v<版>`，版次必须写明 |
-| `source.section` | string | 原文节号，如 `2.6.6`、`5` |
-| `source.pages` | [int,int] | **印刷页**区间闭区间。Witten 2015：印刷页 = PDF 页 − 1；Witten 2008：印刷页 = PDF 页 |
+| `source.section` | string | 原文节号，如 `2.6.6`、`5`、`C`（附录） |
+| `source.pages` | [int,int] | 原文页区间（闭区间）。Witten 2015：印刷页 = PDF 页 − 1；Witten 2008：印刷页 = PDF 页；GNO 1977：CERN 影印 PDF 页（页脚数字 OCR 不可靠，以节/式号为准） |
 | `source.anchor` | string | 更细的锚（式号/定理名/段落），不许写「见正文」 |
 | `natural_language.zh` | string | 译文的陈述句（一至两句，量词与假设写全） |
 | `natural_language.en` | string | 英文原文的紧缩版（≤ 200 字符，只作对照） |
@@ -640,6 +665,7 @@ W15-S08–S10（`arithmetic-core`，`ring` 级恒等式，几何前提在 G01/G0
 W08-S01（`algebraic-core`，SL(N,ℂ) 的中心，依赖 SpecialLinearGroup）
 W08-S02–S03、S05（`discrete-core`，依赖 PontryaginDuality 与 Equiv.curry）
 W08-S04（`algebraic-core`，复数幂的基础算术）
+GNO77-S01–S06（`discrete-core`/`algebraic-core`，exp 周期 + 有限 Pontryagin 对偶）
 
 ## 路线 3：缺口清单（想知道「为什么这么多做不了」）
 
@@ -654,6 +680,13 @@ W08-G06 主定理：镜像对称 → 缺 SYZ/T-对偶与镜像对称本身
 W08-G07 tame ramification → 缺 𝔤 值留数与单值理论
 W08-G08 wild ramification/辫群 → 缺 Stokes 现象、等单值变形、辫群
 W08-G09 四维提升与栈 → 缺四维规范理论与 `Bun_G` 无整体商定理
+GNO77-G01 对偶群构造 → 缺根数据的对偶层
+GNO77-G02 磁权 = H^∨ 的权（主定理）→ 缺对偶表示论
+GNO77-G03 Cartan 共轭（式 1.5）→ 缺紧 Lie 群的最大环面
+GNO77-G04 π₂(G/H) ≅ π₁(H)（式 2.3）→ 缺同伦长正合列
+GNO77-G05 单极解渐近行为 → 缺变分解的存在性/渐近分析
+GNO77-G06 非半单 H（§6）→ 缺 U(1) 因子的对偶推广
+GNO77-G07 附录 D 磁权表 → 缺 Dynkin 图/根数据表
 
 ## 卡片索引
 

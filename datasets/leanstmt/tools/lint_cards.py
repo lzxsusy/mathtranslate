@@ -92,8 +92,10 @@ def main() -> int:
             errors.append(f"{rel}: source.pages 必须是 [印刷页, 印刷页] 两个整数")
         elif pages[0] > pages[1]:
             errors.append(f"{rel}: source.pages 区间反了：{pages}")
-        if not re.fullmatch(r"arXiv:\d{4}\.\d{4,5}v\d+", src.get("arxiv", "")):
-            errors.append(f"{rel}: source.arxiv 形如 arXiv:1506.04293v3")
+        arx = src.get("arxiv", "")
+        if not (re.fullmatch(r"arXiv:\d{4}\.\d{4,5}v\d+", arx)
+                or arx.startswith("Nucl. Phys.")):
+            errors.append(f"{rel}: source.arxiv 形如 arXiv:1506.04293v3（非 arXiv 源以出版信息起头）")
         if len(card.get("title", "")) > 40:
             warnings.append(f"{rel}: title 超过 40 字")
         if len(card.get("natural_language", {}).get("en", "")) > 200:

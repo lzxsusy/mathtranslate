@@ -7,14 +7,20 @@
 ## 〇、已落地（2026-11-19）
 
 - **Witten 2008**（下栏 4.B）已做成 `leanstmt` 的 **B 批**：14 张卡（5 `certified` + 9 `gap`，轨道 `W08`）。
+
+- **GNO 1977**（下栏 1）已做成 `leanstmt` 的 **C 批**：13 张卡（6 `certified` + 7 `gap`，轨道 `GNO77`）。
+  底本为 CERN CDS 影印本（record 422230 / CERN-TH-2255，38 页扫描件），OCR 后按节号+式号定位；
+  certified 全是群论/单变量骨架（权的整性、狄拉克量子化式 (1.3) 的 U(1) 特例、中心元幂、有限对偶同阶、式 (1.6) 有限群双对偶、Weyl 反射 p↦−p 不变），
+  根格/权格构造 H^∨ 与「磁权=H^∨ 的权」这两条核心定理如实进 gap（mathlib 无根数据对偶层）。
+  见 `datasets/leanstmt/README.md` 与 `workflow/PRODUCTION.md` §七。
   certified 只有离散/代数影子（SL(N,ℂ) 中心 = μ_N、有限 Pontryagin 对偶两条、非正则奇点系数伸缩律、函数空间 currying）；
   本文主定理（Hitchin 纤维化上的镜像对称）如实进 G06 gap——它正好是 mathlib 缺口最深的一层。
   见 `datasets/leanstmt/README.md` 与 `workflow/PRODUCTION.md` §六。
 
 ## 一、先做（6–12 个月内，statements 能落在现有 mathlib 上）
 
-### 1. GNO 1977：Gods, Nuyts, Olive, *Gauge theories and magnetic charge*
-- 出处：Nucl. Phys. **B125** (1977) 1–28（DOI: 10.1016/0550-3213(77)90086-8）。
+### 1. GNO 1977：Goddard, Nuyts, Olive, *Gauge theories and magnetic charge*（**已落地为 C 批 13 卡**）
+- 出处：Nucl. Phys. **B125** (1977) 1–28（DOI: 10.1016/0550-3213(77)90221-8）。
 - 为什么先做：这是「't Hooft 磁通 / 磁荷量子化 / 对偶环面」的源头文献，全文大多是**群论级**陈述（权格、根格、character/cocharacter 格、ℤ_N 中心），篇幅短、定义清楚，正落在 mathlib 的基础设施（有限群、模、`ZMod`、`PontryaginDual`、`AddChar`）上。
 - 可产出：30–40 条陈述（对偶环面 = Hom(Λ, U(1))、磁荷 = 反权、中心 ℤ_N、't Hooft 通量配对），其中至少一半可 `certified`；配套 1 个中文译注本（短，60 页内）+ 语料。
 - 现在就能起的 3 条：`(Λ^*)dual ≃ T`（characters of dual torus = lattice）、`ZMod` 阶与卡数（已在本批 S01–S03）、`exp(2πi⟨·,·⟩)` 的配对非退化性。

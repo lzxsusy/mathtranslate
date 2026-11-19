@@ -1,4 +1,4 @@
-# leanstmt 地图（26 卡）
+# leanstmt 地图（39 卡）
 
 三条读法，按目的选一条。
 
@@ -18,6 +18,7 @@ W15-S08–S10（`arithmetic-core`，`ring` 级恒等式，几何前提在 G01/G0
 W08-S01（`algebraic-core`，SL(N,ℂ) 的中心，依赖 SpecialLinearGroup）
 W08-S02–S03、S05（`discrete-core`，依赖 PontryaginDuality 与 Equiv.curry）
 W08-S04（`algebraic-core`，复数幂的基础算术）
+GNO77-S01–S06（`discrete-core`/`algebraic-core`，exp 周期 + 有限 Pontryagin 对偶）
 
 ## 路线 3：缺口清单（想知道「为什么这么多做不了」）
 
@@ -32,6 +33,13 @@ W08-G06 主定理：镜像对称 → 缺 SYZ/T-对偶与镜像对称本身
 W08-G07 tame ramification → 缺 𝔤 值留数与单值理论
 W08-G08 wild ramification/辫群 → 缺 Stokes 现象、等单值变形、辫群
 W08-G09 四维提升与栈 → 缺四维规范理论与 `Bun_G` 无整体商定理
+GNO77-G01 对偶群构造 → 缺根数据的对偶层
+GNO77-G02 磁权 = H^∨ 的权（主定理）→ 缺对偶表示论
+GNO77-G03 Cartan 共轭（式 1.5）→ 缺紧 Lie 群的最大环面
+GNO77-G04 π₂(G/H) ≅ π₁(H)（式 2.3）→ 缺同伦长正合列
+GNO77-G05 单极解渐近行为 → 缺变分解的存在性/渐近分析
+GNO77-G06 非半单 H（§6）→ 缺 U(1) 因子的对偶推广
+GNO77-G07 附录 D 磁权表 → 缺 Dynkin 图/根数据表
 
 ## 卡片索引
 
@@ -63,3 +71,16 @@ W08-G09 四维提升与栈 → 缺四维规范理论与 `Bun_G` 无整体商定�
 | W08-G07 | 缺口：tame ramification 的单值 exp(−2π(α−iγ)) | gap | gap |
 | W08-G08 | 缺口：wild ramification 与辫群 B(G) ≅ B(^LG) | gap | gap |
 | W08-G09 | 缺口：四维提升与 Bun_G 无有限维整体商 | gap | gap |
+| GNO77-S01 | 整数权：exp(2πi z) = 1 当且仅当 z 为整数 | discrete-core | certified |
+| GNO77-S02 | 狄拉克量子化（U(1)）：exp(4πi z)=1 ⇔ 2z∈ℤ | discrete-core | certified |
+| GNO77-S03 | 中心元：exp(2πi k/N) 的 N 次幂为 1 | discrete-core | certified |
+| GNO77-S04 | 对偶群与原群同阶（有限群情形） | algebraic-core | certified |
+| GNO77-S05 | 双对偶：(ℤ_N)^∨∨ ≅ ℤ_N（式 (1.6) 的有限群情形） | discrete-core | certified |
+| GNO77-S06 | Weyl 反射 p ↦ −p 保持量子化条件 | discrete-core | certified |
+| GNO77-G01 | 缺口：由根数据构造磁对偶群 H^∨ | gap | gap |
+| GNO77-G02 | 缺口：磁权恰为 H^∨ 的权（GNO 主定理） | gap | gap |
+| GNO77-G03 | 缺口：磁荷可共轭到 Cartan 组合（式 (1.5)） | gap | gap |
+| GNO77-G04 | 缺口：拓扑量子数 ≅ π₁(H)（式 (2.3)） | gap | gap |
+| GNO77-G05 | 缺口：'t Hooft–Polyakov 单极解渐近行为 | gap | gap |
+| GNO77-G06 | 缺口：非半单 H 的推广（§6） | gap | gap |
+| GNO77-G07 | 缺口：附录 D 的具体磁权表 | gap | gap |

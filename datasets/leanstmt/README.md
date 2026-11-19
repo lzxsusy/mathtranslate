@@ -8,7 +8,7 @@
 
 | 想看什么 | 看哪里 |
 | --- | --- |
-| 26 张卡的总览 | `MAP.md` |
+| 39 张卡的总览 | `MAP.md` |
 | 字段规范 | `SCHEMA.md` |
 | 一条卡长什么样 | `cards/statements/witten2008-s01.json`（及其 `md/` 渲染） |
 | Lean 源码 | `lean/ShuyiFormal/Witten2015/{Statements,Gaps}.lean`、`lean/ShuyiFormal/Witten2008/{Statements,Gaps}.lean` |
@@ -16,7 +16,7 @@
 | 这批是怎么做出来的 | `workflow/PRODUCTION.md` |
 | 下一步找哪些文献、做哪些陈述 | `ROADMAP.md` |
 
-## 两批范围（26 卡 = 15 certified + 11 gap）
+## 两批范围（39 卡 = 21 certified + 18 gap）
 
 **A 批：Witten 2015**（12 卡，10 certified + 2 gap）
 底本 *More On Gauge Theory And Geometric Langlands*，arXiv:1506.04293v3（79 页；印刷页 = PDF 页 − 1）。
@@ -28,7 +28,12 @@
 因此 B 批的 certified 卡只是若干离散/代数影子（中心 μ_N、有限 Pontryagin 对偶、
 非正则奇点系数的伸缩律、函数空间 currying）。
 
-- 轨道：`W15`（Witten 2015）、`W08`（Witten 2008）。
+**C 批：Goddard–Nuyts–Olive 1977**（13 卡，6 certified + 7 gap）
+底本 *Gauge Theories and Magnetic Charge*，Nucl. Phys. B125 (1977) 1–28（CERN-TH-2255 影印本；无文字层，经 OCR）。
+certified 卡是量子化条件与对偶群的离散影子（整数权、狄拉克量子化、中心元 N 次幂、对偶群同阶、
+双对偶、Weyl 反射不变性）；磁权的根格/权格构造、GNO 主定理与附录 D 的具体表见 G01–G07。
+
+- 轨道：`W15`（Witten 2015）、`W08`（Witten 2008）、`GNO77`（Goddard–Nuyts–Olive 1977）。
 - scope 四值：`discrete-core`（有限群/单位根）、`algebraic-core`（对偶空间/维数/群中心）、
   `arithmetic-core`（维数账与 RH 推论）、`gap`（mathlib 缺口，`sorry` 占位）。
 - certified 判据：`lake env lean` 对该文件 **0 error**、`sorry` 计数为 0、声明的 mathlib
@@ -46,7 +51,7 @@
 
 ## 已知限制
 
-1. 26 条仍是试点，不是全量。A 批原文 §2.4–§5 的主体（Hitchin 模空间、谱曲线、本征膜）
+1. 39 条仍是试点，不是全量。A 批原文 §2.4–§5 的主体（Hitchin 模空间、谱曲线、本征膜）
    几乎全部落在 gap 卡里；B 批的主定理见 G06。
 2. `arithmetic-core`/`algebraic-core` 的卡只固化代数恒等式或群论骨架，几何前提没有形式化，
    引用时须连带 gap 卡一起看，不能当成「Hitchin 系统已形式化」。
@@ -66,5 +71,6 @@ python tools/check_lean.py --project <formal 工程路径> --run   # 真跑 Lean
 ## 版本
 
 - v0.1（2026-11-19）：试点 12 卡（10 certified + 2 gap）、Lean 快照入库、工具与规范落地。
-- v0.2（2026-11-19）：加入 Witten 2008 批 14 卡（5 certified + 9 gap）；轨道改为 `W15`/`W08`；
-  两批合计 26 卡（15 certified + 11 gap）。
+- v0.2（2026-11-19）：加入 Witten 2008 批 14 卡（5 certified + 9 gap）；轨道改为 `W15`/`W08`。
+- v0.3（2026-11-19）：加入 GNO 1977 批 13 卡（6 certified + 7 gap），新增轨道 `GNO77`；
+  原文为 CERN 扫描件（无文字层），经 OCR 重排后按节/式号抽取；合计 39 卡（21 certified + 18 gap）。

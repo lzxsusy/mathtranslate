@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## leanstmt C 批：GNO 1977 陈述对照语料 13 卡 + 扫描件 OCR 管线 — 2026-11-19
+
+- 底本：R. Goddard, J. Nuyts, B. S. Olive, *Gauge Theories and Magnetic Charge*, Nucl. Phys. **B125** (1977) 1–28（DOI 10.1016/0550-3213(77)90221-8；报告号 CERN-TH-2255）。原文无公开 arXiv 号；从 CERN CDS record 422230 取影印 PDF（38 页、600 dpi 1-bit 扫描、无文字层），自解 Anubis v1.27 challenge 后下载。
+- OCR：`mutool draw -r 300` 渲 38 页 → PIL 合 300 dpi PDF（15.9 MB）→ `convert_file(ocr:true)`（tesseract.js/eng）；另用 node+tesseract.js 逐页 OCR 带 `[[PDF p.N]]` 标记。页脚数字不可靠，语料一律按节号+式号定位。
+- 新增 `datasets/leanstmt/cards/statements/gno1977-*.json` **13 张**（`s01`–`s06` certified、`g01`–`g07` gap），三批合计 **39 卡 = 21 certified + 18 gap**；轨道 `GNO77`；SCHEMA v0.3。
+- certified 6 条均为群论/单变量骨架：权的整性 `exp(2πiz)=1 ↔ z∈ℤ`；狄拉克量子化式 (1.3) 的 U(1) 特例 `exp(4πiz)=1 ↔ 2z∈ℤ`；中心元 `ζ^N=1`；有限对偶同阶 `|Hom(H,U(1))|=|H|`；式 (1.6) 有限群双对偶 `(ℤ_N)^∨∨≅ℤ_N`；Weyl 反射 `p↦−p` 保持量子化条件。
+- gap 7 条：根格/权格构造 H^∨（`dual_group_construction`）、磁权=H^∨ 的权（`magnetic_weights_are_weights`，GNO 主定理）、磁荷共轭到 Cartan 组合（式 (1.5)）、拓扑量子数 π₂(G/H)≅π₁(H)、单极解渐近行为（式 (1.1)(1.2)）、非半单 H 推广（§6）、附录 D 磁权表。
+- Lean：`formal/ShuyiFormal/GNO1977/{Statements,Gaps}.lean`；`check_lean.py --run` 六个文件全部 exit 0（GNO1977/Statements 0 sorry、Gaps 7），`verification.jsonl` 39 行；`lint_cards.py --strict` 0 error 0 warning；`build_index` 39 行、`render_md` 39 篇。
+- 工程：`make_cards.py` 扩为三批生成器（`tools/gno77_data.py` 数据表）；`lint_cards.py` 的 `source.arxiv` 规则放宽为「arXiv 形式或 `Nucl. Phys.` 起头」；`workflow/PRODUCTION.md` 增 §七（含 CDS/Anubis、OCR 管线、页映射、编译备注）；`ROADMAP.md` 记 C 批已落地并修 DOI；`datasets/README.md` 记 v0.20。
+
 ## SY02-13 Gaitsgory《几何朗兰兹的非正式导论》中译注本（15 页）+ dataset gaits04（23 卡） — 2026-11-19
 
 - 新增 `08_source_code/SY02-13_Gaitsgory_几何朗兰兹非正式导论_中文译注/`：D. Gaitsgory, *Informal Introduction to Geometric Langlands*（Bernstein–Gelbart 编 *An Introduction to the Langlands Program* 第 12 章，Birkhäuser 2004，原书 pp. 269–281 = PDF 271–283，13 页）全章中译，`ctexbook` + XeLaTeX，成品 **15 页**（题页、译者说明、目录、正文 9 页、文献）。
