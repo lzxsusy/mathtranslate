@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## dataset cdm14《晶体与 D-模》资料卡（35 张） — 2026-11-19
+
+- 新增 `datasets/cdm14/`：据 SY02-12 译注本裁出 **35 张**资料卡（27 概念 + 8 推导），八轨 A（de Rham 预栈与晶体定义 4）/B（左/右晶体、$\Upsilon$、Kashiwara 6）/C（下降与归纳函子 6）/D（$t$-结构 8）/E（与 D-模的关系 4）/F（扭化 4）/G（扭晶体 2）/O（总览 1）。每卡一 JSON，字段与 gtgl15 同规范（`SCHEMA.md` 已改写为 cdm14 版：id 前缀 `cdm14`、页 1–65、来源 A/B/C/D）。
+- 内容主线：$Y_{\mathrm{dR}}$ 的定义与保极限 → 左右晶体与 $\Upsilon$ 等价 → Kashiwara 引理 → h/fppf 下降与 $\ind^r$ 的单子性 → 两个 $t$-结构（含 $[-n]$ 平移、左完备、Gorenstein、$D(\heartsuit)\simeq\Crys^r$）→ 积分变换与 $D^l_X\simeq\mathrm{Diff}_X$ → 晶体 $\simeq$ D-模 → gerbe/扭化 $\mathrm{Tw}(Y)\simeq\tau^{\le2}(H_{\mathrm{dR}}\times_H*)[2]$ → 扭晶体。
+- 质量门禁：`python tools/lint_cards.py cards --strict` → `cards=35 ids=35 dup=0 errors=0`；`build_index.py` 35 条；`render_md.py` 35 卡。推导卡逐步带 `locator`（印刷页）与 `provenance` A/B/C，非 A 步一律在 `gaps` 登记；每卡 `provenance_note` 点名「最没把握处」。
+- 同批更新：`datasets/README.md` 十类表、目录树与版本记录 `v0.18`；`RELEASE_REGISTER.csv` 的 SY02-12 备注补「另附 cdm14 资料卡 35 张」；SY02-12 的 CHANGELOG 条目「遗留」改为「资料卡已裁，见 datasets/cdm14」。
+
 ## SY02-12 Gaitsgory–Rozenblyum《晶体与 D-模》中译注本（73 页） — 2026-11-19
 
 - 新增 `08_source_code/SY02-12_晶体与D-模（Gaitsgory–Rozenblyum）/`：Dennis Gaitsgory, Nick Rozenblyum, *Crystals and D-modules*（arXiv:1111.2087v4，2014-10-02，65 页，未正式出版预印本）全书中译，`ctexbook` + XeLaTeX，成品 **73 页 A4**（正文 67 页 + 前置 4 页 + 参考文献 2 页），含译注 10 条、重画交换图 33 幅。
@@ -10,7 +17,7 @@
 - 成品：`成品/晶体与D-模（Gaitsgory–Rozenblyum）-译注本.pdf`（73 页，随仓入库）；`成品/SY02-12_交付报告.md`（交付物、关键数字、六道工序、译注表、笔误表、校订层次、遗留问题）；`工程文件/build.sh`（干净目录三遍 xelatex + 页数/Overfull/未定义引用检查，当前 **Overfull 0 / 未定义引用 0**）。
 - 台账与元数据：`RELEASE_REGISTER.csv` 新增 SY02-12（arXiv 预印本，风险低，源码 L2 公开·受限，**随仓公开 / 成品在仓=是**，原文 L4 禁入，人工判定，合规，2026-11-19）；`03_translations_meta/SY02-12/投稿信息.md` 与工程根同名文件一致；README 主题分布表更新为 84 部 / 10,376 页（SY02 9 部 / 1,078 页）。`tools/check_compliance.py` 通过（2 条既有提示）。
 - 合规：底本 PDF、`en_full.txt`/`en_raw.txt` 文本层抽取与 `work/pages/` 页面图均属 L4，未入仓；`.gitignore` 新增 `08_source_code/**/工程文件/work/en_*.txt` 与 `*_raw.txt` 两条排除规则，并为 SY02-12 成品 PDF 增加随仓例外（与 SY03-20 同属未正式发表 arXiv 预印本，台账登记「随仓公开」）。
-- 遗留：术语索引与资料卡按约定等主人验收后再裁；本工程未做 index，未附预览 PNG。
+- 遗留：术语索引与资料卡按约定等主人验收后再裁；本工程未做 index，未附预览 PNG。（2026-11-19 补：主人验收后已裁出 `datasets/cdm14/` 35 张资料卡。）
 
 ## SY03-20 Witten《规范理论与几何朗兰兹续谈》校订译注本 + dataset gtgl15（40 卡） — 2026-11-19
 
