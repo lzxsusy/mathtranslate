@@ -1,0 +1,48 @@
+# 特征层与 Lang 同态
+
+> `gaits04/concept/character-sheaf` · 轨 E 附录：层-函数对应 · 状态 reviewed · 核验 source-only
+
+**问题：** 为什么特征层由 $\pi_1(A)$ 的一维表示给出，而 $\ker(L)=A$？
+
+**一句话：** 连通交换代数群 $A$ 上的一维局部系统，若单位元处纤维平凡且 $m^*(\mathcal X)\simeq\mathcal X\boxtimes\mathcal X$，称为特征层；它由 $\pi_1(A)\to\ker(L)=A\xrightarrow{\chi}\overline{\mathbb Q}_\ell^\times$ 给出，$L(a)=\mathrm{Fr}(a)/a$ 为 Lang 同态。
+
+**别名：** `character sheaf`、`Lang isogeny`、`Artin–Schreier sheaf`、`Kummer sheaf`
+
+## 定义
+
+事实证明，许多情形下定义在 $\mathcal Y/\mathbb{F}_q$ 的 $Y$ 上的「有趣」函数，都按上述方式来自 $\ell$-进层。某些情形下也可以反向构造。下面是一个例子。设 $A$ 是连通交换代数群。若对象 $\mathcal X\in D^b(A)$ 是一维局部系统，其在单位元处的纤维平凡，且 $m^*(\mathcal X)\simeq\mathcal X\boxtimes\mathcal X$（其中 $m:A\times A\to A$ 是乘法映射），则称 $\mathcal X$ 为特征层。此时，对应的有限群 $A=A(\mathbb F_q)$ 上的函数 $\chi$ 是特征。反之，给定 $A$ 的特征 $\chi$，可如下重构 $\mathcal X$：考虑 Lang 同态 $L:A\to A$，$a\mapsto\mathrm{Fr}(a)/a$，其中 $\mathrm{Fr}:A\to A$ 是 Frobenius 自同态。则 $L$ 是平展 Galois 覆盖，其覆盖变换群等于 $\ker(L)=A$。所求的特征层 $\mathcal X$，由 $\pi_1(A)$ 的如下一维表示所对应的 $\ell$-进层给出：$\pi_1(A)\to\ker(L)=A\xrightarrow{\chi}\overline{\mathbb Q}_\ell^\times$。把这一构造用于 $A$ 是仿射直线 $\mathbb A^1$ 的情形，得到 $\mathbb A^1$ 上称为 Artin–Schreier 层的 $\ell$-进层。类似地，$A$ 是乘法群 $\mathbb G_m$ 时得到其上的 Kummer 层。另一个例子是 $A=\mathrm{Pic}^0(X)$：由此可恢复 Lang 对函数域上整体类域论的证明中所用的构造；参看 [Se]。
+
+**记号：** $A$：$\mathbb F_q$ 上连通交换代数群；$L(a)=\mathrm{Fr}(a)/a$：Lang 同态；$\ker(L)=A(\mathbb F_q)$；$m$：乘法映射。
+
+## 要点
+
+- 特征层是「群 $A$ 的乘法与层的张量积相容」的层化：$m^*(\mathcal X)\simeq\mathcal X\boxtimes\mathcal X$ 正是「函数是特征」的几何版本。
+- Lang 同态是满的平展覆盖，核恰为 $A(\mathbb F_q)$，故 $\pi_1(A)$ 的一维表示与 $A(\mathbb F_q)$ 的特征一一对应。
+- $A=\mathbb A^1$ 给 Artin–Schreier 层（加性特征），$A=\mathbb G_m$ 给 Kummer 层（乘性特征），$A=\mathrm{Pic}^0(X)$ 给出整体类域论的 Lang 证明。
+
+## 公式
+
+$$
+m^*(\mathcal X)\simeq\mathcal X\boxtimes\mathcal X
+$$
+
+$$
+L:A\to A,\quad a\mapsto\mathrm{Fr}(a)/a,\quad \ker(L)=A(\mathbb F_q)
+$$
+
+## 易错点
+
+- 把 $\mathrm{Fr}(a)/a$ 的除法当成乘法逆的一般写法：这里 $A$ 是交换群，$\mathrm{Fr}$ 是群自同态，商有意义；非交换群没有这个构造。
+
+## 批注
+
+**〔易错预警〕特征层 vs Hecke 本征层**　本译注把 Hecke eigen-sheaf 译作「Hecke 本征层」，把 character sheaf 译作「特征层」，两者不可混用：前者是 Hecke 函子的本征对象，后者是交换群上「乘法相容」的一维局部系统。
+
+## 相关
+
+[[sheaf-function]]、[[eigensheaf]]
+
+## 来源
+
+- D. Gaitsgory《几何朗兰兹的非正式导论》，Bernstein–Gelbart 编《朗兰兹纲领导论》第 12 章，Birkhäuser 2004，pp. 269–281，§4.3，原书 pp. 279–280（PDF pp. 281–282）
+  - 锚点：`08_source_code/SY02-13_Gaitsgory_几何朗兰兹非正式导论_中文译注/源码/chapters/ch12_sec3.tex:99-118（§4.3）`

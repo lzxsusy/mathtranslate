@@ -1,0 +1,44 @@
+# 局部 Hecke 代数与卷积
+
+> `gaits04/concept/local-hecke` · 轨 A 阿代尔与球表示 · 状态 reviewed · 核验 source-only
+
+**问题：** 卷积定义里为什么是 $f_1(g\cdot g_1)f_2(g_1^{-1})$，而不是 $f_1(g_1)f_2(g_1^{-1}g)$？
+
+**一句话：** 局部 Hecke 代数 $\mathcal H(\mathrm{GL}_n(K_x),\mathrm{GL}_n(\mathcal O_x))$ 由紧支撑双不变函数组成，乘法是卷积，单位元是 $\mathrm{GL}_n(\mathcal O_x)$ 的特征函数。
+
+**别名：** `local Hecke algebra`、`convolution`、`bi-invariant functions`
+
+## 定义
+
+对 $x\in|X|$，Hecke 代数 $\mathcal H(\mathrm{GL}_n(K_x),\mathrm{GL}_n(\mathcal O_x))$ 是 $\mathrm{GL}_n(K_x)$ 上紧支撑的 $\mathrm{GL}_n(\mathcal O_x)$-双不变函数构成的向量空间。代数结构由卷积给出：$f_1,f_2\mapsto f_1*f_2$，其中 $(f_1*f_2)(g)=\int_{\mathrm{GL}_n(K_x)}f_1(g\cdot g_1)\,f_2(g_1^{-1})\,\mu(dg_1)$，$\mu$ 是满足 $\mu(\mathrm{GL}_n(\mathcal O_x))=1$ 的 Haar 测度。由构造，它是结合代数，单位元是 $\mathrm{GL}_n(\mathcal O_x)\subset\mathrm{GL}_n(K_x)$ 的特征函数。
+
+**记号：** $\mathcal H(G,G(\mathcal O))$：紧支撑双不变函数代数；$\mu$：局部 Haar 测度；卷积写成左乘 $g$、右乘 $g_1$ 的形式。
+
+## 要点
+
+- 双不变性使卷积封闭：$f_1*f_2$ 仍是双不变的，这是把函数代数化为「矩阵元」的前提。
+- 紧支撑保证积分有限；$\mu(\mathrm{GL}_n(\mathcal O_x))=1$ 使单位元的特征函数真的是单位元。
+- 卷积的结合律来自 Haar 测度的不变性，不需要任何交换性假设。
+
+## 公式
+
+$$
+(f_1*f_2)(g)=\int_{\mathrm{GL}_n(K_x)}f_1(g\cdot g_1)\,f_2(g_1^{-1})\,\mu(dg_1)
+$$
+
+## 易错点
+
+- 把卷积写成交换的形式：$\mathcal H$ 在 $n\ge 2$ 时非交换，交换性只在球 Hecke 代数（Satake 化）之后才出现。
+
+## 批注
+
+**〔易错预警〕卷积的左右**　这里 $f_1$ 吃 $g\cdot g_1$、$f_2$ 吃 $g_1^{-1}$，对应「先作用 $f_1$ 再作用 $f_2$」。若把两个因子调换，得到的是反代数结构，$T_x^i$ 的乘法次序会整体反过来。
+
+## 相关
+
+[[integral-adeles]]、[[spherical-module]]
+
+## 来源
+
+- D. Gaitsgory《几何朗兰兹的非正式导论》，Bernstein–Gelbart 编《朗兰兹纲领导论》第 12 章，Birkhäuser 2004，pp. 269–281，§1.4，原书 pp. 270（PDF pp. 272）
+  - 锚点：`08_source_code/SY02-13_Gaitsgory_几何朗兰兹非正式导论_中文译注/源码/chapters/ch12_sec1.tex:43-71（§1.4）`

@@ -1,0 +1,48 @@
+# 整体 Hecke 代数与限制张量积
+
+> `gaits04/concept/global-hecke` · 轨 A 阿代尔与球表示 · 状态 reviewed · 核验 source-only
+
+**问题：** 「几乎处处球」在整体表示里为什么自动成立？
+
+**一句话：** 整体 Hecke 代数是各局部 Hecke 代数的限制张量积；不可约 $\mathrm{GL}_n(\mathbb A)$-表示是局部表示的限制张量积，几乎处处球，于是给出一族半单共轭类 $\{\gamma_x\}$。
+
+**别名：** `global Hecke algebra`、`restricted tensor product`、`spherical representation`
+
+## 定义
+
+整体 Hecke 代数按定义为 $\mathcal H(\mathrm{GL}_n(\mathbb A),\mathrm{GL}_n(\mathbb O))=\bigotimes'_{x\in|X|}\mathcal H(\mathrm{GL}_n(K_x),\mathrm{GL}_n(\mathcal O_x))$，其中限制张量积指：考虑形如 $\bigotimes_{x\in|X|}f_x$ 的元素的有限线性组合，使得对几乎所有的 $x$，$f_x$ 是局部 Hecke 代数中的单位元。每个不可约 $\mathrm{GL}_n(\mathbb A)$-表示 $\pi$ 都是限制张量积 $\pi\simeq\bigotimes'_x\pi_x$，其中几乎所有 $\pi_x$ 是球表示。同样，若 $\pi^{\mathrm{GL}_n(\mathbb O)}\ne0$，则称 $\pi$ 为球表示；这等价于上述张量积中所有 $\pi_x$ 都是球表示。于是，给定 $\mathrm{GL}_n(\mathbb A)$ 的不可约球表示 $\pi$，可以赋予它一族半单共轭类 $\{\gamma_x\}$，$\forall x\in|X|$，$\gamma_x\in\mathrm{GL}_n(\mathbb C)$。
+
+**记号：** $\bigotimes'$：限制张量积；$\gamma_x$：$\pi_x$ 的 Satake 参数，即 $\mathrm{GL}_n(\mathbb C)$ 中的半单共轭类。
+
+## 要点
+
+- 限制张量积的两层含义：局部因子取自各自空间，且几乎处处是单位元／球向量。
+- 整体球性等价于局部处处球性：一边是 $\mathrm{GL}_n(\mathbb O)$-不动，一边是每个 $\pi_x^{\mathrm{GL}_n(\mathcal O_x)}\ne0$。
+- 于是「球表示」的对象从一族局部表示压缩成一族共轭类 $\{\gamma_x\}$，这是 §1.9 对应陈述的左边参数。
+
+## 公式
+
+$$
+\mathcal H(\mathrm{GL}_n(\mathbb A),\mathrm{GL}_n(\mathbb O))=\bigotimes'_{x\in|X|}\mathcal H(\mathrm{GL}_n(K_x),\mathrm{GL}_n(\mathcal O_x))
+$$
+
+$$
+\pi\simeq\bigotimes'_{x\in|X|}\pi_x
+$$
+
+## 易错点
+
+- 把限制张量积当成普通张量积：普通张量积里几乎处处非单位的因子有无穷多个，整体空间会退化。
+
+## 批注
+
+**〔背景直觉〕为什么是「几乎处处」**　整体表示论的所有构造都只允许有限个位「不规矩」：这既是限制积的定义方式，也是为什么整体 Hecke 代数可数生成、球表示可数分类的原因。
+
+## 相关
+
+[[satake]]、[[cuspidal]]
+
+## 来源
+
+- D. Gaitsgory《几何朗兰兹的非正式导论》，Bernstein–Gelbart 编《朗兰兹纲领导论》第 12 章，Birkhäuser 2004，pp. 269–281，§1.7，原书 pp. 272（PDF pp. 274）
+  - 锚点：`08_source_code/SY02-13_Gaitsgory_几何朗兰兹非正式导论_中文译注/源码/chapters/ch12_sec1.tex:97-111（§1.7）`

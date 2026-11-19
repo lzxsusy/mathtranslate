@@ -1,0 +1,44 @@
+# 光滑函数空间 $\operatorname{Funct}$
+
+> `gaits04/concept/smooth-funct` · 轨 A 阿代尔与球表示 · 状态 reviewed · 核验 source-only
+
+**问题：** 为什么只取光滑函数，而不取所有函数或 $L^2$ 函数？
+
+**一句话：** 自守形式的空间取为商 $\mathrm{GL}_n(K)\backslash\mathrm{GL}_n(\mathbb A)$ 上的光滑（即被某个开紧子群固定）复值函数。
+
+**别名：** `smooth functions`、`自守形式的空间`
+
+## 定义
+
+本章只讨论代数群 $\mathrm{GL}_n$，相应地 $\mathrm{GL}_n(\mathbb A)$ 是局部紧群。自守形式论研究商 $\mathrm{GL}_n(K)\backslash\mathrm{GL}_n(\mathbb A)$ 上（复值）函数构成的空间。只考虑光滑函数：所谓光滑，指该函数关于某个开紧子群不变。此空间记为 $\operatorname{Funct}(\mathrm{GL}_n(K)\backslash\mathrm{GL}_n(\mathbb A))$。按定义，阿代尔群通过右平移作用在其上。
+
+**记号：** $\operatorname{Funct}(X)$：所论空间上的复值光滑函数；光滑 = 存在开紧子群 $K_0$ 使 $f(gk)=f(g)$（$k\in K_0$）。
+
+## 要点
+
+- 光滑性是纯代数条件（被开紧子群固定），不需要拓扑或测度，故在任意特征下都成立。
+- 取复值是为陈述表示论；§1.8 之后改用 $\overline{\mathbb Q}_\ell$ 值，理由是该调和分析完全是代数的。
+- 右平移作用使 $\operatorname{Funct}$ 成为 $\mathrm{GL}_n(\mathbb A)$-表示，这是后文一切分解的载体。
+
+## 公式
+
+$$
+\operatorname{Funct}(\mathrm{GL}_n(K)\backslash\mathrm{GL}_n(\mathbb A))
+$$
+
+## 易错点
+
+- 把光滑误解为「$C^\infty$」：这里没有拓扑，光滑只意味着被某个开紧子群固定。
+
+## 批注
+
+**〔含糊点拨〕为什么可以只取光滑**　任何向量都被某个开紧子群固定：$\mathrm{GL}_n(\mathbb A)$ 有由 $\mathrm{GL}_n(\mathbb O)$ 的深子群组成的邻域基，故光滑向量在表示论里稠密到够用。原书不证这一点，直接把它当作工作假设。
+
+## 相关
+
+[[adeles]]、[[integral-adeles]]
+
+## 来源
+
+- D. Gaitsgory《几何朗兰兹的非正式导论》，Bernstein–Gelbart 编《朗兰兹纲领导论》第 12 章，Birkhäuser 2004，pp. 269–281，§1.2，原书 pp. 269（PDF pp. 271）
+  - 锚点：`08_source_code/SY02-13_Gaitsgory_几何朗兰兹非正式导论_中文译注/源码/chapters/ch12_sec1.tex:19-25（§1.2）`

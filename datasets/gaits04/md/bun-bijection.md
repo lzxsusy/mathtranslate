@@ -1,0 +1,44 @@
+# Bun$_n$ 与阿代尔双商的自然双射
+
+> `gaits04/concept/bun-bijection` · 轨 C 向量丛与 Hecke · 状态 reviewed · 核验 source-only
+
+**问题：** 平凡化的选择为什么最终被双商吸收？
+
+**一句话：** 秩 $n$ 向量丛的同构类集合 $\mathrm{Bun}_n$ 与双商 $\mathrm{GL}_n(K)\backslash\mathrm{GL}_n(\mathbb A)/\mathrm{GL}_n(\mathbb O)$ 自然双射。
+
+**别名：** `Bun_n`、`vector bundles`、`adelic double quotient`
+
+## 定义
+
+记 $\mathrm{Bun}_n$ 为曲线 $X$ 上秩 $n$ 向量丛的同构类集合。断言：$\mathrm{Bun}_n$ 与 $\mathrm{GL}_n(K)\backslash\mathrm{GL}_n(\mathbb A)/\mathrm{GL}_n(\mathbb O)$ 之间存在自然双射。事实上，给定向量丛 $M$，它在 Zariski 拓扑下局部同构于平凡丛 $\mathcal O_X^{\oplus n}$。取它在 $X$ 的一般点处的平凡化 $M\otimes_{\mathcal O_X}K\simeq K^n$，并在每个局部位置分别取平凡化 $M\otimes_{\mathcal O_X}\mathcal O_x\simeq\mathcal O_x^n$。对每个 $x\in|X|$ 复合这些同构，得到 $K_x^n\simeq\mathcal O_x^n\otimes_{\mathcal O_x}K_x\simeq M\otimes_{\mathcal O_X}K_x\simeq M\otimes_{\mathcal O_X}K\otimes_K K_x\simeq K^n\otimes_K K_x\simeq K_x^n$，即 $\mathrm{GL}_n(\mathbb A)$ 的一个元素。改变上述平凡化，效果是在左边乘 $\mathrm{GL}_n(K)$ 的元素，在右边乘 $\prod_{x\in|X|}\mathrm{GL}_n(\mathcal O_x)=\mathrm{GL}_n(\mathbb O)$ 的元素。
+
+**记号：** $\mathrm{Bun}_n$：同构类集合（不是叠）；一般点平凡化给出左乘的 $\mathrm{GL}_n(K)$；各位局部平凡化给出右乘的 $\mathrm{GL}_n(\mathbb O)$。
+
+## 要点
+
+- 构造是「一般点 + 所有局部位置」两组平凡化复合，缺任一组都得不到整个 $\mathrm{GL}_n(\mathbb A)$-元素。
+- 改变一般点平凡化 = 左乘 $\mathrm{GL}_n(K)$；改变后一位的局部平凡化 = 右乘 $\mathrm{GL}_n(\mathcal O_x)$，全部位合起来正是右乘 $\mathrm{GL}_n(\mathbb O)$。
+- 双射只依赖同构类：平凡化的选取不进入双商，这正是「自然」的含义。
+
+## 公式
+
+$$
+\mathrm{Bun}_n\longleftrightarrow \mathrm{GL}_n(K)\backslash\mathrm{GL}_n(\mathbb A)/\mathrm{GL}_n(\mathbb O)
+$$
+
+## 易错点
+
+- 把 $\mathrm{Bun}_n$ 当成叠：此处它只是同构类的集合，自同构信息已丢失；§3.1 才升级为 $\mathfrak{B}\mathrm{un}_n$。
+
+## 批注
+
+**〔含糊点拨〕看似选了无穷多个东西**　直觉上「一般点平凡化 + 每个位平凡化」是无穷多个选择，但改任一选择只是左右乘，双商把它们全商掉了。原书用一句「效果是左乘/右乘」带过，这里补出：局部改动只影响单个位，故右侧是每个位各自乘。
+
+## 相关
+
+[[adeles]]、[[bun-stack]]
+
+## 来源
+
+- D. Gaitsgory《几何朗兰兹的非正式导论》，Bernstein–Gelbart 编《朗兰兹纲领导论》第 12 章，Birkhäuser 2004，pp. 269–281，§2.1，原书 pp. 274（PDF pp. 276）
+  - 锚点：`08_source_code/SY02-13_Gaitsgory_几何朗兰兹非正式导论_中文译注/源码/chapters/ch12_sec2.tex:3-20（§2.1）`

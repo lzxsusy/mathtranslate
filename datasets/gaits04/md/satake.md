@@ -1,0 +1,48 @@
+# Satake 同构与球表示的分类
+
+> `gaits04/concept/satake` · 轨 A 阿代尔与球表示 · 状态 reviewed · 核验 source-only
+
+**问题：** 为什么球 Hecke 代数是交换的，而局部 Hecke 代数一般不是？
+
+**一句话：** 球 Hecke 代数同构于 $\mathbb C[T_1^\pm,\dots,T_n^\pm]$，其谱就是 $\mathrm{GL}_n(\mathbb C)$ 的半单共轭类；球表示的分类因此变成「给一个半单共轭类」。
+
+**别名：** `Satake isomorphism`、`Gelfand`、`spherical representation`、`semisimple conjugacy classes`
+
+## 定义
+
+回忆：不可约 $G(K_x)$-表示 $\pi$ 称为球表示，若 $\pi^{G(\mathcal O_x)}\ne0$。容易证明，$\pi\mapsto\pi^{G(\mathcal O_x)}$ 给出不可约球表示的同构类与不可约 $\mathcal H(G(K_x),G(\mathcal O_x))$-模的同构类之间的双射。Gelfand 的一个基本定理与 Satake 的一个结果（对 $\mathrm{GL}_n$ 都不难）合起来，可以非常具体地描述 $\mathcal H$：它交换，且几乎就是多项式代数：$\mathcal H(\mathrm{GL}_n(K_x),\mathrm{GL}_n(\mathcal O_x))=\mathbb C[T_x^1,\dots,T_x^{n-1},T_x^n,(T_x^n)^{-1}]$，其中 $T_x^i$ 是对角矩阵 $\operatorname{diag}(\varpi_x,\dots,\varpi_x,1,\dots,1)$（前 $i$ 个为 $\varpi_x$）的 $\mathrm{GL}_n(\mathcal O_x)$-双陪集的特征函数。于是每个不可约 $\mathcal H$-模都是一维的，从而每个球表示 $\pi$ 的子空间 $\pi^{G(\mathcal O_x)}$ 也是一维的。此外，不可约 $\mathcal H$-模的同构类可等同于 $\operatorname{Spec}(\mathbb C[T_x^1,\dots,T_x^{n-1},T_x^n,(T_x^n)^{-1}])$，后者又可等同于群 $\mathrm{GL}_n(\mathbb C)$ 中半单共轭类的集合。
+
+**记号：** $T_x^i$：双陪集 $\mathrm{GL}_n(\mathcal O_x)\operatorname{diag}(\varpi_x,\dots,\varpi_x,1,\dots,1)\mathrm{GL}_n(\mathcal O_x)$ 的特征函数；$\varpi_x$：$\mathcal O_x$ 的一致化子；上标 $\pm$ 表示可逆。
+
+## 要点
+
+- 交换性来自 Gelfand：球函数在卷积下交换；对 $\mathrm{GL}_n$ 可以直接用对称多项式验证。
+- $\operatorname{Spec}$ 是 $n$ 个变量的多项式环，其闭点由 $T_1,\dots,T_n$ 的取值给出，正好是 $\mathrm{GL}_n(\mathbb C)$ 的特征值，故等同于半单共轭类。
+- 每个不可约 $\mathcal H$-模一维，是把「球表示」压成一个半单共轭类 $\gamma_x$ 的全部内容。
+
+## 公式
+
+$$
+\mathcal H(\mathrm{GL}_n(K_x),\mathrm{GL}_n(\mathcal O_x))=\mathbb C[T_x^1,\dots,T_x^{n-1},T_x^n,(T_x^n)^{-1}]
+$$
+
+$$
+\operatorname{Spec}(\mathbb C[T_x^1,\dots,T_x^n,(T_x^n)^{-1}])\simeq\{\text{半单共轭类}\}
+$$
+
+## 易错点
+
+- 把 $T_x^i$ 当成矩阵：它是双陪集的特征函数，不是矩阵本身；只取其对角代表写公式。
+
+## 批注
+
+**〔易错预警〕归一化因子**　原书脚注 1 指出 $T_x^i$ 还须乘 $(-|k_x|^{1/2})^{i(n-i)}$ 才与 §3.2 的 Hecke 函子平移 $[i(n-i)]$ 配套。两处对照读时，特征值会差 $q_x^{i(n-i)/2}$，这不是笔误。
+
+## 相关
+
+[[spherical-module]]、[[global-hecke]]
+
+## 来源
+
+- D. Gaitsgory《几何朗兰兹的非正式导论》，Bernstein–Gelbart 编《朗兰兹纲领导论》第 12 章，Birkhäuser 2004，pp. 269–281，§1.6，原书 pp. 271（PDF pp. 273）
+  - 锚点：`08_source_code/SY02-13_Gaitsgory_几何朗兰兹非正式导论_中文译注/源码/chapters/ch12_sec1.tex:72-96（§1.6）`

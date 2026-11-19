@@ -39,6 +39,7 @@
 | `functoriality/` | 单篇论文资料卡（Abouzaid–Bottman《范畴辛几何中的函子性》，arXiv:2210.11159v1）：56 张概念卡 + 14 张推导卡 + 13 张勘误卡，四轨 A/B/C/D；每卡带英文原文印刷页锚，公式逐字对中译本源码校验；其中 42 张交换图以 tikz-cd 源码存于卡内、渲染 PNG 在 `md/diagrams/` | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
 | `gtgl15/` | 单篇论文资料卡（Witten《More On Gauge Theory And Geometric Langlands》，arXiv:1506.04293v3，79 页，与 SY03-20 校订译注版同批）：30 张概念卡 + 10 张推导卡，六轨 A（Hitchin 几何与谱曲线）/B（对偶环面与 T-对偶）/C（膜、线算符与本征膜）/D（'t Hooft 算符与赫克修正）/E（行列式线丛与本征值）/O（总览）；每卡带 arXiv 印刷页锚（印刷页 = PDF 页 − 1） | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
 | `cdm14/` | 单篇论文资料卡（Gaitsgory–Rozenblyum《晶体与 D-模》，arXiv:1111.2087v4，65 页，与 SY02-12 译注本同批）：27 张概念卡 + 8 张推导卡，八轨 A（de Rham 预栈）/B（左/右晶体与 Kashiwara）/C（下降与归纳函子）/D（$t$-结构）/E（与 D-模的关系）/F（扭化）/G（扭晶体）/O（总览）；每卡带 arXiv 印刷页锚（印刷页 = PDF 页）与 A/B/C 来源标注 | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
+| `gaits04/` | 单章资料卡（Gaitsgory《几何朗兰兹的非正式导论》，《朗兰兹纲领导论》第 12 章，13 页，与 SY02-13 译注本同批）：23 张概念卡，六轨 O/A/B/C/D/E；**每卡携带批注**（易错预警 / 含糊点拨 / 背景直觉，共 23 条）；每卡带原书页锚与中译本源码行号锚（`ch12_sec*.tex:A-B`）；全部 `reviewed` + `source-only` | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
 | `leanstmt/` | 自然语言 ↔ Lean 陈述对照语料：26 张陈述卡（15 certified + 11 gap；Witten 2015 ×12 + Witten 2008 ×14），每卡含原文页/式锚、规范化中英陈述、Lean 4 语句、mathlib 依赖、假设、盲验回译、`verification.jsonl` 机器可复算；`lean/` 存源码快照，`tools/` 可一键复跑 | 一条可编译、可复算的陈述 | 单卡 3,000 字 |
 
 `bench/` 与训练集严格隔离：出题时不得使用 `parallel/`、`deepread/` 中已出现的同一段落。

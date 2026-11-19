@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## SY02-13 Gaitsgory《几何朗兰兹的非正式导论》中译注本（15 页）+ dataset gaits04（23 卡） — 2026-11-19
+
+- 新增 `08_source_code/SY02-13_Gaitsgory_几何朗兰兹非正式导论_中文译注/`：D. Gaitsgory, *Informal Introduction to Geometric Langlands*（Bernstein–Gelbart 编 *An Introduction to the Langlands Program* 第 12 章，Birkhäuser 2004，原书 pp. 269–281 = PDF 271–283，13 页）全章中译，`ctexbook` + XeLaTeX，成品 **15 页**（题页、译者说明、目录、正文 9 页、文献）。
+- 选篇理由：全书 12 章中唯此章从「函数域自守形式 → 向量丛 → 层」走完几何化，且作者自称是「进入几何朗兰兹的一张地图」。
+- 工序按 v2.1：原文两遍通读 → `工程文件/通读笔记.md`（三句话主旨、逐节论证地图、体裁清单）与 `工程文件/疑点清单.tsv`（17 条，8 列，`未解`=0）→ 术语冻结（`工程文件/术语表.tsv` 109 条）与 `符号表.tsv` 44 条 → 150 dpi 页图逐符号核公式（`工程文件/公式核对记录.md`；pdftotext 提取件公式全乱码，一律不采信）→ 分节落盘 → 三遍 xelatex。
+- 质量：0 error / 0 undefined / 0 overfull / 0 缺字，7 处 Underfull（中文-数学混排）；逐页 110–130 dpi 目检，TOC 6 项、节号 1–4 与原书一致。
+- 两条术语决定：① Hecke eigen-sheaf 作「Hecke 本征层」而非「Hecke 特征层」，因 §4.3 的 character sheaf 必须作「特征层」（SY02-11 旧译已在译者说明里交代改译理由）；② 原书「小节号与命题共用一套编号」照原书保留，`\ob` 与 `othm` 共用计数器。
+- 排版取舍：不作页边码（右边界 2.6 cm 易 overfull），改在译者说明里给 13 行「原书页 ↔ 内容」对照表；8 条译注的来源统一 `\raggedleft` 独占一行，避免满行时被挤到行首。
+- 同批新增 `datasets/gaits04/`：**23 张概念卡**，六轨 O（总览 1）/A（阿代尔与球表示 7）/B（尖点与 Langlands 对应 4）/C（向量丛与 Hecke 4）/D（层化与猜想 5）/E（附录 2）。每卡**至少一条批注**（共 23 条，类型限易错预警 / 含糊点拨 / 背景直觉），8 条译注按主题落入 `satake`、`unramified-lisse`、`bun-bijection`、`hecke-correspondence`、`bun-stack`、`eigensheaf`、`sheaf-function`、`character-sheaf` 八卡。每卡带原书页与 `ch12_sec*.tex:A-B` 行号锚；`python tools/make_cards.py --check` → 23 卡、0 错误、0 警告；全部 `reviewed` + `source-only`，按规则不标 `published`。
+- 合规：底本为**在版图书**，按 COMPLIANCE R3 与 SY02-08 先例登记为「成品不公开」——译本 PDF 不随仓（`成品/说明.md` 给出本地编译方式）；原书文本层抽取、`work/pages/` 页面图均未入仓。`RELEASE_REGISTER.csv` 新增 SY02-13 行（图书、风险高、源码 L2 公开·受限、成品不公开、原文 L4 禁入、人工判定、合规）。
+- 遗留：`site/catalog.json` 与 `site/p/` 仍停在 SY01 批次（SY02-11/12/13 均未登记），站点未重生成；gaits04 尚未做外部核验（`source-only`）。
+
 ## leanstmt B 批：Witten 2008 陈述层形式化（14 卡） — 2026-11-19
 
 - 新增 `datasets/leanstmt/cards/statements/witten2008-{s01..s05,g01..g09}.json`：据 Witten, *Mirror Symmetry, Hitchin's Equations, and Langlands Duality*（arXiv:0802.0999v1，15 页；**印刷页 = PDF 页**）裁出 **14 张陈述卡**（5 `certified` + 9 `gap`），轨道 `W08`；与 A 批合计 26 卡（15 certified + 11 gap）。
