@@ -2,8 +2,8 @@
 
 ## SY03-20 Witten《规范理论与几何朗兰兹续谈》校订译注本 + dataset gtgl15（40 卡） — 2026-11-19
 
-- 新增 `08_source_code/SY03-20_规范理论与几何朗兰兹续谈/`：Edward Witten, *More On Gauge Theory And Geometric Langlands*（arXiv:1506.04293v3，2017-07-28，79 页，未正式出版预印本）既有中译（62 页）→ **校订译注版 77 页**（源码 50 项 / 工程文件 / 成品）。正文 62 页 + 附录 A 译注汇总 8 页 + 附录 B 术语对照表 3 页 + 中文概念索引 4 页。
-- 校订：四位校订译手一人一章（§1–2.6.3 / §2.6.4–3.4.1 / §4–5 / §6–7）逐段对照 79 页原文，正文改动 **12 处**（P1 3 / P2 9）。最重的是 §3 开头 "which was essentially described" 的限定词 essentially 原译漏（「实际上」→「实质上」）、"one-form" 原译「单形式」2 处；另有宏与记号统一、Stiefel–Whitney 专名、其余 5 处「一形式」统一为「1-形式」。逐条见 `工程文件/reports/ch0N_issues.md`。
+- 新增 `08_source_code/SY03-20_规范理论与几何朗兰兹续谈/`：Edward Witten, *More On Gauge Theory And Geometric Langlands*（arXiv:1506.04293v3，2017-07-28，79 页，未正式出版预印本）既有中译（62 页）→ **校订译注版 77 页**（源码 50 项 / 工程文件 / 成品）。正文 62 页 + 参考文献 2 页 + 附录 A 译注汇总 8 页 + 附录 B 术语对照表 3 页 + 中文概念索引 2 页。
+- 校订：四位校订译手一人一章（§1–2.6.3 / §2.6.4–3.4.1 / §4–5 / §6–7）逐段对照 79 页原文，正文改动 **12 行**（P1 1 行：essentially 漏限定词；P2 11 行 7 组：术语统一 7 行、记号 2 行、专名 1 行、句义精度 1 行）。最重的是 §3 开头 "which was essentially described" 的限定词 essentially 原译漏（「实际上」→「实质上」）、"one-form" 原译「单形式」2 处；另有宏与记号统一、Stiefel–Whitney 专名、其余 5 处「一形式」统一为「1-形式」。逐条见 `工程文件/reports/ch0N_issues.md`。
 - 译注 **57 条**（part1 15 / part2 13 / part3 17 / part4 12），每条带 `[来源：…]`：A 级原始文献为主（Witten 1988/1998/2008、KW 2006、Hitchin 1987×2、GNO 1977、Deligne 1987、Quillen 1985、RSW 1989、Donagi–Gaitsgory、Frenkel–Witten、Hausel–Thaddeus 等），B 级 nLab/Stacks 少量且均 web_fetch 实测 200、记 Last revised 与 2026-11-19 访问日期并与 A 级互证；黑名单来源 0 命中、「译者按（无外部依据）」0 条。附录 A 按节重列，编号「节号-序号」；附录 B 92 条中英对照（中文/英文/首见节），由 `\index{english@中文}` 机械生成。
 - 原文疑误 **27 处**只登记不改（保留译文原样），其中特别影响阅读的 3 处加译注说明：$q'$/$q''$ 重复、§2.6.5 偶 $N$ 的 $K^{1/2}$ 依赖、§3.4.1 脚注曲率 $2\pi i\Sigma$ 与式 (3.38) 的 $i\pi$ 归一化差因子 2。
 - 工程工具：`工程文件/tools/` 新增 `check_part.py`（UTF-8/LF/括号/$/环境配对/未转义 %）、`gen_appendix.py`（由 part 文件机械生成附录 A/B 与 `译注清单.tsv`）、`wrap_urls.py`（译注内裸 URL 包 `\url{}`）、`build.sh`（xelatex→makeindex→xelatex→xelatex + 日志审计 + 预览 PNG）。最终编译 **0 error / 0 undefined / 0 overfull**（109 条 warning 全为既有 hyperref PDF 字符串与 `\large` in math mode 字体警告，已登记疑点清单）。
