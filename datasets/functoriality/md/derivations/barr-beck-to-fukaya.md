@@ -35,6 +35,35 @@
    为什么：按原文语气与译者注，5.14 被明确标为 expectation、弱于定理，且只附启发式论证。  
    锚点：原书 p.62–65 §5.7.2（证据 C）
 
+## 交换图
+
+### 图 1：Cardy 型交换图（式140）
+
+![barr-beck-to-fukaya-1](../diagrams/barr-beck-to-fukaya-1.png)
+
+原文 §5.7 式(140)（中译本 chapter5.tex 式 140）。QCC 为拼接开--闭映射，CO 为闭--开弦映射；此方图的交换性是 BB1 启发式的核心。
+
+```tikz
+\begin{tikzcd}[column sep=1.5em,row sep=2em]
+\begin{gathered}\SH^*(M_1)\otimes\\\HH_*(\operatorname{CF}^*(L_{12});\operatorname{CF}^*(L_{12}))\end{gathered}
+\arrow[r] \arrow[d,"QCC"'] & \HH_*(\operatorname{CF}^*(L_{12});\operatorname{CF}^*(L_2\#L_{12}^T)) \arrow[d] \\
+\SH^*(M_2) \arrow[r,"CO"] & \HF^*(L_2)
+\end{tikzcd}
+```
+
+### 图 2：预期 5.14：到伪完美模范畴的提升（式144）
+
+![barr-beck-to-fukaya-2](../diagrams/barr-beck-to-fukaya-2.png)
+
+原文 §5.7 式(144)（预期 5.14）：虚线为待证的提升。这正是本卡结论只到「预期」而非定理的原因。
+
+```tikz
+\begin{tikzcd}[column sep=2em,row sep=1.5em]
+& \operatorname{perf}\bigl(\Phi_{L^T}\circ\Phi_L\bigr) \arrow[d] \\
+\Fuk M_2 \arrow[ur,dashed] \arrow[r] & \operatorname{Mod}\bigl(\Phi_{L^T}\circ\Phi_L\bigr)
+\end{tikzcd}
+```
+
 ## 结果
 
 得到条件性的路线：若单位 id_{M2} ∈ SH*(M2) 位于拼接闭--闭映射的像中，则 BB2 的剩余部分可望成立，从而 Fuk M2 与 Mod(Φ#_{L12^T}∘Φ#_{L12}) 拟同构。该陈述就是预期 5.14，仅由启发式论证支持，尚非定理。

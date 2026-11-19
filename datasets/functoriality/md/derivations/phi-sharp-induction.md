@@ -38,6 +38,33 @@
    为什么：同伦 $T$ 由收缩条带的计数给出；这一步把 §3.5.2 的同构提升为函子层面的同伦。  
    锚点：原书 p.31 §3.6（证据 A）
 
+## 交换图
+
+### 图 1：论证骨架：对象层面末端追加 L12（式67）
+
+![phi-sharp-induction-1](../diagrams/phi-sharp-induction-1.png)
+
+本图为论证骨架，非原文图：原文式(67) 用文字描述「在同一条广义对应链的末端追加一段」。
+
+```tikz
+\begin{tikzcd}[column sep=large]
+\pt \arrow[r,"K_{01}"] & N_1 \arrow[r] & \cdots \arrow[r] & N_r=M_1 \arrow[r,"L_{12}"] & M_2
+\end{tikzcd}
+```
+
+### 图 2：论证骨架：余维 1 退化给出 A∞ 关系（式69）
+
+![phi-sharp-induction-2](../diagrams/phi-sharp-induction-2.png)
+
+本图为论证骨架，非原文图：原文 §3.6 只给退化类型（接缝断裂、圆盘泡、八字形泡），未画图。
+
+```tikz
+\begin{tikzcd}[column sep=large,row sep=large]
+\partial\ol{\mathcal M}^{\#}_{d} \arrow[r,"\sim"] \arrow[d,Rightarrow] & \coprod_{\text{degeneration}}\mathcal M_{\text{broken}} \arrow[d,Rightarrow] \\
+0 \arrow[r,Rightarrow] & \sum\pm\mu(\ldots,\mu(\ldots),\ldots)=0
+\end{tikzcd}
+```
+
 ## 结果
 
 $\Phi^\#_{L_{12}}$ 由 (67)（对象：末端追加 $L_{12}$）与 (68)（态射：计数刚性拼接曲线）定义，满足 $A_\infty$ 关系 (69)（余维 1 退化证明），并带同伦 (70)–(71)（由条带收缩 (62) 给出）。

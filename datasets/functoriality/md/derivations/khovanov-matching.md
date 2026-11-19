@@ -30,6 +30,34 @@
    为什么：原文明确说比较由 [AS19] 完成，并指出推论 5.2 的一个版本在其中起关键作用；具体论证本节不复述。  
    锚点：原书 p.55 §5.2（证据 A）
 
+## 交换图
+
+### 图 1：纤维化 Dehn 扭转的正合三角（式112）
+
+![khovanov-matching-1](../diagrams/khovanov-matching-1.png)
+
+原文 §5.1 式(112)（定理 5.1）：C^t#C→Δ_M 是 C 与 C^t 之间伴随的余单位；Khovanov 稳定化所用的 τ_2 是 C=∪_2 的特例。原文节点后的句点属排版，此处略去。
+
+```tikz
+\begin{tikzcd}[column sep=huge,row sep=large]
+C^t\#C[\dim N] \arrow[rr] & & \Delta_M \arrow[dl] \\
+& \Delta_{\tau_C} \arrow[ul] &
+\end{tikzcd}
+```
+
+### 图 2：论证骨架：Markov 变换下的不变性
+
+![khovanov-matching-2](../diagrams/khovanov-matching-2.png)
+
+本图为论证骨架，非原文图：§5.2 没有交换图（只有辫闭包图 41）。两条斜边分别是共轭（Hamilton 同痕）与稳定化（引理 44 式(116)）。
+
+```tikz
+\begin{tikzcd}[column sep=large,row sep=large]
+\operatorname{Kh}_{symp}(\beta) \arrow[r,"\sim"] \arrow[dr,"\sim"'] & \operatorname{Kh}_{symp}(\beta') \arrow[d,"\sim"] \\
+& \operatorname{Kh}_{symp}(K)
+\end{tikzcd}
+```
+
 ## 结果
 
 $\operatorname{Kh}_{symp}$ 是纽结不变量；在特征 $0$ 的域上、把双分次合并为单分次后，它与 Jones 多项式的 Khovanov 范畴化一致（定理 5.4，转述 [AS19]）。证明路线的两个支点是 Seidel–Smith 引理 44（稳定化）与拼接 Floer 的对应计算。

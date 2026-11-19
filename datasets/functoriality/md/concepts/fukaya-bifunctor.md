@@ -27,6 +27,22 @@ $\CF^*(L_{01},L_{12},L_{01}\circ L_{12})$
 $\bigl(\Fuk(M_0^-\times M_1),\Fuk(M_1^-\times M_2)\bigr)\longrightarrow\Fuk(M_0^-\times M_2),$
 $\CF^*(L_{ij},L_{jk},L_{ik}^T)$
 
+## 交换图
+
+### 图 1：A∞-三函子方形中的指定同伦（式 95）
+
+![fukaya-bifunctor-1](../diagrams/fukaya-bifunctor-1.png)
+
+直取中译本式 (95)（定理 3.25）：复合双函子在 $A_\infty$-三函子方形中同伦意义下结合。四个角分别是三次复合的两种括号化与两条直接复合；原文的方形即此，未作改动。
+
+```tikz
+\begin{tikzcd}[column sep=1.3em,row sep=large]
+\begin{gathered}(\Fuk(M_0^-\times M_1),\Fuk(M_1^-\times M_2),\\\Fuk(M_2^-\times M_3))\end{gathered}\arrow[r]\arrow[d]
+&\bigl(\Fuk(M_0^-\times M_1),\Fuk(M_1^-\times M_3)\bigr)\arrow[d]\\
+\bigl(\Fuk(M_0^-\times M_2),\Fuk(M_2^-\times M_3)\bigr)\arrow[r]&\Fuk(M_0^-\times M_3).
+\end{tikzcd}
+```
+
 ## 定理与证明
 
 ### 复合对应上的边界上链

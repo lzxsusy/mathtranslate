@@ -86,6 +86,42 @@ def check_common(card, path, ids, allow_missing):
     return e
 
 
+def check_diagrams(card):
+    """交换图（可选字段）：自足的 tikz-cd/tikz 片段。"""
+    e = []
+    ds = card.get("diagrams")
+    if ds is None:
+        return e
+    if not isinstance(ds, list):
+        return ["diagrams 必须是数组"]
+    if len(ds) > 4:
+        e.append("diagrams 最多 4 张")
+    for i, d in enumerate(ds, start=1):
+        if not isinstance(d, dict):
+            e.append(f"diagram {i} 不是对象")
+            continue
+        title = str(d.get("title", "")).strip()
+        if not title:
+            e.append(f"diagram {i} 缺 title")
+        elif len(title) > 40:
+            e.append(f"diagram {i} 的 title 超过 40 字")
+        tikz = str(d.get("tikz", ""))
+        if "\\begin{tikzcd}" not in tikz and "\\begin{tikzpicture}" not in tikz:
+            e.append(f"diagram {i} 的 tikz 不含 tikzcd/tikzpicture 环境")
+        if tikz.count("\\begin{") != tikz.count("\\end{"):
+            e.append(f"diagram {i} 的 tikz 环境不闭合")
+        if "%" in tikz:
+            e.append(f"diagram {i} 的 tikz 含 %（会截断后续内容）")
+        if "$$" in tikz or "\\begin{equation}" in tikz:
+            e.append(f"diagram {i} 的 tikz 不得自带行间公式环境")
+        if len(tikz) > 2000:
+            e.append(f"diagram {i} 的 tikz 过长（>2000 字符）")
+        for k in d:
+            if k not in ("title", "tikz", "note"):
+                e.append(f"diagram {i} 含未知字段 {k}")
+    return e
+
+
 def check_concept(card):
     e = []
     for k in ("definition", "key_points", "formulas", "theorems"):
@@ -181,6 +217,8 @@ def main():
             continue
         rel = p.relative_to(ROOT)
         e = check_common(c, p, ids, args.allow_missing)
+        if p.parent.name in ("concepts", "derivations"):
+            e += check_diagrams(c)
         if p.parent.name == "concepts":
             e += check_concept(c)
         elif p.parent.name == "derivations":

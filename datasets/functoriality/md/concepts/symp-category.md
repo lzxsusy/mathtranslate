@@ -25,6 +25,21 @@ $\bigl(\Fuk(M_0^-\times M_1),\Fuk(M_1^-\times M_2)\bigr)\longrightarrow\Fuk(M_0^
 $\hom(M_1,M_2)\coloneqq\CC_*(\Fuk(M_1^-\times M_2))$
 $\SC^*(M_1)\longrightarrow\SC^*(M_r)$
 
+## 交换图
+
+### 图 1：闭-开弦映射的提升方形（式 107）
+
+![symp-category-1](../diagrams/symp-category-1.png)
+
+直取中译本式 (107)：闭-开映射自然提升为 $A_\infty$-同态等价于该方形交换；竖箭头为拟同构（原文用 $\leftrightarrow$ 加 $\simeq$ 表示）。右下图 $\operatorname{hom}(\id,\id)$ 是 $\Fuk M$ 的闭-开结构的一部分。
+
+```tikz
+\begin{tikzcd}[column sep=large,row sep=large]
+\SC^*(M)\arrow[r]\arrow[d,<->,"\simeq"']&\operatorname{CC}^*(\Fuk M)\arrow[d,<->,"\simeq"]\\
+\operatorname{CF}^*(\Delta_M,\Delta_M)\arrow[r]&\operatorname{hom}(\operatorname{id}_{\Fuk M},\operatorname{id}_{\Fuk M})
+\end{tikzcd}
+```
+
 ## 定理与证明
 
 ### 去范畴化与辛上同调

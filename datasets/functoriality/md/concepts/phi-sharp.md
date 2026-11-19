@@ -26,6 +26,21 @@ $\Phi^\#_{L_{12}}\bigl(\pt=N_0\xrightarrow{K_{01}}\cdots\xrightarrow{K_{(k-1)k}}
 $\hom(\underline L_1^0,\underline L_1^1)\otimes\cdots\otimes\hom(\underline L_1^{r-1},\underline L_1^r)$
 $\sum_{k,\ell}\pm\Phi^\#_{L_{12}}\bigl(x_1,\ldots,x_k,\mu_\ell(x_{k+1},\ldots,x_{k+\ell}),x_{k+\ell+1},\ldots,x_d\bigr)$
 
+## 交换图
+
+### 图 1：Φ# 在对象上于链尾追加 L12
+
+![phi-sharp-1](../diagrams/phi-sharp-1.png)
+
+定义 3.14 式 (67)：输入广义拉格朗日 $\underline L_1=(\pt=N_0\to\cdots\to N_r=M_1)$ 映到 $(\underline L_1,L_{12})$，即在链尾追加 $L_{12}\subset M_1^-\times M_2$ 一段。原文用公式 (67) 而未画图，本图按该式重排；态射侧见式 (68)。
+
+```tikz
+\begin{tikzcd}[column sep=2.4em,row sep=large]
+\pt=N_0 \arrow[r,"K_{01}"] & \cdots \arrow[r,"K_{(k-1)k}"] & N_r=M_1 \arrow[d,"\Phi^\#_{L_{12}}"] \\
+\pt=N_0 \arrow[r,"K_{01}"] & \cdots \arrow[r,"K_{(k-1)k}"] & N_r=M_1 \arrow[r,"L_{12}"] & M_2
+\end{tikzcd}
+```
+
 ## 定理与证明
 
 ### Φ# 满足 A∞ 关系

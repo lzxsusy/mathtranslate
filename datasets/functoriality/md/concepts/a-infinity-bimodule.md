@@ -26,6 +26,21 @@ $\mu_{\mathscr M;d}:\hom(X_0,X_1)\otimes\cdots\otimes\hom(X_{d-1},X_d)\otimes\ma
 $\hom(Y_0,Y_1)\otimes\cdots\otimes\hom(Y_{e-1},Y_e)\otimes\mathscr M(X_0,Y_0)$
 $\mathscr M(X,Y):=\hom_{\mathscr B}(\mathscr F(X),Y),$
 
+## 交换图
+
+### 图 1：图像双模由复合双函子给出（式 75）
+
+![a-infinity-bimodule-1](../diagrams/a-infinity-bimodule-1.png)
+
+例 3.16 式 (75)：$\mathcal M(X,Y):=\operatorname{hom}_{\mathcal B}(\mathcal F(X),Y)$，即图像双模是双函子 $\mathcal F^{\op}\times\id$ 与 $\operatorname{hom}_{\mathcal B}$ 的复合。原文只给式 (75) 未画图，本图按该式重排；排版上 $\mathscr$ 以 $\mathcal$ 代替（编译宏集不含 mathrsfs）。
+
+```tikz
+\begin{tikzcd}[column sep=large,row sep=large]
+\mathcal A^{\op}\times\mathcal B \arrow[r,"\mathcal F^{\op}\times\operatorname{id}_{\mathcal B}"] \arrow[dr,"\mathcal M"'] & \mathcal B^{\op}\times\mathcal B \arrow[d,"\operatorname{hom}_{\mathcal B}"] \\
+& \operatorname{Ch}
+\end{tikzcd}
+```
+
 ## 定理与证明
 
 ### 对应给出双模

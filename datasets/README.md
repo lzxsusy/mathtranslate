@@ -36,7 +36,7 @@
 | `seidel/` | 专著资料卡（Seidel《Fukaya categories and Picard–Lefschetz theory》）：32 张概念卡 + 8 张推导卡 + 30 张校订卡（初版错译→改译→理由），三轨 A/B/C | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
 | `siebert/` | 讲义资料卡（Siebert《镜像对称》讲义译本裁切卡，2019 年秋课程）：概念卡 + 推导卡 + 勘误卡，七轨 A–F + O | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
 | `dmod/` | 整本讲义资料卡（Miličić《D-模的代数理论讲义》，5 章 35 节 283 条）：61 张卡（59 概念 + 2 例子），九轨 O–H，逐卡对齐校订批注本源码行号并在 nLab / Stacks Project 找依据（`verification.jsonl` 记 `alignment` 与核验页面） | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
-| `functoriality/` | 单篇论文资料卡（Abouzaid–Bottman《范畴辛几何中的函子性》，arXiv:2210.11159v1）：56 张概念卡 + 14 张推导卡 + 13 张勘误卡，四轨 A/B/C/D；每卡带英文原文印刷页锚，公式逐字对中译本源码校验 | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
+| `functoriality/` | 单篇论文资料卡（Abouzaid–Bottman《范畴辛几何中的函子性》，arXiv:2210.11159v1）：56 张概念卡 + 14 张推导卡 + 13 张勘误卡，四轨 A/B/C/D；每卡带英文原文印刷页锚，公式逐字对中译本源码校验；其中 42 张交换图以 tikz-cd 源码存于卡内、渲染 PNG 在 `md/diagrams/` | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
 
 `bench/` 与训练集严格隔离：出题时不得使用 `parallel/`、`deepread/` 中已出现的同一段落。
 
@@ -61,7 +61,7 @@ datasets/
 ├── kw06/                      # 单篇论文资料卡：Kapustin–Witten 2006（概念卡 + 推导卡）
 ├── seidel/                    # 专著资料卡：Seidel《Fukaya categories and P–L theory》（概念/推导/校订）
 ├── siebert/                   # 讲义资料卡：Siebert《镜像对称》（概念/推导/勘误，七轨 A–F+O）
-├── functoriality/             # 单篇论文资料卡：Abouzaid–Bottman《范畴辛几何中的函子性》（概念/推导/勘误，四轨 A–D）
+├── functoriality/             # 单篇论文资料卡：Abouzaid–Bottman《范畴辛几何中的函子性》（概念/推导/勘误，四轨 A–D，42 张交换图）
 ├── math/<pkg>.<split>.jsonl   # 数学推理条目（主力）
 ├── parallel/<pkg>.<split>.jsonl
 ├── deepread/<pkg>.<split>.jsonl
@@ -138,4 +138,6 @@ https://atomgit.com/lzxSUSUY/mathtranslate/blob/main/datasets/<...>.jsonl
   `lint_cards.py --strict` 0 error、`index.jsonl` 75 条、`render_md.py` 75 卡。同批入库 SY01-24 中译注本（103 页，讲义类，L2 公开·受限，随仓公开）。
 - `v0.13`（2026-11-19）：新增 `functoriality/`——Abouzaid–Bottman《Functoriality in categorical symplectic geometry》（arXiv:2210.11159v1，68 页）的 83 张资料卡（56 概念 + 14 推导 + 13 勘误），四轨 A（第 1–2 章 Floer/Fukaya/操作子）/B（第 3 章 拼接 Floer 与函子）/C（第 4 章 辛 (A∞,2)-范畴）/D（第 5 章 应用）；
   页码锚由英文 PDF 逐页抽文定出（35 条节→页映射），73 个推导步骤、266 条 pitfalls；`lint_cards.py --strict` 0 error、`audit_pages.py` 0 issue、`check_formulas.py` 232/232 逐字命中、`index.jsonl` 83 条、`render_md.py` 83 卡。
+- `v0.14`（2026-11-19）：`functoriality/` 补 **42 张交换图**（tikz-cd，编译校验通过、PNG 渲染入 `md/diagrams/`），并把该论文的**术语表（209 条）与记号表（76 条）**冻结进 `01_corpus_zh/`（`terms_frozen_FUNCTORIALITY.tsv`、`symbols_frozen_FUNCTORIALITY.tsv`），术语基追加 190 行（`pkg=FUNCTORIALITY`）；
+  术语表 209 条（A 124/B 77/I 8）、记号表 76 条（5 组）；`check_diagrams.py --png` 42/42 编译通过。
 - 后续见 [CHANGELOG.md](../CHANGELOG.md)。

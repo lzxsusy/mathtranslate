@@ -27,6 +27,20 @@ $\epsilon:LR\to\id_Y$
 $(T,\mu,\eta):=(RL,R\epsilon L,\eta)$
 $L^T\dashv R^T$
 
+## 交换图
+
+### 图 1：伴随 L ⊣ R 与相联系的单子（式 133–134）
+
+![monad-1](../diagrams/monad-1.png)
+
+直取中译本式 (133)。该伴随给出单子 $(T,\mu,\eta):=(RL,R\epsilon L,\eta)$（式 134），其中 $\eta:\id_X\to RL$ 为单位、$\epsilon:LR\to\id_Y$ 为余单位。
+
+```tikz
+\begin{tikzcd}[column sep=3em]
+X \arrow[r,bend left=18,"L"] & Y. \arrow[l,bend left=18,"R"]
+\end{tikzcd}
+```
+
 ## 定理与证明
 
 ### 每个单子都来自某个伴随（Eilenberg–Moore、Kleisli 1965）

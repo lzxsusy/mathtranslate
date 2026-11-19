@@ -29,13 +29,13 @@ AI 辅助翻译的过程轨迹、以及威腾文章研讨班的组织资料整�
 | 指标 | 数值 |
 |---|---|
 | 译注工程 | **100** 部（其中 **86** 部带完整 LaTeX 源码） |
-| 仓库文件 | 8879 个 / **373.9 MB** |
+| 仓库文件 | 8924 个 / **374.5 MB** |
 | LaTeX 源文件 / 插图 | 1662 个 `.tex` / 2125 张图 |
 | 成品 PDF（预印本类） | 41 部 / **50.8 MB**（Release 附件） |
 | 中文段落语料 | **49035** 段（唯一 47469），其中 **42153** 段含公式（86%）；汉字 4,035,682 字 |
 | 语料覆盖 | **81** 个工程有段落入库（其余为仅成品 PDF / 无正文的工程） |
 | 近重复标注 | 1418 段（保留，标 `near_dup_of`） |
-| 术语基 | 1630 条 |
+| 术语基 | 1820 条 |
 | 精选轨迹 | 402 条 |
 | 原始会话分片 | 4 片 / **144.6 MB**（Release 附件） |
 
@@ -161,6 +161,13 @@ Bourbaki 报告、Astérisque 专辑、arXiv 预印本、论文集（proceedings
 列：英文 / 中文 / 等级 / 依据 / 首次出现 / 本轮校订备注）。这是《Langlands 纲领导论》逐页校订后的
 冻结术语表——`B` 级条目都能在 `07_refs_nlab/pages/` 找到对应 nLab 页，`A` 级条目指向本讲参考文献的
 具体章节。以后翻译几何 Langlands 的文献先查这张表，避免同词异译。
+
+**同一体例的第二张冻结表**（辛几何与 Floer 理论方向）：[`01_corpus_zh/terms_frozen_FUNCTORIALITY.tsv`](01_corpus_zh/terms_frozen_FUNCTORIALITY.tsv)（209 条，
+列同 SY02-09；`A` 级指向 arXiv 原文页码/式号，`B` 级指向 nLab 页面，`I` 级为本库定案），
+配套的**记号冻结表** [`01_corpus_zh/symbols_frozen_FUNCTORIALITY.tsv`](01_corpus_zh/symbols_frozen_FUNCTORIALITY.tsv)（76 条，
+列：记号 / LaTeX 源码 / 读法 / 含义 / 首次出现 / 依据；按「导言区宏—辛拓扑—Floer 与 A∞ 范畴—拼接 Floer 与对应—组合模型与应用」五组）。
+这两张表来自 Abouzaid–Bottman《Functoriality in categorical symplectic geometry》（arXiv:2210.11159v1）的中译注工程，
+术语基 `termbase.jsonl` 同步追加 190 行（`pkg=FUNCTORIALITY`，`status=confirmed`）。译「辛」「Floer」「拼接」「操作子」一类文献时先查这三处。
 
 ## `08_source_code/`：工程源码
 

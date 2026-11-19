@@ -34,6 +34,33 @@
    为什么：这是对结论的收尾与边界情形的判断：后半句依据 §2.4 的反常讨论（式(30)），原文在 §2.1 的译注中已提示。  
    锚点：原书 p.6（证据 C）
 
+## 交换图
+
+### 图 1：论证骨架：1 维模空间边界即 d² 的双和
+
+![floer-d-squared-1](../diagrams/floer-d-squared-1.png)
+
+本图为论证骨架，非原文图。原文 §2.1 p.6 只说由模空间紧化的余维 1 边界层给出；此处把「边界计数为零 = 式(14) 双和」画成一个方图。
+
+```tikz
+\begin{tikzcd}[column sep=large,row sep=large]
+\partial\ol{\mathcal M}(p_-,p_+;[v]) \arrow[r,"\sim"] \arrow[d,Rightarrow] & \coprod_{q,[v]=[v_1]+[v_2]} \mathcal M(p_-,q;[v_1])\times\mathcal M(q,p_+;[v_2]) \arrow[d,Rightarrow] \\
+0 \arrow[r,Rightarrow] & (d^2)_{p_-,p_+}
+\end{tikzcd}
+```
+
+### 图 2：论证骨架：π₂=0 排除圆盘冒泡
+
+![floer-d-squared-2](../diagrams/floer-d-squared-2.png)
+
+本图为论证骨架，非原文图；非球面假设使边界层只剩条带断裂，断裂项与式(14) 逐项配对。
+
+```tikz
+\begin{tikzcd}[column sep=large]
+\pi_2(M,L)=\pi_2(M,K)=0 \arrow[r,Rightarrow] & \partial\ol{\mathcal M}\ \text{broken strips only} \arrow[r,Rightarrow] & (d^2)_{p_-,p_+}=0
+\end{tikzcd}
+```
+
 ## 结果
 
 在非球面假设下 d²=0，故 HF*(L,K)=H(CF*(L,K),d) 是良定义的分次 Λ-模；这正是 §2.1 中 Floer 定理推导的前提。

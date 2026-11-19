@@ -29,6 +29,20 @@
    为什么：这一步把逐处局部极限粘成整体极限，完成紧性；同一论证适用于一般巫球，[BW18] 将其视为奇点消去定理的标准推论。  
    锚点：原书 p.50（证据 A）
 
+## 交换图
+
+### 图 1：论证骨架：宽度塌缩→圆盘延拓→泡树
+
+![witch-ball-compactness-1](../diagrams/witch-ball-compactness-1.png)
+
+本图为论证骨架，非原文图：原文 §4.4 p.49--50 只有文字（定理 4.9 奇点可去 + [BW18] 的 Gromov 紧性）。
+
+```tikz
+\begin{tikzcd}[column sep=large]
+\delta^\nu\to0 \arrow[r,Rightarrow] & w_0,w_2\ \text{extend to}\ D^2 \arrow[r,Rightarrow] & \text{bubble tree} \arrow[r,Rightarrow] & \text{allowed convergence}
+\end{tikzcd}
+```
+
 ## 结果
 
 在干净浸入假设下，宽度趋于零的伪全纯拼接映射序列有允许冒泡收敛的子序列；极限是穿孔拼接映射，每个穿孔的能量由圆盘、球面与八字形泡组成的泡树捕获。这给出巫球模空间的 Gromov 紧性，是 [WW12] 带收缩估计的加强。

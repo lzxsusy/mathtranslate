@@ -27,6 +27,21 @@ $K:Y\to\Mod T$
 $f,g:A\rightrightarrows B$
 $\Mod T$
 
+## 交换图
+
+### 图 1：余等化子的万有性质（式 136）
+
+![barr-beck-1](../diagrams/barr-beck-1.png)
+
+直取中译本式 (136)：$f,g:A\rightrightarrows B$ 的余等化子 $h:B\to C$ 满足 $h\circ f=h\circ g$，并对任何这样的 $h':B\to C'$ 有唯一分解（虚线）。Barr–Beck 的 (BB2) 要求 $Y$ 具有所有余等化子且 $L$ 保持它们。
+
+```tikz
+\begin{tikzcd}[column sep=2em,row sep=1.5em]
+A \arrow[r,shift left=.6ex,"f"] \arrow[r,shift right=.6ex,"g"'] & B \arrow[r,"h"] \arrow[dr,"h'"'] & C \arrow[d,dashed] \\
+&& C'.
+\end{tikzcd}
+```
+
 ## 定理与证明
 
 ### 定理 5.12（转述 [Mac71] 习题 VI.7.3 的弱三可表性版本）

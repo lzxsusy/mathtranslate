@@ -38,6 +38,34 @@
    为什么：这解释了为什么 §3.4 之后正文不再回头处理复合的合法性：它已经被假设吸收。  
    锚点：原书 p.23–24 §3.4（证据 B）
 
+## 交换图
+
+### 图 1：论证骨架：复合由纤维积截出
+
+![guillemin-sternberg-application-1](../diagrams/guillemin-sternberg-application-1.png)
+
+本图为论证骨架，非原文图。GS 横截判据（[GS05] 定理 4）说的正是这个纤维积光滑、且 \pi_{M_2} 在其上是拉格朗日浸入。
+
+```tikz
+\begin{tikzcd}[column sep=large,row sep=large]
+L_1\times_{M_1}L_{12} \arrow[r] \arrow[d] & L_{12} \arrow[d] \\
+L_1 \arrow[r] & M_1
+\end{tikzcd}
+```
+
+### 图 2：论证骨架：横截判据与凸性定理的分工
+
+![guillemin-sternberg-application-2](../diagrams/guillemin-sternberg-application-2.png)
+
+本图为论证骨架，非原文图；上下两行是两条独立线索，不是交换图：GS 横截判据管复合的合法性，Atiyah--GS 凸性只管矩多面体。
+
+```tikz
+\begin{tikzcd}[column sep=large,row sep=large]
+L_1\times L_{12}\pitchfork\Delta_{M_1}\times M_2 \arrow[r,Rightarrow] & L_1\circ L_{12}\hookrightarrow M_2 \\
+\mu(M)\ \text{convex} \arrow[r,Rightarrow] & \text{moment polytope}
+\end{tikzcd}
+```
+
 ## 结果
 
 复合的合法性由 GS 横截判据（横截⇒拉格朗日浸入）加 Hamilton 同痕与嵌入假设保证；凸性定理只给出矩多面体这一组合侧的控制，不能当作复合横截性的判据。

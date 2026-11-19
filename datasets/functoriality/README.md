@@ -6,7 +6,7 @@ Mohammed Abouzaid & Nathaniel Bottman, *Functoriality in categorical symplectic 
 
 - 底本：arXiv 英文原文 68 页；**PDF 页 = 印刷页**。卡中的 `原书 p.N` 一律指英文原文的印刷页。
 - 材料：84 页中文译注本（43 条译注、209 条术语、62 条索引条目）——译稿本身**不入库**，只把其中的数学与校订结论裁成卡。
-- 规模：**83 张** —— 56 张概念卡 + 14 张推导卡 + 13 张勘误卡；73 个推导步骤、266 条易错点，页锚覆盖原文 p.2–65 的 41 个印刷页。
+- 规模：**83 张** —— 56 张概念卡 + 14 张推导卡 + 13 张勘误卡；**42 张交换图**（28 张卡，tikz-cd 源码 + 渲染 PNG）；73 个推导步骤、266 条易错点，页锚覆盖原文 p.2–65 的 41 个印刷页。
 - 权利：全部 `rights: "rewritten"`。定义、证明、要点用自己的话重写；公式照录（逐字取自中译本 chapter 源码，`check_formulas.py` 校验）；勘误卡给出「原文—应作—依据」三层，不复制原文整段。
 
 ## 30 秒入口
@@ -17,6 +17,7 @@ Mohammed Abouzaid & Nathaniel Bottman, *Functoriality in categorical symplectic 
 | 按类型、轨道浏览 | [md/index.md](md/index.md) |
 | 按 id / 页码检索 | [index.jsonl](index.jsonl) |
 | 看一张概念卡 | [md/concepts/operadic-principle.md](md/concepts/operadic-principle.md) |
+| 看一张交换图 | [md/diagrams/a-infinity-bimodule-1.png](md/diagrams/a-infinity-bimodule-1.png) |
 | 看一条推导链 | [md/derivations/mww-composition.md](md/derivations/mww-composition.md) |
 | 看一条勘误 | [md/corrections/d01-cpn-should-be-cn.md](md/corrections/d01-cpn-should-be-cn.md) |
 | 字段规范 | [SCHEMA.md](SCHEMA.md) |
@@ -40,6 +41,7 @@ Mohammed Abouzaid & Nathaniel Bottman, *Functoriality in categorical symplectic 
    - `lint_cards.py --strict`：字段、类型、长度、id 与文件名、related 可解析、页码 1–68、anchor 以「原书 p.」开头、禁本机绝对路径 —— **0 error / 0 warn**。
    - `audit_pages.py`：每卡页码范围落在所属节的页区间内、跨度 ≤3 页，且 anchor 页码落在 pages 内 —— 0 issue。
    - `check_formulas.py --corpus book/`：232 条公式在 5 个章节源码中**逐字命中 232/232**。
+   - `check_diagrams.py --png`：42 张交换图逐张用 `standalone` + tikz-cd 编译，**42/42 通过**，PNG 渲染到 `md/diagrams/`。
    - `build_index.py` 生成 83 行 `index.jsonl`；`render_md.py` 渲染 83 张 Markdown + `md/index.md`；`gen_map.py` 生成 `MAP.md`。
 
 ## 质检
@@ -48,6 +50,7 @@ Mohammed Abouzaid & Nathaniel Bottman, *Functoriality in categorical symplectic 
 python tools/lint_cards.py cards --strict    # 0 error 才算过
 python tools/audit_pages.py cards            # 页锚点自洽
 python tools/check_formulas.py cards --corpus <中译本 book 目录>   # 公式逐字核对
+python tools/check_diagrams.py cards --png   # 交换图编译 + 渲染 PNG
 python tools/build_index.py                  # 重建 index.jsonl
 python tools/render_md.py                    # 重建 md/
 python tools/gen_map.py                      # 重建 MAP.md

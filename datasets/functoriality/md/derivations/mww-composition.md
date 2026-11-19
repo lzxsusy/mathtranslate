@@ -34,6 +34,33 @@
    为什么：这解释了为什么对应落在 $\Fuk(M^-\times N)$ 而不是 $\Fuk(M\times N)$。  
    锚点：原书 p.21 §3.3（Remark 3.8）（证据 A）
 
+## 交换图
+
+### 图 1：对象的原型：广义拉格朗日对应 pt→M（式54）
+
+![mww-composition-1](../diagrams/mww-composition-1.png)
+
+原文 §3.5 式(54)：Fuk#(M) 的对象就是这种（循环）广义拉格朗日对应，本卡 setup 中的 pt→M 即指此。
+
+```tikz
+\begin{tikzcd}[column sep=large]
+\pt \arrow[r,bend left=25,"L"] & M \arrow[l,bend left=25,"K"]
+\end{tikzcd}
+```
+
+### 图 2：论证骨架：函子复合与复合对应（定理 1.2）
+
+![mww-composition-2](../diagrams/mww-composition-2.png)
+
+本图为论证骨架，非原文图：原文 §3.3 定理 1.2 以文字陈述「A∞-同伦」，图中未画 2-胞腔；与 §3.11 式(93) 同型。
+
+```tikz
+\begin{tikzcd}[column sep=large]
+\Fuk^\#(M_0) \arrow[r,"\Phi^\#_{L_{01}}"] \arrow[dr,"\Phi^\#_{L_{01}\circ L_{12}}"'] & \Fuk^\#(M_1) \arrow[d,"\Phi^\#_{L_{12}}"] \\
+& \Fuk^\#(M_2)
+\end{tikzcd}
+```
+
 ## 结果
 
 (49) 与 (50) 成立：$\Phi^\#_{L_{01}}$ 是 $A_\infty$-函子，且 $\Phi^\#_{L_{12}}\circ\Phi^\#_{L_{01}}\simeq\Phi^\#_{L_{01}\circ L_{12}}$ 为 $A_\infty$-同伦（在同伦意义下「复合与范畴化可交换」）。

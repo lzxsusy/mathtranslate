@@ -34,6 +34,34 @@
    为什么：正向方向使等价成立；原文只详细写逆向，本卡补出正向的说明（后半句为 C 的判断）。  
    锚点：原书 p.15（证据 A）
 
+## 交换图
+
+### 图 1：论证骨架：μ_r 是链映射（式27）
+
+![operadic-construction-1](../diagrams/operadic-construction-1.png)
+
+本图为论证骨架，非原文图：原文 §2.3 只有式(25)--(28) 的链映射等式。
+
+```tikz
+\begin{tikzcd}[column sep=large,row sep=large]
+C_*^{\mathrm{cell}}(K_r)\otimes\operatorname{CF}^*(L_0,L_1)\otimes\cdots\otimes\operatorname{CF}^*(L_{r-1},L_r) \arrow[r,"\mu_r"] \arrow[d,"\partial"'] & \operatorname{CF}^*(L_0,L_r) \arrow[d,"d"] \\
+C_*^{\mathrm{cell}}(\partial K_r)\otimes\cdots \arrow[r,"\sum\pm\mu_r"'] & \operatorname{CF}^*(L_0,L_r)
+\end{tikzcd}
+```
+
+### 图 2：论证骨架：结合多面体的边界给出 A∞ 方程（式28）
+
+![operadic-construction-2](../diagrams/operadic-construction-2.png)
+
+本图为论证骨架，非原文图；左列的边界项经操作子作用后给出 μ₁ 项与内边收缩项，合起来即式(28)。
+
+```tikz
+\begin{tikzcd}[column sep=large,row sep=large]
+\partial[K_r] \arrow[r,"\sim"] \arrow[d,"\varphi_r"'] & \sum_{a,i}\pm[K_{r-a+1}]\circ_i[K_a] \arrow[d,"\varphi"] \\
+\mu_1\mu_r+\sum_i\pm\mu_r(\ldots,\mu_1,\ldots) & \sum_{a,i}\pm\mu_{r-a+1}(\ldots,\mu_a(\ldots),\ldots)
+\end{tikzcd}
+```
+
 ## 结果
 
 线性 A∞-范畴与操作子 C_*^cell(K) 上的范畴等价；A∞ 方程不再是额外公理，而是操作子相容性（结合多面体胞腔边界的递归分解）的翻译。

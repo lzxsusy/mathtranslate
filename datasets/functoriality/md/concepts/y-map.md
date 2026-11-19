@@ -25,6 +25,21 @@ Lekili–Lipyanskiy（并见其修正版）证明：取闭辛流形 $M_0,M_1,M_2
 $L_0\subset M_0,\quad L_{01}\subset M_0^-\times M_1,\quad L_{12}\subset M_1^-\times M_2,\quad L_2\subset M_2,$
 $\HF^*(L_0,L_{01},L_{12},L_2)\xrightarrow{\simeq}\HF^*(L_0,L_{01}\circ L_{12},L_2).$
 
+## 交换图
+
+### 图 1：Y-映射诱导的同构方形（定理 3.22）
+
+![y-map-1](../diagrams/y-map-1.png)
+
+据定理 3.22 的式 (89)–(90) 重排：上横箭头是典范双射，下横箭头是它诱导的同构；竖箭头表示由这些广义交点生成相应的拼接 Floer 复形。原文以文字与式 (90) 陈述、未画方形，本图未加任何新假设。
+
+```tikz
+\begin{tikzcd}[column sep=large,row sep=large]
+(L_0\times L_{12})\cap(L_{01}\times L_2) \arrow[r,"\cong"] \arrow[d] & (L_0\times L_2)\cap(L_{01}\circ L_{12}) \arrow[d] \\
+\HF^*(L_0,L_{01},L_{12},L_2) \arrow[r,"\simeq"'] & \HF^*(L_0,L_{01}\circ L_{12},L_2)
+\end{tikzcd}
+```
+
 ## 定理与证明
 
 ### Lekili–Lipyanskiy 同构

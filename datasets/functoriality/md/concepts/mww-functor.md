@@ -26,6 +26,21 @@ $\Fuk(M^-\times N):=\Fuk(M\times N,(-\omega_M)\oplus\omega_N)$
 $\Phi_{L_{01}}^\#:\Fuk^\#(M_0)\longrightarrow\Fuk^\#(M_1),$
 $\Phi_{L_{12}}^\#\circ\Phi_{L_{01}}^\#\simeq\Phi_{L_{01}\circ L_{12}}^\#.$
 
+## 交换图
+
+### 图 1：Φ# 与几何复合相容（同伦意义）
+
+![mww-functor-1](../diagrams/mww-functor-1.png)
+
+定理 3.7（中译本式 50 之后）：两个函子的复合与复合对应所给函子同伦等价，图中斜边上的 ≃。原文以文字陈述、未画图，本图按定理内容重排。
+
+```tikz
+\begin{tikzcd}[column sep=large,row sep=large]
+\Fuk^\#(M_0) \arrow[r,"\Phi^\#_{L_{01}}"] \arrow[dr,"\substack{\Phi^\#_{L_{01}\circ L_{12}}\\ \simeq}"'] & \Fuk^\#(M_1) \arrow[d,"\Phi^\#_{L_{12}}"] \\
+& \Fuk^\#(M_2)
+\end{tikzcd}
+```
+
 ## 定理与证明
 
 ### MWW 存在定理

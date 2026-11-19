@@ -27,6 +27,20 @@ $\Mod T$
 $K:Y\to\Mod T$
 $(Ry,R\epsilon_y)$
 
+## 交换图
+
+### 图 1：自由/遗忘伴随 L^T ⊣ R^T（式 135）
+
+![eilenberg-moore-1](../diagrams/eilenberg-moore-1.png)
+
+直取中译本式 (135)：单子 $(T,\mu,\eta)$ 的 Eilenberg–Moore 范畴 $\operatorname{Mod}T$ 与自由函子 $L^T$、遗忘函子 $R^T$ 构成伴随，相联系的单子恰是 $(T,\mu,\eta)$（原文此处误写 $\nu$，见 barr-beck / monad 卡原文笔误条）。
+
+```tikz
+\begin{tikzcd}[column sep=3em]
+X \arrow[r,bend left=18,"L^T"] & \operatorname{Mod}T \arrow[l,bend left=18,"R^T"]
+\end{tikzcd}
+```
+
 ## 定理与证明
 
 ## 易错点

@@ -34,6 +34,34 @@
    为什么：这是原文明确指出的类比（「与 thm:3.5 比较」）；但辛侧只到 $A_\infty$-同伦，且需要嵌入复合等假设，不能把代数侧的严格同构直接搬过来。  
    锚点：原书 p.21 §3.3（证据 C）
 
+## 交换图
+
+### 图 1：论证骨架：FM 变换的复合
+
+![fm-composition-1](../diagrams/fm-composition-1.png)
+
+本图为论证骨架，非原文图：原文 §3.2 命题 thm:3.5 只陈述 Φ_Q∘Φ_P≅Φ_R，无交换图。
+
+```tikz
+\begin{tikzcd}[column sep=large]
+D^b(X) \arrow[r,"\Phi_{\mathcal P}"] \arrow[dr,"\Phi_{\mathcal Q}\circ\Phi_{\mathcal P}"'] & D^b(Y) \arrow[d,"\Phi_{\mathcal Q}"] \\
+& D^b(Z)
+\end{tikzcd}
+```
+
+### 图 2：论证骨架：卷积核用的拉回方块
+
+![fm-composition-2](../diagrams/fm-composition-2.png)
+
+本图为论证骨架，非原文图；投影公式沿此方块把中间的 Y 方向消去，得到 R=(π_XZ)_*(π_XY^*P⊗π_YZ^*Q)。
+
+```tikz
+\begin{tikzcd}[column sep=large,row sep=large]
+X\times Y\times Z \arrow[r,"\pi_{YZ}"] \arrow[d,"\pi_{XY}"'] & Y\times Z \arrow[d,"\operatorname{pr}_Y"] \\
+X\times Y \arrow[r,"\operatorname{pr}_Y"'] & Y
+\end{tikzcd}
+```
+
 ## 结果
 
 $\Phi_{\mathscr Q}\circ\Phi_{\mathscr P}\cong\Phi_{\mathscr R}$，其中 $\mathscr R={\pi_{XZ}}_*\bigl(\pi_{XY}^*\mathscr P\otimes\pi_{YZ}^*\mathscr Q\bigr)$；复合对应核的卷积，是 MWW 复合定理 (50) 的代数原型。

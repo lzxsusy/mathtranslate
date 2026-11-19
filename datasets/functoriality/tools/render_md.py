@@ -13,6 +13,23 @@ def esc(s):
     return str(s)
 
 
+def render_diagrams(c, slug):
+    ds = c.get("diagrams") or []
+    if not ds:
+        return []
+    out = ["## 交换图", ""]
+    for i, d in enumerate(ds, start=1):
+        title = d.get("title", "")
+        out += [f"### 图 {i}：{title}" if title else f"### 图 {i}", ""]
+        png = MD / "diagrams" / f"{slug}-{i}.png"
+        if png.exists():
+            out += [f"![{slug}-{i}](../diagrams/{slug}-{i}.png)", ""]
+        if d.get("note"):
+            out += [d["note"], ""]
+        out += ["```tikz", str(d.get("tikz", "")).strip(), "```", ""]
+    return out
+
+
 def render_concept(c):
     out = [f"# {c['title']}", "",
            f"> `{c['id']}` ｜ track {c['track']} ｜ {c['status']}", "",
@@ -24,6 +41,7 @@ def render_concept(c):
     out += ["## 要点", ""] + [f"- {x}" for x in c["key_points"]] + [""]
     if c.get("formulas"):
         out += ["## 公式", ""] + [x for x in c["formulas"]] + [""]
+    out += render_diagrams(c, c["id"].split("/")[-1])
     out += ["## 定理与证明", ""]
     for t in c.get("theorems", []):
         out += [f"### {t['name']}", "", t["statement"], "",
@@ -49,6 +67,7 @@ def render_deriv(c):
         out += [f"{st['no']}. **{st['text']}**  ",
                 f"   为什么：{st['why']}  ",
                 f"   锚点：{st['locator']}（证据 {st['provenance']}）", ""]
+    out += render_diagrams(c, c["id"].split("/")[-1])
     out += ["## 结果", "", c["result"], "", "## 缺口", ""] + [f"- {x}" for x in c["gaps"]] + [""]
     out += ["## 易错点", ""] + [f"- {x}" for x in c["pitfalls"]] + [""]
     out += refs(c)

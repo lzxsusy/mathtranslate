@@ -38,6 +38,33 @@
    为什么：归纳的三角形/链式图来自 fig:24 中每次把复合对应替换为几何复合的那一步（即 (62)），不是三角范畴意义下的正合三角。  
    锚点：原书 p.34–35 §3.9（证据 A）
 
+## 交换图
+
+### 图 1：Hamilton 作用的等变提升数据（式80）
+
+![reduction-clifford-example-1](../diagrams/reduction-clifford-example-1.png)
+
+原文 §3.9 式(80)：实线箭头 X↦X^#，虚线是矩映射前提到的等变提升 X↦H_X。
+
+```tikz
+\begin{tikzcd}[column sep=large]
+& C^\infty(M,\bR) \arrow[d] \\
+\mathfrak g \arrow[r] \arrow[ur,dashed] & C^\infty(M,TM)
+\end{tikzcd}
+```
+
+### 图 2：论证骨架：n=3 时的归纳步骤（图24）
+
+![reduction-clifford-example-2](../diagrams/reduction-clifford-example-2.png)
+
+本图为论证骨架，非原文图（原文图 24 是带四个表达式的示意图，不是 tikzcd）；这里取图中首尾两项，前两个同构本质上就是带收缩同构 (62)。
+
+```tikz
+\begin{tikzcd}[column sep=large]
+\HF^*(T^3_{\mathrm{Cl}},T^3_{\mathrm{Cl}}) \arrow[r,"\sim"] & \HF^*(S^1_{\mathrm{Cl}},S^1_{\mathrm{Cl}})\otimes\HF^*(T^2_{\mathrm{Cl}},T^2_{\mathrm{Cl}}) \arrow[r,"="] & \bZ^{8}
+\end{tikzcd}
+```
+
 ## 结果
 
 $\HF^*(T^n_{\mathrm{Cl}},T^n_{\mathrm{Cl}})\cong\HF^*(T^{n-1}_{\mathrm{Cl}},T^{n-1}_{\mathrm{Cl}})^{\otimes2}$，故 $\HF^*(T^n_{\mathrm{Cl}},T^n_{\mathrm{Cl}})\cong\Z^{2^n}$。

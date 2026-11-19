@@ -25,6 +25,34 @@ $C\subset N^-\times M$
 $C^t\#C\to\Delta_M$
 $\Fuk(M\times M^-)$
 
+## 交换图
+
+### 图 1：Seidel 正合三角（式 111）
+
+![dehn-twist-1](../diagrams/dehn-twist-1.png)
+
+直取中译本式 (111)：球面 $V$ 沿 $L$ 的 Seidel 扭转 $\tau_V L$ 所在的正合三角。
+
+```tikz
+\begin{tikzcd}[column sep=2em,row sep=1.2em]
+\HF^*(V,L)\otimes V \arrow[rr] && L \arrow[dl] \\
+& \tau_V L \arrow[ul] &
+\end{tikzcd}
+```
+
+### 图 2：Wehrheim–Woodward 提升的正合三角（式 112）
+
+![dehn-twist-2](../diagrams/dehn-twist-2.png)
+
+直取中译本式 (112)（[WW16] 定理 7.4）：余单位 $C^t\#C\to\Delta_M$ 的锥为 $\Delta_{\tau_C}$。译者注：按预三角范畴约定，第三条箭头应终止于 $C^t\#C[\dim N+1]$，原文图中只画到 $[\dim N]$；此处保留原文画法。
+
+```tikz
+\begin{tikzcd}[column sep=2em,row sep=1.2em]
+C^t\#C[\dim N] \arrow[rr] && \Delta_M \arrow[dl] \\
+& \Delta_{\tau_C}. \arrow[ul] &
+\end{tikzcd}
+```
+
 ## 定理与证明
 
 ### 定理 5.1（转述 Wehrheim–Woodward 定理 7.4）

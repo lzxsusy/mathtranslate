@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## dataset functoriality 补交换图（42 张）+ 术语/记号冻结表入库 — 2026-11-19
+
+- **交换图**：仓主要求「复杂交换图不画出来就没用」。资料卡 schema 新增可选字段 `diagrams`（tikz-cd 自足源码，≤4 张/卡，禁 `%`/`$$`/equation，标题 ≤40 字），并在 `SCHEMA.md` 写死原则「凡是原文用交换图讲清的一步，卡里必须把图也画出来，只写文字的『复合满足结合律』读者无法复核」。本轮给 **14 张推导卡**（26 图）与 **14 张概念卡**（16 图）补图：其中 18 张直取原文/中译本的交换图（式 (20)(54)(76)(80)(93)(95)(107)(111)(112)(113)(133)(135)(136)(140)(144) 等），其余按定义/定理重排为论证骨架并在 `note` 注明「原文未画」，不改箭头方向、标号与同伦标记。
+- **工具**：新增 `tools/check_diagrams.py`——每图 `standalone` + tikz-cd 单独编译，失败回报首条 TeX 错误，`--png` 用 mutool 渲染 `md/diagrams/<slug>-<n>.png`，`--only` 过滤；`lint_cards.py` 增 `diagrams` 结构校验；`render_md.py` 增「交换图」节（PNG 链接 + tikz 源码块）。实测 **42/42 图编译通过**，PNG 逐张目检无乱码/断箭头。
+- **术语冻结**：新增 `01_corpus_zh/terms_frozen_FUNCTORIALITY.tsv`（**209 条**：A 124 / B 77 / I 8，列同 SY02-09：英文/中文/等级/依据/首次出现/备注，备注含拼音索引键 `key=…` 与 D07 辛同胚裁决等）与 `01_corpus_zh/symbols_frozen_FUNCTORIALITY.tsv`（**76 条**记号：记号 / LaTeX 源码 / 读法 / 含义 / 首次出现 / 依据，按「导言区宏—辛拓扑与基本几何—Floer 与 A∞ 范畴—拼接 Floer 与对应—组合模型与应用」五组）。术语基 `01_corpus_zh/termbase.jsonl` 追加 **190 行**（`pkg=FUNCTORIALITY`、`status=confirmed`、`src_format=tsv`，19 条与既有全局条目重复者已跳过；旧 1630 行逐字节未动）。
+- **复核**：术语表与译文的一致性抽查（`grep` 全书）——「干净」4 处、0 处「洁净」；「拼片」11 处、0 处「补片」；「哈密顿」28 处、0 处拉丁 Hamilton；唯一真冲突是 grading 旧注作「分级」而正文 19 处作「分次」，已把冻结表与 termbase 统一为**分次**。B 级依据只用已核 HTTP 200 的 nLab 页面（77 条，页面名与 URL 全记），无编造页码。
+- **同步更新**：`datasets/functoriality/README.md`（规模行加 42 图、入口加交换图、质检命令加 `check_diagrams.py`）、`datasets/README.md`（十类表加交换图说明、版本记录 `v0.14`）、根 `README.md` 的 `01_corpus_zh/` 节（两张冻结表与新 pkg 说明）、`index.jsonl` / `md/`（83 卡重渲染，含图）/ `MAP.md`。
+- 说明：全部卡仍为 `status: "draft"`、`rights: "rewritten"`；图为自绘/重排，不复制原文整图。
+
 ## dataset functoriality —— Abouzaid–Bottman《范畴辛几何中的函子性》资料卡（83 张）— 2026-11-19
 
 - 新增 `datasets/functoriality/`：Abouzaid & Bottman, *Functoriality in categorical symplectic geometry*（arXiv:2210.11159v1，2022-10-20，68 页、43 图）中文译注本的资料卡 **83 张**——概念 56 / 推导 14 / 勘误 13，四轨 A（第 1–2 章 Floer、Fukaya、操作子原理、带曲率 A∞ 与边界上链）/ B（第 3 章 凝聚层与拉格朗日对应、拼接 Floer、Φ#、A∞-双模、伴随、辛约化）/ C（第 4 章 巫曲线与巫球、(A∞,2)-范畴 Symp、相对 2-操作子）/ D（第 5 章 Dehn 扭转、Khovanov、Floer 场论、HMS、形式群、Barr–Beck）。

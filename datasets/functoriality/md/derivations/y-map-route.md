@@ -34,6 +34,34 @@
    为什么：这是我们的归纳：原文只把 LL 的结果作为 (62) 的变体转述，未逐条比较两条路线；这一步是结构性对照（C）。  
    锚点：原书 p.36 §3.10（证据 C）
 
+## 交换图
+
+### 图 1：论证骨架：典范双射诱导同构（式90）
+
+![y-map-route-1](../diagrams/y-map-route-1.png)
+
+本图为论证骨架，非原文图：原文 §3.10 定理 3.22 的陈述只有文字，图 25 是 Y-拼接曲面示意图。上行为交集的典范双射，下行为式(90)。
+
+```tikz
+\begin{tikzcd}[column sep=large,row sep=large]
+(L_0\times L_{12})\cap(L_{01}\times L_2) \arrow[r,"\sim"] \arrow[d] & (L_0\times L_2)\cap(L_{01}\circ L_{12}) \arrow[d] \\
+\HF^*(L_0,L_{01},L_{12},L_2) \arrow[r,"\simeq"] & \HF^*(L_0,L_{01}\circ L_{12},L_2)
+\end{tikzcd}
+```
+
+### 图 2：论证骨架：Y-映射的两条接缝汇合
+
+![y-map-route-2](../diagrams/y-map-route-2.png)
+
+本图为论证骨架，非原文图（原文图 25）：两条接缝 L01、L12 在 Y 点汇成一条接缝 L01∘L12。
+
+```tikz
+\begin{tikzcd}[column sep=large]
+L_{01} \arrow[dr] & & L_{12} \arrow[dl] \\
+& L_{01}\circ L_{12} &
+\end{tikzcd}
+```
+
 ## 结果
 
 在负单调、嵌入复合与指标不等式假设下，(90) $\HF^*(L_0,L_{01},L_{12},L_2)\xrightarrow{\simeq}\HF^*(L_0,L_{01}\circ L_{12},L_2)$ 成立，其证明由计数 Y-拼接带的延拓映射给出。

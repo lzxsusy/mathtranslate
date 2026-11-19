@@ -42,6 +42,34 @@
    为什么：这是原文 Remark 3.26 的判断；代价是依赖 [FOOO09b] 的重型技术，且只得到规范等价/同伦意义下的函子性。  
    锚点：原书 p.38 §3.11（证据 A）
 
+## 交换图
+
+### 图 1：复合函子与函子复合的同伦等价三角（式93）
+
+![fukaya-transfer-route-1](../diagrams/fukaya-transfer-route-1.png)
+
+原文 §3.11 式(93)：三条边分别是 Φ_{L01}、Φ_{L12} 与 Φ_{L01∘L12}，原文未标箭头，此处保持原样。
+
+```tikz
+\begin{tikzcd}[column sep=large]
+\Fuk M_0 \arrow[r] \arrow[dr] & \Fuk M_1 \arrow[d] \\
+& \Fuk M_2
+\end{tikzcd}
+```
+
+### 图 2：A∞-双函子结合性的方图（式95）
+
+![fukaya-transfer-route-2](../diagrams/fukaya-transfer-route-2.png)
+
+原文 §3.11 式(95)：原文把第一格拆成两行 gathered 排版，这里简化为单行；方图在同伦意义下交换（定理中指定该同伦）。
+
+```tikz
+\begin{tikzcd}[column sep=large,row sep=large]
+(\Fuk(M_0^-\times M_1),\Fuk(M_1^-\times M_2),\Fuk(M_2^-\times M_3)) \arrow[r] \arrow[d] & (\Fuk(M_0^-\times M_1),\Fuk(M_1^-\times M_3)) \arrow[d] \\
+(\Fuk(M_0^-\times M_2),\Fuk(M_2^-\times M_3)) \arrow[r] & \Fuk(M_0^-\times M_3)
+\end{tikzcd}
+```
+
 ## 结果
 
 (91) 的函子 $\Phi_{L_{12}}:\Fuk M_1\to\Fuk M_2$ 存在且与复合相容（同伦等价意义）；进一步提升为滤过 $A_\infty$-双函子 (94)，其结合性在同伦意义下由 (95) 中指定的同伦给出。

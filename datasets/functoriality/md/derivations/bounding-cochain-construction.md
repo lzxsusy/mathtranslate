@@ -34,6 +34,20 @@
    为什么：原文只说「具有给定势值的弱边界上链构成范畴对象」；复合的具体公式与「势值不同则范畴不同」是我们的判断。  
    锚点：原书 p.18（证据 C）
 
+## 交换图
+
+### 图 1：论证骨架：MC 方程消去曲率
+
+![bounding-cochain-construction-1](../diagrams/bounding-cochain-construction-1.png)
+
+本图为论证骨架，非原文图。原文 §2.4 p.18 只有文字：式(42) 的 Maurer--Cartan 方程使 d_b² 中的曲率项相消，式(43) 给出态射复形的扭曲微分。
+
+```tikz
+\begin{tikzcd}[column sep=large]
+(A,\mu^0) \arrow[r,"b"] & \MC(b)=0 \arrow[r,Rightarrow] & d_b^2=0 \arrow[r,Rightarrow] & \HF^*(L;b)
+\end{tikzcd}
+```
+
 ## 结果
 
 对每个势值 𝔓，弱边界上链 b 构成 A∞-范畴的对象，态射复形的微分由式(43) 给出；曲率被 Maurer–Cartan 方程吸收，若 𝔓=0 则得到通常意义（严格）的无障碍理论。

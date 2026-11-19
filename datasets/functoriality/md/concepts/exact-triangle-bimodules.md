@@ -25,6 +25,21 @@ $\CF^*(L_0,C)\otimes\CF^*(L_1,C)$
 $\CF^*(L_0,L_1)$
 $\CF^*(L_0,\tau_C L_1)$
 
+## 交换图
+
+### 图 1：双模范畴中的正合三角（式 113）
+
+![exact-triangle-bimodules-1](../diagrams/exact-triangle-bimodules-1.png)
+
+直取中译本式 (113)（推论 5.2）：$\Fuk M$ 上双模范畴中的正合三角，方向与式 (112) 一致；按预三角约定第三条箭头的平移见 dehn-twist 卡的注。
+
+```tikz
+\begin{tikzcd}[column sep=0.8em,row sep=1.2em]
+\operatorname{CF}^*(L_0,C)\otimes\operatorname{CF}^*(L_1,C) \arrow[rr] && \operatorname{CF}^*(L_0,L_1) \arrow[dl] \\
+& \operatorname{CF}^*(L_0,\tau_C L_1). \arrow[ul] &
+\end{tikzcd}
+```
+
 ## 定理与证明
 
 ### 推论 5.2（转述 Wehrheim–Woodward 定理 7.4 的推论形式）

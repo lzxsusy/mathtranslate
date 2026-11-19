@@ -28,6 +28,21 @@ $\left((P_r)_{r\ge1},(Q_{\m})_{\m\in\Z_{\ge0}^r\setminus\{0\},r\ge1}\right)$
 $\Gamma_{\m,(\n_i^a)}:Q_{\m}\times\prod_{1\le i\le r}\prod_{1\le a\le m_i}^{P_{s_i}}Q_{\n_i^a} \longrightarrow Q_{\sum_a\n_1^a,\ldots,\sum_a\n_r^a}$
 $\pi_{\m}:Q_{\m}\longrightarrow P_r,\qquad r\ge1,\quad\m\in\Z_{\ge0}^r\setminus\{0\}$
 
+## 交换图
+
+### 图 1：π 交织 Γ 与 P 的结构映射
+
+![relative-2-operad-1](../diagrams/relative-2-operad-1.png)
+
+原文未画此图，按定义中「$\pi$ 把 $\Gamma$ 与 $P$ 的结构映射交织」这一条重排；下标 $\sum_a\mathbf n_1^a,\ldots,\sum_a\mathbf n_r^a$ 为向量连接，长度为 $\sum_i s_i$，上标 $P_{s_i}$ 表示在 $P_{s_i}$ 上取纤维积。原文下标记作 $\mathbb n$，编译宏集不含该字体，故以 $\mathbf n$ 排印。
+
+```tikz
+\begin{tikzcd}[column sep=large,row sep=large]
+Q_{\mathbf n}\times\prod_{1\le i\le r}\prod_{1\le a\le m_i}^{P_{s_i}}Q_{\mathbf n_i^a} \arrow[r,"\Gamma"] \arrow[d,"\pi_{\mathbf n}\times\prod\pi"'] & Q_{\sum_a\mathbf n_1^a,\ldots,\sum_a\mathbf n_r^a} \arrow[d,"\pi"] \\
+P_r\times\prod_{1\le i\le r}\prod_{1\le a\le m_i}P_{s_i} \arrow[r,"\circ"'] & P_{\sum_i s_i}
+\end{tikzcd}
+```
+
 ## 定理与证明
 
 ### 2-结合多面体构成相对 2-操作子

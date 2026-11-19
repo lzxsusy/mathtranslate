@@ -34,6 +34,34 @@
    为什么：原文在注 thm:2.10 与 §2.4 讨论滤过/有间隙的必要性；这里补出它如何保证方程有意义。  
    锚点：原书 p.10（证据 B）
 
+## 交换图
+
+### 图 1：系数域的三选一（式20）
+
+![fukaya-ainf-structure-1](../diagrams/fukaya-ainf-structure-1.png)
+
+原文 §2.2 式(20)：英文版 prelim.tex 画成虚线，中译本 chapter2.tex 式 20 画成实线。左箭头为把 Novikov 参数特化到 k 中选定有限值，右箭头由包含 Λ_poly⊂Λ 诱导。
+
+```tikz
+\begin{tikzcd}[column sep=large]
+& \Fuk(M;\Lambda_{\mathrm{poly}}) \arrow[dl,dashed] \arrow[dr,dashed] & \\
+\Fuk(M;\mathbf k) & & \Fuk(M;\Lambda)
+\end{tikzcd}
+```
+
+### 图 2：论证骨架：边界层对应 A∞ 方程各项
+
+![fukaya-ainf-structure-2](../diagrams/fukaya-ainf-structure-2.png)
+
+本图为论证骨架，非原文图：原文 §2.2 式(19) 只有求和式，边界层解释在 §2.3 用操作子给出。
+
+```tikz
+\begin{tikzcd}[column sep=large,row sep=large]
+\partial\ol{\mathcal M}_{r+1} \arrow[r,"\sim"] \arrow[d,Rightarrow] & \coprod_{a,i}\mathcal M_a\times\mathcal M_{r-a+1} \arrow[d,Rightarrow] \\
+0 \arrow[r,Rightarrow] & \sum_{a,i}\pm\mu_{r-a+1}(\ldots,\mu_a(\ldots),\ldots)=0
+\end{tikzcd}
+```
+
 ## 结果
 
 μ_r 满足 A∞ 方程式(19)，故 Fuk M 是（一般情形下滤过、有间隙的）A∞-范畴；前几个方程分别给出 μ₁²=0、μ₂ 是链映射、μ₂ 在同伦意义下结合（式(21)）。

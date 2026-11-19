@@ -30,6 +30,32 @@ $(*_2):\ \bigl(u_j(s,\delta_j),u_{j+1}(s,0)\bigr)\in L_{j(j+1)}\quad\forall j,\ 
 $\Phi_{\underline S}:\bigotimes_{\underline e\in\mathcal E_i}\HF^*(\underline L_{\underline e})\longrightarrow\bigotimes_{\underline e\in\mathcal E_o}\HF^*(\underline L_{\underline e}).$
 $\HF^*(L_0,L_{01},L_{12},L_2)\xrightarrow{\simeq}\HF^*(L_0,L_{01}\circ L_{12},L_2).$
 
+## 交换图
+
+### 图 1：广义拉格朗日对应链（式 53）
+
+![quilted-floer-1](../diagrams/quilted-floer-1.png)
+
+直取中译本式 (53) 的记号：长度为 $r$ 的广义对应 $\underline L$；$r=1$ 退化为普通拉格朗日对应，$M_0=\pt$ 时是广义拉格朗日子流形。
+
+```tikz
+\begin{tikzcd}[column sep=2.2em]
+M_0=N_0 \arrow[r,"L_{01}"] & N_1 \arrow[r,"L_{12}"] & \cdots \arrow[r,"L_{(r-1)r}"] & N_r=M_1
+\end{tikzcd}
+```
+
+### 图 2：循环广义对应：Floer 上同调的基本例子（式 54）
+
+![quilted-floer-2](../diagrams/quilted-floer-2.png)
+
+直取中译本式 (54)：由一对拉格朗日子流形 $L,K\subset M$ 作出的循环广义对应（$M_0=M_1=\pt$ 一侧、$M$ 两侧），拼接 Floer 上同调 $\HF^*_{\underline\delta}(\underline L)$ 由此把 $\HF^*(L,K)$ 推广到任意循环广义对应。
+
+```tikz
+\begin{tikzcd}[column sep=large]
+\pt \arrow[r,bend left=25,"L"] & M. \arrow[l,bend left=25,"K"]
+\end{tikzcd}
+```
+
 ## 定理与证明
 
 ### 拼接 Floer 上同调良定义（定义–命题）

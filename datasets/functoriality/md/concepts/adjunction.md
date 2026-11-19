@@ -25,6 +25,20 @@
 $\hom_{\mathscr D}(L(-),-)\xrightarrow{\simeq}\hom_{\mathscr C}(-,R(-)).$
 $\CF^*(L_1^{d-1},L_1^d)\otimes\cdots\otimes\CF^*(L_1^0,L_1^1)$
 
+## 交换图
+
+### 图 1：Φ# 与转置对应函子的伴随对（式 76）
+
+![adjunction-1](../diagrams/adjunction-1.png)
+
+直取中译本式 (76)。伴随的代数含义是式 (77)–(78) 的自然同构 $\operatorname{hom}_{\mathcal D}(L(-),-)\simeq\operatorname{hom}_{\mathcal C}(-,R(-))$，具体由式 (79) 的拼接映射族计数给出（图 23）。
+
+```tikz
+\begin{tikzcd}[column sep=huge]
+\Fuk^\#(M_1)\arrow[r,bend left=22,"\Phi^\#_{L_{12}}"]&\Fuk^\#(M_2)\arrow[l,bend left=22,"\Phi^\#_{L_{12}^T}"]
+\end{tikzcd}
+```
+
 ## 定理与证明
 
 ### 转置对应给出伴随

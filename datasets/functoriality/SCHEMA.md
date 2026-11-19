@@ -58,6 +58,29 @@ id 形如 `functoriality/concept/<slug>`、`functoriality/deriv/<slug>`、
 - `pages` 为两个递增整数，落在所引节的页区间内（见 `tools/audit_pages.py` 的内置映射）。
 - `anchor` 以 `原书 p.` 开头，页码须在 `pages` 内。
 
+## 交换图（`diagrams`，概念卡与推导卡可选）
+
+本论文的骨架大量靠交换图表达（函子、双模、伴随、操作子复合）。**凡是原文用交换图
+讲清的一步，卡里必须把图也画出来**：只写文字的「复合满足结合律」读者无法复核。
+图用 tikz-cd 自足书写（不用 `\input`、不引用外部文件），核对时编译通过才算数。
+
+| 字段 | 类型 | 约束 |
+|---|---|---|
+| `diagrams` | list[obj] | 可选，≤4 张；每项见下 |
+
+每张图：
+
+```json
+{"title": "Φ_L 与复合相容（同伦意义）",
+ "tikz": "\\begin{tikzcd}[column sep=large]…\\end{tikzcd}",
+ "note": "可选：图中符号读法与原文位置的对应"}
+```
+
+- `title` ≤40 字，说明这张图在证什么；`tikz` 必须含 `\begin{tikzcd}` 或 `\begin{tikzpicture}` 且环境闭合，不得含 `%`、`$$`、`equation` 环境。
+- 只用 `amsmath` / `amssymb` / `tikz-cd` 的命令，外加 `tools/check_diagrams.py` preamble 预定义的记号宏（`\Fuk \HF \SH \SC \HH \QC \QH \MC \Ainf \wt \ol \pt \op \bC \bR \bZ \bP \CP`）。其它算子名一律写字面（`\operatorname{CF}`、`\operatorname{Ch}`、`\operatorname{Mod}`），**不要自造宏**：check_diagrams 不认得的宏会直接编译失败。`\hom` 由 amsmath 提供，可直接用；`\Hom` 请写 `\operatorname{Hom}`。
+- 图必须与中译本的图或英文原文的 `tikzcd` 一致（可简化排版，不得改数学内容）；内容对不上就不画，写进 `gaps`。
+- `python tools/check_diagrams.py cards --png` 编译全部图并渲染 `md/diagrams/*.png`。
+
 ## 概念卡（concept）专有
 
 | 字段 | 类型 | 约束 |
@@ -116,6 +139,7 @@ id 形如 `functoriality/concept/<slug>`、`functoriality/deriv/<slug>`、
 python tools/lint_cards.py cards --strict      # 字段与结构
 python tools/audit_pages.py cards              # 页锚与节区间
 python tools/check_formulas.py cards --corpus <中译本 chapter*.tex>   # 公式子串回查
+python tools/check_diagrams.py cards --png                          # 交换图编译 + 渲染 PNG
 python tools/build_index.py                    # 生成 index.jsonl
 python tools/render_md.py                      # 生成 md/
 ```
