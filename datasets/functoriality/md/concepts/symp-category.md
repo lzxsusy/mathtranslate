@@ -1,0 +1,55 @@
+# 辛 (A∞,2)-范畴 Symp
+
+> `functoriality/concept/symp-category` ｜ track C ｜ draft
+
+**一句话**：Symp 以辛流形为对象、拉格朗日对应为 1-态射、Floer 复形为 2-态射，运算由巫球计数给出；去范畴化后得到带辛上同调作用的 A∞-范畴。
+
+**自测**：Symp 的三层数据（对象、1-态射、2-态射）怎样由巫球计数组装，去范畴化又怎样把辛上同调带回来？
+
+## 定义
+
+Symp 是 K-线性 (A∞,2)-范畴，蓝图如下。(i) 对象是辛流形 $(M,\omega)$，即 $\Symp_1$ 的对象；1-态射 $M_1\xrightarrow{L_{12}}M_2$ 是拉格朗日对应 $L_{12}\subset M_1^-\times M_2$。(ii) 每对 1-态射 $L_{12},L'_{12}$ 给一个 2-态射复形 $\CF^*(L_{12},L'_{12})$。(iii) 对 $r\ge1$、$\m\in\Z_{\ge0}^r\setminus\{0\}$ 与一串对象 $M_0,\ldots,M_r$ 及拉格朗日对应族，复合映射由巫球计数定义。1-态射的复合在 $\Symp_1$ 中按普通范畴严格结合，但 §3.5.2 的八字形冒泡迫使一般情形松弛为同伦结合（注 4.1）。Symp 的垂直复合是 $\Fuk(M_0^-\times M_1)$ 的 $\Ainf$ 复合；水平复合是 $\Ainf$-双函子，结构常数由三拼片巫球计数给出。
+
+记号：$\hom(M_0,M_1)=\Fuk(M_0^-\times M_1)$；对角 $\Delta_M\subset M^-\times M$ 给出恒等对象；取同调后 $\SF$ 结构让辛上同调以闭--开、开--闭弦映射出现。
+
+## 要点
+
+- 三层数据的分工：$\Symp_1$ 是 1-范畴层（对象辛流形、1-态射拉格朗日对应），2-态射层由 Floer 复形 $\CF^*(L_{12},L'_{12})$ 给出，复合数据由相对 2-操作子的 $\Gamma$ 组织。
+- 垂直复合是 $\Fuk(M_0^-\times M_1)$ 的 $\Ainf$ 复合；水平复合是 $\Ainf$-双函子 $(\Fuk(M_0^-\times M_1),\Fuk(M_1^-\times M_2))\to\Fuk(M_0^-\times M_2)$，结构常数由三拼片巫球计数。
+- 对角 $\Delta_M$ 是恒等 1-态射的候选：$M$ 紧时 $HF(\Delta_M)\cong H^*(M)$；非紧情形预期由辛上同调 $\SH^*(M)$ 承担（[Gan12] §8）。
+- 去范畴化把 2-态射复形压平成 1-态射复形：忘掉 2-态射的复合，只保留 $\hom(M_1,M_2)=\CC_*(\Fuk(M_1^-\times M_2))$，得到 A∞-范畴 $\Symp_{CC_*}$，辛上同调作为其上的 A∞-模出现。
+
+## 公式
+
+$\bigl(\Fuk(M_0^-\times M_1),\Fuk(M_1^-\times M_2)\bigr)\longrightarrow\Fuk(M_0^-\times M_2)$
+$\hom(M_1,M_2)\coloneqq\CC_*(\Fuk(M_1^-\times M_2))$
+$\SC^*(M_1)\longrightarrow\SC^*(M_r)$
+
+## 定理与证明
+
+### 去范畴化与辛上同调
+
+对 $M_1$ 与 $M_r$，拼接柱面的计数给出映射 $\SC^*(M_1)\longrightarrow\SC^*(M_r)$；因此辛上同调是去范畴化范畴上的 $\Ainf$-模。
+
+（sketch；来源：原书 p.51–52 §4.5.3（式 (108)–(110)））
+
+1. 把图 39 的柱面计数按输入 Hochschild 链 $\CC_*(\Fuk(M_1^-\times M_2)),\ldots,\CC_*(\Fuk(M_{r-1}^-\times M_r))$ 组织，即得式 (108) 的输入数据。  
+   为什么：去范畴化后 1-态射复形正是这些 Hochschild 链，故柱面计数可读成 A∞-模结构映射。
+2. 一条接缝、拼片映往 $\pt$ 与 $M$ 时，拼接柱面退化为开--闭弦圆盘（图 38 是图 39 的特殊情形）。  
+   为什么：开--闭弦映射 $OC:\CC_*(\Fuk M)\to\SC^*(M)$ 正是这一特殊情形的计数。
+3. 所得映射 $\SC^*(M_1)\to\SC^*(M_r)$ 与 1-态射复合相容，因此 $\bigoplus_M\SC^*(M)$ 是 $\Symp_{CC_*}$ 上的 $\Ainf$-模。  
+   为什么：相容性来自相对 2-操作子的结构映射 $\Gamma$ 与方形图的交换性。
+
+## 易错点
+
+- 不要把 Symp 的 1-态射复合当成严格结合：注 4.1 明说 $\Symp_1$ 先按普通范畴描述，一般情形必须松弛为同伦结合。
+- 去范畴化不是取同调：它把 2-态射复形整体压成 1-态射复形 $\CC_*(\Fuk(M_1^-\times M_2))$，忘掉的是 2-态射的复合，链层信息仍保留。
+- $\Delta_M$ 只是恒等对象的候选：$HF(\Delta_M)\cong H^*(M)$ 只对紧 $M$ 成立；非紧情形对应辛上同调是预期而非常定理。
+
+## 参考与关联
+
+- Abouzaid & Bottman, Functoriality in categorical symplectic geometry (arXiv:2210.11159v1)，§4.5，p.51–52（原书 p.51–52 §4.5）
+
+关联：`functoriality/concept/a-infinity-2-category`、`functoriality/concept/relative-2-operad`、`functoriality/concept/witch-ball`、`functoriality/concept/fukaya-category`
+
+来源说明：原书 p.51–52 §4.5（式 (104)–(110)、注 4.1）；公式取自中译本 chapter4.tex。

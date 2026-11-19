@@ -1,0 +1,70 @@
+# 操作子
+
+> `functoriality/concept/operad` ｜ track A ｜ draft
+
+**一句话**：操作子把「所有 r 元运算及其替换方式」打包成一套数据：每个 r 给一个对象 O(r)，复合映射把子运算代入输入；结合多面体给出其几何模型。
+
+**自测**：操作子到底抽象了什么，为什么 Fukaya 范畴的 A∞ 结构要用它来表达？
+
+## 定义
+
+固定一个对称幺半范畴 $\mathscr C$（例如 $\Top$、$\Set$ 或 $\Ch$）。$\mathscr C$ 中的非对称操作子 $\mathcal O$ 由以下数据组成：对每个 $r\ge1$，一个 $\mathscr C$ 中的对象 $\mathcal O(r)$（视为一族 $r$ 元运算）；对任意 $r,s_1,\ldots,s_r\ge1$，复合映射 $\circ:\mathcal O(r)\times\mathcal O(s_1)\times\cdots\times\mathcal O(s_r)\longrightarrow\mathcal O(s_1+\cdots+s_r)$（式(23)），要求复合满足结合性；以及一个起恒等作用的元素 $1\in\mathcal O(1)$。给定操作子 $\mathcal O$，$\mathcal O$-范畴由对象集、态射空间 $\hom(X,Y)\in\mathscr C$ 与复合运算 $\mathcal O(r)\times\hom(X_0,X_1)\times\cdots\times\hom(X_{r-1},X_r)\longrightarrow\hom(X_0,X_r)$（式(24)）组成，并要求与操作子的复合相容。
+
+记号：「非对称」指输入按固定顺序代入，不需要置换作用；本章实际使用的操作子是结合多面体的胞腔链 $\mathcal C_0(r)\coloneqq C_*^{\mathrm{cell}}(K_r)$（式(32)），它是 $\Ch$ 中的操作子。
+
+## 要点
+
+- 一句话：$\mathcal O(r)$ 中的元素是 $r$ 元运算的抽象模板，复合映射说明如何把子运算代入某个输入；操作子把所有可能的替换方式一次打包。
+- 几何来源是结合多面体：结合多面体 $(K_r)_{r\ge1}$ 在 $\Top$ 中构成操作子（$K_1\coloneqq\pt$，复合由连接圆盘树定义），它的胞腔链给出 $\Ch$ 中的操作子。
+- 为什么用非对称版本：Fukaya 的圆盘边界标记有循环顺序，插入输入时有固定次序，不需要对称群作用；对称操作子会多出置换数据。
+- 链层面的必要性：辛不变量只数 0 维模空间，得到的是链而非空间，所以真正用到的是胞腔链操作子 $(C_*^{\mathrm{cell}}(K_r))$，而不是 $(K_r)$ 本身。
+- 统一作用：A∞-范畴恰好是胞腔链操作子上的范畴（命题 thm:2.20），这使「A∞ 方程」变成操作子相容性的直接推论。
+
+## 公式
+
+$$\circ:\mathcal O(r)\times\mathcal O(s_1)\times\cdots\times\mathcal O(s_r) \longrightarrow\mathcal O(s_1+\cdots+s_r).$$
+$$\mathcal O(r)\times\hom(X_0,X_1)\times\cdots\times\hom(X_{r-1},X_r)\longrightarrow\hom(X_0,X_r).$$
+$K_1\coloneqq\pt$
+
+## 定理与证明
+
+### 结合多面体（定义 thm:2.14）
+
+对 r≥2，K_r 是实直线上 r 个互异无标号点的构形空间模去平移与伸缩后所得空间的紧化；等价地，是单位圆盘边界上 r+1 个标记点（其中一个为指定点）的构形模去保持圆盘的 Möbius 变换。K_3 是区间，K_4 是五边形。
+
+（none；来源：原书 p.12 §2.3）
+
+
+缺口：原文把它作为定义陈述，并指出紧化实质上是 Fulton–MacPherson 紧化、已有多种凸多胞体实现，但未给实现细节。
+
+### 结合多面体构成拓扑操作子
+
+结合多面体 (K_r)（令 K_1 为一个点）构成 Top 中的操作子，复合映射 K_r×K_{s_1}×…×K_{s_r}→K_{s_1+…+s_r} 由连接圆盘树定义；其胞腔链 (C_*^cell(K_r)) 构成 Ch 中的操作子。
+
+（none；来源：原书 p.13 §2.3）
+
+
+缺口：原文在注 thm:2.17 之后直接陈述这一事实，把圆盘树粘合的验证留给读者。
+
+### 面偏序集的组合解释
+
+K_r 的层（面）偏序集与具有 r 片叶子的稳定植根平面树的偏序集等同，也与 r 个字母的括号化等同。
+
+（none；来源：原书 p.12 §2.3）
+
+
+缺口：原文只给出这一组合解释并配图说明，未给形式证明。
+
+## 易错点
+
+- 把操作子当成「一个集合上的代数结构」：操作子是幺半范畴中的对象族加复合，必须指定所在范畴（$\\Top$ 还是 $\\Ch$），否则「乘法」无法定义。
+- 忘记非对称与对称的区别：$\\mathcal O(r)$ 不带对称群作用，输入顺序是数据的一部分；按对称操作子写会多出置换导致的符号问题。
+- 以为用 $(K_r)$ 就够了：辛几何中计数只给链级信息，必须换成胞腔链操作子 $C_*^{\\mathrm{cell}}(K_r)$。
+
+## 参考与关联
+
+- Abouzaid & Bottman, Functoriality in categorical symplectic geometry (arXiv:2210.11159v1)，§2.3，p.12–14（原书 p.12–14 §2.3）
+
+关联：`functoriality/concept/operadic-principle`、`functoriality/concept/a-infinity-category`、`functoriality/deriv/operadic-construction`
+
+来源说明：原书 p.12–14 §2.3（定义 thm:2.14、注 thm:2.17、定义 thm:2.18/2.19 与式(23)、(24)）；公式逐字取自中译本 chapter2.tex 的 eq:23、eq:24 与「K_1\coloneqq\pt」片段。

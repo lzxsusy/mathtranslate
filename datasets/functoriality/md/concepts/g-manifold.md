@@ -1,0 +1,70 @@
+# G-流形的 Fukaya 范畴
+
+> `functoriality/concept/g-manifold` ｜ track D ｜ draft
+
+**一句话**：哈密顿 G-流形上，对应 Γ_G 给出 Fuk T*G → Fuk(M^-×M) 的函子；自由轨道假设下 μ^{-1}(0) 分裂生成 Fuk M 的一个正交因子。
+
+**自测**：在哈密顿 G-流形上，矩映射零纤维的自由轨道假设为什么能让 μ^{-1}(0) 分裂生成 Fuk M 的正交因子？
+
+## 定义
+
+设 $G$ 是紧李群，$M$ 是带哈密顿 $G$-作用的辛流形，矩映射为 $\mu$。Evans 与 Lekili 考虑与作用相联系的拉格朗日对应 $\Gamma_G:=\{(g,a,x,y)\mid a=\mu(g\cdot x),\ y=g\cdot x\}\subset(T^*G)^-\times M^-\times M$，经 Wehrheim–Woodward 的形式体系得到函子 $\Fuk T^*G\to\Fuk(M^-\times M)$。函子把 $G$ 单位元处的余切纤维送到对角线 $\Delta_M$，把 $T^*G$ 零截面的像送到 $\Lambda_G\circ\Lambda_G^t$。定理 5.7 与推论 5.8 都是转述 [EL19] 的结果。
+
+记号：$\mu$：矩映射；$T^*G$：$G$ 的余切丛；$\Lambda_G$：矩对应；$\Delta_{M,\alpha}$：对角线对象的直和项。
+
+## 要点
+
+- 对应 $\Gamma_G$ 编码作用 $G\times M\to M$：条件 $a=\mu(g\cdot x)$ 与 $y=g\cdot x$ 把群作用与矩映射同时记录在拉格朗日对应中。
+- 函子 $\Fuk T^*G\to\Fuk(M^-\times M)$ 把单位元处余切纤维送到 $\Delta_M$，把零截面的像送到 $\Lambda_G\circ\Lambda_G^t$。
+- 定理 5.7（转述 [EL19] 定理 1.2.2）：若域 $\K$ 的特征与 $H^*(G)$ 的挠子群互素，则每个与 $\Lambda_G\circ\Lambda_G^t$ 非 Floer 正交的直和项 $\Delta_{M,\alpha}$ 都属于其分裂生成范畴。
+- 推论 5.8：若 $\mu^{-1}(0)$ 是 $G$ 的自由轨道，则它分裂生成 $\Fuk M$ 的一个正交因子；自由轨道假设使 $\dim\mu^{-1}(0)=\dim G=\frac12\dim M$，辛约化退化为一个点。
+- 最直接的例子是环簇，其中 $G$ 是环面 $\mathbb T^n$。
+
+## 公式
+
+$\Gamma_G:=\bigl\{(g,a,x,y)\mid a=\mu(g\cdot x),\ y=g\cdot x\bigr\}\subset(T^*G)^-\times M^-\times M$
+$\Fuk T^*G\longrightarrow\Fuk(M^-\times M)$
+$\Lambda_G\circ\Lambda_G^t$
+$\dim\mu^{-1}(0)=\dim G=\frac12\dim M$
+
+## 定理与证明
+
+### 定理 5.7（转述 Evans–Lekili 定理 1.2.2）
+
+若 $\K$ 是一个其特征与上同调群 $H^*(G)$ 的挠子群互素的域，则每个在 Floer 理论意义下与 $\Lambda_G\circ\Lambda_G^t$ 不正交的直和项 $\Delta_{M,\alpha}$，都属于由它分裂生成的范畴。这是转述 [EL19] 的定理，不是本文结果。
+
+（sketch；来源：原书 p.58 §5.5（转述 [EL19] 定理 1.2.2））
+
+1. 把 $\Gamma_G$ 经 Wehrheim–Woodward 形式体系变成函子，得到零截面的像是 $\Lambda_G\circ\Lambda_G^t$，且它由对角线 $\Delta_M$ 构成。  
+   为什么：这一步用 $T^*G$ 的 Fukaya 范畴与链 $C_{-*}\Omega G$ 上模的关系。
+2. 把 $\Delta_M$ 形式地分解为直和项 $\Delta_{M,\alpha}$；初等代数论证说明 $\Lambda_G\circ\Lambda_G^t$ 可由与它非 Floer 正交的直和项构成。  
+   为什么：这是 [EL19] 的主要结果，域的特征条件用于避开挠。
+
+缺口：原文只引用 [EL19] 定理 1.2.2 并指出它是量子 cohomology 有限维且交换的代数推论；不复述论证。
+
+### 推论 5.8（转述 Evans–Lekili）
+
+若 $\mu^{-1}(0)$ 是 $G$ 的一个自由轨道，则它分裂生成 $\Fuk M$ 的一个正交因子。
+
+（sketch；来源：原书 p.58 §5.5（转述 [EL19]））
+
+1. 自由轨道假设给出 $\dim\mu^{-1}(0)=\dim G=\frac12\dim M$，故 $\mu^{-1}(0)$ 本身是半维拉格朗日子流形，且辛约化是点。  
+   为什么：这正是「约化为一个点」的情形，使定理 5.7 可以应用。
+2. 于是定理 5.7 中「约化为一个点」的情形给出：该轨道分裂生成 $\Fuk M$ 的一个正交因子。  
+   为什么：环簇的矩映射纤维正是这样的自由轨道。
+
+缺口：原文只引用 [EL19] 的推论并加译者注解释自由轨道假设；本卡不复述证明。
+
+## 易错点
+
+- 把定理 5.7 当成无条件成立：要求域 $\K$ 的特征与 $H^*(G)$ 的挠子群互素。
+- 把推论 5.8 的自由轨道假设当技术装饰：它保证 $\mu^{-1}(0)$ 是半维拉格朗日子流形且辛约化为点，否则不能直接套用。
+- 误以为函子的定义域是 $\Fuk M$：函子是 $\Fuk T^*G\to\Fuk(M^-\times M)$，经由拉格朗日对应 $\Gamma_G$。
+
+## 参考与关联
+
+- Abouzaid & Bottman, Functoriality in categorical symplectic geometry (arXiv:2210.11159v1)，§5.5，p.58–58（原书 p.58 §5.5）
+
+关联：`functoriality/concept/symplectic-reduction`、`functoriality/concept/lagrangian-correspondence`、`functoriality/concept/fukaya-category`
+
+来源说明：据中译本 §5.5（p.58）与译者注转述 [EL19] 定理 1.2.2 及其推论。

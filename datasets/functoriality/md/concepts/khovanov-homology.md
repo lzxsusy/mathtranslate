@@ -1,0 +1,41 @@
+# Khovanov 同调
+
+> `functoriality/concept/khovanov-homology` ｜ track D ｜ draft
+
+**一句话**：Jones 多项式的范畴化：双分次链复形的同调，其带符号 Euler 特征为 Jones 多项式；与 Seidel–Smith 辛构造的比较是本节的动机。
+
+**自测**：Khovanov 同调作为 Jones 多项式的范畴化，究竟把多项式的哪一部分信息提升成了同调群？
+
+## 定义
+
+Khovanov 同调是 $S^3$ 中定向链环的一个不变量：它是双分次链复形的同调，其（带符号的）Euler 特征恰为 Jones 多项式，因此称为 Jones 多项式的范畴化。Seidel 与 Smith 用 Floer 上同调给出另一种构造 $\operatorname{Kh}_{symp}$；定理 5.4 断言，在特征 $0$ 的域上（先把双分次合并为单分次）二者一致。
+
+记号：本卡遵循译文：$\operatorname{Kh}_{symp}$ 是辛构造，Khovanov 同调（Kh）是代数构造；比较须限定特征 $0$ 并合并双分次。
+
+## 要点
+
+- Khovanov 同调是双分次链复形的同调，其带符号 Euler 特征等于 Jones 多项式；这就是「范畴化」的准确含义。
+- 它不能与 $\operatorname{Kh}_{symp}$ 直接等同：后者由 Seidel–Smith 用辛流形 $\mathcal S_n$ 上的辫群作用与 Floer 上同调构造，定理 5.4 才断言二者在特征 $0$、合并双分次后一致。
+- 比较不是逐字等同：需要取纽结的辫闭包表示，并逐条验证 Markov 变换（共轭与稳定化）下的不变性。
+- 定理 5.4 本身是转述 [AS19] 的结论，本节只给综述，不重复其证明。
+
+## 公式
+
+$\operatorname{Kh}_{symp}(\beta):=\HF^*(L_n^{\Cap},\Phi_\beta L_n^{\Cap})$
+$\Phi:\Braid_n\longrightarrow\pi_0\operatorname{Symp}(\mathcal S_n)$
+
+## 定理与证明
+
+## 易错点
+
+- 把 Khovanov 同调直接等同于辛 Khovanov 同调：二者只在特征 $0$、把双分次合并为单分次后才一致（定理 5.4，且是转述）。
+- 把 Kh 当成 Jones 多项式本身：Kh 是同调群，Jones 多项式只是它的（带符号）Euler 特征。
+- 忽略双分次与符号的来源，把「Euler 特征等于 Jones 多项式」误读成「Kh 就是 Jones 多项式」。
+
+## 参考与关联
+
+- Abouzaid & Bottman, Functoriality in categorical symplectic geometry (arXiv:2210.11159v1)，§5.2，p.55–55（原书 p.55 §5.2）
+
+关联：`functoriality/concept/symplectic-khovanov`、`functoriality/deriv/khovanov-matching`、`functoriality/concept/floer-cohomology`
+
+来源说明：据中译本 §5.2（p.55）与译者注（Khovanov 2000；[AS19]）转述。

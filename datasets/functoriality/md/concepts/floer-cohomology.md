@@ -1,0 +1,66 @@
+# Floer 上同调
+
+> `functoriality/concept/floer-cohomology` ｜ track A ｜ draft
+
+**一句话**：Floer 上同调 HF*(L,K) 是由 L∩K 自由生成的链复形、用条带计数定义微分的同调；它把相交数范畴化，并在 π₂(M,L)=0 时良定义。
+
+**自测**：Floer 上同调如何把两个拉格朗日子流形的相交数「范畴化」，它的良定义又依赖哪些假设？
+
+## 定义
+
+设 $(M,\omega)$ 是闭辛流形，$L,K\subset M$ 是闭拉格朗日子流形，横截且满足 $\pi_2(M,L)=\pi_2(M,K)=0$。取 Novikov 域 $\Lambda$（式(11)），令 $\CF^*(L,K)\coloneqq\Lambda\langle p\rangle_{p\in L\cap K}$ 为以交点自由生成的 $\Lambda$-模。微分 $d$ 计数从 $\R\times[0,1]$ 到 $M$、以 $L$ 与 $K$ 为边界条件的刚性伪全纯条带：$dp_-$ 的系数是 $L\cap K$ 中每个点 $p_+$ 上 Maslov 指标为 1 的条带数乘 $T^{\omega(v)}$（式(13)）。Floer 上同调定义为 $\HF^*(L,K)\coloneqq H(\CF^*(L,K),d)$（式(10)）。
+
+记号：分次由 Maslov 指标给出；$T$ 的指数记录辛面积 $\omega(v)$；系数域取 $\mathbf k=\Z/2\Z$ 以回避定向问题。
+
+## 要点
+
+- 范畴化相交数：$\HF^*$ 的维数给出 $L$ 与 $\varphi(L)$ 交点数的下界（Floer 定理），把 Arnold–Givental 猜想的一个版本变成线性代数陈述。
+- 必须用 Novikov 系数：微分是无穷和，靠能量指数 $T^{\omega(v)}$ 收敛；若用普通域的有限和，一般情形下的微分根本没有定义。
+- 良定义依赖附加数据：横截性、定向、相对 Sp 结构，以及 $\pi_2(M,L)=0$ 排除圆盘冒泡，否则 $d^2\ne0$，须用曲率 $\mu_0$ 修正（§2.4）。
+- 允许非横截的替代定义：把 $L$ 哈密顿推移到横截位置，或用带模空间的奇异链/de Rham 链，或 Morse 簇模型；它们给出同构的群。
+
+## 公式
+
+$$\HF^*(L,K)\coloneqq H\left(\CF^*(L,K)\coloneqq\Lambda\langle p\rangle_{p\in L\cap K},d\right).$$
+$$\Lambda\coloneqq\left\{\sum_{k=0}^{\infty}a_kT^{\lambda_k}\ \middle|\ a_k\in\mathbf k,\ \lambda_k\in\R,\ \lim_{k\to\infty}\lambda_k=+\infty\right\}.$$
+$$dp_-\coloneqq\sum_{p_+\in L\cap K}\ \sum_{[v]:\ind v=1}\#\mathcal M(p_-,p_+;[v])\cdot T^{\omega(v)}\cdot p_+,$$
+
+## 定理与证明
+
+### Floer 定理（Arnold–Givental 型下界）
+
+设 M 是闭辛流形，L⊂M 满足 π₂(M,L)=0；固定哈密顿微分同胚 φ 使 L 与 φ(L) 横截。则交点数不小于 L 的各阶 Z/2Z Betti 数之和（式(8)）。
+
+（sketch；来源：原书 p.5 §2.1）
+
+1. 链复形 $\CF^*(L,\varphi(L))$ 由交点自由生成，其秩等于交点数；微分降低分次，故 $\dim\HF^*$ 不超过秩。  
+   为什么：同调维数不超过链复形秩，这是把几何下界转成代数估计的第一步。
+2. 在假设下 $d^2=0$，且 Hamiltonian 推移给出 $\HF^*(L,\varphi(L))\cong\HF^*(L,L)$，后者与 $H^*(L;\Z/2\Z)$ 同构。  
+   为什么：闭合条带论证说明 $\HF^*(L,L)\cong H^*(L)$；$\varphi$ 的 Hamiltonian 同痕给出同构。
+3. 于是 $\#|L\cap\varphi(L)|\ge\dim\HF^*(L,\varphi(L))=\sum_i\rk H^i(L;\Z/2\Z)$。  
+   为什么：合并步骤 1、2 即得式(8)；这正是 Floer 定理的表述。
+
+缺口：原文把该定理作为 Floer 1988 年结果的直接推论引述，未给证明；这里只补出「秩—同调—Betti 数」的骨架，$\HF^*(L,L)\cong H^*(L)$ 本身另有论证。
+
+### Euler 示性数版本（Poincaré–Hopf）
+
+若 L 可定向并用 Z 系数，则交点数亦不小于交错的 Betti 数之和（式(9)），即 Lefschetz 数的下界。
+
+（none；来源：原书 p.5 §2.1）
+
+
+缺口：原文只作为注记（注 thm:2.2）陈述，引 Poincaré–Hopf 定理，未给证明。
+
+## 易错点
+
+- 「$\HF^*(L,K)$ 对任意一对 $(L,K)$ 都有定义」是错的：构造依赖附加数据，而这些数据未必存在（引言脚注明确警告）。
+- 把 $\HF^*(L,L)$ 当成 $H^*(L)$ 的直和：常数条带只贡献一部分，非平凡条带会改变同调；$\HF^*(L,L)\cong H^*(L)$ 是需要论证的定理，不是定义。
+- 忽略系数域：用普通域系数时，微分是可能不收敛的无穷和；Novikov 域及其「指数趋于无穷」条件不可省。
+
+## 参考与关联
+
+- Abouzaid & Bottman, Functoriality in categorical symplectic geometry (arXiv:2210.11159v1)，§2.1，p.5–7（原书 p.5–7 §2.1）
+
+关联：`functoriality/concept/lagrangian-submanifold`、`functoriality/deriv/floer-d-squared`、`functoriality/concept/novikov-field`
+
+来源说明：原书 p.5–7 §2.1（式(10)、(11)、(13) 与 Floer 定理 thm:2.1、注 thm:2.2）；公式逐字取自中译本 chapter2.tex 的 eq:10、eq:11、eq:13。

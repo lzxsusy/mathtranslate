@@ -1,0 +1,68 @@
+# A∞-双模
+
+> `functoriality/concept/a-infinity-bimodule` ｜ track B ｜ draft
+
+**一句话**：把 (A,B)-双模定义为 A∞-双函子 (A,B)→Ch，逐层给出 μ_{M;d;e}；拉格朗日对应 L12 给出双模 M_{L12}(L1,L2)=CF*(L1,L12,L2)。
+
+**自测**：为什么用 A∞-双模比直接造函子 Φ 更容易，M_{L12} 的结构映射又是怎么计数出来的？
+
+## 定义
+
+给定 $A_\infty$-范畴 $\mathscr A$，$\mathscr A$-模是 $A_\infty$-函子 $\mathscr A\to\Ch$；展开即对每个对象 $X$ 给分次向量空间 $\mathscr M(X)$，并对 $d\ge1$ 给映射 $\mu_{\mathscr M;d}:\hom(X_0,X_1)\otimes\cdots\otimes\hom(X_{d-1},X_d)\otimes\mathscr M(X_0)\to\mathscr M(X_d)[1-d]$，满足分层相干性关系。类似地，$(\mathscr A,\mathscr B)$-双模是 $A_\infty$-双函子 $(\mathscr A,\mathscr B)\to\Ch$，即逐层给出 $\mu_{\mathscr M;d;e}$。对拉格朗日对应 $L_{12}\subset M_1^-\times M_2$，令 $\mathscr M_{L_{12}}(L_1,L_2):=\CF^*(L_1,L_{12},L_2)$，结构映射由计数边界标记点位置不固定的拼接映射定义，得到 $(\Fuk M_1,\Fuk M_2)$-双模。
+
+记号：$\Ch$ 是 $\K$-向量空间链复形的 dg 范畴，视为 $A_\infty$-范畴；$[1-d]$ 是次数平移；$d$、$e$ 分别是 $\mathscr A$ 侧与 $\mathscr B$ 侧输入的个数。
+
+## 要点
+
+- 双模 = 双函子：$\mu_{\mathscr M;d;e}$ 同时吃 $\mathscr A$ 侧与 $\mathscr B$ 侧的态射，这正是「左模作用 + 右模作用」的精确含义。
+- $\mathscr M_{L_{12}}$ 的结构映射来自一条带两处输入的拼接带，边界标记点位置不固定，因此一次计数给出全部 $\mu_{\mathscr M;d;e}$。
+- 优点一：定义 $\mathscr M_{L_{12}}$ 的拼接映射不涉及接缝相切，不必在「使用扩充范畴」与「处理相切」之间选择。
+- 优点二：不涉及拉格朗日子流形的几何复合；在能定义 $\Phi_{L_{12}}$ 的情形下，预期 $\mathscr M_{L_{12}}$ 同构于 $\Phi_{L_{12}}$ 的图像双模。
+- Yoneda 模与图像双模是两个基本例子：前者 $\mathscr Y(X)=\hom(X,Y)$，后者 $\mathscr M(X,Y)=\hom_{\mathscr B}(\mathscr F(X),Y)$。
+
+## 公式
+
+$\mu_{\mathscr M;d}:\hom(X_0,X_1)\otimes\cdots\otimes\hom(X_{d-1},X_d)\otimes\mathscr M(X_0)\longrightarrow\mathscr M(X_d)[1-d].$
+$\hom(Y_0,Y_1)\otimes\cdots\otimes\hom(Y_{e-1},Y_e)\otimes\mathscr M(X_0,Y_0)$
+$\mathscr M(X,Y):=\hom_{\mathscr B}(\mathscr F(X),Y),$
+
+## 定理与证明
+
+### 对应给出双模
+
+给定 L12⊂M1^-×M2，令 M_{L12}(L1,L2):=CF*(L1,L12,L2)，并用计数拼接映射定义结构映射，则 M_{L12} 是 (Fuk M1,Fuk M2)-双模，其 A∞ 方程来自余维 1 退化的枚举。
+
+（sketch；来源：原书 p.32 §3.7）
+
+1. 对每条拼接带按边界标记点位置计数刚性拼接映射，定义 $\mu_{\mathscr M;d;e}$。  
+   为什么：标记点位置不固定，故一次计数覆盖所有 (d,e)。
+2. 枚举这些拼接带的余维 1 退化。  
+   为什么：退化给出双模相干性关系 (73) 的各项。
+3. 把退化按位置归类，得到双模的 $A_\infty$ 方程。  
+   为什么：每类退化对应方程中的一项，边界计数相等。
+
+缺口：原文只述构造并称方程「直接来自」退化枚举，未逐项验证；图 22 只示意一条拼接带。
+
+### 图像双模
+
+设 F:A→B 是 A∞-函子，令 M(X,Y):=hom_B(F(X),Y)，并用 F 与 B 的 μ 组合定义结构映射，则 M 是 (A,B)-双模，称为 F 的图像双模。
+
+（none；来源：原书 p.32 §3.7）
+
+
+缺口：原文只给出定义与结构映射的公式，未给相干性验证；这是 A∞-函子理论的标准构造。
+
+## 易错点
+
+- 把双模当成两个模的直和或笛卡尔积：$\mu_{\mathscr M;d;e}$ 是同时吃两侧态射的单一多重线性映射。
+- 把图像双模的次序写反：应为 $\hom_{\mathscr B}(\mathscr F(X),Y)$，不是 $\hom_{\mathscr B}(Y,\mathscr F(X))$。
+- 把 $\mathscr M_{L_{12}}(L_1,L_2)$ 当成 $\CF^*(L_1,L_2)$：它是三个拉格朗日（$L_1$、$L_{12}$、$L_2$）的拼接复形。
+- 漏掉 $[1-d]$ 平移：模映射的输出带次数平移，漏掉后相干性关系不可能成立。
+
+## 参考与关联
+
+- Abouzaid & Bottman, Functoriality in categorical symplectic geometry (arXiv:2210.11159v1)，§3.7，p.32–32（原书 p.32 §3.7）
+
+关联：`functoriality/concept/a-infinity-category`、`functoriality/concept/mww-functor`、`functoriality/concept/adjunction`、`functoriality/concept/quilted-floer`
+
+来源说明：原书 p.32 §3.7（定义 3.15–3.17）；公式 (72)(74)(75) 逐字取自中译本 chapter3.tex。

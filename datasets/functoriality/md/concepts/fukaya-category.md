@@ -1,0 +1,68 @@
+# Fukaya A∞-范畴
+
+> `functoriality/concept/fukaya-category` ｜ track A ｜ draft
+
+**一句话**：Fukaya 范畴 Fuk M 的对象是带附加结构（膜结构）的拉格朗日子流形，态射空间是 Floer 复形，μ_r 由刚性伪全纯 (r+1)-边形计数给出。
+
+**自测**：Fukaya 范畴怎样把 Floer 上同调升格成范畴，对象上又需要哪些附加数据？
+
+## 定义
+
+固定闭辛流形 $M$（本节假设 $\pi_2(M,L)=0$）。Fukaya 范畴 $\Fuk M$ 的对象是带辅助数据的拉格朗日子流形：定向、相对 Sp 结构、以及（在系数域上）膜结构等；态射空间 $\hom(L,K)\coloneqq\CF^*(L,K)$ 是分次 $\mathbf K$-向量空间。运算 $\mu_r$（式(18)）把 $r$ 个态射送到一个态射，次数为 $2-r$，并按式(19) 满足 A∞ 方程。$\mu_r$ 的矩阵系数通过计数刚性伪全纯 $(r+1)$-边形给出：多边形边界依次落在 $L^0,\ldots,L^r$ 上，内部无标记点。
+
+记号：系数域 $\mathbf K=\Lambda$（Novikov，一般情形）或 $\mathbf k$（单调/正合情形）；$\mu_1$ 就是 Floer 微分，故 $\hom(L,K)$ 的同调为 $\HF^*(L,K)$。
+
+## 要点
+
+- 对象不是裸拉格朗日：需要定向与相对 Sp 结构来定分次，否则 $\\mu_r$ 的分次错位、符号也无法确定。
+- $\\mu_1$ 即 Floer 微分，所以对象 $L,K$ 之间态射的同调就是 $\\HF^*(L,K)$；范畴是 Floer 上同调的自然升级。
+- 高阶 $\\mu_r$ 来自带多个边界标记的圆盘；这是 A∞ 结构（而非 dg 结构）的几何来源，也正是 A∞ 方程出现的理由。
+- HMS 猜想把 $\\Fuk M$ 的导出版本与 $X$ 上凝聚层的导出范畴等同起来，Fukaya 范畴因此是镜像对称的核心对象。
+
+## 公式
+
+$$\mu_r:\CF^*(L^0,L^1)\otimes\cdots\otimes\CF^*(L^{r-1},L^r)\longrightarrow\CF^{*-2+r}(L^0,L^r),$$
+$$\sum_{\substack{1\le a\le r\\1\le i\le r-a+1}}\pm\mu_{r-a+1} \bigl(x_1,\ldots,x_{i-1},\mu_a(x_i,\ldots,x_{i+a-1}),x_{i+a},\ldots,x_r\bigr)=0 \quad\forall r\ge1.$$
+$$\HF^*(L_{\mathrm{eq}},L_{\mathrm{eq}})\simeq \Lambda\langle x\rangle/\langle x^2=T^{\omega(S^2)/2}\rangle.$$
+
+## 定理与证明
+
+### Fuk S² 的计算（例 thm:2.12）
+
+设 L_eq 是 S² 上的大圆（赤道）。Fuk S² 的自同态代数为 Clifford 代数：HF*(L_eq,L_eq) ≅ Λ⟨x⟩/⟨x²=T^{ω(S²)/2}⟩（式(22)）；且由 Oh 的定理，S² 上任意两条大圆都哈密顿同痕。
+
+（sketch；来源：原书 p.10–11 §2.2）
+
+1. 两条大圆横截相交于两点 $p,q$，故 $\CF^*$ 由 $p,q$ 生成。  
+   为什么：大圆在 S² 上的相交数是 2；这是最简单的闭拉格朗日例子。
+2. 条带计数给出 $dp=T^bq+T^bq=0$、$dq=T^ap+T^ap=0$（式(17) 及其译注修正）。  
+   为什么：两条条带贡献相等的面积，故系数成对出现并相消（在 $\Z/2$ 系数下）。
+3. 取 $x$ 为交点的线性组合，乘法的修正给出 $x^2=T^{\omega(S^2)/2}$，即式(22) 的 Clifford 关系。  
+   为什么：乘积 $\mu_2$ 的矩阵系数由穿过两条大圆的圆盘面积决定；这正是「量子化」的乘法。
+4. 任意两条大圆哈密顿同痕（Oh），故 $\Fuk S^2$ 本质只有一个对象。  
+   为什么：对象在哈密顿同痕下给出同构的对象，故范畴只有一个同构类。
+
+缺口：原文对符号与系数只作示意（例 thm:2.12 与译注），并指出 (17) 有一处笔误；严格计算需选定条带与定向，本卡只重述结构与结论。
+
+### Z/2 与 C 系数的差别（注 thm:2.13）
+
+Z/2Z 系数下 Fuk S² 只有一个对象；C 系数下有两个非零对象，对应平坦 U(1)-丛单值化的 ±1 两种选择。
+
+（none；来源：原书 p.11 §2.2）
+
+
+缺口：原文只陈述并引 [FOOO] 的讨论，未给证明。
+
+## 易错点
+
+- 把对象当成所有拉格朗日子流形：只有带附加数据（定向、相对 Sp 结构、膜结构）的才是对象，裸流形没有分次。
+- 忘记「刚性」：$\\mu_r$ 只数 0 维模空间（Maslov 指标恰好的情形），多算非刚性多边形会破坏 A∞ 方程。
+- 以为 $\\mu_2$ 一定结合：Fukaya 范畴里结合律只在同伦意义下成立，$\\mu_3$ 不可省。
+
+## 参考与关联
+
+- Abouzaid & Bottman, Functoriality in categorical symplectic geometry (arXiv:2210.11159v1)，§2.2，p.9–11（原书 p.9–11 §2.2）
+
+关联：`functoriality/concept/floer-cohomology`、`functoriality/deriv/fukaya-ainf-structure`、`functoriality/concept/a-infinity-category`
+
+来源说明：原书 p.9–11 §2.2（Fuk M 定义、式(18)、(19)、例 thm:2.12 与式(22)、注 thm:2.13）；公式逐字取自中译本 chapter2.tex 的 eq:18、eq:19、eq:22。

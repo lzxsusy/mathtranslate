@@ -1,0 +1,66 @@
+# 扩充 Fukaya 范畴
+
+> `functoriality/concept/extended-fukaya` ｜ track B ｜ draft
+
+**一句话**：对象换成广义拉格朗日、态射取拼接 Floer 上链复形、μ_d 由刚性拼接映射计数；扩充专为消除接缝与边界相切的分析困难。
+
+**自测**：为什么要把 Fukaya 范畴扩充成 Fuk#(M)，这个扩充在对象与态射上分别换掉了什么？
+
+## 定义
+
+Ma'u–Wehrheim–Woodward 在标准单调性假设下定义扩充 Fukaya 范畴：对象是广义拉格朗日子流形 $\pt\xrightarrow{\underline L}M$；从 $\underline L$ 到 $\underline K$ 的态射集是拼接 Floer 上链复形 $\CF^*(\underline L,\underline K)$；$A_\infty$ 运算 $\mu_d$ 通过计数刚性拼接映射定义。关键设计是：在输出标记点处，接缝横截地趋近边界，即在输出点附近的带状坐标中接缝平行于边界，而不是渐近于边界。
+
+记号：$\Fuk^\#(M)$ 与通常的 $\Fuk M$ 相对；$\underline L$ 是广义拉格朗日（带若干接缝的链），不是单个拉格朗日子流形。
+
+## 要点
+
+- 对象层面：普通 Fukaya 范畴的对象是拉格朗日子流形，$\Fuk^\#(M)$ 的对象是任意循环广义对应 $\pt=L_0\to\cdots\to L_k\to M$，普通拉格朗日只是 r=1 的特例。
+- 态射层面：从拼接 Floer 上链复形 $\CF^*(\underline L,\underline K)$ 取代 $\CF^*(L,K)$，天然容纳多条接缝。
+- 为什么要扩充：定义 $\Phi_{L_{12}}$ 的拼接曲面中接缝与边界相切，线性化失去一致的椭圆估计；让接缝横截趋近边界后，Fredholm 理论才建立得起来。
+- 代价是对象类巨大，但人们普遍预期嵌入 $\Fuk M\hookrightarrow\Fuk^\#(M)$ 在许多情形下是拟等价，故扩充不改变本质。
+- 扩充的直接收益：$\Phi^\#_{L_{12}}$ 在对象上只需末尾追加 $L_{12}$，不必把 $\underline L_1$ 映到几何复合。
+
+## 公式
+
+$\mu_d(\underline L^0,\ldots,\underline L^d):\CF^*(\underline L^0,\underline L^1)\otimes\cdots\otimes\CF^*(\underline L^{d-1},\underline L^d)\longrightarrow\CF^*(\underline L^0,\underline L^d)$
+
+## 定理与证明
+
+### Fuk M 嵌入 Fuk#(M) 是拟等价
+
+在许多情形下，嵌入 Fuk M↪Fuk#(M) 是 A∞-范畴的拟等价；因此用扩充范畴代替通常范畴不损失信息。
+
+（none；来源：原书 p.30 §3.6）
+
+
+缺口：原文明确称之为 folk expectation（人们普遍预期），未给条件与证明；引用时必须保持「预期」而非定理的措辞。
+
+### μ_d 满足 A∞ 关系
+
+由刚性拼接映射计数的 μ_d 满足 A∞-范畴的相乘关系；该关系来自相应模空间的余维 1 退化。
+
+（sketch；来源：原书 p.29 §3.6）
+
+1. 取 $\mu_d$ 所计数的刚性拼接映射模空间。  
+   为什么：关系式来自这个模空间的边界。
+2. 列出余维 1 退化：边界标记点碰撞或接缝位置退化。  
+   为什么：每类退化对应关系式中的一项。
+3. 把边界项按退化类型配对，得到 A∞ 关系。  
+   为什么：同一模空间边界的两种计数方式相等。
+
+缺口：原文以图示说明，未逐项列出退化类型与符号；严格论证在 MWW 原文。
+
+## 易错点
+
+- 把 $\Fuk^\#(M)$ 的对象当成拉格朗日子流形：对象是广义拉格朗日（带接缝的链），普通拉格朗日只是特例。
+- 把 hom 写成普通 $\CF^*(L,K)$：扩充范畴的 hom 是拼接 Floer 上链复形 $\CF^*(\underline L,\underline K)$。
+- 混淆两种定义域图形：$\Phi_{L_{12}}$ 的图形（图 16）接缝与边界相切，扩充范畴用的图形（图 17）接缝横截趋近边界；这正是扩充的全部意义。
+- 把「拟等价」当成已证定理：原文只说 folk expectation。
+
+## 参考与关联
+
+- Abouzaid & Bottman, Functoriality in categorical symplectic geometry (arXiv:2210.11159v1)，§3.6，p.29–31（原书 p.29–31 §3.6）
+
+关联：`functoriality/concept/phi-sharp`、`functoriality/concept/fukaya-category`、`functoriality/concept/quilted-floer`、`functoriality/concept/mww-functor`
+
+来源说明：原书 p.29–30 §3.6（定义 3.13 与紧随其后的说明）；公式 (66) 取自中译本 chapter3.tex。

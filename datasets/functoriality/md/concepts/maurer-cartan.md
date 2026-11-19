@@ -1,0 +1,42 @@
+# Maurer–Cartan 元
+
+> `functoriality/concept/maurer-cartan` ｜ track D ｜ draft
+
+**一句话**：A⊗hat N 中满足 sum μ_d(γ,…,γ)=0 的次数 1 元素；经规范等价得到 MC(A;N)，是形式群构造的输入。
+
+**自测**：Maurer–Cartan 方程中的每一项都起什么作用，为什么它刻画的是「形变」而不是普通的闭元素？
+
+## 定义
+
+设 $\mathscr A$ 是 $\Ainf$-环，$N$ 是进环。$\mathscr A\widehat\otimes N$ 中的一个 Maurer–Cartan 元是满足 Maurer–Cartan 方程的元素 $\gamma\in\mathscr A^1\widehat\otimes N$，即 $\sum_{d\geq1}\mu_d(\gamma,\ldots,\gamma)=0$。若存在 $h\in\mathscr A^0\widehat\otimes N$ 使 $\gamma-\widetilde\gamma$ 相对由 $\gamma$ 与 $\widetilde\gamma$ 变形的微分恰当（式 (129)），则称两个解规范等价；等价类的集合记为 $MC(\mathscr A;N)$。
+
+记号：$\Ainf$-环 $\mathscr A$ 的运算记为 $\mu_d$；$N$ 进环；$\gamma$ 取值在 $\mathscr A^1\widehat\otimes N$，故 MC 方程中 $\mu_d(\gamma,\ldots,\gamma)$ 的次数为 1。
+
+## 要点
+
+- $\mathscr A\widehat\otimes N$ 定义为逆极限 $\varprojlim_m\mathscr A\otimes(N/N^m)$；MC 元是其中次数 1 且满足 MC 方程的元素。
+- 规范等价由 $h\in\mathscr A^0\widehat\otimes N$ 给出，等价关系就是「$\gamma-\widetilde\gamma$ 是恰当的」的代数化。
+- $MC(\mathscr A;N)$ 是等价类的集合，关于 $N$ 函子性；取 $\mathscr A=\QC^*(M)$ 就得到形式群 $MC(M)$。
+- MC 方程把 $\Ainf$ 结构的高阶运算 $\mu_d$ 都耦合在一起；$d\geq1$ 的求和是 MC 元「形变」含义的来源。
+
+## 公式
+
+$\gamma\in\mathscr A^1\widehat\otimes N$
+$\sum_{d\geq1}\mu_d(\gamma,\ldots,\gamma)=0$
+$\sum_{p,q\geq0}\mu_{p+q+1}\bigl(\underbrace{\gamma,\ldots,\gamma}_{p},h,\underbrace{\widetilde\gamma,\ldots,\widetilde\gamma}_{q}\bigr)=\gamma-\widetilde\gamma$
+
+## 定理与证明
+
+## 易错点
+
+- 把 MC 元当成任意元素：必须次数为 1 且满足 MC 方程，取值在 $\mathscr A^1\widehat\otimes N$。
+- 把规范等价误读为相等：$MC(\mathscr A;N)$ 的元素是等价类，不是单个解。
+- 忘记 $N$ 无单位、$\mathscr A\widehat\otimes N$ 是逆极限：这正是使求和有意义、并让系数可以取 $q\mathbb F_p[q]/q^{p+1}$ 之类环的原因。
+
+## 参考与关联
+
+- Abouzaid & Bottman, Functoriality in categorical symplectic geometry (arXiv:2210.11159v1)，§5.6，p.59–59（原书 p.59 §5.6）
+
+关联：`functoriality/concept/formal-group`、`functoriality/concept/a-infinity-category`、`functoriality/concept/filtered-a-infinity`
+
+来源说明：据中译本 §5.6（p.59）定义 5.9 与译者注转述 Seidel [Sei19] 的 MC 元概念。

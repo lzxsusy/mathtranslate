@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## dataset functoriality —— Abouzaid–Bottman《范畴辛几何中的函子性》资料卡（83 张）— 2026-11-19
+
+- 新增 `datasets/functoriality/`：Abouzaid & Bottman, *Functoriality in categorical symplectic geometry*（arXiv:2210.11159v1，2022-10-20，68 页、43 图）中文译注本的资料卡 **83 张**——概念 56 / 推导 14 / 勘误 13，四轨 A（第 1–2 章 Floer、Fukaya、操作子原理、带曲率 A∞ 与边界上链）/ B（第 3 章 凝聚层与拉格朗日对应、拼接 Floer、Φ#、A∞-双模、伴随、辛约化）/ C（第 4 章 巫曲线与巫球、(A∞,2)-范畴 Symp、相对 2-操作子）/ D（第 5 章 Dehn 扭转、Khovanov、Floer 场论、HMS、形式群、Barr–Beck）。
+- 页码锚：以 `pdftotext -layout` 逐页抽英文原文，按作者 LaTeX 的 `\section/\subsection` 顺序建 35 条「节号 → 印刷页区间」映射（PDF 页 = 印刷页），卡内 `sources.pages` 与 anchor 全部照该表；页锚覆盖 p.2–65 共 41 个印刷页。勘误卡 13 张对应译注登记的原文笔误（p.3、p.9、p.24、p.26、p.31、p.39、p.40、p.52、p.56×2、p.61、p.64、p.65），每张给「原文—应作—依据」三层。
+- 质量：`lint_cards.py cards --strict` **0 error / 0 warn**（字段、长度、id 与文件名一致、related 可解析、页码 1–68、anchor 以「原书 p.」开头、禁本机绝对路径）；`audit_pages.py` 0 issue（页码落在所属节区间、跨度 ≤3 页、anchor 页码自洽）；`check_formulas.py --corpus book/` **232/232** 条公式在中译本 5 个章节源码中逐字命中；73 个推导步骤、266 条 pitfalls，推导卡每步带 `provenance`（A 原文明写 / B 补出 / C 判断）与 `locator`。
+- 生成物：`index.jsonl` 83 行、`md/` 83 张 Markdown + `md/index.md`、`MAP.md`（mermaid 骨架 + 逐节卡表，由 `tools/gen_map.py` 生成）；`tools/` 另含 `lint_cards.py`、`audit_pages.py`、`build_index.py`、`render_md.py`、`check_formulas.py`；`workflow/PRODUCTION.md` 记来源三级、硬性规则与终审标准，`workflow/cards_plan.tsv` 为 70 条写作清单。
+- 同步更新：`datasets/README.md` 的十类数据表、目录树与版本记录加 `v0.13`。
+- 说明：全部卡 `status: "draft"`、`rights: "rewritten"`；第 5 节的 expectation 5.14/5.15 与 conjecture 5.6 按「预期」「猜想」措辞，未升格为定理。
+
 ## SY01-24 Siebert《镜像对称：代数几何专题讲义》中译注本（三校）+ dataset siebert — 2026-11-19
 
 - 新增 `08_source_code/SY01-24_镜像对称（Siebert 讲义中译本）/`：Siebert 讲授、Van Dyke 记录 *Mirror Symmetry*（Fall 2019 课程讲义，108 页，未出版）→ 中译注本 **103 页**（源码 50 项 / 工程文件 / 成品）。

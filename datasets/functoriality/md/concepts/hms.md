@@ -1,0 +1,66 @@
+# 同调镜像对称
+
+> `functoriality/concept/hms` ｜ track D ｜ draft
+
+**一句话**：HMS 断言 Fuk(M) 与 D^b(Coh X) 等价；辛侧没有张量积的对应物，Subotic 用逐纤维相加的 Γ^⊗ 在二维环面上造出对称幺半结构。
+
+**自测**：HMS 把 Fuk(M) 与 D^b(Coh X) 对应起来，为什么辛侧的张量积需要 Γ^⊗ 这样的拉格朗日对应才能实现？
+
+## 定义
+
+同调镜像对称把镜像对 $(M,X)$ 的两侧配对：辛侧的 Fukaya 范畴 $\Fuk(M)$ 对应代数侧的凝聚层有界导出范畴 $D^b(X)$。§5.4 关注的是一处不对称：代数侧有一对凝聚层的张量积，给出函子 $D^b(X)\otimes D^b(X)\to D^b(X)$，而在辛几何中没有普遍办法把同一流形中的一对拉格朗日映回同一流形中的拉格朗日。Subotic 对亏格 $1$ 曲面用投影 $\pi$、截面与逐纤维相加构造拉格朗日对应 $\Gamma^\otimes$，它在二维环面的 Donaldson–Fukaya 范畴上诱导对称幺半结构；在镜像对称下这对应镜像椭圆曲线上凝聚层有界复形的张量积。
+
+记号：$\Gamma^\otimes\subset M\times M\times M^-$：实现张量积的拉格朗日对应；$\pi$：$M$ 到圆 $B$ 的投影；$\Delta_{M,\alpha}$：对角的直和项。
+
+## 要点
+
+- 代数侧：张量积是函子 $D^b(X)\otimes D^b(X)\to D^b(X)$；辛侧缺少普遍定义的「同一流形中拉格朗日的张量积」，这是本节要解决的谜题。
+- Subotic 的构造：$\Gamma^\otimes:=\{(p,q,r)\mid\pi(p)=\pi(q)=\pi(r),\ p+q=r\}$，依赖从 $M$ 到圆的投影 $\pi$ 及其截面；用逐纤维相加定义对应，Arnold–Liouville 定理证明它是拉格朗日的。
+- 定理 5.5（转述 [Sub10]）：$\Gamma^\otimes$ 在二维环面的 Donaldson–Fukaya 范畴上诱导对称幺半结构，镜像侧对应凝聚层有界复形的张量积。
+- Pascaleff 用 Weinstein 辛群胚统一这一形式结构，把构造推广到高维环面、余切丛与扭曲版本；这是形式推广，不是本文定理。
+- 猜想 5.6（作者自己的猜想，不是定理）：闭流形上同调的 Steenrod 运算可从余切丛 Floer 理论加逐纤维相加的几何提取。
+
+## 公式
+
+$D^b(X)\otimes D^b(X)\longrightarrow D^b(X)$
+$\Gamma^\otimes\subset M\times M\times M^-$
+$\Gamma^\otimes:=\bigl\{(p,q,r)\in M\times M\times M^-\mid\pi(p)=\pi(q)=\pi(r),\ p+q=r\bigr\}$
+$\Gamma^\otimes\circ_{1,2}(L\times L)=L$
+
+## 定理与证明
+
+### 定理 5.5（转述 Subotic [Sub10]）
+
+拉格朗日对应 $\Gamma^\otimes$ 在二维环面的 Donaldson–Fukaya 范畴上诱导一个对称幺半结构；在镜像对称下，这一结构对应于镜像椭圆曲线上凝聚层的有界复形的张量积。这是转述 [Sub10] 的结果，不是本文证明的定理。
+
+（sketch；来源：原书 p.57 §5.4（转述 [Sub10]））
+
+1. 取 $M$ 为亏格 $1$ 曲面，固定到圆 $B$ 的投影 $\pi$ 与截面；用辛形式把每根纤维的万有覆盖与 $T_b^*B$ 等同，从而给纤维一个阿贝尔群结构。  
+   为什么：这是 Subotic 构造的几何输入，使「逐纤维相加」有意义。
+2. 令 $\Gamma^\otimes$ 为三点在同一纤维上方且 $p+q=r$ 的三元组；Arnold–Liouville 定理给出它是拉格朗日对应，交换性与结合性可直接验证。  
+   为什么：对应本身满足所需的对称幺半公理，于是它诱导范畴层面的对称幺半结构。
+
+缺口：原文只引用 [Sub10] 的结论并说明构造依赖投影与截面；本卡不复述其证明。
+
+### 猜想 5.6（作者提出，非定理）
+
+闭流形的上同调上的 Steenrod 运算可以从其余切丛的 Floer 理论以及逐纤维相加的几何中提取出来。原文用的是 conjecture 环境，本文没有证明它。
+
+（none；来源：原书 p.57 §5.4（作者猜想 5.6））
+
+
+缺口：这是作者提出的猜想，不是定理；原文只给出动机（有限特征下相干同伦交换代数的丰富性）。
+
+## 易错点
+
+- 把定理 5.5 当成对一般辛流形成立：Subotic 只处理亏格 $1$ 曲面（二维环面），且构造依赖投影 $\pi$ 与截面的选择。
+- 把猜想 5.6 当定理：它是作者提出的猜想，原文没有证明。
+- 以为辛侧已有链层面的张量积：$\Gamma^\otimes$ 只在同调层面给出对称幺半结构，提升到链层面需要「对称幺半 $\Ainf$-范畴」的合适表述。
+
+## 参考与关联
+
+- Abouzaid & Bottman, Functoriality in categorical symplectic geometry (arXiv:2210.11159v1)，§5.4，p.57–57（原书 p.57 §5.4）
+
+关联：`functoriality/concept/derived-category-coherent`、`functoriality/concept/lagrangian-correspondence`、`functoriality/concept/fukaya-category`、`functoriality/concept/steenrod-operations`
+
+来源说明：据中译本 §5.4（p.57）转述 [Sub10] 的定理、Pascaleff 的形式推广与作者猜想 5.6。

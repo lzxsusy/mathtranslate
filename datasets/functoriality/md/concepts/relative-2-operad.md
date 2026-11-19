@@ -1,0 +1,54 @@
+# 相对 2-操作子
+
+> `functoriality/concept/relative-2-operad` ｜ track C ｜ draft
+
+**一句话**：相对 2-操作子在 2-操作子之外多出对象族 $Q_{\m}$、投影 $\pi_{\m}$ 与沿底层操作子纤维积的复合映射 $\Gamma$，用以编码 2-结合多面体沿遗忘映射的分解。
+
+**自测**：为什么 2-结合多面体不构成普通 2-操作子，而必须加上「相对」这一层结构？
+
+## 定义
+
+设 $\C$ 是有有限极限的范畴。$\C$ 中的非对称相对 2-操作子是一对数据 $\left((P_r)_{r\ge1},(Q_{\m})_{\m\in\Z_{\ge0}^r\setminus\{0\},r\ge1}\right)$：$P_r$ 构成 $\C$ 中的非对称操作子（实现后的结合多面体），$Q_{\m}$ 是 $\C$ 的一族对象（2-结合多面体），另给结构态射
+$$\Gamma_{\m,(\n_i^a)}:Q_{\m}\times\prod_{1\le i\le r}\prod_{1\le a\le m_i}^{P_{s_i}}Q_{\n_i^a}\longrightarrow Q_{\sum_a\n_1^a,\ldots,\sum_a\n_r^a}$$
+与投影 $\pi_{\m}:Q_{\m}\to P_r$，使得 $\pi$ 把 $\Gamma$ 与 $P$ 的结构态射交织，且 $\Gamma$ 满足直接结合性与单位条件（单位 $1\to Q_1$）。对 $Q_{\m}=\twom_{\n}$、$P_r=\Mbar_r$ 的情形，$\pi$ 就是遗忘映射，$\Gamma$ 就是层的纤维积分解。
+
+记号：下标 $\sum_a\n_1^a,\ldots,\sum_a\n_r^a$ 是向量连接，长度为 $\sum_i s_i$；上标 $P_{s_i}$ 表示在 $P_{s_i}$ 上取纤维积；$(P_r)$ 是非对称操作子，$P_r$ 对应 $\Mbar_r$。
+
+## 要点
+
+- 普通 2-操作子只有 $(P_r)$ 及 $P$ 的复合；相对版本多出 $(Q_{\m})$、投影 $\pi_{\m}$ 与 $\Gamma$，三者合起来把「层如何分解为低维部分的纤维积」编进操作子结构。
+- 2-结合多面体不构成普通操作子，最基础的理由是它不由单个正整数索引（$\n$ 是序列）；更深的原因是它的层是低维 $\twom$ 的纤维积之乘积，而操作子只允许通常的乘积式复合。
+- 投影 $\pi_{\m}$ 是遗忘映射：它把 2-结合多面体送到结点曲线的组合型（复化后是 $\Mbar_{0,r+1}$），与 $\Gamma$ 交织的条件保证计数映射的相容性可以沿两个方向翻译。
+- 「相对」的基准是已实现的结合多面体 $(\Mbar_r)$；2-结合多面体作为对象族出现，复合只到纤维积层面，这为 (A∞,2)-范畴提供了正确的抽象语法。
+- Symp 的主线也体现在这里：$\Symp_1$ 先按普通范畴描述（1-态射复合严格结合），一般情形必须松弛为同伦结合（注 4.1）；相对 2-操作子只把复合相容到链同伦，正是为这种松弛留出空间。
+
+## 公式
+
+$\left((P_r)_{r\ge1},(Q_{\m})_{\m\in\Z_{\ge0}^r\setminus\{0\},r\ge1}\right)$
+$\Gamma_{\m,(\n_i^a)}:Q_{\m}\times\prod_{1\le i\le r}\prod_{1\le a\le m_i}^{P_{s_i}}Q_{\n_i^a} \longrightarrow Q_{\sum_a\n_1^a,\ldots,\sum_a\n_r^a}$
+$\pi_{\m}:Q_{\m}\longrightarrow P_r,\qquad r\ge1,\quad\m\in\Z_{\ge0}^r\setminus\{0\}$
+
+## 定理与证明
+
+### 2-结合多面体构成相对 2-操作子
+
+$(\twom_{\n})$ 连同遗忘映射 $\pi$ 与结构映射 $\Gamma$ 构成相对于 $(\Mbar_r)$ 的 2-操作子。
+
+（none；来源：原书 p.47 §4.3（引 [BC18] 定义-命题 2.3））
+
+
+缺口：构造与公理验证在 [BC18] 的定义-命题 2.3 中给出；本章只陈述该结构并解释两部分（遗忘映射与纤维积结构映射）的作用，未给证明。
+
+## 易错点
+
+- 相对 2-操作子不是普通 2-操作子「加一个标签」：它多出对象族 $Q_{\m}$ 与投影 $\pi_{\m}$；只记 $P_r$ 会丢掉层的纤维积分解，从而丢掉 Symp 复合映射的相容性。
+- $\Gamma$ 的下标是向量连接而非整数拼接：$\sum_a\n_1^a,\ldots,\sum_a\n_r^a$ 的长度是 $\sum_i s_i$，逐位相加会把长度算错。
+- 把 $(\twom_{\n})$ 当成以 $r$ 为下标的普通操作子，就会误以为它的复合与 $K_r$ 的复合一样是乘积式；实际上层要沿 $\pi$ 取纤维积，这正是「相对」的含义。
+
+## 参考与关联
+
+- Abouzaid & Bottman, Functoriality in categorical symplectic geometry (arXiv:2210.11159v1)，§4.3，p.47–48（原书 p.47–48 §4.3）
+
+关联：`functoriality/concept/a-infinity-2-category`、`functoriality/concept/tree-pairs`、`functoriality/concept/operad`、`functoriality/concept/symp-category`
+
+来源说明：原书 p.47–48 §4.3（定义 def:2op、[BC18] 定义-命题 2.3）；公式取自中译本 chapter4.tex。

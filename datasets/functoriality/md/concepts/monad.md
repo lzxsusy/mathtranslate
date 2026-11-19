@@ -1,0 +1,62 @@
+# 单子
+
+> `functoriality/concept/monad` ｜ track D ｜ draft
+
+**一句话**：单子是带单位与乘法的自函子；伴随 L⊣R 给出单子 (T,μ,η)=(RL,RεL,η)，而单子的 Eilenberg–Moore 范畴又反过来给出伴随。
+
+**自测**：伴随对 L⊣R 为什么必然给出一个单子，而单子又怎样通过 Eilenberg–Moore 范畴找回一个以它为相联系的伴随？
+
+## 定义
+
+设 $X$ 是一个范畴。$X$ 上的单子是一个自函子 $T:X\to X$ 连同两个自然变换：单位 $\eta:\id_X\to T$ 与乘法 $\mu:T^2\to T$，满足结合律 $\mu\circ T\mu=\mu\circ\mu T$ 与单位律 $\mu\circ T\eta=\mu\circ\eta T=\id_T$；等价地说，单子是自函子范畴中的幺半群对象。原文的实际用法是：给定伴随 $L\dashv R$（$X\to Y$），以 $\eta:\id_X\to RL$ 为单位、以 $R\epsilon L:R^2L\to RL$ 为乘法，得到 $X$ 上的单子 $(T,\mu,\eta):=(RL,R\epsilon L,\eta)$；反过来，单子 $(T,\mu,\eta)$ 的 Eilenberg–Moore 范畴 $\Mod T$ 与自由函子 $L^T$、遗忘函子 $R^T$ 构成伴随 $L^T\dashv R^T$，其相联系的单子恰是 $(T,\mu,\eta)$。
+
+记号：$T$：自函子；$\eta$：单位；$\mu$：乘法；$\Mod T$：单子 $T$ 的 Eilenberg–Moore 范畴（本章称 T-模范畴）；$L^T\dashv R^T$：自由/遗忘伴随。
+
+## 要点
+
+- 单子 $=(T,\mu,\eta)$ 的三条数据加两条连贯性公理；它是自函子范畴中的幺半群对象，不是幺半范畴的普通幺半对象。
+- 每个伴随 $L\dashv R$ 都给出一个单子：$(T,\mu,\eta):=(RL,R\epsilon L,\eta)$，其中 $\eta$ 是伴随单位、$\epsilon$ 是余单位。
+- 每个单子都来自某个伴随：Eilenberg–Moore 范畴 $\Mod T$ 与自由/遗忘函子给出伴随 $L^T\dashv R^T$，相联系的单子正是原来的 $(T,\mu,\eta)$（Eilenberg–Moore 与 Kleisli 1965）。
+- 本章把 T-代数改称 T-模（remark 5.11），以便后文谈完美 T-模；T-模的对象是 $h:Tx\to x$ 并满足结合律与单位律。
+- 单子性是 Barr–Beck 定理的判据：比较函子 $K:Y\to\Mod T$，$y\mapsto(Ry,R\epsilon_y)$ 是等价当且仅当伴随是单子的。
+
+## 公式
+
+$\eta:\id_X\to RL$
+$\epsilon:LR\to\id_Y$
+$(T,\mu,\eta):=(RL,R\epsilon L,\eta)$
+$L^T\dashv R^T$
+
+## 定理与证明
+
+### 每个单子都来自某个伴随（Eilenberg–Moore、Kleisli 1965）
+
+每个单子都来自某个伴随：对单子 $(T,\mu,\eta)$，其 Eilenberg–Moore 范畴 $\Mod T$ 与自由函子、遗忘函子构成伴随 $L^T\dashv R^T$，相联系的单子恰为 $(T,\mu,\eta)$。这是经典结果，原文只引用、不证明。
+
+（none；来源：原书 p.60–62 §5.7.1（经典结果，转述））
+
+
+缺口：原文只作引用（Eilenberg–Moore 与 Kleisli 1965），未给证明；本卡按综述体例不补证明。
+
+### 原文笔误：式 (135) 后写 (T,μ,ν)
+
+原文在式 (135) 之后把单子写成 $(T,\mu,\nu)$，按上下文应为 $(T,\mu,\eta)$；这是译者注指出的笔误，不是数学内容。
+
+（none；来源：原书 p.61 §5.7.1（译者注））
+
+
+缺口：这是版本/笔误说明，无需证明。
+
+## 易错点
+
+- 把单子与幺半范畴的幺半对象混为一谈：单子是自函子范畴中的幺半群对象；「T-模」也只是 T-代数的别名（remark 5.11）。
+- 把 T-模的对象当成任意 $Tx\to x$：它必须与 $\mu$、$\eta$ 相容，即满足结合律与单位律两张交换图。
+- 把原文式 (135) 后的 $(T,\mu,\nu)$ 当真：译者注指出应为 $(T,\mu,\eta)$。
+
+## 参考与关联
+
+- Abouzaid & Bottman, Functoriality in categorical symplectic geometry (arXiv:2210.11159v1)，§5.7，p.60–62（原书 p.60–62 §5.7）
+
+关联：`functoriality/concept/eilenberg-moore`、`functoriality/concept/barr-beck`、`functoriality/concept/adjunction`
+
+来源说明：据中译本 §5.7.1（p.60–62）与译者注转述经典单子理论与 [Mac71] 的相关引述。
