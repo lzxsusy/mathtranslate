@@ -38,6 +38,7 @@
 | `dmod/` | 整本讲义资料卡（Miličić《D-模的代数理论讲义》，5 章 35 节 283 条）：61 张卡（59 概念 + 2 例子），九轨 O–H，逐卡对齐校订批注本源码行号并在 nLab / Stacks Project 找依据（`verification.jsonl` 记 `alignment` 与核验页面） | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
 | `functoriality/` | 单篇论文资料卡（Abouzaid–Bottman《范畴辛几何中的函子性》，arXiv:2210.11159v1）：56 张概念卡 + 14 张推导卡 + 13 张勘误卡，四轨 A/B/C/D；每卡带英文原文印刷页锚，公式逐字对中译本源码校验；其中 42 张交换图以 tikz-cd 源码存于卡内、渲染 PNG 在 `md/diagrams/` | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
 | `gtgl15/` | 单篇论文资料卡（Witten《More On Gauge Theory And Geometric Langlands》，arXiv:1506.04293v3，79 页，与 SY03-20 校订译注版同批）：30 张概念卡 + 10 张推导卡，六轨 A（Hitchin 几何与谱曲线）/B（对偶环面与 T-对偶）/C（膜、线算符与本征膜）/D（'t Hooft 算符与赫克修正）/E（行列式线丛与本征值）/O（总览）；每卡带 arXiv 印刷页锚（印刷页 = PDF 页 − 1） | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
+| `leanstmt/` | 自然语言 ↔ Lean 陈述对照语料：12 张陈述卡（10 certified + 2 gap），每卡含原文页/式锚、规范化中英陈述、Lean 4 语句、mathlib 依赖、假设、盲验回译、`verification.jsonl` 机器可复算；`lean/` 存源码快照，`tools/` 可一键复跑 | 一条可编译、可复算的陈述 | 单卡 3,000 字 |
 
 `bench/` 与训练集严格隔离：出题时不得使用 `parallel/`、`deepread/` 中已出现的同一段落。
 
@@ -64,6 +65,7 @@ datasets/
 ├── siebert/                   # 讲义资料卡：Siebert《镜像对称》（概念/推导/勘误，七轨 A–F+O）
 ├── functoriality/             # 单篇论文资料卡：Abouzaid–Bottman《范畴辛几何中的函子性》（概念/推导/勘误，四轨 A–D，42 张交换图）
 ├── gtgl15/                    # 单篇论文资料卡：Witten 2015《More On Gauge Theory And Geometric Langlands》（概念/推导，六轨 A–E+O）
+├── leanstmt/                  # 自然语言 ↔ Lean 陈述对照语料（Witten 2015 试点 12 条；10 certified + 2 gap）
 ├── math/<pkg>.<split>.jsonl   # 数学推理条目（主力）
 ├── parallel/<pkg>.<split>.jsonl
 ├── deepread/<pkg>.<split>.jsonl
@@ -144,4 +146,5 @@ https://atomgit.com/lzxSUSUY/mathtranslate/blob/main/datasets/<...>.jsonl
   术语表 209 条（A 124/B 77/I 8）、记号表 76 条（5 组）；`check_diagrams.py --png` 42/42 编译通过。
 - `v0.15`（2026-11-19）：新增 `gtgl15/`——Witten《More On Gauge Theory And Geometric Langlands》（arXiv:1506.04293v3，79 页）的 40 张资料卡（30 概念 + 10 推导），六轨 A（Hitchin 几何与谱曲线）/B（对偶环面与 T-对偶）/C（膜、线算符与本征膜）/D（'t Hooft 算符与赫克修正）/E（行列式线丛与本征值）/O（总览）；每卡带 arXiv 印刷页锚（印刷页 = PDF 页 − 1）、来源定位与 pitfalls；`lint_cards.py --strict` 0 error、`index.jsonl` 40 条、`render_md.py` 40 卡；维数类断言按原文 eq (2.6) 复核（$\dim_{\mathbb C}M_H=2(g-1)\dim G$）并记入 `workflow/PRODUCTION.md` 修订记录。同批入库 SY03-20 校订译注本（77 页、57 条译注，讲义类，L2 公开·受限，随仓公开）。
 - `v0.16`（2026-11-19）：**既有资料卡修复**——按独立核验结论直接修入 `kw06/`（10 张卡、22 个文本点：A 类 4 条 = *simply-laced*「单连通」误译 3 卡 6 处 + `geometric-langlands` 把 $M(G,C)$ 误作稳定 Higgs 丛；C 类 6 条 = 一般纤维/$Ξ$ 归一化/$B,C$ 族 $n_g$/lacing number 等），`glc/` 两张 Hitchin 卡互注 $d_i$ 指数 vs 次数约定（非错误）并同步 `verification.jsonl` 的 note；修后 `lint_cards.py --strict` 0 error（kw06 67 卡）、`lint_glc.py` 0 error 0 warning（glc 154 卡），index/md 全部重生成。同批：SY03-20 中文字体由 Fandol 换成 SimSun/SimHei/KaiTi（`\IfFontExistsTF` 回退链），PDF 中文与「译注｜」脚注可复制可检索（290 KB 文本、0 处 Missing character），页数仍 77。核验与修复全记录见 `08_source_code/SY03-20…/工程文件/校对记录/既有资料卡问题上报.md`。
+- `v0.17`（2026-11-19）：新增 `leanstmt/`——**自然语言 ↔ Lean 陈述对照语料**（首批 Witten 2015 试点 12 条：10 `certified` + 2 `gap`）。钉死验证环境：`leanprover/lean4:v4.36.0`、mathlib `d33c49ca43873d3746194325da62640cc893c9d9`；`lake env lean` 两文件均 exit 0（Statements 0 sorry、Gaps 2 sorry），`verification.jsonl` 12 行机器可复算；`lint_cards.py --strict` 0 error 0 warning；附 `SCHEMA.md` 五条硬性纪律（不虚标/不掺沙/不越界/盲验回译/缺口照登）、`workflow/PRODUCTION.md`（含 18:31 内存耗尽事故记录与复现教训）、`ROADMAP.md`（先做/缓做/暂不做三分与下一批选题）。同批：lean 源码快照 `lean/ShuyiFormal/Witten2015/{Statements,Gaps}.lean`，工具链 `tools/{make_cards,lint_cards,build_index,render_md,check_lean}.py`。
 - 后续见 [CHANGELOG.md](../CHANGELOG.md)。
