@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 产出作用审计 + 思考链纪律与工具 + 形式化路线 — 2026-11-20
+
+- 新增 `ASSESSMENT_2026-11-20_产出作用.md`：按“有没有用”审计 33 天产出（95 部/11,404 页、200,366 次调用、¥2,437.38；结论：页数已过拐点，稀缺的是 240 条核验断言、153 个校对 JSON、402 条轨迹）。
+- 新增 `ASSESSMENT_2026-11-20_AI消耗.md`：成本侧报告（输出 token 45.6%、缓存命中 98.61%、¥0.21/页）。
+- 新增 `09_thinking/`：L0 raw → L1 候选卡 → L2 人工批准链 → L3 审计；硬纪律 R1–R12；一条链七段（任务/关键片段/决策与替代方案/自纠与回退/验证证据/逆转条件/交付物）；`_TEMPLATE.md` + `index.csv`。
+- 新增 `tools/thinking_audit.py`：`scan / rank / extract / approve / check / coverage / report`；272 个子会话试跑得到 12 张候选卡（3,952 万字符 reasoning 压到 9KB/张）。
+- 新增 `04_playbook/15_形式化与自然语言对齐_2026-11.md`：Lean 陈述层做验证器，T1–T4 课程，2026-Q1 1,000 条 NL↔Lean 对齐。
+- 更新 `README.md`、`00_README.md`、`04_playbook/README.md`、`04_playbook/11_资源受限路线_v1.md`：统计口径统一到 105 部/92 部源码/10,043 文件/442.9MB/49,035 段/95 部 11,404 页；补入 `09_thinking`、审计报告与形式化路线入口；修正主题分布表（含 SY08-01）。
+
 ## SY05-26 Gaiotto–Witten《通过膜探测量子化》中译注本（69 页）— 2026-11-20
 
 - 新增 `08_source_code/SY05-26_通过膜探测量子化/`：D. Gaiotto、E. Witten, *Probing Quantization Via Branes*（arXiv:2107.12251v2，2021-08-11，101 页；原文日期 2020-05）全文中译注本，`ctex` + XeLaTeX，成品 **69 页**（书名页、译序、目录、§1–§5、附录 A–D、致谢、文献），正文约 **5.57 万字**。

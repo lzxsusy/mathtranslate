@@ -28,9 +28,9 @@ AI 辅助翻译的过程轨迹、以及威腾文章研讨班的组织资料整�
 
 | 指标 | 数值 |
 |---|---|
-| 译注工程 | **102** 部（其中 **89** 部带完整 LaTeX 源码） |
-| 仓库文件 | 9467 个 / **397.5 MB** |
-| LaTeX 源文件 / 插图 | 1690 个 `.tex` / 2125 张图 |
+| 译注工程 | **105** 部（其中 **92** 部带完整 LaTeX 源码） |
+| 仓库文件 | 10057 个 / **443.0 MB** |
+| LaTeX 源文件 / 插图 | 1755 个 `.tex` / 2135 张图 |
 | 成品 PDF（预印本类） | 41 部 / **50.8 MB**（Release 附件） |
 | 中文段落语料 | **49035** 段（唯一 47469），其中 **42153** 段含公式（86%）；汉字 4,035,682 字 |
 | 语料覆盖 | **81** 个工程有段落入库（其余为仅成品 PDF / 无正文的工程） |
@@ -73,16 +73,17 @@ AI 辅助翻译的过程轨迹、以及威腾文章研讨班的组织资料整�
 - 与数学物理无关的纯组合、纯分析题目；
 - **无法溯源底本**、或只有二手转述的材料（施工纪律要求每条译注可追溯到原文页码）。
 
-### 按主题的分布（84 部译注工程 / 10,376 页）
+### 按主题的分布（95 部已发布译注工程 / 11,404 页）
 
 | 主线 | 编号 | 部数 | 页数 | 内容举例 |
 |---|---|---|---|---|
-| 辛几何 · 拓扑 · 纽结 · 指标定理 | `SY05` | 22 | 2,913 | Hofer 几何、Floer 同调、K-理论、指数定理、Jost 黎曼几何 |
-| 量子场论与规范理论 | `SY03` | 21 | 2,266 | 超对称、AGT、共形场论、瞬子、Seiberg–Witten |
-| 镜像对称与同调镜像对称 | `SY01` | 19 | 1,738 | SYZ、深谷范畴、Kontsevich 对偶、Batyrev 构造、植田一石讲义 |
+| 辛几何 · 拓扑 · 纽结 · 指标定理 | `SY05` | 25 | 3,018 | Hofer 几何、Floer 同调、K-理论、指数定理、Jost 黎曼几何 |
+| 量子场论与规范理论 | `SY03` | 21 | 2,270 | 超对称、AGT、共形场论、瞬子、Seiberg–Witten |
+| 镜像对称与同调镜像对称 | `SY01` | 22 | 2,009 | SYZ、深谷范畴、Kontsevich 对偶、Batyrev 构造、植田一石讲义 |
 | 弦论与紧致化 | `SY04` | 3 | 198 | 拓扑弦、CY 紧致化、D-膜 |
-| 几何朗兰兹与电磁对偶 | `SY02` | 9 | 1,078 | Hecke 本征层、Hitchin 系统、Kapustin–Witten、Frenkel 圈群讲义 |
+| 几何朗兰兹与电磁对偶 | `SY02` | 13 | 1,401 | Hecke 本征层、Hitchin 系统、Kapustin–Witten、Frenkel 圈群讲义 |
 | 其他几何（热带 / 范畴 / 量子力学与几何） | `SY07` | 7 | 1,717 | 热带几何、导出范畴、几何量子化 |
+| 双有理几何（新增） | `SY08` | 1 | 325 | Kollár–森重文《双有理几何》 |
 | 拓扑学与专题 | `SY99` | 3 | 466 | Novikov 拓扑学、TQFT 博士论文、讨论班讲义 |
 
 ## 关键词（供检索与打标签）
@@ -175,7 +176,7 @@ Bourbaki 报告、Astérisque 专辑、arXiv 预印本、论文集（proceedings
 - 装 TeX Live / MiKTeX 后进 `源码/` 跑 `xelatex main.tex` 即可重建中文译注本；
   少数工程的根文件叫 `main.tex` 之外的名称，见该工程 `工程文件/编译说明.md`。
 - **14 部当初只留了成品 PDF、没有 LaTeX 工程**（`SY01-18 / 01-19 / 02-08 / 03-02 / 03-16 / 03-17 / 03-18 / 03-20 / 03-21 / 05-10 / 05-19 / 05-20 / 05-21 / 05-22`），
-  这些目录只有 `投稿信息.md`；其余 **72 部**有完整可编译源码。
+  这些目录只有 `投稿信息.md`；其余 **92 部**有完整可编译源码（`make_stats.py` 口径）。
 - **`工程文件/` 覆盖 81 部**（2026-11-14 从投稿包回填了 38 部缺失的 `工程文件/`，共 223 文件 / 2.8 MB）；
   其余 9 部（`SY01-18 / 01-19 / 02-08 / 03-16 / 03-18 / 03-20 / 05-20 / 05-21 / 05-22`）的原始投稿包本身就没有工程文档，只有 `源码/` 或仅成品。
 - **自 2026-11-14 起，`03_translations_meta/<编号>/` 不再重复保存 `源码/` 与 `工程文件/`**：
@@ -214,7 +215,7 @@ python tools/ds_publish.py --check       # 发布前权利过滤，0 blocked 才
 python tools/ds_publish.py --write       # 重写 datasets/PUBLISH.json
 ```
 
-当前试点：`SY05-25`（Witten, arXiv:0802.0999）第 1 节，6 条数学推理条目、7 条平行片段、4 张精读卡、3 条高光、3 道评测、1 张 6 节点图谱、1 段 12 事件工作流；另有 3 张跨工程精读卡（SY01-01 谱流、SY01-09 SYZ 启发式、SY03-08 Chern–Simons 形式），共 50 条记录，`ds_lint` 0 错。存量第一批 L0 修正 47 处（44 改 3 删），见 `datasets/fixes/l0_batch01.jsonl`。扩量先做 37 部 arXiv 底本（每部 3–5 个技术引理），再做 22 部讲义；图书底本只做 `_internal/`；形式化对（NL↔Lean）单独起步，先做 20 条能编译的。
+当前试点：`SY05-25`（Witten, arXiv:0802.0999）第 1 节，6 条数学推理条目、7 条平行片段、4 张精读卡、3 条高光、3 道评测、1 张 6 节点图谱、1 段 12 事件工作流；另有 3 张跨工程精读卡（SY01-01 谱流、SY01-09 SYZ 启发式、SY03-08 Chern–Simons 形式），共 **119 条记录**（math 6 / parallel 7 / deepread 7 / highlights 3 / traces 81 / kg 12 / bench 3），`ds_lint` 0 错。存量第一批 L0 修正 47 处（44 改 3 删），见 `datasets/fixes/l0_batch01.jsonl`。扩量先做 37 部 arXiv 底本（每部 3–5 个技术引理），再做 22 部讲义；图书底本只做 `_internal/`；形式化对（NL↔Lean）单独起步，先做 20 条能编译的。
 
 ### 资料卡试点：几何量子化（`datasets/geoq/`）
 
@@ -296,12 +297,35 @@ python tools/gen_docs.py       # taxonomy.md + MAP.md
 
 `source-only` 是诚实标注，不是错误：它表示讲义自创的构造或未成文定理在公开权威页面找不到逐字对应，卡片仍严格对齐原句，引用时按讲义页码引即可。
 
+## `09_thinking/`：AI 思考链的筛选、审计与上传
+
+这是 2026-11-20 新增的**硬纪律 + 工具**，解决一个具体问题：272 个 agent 一次全书校订产生了 **3,952 万字符 reasoning**，最终文本只有 **1.7 万字符**；人不可能通读，但不读就等于把最贵的判断扔掉。
+
+- 分层：`06_sessions_raw`（L0 原始）→ `.thinking_candidates`（L1 候选卡，本地不入库）→ `09_thinking/chains/`（L2 人工批准）→ `09_thinking/audit/`（L3 审计）。
+- 一条链必须含七段：任务、关键片段、决策与替代方案、自纠与回退、验证证据、逆转条件、交付物。
+- 只上传人批准的链；raw reasoning 永不入库；新交付打 tag 前跑 `python tools/thinking_audit.py check --require-coverage`。
+- 完整规则见 [`09_thinking/README.md`](09_thinking/README.md)，模板见 [`09_thinking/_TEMPLATE.md`](09_thinking/_TEMPLATE.md)。
+
+```bash
+python tools/thinking_audit.py scan --root <父会话> --per-project 3 --cards 15
+python tools/thinking_audit.py rank --top 15
+python tools/thinking_audit.py approve --card .thinking_candidates/cards/SY01-26_xxx.md \
+  --auditor <名字> --note "哪个决定改变了交付物"
+python tools/thinking_audit.py check --require-coverage
+```
+
+## 评估与路线（2026-11-20）
+
+- [`ASSESSMENT_2026-11-20_AI消耗.md`](ASSESSMENT_2026-11-20_AI消耗.md)：33 天、200,366 次调用、¥2,437.38；¥0.21/页、¥25.7/部；输出 token 占 45.6%。
+- [`ASSESSMENT_2026-11-20_产出作用.md`](ASSESSMENT_2026-11-20_产出作用.md)：只问“有没有用”；结论是页数已过拐点，稀缺的是可验证判断（240 条核验断言、153 个校对 JSON、402 条轨迹）。
+- [`04_playbook/15_形式化与自然语言对齐_2026-11.md`](04_playbook/15_形式化与自然语言对齐_2026-11.md)：算力受限下的路线——Lean 陈述层做验证器，2026-Q1 先做 1,000 条 NL↔Lean 对齐。
+
 ## 成品 PDF 与原文（合规说明）
 
 > 本库**不在仓库里保存任何成品 PDF，也不保存原文**。这一节说明去哪拿、为什么。
 
 - **成品 PDF（中文译注本）只对 arXiv / 开放许可底本开放**：41 部以 arXiv 预印本（含 arXiv 托管的学位论文与讲义）为底本的译本，成品 PDF 在 Release [`v1.0.1`](https://atomgit.com/lzxSUSUY/mathtranslate/releases/tag/v1.0.1) 的附件，点开即下载；逐部清单（页数、字节、arXiv 号、文件名、下载直链）见 [`03_translations_meta/_PDF清单.tsv`](03_translations_meta/_PDF清单.tsv)。
-- **其余 55 部的成品不公开**：在版图书、非 arXiv 讲义、学位论文等，成品 PDF 不发布、不给直链；确需研读可按 [`COMPLIANCE.md`](COMPLIANCE.md) §4 申请，逐部登记在 [`RELEASE_REGISTER.csv`](RELEASE_REGISTER.csv)。
+- **其余 54 部的成品不公开**：在版图书、非 arXiv 讲义、学位论文等，成品 PDF 不发布、不给直链；确需研读可按 [`COMPLIANCE.md`](COMPLIANCE.md) §4 申请，逐部登记在 [`RELEASE_REGISTER.csv`](RELEASE_REGISTER.csv)。
 - **原文不发布、不给直链**：本库只发布译文、工程源码、元数据与自建语料；原文（无论 arXiv 版还是出版书）请按书目信息自行从 arXiv、出版社或图书馆获取。
 - **2026-11-16 已撤下**：SY02-09 随仓的袁瑶课程讲义原本、SY07-08 随仓的扶磊《代数几何》成品，以及另外 4 部误入仓的成品 PDF。撤下记录见 `CHANGELOG.md` 与 `RELEASE_REGISTER.csv`。
 - **为什么这样**：① 图书译文的再分发权在出版社，公开全文会累积下架与封仓风险；② 成品 PDF 是二进制大文件，留在 Git 历史里会让每次 clone 都下载全部版本。移出后检出体积约 280 MB。
