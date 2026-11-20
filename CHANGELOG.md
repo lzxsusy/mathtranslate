@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## SY05-26 Gaiotto–Witten《通过膜探测量子化》中译注本（69 页）— 2026-11-20
+
+- 新增 `08_source_code/SY05-26_通过膜探测量子化/`：D. Gaiotto、E. Witten, *Probing Quantization Via Branes*（arXiv:2107.12251v2，2021-08-11，101 页；原文日期 2020-05）全文中译注本，`ctex` + XeLaTeX，成品 **69 页**（书名页、译序、目录、§1–§5、附录 A–D、致谢、文献），正文约 **5.57 万字**。
+- 底本策略：不用 PDF 重排，改用作者 arXiv LaTeX 源码（`Draft_D.tex`，4335 行）。公式、编号、图位置、参考文献（**55 条**）全部原样沿用，译文只改文字与章节标题；源码中注释掉的旧节（Gauged quantization、More On Cotangent Bundles 等）不在 PDF 成文中，未译。PDF 仅用于核对与页面图。
+- 工序：源码 4335 行通读 → `work/通读笔记.md`（行号→印刷页结构表、逐节论证骨架）与 `疑点清单.tsv`（Q01–Q22，**未解 0**）→ 术语冻结约 100 条（`work/glossary.tsv`）→ 按小节切 31 个 tex 分块翻译 → 两遍 xelatex。
+- 质量：`main.log` 0 error / 0 undefined / 0 overfull（4 处 underfull，badness 1043–2134）；逐页目检书名页、§3.1、附录 C/D 与目录；图 10 幅全部加载（`6.pdf` 经 `pdftocairo` 重新蒸馏，`Correspondence.pdf` 统一改小写）。
+- 批注：译注 **4 条**（Groenewold–Van Hove 障碍、亚辛校正与 $\mathrm{Spin}^c$、线丛的复幂、与几何 Langlands 的关系；来源分别 A/I/I/A）、校勘 **2 条**（§3.7 联络共轭方向、附录 A $[\hat z^3,\hat{\bar z}^3]$ 的 $\bar z^2$ 笔误）、概念卡片 **1 张**；另汇总 12 条原文笔误（Stiefel–Whitney、ultraviolet、Eguchi–Hanson、$v_s\to c_s$ 等）。
+- 交付：`BRIEF.md`、`STYLE_GUIDE.md`、`build.ps1`（编译 + 质量门，PowerShell 5.1 下已验证）、`work/{通读笔记,疑点清单,glossary}`、`deliverable/{术语对照表,译注汇总,工程总结,阅读参考指南,统计数据}`、`投稿信息.md`（工程内与 `03_translations_meta/SY05-26/` 各一份）。
+- 合规：底本为 arXiv 预印本，按 `RELEASE_REGISTER.csv` 登记（源码 L2 公开·受限，成品 Release 外链，原文 L4 禁入，`auto`，合规）；底本 PDF、页面图（`work/pages/`，30 MB）、作者源码（`work/原文/`）与成品 `源码/main.pdf` 均不入库，项目内 `.gitignore` 兜底。**未做资料卡**（按用户要求，待正文稳定后补）。
+- 已知遗留：译注偏少、无 B 级来源交叉、§2.8 一处 $\alpha$ 方向按约定改而未加校勘框；详见 `deliverable/工程总结.md` 第六节。
+
 ## SY01-17 Bocklandt《同调镜像对称性浅入门》中译二轮校订 + sy0117 32 张资料卡 — 2026-11-20
 
 - 二轮独立校订：12 章各由一名审稿人通读，主校逐条复核；共 **89 处**修订（ch01 8、ch02 6、ch03 4、ch04 9、ch05 11、ch06 8、ch07 9、ch08 14、ch09 7、ch10 3、ch11 6、ch12 4），只改确定的误译/漏译、数学错误、记号错误与体例错误，纯风格问题不改。用二轮结果覆盖 `reports/ch01.md`–`ch12.md`、`审校报告.md`、`审校批注索引.md`、`reports/notes_index.md`、`appendix_notes.tex`；首轮原件仅本地备份于 `reports/_v1_archive/`，不随仓。
