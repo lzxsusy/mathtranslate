@@ -1,0 +1,731 @@
+\chapter{物理理论}\label{app:physical-theories}
+\SourcePage{434}
+本附录概述本书提到的物理理论中的若干要点。\hyperref[sec:general-field-theories]{第一节}介绍一些基本物理理论的背景，按照
+\[
+\text{经典力学}\longrightarrow\text{经典场论}\longrightarrow\text{量子场论}
+\]
+的顺序，逐步过渡到量子场论。每一种理论都有 Lagrange 表述和 Hamilton 表述。在量子场论中，将看到 Lagrange 表述更适合路径积分，Hamilton 表述则导出 Hilbert 空间上的自伴算子代数。由 Lagrange 表述转到 Hamilton 表述很容易，因此总是从 Lagrange 表述出发。
+
+读者若对经典力学的基础知识有所了解（例如 \SourceCite{Arnold} 中的内容），会有所帮助。我们将讨论经典场论、量子场论以及一些规范理论。本附录余下各节介绍非线性 $\sigma$ 模型、共形场论、Landau--Ginzburg 理论、规范线性 $\sigma$ 模型，最后介绍拓扑量子场论。
+
+对这里某些理论更详细、也更偏数学的论述，可参阅 1996--1997 年 IAS 量子场论项目的讲义 \SourceCite{DEFJKMMW}。
+
+\section{一般场论}\label{sec:general-field-theories}
+本节解释什么是场论。这里不求自成体系，而是通过几个简单例子，说明正文中提及的理论属于何种类型；一些必要的背景材料则不展开。更多细节见 \SourceCite{Rabin}；这里的介绍大体沿用其思路，但并非完全照搬。
+
+先考虑时空 $M$ 上的经典场论。$M$ 的典型例子包括四维 Minkowski 空间，或弦的世界面（即 Riemann 曲面）。粗略地说，$M$ 上的\emph{经典场}可以是函数、微分形式、丛的截面或丛上的联络。此时不宜用更精确的定义来限制讨论范围；有时还会将场当作函数来谈论，使这种表述更加粗略。
+
+物理动力学由 \emph{Lagrange 密度}决定，它是场及其导数的泛函。\footnote{这种说法不够精确，因为我们需要对 Lagrange 密度积分。读者会注意到，积分前总会把 Lagrange 密度乘以适当的体积形式。}Lagrange 量的选择受到对称性的强烈约束，并由场论所要描述的具体物理过程决定。动力学的基本原理是：场必须使作用量取驻值；作用量是
+\SourcePage{435}
+Lagrange 密度在区域 $V\subset M$ 上的积分。将不同点处的场值视为独立的动力学变量，便可由作用量积分的 Euler--Lagrange 方程确定经典场方程。Lagrange 量有对称性时，这个处理需要修改；本节稍后将讨论。
+
+第一个例子取 $M=M^4$ 为四维 Minkowski 空间。约定在 $M$ 上使用坐标 $x=(x^0,x^1,x^2,x^3)$，其中 $x^0$ 表示时间。有时也写成 $x=(t,\vec x)$，其中 $\vec x$ 表示空间变量，$t$ 表示时间。再令 $\partial_i=\partial/\partial x^i$，并置 $\vec\partial=(\partial_0,\partial_1,\partial_2,\partial_3)$。还将使用 $M^4$ 上号型为 $(1,3)$ 的 Lorentz 内积；例如，波算子 $\partial_0^2-\sum_{i=1}^3\partial_i^2$ 可记为 $\Box=\vec\partial\cdot\vec\partial$。符号 $d^4x$ 表示 $M$ 上的 Euclid 体积密度。
+
+现在考虑质量为 $m$ 的标量场。在数学上，它是 $M^4$ 上的实值函数 $\phi(x)$，满足 Klein--Gordon 方程
+\begin{equation}\label{eq:klein-gordon-field}
+(\Box+m^2)\phi(x)=0.
+\end{equation}
+此方程也可由区域 $V\subset M$ 上的作用量得到，作用量定义为
+\begin{equation}\label{eq:scalar-field-action}
+S=S(\phi)=\frac12\int_Vd^4x\,
+(\vec\partial\phi\cdot\vec\partial\phi-m^2\phi^2)
+=\int_Vd^4x\,\mathcal L(\phi,\vec\partial\phi),
+\end{equation}
+其中
+\begin{equation}\label{eq:scalar-field-lagrangian-density}
+\mathcal L(\phi,\vec\partial\phi)
+=\frac12(\vec\partial\phi\cdot\vec\partial\phi-m^2\phi^2)
+\end{equation}
+是 \emph{Lagrange 密度}。照常，$\phi$ 使作用量 $S$ 取驻值的条件是满足 Euler--Lagrange 方程
+\begin{equation}\label{eq:field-euler-lagrange}
+\frac{\delta\mathcal L}{\delta\phi}
+-\vec\partial\cdot\frac{\delta\mathcal L}{\delta(\vec\partial\phi)}=0,
+\end{equation}
+其中 $\delta\mathcal L/\delta\phi$ 和 $\delta\mathcal L/\delta(\vec\partial\phi)$ 表示变分导数。将它应用于式~\eqref{eq:scalar-field-lagrangian-density}，便得到式~\eqref{eq:klein-gordon-field}。
+
+接着回顾经典力学的 Hamilton 表述。从 Lagrange 函数 $L=L(q,\dot q,t)$ 出发，其中 $q=q_i(t)$ 是坐标，$t$ 是时间，点号表示时间导数。内蕴地说，$L$ 是构型流形 $M$ 的切丛 $T_M$ 上的函数。$q_i$ 的\emph{共轭动量}定义为 $p_i=\partial L/\partial\dot q_i$。这个名称很自然，因为对于势场中的自由点粒子，坐标函数 $q_i$ 的共轭动量，就是动量的相应分量。注意，$(p_i,q_i)$ 构成余切丛 $T_M^*$ 上的一组局部坐标。流形 $T_M^*$ 有典范辛结构，其局部坐标表达式为
+\[
+\omega=\sum_i dp_i\wedge dq_i.
+\]
+方程 $p_i=\partial L/\partial\dot q_i$ 局部定义一个映射 $T_M\to T_M^*$，我们假设它是同构。
+
+定义 Hamilton 量为
+\[
+H=\sum_i p_i\dot q_i-L.
+\]
+\index{经典场|hyperpage}\index{Lagrange密度@Lagrange 密度|hyperpage}\index{作用量|hyperpage}\index{共轭动量|hyperpage}\index{Klein--Gordon方程@Klein--Gordon 方程|hyperpage}
+
+\SourcePage{436}
+Hamilton 量是 $T_M^*$ 上的函数，这里利用上述同构，将 $L$ 也视为定义在 $T_M^*$ 上。Hamilton 方程为
+\[
+\dot q_i=\frac{\partial H}{\partial p_i},\qquad
+\dot p_i=-\frac{\partial H}{\partial q_i}.
+\]
+不过，对我们的目的，等价形式
+\begin{equation}\label{eq:classical-poisson-evolution}
+\dot A=[A,H]=\sum_{i=1}^3
+\left(\frac{\partial A}{\partial q_i}\frac{\partial H}{\partial p_i}
+-\frac{\partial A}{\partial p_i}\frac{\partial H}{\partial q_i}\right),
+\end{equation}
+其中 $A=q_i$ 或 $p_i$，更容易推广。表达式 $[A,H]$ 是 \emph{Poisson 括号}的一个例子。内蕴地说，辛形式 $\omega$ 确定同构 $I:T_M^*\to T_M$，两个函数 $f,g$ 的 Poisson 括号可改写为
+\[
+[f,g]=\langle df,I(dg)\rangle.
+\]
+Hamilton 方程可由 Lagrange 函数 $L$ 所确定作用量的 Euler--Lagrange 方程推出。还要注意，按上述 Poisson 括号的定义，有交换关系
+\begin{equation}\label{eq:classical-canonical-poisson-brackets}
+\begin{aligned}
+[q_i,q_j]&=[p_i,p_j]=0,\\
+[q_i,p_j]&=\delta_{ij}.
+\end{aligned}
+\end{equation}
+
+现在将这个经典系统量子化。得到一个态的 Hilbert 空间 $\mathcal H$，$T_M^*$ 上的函数 $f$ 被替换为 $\mathcal H$ 上的自伴算子 $\mathbf f$。$f$ 的经典取值体现为算子的特征值。例如，若某个态 $\psi\in\mathcal H$ 满足 $\mathbf q_i\cdot\psi=q_i^0\psi$，则将 $\psi$ 理解为一个粒子的第 $i$ 个坐标为 $q_i^0$ 时所对应的量子态。同样，算子 $\mathbf p_i$ 的特征值与动量第 $i$ 个分量的经典取值等同。Hilbert 空间 $\mathcal H$ 上的内积，可用来确定观测到某量子态具有某个确定经典取值的概率。
+
+按照\emph{正则量子化}方法，将式~\eqref{eq:classical-canonical-poisson-brackets} 中的 Poisson 括号替换为对易子
+\[
+\begin{aligned}
+[\mathbf q_i,\mathbf q_j]&=[\mathbf p_i,\mathbf p_j]=0,\\
+[\mathbf q_i,\mathbf p_j]&=i\delta_{ij}.
+\end{aligned}
+\]
+运动方程~\eqref{eq:classical-poisson-evolution} 则被下述陈述替代：假定 $H$ 不显含时间，一个态经过时间间隔 $t$ 的传播，由酉算子
+\begin{equation}\label{eq:quantum-unitary-time-evolution}
+U_t=e^{-i\mathbf Ht}
+\end{equation}
+给出，这里选取单位使 Planck 常数 $\hbar=1$。这是对量子力学 \emph{Schrödinger 绘景}的极简描述：算子不变，态随时间演化。量子力学也可等价地用 \emph{Heisenberg 绘景}表述：态不变，算子随时间演化。通过 $U_t$ 的共轭作用，可以比较 Schrödinger 绘景与 Heisenberg 绘景。特别地，Schrödinger 绘景中的算子 $\mathbf A$，在 Heisenberg 绘景中替换为随时间变化的算子 $\mathbf A(t)=U_t^{-1}\mathbf A U_t$。计算得
+\begin{equation}\label{eq:heisenberg-operator-evolution}
+\frac{d}{dt}\mathbf A(t)=-i[\mathbf A(t),\mathbf H],
+\end{equation}
+\SourcePage{437}
+它是式~\eqref{eq:classical-poisson-evolution} 的量子力学版本。式~\eqref{eq:heisenberg-operator-evolution} 中使用通常的算子对易子定义 $[\mathbf A,\mathbf H]=\mathbf A\mathbf H-\mathbf H\mathbf A$。在量子场论中，我们将使用 Heisenberg 绘景，不再特别说明。
+
+将上述过程用于场论，定义\emph{共轭动量} $\pi(x)$ 为
+\[
+\pi(x)=\frac{\delta\mathcal L}{\delta(\partial_0\phi)}.
+\]
+假设只有一个场 $\phi(x)$，则 \emph{Hamilton 量}（或能量）$H$ 定义为 $\pi(x)\partial_0\phi(x)-\mathcal L$ 的空间积分，即对不含时间变量的空间变量积分，其中 $\mathcal L$ 是 Lagrange 密度。Hamilton 量是 $\phi(x)$ 和 $\pi(x)$ 的泛函，$\phi(x)$ 的时间导数已被消去。Euler--Lagrange 方程~\eqref{eq:field-euler-lagrange} 给出任意可观测量 $O$ 随时间传播的 Hamilton 方程；在数学上，$O$ 就是场 $\phi(x)$ 和 $\pi(x)$ 的泛函。这些方程类似于式~\eqref{eq:classical-poisson-evolution}，即
+\[
+\dot O=[O,H]=\int
+\left(\frac{\delta O}{\delta\phi(x)}\frac{\delta H}{\delta\pi(x)}
+-\frac{\delta O}{\delta\pi(x)}\frac{\delta H}{\delta\phi(x)}\right)
+dx^1dx^2dx^3.
+\]
+令 $O=\phi$ 或 $\pi$，便得到 Hamilton 场方程
+\[
+\dot\phi=[\phi,H],\qquad\dot\pi=[\pi,H].
+\]
+对标量场 $\phi(x)$，共轭动量为 $\pi(x)=\partial_0\phi(x)$，Hamilton 量为
+\begin{equation}\label{eq:scalar-field-hamiltonian}
+H=\frac12\int
+\bigl(\pi(x)^2+|\vec\nabla\phi(x)|^2+m^2\phi^2\bigr)
+dx^1dx^2dx^3.
+\end{equation}
+Poisson 括号为
+\begin{equation}\label{eq:classical-equal-time-field-brackets}
+\begin{aligned}
+[\phi(\vec x,t),\phi(\vec y,t)]&=[\pi(\vec x,t),\pi(\vec y,t)]=0,\\
+[\phi(\vec x,t),\pi(\vec y,t)]&=\delta(\vec x-\vec y).
+\end{aligned}
+\end{equation}
+它们是式~\eqref{eq:classical-canonical-poisson-brackets} 的场论对应。
+
+下一步转向量子场。在我们希望达到的一般性下，这一步尚无良好的数学定义。其想法是寻找态的 Hilbert 空间 $\mathcal H$，将经典场 $\phi(x)$ 替换为量子场，记为 $\Phi(x)$。它们是依赖于 $x$ 的 $\mathcal H$ 上的算子，并在变量 $x$ 中作为分布。场的经典取值体现为算子的特征值。例如，若存在态 $\psi\in\mathcal H$，使某个函数 $f(x)$ 满足 $\Phi(x)\cdot\psi=f(x)\psi$，就把这个量子态理解为对应于经典场 $\phi(x)=f(x)$。与通常的量子力学类似，内积用来确定相对概率。
+
+采用正则量子化，令 $\Pi(\vec x,t)$ 为对应于 $\pi(\vec x,t)$ 的算子值分布，并将式~\eqref{eq:classical-equal-time-field-brackets} 中的 Poisson 括号替换为
+\[
+\begin{aligned}
+[\Phi(\vec x,t),\Phi(\vec y,t)]&=[\Pi(\vec x,t),\Pi(\vec y,t)]=0,\\
+[\Phi(\vec x,t),\Pi(\vec y,t)]&=i\delta(\vec x-\vec y).
+\end{aligned}
+\]
+这些等时对易关系是算子值分布的恒等式。
+
+下面说明，这一形式体系如何将量子场 $\Phi(x)$ 解释为由粒子（量子）构成。回到 Klein--Gordon 方程~\eqref{eq:klein-gordon-field}，使用求解偏微分方程的标准 Fourier 变换方法，可将经典场 $\phi$ 写成
+\begin{equation}\label{eq:classical-scalar-field-fourier-expansion}
+\phi(x)=\int\bigl(
+a(\vec k)e^{i(\vec k\cdot\vec x-E_{\vec k}t)}
++a^\dagger(\vec k)e^{-i(\vec k\cdot\vec x-E_{\vec k}t)}
+\bigr)\frac{dk^1dk^2dk^3}{\sqrt{(2\pi)^3\,2E_{\vec k}}}.
+\end{equation}
+\index{Poisson括号@Poisson 括号|hyperpage}\index{正则量子化|hyperpage}\index{Schrödinger绘景@Schrödinger 绘景|hyperpage}\index{Heisenberg绘景@Heisenberg 绘景|hyperpage}\index{等时对易关系|hyperpage}
+
+\SourcePage{438}
+这里 $a$ 和 $a^\dagger$ 是变量 $\vec k=(k^1,k^2,k^3)$ 的某两个互为复共轭的函数。式~\eqref{eq:classical-scalar-field-fourier-expansion} 中置 $E_{\vec k}=\sqrt{\vec k\cdot\vec k+m^2}$。由于 $E_{\vec k}^2=\vec k\cdot\vec k+m^2$，Klein--Gordon 方程~\eqref{eq:klein-gordon-field} 成立；在 $E_{\vec k}=\sqrt{\vec k\cdot\vec k+m^2}$ 定义的\emph{质壳}上，表达式 $dk^1dk^2dk^3/E_{\vec k}$ 在 $(E_{\vec k},k^1,k^2,k^3)$ 的 Lorentz 变换下不变。$E_{\vec k}$ 是质量为 $m$、动量为 $\vec k$ 的相对论粒子的总能量。对不熟悉这一点的数学读者，说明一下：当 $|\vec k|\ll m$ 时，有近似式 $E_{\vec k}\sim m+(\vec k\cdot\vec k)/(2m)$。第一项是粒子的静止能量（通常写成 $E=mc^2$，但这里取单位使 $c=1$），第二项则是质量为 $m$、动量为 $\vec k$ 的粒子的经典动能。
+
+回到量子理论，我们断言，$a(\vec k)$ 和 $a^\dagger(\vec k)$ 有自然的粒子解释。首先，它们是算子值分布；可以证明，它们满足对易关系
+\begin{equation}\label{eq:scalar-creation-annihilation-commutators}
+\begin{aligned}
+[a(\vec k),a(\vec k')]&=[a^\dagger(\vec k),a^\dagger(\vec k')]=0,\\
+[a(\vec k),a^\dagger(\vec k')]&=\delta(\vec k-\vec k').
+\end{aligned}
+\end{equation}
+此外，将展开式代回 Hamilton 量~\eqref{eq:scalar-field-hamiltonian}，可得
+\[
+H=\int\left(E_{\vec k}a^\dagger(\vec k)a(\vec k)
++\frac12E_{\vec k}\delta(\vec0)\right)dk^1dk^2dk^3,
+\]
+其中 $\vec0$ 为三维零向量。最后一项在数学上没有意义，因为它是一个无穷大的标量算子。处理办法是直接略去此项，因为从 Hamilton 量中减去一个常数，不影响动力学。最终得到
+\begin{equation}\label{eq:normal-ordered-scalar-hamiltonian}
+H=\int E_{\vec k}a^\dagger(\vec k)a(\vec k)\,dk^1dk^2dk^3.
+\end{equation}
+
+这有很好的直观描述。对易关系~\eqref{eq:scalar-creation-annihilation-commutators} 和 Hamilton 量~\eqref{eq:normal-ordered-scalar-hamiltonian} 表明，作用算子 $a(\vec k)$ 会降低能量。真空应当是最低能量态，因此可将真空态 $V$ 定义为被所有 $a(\vec k)$ 湮灭的态。利用式~\eqref{eq:scalar-creation-annihilation-commutators} 及 $a(\vec k)(V)=0$，可知态 $a^\dagger(\vec k')(V)$ 是能量（即特征值）为 $E_{\vec k'}$ 的特征态：
+\[
+\begin{aligned}
+H\bigl(a^\dagger(\vec k')(V)\bigr)
+&=\int E_{\vec k}a^\dagger(\vec k)a(\vec k)a^\dagger(\vec k')(V)\,d^3k\\
+&=\int E_{\vec k}a^\dagger(\vec k)
+\bigl(a^\dagger(\vec k')a(\vec k)+\delta(\vec k-\vec k')\bigr)(V)\,d^3k\\
+&=E_{\vec k'}a^\dagger(\vec k')(V).
+\end{aligned}
+\]
+于是，将 $a^\dagger(\vec k)$ 解释为\emph{\IndexLocation{indexloc:0203:438}产生算子}：它的作用产生一个动量为 $\vec k$ 的标量粒子。同样，$a(\vec k)$ 是\emph{\IndexLocation{indexloc:0049:438}湮灭算子}，其作用湮灭一个动量为 $\vec k$ 的粒子。
+
+结论是：一般而言，式~\eqref{eq:classical-scalar-field-fourier-expansion} 将量子场 $\Phi(x)$ 表示为基本粒子态的叠加。
+
+我们并不指望上述说明能使初次接触这些内容的读者完全信服，但希望明确指出：从 Lagrange 密度和形式上的量子化程序出发，已经得到
+\SourcePage{439}
+物质的量子结构，并以这些量子重新表述了动力学。换句话说，量子场的动力学完全由 Lagrange 密度决定。还应提到，上述内容中的一部分（但并非全部）可以建立在牢固的数学基础之上，见 \SourceCite[第 8 讲]{Rabin}。
+
+迄今主要关注量子场论的 Hamilton 表述。如前所述，也有涉及\emph{路径积分}概念的 Lagrange 表述。设在时刻 $t<t'$，经典场的取值分别为 $\phi_0(\vec x,t)$ 和 $\phi_1(\vec x,t')$。以 $|\phi_0(\vec x,t)\rangle$ 和 $|\phi_1(\vec x,t')\rangle$ 表示在相应时刻的算子值分布 $\Phi$ 下，特征值分别为 $\phi_0(\vec x,t)$、$\phi_1(\vec x,t')$ 的量子态。也就是说，
+\begin{equation}\label{eq:field-eigenstate-notation}
+\Phi(\vec x,t)|\phi_0(\vec x,t)\rangle
+=\phi_0(\vec x,t)|\phi_0(\vec x,t)\rangle,
+\end{equation}
+$\phi_1$ 也有类似表达式。式~\eqref{eq:field-eigenstate-notation} 左边涉及算子的作用，右边涉及乘以一个分布。
+
+这两个态的 Hilbert 内积为 $\langle\phi_1(\vec x,t')\mid\phi_0(\vec x,t)\rangle$。其物理含义是：它的模平方给出态 $\phi_0(\vec x,t)$ 传播为 $\phi_1(\vec x,t')$ 的概率密度。形式计算表明，若 $S(\phi)$ 是推广式~\eqref{eq:scalar-field-action} 的作用量，则
+\[
+\langle\phi_1(\vec x,t')\mid\phi_0(\vec x,t)\rangle
+=N\int[D\phi]e^{iS(\phi)},
+\]
+其中右侧\emph{路径积分}遍及场空间中所有初始点为 $\phi_0$、终止点为 $\phi_1$ 的路径。$N$ 是适当的归一化因子，$[D\phi]$ 是路径空间上的适当测度。目前，路径积分（或泛函积分）还没有良好的数学定义。
+
+路径积分还可计算某些物理\emph{\IndexLocation{indexloc:0183:439}\IndexLocation{indexloc:0192:439}关联函数}，有时称为 \emph{$n$ 点函数}。选取 $n$ 个点 $x_1,\ldots,x_n\in M$，形式上将 $n$ 点函数定义为
+\begin{equation}\label{eq:path-integral-n-point-function}
+\langle\Phi(x_1)\cdots\Phi(x_n)\rangle
+=N\int[D\phi]\,\phi(x_1)\cdots\phi(x_n)e^{iS(\phi)}.
+\end{equation}
+它们是点 $x_1,\ldots,x_n$ 及各点所对应场的类型的函数，而非场的具体取值的函数，因为这些取值已被积分。在上述标量场例子中，只有一种场；但例如 Yukawa 耦合是一类三点函数，其中不同点对应不同类型的场。Yukawa 耦合是\emph{拓扑量子场论}中的三点函数，这大大简化了问题。\hyperref[sec:topological-qft]{附录~\ref*{sec:topological-qft}}将讨论拓扑量子场论。
+
+这些量本身具有物理意义。例如，二点函数就是理论中的 Green 函数。在很实在的意义上，可以说 $n$ 点函数包含这个理论的全部物理预言。
+
+虽然式~\eqref{eq:path-integral-n-point-function} 这类路径积分尚无法严格表述，但有一些获得部分论证、被普遍接受的启发式计算方法。最重要的是\emph{驻相法}：把路径积分“局部化”为 $S$ 的驻点空间上的积分，该空间往往是有限维的。一个粗略解释是：若 $\phi_0$ 为 $S$ 的驻点，则在 $\phi_0$ 附近，$e^{iS(\phi)}$ 的相位变化缓慢，
+\SourcePage{440}
+因而 $\phi_0$ 附近的局部路径积分可以有非零贡献。若 $\phi_0$ 不是驻点，则相位振荡得更快，往往导致相互抵消。因此，$\phi_0$ 附近的态更可能出现，并对物理过程作出贡献。这为经典场论和量子场论建立了联系。驻相法对有限维参数空间是严格的，但路径积分所涉及的空间是无限维的。
+
+这里有一个微妙之处。在路径积分~\eqref{eq:path-integral-n-point-function} 中，各项 $\phi(x_i)$ 是数值分布，彼此交换；但\emph{算子} $\Phi(x_i)$ 一般不交换，似乎有矛盾。解决办法是定义\emph{编时乘积} $T(\Phi(x_1)\cdots\Phi(x_n))$：按时间先后依次作用各 $\Phi(x_i)$，得到相应算子。于是
+\[
+\langle V\mid T(\Phi(x_1)\cdots\Phi(x_n))\mid V\rangle
+=N\int[D\phi]\,\phi(x_1)\cdots\phi(x_n)e^{iS(\phi)},
+\]
+其中 $V$ 仍表示真空态。
+
+还需要对\emph{规范理论}有所了解。此时，作用量在 $M$ 上一个连续的局部变换群下不变。这个群通常是无限维的；典型例子是 Yang--Mills 理论，规范群是从 $M$ 到某个有限维 Lie 群的映射空间。这里的目标很有限：在量子场论的讨论背景下，解释所谓\emph{规范固定}的作用，以及守恒量的概念。
+
+最简单的例子是不含带电物质的经典电磁理论。此处只是让读者体会其风貌，并不力求自成体系。更多细节可参阅 \SourceCite{BjoD}。取 $M=M^4$ 为四维 Minkowski 空间，使用通常坐标 $(x^0,\ldots,x^3)=(t,\vec x)$。场为实一形式 $\phi=A_i\,dx^i$，\footnote{采用 Einstein 求和约定，对重复出现的上、下指标求和。通过与度量张量 $g_{ij}=\operatorname{diag}(1,-1,-1,-1)$ 缩并来升降指标，不再特别说明。}称为\emph{电磁势}。再令 $\vec A=(A_1,A_2,A_3)$。$\phi$ 的\emph{场强}定义为
+\[
+F=d\phi=\frac12F_{ij}\,dx^i\wedge dx^j,\qquad
+F_{ij}=\partial_iA_j-\partial_jA_i.
+\]
+电场 $\vec E$ 和磁场 $\vec B$ 通过下式从场强中提取：
+\[
+F=-dt\wedge\left(\sum_{i=1}^3E_i\,dx^i\right)
++\iota_{\vec B}(dx^1\wedge dx^2\wedge dx^3),
+\]
+其中 $\iota_{\vec B}$ 是与视为向量场 $B^i\partial/\partial x^i$ 的 $\vec B$ 作内乘。按这些约定，电磁场强 $F$ 是闭二形式，等价于两个 Maxwell 方程
+\[
+\vec\nabla\times\vec E=-\dot{\vec B},\qquad
+\vec\nabla\cdot\vec B=0.
+\]
+另两个方程来自 Lagrange 密度
+\begin{equation}\label{eq:electromagnetic-lagrangian-density}
+\mathcal L=-\frac14F_{ij}F^{ij}
+=\frac12(|\vec E|^2-|\vec B|^2).
+\end{equation}
+此时，Euler--Lagrange 方程写成
+\[
+\vec\nabla\cdot\vec E=0,\qquad
+\vec\nabla\times\vec B=\dot{\vec E},
+\]
+\SourcePage{441}
+计算所得 Hamilton 量为
+\[
+H=\frac12\int(|\vec E|^2+|\vec B|^2)\,dx^1\wedge dx^2\wedge dx^3.
+\]
+
+给 $\phi=A_i\,dx^i$ 加上一个恰当形式，不改变场强 $F=d\phi$，因而也不改变相应的 Lagrange 量 $\mathcal L$。即它们在下列替换下不变：
+\begin{equation}\label{eq:electromagnetic-gauge-transformation}
+A_i\longmapsto A_i+\frac{\partial\Lambda(x)}{\partial x^i},
+\end{equation}
+其中 $\Lambda(x)$ 为 $M$ 上任意实函数。此替换对应于局部变换 $e^{i\Lambda(x)}$ 的\emph{规范群}。事实上，若将 $\sqrt{-1}A_i\,dx^i$ 视为 $M$ 上主 $U(1)$ 丛的联络形式，则该丛上的规范变换 $e^{i\Lambda(x)}$ 诱导式~\eqref{eq:electromagnetic-gauge-transformation}。因此，只需在 $\phi=A_i\,dx^i$ 的参数空间中选取一个截片，使每个可能的 $\phi$ 都通过规范变换~\eqref{eq:electromagnetic-gauge-transformation} 等价于截片内的某个 $\phi$。这样的截片称为\emph{规范选择}。\footnote{从路径积分的观点看，显然必须限制到这样的截片；否则，规范对称性会使同一条路径被重复计数，产生不希望出现的无穷大。}下面分两步作规范选择。首先，可设
+\begin{equation}\label{eq:temporal-electromagnetic-gauge}
+A_0=0.
+\end{equation}
+但不能只作这个规范选择就立即量子化，因为还需满足相应的 Euler--Lagrange 方程 $\delta S/\delta A_0=0$。它是 Gauss 定律 $\vec\nabla\cdot\vec E=0$；由于 $A_0=0$，它变为 $\vec\nabla\cdot\partial\vec A/\partial t=0$。因此，$\vec\nabla\cdot\vec A$ 与时间无关。现在解 Poisson 方程，找到与时间无关的函数 $f$，满足 $\vec\nabla\cdot\vec\nabla f=\vec\nabla\cdot\vec A$。将 $\phi=A_i\,dx^i$ 替换为 $\phi-df$ 不影响 $A_0$，所以还可使规范选择满足
+\begin{equation}\label{eq:transverse-electromagnetic-gauge}
+\vec\nabla\cdot\vec A=\vec\nabla\cdot(A_1,A_2,A_3)=0.
+\end{equation}
+一般而言，作规范选择之后，不能简单忽略已被“通过规范变换消去”的场。
+
+固定规范选择~\eqref{eq:temporal-electromagnetic-gauge} 和~\eqref{eq:transverse-electromagnetic-gauge} 后，可采用与 Klein--Gordon 场类似的量子化过程。作 Fourier 展开
+\begin{equation}\label{eq:electromagnetic-polarization-expansion}
+\vec A(x)=\int\sum_{j=1}^2\vec\epsilon_j(\vec k)
+\bigl(a_j(\vec k)e^{-ik\cdot x}+a_j^\dagger(\vec k)e^{ik\cdot x}\bigr)
+\frac{dk^1\wedge dk^2\wedge dk^3}{\sqrt{2k_0(2\pi)^3}}.
+\end{equation}
+其中记号约定如下。$\vec\epsilon_j$ 是三维极化向量；由第二个规范条件~\eqref{eq:transverse-electromagnetic-gauge} 的 Fourier 变换可知，它们垂直于 $\vec k$，因而有两个独立的极化向量。最后，$k=(k_0,\vec k)$ 满足 $k_0=|\vec k|$，因为 $\vec A(x)$ 的每个分量都是四维波动方程的解（这由 Maxwell 方程推出）。
+
+于是将 $a_j(\vec k)$ 和 $a_j^\dagger(\vec k)$ 分别解释为湮灭和产生一个动量为 $\vec k$、极化为 $\vec\epsilon_j(\vec k)$ 的电磁场量子的算子。这与前面对 $a(\vec k)$ 和 $a^\dagger(\vec k)$ 的讨论一致。
+\index{产生算子|hyperpage}\index{湮灭算子|hyperpage}\index{质壳|hyperpage}\index{路径积分|hyperpage}\index{驻相法|hyperpage}\index{编时乘积|hyperpage}\index{规范固定|hyperpage}\index{电磁势|hyperpage}
+
+\SourcePage{442}
+一个关键事实是 Noether 定理：连续对称群给出守恒量。对使 Lagrange 密度不变的无穷小对称变换，设场变为 $\phi\mapsto\phi+\psi\varepsilon$，其中 $\varepsilon$ 为无穷小参数，则在场方程成立时，量
+\begin{equation}\label{eq:noether-conserved-current}
+\frac{\delta\mathcal L}{\delta(\partial_i\phi)}\psi
+\end{equation}
+的散度为零，称为\emph{守恒流}。因此，守恒流时间分量在固定时刻的空间积分与时间无关，称为\emph{守恒荷}。
+
+在\hyperref[sec:conformal-field-theories]{附录~\ref*{sec:conformal-field-theories}}讨论共形场论时，规范群将是共形群。将看到，也需作类似的\IndexLocation{indexloc:0349:442}规范选择；规范群还产生类似的守恒量，它们在理论中起重要作用。
+
+迄今讨论的\IndexLocation{indexloc:1155:442}量子场论最适合\emph{玻色子}，即自旋为整数的粒子。若干经典的（即非量子的）玻色场，可通过乘法组合，此乘法是交换的。但为描述\emph{费米子}（自旋为半整数的粒子）的场论，需要从乘法反交换的经典场出发。有几种表述方式，其中一种通过超空间来公理化反交换变量；\hyperref[sec:landau-ginzburg-models]{附录~\ref*{sec:landau-ginzburg-models}}将作简述。费米场的量子化过程，需要修改上面对玻色场概述的过程。下一节的非线性 $\sigma$ 模型，将给出\IndexLocation{indexloc:0313:442}费米变量的一些例子。关于玻色系统与费米系统的区别，很好的入门介绍见 \SourceCite[第 1、2 讲]{Alvarez}。
+\index{守恒流|hyperpage}\index{守恒荷|hyperpage}\index{费米场|hyperpage}\index{玻色场|hyperpage}
+
+\section{非线性 \texorpdfstring{$\sigma$}{σ} 模型}\label{sec:nonlinear-sigma-models}
+为定义\emph{非线性 $\sigma$ 模型}（简称 \emph{$\sigma$ 模型}），从 Kähler 流形 $(X,g)$ 和闭二形式 $B$ 出发。$\sigma$ 模型建立在从 Riemann 曲面 $\Sigma$ 到 $X$ 的映射之上。把映射 $f:\Sigma\to X$ 理解为描述弦在 $X$ 中的传播，$\Sigma$ 就是弦传播时扫出的\emph{世界面}。理论中不固定 Riemann 曲面 $\Sigma$，而是允许任意曲面，因此允许一条弦分裂成两条或多条弦、或若干条弦结合等任意复杂的过程。换句话说，允许任意亏格的 Riemann 曲面，就自动将弦之间的相互作用纳入理论。这是所有弦理论的一般特征，并非 $\sigma$ 模型独有。
+
+非线性 $\sigma$ 模型还包含反交换的费米场，它们是 $\Sigma$ 上某些丛的截面，如下表所示：
+\begin{equation}\label{eq:sigma-model-fermionic-bundles}
+\begin{array}{c|l}
+\text{场}&\text{丛}\\\hline
+\psi_+^i&K^{1/2}\otimes f^*(T_X^{1,0})\\
+\psi_+^{\bar i}&K^{1/2}\otimes f^*(T_X^{0,1})\\
+\psi_-^i&\overline K^{1/2}\otimes f^*(T_X^{1,0})\\
+\psi_-^{\bar i}&\overline K^{1/2}\otimes f^*(T_X^{0,1})
+\end{array}
+\end{equation}
+这里，$K$ 是 $\Sigma$ 的典范丛，$\overline K$ 是其复共轭（反全纯）丛，$K^{1/2}$ 是所选的 $K$ 的一个平方根（即 $\Sigma$ 上的旋量丛），$T_X$
+\SourcePage{443}
+是 $X$ 的复化切丛，并有通常的分解 $T_X=T_X^{1,0}\oplus T_X^{0,1}$。指标 $i,\bar i$ 取值从 $1$ 到 $n=\dim_{\mathbb C}X$，约定 $i$ 为全纯指标，$\bar i$ 为反全纯指标。选用这些记号，是为了可以将上表中的对象与它们的某些系数等同；具体含义由上下文辨明。做法如下：在 $\Sigma$ 上选局部全纯坐标 $z$，在 $X$ 上选局部复坐标 $x^i$。例如，$\psi_+^i$ 既可表示 $K^{1/2}\otimes f^*(T_X^{1,0})$ 的一个截面，也可表示该截面在 $(dz)^{1/2}\otimes\partial/\partial x^i$ 前的系数，其中 $(dz)^{1/2}$ 表示 $K^{1/2}$ 的局部生成元。记号上，$x^{\bar i}$ 与 $\overline{x^i}$ 含义相同。
+
+现在可定义作用量 $S$。再令指标 $I,J$ 遍及 $i,\bar i$ 的所有可能取值，即同时遍及全纯与反全纯指标；于是 $x^I$ 遍及 $2n$ 个坐标 $x^i,x^{\bar i}$，这里 $n$ 仍是 $X$ 的复维数。置
+\begin{equation}\label{eq:supersymmetric-sigma-action}
+\begin{aligned}
+S=\int_\Sigma\Bigl(&\frac12(g_{IJ}+iB_{IJ})\partial_zx^I\partial_{\bar z}x^J\\
+&+\frac{\sqrt{-1}}2g_{i\bar i}\psi_-^{\bar i}D_z\psi_-^i
++\frac{\sqrt{-1}}2g_{i\bar i}\psi_+^{\bar i}D_{\bar z}\psi_+^i\\
+&+\frac14R_{i\bar i j\bar j}\psi_+^i\psi_+^{\bar i}\psi_-^j\psi_-^{\bar j}\Bigr)
+\sqrt{-1}\,dz\wedge d\bar z,
+\end{aligned}
+\end{equation}
+其中 $R$ 是 $X$ 上度量 $g$ 的曲率张量，$D_z$ 来自将 $g$ 的 Levi--Civita 联络拉回到 $f^*T_X$ 所得的联络。注意，$S$ 同时依赖映射 $f:\Sigma\to X$ 和 $4n$ 个费米场 $\psi_\pm^i,\psi_\pm^{\bar i}$。
+
+这个看似奇特的作用量其实很自然。对满足共形约束的经典解，玻色部分中的度量项化为 $\Sigma$ 的面积，$B$ 项则给出拓扑贡献。加入费米项的方式，既保持\emph{共形不变性}（本附录稍后讨论），又使理论具有\emph{超对称性}：作用量有一个无穷小对称变换，将费米子沿玻色方向扰动，反之亦然。事实上，这样的对称性有两个，因为 $\sigma$ 模型具有 $N=2$ 超对称。\IndexLocation{indexloc:1312:443}超对称变换相当复杂，可写成：
+\begin{equation}\label{eq:sigma-model-supersymmetry-transformations}
+\begin{aligned}
+\delta x^i&=\sqrt{-1}\alpha_-\psi_+^i+\sqrt{-1}\alpha_+\psi_-^i,\\
+\delta x^{\bar i}&=\sqrt{-1}\widetilde\alpha_-\psi_+^{\bar i}
++\sqrt{-1}\widetilde\alpha_+\psi_-^{\bar i},\\
+\delta\psi_+^i&=-\widetilde\alpha_-\partial_zx^i
+-\sqrt{-1}\alpha_+\psi_-^J\Gamma^i_{Jm}\psi_+^m,\\
+\delta\psi_+^{\bar i}&=-\alpha_-\partial_zx^{\bar i}
+-\sqrt{-1}\widetilde\alpha_+\psi_-^J\Gamma^{\bar i}_{J\bar m}\psi_+^{\bar m},\\
+\delta\psi_-^i&=-\widetilde\alpha_+\partial_{\bar z}x^i
+-\sqrt{-1}\alpha_-\psi_+^J\Gamma^i_{Jm}\psi_-^m,\\
+\delta\psi_-^{\bar i}&=-\alpha_+\partial_{\bar z}x^{\bar i}
+-\sqrt{-1}\widetilde\alpha_-\psi_+^J\Gamma^{\bar i}_{J\bar m}\psi_-^{\bar m}.
+\end{aligned}
+\end{equation}
+这里，$\alpha_-$ 和 $\widetilde\alpha_-$ 是 $K^{-1/2}$ 的无穷小全纯截面，而 $\alpha_+$ 和 $\widetilde\alpha_+$ 是 $\overline K^{-1/2}$ 的无穷小反全纯截面。应用变换~\eqref{eq:sigma-model-supersymmetry-transformations}，并利用 Kähler 条件，可证明式~\eqref{eq:supersymmetric-sigma-action} 的被积二形式只改变一个恰当形式，因而作用量 $S$ 不变。
+
+在杂化弦理论中，须适当修改 Lagrange 量，使某些费米场 $\psi_+^I$ 取值于包含 $E_8\times E_8$ 根格的十六维空间。于是所得理论可包含 $E_8\times E_8$ 规范
+\SourcePage{444}
+群；这在 Yukawa 耦合的定义中起作用。Yukawa 耦合就是我们理论中的关联函数（或 $n$ 点函数）。还应提到，在所考虑的杂化理论中，费米子的运动方程解耦为左行与右行方程，此处可将它们理解为全纯与反全纯部分。因此，这个 $\sigma$ 模型给出 $(2,2)$ 弦理论，即有两个全纯超对称和两个反全纯超对称。
+
+借助\emph{扭曲理论}，即 A 模型与 B 模型，可以更容易地计算我们关心的关联函数。它们不同于 $\sigma$ 模型，但可以证明，其某些关联函数（包括\hyperref[chap:introduction]{第一章}提到的那些）与 $\sigma$ 模型中相应的关联函数一致。
+
+这些理论的作用量在形式上与式~\eqref{eq:supersymmetric-sigma-action} 相同，但场 $\psi_\pm^I$ 的含义不同。A 模型将式~\eqref{eq:sigma-model-fermionic-bundles} 替换为
+\[
+\begin{array}{c|l}
+\text{场}&\text{丛}\\\hline
+\psi_+^i&f^*(T_X^{1,0})\\
+\psi_+^{\bar i}&K\otimes f^*(T_X^{0,1})\\
+\psi_-^i&\overline K\otimes f^*(T_X^{1,0})\\
+\psi_-^{\bar i}&f^*(T_X^{0,1})
+\end{array}
+\]
+而 B 模型使用
+\[
+\begin{array}{c|l}
+\text{场}&\text{丛}\\\hline
+\psi_+^i&K\otimes f^*(T_X^{1,0})\\
+\psi_+^{\bar i}&f^*(T_X^{0,1})\\
+\psi_-^i&\overline K\otimes f^*(T_X^{1,0})\\
+\psi_-^{\bar i}&f^*(T_X^{0,1})
+\end{array}
+\]
+换句话说，这些场局部上与 $\sigma$ 模型中的对应场一致，但在整体上用丛 $K^{1/2}$、$\overline K^{1/2}$ 或它们的逆作了扭曲。
+
+这些模型仍然超对称，但此时只有 $N=1$ 超对称。此外，若 $V$ 和 $V^\circ$ 构成镜像对，则由 Calabi--Yau 流形 $V$ 得到的 A 模型，与由镜像流形 $V^\circ$ 得到的 B 模型镜像对称，其中须对应地选取 $V^\circ$ 的复结构和 $V$ 的 Kähler 结构。
+
+先看 A 模型。此时，可将场 $\psi_+^i$ 和 $\psi_-^{\bar i}$ 视为 $f^*(T_X)$ 的一个截面的全纯与反全纯部分。此外，A 模型给 $X$ 上每个 $k$ 形式 $\eta$ 赋予一个\emph{局部算子} $\mathcal O_\eta(x)$，定义如下。可将 $k$ 形式写成 $\eta=h_{I_1\cdots I_k}(x)\,dx^{I_1}\wedge\cdots\wedge dx^{I_k}$，其中每个 $dx^I$ 或为 $dx^i$，或为 $dx^{\bar i}=d\overline{x^i}$。相应的局部算子定义为
+\begin{equation}\label{eq:a-model-local-form-operator}
+\mathcal O_\eta(x)=h_{I_1\cdots I_k}(x)\chi^{I_1}(x)\cdots\chi^{I_k}(x),
+\end{equation}
+其中 $\chi^I$ 或为 $\psi_+^i$，或为 $\psi_-^{\bar i}$；应将它们视为 Hilbert 空间 $\mathcal H$ 上的反交换算子。
+
+式~\eqref{eq:supersymmetric-sigma-action} 的玻色部分的拓扑贡献由 $\int_\Sigma f^*(\omega)$ 给出，其中照常 $\omega=B+iJ$，$J$ 为度量 $g$ 的 Kähler 类。使用运动方程，即上面讨论的广义 Euler--Lagrange 方程后，作用量有所简化；其余项可以用一个费米算子，
+\SourcePage{445}
+即 \emph{BRST 算子} $Q$，紧凑地表示。这个算子是超对称从原来的 $N=2$ 理论减为扭曲后的 $N=1$ 理论时保留下来的超对称变换。事实上，模去运动方程后，有
+\[
+S=2\pi i\int_\Sigma\{Q,V\}\left(\frac i2dz\wedge d\bar z\right)
++2\pi\int_\Sigma f^*(\omega),
+\]
+其中 $V$ 是某个场，其细节无须关注；$\{Q,V\}$ 为反对易子。这里不展开细节，只指出 BRST 算子在量子场论中起重要作用。$Q^2=0$，算子 $d_Q$ 定义为 $d_Q(O)=\{Q,O\}$，这里花括号按分次对易子理解。它实际上确定一个复形，其上同调称为量子场论的 \emph{BRST 上同调}。有公式
+\[
+\{Q,\mathcal O_\eta\}=-\mathcal O_{d\eta},
+\]
+因此 $\eta\mapsto\mathcal O_\eta$ 给出从 $X$ 的 de Rham 上同调 $H^k(X)$ 到 BRST 上同调的映射。
+
+令 $\omega_1,\ldots,\omega_n\in H^2(X)$，转向计算 $n$ 点关联函数 $\langle\mathcal O_{\omega_1}\cdots\mathcal O_{\omega_n}\rangle$。对式~\eqref{eq:supersymmetric-sigma-action} 作 BRST 局部化，相关固定点方程为 $\partial x^i/\partial\bar z=0$，故 $f$ 全纯。相应地，路径积分化为全纯映射空间上的积分。再置 $\gamma=f_*[\Sigma]$，将积分写成对 $\gamma$ 的求和，并把 $\gamma=0$ 项单独写出。得到
+\[
+\begin{aligned}
+\langle\mathcal O_{\omega_1}\cdots\mathcal O_{\omega_n}\rangle
+&=\int_X\omega_1\wedge\cdots\wedge\omega_n\\
+&\quad+\sum_{\gamma\ne0}\int[D\phi][D\chi][D\psi]\,
+e^{-2\pi\{Q,\int V\}}\prod_i\mathcal O_{\omega_i}
+e^{2\pi i\int_\gamma\omega}\\
+&=\int_X\omega_1\wedge\cdots\wedge\omega_n
++\sum_{\gamma\ne0}N_{\gamma,\omega_i}q^\gamma,
+\end{aligned}
+\]
+其中 $q^\gamma$ 的记号如\hyperref[chap:gromov-witten]{第七章}所述，$N_{\gamma,\omega_i}$ 粗略定义如下：选取点 $p_1,\ldots,p_n\in\mathbb P^1$，并选取代表圈 $Z_i$，使其基本类与 $\omega_i$ Poincaré 对偶；$N_{\gamma,\omega_i}$ 表示满足 $f_*[\mathbb P^1]=\gamma$，且每个 $i$ 都有 $f(p_i)\in Z_i$ 的全纯映射 $f:\mathbb P^1\to X$ 的数目。这一定义还不严格，因为这样的映射可能有无穷多个，但可用\hyperref[chap:gromov-witten]{第七章}讨论的 Gromov--Witten 不变量概念精确化。如\hyperref[chap:quantum-cohomology]{第八章}所述，这些不变量是构造量子上同调的关键成分。\hyperref[sec:topological-qft]{附录~\ref*{sec:topological-qft}}将指出，A 模型是拓扑量子场论，因而三点关联函数定义结合环结构。上面第二个等式由在 $\chi$ 和 $\psi$ 的临界点空间上作适当积分得到，是\hyperref[sec:general-field-theories]{附录~\ref*{sec:general-field-theories}}所述驻相法的一个例子。非常值全纯映射 $f:\Sigma\to X$ 称为\emph{世界面瞬子}，上述 $n$ 点函数的形式称为\emph{瞬子和}。
+
+对 B 模型，场 $\eta^{\bar i}=\psi_+^{\bar i}+\psi_-^{\bar i}$ 按 $f^*(T_X^{0,1})$ 的截面变换；类似地，$\theta_i=g_{i\bar i}(\psi_+^{\bar i}-\psi_-^{\bar i})$ 按 $(1,0)$ 形式变换。B 模型也有局部算子，来自取值于 $\wedge^pT_X^{1,0}$ 的 $(0,q)$ 形式。若将这样的形式 $\theta$ 局部写成
+\SourcePage{446}
+\[
+\theta=h^{j_1\cdots j_p}_{\bar i_1\cdots\bar i_q}\,
+dx^{\bar i_1}\wedge\cdots\wedge dx^{\bar i_q}
+\otimes\frac{\partial}{\partial x^{j_1}}\wedge\cdots\wedge
+\frac{\partial}{\partial x^{j_p}},
+\]
+则局部算子 $\mathcal O_\theta$ 定义为
+\[
+\mathcal O_\theta=h^{j_1\cdots j_p}_{\bar i_1\cdots\bar i_q}
+\eta^{\bar i_1}\cdots\eta^{\bar i_q}\theta_{j_1}\cdots\theta_{j_p}.
+\]
+与 A 模型一样，考虑运动方程后，作用量有简化形式。此理论的 BRST 算子仍记为 $Q$，满足 $\{Q,\mathcal O_\theta\}=-\mathcal O_{\bar\partial\theta}$。因此，$\theta\mapsto\mathcal O_\theta$ 将 Dolbeault 上同调 $H^q(X,\wedge^p(T_X^{1,0}))$ 映到 B 模型的 BRST 上同调。
+
+B 模型的关联函数，可用刚提及的作用量简化形式计算得到。原则上，此关联函数可能包含瞬子和，但某些\emph{\IndexLocation{indexloc:0944:446}非重整化定理}断言并非如此。另一种论证借助\IndexLocation{indexloc:0830:446}镜像对称：A 模型的关联函数不依赖复模，因此镜像流形的 B \IndexLocation{indexloc:0184:446}\IndexLocation{indexloc:0189:446}模型关联函数不依赖 Kähler 模；然而，瞬子和中每个 $\gamma\ne0$ 项，都因含 $q^\gamma$ 而显式依赖 Kähler 模。\hyperref[sec:three-point]{第~\ref*{sec:three-point} 节}给出了\IndexLocation{indexloc:0623:446}瞬子修正消失的另一种启发式论证。
+
+最后，为使我们的 $\sigma$ 模型避免某些\IndexLocation{indexloc:1110:446}量子反常，$(X,g)$ 实际上须为 Calabi--Yau 三维簇。要求 $X$ 的实维数为六的原因，将在\hyperref[sec:conformal-field-theories]{附录~\ref*{sec:conformal-field-theories}}解释；Kähler 条件则是 $N=2$ 超对称的必要条件。\hyperref[sec:calabi-yau-physics]{第~\ref*{sec:calabi-yau-physics} 节}简述过的 Calabi--Yau 条件更为微妙，需要转入量子场论重整化的讨论，超出了这些附录的范围。更多细节见 \SourceCite{Huebsch}，超对称 $\sigma$ 模型的讨论也见 \SourceCite{GO}。
+\index{非线性sigma模型@非线性 $\sigma$ 模型|hyperpage}\index{BRST算子@BRST 算子|hyperpage}\index{BRST上同调@BRST 上同调|hyperpage}\index{世界面瞬子|hyperpage}\index{瞬子和|hyperpage}
+
+\section{共形场论}\label{sec:conformal-field-theories}
+粗略地说，共形理论是定义在 Riemann 曲面上的场的理论，它尊重曲面的共形变换。下面尝试把这一说法讲得更精确一些。详细介绍见 \SourceCite{Ginsparg}。它与弦论的联系在于，这些 Riemann 曲面正是弦随时间传播时扫出的曲面。因此，我们将这种 Riemann 曲面称为\emph{世界面}。
+
+Riemann 曲面的\emph{共形映射}是保持角度和定向的自映射；这样的映射是全纯的。我们希望在带复坐标 $z=x+iy$ 的二维圆盘 $\Delta$ 上，局部研究共形映射。遗憾的是，局部共形变换并不构成群，因为邻域未必保持不变，映射因而未必能够复合。不过，\IndexLocation{indexloc:0161:446}共形代数是良好定义的：无穷小共形变换在底层实曲面上诱导一个实向量场，在局部全纯坐标中可写成 $f(z)\partial/\partial z+\overline{f(z)}\partial/\partial\bar z$，其中 $f(z)$ 全纯。通常选取基 $\ell_n=-z^{n+1}\partial_z$ 与 $\bar\ell_n=-\bar z^{n+1}\partial_{\bar z}$，将全纯部分和反全纯部分分开；它们满足 Virasoro 代数关系
+\[
+[\ell_n,\ell_m]=(n-m)\ell_{n+m},\qquad
+[\bar\ell_n,\bar\ell_m]=(n-m)\bar\ell_{n+m}.
+\]
+\SourcePage{447}
+共形代数可由 Virasoro 代数恢复为由 $\ell_n+\bar\ell_n$ 和 $i(\ell_n-\bar\ell_n)$ 生成的子代数。共形场论包含 Virasoro 代数的一个表示；不过必须谨慎，因为某些表示会出现量子反常。
+
+接下来定义共形场论中我们关心的场。
+\begin{definition}\label{def:primary-field}
+\emph{权为 $(h,\bar h)$ 的初级场}是一个场 $\Phi(z,\bar z)$，在共形变换 $z\mapsto f(z)$ 下按
+\[
+\Phi(z,\bar z)\longmapsto
+\left(\frac{\partial f}{\partial z}\right)^h
+\left(\frac{\partial\bar f}{\partial\bar z}\right)^{\bar h}
+\Phi(f(z),\bar f(\bar z))
+\]
+变换。
+\end{definition}
+换言之，$\Phi(z,\bar z)$ 为初级场时，表达式 $\Phi(z,\bar z)\,dz^h\otimes d\bar z^{\bar h}$ 不变。
+
+共形场论的规范群是局部共形群。如\hyperref[sec:general-field-theories]{附录~\ref*{sec:general-field-theories}}所述，这意味着必须作规范选择。在局部坐标 $z=x+iy$ 中，可通过把世界面上的度量 $h$ 固定为 $h=dx^2+dy^2$ 来确定规范。但与该节一样，仍须施加 Euler--Lagrange 方程给出的条件 $\delta S/\delta h^{ij}=0$。
+
+遗憾的是，量子化并不像电磁场的情形那样直接。例如，为保持共形不变性，在量子化过程中须引入称为\emph{鬼场}的辅助场；超对称性还需要额外的鬼场。另外，虽然 Euler--Lagrange 方程 $\delta S/\delta h^{ij}=0$ 在经典层面成立，但在量子层面，其表现略有不同。为解释这一点，引入分量为
+\[
+T_{ij}=\frac1{\sqrt h}\frac{\delta S}{\delta h^{ij}}
+\]
+的\emph{能动张量}；这是一个对称张量。这里，照常用 $h$ 表示矩阵 $h_{ij}$ 的行列式，$h^{ij}$ 表示逆矩阵。在全纯坐标中，能动张量的分量为 $T(z)=T_{zz}$、$\bar T(\bar z)=T_{\bar z\bar z}$ 和 $T_{z\bar z}$。类似于式~\eqref{eq:noether-conserved-current} 中的处理，由任意正函数 $\phi$ 给出的共形缩放 $h\mapsto\phi h$ 的不变性，导出 $T_{z\bar z}=0$。再由能动量守恒，得到 $T(z)$ 全纯而 $\bar T(\bar z)$ 反全纯，这也解释了上述记号。因此，经典运动方程，即 Euler--Lagrange 方程，还包括约束 $T(z)=\bar T(\bar z)=0$。
+
+在量子理论中，用\emph{\IndexLocation{indexloc:1108:447}径向量子化}来修改这些方程。这意味着，在局部坐标中，将等时曲线选为同心圆，而固定空间坐标的曲线则为径向线。弦的世界面局部包含一个空间坐标和一个时间坐标，但空间与时间的区分并非不变量。形式运算以及 $T(z)$ 为守恒量这一事实给出：若 $\Phi(z,\bar z)$ 是权为 $(h,\bar h)$ 的初级场，则有如下算子恒等式，称为\emph{\IndexLocation{indexloc:0989:447}算子乘积展开}：
+\[
+T(z)\Phi(w,\bar w)
+=\frac h{(z-w)^2}\Phi(w,\bar w)
++\frac{\partial_w\Phi(w,\bar w)}{z-w}+R(z,w,\bar w),
+\]
+其中 $R(z,w,\bar w)$ 在 $z=w$ 时保持有限。$\bar T(\bar z)\Phi(w,\bar w)$ 有类似公式。$T$ 的这一变换性质似乎说明它应是权为 $(2,0)$ 的初级场。遗憾的是，若真如此，就会产生
+\SourcePage{448}
+量子反常。因此，实际公式在算子乘积展开中需要多一项：
+\begin{equation}\label{eq:stress-tensor-ope}
+T(z)T(w)\sim\frac{c/2}{(z-w)^4}
++\frac{2T(w)}{(z-w)^2}+\frac{\partial_wT(w)}{z-w},
+\end{equation}
+其中 $c$ 为称作\emph{中心荷}的常数，符号 $\sim$ 表示只写出奇异项。展开 $T(z)=\sum_nL_nz^{-(n+2)}$，代入式~\eqref{eq:stress-tensor-ope}，通过围道积分得到
+\begin{equation}\label{eq:virasoro-central-extension}
+[L_n,L_m]=(n-m)L_{n+m}+\frac c{12}(n^3-n)\delta_{n+m,0},
+\end{equation}
+其中 $n+m=0$ 时，$\delta_{n+m,0}$ 为恒等算子；否则为零。也就是说，在量子层面得到的是 Virasoro 代数的中心扩张的表示。还应提及，式~\eqref{eq:virasoro-central-extension} 也出现在\hyperref[subsec:virasoro-conjecture]{第~\ref*{subsec:virasoro-conjecture} 小节}关于 Virasoro 猜想的讨论中。
+
+为使微扰弦论自洽，需要一个没有反常的 Virasoro 代数本身的表示。由式~\eqref{eq:virasoro-central-extension}，只要理论的总中心荷 $c$ 为零，就不会出现中心扩张。在实维数为 $2k$ 的流形 $X$ 上的 $\sigma$ 模型所给出的共形场论中，每个玻色子 $x^i$ 对 $c$ 的贡献为 $+1$，而 $2k$ 对费米子 $\psi_+^i,\psi_-^i$ 中，每一对的贡献为 $+1/2$，总贡献为 $2k\cdot1+2k\cdot\tfrac12=3k$。不过，已经看到，量子化需要鬼场，才能保持世界面重新参数化，即共形变换，以及超对称变换的不变性。补偿世界面重新参数化的鬼场对 $c$ 的贡献为 $-26$，补偿超对称性的鬼场贡献为 $+11$。方程 $3k-26+11=0$ 仅在 $2k=10$ 时满足。其中四个维度视为我们熟悉的世界的时空维度，例如常用四维 Minkowski 空间作为模型，剩下六个实维度。这就是将讨论限于复维数为三的 Calabi--Yau 流形的原因。
+
+类似而更简单的论证表明，自洽的玻色弦必须在 $26$ 维空间中传播。
+
+最后，对 $\sigma$ 模型 $(X,g)$ 给出的 $N=2$ 超共形代数表示作几点说明。这个表示包含上述算子 $T(z)$、$\bar T(\bar z)$。此外，全纯超对称性给出一个 $U(1)=SO(2)$ 对称性，自然作用于 $\sigma$ 模型的费米子
+\[
+\begin{pmatrix}\psi_+^i\\\psi_-^{\bar i}\end{pmatrix}.
+\]
+这个 $U(1)$ 对称性所产生的守恒流记为 $J(z)$。$J$ 的空间积分就是\hyperref[sec:physics]{第~\ref*{sec:physics} 节}中出现的算子 $Q$；它是理论中右行（即全纯）部分的生成元，对两种超对称性作无穷小旋转。同样，由反全纯超对称性及 $U(1)$ 在
+\[
+\begin{pmatrix}\psi_+^{\bar i}\\\psi_-^i\end{pmatrix}
+\]
+上的作用，得到 $\bar J$，进而得到左行，即反全纯部分的算子 $\bar Q$。上面已经说明，$H^1(X,T_X)$ 和 $H^1(X,\Omega_X^1)$ 如何成为理论中的算子；将它们作用于真空态，便得到对应于这两个空间的量子态。这些态是算子 $Q,\bar Q$ 的特征向量，
+\SourcePage{449}
+如\hyperref[sec:physics]{第~\ref*{sec:physics} 节}所述。镜像对称的一项主要动机，正是改变生成元 $\bar Q$ 的符号对相应特征值所产生的影响。
+\index{共形场论|hyperpage}\index{初级场|hyperpage}\index{鬼场|hyperpage}\index{能动张量|hyperpage}\index{径向量子化|hyperpage}\index{算子乘积展开|hyperpage}\index{中心荷|hyperpage}\index{Virasoro代数@Virasoro 代数|hyperpage}
+
+\section{Landau--Ginzburg 模型}\label{sec:landau-ginzburg-models}
+这里描述的 Landau--Ginzburg（LG）理论也是超对称理论。为明确起见，将讨论限制于具有 $(2,2)$ 超对称性的理论。这些理论可用超空间和超场的形式体系描述。下面暂且离开主线，介绍这一体系。
+
+\emph{超流形}是带有局部坐标
+\[
+(x^1,\ldots,x^n,y^1,\ldots,y^m)
+\]
+的拓扑空间 $M$，其中变量 $x^i$ 彼此对易，也与 $y^j$ 对易，而 $y^i$ 彼此反对易。虽然可以给出精确的数学定义，见 \SourceCite{Manin1}，但上述粗略定义已足够用于目前的讨论。可以将 $M$ 看成一个带局部坐标 $(x^1,\ldots,x^n)$ 的流形，再附加反对易变量 $y^i$。\emph{超场}就是超空间上的函数。超场可唯一写成和 $\sum_I f_I(x)y^I$，其中 $f_I(x)$ 是 $x^1,\ldots,x^n$ 的函数，$I=\{i_1,\ldots,i_k\}\subset\{1,\ldots,m\}$ 为指标集；若按 $i_1<\cdots<i_k$ 排列，则 $y^I=y^{i_1}\cdots y^{i_k}$。\hyperref[subsec:cohomology-supermanifold]{第~\ref*{subsec:cohomology-supermanifold} 小节}已经说明，$H^*(X,\mathbb C)$ 具有自然的复超流形结构。
+
+这里的底层流形是世界面 $\Sigma$，故取 $n=2$。为了得到 $(2,2)$ 超对称性，还须取 $m=4$。以局部复坐标 $z$ 取代变量 $x^1,x^2$，并将 $y^i$ 记为 $\theta^i,\bar\theta^i$，其中 $i=1,2$。$\theta^i,\bar\theta^i$ 不只是局部表达式，它们还是\emph{旋量}，即按二维旋转群的双覆盖 $\operatorname{Spin}(2)$ 的某个一维旋量表示变换；$\theta^1,\theta^2$ 属于其中一个表示，$\bar\theta^1,\bar\theta^2$ 属于另一个表示。\IndexLocation{indexloc:1267:449}旋量几何的更多数学细节见 \SourceCite{LM}。
+
+因此，超场 $\Phi$ 可在局部表示为
+\[
+\Phi=f(z)+\phi_i(z)\theta^i+\bar\phi_i(z)\bar\theta^i
++F_{ij}(z)\theta^i\theta^j+\cdots,
+\]
+其中省写了反对易变量的部分二次项和所有更高次项。超对称变换 $Q^i,\bar Q^i$ 可以显式写出，其反对易关系形式简单；四维超对称的类似公式可参见 \SourceCite{WB}。由此可以构造 $N=2$ 超对称代数。注意，不要将这些超对称变换与前面讨论过的 $U(1)$ 荷 $Q,\bar Q$ 混淆。
+
+所有超场组成的空间给出 $N=2$ 超对称代数的一个表示。\emph{手征超场}构成其不变子空间。具体构造是，在超空间中显式写出与超对称算子分次对易的微分算子 $\bar D_i$，并将手征超场定义为满足 $\bar D_i\Phi=0$、$i=1,2$ 的超场 $\Phi$；手征超场的定义例如见 \SourceCite{WB}。算子 $\bar D_i$ 涉及对反对易变量的微分。事实上，$\bar D_i$ 包含一项 $\partial/\partial\bar\theta^i$，可按自然的方式定义。因此，手征超场的行为与普通空间中的全纯函数颇为相似。
+
+Landau--Ginzburg 理论是某些超对称理论，可简单地用\emph{超势}描述。超势是二维手征超场的\IndexLocation{indexloc:1431:449}加权齐次多项式
+\SourcePage{450}
+$F(\Phi_1,\ldots,\Phi_k)$。这里的加权齐次，是指为 $\Phi_i$ 指定权 $d_i$。在我们关心的情形中，选择 $F$ 的加权次数为 $d=\sum_i d_i$。
+
+Landau--Ginzburg 理论的作用量中的重要项为
+\begin{equation}\label{eq:landau-ginzburg-superpotential-term}
+\int d^2z\,d^2\theta\,F(\Phi_i),
+\end{equation}
+其中 $z$ 是世界面上的局部全纯坐标，$\Phi_i$ 为手征超场，$\theta^j$ 为费米超空间坐标。将 $\Phi_i$ 的标量玻色分量记为 $\phi_i$；经典真空的方程给出 $\partial F/\partial\phi_i=0$。显然有经典解 $\phi_i=0$，在这里考虑的 Landau--Ginzburg 理论中，这是唯一的解。
+
+转到量子理论，与唯一的经典真空相联系的是唯一的真空态。将真空态记为 $V$，对任意多项式 $P$，都可构造新态 $P(\phi_i)(V)$。这些手征态组成的空间与 Jacobian 环 $\mathbb C[\phi_1,\ldots,\phi_k]/(\partial F/\partial\phi_i)$ 同构；此环也称为\emph{手征环}。
+
+注意上一段中，我们很快从听起来相当陌生的对象，如费米超空间坐标等，转到了代数几何学家熟悉的对象，即加权齐次多项式的 Jacobian 环。方程 $\partial F/\partial\phi_i=0$ 只有原点这一解，等价于加权射影空间中的超曲面 $F=0$ 为拟光滑。这是标准数学对象突然出现在这些物理理论中的一个典型例子。
+
+实际感兴趣的是相关的理论，即 \emph{Landau--Ginzburg 轨形}。在我们关心的情形中，令 $\eta$ 为本原 $d$ 次单位根，并对 $(\eta^{d_1},\ldots,\eta^{d_k})$ 的作用取轨形。这意味着，不仅考虑在世界面 $\Sigma$ 上单值定义的超场，还考虑弦两端的场值按这一作用的第 $i$ 次幂变换的超场。所得态称为属于\emph{第 $i$ 个扭曲部分}，并产生扭曲真空 $V_i$。再形成 $P(\phi_j)(V_i)$ 这样的表达式，就能构造更多的态。Landau--Ginzburg 轨形包含其中在 $\eta$ 的作用下不变的态。
+
+下面将看到，Calabi--Yau 流形与 Landau--Ginzburg 轨形密切相关。现在先从另一个角度举例说明。
+\SourceExampleNumber{B.4}{1}
+\begin{example}\label{ex:lg-octic-twisted-sector}
+设 $\Phi_1,\ldots,\Phi_5$ 的权依次为 $1,1,2,2,2$，令 $F$ 为这些变量中加权次数为 $8$ 的齐次多项式。在计算这个理论中的某些态之前，先注意，此例与 $\mathbb P^4(1,1,2,2,2)$ 中的八次超曲面有关；\SourceCite{CdFKM,HKTY1} 研究过这些超曲面。这个加权射影空间沿 $x_1=x_2=0$ 定义的 $\mathbb P^2$ 有 $A_1$ 奇点。将它爆破，例外除子是 $\mathbb P^2$ 上的一个直纹三维簇。限制到超曲面后，例外除子成为一条四次曲线（即亏格为三的曲线）上的直纹曲面。因此，纤维族的 Abel--Jacobi 映射的像是 $H^{2,1}$ 的一个三维子空间。可以证明，这些元素对应的 Calabi--Yau 三维簇形变，不能实现为 $\mathbb P^4(1,1,2,2,2)$ 中的超曲面。这个三维子空间，与由超曲面形变组成的余维为三的子空间 $H^{2,1}_{\mathrm{poly}}(V^\circ)\subset H^{2,1}(V^\circ)$ 互补。例题~\ref{ex:weighted-extremal-transition} 给出了这些形变的几何描述。
+
+\SourcePage{451}
+现在回到 LG 理论。我们有态 $P(\phi_i)(V)$。理论的模参数所对应的态，恰是 $P$ 的次数为 $8$ 的那些态。因此得到 Jacobian 环的八次部分，其维数为 $83$。这是代数几何中熟悉的构造。
+
+那么，缺少的三个形变在哪里？它们出现在某个扭曲部分中，确切地说，是第四个扭曲部分。扭曲真空 $V_4$ 不是不变的；要使 $P(\phi_i)(V_4)$ 对应于形变，$P$ 必须具有权 $2$。变量 $\phi_3,\phi_4,\phi_5$ 在 $\eta^4$ 的作用下不变，而 $\phi_1,\phi_2$ 则不在该作用下保持不变。因此，这些态就是 $P(\phi_3,\phi_4,\phi_5)(V_4)$，组成三维空间，恰如预期。
+\end{example}
+上述讨论基于 \SourceCite{Vafa1} 中的计算；该文还从 Landau--Ginzburg 理论出发，给出了令人惊叹的 Calabi--Yau 流形上同调公式。
+\index{Landau--Ginzburg模型@Landau--Ginzburg 模型|hyperpage}\index{超空间|hyperpage}\index{超场|hyperpage}\index{手征超场|hyperpage}\index{超势|hyperpage}\index{手征环|hyperpage}\index{Landau--Ginzburg轨形@Landau--Ginzburg 轨形|hyperpage}\index{扭曲部分|hyperpage}
+
+\section{规范线性 \texorpdfstring{$\sigma$}{σ} 模型}\label{sec:gauged-linear-sigma-models}
+Witten 的规范线性 $\sigma$ 模型（GLSM）十分有用；在适当意义下，它在 Calabi--Yau 模型与 Landau--Ginzburg 理论之间作“插值”。与 Landau--Ginzburg 模型一样，这一理论可用\hyperref[sec:landau-ginzburg-models]{附录~\ref*{sec:landau-ginzburg-models}}概述的手征超场来表述。更多细节见 \SourceCite{Witten5}。GLSM 与\hyperref[sec:nonlinear-sigma-models]{附录~\ref*{sec:nonlinear-sigma-models}}讨论的非线性 $\sigma$ 模型之间的数学比较，在\hyperref[chap:mirror-theorem]{第~\ref*{chap:mirror-theorem} 章}的镜像定理中起关键作用。
+
+GLSM 是规范群为某个 $U(1)^s$ 的规范理论。与规范群相联系的是二维\emph{向量超场} $V_a$，$a=1,\ldots,s$。理论还包含 $k+r$ 个手征超场 $\Phi_i$、$i=1,\ldots,k$ 和 $P_j$、$j=1,\ldots,r$；其荷分别记为 $Q_{i,a}$ 和 $-q_{j,a}$，其中每个 $a$ 都有 $\sum_jq_{j,a}=\sum_iQ_{i,a}$。荷说明超场如何在对称群 $U(1)_a$，即 $U(1)^s$ 的第 $a$ 个因子的作用下变换。理论还由超势 $W$ 决定；我们将看到，超势把 Calabi--Yau 超曲面的方程与 Landau--Ginzburg 势联系起来。超势是超场的全纯函数，在 $U(1)^s$ 的作用下不变。这里限于形如 $W=\sum_{j=1}^rP_jG_j(\Phi_1,\ldots,\Phi_k)$ 的超势。
+
+作用量本身是四项之和：
+\begin{equation}\label{eq:glsm-action-decomposition}
+S=S_{\mathrm{kin}}+S_W+S_{\mathrm{gauge}}+S_{D,\theta},
+\end{equation}
+具体形式无须关注。这里只强调，作用量是所有超场的函数。作用量中有几个常数，衡量理论中某些耦合的强度：$e_j$ 为 $U(1)_j$ 的规范耦合常数，$r_j$ 决定某种超对称相互作用的强度。这些常数将在下面的式~\eqref{eq:glsm-bosonic-potential} 和~\eqref{eq:glsm-d-term} 中显式出现。
+
+暂且作简化假设 $r=1$，并以 $P$ 代替 $P_1$。因此超势为 $W=PG$，其中 $G$ 为某个多项式。本节稍后再回到 $r>1$ 的情形。将作用量中的项分成对易的\IndexLocation{indexloc:0084:451}玻色变量部分和反对易的\IndexLocation{indexloc:0313:451}费米变量部分，并考虑运动方程后，\IndexLocation{indexloc:0356:451}玻色部分的势为
+\begin{equation}\label{eq:glsm-bosonic-potential}
+U(\phi_i,p)=\sum_j\frac1{2e_j^2}D_j^2+\sum_\alpha|F_\alpha|^2,
+\end{equation}
+\SourcePage{452}
+其中
+\begin{equation}\label{eq:glsm-d-term}
+D_j=-e_j^2\left(\sum_iQ_{i,j}|\phi_i|^2-q_j|p|^2-r_j\right),
+\end{equation}
+而
+\begin{equation}\label{eq:glsm-f-term}
+\sum_\alpha|F_\alpha|^2=|G|^2+|p|^2\sum_i\left|\frac{\partial G}{\partial\phi_i}\right|^2.
+\end{equation}
+在式~\eqref{eq:glsm-d-term} 和~\eqref{eq:glsm-f-term} 中，$\phi_i,p$ 是超场 $\Phi_i,P$ 的某些标量玻色分量（顶分量）。换言之，可以将 $\phi_i,p$ 看成普通函数。
+
+我们将看到，$r_j$ 取值不同时，经典运动方程的解十分不同。Witten 将这些过渡称为理论中的\emph{相变}，见 \SourceCite{Witten5}。
+\SourceExampleNumber{B.5}{1}
+\begin{example}\label{ex:glsm-quintic-phases}
+设 $k=5$、$s=1$，每个 $i$ 都有 $Q_{i,1}=1$。选择超势 $W=PG(\Phi_1,\ldots,\Phi_5)$，其中 $G$ 是 $\Phi_i$ 的一般五次多项式。为使势最小，式~\eqref{eq:glsm-d-term} 的每一项与式~\eqref{eq:glsm-f-term} 右端的每一项都必须为零。注意，式~\eqref{eq:glsm-d-term} 为零意味着 $\sum_{i=1}^5|\phi_i|^2-5|p|^2-r_1=0$。须考虑两种情形：
+\begin{itemize}
+\item $r_1>0$。此时，式~\eqref{eq:glsm-d-term} 为零表明 $(\phi_1,\ldots,\phi_5)\ne0$。再由 $|p|^2\sum_i|(\partial G/\partial\phi_i)|^2=0$，得到 $p=0$，因为 $(\phi_1,\ldots,\phi_5)\ne0$，且 $G$ 一般，即定义光滑超曲面。式~\eqref{eq:glsm-d-term} 为零现在意味着 $\sum_i|\phi_i|^2=r_1$。接着考虑规范对称性，对 $U(1)$ 取商；根据 $Q_i$ 的选择，$U(1)$ 通过标量乘法作用于 $(\phi_1,\ldots,\phi_5)$，所得空间为 $\mathbb P^4$。最后，由式~\eqref{eq:glsm-f-term} 的右端还须令 $G=0$。因此，经典解的空间就是五次三维簇。
+\item $r_1<0$。此时，式~\eqref{eq:glsm-d-term} 为零表明 $p\ne0$。由式~\eqref{eq:glsm-f-term} 右端各项为零，首先得到每个 $\partial G/\partial\phi_i$ 为零。因 $G$ 一般，这意味着 $(\phi_1,\ldots,\phi_5)=(0,\ldots,0)$。再由式~\eqref{eq:glsm-d-term} 为零，得到 $|p|=\sqrt{-r_1/5}$。$p$ 本身只在规范变换 $p\mapsto u^{-5}p$、$u\in U(1)$ 的意义下确定。注意，$u$ 为五次单位根时，$p$ 保持不变。因此得到一个 Landau--Ginzburg 轨形。
+\end{itemize}
+所以，GLSM 在 Calabi--Yau 理论与 Landau--Ginzburg 理论之间作插值。
+\end{example}
+
+更一般地，可用环面几何描述 GLSM。$U(1)^s$ 在 $\Phi_i$ 上的作用给出在坐标为 $\phi_1,\ldots,\phi_k$ 的 $\mathbb C^k$ 上的作用。用\hyperref[subsec:toric-symplectic]{第~\ref*{subsec:toric-symplectic} 小节}的术语说，这个作用是 Hamilton 作用，其矩映射 $\mu:\mathbb C^k\to\mathbb R^s$ 为
+\[
+\mu(\phi_1,\ldots,\phi_k)
+=\frac12\left(\sum_iQ_{i,1}|\phi_i|^2,\ldots,\sum_iQ_{i,s}|\phi_i|^2\right).
+\]
+可以证明，GLSM 的 Calabi--Yau 相，粗略地对应于 $\vec r=(r_1,\ldots,r_s)$ 位于 $\mathbb R^s$ 的某个锥中；该锥是环面簇
+\[
+X_{\vec r}=\mu^{-1}(\vec r/2)/U(1)^s
+\]
+的 Kähler 锥。
+\SourcePage{453}
+这里使用的是\hyperref[subsec:toric-reduction]{第~\ref*{subsec:toric-reduction} 小节}讨论的环面簇的辛构造。这种构造方法是 GLSM 的关键成分。此外，$G\in\mathbb C[\phi_1,\ldots,\phi_k]$ 是\hyperref[subsec:homogeneous-ring]{第~\ref*{subsec:homogeneous-ring} 小节}意义下的齐次多项式，因此 $G=0$ 给出 $X_{\vec r}$ 中的一个 Calabi--Yau 超曲面。所以，随着 $\vec r$ 改变，GLSM 的 Calabi--Yau 相对应于\hyperref[sec:gkz-decomposition]{第~\ref*{sec:gkz-decomposition} 节}中 GKZ 分解的某些锥。不过，理论还有其他相，如 Landau--Ginzburg 相，来自 GKZ 分解之外的锥。它们对应于 \SourceCite{MP1} 中描述的\emph{扩大 GKZ 分解}或\emph{扩大次级扇}中的锥。
+
+到目前为止，讨论中一直假设 $r=1$。当 $r>1$ 时，超势为 $W=\sum_aP_aG_a$，其中 $G_a$ 仍为环面意义下的齐次多项式。这样的 GLSM 的一个 Calabi--Yau 相仍给出环面簇，但现在要考虑 Calabi--Yau 完全交 $G_1=\cdots=G_r=0$。
+
+线性 $\sigma$ 模型与非线性 $\sigma$ 模型有一项重要差别。为明确起见，考虑上面的例子，假定 $r_1>0$，即处于 Calabi--Yau 相。在非线性 $\sigma$ 模型中，场是 $\mathbb P^4$ 上的局部坐标；在线性模型中，场是 $\mathbb C^5$ 上的坐标，再对标量作用取商。因此，对非线性 $\sigma$ 模型，须考虑全纯瞬子，即亏格为零的曲线 $C$ 到 $\mathbb P^4$ 的次数为 $d$、像落在 $G=0$ 上的全纯映射。对 GLSM，则使用五元组 $(f_1(s,t),\ldots,f_5(s,t))$，其中 $f_i$ 是固定次数 $d$ 的齐次多项式，满足 $G(f_1,\ldots,f_5)=0$；这里将 $(s,t)$ 视为 $\mathbb P^1$ 的齐次坐标。但这并非精确的一一对应：五元组 $(f_1(s,t),\ldots,f_5(s,t))$ 未必来自一个次数为 $d$ 的全纯映射，因为 $f_i$ 可能有公因子；若尝试将其解释为映射，在去掉基点后次数会降低。这些五元组，或称\emph{朴素瞬子}，更容易处理；在 GLSM 的框架中，它们已被用来为\IndexLocation{indexloc:0360:453}\IndexLocation{indexloc:0836:453}镜像对称提供有力支持，见 \SourceCite{MP1}。\hyperref[sec:quintic-mirror-theorem]{第~\ref*{sec:quintic-mirror-theorem} 节}定义的映射 $\varphi:M_d\to N_d$，可描述为全纯瞬子与朴素瞬子之间的比较。
+\index{规范线性sigma模型@规范线性 $\sigma$ 模型|hyperpage}\index{相变|hyperpage}\index{扩大GKZ分解@扩大 GKZ 分解|hyperpage}\index{扩大次级扇|hyperpage}\index{朴素瞬子|hyperpage}
+
+\section{拓扑量子场论}\label{sec:topological-qft}
+\hyperref[sec:general-field-theories]{附录~\ref*{sec:general-field-theories}}简要介绍了一般量子场论。这种理论由态的 Hilbert 空间 $\mathcal H$ 及其上的某些算子描述，算子编码粒子的传播和相互作用。现在解释什么是\emph{拓扑量子场论}（TQFT）。我们将看到，Frobenius 代数和\IndexLocation{indexloc:1111:453}量子上同调自然地出现在这一背景中。
+
+先讨论点粒子理论。令 $\mathcal H$ 为态空间，$\mathsf H$ 为通过量子化过程与 Hamilton 函数 $H$ 对应的算子。如式~\eqref{eq:quantum-unitary-time-evolution} 所述，态随时间的传播由酉算子 $\exp(-i\mathsf Ht)$ 给出。可以用长度为 $t$ 的区间示意这一传播过程：将 Hilbert 空间 $\mathcal H$ 与区间的每个端点相联系，将算子
+\[
+e^{-i\mathsf Ht}:\mathcal H\longrightarrow\mathcal H
+\]
+与区间相联系。这是一个 $(0+1)$ 维量子场论；$0$ 表示与 $\mathcal H$ 对应的端点的维数，$+1$ 表示连接这些端点所需要的额外时间维度。
+
+\SourcePage{454}
+为过渡到 TQFT，考虑哪些 $(0+1)$ 维理论的算子 $\exp(-i\mathsf Ht)$ 只依赖区间的拓扑。这个问题容易确定，因为我们要问的就是，$\exp(-i\mathsf Ht)$ 何时与 $t$ 无关。在 $t=0$ 处求导，得到必须有 $\mathsf H=0$。因此，任意 $t$ 都有 $\exp(-i\mathsf Ht)$ 为恒等算子。换言之，这个系统完全没有动力学，作为物理理论完全平凡，毫无趣味。
+
+这些理论就是 $(0+1)$ 维拓扑量子场论。将会看到，当 $d>0$ 时，$(d+1)$ 维 TQFT 远非平凡。
+
+现在给出拓扑量子场论的公理化定义。为明确起见，使用复系数。若要包含费米子，须使用超向量空间，即满足自然符号规则的 $\mathbb Z/2\mathbb Z$ 分次向量空间，见 \SourceCite{Manin1}。必要的修改留给感兴趣的读者。更广泛的论述见 \SourceCite{Quinn}。
+\begin{definition}\label{def:topological-qft}
+一个 $(d+1)$ 维\emph{拓扑量子场论}由下列资料组成：
+\begin{itemize}
+\item 对每个闭的定向 $d$ 维流形 $Y$，指定一个有限维复向量空间 $Z(Y)$。这一向量空间在 $Y$ 的同构下按函子方式变换。
+\item 对每个定向 $(d+1)$ 维流形 $X$，其边界 $\partial X$ 是闭的定向 $d$ 维流形，指定一个元素 $Z_X\in Z(\partial X)$。这一元素在 $X$ 的同构下按函子方式变换。
+\end{itemize}
+这些资料还满足下列公理：
+\begin{enumerate}[label=\textbf{公理 \arabic*：},leftmargin=4.7em]
+\item $Z(Y_1\coprod Y_2)=Z(Y_1)\otimes Z(Y_2)$。
+\item 将空集视为闭的定向 $d$ 维流形时，有 $Z(\varnothing)=\mathbb C$。
+\item 将空集视为边界为空的定向 $(d+1)$ 维流形时，有 $Z_{\varnothing}=1\in Z(\varnothing)=\mathbb C$。
+\item 以 $\bar Y$ 表示 $Y$ 配备相反定向所得的流形，则 $Z(\bar Y)\simeq Z(Y)^*$，此同构在 $Y$ 的同构下按函子方式变换。特别地，若 $\partial X=(\coprod_{i=1}^k\bar Y_i)\coprod(\coprod_{j=1}^{\ell}Y'_j)$，则可将 $Z_X$ 视为
+\[
+Z_X\in\operatorname{Hom}_{\mathbb C}
+\left(\bigotimes_{i=1}^kZ(Y_i),\bigotimes_{j=1}^{\ell}Z(Y'_j)\right),
+\]
+这里使用了本条公理与公理 1。还假设，在自然的识别下，$Z_{\bar X}$ 是 $Z_X$ 的对偶映射。
+\item 以 $I$ 表示定向区间 $[0,1]$。令 $Y$ 为任意闭的、无边界定向 $d$ 维流形，并置 $X=Y\times I$，则 $\partial X=\bar Y\coprod Y$。要求
+\[
+Z_X=1_{Z(Y)}\in\operatorname{Hom}_{\mathbb C}(Z(Y),Z(Y)),
+\]
+其中使用了公理 4。
+\item 若 $\partial X=\bar Y_1\coprod Y_2$ 且 $\partial X'=\bar Y_2\coprod Y_3$，则可沿 $Y_2$ 将 $X$ 与 $X'$ 粘合，得到边界为 $\bar Y_1\coprod Y_3$ 的新流形 $X\cup_{Y_2}X'$。由公理 4，可写成
+\[
+\begin{aligned}
+Z(\partial X)&=\operatorname{Hom}_{\mathbb C}(Z(Y_1),Z(Y_2)),\\
+Z(\partial X')&=\operatorname{Hom}_{\mathbb C}(Z(Y_2),Z(Y_3)),\\
+Z(\partial(X\cup_{Y_2}X'))&=\operatorname{Hom}_{\mathbb C}(Z(Y_1),Z(Y_3)).
+\end{aligned}
+\]
+要求 $Z_{X\cup_{Y_2}X'}=Z_{X'}\circ Z_X$。
+\end{enumerate}
+\end{definition}
+当 $d=0$ 时，这些公理很容易理解。可置 $\mathcal H=Z(\text{点})$，这是 $\mathbb C$ 上的有限维向量空间。将公理 5 用于
+\begingroup\linespread{1.14}\selectfont
+\SourcePage{455}
+$Y=\text{点}$，得到 $Z_I=1_{\mathcal H}$；这正是本节开头讨论 $(0+1)$ 维 TQFT 所得到的结论。此外，$S^1$ 是边界为空的定向一维流形，所以 $Z(S^1)\in Z(\varnothing)=\mathbb C$。可以如下计算这个数：将 $S^1$ 实现为两个单位区间 $I$ 的并。
+\begin{figure}[H]
+\centering\includegraphics[width=0.125523\textwidth]{b6-circle.png}
+\end{figure}
+现在使用公理 6，取
+\[
+X=I,\quad Y_1=\varnothing,\quad Y_2=\overline{\text{点}}\coprod\text{点},
+\quad X'=\bar I,\quad Y_3=\varnothing.
+\]
+结合公理 2、4、5，算得 $Z(S^1)=\dim\mathcal H$。由于任意紧致一维流形都是 $S^1,\bar S^1,I,\bar I$ 的不交并，上述公理说明，$(0+1)$ 维 TQFT 由 $\mathcal H=Z(\text{点})$ 唯一确定。还可证明，所有有限维复向量空间 $\mathcal H$ 都能以这种方式来自 $(0+1)$ 维 TQFT。
+
+现在转向 $d=1$ 的情形。目标是刻画 $(1+1)$ 维 TQFT，为此需要下面的定义。
+\begin{definition}\label{def:commutative-frobenius-algebra}
+\emph{交换 Frobenius 代数}是一个有限维、有单位元 $1$ 的交换结合代数 $(A,*)$，配备非退化对称双线性配对 $\langle\ ,\ \rangle$，满足对所有 $a,b,c\in A$ 都有
+\begin{equation}\label{eq:frobenius-invariant-pairing}
+\langle a*b,c\rangle=\langle a,b*c\rangle.
+\end{equation}
+\end{definition}
+文献中有时使用其他等价定义。例如，某些公理体系给出满足一定性质的\emph{迹映射} $\epsilon:A\to\mathbb C$。按这里的约定，只须置 $\epsilon(a)=\langle a,1\rangle$。
+
+Frobenius 代数有十分丰富的结构。可定义三点关联函数 $\langle\ ,\ ,\ \rangle:A^{\otimes3}\to\mathbb C$，令所有 $a,b,c\in A$ 都满足
+\[
+\langle a,b,c\rangle=\langle a*b,c\rangle.
+\]
+由式~\eqref{eq:frobenius-invariant-pairing} 和交换性，\IndexLocation{indexloc:0341:455}三点函数对各自变量完全对称。类似地，对任意 $n$，可定义 $n$ 点关联函数为
+\begin{equation}\label{eq:frobenius-n-point-function}
+\langle a_1,\ldots,a_n\rangle=\langle a_1*\cdots*a_{n-1},a_n\rangle,
+\end{equation}
+也可证明，它对各自变量完全对称。
+
+现在假设有一个 $(1+1)$ 维\IndexLocation{indexloc:1336:455}拓扑量子场论。固定一个标准的定向闭圆盘 $\Delta=\{z:|z|\leq1\}$，以 $S^1$ 表示其边界。置 $\mathcal H=Z(S^1)$，并将元素 $Z_\Delta\in Z(\partial\Delta)=Z(S^1)=\mathcal H$ 记为 $T_0$。我们将证明，$\mathcal H$ 有自然的 Frobenius 代数结构，以 $T_0$ 为单位元。
+
+容易在 $\mathcal H$ 上构造配对。复共轭给出的同构 $\bar S^1\simeq S^1$，通过公理 4 诱导同构 $\mathcal H\simeq\mathcal H^*$。以 $\langle\ ,\ \rangle$ 表示相应的非退化双线性配对。
+
+\SourcePage{456}
+接着须构造乘法 $*:\mathcal H\otimes\mathcal H\to\mathcal H$。为此，考虑如下的“裤形曲面” $\Sigma$：
+\begin{figure}[H]
+\centering
+\refstepcounter{equation}\label{eq:tqft-pair-of-pants}
+\makebox[\textwidth]{\makebox[0pt][l]{(\theequation)}\hfill
+\raisebox{-.5\height}{\includegraphics[width=0.278940\textwidth]{b6-pants.png}}\hfill\mbox{}}
+\end{figure}
+选择 $\Sigma$ 的边界分支与 $\bar S^1\coprod\bar S^1\coprod S^1$ 的定向同构，两个 $\bar S^1$ 对应于式~\eqref{eq:tqft-pair-of-pants} 左侧的边界圆，$S^1$ 对应于右侧的边界圆。由公理 4，得到元素 $Z_\Sigma\in\operatorname{Hom}_{\mathbb C}(\mathcal H\otimes\mathcal H,\mathcal H)$。以 $*$ 表示 $Z_\Sigma$ 在 $\mathcal H$ 上定义的乘法。
+\begin{proposition}\label{prop:tqft-frobenius-algebra}
+乘法 $*$ 交换且结合。元素 $T_0$ 是 $*$ 的单位元，对所有 $a,b,c\in\mathcal H$ 都有恒等式
+\[
+\langle a*b,c\rangle=\langle a,b*c\rangle.
+\]
+因此，$\mathcal H$ 在 $*$ 下是 Frobenius 代数。
+\end{proposition}
+\begin{proof}
+将选定的同构 $\partial\Sigma\simeq\bar S^1\coprod\bar S^1\coprod S^1$，与交换前两个分支的 $\bar S^1\coprod\bar S^1\coprod S^1$ 的同构复合，便可得到另一个这样的同构。由函子性得到交换性。现在，将 $\Delta$ 粘到式~\eqref{eq:tqft-pair-of-pants} 中的一个边界 $\bar S^1$ 上，所得空间记为 $X$。由公理 6，可将 $Z_X$ 识别为 $\mathcal H$ 的自同态 $\phi\mapsto T_0*\phi$。另一方面，$X$ 与圆柱 $S^1\times I$ 定向保持同胚。由公理 5，有 $Z_X=1_{\mathcal H}$。比较两种计算，得到 $T_0$ 为 $*$ 的单位元。再选取 $\partial\Sigma$ 与 $\bar S^1\coprod\bar S^1\coprod\bar S^1$ 的同构，则 $Z_\Sigma\in\operatorname{Hom}_{\mathbb C}(\mathcal H\otimes\mathcal H\otimes\mathcal H,\mathbb C)$；这里仍用同一个符号 $Z_\Sigma$，稍微混用了记号。若在第三个边界分支上，将这一边界识别与同构 $\bar S^1\simeq S^1$ 复合，则算得 $Z_\Sigma(a,b,c)=\langle a*b,c\rangle$；若在第一个边界分支上作这一识别，则得到 $Z_\Sigma(a,b,c)=\langle a,b*c\rangle$。等式~\eqref{eq:frobenius-invariant-pairing} 随之成立。最后，为证明结合性，令 $\Sigma'$ 为挖去四个圆盘的二维球面，将 $\partial\Sigma'$ 与 $\bar S^1\coprod\bar S^1\coprod\bar S^1\coprod S^1$ 识别，得到 $Z_{\Sigma'}\in\operatorname{Hom}_{\mathbb C}(\mathcal H\otimes\mathcal H\otimes\mathcal H,\mathcal H)$。现在将 $\Sigma'$ 如下分解成两个裤形曲面：
+\begin{figure}[H]
+\centering\includegraphics[width=0.659693\textwidth]{b6-assoc-left.png}
+\end{figure}
+这表明 $Z_{\Sigma'}(a,b,c)=(a*b)*c$。不过，由于所处理的是\IndexLocation{indexloc:1336:456}拓扑量子场论，也可将 $\Sigma'$ 以
+\SourcePage{457}
+另一种方式分解成两个裤形曲面，即：
+\begin{figure}[H]
+\centering\includegraphics[width=0.659693\textwidth]{b6-assoc-right.png}
+\end{figure}
+第二幅图给出 $Z_{\Sigma'}(a,b,c)=a*(b*c)$。结合前面对 $Z_{\Sigma'}(a,b,c)$ 的计算，得到 $(a*b)*c=a*(b*c)$，这正是所需的结论。
+\end{proof}
+
+\looseness=-1 不难看出，$(1+1)$ 维 TQFT 由命题~\ref{prop:tqft-frobenius-algebra} 中描述的有限维 Frobenius 代数 $\mathcal H$ 唯一确定。这里不作证明，而是说明这些公理如何在实际中使用。例如，二维环面 $T^2$ 可由两个圆柱粘合得到。略微修改 $(0+1)$ 维情形中 $Z(S^1)$ 的计算，就得到 $Z(T^2)=\dim\mathcal H$。将两个圆盘粘合得到 $S^2$，则得到 $Z(S^2)=\langle T_0,T_0\rangle$。对其他闭的定向二维曲面 $\Sigma$，计算 $Z(\Sigma)$ 同样直接。
+
+\looseness=-1 得到 $(1+1)$ 维 TQFT 的 Frobenius 代数 $\mathcal H$ 后，还可在 TQFT 中解释式~\eqref{eq:frobenius-n-point-function} 的 $n$ 点函数。例如，$n=4$ 时，令 $\Sigma'$ 为挖去四个圆盘的二维球面，并将其边界与 $\bar S^1\coprod\bar S^1\coprod\bar S^1\coprod\bar S^1$ 识别。仿照命题~\ref{prop:tqft-frobenius-algebra} 证明中的论证，可以说明，对所有 $a,b,c,d\in\mathcal H$，四点函数由
+\[
+\langle a,b,c,d\rangle=Z_{\Sigma'}(a,b,c,d)
+\]
+给出。更一般地，$n$ 点函数可用挖去 $n$ 个圆盘的二维球面来定义。
+
+\looseness=-1 如\hyperref[sec:nonlinear-sigma-models]{附录~\ref*{sec:nonlinear-sigma-models}}所述，A 模型是依赖于复化 Kähler 类选择的 $(1+1)$ 维 TQFT。那么，它的底层 Frobenius 代数是什么？在该节中已经将 $\mathcal H$ 与 $H^*(X)$ 识别。配对由
+\[
+\langle T_1,T_2\rangle=\int_XT_1\cup T_2
+\]
+定义，而乘法 $*$ 就是量子乘法！\footnote{这里实际上必须使用超向量空间。这一点很明显，因为量子乘法是超交换的，见定理~\ref{thm:small-quantum-ring}。}这样便得到结合的量子上同调环。迹映射为 $\epsilon(T)=\int_XT$。若 $X$ 一般，即未必是 Calabi--Yau 流形，这个量子乘法来自称为\emph{拓扑 $\sigma$ 模型}的物理理论。已经看到，量子乘法由式~\eqref{eq:tqft-pair-of-pants} 的裤形曲面编码；将这些曲面粘合，可以得到挖去若干圆盘的更高亏格 Riemann 曲面 $\Sigma_g$。为边界圆适当选择定向，便得到亏格为 $g$ 的关联函数 $Z_{\Sigma_g}:\mathcal H^{\otimes n}\to\mathbb C$。它们推广了上述 $n$ 点关联函数，后者全部是亏格为零的关联函数。将 $\mathcal H$ 与 $H^*(X,\mathbb C)$ 识别后，这些更高亏格的关联函数，与 \SourceCite{RT1} 中的一些不变量相识别。注意，\SourceCite{RT1} 中固定了复结构，
+\SourcePage{458}
+因而这些不变量是纯拓扑的，不依赖复结构。
+
+Frobenius 代数结构解释了，为什么在数学家能够证明量子上同调存在之前，物理学家就已知道它的存在。\hyperref[chap:quantum-cohomology]{第~\ref*{chap:quantum-cohomology} 章}已对量子上同调作了广泛的数学处理。量子上同调的物理解释见 \SourceCite{LVW}。
+
+最后还应提及，$(2+1)$ 维拓扑量子场论与 Jones 多项式有关。\SourceCite{Atiyah} 给出了很好的介绍。
+\index{拓扑量子场论|hyperpage}\index{Frobenius代数@Frobenius 代数|hyperpage}\index{迹映射|hyperpage}\index{裤形曲面|hyperpage}\index{拓扑sigma模型@拓扑 $\sigma$ 模型|hyperpage}
+\par\endgroup

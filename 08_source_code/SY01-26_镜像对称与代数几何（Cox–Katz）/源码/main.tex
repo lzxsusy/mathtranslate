@@ -1,0 +1,176 @@
+\documentclass[lang=cn,11pt,scheme=chinese,math=cm,thmcnt=section,usesamecnt]{elegantbook}
+\usepackage{unicode-math}
+\setmathfont{NewCMMath-Regular.otf}
+\renewcommand{\Box}{\mdlgwhtsquare}
+\renewcommand{\dashrightarrow}{\mathrel{\rightdasharrow}}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{tikz-cd}
+\usepackage{imakeidx}
+\makeindex[intoc,title=索引]
+\renewcommand{\bibname}{参考文献}
+\elegantnewtheorem{physicsconjecture}{物理学猜想}{thmstyle}{physconj}
+\elegantnewtheorem{physicsdefinition}{物理学定义}{defstyle}{physdef}
+\elegantnewtheorem{conjecture}{猜想}{thmstyle}{conj}
+% 原书的例题、练习和问题按所在小节编号；保留 ElegantBook 原生环境。
+\counterwithin{exam}{section}
+\counterwithin{exer}{section}
+\counterwithin{prob}{section}
+\renewcommand{\theHexam}{\thesection.\arabic{exam}}
+\renewcommand{\theHexer}{\thesection.\arabic{exer}}
+\renewcommand{\theHprob}{\thesection.\arabic{prob}}
+
+% 保留原书例题采用的节或小节前缀，仍使用原生 example 环境。
+\newcommand{\SourceExampleNumber}[2]{%
+  \renewcommand{\theexam}{#1.\arabic{exam}}%
+  \renewcommand{\theHexam}{#1.\arabic{exam}}%
+  \setcounter{exam}{\numexpr#2-1\relax}}
+\title{镜像对称与代数几何}
+\subtitle{Mirror Symmetry and Algebraic Geometry}
+\author{David A. Cox \quad Sheldon Katz}
+\date{}
+\cover{cover.jpg}
+\hypersetup{pdftitle={镜像对称与代数几何},pdfauthor={David A. Cox; Sheldon Katz},bookmarksdepth=1}
+\setcounter{tocdepth}{1}
+\setlength{\emergencystretch}{2em}
+
+% ElegantBook 先加载 hyperref 再加载 titlesec；显式启用 hyperref 的
+% titlesec 兼容处理，把目标随标题安放，避免分页时落在上一页。
+\makeatletter
+\def\ttl@Hy@steplink#1{%
+  \Hy@MakeCurrentHrefAuto{#1*}%
+  \edef\ttl@Hy@saveanchor{%
+    \noexpand\Hy@raisedlink{%
+      \noexpand\hyper@anchorstart{\@currentHref}%
+      \noexpand\hyper@anchorend
+      \def\noexpand\ttl@Hy@SavedCurrentHref{\@currentHref}%
+      \noexpand\ttl@Hy@PatchSaveWrite}}}
+\def\ttl@Hy@PatchSaveWrite{%
+  \begingroup
+    \toks@\expandafter{\ttl@savewrite}%
+    \edef\x{\endgroup
+      \def\noexpand\ttl@savewrite{%
+        \let\noexpand\@currentHref\noexpand\ttl@Hy@SavedCurrentHref
+        \the\toks@}}%
+    \x}
+\def\ttl@Hy@refstepcounter#1{%
+  \let\ttl@b\Hy@raisedlink
+  \def\Hy@raisedlink##1{%
+    \def\ttl@Hy@saveanchor{\Hy@raisedlink{##1}}}%
+  \refstepcounter{#1}%
+  \let\Hy@raisedlink\ttl@b}
+\makeatother
+
+% 源页锚点仅用于校对定位；原书 PDF 物理页码从 1 起算。
+\makeatletter
+\newcommand{\SourcePage}[1]{\hypertarget{source:#1}{}%
+  \begingroup
+  \def\@currentlabel{}\def\@currentlabelname{}\def\@currentHref{source:#1}%
+  \let\@bsphack\relax\let\@esphack\relax
+  \label{orig:#1}\endgroup}
+\newcommand{\IndexLocation}[1]{\hypertarget{#1}{}%
+  \begingroup\def\@currentlabel{}\def\@currentlabelname{}\def\@currentHref{#1}%
+  \let\@bsphack\relax\let\@esphack\relax\label{#1}\endgroup}
+\newcommand{\IndexSubSubSubItem}{\@idxitem\hspace*{40\p@}}
+\makeatother
+% 原索引页码由源页标签换算为译本页码；同页去重，相邻页合并为范围。
+\ExplSyntaxOn
+\seq_new:N \l__mirror_index_pages_seq
+\int_new:N \l__mirror_index_start_int
+\int_new:N \l__mirror_index_end_int
+\bool_new:N \l__mirror_index_first_bool
+\cs_new_protected:Npn \__mirror_index_output_range:
+ {
+  \bool_if:NF \l__mirror_index_first_bool {,\allowbreak\space}
+  \bool_set_false:N \l__mirror_index_first_bool
+  \hyperlink{page.\int_use:N\l__mirror_index_start_int}
+   {\int_use:N\l__mirror_index_start_int}
+  \int_compare:nNnF {\l__mirror_index_start_int}={\l__mirror_index_end_int}
+   {--\hyperlink{page.\int_use:N\l__mirror_index_end_int}
+      {\int_use:N\l__mirror_index_end_int}}
+ }
+\NewDocumentCommand{\IndexPageList}{o m}
+ {
+  \group_begin:
+  \seq_clear:N \l__mirror_index_pages_seq
+  \clist_map_inline:nn {#2}
+   {
+    \int_set:Nn \l_tmpa_int {\getpagerefnumber{orig:##1}}
+    \IfValueT{#1}
+     {\cs_if_exist:cT {r@indexloc:#1:##1}
+       {\int_set:Nn \l_tmpa_int {\getpagerefnumber{indexloc:#1:##1}}}}
+    \int_compare:nNnT {\l_tmpa_int}>{0}
+     {\seq_put_right:Nx \l__mirror_index_pages_seq {\int_use:N\l_tmpa_int}}
+   }
+  \seq_remove_duplicates:N \l__mirror_index_pages_seq
+  \seq_sort:Nn \l__mirror_index_pages_seq
+   {\int_compare:nNnTF {##1}>{##2}{\sort_return_swapped:}{\sort_return_same:}}
+  \int_zero:N \l__mirror_index_start_int
+  \int_zero:N \l__mirror_index_end_int
+  \bool_set_true:N \l__mirror_index_first_bool
+  \seq_map_inline:Nn \l__mirror_index_pages_seq
+   {
+    \int_compare:nNnTF {\l__mirror_index_start_int}={0}
+     {\int_set:Nn\l__mirror_index_start_int{##1}\int_set:Nn\l__mirror_index_end_int{##1}}
+     {
+      \int_compare:nNnTF {##1}={\l__mirror_index_end_int+1}
+       {\int_set:Nn\l__mirror_index_end_int{##1}}
+       {\__mirror_index_output_range:\int_set:Nn\l__mirror_index_start_int{##1}\int_set:Nn\l__mirror_index_end_int{##1}}
+     }
+   }
+  \int_compare:nNnTF {\l__mirror_index_start_int}>{0}
+   {\__mirror_index_output_range:}{\textbf{??}}
+  \group_end:
+ }
+\ExplSyntaxOff
+% 原书的字母式书目标签逐项链接到完整参考文献条目。
+\ExplSyntaxOn
+\bool_new:N \l__mirror_cite_first_bool
+\NewDocumentCommand{\SourceCite}{o m}
+ {
+  \group_begin:
+  \upshape [
+  \bool_set_true:N \l__mirror_cite_first_bool
+  \clist_map_inline:nn {#2}
+   {
+    \bool_if:NF \l__mirror_cite_first_bool {,\allowbreak\space}
+    \bool_set_false:N \l__mirror_cite_first_bool
+    \hyperlink{bib:##1}
+     {\str_case:nnF {##1}{{Huebsch}{Hübsch}{GoP}{GöP}{Tjotta}{Tjøtta}{BjoD}{BD}{KaS}{KS}{Gottsche}{Göttsche}{Kollar}{Kollár}}{##1}}
+   }
+  \IfValueT{#1}{,\nobreakspace #1}
+  ]\group_end:
+ }
+\ExplSyntaxOff
+
+\begin{document}
+\maketitle
+\hypersetup{pageanchor=true}
+\frontmatter
+\tableofcontents
+\input{chapters/preface}
+\input{chapters/notation}
+\mainmatter
+\input{chapters/chapter01}
+\input{chapters/chapter02}
+\input{chapters/chapter03}
+\input{chapters/chapter04}
+\input{chapters/chapter05}
+\input{chapters/chapter06}
+\input{chapters/chapter07}
+\input{chapters/chapter08}
+\input{chapters/chapter09}
+\input{chapters/chapter10}
+\input{chapters/chapter11}
+\input{chapters/chapter12}
+\appendix
+\input{chapters/appendixA}
+\input{chapters/appendixB}
+\input{chapters/appendixC}
+\input{chapters/references}
+\input{chapters/index}
+\end{document}
+
+
+
+
