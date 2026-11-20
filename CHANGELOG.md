@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## SY01-17 Bocklandt《同调镜像对称性浅入门》中译二轮校订 + sy0117 32 张资料卡 — 2026-11-20
+
+- 二轮独立校订：12 章各由一名审稿人通读，主校逐条复核；共 **89 处**修订（ch01 8、ch02 6、ch03 4、ch04 9、ch05 11、ch06 8、ch07 9、ch08 14、ch09 7、ch10 3、ch11 6、ch12 4），只改确定的误译/漏译、数学错误、记号错误与体例错误，纯风格问题不改。用二轮结果覆盖 `reports/ch01.md`–`ch12.md`、`审校报告.md`、`审校批注索引.md`、`reports/notes_index.md`、`appendix_notes.tex`；首轮原件仅本地备份于 `reports/_v1_archive/`，不随仓。
+- 代表修正：ch01 `Top_*` 态射补“连续”；ch02 面映射补回 $x_0$；ch05 辛形式补 $i$ 与 $dz\wedge d\bar z$；ch07 统一“反 Fano/一般型”术语并修例 7.90 矩阵阶数；ch08 三维 LG 模型统一为 $UV=W_t$；ch10 三穿孔球面改 $\mathbb C\setminus\{0,1\}$；ch11 删除定理中未使用的 $A$；ch12 $\Lambda_Z\to E_Z^{\pm}$。
+- 90 条校订批注保留，仅 ch10 批注 $2-k\to k-2$；本轮未新增或删除批注。本机无英文原书与页面图像，二轮以中译内部数学一致性、记号、术语、交叉引用与体例自洽为主，**未逐页对照英文原文**，报告如实说明。
+- 新增 `datasets/sy0117/`：**20 张概念卡 + 12 张勘误卡 = 32 卡**；每张概念卡至少 1 条批注（易错预警/含糊点拨/背景直觉），勘误卡记 `location/original/corrected/why/note`；anchor 全部指向 `08_source_code/SY01-17_同调镜像对称性浅入门/源码/chapters/chNN.tex:A-B`；`tools/make_cards.py --check` 输出 `OK 32 cards (20 concepts, 12 corrections)`；全部 `reviewed` + `source-only`。
+- 更新 `08_source_code/SY01-17_同调镜像对称性浅入门/` 的源码与工程文件；`README.md` 升 v3.0（89 处修订、90 条批注、32 张卡）。重编译 **365 页**，`undefined_refs=0 duplicate_dest=0 overfull=0 missing_glyph=0`。
+- 合规：底本为在版图书，按 `RELEASE_REGISTER.csv` 的 SY01-17 条目（成品不公开、L4 禁入）执行；仓库只收源码、工程文件与资料卡，不收 PDF、不收原书扫描件。
+
 ## SY01-26 Cox–Katz《镜像对称与代数几何》中译校订本 + 逐页对照全校订 + 24 张资料卡 — 2026-11-20
 
 - 新增 `08_source_code/SY01-26_镜像对称与代数几何（Cox–Katz）/`：David A. Cox、Sheldon Katz *Mirror Symmetry and Algebraic Geometry*（AMS Mathematical Surveys and Monographs **66**, 1999；ISBN 978-0-8218-1059-0，xx + 469 页）全书中译本的校订版。底本扫描件 495 页、纯图像无文本层；译本原 403 页，校订后 **410 页**（新增附录 C 译注汇编 7 页），XeLaTeX 三遍 + biber，0 Overfull。
