@@ -1,0 +1,350 @@
+% ============================================================
+%  第一讲  曲线的镜像
+% ============================================================
+\section{第一讲：曲线的镜像与 wrapped Fukaya 范畴}
+
+本讲给出全部构造的起点：超曲面的镜像 Landau--Ginzburg 模型由 Laurent 多项式的热带化读出；随后用单项式容许性定义 $Y$ 上的 wrapped Fukaya 范畴；最后在裤子的情形把两端算到底。
+
+\subsection{从超曲面到 Landau--Ginzburg 模型}
+\origpage{1}
+
+设 $H^{n-1}\subset V^n$ 是超曲面。系数域取非阿基米德域，例如 Novikov 域；最简单的情形不需要这个假设。最典型的例子是热带极限附近的一族退化复超曲面。环境簇 $V^n$ 可以是代数环面、环簇或阿贝尔簇。由这些数据可以得到一个镜像 Landau--Ginzburg 模型 $(Y,W)$，其中 $Y$ 是 Calabi--Yau $(n+1)$ 维簇，$W\in\OO(Y)$ 是超势。注意 $W$ 依赖于嵌入的选取。
+
+\begin{remark}
+这里 $Y$ 的维数是 $n+1$，比 $H$ 的维数大 2。多出来的两维并非冗余：$W$ 的光滑纤维是 $n$ 维的 $\left(\C^*\right)^n$，而临界轨迹的维数是 $n-1$，正与 $H$ 相配。Knörrer 周期性（见~\S\ref{sec:knonrer}）把这两维"约掉"。
+% [Tutor Note: 点拨] 记住 $Y$ 的维数是 $n+1$。初读时容易把 $Y$ 当成 $n$ 维，于是后面"$w_0$ 的光滑纤维是 $(\C^*)^n$"就无法与维数对上。来源：原书第 1 页正文与注 1。
+\end{remark}
+
+具体的构造如下。记
+\[
+H=f^{-1}(0),\qquad
+f(x)=\sum_{\alpha\in A\subset\Z^n} c_\alpha\, t^{\rho(\alpha)} x^\alpha
+\]
+为 Laurent 多项式，令 $t\to 0$。这里 $A$ 有限，$\rho\colon A\to\R$ 是把系数写成 $t$ 的幂次的形式。$f$ 的热带化为
+\begin{equation}
+\varphi(\xi)=\max_{\alpha\in A}\bigl(\langle\alpha,\xi\rangle-\rho(\alpha)\bigr),
+\qquad \xi\in\R^n .
+\label{eq:trop}
+\end{equation}
+
+现在取环 Calabi--Yau 簇 $(Y,\omega)$，使其矩多胞形为
+\[
+\Delta_Y=\bigl\{(\xi,\eta)\ \bigl|\ \eta\ge\varphi(\xi)\bigr\}\subseteq\R^{n+1},
+\]
+并令
+\[
+W_0=-z^{(0,\dots,0,1)}
+\]
+为环单项式，它在 $Y$ 的每个环除子上零化 1 阶。于是 $(Y,W_0)$ 是 $H\subset\left(\C^*\right)^n$ 的镜像；按 SYZ 的观点，它给出一个沿 $H$ 具 Morse--Bott 奇点的 LG 模型。
+
+\begin{remark}
+$z^{(0,\dots,0,1)}$ 里的指数向量并不逐坐标地指某个原始坐标，而是与多胞形中 $\eta$ 方向对偶的特征标。在具体例子里它展开成 $Y$ 的各 Cox 坐标之积：$\C^3$ 上是 $z_1z_2z_3$，$\Tot\bigl(\OO(-3)\to\PP^2\bigr)$ 上是 $uz_0z_1z_2$。这也解释了"在每个环除子上零化 1 阶"这句话：多胞形的每个面都形如 $\eta=\langle\alpha,\xi\rangle-\rho(\alpha)$，其内法向与 $(0,\dots,0,1)$ 配对恰为 1。
+% [Tutor Note: 易错] $z^{(0,\dots,0,1)}$ 不是"最后一个坐标"，而是对偶于 $\eta$ 的特征标，在 Cox 坐标下展开为全部坐标之积。若按字面理解成 $z_{n+1}$，例 (1) 就会给出 $-z_3$ 而不是 $-z_1z_2z_3$。来源：原书第 1 页例 (1)(2) 对照。
+\end{remark}
+
+\begin{example}[裤子]\label{ex:pants}
+$n=2$，$z_1+z_2+1=0$。热带化给出 $\varphi(\xi)=\max(0,\xi_1,\xi_2)$，其图像是一族三片平面在三条射线上折起（图~\ref{fig:trop-pants}）。于是 $Y\cong\C^3$，
+\[
+w_0=-z_1z_2z_3 .
+\]
+更一般地，$T_{n-1}=\{x_1+\cdots+x_n+1=0\}$ 的镜像是 $\bigl(\C^{n+1},-\textstyle\prod_i z_i\bigr)$。
+\end{example}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.05,>=Stealth]
+  % 区域 eta >= phi
+  \fill[blue!8] (-2.4,-2.4) -- (3.0,-2.4) -- (3.0,3.0) -- (-2.4,3.0) -- cycle;
+  \fill[white] (-2.4,-2.4) -- (3.0,-2.4) -- (3.0,-2.4) -- cycle;
+  \begin{scope}
+    \clip (-2.4,-2.4) rectangle (3.0,3.0);
+    % 热带曲线：三条射线
+    \draw[very thick,red!70!black] (0,0) -- (3.0,0);
+    \draw[very thick,red!70!black] (0,0) -- (0,3.0);
+    \draw[very thick,red!70!black] (0,0) -- (-2.4,-2.4);
+    % 三个区域标号（phi 的三片）
+    \node at (1.6,1.5) {\footnotesize $\eta=\xi_1$};
+    \node at (-1.2,1.6) {\footnotesize $\eta=\xi_2$};
+    \node at (1.5,-1.4) {\footnotesize $\eta=0$};
+    % 区域着色
+    \fill[blue!14] (0,0) -- (3.0,0) -- (3.0,3.0) -- (0,3.0) -- cycle;
+    \fill[blue!8] (0,0) -- (-2.4,-2.4) -- (-2.4,3.0) -- (0,3.0) -- cycle;
+    \fill[blue!14] (0,0) -- (-2.4,-2.4) -- (3.0,-2.4) -- (3.0,0) -- cycle;
+    \draw[very thick,red!70!black] (0,0) -- (3.0,0);
+    \draw[very thick,red!70!black] (0,0) -- (0,3.0);
+    \draw[very thick,red!70!black] (0,0) -- (-2.4,-2.4);
+  \end{scope}
+  \draw[->] (-2.5,0) -- (3.2,0) node[right] {\footnotesize $\xi_1$};
+  \draw[->] (0,-2.5) -- (0,3.2) node[above] {\footnotesize $\xi_2$};
+  \fill (0,0) circle (1.6pt);
+  \node[below right] at (0,0) {\footnotesize $0$};
+\end{tikzpicture}
+\caption{裤子例的热带化：$\eta\ge\varphi(\xi)=\max(0,\xi_1,\xi_2)$ 的三片。折线（红线）即 $\eta=\varphi(\xi)$ 的投影。（原稿第 1 页）}
+\label{fig:trop-pants}
+\end{figure}
+
+\begin{example}[$\PP^2$ 中的三次曲线附近]\label{ex:o3}
+$n=2$，
+\[
+x_1+x_2+\frac{t}{x_1x_2}+1=0 .
+\]
+热带曲线是一个带一个洞的三角形（图~\ref{fig:trop-o3}）。于是 $Y\cong\Tot\bigl(\OO(-3)\to\PP^2\bigr)$，而
+\[
+w_0=-u\,z_0z_1z_2 ,
+\]
+其中 $u$ 是纤维坐标。
+\end{example}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.95,>=Stealth]
+  \draw[very thick,red!70!black] (0,0) -- (2.6,0);
+  \draw[very thick,red!70!black] (0,0) -- (150:2.6);
+  \draw[very thick,red!70!black] (0,0) -- (240:2.6);
+  \draw[very thick,red!70!black] (1.3,2.25) -- (2.6,0) -- (0,0) -- (1.3,2.25);
+  \draw[very thick,red!70!black] (1.3,2.25) -- (1.3,3.3);
+  \draw[dashed] (1.3,2.25) circle (0.22);
+  \node at (1.3,1.1) {\footnotesize 一个洞};
+  \node at (-0.2,-0.3) {\footnotesize $0$};
+\end{tikzpicture}
+\caption{例~\ref{ex:o3} 的热带曲线：一个带有一个有界面的三角形。（原稿第 1 页）}
+\label{fig:trop-o3}
+\end{figure}
+
+\begin{remark}\label{rem:fib}
+关于 $w_0$：
+\begin{enumerate}[label=(\arabic*)]
+  \item $w_0$ 的光滑纤维同构于 $\left(\C^*\right)^n$；
+  \item 奇纤维 $w_0^{-1}(0)$ 等于 $Y$ 中若干边界层之并；
+  \item 临界轨迹等于若干余维 2 环层之并。对极大退化（即"热带光滑"）的曲线，它是一族 $\C^*$ 与 $\PP^1$ 的三价构形。
+\end{enumerate}
+\end{remark}
+
+第 (3) 条是后面两讲的枢纽：曲线的镜像 $Y$ 的临界轨迹是一条由 $\C^*$ 和 $\PP^1$ 组成的三价图，曲线 $H$ 的信息全部编码在这个图上。
+
+\begin{remark}[线丛情形]\label{rem:linebundle}
+在简单例子中，$Y$ 是某个底簇 $Z$ 上的线丛，而
+\[
+w_0=u\cdot\sigma ,
+\]
+其中 $u$ 是纤维坐标（相对于底的方向），$\sigma\in H^0\bigl(Z,K_Z^{-1}\bigr)$ 是底上的函数。由 Orlov 的 Knörrer 周期性，
+\[
+\dsg(Y,w_0)\simeq\db\Coh\bigl(\sigma^{-1}(0)\bigr),
+\]
+右端通常是奇异的，它是 $(n-1)$ 维的镜像。例如：
+\begin{enumerate}[label=(\arabic*)]
+  \item 裤子 $\{x_1+x_2+1=0\}$ 对应 $\{z_1z_2=0\}\subset\C^2$，其中 $\sigma\colon\C^2\to\C$ 是 $\C^2$ 的镜像函数；类似地 $T_{n-1}$ 对应 $\{\prod_i z_i=0\}\subset\C^n$；
+  \item 例~\ref{ex:o3} 对应 $\{z_0z_1z_2=0\}\subset\PP^2$。
+\end{enumerate}
+\end{remark}
+
+亏格更高时，这类镜像带栈结构且非既约，本册不予考虑。
+
+% [Tutor Note: 易错] 加上 $w_V$ 之后，"卷绕"的方向变了：紧化引入的单项式使部分拉格朗日沿纤维方向被推向无穷，而 $w_0$ 与 $w_V$ 中出现的单项式只在小范围内变动。若把两者一并卷绕，得到的范畴会失去 $\db\Coh(H)$ 的有限性。来源：原书第 2 页与第 3 页的对照。
+\subsection{\texorpdfstring{环簇情形：加上 $w_V$}{环簇情形：加上 w\_V}}
+\origpage{2}
+
+设 $H\subset V^n$ 是环簇，且 $V$ 为 Fano（或更一般地，$-K_V$ 丰沛）。$H$ 由
+\[
+f(x)=\sum_{\alpha\in A}c_\alpha\,t^{\rho(\alpha)}x^\alpha\in H^0(V,\LL)
+\]
+定义，其中 $\Conv(A)=\Newt(\LL)$。此时镜像为
+\[
+\bigl(Y^{n+1},\;w_0+w_V\bigr),
+\]
+其中 $Y$ 与前面相同，即由 $\Trop(f)$ 确定的环 Calabi--Yau 簇；超势多了若干项，$\Sigma_V$ 的每条射线贡献一项：
+\begin{equation}
+w_V=\sum_{\nu\in\mathrm{ray}(\Sigma_V)} T^{c(\nu)}\,z^{(\nu,\lambda(\nu))},
+\label{eq:wV}
+\end{equation}
+这里 $\lambda\colon\Sigma_V\to\R$ 是分段线性函数，它下降给出 $\LL=\OO(H)$。直观地，$\lambda$ 把扇的每条射线 $\nu$ 提升到 $\R^{n+1}$ 中的点 $(\nu,\lambda(\nu))$，而 $z^{(\nu,\lambda(\nu))}$ 就是与该点对应的单项式。
+
+\begin{example}\label{ex:p2line}
+$\{x_0+x_1+x_2=0\}\subset\PP^2$ 对应
+\[
+\Bigl(\C^3,\;-z_1z_2z_3+T(z_1+z_2+z_3)\Bigr),
+\]
+其中第一项是 $w_0$，第二项是 $w_V$。
+\end{example}
+
+\begin{example}\label{ex:cubic}
+设 $C\subset V_\Delta$ 是光滑三次曲线。它对应
+\[
+\Bigl(Y=\Tot\bigl(\OO(-3)\to\PP^2\bigr)\ \text{（坐标为 }[z_0:z_1:z_2]\text{）},\;
+-u\,z_0z_1z_2+Tu\,(z_0^3+z_1^3+z_2^3)\Bigr).
+\]
+这里 $w_V$ 沿一条光滑的三次椭圆曲线为 Morse--Bott。
+\end{example}
+
+\begin{example}\label{ex:genusg}
+亏格 $g$ 的曲线嵌入环 del Pezzo 曲面，$g\ge2$，对应
+\[
+\crit(w_0+w_V)=\text{由 }(3g-3)\text{ 条 }\PP^1\text{ 在 }(2g-2)\text{ 个结点处相接的双色构形}.
+\]
+例如亏格 2 的曲线对应图~\ref{fig:genus2} 右侧的图形。
+\end{example}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.9]
+  % 亏格 2 曲线
+  \draw[thick] (0,0.35) ellipse (1.05 and 0.62);
+  \draw[thick] (1.15,0.35) ellipse (1.05 and 0.62);
+  \node at (0.6,-0.55) {\footnotesize 亏格 $2$ 曲线};
+  \draw[->,thick] (2.6,0.35) -- (3.5,0.35);
+  % 双色构形：两个圈在两个结点处相接
+  \begin{scope}[xshift=5.4cm]
+    \draw[thick] (0,0.9) .. controls (1.2,1.35) and (1.2,-0.65) .. (0,0) ;
+    \draw[thick] (0,0.9) .. controls (-1.2,1.35) and (-1.2,-0.65) .. (0,0) ;
+    \draw[thick] (0,0.9) -- (0.55,1.6);
+    \draw[thick] (0,0) -- (0.55,-0.7);
+    \fill (0,0.9) circle (1.8pt);
+    \fill (0,0) circle (1.8pt);
+    \node at (0,-1.1) {\footnotesize $\crit(w_0+w_V)$};
+  \end{scope}
+\end{tikzpicture}
+\caption{亏格 2 曲线（左）与其镜像的临界轨迹（右）：两条 $\PP^1$ 在两点相接。（原稿第 2 页）}
+\label{fig:genus2}
+\end{figure}
+
+这些构造对阿贝尔簇同样成立，见例如 C. Cannizzo 的学位论文；对完全交也成立：$H^{n-k}\subset V^n$ 对应 $Y^{n+k}$，此时 $w_0$ 有 $k$ 项。
+
+\paragraph{HMS 的两条路线.}
+把 $H$ 的 Fukaya 范畴与镜像联系起来，有两条互补的路线。
+
+(A) \textbf{把 $Y$ 一侧算成 $H$ 一侧。} 有
+\[
+\mathcal W(H)\ \longleftrightarrow\ \dsg(Y,W),
+\]
+其中 $\mathcal W(H)$ 是 $H$ 的 wrapped Fukaya 范畴；等价地，经 Orlov 定理可以用 $\db\Coh\bigl(\sigma^{-1}(0)\bigr)$ 代替右端。这条路对曲线（在 $\left(\C^*\right)^2$ 中）已有大量工作：AAEKO、H. Lee、Nadler、Gammage--Shende、Lekili--Polishchuk 等。走向高维时用微局部层，GPS 给出同一结论。
+
+(B) \textbf{把 $H$ 一侧算成 $Y$ 一侧。} 从 $\db\Coh(H)$ 到 $\FF(Y,W)$ 有几条具体途径：
+\begin{enumerate}[label=(\arabic*)]
+  \item 经 plabic sheaves（Nadler）或 sectors（GPS），前提是 $Y$ 正合（weakly 正合即可）；
+  \item 经 Floer 理论的 wrapped Fukaya 范畴（Abouzaid--A.）；
+  \item 经 $\FF\bigl(\sigma^{-1}(0)\bigr)$：当 $Y$ 不能取正合时，用 Knörrer 周期性给出一个非 LG 的镜像（M. Jeffs）；
+  \item 直接在 $\crit(w)$（或 $\crit(w_0,w_V)$）上工作，绕开把 $H$ 嵌入 $V$ 的需要。对曲线的镜像，这就是要在 $\C^*$ 与 $\PP^1$ 的三价构形上做拉格朗日 Floer 理论（A.--Efimov--Katzarkov，进行中）。
+\end{enumerate}
+本册的重点是 (1)(2)，而 (4) 是第三讲的主题。
+
+% [Tutor Note: 直觉] 单项式容许性说的是：$L$ 在无穷远处只沿少数"许可方向"伸展，从而 $\arg z^\nu$ 在这些方向上局部常值。这是把非紧的 $Y$ 上"卷绕"这个概念变得可数的唯一办法——许可的单项式越少，可卷绕的方向越少，$\hom$ 越像有限维。来源：原书第 3 页对象定义三条。
+\subsection{单项式容许与 wrapped Fukaya 范畴}
+\origpage{3}
+
+本小节按 Abouzaid--A. 的办法，对环 LG 模型给出 wrapped Fukaya 范畴的一个特设（ad hoc）构造。这套构造可以用 sectors 的语言推广，但要注意 $Y$ 一般不正合。单项式容许性的想法也出现在 Hanlon 的学位论文中。
+
+\paragraph{对象.} $F(Y,W)$ 的对象是真嵌入的拉格朗日 $L\subset Y$，要求：
+\begin{itemize}
+  \item 平凡地无阻碍，即 $L$ 不边界任何全纯圆盘；
+  \item 带有额外数据：spin 结构、分次（grading）、局部系统；
+  \item \emph{单项式容许}：当 $|w_0|>1$ 时，$\arg(w_0)|_L$ 局部常值，即 $w_0|_L$ 落在若干径向弧之并中，且取值位于 $\left(-\frac{\pi}{2},\frac{\pi}{2}\right)$。
+\end{itemize}
+
+单项式容许的第二部分更技术些。回忆 $w_0$ 的纤维同构于 $\left(\C^*\right)^n$。在这些纤维的一个紧集之外，存在有限开覆盖 $\{U_j\}$ 与一族单项式 $z^\nu$，使得
+\[
+\arg(z^\nu)\big|_{L\cap U_j}\ \text{局部常值}
+\]
+并取指定的值（例如 $0$）。这里 $z^\nu$ 的取法有讲究：若 $V$ 紧，恰取 $w_V$ 中出现的那些单项式；否则要用 $\Newt(f)=\Conv(A)$ 选一个环紧化 $\ol V$，再取紧化带来的单项式。
+
+\paragraph{Hamilton 扰动.} 设 $L$ 容许，令 $L^t$ 为 $L$ 沿 Hamilton 同痕的扰动，仍要求容许。扰动在无穷远处增大 $\arg(w_0)$ 与 $\arg(z^\nu)$ 的值，分两种情形：
+\begin{itemize}
+  \item 对 $w_0$ 以及出现在 $w_V$ 中的 $z^\nu$，增量停留在有界区间内，故不产生卷绕（no wrapping）；
+  \item 对其他单项式（来自紧化、出现在 $w_V$ 中但不在 $w_0$ 中者），增量趋于无穷，产生卷绕（wrap）。
+\end{itemize}
+于是定义
+\[
+\hom(L_0,L_1)=\varinjlim_{t\to\infty}\ CF^\bullet(L_0^t,L_1),
+\]
+极限沿自然的连续映射取。
+
+\begin{remark}\label{rem:hanlon}
+这些"纤维方向的部分卷绕"Hamilton 量，本质上就是 Hanlon 学位论文中作为环镜像族的单值群出现的那一批。在 $\FF\bigl(\left(\C^*\right)^n,w_V\bigr)\cong\db(\ol V)$ 上，相应的诱导函子在 HMS 下对应 $-\otimes\OO(D)$，其中 $D=\ol V\setminus V$ 是紧化除子。于是上面那个直极限在纤维方向等于一个局部化，它给出 $\db(\ol V)\to\db(V)$。
+\end{remark}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.9,>=Stealth]
+  % 面板 1：纤维 (C*)^2 与 L_0
+  \begin{scope}
+    \draw[thick] (0,0) rectangle (2.2,2.2);
+    \foreach \y in {0.45,0.95,1.45,1.95}{
+      \draw[blue!70!black,thick] (0.1,\y) .. controls (0.7,\y+0.18) and (1.5,\y-0.12) .. (2.1,\y+0.08);
+    }
+    \draw[thick] (1.1,0.05) -- (1.1,2.15);
+    \node[above] at (1.1,2.2) {\footnotesize $\ell_0$};
+    \node[blue!70!black] at (0.25,2.45) {\footnotesize $\ell_0^t$};
+    \node at (1.1,-0.35) {\footnotesize $w_0^{-1}(-1)\cong(\C^*)^2$};
+  \end{scope}
+  % 面板 2：三个 C^2 拼成的圆盘
+  \begin{scope}[xshift=3.6cm]
+    \draw[thick] (0,0) circle (1.1);
+    \draw[thick] (0,0) -- (90:1.1);
+    \draw[thick] (0,0) -- (210:1.1);
+    \draw[thick] (0,0) -- (330:1.1);
+    \node at (0.55,0.62) {\footnotesize $\C^2$};
+    \node at (-0.62,0.30) {\footnotesize $\C^2$};
+    \node at (0.05,-0.72) {\footnotesize $\C^2$};
+    \node at (0,-1.45) {\footnotesize 环紧化};
+  \end{scope}
+  % 面板 3：卷绕后的像
+  \begin{scope}[xshift=7.2cm]
+    \draw[thick] (0,0) rectangle (2.2,2.2);
+    \draw[blue!70!black,thick] (0.15,1.7) .. controls (0.8,1.2) and (0.5,0.7) .. (1.4,0.9)
+      .. controls (2.0,1.05) and (1.6,1.8) .. (2.05,1.6);
+    \draw[blue!70!black,thick] (0.15,0.8) .. controls (0.9,0.4) and (1.3,0.5) .. (2.05,0.55);
+    \draw[thick] (1.1,0.05) -- (1.1,2.15);
+    \node at (1.1,-0.35) {\footnotesize 单值群 $+$ 卷绕};
+  \end{scope}
+\end{tikzpicture}
+\caption{左：$w_0^{-1}(-1)\cong\left(\C^*\right)^n$ 中的 $\ell_0$ 及其扰动 $\ell_0^t$；中：$Y=\C^3$ 的三个 $\C^2$ 图卡给出的环紧化；右：单值群与卷绕 Hamilton 量作用下 $\ell_0$ 的像。（原稿第 3 页）}
+\label{fig:panels}
+\end{figure}
+
+图~\ref{fig:panels} 右panel的构造可以写得再具体些：卷绕后的像是
+\[
+\arg(z_i)=f_i\bigl(\log|z_i|\bigr),\qquad
+\arg(z_i)=0\ \text{当 } |z_i|\gg\min_j|z_j|,
+\]
+于是卷绕始终朝一个方向进行（在图上 $t\to\infty$）。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.95,>=Stealth]
+  \draw[thick] (0,0) -- (0.9,0) arc (180:0:1.4) -- (3.7,0);
+  \draw[thick] (0,0) -- (-0.9,0);
+  \node at (5.0,0) {\footnotesize $L_0$};
+  \draw[blue!70!black,thick] (0.15,0.12) -- (0.75,0.12) arc (0:-180:0.7 and 0.62) -- (3.55,0.15);
+  \node[blue!70!black] at (3.2,0.55) {\footnotesize 卷绕像};
+  \fill (0,0) circle (1.6pt);
+  \node[below] at (0,-0.9) {\footnotesize $\times 0$};
+  \node[above] at (1.9,-1.35) {\footnotesize U 形弧};
+\end{tikzpicture}
+\caption{$Y=\C^3$、$w_0=-z_1z_2z_3$ 时沿 U 形弧平行移动得到的 $L_0$（黑）及其卷绕像（蓝）。U 形弧的底部对应 $w_0$ 的临界值。（原稿第 3 页）}
+\label{fig:uarc}
+\end{figure}
+
+\subsection{裤子的计算}
+\origpage{4}
+
+在例~\ref{ex:pants} 的 $L_0$ 上把定义算到底。设 $\ell_0=\left(\R_+\right)^2\subseteq\left(\C^*\right)^2=w_0^{-1}(-1)$，$L_0$ 为沿 U 形弧平行移动所得。则
+\[
+\hom(L_0,L_0)\simeq CW^\bullet(\ell_0,\ell_0)\oplus CW^\bullet(\ell_0,\ell_0)[-1],
+\]
+其中两块的微分都是"乘以 $1+x_1+x_2$"，即
+\[
+CW^\bullet(\ell_0,\ell_0)=K\bigl[x_1^{\pm1},x_2^{\pm1}\bigr],
+\qquad \partial=\cdot\,(1+x_1+x_2).
+\]
+这是 Abouzaid--A. 的结果。于是
+\[
+H^\bullet\hom(L_0,L_0)\ \cong\ K\bigl[x_1^{\pm1},x_2^{\pm1}\bigr]\big/\bigl(1+x_1+x_2\bigr)
+\ \cong\ \hom(\OO,\OO),
+\]
+最后这个同构对裤子成立。注意 $(1+x_1+x_2=0)$ 就是裤子的方程，而 $K[x_1^{\pm1},x_2^{\pm1}]/(1+x_1+x_2)$ 正是裤子上的函数环。
+
+对一般的超曲面 $H\subset\left(\C^*\right)^n$，同样的计算给出 $L_0$ 与 $\OO_H$ 在 HMS 下相配；此外还需要一个生成性（generation）陈述，对裤子它是现成的。计算的形式完全一样，只是微分换成乘以 $H$ 的定义方程 $f$。合起来就得到裤子情形的 HMS。
+
+\begin{remark}
+这里出现了一个值得记住的现象：$L_0$ 的 Floer 上同调环与 $\OO$ 的自同态环一致，而后者只依赖曲线 $H$ 本身。换句话说，Floer 复形把 $H$ 上的函数环算了回来。第三讲要把这件事推广到任意三价构形，那时没有现成的 $H$ 可以参照，环结构本身就成了唯一的线索。
+% [Tutor Note: 直觉] 裤子情形之所以能算，是因为 $Y=\C^3$ 的每个坐标除子都只与 $L_0$ 交一次，Floer 复形只有三组生成元。一般曲线的镜像没有这么规整，这正是第三讲要引入三价构形与传播规则的原因。来源：原书第 4 页与第 16 页。
+\end{remark}
