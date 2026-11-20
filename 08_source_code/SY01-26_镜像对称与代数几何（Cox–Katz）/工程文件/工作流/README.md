@@ -40,6 +40,7 @@ OCR     = RapidOCR（onnxruntime，中英混排模型）
 | 13 | `04_核验workflow.js` | 逐卡核验卡片断言（外部文献 + 自算），24 张分 3 批 | `资料卡/_核验/MS-XX.json` |
 | 14 | `make_verify_report.py` | 汇总核验 JSON 为核验记录（✓/✗/△ 三判 + 本机复算表） | `资料卡/_核验记录.md` |
 | 15 | `verify_arith.py` / `verify_quintic.py` / `verify_instanton.py` | 本机复算：Betti/Euler 数、基础周期 ω₀、镜像映射 770、K(q) 前四项 | 控制台输出（已录入核验记录第三节） |
+| 16 | `verify_quintic_frobenius.py` | 按 §5.6 式 (5.72) 的闭式独立复算五次簇瞬子数 n₁..n₁₀（Fraction 精确算术，<1 s，输出 `*** ALL MATCH ***`） | `工程文件/核对与复算/五次簇GW不变量复算.md` + 运行输出 |
 
 ## 3. 校对单元协议
 
