@@ -8,6 +8,18 @@ Prints per-term occurrence counts by file and flags variant pairs that co-occur.
 import glob, os, re, sys, collections
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
+# 本脚本原在 scripts/ 下 os.chdir，导致 chapters/ 相对路径落空、审计恒为空（2026-11-20 修正）。
+# 从脚本目录向上找到含 chapters/*.tex 的工程根再 chdir。
+_d = os.getcwd()
+while _d != os.path.dirname(_d):
+    for _sub in ("", "源码"):
+        if glob.glob(os.path.join(_d, _sub, "chapters", "*.tex")):
+            os.chdir(os.path.join(_d, _sub) if _sub else _d)
+            _d = None
+            break
+    if _d is None:
+        break
+    _d = os.path.dirname(_d)
 FILES = sorted(glob.glob("chapters/*.tex"))
 SKIP_INDEX = {"chapters/index.tex"}
 

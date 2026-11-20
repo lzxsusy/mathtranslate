@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## SY01-26 Cox–Katz 收尾：官方勘误 99 条逐条比对 + 命题 5.5.4 依作者更正重写 — 2026-11-20
+
+- **勘误比对（主任务）**：AMS 2020-01-29 版 `typos.pdf` 98 条逐条定位译本（`\SourcePage{N}`，PDF 页 = 印刷页 + 23）并判定，另补入原表漏收的 page 54 line 12（编号 9a），共 **99 条**：已修 43、已吸收 49、不适用 7、**无未判定**。改动落在 `chapters/chapter03/04/05/06/07/08/09/10/11/12.tex`、`preface.tex`、`appendixA.tex`、`references.tex`；每条依据（`chapters/chapterXX.tex:行号`）写入 `工程文件/校对/官方勘误2020/官方勘误2020对照表.md` 的「备注」列。
+- **命题 5.5.4 重写**：作者 2001-10-14 的 *Correction to Proposition 5.5.4*（`554.pdf`）指出原书 p98 命题 as stated 有误；AMS 勘误表的处理是把 p98–p101 整段从列表里抽掉，本译本改为**照更正版重写正文**：(5.43) 符号写法加一句等价性说明、命题改为 $Q\widetilde I$ 满足 $\mathcal A$ 方程组且 $\widehat\beta=(0,\ldots,0,-1,\ldots,-1)$、(5.47) 化单项式、$\Box'_\beta=A-q^\beta B$ 与 (5.51)(5.52) 重写、引入 $C,S,T,U$ 四记号完成逐项相消、删去 p100 末三行括注、p101 补 $q_1=-z$ 的变量替换。`译注.md` 末节「据作者 2020 更正重写 · 命题 5.5.4」记全过程。
+- **(5.43) 复核（E5）**：正文仍作 $(-1)^{\sum_ic_1\cdot\beta_j}\prod\lambda_\rho^{D_\rho\cdot\beta_j}/\prod\lambda_{r+i}^{c_1\cdot\beta_j}$，与勘误的 $(-\lambda_{r+i})$ 写法等价；重写未改动该因子，`原文笔误表` E5 补注说明。
+- **编译**：`latexmk -xelatex` 三遍 + biber，**412 页**（原 410，+2），0 未定义引用、0 未定义 citation、2 处 Overfull；成品同步覆盖到 `成品/`。遗留：`chapters/appendixC.tex` 若干行正文模式内含字面 Unicode 数学符号（ℏ、∏、∫ 等），xelatex 报 90+ 条 "Missing character"（前任遗留，未在本轮处理）。
+- **一致性**：`audit_terms.py` 与 `pdftotext | grep` 的「单值化/虚基本类/通用族/线性束」计数均为 0；`RELEASE_REGISTER.csv`、`03_translations_meta/SY01-26/`、项目 `README.md`、`CHANGELOG.md`、`交付报告` 五处页数与条目数已同步。
+
 ## 产出作用审计 + 思考链纪律与工具 + 形式化路线 — 2026-11-20
 
 - 新增 `ASSESSMENT_2026-11-20_产出作用.md`：按“有没有用”审计 33 天产出（95 部/11,404 页、200,366 次调用、¥2,437.38；结论：页数已过拐点，稀缺的是 240 条核验断言、153 个校对 JSON、402 条轨迹）。
