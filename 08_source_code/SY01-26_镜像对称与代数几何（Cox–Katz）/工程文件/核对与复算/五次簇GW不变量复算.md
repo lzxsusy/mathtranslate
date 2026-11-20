@@ -14,7 +14,7 @@ $$n_1,\dots,n_{10}=2875,\ 609250,\ 317206375,\ 242467530000,\ 229305888887625,\ 
 
 ## 二、依据
 
-1. **归一化 Yukawa 耦合的闭式**（Cox–Katz, §5.6, 式 (5.72)，英文本 p.111 / 译本 p.111，`chapters/chapter05.tex:1662`，标签 `eq:quintic-normalized-yukawa`）：
+1. **归一化 Yukawa 耦合的闭式**（Cox–Katz, §5.6, 式 (5.72)，英文本 p.111；译本 §5.6.4 例 5.6.4，PDF p.101–102，`chapters/chapter05.tex:1662`，标签 `eq:quintic-normalized-yukawa`）：
 
    $$Y=-\int_{V^\circ}\widetilde\Omega\wedge\nabla_\delta\nabla_\delta\nabla_\delta\widetilde\Omega
    =\frac{c}{(1+5^5z)\,y_0(z)^2}\left(\frac qz\frac{dz}{dq}\right)^3,\qquad c=5,$$
