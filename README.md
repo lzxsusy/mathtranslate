@@ -15,7 +15,9 @@
 | 1,820 条术语表（可搜索） | [`site/terms.html`](site/terms.html) |
 | 三层许可与五条合规红线 | [`site/compliance.html`](site/compliance.html) |
 
-站点是纯静态 HTML、不依赖 CDN 与联网：fork 或 clone 后双击 `site/index.html` 即可浏览，用浏览器打开本地文件也不需要服务器。
+站点是纯静态 HTML、不依赖 CDN 与联网，用浏览器直接打开本地文件也不需要服务器。
+
+> 注意：AtomGit / GitHub 的仓库网页把 `.html` 当源码显示、不会渲染。想看到成品页面有两条路：clone 后双击 `site/index.html`；或按 [`.github/workflows/pages.yml`](.github/workflows/pages.yml) 开一次 Pages（Settings → Pages → Source 选 GitHub Actions），之后每次推送自动发布。**只想读内容、不想 clone 的，本页下面直接贴了卡片、语料与术语样例。**
 
 ### 资料卡长什么样
 
@@ -209,7 +211,7 @@ Bourbaki 报告、Astérisque 专辑、arXiv 预印本、论文集（proceedings
 |---|---|
 | `pkg` / `file` / `para` | 所属工程、源文件、段序 |
 | `para_id` | 内容哈希（sha1 前 16 位），全库唯一稳定标识，便于下游去重 / 增量更新 / 引用 |
-| `page_orig` | 原书页码（解析 TeX 里的 `% ===== PDF p.NNN (原书 p.N) =====` 标记；仅 95 个工程带此标记） |
+| `page_orig` | 原书页码（解析 TeX 里的 `% ===== PDF p.NNN (原书 p.N) =====` 标记；当前 3 个工程带此标记、共 4,023 段：SY01-23 2,950 / SY01-08 692 / SY02-09 381） |
 | `env` | 段落所在环境：`text` / `theorem` / `definition` / `proof` / `remark` / `example` |
 | `tier` | 该工程的评级 A/B/C（来自工程元数据） |
 | `text` | **保真文本**：行内/行间公式原样保留 `$...$`、`\begin{equation}...\end{equation}`，不再被洗成 ASCII 骨架 |
@@ -218,6 +220,8 @@ Bourbaki 报告、Astérisque 专辑、arXiv 预印本、论文集（proceedings
 去重统计与理由见 `01_corpus_zh/DEDUP_REPORT.md`；术语基 `termbase.jsonl` 字段为
 `foreign / lang(en|ja|other) / zh / status / pkg / src_format`，SY02-09 的 215 行另有
 `level`（A/B/I）/ `source`（依据）/ `lecture`（首次出现讲次）三字段，`status=confirmed`。
+
+**干净训练子集**：`python tools/make_train_subset.py` 一条命令生成 `01_corpus_zh/zh_train.jsonl.gz`——按固定口径丢 `empty_ref` / `orphan_number` / `layout_residue` 等标注段、按 `para_id` 去重、丢 <8 汉字碎片，实测 **44,087 段 / 364 万汉字 / 86% 含公式**（原始 49,035 段保留不动）。
 
 **术语定案表**：[`01_corpus_zh/terms_frozen_SY02-09.tsv`](01_corpus_zh/terms_frozen_SY02-09.tsv)（223 条，
 列：英文 / 中文 / 等级 / 依据 / 首次出现 / 本轮校订备注）。这是《Langlands 纲领导论》逐页校订后的

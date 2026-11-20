@@ -92,6 +92,7 @@ schema 已统一（`_normalize_schema.py`）：`flags` 恒为数组（可为空�
 - **Agent 训练**：`02_trajectories` 的四段式（意图→动作→证据→结论 + 评分 6.07–9.99）+ `06_sessions_raw` 的未截断 I/O（Release 附件），属自产层。
 
 - **模型训练（译文与语料）**：`01_corpus_zh/zh_paragraphs.jsonl`（49,035 段中文数学段落）与 `datasets/` 资料卡可直接用于训练与蒸馏，本库不设限制；出版发行请自行核实底本权利。
+- **干净训练子集**：`python tools/make_train_subset.py` 会按固定口径（丢 `empty_ref` / `orphan_number` / `layout_residue` 等标注段、按 `para_id` 去重、丢 <8 汉字碎片）生成 `01_corpus_zh/zh_train.jsonl.gz`——当前实测 **44,087 段 / 364 万汉字 / 86% 含公式**。原始 49,035 段保留不动，两个口径并存。
 
 ## 7. 引用
 
