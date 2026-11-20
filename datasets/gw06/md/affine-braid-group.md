@@ -1,0 +1,66 @@
+# 仿射辫群 $B_{\rm aff}({}^L\neg G)$
+
+- **id**：`gw06/concept/affine-braid-group`
+- **类型**：concept
+- **位置**：§4.5
+- **问题**：仿射辫群为什么不是仿射外尔群，二者相差的那个 $\pi_1(\mathfrak z)$ 在物理上意味着什么？
+
+> $Y=1$ 时的单值性群是 $^L\neg G$ 的仿射辫群：正则共轭类空间的基本群，由 (4.16) 与仿射外尔群相联系；$\hat B_{\rm aff}=B_{\rm aff}\rtimes\mathcal Z(G)$ 放宽保通量条件。
+
+## 定义
+
+仿射辫群 $B_{\rm aff}({}^L\neg G)$ 定义为 $^L\bar G_\C$ 中正则共轭类构成空间的基本群；当 $Y=1$ 时 ${\mathcal W}_Y=\Weyl$，${\mathcal V}_Y=\Lambda_{\cort}\rtimes\Weyl$ 恰是 $^L\neg G$ 的仿射外尔群，正合列 (4.15) 化为 (4.16)。名称来自如下类比：普通辫群是 $\C$ 中 $n$ 个互异点的无序 $n$ 元组空间的基本群，把 $\C$ 换成 $\C^*$ 便得到 $GL(n,\C)$ 的仿射辫群，因为 $\C^*$ 的无序 $n$ 元组等价于 $GL(n,\C)$ 的正则半单共轭类。一般 $Y$ 的单值性群 $B_Y$ 介于 $\Lambda_{\cort}$ 与 $B_{\rm aff}$ 之间；放宽『保持 ${\bf m}_0$』后得到扩张 $\hat B_Y=B_Y\rtimes\mathcal Z(G)$，$Y=1$ 时即 (4.17)。物理上它是 $A$-模型膜上的单值性群，也是 §4.6 中非正则单值性下算符代数的来源。这一群在 §6 的局部情形中再次出现，并在那里与仿射赫克代数的表示论相连。
+
+**记号**：$B_{\rm aff}({}^L\neg G)$：仿射辫群、$\mathcal Z(G)$：$G$ 的中心、$\Lambda_{\cort}$：余根格（$B_Y$ 的平移部分）、$\mathfrak z$：正则序对构成的空间
+
+## 关键点
+
+- $B_{\rm aff}({}^L\neg G)=\pi_1(\mathfrak z/\Weyl)$；$Y=1$ 时 $\mathfrak z/\Weyl$ 即 $^L\bar G_\C$ 的正则共轭类空间。
+- (4.16) 中 $\pi_1(\mathfrak z)$ 一般非平凡：正则共轭类空间不单连通，这正是辫群大于外尔群的部分。
+- 扩张 $\hat B_{\rm aff}=B_{\rm aff}\rtimes\mathcal Z(G)$ 对应放宽保 ${\bf m}_0$；$Y$ 正则时 $\hat B_Y=\Lambda_\cochar$。
+- 仿射辫群由 Bezrukavnikov（文献 [29]）引入，背景是本问题的局部版本；本文在 §3.8 与 §6 回到这一点。
+- 在平坦联络一侧，同一群以『$^L\neg G$-丛在分歧点处由 $^L\TT$ 约化』的粘合数据出现，见 (4.18) 的线丛直和。
+
+## 公式
+
+```latex
+1\to \pi_1(\eurz)\to B_{\rm aff}(^L\neg G)\to \AffWeyl(^L\neg G)\to 1,
+```
+```latex
+\hat{B}_{\rm aff}({}^L\neg G)= B_{\rm aff}(^L\neg G)\rtimes {\mathcal Z}(G).
+```
+```latex
+{\mathcal U}\to \left(\oplus_{i=1}^w{\mathcal L}^{v_i}\right)\otimes {\mathcal U}.
+```
+```latex
+{\mathcal V}_{Y,\mathbb{L}}=\Lambda_\cort^\mathbb{L}\rtimes{\mathcal W}_{Y,\mathbb{L}}.
+```
+
+## 常见错误
+
+- 把 $B_{\rm aff}$ 当成 $\AffWeyl$：二者由 (4.16) 相差 $\pi_1(\mathfrak z)$，这个因子正是『辫』而非『外尔』的部分。
+- 把 $\hat B_{\rm aff}=B_{\rm aff}\rtimes\mathcal Z(G)$ 的 $\mathcal Z(G)$ 写成 $\pi_1(G)$：扩张记录的是 $G$ 的中心对离散磁通量 ${\bf m}_0$ 的作用。
+- 把所有 $Y$ 都写成 $B_{\rm aff}$：只有 $Y=1$（幂幺极限）才是仿射辫群，一般 $Y$ 时 ${\mathcal W}_Y$ 更小、$B_Y$ 介于 $\Lambda_{\cort}$ 与 $B_{\rm aff}$ 之间。
+
+## 批注
+
+### 易错预警：$Y=1$ 只是极端点
+
+$Y=1$ 意味着 ${\mathcal W}_Y=\Weyl$，即单值性 $V$ 完全非半单（幂幺）的极端情形；一般 $Y$ 对应更小的 ${\mathcal W}_Y$，$B_Y$ 严格介于 $\Lambda_{\cort}$ 与 $B_{\rm aff}$ 之间。把一般情形也写成 $B_{\rm aff}$，就会丢掉 (4.15) 里的 $\pi_1$ 项。另一个极端是 $Y$ 正则：此时 ${\mathcal W}_Y=1$，$B_Y=\Lambda_{\cort}$，正是 (4.16) 的退化情形。把两个极端混同，就会误以为 $B_Y$ 恒等于仿射辫群。
+
+### 含糊点拨：名字里的『仿射』指什么
+
+普通辫群把点放在 $\C$ 上，仿射辫群把点放在 $\C^*$ 上；$\C^*$ 的非零基本群与 $\Lambda_{\cort}$ 的平移相容，这正是仿射外尔群与仿射辫群共享『仿射』二字的来源，而 (4.16) 中的 $\pi_1(\mathfrak z)$ 就是 $\C^*$ 与 $\C$ 的差别在群论上的残留。这正是 (4.16) 中 $\pi_1(\mathfrak z)\neq1$ 的几何来历，也是仿射辫群与仿射外尔群的分水岭。
+
+### 背景直觉：辫群为何是 $A$-模型的对称性
+
+在 $\alpha$-$\beta$ 空间绕回路一周，$A$-模型的膜范畴回到自身，但对象被一个自同构搬运；这个自同构只依赖回路的同伦类，故给出 $B_Y=\pi_1(\mathfrak z_Y/{\mathcal V}_Y)$ 的作用，而 $Y=1$ 时这个基本群就是仿射辫群 $B_{\rm aff}({}^L\neg G)$。所以 $B_{\rm aff}$ 是 $A$-模型在幂幺极限下的对称群，而不是全参数空间的对称群。
+
+## 出处
+
+- Gukov–Witten 2006（hep-th/0612073v2）中译校订本 §4.5；印刷页 [102, 104] / PDF 页 [103, 105]；锚点 `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s04b-lines.tex:330-445`
+- $\hat B_{\rm aff}$、群半环 (4.18) 与任意列维子群推广 (4.19) 见 PDF 第 103–105 页（印刷 102–104 页）。
+
+---
+
+权利：`rewritten`；核验：`source-only`（2026-11-20）。

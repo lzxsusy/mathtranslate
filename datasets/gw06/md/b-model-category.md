@@ -1,0 +1,80 @@
+# 从 $A$-膜范畴到扭曲 $\mathcal D$-模范畴
+
+- **id**：`gw06/concept/b-model-category`
+- **类型**：concept
+- **位置**：§4.4
+- **问题**：「$A$-膜的范畴等于扭曲 $\mathcal D$-模的范畴」这句话里，函子如何构造、twist 由什么数据决定、为何不同的抛物子群选择给出等价的范畴？
+
+> 典范余迷向膜给出从 $K$ 型 $A$-膜到扭曲 $\mathcal D$-模的函子；$w$ 由弱耦合下的线性性与式 (4.10) 定出，格平移实现 Morita 等价，$\mathbb L$ 型情形给出同一套论证的推广。
+
+## 定义
+
+设 $C$ 紧、$G$ 单连通单紧，$\M=\M(\alpha,p;G)$。取 $X=\MH(\alpha,\beta,\gamma;p)$ 的 $K$ 型 $A$-模型，对象是辛膜，态射是 $(\CB_{\rm c.c.},\CB')$ 弦；量子化后这些弦给出 $\cD_{K_\M^{1/2}\otimes\cL^w}$-模，$w$ 是 $T^*\M\subset\MH$ 上闭 $(1,1)$-形式的类。命题是：该 $A$-模型范畴等价于 $\M$ 上扭曲 $\mathcal D$-模的导出范畴（当 $\gamma=\eta=0$ 时退化到通常的 $\mathcal D$-模），且赫克算子对应到赫克本征层、本征膜对应到本征 $\mathcal D$-模。物理上这就是几何朗兰兹的膜与 $\mathcal D$-模的对应表述。范畴层面还应记住：赫克算子对应到赫克本征层的拉回与张量，而 $S$-对偶把 $B$-模型一侧的膜送到 $A$-模型一侧，故这个等价是两步复合的结果，而非单个函子。
+
+**记号**：$\CB_{\rm c.c.}$：典范余迷向膜、$\CB'$：支撑在零截面 $\M\subset T^*\M$ 上、带平凡 Chan-Paton 丛的 $A$-膜、$w$：twist 参数，住 $H^2(\M,\C)=(\Z\oplus\Lambda_\char)\otimes\C$、$z=({\rm Im}\,\tau)\gamma^*-i\eta$：复化 Kähler 类
+
+## 关键点
+
+- 函子来自 $(\CB_{\rm c.c.},-)$ 弦：对任意 $K$ 型 $A$-膜 $\CB'$，$(\CB_{\rm c.c.},\CB')$ 弦层是 $\cD_{K_\M^{1/2}}$（或 $\cD_{K_\M^{1/2}\otimes\cL^w}$）的模；这一步只是超 Kähler 几何，不含 $S$-对偶。
+- 要得到「$B$-膜 $\leftrightarrow$ $\mathcal D$-模」，需两步复合：先 $S$-对偶把 $\MH(\dots;{}^LG)$ 的 $J$ 型 $B$-膜送到 $\MH(\dots;G)$ 的 $K$ 型 $A$-膜，再用 c.c. 膜构造。
+- $\gamma\ne0$ 时 $\MH$ 只是 $T^*\M$ 的仿射形变，$\varphi\to-\varphi$（时间反演）与零截面 $\CB'$ 都失效；但 $\CB_{\rm c.c.}$ 仍可定义，只是 ${\mathcal S}=K^{1/2}$ 的论证要改用 $\eta=v\in\Lambda_\char$ 的 $\CB'$ 膜计算来替代。
+- $w$ 由弱耦合展开定出：(4.10) 给 $w(\gamma,\eta)=0\oplus(-\eta-i({\rm Im}\,\tau)\gamma^*)$，与启发式推导 $w=-({\rm Im}\,\tau)(\beta^*+i\gamma^*)$ 只差 $\eta$ 的符号（原文照录，见第 96 页）。
+- $\mathbb L$ 型推广：参数取 ${\mathcal W}_\mathbb{L}$-不变量、$\alpha$ 需 $\mathbb L$-正则，不同抛物子群 $\EUP$ 给出不同 $\M_\mathbb{L}(\alpha;p,G)$ 上的 $\mathcal D$-模，但这些空间彼此双有理。
+
+## 公式
+
+```latex
+w(\gamma,\eta)=0\oplus (-\eta-i({\rm Im}\,\tau)\gamma^*)
+```
+```latex
+w=-({\rm Im}\,\tau)(\beta^*+i\gamma^*)
+```
+```latex
+F+B=({\rm Im}\,\tau)\omega_J
+```
+```latex
+\beta^*=-({\rm Im}\,\tau)^{-1}\eta
+```
+
+## 定理
+
+**$A$-膜到扭曲 $\mathcal D$-模的函子**：对 $X=\MH(\alpha,\beta,\gamma,\eta;p;G)$ 的每个 $K$ 型 $A$-膜 $\CB'$，$(\CB_{\rm c.c.},\CB')$ 弦层是 $\cD_{K_\M^{1/2}\otimes\cL^w}$-模；$\gamma=\eta=0$ 时 $w=0$，给出 $A$-膜到 $\cD_{K_\M^{1/2}}$-模的函子。
+
+证明：sketch（§4.4，式 (4.9)–(4.10)）
+
+1. $\CB_{\rm c.c.}$ 给出 $(\CB_{\rm c.c.},\CB_{\rm c.c})$ 弦环，即 $\cD_{K^{1/2}}$。 —— $\theta=0$、$\eta=0$ 时时间反演对称性把 $\cL$ 定为 $K_\M^{1/2}$。
+2. $(\CB_{\rm c.c.},\CB')$ 弦自动是上述环的模。 —— 一侧边界条件固定为 $\CB_{\rm c.c.}$ 时，另一侧给出模结构，这是开弦代数的构造性结论。
+3. $\gamma,\eta\ne0$ 时把 $\cD_{K^{1/2}}$ 换成 $\cD_{K^{1/2}\otimes\cL^w}$，$w$ 由 (4.10) 给出。 —— $\omega^{-1}(F+B)=I$ 仍成立，$\CB'$ 膜的 Chan-Paton 丛换成 $\cL^{-v}$，截面层随之扭曲。
+
+缺口：原文称该构造依赖弱耦合微扰论与 $w$ 的线性性，未给强耦合下的证明。
+
+## 常见错误
+
+- 把 c.c. 膜构造当成就是朗兰兹对应：它只给 $A$-膜 $\to$ $\mathcal D$-模；真正的 $B$-膜 $\leftrightarrow$ $\mathcal D$-模还要先做 $S$-对偶，少这一步会以为 $B$-膜直接给出 $\mathcal D$-模。
+- 在 $\gamma\ne0$ 时仍用零截面上的 $\CB'$ 膜去定 ${\mathcal S}$：仿射形变不容许全纯截面，$\CB'$ 不存在；必须改用 $\eta=v\in\Lambda_\char$ 的格点计算，或替换为支撑在拉格朗日 $\M$ 上的膜。
+- 把 $w$ 的两个表达式混用而不查符号：$-({\rm Im}\,\tau)(\beta^*+i\gamma^*)$ 与 $0\oplus(-\eta-i({\rm Im}\,\tau)\gamma^*)$ 差 $\eta$ 的符号，直接用前者会把 twist 的 $\eta$ 项整体反号，「指数＝本征值」随之反号。
+
+## 批注
+
+### 易错预警：c.c. 构造 $\ne$ 朗兰兹对应
+
+c.c. 膜构造对任意超 Kähler $X$ 与任意 $K$ 型 $A$-膜都成立，本身不含 $S$-对偶；几何朗兰兹的 $\mathcal D$-模一侧是先 $S$-对偶（把 $B$-膜送到 $A$-膜）再套 c.c. 构造。把两者混同，就会误以为 $B$-膜一侧也能直接从 ${\mathcal B}_{\rm c.c.}$ 读出，从而看不到对偶群 $^L G$ 与参数 $\beta$ 在对应中的位置。
+
+### 含糊点拨：$w$ 为什么是线性的
+
+取 $e^2=4\pi/{\rm Im}\,\tau$ 很小、$z$ 固定，$w$ 可按 $z/{\rm Im}\,\tau$ 作微扰展开；$w$ 由 $({\mathcal B}_{\rm c.c.},{\mathcal B}_{\rm c.c.})$ 弦的环结合余循环读出，而 $z$ 只以整体闭弦背景（$B$-场与复化 Kähler 类）的方式进入，高阶项相互抵消，故只剩线性项。原文把这一步类比于文献第 11.3 节 $f(\theta)$ 对 $\theta$ 的线性依赖。严格说，这只是弱耦合展开的首项，$w$ 的高阶修正并没有被计算，故原文自称此说明是启发式的。
+
+### 背景直觉：范畴等价为什么比逐点对应强
+
+逐点对应只说「每个膜配一个 $\mathcal D$-模」；范畴等价还要求态空间、复合与赫克函子都对应。$\mathbb L$ 型情形下不同抛物子群给出不同模空间上的 $\mathcal D$-模，但它们彼此双有理，正因为函子在双有理等价下不变——这也是原文说一般 $\mathbb L$ 的陈述「略欠自然」的原因。
+
+## 出处
+
+- S. Gukov & E. Witten, Gauge Theory, Ramification, And The Geometric Langlands Program（arXiv:hep-th/0612073v2）中译校订本 §4.4；印刷页 [91, 95] / PDF 页 [92, 96]；锚点 `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s04a-branes.tex:420-574`
+- 恢复参数依赖、$w$ 的线性性、式 (4.10)、Morita 等价与非正式说明，见印刷第 91–95 页。
+- S. Gukov & E. Witten, Gauge Theory, Ramification, And The Geometric Langlands Program（arXiv:hep-th/0612073v2）中译校订本 §4.4；印刷页 [96, 96] / PDF 页 [97, 97]；锚点 `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s04a-branes.tex:576-630`
+- $\mathbb L$ 型情形的类比，见印刷第 96 页。
+
+---
+
+权利：`rewritten`；核验：`source-only`（2026-11-20）。

@@ -1,0 +1,80 @@
+# 对偶环面 ${}^L\neg\TT$ 与 $\eta$ 参数
+
+- **id**：`gw06/concept/dual-torus`
+- **类型**：concept
+- **位置**：§2.4
+- **问题**：$\eta$ 为什么取值于对偶环面而不是 $\TT$，阿贝尔情形又怎样证明 $S$ 交换 $\alpha$ 与 $\eta$？
+
+> $\eta$ 取值于对偶环面 ${}^L\neg\TT$；阿贝尔情形下 $S$ 交换 $\alpha$ 与 $\eta$，可用二形式场的两种积分次序证明。
+
+## 定义
+
+$\TT$ 是 $G$ 的极大环面 $\mathfrak t/\Lambda_{\rm cochar}$，${}^L\neg\TT={}^L\mathfrak t/\Lambda_{\rm cochar}({}^L G)$ 是对偶群 ${}^L G$ 的极大环面。面算符的 $\eta$ 参数是限制在 $D$ 上的二维 $\theta$ 角，它取值于 ${}^L\neg\TT$：因为沿 $D$ 的磁通量与 $\alpha$ 对偶，$S$ 又交换 $G$ 与 ${}^L G$，所以 $S$ 交换 $\alpha$ 与 $\eta$。$G=U(1)$ 时这一交换可以直接证明：引入二形式场 $\CK$ 与扩充规范变换 $A\to A+\cb$、$\CK\to\CK+d\cb$，得到与 $\tau$ 和 $-1/\tau$ 两个理论等价的扩充理论；带 $\alpha=0$、$\eta\neq0$ 的面算符等价于插入 $e^{i\eta\int_D F}$，在积掉 $\CK$ 后它恰是 $\alpha=\eta$ 的面算符，于是 $(0,\eta)\mapsto(\eta,0)$。
+
+**记号**：$\TT=\mathfrak t/\Lambda_{\rm cochar}$：极大环面；${}^L\neg\TT$：对偶环面；$\CK$：二形式场（文献中记为 $G$）；$\cv$：辅助 $U(1)$ 联络，曲率 $\CV$；$\FF=F-\CK$；$\delta_D$：与 $D$ 庞加莱对偶的二形式 $\delta$ 函数；$\eta$：二维 $\theta$ 角，归一化为取值于 $\R/\Z$。
+
+## 关键点
+
+- $\alpha\in\TT=\mathfrak t/\Lambda_{\rm cochar}$，$\eta\in{}^L\neg\TT$；二者属于互为对偶的环面，这是 $S$ 能交换它们的几何前提。
+- 阿贝尔情形：扩充规范变换 $A\to A+\cb$、$\CK\to\CK+d\cb$（式 (2.27)）使 $\CK$ 的周期可平移 $2\pi\Z$（式 (2.28)）。
+- 扩充作用量 (2.30) 先积 $\cv$ 给出 $\delta(d\CK)$ 与周期整性，从而可令 $\CK=0$ 回到原理论；先令 $A=0$ 再积 $\CK$ 得参数 $-1/\tau$ 的理论（式 (2.32)）。
+- 带 $(\alpha=0,\eta\neq0)$ 的面算符等价于插入 $e^{i\eta\int_D F}$（式 (2.33)），积掉 $\CK$ 后要求 $\CV=2\pi\eta\delta_D+\dots$（式 (2.37)），即 $\alpha=\eta$。
+- 一般 $\alpha$ 只需把 $\FF$ 换成 $\FF-2\pi\alpha\delta_D$ 重复论证，结果正是式 (2.25)。
+
+## 公式
+
+```latex
+\int_D\CK\to\int_D\CK+2\pi m, ~~m\in\Z
+```
+```latex
+\tilde \II={i\over 8\pi}\int_M d^4x \sqrt h\epsilon^{mnpq}\CV_{mn}\CK_{pq}={i\over 2\pi}\int_M \CV\wedge \CK
+```
+```latex
+\exp\left(i\eta\int_D{F}\right)
+```
+```latex
+\CV=2\pi\eta\delta_D+\dots
+```
+
+## 定理
+
+**阿贝尔 $S$-对偶交换 $\alpha$ 与 $\eta$**：在 $G=U(1)$ 时，$\tau\to-1/\tau$ 把参数为 $(0,\eta)$ 的面算符送到 $(\eta,0)$；把 $\FF$ 换成 $\FF-2\pi\alpha\delta_D$ 后对任意 $(\alpha,\eta)$ 有 $(\alpha,\eta)\to(\eta,-\alpha)$。
+
+证明：sketch（）
+
+1. 引入二形式场 $\CK$ 与扩充规范变换 (2.27)，写出扩充作用量 (2.30)。 —— 作用量 (2.30) 在 (2.27) 下模 $2\pi i\Z$ 不变（式 (2.29) 的系数即为此选取）。
+2. 先积掉 $\cv$：得到强制 $d\CK=0$ 与 $\CK$ 周期属于 $2\pi\Z$ 的两个 $\delta$ 函数，故可令 $\CK=0$，回到参数 $\tau$ 的原理论。 —— 对 $\tilde{\mathcal R}$ 求和与对每个丛的联络积分分别给出这两个条件（式 (2.31) 后的讨论）。
+3. 改用 (2.27) 取 $A=0$，对 $\CK$ 配方并积掉，得式 (2.32)：参数 $-1/\tau$ 的同一类作用量。 —— 作用量对 $\CK$ 二次且二次项非退化，可直接解欧拉–拉格朗日方程。
+4. 加入面算符项 $-i\eta\int_M\delta_D\wedge\FF$（式 (2.34)），线性项合并为 (2.35)，等效于 $\CV\to\CV-2\pi\eta\delta_D$。 —— (2.35) 与 (2.29) 对照即见 $\CV$ 的平移。
+5. 作用量有限性要求 $\CV=2\pi\eta\delta_D+\dots$（式 (2.37)），此即 $\alpha=\eta$ 的面算符定义。 —— 式 (2.37) 与单值性定义式 (2.5) 比较即得 $\alpha=\eta$。
+
+缺口：第 2 步的两个 $\delta$ 函数只是形式论证，量子层面的精确处理见所引文献；非阿贝尔情形无此证明。
+
+## 常见错误
+
+- 把 $\CK$ 当成普通二形式场而忘记周期 $2\pi\Z$：会丢掉“可令 $\CK=0$”的规范固定，也就看不出扩充理论等价于原理论。
+- 把面算符的插入写成 $e^{i\eta\int_D\star F}$ 或漏掉 $i$：$\eta$ 是 $\theta$ 角，插入的是 $F$ 在 $D$ 上的积分；写错后积掉 $\CK$ 得到的是 $\alpha=-\eta$，与式 (2.25) 的符号不符。
+- 把 ${}^L\neg\TT$ 与 $\TT$ 当成同一空间：$G$ 非单连通时两者的格不同，$\eta$ 的周期也就不再是 $\Lambda_{\rm char}$。
+
+## 批注
+
+### 易错预警：$\eta$ 的归一化是 $\R/\Z$
+
+原文把 $\eta$ 归一化为取值于 $\R/\Z$ 而非 $\R/2\pi\Z$，为的是让 $S$ 作用不出现 $2\pi$ 因子；若按 $\R/2\pi\Z$ 理解，式 (2.33) 的指数会多出 $2\pi$，$S$ 变换后的 $\alpha$ 就会差 $2\pi$ 倍。
+
+### 含糊点拨：两个 $\delta$ 函数
+
+式 (2.31) 的积分给出两个条件：$d\CK=0$（来自对每个丛的联络积分）与 $\CK$ 的周期属于 $2\pi\Z$（来自对 $U(1)$-丛 $\tilde{\mathcal R}$ 求和）。两者合起来才使 (2.27) 能把 $\CK$ 规范到零；只用一个条件无法回到原理论。
+
+### 背景直觉：与二维 $T$-对偶同构
+
+二维中对周期标量的平移对称性先被规范化、再积掉规范场，得到半径 $1/R$ 的对偶标量。四维里被规范化的是 $A\to A+\cb$ 的一形式平移，$\CK$ 是拉格朗日乘子；两种积分次序给出同一扩充理论的两个等价描述，这就是阿贝尔 $S$-对偶的“证明”。
+
+## 出处
+
+- S. Gukov & E. Witten, Gauge Theory, Ramification, And The Geometric Langlands Program（arXiv:hep-th/0612073v2）中译校订本 §2.4；印刷页 [15, 18] / PDF 页 [16, 19]；锚点 `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s02b-duality.tex:230-451`
+- 式 (2.26)–(2.37)：阿贝尔 $S$-对偶的构造与 $\alpha,\eta$ 的交换；印刷页 15–18，原文 PDF 第 16–19 页。
+
+---
+
+权利：`rewritten`；核验：`source-only`（2026-11-20）。

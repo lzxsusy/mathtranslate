@@ -1,0 +1,77 @@
+# 相机覆盖
+
+- **id**：`gw06/concept/cameral-cover`
+- **类型**：concept
+- **位置**：§3.9
+- **问题**：谱曲线之外，一般 $G$ 的希钦纤维用什么覆盖来描述，相机覆盖与谱曲线、分歧除子是什么关系？
+
+> 把希格斯场的 Weyl 不变多项式看成映到 $\mathfrak t/W$ 的映射后，拉回得到的 $|W|$ 重覆盖 $\tilde C\to C$；$SL(2)$ 时它就是谱曲线，分歧点处由 $(3.108)$ 的 $d_i$ 阶极点控制。
+
+## 定义
+
+相机覆盖是希钦纤维化的“特征数据”几何化。希格斯场 $\varphi\in H^0(C,{\rm ad}(E)\otimes K_C)$ 通过 $r$ 个 Weyl 不变多项式 ${\mathcal P}_i$ 给出曲线到 $\mathfrak t/W$ 的映射（在 $K_C$ 的适当扭转下），沿 $\mathfrak t\to\mathfrak t/W$ 拉回即得 $|W|$ 重覆盖 $\tilde C=C\times_{\mathfrak t/W}\mathfrak t\to C$，$W$ 作用其上且 $\tilde C/W=C$。在本文记号里，$\EUBB$ 的点就是$({\mathcal P}_1(\varphi),\dots,{\mathcal P}_r(\varphi))$，它们决定 $\tilde C$；分歧点 $p$ 处的局部行为由 $(3.108)$ 给出：领头项 ${\mathcal P}_i(\sigma)(dz/z)^{d_i}$ 被固定，其余 $d_i$ 个系数自由。对 $G=SL(2,\C)$，$r=1$、$d_1=2$、$W=\Z_2$，相机覆盖就是谱曲线 $\Sigma=\{y^2=\Tr\varphi^2\}\subset T^*C$，$\EUBB$ 的双极点条件即 $\Sigma$ 在 $p$ 上方的分支行为。物理上，$\tilde C$ 是谱数据所在的覆盖曲面，纤维上的阿贝尔簇由它的 Prym 给出。
+
+**记号**：$\tilde C$：相机覆盖；$W$：外尔群；$\mathfrak t$：嘉当子代数；${\mathcal P}_i$：不变多项式；$d_i$：${\mathcal P}_i$ 的次数；$\Sigma$：谱曲线（$SL(2)$ 情形）；$r$：$G$ 的秩。
+
+## 关键点
+
+- $\EUBB$ 的坐标是 $({\mathcal P}_1(\varphi),\dots,{\mathcal P}_r(\varphi))$（$(3.108)$），维数 $(g_C-1)\dim G+\sum(d_i-1)$。
+- $(3.107)$ 的 $\sum(2d_i-1)=\dim G$ 保证 $\dim\EUBB$ 恰为 $\half\dim\MH$ 的另一半，即基与纤维维数互补。
+- $SL(2)$：$W=\Z_2$、$d_1=2$，相机覆盖即谱曲线；无分歧时 $\deg K_C^2=4g_C-4$ 个分支点给 $g_\Sigma=4g_C-3$，$p$ 处分歧时 $4g_C-2$ 个分支点给 $g_\Sigma=4g_C-2$。
+- 分歧点处 $(3.108)$ 只固定 $d_i$ 阶极点的领头项，其余 $d_i$ 个参数仍自由——这正是 $\EUBB$ 与 $\bigoplus_i H^0(K_C^{d_i})$ 的差别。
+- $p$ 处 ${\mathcal P}_i(\varphi)$ 有 $d_i$ 阶极点，故 $\tilde C$ 在 $p$ 上方反而更退化，不是“不分歧”。
+- 一般 $G$ 的相机覆盖度数为 $|W|$，与谱覆盖（度数等于所选表示）一般不相等，只有在 $SL(2)$ 这类低秩情形才重合。
+
+## 公式
+
+```latex
+\sum_{i=1}^r(2d_i-1)={\rm dim}(G)
+```
+```latex
+{\mathcal P}_i(\varphi)={\mathcal P}_i(\sigma)\left({dz\over z}\right)^{d_i}(1+{\mathcal O}(z))
+```
+```latex
+(g_C-1){\rm dim}(G)+\sum_{i=1}^r(d_i-1)
+```
+```latex
+{\rm dim}(\M_H(\alpha,\beta,\gamma;p))=(2g_C-1)\,{\rm dim}(G)-r
+```
+
+## 定理
+
+**维数核对：基 + 纤维 = $\dim\MH$**：$\dim\EUBB=(g_C-1)\dim G+\sum(d_i-1)$ 与 $(3.109)$ 的 $\dim\MH$ 相差 $\half\dim\MH$，故一般纤维维数为 $\half\dim\MH$。
+
+证明：complete（本文 §3.9 式 $(3.107)$、$(3.109)$ 与基空间维数段）
+
+1. 用 $(3.107)$ 改写 $\sum(d_i-1)=(\dim G-r)/2$。 —— $\sum(2d_i-1)=\dim G$ 即 $2\sum d_i-r=\dim G$，两边减 $2r$ 再除 2。
+2. $\dim\MH-\dim\EUBB=g_C\dim G-(\dim G+r)/2$。 —— 直接相减：$(2g_C-1)\dim G-r-(g_C-1)\dim G-(\dim G-r)/2$。
+3. 该差等于 $\half[(2g_C-1)\dim G-r]=\half\dim\MH$。 —— 把 $(3.109)$ 的 $\dim\MH$ 除以 2 即得，与纤维是拉格朗日的相符。
+
+## 常见错误
+
+- 把相机覆盖当成谱曲线：只有 $SL(2)$（以及少数低秩情形）二者重合；一般 $G$ 的相机覆盖是 $|W|$ 重，套用二重覆盖会算错分支点个数与亏格。
+- 忽略 $d_i$：把 $\EUBB$ 当成 $\bigoplus_i H^0(K_C^{d_i})$，会多算 $r$ 个参数，基空间维数与纤维维数都不再互补。
+- 把 $\tilde C$ 的亏格直接当成纤维维数：纤维是 Prym（$\tilde C$ 的 Jacobian 商掉 $C$ 的部分），差一个 $g_C$；$SL(2)$ 分歧情形是 $4g_C-2-g_C=3g_C-2$。
+
+## 批注
+
+### 易错预警：相机覆盖不等于谱曲线
+
+“cameral”指嘉当子代数 $\mathfrak t$，覆盖的度数是 $|W|$；谱覆盖的度数等于所选表示的维数。$SL(2)$ 时 $|W|=2$ 且标准表示也是二维，二者才重合。对 $SL(3)$，相机覆盖是 6 重而谱曲线是 3 重，直接用谱曲线代替会得到错误的分支点计数与错误的纤维维数。另需注意 $p$ 上方是极点而非零点：${\mathcal P}_i(\varphi)$ 在 $p$ 处有 $d_i$ 阶极点，$p$ 上方的分支由 $(3.108)$ 的领头项决定，按“零点处分歧”去数 Riemann–Hurwitz 会差一。
+
+### 含糊点拨：同一个 $d_i$ 既是次数又是极点阶
+
+$(3.108)$ 里同一个 $d_i$ 出现两次：一次是 ${\mathcal P}_i$ 的齐次次数（决定 ${\mathcal P}_i(\varphi)\in H^0(K_C^{d_i})$），一次是 $p$ 处极点的阶（$(dz/z)^{d_i}$）。这不是巧合：$\varphi$ 带一个 $dz$，取 $d_i$ 次多项式就带 $(dz)^{d_i}$，在 $p$ 处除以 $z^{d_i}$ 便是 $d_i$ 阶极点。$(3.107)$ 又把$\sum(2d_i-1)$ 与 $\dim G$ 绑定，维数互补由此而来。检验：$SL(2)$ 取 $d_1=2$，$\sum(2d_1-1)=3=\dim G$；$SU(3)$ 取 $d_i=2,3$，$3+5=8=\dim G$，且 $\sum(d_i-1)=1+2=3=(\dim G-r)/2$。$SL(2)$ 时 $r=1$、$\dim G=3$，由 $(3.107)$ 直接读出 $d_1=2$，故极点阶与齐次次数都是 2。
+
+### 背景直觉：相机覆盖承载全部谱数据
+
+希钦纤维化的纤维是“同一组不变多项式下的所有希格斯丛”，这些丛在相机覆盖上可以同时对角化（阿贝尔化），于是纤维成为覆盖的 Prym 簇。几何朗兰兹的对偶性正是把 $C$ 上的希格斯丛与 $\tilde C$ 上的谱数据互换；分歧点处 $(3.108)$ 固定的领头项，就是谱数据在 $p$ 处的边界条件。
+
+## 出处
+
+- S. Gukov & E. Witten, Gauge Theory, Ramification, And The Geometric Langlands Program（arXiv:hep-th/0612073v2）中译校订本 §3.9；印刷页 [81] / PDF 页 [82]；锚点 `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s03d-nahm.tex:470-531`
+- $(3.107)$–$(3.109)$、$\EUBB$ 的定义与维数；印刷页 81，原文 PDF 第 82 页。
+
+---
+
+权利：`rewritten`；核验：`source-only`（2026-11-20）。

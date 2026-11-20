@@ -1,0 +1,47 @@
+# 把线性空间写成「一族希格斯场构成的空间」
+
+- **id**：`gw06/correction/fiber-not-a-family`
+- **类型**：correction
+- **位置**：§3.6
+- **问题**：为什么「一族」在这里改动了数学对象？
+
+> 映射 $\psi$ 的纤维是「由希格斯场构成的空间」，不是「一族希格斯场」；前者是向量空间，后者是族。
+
+## 位置
+
+§3.6，s03c-topology.tex:22
+
+## 原文片段
+
+```latex
+此映射的纤维是一族希格斯场构成的空间
+```
+
+## 改为
+
+```latex
+此映射的纤维是由 $\varphi\in H^0(C,K\otimes{\rm ad}(E))$ 参数化的线性空间
+```
+
+## 依据
+
+英文为 “a space of Higgs fields”，即 $H^0(C,K\otimes\mathrm{ad}(E))$——一个线性空间。「一族」在中文数学语境里指带参数的集合（family over a base），把单点上的纤维说成「一族」，会与紧接着的「该空间就是余切空间」直接冲突：余切空间不是族。
+
+## 说明
+
+只改「一族」为「由」，其余照旧。
+
+## 批注
+
+### 易错预警：space 与 family 别混
+
+英文的 a space of X 是「由 X 构成的空间」，a family of X 才是「一族 X」。中文「一族」自带参数维度的含义，用在纤维上会让读者去找那个并不存在的底空间。
+
+## 出处
+
+- S. Gukov & E. Witten, Gauge Theory, Ramification, And The Geometric Langlands Program（arXiv:hep-th/0612073v2）中译校订本 §3.6；印刷页 [61] / PDF 页 [62]；锚点 `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s03c-topology.tex:18-26`
+- 该句位于§3.6（小节的起始印刷页为第 61 页，PDF 第 62 页）。
+
+---
+
+权利：`rewritten`；核验：`source-only`（2026-11-20）。

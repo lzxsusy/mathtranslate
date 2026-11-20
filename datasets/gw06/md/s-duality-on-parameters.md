@@ -1,0 +1,67 @@
+# $S$ 在 $(\beta,\gamma)$ 与 $(\alpha,\eta)$ 上的作用
+
+- **id**：`gw06/concept/s-duality-on-parameters`
+- **类型**：concept
+- **位置**：§2.4
+- **问题**：$S$ 作用在面算符的四个参数上时，为什么 $\beta,\gamma$ 只乘 $|\tau|$，而 $\alpha$ 与 $\eta$ 被交换？
+
+> $S$ 把 $(\beta,\gamma)$ 按 $|\tau|$ 重标度为 $(\beta^*,\gamma^*)$，并把 $\alpha$ 与 $\eta$ 交换为 $(\eta,-\alpha)$。
+
+## 定义
+
+面算符由四元参数 $(\alpha,\beta,\gamma,\eta)$ 刻画：$\alpha\in\TT$ 是绕 $D$ 的单值性，$(\beta,\gamma)$ 是希格斯场特征多项式在 $D$ 处极点的系数，$\eta\in{}^L\neg\TT$ 是二维 $\theta$ 角。$S$-对偶在这四个参数上的作用由两个独立事实定出：其一，$\beta,\gamma$ 决定特征多项式的极点，而特征多项式在对偶下线性变换，故 $({}^L\neg\beta,{}^L\neg\gamma)=|\tau|(\beta^*,\gamma^*)$（式 (2.22)）；其二，$S$ 交换 $G$ 与 ${}^L G$，从而交换 $\TT$ 与 ${}^L\neg\TT$，故它交换 $\alpha$ 与 $\eta$，在相差整体符号下为 $S:(\alpha,\eta)\to(\eta,-\alpha)$（式 (2.25)）。前者在阿贝尔真空中由动能匹配定出，后者对非阿贝尔 $G$ 是猜想。
+
+**记号**：$\alpha\in\TT=\mathfrak t/\Lambda_{\rm cochar}$：单值性；$\eta\in{}^L\neg\TT$：二维 $\theta$ 角；$(\beta,\gamma)$：特征多项式 $\det(\lambda-\phi)=0$ 中极点的系数；$x\mapsto x^*$：$\mathfrak t\to{}^L\mathfrak t$ 的外尔不变等同；$|\tau|$：模长。
+
+## 关键点
+
+- 阿贝尔真空中由式 (2.20) 的动能匹配得 ${}^L\neg\phi=|\tau|\,\phi^*$（式 (2.21)）；系数是 $|\tau|$ 而不是 $1$。
+- 因为 $\beta,\gamma$ 刻画极点而非真空，式 (2.22) 普遍成立；当 ${\rm Re}\,\tau=0$ 时它写成 $({}^L\neg\beta,{}^L\neg\gamma)=({\rm Im}\,\tau)(\beta^*,\gamma^*)$（式 (2.23)）。
+- 对一般的 $\left(\begin{smallmatrix}a&b\\ c&d\end{smallmatrix}\right)\in SL(2,\Z)$，$({}^L\neg\beta,{}^L\neg\gamma)$ 的变换含因子 $|c\tau+d|$；单边群时 $\beta^*=\beta$，故 $(\beta,\gamma)\to|c\tau+d|(\beta,\gamma)$。
+- $S$ 交换 $\alpha$ 与 $\eta$：$S:(\alpha,\eta)\to(\eta,-\alpha)$（式 (2.25)）；整体符号由 $S$ 的提升决定。
+- $S^2=-1$ 在 $(\alpha,\eta)$ 上给 $( -\alpha,-\eta)$，即电荷共轭；这正是式 (2.25) 只能定到符号的原因。
+- $\alpha$ 与 $\eta$ 同量纲却属于不同格：$\alpha\in\mathfrak t/\Lambda_{\rm cochar}$，$\eta\in{}^L\mathfrak t/\Lambda_{\rm cochar}({}^L G)$，后者是 ${}^L G$ 的余特征格，不是 $\mathfrak g$ 的。混用两个格会让式 (2.25) 的交换变成格与格之间的错配，连 $\alpha=0$ 的阿贝尔检验都通不过；稳妥的记法是把二者都写成“模余特征格”。注意 $|c\tau+d|$ 中 $c\neq0$ 的项正是 $S$ 型变换；$c=0$ 时它化为 $|d|=1$，所以 $T$ 不重标度 $\beta,\gamma$。
+
+## 公式
+
+```latex
+^L\neg \phi= |\tau|\,\phi^*
+```
+```latex
+({}^L\neg\beta,{}^L\neg\gamma)=|\tau|(\beta^*,\gamma^*)
+```
+```latex
+({}^L\neg\beta,{}^L\neg\gamma)=({\rm Im}\,\tau)\,(\beta^*,\gamma^*)
+```
+```latex
+S:(\alpha,\eta)\to (\eta,-\alpha)
+```
+
+## 常见错误
+
+- 把式 (2.22) 的 $|\tau|$ 写成 $\tau$ 或 ${\rm Im}\,\tau$：${\rm Im}\,\tau$ 只在 ${\rm Re}\,\tau=0$ 时等于 $|\tau|$，否则 $\beta,\gamma$ 会随 $\theta$ 角变化，与它们不受 $\theta$ 平移影响（式 (2.22) 前的讨论）矛盾。
+- 把 $|c\tau+d|$ 当成常数 $1$：会得出 $(\beta,\gamma)$ 在 $S$ 下不变，从而丢掉 $S$ 对极点系数的重标度。
+- 把 $S:(\alpha,\eta)\to(\eta,-\alpha)$ 写成 $(\eta,\alpha)$：后者与 $S^2=-1$ 不符（用两次会得 $(\alpha,\eta)$ 而非 $( -\alpha,-\eta)$）。
+
+## 批注
+
+### 易错预警：$\beta,\gamma$ 不是 $\mathfrak t$ 中的普通向量
+
+$\beta\in\mathfrak t$ 与 ${}^L\neg\beta\in{}^L\mathfrak t$ 属于不同的空间，式 (2.22) 里的 $*$ 是外尔不变度量的等同；忘记这一点会以为 $\beta^*$ 是某个固定的线性映射，从而把 $|\tau|$ 的因子记在错误的变量上。
+
+### 含糊点拨：从 (2.20) 到 (2.21) 的一步
+
+把 ${}^L\neg\phi=c\,\phi^*$ 代入式 (2.20)，用式 (2.16) 的 ${}^L\neg\Tr(D\phi^*)^2=n_{\mathfrak g}\Tr(D\phi)^2$ 得 $c^2={\rm Im}\,\tau/(n_{\mathfrak g}{\rm Im}\,{}^L\neg\tau)$，再用式 (2.19) 得 $c=|\tau|$。$n_{\mathfrak g}$ 恰好抵消，所以式 (2.21) 与根长比无关；这一步只是按 ${}^L\neg\Tr$ 的归一化重写动能项，没有任何动力学假设，误取 $c=1$ 会让两边动能之比为 $1/|\tau|^2$。
+
+### 背景直觉：为什么 $\alpha$ 与 $\eta$ 的交换是核心假设
+
+$\beta,\gamma$ 的变换可由阿贝尔化后的线性分析得到，而 $\alpha$ 与 $\eta$ 的交换不能：它等价于把单值性换成对偶单值性，是 Montonen–Olive 对偶在带面算符情形下的实质内容。几何朗兰兹里它对应“特征层↔平坦丛”的交换，因此本文把它列为基本假设，只在 $U(1)$ 情形给出证明。
+
+## 出处
+
+- S. Gukov & E. Witten, Gauge Theory, Ramification, And The Geometric Langlands Program（arXiv:hep-th/0612073v2）中译校订本 §2.4；印刷页 [14, 16] / PDF 页 [15, 17]；锚点 `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s02b-duality.tex:120-230`
+- 式 (2.21)–(2.25)：${}^L\neg\phi=|\tau|\phi^*$、$(\beta,\gamma)$ 的重标度与 $S$ 交换 $\alpha,\eta$；印刷页 14–16，原文 PDF 第 15–17 页。
+
+---
+
+权利：`rewritten`；核验：`source-only`（2026-11-20）。

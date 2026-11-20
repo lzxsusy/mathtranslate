@@ -1,0 +1,64 @@
+# 本征膜：指数等于本征值
+
+- **id**：`gw06/concept/eigenbrane`
+- **类型**：concept
+- **位置**：§4.4
+- **问题**：几何朗兰兹说「线丛的指数就是单值性的本征值」，这个等式究竟在哪一层对象上成立？
+
+> 把典范余迷向膜与 $A$-膜之间的弦量子化，得到 $\M(\alpha,p)$ 上的扭曲 $\mathcal D$-模；它是赫克本征层，线丛指数等于平坦丛单值性的本征值 $^L\neg\alpha-i^L\neg\gamma$。
+
+## 定义
+
+设 $C$ 为紧 Riemann 面、$G$ 单连通单紧，固定 $E\in\M_H(\alpha;p)$ 与 $p\in C$。取 $X=\MH(\dots)$ 的 $K$ 型 $A$-模型；对每个点 $z\in C$，赫克算子 ${\mathcal H}_z$（来自该点的威尔逊线与其对偶）作用在 $A$-膜上。称 $A$-膜 ${\mathcal B}'$ 为本征膜，若对每个 $z$ 存在线丛 ${\mathcal L}_z$ 使 ${\mathcal H}_z\,{\mathcal B}'\cong {\mathcal L}_z\otimes{\mathcal B}'$：赫克作用只把膜张量一个线丛，不改变其形状。物理上 ${\mathcal B}'$ 是零膜 ${\mathcal B}_E$ 经界面与镜像对称后的像，支撑在 $\M(\alpha,p;G)$ 上的点即 $E$ 本身；平坦联络取 $E$ 处的规范等价类。本征值即 ${\mathcal L}_z$ 的指数。实际使用时，这一条件常与「在 $z$ 处的威尔逊线与 't Hooft 线之间插入界面」的图像配合：界面把零膜送到 $A$-模型，而赫克算符是绕 $z$ 的线算符的像，故本征条件就是线算符只给出一个指数。
+
+**记号**：$E$：$C\setminus p$ 上结构群 $^LG_\C$ 的带分歧平坦丛、$V$：$E$ 绕 $p$ 的单值性、$\hat{\mathcal B}_E$：${\mathcal B}_E$ 经 $S$-对偶所得的 $A$-膜、$^L\neg\alpha-i^L\neg\gamma$：线丛的指数，亦即本征值
+
+## 关键点
+
+- 本征膜不是另一类膜，而是「$A$-膜 $\leftrightarrow$ 赫克本征 $\mathcal D$-模」对应中的对象：它由平坦丛 $E$ 决定，其 $\mathcal D$-模在赫克算子作用下只差张量一个线丛。
+- 本征值由单值性给出：$U=\exp(-2\pi({}^L\neg\alpha-i{}^L\neg\gamma))$ 落在 $V$ 的共轭轨道闭包中，而线丛一侧的指数正是 $^L\neg\alpha-i{}^L\neg\gamma$。
+- 两侧记法一致：扭曲线丛 $K_\M^{1/2}\otimes{\mathcal L}^{-(\eta+i{\rm Im}\,\tau\,\gamma^*)}$ 用 (4.2)–(4.3) 可写成 $K_\M^{1/2}\otimes{\mathcal L}^{^L\neg\alpha-i{}^L\neg\gamma}$，故 $(\eta,\gamma)$ 与 $(^L\alpha,^L\gamma)$ 是同一组数据的两种写法。
+- 幂幺单值性对应 $^L\alpha=^L\gamma=0$：此时 $U=1$、twist 平凡，$\mathcal D$-模就是 $K_\M^{1/2}$-模；非正则单值性需第 4.6 节的补充说明。
+
+## 公式
+
+```latex
+U=\exp(-2\pi({}^L\neg\alpha-i{}^L\neg\gamma))
+```
+```latex
+K_\M^{1/2}\otimes {\mathcal L}^{-(\eta+i({\rm Im}\,\tau)\gamma^*)}
+```
+```latex
+K_\M^{1/2}\otimes {\mathcal L}^{^L\neg\alpha-i{}^L\neg\gamma}
+```
+
+## 常见错误
+
+- 把「指数」当成膜上的整体常数：指数是 Chan-Paton 线丛的第一陈类（在给定 $B$-场下），随 $\eta,\gamma$ 变化；当成常数就得不到「移动 $\eta$ 改变本征值」这一图像。
+- 把本征值取成 $V$ 的迹或某个特征值：本征值是线丛的指数 $^L\neg\alpha-i^L\neg\gamma$，它与 $V$ 的关系只是「$U$ 落在 $V$ 的轨道闭包中」，一般并不等于 $V$ 的特征值。
+- 在幂幺单值性时仍取 $^L\alpha\ne0$：此时 $^L\alpha=^L\gamma=0$（$U=1$），twist 平凡、$\mathcal D$-模就是 $K^{1/2}$-模；取非零会与时间反演论证矛盾，并给出错的指数。
+
+## 批注
+
+### 易错预警：本征值不是 $V$ 的特征值
+
+本征值指线丛 $K^{1/2}\otimes\cL^{^L\alpha-i^L\gamma}$ 的指数 $^L\alpha-i^L\gamma$；$V$ 只通过「$U$ 落在共轭轨道闭包中」这一条件进入，它决定的是膜位于哪条纤维。若把本征值当成 $V$ 的矩阵特征值，就无法解释为何 $V$ 不动、只移动面参数 $\alpha,\gamma$ 时指数会跟着变，也会在幂幺情形下把指数错算成零。
+
+### 含糊点拨：「只差一个线丛」是什么意思
+
+赫克算子把 $\mathcal D$-模拉回到赫克对应的另一侧再推回，一般改变对象；本征层指作用后只差张量一个线丛 ${\mathcal L}^{^L\alpha-i^L\gamma}$，标量因子是它的指数。正因为「相差」的恰是线丛而非函数，本征值才能与单值性这种整体数据对上。
+
+### 背景直觉：为什么用膜来说赫克
+
+赫克对应在几何一侧由膜之间的对应实现：$A$-膜的相交/态空间翻译成 $\mathcal D$-模的算子，本征层就是「在该对应下只差张量线丛」的膜。用膜的语言说，本征值 $\alpha-i\gamma$ 是零膜在希钦纤维上的位置，经傅里叶对偶变成对偶侧膜的平坦联络数据。
+
+## 出处
+
+- S. Gukov & E. Witten, Gauge Theory, Ramification, And The Geometric Langlands Program（arXiv:hep-th/0612073v2）中译校订本 §4.4；印刷页 [88, 91] / PDF 页 [89, 92]；锚点 `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s04a-branes.tex:288-420`
+- c.c. 膜构造与 $A$-膜到 $\mathcal D$-模的配给，见印刷第 88–91 页。
+- S. Gukov & E. Witten, Gauge Theory, Ramification, And The Geometric Langlands Program（arXiv:hep-th/0612073v2）中译校订本 §4.4；印刷页 [94, 95] / PDF 页 [95, 96]；锚点 `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s04a-branes.tex:529-541`
+- 本征值等式与 $\mathcal D$-模表述，见印刷第 94–95 页。
+
+---
+
+权利：`rewritten`；核验：`source-only`（2026-11-20）。

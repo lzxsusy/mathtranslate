@@ -1,0 +1,76 @@
+# 带分歧的希格斯丛模空间
+
+- **id**：`gw06/concept/ramified-higgs-bundle`
+- **类型**：concept
+- **位置**：§3.1
+- **问题**：面算符在几何一侧到底对应什么模空间，为什么必须在 p 处引入奇点并只除以在 p 处落在环面里的规范变换？
+
+> 在点 p 处把结构群约化到环面并允许 (α,β,γ) 型奇点，超 Kähler 商给出面算符所对应的模空间 M_H(α;p)。
+
+## 定义
+
+取 $p\in C$，把丛 $E$ 在 $p$ 处的结构群约化到极大环面 $\mathbb T$，并取 $(\alpha,\beta,\gamma)\in\mathfrak t^3$。令 $\mathcal W(\alpha,\beta,\gamma;p)$ 为在 $p$ 附近具有如下渐近行为的数对 $(A,\phi)$ 构成的空间：$A=\alpha\,d\theta+\cdots$，$\phi=\beta\,{dr\over r}-\gamma\,d\theta+\cdots$，省略号表示比 $1/r$ 更不奇异的项。再令 $\mathcal G_p$ 为 $\mathcal G$ 中在 $p$ 处取值于 $\mathbb T$ 的规范变换构成的子群——它正是保持该渐近形式不变的群。于是 $\mathcal M_H(\alpha,\beta,\gamma;p):=\mathcal W(\alpha,\beta,\gamma;p)/\! /\! /\mathcal G_p$，称为在 $p$ 处带分歧的希格斯丛的模空间。物理上它正是支撑在曲面 $D$ 上的面算符所对应的二维σ模型的目标空间；把 $\mathbb T$ 换成列维子群 $\mathbb L$、把参数限制为 $\mathbb L$-不变，就得到 $\mathbb L$ 型分歧的 $\mathcal M_{H,\mathbb L}$。
+
+**记号**：$\mathbb T$：极大环面、$\mathcal G_p$：在 $p$ 处取值于 $\mathbb T$ 的规范变换、$\mathcal M_H(\alpha,\beta,\gamma;p)$：带分歧希格斯丛模空间、$\mathcal M_{H,\mathbb L}$：$\mathbb L$ 型分歧的模空间
+
+## 关键点
+
+- $\alpha$ 只通过它在 $\mathfrak t/\Lambda_{\mathrm{cochar}}=\mathbb T$ 中的像起作用；$\beta,\gamma$ 才是希格斯场奇点强度的参数（$\phi\sim\beta\,dr/r-\gamma\,d\theta$ 对应留数 $\sigma=\frac12(\beta+i\gamma)$）。
+- 同样的构造可同时在若干点 $p_1,\dots,p_s$ 处分歧，各点参数独立，单点陈述对所有情形有直接类比。
+- 定义 $\mathcal M_{H,\mathbb L}$ 时要求偏离渐近形式的项小于 $1/(r\ln r)$ 而不是小于 $1/r$，目的是排除带非平凡纳姆极点的解（式 (3.101)）。
+- $\mathcal M_{H,\mathbb L}$ 不是 $\mathcal M_H$ 在参数趋于 $\mathbb L$-不变值时的极限：两者维数不同，前者是后者在该极限处的奇点轨迹。
+- $\mathbb L=G$ 是特例：此时 $\mathcal M_{H,G}$ 按中心 $\mathcal Z$ 分成若干分支，单位元分支就是无奇点的 $\mathcal M_H$。
+
+## 公式
+
+```latex
+A=\alpha\,d\theta+\dots
+```
+```latex
+\phi=\beta\,{dr\over r}-\gamma\,d\theta+\dots
+```
+```latex
+\omega_K={1\over 2\pi}\int_C\Tr\,\delta\phi\wedge\delta A
+```
+```latex
+\omega_J=-{i\over 2\pi}\int_C|d^2z|\Tr\left(\delta\phi_{\bar z}\wedge\delta A_z-\delta\phi_z\wedge\delta A_{\bar z}\right)
+```
+
+## 定理
+
+**分歧参数对上同调类的作用**：在 $\mathcal M_H(\alpha,\beta,\gamma;p)$ 上，当 $\gamma\neq0$ 时 $[\omega_K]\neq0$，当 $\beta\neq0$ 时 $[\omega_J]\neq0$；而 $\gamma=0$ 时 $\omega_K=\delta\lambda_K$ 是恰当形式。
+
+证明：sketch（§3.1，式 (3.3)–(3.4) 之后的讨论）
+
+1. 取 $\lambda_K={1\over2\pi}\int_C\Tr\phi\wedge\delta A$，直接计算得 $\delta\lambda_K=\omega_K$。 —— 对 $\lambda_K$ 取外微分 $\delta$，与式 (3.3) 末行逐项相同。
+2. 把 $\lambda_K$ 与规范变换生成元缩并，得 $\Tr\gamma\epsilon(p)$。 —— 缩并时用 $\delta A=-d_A\epsilon$、分部积分以及 $d_A\phi=-2\pi\gamma\delta_p$。
+3. 故 $\gamma\neq0$ 时 $\lambda_K$ 不是规范不变一形式的拉回，$[\omega_K]\neq0$。 —— 若 $\lambda_K$ 是拉回，它与生成元的缩并必须为零。
+
+## 常见错误
+
+- 把 $\mathcal M_{H,\mathbb L}$ 当成 $\mathcal M_H(\alpha;p)$ 在 $\alpha$ 趋于 $\mathbb L$-不变值时的极限，于是以为两者维数相同、可以连续过渡。
+- 把条件「偏离小于 $1/r\ln r$」读成 $1/r$ 乘 $\ln r$，条件反而变弱，会把带纳姆极点的解错误地算进来。
+- 忘记 $\alpha$ 只在 $\mathbb T=\mathfrak t/\Lambda_{\mathrm{cochar}}$ 中有意义，把相差余特征格元素的 $\alpha$ 当成不同的模空间。
+
+## 批注
+
+### 易错预警：α 与 γ 都配 dθ，别写反
+
+渐近式里 $\alpha$ 配 $d\theta$、$\gamma$ 也配 $d\theta$，两者容易互换。判据是：$\alpha$ 是绕 $p$ 的和乐（$A$ 的角向分量），$\gamma$ 是希格斯场的角向分量，二者组合成 $U=\exp(-2\pi(\alpha-i\gamma))$ 才是单值性。抄公式时把 $\gamma$ 写成 $+\gamma\,d\theta$ 会让 $U$ 的 $i$ 位置整体错位。
+
+### 含糊点拨：G_p 比「固定 p 的规范变换」大
+
+$\mathcal G_p$ 的定义是「在 $p$ 处取值于 $\mathbb T$ 的规范变换」，而不是「保持 $p$ 不动的规范变换」。前者比后者大：它允许在 $p$ 处作环面值的规范旋转，这正是把奇点强度 $\alpha$ 规范化掉、使 $\alpha$ 只依赖其模 $\Lambda_{\mathrm{cochar}}$ 的像的原因。
+
+### 背景直觉：面算符为什么有三个连续参数
+
+为什么分歧参数要三个而不是一个：$A$ 与 $\phi$ 各有角向与径向分量，径向部分由希钦方程与角向部分绑定，独立的只有 $A$ 的角向（$\alpha$）与 $\phi$ 的角向、径向（$\gamma,\beta$）。三者合起来正是四维面算符的连续参数，也解释了面算符为何比线算符「多两个参数」。
+
+## 出处
+
+- Gukov–Witten 2006（hep-th/0612073v2）中译校订本 §3.1；印刷页 [31, 34] / PDF 页 [32, 35]；锚点 `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s03a-quotient.tex:60-140`
+- 式 (3.2)–(3.4) 与 $\mathbb L$ 型推广见 PDF 第 32–35 页。
+
+---
+
+权利：`rewritten`；核验：`source-only`（2026-11-20）。
