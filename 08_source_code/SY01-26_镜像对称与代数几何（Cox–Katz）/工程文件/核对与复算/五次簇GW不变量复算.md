@@ -92,3 +92,18 @@ python verify_quintic_frobenius.py        # 输出 y0、G、q(z)、Y(q) 前几�
 
 - 只比对到 $d=10$（文献可查范围；原著第 2 章表也止于 $d\le10$）。脚本本身可算到 $d=23$，超出部分未与独立来源比对，故不列入结论。
 - `verify_quintic.py`、`verify_instanton.py` 是早先的尝试（用 Picard–Fuchs 算子与 Frobenius 方法直接构造解），归一化常数未能对上，已保留作反面记录：它们说明**在 B 模型一侧，Yukawa 耦合的常数不能靠猜**，必须用书中 (5.72) 的 $(1+5^5z)$ 与 $(q/z\,dz/dq)^3$ 结构。
+
+## 九、可复现实验包（2026-11-21 补）
+
+为了让读者不必读本文件也能自己动手，另建 `工程文件/核对与复算/quintic_gw/`：
+
+| 文件 | 内容 |
+|---|---|
+| `quintic_gw.py` | 纯标准库、有理数精确算术 + **Lagrange 反演**求镜像映射逆；约 0.01 s |
+| `quintic_gw_contour.py` | mpmath 60 位精度、沿 `|q|=r` 圆周做**围道积分**取系数 + 牛顿迭代求 z(q)；约 40 s |
+| `README.md` | 公式推导、运行方法、与网上现成程序的调查（Gathmann 的 Maple 脚本、Straat 论文的 `quintic.py`、Rust crate 里的硬编码表） |
+| `out_exact.txt`、`out_contour.txt` | 本机实跑输出 |
+
+两条代码路径不共享任何实现，都从式 (5.72) 出发，独立算出 $n_1,\dots,n_{10}$，
+与上表及原著第 2 章表格逐位一致。这比单一脚本更能说明“不是抄的、也没算错”。
+附录 C 亦新增一条译注（原书 PDF p133）指向该目录。

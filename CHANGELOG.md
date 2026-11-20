@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## SY01-26 增补：五次三维簇瞬子数的可复现计算包 + 附录 C 新译注 — 2026-11-21
+
+- **可复现计算包** `工程文件/核对与复算/quintic_gw/`：两个互相独立的程序从 §5.6.4 式 (5.72) 出发重算 $n_1,\dots,n_{10}$——`quintic_gw.py`（纯标准库、有理数精确算术 + Lagrange 反演，0.01 s）与 `quintic_gw_contour.py`（mpmath 60 位、围道积分 + 牛顿迭代，约 40 s），结果与文献及第 2 章表格逐位一致；附 `README.md`（公式推导、运行方法、网上现成程序调查：Gathmann 的 Maple 脚本、Straat 论文的 `quintic.py`、Rust crate 硬编码表）与实跑输出 `out_exact.txt`／`out_contour.txt`。
+- **附录 C**：新增「第 5 章」小节与 p133 译注（原书 PDF 页，= 印刷 p110），指向上述目录与仓库地址；总条数 93→94；顺带修掉 p27 条里漏进的 Markdown 星号（`**…**` → `\emph{…}`）。
+- **同步**：`README.md`、`工程文件/SY01-26_交付报告.md`（新增 §十）、`RELEASE_REGISTER.csv`、`工程文件/核对与复算/五次簇GW不变量复算.md`（新增 §九）、`03_translations_meta/SY01-26/` 副本。
+- **编译**：仍为 412 页，0 undefined reference/citation；`成品/` 与桌面副本已更新（md5 一致）。
+
 ## SY03-22《广义 Argyres–Douglas 理论》中译注本（45 页）+ 新工序「译中验算」 — 2026-11-21
 
 - **新增工程** `08_source_code/SY03-22_广义 Argyres-Douglas 理论/`：Dan Xie《General Argyres–Douglas Theory》（arXiv:1204.2270v2 [hep-th]，2016-07-12，Prepared for submission to JHEP）全文译注，8 节 + 致谢 + 67 条参考文献，**45 页**；**20 幅插图**按原 PDF 的 1:1 pt 坐标重绘为 TikZ 黑白线稿（每个文件只含一个 `tikzpicture`，标注保留原文 ASCII），4 张表、151 条编号公式；xelatex 两遍 **0 error / 0 Missing character / 0 Overfull hbox**；`translate_kit.py gate` 与 `check` 全过（黑名单 0、译注来源 0 缺失、引用闭合、无残留标记）。
