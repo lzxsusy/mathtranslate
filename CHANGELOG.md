@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## SY03-22《广义 Argyres–Douglas 理论》中译注本（45 页）+ 新工序「译中验算」 — 2026-11-21
+
+- **新增工程** `08_source_code/SY03-22_广义 Argyres-Douglas 理论/`：Dan Xie《General Argyres–Douglas Theory》（arXiv:1204.2270v2 [hep-th]，2016-07-12，Prepared for submission to JHEP）全文译注，8 节 + 致谢 + 67 条参考文献，**45 页**；**20 幅插图**按原 PDF 的 1:1 pt 坐标重绘为 TikZ 黑白线稿（每个文件只含一个 `tikzpicture`，标注保留原文 ASCII），4 张表、151 条编号公式；xelatex 两遍 **0 error / 0 Missing character / 0 Overfull hbox**；`translate_kit.py gate` 与 `check` 全过（黑名单 0、译注来源 0 缺失、引用闭合、无残留标记）。
+- **术语**：45 条候选由两名术语译手独立出提案，逐条裁定后冻结 **132 条**（`工程文件/work/glossary.tsv`）。abelianization / spray / class S / magical / lamination space 一律**保留英文**；非正则奇点（irregular singularity）、完备理论（complete theory）、箭图支链（quiver leg/tail）、驯顺/野分歧（tame/wild ramification，§8 刻意换用的几何 Langlands 词汇，不可回译为「正则/非正则奇点」）等定名与理由记入 `工程文件/STYLE_GUIDE.md`。
+- **疑点**：**32 条**全部有结论（未解 0），15 处标【原文如此】并给出正确形式或判定依据；原则是正文照录、不动数字，改正版只进译注。
+- **新工序** `04_playbook/16_译中验算与原文缺陷发现.md`（v1.0）：把「译注＝对原文的一次独立复算」固化成工序——五条复算手法（反算幂次或分母、双路记账、边界代入、维数检查、图数格点）、判定三分（排印瑕疵 → 径行订正不出注／笔误 → 照录 +【原文如此】+ 译注且须算出正确形式／论证缺口 → 必须指出哪一步不成立，标【译者按（无外部依据）】，不许替作者改论证）、四条红线。本次首次实战即撞出 **§6.1 式 (6.6) 的论证缺口**：由 $j_1/k_1\le j_2/(k_2-1)$ 推不出与 $j_1/k_1>j_2/k_2$ 的矛盾（$k_2>1$ 时二者可并存），结论本身仍由后文（只剩两 block 且 $k_2=1$）支撑，故原样保留并注记；另 5 处笔误：(5.23) 的 $\omega$ 项幂次应为 $z^{3n-1}$、(5.24) 的 $[u_{3n+1}]$ 分母应为 $3n+3$、表 4 的 Base dimension 列与 (5.19) 自相矛盾、(6.8)(6.9) 的 $\omega$ 指数应为 $k$ 而非 $n$、§6.3.1 两处把 $Y_3$ 写了两遍。
+- **台账**：`RELEASE_REGISTER.csv` 增 SY03-22 行（随仓公开·状态合规），`03_translations_meta/SY03-22/投稿信息.md` 同步。
+
 ## SY01-26 Cox–Katz 收尾：官方勘误 99 条逐条比对 + 命题 5.5.4 依作者更正重写 — 2026-11-20
 
 - **勘误比对（主任务）**：AMS 2020-01-29 版 `typos.pdf` 98 条逐条定位译本（`\SourcePage{N}`，PDF 页 = 印刷页 + 23）并判定，另补入原表漏收的 page 54 line 12（编号 9a），共 **99 条**：已修 43、已吸收 49、不适用 7、**无未判定**。改动落在 `chapters/chapter03/04/05/06/07/08/09/10/11/12.tex`、`preface.tex`、`appendixA.tex`、`references.tex`；每条依据（`chapters/chapterXX.tex:行号`）写入 `工程文件/校对/官方勘误2020/官方勘误2020对照表.md` 的「备注」列。
