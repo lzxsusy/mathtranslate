@@ -10,7 +10,7 @@ sources:
   - "A 级：Cox–Katz 1999, §8.1.3, PDF p.251–252（印刷 p.228–229）：系数环 R 与 Novikov 环 Λ(ω,Q)"
   - "A 级：Cox–Katz 1999, §8.2, PDF p.252–257（印刷 p.229–234）：定义 8.2.1–8.2.2、引理 8.2.3、定理 8.2.4（WDVV）、定理 8.2.5"
   - "A 级：Cox–Katz 1999, §8.4–8.5, PDF p.262–269（印刷 p.239–246）：Dubrovin 联络、引理 8.5.1、命题 8.5.2–8.5.3"
-  - "A 级：Kontsevich–Manin 1994, Comm. Math. Phys. 164, 525–562, §1–2（本书 PDF p.241、p.255 引作 [KoM1]）"
+  - "A 级：Kontsevich–Manin 1994, Comm. Math. Phys. 164, 525–562（§1–2 为 GW 类的公理表，量子上同调环见 §4.5、WDVV 见 §4.2 式 (4.13)；本书 PDF p.241、p.255 引作 [KoM1]）"
   - "A 级：Batyrev 1993, Astérisque 218, 定理 5.3（本书 PDF p.247 引作 Batyrev2 定理 5.3）"
   - "B 级：Cox–Katz 1999, §8.1–§8.5 节内定义与例题（书内节号，PDF p.240–280）"
 status: draft
@@ -113,7 +113,7 @@ $$H*H=\tfrac15\langle H,H,H\rangle\,H^2,\qquad
 | Cox–Katz 1999 | §8.6，PDF p.280–283（印刷 p.257–260） | 定义 8.6.1 数学镜像对；定理 8.6.2：B 模型 Yukawa 耦合 = A 模型三点函数 $\int T_i*T_j*T_k$ |
 | SY01-24 术语表 | #31 稳定映射 p.42、#32 虚拟基本类 p.46、#67 Novikov 域 p.99；第 6 章 HMS 只到 Novikov 域与 Hochschild 上同调，p.96–104 | 只覆盖 GW 的输入与系数，**70 条中无「量子上同调/GW 势/WDVV」条目**。**冲突**：monodromy 作「单值变换」（本书作「单值性」，T1）；系数作「Novikov 域」而本书 PDF p.252 定义的是「Novikov 环」$\Lambda(\omega,\mathbb{Q})$（域/环不同，见 §11 C1、C2） |
 | SY01-25 资料卡 | `04-术语文献勘误.md` §一（HMS、A∞-预范畴、Morse–Smale 复形）、§二 文献表 [Ko] | 其量子侧走 A∞/Fukaya 与同调扰动，**全书无「量子上同调」条目**，不定义小量子乘积。**冲突**：本书第 8 章用稳定映射+GW 不变量，不引入 A∞-预范畴（U4）；大极限用 $q\to0$，本书用 $q=e^{2\pi it}$ 与 $\operatorname{Im}\omega\to\infty$（U3，见 §11 C3、C4） |
-| 原始文献：Kontsevich–Manin 1994 | Comm. Math. Phys. 164, 525–562，§1–2（本书 PDF p.241、p.255 引作 [KoM1]） | GW 类公理化与量子上同调定义的标准来源；定义 8.1.1 与 WDVV 证明均引此 |
+| 原始文献：Kontsevich–Manin 1994 | Comm. Math. Phys. 164, 525–562（§1–2 公理表；量子上同调环 §4.5、WDVV §4.2 式 (4.13)；本书 PDF p.241、p.255 引作 [KoM1]） | GW 类公理化与量子上同调定义的标准来源；定义 8.1.1 与 WDVV 证明均引此 |
 | 原始文献：Batyrev 1993 | Astérisque 218，定理 5.3（本书 PDF p.247 引作 Batyrev2 定理 5.3） | 环面簇量子环 $H^*_\omega(X)=\mathbb{C}[x]/(P(\Sigma)+\mathrm{SR}_\omega(\Sigma))$，即例 8.1.2(2) |
 | 原始文献：Dubrovin 1996 | LNM 1620，§1–3（本书 PDF p.262 引作 Dubrovin1，页码待核） | Frobenius 流形与 Dubrovin 联络：把「量子乘法 + 配对 + 势」组织成平坦联络 |
 
@@ -187,3 +187,4 @@ end MirrorSymmetry
 - [ ] 外部文献坐标只核到书名/定理号：Kontsevich–Manin 1994 的 §1–2 具体页、Batyrev 1993 定理 5.3 的原书页、Dubrovin 1996 LNM 1620 的 §1–3 页码，均待补（当前 A 级只落到本书引用页 p.241、p.247、p.262）。
 - [ ] 队列把最小例子写成 $\mathbb{Z}[p]/(p^{n+1})-q$（整系数），本书用 $\mathbb{Q}$ 系数与 $\mathbb{P}^r$ 记号（例 8.1.2(1)，PDF p.245–246）；系数域差异待核，本卡按本书用 $\mathbb{Q}$。
 - [ ] §4 例 C 的 $\langle H,H,H\rangle$ 展开式按 PDF p.249 的一般公式写成 $\sum_d n_d\,d^3q^d/(1-q^d)$，但书中对五次是否用同一归一化（$q=e^{2\pi it}$、$n_d$ 的正负号）未逐项核对，$n_1=2875$ 等数值待从原书页取。
+- **核验（2026-11-20）**：本卡经 `_核验记录.md` 核验，修正 1 处（详见该文件 ✗ 清单与证据链接）；其余待核条目保留。

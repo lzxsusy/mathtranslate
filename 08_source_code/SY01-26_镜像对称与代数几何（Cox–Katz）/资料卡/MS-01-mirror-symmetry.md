@@ -109,7 +109,7 @@ updated: 2026-11-20
 | COGP 1991 | Nuclear Phys. B359, 21–74 | 五次镜像的周期与 Yukawa 耦合计算，$n_d$ 预测的来源（书 [COGP]；式号/页码待核） |
 | Kontsevich 1994 | Proc. ICM Zürich, Vol. 1, 120–139 | HMS 原始提议 $D^b(\mathrm{Coh}\,V)\simeq D^\pi\mathrm{Fuk}(V°)$（书 PDF p.34；页码待核） |
 | Batyrev 1994 | J. Algebraic Geom. 3, 493–535 | 用自反多胞形 $Δ,Δ°$ 构造镜像族；本书 PDF p.290 述其环面情形定理 |
-| Givental 1996；Lian–Liu–Yau 1997 | IMRN 1996, 613–636；Asian J. Math. 1 (1997), 729–763 | 数值镜像对称的证明（SY01-24 概览 p.9 只记年份；页码待核） |
+| Givental 1996；Lian–Liu–Yau 1997 | IMRN 1996, 613–663；Asian J. Math. 1 (1997), 729–763 | 数值镜像对称的证明（SY01-24 概览 p.9 只记年份；页码待核） |
 
 ## 9. 前置与后继
 
@@ -165,3 +165,4 @@ end MirrorSymmetry
 - [ ] 式 (8.71) 与第 2 章式 (2.22) 是否逐字同一恒等式，仅据 PDF p.285 正文推断（左边 A 模型关联函数、右边归一化 Yukawa），待对照印刷页 p.262。
 - [ ] 外部文献坐标待核：COGP 1991 中 $n_1$–$n_5$、$c_1,c_2$ 的式号/页码；Kontsevich 1994 ICM 页码（书 $[Ko]$ 未给）；Batyrev 1994 定理号；Givental 1996 与 Lian–Liu–Yau 1997 的期刊页码（SY01-24 概览 p.9 只记年份）。
 - [ ] 方向约定：第 2 章与定义 8.6.1 的 $V/V°$ 互换（§7 M5），建议在 MS-02 显式声明，避免资料卡之间混用；待 lead 裁。
+- **核验（2026-11-20）**：本卡经 `_核验记录.md` 核验，修正 1 处（详见该文件 ✗ 清单与证据链接）；其余待核条目保留。

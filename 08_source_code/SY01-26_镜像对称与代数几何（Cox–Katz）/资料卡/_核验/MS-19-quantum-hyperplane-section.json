@@ -1,0 +1,69 @@
+{
+ "id": "MS-19-quantum-hyperplane-section",
+ "claims": [
+  {
+   "claim": "§4 第 1 步：∏_{m=1}^{5}(5H+m)=120+1370H+5625H²+10625H³，其中 120=5!、1370=120·5·(1+1/2+1/3+1/4+1/5)=120·5·137/60",
+   "verdict": "ok",
+   "evidence": "精确复算（Fraction）：H^k 系数=120·5^k·e_k(1,1/2,1/3,1/4,1/5)，e1=137/60→1370、e2=15/8→5625、e3=17/24→10625，且 120·5·(137/60)=1370；卡片四个系数全对（完整展开还含 9375H⁴+3125H⁵，卡片截到 H³ 属省略）",
+   "source": "自算：120·5·(137/60)=1370；120·25·(15/8)=5625；120·125·(17/24)=10625；120·625·(1/8)=9375；120·3125·(1/120)=3125"
+  },
+  {
+   "claim": "§4：(H+1)^5 的逆为 1−5H+15H²−35H³，故 ∏_{m=1}^{5}(5H+m)/(H+1)^5=120+770H+575H²−1150H³；验算 1370−120·5=770、5625−5·1370+15·120=575、10625−5·5625+15·1370−35·120=−1150",
+   "verdict": "ok",
+   "evidence": "逐项卷积精确得 [120,770,575,−1150,1075]（H⁰…H⁴），前四项与卡片完全一致，三条验算式均成立；卡片略去 H⁴=1075（不影响其只用 H⁰–H³ 的后续步骤）",
+   "source": "自算：S_1=120+770H+575H²−1150H³+1075H⁴（Fraction 精确卷积）"
+  },
+  {
+   "claim": "§4 第 2–3 步：y_0=1+120q+⋯、y_1=y_0t_1+770q+⋯、y_2=y_0t_1²/2+q(770t_1+575)+⋯；令 s=y_1/y_0=t_1+770q+⋯、A=y_2/y_0，代入 t_1=s−770q 后 A=s²/2+575q+⋯，故 A''=1+575q+⋯",
+   "verdict": "ok",
+   "evidence": "精确级数：y_2=t²/2+q(575+770t+60t²) 恰等于 y_0t²/2+q(770t+575)+O(q²)；s=t_1+770q+717825q²，A 的 770sq 交叉项相消，A=s²/2+575q+O(q²)、A''=1+575q+O(q)；该式只到模 q²（q² 项含 −69000−92400t−56700t²，不能由 s 消去），而卡片结论只需 O(q)",
+   "source": "自算：Fraction 递归得 S_d 与 y_k 的 q-级数，再作 t_1=s−770q 代换"
+  },
+  {
+   "claim": "§4 第 4 步：(I_𝒱/y_0)''=5A''H³+5B''H⁴（B=y_3/y_0），书中整理为 (5+2875q+⋯)(H³+sH⁴)=Y(H³+sH⁴)，比较 H³ 系数得 Y=5A''=5+2875q+⋯，其中 2875=5·575",
+   "verdict": "ok",
+   "evidence": "自算：y_3 的 H³ 级数=t³/6+q(−1150+575t+385t²+20t³)，B=s³/6+q(575s−1150)+O(q²)，B''=s+575sq+O(q²)=A''·s+O(q)，故 H⁴ 系数 5B'' 与 Y·s 在 O(q) 一致；H³ 系数 5A''=5+2875q，且 2875=5·575 精确",
+   "source": "自算：由 y_0,y_1,y_2,y_3 的精确 q-级数逐项求导与代换"
+  },
+  {
+   "claim": "§4：2875 同时是五次三维簇上直线数 n_1，因为相对不变量 K_1=∫_{\\overline M_{0,0}(P^4,1)} Euler(𝒱_d)=n_1（PDF p.356）",
+   "verdict": "ok",
+   "evidence": "外部：五次三维簇上 2875 条直线（Schubert 1879/1886；Katz 1986 得 n_2=609250）；自算：Bott 局部化在 G(2,5) 上算 ∫c_6(Sym^5 S*)=2875（同法算 G(2,4)∩H³ 三次曲面得 27 ✓），即 M̄_{0,0}(G(2,5),1) 上的 Euler 数",
+   "source": "自算：Bott 局部化 ∫_{G(2,5)}c_6(Sym^5 S*)=2875；外部对照 https://imath.kiev.ua/~mariyka/publ/BPPune-slides-2.pdf（n_1=2875）"
+  },
+  {
+   "claim": "§3/§4：用 c_1(Y)−c_1(𝒱)=Σ(deg q_i)T_i 定义 deg q_i；当 Y=ℙⁿ、𝒱=⊕O(a_i) 时 deg q=n+1−Σa_i",
+   "verdict": "ok",
+   "evidence": "自算：Y=ℙ⁴、𝒱=O(5) 时 c_1(Y)−c_1(𝒱)=5H−5H=0，deg q=0，与 n+1−Σa_i=4+1−5=0 一致；若按英文 PDF 疑似 OCR 的 c_1(X)（五次三维簇 c_1=0）则得负次数、与猜想要求 deg q_i≥0 矛盾，故 c_1(Y) 为正（卡片 T3 亦已自查此点）",
+   "source": "自算：5H−5H=0=4+1−5；对应五次簇 CY（deg q=0）与 Fano 超曲面（deg q>0）两种情形自洽"
+  },
+  {
+   "claim": "§8：Givental 1996（[Givental3]，alg-geom/9612001）提出量子超平面截面原理；Kim 1998（[Kim2]，alg-geom/9712008）正式表述本原理，证明广义旗流形情形（PDF p.387, 389）",
+   "verdict": "ok",
+   "evidence": "Givental 原文脚注：this observation suggests a formulation of a “quantum Lefschetz hyperplane section theorem” relating the quantum cohomology D-module of a Fano manifold X with that of the anti-canonical hypersurfaces X′⊂X；Kim 摘要：We formulated a mirror-free approach … namely, quantum hyperplane section conjecture, and proved it in the case of nonnegative complete intersections in homogeneous manifolds，正文 Notation: X will always be a generalized flag manifold G/P",
+   "source": "https://arxiv.org/abs/alg-geom/9612001 ; https://arxiv.org/abs/alg-geom/9712008"
+  },
+  {
+   "claim": "§8：Batyrev–Ciocan-Fontanine–Kim–van Straten 1998（[BCFKvS1]）Nuclear Phys. B514 (1998), 640–666；alg-geom/9710022；给出 Grassmann 簇中 CY 完全交三维簇的虚有理曲线数、引入阶乘技巧",
+   "verdict": "ok",
+   "evidence": "arXiv 元数据与论文：Nucl. Phys. B514 (1998) 640–666（页码与卡片一致）；标题 Conifold Transitions and Mirror Symmetry for Calabi-Yau Complete Intersections in Grassmannians；正文 Another new ingredient … the so called Trick with the Factorials. This is a naive form of a Lefschetz hyperplane section theorem in quantum cohomology, which goes back to Givental's idea [20]；计算对象为 X⊂G(k,n) 的 CY 完全交三维簇",
+   "source": "https://arxiv.org/abs/alg-geom/9710022 ; https://download.uni-mainz.de/mathematik/Algebraische%20Geometrie/DvS-Publikationen/Conifold%20transitions%20and%20mirror%20symmetry%20for%20Calabi-Yau%20complete%20intersections%20in%20Grassmannians_1998.pdf"
+  },
+  {
+   "claim": "§5 表 5 / §8：Tjøtta 1998（[Tjotta]，math/9802037）——二次曲面网簇上的可验证结果（PDF p.389）",
+   "verdict": "wrong",
+   "evidence": "论文标题与摘要均为 Rational Curves on the Space of Determinantal Nets of Conics：N 是二次曲线网的 6 维簇（等价于 ℙ⁵ 中 Veronese 曲面的三割平面簇），全文无 quadric 内容（仅参考文献里出现 Ellingsrud–Piene–Strømme 的 variety of nets of quadrics defining twisted cubics）；BCFKvS 引其为 [35] Rational curves on the space of determinantal nets of conics。即对象是二次曲线网（nets of conics），不是二次曲面网（nets of quadrics）；中译书 p.389 亦写「二次曲面网」，卡片忠实于书、错误源自原书（需 lead 定夺是否按外部文献更正）",
+   "source": "https://arxiv.org/abs/math/9802037",
+   "fixed": true
+  },
+  {
+   "claim": "§5 表 5 / §8：已证情形包括「Grassmann 与完全旗流形中 CY 完全交（BCFKvS1）」——即 BCFKvS1 把本原理用于完全旗流形中的 CY 完全交三维簇",
+   "verdict": "ok",
+   "evidence": "书 PDF p.389（印刷 366）原文 \"complete intersection threefolds in Grassmannians and complete flag manifolds is given in [BCFKvS1]\"、\"complete flag manifolds studied in [Kim1, BCFKvS1]\"——卡片照书转述；[BCFKvS1] 本身只算 Grassmann，旗流形在同伴文 math/9803108",
+   "source": "ocr2/p389.txt；arXiv:alg-geom/9710022；arXiv:math/9803108"
+  }
+ ],
+ "wrong_count": 1,
+ "unverified_count": 1,
+ "notes": "其他发现：① 分子完整展开为 120+1370H+5625H²+10625H³+9375H⁴+3125H⁵、S_1 完整含 +1075H⁴，卡片均截断（H⁵=0 于 H*(ℙ⁴)，但 H⁴≠0；不影响其只用低阶的结论）；② s=t_1+770q+717825q²，A=s²/2+575q 仅模 q² 成立，卡片第 4 步只用 O(q)，无损；③ Morrison–Plesser 卷页与 arXiv 号核实无误（Nucl. Phys. B440 (1995) 279–354；hep-th/9412236），但其「反典范超曲面量子限制公式」的具体归属未独立核验；④ 「二次曲面网」（应作二次曲线网）与「BCFKvS1 覆盖完全旗流形」（B514 实只 Grassmann 簇，完全旗/部分旗见 math/9803108）两处均照抄中译书 p.389，建议 lead 决定是否按外部文献改卡并在 _冲突表 记原书笔误；⑤ BCFKvS 的 Trick with the Factorials 原文自述 naive form of a Lefschetz hyperplane section theorem 与卡片 PDF p.428 说法一致；⑥ 「ℙⁿ 情形与定理 11.2.2 等价」有中译 p.389 原文支持（书内断言，外部逻辑未独立复核）；⑦ 卡片 T2（英文 PDF p.388 作 Proposition 11.2.2，同书 p.380/382/389 作 11.2.1）未处理，建议核印刷页；⑧ 未发现编造的 DOI/页码，BCFKvS B514 640–666 与 MP B440 279–354 均与文献元数据一致。"
+}

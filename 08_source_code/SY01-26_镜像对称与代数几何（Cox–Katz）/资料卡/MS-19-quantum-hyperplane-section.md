@@ -91,7 +91,7 @@ $$\Big(\frac{I_{\mathcal V}}{y_0}\Big)''=(5+2875q+\cdots)(H^3+sH^4)=Y\,(H^3+sH^4
 | 2 | $Y=\mathbb P^n$ 时用 (11.55) 得 $\overline I_{\mathcal V}=I_{\mathcal V}$（即式 (11.38)） | PDF p.388–389 | 需命题 11.2.1 |
 | 3 | $\mathbb P^n$ 情形：本原理 $\Longleftrightarrow$ 定理 11.2.2 | PDF p.389 | 故不是额外假设 |
 | 4 | $\deg q_i$ 由 $c_1(Y)-c_1(\mathcal V)$ 定，$\mathbb P^n$ 时 $=n+1-\sum a_i$；猜想要求 $\ge0$ | PDF p.388 | 反典范 nef 的类比 |
-| 5 | 已证情形：$\mathbb P^n$（定理 11.2.2）、广义旗流形（Kim2）、Grassmann 与完全旗流形中 CY 完全交（BCFKvS1）、二次曲面网（Tjøtta） | PDF p.389 | 一般情形仍未证 |
+| 5 | 已证情形：$\mathbb P^n$（定理 11.2.2）、广义旗流形（Kim2）、Grassmann 流形与完全旗流形中 CY 完全交（BCFKvS1；书 PDF p.389 如此表述，论文本身只算 Grassmann，旗流形在同伴文 math/9803108）、二次曲线网簇 $N$（determinantal nets of conics，dim 6；Tjøtta） | PDF p.389 | 一般情形仍未证 |
 | 6 | $\dim X\ge3$ 时 $J_{\mathcal V}=i_!(J_X)$；偶数维 $X$ 只能看到 $H^*(\mathcal V)=i^*H^*(Y)$ 部分 | 命题 11.2.3, PDF p.382–384 | 见 §7-误解 2 |
 
 ## 6. 推导流程（D1…Dn）
@@ -125,7 +125,7 @@ $$\Big(\frac{I_{\mathcal V}}{y_0}\Big)''=(5+2875q+\cdots)(H^3+sH^4)=Y\,(H^3+sH^4
 | Kim 1998（[Kim2]） | 预印本，alg-geom/9712008 | 正式表述本原理，证明广义旗流形情形（PDF p.387, 389） |
 | Batyrev–Ciocan-Fontanine–Kim–van Straten 1998（[BCFKvS1]） | Nuclear Phys. B514 (1998), 640–666；alg-geom/9710022 | Grassmann 簇与完全旗流形中 CY 完全交三维簇的虚有理曲线数；引入阶乘技巧（PDF p.389, 428） |
 | Morrison–Plesser 1995（[MP1]） | Nuclear Phys. B440 (1995), 279–354；hep-th/9412236 | 反典范超曲面的量子限制公式：与本原理精神相近、范围更窄（PDF p.387） |
-| Tjøtta 1998（[Tjotta]） | 预印本，math/9802037 | 二次曲面网簇上的可验证结果（PDF p.389） |
+| Tjøtta 1998（[Tjotta]） | 预印本，math/9802037 | 二次曲线网簇（determinantal nets of conics，dim $N=6$）上的可验证结果（PDF p.389）。**注意**：书 PDF p.389 原文作 "varieties of nets of quadrics"，与 [Tjotta] 实际对象（nets of *conics*）不符，属原文误引；卡片按论文实际对象订正 |
 | B 级：nLab / 教材索引 | nLab「quantum cohomology」「Gromov–Witten invariant」；本书 §11.1.5（PDF p.372） | 索引级背景（凸丛、稳定映射、虚拟基本类）；无本原理专条（待核） |
 
 ## 9. 前置与后继
@@ -165,3 +165,4 @@ theorem quantum_hyperplane_section_principle
 - [ ] **T4（凸簇定义）** 本书只给「凸线丛」（$H^1=0$，引 §11.1.5, PDF p.372）与「$\mathbb P^n$ 为凸」，未给一般「凸簇」的正式定义；使用时援引「虚拟基本类=通常基本类」（PDF p.381）。一般定义是否要求 $H^1(C,f^*T_Y)=0$，待核。
 - [ ] **T5（$y_i$ 归一化）** §4 中 $y_2$ 的 $q^1$ 系数 $575$ 由 $S_1=120+770H+575H^2-1150H^3$ 与 $e^{t_1H}$ 乘出，须与 §11.1（PDF p.356–357）用 Frobenius 法定义的 $y_i$（含 log 解约定）对齐；$2875=5\cdot575$ 已自行核算，但 $H^4$ 部分（$B=y_3/y_0$）未逐步展开，仅依书中 p.386 结论。
 - [ ] **T6（术语判据）** 英文 "quantum hyperplane section principle" 的「hyperplane」是历史名；是否在术语表另立「量子限制公式」条（与 [MP1] 区分）待 lead 定。
+- **核验（2026-11-20）**：本卡经 `_核验记录.md` 核验，修正 1 处（详见该文件 ✗ 清单与证据链接）；其余待核条目保留。

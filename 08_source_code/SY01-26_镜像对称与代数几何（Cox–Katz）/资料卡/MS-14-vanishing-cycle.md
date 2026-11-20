@@ -78,7 +78,7 @@ updated: 2026-11-20
 2. 若 $e=0$，则一切 $x_i=0$，不是 $\mathbb P^4$ 的点；故 $e\ne0$、一切 $x_i\ne0$，且所有 $x_i^5=-\psi e/5$ 相等。写 $x_i=\zeta_i x_1$，$\zeta_i\in\mu_5$，$\zeta_1=1$。
 3. 代入 $f_\psi=0$：$e=x_1^5\prod\zeta_i$，故 $x_1^5=-\psi e/5$ 给出 $1=-\psi\prod\zeta_i/5$，即 $\psi=-5/\prod\zeta_i$；此时 $f_\psi=x_1^5(5+\psi\prod\zeta_i)=0$ ✓。
 4. 取 $\psi=-5$（即 $x=(-5)^{-5}=-5^{-5}$）：条件化为 $\prod_i\zeta_i=1$，于是临界点为 $[1:\zeta_2:\zeta_3:\zeta_4:\zeta_5]$，$\zeta_i^5=1$、$\zeta_2\zeta_3\zeta_4\zeta_5=1$，共 $5^3=125$ 个（均非退化，即结点；结点性本卡未逐项验证，见 §11）。
-5. $G=\{a\in(\mathbb Z/5)^5:\sum a_i\equiv0\bmod 5\}/\mathbb Z_5\cong(\mathbb Z/5)^3$ 阶为 125，按 $(x_i)\mapsto(\zeta^{a_i}x_i)$ 作用。它在 125 个结点上**自由且传递**（坐标全非零 ⇒ 稳定子平凡；给定目标 $(\eta_i)$，取 $g_1\in\mu_5$、$g_i=g_1\eta_i/\zeta_i$，则 $\prod g_i=g_1^5\prod\eta_i/\prod\zeta_i=1$）。故商族 $V_\psi/G$（即镜像族）在 $x=-5^{-5}$ 处**恰有 1 个结点**，其邻近光滑纤维恰有一个消失 $S^3$——与 PDF p.104「此时 $N^2=0$」、PDF p.145「判别式主分支一般点有一个结点」互检；数值上 $h^{2,1}=1$、$b_3=204=2+2\cdot101$，与 MS-22 的锥形奇点跃迁 $b_3:204\to202$ 一致。
+5. $G=\{a\in(\mathbb Z/5)^5:\sum a_i\equiv0\bmod 5\}/\mathbb Z_5\cong(\mathbb Z/5)^3$ 阶为 125，按 $(x_i)\mapsto(\zeta^{a_i}x_i)$ 作用。它在 125 个结点上**自由且传递**（坐标全非零 ⇒ 稳定子平凡；给定目标 $(\eta_i)$，取 $g_1\in\mu_5$、$g_i=g_1\eta_i/\zeta_i$，则 $\prod g_i=g_1^5\prod\eta_i/\prod\zeta_i=1$）。故商族 $V_\psi/G$（即镜像族）在 $x=-5^{-5}$ 处**恰有 1 个结点**，其邻近光滑纤维恰有一个消失 $S^3$——与 PDF p.104「此时 $N^2=0$」、PDF p.145「判别式主分支一般点有一个结点」互检；数值上镜像族 $h^{2,1}=1$、$h^{1,1}=101$，故 $b_3(V^\circ)=2+2h^{2,1}=4$（五次三维簇本身 $b_3=2+2\cdot101=204$）；与 MS-22 的锥形奇点跃迁 $b_3:204\to202$（原簇一侧）一致。
 
 ### 4.3 数值链（本书 p.42–44）
 
@@ -190,3 +190,4 @@ end MirrorSymmetry
 - [ ] **p.167 的 16 结点例题**与本卡 §4.2 的「1 个结点」是不同构造（前者是 $\overline V\subset\mathbb P^4\times\mathbb P^1$ 的跃迁，后者是判别式主分支一般点），§7 误解 5 已注明；二者关系待核（转 MS-22）。
 - [ ] **式编号**：式 (2.6)、(2.9)、(2.11) 由 `chapter02.tex` 中 `\label` 顺序推定（与 MS-06 卡「式 (2.8)=PF 方程」一致），印刷版定稿前需核一次。
 - [ ] **B 级来源**：nLab 的 "vanishing cycle"／"Picard–Lefschetz formula" 条目号与版本未取；Stacks Project 是否有对应条目待核，当前 B 级主要靠书内节号索引。
+- **核验（2026-11-20）**：本卡经 `_核验记录.md` 核验，修正 1 处（详见该文件 ✗ 清单与证据链接）；其余待核条目保留。

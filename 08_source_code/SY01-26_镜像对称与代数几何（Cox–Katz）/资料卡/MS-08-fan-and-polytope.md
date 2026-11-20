@@ -58,7 +58,7 @@ updated: 2026-11-20
 2. **扇。** 取三条射线 $v_1=(1,0)$、$v_2=(0,1)$、$v_0=(-1,-1)$，$\Sigma$ 含 $0$、三条射线与三个二维锥 $\operatorname{cone}(v_0,v_1)$ 等。$|\Sigma|=\mathbb R^2$ 且每个二维锥的生成元可补成 $\mathbb Z^2$ 的基，故 $\Sigma$ 完备、光滑，$X(\Sigma)=\mathbb P^2$。
 3. **设 $D=-K_{\mathbb P^2}=D_{v_1}+D_{v_2}+D_{v_0}$**（式 (3.3) 中 $a_\rho=1$）。由 $\Delta_D=\{m:\langle m,v_\rho\rangle\ge-a_\rho\}$ 得三个半空间：$m_1\ge-1$（$v_1$）、$m_2\ge-1$（$v_2$）、$-m_1-m_2\ge-1$ 即 $m_1+m_2\le1$（$v_0$）。
 4. **顶点。** 三式两两取等：$(m_1,m_2)=(-1,-1)$、$(2,-1)$、$(-1,2)$。故 $\Delta=\operatorname{Conv}\{(-1,-1),(2,-1),(-1,2)\}$，三张刻面对应三条射线（与 p.56「丰沛时刻面 ↔ $\Sigma(1)$」一致）。
-5. **数格点。** 面积 $=\frac12|\det((3,0),(0,3))|=\frac92$；边界格点数 $B=3+3+3=9$；Pick 公式给内点 $I=\frac92-\frac92+1=1$（正是原点）。故 $l(\Delta)=I+B=10$、$l^*(\Delta)=I=1$。又 $2\Delta$：令 $a=m_1+2,\ b=m_2+2$，则 $a,b\ge0$、$a+b\le6$，故 $l(2\Delta)=\binom82=28$；而 $\operatorname{Int}(2\Delta)\cap M=\Delta\cap M$（整多胞形标准事实），得 $l^*(2\Delta)=10$。
+5. **数格点。** 面积 $=\frac12|\det((3,0),(0,3))|=\frac92$；边界格点数 $B=3+3+3=9$；Pick 公式给内点 $I=\frac92-\frac92+1=1$（正是原点）。故 $l(\Delta)=I+B=10$、$l^*(\Delta)=I=1$。又 $2\Delta$：令 $a=m_1+2,\ b=m_2+2$，则 $a,b\ge0$、$a+b\le6$，故 $l(2\Delta)=\binom82=28$；而 $\operatorname{Int}(2\Delta)\cap M=\Delta\cap M$ 在此成立的原因是 $\Delta$ 自反（各刻面到原点的格高恰为 1：$\operatorname{Int}(k\Delta)\cap M=(k-1)\Delta\cap M$ 只对这类多胞形成立，一般整多胞形如 $\operatorname{Conv}\{(-1,0),(0,-1),(2,2)\}$ 不成立），故 $l^*(2\Delta)=10$。
 6. **极多胞形。** $\Delta$ 的三张刻面由上述不等式取等给出，其对偶的顶点就是三个法向量：$\Delta^\circ=\operatorname{Conv}\{(1,0),(0,1),(-1,-1)\}$（如刻面 $F_1=\{m_1=-1\}$ 对应的顶点为 $(1,0)=F_1^\circ$）。它是标准单形，$l(\Delta^\circ)=4$、$l^*(\Delta^\circ)=1$；逐条代入得 $(\Delta^\circ)^\circ=\Delta$。
 7. **法扇就是第 2 步的扇。** 引理 3.2.1：$\sigma_{F_1}=\mathbb R_{\ge0}(1,0)$、$\sigma_{F_2}=\mathbb R_{\ge0}(0,1)$、$\sigma_{F_0}=\mathbb R_{\ge0}(-1,-1)$，二维锥由相邻刻面给出。故 $\mathbb P_\Delta=X(\Sigma_\Delta)=\mathbb P^2$。
 8. **自反性校验（定义 3.5.3，p.69）。** 三张刻面分别落在 $\langle m,(1,0)\rangle=-1$、$\langle m,(0,1)\rangle=-1$、$\langle m,(-1,-1)\rangle=-1$ 上且 $v_\Gamma\in N$；(ii) $\operatorname{Int}(\Delta)\cap M=\{(0,0)\}$。故 $\Delta$ 自反，$\Delta^\circ$ 也自反（引理 3.5.4），$\mathbb P_\Delta=\mathbb P^2$ 是 Fano（命题 3.5.5）。
@@ -187,3 +187,4 @@ theorem reflexive_iff_fano (P : LatticePair) (Δ : Polytope P) :
 - [ ] 「多面体」术语缺口（不算冲突）：本书在 $0\notin\operatorname{Int}\Delta$ 时出现无界对象却未命名，SY01-24 定义 4.12 明确区分多面体/多胞体；本卡 §3.8 只描述、不引入新译名。
 - [ ] §4.2 的 $(-K_{X^\circ})^3=8$ 为自算（$\operatorname{vol}(\Delta^\circ)=\frac43$，公式见 p.76 引 [Fulton3] §5.3）；书 p.74 只作定性对比，数值待复核。
 - [ ] §10 形式化只到签名层（多处 `by sorry`；`interiorOf`/`IsReflexive`/`IsFanoPolar` 为占位定义）；Mathlib 有无 toric variety / fan 的现成 API 待核。
+- **核验（2026-11-20）**：本卡经 `_核验记录.md` 核验，修正 1 处（详见该文件 ✗ 清单与证据链接）；其余待核条目保留。

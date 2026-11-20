@@ -73,7 +73,7 @@ $$Q\bigl(i^{p-q}\alpha,\overline\alpha\bigr)>0\qquad(\alpha\in H^{p,q}_s,\ \alph
 $$V_\psi=\{F_\psi=x_1^5+x_2^5+x_3^5+x_4^5+x_5^5+\psi\,x_1x_2x_3x_4x_5=0\}\subset\mathbb P^4,\qquad\psi\in\mathbb C^*,$$
 模 $G=(\mathbb Z/5)^4$ 的群作用；令 $z=\psi^{-5}$，$\delta=z\,d/dz=-\tfrac15\psi\,d/d\psi$。$V_\psi$ 在 $\psi^5\neq-5^5$ 时光滑，即 $z\notin\{0,-\tfrac1{3125},\infty\}$（$5^5=3125$）。
 
-**Hodge 数（可直接算出）.** $V_\psi$ 是三次 Calabi–Yau 三维簇，$h^{3,0}=h^{2,1}=h^{1,2}=h^{0,3}=1$，故 $b_3=4$，且 $\dim F^p=\sum_{a\ge p}h^{a,3-a}=4-p$：
+**Hodge 数（可直接算出）.** $V_\psi$ 作为 $\mathbb P^4$ 中的五次三维簇有 $h^{1,1}=1$、$h^{2,1}=101$、$b_3=204$；本书真正用的是其 $G$-不变部分 $H^3(V_\psi)^G$（即镜像族 $V_\psi/G$ 的 $H^3$）：$h^{3,0}=h^{2,1}=h^{1,2}=h^{0,3}=1$，故 $b_3(H^3(V_\psi)^G)=4$，且 $\dim F^p=\sum_{a\ge p}h^{a,3-a}=4-p$：
 $$\dim F^3=1,\quad\dim F^2=2,\quad\dim F^1=3,\quad\dim F^0=4.$$
 基（留数形式，PDF p.110–111）：$\omega_j=(-1)^{j-1}\psi^j(x_1x_2x_3x_4x_5)^{j-1}\Omega_0/F_\psi^j$（$j=1,2,3,4$），其中 $\Omega_0=\sum_{j=1}^5(-1)^{j-1}x_j\,dx_0\wedge\cdots\widehat{dx_j}\cdots\wedge dx_4$；则 $\operatorname{Res}(\omega_j)\in F^{4-j}H^3(V_\psi)$，且 $\{\omega_1,\dots,\omega_4\}$ 是 $H^3$ 的基。
 
@@ -206,3 +206,4 @@ theorem quintic_connection_upper_triangular : True := by sorry
 - [ ] C10（非冲突）：§4 中 $T$ 矩阵所取 PF 解基 $(y_0,\dots,y_3)$ 与书 p.44、p.111 所用周期基可能差一个整基变换（$\log T$ 的幂零指数不变），具体矩阵待核。
 - [ ] C11（非冲突·符号约定）：§3 (A6) 与 §4 中 $Q$ 的系数 $(-1)^{k(k-1)/2}$ 与式 (5.1) 正性 $Q(i^{p-q}\alpha,\bar\alpha)>0$ 的符号配合（$k=3$ 时 $Q=-\int\alpha\wedge\beta$）需对照书 p.97 原文核实；本卡照书引用。
 - 非空则 status ≠ frozen。
+- **核验（2026-11-20）**：本卡经 `_核验记录.md` 核验，修正 2 处（详见该文件 ✗ 清单与证据链接）；其余待核条目保留。

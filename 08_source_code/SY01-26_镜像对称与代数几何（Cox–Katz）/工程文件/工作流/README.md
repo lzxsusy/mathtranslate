@@ -37,6 +37,9 @@ OCR     = RapidOCR（onnxruntime，中英混排模型）
 | 10 | `rank_pages.py` | 按「数学标记密度」排可疑页，供人工公式核对 | 排序表 |
 | 11 | `audit_terms.py` / `audit2.py` / `cmp_glossary.py` | 术语审计、库内跨项目对照 | 术语对照与冲突表 |
 | 12 | `03_资料卡workflow.js` | 24 张概念资料卡（每卡一个子智能体，按 playbook 13 号十一节模板） | `资料卡/MS-XX-*.md` |
+| 13 | `04_核验workflow.js` | 逐卡核验卡片断言（外部文献 + 自算），24 张分 3 批 | `资料卡/_核验/MS-XX.json` |
+| 14 | `make_verify_report.py` | 汇总核验 JSON 为核验记录（✓/✗/△ 三判 + 本机复算表） | `资料卡/_核验记录.md` |
+| 15 | `verify_arith.py` / `verify_quintic.py` / `verify_instanton.py` | 本机复算：Betti/Euler 数、基础周期 ω₀、镜像映射 770、K(q) 前四项 | 控制台输出（已录入核验记录第三节） |
 
 ## 3. 校对单元协议
 

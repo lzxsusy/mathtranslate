@@ -10,7 +10,7 @@ sources:
   - "A 级：Cox–Katz 1999, §5.1.4, PDF p.99（[Schmid] 幂零轨道定理；式 (5.3)–(5.4)；三条性质）"
   - "A 级：Cox–Katz 1999, §5.1.5, PDF p.99–101（留数 Res(∇)、T 幺幂 ⇔ Res 幂零、指标方程）"
   - "A 级：Cox–Katz 1999, §5.2, PDF p.101–103（最大幺幂、式 (5.5)、Hodge–Tate 特化）"
-  - "A 级：Landman 1973, On the Picard-Lefschetz transformations, Trans. Amer. Math. Soc. 181, 89–126（定理号待核）"
+  - "A 级：Landman 1973, On the Picard–Lefschetz transformation for algebraic manifolds acquiring general singularities, Trans. Amer. Math. Soc. 181, 89–126（定理号待核）"
   - "A 级：Schmid 1973, Variation of Hodge structure: the singularities of the period mapping, Invent. Math. 22, 211–319（定理号待核）"
   - "B 级：Cox–Katz 1999, §5.1.3–5.1.4 节内定义（书内节号，PDF p.98–99）"
 status: draft
@@ -174,3 +174,4 @@ end MirrorSymmetry
 - [ ] §4 中 Picard–Lefschetz 公式 T(γ)=γ+δ 的符号与 §5.2 式 (5.5) 的矩阵方向（周期向量取转置作用）约定是否一致，待逐式核对；本卡固定 ⟨γ,δ⟩=1 并只用于演示矩阵结构。
 - [ ] chapter06.tex:1200 的 F^d_lim（A 模型 Hodge 结构变分）书内页码未核（章起点 \SourcePage{136}）。
 - [ ] 术语缺口：SY01-24（70 条）与 `glossary.tsv` 均未收「极限混合 Hodge 结构」「单值性权滤过」「幂零轨道定理」，建议补词条（交术语表维护）。
+- **核验（2026-11-20）**：本卡经 `_核验记录.md` 核验，修正 1 处（详见该文件 ✗ 清单与证据链接）；其余待核条目保留。

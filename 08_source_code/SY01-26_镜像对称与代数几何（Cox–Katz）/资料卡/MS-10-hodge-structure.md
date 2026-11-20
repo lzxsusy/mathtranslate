@@ -7,7 +7,7 @@ layer: L0
 prereqs: []
 sources:
   - "A 级：Cox–Katz 1999, p.96–99（PDF p.96–99，印刷 p.73–76）§5.1.1–5.1.4；§5.2 p.101–103"
-  - "A 级：P. Griffiths, On the periods of certain rational integrals I, II, Ann. of Math. 90 (1969), 460–495, 498–541（书内 [Griffiths1]）"
+  - "A 级：P. Griffiths, On the periods of certain rational integrals I, II, Ann. of Math. 90 (1969), 460–495, 496–541（书内 [Griffiths1]）"
   - "A 级：W. Schmid, Variation of Hodge structure: the singularities of the period mapping, Invent. Math. 22 (1973), 211–319（书内 [Schmid]）"
   - "B 级：本书 §5.1（节号）；Griffiths–Harris, Principles of Algebraic Geometry, Wiley 1978（书内 [GH]）"
   - "B 级：nLab 条目 Hodge structure（索引页）"
@@ -107,7 +107,7 @@ $$Q(i^{p-q}\alpha,\overline\alpha)>0,\qquad 0\ne\alpha\in H_0^{p,q}(X),\ p+q=k .
 | Cox–Katz 1999（中译本）| p.96–99 §5.1.1–5.1.4；p.101–103 §5.2；p.28（Hodge 菱形）；p.110–111 例 5.4.1；p.97 式 (5.1) | 权 $k$ Hodge 结构、$F^\bullet$、极化、VHS、退化与极限混合 Hodge 结构全套定义；后文 §5.2/§5.4 直接使用 |
 | SY01-24（Siebert 讲义中译本）| ch01.tex 式 (1.95)–(1.97)（$F=F^0\supset F^1\supset F^2\supset F^3$ 与 Griffiths 横截性）；术语表 #11 Hodge 菱形、#17 Gauss–Manin 联络、#20 Griffiths 横截性 | 指标约定与本卡一致；但只对 CY 三维簇的 $H^3$ 写出 $F^k$，且用「Hodge 结构变动」。冲突：SY01-24 用「变动」、本书 p.97 用「变分」；SY01-24 只覆盖 $H^3$、本书覆盖任意 $n$ 与任意 $H^k$——术语与适用范围均不一致，待裁（见 §11） |
 | SY01-25 资料卡 | 04-术语文献勘误.md §二文献表（[De] Hodge 结构在无穷远处的局部行为、[Mum]/[BL] 退化阿贝尔簇）；§三/§四不涉 Hodge | 无 Hodge 结构/滤过定义可对照（缺口，不算冲突）；其「消没圈」与本书「消失圈」用字差异属 _冲突表 T2（已裁），归 MS-14 |
-| Griffiths 1969（书内 [Griffiths1]）| Ann. of Math. 90 (1969) 460–495、498–541（I、II 两部分）| 有理积分的极点阶滤过：$F^p$ 的解析来源，本书 §5.3 Griffiths–Dwork 方法（p.106–110）建立其上 |
+| Griffiths 1969（书内 [Griffiths1]）| Ann. of Math. 90 (1969) 460–495、496–541（I、II 两部分）| 有理积分的极点阶滤过：$F^p$ 的解析来源，本书 §5.3 Griffiths–Dwork 方法（p.106–110）建立其上 |
 | Schmid 1973（书内 [Schmid]）| Invent. Math. 22 (1973) 211–319（幂零轨道定理）| 本书 p.99 用它把 $\mathcal F^p$ 延拓为 $F_{\lim}^p$，从而定义极限混合 Hodge 结构 |
 
 注：书内页码一律为 PDF 物理页（$=\backslash$SourcePage$\{N\}$，印刷页 $+23$）；外部文献用原书页码。
@@ -195,3 +195,4 @@ theorem limit_mixed_hodge (V : Type u) [AddCommGroup V] [Module ℂ V] (n : ℕ)
 - [ ] **$m$ 的正负**：书 p.98 单值性定理原文为「对某个整数 $m>0$，$(T_j^m-I)^{n+1}=0$」；MS-13 队列记「应为 $m\ge0$（原译笔误）」——本卡按书中原文陈述，待裁（不属 SY01-24/25 冲突）。
 - [ ] **§4 椭圆曲线例**：书中无此例，$h^{1,0}=1$、$h^{1,1}=1$、周期 $(1,\tau)$ 为标准事实，本卡自算并逐项校验；[GH] 具体页码待补（B 级 → 待升 A）。
 - [ ] **交叉引用**：_冲突表 T1（单值变换→单值性）与 T2（消失循环→消失圈）已裁，分别属 MS-12/MS-14；本卡只用「单值性」，不重复计数。
+- **核验（2026-11-20）**：本卡经 `_核验记录.md` 核验，修正 1 处（详见该文件 ✗ 清单与证据链接）；其余待核条目保留。

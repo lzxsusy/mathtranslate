@@ -9,7 +9,7 @@ sources:
   - "Cox–Katz 1999, PDF p.38–47（Ch.2 §2.1–2.5：A 模型关联函数、镜像族、镜像映射、n_d 表）"
   - "Cox–Katz 1999, PDF p.84–85（§4.2：以自反多胞形 Δ、Δ° 重访五次三维簇）"
   - "Cox–Katz 1999, PDF p.101–111（§5.2 最大幺幂指标、§5.4 例 1 的 h^{2,1}(V°)=1）"
-  - "A 级：Griffiths 1969, Ann. of Math. 90 (1969), 460–495, 498–541（Jacobian 环与 Hodge 数）"
+  - "A 级：Griffiths 1969, Ann. of Math. 90 (1969), 460–495, 496–541（Jacobian 环与 Hodge 数）"
   - "A 级：Batyrev 1994, J. Algebraic Geom. 3 (1994), 493–535（自反多胞形镜像构造）"
   - "A 级：Candelas–de la Ossa–Green–Parkes 1991, Nuclear Phys. B359 (1991), 21–74"
   - "B 级：本书 §1.4（PDF p.33–35）Calabi–Yau 簇与 Kähler 模空间定义；§5.3（PDF p.106–107）Griffiths–Dwork"
@@ -101,7 +101,7 @@ $$\bar X_\psi=\{x_1^5+x_2^5+x_3^5+x_4^5+x_5^5+\psi\,x_1x_2x_3x_4x_5=0\}\subset\m
 | SY01-24 术语表（续） | 第 2 条（p.7，概览） | **冲突（范围）**：SY01-24 只收「Calabi–Yau 流形」（光滑流形口径），本书 PDF p.34 的 Calabi–Yau **簇**允许 Gorenstein 典范奇点；五次族的镜像 $V^\circ$ 先是 $\mathbb P^4/G$ 中的轨形（PDF p.40），必须用簇版定义才称得上 CY，两处适用范围不同 |
 | SY01-25 资料卡 04（术语文献勘误） | §一 核心术语；§二 文献；§三 勘误 | 无直接冲突：卡 04 的 25 条术语（HMS、SYZ 环面纤维化、$A_\infty$-预范畴、大复结构极限 $q\to0$ 等）针对 HMS/$A_\infty$ 语境，未收五次三维簇条目；本书不讲 $A_\infty$/Fukaya（_冲突表 U4），本卡只在「CY 三维簇/Hodge 数」层面与之相接；其「大复结构极限 $=q\to0$」与本书 PDF p.41 的 $x=0$（$q=0$）相容 |
 | Candelas–de la Ossa–Green–Parkes 1991（CdGP） | Nuclear Phys. B359 (1991), 21–74 | A 级原始文献：首次由镜像对称算出五次三维簇的 $n_d$；本书 PDF p.38 明说基本沿用 CdGP 方法，p.40 指出 CdGP 用 $-5\psi$ 而非 $\psi$，p.46 指出 CdGP 亦得 $c_1=-1$ |
-| Griffiths 1969 | Ann. of Math. 90 (1969), 460–495、498–541（本书 PDF p.106–107 引 Griffiths1） | A 级原始文献：留数理论与 Jacobian 环，§4(3) 的 $h^{2,1}=101$ 计算依据 |
+| Griffiths 1969 | Ann. of Math. 90 (1969), 460–495、496–541（本书 PDF p.106–107 引 Griffiths1） | A 级原始文献：留数理论与 Jacobian 环，§4(3) 的 $h^{2,1}=101$ 计算依据 |
 | Batyrev 1994 | J. Algebraic Geom. 3 (1994), 493–535（本书 PDF p.84–85 引 Batyrev4） | A 级原始文献：自反多胞形对 $(\Delta,\Delta^\circ)$ 的镜像构造；§4.2 的顶点表与 §5.4 的 $h^{2,1}(V^\circ)$ 公式出处 |
 | Greene–Plesser 1990 | Nuclear Phys. B338 (1990), 15–37（本书 PDF p.40 引 GPl） | A 级原始文献：$\mathbb P^4/G$ 中五次族的轨形镜像构造，定义 3.3 的出处 |
 
@@ -164,3 +164,4 @@ theorem quintic_MUM (N : Module.End ℚ (Fin 4 → ℚ)) :
 - [ ] 队列 MS-12 行示例写「单参数族的 $T=I+N$，$N^2=0$；MUM 点」，而本书 PDF p.101–104 对五次族的 MUM 点给 $N^3\neq0$、$N^4=0$，$N^2=0$ 只出现在 $x=-5^{-5}$ 处；两者不是同一极限点，需 MS-12 卡处理（本卡按 PDF p.104 写）。
 - [ ] CdGP 的 $-5\psi$ 约定（PDF p.40）与本书 $\psi$ 的换算关系书中只给一句提示，$x_{\mathrm{CdGP}}$ 与 $x=\psi^{-5}$ 的具体换算式待核。
 - [ ] _冲突表 第三节维护：本卡的两条冲突未写入 _冲突表.md（本轮禁止改写既有文件），需 lead 同步登记。
+- **核验（2026-11-20）**：本卡经 `_核验记录.md` 核验，修正 1 处（详见该文件 ✗ 清单与证据链接）；其余待核条目保留。
