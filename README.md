@@ -2,6 +2,64 @@
 
 > 让散落的数学资料得以保存，让数学术语形成共识。
 
+## 不用克隆，先看内容
+
+本仓的东西可以直接在网页里看，不必 clone 整个仓库：
+
+| 想看什么 | 打开 |
+| --- | --- |
+| 总览：六个数字、8 条主线、卡片/语料/术语样例 | [`site/index.html`](site/index.html) |
+| 106 部工程总表（可按主题搜） | [`site/p/index.html`](site/p/index.html) |
+| 900 张资料卡统一入口（按系列/类型/状态筛） | [`site/cards/index.html`](site/cards/index.html) |
+| 49,035 段语料里的 400 段抽样 | [`site/corpus.html`](site/corpus.html) |
+| 1,820 条术语表（可搜索） | [`site/terms.html`](site/terms.html) |
+| 三层许可与五条合规红线 | [`site/compliance.html`](site/compliance.html) |
+
+站点是纯静态 HTML、不依赖 CDN 与联网：fork 或 clone 后双击 `site/index.html` 即可浏览，用浏览器打开本地文件也不需要服务器。
+
+### 资料卡长什么样
+
+`glc/concept/restricted-local-systems` · concept · **published** · 来源：陈麟《Introduction to Geometric Langlands Theory》§9.5（p.51）
+
+**受限局部系统叠** —— de Rham 之外层论里替换 $\operatorname{LocSys}_{\check G}$ 的受限叠，用取值在 $\operatorname{QLisse}(X)$ 里的张量函子描述。
+
+- 受限局部系统叠用点函子描述为张量函子 $\operatorname{Rep}(\check G)\to\operatorname{QCoh}(S)\otimes\operatorname{QLisse}(X)$。
+- de Rham 情形的平行表述是把 $\operatorname{QLisse}(X)$ 换成 $\operatorname{DMod}(X)$。
+- 在 Betti／可构造情形，已知的因子化陈述落在具有幂零奇异支撑的范畴 $D_{\mathrm{Nilp}}(\operatorname{Bun}_G)$ 中。
+- 因此它本身并不蕴涵整个 $D(\operatorname{Bun}_G)$ 上完整的消失定理。
+
+这张卡还带 `question` / `definition`（含 notation）/ `pitfalls` / `formulas` / `related` 与 3 条 `verification` 记录（其中 1 条与 arXiv 原文冲突、已记为 P1 修正）——完整字段见 [`site/cards/index.html`](site/cards/index.html)。
+
+### 语料长什么样
+
+每段一行 JSONL（[`01_corpus_zh/zh_paragraphs.jsonl`](01_corpus_zh/zh_paragraphs.jsonl)），字段：`pkg / file / para / para_id / page_orig / env / tier / text / zh_chars / flags / seg`。
+
+> **SY01-10 · para 18 · env=theorem · tier=B · 33 汉字**
+>
+> 设 $\mathcal{A}$ 与 $\mathcal{B}$ 是两个分裂闭的 $A_\infty$-范畴，分别由 $X_1,\dots,X_n$ 与 $Y_1,\dots,Y_m$ 分裂生成（split-generate）。令
+> $$\mathcal{A}' = \operatorname{Hom}_{\mathcal{A}}(X_1\oplus\cdots\oplus X_n,\ X_1\oplus\cdots\oplus X_n),$$
+> 并对 $\mathcal{B}'$ 作同样的定义。它们是 $A_\infty$-代数。
+
+> **SY01-03 · para 12 · env=text · tier=B · 65 汉字**
+>
+> 这可以通过计算轴流与 (5.11) 中给出的 $(\partial_0\pm\partial_1)y$ 的算子乘积展开读出。又注意，theta 参数的轴平移（见 (4.22)；在目前情形下即 $\theta\to\theta+2\beta$）通过扭超势 (5.9) 被 (5.15) 有效地实现：$\tilde W=(y-\zeta+i\theta)\sigma$。还可以证明 $y$ 在矢量 $U(1)$ R-对称性下不变。
+
+### 术语表长什么样
+
+| 外文 | 语种 | 中文 | 状态 | 级别 | 出处 |
+| --- | --- | --- | --- | --- | --- |
+| 前層 | ja | 预层 | confirmed | A | 仓主裁决（2026-11-17）：presheaf 标准译名为「预层」 |
+| Langlands Program | en | Langlands纲领 | confirmed | I | 本库术语表 |
+| Galois group | en | Galois群 | confirmed | I | 本库术语表 |
+| class field theory | en | 类域论 | confirmed | I | 本库术语表 |
+| number field | en | 数域 | confirmed | B/nLab | nLab `function field` |
+| function field | en | 函数域 | confirmed | B | nLab `function field` |
+
+全表 1,820 条（confirmed 409 / candidate 1,411；en 1,267 / ja 325 / other 228），可在 [`site/terms.html`](site/terms.html) 里搜。
+
+<details>
+<summary><b>开工前必读：本仓内部作业规程（只想看内容的读者可跳过）</b></summary>
+
 > **⚠️ 强制前置读本（2026-11-18 起）**
 > 任何人与智能体在做「挑文章 → 精读 → 造语料 → 评数据」之前，**必须先通读**
 > [`MEMORANDUM_01_论证精读与语料生产.md`](MEMORANDUM_01_论证精读与语料生产.md)
@@ -18,19 +76,21 @@
 > 先通读后落笔（§1.0）、译注必须有来源并可追溯（§2.5）、来源黑名单与语料卫生（§2.5.9）。
 > **每次开工前、每次接手别人的稿、每次交付前都要重读对应章节**；文件库总入口见 [`04_playbook/README.md`](04_playbook/README.md)。
 
+</details>
+
 本仓库是「数译」工程的**数据与语料发布仓**：把一批中文数学译注本、工程原件、术语资产、
 AI 辅助翻译的过程轨迹、以及威腾文章研讨班的组织资料整理成**可以被别人直接拿去用**的数据。
 
 - 译者/整理者：超对称梦想家（chaoduicheng）
-- 用途：学术研究、教学；自产层可用于模型训练与蒸馏，译文层仅限非商业研读（见「使用许可」）
+- 用途：学术研究、教学、检索，以及中文数学语料训练与蒸馏（见「使用许可」）
 
 <!-- STATS:BEGIN -->
 
 | 指标 | 数值 |
 |---|---|
 | 译注工程 | **106** 部（其中 **93** 部带完整 LaTeX 源码） |
-| 仓库文件 | 10113 个 / **444.9 MB** |
-| LaTeX 源文件 / 插图 | 1772 个 `.tex` / 2135 张图 |
+| 仓库文件（git 跟踪） | 9865 个 / **385.2 MB** |
+| LaTeX 源文件 / 插图 | 1771 个 `.tex` / 2135 张图 |
 | 成品 PDF（预印本类） | 41 部 / **50.8 MB**（Release 附件） |
 | 中文段落语料 | **49035** 段（唯一 47469），其中 **42153** 段含公式（86%）；汉字 4,035,682 字 |
 | 语料覆盖 | **81** 个工程有段落入库（其余为仅成品 PDF / 无正文的工程） |
@@ -39,6 +99,7 @@ AI 辅助翻译的过程轨迹、以及威腾文章研讨班的组织资料整�
 | 精选轨迹 | 402 条 |
 | 原始会话分片 | 4 片 / **144.6 MB**（Release 附件） |
 
+> 口径：本表由 `python make_stats.py` 从仓库文件与语料实测生成，是唯一事实源；请勿手写或从他处抄数。
 <!-- STATS:END -->
 
 ## 这是一个有明确倾向的文献库（不是泛泛的数学资料堆）
@@ -73,18 +134,18 @@ AI 辅助翻译的过程轨迹、以及威腾文章研讨班的组织资料整�
 - 与数学物理无关的纯组合、纯分析题目；
 - **无法溯源底本**、或只有二手转述的材料（施工纪律要求每条译注可追溯到原文页码）。
 
-### 按主题的分布（95 部已发布译注工程 / 11,404 页）
+### 按主题的分布（106 部译注工程，其中 93 部带 LaTeX 源码）
 
-| 主线 | 编号 | 部数 | 页数 | 内容举例 |
+| 主线 | 编号 | 部数 | 带源码 | 内容举例 |
 |---|---|---|---|---|
-| 辛几何 · 拓扑 · 纽结 · 指标定理 | `SY05` | 25 | 3,018 | Hofer 几何、Floer 同调、K-理论、指数定理、Jost 黎曼几何 |
-| 量子场论与规范理论 | `SY03` | 21 | 2,270 | 超对称、AGT、共形场论、瞬子、Seiberg–Witten |
-| 镜像对称与同调镜像对称 | `SY01` | 22 | 2,009 | SYZ、深谷范畴、Kontsevich 对偶、Batyrev 构造、植田一石讲义 |
-| 弦论与紧致化 | `SY04` | 3 | 198 | 拓扑弦、CY 紧致化、D-膜 |
-| 几何朗兰兹与电磁对偶 | `SY02` | 13 | 1,401 | Hecke 本征层、Hitchin 系统、Kapustin–Witten、Frenkel 圈群讲义 |
-| 其他几何（热带 / 范畴 / 量子力学与几何） | `SY07` | 7 | 1,717 | 热带几何、导出范畴、几何量子化 |
-| 双有理几何（新增） | `SY08` | 1 | 325 | Kollár–森重文《双有理几何》 |
-| 拓扑学与专题 | `SY99` | 3 | 466 | Novikov 拓扑学、TQFT 博士论文、讨论班讲义 |
+| 辛几何 · 拓扑 · 纽结 · 指标定理 | `SY05` | 27 | 23 | Hofer 几何、Floer 同调、K-理论、指数定理、Jost 黎曼几何 |
+| 量子场论与规范理论 | `SY03` | 21 | 16 | 超对称、AGT、共形场论、瞬子、Seiberg–Witten |
+| 镜像对称与同调镜像对称 | `SY01` | 26 | 24 | SYZ、深谷范畴、Kontsevich 对偶、Batyrev 构造、植田一石讲义 |
+| 弦论与紧致化 | `SY04` | 3 | 3 | 拓扑弦、CY 紧致化、D-膜 |
+| 几何朗兰兹与电磁对偶 | `SY02` | 13 | 11 | Hecke 本征层、Hitchin 系统、Kapustin–Witten、Frenkel 圈群讲义 |
+| 其他几何（热带 / 范畴 / 量子力学与几何） | `SY07` | 10 | 10 | 热带几何、导出范畴、几何量子化、圏論 |
+| 双有理几何 | `SY08` | 3 | 3 | Kollár–森重文《双有理几何》、导出范畴指南 |
+| 拓扑学与专题 | `SY99` | 3 | 3 | Novikov 拓扑学、TQFT 博士论文、讨论班讲义 |
 
 ## 关键词（供检索与打标签）
 
@@ -357,10 +418,10 @@ python tools/thinking_audit.py check --require-coverage
 **分两层**，完整条款见 [`LICENSE`](./LICENSE) 与 [`COMPLIANCE.md`](./COMPLIANCE.md)。
 
 - **自产层 → CC BY 4.0**：元数据、术语库、标注、工作流轨迹、方法文档、工程文档、脚本、站点，署名即可，**欢迎训练、蒸馏、评测与商用**。
-- **译文层 → 保留权利**：译文、译注、语料正文、译文源码是第三方作品的**演绎作品**，本库无权再许可；只允许**非商业学术研读**，不得整本转载、不得用于训练商业模型、不得出版发行；需要其他用途请先取得底本权利人授权。
+- **译文层 → 本库不另设限制**：译文、译注、语料正文、译文源码是第三方作品的**演绎作品**，本库不代原作者授权，也**不附加"仅非商业""禁止训练"一类限制**——检索、研究、教学、模型训练、蒸馏都可以用。要出版发行或以正式形式署名使用，请自行核实底本权利。
 - **成品 PDF**：不随译文以 CC BY 发布。arXiv / 开放许可底本的成品走 Release 外链；图书底本的成品不公开，按 `COMPLIANCE.md` §4 申请。
 - **原文版权**归原作者与出版方，本库不发布原文、不授予原文权利。权利人要求撤下时 48 小时内移除。
-- **历史口径**：2026-11-15 曾把全库统一为 CC BY 4.0 并声明欢迎训练/商用；该口径对译文层越权，已于 2026-11-16 由 `LICENSE` v1.1 取代，旧表述一律作废。
+- 口径沿革见 [`LICENSE`](./LICENSE) §7。
 
 ## 相关
 

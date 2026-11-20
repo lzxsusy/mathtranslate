@@ -137,14 +137,26 @@ def check_paths(files):
                 warn("%s：%.1f MB，确认不是整本扫描件" % (rel, size / 1048576))
 
 
+# 按日期的历史快照/变更日志：记录当年口径，不参与现行口径扫描
+HISTORY_DOC = re.compile(r"^(CHANGELOG\.md|ASSESSMENT_.*|AUDIT_.*)$")
+
+
 def check_texts(files):
     link_pat = re.compile(r"raw\.(?:gitcode|githubusercontent|gitee)\.com/\S+?\.pdf", re.I)
     bad_claims = [
         (re.compile(r"全库统一\s*\*{0,2}CC BY 4\.0"), "R4 全库统一 CC BY 4.0（译文不适用）"),
         (re.compile(r"译文[^。\n]{0,20}CC BY 4\.0"), "R4 译文标 CC BY 4.0（越权）"),
-        (re.compile(r"欢迎[^。\n]{0,12}(训练|蒸馏)[^。\n]{0,12}商用"), "R4 欢迎训练/商用（对译文越权）"),
         (re.compile(r"已获授权|经作者同意|已取得授权"), "R9 授权表述缺凭证"),
     ]
+    # v1.2 起："译文/语料不得用于训练""仅限非商业"是本库无权施加的自我限制，同样禁止
+    self_limits = [
+        (re.compile(r"(不得|不可|禁止)[^。\n]{0,10}(用于)?[^。\n]{0,10}训练"), "R4 自我限制「不得用于训练」"),
+        (re.compile(r"仅限?[^。\n]{0,8}非商业"), "R4 自我限制「仅限非商业」"),
+        (re.compile(r"不授予[^。\n]{0,20}训练"), "R4 自我限制「不授予训练」"),
+    ]
+    # 讨论口径沿革/明确说"不另设限制"的句子不算违规
+    exempt = re.compile(r"不另设|不作授权|无权|收回|取代|已由|历史口径|v1\.[12]|v2\.[01]|沿革"
+                        r"|来源|黑名单|审计|卫生|质量|数据集|训练数据|上下文")
     for rel in files:
         if not is_text(rel):
             continue
@@ -167,6 +179,17 @@ def check_texts(files):
                     if re.search(r"不适用|不授权|无权|不在本许可|除外|不得|不作|未获", line_txt):
                         continue
                     add(label.split()[0], "%s:%d：%s → %s" % (rel, line, label, line_txt.strip()[:80]))
+            if HISTORY_DOC.search(os.path.basename(rel)):
+                continue
+            for pat, label in self_limits:
+                for m in pat.finditer(text):
+                    line = text.count("\n", 0, m.start()) + 1
+                    line_txt = text.splitlines()[line - 1] if line - 1 < len(text.splitlines()) else ""
+                    if not re.search(r"译文|译注|语料|成品|训练集", line_txt):
+                        continue
+                    if exempt.search(line_txt):
+                        continue
+                    add("R4", "%s:%d：%s → %s" % (rel, line, label, line_txt.strip()[:80]))
 
 
 def check_register(files):
@@ -179,9 +202,17 @@ def check_register(files):
         for r in csv.DictReader(f):
             rows[r["id"]] = r
     base = "08_source_code"
-    for d in sorted(os.listdir(base)):
-        if not os.path.isdir(os.path.join(base, d)):
-            continue
+    # 只看仓库里真的存在的工程（git 跟踪），本机草稿目录不算欠账
+    import subprocess
+    try:
+        tracked = subprocess.run(["git", "ls-files", base], capture_output=True,
+                                 cwd=ROOT).stdout.decode("utf-8", "replace")
+    except Exception:
+        tracked = ""
+    dirs = sorted({ln.split("/")[1] for ln in tracked.splitlines() if ln.count("/") >= 2})
+    if not dirs:
+        dirs = sorted(d for d in os.listdir(base) if os.path.isdir(os.path.join(base, d)))
+    for d in dirs:
         pid = d.split("_", 1)[0]
         if pid not in rows:
             add("R5", "08_source_code/%s：未在台账登记" % d)

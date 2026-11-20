@@ -118,5 +118,5 @@ powershell -ExecutionPolicy Bypass -File build.ps1     # 三次 LuaLaTeX，输�
 ## 8. 版权声明
 
 原文版权归原作者 **Yuji Tachikawa** 所有（arXiv:1412.7121，arXiv non-exclusive license）。
-本译本为非商业学习/研究用途的中文翻译与批注，不改变原文授权；引用原文内容请引用原始 arXiv 条目。
+本译本为学习/研究用途的中文翻译与批注，不改变原文授权；引用原文内容请引用原始 arXiv 条目。
 译本中的译者批注由本项目译者撰写，文责由译者自负，不代表原作者观点。

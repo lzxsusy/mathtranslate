@@ -36,24 +36,61 @@ def count_tree(path):
     return n, b
 
 
+def count_tracked(path):
+    """只数 git 跟踪的文件——这才是别人 clone 下来真正拿到的东西。
+
+    以前用 os.walk 数工作区，会把 .gitignore 掉的缓存/本地 PDF 也算进去，
+    于是同一个仓库在不同机器上给出不同数字（口径漂移的根源之一）。
+    """
+    import subprocess
+
+    try:
+        out = subprocess.run(
+            ["git", "-C", path, "ls-files", "-z"],
+            capture_output=True, check=True,
+        ).stdout
+    except (OSError, subprocess.CalledProcessError):
+        return count_tree(path)
+    n = b = 0
+    for rel in out.split(b"\0"):
+        if not rel:
+            continue
+        fp = os.path.join(path, rel.decode("utf-8", "replace"))
+        try:
+            b += os.path.getsize(fp)
+        except OSError:
+            continue
+        n += 1
+    return n, b
+
+
 def main():
     write = "--write" in sys.argv
     d08 = os.path.join(REPO, "08_source_code")
     d03 = os.path.join(REPO, "03_translations_meta")
-    projs = [d for d in os.listdir(d08) if os.path.isdir(os.path.join(d08, d))] if os.path.isdir(d08) else []
+    # 只统计仓库里真的入库的工程（git 跟踪），本机草稿目录不算数
+    import subprocess
+    try:
+        tracked = subprocess.run(["git", "-C", REPO, "ls-files", "08_source_code"],
+                                 capture_output=True, check=True).stdout.decode("utf-8", "replace")
+    except Exception:
+        tracked = ""
+    tset = [ln for ln in tracked.splitlines() if ln.count("/") >= 2]
+    projs = sorted({ln.split("/")[1] for ln in tset}) if tset else \
+        ([d for d in os.listdir(d08) if os.path.isdir(os.path.join(d08, d))] if os.path.isdir(d08) else [])
     tex = img = 0
     with_src = 0
     for d in projs:
-        p = os.path.join(d08, d)
         t = 0
-        for dp, dn, fn in os.walk(p):
-            for f in fn:
-                lf = f.lower()
-                if lf.endswith(".tex"):
-                    tex += 1
-                    t += 1
-                elif lf.endswith((".png", ".jpg", ".jpeg", ".pdf")) and "figures" in dp.lower():
-                    img += 1
+        for ln in tset:
+            if ln.split("/")[1] != d:
+                continue
+            lf = ln.lower()
+            if lf.endswith(".tex"):
+                tex += 1
+                t += 1
+            elif lf.endswith((".png", ".jpg", ".jpeg", ".pdf")) and "figures" in os.path.dirname(lf):
+                img += 1
         if t:
             with_src += 1
 
@@ -115,7 +152,7 @@ def main():
         shards_n = sum(len(p.get("parts", [])) for p in am.get("packages", []))
         sbytes = int(am.get("total_bytes") or 0)
 
-    nfiles, nbytes = count_tree(REPO)
+    nfiles, nbytes = count_tracked(REPO)
 
     lines = [
         BEGIN,
@@ -123,7 +160,7 @@ def main():
         "| 指标 | 数值 |",
         "|---|---|",
         "| 译注工程 | **%d** 部（其中 **%d** 部带完整 LaTeX 源码） |" % (len(projs), with_src),
-        "| 仓库文件 | %d 个 / **%s** |" % (nfiles, mb(nbytes)),
+        "| 仓库文件（git 跟踪） | %d 个 / **%s** |" % (nfiles, mb(nbytes)),
         "| LaTeX 源文件 / 插图 | %d 个 `.tex` / %d 张图 |" % (tex, img),
         "| 成品 PDF（预印本类） | %d 部 / **%s**（Release 附件） |" % (pdf_rows, mb(pdf_bytes)),
         "| 中文段落语料 | **%d** 段（唯一 %d），其中 **%d** 段含公式（%.0f%%）；汉字 %s 字 |"
@@ -134,6 +171,7 @@ def main():
         "| 精选轨迹 | %d 条 |" % traj,
         "| 原始会话分片 | %d 片 / **%s**（Release 附件） |" % (shards_n, mb(sbytes)),
         "",
+        "> 口径：本表由 `python make_stats.py` 从仓库文件与语料实测生成，是唯一事实源；请勿手写或从他处抄数。",
         END,
     ]
     block = "\n".join(lines)
