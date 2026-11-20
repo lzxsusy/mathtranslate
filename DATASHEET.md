@@ -12,7 +12,7 @@
 
 | 层 | 目录 | 说明 |
 |---|---|---|
-| 权威层 | `08_source_code/` | 106 部工程的 LaTeX 源码 + 工程文档（其中 93 部带 LaTeX 源码；余 13 部只有成品 PDF 或译本正文） |
+| 权威层 | `08_source_code/` | 95 部工程的 LaTeX 源码 + 工程文档（其中 93 部带 LaTeX 源码；余 13 部只有成品 PDF 或译本正文） |
 | 衍生层 | `01_corpus_zh/`、`02_trajectories/`、`06_sessions_raw/`（分片在 Release 附件）、`03_translations_meta/` | 语料、轨迹、会话、元数据与术语 |
 | 过程层 | `04_playbook/`、`05_seminar_witten/` | 翻译纪律、审校报告、研讨班组织资料 |
 | 参考层 | `07_refs_nlab/` | nLab 条目摘要 120 条 + 替代来源卡 37 份 + 110 条来源真实性抽查；几何 Langlands 线的术语与引文底账 |
@@ -43,7 +43,7 @@
 | `text` | str | **保真文本**：`$...$`、`\[...\]`、`equation/align` 等数学环境原样保留 |
 | `dup_of` / `dup_pkg` | str\|null | 与前面某段文本完全重复时指向首次出现（重复段保留，便于下游按需过滤） |
 
-统计（2026-11-20 实测，`python make_stats.py` 为唯一事实源）：**49,035 段 / 81 个工程有语料 / 唯一 47,469（96.8%）/ 含公式 42,153（86.0%）/ 汉字 4,035,682 字**。
+统计（2026-11-20 实测，`python make_stats.py` 为唯一事实源）：**49,035 段 / 95 个工程有语料 / 唯一 47,469（96.8%）/ 含公式 42,153（86.0%）/ 汉字 4,035,682 字**。
 另标 `near_dup_of`（MinHash-LSH，Jaccard≥0.8，1,418 段，保留不删；SY01-23 之后未重算，为下界）。
 `flags` 记录质检动作与已知缺陷（见 §5）：`junk_trimmed`、`placeholder_in_math`、`unbalanced_math`、
 `empty_ref`（引用编号被吞，只剩空括号 481 段）、`layout_residue`（字号/行距残渣 90 段）、
