@@ -14,7 +14,7 @@ Gaiotto–Moore–Neitzke（GMN）是 2008–2013 年间把 **4d N=2 超对称�
 |---|---|---|---:|---|
 | GMN1 | SY01-27 | Four-dimensional wall-crossing via three-dimensional field theory（arXiv:0807.4723v3） | 66 | **译文 v1.0 完成**（65 页）+ 资料卡五件套 + 阅读报告 |
 | GMN2 | SY01-28 | Wall-crossing, Hitchin Systems, and the WKB Approximation（arXiv:0907.3987v2） | 180 | **译文 v1.0 完成**（169 页）+ 资料卡五件套 + 阅读报告 |
-| GMN3 | SY01-29（预留） | Framed BPS States（arXiv:1006.0146v2） | 124 | 未开始 |
+| GMN3 | SY01-29 | Framed BPS States（arXiv:1006.0146v2） | 124 | **译文 v1.0 完成**（126 页）+ 资料卡五件套 + 阅读报告 |
 | GMW1 | SY03-（预留） | An Introduction to the Web-Based Formalism（arXiv:1506.04086v2） | 51 | **推迟**：等地基文献齐备（导读版） |
 | GMW2 | SY03-（预留） | Algebra of the Infrared（arXiv:1506.04087v1） | 430 | **推迟**：等地基文献齐备（详细版） |
 
@@ -44,9 +44,11 @@ Gaiotto–Moore–Neitzke（GMN）是 2008–2013 年间把 **4d N=2 超对称�
 ├─ 研究笔记/
 │   ├─ GMN1_阅读报告.md          ← 十节深版：没读原文也能掌握"怎么证明的"
 │   ├─ GMN2_阅读报告.md          ← 十节深版：Hitchin/WKB/谱网络/谱生成元
+│   ├─ GMN3_阅读报告.md          ← 十节深版：带框指标、半环、簇代数、叶层
+│   ├─ 00_系列导读.md            ← **讨论班第一份**：三篇分工、主线五次出现、读路线、锚点式
 │   └─ 00_交接说明.md            ← 给下一个 agent 的交接（读序、任务、硬约束、教训）
 └─ 术语/
-    └─ glossary_master.tsv       ← 全系列冻结术语（100 条，带依据列）
+    └─ glossary_master.tsv       ← 全系列冻结术语（184 条，带依据列）
 ```
 
 每篇的**资料卡五件套**与项目同处：`08_source_code/SY01-27_四维穿墙：经由三维场论/资料卡/`：
@@ -84,5 +86,7 @@ Gaiotto–Moore–Neitzke（GMN）是 2008–2013 年间把 **4d N=2 超对称�
   资料卡五件套、阅读报告、交接说明、术语 100 条全部入库。
 - **2026-11-21 晚**：GMN2 全译完成（170 页，534 个编号公式逐节对齐，0 error/0 overfull），
   19 块并行译毕；GMN3 立项与 §1 样板章启动中。
+- **2026-11-21 深夜**：GMN3 全译完成（126 页、333 个编号公式逐节对齐、54 幅图、0 error/0 overfull>3pt），
+  16 块并行译毕，资料卡五件套与阅读报告同日交付；系列导读 `研究笔记/00_系列导读.md` 写入。
 - 地基文献库：33 条清单、29 篇 PDF 入 `00_原文/基础文献/`（8 主题 + 摘要），见施工目录。
 - 每篇完成后在此表回填编号与状态，并在 `RELEASE_REGISTER.csv` 登记。
