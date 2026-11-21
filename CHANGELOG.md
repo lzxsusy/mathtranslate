@@ -10,7 +10,7 @@
 - **退役**：全库页数（无脚本可复算）与由此派生的单页成本数字；旧工程数、旧段数、旧资料卡数、旧文件数一律不再使用，历史报告保留原值并加「历史快照」标记。
 - **数语规范**（新）：`01_corpus_zh/数语规范/`——`README.md`（总则）、`STYLE_NL.md`（中文语体）、`STYLE_FORMAL.md`（对齐卡规范）；`tools/build_norm.py` 生成 `TERMS.tsv` **1,847** 条（A 170 / B 152 / I 114 / D 1,411）、`SYMBOLS.tsv` **76** 条、`CONFLICTS.tsv` **76** 组（一外多中 12 / 一中多外 28 / 等级不一致 33 / 空格连字符 3）、`MACROS.tsv` **405** 个跨工程同名不同义宏；`--check` 作提交闸门。
 - **说明文件**：`README.md` 新增「从给人读的译本到可对齐的中文数学底稿」定位段、数语规范章、形式化对齐章；`DATASHEET.md` 升 **v1.3.0**（五层资产）；`00_README.md`、`datasets/README.md`（补 kshms 83 卡、ggl19 12 卡、sy0117 36 卡、v0.24）、`04_playbook/15`（新增 §6.5 资料卡→对齐卡 7 步流程，季度目标改 100 条 certified）、`04_playbook/README.md`（纪律 v2.1）同步改数。
-- **测试**：`make_stats --check` OK、`check_numbers` 0 命中、`build_norm --check` 一致、`ds_lint` 119 条 0 错 0 警、`entry_lint` 0/0、`check_compliance` 通过（7 条既有提示）、`make_train_subset` 44,372 段。详见 `AUDIT_2026-11-21_口径与测试.md`。
+- **测试**：`make_stats --check` OK、`check_numbers` 0 命中、`build_norm --check` 一致、`ds_lint` 119 条 0 错 0 警、`entry_lint` 0/0、`check_compliance` 通过（7 条既有提示）、`make_train_subset` 44,372 段；站点与 11 份说明文件 0 断链；**独立复跑 Lean 对齐卡**：仓内 6 个 `.lean` 与工作工程逐字节相同，在 `leanprover/lean4:v4.36.0` + mathlib `d33c49ca` 上 `lake env lean` 全部 exit 0、0 error，三个 `Statements.lean` 0 `sorry`，`Gaps.lean` 合计 22 处 `sorry` / 18 条声明，与卡片 `sorry_count` 对账一致。详见 `AUDIT_2026-11-21_口径与测试.md`。
 
 ## SY02-14《Hitchin 可积系统的量子化与 Hecke 特征层》中译校订本 + 资料卡 43 张 — 2026-11-21
 

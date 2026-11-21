@@ -275,7 +275,8 @@ def dataset_stats():
                             status[json.load(fh).get("status") or "?"] += 1
                     except (ValueError, OSError):
                         status["unreadable"] += 1
-    lean = {"cards": 0, "certified": 0, "gap": 0, "lean_files": 0, "sorry": 0}
+    lean = {"cards": 0, "certified": 0, "gap": 0, "lean_files": 0,
+            "sorry": 0, "sorry_decls": 0}
     ldir = os.path.join(root, "leanstmt")
     if os.path.isdir(ldir):
         for dp, dn, fn in os.walk(os.path.join(ldir, "cards")):
@@ -284,7 +285,9 @@ def dataset_stats():
                     continue
                 lean["cards"] += 1
                 with io.open(os.path.join(dp, f), encoding="utf-8") as fh:
-                    v = (json.load(fh).get("verification") or {}).get("status")
+                    vd = json.load(fh).get("verification") or {}
+                lean["sorry_decls"] += int(vd.get("sorry_count") or 0)
+                v = vd.get("status")
                 if v == "certified":
                     lean["certified"] += 1
                 elif v in ("gap", "sketch"):
@@ -364,10 +367,10 @@ def render_block(s):
         "| 原书页码锚点 | %s 段（`page_orig`） |" % "{:,}".format(c["page_orig"]),
         "| 术语基 | %s 条 |" % "{:,}".format(s["termbase"]["total"]),
         "| 资料卡 | %s 张（%d 个数据集） |" % ("{:,}".format(s["datasets"]["cards_total"]), len(s["datasets"]["by_dataset"])),
-        "| 形式化陈述对齐 | %d 条（%d certified + %d gap；%d 个 `.lean`，%d 处 sorry） |"
+        "| 形式化陈述对齐 | %d 条（%d certified + %d gap；%d 个 `.lean`，%d 处 `sorry` / %d 条声明） |"
         % (s["datasets"]["leanstmt"]["cards"], s["datasets"]["leanstmt"]["certified"],
            s["datasets"]["leanstmt"]["gap"], s["datasets"]["leanstmt"]["lean_files"],
-           s["datasets"]["leanstmt"]["sorry"]),
+           s["datasets"]["leanstmt"]["sorry"], s["datasets"]["leanstmt"]["sorry_decls"]),
         "| 精选轨迹 | %s 条 |" % "{:,}".format(s["trajectories"]),
         "| 原始会话分片 | %d 片 / **%s**（Release 附件） |" % (s["session_shards"], mb(s["session_bytes"])),
         "",

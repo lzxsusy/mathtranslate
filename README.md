@@ -124,7 +124,7 @@ AI 辅助翻译的过程轨迹、以及威腾文章研讨班的组织资料整�
 | 原书页码锚点 | 4,023 段（`page_orig`） |
 | 术语基 | 1,820 条 |
 | 资料卡 | 1,034 张（18 个数据集） |
-| 形式化陈述对齐 | 39 条（21 certified + 18 gap；6 个 `.lean`，22 处 sorry） |
+| 形式化陈述对齐 | 39 条（21 certified + 18 gap；6 个 `.lean`，22 处 `sorry` / 18 条声明） |
 | 精选轨迹 | 402 条 |
 | 原始会话分片 | 4 片 / **144.6 MB**（Release 附件） |
 
@@ -425,7 +425,7 @@ python tools/build_norm.py --check   # 与已提交版本不一致则失败（CI
 盲翻回译，五者互相约束。现有试点 [`datasets/leanstmt/`](datasets/leanstmt/README.md)：
 
 - **39 张卡**：21 张 certified（编译通过、`sorry` 为 0）+ 18 张 gap（陈述已写出，依赖或证明未完成）；
-- 覆盖 GNO 1977、Witten 2015、Witten 2008 三条底本批次；6 个 `.lean` 文件，22 处 `sorry` 全部记账；
+- 覆盖 GNO 1977、Witten 2015、Witten 2008 三条底本批次；6 个 `.lean` 文件，22 处 `sorry`（18 条声明）全部记账；2026-11-21 在本地 `leanprover/lean4:v4.36.0` + mathlib `d33c49ca` 上独立复跑，6 个文件 0 error，三个 `Statements.lean` 均 0 sorry；
 - 工具链固定 `leanprover/lean4:v4.36.0` + mathlib commit `d33c49c…`，每张卡写死版本。
 
 四层对齐（只做前两层也能产生价值，但不要跳过 L1 直接做 L2）：

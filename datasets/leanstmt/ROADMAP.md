@@ -17,6 +17,13 @@
   本文主定理（Hitchin 纤维化上的镜像对称）如实进 G06 gap——它正好是 mathlib 缺口最深的一层。
   见 `datasets/leanstmt/README.md` 与 `workflow/PRODUCTION.md` §六。
 
+### 复现性待办（2026-11-21 独立复核后新增）
+
+- **现状**：仓库里只有 `lean/ShuyiFormal/**.lean` 源码，**没有** `lean-toolchain`、`lakefile.lean`、`lake-manifest.json`；`certified` 目前只能在工作工程复现（README「工作工程」表指向仓外路径）。
+- **已复核**：2026-11-21 把仓内 6 个 `.lean` 与工作工程逐文件比对（6/6 完全相同），在 `leanprover/lean4:v4.36.0` + mathlib `d33c49ca` 上逐个 `lake env lean`，**6 个文件全部 exit 0、0 error**；三个 `Statements.lean` 0 `sorry`，三个 `Gaps.lean` 合计 22 处 `sorry` / 18 条声明，与卡片 `verification.sorry_count` 之和一致。
+- **待做**：把 `lean-toolchain`、`lakefile.lean`（`require mathlib from git "...", @ "d33c49ca"`）、`lake-manifest.json` 三件套补进 `lean/`，并在 README 写清「首次需 `lake exe cache get`，mathlib 全量构建约 7 GB」；这样任何人 clone 后只靠仓库就能复跑 `certified`。
+- 更远一步：写 `tools/lean_check.py`，读 `cards/statements/*.json` 逐个 `lake env lean`，把 `sorry` 计数与 `verification` 对账（现在靠手工表）。
+
 ## 一、先做（6–12 个月内，statements 能落在现有 mathlib 上）
 
 ### 1. GNO 1977：Goddard, Nuyts, Olive, *Gauge theories and magnetic charge*（**已落地为 C 批 13 卡**）
