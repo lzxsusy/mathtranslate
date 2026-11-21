@@ -47,8 +47,8 @@ SPEC 术语表把 ramification 固定为「分歧」、branch point 固定为「
 
 ## 出处
 
-- Gukov–Witten 2006（hep-th/0612073v2）中译校订本 §4.5；印刷页 [97] / PDF 页 [98]；锚点 `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s04b-lines.tex:414-418`
-- 该句位于§4.5（小节的起始印刷页为第 97 页，PDF 第 98 页）。
+- Gukov–Witten 2006（hep-th/0612073v2）中译校订本 §4.5；印刷页 [103] / PDF 页 [104]；锚点 `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s04b-lines.tex:414-418`
+- 该句在 §4.5 中段，原文 PDF 第 104 页（印刷第 103 页）；PDF 页 = 印刷页 + 1。
 
 ---
 

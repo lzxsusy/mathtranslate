@@ -23,7 +23,7 @@
 | §3.1 | concept | 超 Kähler 商 | §3.1 | 32 | `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s03a-quotient.tex:29-60` |
 | §3.1 | concept | 带分歧的希格斯丛模空间 | §3.1 | 32、35 | `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s03a-quotient.tex:60-140` |
 | §3.2 | concept | 三个复结构 I、J、K | §3.2 | 36、40 | `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s03a-quotient.tex:141-305` |
-| §3.2 | correction | real codimension 被吞成「其实余维」 | §3.2 | 36 | `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s03a-quotient.tex:258-262` |
+| §3.2 | correction | real codimension 被吞成「其实余维」 | §3.2 | 39 | `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s03a-quotient.tex:258-262` |
 | §3.3 | concept | 非正则参数与奇点 | §3.3 | 41、47 | `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s03a-quotient.tex:306-460` |
 | §3.4 | concept | 抛物丛 | §3.4 | 48、50 | `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s03b-parabolic.tex:9-77` |
 | §3.4 | concept | 抛物稳定性与 α 的门槛 | §3.4 | 48、50 | `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s03b-parabolic.tex:39-77` |
@@ -50,7 +50,7 @@
 | §4.5 | concept | 仿射辫群 $B_{\rm aff}({}^L\neg G)$ | §4.5 | 103、105 | `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s04b-lines.tex:330-445` |
 | §4.5 | concept | 线算符：威尔逊算符与 't Hooft 算符 | §4.5 | 98、101 | `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s04b-lines.tex:9-160` |
 | §4.5 | concept | 分歧参数的单值性：$B_Y$ 与 $\mathcal V_Y$ | §4.5 | 101、103 | `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s04b-lines.tex:160-330` |
-| §4.5 | correction | 「歧点」应作「分歧点」：术语表外的自造省写 | §4.5 | 98 | `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s04b-lines.tex:414-418` |
+| §4.5 | correction | 「歧点」应作「分歧点」：术语表外的自造省写 | §4.5 | 104 | `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s04b-lines.tex:414-418` |
 | §4.5 | correction | 「说明一个说明其运作的例子」：动宾搭配错乱 | §4.5 | 98 | `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s04b-lines.tex:172-176` |
 | §4.6 | concept | 仿射赫克代数与赫克算符 | §4.6 | 107、109 | `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s04b-lines.tex:520-640` |
 | §4.6 | concept | Kazhdan–Lusztig 多项式与不可约表示重数 | §4.6 | 108、109 | `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s04b-lines.tex:600-678` |
@@ -60,8 +60,10 @@
 | §5.1 | correction | 「实一维形式」应为「实一形式」 | §5.1 | 115 | `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s05a-framework.tex:167-171` |
 | §5.2 | concept | 分歧点的 B-模型与威尔逊算符 | §5.2 | 115、117 | `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s05a-framework.tex:119-181` |
 | §5.3 | concept | A-模型与 Fukaya 一侧 | §5.3 | 117、121 | `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s05b-amodel.tex:9-124` |
+| §5.3 | concept | CP¹ 上两点抛物丛与 Yang–Mills 解的分类 | §5.3 | 123、124 | `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s05b-amodel.tex:141-200` |
 | §5.3 | concept | Kähler 形式与 Kähler 模 | §5.3 | 127、129 | `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s05b-amodel.tex:221-298` |
 | §5.3 | concept | A-模型中的拉格朗日膜 | §5.3 | 123、126 | `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s05b-amodel.tex:191-220` |
+| §5.3 | concept | 't Hooft 算符与仿射外尔群 | §5.3 | 128、129 | `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s05b-amodel.tex:237-285` |
 | §6 | concept | 局部模型：余伴随轨道上的西格玛模型 | §6 | 130、131、132 | `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s06-local.tex:9-64` |
 | §6.1 | concept | 复余伴随轨道与局部奇点的超 Kähler 消解 | §6.1 | 130、131、132 | `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s06-local.tex:25-64` |
 | §6.1 | concept | $G_\C=SL(2,\C)$ 的线性西格玛模型 | §6.1 | 130、131、132 | `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s06-local.tex:25-64` |
@@ -76,4 +78,4 @@
 | 附录A | correction | 「四组格」实为三对格（六个格） | 附录A | 146 | `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/sA-duality.tex:14-18` |
 | 附录B | correction | 记号表条目数误抄成参考文献数（91→70） | 附录B | 153 | `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/sB-notation.tex:9-13` |
 
-共 73 张：概念 55、勘误 18；批注 199 条（易错预警 68、含糊点拨 68、背景直觉 63）。
+共 75 张：概念 57、勘误 18；批注 205 条（易错预警 70、含糊点拨 70、背景直觉 65）。

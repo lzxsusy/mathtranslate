@@ -1,6 +1,6 @@
 # gw06 分类
 
-按位置分组；每张卡至少一条批注。共 73 张（概念 55、勘误 18）。
+按位置分组；每张卡至少一条批注。共 75 张（概念 57、勘误 18）。
 
 ## §1
 
@@ -134,8 +134,10 @@
 ## §5.3
 
 - `gw06/concept/a-model-fukaya` A-模型与 Fukaya 一侧（concept）
+- `gw06/concept/cp1-two-point-parabolic` CP¹ 上两点抛物丛与 Yang–Mills 解的分类（concept）
 - `gw06/concept/kahler-forms` Kähler 形式与 Kähler 模（concept）
 - `gw06/concept/lagrangian-brane` A-模型中的拉格朗日膜（concept）
+- `gw06/concept/thooft-affine-weyl` 't Hooft 算符与仿射外尔群（concept）
 
 ## §6
 

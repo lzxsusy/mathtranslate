@@ -39,8 +39,8 @@
 
 ## 出处
 
-- S. Gukov & E. Witten, Gauge Theory, Ramification, And The Geometric Langlands Program（arXiv:hep-th/0612073v2）中译校订本 §3.2；印刷页 [35] / PDF 页 [36]；锚点 `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s03a-quotient.tex:258-262`
-- 该句位于§3.2（小节的起始印刷页为第 35 页，PDF 第 36 页）。
+- S. Gukov & E. Witten, Gauge Theory, Ramification, And The Geometric Langlands Program（arXiv:hep-th/0612073v2）中译校订本 §3.2；印刷页 [38] / PDF 页 [39]；锚点 `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s03a-quotient.tex:258-262`
+- 该句在 §3.2 末段，原文 PDF 第 39 页（印刷第 38 页）；PDF 页 = 印刷页 + 1。
 
 ---
 

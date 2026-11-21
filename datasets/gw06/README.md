@@ -6,7 +6,7 @@
 
 ## 1. 规模
 
-- **73 张卡**：55 张概念卡（覆盖 §1–§6 与附录 A 全部小节）+ 18 张勘误卡。
+- **75 张卡**：57 张概念卡（覆盖 §1–§6 与附录 A 全部小节；§5.3 另含 $\mathbb{CP}^1$ 两点抛物丛与 't Hooft–仿射外尔群两张）+ 18 张勘误卡。
 - 每张卡至少 3 条批注（`易错预警` / `含糊点拨` / `背景直觉` 各一），全部带锚点。
 - 中译校订新增译注 156 条（库内 `\begin{yizhu}` 由 78 条增至 234 条），其中 [原文疑误] 条目由 14 条增至 24 条；
   18 张勘误卡是其中可独立成卡的代表，`original` / `corrected` 只保留差异片段。
@@ -15,7 +15,7 @@
 
 ```
 datasets/gw06/
-├── cards/concepts/*.json       # 55 张概念卡
+├── cards/concepts/*.json       # 57 张概念卡
 ├── cards/corrections/*.json    # 18 张勘误卡
 ├── index.jsonl                 # 逐卡摘要索引
 ├── verification.jsonl          # 核验台账
@@ -66,4 +66,4 @@ rights/status/verification 取值、`pdf_pages == pages + 1`、anchor 文件存�
 
 - `two-dimensional-defect` 卡对极大列维情形的 $\xi\in H^2(D,\pi_1(G))$ 解释是标准图景补全，原文只一句，建议第三轮复核。
 - `cameral-cover` 卡的一般 $G$ 部分（$|W|$ 重覆盖、Prym）依外部标准结果写入，可逐字核验的只有 $SL(2)$ 谱曲线与 (3.107)–(3.109)。
-- §5.3 的 (5.10)–(5.14) 目前无专属卡；如需补齐可加一张推导卡。
+- §5.3 的 (5.10)–(5.15) 已由 `cp1-two-point-parabolic`、`thooft-affine-weyl` 两张概念卡覆盖；(5.10)–(5.13) 的交换图逐步推导仍散在正文，无独立推导卡。

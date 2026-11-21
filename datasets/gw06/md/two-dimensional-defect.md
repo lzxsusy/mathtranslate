@@ -52,7 +52,7 @@
 
 ### 背景直觉：离散 $\theta$ 角的对偶
 
-当 $\mathbb L=G$，$\alpha\in{\mathcal Z}(G)$ 标记中心单值性，$\eta\in{\rm Hom}(\pi_1(G),U(1))$ 是二维离散 $\theta$ 角；对偶交换这两个有限群，正是 $S$ 交换 $\alpha,\eta$ 的离散版。它反映 $G$-丛不能延拓过 $D$ 的拓扑障碍。
+原文说 ${\mathcal Z}(G)$ 与 ${\rm Hom}(\pi_1(G),U(1))$ 在对偶下互换。按字面用同一个 $G$ 会出问题：$G=SU(2)$ 时 ${\mathcal Z}(G)=\Z_2$，而 $\pi_1(G)=1$、${\rm Hom}(\pi_1(G),U(1))=1$，两者并不相等。正确的读法是右端的 $G$ 指对偶群 ${}^LG$：$\pi_1({}^LG)\cong{\mathcal Z}(G)$，故 ${\rm Hom}(\pi_1({}^LG),U(1))\cong{\mathcal Z}({}^LG)$，互换的其实是 ${\mathcal Z}(G)$ 与 ${\mathcal Z}({}^LG)$。$\alpha\in{\mathcal Z}(G)$ 标记绕 $D$ 的单值性；$\eta$ 是给拓扑类 $\xi\in\pi_1(G)$ 加权的离散 $\theta$ 角，$\xi$ 不能当成 $\alpha$ 的另一种写法。
 
 ## 出处
 
