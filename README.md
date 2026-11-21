@@ -198,6 +198,7 @@ Bourbaki 报告、Astérisque 专辑、arXiv 预印本、论文集（proceedings
 | `05_seminar_witten/` | 威腾（Witten）文章研讨班的索引、阅读路线、经验教训 |
 | `06_sessions_raw/` | 原始对话事件流（已脱敏、zstd 压缩）；145 MB 分片已移到 Release `v1.0.1` 附件，仓库只留抽取脚本与分片说明 |
 | `papers/WIT-1989-JONES/` | **威腾 1989 CS/Jones 论文研讨班**（第二轮解经试点）：六场研讨记录、claims/questions 数据、教材核查；交付两版讲义——**49 页连续叙事讲义**（`deliverables/lecture/`，可作课程主文本）与 **97 页逐句注疏版**（`deliverables/reading_note/`），均含 LaTeX 源码、一键构建工程、协作流程记录，并有打包下载 `WIT-1989-JONES-v1.0.zip` |
+| `papers/WIT-2021-ATIYAH-LANG/` | **Witten 2021 INI 演讲《对偶、Langlands 对应与 Michael Atiyah 的影响》中文译注本**（讲义型）：把 54 张 beamer 幻灯片按演讲的叙事顺序重排为 **39 页连续叙事**，逐张标注原页码，译注（术语/译法）与批注（技术/史实）分两套编号；前置出版说明与导读「一条走了四十七年的暗线」，后置附录 A 术语表、B 人物小传、C 参考文献、D 技术路线图（从本演讲到 Kapustin–Witten 2006）。LaTeX 源码在 `源码/`，成品 PDF 在 `deliverables/lecture/`，底本对应表、通读笔记、疑点清单、术语表 tsv 在 `工程文件/` |
 | `08_source_code/` | **每部译本的完整工程**：`工程文件/`（BRIEF、构建脚本、交付清单、术语表、校对记录、逐章报告）+ `源码/`（LaTeX 源与插图） |
 | `07_refs_nlab/` | **nLab 参考资料库**（几何 Langlands 线专用）：120 条 nLab 条目摘要（含 `last_revised`，可直接写进译注来源行）+ 37 份替代来源卡（nLab 只有存根时改引 A 级教材 / MathWorld / Stacks）+ 110 条来源真实性抽查记录 |
 | `datasets/` | **可训练数据集**：数学推理条目（`math/`，命题+证明步骤+缺口+校验）、原文片段↔译文↔译法理由（`parallel/`）、精读卡（`deepread/`）、高光与难证标注（`highlights/`）、事件级工作流（`traces/`）、概念图谱（`kg/`）、held-out 评测（`bench/`）、按概念组织的词条库（`encyclopedia/`）、单章资料卡（`geoq/`、`pathintegral/`、`csw/`、`glc/`）；规则见 `datasets/README.md`，权利分 `self / arxiv / book / rewritten` 四层，`book` 只进 `_internal/` |

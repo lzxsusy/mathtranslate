@@ -1,0 +1,175 @@
+% ============================================================
+%  preamble.tex — 《对偶、Langlands 对应与 Michael Atiyah 的影响》
+%  中文译注本 · 数译 WIT-2021-ATIYAH-LANG
+%  编译：xelatex × 2（需要 ctex + fandol + tcolorbox + tikz）
+% ============================================================
+
+\usepackage[UTF8,fontset=fandol,heading=true]{ctex}
+\usepackage{amsmath,amssymb,mathtools,bm}
+\usepackage[a4paper,left=2.7cm,right=2.7cm,top=2.95cm,bottom=2.9cm,headheight=22pt,headsep=9pt]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage[font=small,labelfont=bf,labelsep=quad]{caption}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning,decorations.markings,shapes.geometric}
+\usepackage{fancyhdr}
+\usepackage[hidelinks,bookmarksnumbered=true]{hyperref}
+\usepackage{footmisc}
+
+% ---------- 颜色 ----------
+\definecolor{shuyiBlue}{HTML}{1F4E79}
+\definecolor{shuyiGray}{HTML}{595959}
+\definecolor{shuyiLight}{HTML}{F5F5F5}
+\definecolor{noteFrame}{HTML}{D9822B}
+\definecolor{cmtFrame}{HTML}{2E6E8E}
+\definecolor{srcFrame}{HTML}{8C8C8C}
+
+% ---------- 版心与行距 ----------
+\linespread{1.20}
+\setlength{\parskip}{0.28em}
+\setlength{\parindent}{2em}
+\allowdisplaybreaks[3]
+\setlength{\emergencystretch}{2em}
+
+\ctexset{
+  section/name={第,章},
+  section/number={\chinese{section}},
+  section/format={\Large\bfseries\centering},
+  section/beforeskip={2.2ex plus .3ex minus .2ex},
+  section/afterskip={1.8ex plus .2ex},
+  subsection/format={\large\bfseries},
+  subsubsection/runin=true,
+}
+
+\captionsetup{skip=6pt}
+
+% ---------- 页眉页脚 ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{shuyiGray}对偶、Langlands 对应与 Michael Atiyah 的影响}
+\fancyhead[R]{\small\color{shuyiGray}数译 · 2026}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{shuyiGray!45}\leaders\hrule height \headrulewidth\hfill}}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+% ---------- 数学记号 ----------
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ee}{\mathrm{e}}
+\newcommand{\ii}{\mathrm{i}}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\SL}{SL}
+\DeclareMathOperator{\SU}{SU}
+\DeclareMathOperator{\SO}{SO}
+\DeclareMathOperator{\Sp}{Sp}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\PSU}{PSU}
+\DeclareMathOperator{\ad}{ad}
+\DeclareMathOperator{\Gr}{Gr}
+\DeclareMathOperator{\Bun}{Bun}
+\DeclareMathOperator{\Loc}{Loc}
+\newcommand{\gvee}{G^{\vee}}
+\newcommand{\Tvee}{T^{\vee}}
+\newcommand{\half}{\tfrac{1}{2}}
+
+% 表示、对偶、内积
+\newcommand{\rep}[1]{\rho_{#1}}
+\newcommand{\ip}[2]{\langle #1,#2\rangle}
+
+% ---------- 底本页码锚 ----------
+% 每张幻灯片的起点用一个极小的灰色角标标出，便于回查底本
+\newcommand{\srcp}[1]{\textsuperscript{\textcolor{shuyiGray!85}{\tiny\,[原\,p.#1]}}}
+
+% ---------- 章首题记 ----------
+\newcommand{\chapterquote}[2]{%
+  \begin{flushright}\small\color{shuyiGray}%
+  \begin{minipage}{0.86\textwidth}\itshape #1\par\vspace{0.3em}%
+  \raggedleft\upshape\footnotesize —— #2\end{minipage}\end{flushright}%
+  \vspace{0.6em}}
+
+% ---------- 译注 / 批注 ----------
+\newcounter{yizhu}[section]
+\renewcommand{\theyizhu}{\arabic{section}.\arabic{yizhu}}
+\newcounter{pizhu}[section]
+\renewcommand{\thepizhu}{\arabic{section}.\arabic{pizhu}}
+
+\newenvironment{yizhu}[1][]{%
+  \par\medskip\refstepcounter{yizhu}%
+  \begin{tcolorbox}[enhanced,breakable,colback=noteFrame!4,colframe=noteFrame!60!black,
+    boxrule=0.4pt,arc=1.2pt,left=7pt,right=7pt,top=5pt,bottom=5pt,
+    fontupper=\small]%
+  \noindent{\bfseries\color{noteFrame!55!black}译注 \theyizhu}%
+  \ifx\relax#1\relax\else{\bfseries\color{noteFrame!55!black}（#1）}\fi
+  \quad\ignorespaces
+}{\end{tcolorbox}\par\medskip}
+
+\newenvironment{pizhu}[1]{%
+  \par\medskip\refstepcounter{pizhu}%
+  \begin{tcolorbox}[enhanced,breakable,colback=cmtFrame!4,colframe=cmtFrame!70!black,
+    boxrule=0.4pt,arc=1.2pt,left=7pt,right=7pt,top=5pt,bottom=5pt,
+    fontupper=\small]%
+  \noindent{\bfseries\color{cmtFrame!80!black}批注 \thepizhu\quad #1}\par\vspace{0.35em}%
+}{\end{tcolorbox}\par\medskip}
+
+% ---------- 文献摘录框（英文原文 + 中译） ----------
+\newenvironment{abstractbox}[1]{%
+  \par\medskip
+  \begin{tcolorbox}[enhanced,breakable,colback=shuyiLight,colframe=srcFrame!70,
+    boxrule=0.35pt,arc=1pt,left=9pt,right=9pt,top=6pt,bottom=6pt]%
+  {\small\bfseries\color{shuyiGray}文献摘录：#1}\par\vspace{0.45em}%
+}{\end{tcolorbox}\par\medskip}
+
+% 英文原文用稍小的衬线体
+\newcommand{\en}[1]{{\small #1}}
+
+% ---------- 列表 ----------
+\setlist[itemize]{topsep=2pt,itemsep=1pt,parsep=0pt,leftmargin=2em}
+\setlist[enumerate]{topsep=2pt,itemsep=1pt,parsep=0pt,leftmargin=2.4em}
+
+% ---------- 目录 ----------
+\renewcommand{\contentsname}{目\quad 录}
+\setcounter{tocdepth}{1}
+
+% ---------- 脚注 ----------
+\renewcommand{\footnotesize}{\small}
+
+% ---------- 补充记号（第二次修复） ----------
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\OO}{\mathbb{O}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\slashed}[1]{\not{#1}}
+\DeclareMathOperator{\Rep}{Rep}
+\DeclareMathOperator{\Perv}{Perv}
+
+% ---------- 公式与图按章编号 ----------
+\numberwithin{equation}{section}
+\renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
+\numberwithin{figure}{section}
+\renewcommand{\thefigure}{\arabic{section}.\arabic{figure}}
+\numberwithin{table}{section}
+\renewcommand{\thetable}{\arabic{section}.\arabic{table}}
