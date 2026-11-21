@@ -1,7 +1,10 @@
 # bdh · Beilinson–Drinfeld《Hitchin 可积系统的量子化与 Hecke 特征层》资料卡
 
-本书是 A. Beilinson 与 V. Drinfeld 的长篇专著（386 页，无正式出版本）中译校订本的**单章资料卡**试点：
+本书是 A. Beilinson 与 V. Drinfeld 的长篇专著（386 页，无正式出版本）中译校订本的**整本专著资料卡**试点：
 一段原文、一段译文、一条「为什么这么译」才算数据；这里进一步做成可校验的概念卡与勘误卡。
+
+首批 **43 张卡**（29 概念 + 14 勘误），覆盖 §0 引论、§1 栈上的微分算子、§2 Hitchin 哈密顿量的量子化、
+§3 oper、§4 Pfaffian 与 $c$-格、§5–§6 Hecke 特征层、§7 栈上 D-模附录、§8–§10 补充材料。
 
 - 底本：A. Beilinson, V. Drinfeld, *Quantization of Hitchin's Integrable System and Hecke Eigensheaves*（pdfTeX 2020 重排版，386 页）。
 - 译本：`08_source_code/SY02-14_Hitchin可积系统的量子化与Hecke特征层/源码/`（章文件 `chapters/chNN.tex`，翻译单元 `units/chNN_uMM.tex`）。
