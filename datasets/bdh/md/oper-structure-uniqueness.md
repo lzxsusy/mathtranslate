@@ -1,0 +1,66 @@
+# oper 结构的唯一性：旗必是 Harder–Narasimhan 旗
+
+- **id**：`bdh/concept/oper-structure-uniqueness`
+- **类型**：concept
+- **位置**：§3.1
+- **问题**：给定一个 $G$-局部系统，为什么它上面的 oper 结构不能有两种，而且一旦存在，旗就被 Harder–Narasimhan 旗唯一钉死？
+
+> 当 $X$ 完备连通、亏格 $>1$ 时，一个 $G$-局部系统至多有一个 oper 结构，其旗必为 Harder–Narasimhan 旗，故自同构群为 $Z$，且该局部系统不能约化到非平凡抛物子群。
+
+## 定义
+
+两个命题构成 §3.1 的刚性核心。命题 3.1.4：设 $(\mathfrak{F}_B,\nabla)$ 是 $X$ 上的 $G$-oper，若 $X$ 连通，则 $\operatorname{Aut}(\mathfrak{F}_B,\nabla)=Z$；特别地 $\mathfrak g$-oper 没有对称性，即 $\operatorname{Op}_{\mathfrak g}(X)$ 是集合、$\operatorname{Op}_{\mathfrak g}$ 是集合层。命题 3.1.5：设 $X$ 完备、连通，亏格 $g>1$，$(\mathfrak{F}_G,\nabla)$ 是 $X$ 上带 oper 结构的 $G$-局部系统，则 (i) $(\mathfrak{F}_G,\nabla)$ 上的 oper 结构唯一，相应的旗 $\mathfrak{F}_B\subset\mathfrak{F}_G$ 是 Harder–Narasimhan 旗；(ii) $\operatorname{Aut}(\mathfrak{F}_G,\nabla)=Z$；(iii) $(\mathfrak{F}_G,\nabla)$ 不能约化到非平凡抛物子群 $P\subset G$。其中 (ii) 由 (i) 与 3.1.4 推出：任一自同构必保持唯一的旗，于是落在 $\operatorname{Aut}(\mathfrak{F}_B,\nabla)=Z$ 内。Harder–Narasimhan 旗指 $G$-丛（这里是带平坦联络的 $G$-局部系统）按斜率唯一给出的最斜约化，故它只依赖 $(\mathfrak{F}_G,\nabla)$ 本身，与 oper 结构无关；唯一性说的正是「oper 结构的旗只能是它」。
+
+**记号**：$\operatorname{Aut}(\mathfrak{F}_B,\nabla)$：保持 $B$-丛与联络的偶对的自同构群；$\operatorname{Aut}(\mathfrak{F}_G,\nabla)$ 类似、$Z=Z_G$：$G$ 的中心；$\mathfrak g$ 半单时 $Z$ 有限，$G$ 伴随时 $Z$ 平凡、Harder–Narasimhan 旗：$G$-丛按斜率唯一确定的最斜约化 $\mathfrak{F}_B\subset\mathfrak{F}_G$、$U\subset\operatorname{LocSys}_G$：不能约化到非平凡抛物子群、且无非平凡自同构的局部系统构成的开子栈（§3.1.11 注 iii）
+
+## 关键点
+
+- 3.1.4 对单个 oper 给出自同构群 $Z$：证明只用连通性，不用完备性，也不假设 $g>1$；因此它是纯局部的刚性陈述，适用于任意光滑曲线上的 oper。
+- 3.1.5(i) 是「结构唯一」而非「存在唯一」：给定带 oper 结构的局部系统，结构至多一个；有 oper 结构的局部系统只是 $\operatorname{LocSys}_G$ 的特殊子集，不是全部。
+- 唯一性的内容是旗的身份：唯一的那面旗正是 Harder–Narasimhan 旗，而 HN 旗由局部系统的斜率决定，与 oper 结构无关，故任何两个 oper 结构的旗必然重合。
+- 3.1.5(ii) 是 (i) 与 3.1.4 的合成：自同构保 HN 旗，故保 $B$-约化，于是 $\operatorname{Aut}(\mathfrak{F}_G,\nabla)=\operatorname{Aut}(\mathfrak{F}_B,\nabla)=Z$；这一步把「旗唯一」翻译成了「自同构不增加」。
+- 3.1.5(iii) 是同一刚性的约化版本：若局部系统能约化到真抛物 $P$，它的 HN 约化就不是 $B$（或旗不再唯一），与 (i) 冲突。§3.1.11 注 iii 正是用这个条件定义开子栈 $U$，并证明 $i(\operatorname{Op}_{\mathfrak g}(X))$ 是 $U$ 的闭 Lagrange 子簇。
+- 对 $\mathfrak g$ 半单，$Z$ 有限，故 $\operatorname{Op}_G(X)$ 是 Deligne–Mumford 栈（§3.1.11）；只有 $G$ 伴随（$Z$ 平凡）时它才是概形，且经 (43) 同构于仿射空间。
+
+## 公式
+
+```latex
+\operatorname{Aut}(\mathfrak{F}_B,\nabla)=Z
+```
+```latex
+\operatorname{Aut}(\mathfrak{F}_G,\nabla)=Z
+```
+```latex
+i:\operatorname{Op}_{\mathfrak{g}}(X)\longrightarrow\operatorname{LocSys}_G,\qquad i(\operatorname{Op}_{\mathfrak{g}}(X))=\pi^{-1}(S)
+```
+
+## 常见错误
+
+- 把「唯一」误读为「存在」：3.1.5 的前提是「$(\mathfrak{F}_G,\nabla)$ 具有 oper 结构」。没有 oper 结构的局部系统当然谈不上唯一性；$i(\operatorname{Op}_{\mathfrak g}(X))$ 只是 $U$ 的 Lagrange 子簇，不是整个 $U$。
+- 把 $\operatorname{Aut}=Z$ 简化成「没有自同构」：$Z$ 可以非平凡（例如 $G=\mathrm{GL}_n$ 时 $Z=\mathbb G_m$ 的作用），源码只说自同构恰是中心元。只有 $G$ 伴随时 $Z$ 才平凡；这也正是 $\operatorname{Op}_G$ 在 $G$ 半单时只是 DM 栈、在 $G$ 伴随时才是概形的原因。
+- 在非完备 $X$ 或 $g\le1$ 上照搬 3.1.5：命题假设 $X$ 完备、连通、$g>1$，Harder–Narasimhan 旗的「唯一最斜约化」在这一框架下才成立；非完备时源码只断言 $\operatorname{Op}_{\mathfrak g}(X)$ 是归纳概形（3.1.11 注 i）。
+- 把 (iii) 与 (i) 当成同一句话的重复：约化到真抛物子群是局部系统本身的性质（与 oper 结构无关），它破坏的恰是 HN 旗的唯一性；反过来，唯一性正是把「不可约化」升级为「无对称」的桥梁。
+- 忽略指标：3.1.4 的结论对 $\mathfrak g$-oper 才写成「$\operatorname{Op}_{\mathfrak g}(X)$ 是集合」，对一般 $G$ 则是 $\operatorname{Op}_G(X)$ 为 DM 栈；把 $\mathfrak g$-oper 的集合性套到 $G$-oper 上会丢掉 $Z$ 带来的栈结构。
+
+## 批注
+
+### 含糊点拨：(ii) 的推导其实只有一行
+
+源码在 3.1.5 之后只写了一句「ii) 由 i) 与 3.1.4 推出」。展开就是：取 $g\in\operatorname{Aut}(\mathfrak{F}_G,\nabla)$，由 (i) 旗唯一，$g$ 必把 $\mathfrak{F}_B$ 送到自身，于是 $g\in\operatorname{Aut}(\mathfrak{F}_B,\nabla)=Z$；反向包含 $Z\subset\operatorname{Aut}(\mathfrak{F}_G,\nabla)$ 是显然的（中心元作用平凡地保持一切）。容易漏掉的是「自同构必须保持旗」这一步——它正是「唯一性」与「刚性」的接缝，缺了它就只能得到 $\operatorname{Aut}\subset G$。
+
+### 易错预警：HN 旗不是「随便挑一面满足条件的旗」
+
+Harder–Narasimhan 旗是 $G$-丛按斜率唯一确定的约化，属 $(\mathfrak{F}_G,\nabla)$ 自身，不属 oper 结构。3.1.5(i) 的因果方向是：先有局部系统，HN 旗给出唯一候选 $B$-约化，然后 oper 结构（若存在）的旗必须等于它。若读成「旗可以任选，只要满足 §3.1.3 的 (1)(2)」，唯一性立刻失效，因为 §3.1.3 的条件对固定 $\nabla$ 并不是只允许一面旗。
+
+### 背景直觉：为什么这恰好解释了 $\operatorname{Op}_{\mathfrak g}$ 的 Lagrange 性
+
+§3.1.11 注 iii 用 3.1.5 把 $i(\operatorname{Op}_{\mathfrak g}(X))$ 认成开子栈 $U$ 的闭子栈：$U$ 由「不能约化到非平凡抛物子群且无非平凡自同构」的局部系统组成，而 3.1.5 的三条结论正是「oper 局部系统落在 $U$ 里」。$U$ 带典范辛结构，$i$ 是闭嵌入且像是 Lagrange 子簇，于是 $\operatorname{Op}_{\mathfrak g}(X)$ 的维数 $(g-1)\dim\mathfrak g$ 正好是 $U$ 的一半——刚性（旗唯一）与半维数（Lagrange）在这里是同一件事的两种说法。
+
+## 出处
+
+- A. Beilinson & V. Drinfeld, Quantization of Hitchin's Integrable System and Hecke Eigensheaves（中译校订本） §3.1.4–§3.1.5；印刷页 [62, 62] / PDF 页 [62, 62]；锚点 `08_source_code/SY02-14_Hitchin可积系统的量子化与Hecke特征层/源码/chapters/ch03.tex:29-41`
+- 两个命题与「ii) 由 i) 推出」一句同在 p.62；本书 PDF 页 = 印刷页。
+
+---
+
+权利：`rewritten`；核验：`source-only`（2026-11-21）。

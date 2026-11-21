@@ -1,0 +1,69 @@
+# 栈上的 D-模：D-模 $\mathcal{D}_{\mathcal{Y}}$ 与算子代数层 $D_{\mathcal{Y}}$
+
+- **id**：`bdh/concept/d-modules-on-stacks`
+- **类型**：concept
+- **位置**：§1.1
+- **问题**：同一个构造为什么同时给出 $O_{\mathcal{Y}}$-模 $\mathcal{D}_{\mathcal{Y}}$ 和结合代数层 $D_{\mathcal{Y}}$，两者各自的角色是什么？
+
+> 在光滑拓扑上把 $\mathcal{D}_S$ 对相对切层打商，得到 $O_{\mathcal{Y}}$-模 $\mathcal{D}_{\mathcal{Y}}$ 与 $\mathcal{Y}_{sm}$ 上的结合代数层 $D_{\mathcal{Y}}$；后者作用在前者上，其整体截面相同（式 (6)），而 $\operatorname{gr}D_{\mathcal{Y}}$ 给出象征代数（式 (7)）。
+
+## 定义
+
+对 $\mathcal{Y}_{sm}$ 中的 $\pi_S:S\to\mathcal{Y}$，令 $\mathcal{D}_S$ 为 $S$ 上的微分算子层，$I:=\mathcal{D}_S\Theta_{S/\mathcal{Y}}$ 为左理想，$\tilde{D}_S$ 为 $I$ 在 $\mathcal{D}_S$ 中的正规化子，并令 $(D_{\mathcal{Y}})_S:=\tilde{D}_S/I$。它从右作用在 $(\mathcal{D}_{\mathcal{Y}})_S:=\mathcal{D}_S/I$ 上，且 $(D_{\mathcal{Y}})_S$ 与 $\operatorname{End}_{\mathcal{D}_S}((\mathcal{D}_{\mathcal{Y}})_S)$ 的反代数等同。拉回同构说明 $(\mathcal{D}_{\mathcal{Y}})_S$ 粘成 $O_{\mathcal{Y}}$-模 $\mathcal{D}_{\mathcal{Y}}$，即 1.1.5 意义下 $\mathcal{Y}$ 上的 D-模；$(D_{\mathcal{Y}})_S$ 粘成 $\mathcal{Y}_{sm}$ 上的结合代数层 $D_{\mathcal{Y}}$，称为 $\mathcal{Y}$ 上微分算子的层。式 (6) 说两者的整体截面相同。$D_{\mathcal{Y}}$ 上的滤链使 $\operatorname{gr}D_{\mathcal{Y}}$ 交换，从而是泊松代数；当条件 (2) 成立时，自然的满射 $\operatorname{Sym}\Theta_{\mathcal{Y}}\to\operatorname{gr}D_{\mathcal{Y}}$ 是同构，于是象征映射 $\sigma_{\mathcal{Y}}$（式 (7)）成为嵌入 $\operatorname{gr}D_{\mathcal{Y}}\hookrightarrow P_{\mathcal{Y}}$。
+
+**记号**：$\mathcal{D}_S$：$S$ 上的微分算子层；$I:=\mathcal{D}_S\Theta_{S/\mathcal{Y}}$、$\tilde{D}_S$：$I$ 的正规化子；$(D_{\mathcal{Y}})_S:=\tilde{D}_S/I$，$(\mathcal{D}_{\mathcal{Y}})_S:=\mathcal{D}_S/I$、$\mathcal{M}^{\ell}(\mathcal{Y})$：$\mathcal{Y}$ 上左 D-模构成的阿贝尔范畴层
+
+## 关键点
+
+- 两个对象来自同一个商：$(\mathcal{D}_{\mathcal{Y}})_S=\mathcal{D}_S/I$ 是 $O_S$-模（粘成 $O_{\mathcal{Y}}$-模），$(D_{\mathcal{Y}})_S=\tilde{D}_S/I$ 是结合代数（粘成 $\mathcal{Y}_{sm}$ 上的代数层）。前者是被作用的对象，后者是作用本身（ch01.tex:52-53）。
+- $(D_{\mathcal{Y}})_S$ 由右作用定义，并等同于 $\operatorname{End}_{\mathcal{D}_S}((\mathcal{D}_{\mathcal{Y}})_S)$ 的反代数：反代数而非代数，是因为作用写在右边。这一点在 1.1.5 末再次出现：$D_{\mathcal{Y}}$ 与 $\underline{\operatorname{End}}\mathcal{D}_{\mathcal{Y}}$ 反同构（ch01.tex:73）。
+- 式 (6)：$\Gamma(\mathcal{Y},D_{\mathcal{Y}})\simeq\Gamma(\mathcal{Y},\mathcal{D}_{\mathcal{Y}})$。整体截面相同，正是 2.2.5、2.5.4 可以把 $\Gamma(\operatorname{Bun}_G,D')$ 既当环又当由 D-模算出的对象来用的原因（ch01.tex:56-58）。
+- 1.1.4：$D_{\mathcal{Y}}$ 的滤链使 $\operatorname{gr}D_{\mathcal{Y}}$ 交换，因而是泊松代数；条件 (2) 保证 $\operatorname{Sym}\Theta_{\mathcal{Y}}\to\operatorname{gr}D_{\mathcal{Y}}$ 是同构，象征映射才成为嵌入（ch01.tex:60-65）。
+- 1.1.5：D-模是光滑拓扑下的局部对象——给每个 $S\to\mathcal{Y}$ 配 $\mathcal{D}_S$-模范畴，其笛卡尔截面即 $\mathcal{Y}$ 上的 D-模；由此得到张量积、凝聚与完整（holonomic）等概念（ch01.tex:70-72）。
+- 技术注记：真正不变的构造是集中在次数 $\le 0$ 的复形（象征映射对其总有定义），朴素对象只是它的零次上同调；条件 (2) 保证其余上同调为零。任意光滑栈的「真」$\mathcal{D}_{\mathcal{Y}}$ 见 7.3.3（ch01.tex:66-68）。
+
+## 公式
+
+```latex
+I:=\mathcal{D}_S\Theta_{S/\mathcal{Y}},\qquad (\mathcal{D}_{\mathcal{Y}})_S:=\mathcal{D}_S/I,\qquad (D_{\mathcal{Y}})_S:=\tilde{D}_S/I
+```
+```latex
+\Gamma(\mathcal{Y},D_{\mathcal{Y}})\simeq\Gamma(\mathcal{Y},\mathcal{D}_{\mathcal{Y}}).
+```
+```latex
+\sigma_{\mathcal{Y}}:\operatorname{gr}D_{\mathcal{Y}}\hookrightarrow P_{\mathcal{Y}},
+```
+```latex
+D_{\mathcal{Y}}\ \text{与}\ \underline{\operatorname{End}}\,\mathcal{D}_{\mathcal{Y}}\ \text{反同构}
+```
+
+## 常见错误
+
+- 把 $\mathcal{D}_{\mathcal{Y}}$ 与 $D_{\mathcal{Y}}$ 当成同一个东西：前者是 $O_{\mathcal{Y}}$-模（D-模），后者是 $\mathcal{Y}_{sm}$ 上的结合代数层；式 (6) 只说整体截面同构，层上并不同一。
+- 忘记反代数：$(D_{\mathcal{Y}})_S$ 是 $\operatorname{End}_{\mathcal{D}_S}((\mathcal{D}_{\mathcal{Y}})_S)$ 的反代数，$D_{\mathcal{Y}}$ 与 $\underline{\operatorname{End}}\mathcal{D}_{\mathcal{Y}}$ 反同构；写成同构会在符号与作用方向上出错（ch01.tex:53、73）。
+- 把 $\operatorname{gr}D_{\mathcal{Y}}\to P_{\mathcal{Y}}$ 当成同构：它是嵌入（式 (7)），成为同构需要条件 (2)（良）；对一般的栈 $\operatorname{gr}D_{\mathcal{Y}}$ 可能真地更小。
+- 把「$D_{\mathcal{Y}}$ 是 $\mathcal{Y}$ 上的层」理解成拓扑空间上的层：它定义在光滑拓扑 $\mathcal{Y}_{sm}$ 上，粘合靠拉回同构；在 1.1.5 里 D-模也是以「局部对象 + 笛卡尔截面」的方式定义的，不能用 Zariski 开集的直觉替代。
+- 忽略阶的注记：$D_{\mathcal{Y}}$ 的滤链是阶滤链，$\operatorname{gr}$ 与阶相容；把技术注记（应向复形而非朴素商）当作可省略的旁注，会在非良栈上把象征映射用错（ch01.tex:66-68）。
+
+## 批注
+
+### 背景直觉：一个商，两个身分
+
+把 $\mathcal{D}_S$ 沿相对切方向作哈密顿约化，动机与象征代数完全平行：对概形，$\mathcal{D}$-模就是 $\mathcal{D}$ 上的模；对栈，必须把 $S\to\mathcal{Y}$ 纤维方向的算子视为冗余并商掉。商 $\mathcal{D}_S/I$ 一旦被看成环（即取正规化子再商），就得到可以「作用」的代数；看成模，就得到「被作用」的对象。式 (6) 说明在整体截面上二者一致，这正是可以在 $\Gamma(\operatorname{Bun}_G,D')$ 上做交换代数运算的根据。
+
+### 含糊点拨：为什么先取正规化子
+
+直接商 $\mathcal{D}_S/I$ 不一定带环结构：$I$ 只是左理想，商上的乘法未必良定义。取正规化子 $\tilde{D}_S$（把 $I$ 在左右乘下都保持住的元素）之后，$\tilde{D}_S/I$ 才真正是结合代数。这与 §1.1.2 里取 $\tilde{P}_S$ 的手法一一对应：一次取正规化子，同时解决「结构良好」与「继承括号」两件事。
+
+### 易错预警：条件 (2) 是通篇的技术支点
+
+式 (7) 的嵌入、1.1.4 中 $\operatorname{gr}D_{\mathcal{Y}}$ 的泊松结构、以及 1.1.6 中扭 D-模的完全忠实性，都以条件 (2)（良）为前提。讲义与后续章节在 $\operatorname{Bun}_G$ 上能自由操作，是因为 2.1.2 证明了 $\operatorname{Bun}_G$ 极良；一旦换成一般的栈，应先检查条件 (2)，再去用「象征 = 函数」这类等同。
+
+## 出处
+
+- A. Beilinson & V. Drinfeld, Quantization of Hitchin's Integrable System and Hecke Eigensheaves（中译校订本） §1.1.3–§1.1.5；印刷页 [8, 9] / PDF 页 [8, 9]；锚点 `08_source_code/SY02-14_Hitchin可积系统的量子化与Hecke特征层/源码/chapters/ch01.tex:52-73`
+- 1.1.3 起于 p.8（`\SourcePage{8}` 在 ch01.tex:54，行内）；1.1.4 末的注在 p.8；`\SourcePage{9}` 在 ch01.tex:70（行内），故 1.1.5 与其后内容属 p.9。两页的印刷页号与 PDF 页号同为 8、9。
+
+---
+
+权利：`rewritten`；核验：`source-only`（2026-11-21）。

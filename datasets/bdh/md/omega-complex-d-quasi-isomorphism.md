@@ -1,0 +1,78 @@
+# Ω-复形与 D-拟同构
+
+- **id**：`bdh/concept/omega-complex-d-quasi-isomorphism`
+- **类型**：concept
+- **位置**：§7.2
+- **问题**：既然 $\mathcal{D}$ 与 $\Omega$ 只在导出层面互逆，为什么还能用 Ω-复形来定义 D-模的导出范畴，而不会丢掉 D-模结构？
+
+> 用微分形式的 DG 代数替代 D-模层：Ω-复形对 D-拟同构局部化就得到光滑栈上 D-模的导出范畴，而 de Rham 复形把 D-模全忠实地嵌进去。
+
+## 定义
+
+设 $X$ 是光滑代数簇（或 $\mathbb{C}$ 上对角态射仿射的光滑拟紧代数空间）。以 $\Omega_X$ 记微分形式的 DG 代数，$(X,\Omega_X)$ 是 DG 环化空间；拟凝聚的 DG $\Omega_X$-模称为 $X$ 上的 Ω-复形，其 DG 范畴记 $C(X,\Omega)$，这是张量 DG 范畴（7.2.1）。右 $\mathcal{D}$-模复形的 DG 范畴记 $C(X,\mathcal{D})$。一对伴随 DG 函子 $\mathcal{D}:C(X,\Omega)\to C(X,\mathcal{D})$ 与 $\Omega:C(X,\mathcal{D})\to C(X,\Omega)$ 由 (306)、(307) 给出：$\mathcal{D}F=F\otimes_{\Omega_X}DR_X$，$\Omega M=\operatorname{Hom}_{\mathcal{D}_X}(DR_X,M)$，其中 $DR_X=\Omega_X^{\cdot}\otimes_{\mathcal{O}_X}\mathcal{D}_X$ 是 $\mathcal{D}_X$ 的 de Rham 复形。Ω-复形态射 $\phi$ 称为 D-拟同构，若 $\mathcal{D}\phi$ 是拟同构；等价地，$H_{\mathcal{D}}^{\cdot}:=H^{\cdot}\mathcal{D}$ 给出同构（7.2.5）。引理 7.2.4 保证 $\mathcal{D}\Omega M\to M$ 对任意 D-复形是拟同构，故在导出层面 D-模与其 de Rham 复形互相还原。对满足「对角态射仿射」（310）的光滑栈 $\mathcal{Y}$，把 Ω-复形的同伦范畴对 D-拟同构局部化，得到三角范畴 $D(\mathcal{Y})=D(\mathcal{Y},\Omega)$；$\Omega$ 给出全忠实嵌入 $\mathcal{M}(\mathcal{Y})\hookrightarrow D(\mathcal{Y})$，其本质像是满足 $H_{\mathcal{D}}^{a}=0\ (a\ne0)$ 的对象，并给出以 $\mathcal{M}(\mathcal{Y})$ 为核心的 t-结构（7.3.2–7.3.4）。这一套形式化的用处在于：$\Omega$ 是光滑拓扑上的环层而 $\mathcal{D}$ 不是，所以栈上的局部问题只能在 Ω 一侧表述。
+
+**记号**：$\Omega_X$：$X$ 上微分形式的 DG 代数；Ω-复形即拟凝聚 DG $\Omega_X$-模，也等同于带阶 $\le1$ 微分的拟凝聚 $\mathcal{O}_X$-模复形、$C(X,\Omega)$、$C(X,\mathcal{D})$：Ω-复形与右 $\mathcal{D}$-复形的 DG 范畴；$K(X,\mathcal{D})$ 为后者同伦范畴、$DR_X=\Omega_X^{\cdot}\otimes_{\mathcal{O}_X}\mathcal{D}_X$：$\mathcal{D}_X$ 视为左 $\mathcal{D}$-模时的 de Rham 复形、$H_{\mathcal{D}}^{\cdot}F=H^{\cdot}\mathcal{D}F$：Ω-复形的 D-上同调，取值于 $\mathcal{M}^{r}(X)$、$\mathcal{Y}_{sm}$：光滑栈 $\mathcal{Y}$ 的光滑图册；$U\in\mathcal{Y}_{sm}$ 上 $\dim U/\mathcal{Y}$ 为相对维数，栈上的上同调按此平移
+
+## 关键点
+
+- 伴随式 (306)、(307)：$\mathcal{D}F=F\otimes_{\Omega_X}DR_X$、$\Omega M=\operatorname{Hom}_{\mathcal{D}_X}(DR_X,M)$；并且 $\mathcal{D}F^{\cdot}=F^{\cdot}\otimes_{\mathcal{O}_X}\mathcal{D}_X=\operatorname{Diff}(\mathcal{O},F^{\cdot})$、$(\Omega M)^i=\bigoplus_{a-b=i}M^a\otimes\Lambda^b\Theta_X$（7.2.3(i)）。
+- 引理 7.2.4：对任意 D-复形 $M$，典范态射 $\mathcal{D}\Omega M\to M$ 是拟同构；由此 7.2.5(ii) 的 $\alpha_F:F\to\Omega\mathcal{D}F$ 对每个 Ω-复形都是 D-拟同构。
+- D-拟同构一定是朴素的拟同构，反之在 $\Omega^{\ge1}F=0$（微分 $\mathcal{O}$-线性）或 $F$ 有界 $\mathcal{O}$-凝聚时成立，一般不对（7.2.6(iii)）；因此局部化必须按 D-拟同构而不是按普通拟同构做。
+- 栈上（条件 (310)）：$D(\mathcal{Y})$ 由 Ω-复形对 D-拟同构局部化得到，$\Omega:\mathcal{M}(\mathcal{Y})\hookrightarrow D(\mathcal{Y})$ 全忠实，$H_{\mathcal{D}}^0\Omega M=M$、$H_{\mathcal{D}}^a\Omega M=0\ (a\ne0)$，且 $D(\mathcal{Y})^{\ge0}$ 给出核心为 $\mathcal{M}(\mathcal{Y})$ 的 t-结构（7.3.2、7.3.4）。
+- $\Omega:D(\mathcal{M}(\mathcal{Y}))\to D(\mathcal{Y})$ 只对 Deligne–Mumford 栈是范畴等价，一般情形不然（7.3.5）；这正是 7.4–7.5 还要另造局部定义的动机。
+
+## 公式
+
+```latex
+\mathcal{D}F=F\otimes_{\Omega_X}DR_X,\qquad \Omega M=\operatorname{Hom}_{\mathcal{D}_X}(DR_X,M)
+```
+```latex
+DR_X=\Omega_X^{\cdot}\otimes_{\mathcal{O}_X}\mathcal{D}_X
+```
+```latex
+(\Omega M)^i=\bigoplus_{a-b=i}M^a\otimes\Lambda^b\Theta_X
+```
+```latex
+\mathcal{D}F^{\cdot}=F^{\cdot}\otimes_{\mathcal{O}_X}\mathcal{D}_X=\operatorname{Diff}(\mathcal{O},F^{\cdot})
+```
+
+## 定理
+
+**引理 7.2.4（de Rham 复形还原 D-模）**：对任意右 $\mathcal{D}$-复形 $M$，典范态射 $\mathcal{D}\Omega M\to M$ 是拟同构。
+
+证明：略证（§7.2.4，原书 p.240）
+
+- 置 $V_j^{i}:=\bigoplus_{a-b=i,\ b+c=j}M^a\otimes\Lambda^b\Theta_X\otimes\mathcal{D}_X^{\le c}\subset(\mathcal{D}\Omega M)^i$，得递增滤链
+- 各项为 $\mathcal{O}$-子复形，且 $V_0\xrightarrow{\sim}M$
+- 对 $i\ge1$，$V_i/V_{i-1}$ 是 $M$ 与 $\Theta_X$ 的第 $i$ 个 Koszul 复形之张量积，无环
+
+## 常见错误
+
+- 把 D-拟同构当成普通层复形的拟同构：7.2.6 只说 D-拟同构一定是朴素拟同构，反之一般不然；若据此把 $D(\mathcal{Y})$ 直接当成 Ω-复形的普通导出范畴，就会抹掉 7.3.5「$\Omega$ 一般不是等价」的理由，误以为任意光滑栈上 $D(\mathcal{Y})\cong D(\mathcal{M}(\mathcal{Y}))$。
+- 在栈上漏掉相对维数平移：$H_{\mathcal{D}}^{\cdot}(F)_U:=H_{\mathcal{D}}^{\cdot+\dim U/\mathcal{Y}}(F_U)$，$\Omega M_U:=\Omega M_U[-\dim U/\mathcal{Y}]$。漏掉 $\dim U/\mathcal{Y}$ 会把 $\mathcal{M}(\mathcal{Y})$ 放到非零上同调次数上，从而误判 7.3.4 的核心。
+- 以为 $\mathcal{D}$ 与 $\Omega$ 互逆：只有 $\mathcal{D}\Omega\cong\operatorname{id}$（引理 7.2.4），$\Omega\mathcal{D}$ 只与恒等有 D-拟同构，故 $\mathcal{D}$ 不是范畴等价；把它当逆函子就会得出 $C(X,\Omega)$ 与 $C(X,\mathcal{D})$ 的导出范畴由逐项比较给出，而实际必须经过局部化。
+
+## 批注
+
+### 易错预警：Ω-模结构其实由 $\mathcal{O}$-模结构与微分重构
+
+7.2.1 的注给出一个容易忽略的等价：Ω-复形上的 $\Omega_X^{\cdot}$-模结构可以忘掉，只保留拟凝聚 $\mathcal{O}_X$-模复形 $(F^{\cdot},d)$ 与阶 $\le1$ 的微分 $d$，因为 $\Omega_X$ 的作用由 $\mathcal{O}_X$-结构与 $d$ 唯一确定（$d$ 的象征就是 $\Omega_X^1\otimes F\to F$ 的乘法）。这解释了为什么栈上可以直接用「带阶 $\le1$ 微分的 $\mathcal{O}$-模复形」来算，而 $\mathcal{D}$-模一侧做不到同样的事：$\mathcal{D}$ 不是 $\mathcal{O}$-拟凝聚的层。
+
+### 含糊点拨：为什么局部化用 D-拟同构而不是朴素拟同构
+
+朴素拟同构只比较底层的层复形，而 $\mathcal{D}$ 会把 $\Omega^{\ge1}$ 的信息卷进来：$\mathcal{D}F=F\otimes_{\Omega_X}DR_X$ 不是正合函子，故一个朴素拟同构 $F_1\to F_2$ 未必诱导 $H_{\mathcal{D}}$ 的同构。7.2.6 给出的反例方向是「常数层取 $\mathcal{D}_X$ 在一般点的分式域」：那里的朴素拟同构在 $\mathcal{D}$ 作用后失去同构性。因此 $D(\mathcal{Y})$ 只能按 $\mathcal{D}\phi$ 是否拟同构来局部化，这也是 7.2.5 要把 $H_{\mathcal{D}}$ 定义成 $H^{\cdot}\mathcal{D}$ 的原因。
+
+### 背景直觉：Kapranov–Saito 路线与 Hecke 函子的需求
+
+7.1.2 明说 Hecke 函子的精确构造需要光滑栈上的 $D(\mathcal{Y})$，而当时没有现成文献；作者仿照 Kapranov [Kap91] 与 Saito [Sa89]，先把 D-模等同于 de Rham 复形再取导出范畴。关键的技术原因是 $\Omega$ 是光滑拓扑上的环层、$\mathcal{D}$ 不是，所以「局部地定义再下降」只能在 Ω 一侧做。这条路线最终在 7.5 用超覆叠的下降收尾，覆盖了 $\operatorname{Bun}_G$ 这类不满足 (310) 的栈——这正是第 7 章其余部分（Hecke 模式）的地基。
+
+## 出处
+
+- A. Beilinson & V. Drinfeld, Quantization of Hitchin's Integrable System and Hecke Eigensheaves（中译校订本） §7.2.1–7.2.2；印刷页 [238, 239] / PDF 页 [238, 239]；锚点 `08_source_code/SY02-14_Hitchin可积系统的量子化与Hecke特征层/源码/chapters/ch07.tex:95-134`
+- 原书 p.238–239，按源码中 \SourcePage{239}（第 104 行）定位：锚点前 9 行属 p.238，其余属 p.239。本书 PDF 页 = 印刷页。
+- A. Beilinson & V. Drinfeld, Quantization of Hitchin's Integrable System and Hecke Eigensheaves（中译校订本） §7.3.4–7.3.5；印刷页 [246] / PDF 页 [246]；锚点 `08_source_code/SY02-14_Hitchin可积系统的量子化与Hecke特征层/源码/chapters/ch07.tex:419-431`
+- 原书 p.246，整段落在 \SourcePage{246}（第 419 行）与 \SourcePage{247}（第 441 行）之间。
+
+---
+
+权利：`rewritten`；核验：`source-only`（2026-11-21）。

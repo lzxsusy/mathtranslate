@@ -1,0 +1,71 @@
+# 象征代数 P_Y：切层对称代数的哈密顿约化
+
+- **id**：`bdh/concept/symbol-algebra`
+- **类型**：concept
+- **位置**：§1.1
+- **问题**：为什么 $T^{*}\mathcal{Y}$ 上的函数不能直接取 $\operatorname{Sym}\Theta_{\mathcal{Y}}$ 的整体截面，而要先作哈密顿约化？
+
+> 把 $\operatorname{Sym}\Theta_{\mathcal{Y}}$ 沿光滑态射 $S\to\mathcal{Y}$ 拉回，再对相对切层 $\Theta_{S/\mathcal{Y}}$ 作哈密顿约化，得到 $S_{\acute{e}t}$ 上的分次泊松代数层 $P_{\mathcal{Y}}$；其整体截面正是 $T^{*}\mathcal{Y}$ 上的函数（式 (5)）。
+
+## 定义
+
+对 $\mathcal{Y}$ 的光滑拓扑 $\mathcal{Y}_{sm}$ 中的对象 $\pi_S:S\to\mathcal{Y}$（$S$ 为概形），有正合列 $\Theta_{S/\mathcal{Y}}\to\Theta_S\to\pi_S^{*}\Theta_{\mathcal{Y}}\to 0$。令 $I^{cl}:=(\operatorname{Sym}\Theta_S)\Theta_{S/\mathcal{Y}}$，则 $\pi_S^{*}\operatorname{Sym}\Theta_{\mathcal{Y}}=\operatorname{Sym}\Theta_S/I^{cl}$。取 $I^{cl}$ 在 $\operatorname{Sym}\Theta_S$ 中的正规化子 $\tilde{P}_S$，并令 $(P_{\mathcal{Y}})_S:=\tilde{P}_S/I^{cl}$：这就是 $\operatorname{Sym}\Theta_S$ 对 $\Theta_{S/\mathcal{Y}}$ 的哈密顿约化，是 $S_{\acute{e}t}$ 上的分次泊松代数层，且对 $\mathcal{Y}_{sm}$ 中的态射相容。于是得到 $\mathcal{Y}$ 上的分次泊松代数层 $P_{\mathcal{Y}}$，称为 $\mathcal{Y}$ 的象征代数（algebra of symbols）。式 (5) 说它的整体截面就是 $\operatorname{Sym}\Theta_{\mathcal{Y}}$ 的整体截面，也就是 $T^{*}\mathcal{Y}$ 上的整体函数。
+
+**记号**：$\mathcal{Y}_{sm}$：光滑拓扑（对象为光滑 1-态射 $\pi_S:S\to\mathcal{Y}$，$S$ 为概形）、$\Theta_{S/\mathcal{Y}}$：相对切层；$I^{cl}:=(\operatorname{Sym}\Theta_S)\Theta_{S/\mathcal{Y}}$、$\tilde{P}_S$：$I^{cl}$ 的正规化子；$(P_{\mathcal{Y}})_S:=\tilde{P}_S/I^{cl}$
+
+## 关键点
+
+- 出发点不是 $\operatorname{Sym}\Theta_{\mathcal{Y}}$ 本身，而是它在每个光滑态射 $\pi_S$ 上的拉回：正合列 $\Theta_{S/\mathcal{Y}}\to\Theta_S\to\pi_S^{*}\Theta_{\mathcal{Y}}\to 0$ 说明 $\pi_S^{*}\Theta_{\mathcal{Y}}$ 是 $\Theta_S$ 的商，故 $\pi_S^{*}\operatorname{Sym}\Theta_{\mathcal{Y}}=\operatorname{Sym}\Theta_S/I^{cl}$（ch01.tex:43-47）。
+- 关键是取正规化子：$\tilde{P}_S$ 是 $\operatorname{Sym}\Theta_S$ 中把 $I^{cl}$ 映入自身的元素，$(P_{\mathcal{Y}})_S=\tilde{P}_S/I^{cl}$ 才能继承泊松括号——$\pi_S^{*}\operatorname{Sym}\Theta_{\mathcal{Y}}$ 本身不封闭于括号，不能直接用作象征层。
+- $(P_{\mathcal{Y}})_S$ 按构造是 $\operatorname{Sym}\Theta_S$ 对相对切层 $\Theta_{S/\mathcal{Y}}$ 的哈密顿约化，因此在 $S_{\acute{e}t}$ 上带分次泊松代数结构；拉回相容使它粘成 $\mathcal{Y}$ 上的层 $P_{\mathcal{Y}}$（ch01.tex:47）。
+- 式 (5)：$\Gamma(\mathcal{Y},P_{\mathcal{Y}})\simeq\Gamma(\mathcal{Y},\operatorname{Sym}\Theta_{\mathcal{Y}})=\Gamma(T^{*}\mathcal{Y},\mathcal{O})$。即象征代数的整体截面恰好是 $T^{*}\mathcal{Y}$ 上的函数——1.1.1 里对 $T^{*}\mathcal{Y}$ 的讨论从此可以整体地写在 $\mathcal{Y}$ 上（ch01.tex:48-50）。
+- $P_{\mathcal{Y}}$ 的角色在 1.1.4 显露：微分算子代数层 $D_{\mathcal{Y}}$ 的伴随分次通过象征映射 $\sigma_{\mathcal{Y}}:\operatorname{gr}D_{\mathcal{Y}}\hookrightarrow P_{\mathcal{Y}}$ 嵌入 $P_{\mathcal{Y}}$，而条件 (2) 保证它是同构（ch01.tex:60-65）。
+- $\mathcal{Y}$ 极良时 $T^{*}\mathcal{Y}^{0}$ 稠密且辛，$P_{\mathcal{Y}}$ 在 $\mathcal{Y}^{0}$ 上就是辛结构的函数层；这正是 2.2–2.3 把 Hitchin 纤维化解释为 Lagrange 纤维化的代数来源。
+
+## 公式
+
+```latex
+\Theta_{S/\mathcal{Y}}\to\Theta_S\to\pi_S^{*}\Theta_{\mathcal{Y}}\to 0
+```
+```latex
+I^{cl}:=(\operatorname{Sym}\Theta_S)\Theta_{S/\mathcal{Y}},\qquad \pi_S^{*}\operatorname{Sym}\Theta_{\mathcal{Y}}=\operatorname{Sym}\Theta_S/I^{cl}
+```
+```latex
+(P_{\mathcal{Y}})_S:=\tilde{P}_S/I^{cl}
+```
+```latex
+\Gamma(\mathcal{Y},P_{\mathcal{Y}})\simeq\Gamma(\mathcal{Y},\operatorname{Sym}\Theta_{\mathcal{Y}})=\Gamma(T^{*}\mathcal{Y},\mathcal{O}).
+```
+```latex
+\sigma_{\mathcal{Y}}:\operatorname{gr}D_{\mathcal{Y}}\hookrightarrow P_{\mathcal{Y}}
+```
+
+## 常见错误
+
+- 把 $P_{\mathcal{Y}}$ 当成 $\operatorname{Sym}\Theta_{\mathcal{Y}}$：两者只差「正规化子再模掉 $I^{cl}$」，一般不同；式 (5) 对整体截面成立，并不意味着把 $P_{\mathcal{Y}}$ 与 $\operatorname{Sym}\Theta_{\mathcal{Y}}$ 等同。
+- 把 $I^{cl}$ 写成 $\operatorname{Sym}\Theta_S\cdot\Theta_{S/\mathcal{Y}}$ 之外的东西：它是由相对切层生成的理想，等价说法是 $\pi_S^{*}\operatorname{Sym}\Theta_{\mathcal{Y}}$ 的核；写成别的形式会丢掉与拉回的对应关系。
+- 以为 $(P_{\mathcal{Y}})_S$ 只是 $S$ 上的层：它依赖 $\pi_S:S\to\mathcal{Y}$，必须验证对 $\mathcal{Y}_{sm}$ 中的态射相容才能粘成 $\mathcal{Y}$ 上的层 $P_{\mathcal{Y}}$。
+- 把象征映射 $\sigma_{\mathcal{Y}}$ 当成总是同构：它是 $\operatorname{gr}D_{\mathcal{Y}}\hookrightarrow P_{\mathcal{Y}}$ 的嵌入，「是同构」正是条件 (2)（良）的内容，也是 1.1.4 能谈泊松代数的前提（ch01.tex:62）。
+
+## 批注
+
+### 背景直觉：为什么要先约化再取截面
+
+若 $\mathcal{Y}$ 是概形，「$T^{*}\mathcal{Y}$ 上的函数」就是 $\operatorname{Sym}\Theta_{\mathcal{Y}}$ 本身；但对栈，逐点看会有方向的冗余：$S\to\mathcal{Y}$ 的光滑性意味着相对切方向都在纤维里，必须在 $S$ 上把这些方向按动量零化（哈密顿约化）才能得到与 $T^{*}\mathcal{Y}$ 一致的对象。式 (5) 说的正是：这样逐层约化之后，整体截面恰好还原成 $T^{*}\mathcal{Y}$ 上的函数。
+
+### 含糊点拨：正规化子与哈密顿约化的关系
+
+哈密顿约化的标准做法是「取零水平集再模去群作用」，在层上对应把 $I^{cl}$ 商掉。但商 $\operatorname{Sym}\Theta_S/I^{cl}$ 不一定是泊松代数，需要先取那些与 $I^{cl}$ 的括号仍在 $I^{cl}$ 里的元素，即正规化子 $\tilde{P}_S$，再模 $I^{cl}$。这一步「先取正规化子」正是能谈论分次泊松结构的原因，也是后面象征映射能落进 $P_{\mathcal{Y}}$ 的技术关键。
+
+### 易错预警：中间那个等号 $\Gamma(T^{*}\mathcal{Y},\mathcal{O})$ 是定义
+
+式 (5) 中间的等号 $\Gamma(\mathcal{Y},\operatorname{Sym}\Theta_{\mathcal{Y}})=\Gamma(T^{*}\mathcal{Y},\mathcal{O})$ 不是定理，而是余切栈 $T^{*}\mathcal{Y}=\operatorname{Spec}\operatorname{Sym}\Theta_{\mathcal{Y}}$ 的定义在整体截面上的写法。真正需要证明（或至少需要在 $\mathcal{Y}_{sm}$ 上逐层检查）的是左边的同构；写批注或讲课时不要把这三者说成同一件事。
+
+## 出处
+
+- A. Beilinson & V. Drinfeld, Quantization of Hitchin's Integrable System and Hecke Eigensheaves（中译校订本） §1.1.2；印刷页 [7] / PDF 页 [7]；锚点 `08_source_code/SY02-14_Hitchin可积系统的量子化与Hecke特征层/源码/chapters/ch01.tex:41-50`
+- `\SourcePage{7}` 在 ch01.tex:39，下一处 `\SourcePage{8}` 在 ch01.tex:54（行内），故 1.1.2 全部（含式 (5)）都在印刷页 7，与 PDF 页 7 对应。
+
+---
+
+权利：`rewritten`；核验：`source-only`（2026-11-21）。

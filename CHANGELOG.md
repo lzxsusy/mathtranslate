@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## SY02-14《Hitchin 可积系统的量子化与 Hecke 特征层》中译校订本 + 资料卡 43 张 — 2026-11-21
+
+- **新工程** `08_source_code/SY02-14_Hitchin可积系统的量子化与Hecke特征层/`：Beilinson–Drinfeld *Quantization of Hitchin's Integrable System and Hecke Eigensheaves*（作者自印 To appear，pdfTeX 2020-11-03 重排版，386 页）全书中译。
+- **提取管线**：底本有文字层但 pdfTeX 把数学压平（`Σ`→`P`、`↦`→`7`、上下标全丢）。自写 `extract2.py` 解析 PDF content stream，按字符码回查 MiKTeX 原版 CM/Euler/AMS 字体的 `/Encoding` 重建符号与上下标，8 秒提取 386 页，正文与符号可用；任何公式仍回页面图像逐符号核对。
+- **规模**：41 个翻译单元并行 + 11 路校订；译本 **194 页**，`\SourcePage` **379** 个（覆盖原书 p.3–380，书页号 = PDF 页号）、`\bdp` **615** 个编号段落、`\tag` **405** 个编号公式（照抄原书按章连续编号）、`\bdsec` 55 个、Tutor Note **173** 条。
+- **编译**：xelatex 三遍，**0 error / 0 Overfull hbox / 0 Missing character**（9 Underfull），TOC 68 条；成品按纪律不入 git。
+- **校订**：逐页对照页面图像，P1/P2 判据见 `04_playbook/07`；九路日志在 `工程文件/校对/`。典型修正：`\rtimes`→`\ltimes`（原书 p.163 字形 ⋉，6 处）、`\mathcal{P}ic` 花体回退（曾误改正体，600 dpi 核对 p.293 后改回）、strata「层」→「分层」、`U^{\natural}`→`U^{\flat}`、`p_{U_i\Omega}` 补上标点、D-模花体 `\mathcal{D}` 归并 100 处。
+- **原书笔误一律照录 + `% [Tutor Note: ...]` 批注**：p.136 `L_1∩L_2` 应为 `L_+∩L_-`、p.329 `[[x_{m+n},…,x_{m+n}]]` 应为 `m+1` 起、p.332 `Ker(A_{n+2}→A_2)` 应为 `A_n`、p.366 引不存在的 7.15.7(iii)、p.370 `Aut^0_2O` 无定义等。
+- **工程文档**：`工程文件/{SY02-14_交付报告.md, 精选片段.md, work/{通读笔记.md, 疑点清单.tsv（38 条，未解 0）, 术语表.md（233 行，开译前冻结）, 符号表.md, 翻译须知.md, 校对须知.md}}`、`投稿信息.md`。
+- **资料卡** `datasets/bdh/`：**43 张**（29 概念 + 14 勘误），覆盖 §0–§10；每张概念卡至少 2 条批注、≥3 关键点、≥1 公式、≥2 坑；锚到中译本源码行号，`pages` = `pdf_pages`；全部 `reviewed` + `source-only`；`make_cards.py --strict` 无 error 无 warning。
+- **同步**：`RELEASE_REGISTER.csv` 新增 SY02-14（作者自印本，成品「申请获取（暂无外链）」）；`03_translations_meta/SY02-14/` 放投稿信息与交付报告副本；`datasets/README.md` 表格、目录树、v0.23 条目。
+
 ## SY01-17《同调镜像对称性浅入门》第四轮校订：首次对照英文原书 +《中英术语表》v4.0 — 2026-11-21
 
 - **首次对照原书**：取得 CUP 2021 原书 PDF（365 页扫描本），按页切分交 12 名审稿人逐段对照中译复核，主校逐条复核；逐章修订 **101 处**（各章 6/7/5/3/10/22/4/18/6/7/8/5），逐条见 `工程文件/work/review3/chNN.json`。

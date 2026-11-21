@@ -42,6 +42,7 @@
 | `gaits04/` | 单章资料卡（Gaitsgory《几何朗兰兹的非正式导论》，《朗兰兹纲领导论》第 12 章，13 页，与 SY02-13 译注本同批）：23 张概念卡，六轨 O/A/B/C/D/E；**每卡携带批注**（易错预警 / 含糊点拨 / 背景直觉，共 23 条）；每卡带原书页锚与中译本源码行号锚（`ch12_sec*.tex:A-B`）；全部 `reviewed` + `source-only` | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
 | `sy0117/` | 整本专著资料卡（Bocklandt《同调镜像对称性浅入门》中译二轮校订本，CUP 2021，LMS Student Texts 99）：20 张概念卡 + 12 张勘误卡；**每张概念卡至少 1 条批注**（易错预警 / 含糊点拨 / 背景直觉）；锚到中译本源码行号（`chapters/chNN.tex:A-B`）；全部 `reviewed` + `source-only`，不发布 PDF | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
 | `gw06/` | 单篇论文资料卡（Gukov–Witten《规范理论、分歧与几何朗兰兹纲领》中译校订本，arXiv:hep-th/0612073v2，160 页）：57 张概念卡 + 18 张勘误卡，覆盖 §1–§6 与附录 A；**每卡 3 条批注**（易错预警 / 含糊点拨 / 背景直觉）；锚到中译本源码行号（`源码/sections/sNN-*.tex:A-B`），印刷页 = PDF 页 − 1；全部 `reviewed` + `source-only`，不发布 PDF | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
+| `bdh/` | 整本专著资料卡（Beilinson–Drinfeld《Hitchin 可积系统的量子化与 Hecke 特征层》中译校订本，作者自印 To appear，386 页，与 SY02-14 同批）：29 张概念卡 + 14 张勘误卡，覆盖 §0–§10 与参考文献；**每张概念卡至少 2 条批注**（易错预警 / 含糊点拨 / 背景直觉）；锚到中译本源码行号（`源码/chapters/chNN.tex:A-B`），`pages` = `pdf_pages`（本书 PDF 页 = 印刷页，偏移 0）；全部 `reviewed` + `source-only`，不发布 PDF | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
 | `leanstmt/` | 自然语言 ↔ Lean 陈述对照语料：39 张陈述卡（21 certified + 18 gap；Witten 2015 ×12 + Witten 2008 ×14 + GNO 1977 ×13），每卡含原文页/式锚、规范化中英陈述、Lean 4 语句、mathlib 依赖、假设、盲验回译、`verification.jsonl` 机器可复算；`lean/` 存源码快照，`tools/` 可一键复跑 | 一条可编译、可复算的陈述 | 单卡 3,000 字 |
 
 `bench/` 与训练集严格隔离：出题时不得使用 `parallel/`、`deepread/` 中已出现的同一段落。
@@ -73,6 +74,7 @@ datasets/
 ├── gtgl15/                    # 单篇论文资料卡：Witten 2015《More On Gauge Theory And Geometric Langlands》（概念/推导，六轨 A–E+O）
 ├── leanstmt/                  # 自然语言 ↔ Lean 陈述对照语料（Witten 2015 ×12 + 2008 ×14 + GNO 1977 ×13；21 certified + 18 gap）
 ├── cdm14/                     # 单篇论文资料卡：Gaitsgory–Rozenblyum《晶体与 D-模》（概念/推导，八轨 A–G+O）
+├── bdh/                       # 整本专著资料卡：Beilinson–Drinfeld《Hitchin 可积系统的量子化与 Hecke 特征层》（29 概念 + 14 勘误）
 ├── math/<pkg>.<split>.jsonl   # 数学推理条目（主力）
 ├── parallel/<pkg>.<split>.jsonl
 ├── deepread/<pkg>.<split>.jsonl
@@ -159,4 +161,5 @@ https://atomgit.com/lzxSUSUY/mathtranslate/blob/main/datasets/<...>.jsonl
 - `v0.20`（2026-11-19）：`leanstmt/` 加入 **C 批 GNO 1977**（Goddard–Nuyts–Olive, *Gauge Theories and Magnetic Charge*, Nucl. Phys. B125 (1977) 1–28；CERN-TH-2255 影印本 38 页）13 张陈述卡（6 `certified` + 7 `gap`），三批合计 **39 卡 = 21 certified + 18 gap**；轨道加 `GNO77`，SCHEMA 升 v0.3（`source.pages` 记 CERN 影印 PDF 页、注明页脚数字不可靠故引用以节/式号为准；`source.arxiv` 放宽为 arXiv 号或 `Nucl. Phys. …` 起头）。原文为无文字层扫描件，经 `mutool` 渲图 + PIL 合成 300 dpi PDF + tesseract.js OCR（`workflow/PRODUCTION.md` §七 有完整管线）；`lake env lean` 六个 Lean 文件全部 exit 0（GNO1977/Statements 0 sorry、Gaps 7；其余不变），`verification.jsonl` **39 行**重跑核验；`lint_cards.py --strict` 0 error 0 warning。C 批 certified 只是群论/单变量骨架（权整性、式 (1.3) 的 U(1) 特例、中心元幂、有限对偶同阶、式 (1.6) 有限群双对偶、Weyl 反射 p↦−p 不变），GNO 的主定理（磁权 = H^∨ 的权）如实记为 G02 gap。
 - `v0.21`（2026-11-20）：新增 `sy0117/`——Bocklandt《同调镜像对称性浅入门》中译二轮校订本的 **32 张资料卡**（20 概念 + 12 勘误）；每张概念卡携带至少 1 条批注（易错预警 / 含糊点拨 / 背景直觉），勘误卡记录二轮实际改动（原文片段→改为→依据）；锚点全部指向修订后 `08_source_code/SY01-17_同调镜像对称性浅入门/源码/chapters/chNN.tex:A-B`；`tools/make_cards.py --check` 输出 `OK 32 cards`，全部 `reviewed` + `source-only`，不发布 PDF；同批 SY01-17 二轮校订 89 处，报告覆盖首轮原件（本地 `_v1_archive/`，不随仓）。
 - `v0.22`（2026-11-20）：新增 `gw06/`——Gukov–Witten *Gauge Theory, Ramification, And The Geometric Langlands Program*（arXiv:hep-th/0612073v2，160 页）中译校订本的 **75 张资料卡**（57 概念 + 18 勘误）；每卡携带 3 条批注（易错预警 / 含糊点拨 / 背景直觉），勘误卡记录校订实际改动（原文片段→改为→依据）；锚点指向修订后 `08_source_code/SY02-06_…/源码/sections/sNN-*.tex:A-B`，`pages` 用印刷页、`pdf_pages = pages + 1`；`tools/make_cards.py --strict` 输出 `OK`（75 卡 0 error 0 warning），全部 `reviewed` + `source-only`，不发布 PDF。同批 SY02-06 全文对照校订：14 个分片、764 段、262 个编号公式，P1 4 处 / P2 34 处，新增译注 156 条（78→234），xelatex 重编译 133 页（初版 111 页）。
+- `v0.23`（2026-11-21）：新增 `bdh/`——Beilinson–Drinfeld《Quantization of Hitchin's Integrable System and Hecke Eigensheaves》（作者自印 To appear，386 页）中译校订本（SY02-14）的 **43 张资料卡**（29 概念 + 14 勘误）；覆盖 §0 引论、§1 栈上的微分算子、§2 Hitchin 哈密顿量的量子化、§3 oper、§4 Pfaffian 与 c-格、§5–§6 Hecke 特征层、§7 栈上 D-模附录、§8–§10 补充材料；每张概念卡至少 2 条批注，公式逐条对中译本源码校验；`pages` = `pdf_pages`（本书 PDF 页 = 印刷页）；`make_cards.py --strict` 无 error 无 warning。
 - 后续见 [CHANGELOG.md](../CHANGELOG.md)。

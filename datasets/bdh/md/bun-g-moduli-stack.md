@@ -1,0 +1,60 @@
+# $\operatorname{Bun}_G$：$G$-丛的模栈
+
+- **id**：`bdh/concept/bun-g-moduli-stack`
+- **类型**：concept
+- **位置**：§0
+- **问题**：为什么在 $\operatorname{Bun}_G$ 上谈「微分算子」必须先谈「栈」，而不能直接用它的粗模空间？
+
+> $X$ 上 $G$-丛的模栈 $\operatorname{Bun}_G$ 是光滑代数栈，其余切空间为 $H^0(X,\mathfrak{g}_\mathfrak{F}\otimes\omega_X)$；本书的一切构造都住在它上面。
+
+## 定义
+
+设 $X$ 是 $\mathbb{C}$ 上亏格 $g>1$ 的连通光滑射影曲线，$G$ 是 $\mathbb{C}$ 上的半单群。$\operatorname{Bun}_G=\operatorname{Bun}_G(X)$ 是 $X$ 上 $G$-丛的模栈：其对象是 $G$-丛，其态射是丛同构，且对任意概形 $S$，$\operatorname{Bun}_G(S)$ 是 $S\times X$ 上 $G$-丛的群胚。它是光滑代数栈，维数 $(g-1)\dim G$；在 $\mathcal{F}$ 处的切空间是 $H^1(X,\mathfrak{g}_\mathcal{F})$，余切空间是 $H^0(X,\mathfrak{g}_\mathcal{F}\otimes\omega_X)$。$\operatorname{Bun}_G$ 不光滑的地方由 $G$ 的中心与 $\mathrm{SL}_n$ 的伴随作用造成，本书第 1 章的「良栈」正是为处理这种情形。
+
+**记号**：$\operatorname{Bun}_G=\operatorname{Bun}_G(X)$：$G$-丛模栈；$\mathfrak{g}_\mathcal{F}$：在 $\mathcal{F}$ 处的扭李代数、$\omega_{\operatorname{Bun}_G}$：$\operatorname{Bun}_G$ 上的典范丛；$T^*\operatorname{Bun}_G$：余切栈、$\operatorname{Conn}(\mathcal{F})$：丛 $\mathcal{F}$ 上的联络 torsor
+
+## 关键点
+
+- $\operatorname{Bun}_G$ 是代数栈而非概形：它的点是 $G$-丛，但每一点都有非平凡自同构群（$\mathcal{F}$ 的自同构），粗模空间会丢掉这些信息。
+- 在 $\mathcal{F}$ 处切空间是 $H^1(X,\mathfrak{g}_\mathcal{F})$，余切空间是 $H^0(X,\mathfrak{g}_\mathcal{F}\otimes\omega_X)$；这是 Serre 对偶的直接推论（2.1.1、2.2.3）。
+- $\operatorname{Bun}_G$ 的典范丛 $\omega_{\operatorname{Bun}_G}$ 由 $\omega=\det R\Gamma(X,\mathfrak{g}_\mathcal{F})^\vee$ 给出，其平方根的存在性是扭量子化的前提。
+- $\operatorname{Bun}_G$ 在「良栈」意义下（1.1.1）满足 $\dim T^*\operatorname{Bun}_G=2\dim\operatorname{Bun}_G$，从而 Hitchin 可积系统的维数计数成立。
+
+## 公式
+
+```latex
+T_{\mathcal{F}}\operatorname{Bun}_G=H^{1}(X,\mathfrak{g}_{\mathcal{F}})
+```
+```latex
+T^{*}_{\mathcal{F}}\operatorname{Bun}_G=H^{0}(X,\mathfrak{g}_{\mathcal{F}}\otimes\omega_{X})
+```
+```latex
+\dim\operatorname{Bun}_G=(g-1)\dim G
+```
+
+## 常见错误
+
+- 用粗模空间代替栈：粗模空间把 $\mathcal{F}$ 的自同构商掉，$H^1$、$H^0$ 的表述与典范丛都不再正确。
+- 把 $\dim\operatorname{Bun}_G$ 记成 $g\dim G$：少乘 $(g-1)$ 会让 Hitchin 纤维化的维数计数全错。
+- 以为 $\operatorname{Bun}_G$ 总是光滑的：$\operatorname{Bun}_G$ 本身是光滑栈，但其余切栈 $T^*\operatorname{Bun}_G$ 一般奇异，本书第 1 章的 good/very good 条件正是为此而设。
+
+## 批注
+
+### 背景直觉：为什么必须用栈
+
+几何朗兰兹的核心对象是「$\operatorname{Bun}_G$ 上的 $\mathcal{D}$-模」，而 $\mathcal{D}$-模要能谈，必须让 $\operatorname{Bun}_G$ 带上光滑拓扑（1.1.2 的 $\mathcal{Y}_{sm}$）。用粗模空间就丢掉了丛的自同构，Hecke 算子（本质上是 $\operatorname{Bun}_G$ 上的对应）也就无从定义。本书第 1 章整章都在为「在栈上谈微分算子」做技术准备，正是因为 $\operatorname{Bun}_G$ 是这一框架最重要的例子。
+
+### 易错预警：典范丛的平方根不是总存在
+
+$\omega_{\operatorname{Bun}_G}=\det R\Gamma(X,\mathfrak{g}_\mathcal{F})^\vee$ 是一个线丛，它未必能开平方；0.2(a) 的扭量子化与 0.2(d) 的 $\omega^{-1/2}$ 都以平方根存在为前提。$G$ 单连通时平方根唯一（0.2(d) 的括注），一般情形则要引入带扭 $\mathcal{D}$-模结构的可逆层 $\lambda_{\mathfrak{F}}$ 来代替 $\omega^{1/2}$。忘记这一点，会把「扭」当成纯粹的记号游戏。
+
+## 出处
+
+- A. Beilinson & V. Drinfeld, Quantization of Hitchin's Integrable System and Hecke Eigensheaves（中译校订本） §0.1；印刷页 [3] / PDF 页 [3]；锚点 `08_source_code/SY02-14_Hitchin可积系统的量子化与Hecke特征层/源码/chapters/ch00.tex:4-4`
+- 原书 p.3；本书 PDF 页 = 印刷页。
+- A. Beilinson & V. Drinfeld, Quantization of Hitchin's Integrable System and Hecke Eigensheaves（中译校订本） §2.1；印刷页 [15, 16] / PDF 页 [15, 16]；锚点 `08_source_code/SY02-14_Hitchin可积系统的量子化与Hecke特征层/源码/chapters/ch02.tex:8-30`
+- $\operatorname{Bun}_G$ 的几何（2.1.1 的维数与切/余切空间）；页码按原书页眉。
+
+---
+
+权利：`rewritten`；核验：`source-only`（2026-11-21）。

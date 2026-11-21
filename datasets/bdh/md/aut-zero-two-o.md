@@ -1,0 +1,51 @@
+# 9.1.1 证明中未定义的 $\operatorname{Aut}^{0}_{2}O$
+
+- **id**：`bdh/correction/aut-zero-two-o`
+- **类型**：correction
+- **位置**：§9
+- **问题**：为什么 9.1.1 证明里的 $\operatorname{Aut}^{0}_{2}O$ 应当按 $\operatorname{Aut}^{0}O$ 处理？
+
+> 同一作用在一处写成 $\operatorname{Aut}^{0}_{2}O$、在别处写成 $\operatorname{Aut}^{0}O$，而前者全书没有定义。
+
+## 位置
+
+§9.1 ch09.tex:17
+
+## 原文片段
+
+```latex
+\operatorname{Aut}^{0}_{2}O
+```
+
+## 改为
+
+```latex
+\operatorname{Aut}^{0}O
+```
+
+## 依据
+
+9.1.4（ch09.tex:34）只定义了 $\operatorname{End}^{0}O$、$\operatorname{Aut}^{0}O$ 与 $0\in\operatorname{End}^{0}O$，全书没有 $\operatorname{Aut}^{0}_{2}O$ 的定义（§4.4 另有 $\operatorname{Aut}_2 O$，但下标位置不同、含义也不同）。而 9.1.2 的注（ch09.tex:26）说 $\mathcal{N}_{\chi}$ 是 $\operatorname{Aut}^{0}O$-等变层，9.1.5 与 9.1.7 也都用 $\operatorname{Aut}^{0}O$；9.1.1 的滤链不变性与 $\operatorname{gr}$ 计算若依赖一个未定义的群，论证链就断了。按上下文，$\operatorname{Aut}^{0}_{2}O$ 应是 $\operatorname{Aut}^{0}O$ 的排印重复。
+
+## 说明
+
+译文未改，照原文保留。校订时在 ch09.tex:18 加 [Tutor Note] 记录底本作 $\operatorname{Aut}^{0}_{2}O$、原文未说明它与 $\operatorname{Aut}^{0}O$ 的关系；正文照录，未径改。建议写法是判断而非事实：按上下文应为 $\operatorname{Aut}^{0}O$；若作者确指二阶子群，则应在此处补定义。
+
+## 批注
+
+### 易错预警：上标 0 与下标 2 不是同一个修饰
+
+$\operatorname{Aut}^{0}O$ 是 9.1.4 定义的「在 $\mathfrak{g}\otimes O$ 上为恒等」的子群；$\operatorname{Aut}_2 O$ 是 §4.4 的二阶子群，上标与下标各管各的。$\operatorname{Aut}^{0}_{2}O$ 把两者拼在一起，却既不是前者的子群也不是后者的子群，书中没有它的定义。
+
+### 含糊点拨：为什么判断是 $\operatorname{Aut}^{0}O$ 而不是 $\operatorname{Aut}_2 O$
+
+9.1.1 要断言滤链对某个群不变，而 9.1.2 的注与 9.1.5 已经把 $\operatorname{Aut}^{0}O$ 的作用作为既定事实使用；若换成 $\operatorname{Aut}_2 O$，9.1.4 就不必专门定义 $\operatorname{Aut}^{0}O$ 了。所以这里最可能是上标 0 与下标 2 的排印重叠，而非另一个群。
+
+## 出处
+
+- A. Beilinson & V. Drinfeld, Quantization of Hitchin's Integrable System and Hecke Eigensheaves（中译校订本） §9.1；印刷页 [370] / PDF 页 [370]；锚点 `08_source_code/SY02-14_Hitchin可积系统的量子化与Hecke特征层/源码/chapters/ch09.tex:17-26`
+- 印刷页=PDF 页；页标记 $\SourcePage{371}$ 在 ch09.tex:30，故 17–26 行属 p.370（18 行为校订者译注）。
+
+---
+
+权利：`rewritten`；核验：`source-only`（2026-11-21）。
