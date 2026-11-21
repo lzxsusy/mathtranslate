@@ -75,7 +75,7 @@ schema 已统一（`_normalize_schema.py`）：`flags` 恒为数组（可为空�
 | 脱敏 | `tools/scrub_publish.py` | **JSON 感知**：先 `json.loads` 再清洗字符串值，最后重新序列化（早版直接在字节上跑正则会写坏 JSON） |
 | 清单 | `build_manifest.py` + `tools/check_manifest.py` | 从 `HEAD:<path>` 的 blob 计算字节数与 sha256 前 16 位；`check_manifest.py` 单进程流式复算（万级文件，十几秒） |
 | 统计 | `make_stats.py` | 生成 README 统计块与 `_meta/stats.json`，杜绝手写数字漂移；`--check` 作闸门 |
-| 数字闸门 | `tools/check_numbers.py` | 扫描文档里的退役数字（`49,035`、`106 部`、`900 张` 等），防止旧口径复活 |
+| 数字闸门 | `tools/check_numbers.py` | 扫描文档里的退役数字（旧工程数、旧语料段数、旧资料卡数等），防止旧口径复活 |
 | 会话抽取 | `06_sessions_raw/_extract_sessions.py` | 读 `session.v4.jsonl.zstd`，按 `callId` 配对 tool/call 与 tool/result；分片从 Release `v1.0.1` 附件下载，拼接与校验见同目录 `_分片说明.md` |
 
 ## 5. 已知缺陷（诚实清单）

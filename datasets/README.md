@@ -40,10 +40,12 @@
 | `gtgl15/` | 单篇论文资料卡（Witten《More On Gauge Theory And Geometric Langlands》，arXiv:1506.04293v3，79 页，与 SY03-20 校订译注版同批）：30 张概念卡 + 10 张推导卡，六轨 A（Hitchin 几何与谱曲线）/B（对偶环面与 T-对偶）/C（膜、线算符与本征膜）/D（'t Hooft 算符与赫克修正）/E（行列式线丛与本征值）/O（总览）；每卡带 arXiv 印刷页锚（印刷页 = PDF 页 − 1） | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
 | `cdm14/` | 单篇论文资料卡（Gaitsgory–Rozenblyum《晶体与 D-模》，arXiv:1111.2087v4，65 页，与 SY02-12 译注本同批）：27 张概念卡 + 8 张推导卡，八轨 A（de Rham 预栈）/B（左/右晶体与 Kashiwara）/C（下降与归纳函子）/D（$t$-结构）/E（与 D-模的关系）/F（扭化）/G（扭晶体）/O（总览）；每卡带 arXiv 印刷页锚（印刷页 = PDF 页）与 A/B/C 来源标注 | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
 | `gaits04/` | 单章资料卡（Gaitsgory《几何朗兰兹的非正式导论》，《朗兰兹纲领导论》第 12 章，13 页，与 SY02-13 译注本同批）：23 张概念卡，六轨 O/A/B/C/D/E；**每卡携带批注**（易错预警 / 含糊点拨 / 背景直觉，共 23 条）；每卡带原书页锚与中译本源码行号锚（`ch12_sec*.tex:A-B`）；全部 `reviewed` + `source-only` | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
-| `sy0117/` | 整本专著资料卡（Bocklandt《同调镜像对称性浅入门》中译二轮校订本，CUP 2021，LMS Student Texts 99）：20 张概念卡 + 12 张勘误卡；**每张概念卡至少 1 条批注**（易错预警 / 含糊点拨 / 背景直觉）；锚到中译本源码行号（`chapters/chNN.tex:A-B`）；全部 `reviewed` + `source-only`，不发布 PDF | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
+| `sy0117/` | 整本专著资料卡（Bocklandt《同调镜像对称性浅入门》中译二轮校订本，CUP 2021，LMS Student Texts 99）：**36 张卡**（24 概念 + 12 勘误）；**每张概念卡至少 1 条批注**（易错预警 / 含糊点拨 / 背景直觉）；锚到中译本源码行号（`chapters/chNN.tex:A-B`）；全部 `reviewed` + `source-only`，不发布 PDF | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
 | `gw06/` | 单篇论文资料卡（Gukov–Witten《规范理论、分歧与几何朗兰兹纲领》中译校订本，arXiv:hep-th/0612073v2，160 页）：57 张概念卡 + 18 张勘误卡，覆盖 §1–§6 与附录 A；**每卡 3 条批注**（易错预警 / 含糊点拨 / 背景直觉）；锚到中译本源码行号（`源码/sections/sNN-*.tex:A-B`），印刷页 = PDF 页 − 1；全部 `reviewed` + `source-only`，不发布 PDF | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
 | `bdh/` | 整本专著资料卡（Beilinson–Drinfeld《Hitchin 可积系统的量子化与 Hecke 特征层》中译校订本，作者自印 To appear，386 页，与 SY02-14 同批）：29 张概念卡 + 14 张勘误卡，覆盖 §0–§10 与参考文献；**每张概念卡至少 2 条批注**（易错预警 / 含糊点拨 / 背景直觉）；锚到中译本源码行号（`源码/chapters/chNN.tex:A-B`），`pages` = `pdf_pages`（本书 PDF 页 = 印刷页，偏移 0）；全部 `reviewed` + `source-only`，不发布 PDF | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
 | `leanstmt/` | 自然语言 ↔ Lean 陈述对照语料：39 张陈述卡（21 certified + 18 gap；Witten 2015 ×12 + Witten 2008 ×14 + GNO 1977 ×13），每卡含原文页/式锚、规范化中英陈述、Lean 4 语句、mathlib 依赖、假设、盲验回译、`verification.jsonl` 机器可复算；`lean/` 存源码快照，`tools/` 可一键复跑 | 一条可编译、可复算的陈述 | 单卡 3,000 字 |
+| `kshms/` | 整本讲义资料卡（Kontsevich–Soibelman《同调镜像对称与环面纤维化》*Homological mirror symmetry and torus fibrations*，arXiv:math/0011041v2，66 页；与译本 SY01-25 同批）：**83 张卡** = 条款卡 73（定义 23 / 定理 4 / 命题 15 / 引理 3 / 推论 1 / 猜想 5 / 注 22）+ 勘误卡 10；每卡带原文页码与译本锚点 | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
+| `ggl19/` | 单篇论文资料卡（Kapustin《量子几何朗兰兹对偶、规范理论与平坦联络模空间的量子化》arXiv:0811.3264，18 页，GGL 合集 #19）：**12 张卡**（8 概念 + 4 推导），`terms.tsv` 与 `excerpts.md` 随卡；`status=dev` | 一张可独立使用的卡（JSON） | 单卡 3,000 字 |
 
 `bench/` 与训练集严格隔离：出题时不得使用 `parallel/`、`deepread/` 中已出现的同一段落。
 
@@ -68,13 +70,15 @@ datasets/
 ├── kw06/                      # 单篇论文资料卡：Kapustin–Witten 2006（概念卡 + 推导卡）
 ├── seidel/                    # 专著资料卡：Seidel《Fukaya categories and P–L theory》（概念/推导/校订）
 ├── siebert/                   # 讲义资料卡：Siebert《镜像对称》（概念/推导/勘误，七轨 A–F+O）
-├── sy0117/                    # 整本专著资料卡：Bocklandt《同调镜像对称性浅入门》中译二轮校订本（20 概念 + 12 勘误，每卡带批注）
+├── sy0117/                    # 整本专著资料卡：Bocklandt《同调镜像对称性浅入门》中译二轮校订本（24 概念 + 12 勘误，每卡带批注）
 ├── gw06/                      # 单篇论文资料卡：Gukov–Witten《规范理论、分歧与几何朗兰兹纲领》（57 概念 + 18 勘误，每卡 3 条批注）
 ├── functoriality/             # 单篇论文资料卡：Abouzaid–Bottman《范畴辛几何中的函子性》（概念/推导/勘误，四轨 A–D，42 张交换图）
 ├── gtgl15/                    # 单篇论文资料卡：Witten 2015《More On Gauge Theory And Geometric Langlands》（概念/推导，六轨 A–E+O）
 ├── leanstmt/                  # 自然语言 ↔ Lean 陈述对照语料（Witten 2015 ×12 + 2008 ×14 + GNO 1977 ×13；21 certified + 18 gap）
 ├── cdm14/                     # 单篇论文资料卡：Gaitsgory–Rozenblyum《晶体与 D-模》（概念/推导，八轨 A–G+O）
 ├── bdh/                       # 整本专著资料卡：Beilinson–Drinfeld《Hitchin 可积系统的量子化与 Hecke 特征层》（29 概念 + 14 勘误）
+├── kshms/                     # 讲义资料卡：Kontsevich–Soibelman《同调镜像对称与环面纤维化》（条款卡 73 + 勘误 10）
+├── ggl19/                     # 单篇论文资料卡：Kapustin arXiv:0811.3264（8 概念 + 4 推导，status=dev）
 ├── math/<pkg>.<split>.jsonl   # 数学推理条目（主力）
 ├── parallel/<pkg>.<split>.jsonl
 ├── deepread/<pkg>.<split>.jsonl
@@ -100,7 +104,7 @@ datasets/
 
 **存量回收（2026-11-16 起）**：除了生产新单元，还要把库里已有的翻译"余料"榨出来——`tools/ds_harvest.py` 按 flags、未展开宏、悬空引用、超长/碎片段、尚无精读卡等规则给段落打分，生成 `datasets/candidates/harvest_queue.jsonl`；五级标注（L0 修正 / L1 术语裁决 / L2 精读卡 / L3 数学条目 / L4 对话流与评测）与抽检比例见 [workflow/余料回收.md](workflow/余料回收.md)。
 
-**第一批 L0（2026-11-16）**：取队列前 50 条，44 条修正（按工程导言逐工程展开 `\R`、`\C`、`\id` 等宏，去尺寸残渣，合并空白）、3 条删除（`meta_block`）、3 条无改动；改动留档 `datasets/fixes/l0_batch01.jsonl`，语料从 49,038 段变为 49,035 段。同日补 3 张跨工程 L2 卡：`SY01-01` 谱流、`SY01-09` SYZ 启发式、`SY03-08` Chern–Simons 形式的规范变换。成本：L0 约 0.5 人时/50 条（AI 起草 + 抽检），L2 单卡 AI 起草 2–3 分钟、人工复核 8–12 分钟。
+**第一批 L0（2026-11-16）**：取队列前 50 条，44 条修正（按工程导言逐工程展开 `\R`、`\C`、`\id` 等宏，去尺寸残渣，合并空白）、3 条删除（`meta_block`）、3 条无改动；改动留档 `datasets/fixes/l0_batch01.jsonl`（删 3 条后语料段数相应减少 3；当时口径已退役，现口径见 `_meta/stats.json`）。同日补 3 张跨工程 L2 卡：`SY01-01` 谱流、`SY01-09` SYZ 启发式、`SY03-08` Chern–Simons 形式的规范变换。成本：L0 约 0.5 人时/50 条（AI 起草 + 抽检），L2 单卡 AI 起草 2–3 分钟、人工复核 8–12 分钟。
 
 
 **首批 event-level trace（2026-11-16）**：`traces/KW06-04.lead.jsonl`（52 条决策流）与
@@ -162,4 +166,5 @@ https://atomgit.com/lzxSUSUY/mathtranslate/blob/main/datasets/<...>.jsonl
 - `v0.21`（2026-11-20）：新增 `sy0117/`——Bocklandt《同调镜像对称性浅入门》中译二轮校订本的 **32 张资料卡**（20 概念 + 12 勘误）；每张概念卡携带至少 1 条批注（易错预警 / 含糊点拨 / 背景直觉），勘误卡记录二轮实际改动（原文片段→改为→依据）；锚点全部指向修订后 `08_source_code/SY01-17_同调镜像对称性浅入门/源码/chapters/chNN.tex:A-B`；`tools/make_cards.py --check` 输出 `OK 32 cards`，全部 `reviewed` + `source-only`，不发布 PDF；同批 SY01-17 二轮校订 89 处，报告覆盖首轮原件（本地 `_v1_archive/`，不随仓）。
 - `v0.22`（2026-11-20）：新增 `gw06/`——Gukov–Witten *Gauge Theory, Ramification, And The Geometric Langlands Program*（arXiv:hep-th/0612073v2，160 页）中译校订本的 **75 张资料卡**（57 概念 + 18 勘误）；每卡携带 3 条批注（易错预警 / 含糊点拨 / 背景直觉），勘误卡记录校订实际改动（原文片段→改为→依据）；锚点指向修订后 `08_source_code/SY02-06_…/源码/sections/sNN-*.tex:A-B`，`pages` 用印刷页、`pdf_pages = pages + 1`；`tools/make_cards.py --strict` 输出 `OK`（75 卡 0 error 0 warning），全部 `reviewed` + `source-only`，不发布 PDF。同批 SY02-06 全文对照校订：14 个分片、764 段、262 个编号公式，P1 4 处 / P2 34 处，新增译注 156 条（78→234），xelatex 重编译 133 页（初版 111 页）。
 - `v0.23`（2026-11-21）：新增 `bdh/`——Beilinson–Drinfeld《Quantization of Hitchin's Integrable System and Hecke Eigensheaves》（作者自印 To appear，386 页）中译校订本（SY02-14）的 **43 张资料卡**（29 概念 + 14 勘误）；覆盖 §0 引论、§1 栈上的微分算子、§2 Hitchin 哈密顿量的量子化、§3 oper、§4 Pfaffian 与 c-格、§5–§6 Hecke 特征层、§7 栈上 D-模附录、§8–§10 补充材料；每张概念卡至少 2 条批注，公式逐条对中译本源码校验；`pages` = `pdf_pages`（本书 PDF 页 = 印刷页）；`make_cards.py --strict` 无 error 无 warning。
+- `v0.24`（2026-11-21）：**口径与目录对齐**——补录两个已入库但未登记的集：`kshms/`（83 卡 = 条款 73 + 勘误 10，底本 Kontsevich–Soibelman arXiv:math/0011041v2，与 SY01-25 同批）与 `ggl19/`（12 卡 = 8 概念 + 4 推导，Kapustin arXiv:0811.3264，GGL 合集 #19）；`sy0117/` 复核为 **36 卡**（24 概念 + 12 勘误，v0.21 记的 32 少了两张概念卡）；§1 表规模与 `make_stats.py` 实测对齐为 **18 个集 / 1,034 张卡**（此前按旧口径写成更少的集数与卡数）。同批新增 `01_corpus_zh/数语规范/`（术语/记号/冲突/宏四张表 + 三份规范）与 `_meta/stats.json` + `_meta/口径.md`（唯一数字事实源）。
 - 后续见 [CHANGELOG.md](../CHANGELOG.md)。

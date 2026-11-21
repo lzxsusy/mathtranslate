@@ -1,5 +1,17 @@
 # CHANGELOG
 
+> **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
+
+## 统计口径收口 + 数语规范 + 说明文件重写 — 2026-11-21
+
+- **问题**：同一统计在 README / 00_README / DATASHEET / datasets/README / site / CHANGELOG 六处各写各的（工程数、带源码数、语料段数、资料卡数分成六套），`AUDIT_2026-11-15` 与 `ASSESSMENT_2026-11-20_产出作用` 已各点过一次。
+- **机制**：`make_stats.py` 重写（189 → 约 370 行），新增 `--write/--check/--json`，统计写入 `_meta/stats.json`；README 统计块改 13 项自动生成；新增 `_meta/口径.md`（指标定义 + 退役数字表 + 历史快照清单）与 `tools/check_numbers.py`（退役数字闸门，56 个文件 0 命中）；`tools/build_site.py` 改读 `_meta/stats.json`，站点数字不再手写。
+- **新口径**（`_meta/stats.json`）：113 部工程 / 100 部带 LaTeX 源码 / 1 万级跟踪文件 / 41 部成品 PDF 50.8 MB / 49,322 段语料（唯一 47,756，含公式 86%，汉字 4,055,500）/ 82 个工程有正文 / 术语 1,820 条 / **资料卡 1,034 张（18 集）** / **对齐卡 39 条（21 certified + 18 gap）** / 402 条轨迹。
+- **退役**：全库页数（无脚本可复算）与由此派生的单页成本数字；旧工程数、旧段数、旧资料卡数、旧文件数一律不再使用，历史报告保留原值并加「历史快照」标记。
+- **数语规范**（新）：`01_corpus_zh/数语规范/`——`README.md`（总则）、`STYLE_NL.md`（中文语体）、`STYLE_FORMAL.md`（对齐卡规范）；`tools/build_norm.py` 生成 `TERMS.tsv` **1,847** 条（A 170 / B 152 / I 114 / D 1,411）、`SYMBOLS.tsv` **76** 条、`CONFLICTS.tsv` **76** 组（一外多中 12 / 一中多外 28 / 等级不一致 33 / 空格连字符 3）、`MACROS.tsv` **405** 个跨工程同名不同义宏；`--check` 作提交闸门。
+- **说明文件**：`README.md` 新增「从给人读的译本到可对齐的中文数学底稿」定位段、数语规范章、形式化对齐章；`DATASHEET.md` 升 **v1.3.0**（五层资产）；`00_README.md`、`datasets/README.md`（补 kshms 83 卡、ggl19 12 卡、sy0117 36 卡、v0.24）、`04_playbook/15`（新增 §6.5 资料卡→对齐卡 7 步流程，季度目标改 100 条 certified）、`04_playbook/README.md`（纪律 v2.1）同步改数。
+- **测试**：`make_stats --check` OK、`check_numbers` 0 命中、`build_norm --check` 一致、`ds_lint` 119 条 0 错 0 警、`entry_lint` 0/0、`check_compliance` 通过（7 条既有提示）、`make_train_subset` 44,372 段。详见 `AUDIT_2026-11-21_口径与测试.md`。
+
 ## SY02-14《Hitchin 可积系统的量子化与 Hecke 特征层》中译校订本 + 资料卡 43 张 — 2026-11-21
 
 - **新工程** `08_source_code/SY02-14_Hitchin可积系统的量子化与Hecke特征层/`：Beilinson–Drinfeld *Quantization of Hitchin's Integrable System and Hecke Eigensheaves*（作者自印 To appear，pdfTeX 2020-11-03 重排版，386 页）全书中译。

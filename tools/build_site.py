@@ -7,13 +7,13 @@ r"""把仓库里的条目渲染成静态站点 `site/`——不克隆也能看�
 
 产物：
     site/index.html        落地页：规模、主线、样例语料、样例卡片、术语抽样
-    site/p/index.html      106 部工程总表（可搜索）
+    site/p/index.html      全部译注工程总表（可搜索）
     site/p/<id>.html       单部工程详情（底本、作者、台账、语料段数、入口）
-    site/cards/index.html  900 张资料卡统一入口（按系列/类型/状态筛选）
+    site/cards/index.html  全部资料卡统一入口（按系列/类型/状态筛选）
     site/corpus.html       语料样例（按包/环境抽样，带 flags）
-    site/terms.html        术语基全表（1,820 条，可搜索）
+    site/terms.html        术语基全表（可搜索）
     site/compliance.html   许可与合规口径（LIKE LICENSE §0–§1）
-    site/catalog.json      机器可读目录（106 条）
+    site/catalog.json      机器可读目录
     site/assets/style.css  共享样式
 
 数据全部来自本仓：git 索引、RELEASE_REGISTER.csv、03_translations_meta/、
@@ -42,6 +42,31 @@ THEMES = {
 }
 TYPES = ["concept", "derivation", "correction", "example", "statement", "remark"]
 STATUS_ZH = {"published": "已发布", "reviewed": "已复核", "draft": "草稿", "dev": "开发中"}
+
+
+def load_stats():
+    """站点上的规模数字只从 `_meta/stats.json` 取，不在这里手写。"""
+    try:
+        return json.load(io.open(os.path.join(ROOT, "_meta", "stats.json"), encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+ST = load_stats()
+
+
+def stnum(path, default=0):
+    cur = ST
+    for key in path.split("."):
+        if isinstance(cur, dict) and key in cur:
+            cur = cur[key]
+        else:
+            return default
+    return cur if isinstance(cur, (int, float)) else default
+
+
+def fmtn(n):
+    return "{:,}".format(int(n))
 
 
 def esc(s):
@@ -127,7 +152,7 @@ def corpus_samples(n=240):
     rows = []
     if not os.path.isfile(p):
         return rows
-    every = max(1, 49035 // n)
+    every = max(1, (stnum("corpus.paragraphs") or 49322) // n)
     for i, line in enumerate(io.open(p, encoding="utf-8")):
         if i % every:
             continue
@@ -219,11 +244,14 @@ def page(title, body, depth=0, extra_head=""):
 <link rel="stylesheet" href="{up}assets/style.css">{eh}</head><body>
 <div class="wrap"><header class="top"><div class="brand">
 <div class="logo">数</div><div><h1>数译 · 中文数学译注文献库</h1>
-<div class="sub">mathtranslate · 106 部译注工程 · 49,035 段中文语料 · 900 张资料卡</div></div>{nav}</div></header>
+<div class="sub">mathtranslate · {n_proj} 部译注工程 · {n_para} 段中文语料 · {n_card} 张资料卡</div></div>{nav}</div></header>
 {body}
 <footer>许可：自产层 CC BY 4.0；译文与语料是第三方底本的演绎作品，本库不代原作者授权、也不另设限制
 （检索、研究、教学、训练均可），权利人通知即撤 · 见 <a href="{up}compliance.html">许可与合规</a> 与仓内 LICENSE</footer>
-</div></body></html>""".format(t=esc(title), body=body, up=up, nav=nav, mj=MATHJAX, eh=extra_head)
+</div></body></html>""".format(t=esc(title), body=body, up=up, nav=nav, mj=MATHJAX, eh=extra_head,
+                              n_proj=fmtn(stnum("projects.total", 113)),
+                              n_para=fmtn(stnum("corpus.paragraphs", 49322)),
+                              n_card=fmtn(stnum("datasets.cards_total", 1034)))
 
 
 def build():
@@ -325,14 +353,17 @@ def build():
 <ul>
 <li><b>只想读</b>：<a href="p/index.html">工程总表</a> → 选一部 → 详情页给出底本、作者、语料段数与入口；
 成品 PDF 按台账分级（随仓公开 / Release 外链 / 按 §4 申请 / 不公开）。</li>
-<li><b>想拿语料训练</b>：<code>01_corpus_zh/zh_paragraphs.jsonl</code>（49,035 段，字段见
+<li><b>想拿语料训练</b>：<code>01_corpus_zh/zh_paragraphs.jsonl</code>（{n_para} 段，字段见
 <a href="compliance.html">DATASHEET.md</a>）；训练前建议按 <code>flags</code> 过滤
 <code>orphan_number / empty_ref</code>，按 <code>para_id</code> 去重。</li>
-<li><b>想接管术语</b>：<code>01_corpus_zh/termbase.jsonl</code>（1,820 条，1,411 条 candidate 待裁决）。</li>
+<li><b>想接管术语</b>：<code>01_corpus_zh/termbase.jsonl</code>（{n_term} 条，{n_cand} 条 candidate 待裁决）。</li>
 </ul></div>
 """ % (len(projs), n_src, "{:,}".format(total_paras), "{:,}".format(formulas), len(cards),
        "{:,}".format(len(terms)), total_files, "".join(theme_cards), len(cards), "".join(card_html),
        "{:,}".format(total_paras), para_html, "{:,}".format(len(terms)), term_html)
+    body = (body.replace("{n_para}", fmtn(total_paras))
+                .replace("{n_term}", fmtn(len(terms)))
+                .replace("{n_cand}", fmtn(sum(1 for t in terms if t.get("status") == "candidate"))))
     io.open(os.path.join(out, "index.html"), "w", encoding="utf-8", newline="\n").write(page("总览", body))
 
     # ---------- 工程总表 ----------
@@ -430,12 +461,13 @@ q.oninput=()=>{const v=q.value.toLowerCase();items.forEach(r=>r.style.display=r.
            fmt(r.get("text") or ""))
         for r in corpus_samples(400))
     cpage = """<h2 class="sec">语料样例</h2>
-<p class="lead">全库 <b>%s</b> 段（唯一 47,469），其中含公式 <b>%s</b> 段（86%%）；
+<p class="lead">全库 <b>%s</b> 段（唯一 {n_uniq}），其中含公式 <b>%s</b> 段（86%%）；
 正文字段 <code>text</code>，段落键 <code>para_id</code>，环境 <code>env</code>，评级 <code>tier</code>，
 质检标记 <code>flags</code>。下面是均匀抽样 400 段（MathJax 在线渲染，离线时为原始 LaTeX）。</p>
 %s
-<p class="lead">全量：<code>01_corpus_zh/zh_paragraphs.jsonl</code>（49,035 行，字段表见 DATASHEET §3）。</p>
+<p class="lead">全量：<code>01_corpus_zh/zh_paragraphs.jsonl</code>（{n_para} 行，字段表见 DATASHEET §3）。</p>
 """ % ("{:,}".format(total_paras), "{:,}".format(formulas), crow)
+    cpage = cpage.replace("{n_uniq}", fmtn(stnum("corpus.unique", total_paras)))
     io.open(os.path.join(out, "corpus.html"), "w", encoding="utf-8", newline="\n").write(page("语料", cpage))
 
     # ---------- 术语 ----------
