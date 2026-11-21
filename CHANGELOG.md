@@ -2,6 +2,18 @@
 
 > **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
 
+## SY02-16《算术与几何朗兰兹纲领》中译注本（ICM 2022 综述） — 2026-11-22
+
+- **新工程** `08_source_code/SY02-16_算术与几何朗兰兹纲领/`：朱歆文（Xinwen Zhu）*Arithmetic and Geometric Langlands Program*（ICM 2022 邀请报告综述，arXiv:2504.07502，26 页）全文逐句中译。选篇理由：微信收到的《几何朗兰兹纲领_好读讲义综述打包.zip》里六篇文献，只有这一篇标题即「算术与几何朗兰兹纲领」，且 26 页可在单次会话内做到逐句质量；其余五篇（Zhu 仿射 Grassmann 讲义 95 页、Zhu 几何 Satake 与 Shimura 簇 50 页、Yun shtuka 38 页、Dhillon 局部几何朗兰兹 83 页、Yun Springer 62 页）未译，已列入 `BRIEF.md` 备查。全库 grep 六个 arXiv 号确认无重复工程。
+- **底本处理**：作者提供 LaTeX 源码（gzip 单文件，本机无 `gzip`/`unzip`，用 Python `gzip` 解压），以源码为底本、公式回 170 dpi 页面位图逐符号核对；`scripts/extract_source.py` 抽文本层与 26 张位图，`scripts/port_macros.py` 从原文前言移植 **325 个宏**（关键修正：先去行尾 `%` 注释，否则 `\Rep`/`\Shv`/`\Gr`/`\Sym`/`\xch`/`\xcoch`/`\Iw`/`\Sat`/`\Sph` 会漏）。
+- **结构**：12 块（ch00 开篇与记号 / ch01a–ch01c §1 / ch02a–ch02c §2 / ch03a–ch03d §3 / ch04 文献），译文源码 1003 行；成品 **34 页**（封面 1 + 译者说明 1 + 目录 1 + 正文 25 + 参考文献 6）。
+- **编号对账**：`\newtheorem{thm}{定理}[subsection]` + `\numberwithin{equation}{section}` 复现原文 1.1.2、(2.3) 的印刷形态；`scripts/numbering.py orig/mine/diff` 双向核对，**58 个编号对象**（37 定理类 + 21 公式）与原文逐条一致；`\label` 沿用原文 key，107 处 `\ref`/`\eqref`。
+- **图与脚注**：原文两张 `\xymatrix` 图（互反律方框图、范畴化路线图）用 tikz 重画（tikz-cd / plain tikz，中文标签一律包 `\text{}`）；作者脚注 8 条保原编号；译注 4 条用 `\zy`（manyfoot 独立序列，标记「译 1–译 4」，不占作者计数器）。
+- **编译与审计**：xelatex 三遍，**0 error / 0 Overfull / 0 Missing character / 0 undefined / 0 multiply-defined**（仅 stmaryrd 粗体回退一条字体提示）。逐行 bbox 审计（版心 x∈[73.7, 521.6]pt）抓到 §3.3 一处超宽公式——**LaTeX 未报 Overfull**，改 `aligned` 断行后归位。
+- **原文缺陷**：`资料卡/04-术语文献勘误.md` 登记 **E1–E10**（Tanniyama、non-archimidean、insdie、content→context、prospectives ×2、surveybut、hypersepcial、定理 1.2.4 的 `\hat S^\chi`、定理 2.2.4/推论 2.2.5 的 `{}^{cl}\Loc`、定义 2.3.1 的 `\Aut(\xi)`、1035 行 `$b,b$`）。会改变数学内容的（公式 (3.2) 指标 $i$/$j$ 混用、§3.4 的 $\Pi_0\times\Pi_1$）照译原式 + 加译注，不擅改；`疑点清单.tsv` 14 行全部「已解」。
+- **交付物**：`投稿信息.md`、`精选片段.md`（12 条判定链）、`工程文件/{BRIEF.md, reports/ch00…ch04（12 份）, scripts/ ×3, work/{通读笔记.md, 疑点清单.tsv, glossary.tsv（51 条）, numbering_orig.txt, 原文/}}`、`源码/{main.tex, preamble.tex, preamble_macros.tex, 编译说明.md, chunks/ ×12}`、`资料卡/` 五件套、`成品/算术与几何朗兰兹纲领_arXiv-2504.07502_v1.0.pdf`（不入库）；`03_translations_meta/SY02-16/` 放投稿信息与交付报告副本。
+- **同步**：`RELEASE_REGISTER.csv` 新增 SY02-16（arXiv 预印本，成品 Release 外链）；台账 **115 行**；工程 **115 部**（102 部带 LaTeX 源码）；`DATASHEET.md`、`00_README.md` 计数同步；`make_stats --write`、`build_site`、`build_manifest`、`check_manifest`（mismatch=0 missing=0 unlisted=0）、`check_numbers`（0 命中）、`check_compliance` 全过。
+
 ## 统计口径收口 + 数语规范 + 说明文件重写 — 2026-11-21
 
 - **问题**：同一统计在 README / 00_README / DATASHEET / datasets/README / site / CHANGELOG 六处各写各的（工程数、带源码数、语料段数、资料卡数分成六套），`AUDIT_2026-11-15` 与 `ASSESSMENT_2026-11-20_产出作用` 已各点过一次。
