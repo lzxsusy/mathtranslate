@@ -131,7 +131,7 @@ def main():
         (MD / c["_kind"] / f"{c['_slug']}.md").write_text(text, encoding="utf-8", newline="\n")
 
     # index.md
-    L = ["# Witten 2015（gtgl15）资料卡索引\n",
+    L = ["# Hausel ICM 2022（hausel22）资料卡索引\n",
          f"共 {len(cards)} 张：概念卡 {sum(1 for x in cards.values() if x['_kind']=='concepts')} 张、"
          f"推导卡 {sum(1 for x in cards.values() if x['_kind']=='derivations')} 张。\n"]
     for tr in ["A", "B", "C", "D", "E", "O"]:
