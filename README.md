@@ -1,6 +1,30 @@
 # 数译 · 中文数学译注文献库（数据集与语料）
 
-> 让散落的数学资料得以保存，让数学术语形成共识。
+> 让散落的数学资料得以保存，让数学术语形成共识，让中文数学的每一条陈述都能被机器读懂。
+
+## 这个仓要做什么：从「给人读的译本」到「可对齐的中文数学底稿」
+
+过去三年，这个仓做的事是把散落的中文数学译注本整理成可读、可查、可复用的资料。现在方向清楚了一步：
+**译本只是原料，真正的产出是「资料卡 + 自然语言与形式语言的对齐」**——为中文数学语宙留一份
+每条陈述都能追溯到原文页码、每个术语都能追溯到依据、每条命题都能被编译器检查的底稿。
+
+四层管线，每层都有机器可校验的产物：
+
+| 层 | 做什么 | 产物 | 现状（2026-11-21） |
+|---|---|---|---|
+| 译文 | 底本译成中文译注本，公式逐符号核对原文页面 | 113 部译注工程（100 部带 LaTeX 源码） | 主体完成，仍在补 |
+| 资料卡 | 一部译本拆成可单独拿起的卡（概念/定理/例子），带页码与前提 | 1,034 张卡 / 18 个数据集 | 已成形，正在扩 |
+| 数语规范 | 术语、记号、语体三层统一，每条带来源等级 | `01_corpus_zh/数语规范/`：术语 1,847 条、冲突 76 组、宏 405 个 | v1.0 首次成文 |
+| 对齐卡 | 一条中文陈述 ↔ 一条 Lean 4 命题，由编译器判定 | `datasets/leanstmt/` 39 条（21 certified + 18 gap） | 试点，2026-Q1 目标 100 条 certified |
+
+为什么把后两层当重心：**术语不统一，形式化就无法映射；陈述不成卡，中文数学就只能被阅读，
+不能被检索、被验证、被讲给机器听。** 所以：
+
+- 数语规范 → [`01_corpus_zh/数语规范/README.md`](01_corpus_zh/数语规范/README.md)（总则）、
+  [`STYLE_NL.md`](01_corpus_zh/数语规范/STYLE_NL.md)（中文语体）、
+  [`STYLE_FORMAL.md`](01_corpus_zh/数语规范/STYLE_FORMAL.md)（对齐卡规范）
+- 形式化路线 → [`04_playbook/15_形式化与自然语言对齐_2026-11.md`](04_playbook/15_形式化与自然语言对齐_2026-11.md)
+- 已落地的对齐卡 → [`datasets/leanstmt/README.md`](datasets/leanstmt/README.md)
 
 ## 不用克隆，先看内容
 
@@ -8,10 +32,10 @@
 
 | 想看什么 | 打开 |
 | --- | --- |
-| 总览：六个数字、8 条主线、卡片/语料/术语样例 | [`site/index.html`](site/index.html) |
-| 106 部工程总表（可按主题搜） | [`site/p/index.html`](site/p/index.html) |
-| 900 张资料卡统一入口（按系列/类型/状态筛） | [`site/cards/index.html`](site/cards/index.html) |
-| 49,035 段语料里的 400 段抽样 | [`site/corpus.html`](site/corpus.html) |
+| 总览：十三个数字、8 条主线、卡片/语料/术语样例 | [`site/index.html`](site/index.html) |
+| 113 部工程总表（可按主题搜） | [`site/p/index.html`](site/p/index.html) |
+| 1,034 张资料卡统一入口（按系列/类型/状态筛） | [`site/cards/index.html`](site/cards/index.html) |
+| 49,322 段语料里的 400 段抽样 | [`site/corpus.html`](site/corpus.html) |
 | 1,820 条术语表（可搜索） | [`site/terms.html`](site/terms.html) |
 | 三层许可与五条合规红线 | [`site/compliance.html`](site/compliance.html) |
 
@@ -91,17 +115,20 @@ AI 辅助翻译的过程轨迹、以及威腾文章研讨班的组织资料整�
 | 指标 | 数值 |
 |---|---|
 | 译注工程 | **113** 部（其中 **100** 部带完整 LaTeX 源码） |
-| 仓库文件（git 跟踪） | 10,871 个 / **398.6 MB** |
+| 仓库文件（git 跟踪） | 10,880 个 / **399.2 MB** |
 | LaTeX 源文件 / 插图 | 1,945 个 `.tex` / 2,309 张图 |
 | 成品 PDF（预印本类） | 41 部 / **50.8 MB**（Release 附件） |
 | 中文段落语料 | **49,322** 段（唯一 47,756），其中 **42,396** 段含公式（86%）；汉字 4,055,500 字 |
-| 语料覆盖 | **82** 个工程有段落入库（其余为仅成品 PDF / 无正文的工程） |
+| 语料覆盖 | **82** 个工程有段落入库 |
 | 近重复标注 | 1,418 段（保留，标 `near_dup_of`） |
+| 原书页码锚点 | 4,023 段（`page_orig`） |
 | 术语基 | 1,820 条 |
+| 资料卡 | 1,034 张（18 个数据集） |
+| 形式化陈述对齐 | 39 条（21 certified + 18 gap；6 个 `.lean`，22 处 sorry） |
 | 精选轨迹 | 402 条 |
 | 原始会话分片 | 4 片 / **144.6 MB**（Release 附件） |
 
-> 口径：本表由 `python make_stats.py` 从仓库文件与语料实测生成，是唯一事实源；请勿手写或从他处抄数。
+> 口径：本表由 `python make_stats.py` 从仓库文件与语料实测生成，同一份数据写入 [`_meta/stats.json`](_meta/stats.json)（机器可读，供其它文档与站点取数），是唯一事实源；请勿手写或从他处抄数。定义见 [`_meta/口径.md`](_meta/口径.md)。
 <!-- STATS:END -->
 
 ## 这是一个有明确倾向的文献库（不是泛泛的数学资料堆）
@@ -136,18 +163,21 @@ AI 辅助翻译的过程轨迹、以及威腾文章研讨班的组织资料整�
 - 与数学物理无关的纯组合、纯分析题目；
 - **无法溯源底本**、或只有二手转述的材料（施工纪律要求每条译注可追溯到原文页码）。
 
-### 按主题的分布（106 部译注工程，其中 93 部带 LaTeX 源码）
+### 按主题的分布（113 部译注工程，其中 100 部带 LaTeX 源码）
 
 | 主线 | 编号 | 部数 | 带源码 | 内容举例 |
 |---|---|---|---|---|
-| 辛几何 · 拓扑 · 纽结 · 指标定理 | `SY05` | 27 | 23 | Hofer 几何、Floer 同调、K-理论、指数定理、Jost 黎曼几何 |
-| 量子场论与规范理论 | `SY03` | 21 | 16 | 超对称、AGT、共形场论、瞬子、Seiberg–Witten |
-| 镜像对称与同调镜像对称 | `SY01` | 26 | 24 | SYZ、深谷范畴、Kontsevich 对偶、Batyrev 构造、植田一石讲义 |
+| 辛几何 · 拓扑 · 纽结 · 指标定理 | `SY05` | 28 | 24 | Hofer 几何、Floer 同调、K-理论、指数定理、Jost 黎曼几何 |
+| 量子场论与规范理论 | `SY03` | 22 | 17 | 超对称、AGT、共形场论、瞬子、Seiberg–Witten |
+| 镜像对称与同调镜像对称 | `SY01` | 29 | 27 | SYZ、深谷范畴、Kontsevich 对偶、Batyrev 构造、植田一石讲义 |
 | 弦论与紧致化 | `SY04` | 3 | 3 | 拓扑弦、CY 紧致化、D-膜 |
-| 几何朗兰兹与电磁对偶 | `SY02` | 13 | 11 | Hecke 本征层、Hitchin 系统、Kapustin–Witten、Frenkel 圈群讲义 |
+| 几何朗兰兹与电磁对偶 | `SY02` | 15 | 13 | Hecke 本征层、Hitchin 系统、Kapustin–Witten、Frenkel 圈群讲义 |
 | 其他几何（热带 / 范畴 / 量子力学与几何） | `SY07` | 10 | 10 | 热带几何、导出范畴、几何量子化、圏論 |
 | 双有理几何 | `SY08` | 3 | 3 | Kollár–森重文《双有理几何》、导出范畴指南 |
 | 拓扑学与专题 | `SY99` | 3 | 3 | Novikov 拓扑学、TQFT 博士论文、讨论班讲义 |
+| **合计** | | **113** | **100** | |
+
+「带源码」= 该工程目录下有被 git 跟踪的 `.tex`（与「有 `源码/` 目录」不是一回事：`SY02-11` 的 `源码/` 目录是空的）。口径定义见 [`_meta/口径.md`](_meta/口径.md)。
 
 ## 关键词（供检索与打标签）
 
@@ -191,17 +221,18 @@ Bourbaki 报告、Astérisque 专辑、arXiv 预印本、论文集（proceedings
 |---|---|
 | `00_README.md` | 资产说明、脱敏说明、使用许可 |
 | `MANIFEST.json` | 全部文件的路径 / 字节数 / sha256 前 16 位（提交后重算，见「校验」） |
-| `01_corpus_zh/` | **中文段落语料**（保真保留 LaTeX 公式）+ 术语基 `termbase.jsonl` + 去重报告 |
+| `01_corpus_zh/` | **中文段落语料**（保真保留 LaTeX 公式）+ 术语基 `termbase.jsonl` + 去重报告 + **数语规范**（`数语规范/`：术语/记号/宏四张表 + 语体与形式化规范，见下文） |
 | `02_trajectories/` | AI 辅助工作的精选工具调用轨迹（意图→动作→证据→结论，含评分） |
 | `03_translations_meta/` | 每部书的元数据、投稿信息、术语表；41 部预印本类的**成品 PDF** 已移到 Release `v1.0.1` 附件（清单见 `_PDF清单.tsv`） |
-| `04_playbook/` | 翻译总纲、施工纪律（v2.0）、文献引进标准、待完成清单、环境备忘 |
+| `04_playbook/` | 翻译总纲、施工纪律（**v2.1**）、文献引进标准、待完成清单、环境备忘、形式化对齐路线 |
 | `05_seminar_witten/` | 威腾（Witten）文章研讨班的索引、阅读路线、经验教训 |
 | `06_sessions_raw/` | 原始对话事件流（已脱敏、zstd 压缩）；145 MB 分片已移到 Release `v1.0.1` 附件，仓库只留抽取脚本与分片说明 |
 | `papers/WIT-1989-JONES/` | **威腾 1989 CS/Jones 论文研讨班**（第二轮解经试点）：六场研讨记录、claims/questions 数据、教材核查；交付两版讲义——**49 页连续叙事讲义**（`deliverables/lecture/`，可作课程主文本）与 **97 页逐句注疏版**（`deliverables/reading_note/`），均含 LaTeX 源码、一键构建工程、协作流程记录，并有打包下载 `WIT-1989-JONES-v1.0.zip` |
 | `papers/WIT-2021-ATIYAH-LANG/` | **Witten 2021 INI 演讲《对偶、Langlands 对应与 Michael Atiyah 的影响》中文译注本**（讲义型）：把 54 张 beamer 幻灯片按演讲的叙事顺序重排为 **39 页连续叙事**，逐张标注原页码，译注（术语/译法）与批注（技术/史实）分两套编号；前置出版说明与导读「一条走了四十七年的暗线」，后置附录 A 术语表、B 人物小传、C 参考文献、D 技术路线图（从本演讲到 Kapustin–Witten 2006）。LaTeX 源码在 `源码/`，成品 PDF 在 `deliverables/lecture/`，底本对应表、通读笔记、疑点清单、术语表 tsv 在 `工程文件/` |
 | `08_source_code/` | **每部译本的完整工程**：`工程文件/`（BRIEF、构建脚本、交付清单、术语表、校对记录、逐章报告）+ `源码/`（LaTeX 源与插图） |
 | `07_refs_nlab/` | **nLab 参考资料库**（几何 Langlands 线专用）：120 条 nLab 条目摘要（含 `last_revised`，可直接写进译注来源行）+ 37 份替代来源卡（nLab 只有存根时改引 A 级教材 / MathWorld / Stacks）+ 110 条来源真实性抽查记录 |
-| `datasets/` | **可训练数据集**：数学推理条目（`math/`，命题+证明步骤+缺口+校验）、原文片段↔译文↔译法理由（`parallel/`）、精读卡（`deepread/`）、高光与难证标注（`highlights/`）、事件级工作流（`traces/`）、概念图谱（`kg/`）、held-out 评测（`bench/`）、按概念组织的词条库（`encyclopedia/`）、单章资料卡（`geoq/`、`pathintegral/`、`csw/`、`glc/`）；规则见 `datasets/README.md`，权利分 `self / arxiv / book / rewritten` 四层，`book` 只进 `_internal/` |
+| `10_gmn_series/` | **GMN 系列研究与译注层**：Gaiotto–Moore–Neitzke 五篇（穿墙公式、BPS 态、超凯勒几何、红外代数）的资料卡、阅读报告、术语与索引；译文源码在 `08_source_code/` |
+| `datasets/` | **可训练数据集**（**18 个集 / 1,034 张资料卡**）：数学推理条目（`math/`）、原文片段↔译文↔译法理由（`parallel/`）、精读卡（`deepread/`）、高光与难证标注（`highlights/`）、事件级工作流（`traces/`）、概念图谱（`kg/`）、held-out 评测（`bench/`）、按概念组织的词条库（`encyclopedia/`）、单章资料卡（`geoq/`、`pathintegral/`、`csw/`、`glc/`、`kshms/`、`ggl19/` …）、**自然语言↔Lean 4 对齐卡（`leanstmt/`，本库未来重心）**；规则见 `datasets/README.md`，权利分 `self / arxiv / book / rewritten` 四层，`book` 只进 `_internal/` |
 | `site/` | 静态站点（`site/index.html` 双击即开，无需服务器） |
 
 ## `01_corpus_zh/`：语料的形态
@@ -212,7 +243,7 @@ Bourbaki 报告、Astérisque 专辑、arXiv 预印本、论文集（proceedings
 |---|---|
 | `pkg` / `file` / `para` | 所属工程、源文件、段序 |
 | `para_id` | 内容哈希（sha1 前 16 位），全库唯一稳定标识，便于下游去重 / 增量更新 / 引用 |
-| `page_orig` | 原书页码（解析 TeX 里的 `% ===== PDF p.NNN (原书 p.N) =====` 标记；当前 95 个工程带此标记、共 4,023 段：SY01-23 2,950 / SY01-08 692 / SY02-09 381） |
+| `page_orig` | 原书页码（解析 TeX 里的 `% ===== PDF p.NNN (原书 p.N) =====` 标记；当前 4,023 段带此标记，集中在 SY01-23 2,950 / SY01-08 692 / SY02-09 381） |
 | `env` | 段落所在环境：`text` / `theorem` / `definition` / `proof` / `remark` / `example` |
 | `tier` | 该工程的评级 A/B/C（来自工程元数据） |
 | `text` | **保真文本**：行内/行间公式原样保留 `$...$`、`\begin{equation}...\end{equation}`，不再被洗成 ASCII 骨架 |
@@ -222,7 +253,7 @@ Bourbaki 报告、Astérisque 专辑、arXiv 预印本、论文集（proceedings
 `foreign / lang(en|ja|other) / zh / status / pkg / src_format`，SY02-09 的 215 行另有
 `level`（A/B/I）/ `source`（依据）/ `lecture`（首次出现讲次）三字段，`status=confirmed`。
 
-**干净训练子集**：`python tools/make_train_subset.py` 一条命令生成 `01_corpus_zh/zh_train.jsonl.gz`——按固定口径丢 `empty_ref` / `orphan_number` / `layout_residue` 等标注段、按 `para_id` 去重、丢 <8 汉字碎片，实测 **44,087 段 / 364 万汉字 / 86% 含公式**（原始 49,035 段保留不动）。
+**干净训练子集**：`python tools/make_train_subset.py` 一条命令生成 `01_corpus_zh/zh_train.jsonl.gz`（8 MB，不入库）——按固定口径丢 `empty_ref` / `orphan_number` / `layout_residue` / 重复 `para_id` 等标注段、丢 <8 汉字碎片，实测 **44,372 段 / 366 万汉字 / 86% 含公式**（源 49,322 段保留不动，丢弃 4,950 段，逐项计数见脚本输出）。
 
 **术语定案表**：[`01_corpus_zh/terms_frozen_SY02-09.tsv`](01_corpus_zh/terms_frozen_SY02-09.tsv)（223 条，
 列：英文 / 中文 / 等级 / 依据 / 首次出现 / 本轮校订备注）。这是《Langlands 纲领导论》逐页校订后的
@@ -241,10 +272,10 @@ Bourbaki 报告、Astérisque 专辑、arXiv 预印本、论文集（proceedings
 - 放的是**翻译工程本身**：`工程文件/` + `源码/`（LaTeX + figures）。
 - 装 TeX Live / MiKTeX 后进 `源码/` 跑 `xelatex main.tex` 即可重建中文译注本；
   少数工程的根文件叫 `main.tex` 之外的名称，见该工程 `工程文件/编译说明.md`。
-- **14 部当初只留了成品 PDF、没有 LaTeX 工程**（`SY01-18 / 01-19 / 02-08 / 03-02 / 03-16 / 03-17 / 03-18 / 03-20 / 03-21 / 05-10 / 05-19 / 05-20 / 05-21 / 05-22`），
-  这些目录只有 `投稿信息.md`；其余 **92 部**有完整可编译源码（`make_stats.py` 口径）。
-- **`工程文件/` 覆盖 81 部**（2026-11-14 从投稿包回填了 38 部缺失的 `工程文件/`，共 223 文件 / 2.8 MB）；
-  其余 9 部（`SY01-18 / 01-19 / 02-08 / 03-16 / 03-18 / 03-20 / 05-20 / 05-21 / 05-22`）的原始投稿包本身就没有工程文档，只有 `源码/` 或仅成品。
+- **13 部没有 LaTeX 源码**（`SY01-18 / 01-19 / 02-08 / 02-11 / 03-02 / 03-16 / 03-17 / 03-18 / 03-21 / 05-19 / 05-20 / 05-21 / 05-22`），
+  这些目录只有 `投稿信息.md`（其中 `SY02-11` 的 `源码/` 是空目录）；其余 **100 部**有可编译源码（`make_stats.py` 口径）。
+- **`工程文件/` 覆盖 104 部**（2026-11-14 从投稿包回填了 38 部缺失的 `工程文件/`，共 223 文件 / 2.8 MB）；
+  其余 9 部（`SY01-18 / 01-19 / 02-08 / 02-11 / 03-16 / 03-18 / 05-20 / 05-21 / 05-22`）的原始投稿包本身就没有工程文档，只有 `源码/` 或仅成品。
 - **自 2026-11-14 起，`03_translations_meta/<编号>/` 不再重复保存 `源码/` 与 `工程文件/`**：
   它们此前与 `08_source_code/<编号>_<中文名>/` 下的同名目录逐字节相同（约 45 MB 重复）。
   源码、工程文档与术语表统一以 `08_source_code/` 为唯一来源。
@@ -266,11 +297,12 @@ Bourbaki 报告、Astérisque 专辑、arXiv 预印本、论文集（proceedings
 | `kg/` | 概念/定理/人物/文献节点 + `prereq_of / uses / generalizes / dual_to / cites` 边，每条边带证据 | 每边一条 |
 | `bench/` | 带 rubric 的 held-out 评测题，与 `parallel/` 不重叠 | 10 题/单元 |
 
-**权利三层**（与 `COMPLIANCE.md` §11 一致）：
+**权利四层**（与 `COMPLIANCE.md` §11、`datasets/README.md` §2 一致）：
 
 - `rights:self` → 自产（中文表述、理由、精读、证明整理、图谱、评测），CC BY 4.0，可用于训练；数学事实本身不受版权保护；
 - `rights:arxiv:<id>` → 逐篇核许可；许可未确认时原文只作 ≤300 字引用；
-- `rights:book` → 只进 `datasets/_internal/`（已被 `.gitignore` 忽略），**永不发布**，也不进公开训练集。
+- `rights:book` → 只进 `datasets/_internal/`（已被 `.gitignore` 忽略），**永不发布**，也不进公开训练集；
+- `rights:rewritten` → 改写卡（资料卡、对齐卡、术语条目）：不复制原文连续 20 字以上，只保留数学内容与页码指针，可公开。
 
 工作流与提示词模板见 [`datasets/workflow/生产协议.md`](datasets/workflow/生产协议.md)，`math/` 的专门协议见 [`datasets/math/README.md`](datasets/math/README.md)。新增一个单元：
 
@@ -281,7 +313,7 @@ python tools/ds_publish.py --check       # 发布前权利过滤，0 blocked 才
 python tools/ds_publish.py --write       # 重写 datasets/PUBLISH.json
 ```
 
-当前试点：`SY05-25`（Witten, arXiv:0802.0999）第 1 节，6 条数学推理条目、7 条平行片段、4 张精读卡、3 条高光、3 道评测、1 张 6 节点图谱、1 段 12 事件工作流；另有 3 张跨工程精读卡（SY01-01 谱流、SY01-09 SYZ 启发式、SY03-08 Chern–Simons 形式），共 **119 条记录**（math 6 / parallel 7 / deepread 7 / highlights 3 / traces 81 / kg 12 / bench 3），`ds_lint` 0 错。存量第一批 L0 修正 47 处（44 改 3 删），见 `datasets/fixes/l0_batch01.jsonl`。扩量先做 37 部 arXiv 底本（每部 3–5 个技术引理），再做 22 部讲义；图书底本只做 `_internal/`；形式化对（NL↔Lean）单独起步，先做 20 条能编译的。
+当前试点：`SY05-25`（Witten, arXiv:0802.0999）第 1 节，6 条数学推理条目、7 条平行片段、4 张精读卡、3 条高光、3 道评测、1 张 6 节点图谱、1 段 12 事件工作流；另有 3 张跨工程精读卡（SY01-01 谱流、SY01-09 SYZ 启发式、SY03-08 Chern–Simons 形式），共 **119 条记录**（math 6 / parallel 7 / deepread 7 / highlights 3 / traces 81 / kg 12 / bench 3），`ds_lint` 0 错。存量第一批 L0 修正 47 处（44 改 3 删），见 `datasets/fixes/l0_batch01.jsonl`。扩量先做 37 部 arXiv 底本（每部 3–5 个技术引理），再做 22 部讲义；图书底本只做 `_internal/`；**形式化对（NL↔Lean）已单独起步**：`datasets/leanstmt/` 39 条（21 certified + 18 gap），规范见 [`01_corpus_zh/数语规范/STYLE_FORMAL.md`](01_corpus_zh/数语规范/STYLE_FORMAL.md)。
 
 ### 资料卡试点：几何量子化（`datasets/geoq/`）
 
@@ -363,6 +395,57 @@ python tools/gen_docs.py       # taxonomy.md + MAP.md
 
 `source-only` 是诚实标注，不是错误：它表示讲义自创的构造或未成文定理在公开权威页面找不到逐字对应，卡片仍严格对齐原句，引用时按讲义页码引即可。
 
+## 数语规范：让术语与记号可以被机器引用
+
+译文能读，不等于能被引用。一条中文术语若在不同工程里指两个概念，形式化时就无法确定该映射到哪个
+Lean 定义；一个宏名若在两个导言区里展开不同，把陈述搬进 Lean 就会静默地换掉含义。所以
+[`01_corpus_zh/数语规范/`](01_corpus_zh/数语规范/README.md) 把「术语 / 记号 / 写法」做成三件有闸门的东西：
+
+| 产物 | 规模（2026-11-21） | 用途 |
+|---|---|---|
+| `TERMS.tsv` | **1,847 条**术语（A 170 / B 152 / I 114 / D 1,411） | 写作时查译名；`术语ID` 是对齐卡与资料卡的外键 |
+| `SYMBOLS.tsv` | **76 条**记号（1 个工程，覆盖是已知缺陷） | 排版与形式化时查读法、含义、出处 |
+| `CONFLICTS.tsv` | **76 组**冲突（一外多中 12、一中多外 28、等级不一致 33、空格/连字符 3） | 裁定清单；高严重度 9 组待仓主裁决 |
+| `MACROS.tsv` | **405 个**跨工程同名不同义的宏（205 个出现在 ≥5 工程） | 形式化前先看这张表，`\R` 一个名字有 6 种定义 |
+
+三份规范：[`README.md`](01_corpus_zh/数语规范/README.md)（分级 A/B/I/D、命名、记号、四表口径）、
+[`STYLE_NL.md`](01_corpus_zh/数语规范/STYLE_NL.md)（中文数学语体：句子层、术语层、公式、译注、交付、质量闸门）、
+[`STYLE_FORMAL.md`](01_corpus_zh/数语规范/STYLE_FORMAL.md)（对齐卡 schema 与 Lean 侧约定）。
+
+表由脚本从源表生成，不手改；改数据的顺序是**改源表 → 重生成 → 闸门通过 → 提交**：
+
+```bash
+python tools/build_norm.py           # 重建四张表 + INDEX.md
+python tools/build_norm.py --check   # 与已提交版本不一致则失败（CI 闸门）
+```
+
+## 形式化对齐：本库未来三年的重心
+
+页数是库存，**对齐卡才是产能**。对齐卡 = 一条中文陈述 + 一条英文陈述 + 一条 Lean 4 命题 + 编译证据 +
+盲翻回译，五者互相约束。现有试点 [`datasets/leanstmt/`](datasets/leanstmt/README.md)：
+
+- **39 张卡**：21 张 certified（编译通过、`sorry` 为 0）+ 18 张 gap（陈述已写出，依赖或证明未完成）；
+- 覆盖 GNO 1977、Witten 2015、Witten 2008 三条底本批次；6 个 `.lean` 文件，22 处 `sorry` 全部记账；
+- 工具链固定 `leanprover/lean4:v4.36.0` + mathlib commit `d33c49c…`，每张卡写死版本。
+
+四层对齐（只做前两层也能产生价值，但不要跳过 L1 直接做 L2）：
+
+| 层 | 对齐什么 | 产物 |
+|---|---|---|
+| **L1 术语** | 中文术语 ↔ Lean 定义名 | `TERMS.tsv` 的术语 ID + 卡的 `lean.name` |
+| **L2 陈述** | 中文陈述 ↔ Lean `Prop` | `cards/statements/*.json` 的 `lean.statement` |
+| **L3 证明** | 中文论证 ↔ Lean 证明项 | 同名 `.lean` 的 `theorem … := by …` |
+| **L4 反例** | 原文反例 ↔ Lean 反例 | `type: "counterexample"` 的卡 |
+
+路线（详见 [`04_playbook/15_形式化与自然语言对齐_2026-11.md`](04_playbook/15_形式化与自然语言对齐_2026-11.md)）：
+
+1. **2026-Q1 先做 100 条 certified**（不是 1,000 条草稿），集中在不依赖大量几何基础设施的 `discrete-core`；
+2. 全年按课程分四档推进：T1 基础陈述 600 / T2 需定义的陈述 250 / T3 需证明的陈述 100 / T4 反例 50；
+3. 陈述的第一来源是资料卡的 `01-结果清单.md` 与 `03-条款索引.md`（已带编号、页码、前提），不从译文随机摘句；
+4. 每条 gap 必须归入 G1 缺定义 / G2 缺定理 / G3 版本漂移 / G4 陈述歧义 / G5 证明未完成之一。
+
+`certified` 的判定只有一条：**编译通过且 `sorry` 数为 0**；人工觉得「应该对」不算。
+
 ## `09_thinking/`：AI 思考链的筛选、审计与上传
 
 这是 2026-11-20 新增的**硬纪律 + 工具**，解决一个具体问题：272 个 agent 一次全书校订产生了 **3,952 万字符 reasoning**，最终文本只有 **1.7 万字符**；人不可能通读，但不读就等于把最贵的判断扔掉。
@@ -382,16 +465,18 @@ python tools/thinking_audit.py check --require-coverage
 
 ## 评估与路线（2026-11-20）
 
-- [`ASSESSMENT_2026-11-20_AI消耗.md`](ASSESSMENT_2026-11-20_AI消耗.md)：33 天、200,366 次调用、¥2,437.38；¥0.21/页、¥25.7/部；输出 token 占 45.6%。
+- [`ASSESSMENT_2026-11-20_AI消耗.md`](ASSESSMENT_2026-11-20_AI消耗.md)：33 天、200,366 次调用、¥2,437.38；¥25.7/部（原报告另算了「每页成本」，页数分母已退役，见 [`_meta/口径.md`](_meta/口径.md) §2）；输出 token 占 45.6%。
 - [`ASSESSMENT_2026-11-20_产出作用.md`](ASSESSMENT_2026-11-20_产出作用.md)：只问“有没有用”；结论是页数已过拐点，稀缺的是可验证判断（240 条核验断言、153 个校对 JSON、402 条轨迹）。
-- [`04_playbook/15_形式化与自然语言对齐_2026-11.md`](04_playbook/15_形式化与自然语言对齐_2026-11.md)：算力受限下的路线——Lean 陈述层做验证器，2026-Q1 先做 1,000 条 NL↔Lean 对齐。
+- [`04_playbook/15_形式化与自然语言对齐_2026-11.md`](04_playbook/15_形式化与自然语言对齐_2026-11.md)：算力受限下的路线——Lean 陈述层做验证器，2026-Q1 先做出 100 条 certified 的 NL↔Lean 对齐卡。
+
+> 两份 ASSESSMENT 与 AUDIT 是当日快照，数字不回改；**所有统计以 [`_meta/stats.json`](_meta/stats.json) 为准**，口径定义见 [`_meta/口径.md`](_meta/口径.md)。
 
 ## 成品 PDF 与原文（合规说明）
 
 > 本库**不在仓库里保存任何成品 PDF，也不保存原文**。这一节说明去哪拿、为什么。
 
 - **成品 PDF（中文译注本）只对 arXiv / 开放许可底本开放**：41 部以 arXiv 预印本（含 arXiv 托管的学位论文与讲义）为底本的译本，成品 PDF 在 Release [`v1.0.1`](https://atomgit.com/lzxSUSUY/mathtranslate/releases/tag/v1.0.1) 的附件，点开即下载；逐部清单（页数、字节、arXiv 号、文件名、下载直链）见 [`03_translations_meta/_PDF清单.tsv`](03_translations_meta/_PDF清单.tsv)。
-- **其余 54 部的成品不公开**：在版图书、非 arXiv 讲义、学位论文等，成品 PDF 不发布、不给直链；确需研读可按 [`COMPLIANCE.md`](COMPLIANCE.md) §4 申请，逐部登记在 [`RELEASE_REGISTER.csv`](RELEASE_REGISTER.csv)。
+- **其余 72 部的成品不公开**：在版图书、非 arXiv 讲义、学位论文等，成品 PDF 不发布、不给直链；确需研读可按 [`COMPLIANCE.md`](COMPLIANCE.md) §4 申请，逐部登记在 [`RELEASE_REGISTER.csv`](RELEASE_REGISTER.csv)。
 - **原文不发布、不给直链**：本库只发布译文、工程源码、元数据与自建语料；原文（无论 arXiv 版还是出版书）请按书目信息自行从 arXiv、出版社或图书馆获取。
 - **2026-11-16 已撤下**：SY02-09 随仓的袁瑶课程讲义原本、SY07-08 随仓的扶磊《代数几何》成品，以及另外 4 部误入仓的成品 PDF。撤下记录见 `CHANGELOG.md` 与 `RELEASE_REGISTER.csv`。
 - **为什么这样**：① 图书译文的再分发权在出版社，公开全文会累积下架与封仓风险；② 成品 PDF 是二进制大文件，留在 Git 历史里会让每次 clone 都下载全部版本。移出后检出体积约 280 MB。
@@ -431,5 +516,10 @@ python tools/thinking_audit.py check --require-coverage
 ## 相关
 
 - 站点：`site/index.html`
-- 术语表：`08_source_code/*/工程文件/deliverable/术语表_*.csv`，汇总见 `01_corpus_zh/termbase.jsonl`
-- 统计与一致性：`make_stats.py`（生成上面的统计块）、`tools/check_manifest.py`
+- 术语表：`08_source_code/*/工程文件/deliverable/术语表_*.csv`，汇总见 `01_corpus_zh/termbase.jsonl`；
+  统一规范与合并表见 [`01_corpus_zh/数语规范/`](01_corpus_zh/数语规范/README.md)
+- 形式化对齐：`datasets/leanstmt/`（卡、Lean 源码、ROADMAP）；规范见
+  [`01_corpus_zh/数语规范/STYLE_FORMAL.md`](01_corpus_zh/数语规范/STYLE_FORMAL.md)
+- 统计与一致性：`make_stats.py --write`（生成上面的统计块与 `_meta/stats.json`）、
+  `make_stats.py --check`、`tools/check_numbers.py`（退役数字闸门）、
+  `tools/build_norm.py --check`（数语规范闸门）、`tools/check_manifest.py`
