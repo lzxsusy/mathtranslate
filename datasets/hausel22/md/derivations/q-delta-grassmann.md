@@ -1,0 +1,55 @@
+# 定理 3.10：$Q_\delta$ 是 Grassmann 上同调环之积
+
+> `hausel22/deriv/q-delta-grassmann` · 轨道 D · 幂零锥上的等变重数 · 状态 dev · 5 步
+
+> **要回答的问题**：$Q_\delta$ 为什么能写成 $\prod_i H^*(\Gr(i,n);\C)^{m_i}$ 这种乘积？
+
+## 一句话
+
+多步 Hecke 修改在每一点独立地挑一个子空间，既约条件保证交点恰为 Grassmann 之积，于是重数代数分解为上同调环的乘积。
+
+## 目标
+
+解释定理 3.10 的乘积分解：$\delta_1+\cdots+\delta_{n-1}$ 既约时 $Q_\delta\cong\prod_{i=1}^{n-1}H^*(\Gr(i,n);\C)^{m_i}$。
+
+## 前提
+
+- $\delta=(\delta_0,\dots,\delta_{n-1})\in J_\ell(C)\times C^{[m_1]}\times\cdots\times C^{[m_{n-1}]}$，$m_i=\deg\delta_i$。
+- $\calE_\delta=\bigoplus M_i$，$M_i=\calO(\delta_0+\cdots+\delta_i)K^{-i}$，$\Phi_\delta|_{M_i}$ 由 $H^0(\calO(\delta_i))$ 的定义截面给出。
+- $Q_\delta=\C[W^+_{\calE_\delta}]/(h_1,\dots,h_N)$ 是局部重数代数。
+
+## 推导链
+
+| # | 步骤 | 为什么 | 出处 | 可信度 |
+|---|---|---|---|---|
+| 1 | $\calE_\delta$ 由标准均匀化 Higgs 丛 $\calE_0=(\calO\xrightarrow{1}K^{-1}\xrightarrow{1}\cdots\xrightarrow{1}K^{1-n})$ 逐步 Hecke 修改得到：每改一步，就在 $c$ 处替换一个 $i$ 维子空间。 | $\calE_0$ 是 Hitchin 截面的点，$\delta$ 记录每步修改的位置与次数；逐级商 $M_i/M_{i-1}$ 的秩就是 $i$。 | `A p.2238` | A·原文明确写了 |
+| 2 | 第 $i$ 类修改的选取空间是 Grassmannian $\Gr(i,n)$：在 $c$ 处挑一个 $i$ 维子空间 $V\subset E_0\|_c$，并要求 $\Phi_\delta\|_c(V)\subset V$。 | 这是式 (3.1) 的 $\calH_k$ 的推广；子空间条件线性，故 $V$ 的自由度正是 $\Gr(i,n)$。 | `A p.2240 eq (3.1)` | A·原文明确写了 |
+| 3 | 把「可修改」条件写成 $\gamma_a g^{-1}\in\gl_n[[z]]$（式 (3.6)）：$g$ 是 $\Gr^\mu$ 中的代表元，$\gamma_a$ 由 $\calE_\delta$ 的局部形式决定。 | Hecke 修改合法的判据是修改后的丛仍是向量丛，即过渡函数落在 $\GL_n[[z]]$ 中；这条条件把每一步限制成对 $V$ 的线性方程。 | `A p.2241 eq (3.6)` | A·原文明确写了 |
+| 4 | 不同 $i$、不同点 $c_{ij}$ 上的条件互不干扰，故 $W^+_{\calE_\delta}\cap h^{-1}(0)$ 是各步 $\Gr(i,n)$ 之积（每点一个因子，共 $m_i$ 个）。 | 各 $\delta_i$ 的支集在 $C$ 上分离，局部条件只涉及 $c_{ij}$ 附近的展开；既约性（$\delta_1+\cdots+\delta_{n-1}$ 既约）保证交集中没有额外粘合分量。 | `A p.2240` | B·原文暗示、我们补的中间步 |
+| 5 | $\Gr(k,n)$ 的上同调环等于对应的 $Q_{\pi_k}$（式 (3.2)），故乘积环就是 $Q_\delta$：$Q_\delta\cong\prod_{i=1}^{n-1}H^*(\Gr(i,n);\C)^{m_i}$。 | 式 (3.2) 把 Grassmann 上同调环写成 $\C[p_1,\dots,p_k,q_1,\dots,q_{n-k}]$ 对一条 Schubert 关系的商，这恰是定理 3.7 中坐标环的形状。 | `A p.2240 eq (3.2)` | A·原文明确写了 |
+
+## 结论
+
+$\delta_1+\cdots+\delta_{n-1}$ 既约时，$Q_\delta\cong\prod_{i=1}^{n-1}H^*(\Gr(i,n);\C)^{m_i}$；特别地 $Q_\delta$ 是 Gorenstein 的，Poincaré 多项式由定理 3.6 的 $t$-二项式系数之积给出。
+
+## 缺口
+
+- 第 4 步「乘积无额外分量」是定理 3.10 证明的核心，原文把它归给 [HH]，本文只陈述结论。
+- 既约条件为何恰好排除粘合分量，原文未论证。
+
+## 最容易讲错的地方
+
+- 乘积分解只在 $\delta_1+\cdots+\delta_{n-1}$ 既约时成立；对一般 $\delta$ 是错的。
+- $m_i=\deg\delta_i$ 是重数（因子的个数），不是 $\Gr(i,n)$ 的维数。
+- $\Gr(i,n)$ 是有限维 Grassmannian（不是仿射 Grassmannian $\Gr$）；定理 3.10 里出现的是前者。
+- 式 (3.2) 的两个多项式环变量个数 $k+(n-k)=n$，与 $\Gr(k,n)$ 的维数 $k(n-k)$ 不同，不要混淆。
+
+## 相关卡
+
+[局部重数代数 $Q_\calE$](../concepts/local-multiplicity-algebra.md) · [仿射 Grassmannian $\Gr$](../concepts/affine-grassmannian.md) · [$Q_\calE$ 的 Gorenstein 性与 Poincaré 对偶](../derivations/gorenstein-multiplicity-algebra.md)
+
+## 出处（印刷页）
+
+- A p.2240（A p.2240 eq (3.2)）
+
+> 说明：A=原文式 (3.1)(3.2)(3.6) 与定理 3.10 的陈述；B=第 4 步「条件互不干扰、乘积无多余分量」的解释是我们按局部性补的；C=「为什么既约性恰好够」是我们的推测。最没把握处：定理 3.10 的完整证明依赖 [HH]，本文只有结论。

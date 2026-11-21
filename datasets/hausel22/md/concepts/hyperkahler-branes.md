@@ -1,0 +1,55 @@
+# 超 Kähler 膜的四类型
+
+> `hausel22/concept/hyperkahler-branes` · 轨道 C · 增强镜像对称与膜 · 状态 dev
+
+> **先自测**：为什么超 Kähler 流形上的膜要按三个复结构分别标注类型？
+
+## 一句话
+
+超 Kähler 流形上，膜对三个复结构 $I,J,K$ 各取 A 型或 B 型；物理上允许的是 $(B,A,A)$、$(A,B,A)$、$(A,A,B)$ 与 $(B,B,B)$ 四种。
+
+## 定义
+
+Kapustin–Witten 指出：由于目标空间超 Kähler，一个膜（边界条件）相对于三个复结构 $I,J,K$ 中的每一个都应当是 $A$ 型或 $B$ 型。他们考虑 $(B,A,A)$ 型、$(A,B,A)$ 型、$(A,A,B)$ 型与 $(B,B,B)$ 型四种膜。例如 $(B,A,A)$ 型膜可以是 $I$-全纯、关于 $\omega_\C=\omega_J+i\omega_K$ 拉格朗日的子簇再配一个局部系统；$(B,B,B)$ 型膜则是超 Kähler 子流形配它上面某个丛的超全纯联络。
+
+**记号**：$(B,A,A)$ 等四元组；$I,J,K$；$\omega_\C$；超全纯联络。
+
+## 要点（为什么需要它）
+
+1. 标注的是「相对于哪个复结构取哪种拓扑 twist」，不是三个独立的膜。
+2. $(B,A,A)$ 型的几何原型正是 Hitchin 系统的纤维：$I$-全纯 + 关于 $\omega_\C$ 拉格朗日，这正是 $\M_\Dol\to\calA$ 的纤维。
+3. $(B,B,B)$ 型最「刚性」：超 Kähler 子流形 + 超全纯联络，信息量最大、构造最少。
+4. 镜像（$S$ 对偶）把 $\M$ 上的 $(B,A,A)$ 型膜送到 $\M^\vee$ 上的 $(B,B,B)$ 型膜；只看 $J$ 这一个复结构，就退化成「$A$ 型镜像于 $B$ 型」。
+
+## 核心公式
+
+$$
+$$\text{brane type}\in\{(B,A,A),(A,B,A),(A,A,B),(B,B,B)\}\quad\text{w.r.t. }(I,J,K)$$
+$$
+
+## 定理与证明（或缺口）
+
+### $(B,A,A)\leftrightarrow(B,B,B)$ 的镜像配对
+
+在 Kapustin–Witten 框架中，超 Kähler 流形 $\M$ 上 $(B,A,A)$ 型膜的镜像（$S$ 对偶）是 $\M^\vee$ 上的 $(B,B,B)$ 型膜；特别地只看复结构 $J$ 时，$A$ 型膜镜像于 $B$ 型膜。
+
+> 证明状态：**sketch**。原文只引用 Kapustin–Witten 的物理论证，没有数学证明。
+
+出处：`A p.2234`
+
+## 常见误解
+
+- 把四类型当成 $2^3=8$ 种里随便挑的四种：原文只讨论这四种，它们才是超对称允许的组合；不要自行推广成八种。
+- $(B,A,A)$ 的 $B$ 指 $I$ 结构上的 $B$ 型，不是「关于 $\omega_\C$ 的 $B$ 型」；顺序固定为 $(I,J,K)$，写反就换了对象。
+- $(B,A,A)$ 型膜不只是一张拉格朗日子流形，还要配局部系统；漏掉局部系统就缺了 $B$ 型的那一半。
+- 镜像配对是 $(B,A,A)\leftrightarrow(B,B,B)$，不是 $(B,A,A)\leftrightarrow(A,B,B)$；后者不在原文讨论范围内。
+
+## 相关卡
+
+[Kapustin–Witten 的 $S$ 对偶纲领](../concepts/kapustin-witten-duality.md) · [增强镜像对称](../concepts/enhanced-mirror-symmetry.md) · [Hitchin 系统](../concepts/hitchin-system.md)
+
+## 出处（印刷页）
+
+- A p.2234（A p.2234）
+
+> 说明：A=原文 §2.5 对四类膜的列举与 $(B,A,A)\leftrightarrow(B,B,B)$ 的配对；B=把「只看 $J$ 就退化成 $A\leftrightarrow B$」这一步展开；C=「$(B,A,A)$ 的原型是 Hitchin 纤维」是我们按 §2.3 的对应补的。最没把握处：原文引 Kapustin–Witten 的 Table 2 p.74 说 $J$ 下 $A$ 模型镜像于 $K$ 下 $B$ 模型，与本文的简化说法略有出入。
