@@ -1,0 +1,158 @@
+\section{第一日第一讲：拓扑量子场论导论}
+
+拓扑量子场论（TQFT）在表示论的大部分领域里充当一个很好用的比喻。表示论里的许多问题都可以按 TQFT 来组织。今天这一讲，我们只考虑与有限群 $G$ 相关的玩具模型。以下，对任意有限群 $G$，我们配一个 $n$ 维 TQFT，记作 $Z^n_G$；若群与维数从上下文看是清楚的，就简记作 $Z$。
+
+\subsection{TQFT 是什么？}
+
+一个 TQFT 是配边范畴 $\mathrm{Bord}^n$ 的一个线性表示，这个范畴的对象是维数 $\le n$ 的流形。所谓线性表示，指的是我们想要一个从 $\mathrm{Bord}^n$ 出发的函子，取值范畴在某种程度上像向量空间范畴（比方说，取在 $\mathbb C$ 上）。例如，这个函子如下赋值：
+
+\begin{enumerate}[label=(\roman*),leftmargin=2.2em]
+\item 对闭的 $n$ 维流形 $\Sigma^n$，一个数 $Z(\Sigma^n)\in\mathbb C$；
+\item 对 $(n-1)$ 维流形 $\Sigma^{n-1}$，一个向量空间 $Z(\Sigma^{n-1})\in\Vect_{\mathbb C}$；
+\item 对 $(n-2)$ 维流形 $\Sigma^{n-2}$，一个 $\mathbb C$-线性范畴 $Z(\Sigma^{n-2})\in\Cat_{\mathbb C}$。
+\end{enumerate}
+
+依此类推。$\Sigma$ 的余维数越大，$Z(\Sigma)$ 的范畴复杂度就该越高。
+
+我们想要这个函子满足哪些性质？
+
+\begin{enumerate}[label=(\roman*),leftmargin=2.2em]
+\item 我们要它是对称幺半的：$\mathrm{Bord}^n$ 里的幺半结构由不交并 $\sqcup$ 给出，取值范畴里由张量积 $\otimes$ 给出。一个 TQFT 把 $m$ 维空流形 $\phi_m$ 送到相应范畴里的幺半单位元：
+\[
+Z(\phi_n)=1\in\mathbb C,\qquad Z(\phi_{n-1})=\mathbb C\in\Vect_{\mathbb C},\ \dots
+\]
+这条性质对应 TQFT 里的 Q，可以看成量子态叠加的数学编码。
+\item 我们要它在族上局部常值。也就是说，$Z(\Sigma^n)$ 应当是 $n$ 维流形的模空间上的局部常值函数；类似地，$Z(\Sigma^{n-1})$ 应当是这模空间上的局部常值层，并带有 $\mathrm{Diff}(\Sigma^{n-1})$ 的作用。这对应 TQFT 里第一个 T。
+\end{enumerate}
+
+\begin{rem}
+就我们的目的而言，$n$ 维流形的模空间可以想成 $\bigsqcup_{M^n} B\mathrm{Diff}(M)$，其中余积取遍所有 $n$ 维流形。
+\end{rem}
+
+\subsection{态射}
+
+$\mathrm{Bord}^n$ 中两个 $(n-1)$ 维流形 $\partial_{in}$ 与 $\partial_{out}$ 之间的态射，是一个 $n$ 维流形 $\Sigma$，满足 $\partial\Sigma=\partial_{in}\sqcup\partial_{out}$。
+
+\begin{rem}
+我们假定所论的 TQFT 是定向的。正是这一点让我们能区分入边与出边。
+\end{rem}
+
+这样的态射我们符号地记作 $\partial_{in}\xrightarrow{\ \Sigma^n\ }\partial_{out}$，图形上记作
+
+\inlfig[0.55\textwidth]{f01-bordism.png}
+
+既然 $Z$ 是函子，就有相应的态射 $Z(\partial_{in})\xrightarrow{\ Z(\Sigma^n)\ }Z(\partial_{out})$，它由一个线性变换给出。态射的复合对应把配边黏起来，图形上可以表示成
+
+\inlfig[0.85\textwidth]{f02-gluing.png}
+
+物理上，这要编码的是\emph{局部性}：一个点处的物理完全由它附近发生的事决定。于是一个复杂流形上的 $Z$ 的输出就可以这样算出来：把它切成更好对付的碎片。例如，我们可以把一张曲面拆成
+
+\inlfig[0.60\textwidth]{f03-cut.png}
+
+由此看出，$Z(\Sigma^2)$ 可以写成复合成 $\mathbb C\to Z(S^1)\to\mathbb C$。
+
+\begin{exmp}[一维定向 TQFT 及更远]
+函子 $Z$ 把正定向的点送到向量空间 $Z(\bullet_+)=V$，把负定向的点送到另一个向量空间 $Z(\bullet_-)=V^\vee$。
+
+\begin{enumerate}[label=(\roman*),leftmargin=2.2em]
+\item 有自然的映射 $\mathbb C\to V\otimes V^\vee$ 与 $V\otimes V^\vee\to\mathbb C$。考察复合 $\mathbb C\to V\otimes V^\vee\to\mathbb C$ 可知，实际上 $V^\vee=V^*$，而第二个映射 $V\otimes V^\vee\to\mathbb C$ 由求值给出。
+\item 我们得到 $Z(S^1)=\dim V$；更一般地，在 $n$ 维理论里 $Z(\Sigma^{n-1}\times S^1)=\dim Z(\Sigma^{n-1})$。
+\item 给定微分同胚 $f:\Sigma^{n-1}\to\Sigma^{n-1}$，有相应的线性映射 $Z(f):Z(\Sigma^{n-1})\to Z(\Sigma^{n-1})$。可以看到，$\operatorname{tr}Z(f)$ 对应 $Z$ 作用在 $f$ 的映射环面（一个 $n$ 维流形）上的值。
+\end{enumerate}
+\end{exmp}
+
+\subsection{场在哪里？}
+
+要谈论量子场论，真正需要的只是一个从物理时空到态空间的映射；这正是函子 $Z$ 所做的事。然而在许多有兴趣的情形里，$Z$ 会经过一个几何范畴分解，如下图所示：
+
+\inlfig[0.62\textwidth]{f04-factor.png}
+
+这种分解是 TQFT 上的额外结构；一个 TQFT 连带这样的分解，叫作\emph{拉格朗日 TQFT}。图中的函子 $\mathcal F_Z$ 把 $\mathrm{Bord}^n$ 的对象送到场空间。通常这个空间由 $\mathrm{Map}(-,T)$ 给出，$T$ 是某个目标流形；$G$ 则由取该空间上的函数或层范畴给出。
+
+\begin{rem}
+你在物理教科书里见到的大多数 TQFT 都是拉格朗日的，但也有一些重要的理论没有已知的拉格朗日结构。此外，同一个 TQFT 可以有多个拉格朗日结构，它们给出的是同一个物理理论。这会引出令人意外的数学陈述或物理对偶。
+\end{rem}
+
+\begin{exmp}
+取 $G$ 为有限群，考虑相应的群胚 $BG$；也就是说，$BG$ 是只有一个对象 $*$、态射为 $\mathrm{Hom}(*,*)=G$ 的范畴。
+
+\begin{enumerate}[label=(\roman*),leftmargin=2.2em]
+\item 存在一个拉格朗日 TQFT，其场空间由 $\mathcal F_G(\Sigma)=\mathrm{Map}(\Sigma,BG)$ 给出；这个空间也叫 $G$ 在 $\Sigma$ 上的局部系空间，记作 $\Loc_G\Sigma$。注意：不论 $\Sigma$ 是几维，TQFT 都把它送到这个空间。
+\item 这个空间等价地可以看成 $\Sigma$ 上 $G$-丛的空间、$G$-覆叠空间的空间，以及映射 $\pi_1(\Sigma)\to G$ 模共轭的空间。
+\begin{rem}
+当 $G$ 不是离散群时，$G$-丛的栈与 $\Sigma$ 上 $G$-局部系之间的等同不再成立。
+\end{rem}
+\item 这个 TQFT 把 $S^1$ 送到 $G$ 的点模共轭作用。于是圆上的场由群元素模共轭给出。
+\end{enumerate}
+\end{exmp}
+
+给定配边 $\partial_{in}\xrightarrow{\ \Sigma\ }\partial_{out}$，函子 $\mathcal F_G$ 经过限制给出一个对应。也就是说，若考虑配边
+
+\inlfig[0.38\textwidth]{f11-restrict-bd.png}
+
+那么把它限制到边界分支上，就得到下面这些映射
+
+\inlfig[0.35\textwidth]{f05-restrict.png}
+
+同样地，若把两个配边黏起来，就得到图形
+
+\inlfig[0.45\textwidth]{f06-glue.png}
+
+它对应下面的图。
+
+\inlfig[0.60\textwidth]{f07-pentagon.png}
+
+类似地，给定 $2$ 维流形 $\Sigma^2$，有
+\[
+\mathcal F_G(\Sigma)=\Loc_G(\Sigma)=\Maps(\pi_1(\Sigma),G)/\text{共轭},
+\]
+这就是 $\Sigma$ 的 $G$-特征标栈。
+
+\subsection{场的线性化}
+
+接着上面的例子，其中 $\mathcal F_G=\mathrm{Hom}(-,BG)$。要构造 TQFT，需要把场空间线性化。$\mathcal F_G(\Sigma)$ 并不依赖 $\Sigma$ 的维数，但线性化会依赖。取 $X$ 为有限轨形，例如 $\Loc_G(\Sigma)$。若 $\Sigma$ 是最高维，则对 $X=\Loc_G(\Sigma)$ 配一个数，由
+\[
+\#X=\int_X 1=\sum_{x\in X}\frac{1}{\abs{\Aut x}}
+\]
+给出。若 $\Sigma$ 的余维为一，则对 $X=\Loc_G(\Sigma)$ 配常数层的整体截面空间，即
+\[
+\mathbb C[X]=\Gamma(X,\mathbb C)=\bigoplus_{x\in X}\mathbb C.
+\]
+对余维为二的 $\Sigma$，我们配 $X$ 上向量丛的范畴：
+\[
+\Vect[X]=\bigoplus_{x\in X}\Vect(\bullet/\Aut x),
+\]
+其中 $\Vect(\bullet/\Aut x)$ 按定义是这个自同构群的表示范畴。
+
+\begin{exmp}
+固定有限群 $G$。于是可以考察不同维数的 TQFT 对不同维数的流形赋什么值。空的部分眼下不关心。
+
+\inlfig[0.62\textwidth]{f08-table.png}
+\end{exmp}
+
+\subsection{TQFT 中的可观测量}
+
+可观测量是能在一点处测量的物理量。任一给定点处都有一整代数的局部可观测量。局部可观测量的数据可以由围绕该点的球面上的态来刻画。因此，TQFT 中局部可观测量的代数就是球面上的态空间，$Z(S^{n-1})$ 在 TQFT 里扮演特殊角色。特别地，这一类可观测量带有若干漂亮的代数结构。
+
+\begin{enumerate}[label=(\arabic*),leftmargin=2.2em]
+\item \textbf{代数结构}：取一个球，从内部挖去两个小球，就得到配边 $S^{n-1}\sqcup S^{n-1}\to S^{n-1}$。
+
+\inlfig[0.34\textwidth]{f12-algstruct.png}
+
+它给出可观测量空间上的映射 $Z(S^{n-1})\otimes Z(S^{n-1})\to Z(S^{n-1})$。这个乘法在大球内两个小球的位置空间上是局部常值的。乘法由这类位置空间参数化的代数，叫作 $E_n$-代数。注意维数 $\ge 2$ 时这个乘法是交换的\footnote{这句话并不真的对，但对我们的目的够用。有一个精确的说法：$E_n$-代数随 $n\to\infty$ 越来越交换，极限对象 $E_\infty$-代数才真正交换。}；而在 $1$ 维情形，我们只得到一个结合代数。
+\item \textbf{模结构}：给定 $(n-1)$ 维流形 $\Sigma^{n-1}$，考察 $n$ 维流形 $\Sigma^{n-1}\times[0,1]$。从它中间挖去一个球 $S^{n-1}$，就得到配边 $\Sigma^{n-1}\sqcup S^{n-1}\to\Sigma^{n-1}$。
+
+\inlfig[0.50\textwidth]{f09-module.png}
+
+这给出作用映射 $Z(S^{n-1})\otimes Z(\Sigma^{n-1})\to Z(\Sigma^{n-1})$。于是球面上的可观测量作用在任意另一个 $(n-1)$ 维流形上的可观测量上。
+\end{enumerate}
+
+\begin{exmp}
+\begin{enumerate}[label=(\roman*),leftmargin=2.2em]
+\item 在 $2$ 维情形，$Z(S^1)$ 上有交换代数结构、单位元和迹运算。这些运算使 $Z(S^1)$ 成为交换 Frobenius 代数。单位元与迹由下面的图表示：
+
+\inlfig[0.50\textwidth]{f10-unittrace.png}
+
+\item 在我们的有限群例子里，这个 Frobenius 代数就是群上的类函数代数：$\mathbb C[G/G]$。此时迹由在 $1$ 处取值再除以 $\abs{G}$ 算出。
+\end{enumerate}
+\end{exmp}
