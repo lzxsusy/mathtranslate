@@ -49,9 +49,18 @@ def git(*args):
         return b""
 
 
+# 与 build_manifest.py 的 SKIP 保持一致：这两个文件由清单脚本自身生成，
+# 计入「仓库文件」会让体积随上次重建结果浮动（自指）。
+STATS_SKIP = {"MANIFEST.json", "_build_summary.json"}
+
+
 def tracked_files():
     out = git("ls-files", "-z")
-    return [p for p in out.decode("utf-8", "replace").split("\0") if p]
+    return [
+        p
+        for p in out.decode("utf-8", "replace").split("\0")
+        if p and p not in STATS_SKIP
+    ]
 
 
 def count_tree(path):

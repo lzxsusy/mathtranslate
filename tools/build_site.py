@@ -282,7 +282,8 @@ def build():
     cards = load_cards()
     terms = load_terms()
     n_src = sum(1 for p in projs if p["tex"])
-    total_files = len(tracked())
+    # 与 make_stats.py 的口径一致：排除 MANIFEST.json / _build_summary.json 两个自指文件
+    total_files = stnum("repo.tracked_files", 0) or len(tracked())
 
     # ---------- catalog.json ----------
     cat = [{k: p[k] for k in ("id", "cn", "orig", "author", "level", "kind", "release", "tex", "figs", "paras")}
@@ -330,7 +331,7 @@ def build():
 <div class="stat"><b>%s</b><span>段中文语料（含公式 %s）</span></div>
 <div class="stat"><b>%d</b><span>张资料卡</span></div>
 <div class="stat"><b>%s</b><span>条术语</span></div>
-<div class="stat"><b>%d</b><span>个仓库文件</span></div>
+<div class="stat"><b>%s</b><span>个仓库文件</span></div>
 </div>
 <p class="lead">这是一个中文数学译注库：把镜像对称、几何朗兰兹、量子场论、辛几何等方向的讲义与专著
 逐段译成中文，并附术语表、资料卡与可编译 LaTeX 源码。<b>不用克隆</b>——本页与下列页面直接给出内容样例；
@@ -359,7 +360,7 @@ def build():
 <li><b>想接管术语</b>：<code>01_corpus_zh/termbase.jsonl</code>（{n_term} 条，{n_cand} 条 candidate 待裁决）。</li>
 </ul></div>
 """ % (len(projs), n_src, "{:,}".format(total_paras), "{:,}".format(formulas), len(cards),
-       "{:,}".format(len(terms)), total_files, "".join(theme_cards), len(cards), "".join(card_html),
+       "{:,}".format(len(terms)), "{:,}".format(total_files), "".join(theme_cards), len(cards), "".join(card_html),
        "{:,}".format(total_paras), para_html, "{:,}".format(len(terms)), term_html)
     body = (body.replace("{n_para}", fmtn(total_paras))
                 .replace("{n_term}", fmtn(len(terms)))
@@ -513,8 +514,8 @@ q.oninput=()=>{const v=q.value.toLowerCase();rows.forEach(r=>r.style.display=r.d
     io.open(os.path.join(out, "compliance.html"), "w", encoding="utf-8", newline="\n").write(
         page("许可与合规", comp))
 
-    print("built: %d projects, %d cards, %d terms, %d files -> %s"
-          % (len(projs), len(cards), len(terms), total_files, out))
+    print("built: %d projects, %d cards, %d terms, %s files -> %s"
+          % (len(projs), len(cards), len(terms), "{:,}".format(total_files), out))
 
 
 if __name__ == "__main__":
