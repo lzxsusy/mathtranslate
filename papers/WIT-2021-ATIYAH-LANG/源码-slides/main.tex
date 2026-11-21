@@ -1,0 +1,660 @@
+% ============================================================
+%  WIT-2021-ATIYAH-LANG 幻灯片版（中文译注）
+%  编译：xelatex main.tex 两遍
+% ============================================================
+\documentclass[aspectratio=169,12pt]{ctexbeamer}
+
+\usepackage{amsmath,amssymb,mathtools,bm}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,calc,decorations.pathmorphing}
+
+% ---------- 外观：白底、衬线、无导航条，仿 Witten 的幻灯片 ----------
+\setbeamertemplate{navigation symbols}{}
+\setbeamercolor{normal text}{fg=black!90}
+\setbeamercolor{frametitle}{fg=black}
+\setbeamercolor{structure}{fg=black!65}
+\setbeamerfont{frametitle}{family=\rmfamily,series=\bfseries,size=\Large}
+\setbeamerfont{normal text}{size=\large}
+\setlength{\parskip}{0.55em}
+\setlength{\parindent}{0pt}
+\setbeamertemplate{footline}{%
+  \hfill{\color{black!45}\scriptsize\insertframenumber\,/\,\inserttotalframenumber}%
+  \hspace{1.4em}\vspace{0.85em}}
+
+% ---------- 记号 ----------
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ee}{\mathrm{e}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\gvee}{G^{\vee}}
+\newcommand{\Tvee}{T^{\vee}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\Aut}{\operatorname{Aut}}
+\newcommand{\SL}{\mathrm{SL}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\Sp}{\mathrm{Sp}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\PSU}{\mathrm{PSU}}
+\newcommand{\ad}{\operatorname{ad}}
+\newcommand{\Gr}{\mathrm{Gr}}
+\newcommand{\Bun}{\mathrm{Bun}}
+\newcommand{\Perv}{\mathrm{Perv}}
+\newcommand{\Rep}{\mathrm{Rep}}
+\newcommand{\srcp}[1]{{\color{black!40}\scriptsize[原 p.#1]}}
+
+% ---------- 两种补注框 ----------
+\newtcolorbox{beizhu}{enhanced, colback=blue!3!white, colframe=blue!3!white,
+  borderline west={1.1pt}{0pt}{blue!45!black},
+  boxrule=0pt, left=7pt, right=5pt, top=3pt, bottom=3pt,
+  fontupper=\small, before skip=6pt, after skip=2pt}
+\newtcolorbox{yizhu}{enhanced, colback=orange!4!white, colframe=orange!4!white,
+  borderline west={1.1pt}{0pt}{orange!70!black},
+  boxrule=0pt, left=7pt, right=5pt, top=3pt, bottom=3pt,
+  fontupper=\small, before skip=6pt, after skip=2pt}
+
+% ---------- 分部页 ----------
+\newcommand{\partframe}[2]{%
+\begin{frame}[plain]
+  \vspace*{2.6cm}
+  {\color{black!35}\large 第 #1 部分}\\[0.8em]
+  {\LARGE\bfseries #2}\\[1.2em]
+  {\color{black!40}\rule{2.2cm}{0.4pt}}
+\end{frame}}
+
+\title{对偶、Langlands 对应\\ 与 Michael Atiyah 的影响}
+\author{Edward Witten\quad（2021 年 9 月 23 日，Isaac Newton Institute）}
+\date{中文译注本 · 2026}
+
+\begin{document}
+
+% ===================== 封面 =====================
+\begin{frame}[plain]
+\vspace*{1.1cm}
+{\color{black!45}\small 数译 · 威腾演讲译注}\\[1.2em]
+{\LARGE\bfseries 对偶、Langlands 对应\\[0.45em] 与 Michael Atiyah 的影响}\\[1.3em]
+{\large Edward Witten}\\[0.5em]
+{\normalsize 2021 年 9 月 23 日 · 剑桥 Isaac Newton Institute}\\[1.5em]
+{\color{black!40}\rule{2.6cm}{0.4pt}}\\[1.2em]
+{\small 中文译注本 · 幻灯片版}\quad{\color{black!50}\small 超对称梦想家　译注}
+\end{frame}
+
+% ===================== 路线图 =====================
+\begin{frame}{这场演讲在讲什么}
+  Atiyah 在 1977 年说过一句话：\emph{GNO 所谓的“磁规范群”，就是数论里的
+  Langlands 对偶群。}这句话把两条看似无关的线索接在一起。
+  \begin{center}
+  \begin{tikzpicture}[x=1cm,y=1cm,>={Stealth[length=2mm]},every node/.style={font=\footnotesize}]
+    \node[align=left,text width=4.1cm,anchor=north west] (a) at (0,0)
+      {\textbf{电磁对偶}\\ GNO $1977$\\ Montonen--Olive $1977$\\ Witten--Olive $1978$};
+    \node[align=left,text width=4.3cm,anchor=north west] (b) at (4.6,0)
+      {\textbf{超对称与单极子}\\ Osborn $1979$\\ Bogomolny 方程\\ Atiyah--Hitchin $1988$};
+    \node[align=left,text width=4.3cm,anchor=north west] (c) at (9.4,0)
+      {\textbf{几何 Langlands}\\ Beilinson--Drinfeld $1990$\\ Hecke 特征层\\ Kapustin--Witten $2006$};
+    \draw[->] (a.east) -- (b.west);
+    \draw[->] (b.east) -- (c.west);
+    \draw[->,rounded corners] (a.south) ++(0.9,0) -- ++(0,-0.75) -| node[pos=0.25,below]{Sen $1994$ · Seiberg--Witten $1994$} ++(9.4,-0.75);
+  \end{tikzpicture}
+  \end{center}
+  \begin{beizhu}
+  \textbf{批注}\quad 这场演讲不是综述，而是一条“谁在何时想到了什么”的证词：它第一次把 1977 年
+  那句口头提醒的后果讲全——从磁荷的群论，到四维流形的微分拓扑。
+  \end{beizhu}
+\end{frame}
+
+\begin{frame}{读法：三种入口}
+  \begin{itemize}
+    \item \textbf{想看物理}：第 2--5 部分。电磁对偶的群论、BPS 界、Seiberg--Witten 解。
+    \item \textbf{想看数学}：第 6--8 部分。Hecke 修改、几何 Satake、't Hooft 算子与 Hecke 函子。
+    \item \textbf{想看“物理为什么能算 Langlands”}：第 9 部分。4d $\cN=4$ 的扭化、二维 sigma 模型、镜像对称。
+  \end{itemize}
+  \vspace{0.5em}
+  记号：$G$ 单连通单群，$T\subset G$ 极大环面，$\gvee$ 为 Langlands 对偶群；
+  $X^*(T)=\Hom(T,U(1))$ 特征标格，$X_*(T)=\Hom(U(1),T)$ 余特征标格。
+  \[
+    \boxed{\;X^*(\Tvee)=X_*(T),\qquad X_*(\Tvee)=X^*(T)\;}
+  \]
+\end{frame}
+
+\partframe{一}{1977：一句口头提醒}
+
+% ===================== Part I =====================
+\begin{frame}{哈佛，1977 年春}
+  \srcp{2} 那年春天我在哈佛做 Junior Fellow。Michael Atiyah 来哈佛讲学，讲的是瞬子。
+  我听完很受触动，去和他交谈；他邀我在当年年底访问牛津。
+  \vspace{0.4em}
+
+  那年年底我到了牛津。整个访问期间，Michael 讲的是四维规范理论里的瞬子。他和
+  Vladimir Drinfeld、Nigel Hitchin、Yuri Manin 刚刚借助扭量理论与代数几何发现了
+  瞬子的 ADHM 构造。
+  \begin{beizhu}
+  \textbf{批注（ADHM）}\quad $\RR^4$ 上 $SU(N)$ 瞬子（自对偶联络，拓扑荷 $k$）的模空间
+  等同于线性数据
+  \[
+    (B_1,B_2,I,J)\in\End(\CC^k)^{\oplus2}\oplus\Hom(\CC^N,\CC^k)\oplus\Hom(\CC^k,\CC^N)
+  \]
+  在实矩映射方程 $[B_1,B_1^\dagger]+[B_2,B_2^\dagger]+II^\dagger-J^\dagger J=0$、
+  $[B_1,B_2]+IJ=0$ 的零点集上模去 $U(k)$。非线性椭圆方程，被写成了有限维线性代数。
+  \end{beizhu}
+\end{frame}
+
+\begin{frame}{为什么瞬子那么重要}
+  \srcp{2} 瞬子当时是物理里最令人兴奋的题目之一，很大程度上是因为 Gerard 't Hooft 的工作：
+  他用瞬子解决了核力的“$U(1)$ 问题”。
+  \vspace{0.4em}
+
+  到 1977 年底，我们又从 Albert Schwarz 的一个观察知道，'t Hooft 关于 $U(1)$ 问题的工作
+  可以理解为 Atiyah--Singer 指标定理的一次应用。
+  \begin{beizhu}
+  \textbf{批注（$U(1)$ 问题）}\quad 按照手征对称性，九种赝标介子中应当有一个很轻的粒子，
+  但实验上 $\eta'$ 的质量却大得多。't Hooft 指出：瞬子通过费米子的零模诱导出一个破坏
+  $U(1)$ 的有效相互作用；而零模的个数恰由 Dirac 算子的指标给出，也就是由瞬子的拓扑荷给出。
+  这正是“物理的量子数 $=$ 几何的指标”的第一次显式兑现。
+  \end{beizhu}
+\end{frame}
+
+\begin{frame}{Atiyah 换了题目}
+  \srcp{3} 那个月的大部分时间，我们都在热烈地讨论瞬子。但到了月底，Atiyah 换了题目。
+  他让我注意两篇我没见过的物理论文：
+  \begin{itemize}
+    \item Peter Goddard、Jean Nuyts 与 David Olive，\emph{Gauge Theories and Magnetic Charge}
+      （Nuclear Physics B125, 1977）；
+    \item David Olive 与 Claus Montonen，\emph{Magnetic Monopoles as Gauge Particles?}
+      （Physics Letters B72, 1977）。
+  \end{itemize}
+  他说他觉得这里面有很深的东西，我应该去伦敦和 Olive 谈谈。
+\end{frame}
+
+\begin{frame}{两篇文章的共同点：把“磁”看成“另一套群”}
+  \begin{columns}[T]
+  \begin{column}{0.49\textwidth}
+    \textbf{GNO}：磁荷的算子是 $H$ 的生成元的线性组合，其分量在 Weyl 群下唯一确定，
+    并且必须是某个新群 $H^0$ 的权。$H$ 与 $H^0$ 互为“电/磁”，$(H^0)^0=H$。
+  \end{column}
+  \begin{column}{0.49\textwidth}
+    \textbf{Montonen--Olive}：量子化之后，'t Hooft--Polyakov 单极子与光子组成同一个规范
+    多重态；对应的拉氏量与原 Georgi--Glashow 模型相同，只是把电电荷换成了磁电荷。
+  \end{column}
+  \end{columns}
+  \vspace{0.5em}
+  \begin{beizhu}
+  \textbf{批注}\quad 两篇文章的年代相同（1977），但气质不同：GNO 是群论与拓扑的静态陈述，
+  MO 是量子动力学的猜想。把它们连起来的，正是 Atiyah 的那句提醒。
+  \end{beizhu}
+\end{frame}
+
+\begin{frame}{Atiyah 的那句话}
+  \srcp{6} Atiyah 向我解释：Goddard、Nuyts 与 Olive 所谓的“磁规范群”，
+  其实就是数论 Langlands 纲领里的 Langlands 对偶群。
+  \vspace{0.4em}
+
+  我相当确定这个联系是 Atiyah 做出的，但据我所知他从未把它写下来。和当时别的物理学家
+  一样，我从未听过 Langlands 纲领，也没听过 Robert Langlands 这个名字。但 Atiyah 向我
+  保证：数论的 Langlands 纲领是非常深刻的东西，他认为物理学家必定也在通向某种重要的东西。
+  \begin{beizhu}
+  \textbf{批注}\quad 这条口头传统在物理文献里第一次被明确引用，要等到 2006 年
+  Kapustin 与 Witten 的论文。本书的整个叙事，可以看作对这句话的展开与验证。
+  \end{beizhu}
+\end{frame}
+
+\partframe{二}{电荷、磁荷与对偶群}
+
+\begin{frame}{$U(1)$：电电荷就是表示}
+  \srcp{7} 先看阿贝尔情形 $G=U(1)$，即现实世界里的电磁规范群。所谓“带电粒子”，
+  最根本的定义是：粒子对应 $G$ 的一个表示。
+  \vspace{0.4em}
+
+  因为 $U(1)$ 的每个表示都是基本表示的 $n$ 次幂，电电荷就可以看成一个整数 $n$。
+  换一种不抽象的说法：电荷是“量子化”的，任何粒子的电荷都是电子电荷的整数倍。
+  \[
+    \text{电电荷}\;\longleftrightarrow\;\text{表示}\;\longleftrightarrow\; n\in\ZZ
+    \;\longleftrightarrow\; X^*(U(1))\cong\ZZ .
+  \]
+\end{frame}
+
+\begin{frame}{Dirac 单极子：奇点与第一陈类}
+  \srcp{8} 在 $U(1)$ 规范理论里，“规范场”是某个复线丛 $\cL$ 上的联络 $A$，曲率 $F=\dd A$。
+  电子的量子波函数是 $\cL$ 的截面 $\psi$。
+
+  Dirac 的单极子概念是：单极子的位置是空间中的一个奇点 $p$，在那里线丛 $\cL$ 与联络 $A$
+  没有定义；$\RR^3\setminus\{p\}$ 中围绕 $p$ 的二维球面 $S$ 可缩，磁荷是
+  \[
+    m=\int_S c_1(\cL)\in\ZZ .
+  \]
+  \begin{center}
+  \begin{tikzpicture}[scale=0.62,>={Stealth[length=1.6mm]}]
+    \shade[ball color=black!12] (0,0) circle (1.5);
+    \draw[black!45,dashed] (-1.5,0) arc (180:360:1.5 and 0.45);
+    \draw[black!45] (-1.5,0) arc (180:0:1.5 and 0.45);
+    \fill (0.35,0.55) circle (1.6pt) node[right,font=\scriptsize]{$p$};
+    \node at (-1.9,1.55) {\scriptsize $S$};
+    \node[font=\scriptsize,black!60] at (2.5,0.55) {$\cL,A$ 在 $p$ 处无定义};
+  \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Dirac 量子化：$e\int_S F\in2\pi\ZZ$}
+  设 $F$ 是 $S$ 上的曲率，$e$ 是试探电荷。沿闭合路径的相位是 $\exp(\ii e\oint A)$；
+  若把 $S$ 分成两个半球 $D_\pm$，在赤道上 $A_+-A_-=\dd\log g$，$g:S^1\to U(1)$。
+  波函数的单值性要求
+  \[
+    \exp\!\Big(\ii e\oint_{S^1}A_+-A_-\Big)=1
+    \quad\Longleftrightarrow\quad
+    e\int_S F\in 2\pi\ZZ .
+  \]
+  而 $\int_S F=2\pi m$，所以
+  \[
+    e\,m\in 2\pi\ZZ\cdot\frac{1}{2\pi}\;\Longrightarrow\; em\in 2\pi\ZZ .
+  \]
+  \begin{beizhu}
+  \textbf{批注}\quad 这里 $m$ 的归一化使 $\int_S F=2\pi m$（即 $F/2\pi$ 的 de Rham 类给出
+  $c_1$）。等价地，磁荷 $g$（使通量 $=4\pi g$）满足 $eg\in2\pi\ZZ$，即 $g=m/2$。
+  真正的不变量是配对 $X^*(T)\otimes X_*(T)\to\ZZ$，而不是某个具体数字。
+  \end{beizhu}
+\end{frame}
+
+\begin{frame}{非阿贝尔：电是表示，磁是拓扑}
+  \srcp{10} 现在设 $G$ 是单的非阿贝尔群。时空上有 $G$-丛 $E$，带联络 $A$，曲率
+  $F=\dd A+A\wedge A$。
+  \begin{itemize}
+    \item \textbf{电电荷}容易：任何粒子的电电荷都是 $G$ 的一个表示 $R$。
+    \item \textbf{磁荷}微妙：单极子是空间中的一点（或一小块区域），在那里 $E$ 与 $A$ 没有定义；
+      磁荷分类的是围绕该点的二维球面 $S$ 上 $G$-丛的选择。
+  \end{itemize}
+  按这个解释，磁荷取值于 $\pi_1(G)$。
+  \begin{beizhu}
+  \textbf{批注}\quad $S^2=D^2_+\cup D^2_-$，两个圆盘上的丛都平凡，粘合数据是
+  $S^1\to G$ 的映射，其同伦类正是 $\pi_1(G)$。但对单连通的 $G$（如 $SU(2)$），
+  $\pi_1(G)=0$：光滑的单极子根本不存在。这就是 GNO 不满意的地方。
+  \end{beizhu}
+\end{frame}
+
+\begin{frame}{GNO 的出路：希格斯化到极大环面}
+  \srcp{11} GNO 考虑的是一种理论：通过希格斯机制，规范群在低能下被有效约化到极大环面
+  $T\subset G$。这种约化只在远离 $p$ 的地方发生。
+  \vspace{0.4em}
+
+  于是我们可以定义分类 $S$ 上 $T$-丛（而不是 $G$-丛）的磁荷，它取值于
+  \[
+    \pi_1(T)\;\cong\;\Hom(U(1),T)=X_*(T).
+  \]
+  另一方面，一旦规范对称性被约化到 $T$，电电荷就应当用 $T$ 的表示来分类；
+  而 $T$ 阿贝尔，不可约表示都是一维的：
+  \[
+    \text{电电荷}\in\Hom(T,U(1))=X^*(T).
+  \]
+  \begin{beizhu}
+  \textbf{批注}\quad 关键的一步：磁荷的“群”从 $\pi_1(G)$ 换成了 $\pi_1(T)=X_*(T)$。
+  这一步把拓扑问题变成了格的问题，也才让对偶成为可能。
+  \end{beizhu}
+\end{frame}
+
+\begin{frame}{两个格}
+  \begin{center}
+  \renewcommand{\arraystretch}{1.25}
+  \begin{tabular}{@{}lll@{}}
+    \toprule
+    情形 & 电电荷 & 磁荷 \\
+    \midrule
+    $G=U(1)$ & $n\in\ZZ$ & $m=\int_S c_1(\cL)\in\ZZ$ \\
+    非阿贝尔 $G$ & $G$ 的表示 $R$ & 朴素看法：$\pi_1(G)$ \\
+    $G$ 破缺到 $T$ & $\Hom(T,U(1))=X^*(T)$ & $\Hom(U(1),T)=X_*(T)$ \\
+    \bottomrule
+  \end{tabular}
+  \end{center}
+  \vspace{0.6em}
+  注意两个格之间有一个自然的整值配对：
+  \[
+    \langle \chi,\lambda\rangle=\chi\circ\lambda\in\Hom(U(1),U(1))=\ZZ,
+    \qquad \chi\in X^*(T),\;\lambda\in X_*(T).
+  \]
+  这个配对就是电荷量子化与 Dirac 量子化的群论内容。
+\end{frame}
+
+\begin{frame}{GNO 对偶 $=$ 根数据对偶}
+  \srcp{13} GNO 观察到：对任何单群 $G$，存在另一个单群 $\gvee$ 与极大环面 $\Tvee$，使得
+  \[
+    \Hom(T,U(1))=\Hom(U(1),\Tvee),\qquad
+    \Hom(U(1),T)=\Hom(\Tvee,U(1)).
+  \]
+  用格写就是
+  \[
+    X^*(T)=X_*(\Tvee),\qquad X_*(T)=X^*(\Tvee).
+  \]
+  \begin{beizhu}
+  \textbf{批注（根数据）}\quad $G$ 的根数据是四元组 $(X^*(T),\Phi,X_*(T),\Phi^{\vee})$。
+  对偶根数据把两个格互换、把根与余根互换：
+  \[
+    (X^*(T),\Phi,X_*(T),\Phi^{\vee})\;\longmapsto\;
+    (X_*(T),\Phi^{\vee},X^*(T),\Phi).
+  \]
+  用 Cartan 矩阵说：$A_{ij}=\langle\alpha_i,\alpha_j^{\vee}\rangle$，对偶就是矩阵转置。
+  \end{beizhu}
+\end{frame}
+
+\begin{frame}{对偶群的例子与“三种对偶”}
+  \begin{columns}[T]
+  \begin{column}{0.46\textwidth}
+  \centering\small
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    $G$ & $\gvee$ \\
+    \midrule
+    $SU(N)$ & $PSU(N)$ \\
+    $Sp(n)$ & $SO(2n+1)$ \\
+    $Spin(2n)$ & $SO(2n)/\ZZ_2$ \\
+    $E_8,\;F_4,\;G_2$ & 自身 \\
+    \bottomrule
+  \end{tabular}
+  \end{column}
+  \begin{column}{0.52\textwidth}
+  \small
+  \textbf{三种“对偶”不要混：}
+  \begin{enumerate}
+    \item \textbf{GNO 对偶}：只由根数据决定，交换 $X^*$ 与 $X_*$。
+    \item \textbf{Langlands 对偶}：数论情形还要把 Galois 群（或 Weil 群）的作用加进来，
+      记 ${}^LG=\gvee\rtimes W_F$；分裂情形退化为 $\gvee$。
+    \item \textbf{电磁对偶}：指以 $G$ 与 $\gvee$ 为规范群的两个量子场论是同一个理论，
+      耦合互为倒数。
+  \end{enumerate}
+  \end{column}
+  \end{columns}
+  \vspace{0.4em}
+  三者共用符号 $\gvee$ 不是偶然：第 3 条之所以可能，正是因为第 1 条。
+\end{frame}
+
+\partframe{三}{Montonen--Olive 与十七年}
+
+\begin{frame}{Montonen--Olive 猜想}
+  \srcp{16} 规范群不同的规范理论在经典上并不等价。但 Montonen 与 Olive 提出，
+  它们在量子力学意义上可以等价：一个规范群是 $G$，另一个是 $\gvee$，两者量子等价，
+  但经典上不等价。
+  \vspace{0.4em}
+
+  这种等价应当把第一个理论里的电电荷映到第二个理论里的磁荷，反之亦然。
+  因此 Montonen--Olive 对偶也被称为\emph{电—磁对偶}。
+  \begin{beizhu}
+  \textbf{批注}\quad “经典不等价、量子等价”是这句话的全部力量所在：它断言的是
+  路径积分（而非作用量）层面的同一性。在 1977 年，这种断言没有任何直接证据。
+  \end{beizhu}
+\end{frame}
+
+\begin{frame}{耦合反演}
+  对偶应当把耦合常数反演：
+  \[
+    e^{\vee2}=\frac{4\pi}{e^2},
+  \]
+  其中 $e^{\vee}$ 是 $\gvee$ 理论的规范耦合。由于 $e$ 与 $e^{\vee}$ 不能同时很小，
+  这就解释了为什么对偶在经典层面看不出来：一侧弱耦合时，另一侧必是强耦合。
+  \begin{beizhu}
+  \textbf{批注（与今日约定的差别）}\quad 今天通用的写法是
+  $\tau=\frac{\theta}{2\pi}+\frac{4\pi\ii}{g^2}$，$S:\tau\mapsto-\frac{1}{n_g\tau}$；
+  $\theta=0$ 时给出 $g'^2=(4\pi)^2/g^2$，与原文差一个 $4\pi$ 因子，来自 $e$ 的定义。
+  对偶的实质是“耦合取倒数”，系数依归一化而定。
+  \end{beizhu}
+\end{frame}
+
+\begin{frame}{当时看起来有多狂野}
+  \srcp{17} 要恰当地传达 Montonen--Olive 猜想在当时显得多么狂野，是很难的。
+  量子规范理论当时只在很小的 $e$ 下被理解，而大 $e$、量子效应很大的区域，
+  真正是一片未知之地（\emph{terra incognita}）。
+  \vspace{0.5em}
+
+  这个猜想看起来像是一跃，不仅跳出了我们已经理解的范围，而且跳出了我们可能理解的范围。
+  但无论如何，Montonen 与 Olive 有一些引人注目的可能证据：他们证明，某些关于
+  各种粒子（带电荷和/或磁荷）质量的经典公式，满足一些关系；这些关系若在量子力学
+  意义上成立，就会从他们的对偶猜想推出。
+\end{frame}
+
+\begin{frame}{伦敦：两个疑点}
+  \srcp{18} 我听 Atiyah 的建议，安排去伦敦找 Olive 谈，但等我到那里的时候，我已经相当怀疑了。
+  \begin{enumerate}
+    \item 让我不安的是 GNO 那篇论文：电与磁的匹配只有在希格斯化之后——也就是约化到
+      极大环面之后——才成立。我觉得一个根本性的陈述不应当依赖于这种希格斯化。
+    \item 让我不安的是 Montonen--Olive 那篇论文的另一点：他们在技术上假定“希格斯势”为零，
+      而按一切标准逻辑，这个假定在量子力学上是不自洽的。
+  \end{enumerate}
+  \vspace{0.4em}
+  第一个疑点，近三十年后才解决；第二个，Witten 与 Olive 在超对称版本里解决了。
+\end{frame}
+
+\begin{frame}{与 Olive 的合作：中心荷}
+  \srcp{19} 我们决定研究这个猜想的超对称版本。在超对称理论里，BPS 界使一些质量公式
+  不受量子修正，这正是 MO 所需要的那种“刚性”。
+  \vspace{0.4em}
+
+  超对称代数被拓扑荷修正：
+  \[
+    \{Q_\alpha,\bar Q_{\dot\beta}\}=2\sigma^\mu_{\alpha\dot\beta}P_\mu,
+    \qquad
+    \{Q^i_{\dot A},Q^j_{\dot B}\}=\varepsilon_{\dot A\dot B}\,\varepsilon^{ij}\,Z ,
+  \]
+  其中中心荷 $Z$ 由拓扑荷（磁荷、电电荷）给出。于是
+  \[
+    M\ge |Z|,
+  \]
+  等号在 BPS 态上成立；而单极子恰是 BPS 态。
+\end{frame}
+
+\begin{frame}{Witten--Olive 1978}
+  \begin{tcolorbox}[enhanced,colback=black!3,colframe=black!3,boxrule=0pt,left=7pt,right=7pt,top=5pt,bottom=5pt,fontupper=\small]
+  \emph{We show that in supersymmetric theories with solitons, the usual supersymmetry
+  algebra is not valid; the algebra is modified to include the topological quantum numbers
+  as central charges. Using the corrected algebra, we are able to show that in certain four
+  dimensional gauge theories, there are no quantum corrections to the classical mass
+  spectrum. These are theories for which Bogomolny has derived a classical bound; the
+  argument involves showing that Bogomolny's bound is valid quantum mechanically and that
+  it is saturated.}
+  \end{tcolorbox}
+  \vspace{0.3em}
+  {\small 中文：我们证明，在带孤子的超对称理论里，通常的超对称代数不成立；代数被修正为
+  把拓扑量子数包含为中心荷。用修正后的代数可以证明：在某些四维规范理论里，经典质量谱
+  没有量子修正——这些正是 Bogomolny 给出经典界的理论。论证的关键是证明 Bogomolny 界
+  在量子层面成立并被饱和。}
+\end{frame}
+
+\begin{frame}{一个错误的结论}
+  \srcp{20} 但那篇论文可能是到此为止我写得最重要的一篇。\emph{但我从中得出了错误的结论。}
+  \vspace{0.4em}
+
+  我以为，我们不靠他们那个激进的对偶假设，就解释了 Montonen 与 Olive 的公式，
+  所以对偶并没有真正的证据。
+  \begin{beizhu}
+  \textbf{批注}\quad 这是整场演讲最诚实的一段：BPS 论证确实解释了质量公式，但它解释的是
+  “为什么公式对”，而不是“为什么两个理论是同一个理论”。两者的区别，要等到 1994 年
+  Sen 的检验才被真正分开。
+  \end{beizhu}
+\end{frame}
+
+\begin{frame}{Osborn：只有 $\cN=4$}
+  \srcp{22} Hugh Osborn 更仔细地看了单极子的量子化，发现只有 $\cN=4$ 理论
+  （而不是 Olive 和我考虑的更一般的 $\cN=2$ 理论）才具有 Montonen--Olive 对偶所需性质。
+  \vspace{0.5em}
+  \begin{tcolorbox}[enhanced,colback=black!3,colframe=black!3,boxrule=0pt,left=7pt,right=7pt,top=5pt,bottom=5pt,fontupper=\small]
+  \emph{The central charges in the supersymmetry algebra of the $\cN=4$ supersymmetry
+  gauge theory are obtained. When spontaneous symmetry breaking is imposed it is shown
+  that the spins of the topological monopole states should be identical to those of the
+  massive elementary particles.}
+  \end{tcolorbox}
+  \vspace{0.2em}
+  {\small 中文：得到 $\cN=4$ 超对称规范理论代数中的中心荷。施加自发对称破缺后可以证明，
+  拓扑单极子态的 spins 应当与有质量基本粒子的自旋完全相同。}
+\end{frame}
+
+\begin{frame}{$\cN=1,2,4$ 与三个除法代数}
+  \srcp{19} 超对称理论按 $\cN=1,2,4$ 分类：
+  \begin{itemize}
+    \item $\cN=4$：给定规范群后理论唯一（只有耦合常数）；
+    \item $\cN=2$：高度受限，但仍有物质多重态与 Coulomb 分支的自由；
+    \item $\cN=1$：更松。
+  \end{itemize}
+  极粗略地说，$\cN=1,2,4$ 分别对应复数、四元数、八元数。
+  \begin{beizhu}
+  \textbf{批注}\quad 这是一个助记，不是定理：严格的对应是“超荷数 $4\cN$”与 R-对称群；
+  与除法代数的关系在不同维数下形式不同（例如十维的 $\cN=1$ 与八元数）。
+  演讲里用它，只是为了让“$\cN=4$ 最特殊”这件事有个直观。
+  \end{beizhu}
+\end{frame}
+
+\begin{frame}{为什么必须是 $\cN=2$ 或 $\cN=4$：BPS 多重态}
+  \begin{itemize}
+    \item 单极子是延展对象（拓扑孤子），它的质量由 Bogomolny 界给出；
+    \item 要让它在量子层面“不重”，它必须是 BPS 态，即处于短多重态；
+    \item $\cN=2$：单极子（磁）与 W-玻色子（电）属于不同的短多重态，自旋内容不匹配；
+    \item $\cN=4$：单极子与规范玻色子落在同一类短多重态里，Osborn 算出的自旋谱恰好一致。
+  \end{itemize}
+  \vspace{0.4em}
+  这就是为什么 Montonen--Olive 对偶在 $\cN=4$ 里最干净：它是一个关于\emph{同一个}
+  超共形场论在弱耦合与强耦合下的两种描述。
+\end{frame}
+
+\begin{frame}{$U(1)$ 自由理论：Hodge 对偶的量子版本}
+  \srcp{23} 当年我们仍然怀疑。但 $U(1)$ 的自由理论（没有带电场）确实有对偶：
+  它是调和形式 Hodge 对偶 $F\mapsto\star F$ 的量子版本，不需要任何超对称。
+  \[
+    F\;\longmapsto\;\star F,\qquad
+    \text{能量}\;\int F\wedge\star F\;\text{不变},\qquad
+    \text{磁荷}\;\leftrightarrow\;\text{电电荷}.
+  \]
+  \begin{beizhu}
+  \textbf{批注}\quad 在四维，$\star:\Omega^2\to\Omega^2$，$\star^2=1$（Lorentz 号差下
+  $\star^2=-1$，欧氏下 $+1$）。自由 $U(1)$ 的对偶因此是“线性”的，可以逐点验证；
+  难的是有物质、有自相互作用的情形。
+  \end{beizhu}
+\end{frame}
+
+\partframe{四}{单极子的几何}
+
+\begin{frame}{奇点往往只是描述不完备}
+  \srcp{25} 我们所知道的物理方程并不完备；通常，一个物理问题的某种描述里的“奇点”，
+  实际上是空间或时空中这样一块区域：在那里，给定的描述层次失效了，需要更完备的描述。
+  \vspace{0.5em}
+
+  比如，电磁学在经典上——甚至在量子电动力学里——被描述为 $U(1)$ 规范理论；
+  但在标准模型里，事实证明更完备的描述要求规范群是 $U(2)$，并带一个“希格斯机制”，
+  用它来解释为什么这个理论对许多目的而言可以近似地当作 $U(1)$ 规范理论。
+  \begin{beizhu}
+  \textbf{批注}\quad 这句话是理解 't Hooft--Polyakov 单极子的钥匙：Dirac 单极子的奇点，
+  不是“场不存在”，而是“$U(1)$ 这一层描述不够用”。
+  \end{beizhu}
+\end{frame}
+
+\begin{frame}{'t Hooft--Polyakov 单极子：把奇点抹平}
+  \srcp{26} 1970 年代初，'t Hooft 与 A. M. Polyakov 证明：如果把 $U(1)$ 规范理论换成一个
+  带“希格斯化”到 $U(1)$ 的 $SU(2)$ 规范理论——意思是，在低能观测中规范群被有效地约化到
+  $U(1)$——那么单极子就可以有一个完全光滑的描述。
+  \vspace{0.4em}
+
+  在这个描述里（而且是在 $e$ 很小的时候！），单极子对应于一个非线性偏微分方程的解。
+  \[
+    \begin{cases}
+      D_\mu\phi=0\ \text{的静态解},\quad \phi\in\Gamma(\ad E),\\
+      |\phi|\to v\neq0\quad (|x|\to\infty),\\
+      \text{磁荷}\;m=\deg\big(\phi/|\phi|:S^2_\infty\to S^1\big)\in\ZZ .
+    \end{cases}
+  \]
+\end{frame}
+
+\begin{frame}{Bogomolny 方程}
+  \srcp{27} 描述单极子的最简单方程是“Bogomolny 方程”（由 E. B. Bogomolny 引入）：
+  关于 $G$-丛 $E\to\RR^3$ 上的联络 $A$ 与取值于伴随丛 $\ad(E)$ 的零形式 $\phi$
+  （“希格斯场”）的方程
+  \[
+    F=\star\,\dd_A\phi .
+  \]
+  这个方程算是四维瞬子方程在三维的某种表亲。
+  \begin{beizhu}
+  \textbf{批注}\quad 四维自对偶方程是 $F=\star F$（$\star$ 作用于二形式）；
+  把它放在 $\RR^4=\RR\times\RR^3$ 上并要求 $\partial_t=0$、$A_t=\phi$，就得到
+  $F_{ij}=\varepsilon_{ijk}D_k\phi$，即 $F=\star\dd_A\phi$。
+  \end{beizhu}
+\end{frame}
+
+\begin{frame}{BPS 界：为什么 $F=\star\dd_A\phi$ 是最省能量的}
+  能量（静态，$\RR^3$ 上）是
+  \[
+    E=\int_{\RR^3}\big(|F|^2+|D\phi|^2\big)\,\dd^3x .
+  \]
+  把它配方：
+  \[
+    E=\int|F-\star D\phi|^2+2\int F\wedge D\phi
+     =\int|F-\star D\phi|^2+2\int_{S^2_\infty}\phi\,F .
+  \]
+  后一项是拓扑的：$\phi\to v$ 在无穷远处，$\int_{S^2}F=2\pi m$，所以
+  \[
+    E\ge 4\pi v\,|m|,
+  \]
+  等号成立当且仅当 $F=\star D\phi$。这就是 Bogomolny 界，也是 BPS 态的几何来源。
+\end{frame}
+
+\begin{frame}{模空间与超 Kähler}
+  \srcp{27} Bogomolny 方程的解模去规范变换，得到一个模空间 $\cM_m$。
+  \begin{itemize}
+    \item $\cM_m$ 是超 Kähler 流形：它有三个复结构 $I,J,K$，满足四元数关系；
+    \item 来源：Bogomolny 方程 $F=\star\dd_A\phi$ 的三个实分量，恰是三个矩映射方程
+      $\mu_I=\mu_J=\mu_K=0$；
+    \item 因此 $\cM_m=\mu^{-1}(0)/\mathcal{G}$，是一个超 Kähler 商。
+  \end{itemize}
+  \[
+    \dim_{\RR}\cM_m=4\,|m|\,.
+  \]
+  磁荷 $2$ 的“约化”模空间（把质心平移模掉）是四维的。
+\end{frame}
+
+\begin{frame}{Atiyah--Hitchin 流形}
+  \srcp{27} 对磁荷 $2$，Atiyah 与 Hitchin 显式地描述了这个四维模空间。
+  这就是 \emph{Atiyah--Hitchin 流形}：一个四维超 Kähler 流形，带 $SO(3)$ 对称性。
+  \begin{itemize}
+    \item 它是第一个“非平凡”的完备超 Kähler 四维流形：度量显式、渐近锥形；
+    \item 它的 $L^2$ 调和形式可以逐项算出来——这正是 1994 年 Sen 所需的“工具”；
+    \item 它也是 Hitchin 系统在 $g=0$、带奇点时的原型。
+  \end{itemize}
+  \begin{beizhu}
+  \textbf{批注}\quad 完整的 2-单极子模空间是 $\RR^3\times(\text{A--H 流形})$ 的商，
+  $\RR^3$ 记录质心；A--H 流形记录“相对位置”与“相对相位”。四维、超 Kähler、
+  $SO(3)$ 等距，这三点使 Sen 的构造成为可能。
+  \end{beizhu}
+\end{frame}
+
+\begin{frame}{Donaldson 理论：$=$ 扭曲的 $\cN=2$}
+  \srcp{28} 同一时期的另一项发展也受 Atiyah 影响：用非阿贝尔瞬子构造光滑四维流形的
+  Donaldson 理论。Atiyah 建议把它当作一个物理学家的问题来理解。
+  \vspace{0.4em}
+
+  到 1988 年，事情已经清楚：Donaldson 理论可以被理解为 $\cN=2$ 超杨--米尔斯理论的
+  “扭曲版本”。$\cN=2$ 超杨--米尔斯几乎就是可能有 Montonen--Olive 对偶的候选者：
+  它满足 Olive 和我的判据，但不满足 Osborn 那个更精细的判据。
+  \begin{beizhu}
+  \textbf{批注（拓扑扭曲）}\quad 扭曲的做法：把 Lorentz 群与 R-对称群的一个 $U(1)$
+  对角化，使一个超荷成为标量并 nilpotent。于是作用量里的应力张量变成恰当形式，
+  理论对度规不敏感——这正是拓扑场论。
+  \end{beizhu}
+\end{frame}
+
+\input{parts/p5}
+\input{parts/p6}
+\input{parts/p7}
+\end{document}
