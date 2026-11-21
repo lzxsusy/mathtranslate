@@ -63,6 +63,40 @@ def tracked_files():
     ]
 
 
+def tracked_bytes():
+    """按索引里的 blob 计字节，与 `build_manifest.py` 的 total_bytes 同源。
+
+    工作区字节会随 CRLF 转换、未暂存改动而偏离仓库实际内容，故不用 getsize。
+    """
+    out = git("ls-files", "-s", "-z")
+    pairs = []
+    for rec in out.split(b"\0"):
+        if not rec:
+            continue
+        meta, _, path = rec.partition(b"\t")
+        parts = meta.split()
+        if len(parts) < 2:
+            continue
+        rel = path.decode("utf-8", "replace")
+        if rel in STATS_SKIP:
+            continue
+        pairs.append((parts[1].decode(), rel))
+    if not pairs:
+        return 0
+    query = ("\n".join(h for h, _ in pairs) + "\n").encode()
+    try:
+        res = subprocess.run(["git", "-C", REPO, "cat-file", "--batch-check"],
+                             input=query, capture_output=True, check=True)
+    except (OSError, subprocess.CalledProcessError):
+        return 0
+    sizes = {}
+    for line in res.stdout.decode("utf-8", "replace").splitlines():
+        parts = line.split()
+        if len(parts) == 3 and parts[1] == "blob":
+            sizes[parts[0]] = int(parts[2])
+    return sum(sizes.get(h, 0) for h, _ in pairs)
+
+
 def count_tree(path):
     n = b = 0
     for dp, dn, fn in os.walk(path):
@@ -288,12 +322,13 @@ def compute():
     files = tracked_files()
     if files:
         n = len(files)
-        b = 0
-        for rel in files:
-            try:
-                b += os.path.getsize(os.path.join(REPO, rel))
-            except OSError:
-                continue
+        b = tracked_bytes()
+        if not b:  # 极老 git / cat-file 不可用时退回工作区
+            for rel in files:
+                try:
+                    b += os.path.getsize(os.path.join(REPO, rel))
+                except OSError:
+                    continue
     else:  # 没有 git 时退回工作区
         n, b = count_tree(REPO)
     stats = OrderedDict()
