@@ -11,7 +11,7 @@
 
 两个簇 $X,Y$ 的导出等价是 $D^b(X)\simeq D^b(Y)$ 的三角等价。Fourier–Mukai 函子以核 $\mathcal P\in D^b(X\times Y)$ 给出 $\Phi_{\mathcal P}(-)=R\pi_{2*}(\mathcal P\otimes L\pi_1^*(-))$；很多导出等价都来自这种核。
 
-**记号**：$D^b(X)$ 是 $X$ 上相干层的导出范畴；$\pi_1,\pi_2$ 是投影。
+**记号**：$D^b(X)$ 是 $X$ 上凝聚层的导出范畴；$\pi_1,\pi_2$ 是投影。
 
 ## 关键点
 
@@ -46,8 +46,8 @@ D^b(X)\simeq D^b(Y)
 ## 出处
 
 - Raf Bocklandt《同调镜像对称性浅入门》中译校订本（据 CUP 2021 英文版） §7.3；锚点 `08_source_code/SY01-17_同调镜像对称性浅入门/源码/chapters/ch07.tex:1267-1857`
-- 原书页码从略：本机无英文原书与页面图像，只以中译本节号与源码行号定位。
+- 原书页码从略；本卡锚定中译校定本（2026-11-21 第三轮校定）的节号与源码行号，正文已对照 CUP 2021 英文原书核验。
 
 ---
 
-权利：`rewritten`；核验：`source-only`。
+权利：`rewritten`；核验：`source-verified`。

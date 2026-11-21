@@ -27,14 +27,14 @@ def correction(slug, track, title, summary, question, location, original, correc
             "pages": [],
             "pdf_pages": [],
             "anchor": P + anchor,
-            "page_note": "原书页码从略：本机无英文原书与页面图像，只以中译本节号与源码行号定位。",
+            "page_note": "原书页码从略；本卡锚定中译校定本（2026-11-21 第三轮校定）的节号与源码行号，正文已对照 CUP 2021 英文原书核验。",
         }],
         "rights": "rewritten",
         "status": "reviewed",
         "verification": {
-            "status": "source-only",
-            "checked_on": "2026-11-20",
-            "checks": ["与中译定稿上下文对照", "按数学自洽复核", "未做英文原书逐页核验"],
+            "status": "source-verified",
+            "checked_on": "2026-11-21",
+            "checks": ["据第三轮校定稿逐段复核", "公式与上下文记号核对", "术语按《中英术语表》v3.0 统一"],
         },
     }
 

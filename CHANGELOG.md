@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## SY01-17《同调镜像对称性浅入门》第四轮校订：首次对照英文原书 +《中英术语表》v4.0 — 2026-11-21
+
+- **首次对照原书**：取得 CUP 2021 原书 PDF（365 页扫描本），按页切分交 12 名审稿人逐段对照中译复核，主校逐条复核；逐章修订 **101 处**（各章 6/7/5/3/10/22/4/18/6/7/8/5），逐条见 `工程文件/work/review3/chNN.json`。
+- **术语统一 208 处**：解消→消解 11、保典解消→crepant 消解 3、泛型→通有 20、温和代数→gentle 代数 68、相干层/拟相干层→凝聚层/拟凝聚层 97、吹起→爆破 7、区分三角→正合三角 1、盘泡→圆盘泡 1；索引键同步改写。
+- **阿米巴译注**：第 8 章首见处加脚注（amoeba 源自希腊语「变形虫」，复环面超曲面在逐坐标对数映射下的像，Gelfand–Kapranov–Zelevinsky 引入）；`frontmatter_note.tex` 补术语说明。
+- **新编《中英术语表》** `术语表.md`：323 条、30 条关键术语释义、保留英文清单、变更记录、外部依据、附录 A 分章表、附录 B 英文索引；机器可读 `glossary.tsv`。香蕉空间核对：箭图/环簇/三角范畴（正合三角）/镜像对称条目；amoeba 无条目，故保留并释义。
+- **编译级修复**：第 6 章 `% [Tutor Note: ...]` 与正文同行导致整句被注释吞掉，已拆行；ch05 例题编号按原书统一为 5.9/5.13。
+- **资料卡**：`datasets/sy0117` 增至 **36 张**（24 概念 + 12 勘误），新增 amoeba、toric-variety、crepant-resolution、gentle-algebra；全部锚点按本轮行号重锚，`make_cards.py --check` 通过。
+- **编译**：365 页，0 未定义引用、0 重复书签、1 Overfull hbox、0 缺字；成品 20,224,211 B（sha256 前缀 `efa03fe0`），按纪律不入 git。
+- **同步**：`08_source_code/SY01-17_…/{源码,工程文件,投稿信息.md}`、`03_translations_meta/SY01-17/`、`datasets/sy0117/`、`RELEASE_REGISTER.csv`；`工程文件/README.md` 升 v4.0。
+
 ## SY01-26 增补：五次三维簇瞬子数的可复现计算包 + 附录 C 新译注 — 2026-11-21
 
 - **可复现计算包** `工程文件/核对与复算/quintic_gw/`：两个互相独立的程序从 §5.6.4 式 (5.72) 出发重算 $n_1,\dots,n_{10}$——`quintic_gw.py`（纯标准库、有理数精确算术 + Lagrange 反演，0.01 s）与 `quintic_gw_contour.py`（mpmath 60 位、围道积分 + 牛顿迭代，约 40 s），结果与文献及第 2 章表格逐位一致；附 `README.md`（公式推导、运行方法、网上现成程序调查：Gathmann 的 Maple 脚本、Straat 论文的 `quintic.py`、Rust crate 硬编码表）与实跑输出 `out_exact.txt`／`out_contour.txt`。

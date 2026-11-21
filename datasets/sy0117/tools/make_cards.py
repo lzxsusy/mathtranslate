@@ -13,15 +13,16 @@ import sys
 
 from cards_concepts import CONCEPTS
 from cards_concepts2 import CONCEPTS_2
+from cards_concepts3 import CONCEPTS_3
 from cards_corrections import CORRECTIONS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(HERE)))
-CARDS = CONCEPTS + CONCEPTS_2 + CORRECTIONS
+CARDS = CONCEPTS + CONCEPTS_2 + CONCEPTS_3 + CORRECTIONS
 ANN_TYPES = {"易错预警", "含糊点拨", "背景直觉"}
 STATUSES = {"draft", "reviewed", "published"}
-VERIF = {"external-confirmed", "source-only", "rejected"}
+VERIF = {"external-confirmed", "source-verified", "source-only", "rejected"}
 errors = []
 warnings = []
 
@@ -182,7 +183,7 @@ def main(check):
             print("WARN " + w)
         return 1
     print("OK %d cards (%d concepts, %d corrections)" % (
-        len(CARDS), len(CONCEPTS) + len(CONCEPTS_2), len(CORRECTIONS)))
+        len(CARDS), len(CONCEPTS) + len(CONCEPTS_2) + len(CONCEPTS_3), len(CORRECTIONS)))
     for w in warnings:
         print("WARN " + w)
     if check:
@@ -236,7 +237,7 @@ def main(check):
         lines.append("| %s | %s | %s | %s | `%s` |" % (
             c["track"], c["type"], c["title"], s["section"], s["anchor"]))
     lines += ["", "共 %d 张：概念 %d、勘误 %d。" % (
-        len(CARDS), len(CONCEPTS) + len(CONCEPTS_2), len(CORRECTIONS)), ""]
+        len(CARDS), len(CONCEPTS) + len(CONCEPTS_2) + len(CONCEPTS_3), len(CORRECTIONS)), ""]
     with io.open(os.path.join(ROOT, "MAP.md"), "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(lines))
     return 0

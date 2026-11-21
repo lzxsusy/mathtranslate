@@ -7,7 +7,7 @@
 | 第1章 | concept | 加法完备化与分裂完备化 | §1.4–1.5 | `08_source_code/SY01-17_同调镜像对称性浅入门/源码/chapters/ch01.tex:218-329` |
 | 第1章 | concept | Morita 等价 | §1.6 | `08_source_code/SY01-17_同调镜像对称性浅入门/源码/chapters/ch01.tex:330-481` |
 | 第2章 | concept | 链复形与上同调 | §2.1 | `08_source_code/SY01-17_同调镜像对称性浅入门/源码/chapters/ch02.tex:5-191` |
-| 第2章 | concept | Ext 群与扩张 | §2.3 | `08_source_code/SY01-17_同调镜像对称性浅入门/源码/chapters/ch02.tex:474-771` |
+| 第2章 | concept | Ext 群与扩张 | §2.3 | `08_source_code/SY01-17_同调镜像对称性浅入门/源码/chapters/ch02.tex:474-773` |
 | 第3章 | concept | A∞ 代数 | §3.1 | `08_source_code/SY01-17_同调镜像对称性浅入门/源码/chapters/ch03.tex:7-369` |
 | 第3章 | concept | 扭曲复形与预范畴 | §3.3 | `08_source_code/SY01-17_同调镜像对称性浅入门/源码/chapters/ch03.tex:637-1286` |
 | 第4章 | concept | 箭图表示与路径代数 | §4.1 | `08_source_code/SY01-17_同调镜像对称性浅入门/源码/chapters/ch04.tex:4-205` |
@@ -22,6 +22,10 @@
 | 第10章 | concept | 分次曲面与线场 | §10.1 | `08_source_code/SY01-17_同调镜像对称性浅入门/源码/chapters/ch10.tex:5-189` |
 | 第11章 | concept | Bridgeland 稳定条件 | §11.3 | `08_source_code/SY01-17_同调镜像对称性浅入门/源码/chapters/ch11.tex:375-570` |
 | 第12章 | concept | 带标记曲面的同调镜像对称 | §12.6 | `08_source_code/SY01-17_同调镜像对称性浅入门/源码/chapters/ch12.tex:1037-1249` |
+| 第8章 | concept | 阿米巴（amoeba） | §8.2 | `08_source_code/SY01-17_同调镜像对称性浅入门/源码/chapters/ch08.tex:440-470` |
+| 第8章 | concept | 环簇与扇 | §8.1 | `08_source_code/SY01-17_同调镜像对称性浅入门/源码/chapters/ch08.tex:180-230` |
+| 第8章 | concept | crepant 消解 | §8.3 | `08_source_code/SY01-17_同调镜像对称性浅入门/源码/chapters/ch08.tex:570-600` |
+| 第9章 | concept | gentle 代数 | §9.1 | `08_source_code/SY01-17_同调镜像对称性浅入门/源码/chapters/ch09.tex:4-70` |
 | 第1章 | correction | Top_* 的态射漏了“连续” | §1.1 | `08_source_code/SY01-17_同调镜像对称性浅入门/源码/chapters/ch01.tex:27-31` |
 | 第2章 | correction | 面映射的几何实现漏了 x_0 | §2.2 | `08_source_code/SY01-17_同调镜像对称性浅入门/源码/chapters/ch02.tex:232-236` |
 | 第3章 | correction | Hochschild 同伦的左下块符号 | §3.2 | `08_source_code/SY01-17_同调镜像对称性浅入门/源码/chapters/ch03.tex:1058-1064` |
@@ -35,4 +39,4 @@
 | 第11章 | correction | 有限生成模不都同构于 R 与 S^λ 的直和 | §11.1 | `08_source_code/SY01-17_同调镜像对称性浅入门/源码/chapters/ch11.tex:28-36` |
 | 第12章 | correction | 未定义的 Λ_Z 应为 E_Z^± | §12.4 | `08_source_code/SY01-17_同调镜像对称性浅入门/源码/chapters/ch12.tex:578-586` |
 
-共 32 张：概念 20、勘误 12。
+共 36 张：概念 24、勘误 12。

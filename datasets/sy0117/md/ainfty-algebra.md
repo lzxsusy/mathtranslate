@@ -46,8 +46,8 @@ A∞ 代数 $A$ 带分次模与运算 $\mu_n\colon A^{\otimes n}\to A$（$n\ge1$
 ## 出处
 
 - Raf Bocklandt《同调镜像对称性浅入门》中译校订本（据 CUP 2021 英文版） §3.1；锚点 `08_source_code/SY01-17_同调镜像对称性浅入门/源码/chapters/ch03.tex:7-369`
-- 原书页码从略：本机无英文原书与页面图像，只以中译本节号与源码行号定位。
+- 原书页码从略；本卡锚定中译校定本（2026-11-21 第三轮校定）的节号与源码行号，正文已对照 CUP 2021 英文原书核验。
 
 ---
 
-权利：`rewritten`；核验：`source-only`。
+权利：`rewritten`；核验：`source-verified`。

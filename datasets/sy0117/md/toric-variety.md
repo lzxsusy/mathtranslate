@@ -1,0 +1,53 @@
+# 环簇与扇
+
+- **id**：`sy0117/concept/toric-variety`
+- **类型**：concept
+- **章**：第8章
+- **问题**：为什么一组锥（扇）就能唯一确定一个代数簇？
+
+> 环簇是以代数环面为稠密开子集的代数簇，完全由扇（整锥的集合）这组组合数据决定。
+
+## 定义
+
+设 $N\cong\mathbb Z^n$，$M=\operatorname{Hom}(N,\mathbb Z)$。$N_{\mathbb R}$ 中的**整锥**是 $\sigma=\{\sum a_i v_i:a_i\ge0\}$（$v_i\in N$ 有限个）且 $\sigma\cap(-\sigma)=\{0\}$。**扇** $\Delta$ 是整锥的集合：每个锥的面仍在 $\Delta$ 中，任两锥之交是公共面。对每个 $\sigma$ 取 $R_\sigma=\mathbb C[\sigma^\vee\cap M]$、$U_\sigma=\operatorname{Spec}R_\sigma$；若 $\tau$ 是 $\sigma$ 的面，则 $U_\tau\subset U_\sigma$ 是开子集。沿这些包含关系粘合，得到**环簇** $X_\Delta=\bigcup_\sigma U_\sigma$。
+
+**记号**：$\sigma^\vee=\{m\in M_{\mathbb R}:\langle m,v\rangle\ge0\ \forall v\in\sigma\}$；$X_\Delta$ 含环面 $T=N\otimes\mathbb C^*$ 作为稠密开子集。
+
+## 关键点
+
+- $\Delta$ 的 $k$ 维锥对应 $X_\Delta$ 中余维 $k$ 的轨道闭包。
+- 射影空间 $\mathbb P^n$ 对应以 $\mathbb R^{n+1}$ 中标准基向量张成的锥及其面组成的扇。
+- 环簇的除子、线丛、上同调都可由扇的组合数据读出；这是环簇几何“组合化”的核心。
+
+## 公式
+
+```latex
+X_\Delta=\bigcup_{\sigma\in\Delta}U_\sigma
+```
+```latex
+R_\sigma=\mathbb C[\sigma^\vee\cap M]
+```
+
+## 常见错误
+
+- 把“扇”理解成一组孤立的锥：必须封闭于取面，且两两相交于公共面。
+- 忘记整性：锥的生成元要落在格 $N$ 里，否则粘出来的不是簇而是栈。
+
+## 批注
+
+### 含糊点拨：扇为什么够用
+
+每个 $U_\sigma$ 是仿射簇，$U_\tau\to U_\sigma$ 是局部化给出的开浸入；扇的公理恰好保证这些开浸入能无矛盾地粘合。
+
+### 背景直觉：环簇是“带组合骨架的射影空间”
+
+$\mathbb P^n$ 的扇由 $n+1$ 个射线锥组成；把扇细分（加射线）对应环簇的双有理修改，例如爆破。
+
+## 出处
+
+- Raf Bocklandt《同调镜像对称性浅入门》中译校订本（据 CUP 2021 英文版） §8.1；锚点 `08_source_code/SY01-17_同调镜像对称性浅入门/源码/chapters/ch08.tex:180-230`
+- 原书页码从略；本卡锚定中译校定本（2026-11-21 第三轮校定）的节号与源码行号，正文已对照 CUP 2021 英文原书核验。
+
+---
+
+权利：`rewritten`；核验：`source-verified`。

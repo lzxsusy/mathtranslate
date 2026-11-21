@@ -47,12 +47,16 @@
 ## 第8章
 
 - `sy0117/concept/lg-model` Landau–Ginzburg 模型与矩阵分解（concept）
+- `sy0117/concept/amoeba` 阿米巴（amoeba）（concept）
+- `sy0117/concept/toric-variety` 环簇与扇（concept）
+- `sy0117/concept/crepant-resolution` crepant 消解（concept）
 - `sy0117/correction/normal-vector` 第三边法向量符号写反（correction）
 
 ## 第9章
 
 - `sy0117/concept/orbifold` 轨形与惯性叠（concept）
 - `sy0117/concept/dimer` 二聚体模型（concept）
+- `sy0117/concept/gentle-algebra` gentle 代数（concept）
 - `sy0117/correction/r12-label` MF 的交集环应为 R_12（correction）
 
 ## 第10章
