@@ -13,7 +13,7 @@ Gaiotto–Moore–Neitzke（GMN）是 2008–2013 年间把 **4d N=2 超对称�
 | 篇 | 编号 | 原文 | 页数 | 状态 |
 |---|---|---|---:|---|
 | GMN1 | SY01-27 | Four-dimensional wall-crossing via three-dimensional field theory（arXiv:0807.4723v3） | 66 | **译文 v1.0 完成**（65 页）+ 资料卡五件套 + 阅读报告 |
-| GMN2 | SY01-28（预留） | Wall-crossing, Hitchin Systems, and the WKB Approximation（arXiv:0907.3987v2） | 180 | 立项中 |
+| GMN2 | SY01-28 | Wall-crossing, Hitchin Systems, and the WKB Approximation（arXiv:0907.3987v2） | 180 | **译文 v1.0 完成**（169 页）+ 资料卡五件套 + 阅读报告 |
 | GMN3 | SY01-29（预留） | Framed BPS States（arXiv:1006.0146v2） | 124 | 未开始 |
 | GMW1 | SY03-（预留） | An Introduction to the Web-Based Formalism（arXiv:1506.04086v2） | 51 | **推迟**：等地基文献齐备（导读版） |
 | GMW2 | SY03-（预留） | Algebra of the Infrared（arXiv:1506.04087v1） | 430 | **推迟**：等地基文献齐备（详细版） |
@@ -43,6 +43,7 @@ Gaiotto–Moore–Neitzke（GMN）是 2008–2013 年间把 **4d N=2 超对称�
 ├─ README.md                     ← 本文件（系列总纲与索引）
 ├─ 研究笔记/
 │   ├─ GMN1_阅读报告.md          ← 十节深版：没读原文也能掌握"怎么证明的"
+│   ├─ GMN2_阅读报告.md          ← 十节深版：Hitchin/WKB/谱网络/谱生成元
 │   └─ 00_交接说明.md            ← 给下一个 agent 的交接（读序、任务、硬约束、教训）
 └─ 术语/
     └─ glossary_master.tsv       ← 全系列冻结术语（100 条，带依据列）
@@ -81,5 +82,7 @@ Gaiotto–Moore–Neitzke（GMN）是 2008–2013 年间把 **4d N=2 超对称�
 
 - **2026-11-21**：GMN1 全译完成（65 页，0 error，297 个编号逐节对齐），
   资料卡五件套、阅读报告、交接说明、术语 100 条全部入库。
-- 下一步：GMN2 立项与 §1 样板章（已由第二棒 agent 启动）；随后按 `排期.md` 逐块推进。
+- **2026-11-21 晚**：GMN2 全译完成（170 页，534 个编号公式逐节对齐，0 error/0 overfull），
+  19 块并行译毕；GMN3 立项与 §1 样板章启动中。
+- 地基文献库：33 条清单、29 篇 PDF 入 `00_原文/基础文献/`（8 主题 + 摘要），见施工目录。
 - 每篇完成后在此表回填编号与状态，并在 `RELEASE_REGISTER.csv` 登记。

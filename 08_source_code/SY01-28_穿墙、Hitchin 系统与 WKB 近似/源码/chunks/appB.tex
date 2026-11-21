@@ -1,0 +1,103 @@
+% =====================================================================
+%  GMN2 附录 B  计算哈密顿流（Computing the Hamiltonian flows）
+%  原文：wkb-paper.tex 9525–9671 行；BRIEF 印刷页 169–171（ch19 块，整块 28 式）；编号公式 (B.1)–(B.17) 共 17 条
+%  块内公式全在本文件，\eqref 可用；跨块引用（(4.10)、第 5.4 节）硬编码原文编号并加 % TODO
+% =====================================================================
+
+\section{计算哈密顿流}
+\label{app:poorman}
+
+我们先作一个辅助计算。取一条路径 $\gamma$，参数化为 $z(t)$，$0\le t\le 1$；令 $z_i=z(0)$、$z_j=z(1)$。眼下先把这两点都取作正则点。设 $s_i$ 与 $s_j$ 是沿 $\gamma$ 的两个平坦截面，其边界条件固定为 $s_i(t=0)=d_i$ 与 $s_j(t=1)=d_j$。给定这两个截面，就可以考虑 $\wedge^2(V)$ 的截面 $s_i\wedge s_j$。为方便起见，我们再取 $\wedge^2(V^*)$ 的一个平坦截面 $\eps$（体积形式）；这总是做得到的，因为 $\CA$ 取值于 $sl(2)$。若用 $\eps$ 作缩并来归一化，就可以把 $s_i\wedge s_j$ 看成一个数，以下我们正是这样做的；在 $V$ 的一个局部标架中，
+\begin{equation}
+s_i \wedge s_j = \eps_{ab} s_i^a(t) s_j^b(t).
+\end{equation}
+既然 $\eps$ 与 $s_{i,j}$ 都是平坦的，$s_i\wedge s_j$ 就与 $t$ 无关。下文还便于用 $\eps$ 把 $V$ 的截面 $s_i^a$ 与 $V^*$ 的对偶截面 $s_{ia}$ 联系起来。在局部标架中，
+\begin{equation}
+s_{ia}(t) = \eps_{ab} s_i^b(t).
+\end{equation}
+
+现在在「所有规范场」构成的空间 $\CN$ 上定义一个函数：
+\begin{equation}
+\CO_{\gamma, d_i, d_j}:= \log( s_i \wedge s_j ).
+\end{equation}
+我们要计算 $\{\CO_{\gamma,d_i,d_j},\CA^a_{\lambda b}(z)\}$。对于与 (4.10) 相应的泊松括号，我们把它的符号取定为% TODO 合稿改 \eqref{eq:symplectic}
+\begin{equation} \label{eq:spoisson}
+\{ \CO ,  \CA^a_{\lambda b}(z) \} = \eps_{\lambda\mu}
+\frac{\delta \CO}{\delta \CA^b_{\mu a}(z)}.
+\end{equation}
+取某个 $t_*$ 使 $z(t_*)\neq z$，并在该点计算 $\CO_{\gamma,d_i,d_j}$；于是 \eqref{eq:spoisson} 化为
+\begin{equation}
+\{\CO_{\gamma, d_i, d_j}, \CA^a_{\lambda b}(z) \}=
+\frac{\eps_{\lambda\mu} }{s_i\wedge s_j} \eps_{a'b'}\left(
+\frac{\delta s_i^{a'}(t_*)}{\delta \CA^b_{\mu a}(z) } s_j^{b'}(t_*)
++ s_i^{a'}(t_*) \frac{\delta s_j^{b'}(t_*)}{\delta \CA^b_{\mu a}(z) } \right).
+\end{equation}
+为计算它，先对平行移动引入一点记号：记 $\CA(t) = \CA_\mu(t) \dot z^\mu(t)$，并令 $U(t_1, t_2)$ 为从 $t_2$ 到 $t_1$ 的平行移动矩阵，它满足
+\begin{align}
+\frac{d}{dt_1} U(t_1,t_2) &= - \CA(t_1) U(t_1,t_2), \\
+\frac{d}{dt_2} U(t_1,t_2) &= U(t_1,t_2) \CA(t_2),
+\end{align}
+以及边界条件 $U(t,t)=\mathrm{id}$。于是有
+\begin{equation}
+\frac{\delta}{\delta \CA^a_{\mu b}(z)} U(t_1,t_2)^c_{~d} =
+\int_{t_1}^{t_2} dt\, \delta^{(2)}(z-z(t)) \dot z^\mu(t)
+U(t_1,t)^c_{~a} U(t,t_2)^b_{~d}.
+\end{equation}
+由此可见，$s_{i,j}$ 关于 $\CA$ 的变分由下式给出：
+\begin{align}
+ \frac{\delta s_i^{a'}(t_*)}{\delta \CA^b_{\mu a}(z) } &= - \int_0^{t_*} dt\,
+\delta^{(2)}(z-z(t)) \dot z^\mu(t) \left[ U(t_*,t)^{a'}_{~b}
+s_i^a(t)- \half \delta^{a}_{~b} s_i^{a'}(t_*) \right], \\
+ \frac{\delta s_j^{b'}(t_*)}{\delta \CA^b_{\mu a}(z) } &= \int_{t_*}^1 dt\,
+\delta^{(2)}(z-z(t)) \dot z^\mu(t) \left[ U(t_*,t)^{b'}_{~b}
+s_j^a(t)-\half \delta^{a}_{~b} s_j^{b'}(t_*) \right].
+\end{align}
+（出现这个减去项，是因为我们在 $sl(2)$ 联络的空间内、而不是在 $gl(2)$ 联络的空间内变分 $\CA$，所以应当把迹投影掉。）现在利用
+\begin{equation}
+\label{eq:rrrng}
+ s_i^a(t) s_{jb}(t) - \half \delta^{a}_{~b} s_i \wedge s_j = \half
+ (s_{ib} s^a_{j} + s_{jb} s_i^a )(t)
+\end{equation}
+（把对偶指标与基 $s_i^a$、$s_j^a$ 缩并即可证明），我们得到
+\begin{equation}\label{eq:poormandeltaA}
+\{\CO_{\gamma, d_i, d_j}, \CA^a_{\lambda b}(z) \} =  \half
+\eps_{\lambda\mu}
+ \int_{0}^1 dt\, \delta^{(2)}(z-z(t)) \dot z^\mu(t)  M(s_i,s_j)^a_{~b}(t),
+\end{equation}
+其中定义了算子
+\begin{equation}
+M(s_i,s_j)^a_{~b}(t) := \frac{s_{ib}(t) s^a_{j}(t) + s_{jb}(t)
+s_i^a(t) }{s_i\wedge s_j}.
+\end{equation}
+
+现在考虑两条路径。第一条 $z_1(t)\in \gamma_1$ 是从 $z_i$ 到 $z_j$ 的路径，即我们上面一直考虑的那种。第二条 $z_2(t) \in \gamma_2$ 与 $\gamma_1$ 横截相交（或者根本不相交）。再考虑一个沿 $\gamma_2$ 平行移动的矢量 $v^a(t)$，其初始边界条件固定。我们要计算 $\{\CO_{\gamma_1, d_i, d_j}, v^a(t_*)\}$，它由下式给出：
+\begin{equation}
+\{ \CO_{\gamma_1, d_i, d_j}, v^a(t_*) \} = - \int_0^{t_*} dt \, \tilde U^{a}_{~b}(t_*, t)
+\{\CO_{\gamma_1, d_i, d_j}, \CA(t)^{b}_{~c} \} v^c(t),
+\end{equation}
+其中 $\tilde U$ 是沿 $\gamma_2$ 的平行移动。利用 \eqref{eq:poormandeltaA} 可得
+\begin{multline}
+\{ \CO_{\gamma_1, d_i, d_j}, v^a(t_*) \} =  \\
+\half \int_0^1 dt_1 \int_0^{t_*} dt_2\,
+\delta^{(2)}(z_2(t_2)-z_1(t_1))\eps_{\lambda\mu} \dot
+z_2^\lambda(t_2) \dot z_1^\mu(t_1) \tilde{U}^a_{~b}(t_*,t_2)
+M(s_i,s_j)^{b}_{~c}(t_1) v^c(t_2).
+\end{multline}
+现在注意
+\begin{equation}
+\delta^{(2)}(z_2(t_2)-z_1(t_1))\eps_{\lambda\mu} \dot
+z_2^\lambda(t_2) \dot z_1^\mu(t_1)  = -(\gamma_1\cap
+\gamma_2)\delta(t_1-t_1^{int}) \delta(t_2-t_2^{int})
+\end{equation}
+其中 $t_i^{int}$ 是两曲线相交处的 $t$ 值，$\cap$ 表示带定向的相交数。于是得到
+\begin{equation} \label{eq:flow-single}
+\{ \CO_{\gamma_1, d_i, d_j}, v(t_*) \} =  \half (\gamma_1 \cap
+\gamma_2) \left( \frac{s_i \wedge v}{s_i \wedge s_j}(t_2^{int})
+s_j(t_*) + \frac{s_j \wedge v}{s_i \wedge s_j}(t_2^{int}) s_i(t_*)
+\right) \theta(t_* - t_2^{int}).
+\end{equation}
+其中 $s_i$、$s_j$ 已沿 $\gamma_2$ 从交点平行移动到 $t_*$。
+
+本附录的目标是描述由函数 $\log \CX^T_E$ 在 $\CM$ 上生成的流。要把它提升到 $\CN$ 上，需要把四个函数 $\CO_{\gamma, d_i, d_j}$ 组合起来：依次把 $\gamma$ 与四边形 $Q_E$ 的四条边等同起来，并取 $d_i$、$d_j$ 与我们在各顶点处所作的装饰选择一致。把这四条边的 \eqref{eq:flow-single} 合起来，就得到我们在第 5.4 节中所描述的那个流。% TODO 合稿改 \ref{sec:ham-flows}
+
+严格说来，我们其实必须作正则化：把四边形稍稍形变，将其顶点从奇点处挪开，然后取顶点趋于奇点的极限。正则化后的函数 $\CO_{\gamma, d_i, d_j}$ 不是规范不变的（因为 $d_{i,j}$ 不是），但它们的组合在极限下确实变成规范不变的：回想一下，规范群 $\CG$ 只包含那些在奇点处被限制到极大环面 $\IC^\times \subset SL(2,\IC)$ 的变换；这个群把 $d_{i,j}$ 保持到整体重标度，而当我们对四条边求和时，这个整体重标度就抵消了。

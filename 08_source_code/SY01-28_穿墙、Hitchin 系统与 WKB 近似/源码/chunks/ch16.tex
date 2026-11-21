@@ -1,0 +1,292 @@
+% ch16 —— §11 谱生成元（11.1 omnipop 下的变换 / 11.2 N=3 / 11.3 N=4 / 11.4–11.6 SU(2) 各例）
+% 原文：0907.3987v2 wkb-paper.tex 第 7873–8420 行
+% 式号：(11.1)–(11.55) 共 55 条，由 \numberwithin{equation}{section} 自动复现
+% 图：9 幅（star-lemma / two-ISP / star-RSP / two-RSP / N3-universal / N4-universal / Nf0-universal / Nf1-universal / Nf4-universal），宽度照原文
+% 跨块引用一律硬编码原文编号，合稿时按 TODO 改为 \ref / \eqref
+
+\section{谱生成元}\label{sec:UniversalStokesMatrix}
+
+本节给出一套代数方法，用来确定任何与 $SU(2)$ Hitchin 系统相关的理论的 BPS 谱。
+
+考虑 WKB 三角剖分 $T_\WKB(\vartheta,\lambda^2)$ 在 $\vartheta$ 连续变化、扫过一段长度为 $\pi$ 的弧时的演化。正如我们在第 6.6 节中所见，% TODO 合稿改 \ref{subsec:Jumps-WKB-triang}
+在临界值 $\vartheta=\vartheta_c$ 处，$T_\WKB$ 一般可能出现三类变换。其中两类是 flip 与 juggle，分别对应我们想要探测的 BPS 超多重态与矢量多重态，此时 $\arg -Z=\vartheta_c$。随着 $\vartheta$ 变化，我们会遇到该理论恰好一半的 BPS 粒子（给定任意一个 BPS 粒子，我们遇到的要么是它本身，要么是它的反粒子）。每一个这样的粒子都对应一个作用在坐标 $\CX^\vartheta_\gamma$ 上的辛同胚。第三类可能的变换是 pop，它并不对应我们感兴趣的任何 BPS 粒子。幸运的是，这些 pop 总是发生在退化三角形内部。得益于第 7.6.3 节的分析，% TODO 合稿改 \ref{sec:no-flavor-jump}
+这些变换实际上给出平凡的辛同胚，因而可以忽略。
+
+把所有这些辛同胚按次序复合起来，我们便得到一个变换 $\mathbf S$，它把 $\CX^\vartheta$ 与 $\CX^{\vartheta+\pi}$ 联系起来：
+\begin{equation}\label{eq:stokes-decomp}
+\mathbf S = \prod_{\gamma:\ \vartheta < \arg -Z_{\gamma}(u) < \vartheta+\pi}^\ccwarrow \CK_\gamma^{\Omega(\gamma;u)}.
+\end{equation}
+这里从左到右的乘积按 $\arg -Z_\gamma$ 递增的次序排列。这个 $\mathbf S$ 是 \cite{Gaiotto:2008cd} 的黎曼--希尔伯特问题的斯托克斯矩阵。我们将称它为\emph{谱生成元}。
+
+我们的窍门在于：前几节的技术提供了一种干净利落的方法来计算 $\mathbf S$，\emph{无需}追踪三角剖分的连续演化。一旦知道了 $\mathbf S$，分解 \eqref{eq:stokes-decomp} 就唯一地确定了 $\Omega(\gamma;u)$。
+
+那么怎样计算 $\mathbf S$ 呢？注意相位为 $\vartheta$ 与 $\vartheta+\pi$ 的 WKB 叶层完全相同。由此推出，未装饰的 WKB 三角剖分也相同。装饰又如何呢？在正则奇点的情形，把 $\vartheta$ 换成 $\vartheta+\pi$ 时，由第 6.5 节可知，装饰从一条单值本征线切换到另一条% TODO 合稿改 \ref{sec:small-flat}
+——这正是我们称为 pop 的变换。类似地，由第 8 节的局部分析可知，% TODO 合稿改 \ref{sec:irregular}
+对不规则奇点同样的结论也成立。于是，装饰后的三角剖分 $T_\WKB(\vartheta+\pi)$ 与 $T_\WKB(\vartheta)$ 相差在每个顶点处的一个 pop 变换——我们将称之为 \emph{omnipop}。
+
+因此，要确定 $\mathbf S$，任务就是算出 omnipop 所对应的显式变换。
+
+\subsection{导出 omnipop 下的变换}\label{subsec:SuperPop}
+
+给定一个顶点 $P$，$T_\WKB(\vartheta)$ 的装饰在 $P$ 附近给出一个特异截面（相差一个标度）。在正则奇点的情形，$P$ 就是奇点本身；在不规则奇点的情形，$P$ 是围绕该奇点的小圆上的某个特异点。选定一个标度，令 $s_P$ 为一个特异截面，而 $\tilde s_P$ 是作一次 pop 后得到的新特异截面。类似地，我们用 $\CX_{P_1P_2}$ 与 $\tilde\CX_{P_1P_2}$ 分别表示连接顶点 $P_1,P_2$ 的边 $E_{P_1P_2}$ 上、用截面 $s_{P_i}$ 与 $\tilde s_{P_i}$ 算出的原来的与新的 Fock--Goncharov 坐标。
+
+由第 7.1 节的定义可知，% TODO 合稿改 \ref{sec:homology}
+对一切 $E$ 都有 $\gamma^{\vartheta+\pi}_E=-\gamma^{\vartheta}_E$。把它与定义
+\begin{equation}
+\CX_{\gamma^{\vartheta+\pi}_E}^{\vartheta+\pi}=\CX^{T_\WKB(\vartheta+\pi,\lambda^2)}_E,\qquad
+\CX_{\gamma^{\vartheta}_E}^{\vartheta}=\CX^{T_\WKB(\vartheta,\lambda^2)}_E
+\end{equation}
+结合起来，对 $\gamma=\gamma^{\vartheta}_E$ 就有
+\begin{equation}\label{eq:X-to-tildeX}
+\CX^{\vartheta+\pi}_\gamma=\CX^{\vartheta}_\gamma\cdot\left(\CX_E^{T_\WKB(\vartheta,\lambda^2)}\,\tilde\CX_E^{T_\WKB(\vartheta,\lambda^2)}\right)^{-1}.
+\end{equation}
+因此，我们要求的只是固定装饰三角剖分 $T$ 下 $\CX_E^T\tilde\CX_E^T$ 的简单公式。为了记号简便，下面计算中我们省去上标 $T$，但要记住我们始终在一个固定的装饰三角剖分里工作。
+
+对任意一条边 $PQ$，定义
+\begin{equation}\label{eq:rewrite-A}
+A_{PQ}:=-\frac{(s_Q\wedge\tilde s_P)(s_P\wedge\tilde s_Q)}{(s_P\wedge\tilde s_P)(s_Q\wedge\tilde s_Q)}
+\end{equation}
+会很方便。注意 $A_{PQ}=A_{QP}$。这个定义之所以有用，是因为容易证明\footnote{要从 \eqref{eq:rewrite-A} 得到 \eqref{eq:def-A}，我们用到了二维向量空间中的一个事实：对任意三个向量 $v_1,v_2,v_3$，有
+\begin{equation}\label{eq:3-termIdent}
+(v_1\wedge v_2)v_3+(v_3\wedge v_1)v_2+(v_2\wedge v_3)v_1=0,
+\end{equation}
+等价地，对任意四个向量 $v_1,v_2,v_3,v_4$，有
+\begin{equation}
+(v_1\wedge v_2)(v_3\wedge v_4)+(v_3\wedge v_1)(v_2\wedge v_4)+(v_2\wedge v_3)(v_1\wedge v_4)=0.
+\end{equation}
+下文我们将反复使用这个关系。}
+\begin{equation}\label{eq:def-A}
+1+A_{PQ}=\frac{(s_P\wedge s_Q)(\tilde s_P\wedge\tilde s_Q)}{(\tilde s_P\wedge s_P)(\tilde s_Q\wedge s_Q)},
+\end{equation}
+从而，若 $E$ 是以 $abcd$ 为顶点（按逆时针次序）的四边形 $Q_E$ 中的边 $ac$，则
+\begin{equation}\label{eq:X-times-tildeX}
+\tilde\CX_E\CX_E=\frac{(1+A_{ab})(1+A_{cd})}{(1+A_{bc})(1+A_{da})}.
+\end{equation}
+于是，只要能用一个坐标 $\CX^T_E$ 表示出 $A_{ab}$，我们的问题就解决了。
+
+\insfig{3in}{star-lemma}{顶点 $P$ 的部分星形邻域，用于计算 $\Sigma(P;Q_{\ell+1}\to Q_0)$。棕色箭头所穿过的各条边，正是 \protect\eqref{eq:def-sigma} 中出现的那些边。棕色箭头最后穿过的那条边只出现在最后一个求和项里。结果 \protect\eqref{eq:key-star-lemma} 用 $P$ 与 $Q_\ell$ 处的装饰以及边界边 $Q_0$、$Q_{\ell+1}$ 处的装饰来表达；不过 $\Sigma(P;Q_{\ell+1}\to Q_0)$ 的表达式中并不出现这两条边界边。}
+
+我们先给出一个关键的引理。考虑一个装饰点 $(P,s_P)$ 的部分星形邻域，其装饰顶点为 $(Q_0,s_0),(Q_1,s_1),\dots,(Q_{\ell+1},s_{\ell+1})$，按\emph{顺时针}次序排列，如图 \ref{fig:star-lemma} 所示。把边坐标 $\CX_{P,Q_j}$ 简记为 $\CX_{P,j}$。我们断言，量
+\begin{equation}\label{eq:def-sigma}
+\Sigma(P;Q_{\ell+1}\to Q_0):=1+\CX_{P,\ell}+\CX_{P,\ell}\CX_{P,\ell-1}+\cdots+(\CX_{P,\ell}\cdots\CX_{P,1})
+\end{equation}
+可以只用截面 $s_P,s_0,s_\ell,s_{\ell+1}$ 简洁地表示出来；这些截面在诸三角形构成的单连通区域内被单值地延拓。事实上，
+\begin{equation}\label{eq:key-star-lemma}
+\Sigma(P;Q_{\ell+1}\to Q_0)=\frac{(s_0\wedge s_{\ell+1})(s_P\wedge s_\ell)}{(s_{\ell+1}\wedge s_\ell)(s_0\wedge s_P)}.
+\end{equation}
+为证明它，先对 $\ell=1$ 验证，这要用到恒等式 \eqref{eq:3-termIdent}。再来看归纳步：若再加一个装饰顶点 $(Q_{\ell+2},s_{\ell+2})$，则
+\begin{equation}
+\begin{split}
+\Sigma(P;Q_{\ell+2}\to Q_0)&=1+\Sigma(P;Q_{\ell+1}\to Q_0)\CX_{P,\ell+1}\\
+&=1-\frac{(s_0\wedge s_{\ell+1})(s_P\wedge s_\ell)}{(s_{\ell+1}\wedge s_\ell)(s_0\wedge s_P)}\frac{(s_P\wedge s_{\ell+2})(s_{\ell+1}\wedge s_\ell)}{(s_{\ell+2}\wedge s_{\ell+1})(s_\ell\wedge s_P)}\\
+&=1+\frac{(s_P\wedge s_{\ell+2})(s_0\wedge s_{\ell+1})}{(s_{\ell+2}\wedge s_{\ell+1})(s_0\wedge s_P)}\\
+&=\frac{(s_0\wedge s_P)(s_{\ell+2}\wedge s_{\ell+1})+(s_0\wedge s_{\ell+1})(s_P\wedge s_{\ell+2})}{(s_{\ell+2}\wedge s_{\ell+1})(s_0\wedge s_P)}\\
+&=\frac{(s_0\wedge s_{\ell+2})(s_P\wedge s_{\ell+1})}{(s_{\ell+2}\wedge s_{\ell+1})(s_0\wedge s_P)},
+\end{split}
+\end{equation}
+其中最后一行我们再次用到了等式 \eqref{eq:3-termIdent}。
+
+\insfig{5in}{two-ISP}{当 $P$、$Q$ 都是不规则奇点时，计算 $A_{PQ}$ 所涉及的边的配置。在 $P$ 与 $Q$ 处的基本 pop 变换，分别把 $\tilde P$、$\tilde Q$ 处的装饰与顶点 $P$、$Q$ 联系起来。}
+
+现在，为计算 $A_{PQ}$，需要区分 $P,Q$ 是正则还是不规则奇点。先考虑 $P,Q$ 都是不规则奇点的情形。这时得到图 \ref{fig:two-ISP} 所示的配置。注意我们把 $\tilde P$ 记作从 $P$ 逆时针走一步的那条 WKB 射线所对应的特异点，于是对一次基本 pop 有 $\tilde s_P=s_{\tilde P}$，对 $Q$ 也类似。这里我们沿从 $P$ 到 $\tilde P$ 的边平行移动 $s_{\tilde P}$。应用上面的引理，有
+\begin{equation}
+\Sigma(P;Q\to\tilde P)=\frac{(\tilde s_P\wedge s_Q)(s_P\wedge s_k)}{(s_Q\wedge s_k)(\tilde s_P\wedge s_P)},
+\end{equation}
+\begin{equation}
+\Sigma(Q;P\to\tilde Q)=\frac{(\tilde s_Q\wedge s_P)(s_Q\wedge s'_{k'})}{(s_P\wedge s'_{k'})(\tilde s_Q\wedge s_Q)},
+\end{equation}
+而按定义
+\begin{equation}
+\CX_{PQ}=-\frac{(s_P\wedge s'_{k'})(s_Q\wedge s_k)}{(s'_{k'}\wedge s_Q)(s_k\wedge s_P)}.
+\end{equation}
+把这三个表达式相乘并约去公因子，我们得到：
+\begin{equation}\label{eq:two-ISP}
+\CX_{PQ}\Sigma(P;Q\to\tilde P)\Sigma(Q;P\to\tilde Q)=-\frac{(\tilde s_P\wedge s_Q)(\tilde s_Q\wedge s_P)}{(\tilde s_P\wedge s_P)(\tilde s_Q\wedge s_Q)}=A_{PQ}.
+\end{equation}
+这就给出了用坐标 $\CX_E^T$ 表示 $A_{PQ}$ 的所需表达式。即使 $P,Q$ 是同一个边界圆上相邻的两点，这个表达式也成立，因为那种情形下我们规定了 $\CX_{PQ}=0$。
+
+\insfig{2.2in}{star-RSP}{当 $P$ 是正则奇点时，计算 $\Sigma(P;Q\to Q)$ 所涉及的边的配置。这里必须把绕 $P$ 的单值性考虑进来，因为在 \protect\eqref{eq:key-star-lemma} 的归纳证明中，假定了各 $s_i$ 在诸三角形所确定的区域内单值。于是，在最后一步归纳时必须移动割线。}
+
+现在考虑 $P$ 是正则奇点的情形，如图 \ref{fig:star-RSP} 所示。计算 $\Sigma(P;Q\to Q)$ 时出现一个新问题：必须把绕该正则奇点的单值性考虑进来。若 $M_P$ 是绕 $P$ 的顺时针单值算子，我们就用上面的表达式 \eqref{eq:key-star-lemma}，取 $s_{\ell+1}=s_Q$、$s_0=M^{-1}s_Q$：
+\begin{equation}
+\Sigma(P;Q\to Q)=\frac{(s_P\wedge s_\ell)(M^{-1}s_Q\wedge s_Q)}{(s_Q\wedge s_\ell)(M^{-1}s_Q\wedge s_P)}.
+\end{equation}
+把它写成更有用的形式，可把 $s_Q$ 在基 $s_P,\tilde s_P$ 中展开，其中 $Ms_P=\mu_P s_P$、$M\tilde s_P=\mu_P^{-1}\tilde s_P$。于是展开 $s_Q=c_1s_P+c_2\tilde s_P$，计算得
+\begin{equation}
+M^{-1}s_Q\wedge s_Q=c_1c_2(\mu_P^{-1}-\mu_P)s_P\wedge\tilde s_P,
+\end{equation}
+\begin{equation}
+M^{-1}s_Q\wedge s_P=c_2\mu_P\tilde s_P\wedge s_P.
+\end{equation}
+于是，利用 $c_1=(s_Q\wedge\tilde s_P)/(s_P\wedge\tilde s_P)$，便得
+\begin{equation}\label{eq:SimpleRSP}
+\Sigma(P;Q\to Q)=(1-\mu_P^{-2})\frac{(s_P\wedge s_\ell)(s_Q\wedge\tilde s_P)}{(s_Q\wedge s_\ell)(s_P\wedge\tilde s_P)}.
+\end{equation}
+
+\insfig{3in}{two-RSP}{当 $P$、$Q$ 都是正则奇点时，计算 $A_{PQ}$ 所涉及的边的配置。}
+
+现在考虑两个正则奇点 $P$ 与 $Q$ 之间的边，如图 \ref{fig:two-RSP} 所示。对 $P$ 与 $Q$ 同时使用结果 \eqref{eq:SimpleRSP}，得到
+\begin{equation}\label{eq:two-RSP}
+\CX_{PQ}\Sigma(P;Q\to Q)\Sigma(Q;P\to P)=(1-\mu_P^{-2})(1-\mu_Q^{-2})A_{PQ},
+\end{equation}
+由此即得用 $\CX_E^T$ 表示的 $A_{PQ}$。
+
+最后，设 $P$ 是不规则奇点而 $Q$ 是正则奇点。与上面类似，有
+\begin{equation}\label{eq:ISP-RSP}
+A_{PQ}=(1-\mu_Q^{-2})^{-1}\CX_{PQ}\Sigma(P;Q\to\tilde P)\Sigma(Q;P\to P).
+\end{equation}
+
+综合起来，\eqref{eq:X-to-tildeX}、\eqref{eq:X-times-tildeX}、\eqref{eq:two-ISP}、\eqref{eq:two-RSP}、\eqref{eq:ISP-RSP} 完全解决了把谱生成元 $\mathbf S$ 确定为一个初等辛变换的问题。在接下来的几节里，我们将用几个例子展示所出现的各类公式。
+
+最后我们作两点评论：
+
+\begin{itemize}
+\item 读者或许会被正则奇点情形下 $A_{ab}$ 的最终表达式里出现的负号弄得不安。毕竟，任意两个三角剖分都应当由一串 flip 相连，而相应的坐标变换只含正号。所幸的是，很容易把交比变换的最终公式 \eqref{eq:X-times-tildeX} 重新整理成只出现正号的形式。事实上，在 \eqref{eq:X-times-tildeX} 中，标号 $abcd$ 中的每一个都在分子中出现一次、在分母中出现一次。把分子与分母同乘 $(1-\mu_a^{2})(1-\mu_b^{2})(1-\mu_c^{2})(1-\mu_d^{2})$，则 \eqref{eq:X-times-tildeX} 中的各因子可以组合成四个形如
+\begin{multline}
+(1-\mu_a^{2})(1-\mu_b^{2})(1+A_{ab}) = \\
+1-\mu_a^{2}-\mu_b^{2}+\mu_a^{2}\mu_b^{2}+\CX_{a,b}\left(\sum_{i=0}^{k-1}\prod_{j=1}^i\CX_{a,j}\right)\left(\sum_{i'=0}^{k'-1}\prod_{j'=1}^{i'}\CX_{b,-j'}\right),
+\end{multline}
+的块；其中 $a$ 的星形区域内有 $k$ 个顶点，$b$ 的星形区域内有 $k'$ 个顶点。在这个求和中，$i=k-1$、$i'=0$ 的项等于 $\mu_a^{2}$，而 $i=0$、$i'=k'-1$ 的项等于 $\mu_b^{2}$。这两项恰好抵消那些带负号的项。这种抵消是必需的，例如为了证明 $SU(2)$、$N_f=2$ 理论的两种实现具有相同的谱生成元 $\mathbf S$：其中一种实现含有正则奇点（因而可能出现负号），另一种则不含。
+
+\item 在 $\abs{\mu_P}<1$ 的区域，定义 $\Sigma(P;Q\to Q)$ 的表达式 \eqref{eq:def-sigma} 可以改写成一种富有启发性的形式，
+\begin{equation}
+\frac{1}{(1-\mu_P^{2})}\Sigma(P;Q\to Q)=1+\sum_{i=1}^{\infty}\prod_{j=1}^i\CX_{P,j},
+\end{equation}
+这里把分母按几何级数展开，并记住 $\prod_{j=1}^k\CX_{P,j}=\mu_P^{2}$。（在这个公式里，顶点按逆时针次序编号更为方便。）
+\end{itemize}
+
+\subsection{$N=3$}
+
+我们先考虑第 9.4.4 节讨论过的 $N=3$ 例子。% TODO 合稿改 \ref{sec:N3}
+为记号简便，我们略去 $\vartheta$，并把 $\CX^{\vartheta+\pi}$ 记作 $\tilde\CX$。我们取 $\hat\Gamma$ 的基 $\gamma_1,\gamma_2$，它们对应图 \ref{fig:N3-universal} 中的边 $13$、$14$，取向取 $\vartheta$ 时的（而非 $\vartheta+\pi$ 时的）；换言之，$\gamma_1:=\gamma_{13}^\vartheta$，$\gamma_2$ 类似。于是由等式 \eqref{eq:X-to-tildeX} 与 \eqref{eq:X-times-tildeX} 得
+\begin{equation}
+\tilde\CX_{\gamma_1}=\CX_{\gamma_1}\frac{(1+A_{23})(1+A_{41})}{(1+A_{12})(1+A_{34})}.
+\end{equation}
+现在 $A_{12}=A_{23}=A_{34}=0$，而等式 \eqref{eq:two-ISP} 直接给出 $A_{41}=\CX_{\gamma_2}$。类似地，
+\begin{equation}
+\tilde\CX_{\gamma_2}=\CX_{\gamma_2}\frac{(1+A_{34})(1+A_{51})}{(1+A_{13})(1+A_{45})},
+\end{equation}
+而 $A_{34}=A_{45}=A_{51}=0$，但由等式 \eqref{eq:two-ISP}
+\begin{equation}
+A_{13}=\CX_{\gamma_1}(1+\CX_{\gamma_2}).
+\end{equation}
+于是我们总共得到变换 $\mathbf S$：
+\begin{align}
+\tilde\CX_{\gamma_1}&=\CX_{\gamma_1}(1+\CX_{\gamma_2}),\label{eq:n31}\\
+\tilde\CX_{\gamma_2}&=\CX_{\gamma_2}(1+\CX_{\gamma_1}+\CX_{\gamma_1}\CX_{\gamma_2})^{-1}.\label{eq:n32}
+\end{align}
+
+\insfig{4.2in}{N3-universal}{用于计算 $N=3$ 理论谱生成元中各因子 $A_{ab}$ 的图。左边是 $ab=14$ 的例子，此时直接得到 $A_{14}=\CX_{\gamma_2}$（因为棕色箭头不穿过任何边）。右边是 $ab=13$，此时得到 $A_{13}=\CX_{\gamma_1}(1+\CX_{\gamma_2})$。}
+
+上面我们说过，给定 $\mathbf S$ 就能恢复 BPS 谱。在这个简单例子里，这就是从 \eqref{eq:n31}、\eqref{eq:n32} 出发恢复分解 $\mathbf S=\CK_{\gamma_1}\CK_{\gamma_2}$。做这件事的一般算法已在第 2.3 节中勾画过；% TODO 合稿改 \ref{subsec:wallcrossing}
+我们来看看它在这里如何运作。我们要找的是形如
+\begin{equation}
+\mathbf S=\prod_{m,n\ge0}\CK_{m\gamma_1+n\gamma_2}^{\Omega(m\gamma_1+n\gamma_2;u)}
+\end{equation}
+的分解，其中乘积按 $m/n$ 递增的次序、从 $0$ 取到 $\infty$。首先取特例 $\CX_{m\gamma_1+n\gamma_2}=0$（对一切 $m+n\ge2$）。作了这一特殊化之后，一切 $m+n\ge2$ 的 $\CK_{m\gamma_1+n\gamma_2}$ 都成为恒等算子，于是分解简化为
+\begin{equation}
+\mathbf S=\CK_{\gamma_1}^{\Omega(\gamma_1;u)}\CK_{\gamma_2}^{\Omega(\gamma_2;u)}.
+\end{equation}
+这个算子的作用是容易算出的：
+\begin{align}
+\tilde\CX_{\gamma_1}&=\CX_{\gamma_1}(1+\CX_{\gamma_2})^{\Omega(\gamma_2;u)},\\
+\tilde\CX_{\gamma_2}&=\CX_{\gamma_2}(1+\CX_{\gamma_1})^{-\Omega(\gamma_1;u)}.
+\end{align}
+把它与 \eqref{eq:n31}、\eqref{eq:n32} 给出的 $\mathbf S$ 的已知作用相比较，并记住我们已经设 $\CX_{\gamma_1+\gamma_2}=0$，便看出两者相容当且仅当 $\Omega(\gamma_1;u)=1$ 且 $\Omega(\gamma_2;u)=1$。现在可以继续到下一阶：取特例 $\CX_{m\gamma_1+n\gamma_2}=0$（对一切 $m+n\ge3$）；这时会出现三个新的未知 $\Omega$，
+\begin{equation}
+\mathbf S=\CK_{\gamma_1}\CK_{2\gamma_1}^{\Omega(2\gamma_1;u)}\CK_{\gamma_1+\gamma_2}^{\Omega(\gamma_1+\gamma_2;u)}\CK_{2\gamma_2}^{\Omega(2\gamma_2;u)}\CK_{\gamma_2}.
+\end{equation}
+算出这个算子的作用，我们发现它与 \eqref{eq:n31}、\eqref{eq:n32} 相容当且仅当这三个未知 $\Omega$ 实际上全为零。更高阶的类似计算给出同样的结果——每一阶出现的新 $\Omega$ 全都为零。只要你有耐心或机时，这可以一直做下去；但最终人们可能会猜测：实际上所有更高阶的 $\Omega$ 都为零，即存在一个精确恒等式 $\mathbf S=\CK_{\gamma_1}\CK_{\gamma_2}$。一旦猜出来，这个恒等式当然容易验证。
+
+注意，如果我们按 $m/n$ 递减的次序去寻找分解，同样的算法会让我们得到公式 $\mathbf S=\CK_{\gamma_2}\CK_{\gamma_1+\gamma_2}\CK_{\gamma_1}$。这两个不同的分解当然对应边缘稳定墙的两侧。
+
+\subsection{$N=4$}
+
+接下来考虑第 9.4.6 节中的 $N=4$ 例子。% TODO 合稿改 \ref{sec:N4}
+我们聚焦于图 \ref{fig:N4-universal} (a) 的三角剖分，并作识别
+\begin{equation}\label{eq:N=4match}
+\CX_{\gamma_1}=\CX_{14},\qquad\CX_{\gamma_2}=\CX_{15},\qquad\CX_{\gamma_3}=\CX_{13}.
+\end{equation}
+于是 \eqref{eq:X-to-tildeX} 变为
+\begin{align}
+\tilde\CX_{\gamma_1}&=\CX_{\gamma_1}(1+A_{51})(1+A_{13})^{-1},\\
+\tilde\CX_{\gamma_2}&=\CX_{\gamma_2}(1+A_{14})^{-1},\\
+\tilde\CX_{\gamma_3}&=\CX_{\gamma_3}(1+A_{14}).
+\end{align}
+用等式 \eqref{eq:two-ISP} 与识别 \eqref{eq:N=4match} 计算 $A_{13},A_{15},A_{14}$，得到：
+\begin{align}
+\tilde\CX_{\gamma_1}&=\CX_{\gamma_1}(1+\CX_{\gamma_2})(1+\CX_{\gamma_3}+\CX_{\gamma_3}\CX_{\gamma_1}+\CX_{\gamma_3}\CX_{\gamma_1}\CX_{\gamma_2})^{-1},\label{eq:n41}\\
+\tilde\CX_{\gamma_2}&=\CX_{\gamma_2}(1+\CX_{\gamma_1}+\CX_{\gamma_1}\CX_{\gamma_2})^{-1},\label{eq:n42}\\
+\tilde\CX_{\gamma_3}&=\CX_{\gamma_3}(1+\CX_{\gamma_1}+\CX_{\gamma_1}\CX_{\gamma_2}).\label{eq:n43}
+\end{align}
+对于适当的 $(u,\vartheta)$ 选取，这个变换确实具有 KS 分解 $\mathbf S=\CK_{\gamma_3}\CK_{\gamma_1}\CK_{\gamma_2}$，与我们的预期一致。注意 $\CX_{\gamma_1}$ 来自一个有两条内边的四边形，这两条内边正对应 \eqref{eq:n41} 中的两个乘性因子。
+
+类似地，作与图 \ref{fig:N4-universal} (b) 的三角剖分相应的识别
+\begin{equation}\label{eq:N=4match-b}
+\CX_{\gamma_1}=\CX_{63},\qquad\CX_{\gamma_2}=\CX_{13},\qquad\CX_{-\gamma_3}=\CX_{46},
+\end{equation}
+我们发现
+\begin{align}
+\tilde\CX_{\gamma_1}&=\CX_{\gamma_1}(1+\CX_{\gamma_2})(1+\CX_{-\gamma_3}),\label{eq:n44}\\
+\tilde\CX_{\gamma_2}&=\CX_{\gamma_2}\left[1+\CX_{\gamma_1}(1+\CX_{\gamma_2})(1+\CX_{-\gamma_3})\right],\label{eq:n45}\\
+\tilde\CX_{-\gamma_3}&=\CX_{-\gamma_3}\left[1+\CX_{\gamma_1}(1+\CX_{\gamma_2})(1+\CX_{-\gamma_3})\right].\label{eq:n46}
+\end{align}
+在这个情形里，$\CX_{\gamma_{2,3}}$ 来自具有同一条内边的那些四边形。从该边任一端逆时针走，我们会遇到一条内边，它贡献 \eqref{eq:n45}、\eqref{eq:n46} 中的乘性因子。$\CX_{\gamma_1}$ 则来自一个有两条内边的四边形，对应 \eqref{eq:n44} 中的两个因子。变换 \eqref{eq:n44}--\eqref{eq:n46} 具有分解（对适当的 $(u,\vartheta)$ 值）$\mathbf S=\CK_{\gamma_1}\CK_{\gamma_2}\CK_{-\gamma_3}$。(d) 的情形类似，留给读者。
+
+最后考虑六边形的第三类三角剖分，其内边构成一个三角形，如图 \ref{fig:N4-universal} (c)：
+\begin{align}
+\tilde\CX_{-\gamma_1}&=\CX_{-\gamma_1}(1+\CX_{\gamma_1+\gamma_2}+\CX_{\gamma_1+\gamma_2}\CX_{-\gamma_1})^{-1}(1+\CX_{\gamma_3}+\CX_{\gamma_3}\CX_{\gamma_1+\gamma_2}),\\
+\tilde\CX_{\gamma_1+\gamma_2}&=\CX_{\gamma_1+\gamma_2}(1+\CX_{\gamma_3}+\CX_{\gamma_3}\CX_{\gamma_1+\gamma_2})^{-1}(1+\CX_{-\gamma_1}+\CX_{-\gamma_1}\CX_{\gamma_3}),\\
+\tilde\CX_{\gamma_3}&=\CX_{\gamma_3}(1+\CX_{-\gamma_1}+\CX_{-\gamma_1}\CX_{\gamma_3})^{-1}(1+\CX_{\gamma_1+\gamma_2}+\CX_{\gamma_1+\gamma_2}\CX_{-\gamma_1}).
+\end{align}
+每个变换中的两个因子，对应每个四边形有两条内边这一事实。这里我们发现（经过一些出人意料的化简）$\mathbf S=\CK_{-\gamma_1}\CK_{\gamma_3}\CK_{\gamma_2}\CK_{\gamma_1+\gamma_2}$。
+
+\insfig{5.5in}{N4-universal}{用于计算 $N=4$ 例子中谱生成元各因子 $A_{ab}$ 的图。我们画出的四种不同三角剖分，会在不同的 $(u,\vartheta)$ 值下作为 $T_\WKB(u,\vartheta)$ 出现。在 a) 中，$ab=14$ 定义 $\gamma_1$，$ab=13$ 定义 $\gamma_3$，$ab=15$ 定义 $\gamma_2$。在 b) 中，$ab=63$ 定义 $\gamma_1$，$ab=13$ 定义 $\gamma_2$，$ab=46$ 定义 $-\gamma_3$。在 c) 中，$ab=35$ 定义 $-\gamma_1$，$ab=31$ 定义 $\gamma_3$，$ab=15$ 定义 $\gamma_1+\gamma_2$。在 d) 中，$ab=46$、$ab=41$ 与 $ab=31$。}
+
+\subsection{$SU(2)$，$N_f=0$}
+
+现在我们转向 $N_f=0$ 的 $SU(2)$ 理论。在第 10.1 节中我们说明过，% TODO 合稿改 \ref{sec:nf0}
+在强耦合区域有 $\mathbf S=\CK_{\gamma_1}\CK_{\gamma_2}$，其中 $\langle\gamma_1,\gamma_2\rangle=2$。这个变换的作用为
+\begin{align}
+\tilde\CX_{\gamma_1}&=\CX_{\gamma_1}(1+\CX_{\gamma_2})^2,\\
+\tilde\CX_{\gamma_2}&=\CX_{\gamma_2}\left[1+\CX_{\gamma_1}(1+\CX_{\gamma_2})^2\right]^{-2}.
+\end{align}
+用我们描述过的规则可以从 $T_\WKB$ 得到这个变换。特别地，$T_\WKB$ 中每个四边形有两条重合的内边，这一事实导致乘性因子中出现整体的 $2$ 次幂。见图 \ref{fig:Nf0-universal}。
+
+\insfig{3.5in}{Nf0-universal}{用于计算 $N_f=0$ 的 $SU(2)$ 理论谱生成元中各因子 $A_{ab}$ 的图。}
+
+\subsection{$SU(2)$，$N_f=1$}
+
+接下来考虑 $N_f=1$ 的 $SU(2)$ 理论，我们在第 10.2 节中描述过它。% TODO 合稿改 \ref{sec:nf1}
+这里在强耦合下我们发现 $\mathbf S=\CK_{\gamma_1}\CK_{-\gamma_3}\CK_{\gamma_2}$，其中 $\langle\gamma_1,\gamma_2\rangle=\langle\gamma_2,\gamma_3\rangle=\langle\gamma_3,\gamma_1\rangle=1$。这个变换的作用为
+\begin{align}
+\tilde\CX_{\gamma_1}&=\CX_{\gamma_1}(1+\CX_{\gamma_2})(1+\CX_{-\gamma_3}+\CX_{-\gamma_3}\CX_{\gamma_2}),\\
+\tilde\CX_{\gamma_2}&=\CX_{\gamma_2}(1+\CX_{-\gamma_3}+\CX_{-\gamma_3}\CX_{\gamma_2})^{-1}\left[1+\CX_{\gamma_1}(1+\CX_{\gamma_2})(1+\CX_{-\gamma_3}+\CX_{-\gamma_3}\CX_{\gamma_2})\right]^{-1},\\
+\tilde\CX_{-\gamma_3}&=\CX_{-\gamma_3}(1+\CX_{\gamma_2})\left[1+\CX_{\gamma_1}(1+\CX_{\gamma_2})(1+\CX_{-\gamma_3}+\CX_{-\gamma_3}\CX_{\gamma_2})\right]^{-1}.
+\end{align}
+同样，用我们的规则可以直截了当地从三角剖分得到这些因子。见图 \ref{fig:Nf1-universal}。
+
+\insfig{4.1in}{Nf1-universal}{用于计算 $N_f=1$ 理论谱生成元中各因子 $A_{ab}$ 的图。}
+
+\subsection{$SU(2)$，$N_f=4$}
+
+作为最后一个例子，我们描述 $N_f=4$ 理论的谱生成元 $\mathbf S$。我们将考虑一个简单情形，其中 $T_\WKB$ 是四面体的图：共有六条边，用所有数对 $ij$（$i<j$，$i,j=1,\dots,4$）标记，如图 \ref{fig:Nf4-universal} 所示。
+
+\insfig{2in}{Nf4-universal}{用于计算 $N_f=4$ 的 $SU(2)$ 理论谱生成元中因子 $A_{12}$ 的图。}
+
+应用我们的规则，有
+\begin{equation}\label{eq:nf4-u}
+\tilde\CX_{12}=\CX_{12}\frac{(1+A_{13})(1+A_{24})}{(1+A_{23})(1+A_{14})},
+\end{equation}
+以及由四面体对称与之相关的另外 5 个变换。把分子与分母同乘 $(1-\mu_1^{2})(1-\mu_2^{2})(1-\mu_3^{2})(1-\mu_4^{2})$，可以把 \eqref{eq:nf4-u} 中出现的因子稍作化简。于是，例如利用 $\mu_2^{2}=\CX_{12}\CX_{24}\CX_{23}$ 与 $\mu_3^{2}=\CX_{34}\CX_{23}\CX_{13}$，我们得到
+\begin{multline}
+(1-\mu_2^{2})(1-\mu_3^{2})(1+A_{23})=1+\CX_{23}+\CX_{12}\CX_{23}+\CX_{23}\CX_{34}+\\
++\CX_{12}\CX_{13}\CX_{23}\CX_{34}+\CX_{12}\CX_{23}\CX_{24}\CX_{34}+\CX_{12}\CX_{13}\CX_{23}\CX_{24}\CX_{34}+\CX_{12}\CX_{13}\CX_{23}^2\CX_{24}\CX_{34}.
+\end{multline}
+
+根据我们在第 10.7 节中对谱的描述，% TODO 合稿改 \ref{subsec:SuperConformalCase}
+我们预期上面的变换可以分解为
+\begin{equation}\label{eq:12ParticlesKii}
+\CK_{1,-1;-}\CK_{0,1;+}^2\CK_{0,-1;-}^2\CK_{1,1;+}\CK_{-1,-1;-}\CK_{1,0;+}^2\CK_{-1,0;-}^2\CK_{1,-1;+},
+\end{equation}
+但我们没有显式验证这一点。
