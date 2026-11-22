@@ -3,6 +3,16 @@
 > **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
 
 
+## 微信「几何朗兰兹纲领」六篇讲稿收口：SY02-20 / SY02-21 / SY02-22 中译注本 — 2026-11-22
+
+- **本轮补齐选篇后半**（前篇 SY02-16 选 02、SY02-17 选 01、SY02-18 选 04，见下条）：SY02-20 取 03（Zhu, *Geometric Satake, categorical traces, and arithmetic of Shimura varieties*, arXiv:1810.07375, 50 页），SY02-21 取 05（Dhillon, *An informal introduction to categorical representation theory and the local geometric Langlands program*, arXiv:2205.14578, 83 页），SY02-22 取 06（Yun, *Lectures on Springer theories and orbital integrals*, arXiv:1602.01451, 62 页）。至此六篇中已译五篇（01–05），仅 06 之外的余篇已无。
+- **SY02-20**（59 页，25 块）：编号对象 **140**（75 定理类 + 65 编号公式），orig/mine **140 / 140，mismatch 0**；文献 48 条；译注 9 条；术语 179 条；疑点 32 条全解；勘误 **E01–E22**。关键判断：① 原文 1185–1190 行的注被 `\quash{}` 包住、PDF 中不出现，译文同样剔除，否则其后编号整体错一位；② 此文定理与公式是**两套独立计数器**（`[subsection]` 与 `\numberwithin{equation}{subsection}`），不能照搬 SY02-17 的合并计数器；③ `refs_check.py` 按小节比对 `\ref/\eqref/\cite` 多重集，抓出 §4.3 标题与开头两段整块漏译、§5.1 少一个 `\eqref{Sat isom}`——只靠编译通过发现不了这类缺口。
+- **SY02-21**（105 页，26 块）：编号条目 **288**（定理 4、定义 1、注 66、例 54、编号段 163）＋编号公式 72＋表 3，逐小节无缺号；文献 **151** 条（嵌原包 `samplez.bbl`，保持 amsalpha 原序）；译注 4 条；术语 77 条；疑点 10 条全解；勘误 9 条。体例复现：原文 amsart「定理与 `\sss` 段同挂 `subsubsection`、编号在前带句点、编号不加粗」，用 `\newtheorem[…][subsubsection]` + 自定义 `\newtheoremstyle` + `\ssszh` 三件套复现；`\on{\acute e tale}` 在 8pt 上标请求 OT1 槽位 19 导致 5 处 `Missing character`，改写 `\text{étale}` 清零。
+- **SY02-22**（71 页，4 块）：编号对象 **250**，按 `pcmi.cls` 机制（`\subsubsection` 消耗 equation 计数器）写 `sim_numbering_sy022.py` 双向推演、250 条序列逐一吻合；文献 56 条；译注 8 条；术语 112 条；疑点 14 条全解；勘误 4 条（positive loop group、`b_i`、Jacobson–Morosov 拼写、`\Fox` 笔误）。踩坑记档：`\newtheoremstyle` 第 9 参必须直接写 `#1#2#3`、第 7 参给 `{\relax}`，否则报 `You can't use '\ ' after \the`；`\thesubsubsection` 多前缀会印出「0.0.1.1」。
+- **术语统一**：全仓「非阿基米德局部域」136 处 vs 「非 Archimedes 局部域」11 处，本轮把 SY02-16/17/18 三处统一为**阿基米德**（34 / 89 / 46 页页数不变，0 error / 0 Overfull / 0 缺字）；SY02-21 的 `p-adic group`／`Archimedes` 是作者原词，其「译者说明」已声明保留原样，不改。
+- **统计与台账**：`RELEASE_REGISTER.csv` **122 行**（新登记 SY02-20/21/22，并据其 BRIEF 补登记并发会话在建的 SY01-30）；`make_stats.py --write` → **122 部 / 109 部带 LaTeX 源码 / 11,739 个跟踪文件 / 406.6 MB / 1,095 张资料卡**；`build_manifest.py` + `check_manifest.py`（mismatch 0 / missing 0 / unlisted 0）、`check_numbers.py`（0 处退役数字）、`check_compliance.py`（通过）、站点重建 122 工程。
+- **交付齐备**：三工程均含 BRIEF、通读笔记、疑点清单（未解 0）、术语表、逐块 reports、资料卡 5 件、精选片段（11 / 12 / 11 条判定链）、投稿信息、编译说明、build 脚本与 `.gitignore`；成品 PDF 按 L3 不入库。
+
 ## 工程文件改造 + SY01-30《三维镜像对称》中译注本（Webster–Yoo） — 2026-11-22
 
 - **工程文件改造（全仓 110 个工程）**：新增 [`04_playbook/17_仓库理念与上传规范.md`](04_playbook/17_仓库理念与上传规范.md)（v1.0），写清四件事——① 为什么做这个仓：把数学搭成 coding 沙盒式工作台，译文可回原文页行、术语记号唯一登记、定理陈述有自然语言与 Lean 双版本、全部脚本可复跑；目标不是让模型多做数学题，而是训练推理，再以 NL↔形式语言对齐换取数学理解，反哺模型本身。② 五层资产与三层产出（可读译注本 < 术语/资料卡/语料 < 对齐卡），口号「页数是库存，对齐才是产能」。③ 该传什么（完成最低配置 / 可传但要标状态 / 绝对不传：在版图书全文、未脱敏会话、密钥、`__pycache__`、本机绝对路径）与口诀「能被人复核的留下；只能被自己相信的别留；能重跑的不要存结果，存命令」。④ 开工五件事、收工五件事、三道闸门。配套 [`tools/gen_start_here.py`](tools/gen_start_here.py) 为每个工程生成 `工程文件/00_开工必读.md`（约 40 行摘要，带 `generated-by` 标记、只覆盖带标记或空文件；**written 110, skipped 0**）；根 `README.md` 与 `04_playbook/README.md` 加指针（后者把「先读 17」列为开工闸门之前的一项，必读顺序表新增第 15 行）。
