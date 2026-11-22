@@ -2,6 +2,18 @@
 
 > **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
 
+## SY02-19《几何朗兰兹的一个算术应用》中译注本（Raskin, PSPM 112.1） — 2026-11-22
+
+- **新工程** `08_source_code/SY02-19_几何朗兰兹的一个算术应用/`：Sam Raskin, *An arithmetic application of geometric Langlands*, Proc. Sympos. Pure Math. **112.1** (2025), 42 页，DOI `10.1090/pspum/112.1/02062`。作者主页 PDF 与 arXiv 均无公开版（arXiv API `totalResults=0`），以微信所收出版社排版 PDF 为唯一底本。选篇理由：这是 AGKRRV 谱分解系列唯一一篇面向算术应用的综述性长文，核心是回答 Michael Harris 的问题——平凡 Langlands 参数处不存在处处无分歧的尖形式（定理 A），且完整展示“谱侧 Eisenstein 级数 = Weyl 特征标 × 曲线 zeta 因子”的显式计算。
+- **底本处理**：`scripts/extract_source.py` 抽 42 页文本层（133K 字符）与 42 张 170 dpi 位图；文本层数学符号严重损坏（连字 ﬀ、上下标压平），所有公式回页面图像逐符号核对。原文无参考文献节标题，32 条文献按正文 `[n]` 重排并补全法语重音。
+- **规模**：13 个翻译单元（ch00 开篇与 §1；ch02a–ch02d §2；ch03a–ch03d §3；ch04a–ch04d §4 与文献），译文源码约 2,300 行；成品 **56 页**（封面 1 + 译者说明 1 + 目录 1 + 正文 50 + 文献 3）。
+- **编号对账**：`\newtheorem{thm}{定理}[subsubsection]` + `\numberwithin{equation}{section}` 复现原文 1.2.4.1、(2.3)、(3.11) 的印刷形态；`\pnum/\pnumt` 递增 subsubsection 计数器复现 run-in 编号段。逐节核对 `\pnum` 计数与原文段落数：2.1(13)、2.2(9)、2.3(2)、2.4(5)+2.5(6)、3.1(3)+3.2(6)、3.3(1)+3.4(3)、3.5(2)、3.6(3)+3.7(2)、4.1(2)+4.2(3)、4.3(3)+4.4(6)、4.5(6)+4.6(6)、4.7(2)，**全部对齐**；42 个编号公式、16 个定理类环境、52 条作者脚注、31 张 tikzcd 图。
+- **图与脚注**：原文 31 张交换图全部用 tikz-cd 重画，中文标签包 `\text{}`；作者脚注保原编号，译注用 manyfoot `\zy` 独立序列（标记「译 n」），解释性译注均带 `[来源：A/B/I…]` 或 `[译者按（上下文推断，无外部依据）]`。
+- **编译与审计**：xelatex 三遍，**0 error / 0 Overfull / 0 Missing character / 0 undefined**；仅 stmaryrd 粗体回退一条字体提示与 5 条 Underfull（`\sloppy` 造成）。逐页目检封面、定理 A、定理 4.7.2.1、引理 4.6.6.4、文献页；定理 4.7.2.1 与 (4.17) 两张宽图改 `\scriptsize`/`\small` + 加大列距后归位。
+- **原文缺陷**：`资料卡/04-术语文献勘误.md` 登记 **E1–E10**：两处 `[?]`（据上下文应为 [2]）、§2.2 的 `O_X`（应为 `O_S`）、OCR 的 `H°`、§4.6.5 缺字 `ε_y`、[13][21][22][28][30] 法语重音脱落、§3.6 末脚注标记后残留 `here.`、§4.4 的 `V^λ` 与 `\bar λ` 混用、§4.7 复杂记号。会改变数学内容的一律照录正文 + `% [Tutor Note]` + 登记，不擅改；`疑点清单.tsv` 18 行全部「已解」。
+- **交付物**：`投稿信息.md`、`精选片段.md`（12 条判定链）、`工程文件/{BRIEF.md, reports/ch00…ch04d（13 份）, scripts/extract_source.py, work/{通读笔记.md, 疑点清单.tsv, glossary.tsv（89 条）, 原文/full.txt, pages/ ×42}}`、`源码/{main.tex, preamble.tex, preamble_macros.tex, 编译说明.md, chunks/ ×13}`、`资料卡/` 五件套（00-速览 / 01-结果清单 / 02-论证地图 / 03-条款索引 / 04-术语文献勘误）、`成品/几何朗兰兹的一个算术应用_PSPM-112.1_v1.0.pdf`（不入库）；`03_translations_meta/SY02-19/` 放投稿信息与交付报告副本。
+- **同步**：`RELEASE_REGISTER.csv` 新增 SY02-19（出版社 PDF 底本，成品 Release 外链）；台账与工程计数由 `make_stats.py --write` 同步；`build_manifest.py`、`tools/check_manifest.py` 通过后推 Gitee / GitHub / AtomGit 三远端 master。
+
 ## ggl 资料卡包 ggl13 / ggl22 入库 + 原文 PDF 误入仓的清理 — 2026-11-22
 
 - **新包**：`datasets/ggl13/`（Witten《Khovanov 同调与规范理论》arXiv:1108.3103，12 卡 + 40 条带 `quote` 的 A 类出处 + errata 5 条）、`datasets/ggl22/`（Gaiotto–Witten《N=4 超 Yang–Mills 理论中边界条件的 S-对偶》arXiv:0807.3720，172 页，20 卡 + errata 2 条）；`datasets/ggl19/` 补 `trace.md`/`workflow.md`/`train.jsonl`（13 条）。三包均含 `XREF.md`（arXiv 版本史 + INSPIRE 引文）、`errata.tsv`、`train.jsonl`。

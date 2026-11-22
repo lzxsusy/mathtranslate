@@ -1,0 +1,8 @@
+# ch04d 施工报告（pp.38–42，§4.7 + 参考文献）
+
+- **范围**：p038 末 §4.6.6 之后至 p042 末。含 4.7.1（$\zeta_{X,\check N,\check T}$ 与 $\LS^{\arthm}_{\check T,\delta_{\check T}\neq0}$）、定理 4.7.2.1 及证明 Step 1–3、参考文献 [1]–[32]、作者地址。
+- **内容摘要**：4.7.1 把 $\tau_{\check T}$（定理 4.3.3.1）与 $\check T^{ad}/\check T=\check T\times_{B\check T}\mathrm{pt}$ 的投影、$\zeta_{X,\check N,\check T}$ 复合，得到 $\LS^{\arthm}_{\check T,\delta_{\check T}\neq0}\to\AA^1\setminus0$。定理 4.7.2.1：定理 3.5.2.1 的交换图与玩具模型 $\Eisspec^{\mathrm{toy}}$ 经 $\zeta_{X,\check N,\check T}\cdot-$ 与 $\simeq$ 交换。证明 Step 1：$B\check B\to\LS^{\restr}_{\check B}$、$B\check G\to\LS^{\restr}_{\check G}$ 的紧合态射给出 $\Rep(\check B)\to\IndCoh(\LS^{\restr}_{\check G})$ 两函子的等同，取 Frobenius 迹得 (4.16)。Step 2：$B\check B\to\LS^{\restr}_{\check B}$、$B\check T\to\LS^{\restr}_{\check T}$ 的方块给出自然变换，用 $\vol_{\check T}$ 与引理 4.6.6.4 得 (4.17)。Step 3：拼接得定理，并由推论 3.7.2.1 得 §4.5.6 所需满射性。
+- **编译**：`test_ch04d.tex`，xelatex exit 0，5 页，0 Overfull。修复三处：`"\Eisspec,toy"` 的逗号改为 `"{\Eisspec,toy}"`（否则 pgf 把 `toy"` 当 key）；(4.17) 图尾多余 `&` 与指向空列的 `\arrow[dr]` 改为同列 `\arrow[d]`；定理 4.7.2.1 的图原宽 119pt，改 `column sep=0.85em, row sep=small, cells={font=\footnotesize}` 后 0 Overfull。
+- **技术处理**：参考文献 32 条按原刊排印，补全法语重音（_généralisée_、_Séminaire_、_Géométrie_、_Épijournal_）；[21] 的 $\mathbb{P}^1$ 用 `\mathbb{P}`（`\PP` 已因与 LaTeX 冲突删除）；[25] 的 URL 用 `\url`；作者地址与邮箱照录。
+- **原文缺陷/疑难**：p039 定理 4.7.2.1 图中 $\Gamma(\LS^{\arthm}_{\check T,\delta_{\check T}\neq0},\omega)$ 与 $\Gamma(\LS^{\arthm}_{\check T},\omega)[\delta_{\check T}^{-1}]$ 的等号按原文；p041「This diagram refines the theorem」按「该图精确化了我们要证明的定理」译。
+- **遗留**：参考文献 [21] 的出版信息原文只给 preprint 与 URL，照录；合成后确认 4.7.1–4.7.2 两段编号与定理 4.7.2.1 编号。
