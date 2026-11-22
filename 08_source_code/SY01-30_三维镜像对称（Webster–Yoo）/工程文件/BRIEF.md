@@ -12,7 +12,7 @@
 | 文献表 | 原包不带 `.bib`，且 3.2 格式的 bbl 与 2026 年的 biblatex（3.3）不兼容（实测：空文献表 + `wrong format version` 警告）。故由 bbl 反推 `源码/main.bib`（30 条，脚本 `work/sy0130/bbl2bib.py`），改用 biber；`.bbl` 不入库（.gitignore） |
 | 语言 | 英 → 中（简体） |
 | 体例 | 中文译注本：译文 + 译注框 + 术语表；保留原文全部公式、定理编号与插图 |
-| 编译 | `xelatex main.tex` → `biber main` → `xelatex main.tex` ×2（ctex + fandol；2026-11-22 实测 29 页、0 error、0 overfull） |
+| 编译 | `xelatex main.tex` → `biber main` → `xelatex main.tex` ×2（ctex + fandol；2026-11-22 实测 30 页（印刷页 29）、0 error、0 overfull） |
 | 成品 | `工程文件/deliverable/Webster-Yoo_三维镜像对称_中文译注本.pdf` |
 | 工程编号 | SY01-30（镜像对称组，接 SY01-29 之后） |
 
@@ -35,7 +35,7 @@
 
 > 原文第 2 页的 `\listoffixmes` 是作者用 `fixme` 包留下的 8 条写作批注（其中数条已过时）。**本译本不排印这一页**，只在「译者说明」里交代；其余页序与原 PDF 一致。
 >
-> **两处「未印出的原文」**：原文把 2.5 节与第 5 节整段包在 `\newcommand{\maybelater}[1]{}` 里——宏体为空，所以这两节**在原文 PDF 里根本不出现**（与 23 页、29 页的实测一致）。译本按「照原文印出的内容译」处理：不译入正文，把两节的起止与主旨登记在 `资料卡/04-术语文献勘误.md`，需要时可回头补。
+> **两处「未印出的原文」**：原文把 2.5 节与第 5 节整段包在 `\newcommand{\maybelater}[1]{}` 里——宏体为空，所以这两节**在原文 PDF 里根本不出现**（与原文 23 页、译本 30 页的实测一致）。译本按「照原文印出的内容译」处理：不译入正文，把两节的起止与主旨登记在 `资料卡/04-术语文献勘误.md`，需要时可回头补。
 
 ## 3. 翻译决定（立项时定下，不再改动）
 
@@ -67,7 +67,7 @@
 - [x] 立项、取底本（arXiv e-print 源；bbl→main.bib 重建，biber 可跑）
 - [x] BRIEF / STYLE_GUIDE / glossary（165 条）
 - [x] 六块译文（ch01–ch06，六个子任务分译后统稿）
-- [x] 合并编译（29 页、0 error、0 overfull、0 未定义引用）
+- [x] 合并编译（30 页 = 扉页 + 印刷页 29；0 error、0 overfull、0 未定义引用）
 - [x] 术语复查（术语表 165 条；正文术语按表）、译注复查（11 条）
 - [ ] 资料卡五件套（00/01/02/03/04）
 - [ ] 成品 PDF 入 `工程文件/deliverable/`

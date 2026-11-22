@@ -2,6 +2,16 @@
 
 > **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
 
+
+## 工程文件改造 + SY01-30《三维镜像对称》中译注本（Webster–Yoo） — 2026-11-22
+
+- **工程文件改造（全仓 110 个工程）**：新增 [`04_playbook/17_仓库理念与上传规范.md`](04_playbook/17_仓库理念与上传规范.md)（v1.0），写清四件事——① 为什么做这个仓：把数学搭成 coding 沙盒式工作台，译文可回原文页行、术语记号唯一登记、定理陈述有自然语言与 Lean 双版本、全部脚本可复跑；目标不是让模型多做数学题，而是训练推理，再以 NL↔形式语言对齐换取数学理解，反哺模型本身。② 五层资产与三层产出（可读译注本 < 术语/资料卡/语料 < 对齐卡），口号「页数是库存，对齐才是产能」。③ 该传什么（完成最低配置 / 可传但要标状态 / 绝对不传：在版图书全文、未脱敏会话、密钥、`__pycache__`、本机绝对路径）与口诀「能被人复核的留下；只能被自己相信的别留；能重跑的不要存结果，存命令」。④ 开工五件事、收工五件事、三道闸门。配套 [`tools/gen_start_here.py`](tools/gen_start_here.py) 为每个工程生成 `工程文件/00_开工必读.md`（约 40 行摘要，带 `generated-by` 标记、只覆盖带标记或空文件；**written 110, skipped 0**）；根 `README.md` 与 `04_playbook/README.md` 加指针（后者把「先读 17」列为开工闸门之前的一项，必读顺序表新增第 15 行）。
+- **新工程 SY01-30**：底本 Ben Webster & Philsang Yoo, *3-dimensional mirror symmetry*, arXiv:2308.06191v1（23 页，*Notices of the AMS* 约稿综述）。六块译文（§1+致谢 / §2.1–2.3 / §2.4–2.5 / §3+3.1 / §3.2 / §4–5）并行译出后合并；成品 **PDF 30 页（印刷页 29）**，`xelatex → biber → xelatex ×2`，**0 error / 0 Overfull / 0 undefined / 0 缺字**；术语表 165 条（由 `work/glossary.tsv` 生成）、译注 10 条框注 + 1 条行内、资料卡五件套、`投稿信息.md` 与台账行（arXiv 预印本 / Release 外链 / 合规）。
+- **两处原文保真发现**：① 原文把 §2.5「Future Direction」与 §5「Future directions」整节包在 `\newcommand{\maybelater}[1]{}` 里，宏体为空 ⇒ 这两节**原文 PDF 根本不印**；译本按「只译原文印出的内容」不译，主旨与源行号登记于 `资料卡/04-术语文献勘误.md` §1。② 原文随包 `.bbl` 是 biblatex **format 3.2**，本机 biblatex 3.3 直接使用会报 `wrong format version` 并产出空文献表（原文自身亦然）；写 `bbl2bib.py` 反推 `源码/main.bib` **30 条**，改由 biber 重建，`.bbl` 不入库。
+- **编译适配（不改数学）**：补回原文 `main.tex` 里漏收的 `\alg`、`\sPoin` 与 `\tikzset{MyPersp,MyPoints}`；命题 3.8 的引用从标题移入陈述句末（原文写法在中文版越界 5.66pt）；柱体图 `wrapfigure` 宽度 `.14→.19\textwidth`；`work/sy0130/split.py` 修一处注释判定 bug（曾把「空白开头且含 `%`」的 tikz 行当整行注释删掉，图内 `\def\h`/`\def\a` 因此丢失，已补回）。
+- **原文勘误**：`资料卡/04-术语文献勘误.md` 登记 14 条（Intrilligator、Contantin、Aganagíc、Rimanyí、bordism 态射应相对边界固定、自由标量作用量缺 1/2、`\mathcal C^\infty` 混用、BFN 定义 `g_{pm}`、BFM 的 `G/G^\vee` 前后矛盾、align 与 tikz 排版小疵、§4.5 重句、`\phil`/`\ben` 内部批注、`\arxiv` 段落实为印出）与原文漏编的 `dimofteMirrorSymmetry2020`（arXiv:1908.00013，行内译注说明，不伪造文献条目）。
+- **统计与台账**：`RELEASE_REGISTER.csv` 现 **119 行**（SY01-30 行由并发会话先行登记，本轮补正备注与成品页数）；`make_stats.py --write` / `--check` 同步 README 统计块（**119 部 / 106 部带源码 / 1,095 张资料卡 / 21 个集**）；`tools/check_numbers.py` 的退役表随实测更新（106 部、1,095 张已是当前值，不再拦）；`build_site.py` 从 `_meta/stats.json` 重生成站点（119 工程 / 1,095 卡 / 1,820 术语）。
+
 ## SY02-17《仿射 Grassmann 簇与几何 Satake 等价》与 SY02-18《shtuka 及其模空间导论》中译注本 — 2026-11-22
 
 - **选篇顺序**：按「与几何朗兰兹的关键程度、可保存程度」从微信收到的 6 篇讲稿中先选 01（Zhu, *An introduction to affine Grassmannians and the geometric Satake equivalence*, arXiv:1603.05593, 95 页）与 04（Yun, *Introduction to Shtukas and their moduli*, arXiv:2411.10248, 38 页）：01 是几何 Satake 这一技术核心的标准入门，04 是数论侧入口并与已完成 SY02-16 的 §2/§3 直接衔接；03 与 01/02 内容重叠、05 自述「非正式」、06 属背景工具，排在后面。
@@ -47,7 +57,7 @@
 - **机制**：`make_stats.py` 重写（189 → 约 370 行），新增 `--write/--check/--json`，统计写入 `_meta/stats.json`；README 统计块改 13 项自动生成；新增 `_meta/口径.md`（指标定义 + 退役数字表 + 历史快照清单）与 `tools/check_numbers.py`（退役数字闸门，56 个文件 0 命中）；`tools/build_site.py` 改读 `_meta/stats.json`，站点数字不再手写。
 - **新口径**（`_meta/stats.json`）：113 部工程 / 100 部带 LaTeX 源码 / 1 万级跟踪文件 / 41 部成品 PDF 50.8 MB / 49,322 段语料（唯一 47,756，含公式 86%，汉字 4,055,500）/ 82 个工程有正文 / 术语 1,820 条 / **资料卡 1,034 张（18 集）** / **对齐卡 39 条（21 certified + 18 gap）** / 402 条轨迹。
 - **退役**：全库页数（无脚本可复算）与由此派生的单页成本数字；旧工程数、旧段数、旧资料卡数、旧文件数一律不再使用，历史报告保留原值并加「历史快照」标记。
-- **数语规范**（新）：`01_corpus_zh/数语规范/`——`README.md`（总则）、`STYLE_NL.md`（中文语体）、`STYLE_FORMAL.md`（对齐卡规范）；`tools/build_norm.py` 生成 `TERMS.tsv` **1,847** 条（A 170 / B 152 / I 114 / D 1,411）、`SYMBOLS.tsv` **76** 条、`CONFLICTS.tsv` **76** 组（一外多中 12 / 一中多外 28 / 等级不一致 33 / 空格连字符 3）、`MACROS.tsv` **405** 个跨工程同名不同义宏；`--check` 作提交闸门。
+- **数语规范**（新）：`01_corpus_zh/数语规范/`——`README.md`（总则）、`STYLE_NL.md`（中文语体）、`STYLE_FORMAL.md`（对齐卡规范）；`tools/build_norm.py` 生成 `TERMS.tsv` **1,847** 条（A 170 / B 152 / I 114 / D 1,411）、`SYMBOLS.tsv` **76** 条、`CONFLICTS.tsv` **76** 组（一外多中 12 / 一中多外 28 / 等级不一致 33 / 空格连字符 3）、`MACROS.tsv` **550** 个跨工程同名不同义宏（初版 405，随新工程增加）；`--check` 作提交闸门。
 - **说明文件**：`README.md` 新增「从给人读的译本到可对齐的中文数学底稿」定位段、数语规范章、形式化对齐章；`DATASHEET.md` 升 **v1.3.0**（五层资产）；`00_README.md`、`datasets/README.md`（补 kshms 83 卡、ggl19 12 卡、sy0117 36 卡、v0.24）、`04_playbook/15`（新增 §6.5 资料卡→对齐卡 7 步流程，季度目标改 100 条 certified）、`04_playbook/README.md`（纪律 v2.1）同步改数。
 - **测试**：`make_stats --check` OK、`check_numbers` 0 命中、`build_norm --check` 一致、`ds_lint` 119 条 0 错 0 警、`entry_lint` 0/0、`check_compliance` 通过（7 条既有提示）、`make_train_subset` 44,372 段；站点与 11 份说明文件 0 断链；**独立复跑 Lean 对齐卡**：仓内 6 个 `.lean` 与工作工程逐字节相同，在 `leanprover/lean4:v4.36.0` + mathlib `d33c49ca` 上 `lake env lean` 全部 exit 0、0 error，三个 `Statements.lean` 0 `sorry`，`Gaps.lean` 合计 22 处 `sorry` / 18 条声明，与卡片 `sorry_count` 对账一致。详见 `AUDIT_2026-11-21_口径与测试.md`。
 

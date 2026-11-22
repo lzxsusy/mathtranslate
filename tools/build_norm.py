@@ -29,6 +29,7 @@ import argparse
 import json
 import os
 import re
+import subprocess
 import sys
 from collections import Counter, defaultdict
 
@@ -431,52 +432,69 @@ def norm_def(body: str) -> str:
     return s
 
 
+def tracked_tex() -> list[str]:
+    """只扫 git 跟踪的 .tex：站点与统计都按「仓库里真实存在的东西」算，
+    这里同口径，避免未提交的草稿把宏表带偏。"""
+    try:
+        out = subprocess.run(
+            ["git", "ls-files", "-z", "08_source_code"],
+            cwd=ROOT, capture_output=True, check=True,
+        ).stdout
+        files = [f for f in out.decode("utf-8", "replace").split("\0") if f.endswith(".tex")]
+    except (OSError, subprocess.CalledProcessError):
+        files = []
+        for dirpath, dirnames, filenames in os.walk(SRC):
+            dirnames[:] = [d for d in dirnames if d not in {"work", "pages", "figures", "build"}]
+            for fn in filenames:
+                if fn.endswith(".tex"):
+                    files.append(os.path.relpath(os.path.join(dirpath, fn), ROOT))
+    return sorted(files)
+
+
 def scan_macros() -> list[dict]:
     decls: dict[str, list[dict]] = defaultdict(list)
-    for dirpath, dirnames, filenames in os.walk(SRC):
-        dirnames[:] = [d for d in dirnames if d not in {"work", "pages", "figures", "build"}]
-        for fn in filenames:
-            if not fn.endswith(".tex"):
+    for rel in tracked_tex():
+        if any(seg in {"work", "pages", "figures", "build"} for seg in rel.split("/")):
+            continue
+        path = os.path.join(ROOT, rel)
+        try:
+            with open(path, encoding="utf-8", errors="replace") as fh:
+                text = strip_comments(fh.read())
+        except OSError:
+            continue
+        if "newcommand" not in text and "DeclareMathOperator" not in text and "\\def" not in text:
+            continue
+        pkg = os.path.relpath(path, SRC).split(os.sep)[0]
+        for m in MACRO_DECL.finditer(text):
+            kind = m.group(1)
+            name = m.group(2) or m.group(3)
+            if not name or name in MACRO_BLACKLIST:
                 continue
-            path = os.path.join(dirpath, fn)
-            try:
-                with open(path, encoding="utf-8", errors="replace") as fh:
-                    text = strip_comments(fh.read())
-            except OSError:
-                continue
-            if "newcommand" not in text and "DeclareMathOperator" not in text and "\\def" not in text:
-                continue
-            pkg = os.path.relpath(path, SRC).split(os.sep)[0]
-            for m in MACRO_DECL.finditer(text):
-                kind = m.group(1)
-                name = m.group(2) or m.group(3)
-                if not name or name in MACRO_BLACKLIST:
-                    continue
-                pos = m.end()
-                while pos < len(text) and text[pos] in " \t":
+            pos = m.end()
+            while pos < len(text) and text[pos] in " \t":
+                pos += 1
+            while pos < len(text) and text[pos] == "[":
+                close = text.find("]", pos)
+                if close < 0:
+                    break
+                pos = close + 1
+                while pos < len(text) and text[pos] in " \t\n":
                     pos += 1
-                while pos < len(text) and text[pos] == "[":
-                    close = text.find("]", pos)
-                    if close < 0:
-                        break
-                    pos = close + 1
-                    while pos < len(text) and text[pos] in " \t\n":
-                        pos += 1
-                body, _ = capture_braced(text, pos)
-                if not body:
-                    continue
-                # 图内局部临时宏（tikz 里 \def\R{2} 这类单个数字/单词）不算记法冲突
-                if kind == "def" and "\\" not in body and len(body) <= 3:
-                    continue
-                decls[name].append(
-                    {
-                        "kind": kind,
-                        "body": body.strip(),
-                        "norm": norm_def(body),
-                        "pkg": pkg,
-                        "file": os.path.relpath(path, ROOT).replace(os.sep, "/"),
-                    }
-                )
+            body, _ = capture_braced(text, pos)
+            if not body:
+                continue
+            # 图内局部临时宏（tikz 里 \def\R{2} 这类单个数字/单词）不算记法冲突
+            if kind == "def" and "\\" not in body and len(body) <= 3:
+                continue
+            decls[name].append(
+                {
+                    "kind": kind,
+                    "body": body.strip(),
+                    "norm": norm_def(body),
+                    "pkg": pkg,
+                    "file": os.path.relpath(path, ROOT).replace(os.sep, "/"),
+                }
+            )
 
     out = []
     for name, items in sorted(decls.items()):
