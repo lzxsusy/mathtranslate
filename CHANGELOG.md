@@ -2,6 +2,13 @@
 
 > **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
 
+## ggl 资料卡包 ggl13 / ggl22 入库 + 原文 PDF 误入仓的清理 — 2026-11-22
+
+- **新包**：`datasets/ggl13/`（Witten《Khovanov 同调与规范理论》arXiv:1108.3103，12 卡 + 40 条带 `quote` 的 A 类出处 + errata 5 条）、`datasets/ggl22/`（Gaiotto–Witten《N=4 超 Yang–Mills 理论中边界条件的 S-对偶》arXiv:0807.3720，172 页，20 卡 + errata 2 条）；`datasets/ggl19/` 补 `trace.md`/`workflow.md`/`train.jsonl`（13 条）。三包均含 `XREF.md`（arXiv 版本史 + INSPIRE 引文）、`errata.tsv`、`train.jsonl`。
+- **合规事故**：`datasets/ggl19/external/qgl2008.pdf`（arXiv:0811.3264 原文，871 KB）随 `1eca8b75 重建 MANIFEST` 入仓并推到 Gitee / AtomGit，**绕过了 `check_compliance.py` 原有的 PDF 命名规则**（文件名不含 arXiv、体积 < 3 MB、不在「原本」目录）。
+- **处理**（当日）：① 移出工作区与索引；② `.gitignore` 增 `datasets/*/external/*.pdf|png|jpg`；③ `package.py ship` 起跳过 `external/` 下的 PDF/图片并打印跳过清单；④ `check_compliance.py` 增两条红线判定（`datasets/` 下任何 `.pdf`、`*/external/` 下任何图片）；⑤ `COMPLIANCE.md` R1 补注该情形；⑥ **重写历史**：用 `git-filter-repo --path … --invert-paths`（`git filter-branch` 在本机 MSYS git 下报 `fatal: not a git repository` 不可用），master `6c7d5ad6 → 35db47ce`、新 tip `222d2ba8`，force-push 到 Gitee（master/main）与 AtomGit（main），本地 `reflog expire + gc --prune=now` 后旧 blob 已不可达（`git cat-file -e` 失败）。
+- **残留风险（待跟）**：Gitee 上**旧 commit 仍可取**——`/raw/6c7d5ad6/datasets/ggl19/external/qgl2008.pdf` 实测 200、891430 字节（当前 master 已 404）；服务端 gc 前该链接一直有效，需向 Gitee 反馈或等其回收。AtomGit 的 raw 路径由 SPA 接管（旧 commit 也返回 200 + 6156 字节 HTML），无法从外部确认，按已清理记录。GitHub 远端本机无可用密钥且从未包含该提交，未处理。
+
 ## SY02-16《算术与几何朗兰兹纲领》中译注本（ICM 2022 综述） — 2026-11-22
 
 - **新工程** `08_source_code/SY02-16_算术与几何朗兰兹纲领/`：朱歆文（Xinwen Zhu）*Arithmetic and Geometric Langlands Program*（ICM 2022 邀请报告综述，arXiv:2504.07502，26 页）全文逐句中译。选篇理由：微信收到的《几何朗兰兹纲领_好读讲义综述打包.zip》里六篇文献，只有这一篇标题即「算术与几何朗兰兹纲领」，且 26 页可在单次会话内做到逐句质量；其余五篇（Zhu 仿射 Grassmann 讲义 95 页、Zhu 几何 Satake 与 Shimura 簇 50 页、Yun shtuka 38 页、Dhillon 局部几何朗兰兹 83 页、Yun Springer 62 页）未译，已列入 `BRIEF.md` 备查。全库 grep 六个 arXiv 号确认无重复工程。
