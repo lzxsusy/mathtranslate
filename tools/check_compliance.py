@@ -110,6 +110,14 @@ def check_paths(files):
         if re.search(r"(扫描件|扫描版|影印本|scanned|scan[_-]\d|ocr[_-]?\d|ocr版本)", name, re.I) and ext in (".pdf", ".png", ".jpg", ".tif", ".tiff"):
             add("R1", "%s：疑似扫描件/OCR 页面图（L4）" % rel)
             continue
+        # R1：资料卡包里的外校证据目录（datasets/*/external/）只许放 xref.json 与文本，
+        # 原文 PDF / 页面裁图一律不入仓（2026-11-22 补：qgl2008.pdf 曾漏过命名规则）
+        if "/external/" in low and ext in (".pdf", ".png", ".jpg", ".jpeg", ".tif", ".tiff", ".webp"):
+            add("R1", "%s：外校证据目录只许放 xref.json 与文本，原文 PDF/页面裁图不得入库（L4）" % rel)
+            continue
+        if low.startswith("datasets/") and ext == ".pdf":
+            add("R1", "%s：资料卡包内不得出现原文 PDF（L4）" % rel)
+            continue
         # R1：PDF 命名里带 arXiv 号（多半是原文）
         if ext == ".pdf" and re.search(r"arXiv|arxiv", name):
             add("R1", "%s：疑似原文 PDF（L4）" % rel)

@@ -15,8 +15,13 @@
 | `cards/derivations/` | 推导卡 |
 | `index.jsonl` | 检索索引 |
 | `terms.tsv` | 术语对照表 |
-| `notes.md` | 通读笔记 |
+| `notes.md` | 通读笔记（含核对与勘误） |
 | `excerpts.md` | 关键段落精译 |
+| `errata.tsv` | 勘误登记（九列） |
+| `XREF.md` | 外部校正底稿（arXiv/INSPIRE） |
+| `trace.md` | 思考链：判断点与理由 |
+| `workflow.md` | 本篇工作流 |
+| `train.jsonl` | SFT 训练样本（原文窗口 → 卡片） |
 
 ## 轨道分布
 
