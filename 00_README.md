@@ -38,7 +38,7 @@ Git 仓库内保留全部源码、元数据、语料、轨迹与工程文档（1
 
 ## 合规
 
-四级发布模型与 9 条红线见 [`COMPLIANCE.md`](./COMPLIANCE.md)：L1 自产全公开、L2 译文公开受限、L3 成品仅外链、L4 原本/扫描件/影印件禁入。每部底本的权利状态、成品去向登记在 [`RELEASE_REGISTER.csv`](./RELEASE_REGISTER.csv)（**115 行**，逐部有台账）；提交前的自动检查由 `tools/check_compliance.py` 与 `tools/check_numbers.py` 完成。2026-11-16 的独立评估与整改记录见 [`ASSESSMENT_2026-11-16.md`](./ASSESSMENT_2026-11-16.md)（历史快照）。
+四级发布模型与 9 条红线见 [`COMPLIANCE.md`](./COMPLIANCE.md)：L1 自产全公开、L2 译文公开受限、L3 成品仅外链、L4 原本/扫描件/影印件禁入。每部底本的权利状态、成品去向登记在 [`RELEASE_REGISTER.csv`](./RELEASE_REGISTER.csv)（**116 行**，逐部有台账）；提交前的自动检查由 `tools/check_compliance.py` 与 `tools/check_numbers.py` 完成。2026-11-16 的独立评估与整改记录见 [`ASSESSMENT_2026-11-16.md`](./ASSESSMENT_2026-11-16.md)（历史快照）。
 
 ## 数据来源与生成方式
 
