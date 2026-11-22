@@ -1,0 +1,228 @@
+\section{群的范畴表示}
+\label{s:catrepgrp}
+
+\subsection{概览}
+
+\ssszh 在第 \ref{s:bbloc} 节中，我们追随 Beilinson--Bernstein 局部化的对称性，得到了群的范畴表示这一概念。本节要给这套形式体系一个更细致的介绍。
+
+这里的基本想法与结果归功于 Beilinson--Drinfeld 与 Frenkel--Gaitsgory。讨论全体范畴表示所构成的范畴、以及它们之间缠绕函子的形式体系，则主要归功于 Gaitsgory。
+
+这套形式体系需要现代同调代数的一些较精细的要点才能起步，我们就从这里讲起。
+
+\subsection{从三角范畴到 dg 范畴}
+
+\ssszh 在第 \ref{s:bbloc} 节中，我们把 $\Dmod(K)$ 当作幺半三角范畴，它的模则是三角范畴。然而，要对它的模做许多基本操作，三角结构并不够用。
+
+下面是这类问题的一个基本例子。给定 $\Dmod(K)$ 的两个模 $\sC_1$ 与 $\sC_2$，人们想谈论 $\Dmod(K)$-等变三角函子所构成的范畴
+%
+\[
+   \Hom_{\Dmod(K)\mod}(\sC_1, \sC_2).
+\]
+%
+不仅如此，我们还希望它们的行为像函数论中的对应物。例如，给定有限群 $K(\Fq)$ 的子群 $H_1(\Fq)$ 与 $H_2(\Fq)$，有典范同构
+%
+\begin{align*}
+  \Hom_{K(\Fq)\mod}\big(\Fun(K(\Fq)/H_1(\Fq)),&\Fun(K(\Fq)/H_2(\Fq))
+  \big)\\
+  &\simeq
+ \Fun\big( H_1(\Fq) \backslash K(\Fq) / H_2(\Fq)\big).
+\end{align*}
+%
+人们希望对 $K$ 的代数子群 $H_1$ 与 $H_2$ 有类似的同构
+%
+\begin{align*}
+\Hom_{\Dmod(K)\mod}\big(\Dmod(K/H_1),\Dmod(K/H_2)
+\big)
+\simeq
+\Dmod( H_1 \backslash K / H_2).
+\end{align*}
+%
+
+遗憾的是，即便 $K$ 是平凡群，构造合适的 Hom 空间也已经有麻烦。此时我们想要的是从 $\sC_1$ 到 $\sC_2$ 的三角函子的一个合理范畴。而这是三角范畴众所周知的老问题。例如，给定带态射 $F_1 \rightarrow F_2$ 的三角函子，如何把它补成一个正合三角，并不清楚。人们想逐点取锥，即对 $\sC_1$ 的每个对象 $c$ 令 $\on{Cone}(F_1 \rightarrow F_2)(c) \simeq \on{Cone}(F_1(c) \rightarrow F_2(c))$，但要把这变成一个函子，就会因 $\sC_2$ 中锥的非函子性而碰壁。
+
+再看一个更精细的例子。人们希望能取 $\Dmod(K)$ 表示的极限、余极限与张量积，而在三角范畴中这些同样不易定义。
+
+幸运的是，从三角范畴过渡到 dg 范畴，可以把这些问题一并解决。
+
+\ssszh 我们先简述 dg 范畴的基本想法。回忆：表示论中出现的多数三角范畴，例如 $\fk\mod$，两个对象 $t_1$ 与 $t_2$ 之间的同态都算作某个向量空间复形的零次上同调。类似地，$t_1$ 与移位 $t_2[i]$（$i$ 为任意整数）之间的同态，就是这个复形的第 $i$ 次上同调。
+
+具体地说，对阿贝尔范畴的导出范畴，可以取 $t_1$ 的投射消解 $p_1$ 或 $t_2$ 的单射消解 $i_2$\footnote{严格说来，由于讨论的可能是同调维数无穷的阿贝尔范畴上的无界复形，这里指的是 Bernstein 与 Spaltenstein 意义下的 K-投射消解与 K-单射消解 \cite{spaltenstein}。}，并使用相应的同态复形
+%
+\[
+  \underline{\Hom}(p_1, t_2) \xrightarrow{\sim} \underline{\Hom}(p_1, i_2) \xleftarrow{\sim}
+  \underline{\Hom}(t_1, i_2).
+\]
+%
+我们强调，上述两个同构都是拟同构，也就是在上同调上诱导同构，但通常并不等同整条链复形本身。
+
+dg 范畴的基本想法是：不仅记住这些复形的上同调，还要记住复形本身，并且只差一个同时的拟同构。熟悉导出范畴的读者不必对此感到意外。毕竟，导出范畴之所以有用，正是因为人们不只记住单个导出函子（例如 $\Ext^1$），还要记住计算它的复形。从三角范畴过渡到 dg 范畴，无非是把这一想法不仅用于对象，也用于态射。
+
+\ssszh 直白地说，一个 $k$-线性 dg 范畴 $\sC$ 有一族对象。对每对对象 $c_1$ 与 $c_2$，有一个 $k$-向量空间复形 $\Hom(c_1, c_2)$；对每个三元组对象，有一个复形的复合态射
+%
+\[
+\Hom(c_1, c_2) \otimes \Hom(c_2, c_3) \rightarrow \Hom(c_1, c_3),
+  \]
+%
+它在朴素的意义下结合。
+
+下面是 dg 范畴中的一些基本操作。首先，给定对象 $c$ 与整数 $i$，移位 $c[i]$（若存在）余表示函子
+%
+\[
+\Hom(c[i], -) \simeq \Hom(c,-)[-i].
+\]
+%
+类似地，给定零链 $f: c_1 \rightarrow c_2$，$f$ 的锥（若存在）余表示函子
+%
+\[
+   \Hom( \on{Cone}(f), -) \simeq \on{Cone}( \Hom(c_2, -) \rightarrow
+   \Hom(c_1, -))[-1],
+\]
+%
+其中右边的锥是向量空间复形通常的锥。最后，直和按通常方式定义：当直和存在时，它余表示函子
+%
+\[
+   \Hom( \underset{i}{\oplus} \hspace{.2mm} c_i, -) \simeq \underset{i}\Pi
+   \hspace{.2mm} \Hom( c_i, -).
+\]
+%
+若一个 dg 范畴对上述操作封闭，即对移位、锥与任意直和封闭，就称它余完备。\footnote{下文还默认任何余完备的 dg 范畴都是可表现的。这是关于其大小的技术性假设，所涉及的一切例子都满足。}
+
+\ssszh 下面是余完备 dg 范畴的两个基本例子。
+
+\begin{ex} $k$-向量空间的范畴 $\Vect$ 是余完备的 dg 范畴。具体地说，$\Vect$ 的对象是 $k$-向量空间的链复形 $(V_i, d_i)$，$i \in \mathbb{Z}$。
+
+给定两个复形
+$(V_i, d_V)$ 与 $(W_i, d_W)$，令
+%
+\[
+\Hom(V_1, V_2) := \underline{\Hom}(V_1, V_2),
+\]
+%
+其中 $\underline{\Hom}(V_1, V_2)$ 是这样的链复形：其 $i$-链为
+%
+\[
+    \underline{\Hom}(V, W)^i := \underset{j}{\Pi} \hspace{.2mm} \Hom(V_j,
+    W_{i+j}),
+\]
+%
+微分则取通常的那个
+%
+\[
+     d \phi := d_W \circ \phi -(-1)^i \phi \circ d_V, \quad \text{对 } \phi
+     \in \underline{\Hom}(V,W)^i.
+\]
+%
+特别地，$i$-闭链就是链复形的映射 $V \rightarrow W[i]$，$i$-边缘则是零伦的映射。\label{e:dgvect}
+\end{ex}
+
+\begin{ex}更一般地，设 $\sA$ 是 $k$-线性的 Grothendieck 阿贝尔范畴，例如 $k$ 上代数簇的 D-模，或某个 $k$-代数的左模。此时无界导出范畴
+%
+$
+    \on{D}(\sA)
+$
+%
+如下自然地提升为一个 dg 范畴：对象取 $\sA$ 中对象的 K-单射复形，同态则按例 \ref{e:dgvect} 中的方式定义。
+\end{ex}
+
+\ssszh\label{s:homdgcats} 给定两个余完备的 dg 范畴 $\sC_1$ 与 $\sC_2$，有一个余完备的 dg 范畴
+%
+\begin{equation} \label{e:bigbrainhoms}
+\udHom(\sC_1, \sC_2),
+\end{equation}
+%
+人们把它想成两者之间的函子范畴；其中的下标 $\on{cont}$ 将在下文第 \ref{s:dgcat} 小节进一步讨论。\eqref{e:bigbrainhoms} 的构造并不完全直接，因为要求它在 dg 范畴的拟等价下不变。\footnote{dg 范畴之间的朴素 dg 函子 $F: \sC \rightarrow \sC'$，由对象集之间的相容映射与态射复形之间的相容映射给出。若 (i) 它在同态复形上诱导拟同构，且 (ii) 对 $\sC'$ 的任意对象 $c'$，存在 $\sC$ 的对象 $c$ 与零链 $F(c) \rightarrow  c'$，使下式中的映射为拟同构
+%
+\begin{equation} \label{e:bigbrainboms}
+  \Hom_{\sC'}(-, F(c)) \simeq \Hom_{\sC'}(-, c'),
+\end{equation}
+%
+就称 $F$ 是拟等价。这可以改述如下。取所有同态复形的零次上同调之后，朴素 dg 函子 $F$ 诱导出相应「同伦」范畴之间的函子
+%
+\[
+\on{Ho}(F): \on{Ho}(\sC) \simeq \on{Ho}(\sC').
+\]
+%
+在 $\sC$ 与 $\sC'$ 都对移位封闭的假设下，$F$ 是拟等价当且仅当 $\on{Ho}(F)$ 是通常范畴的等价。
+
+直白地说，实践中人们并不在乎严格的同态复形本身，而在乎复形到拟同构为止。这既引出了拟等价的概念，也引出这样的愿望：函子范畴应当在拟等价下不变。}
+
+不过，可以像导出范畴中的映射那样，用模型范畴论的手段来构造它：在 $\sC_1$ 与 $\sC_2$ 的适当替换之间取朴素的 dg 函子范畴；参见 \cite{toenlectures} 及其中的文献。
+
+我们来描述 \eqref{e:bigbrainhoms} 的一些基本性质。第一，\eqref{e:bigbrainhoms} 的对象集是 Keller 意义下的拟函子 \cite{kellerderiving}，并且是连续的，即与任意直和交换。第二，$F_1$ 与 $F_2$ 之间态射的 $i$-闭链集，在（余）纤维替换之后，就是自然变换 $F_1 \rightarrow F_2[i]$。
+
+\begin{re} 需要说明，这里的「连续」指与余极限交换；而在文献的其他地方，它指与极限交换。\end{re}
+
+下面是这类函子范畴的一些重要例子。
+
+\begin{ex} 对任意余完备的 dg 范畴 $\sC$，有典范等价
+%
+\[
+     \udHom(\Vect, \sC) \simeq \sC,
+\]
+%
+它把 $\sC$ 的对象 $c$ 与张量以 $c$ 的 dg 函子对应起来，即 $V \mapsto V \otimes c$。
+
+具体地说，这个 dg 函子把向量空间 $k^{\oplus I}$（$I$ 为集合）对应到对象 $c^{\oplus I}$；给定映射 $k^{\oplus I} \rightarrow k^{\oplus J}$，所得的映射 $c^{\oplus I} \rightarrow c^{\oplus J}$ 来自映射 $k \rightarrow \on{Hom}_\sC(c, c)$，即 $\sC$ 的 $k$-线性性。有界向量空间复形的像通过取锥得到，无界复形的像则通过取余极限得到。
+\end{ex}
+
+\begin{ex} 下面这个例子是第 \ref{sss:endos} 小节中函数论讨论的一个版本，后文会反复用到；对代数簇它归功于 \cite{toenpaper}，对一大类导出叠则由 \cite{benzvifrancisnadler} 推广。
+
+对代数簇 $X$ 与 $Y$，有典范等价
+%
+\[
+   \Hom_{\DGCat}(\QCoh(X), \QCoh(Y)) \simeq \QCoh(X \times Y),
+\]
+%
+它把乘积上的层 $\mathscr{K}$ 对应到相应的积分变换，即
+%
+\[
+   \QCoh(X) \xrightarrow{\pi_X^*} \QCoh(X \times Y) \xrightarrow{\mathscr{K} \otimes - } \QCoh(X \times Y) \xrightarrow{\pi_{Y, *}} \QCoh(Y),
+\]
+%
+其中 $\pi_X: X \times Y \rightarrow X$ 与 $\pi_Y: X \times Y \rightarrow Y$ 表示投影。
+
+类似地，有典范等价
+%
+\[
+   \Hom_{\DGCat}(\Dmod(X), \Dmod(Y)) \simeq \Dmod(X \times Y),
+\]
+%
+它同样把乘积上的 D-模 $\mathscr{K}$ 对应到积分变换
+%
+\[
+   \Dmod(X) \xrightarrow{\pi_X^!} \Dmod(X \times Y) \xrightarrow{ \mathscr{K} \overset ! \otimes - } \Dmod(X \times Y) \xrightarrow{\pi_{Y, *}} \Dmod(Y).
+\]
+%
+\end{ex}
+
+\ssszh\label{s:dgcat} 要谈论 dg 范畴的（余）极限，需要用到如下结构。存在一个 $(\infty, 1)$-范畴，记作 $\DGCat$，其对象是余完备的 dg 范畴，1-态射是连续的拟函子；参见 \cite{gaitsroz} 第 1 章及其中的文献。以下是它的一些基本性质。
+
+第一，它在 $\infty$-范畴的意义下具有一切（余）极限。粗略地说，dg 范畴的极限 $\varprojlim \sC_\alpha$ 的对象，是各 $\sC_\alpha$ 中同伦相容的一族对象；态射则是相应的映射复形的逆向极限。\footnote{这里再次强调，这正是三角范畴不够用的一个基本之处。也就是说，由于逆向极限不正合，人们确实需要复形本身，而不能只看它们的上同调。}
+
+dg 范畴图的余极限则由下述等式刻画
+%
+\[
+\udHom(\varinjlim \sC_\alpha, -) \simeq \varprojlim
+\udHom(\sC_\alpha, -)
+\]
+%
+与此相关，dg 范畴的极限满足等式
+%
+\[
+ \udHom(-, \varprojlim \sC_\beta) \simeq \varprojlim
+ \udHom(-, \sC_\beta).
+\]
+%
+
+一般 dg 范畴的余极限中的对象或态射并不容易描述（其实一般只对极限才指望有直白的描述，因为它们由映射性质刻画）。不过为了帮助读者定位，我们描述一个可以显式描述的重要例子。
+
+\begin{ex}\label{e:colimitcats}回忆：若函子 $$\Hom(c, -)$$ 与余极限交换，就说 dg 范畴 $\sC$ 的对象 $c$ 是\emph{紧}的。应当把它们想成小对象，例如在 $\Vect$ 中，一个对象紧当且仅当它等价于有限维向量空间的有界复形。与之相关，若每个对象都能写成紧对象的余极限，就说 $\sC$ 是紧生成的。
+
+给定紧生成范畴的滤过图 $\sC_\alpha$，其中每个 1-态射 $\sC_\alpha \rightarrow \sC_{\alpha'}$ 都把紧对象送到紧对象，则余极限
+%
+\[
+  \varinjlim \sC_{\alpha}
+\]
+%
+有如下描述：它仍由各 $\sC_\alpha$ 的紧对象嵌入而紧生成，这些对象之间的同态则是余极限各步上同态的滤过余极限。
+\end{ex}
