@@ -1,0 +1,125 @@
+%=====================================================================
+%  preamble.tex —— 中文译本的版式与定理环境设定
+%  底本：Gurbir Dhillon, arXiv:2205.14578（amsart, 10pt）
+%  目标：在中文 ctexart 12pt 下复现原文的编号体制与版面层次
+%=====================================================================
+
+%--------------------- 版面 ---------------------
+\usepackage{geometry}
+\geometry{a4paper, left=2.7cm, right=2.7cm, top=2.9cm, bottom=2.9cm}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\kaishu 范畴表示论与局部几何朗兰兹导论}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}%
+  \renewcommand{\headrulewidth}{0pt}}
+
+%--------------------- 数学与图 ---------------------
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amscd}
+\usepackage{mathtools}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{xspace}
+\usepackage{xcolor}
+\usepackage{tocvsec2}
+\usepackage[mathscr]{euscript}
+\usepackage{scalerel}
+\usepackage{aligned-overset}
+% xy-pic 用于原文的 \xymatrix 交换图（原文载入 [all,cmtip]）
+\usepackage[all,cmtip]{xy}
+
+%--------------------- 编号体制 ---------------------
+% 原文：amsart + \numberwithin{equation}{section}；
+%       定理类环境一律挂 subsubsection 计数器（印刷为「2.3.10.」形式）
+\numberwithin{equation}{section}
+
+%--------------------- 定理环境 ---------------------
+% 对应 amsart 的 plain 样式：题头粗体，正文斜体，题头以句点收尾，
+% optional 注排在编号之后、句点之前，形如「定理 3.3.13 (Beilinson–Bernstein, [BB81]).」
+\newtheoremstyle{zhthm}%
+  {3pt}{3pt}% 上下间距
+  {\itshape}% 正文
+  {}% 缩进
+  {\bfseries}% 题头
+  {.}% 题头后标点
+  {0.5em}% 题头后空隙
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}
+\newtheoremstyle{zhdefn}%
+  {3pt}{3pt}{\normalfont}{}{\bfseries}{.}{0.5em}%
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}
+
+% 环境名沿用原文，避免正文大量改名；仅把显示名换成中文。
+\theoremstyle{zhthm}
+\newtheorem{theo}[subsubsection]{定理}
+\newtheorem*{theo*}{定理}
+\newtheorem{lem}[subsubsection]{引理}
+\newtheorem{lemma}[subsubsection]{引理}
+\newtheorem{cor}[subsubsection]{推论}
+\newtheorem{pro}[subsubsection]{命题}
+\newtheorem{conj}[subsubsection]{猜想}
+\newtheorem{re}[subsubsection]{注}
+\newtheorem{remark}[subsubsection]{注}
+\newtheorem{example}[subsubsection]{例}
+\newtheorem{ex}[subsubsection]{例}
+\newtheorem{proofw}[subsubsection]{定理的证明}
+
+\theoremstyle{zhdefn}
+\newtheorem{defn}[subsubsection]{定义}
+
+\renewcommand{\proofname}{证明}
+
+% 原文用 \subsubsection{} 产生「2.3.5.」式的段首编号：编号不加粗、首行不缩进。
+\newcommand{\ssszh}{%
+  \par\medskip\noindent\refstepcounter{subsubsection}%
+  \thesubsubsection.\enspace\ignorespaces}
+
+%--------------------- 译注 ---------------------
+% 原文脚注 37 条照译为普通脚注；译者所加注释另立序列，印刷为「译1」「译2」……
+\usepackage{manyfoot}
+\DeclareNewFootnote[plain]{trans}
+\renewcommand{\thefootnotetrans}{译\arabic{footnotetrans}}
+\newcommand{\zy}[1]{\footnotetrans{#1}}
+
+%--------------------- 标题层次 ---------------------
+\ctexset{
+  section={
+    name={,},
+    number=\arabic{section},
+    aftername={.\enspace},
+    format=\Large\bfseries\centering,
+    beforeskip=3ex plus 1ex minus .2ex,
+    afterskip=2ex plus .2ex,
+  },
+  subsection={
+    aftername={.\enspace},
+    format=\large\bfseries\raggedright,
+    beforeskip=2.5ex plus .5ex minus .2ex,
+    afterskip=1.2ex plus .2ex,
+  },
+}
+
+% 附录：原文印刷为「Appendix A. From functions on …」，小节自然成为「A.1.」
+\newcommand{\zhappendix}{%
+  \appendix
+  \ctexset{section={name={Appendix\ }, number=\Alph{section}}}}
+
+%--------------------- 中西文混排细节 ---------------------
+\xeCJKsetup{CJKecglue={\hskip 0.24em plus 0.05em minus 0.05em}}
+\setlength{\parindent}{2em}
+\linespread{1.22}
+\allowdisplaybreaks[1]
+
+%--------------------- 超链接与书签 ---------------------
+\usepackage[colorlinks=true, linkcolor=blue!55!black, citecolor=blue!55!black,
+            urlcolor=blue!55!black, bookmarksnumbered=true]{hyperref}
+
+%--------------------- 移植自原文导言区的宏 ---------------------
+\input{preamble_macros}
