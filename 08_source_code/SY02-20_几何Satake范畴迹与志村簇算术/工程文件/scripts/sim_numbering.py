@@ -39,6 +39,28 @@ THM_ENVS = "|".join(sorted(KIND, key=len, reverse=True))
 EQ_ENVS = ("equation", "align", "multline", "gather", "eqnarray")
 
 
+def strip_quash(text):
+    """删除 \\quash{...} 的内容（作者用它在 PDF 中隐藏整段，故不参与编号）。"""
+    out = []
+    i = 0
+    while True:
+        j = text.find("\\quash{", i)
+        if j < 0:
+            out.append(text[i:])
+            break
+        out.append(text[i:j])
+        k = j + len("\\quash{")
+        depth = 1
+        while k < len(text) and depth:
+            if text[k] == "{":
+                depth += 1
+            elif text[k] == "}":
+                depth -= 1
+            k += 1
+        i = k
+    return "".join(out)
+
+
 def simulate(text, need_doc=True):
     """返回 [(编号, 类别)]，按正文出现次序。"""
     sec = sub = sss = 0
@@ -63,6 +85,7 @@ def simulate(text, need_doc=True):
         for m in re.finditer(r"\\subsection(?!\*)\s*\{", line):
             sub += 1
             sss = 0
+            eqs = 0
         n_sss = len(re.findall(r"\\subsubsection(?!\*)\s*\{", line))
         n_sss += len(re.findall(r"\\sss\s*\{", line))
         n_sss += len(re.findall(r"\\ssszh\s*\{", line))
@@ -76,16 +99,16 @@ def simulate(text, need_doc=True):
             if m.group(0).endswith("*"):
                 continue
             eqs += 1
-            out.append(("%d.%d" % (sec, eqs), "eq"))
+            out.append(("%d.%d.%d" % (sec, sub, eqs), "eq"))
     return out
 
 
 def main():
     mode = sys.argv[1] if len(sys.argv) > 1 else "diff"
-    orig = simulate(open(ORIG, encoding="utf-8").read())
+    orig = simulate(strip_quash(open(ORIG, encoding="utf-8").read()))
     joined = "\n".join(open(p, encoding="utf-8").read()
-                         for p in sorted(glob.glob(os.path.join(CHUNKS, "ch0*.tex"))))
-    mine = simulate(joined, need_doc=False)
+                         for p in sorted(glob.glob(os.path.join(CHUNKS, "ch*.tex"))))
+    mine = simulate(strip_quash(joined), need_doc=False)
 
     if mode == "orig":
         for n, k in orig:

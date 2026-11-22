@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-r"""对账：原文 \label 集合 vs 译文 \label 集合；并打印译文分节结构。"""
+r"""对账：原文 \label 集合 vs 译文 \label 集合；并打印译文分节结构。
+
+正文与文献分开：原文取 \begin{thebibliography} 之前的部分，译文取 chunks/*.tex 中
+thebibliography 之前的部分（ch25 只含文献）。
+"""
 import os
 import re
 
@@ -9,14 +13,16 @@ PROJ = os.path.dirname(ROOT)
 SRC = os.path.join(ROOT, "work", "原文", "main.tex")
 CH = os.path.join(PROJ, "源码", "chunks")
 
-orig = open(SRC, encoding="utf-8").read().split("\n")[0:2029]   # 正文（不含文献）
-otext = "\n".join(orig)
+otext = open(SRC, encoding="utf-8").read()
+otext = otext.split(r"\begin{thebibliography}")[0]
 olabels = re.findall(r"\\label\{([^}]*)\}", otext)
 
 mtext = ""
 for f in sorted(os.listdir(CH)):
-    if f.endswith(".tex") and f != "ch05.tex":
-        mtext += open(os.path.join(CH, f), encoding="utf-8").read() + "\n"
+    if f.endswith(".tex"):
+        piece = open(os.path.join(CH, f), encoding="utf-8").read()
+        piece = piece.split(r"\begin{thebibliography}")[0]
+        mtext += piece + "\n"
 mlabels = re.findall(r"\\label\{([^}]*)\}", mtext)
 
 o, m = set(olabels), set(mlabels)

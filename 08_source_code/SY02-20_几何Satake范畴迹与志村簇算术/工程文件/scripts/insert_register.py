@@ -7,7 +7,7 @@ path = os.path.join(R, "RELEASE_REGISTER.csv")
 
 note = sys.argv[1] if len(sys.argv) > 1 else (
     "底本 50 页；中译注本 %s 页；0 error/0 Overfull/0 Missing character/0 未定义引用；"
-    "141 个编号对象（76 定理类 + 65 公式）；48 条文献；译注 %s 条；术语 %s 条；"
+    "140 个编号对象（75 定理类 + 65 公式）；48 条文献；译注 %s 条；术语 %s 条；"
     "疑点 %s 条（未解 0）；勘误 %s 条；图 0 张（全为 xy-pic/tikz 交换图）；成品待上传 Release"
 )
 pages = sys.argv[2] if len(sys.argv) > 2 else "__"
