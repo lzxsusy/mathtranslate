@@ -2,6 +2,14 @@
 
 > **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
 
+## SY02-17《仿射 Grassmann 簇与几何 Satake 等价》与 SY02-18《shtuka 及其模空间导论》中译注本 — 2026-11-22
+
+- **选篇顺序**：按「与几何朗兰兹的关键程度、可保存程度」从微信收到的 6 篇讲稿中先选 01（Zhu, *An introduction to affine Grassmannians and the geometric Satake equivalence*, arXiv:1603.05593, 95 页）与 04（Yun, *Introduction to Shtukas and their moduli*, arXiv:2411.10248, 38 页）：01 是几何 Satake 这一技术核心的标准入门，04 是数论侧入口并与已完成 SY02-16 的 §2/§3 直接衔接；03 与 01/02 内容重叠、05 自述「非正式」、06 属背景工具，排在后面。
+- **SY02-17**（`08_source_code/SY02-17_仿射Grassmann簇与几何Satake等价/`）：五讲 + 附录，22 个 chunk 共 3,273 行，82 条文献；成品 **89 页**，0 error / 0 Overfull / 0 缺字。编号体制照 `pcmi.cls`：`\numberwithin{equation}{subsection}` 且定理类与公式共用计数器，印刷为「定理 1.1.3」「(1.2.1)」；`\xymatrix` 三角图改 plain tikz。**PDF 文本层抽不出中文**（`Unknown font tag 'F7'`），编号对账改用两条独立通道：标签集合对账（原文 193 / 译文 214，唯一差 `Lecture IV` 已补）+ 源码计数器模拟（284 个编号对象与原 PDF 首现序列逐条吻合）。
+- **SY02-18**（`08_source_code/SY02-18_shtuka及其模空间导论/`）：6 节 22 小节，5 个 chunk 共 1,630 行，44 条文献；成品 **46 页**，0 error / 0 Overfull / 0 缺字。关键体例：原文 `\newcommand\sss{\subsubsection}` 与定理类共用 `subsubsection` 计数器（amsart 下小标题不显示编号但仍步进），译文以 `\ssszh` 宏复现，题头由自定义 `\newtheoremstyle` 渲染为「2.3.3. 引理.」；`sim_numbering.py diff` 结果 **57 / 57，mismatch 0**，5 处 `\xymatrix` 全部改 `tikz-cd`。
+- **工程量**：两工程均配齐 BRIEF、通读笔记、疑点清单（全「已解」）、术语表、逐块 reports、资料卡 5 件、精选片段（8 条判定链）、投稿信息、编译说明、build 脚本、`.gitignore`；`03_translations_meta/SY02-17`、`SY02-18` 各放投稿信息与交付报告。
+- **台账与同步**：`RELEASE_REGISTER.csv` 增至 **118 行**（两行均为 arXiv 预印本 / Release 外链 / manual / 合规）；`make_stats.py --write`、`build_manifest.py`（files=11,194）、`check_manifest.py`（mismatch=0 missing=0 unlisted=0）、`check_numbers.py`（0 处退役数字）、`check_compliance.py`（通过）全部跑过；`00_README.md`、`DATASHEET.md` 的部数与底本分布同步为 118 部（arXiv 49 部）。
+
 ## SY02-19《几何朗兰兹的一个算术应用》中译注本（Raskin, PSPM 112.1） — 2026-11-22
 
 - **新工程** `08_source_code/SY02-19_几何朗兰兹的一个算术应用/`：Sam Raskin, *An arithmetic application of geometric Langlands*, Proc. Sympos. Pure Math. **112.1** (2025), 42 页，DOI `10.1090/pspum/112.1/02062`。作者主页 PDF 与 arXiv 均无公开版（arXiv API `totalResults=0`），以微信所收出版社排版 PDF 为唯一底本。选篇理由：这是 AGKRRV 谱分解系列唯一一篇面向算术应用的综述性长文，核心是回答 Michael Harris 的问题——平凡 Langlands 参数处不存在处处无分歧的尖形式（定理 A），且完整展示“谱侧 Eisenstein 级数 = Weyl 特征标 × 曲线 zeta 因子”的显式计算。

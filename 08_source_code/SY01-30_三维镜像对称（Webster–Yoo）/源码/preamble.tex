@@ -1,0 +1,154 @@
+% =============================================================================
+%  导言区：中译注本《三维镜像对称》
+%  原文：Ben Webster, Philsang Yoo,
+%        "3-dimensional mirror symmetry", arXiv:2308.06191v1 [math.RT],
+%        Notices of the AMS（本译本据 arXiv 版，正文 23 页）
+%  编译：xelatex main.tex（三遍）
+% =============================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[UTF8, fontset=fandol, heading=true]{ctex}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage[a4paper,left=2.5cm,right=2.5cm,top=2.6cm,bottom=2.6cm]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{tikz}
+% 原文 main.tex:12–17 的图样式，逐字照搬
+\tikzset{
+  MyPersp/.style={scale=1.8,x={(-0.8cm,0cm)},y={(0cm,.3cm)},z={(0cm,1cm)}},
+  MyPoints/.style={fill=white,draw=black,thick}
+}
+\usepackage{tikz-cd}
+\usepackage{tqft}
+\usepackage{wrapfig}
+\usepackage[font=small,labelfont=bf,labelsep=quad]{caption}
+\usepackage[style=alphabetic,url=false,isbn=false,doi=false,maxbibnames=99]{biblatex}
+% 原包只带 .bbl（3.2 格式）与 2026 年的 biblatex（3.3）不兼容，故由 .bbl 反推 main.bib，
+% 用 biber 重建文献表；见 BRIEF.md「文献表」条。
+\addbibresource{main.bib}
+\AtEveryBibitem{%
+  \clearfield{urlyear}%
+  \clearfield{urlmonth}%
+}
+\usepackage[colorlinks=true,
+            linkcolor=blue!45!black,
+            citecolor=blue!45!black,
+            urlcolor=blue!45!black]{hyperref}
+
+\linespread{1.15}
+\setlength{\emergencystretch}{3em}
+\allowdisplaybreaks[3]
+\pagestyle{plain}
+\renewcommand{\figurename}{图}
+\renewcommand{\refname}{参考文献}
+\renewcommand{\contentsname}{目录}
+\renewcommand{\proofname}{证明}
+\renewcommand{\abstractname}{摘要}
+\renewcommand{\tablename}{表}
+
+% 原文以 \emph / {\bf } 标出强调；中文以加粗对应
+\renewcommand{\emph}[1]{{\bfseries #1}}
+
+% ---------------------------------------------------------------------------
+% 原文的自定义宏（与原文同名，见原文 preamble；译手只允许使用这些）
+% ---------------------------------------------------------------------------
+\newcommand{\Sec}{\operatorname{Sec}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\Bv}{\mathbf{v}}
+\newcommand{\Bw}{\mathbf{w}}
+\newcommand{\Sym}{\operatorname{Sym}}
+\newcommand{\obs}{\operatorname{Obs}}
+\newcommand{\NO}{N_{\mathcal{O}}}
+\newcommand{\NK}{N_{\mathcal{K}}}
+\newcommand{\GO}{G_{\mathcal{O}}}
+\newcommand{\GK}{G_{\mathcal{K}}}
+\newcommand{\XO}{X_{\mathcal{O}}}
+\newcommand{\XK}{X_{\mathcal{K}}}
+\newcommand{\XA}{X_n^{(\mathrm{A})}}
+\newcommand{\XB}{X_n^{(\mathrm{B})}}
+\newcommand{\XS}{X_n^{(*)}}
+\newcommand{\fM}{\mathfrak{M}}
+\newcommand{\disk}{\mathbb{D}}
+\newcommand{\pdisk}{\mathbb{D}^{\circ}}
+\newcommand{\rkone}{M_{n\times n}^{\mathrm{rk}\leq 1}(\C)}
+\newcommand{\Symp}{\mathrm{Symp}}
+\newcommand{\Ham}{\mathrm{Ham}}
+\newcommand{\KR}{\mathrm{K}}
+\newcommand{\id}{\mathrm{id}}
+% 原文 orig/main.tex:65 / :84 定义、本库首稿漏收的两个宏（2026-11-22 补）：
+\newcommand{\alg}{\mathcal{A}}
+\newcommand{\sPoin}{\mathfrak{a}}
+
+% ---------------------------------------------------------------------------
+% 定理类环境：与原文编排一致（每节内一个共享计数器），
+% 编号如「定理 3.1」「定义 3.2」，与原文逐条对应。
+% ---------------------------------------------------------------------------
+\newtheoremstyle{cnth}%
+  {6pt}% above
+  {6pt}% below
+  {\normalfont}% body
+  {}% indent
+  {\bfseries}% head font
+  {.}% punctuation
+  {0.5em}% space after head
+  {}% head spec
+
+\theoremstyle{cnth}
+\newtheorem{theorem}{定理}[section]
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{corollary}[theorem]{推论}
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{assumption}[theorem]{假设}
+\newtheorem{definition}[theorem]{定义}
+\newtheorem{ex}[theorem]{例}
+\newtheorem{note}[theorem]{注}
+\newtheorem{ques}[theorem]{问题}
+\newtheorem{conjecture}[theorem]{猜想}
+\newtheorem{physics}[theorem]{物理动机}
+
+\renewcommand{\qedsymbol}{$\square$}
+
+% ---------------------------------------------------------------------------
+% 译注方框：橙色、编号；可用 \showyizhufalse 关闭
+% ---------------------------------------------------------------------------
+\newif\ifshowyizhu
+\showyizhutrue
+\newcounter{yizhu}
+
+\newenvironment{yizhu}[1][]{%
+    \refstepcounter{yizhu}%
+    \par\medskip
+    \ifshowyizhu
+        \begin{tcolorbox}[enhanced, breakable,
+            colback=orange!4!white, colframe=orange!55!black,
+            boxrule=0.5pt, arc=2pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+            title={\small\textbf{译注 \theyizhu\if\relax\detokenize{#1}\relax\else： #1\fi}},
+            fonttitle=\bfseries, coltitle=black, colbacktitle=orange!12!white,
+            toptitle=1pt, bottomtitle=1pt]
+    \fi
+}{%
+    \ifshowyizhu
+        \end{tcolorbox}%
+    \fi
+    \par\smallskip
+}
+
+% 行内译者小注
+\newcommand{\zy}[1]{\footnote{译者注：#1}}
+
+% 术语表条目：中文（English）
+\newcommand{\term}[2]{#1（#2）}
