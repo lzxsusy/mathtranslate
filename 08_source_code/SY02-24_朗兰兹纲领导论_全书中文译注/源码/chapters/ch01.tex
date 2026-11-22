@@ -1,0 +1,639 @@
+\chapter{L 函数的初等理论 I}\label{ch:01}
+
+\begin{center}
+E. Kowalski
+\end{center}
+
+\section{引言}\label{sec:1}
+
+本章将按大致的时间顺序——从 Euler 时代到 Hecke 时代——定义并描述几类有趣的全纯函数，它们与数论的许多方面有着奇特的联系。后面的章节将说明，这些神秘之处中至少有一部分今天已被理解。但必须强调，仍有许多要点没有得到完整解释，哪怕只是粗略的、哲学式的解释也没有。
+
+我会特别注意提到 L 函数（以及自守形式）理论中一些更为独特的现象，它们是从解析数论的观点浮现出来的。在后续章节将带来新视角的地方，我也会给出提示。
+
+下一章将展开这里陈述的要点，特别是勾勒其中最重要几条的证明，尤其当这样的证明能带来对理论的新洞察时。
+
+眼下对我们最重要的数学家是 Euler、Gauss、Dirichlet、Riemann、Dedekind、Kronecker、Hecke、Artin 与 Hasse。
+
+\section{Riemann zeta 函数}\label{sec:2}
+
+第一个 L 函数被冠以 Riemann 之名。这一事实对我们倒是方便：它似乎需要一些解释，因为无人否认其他数学家——尤其是 Euler——此前已考虑过这个函数；而这些解释正是进入本主题的最佳入口。
+
+所说的函数由级数定义：
+\[
+\zeta(s)=\sum_{n\ge 1}\frac{1}{n^{s}}.
+\]
+
+对整数 $s\ge 1$，这个级数在 Euler 之前就有人研究；甚至对 $s\ge 2$，众所周知也是 Euler 最先找到精确公式（见 \eqref{eq:5.1}）。然而 L 函数理论的起点，是 Euler 的发现：整数分解为素数幂之乘积的存在性与唯一性，蕴涵
+\begin{equation}\tag{2.1}\label{eq:2.1}
+\zeta(s)=\prod_{p}\frac{1}{1-\dfrac{1}{p^{s}}},
+\end{equation}
+即对全部素数取乘积。由调和级数的发散，Euler 由此得到了 Euclid 定理（素数无穷多）的一个新证明；稍加小心，他还得到了更精确的表述：
+\[
+\sum_{p\le X}\frac{1}{p}=\log\log X+O(1)
+\]
+当 $X\to+\infty$。\footnote{为避免争议，这里给出 Landau 的 $O(\cdots)$ 与 Vinogradov 的 $\ll$ 记号的定义：当 $x\to x_0$ 时 $f=O(g)$ 意即存在 $x_0$ 的某个（未指定的）邻域 $U$ 与常数 $C\ge 0$，使得对 $x\in U$ 有 $|f(x)|\le Cg(x)$；这等价于：在事先指定的 $U$ 上 $f\ll g$，而在后一种情形可以谈论 $\ll$ 中的“隐含常数” $C$。不过我们有时也说涉及 $O(\cdots)$ 的估计对某些参数“一致”：这意味着上述 $U$ 与 $C$ 可以取得与这些参数无关。} 于是 \eqref{eq:2.1} 显然含有关于素数分布的新信息。
+
+\begin{annote}
+“$\sum_{p\le X}1/p=\log\log X+O(1)$” 里的 $O(1)$ 是有界的正数，不是“趋于某常数”的弱陈述：更精确的 Mertens 定理给出 $\sum_{p\le X}1/p=\log\log X+B+O(1/\log X)$，其中 $B=0.26149\,721\ldots$ 是 Meissel--Mertens 常数。切记 $\sum_p 1/p$ 发散，故不能把 $\log\log X$ 误当作收敛级数的余项；Euler 正是用“调和级数发散＋Euler 乘积在 $s=1$ 处发散”这两件事互推。
+\par\vspace{0.15em}{\raggedleft 【来源：Serre《A Course in Arithmetic》Ch.~VI \S1（A）；nLab “Riemann zeta function” 条目（B，与 A 交叉）】\par}
+\end{annote}
+
+Riemann 的洞见 [Rie] 在于指出：如此定义的函数 $\zeta(s)$，若把 $s$ 看作复变量（在他的记号中 $s=\sigma+it$），则在其收敛区域内全纯。这就为寻找它的（极大）解析延拓提供了理由，不过这件事此前也有人做过（见 [We]）。真正令我们欣喜的，是 Euler 乘积展开 \eqref{eq:2.1} 与下文函数方程所给的解析延拓这两者的结合；因为它揭示了 $\zeta(s)$ 的复零点与素数之间奇特的“对偶性”。
+
+更具体地说，Riemann 断言 $\zeta(s)$ 可亚纯延拓到整个复平面，唯一的奇点是 $s=1$ 处留数为 $1$ 的单极点；并且这一解析延拓满足下述性质，它被恰如其分地称为函数方程：函数
+\begin{equation}\tag{2.2}\label{eq:2.2}
+\Lambda(s)=\pi^{-s/2}\Gamma(s/2)\zeta(s)
+\end{equation}
+除 $s=0$ 与 $s=1$ 处的单极点外亚纯，且对一切 $s\in\mathbb{C}$ 满足
+\begin{equation}\tag{2.3}\label{eq:2.3}
+\Lambda(1-s)=\Lambda(s).
+\end{equation}
+
+由 $\zeta(s)$ 在 $s=1$ 处、$\Gamma(s/2)$ 在 $s=0$ 处的单极点，特别可以推出 $\zeta(0)=-\pi^{-1/2}\Gamma(1/2)/2=-1/2$。此外，$\Gamma(s/2)$ 在 $s=-2n$（$n\ge 1$ 为整数）处的其余极点表明，\eqref{eq:2.3} 蕴涵 $\zeta(-2n)=0$（$n\ge 1$）：这些零点称为 $\zeta(s)$ 的\emph{平凡零点}。
+
+这一点，事实上 \eqref{eq:2.3} 对整数 $s\ge 1$ 的全部内容，Euler 早已用发散级数的语言知道了！
+
+\begin{annote}
+上面这句“精确公式（见 (5.1)）”是原书的交叉引用失误：本章的 (5.1) 是 $\zeta_E(s)=\prod_{\rho\in\widehat G}L(\rho,s)$，与 $\zeta(2)=\pi^2/6$ 毫无关系。Euler 的精确公式指 $\zeta(2n)=(-1)^{n+1}B_{2n}(2\pi)^{2n}/(2\cdot(2n)!)$（$B_{2n}$ 为 Bernoulli 数），其证明属下一章的内容。译文照录编号，读者不必回查。另注意 $\zeta(0)=-1/2$ 与“平凡零点在负偶数”两件事同出一源：$\Gamma(s/2)$ 的极点被 $\zeta$ 的取值抵消或放大。
+\par\vspace{0.15em}{\raggedleft 【来源：原书 p.1 与 p.13 公式编号对照（A）；Titchmarsh《The Theory of the Riemann Zeta-Function》Ch.~2（A）】\par}
+\end{annote}
+
+\begin{annote}
+$\Lambda(s)=\pi^{-s/2}\Gamma(s/2)\zeta(s)$ 仍带两个极点；真正的整函数是 $\xi(s)=\tfrac12 s(s-1)\Lambda(s)$，它满足 $\xi(s)=\xi(1-s)$ 且 $\xi(0)=\xi(1)=\tfrac12$。Riemann 1859 年的原文正是以 $\xi$ 陈述函数方程的，故“$\Lambda$ 在 $0,1$ 有单极点”与“$\xi$ 整”是同一件事的两种说法。写论文时若引用“Riemann 的函数方程”，须先声明自己用的是 $\Lambda$ 还是 $\xi$，否则对称轴 $s=1/2$ 的表述会差一个平移。
+\par\vspace{0.15em}{\raggedleft 【来源：Riemann 1859《Über die Anzahl der Primzahlen unter einer gegebenen Grösse》（A）；Titchmarsh 同上 Ch.~2（A）】\par}
+\end{annote}
+
+函数方程中“伽马因子”的出现当时并未被很好地理解：事实上 \eqref{eq:2.3} 常被写成完全不同的形式（例如见 [Ti, 第 2 章]）。借助 Poisson 求和公式（见下一章）与 theta 函数，人们对 \eqref{eq:2.3} 及其各种推广有了更透明、更概念化的证明，这使伽马因子事实上获得了明确的地位；但直到 Tate 的论文 [Ta]，它的作用才被澄清为 $\mathbb{Q}$ 的阿基米德位处的 Euler 因子。一般地我应提到，Euler 乘积是对素数取形如
+\begin{equation}\tag{2.4}\label{eq:2.4}
+\prod_{p}L_p(s)
+\end{equation}
+的乘积，而 $L_p(s)$ 称为 $p$ 处的\emph{Euler 因子}。\footnote{须注意：当 Euler 乘积定义在数域 $\neq\mathbb{Q}$ 的素理想 $\mathfrak{p}$ 上时（如下文所述），Euler 因子 $L_{\mathfrak{p}}(s)$ 这份数据比乘积本身更强，即便后者定义了一个全纯函数。}
+
+zeta 函数与素数的相互作用，由 Riemann 以所谓“显式公式”的形式揭示。他的版本（以及后来 van Mangoldt 等人证明的版本）在纯分析的困难中多少掩盖了要点；用光滑检验函数绕过这些困难，便可把它陈述如下。
+
+\par\medskip\noindent\textbf{命题 2.1}\quad 设 $\varphi\colon\,]0,+\infty[\,\to\mathbb{C}$ 是具紧支集的 $C^{\infty}$ 函数，并令
+\[
+\hat\varphi(s)=\int_{0}^{+\infty}\varphi(x)x^{s-1}\,dx
+\]
+为其 Mellin 变换，它是整函数，且在竖直带内速降。令
+\[
+\psi(x)=\frac{1}{x}\varphi(x^{-1}).
+\]
+则有
+\begin{equation}\tag{2.5}\label{eq:2.5}
+\begin{aligned}
+&\sum_{p}\sum_{k\ge 1}(\log p)\bigl(\varphi(p^{k})+\psi(p^{k})\bigr)\\
+&\qquad=\int_{0}^{+\infty}\varphi(x)\,dx
+-\sum_{\substack{\zeta(\rho)=0\\ 0<\operatorname{Re}(\rho)<1}}\hat\varphi(\rho)\\
+&\qquad\qquad+\frac{1}{2\pi i}\int_{(-1/2)}
+\Bigl(\frac{1}{2}\frac{\Gamma'}{\Gamma}\Bigl(\frac{s}{2}\Bigr)
+-\frac{1}{2}\frac{\Gamma'}{\Gamma}\Bigl(\frac{1-s}{2}\Bigr)\Bigr)\hat\varphi(s)\,ds .
+\end{aligned}
+\end{equation}
+
+更一般的情形将在下一章勾勒（命题 3.5）。
+
+\begin{annote}
+\eqref{eq:2.5} 的三项各有出处：右端第一项来自 $s=1$ 处的极点（即主项），第二项是对临界带内非平凡零点的求和，第三项沿竖线 $\operatorname{Re}(s)=-1/2$ 积分，吸收了平凡零点与阿基米德因子 $\Gamma'/\Gamma$。两个 $\Gamma'/\Gamma$ 各带系数 $1/2$，来自 $\Lambda$ 中的 $\Gamma(s/2)$ 与 $\Gamma((1-s)/2)$，漏掉任一个都会破坏 $s\mapsto 1-s$ 的对称。检验函数 $\varphi$ 取光滑紧支集，正是为了绕开 Riemann--van Mangoldt 版本中条件收敛的困难：此时各项绝对收敛，公式成为恒等式而非极限。
+\par\vspace{0.15em}{\raggedleft 【来源：Iwaniec--Kowalski《Analytic Number Theory》显式公式一章（A）；Davenport《Multiplicative Number Theory》显式公式一章（A）】\par}
+\end{annote}
+
+在这个把素数求和表为零点和的一般公式中，右端第一项其实是 $s=1$ 处极点的贡献（常常给出某个渐近式的主项）。我们隐含地用到了 $\zeta(s)$ 在 $\operatorname{Re}(s)>1$ 时不为零这一事实。极重要的一点是：这从级数表示来看绝非显然；它直接由 Euler 乘积展开推出（绝对收敛的无穷乘积不为零）。这一点不可低估：例如它正是 Deligne 关于有限域上簇的 Riemann 假设的第一个证明中的关键分析输入 [De, 3.8]。函数方程随后表明，除已指认的平凡零点外，$\zeta(s)$ 在 $\operatorname{Re}(s)<0$ 时不为零。
+
+Riemann 随即表示，所有（非平凡）零点满足 $\operatorname{Re}(s)=1/2$ 是“可能的”。若关心素数，这确实是最佳可能的情形：若取检验函数 $\varphi$ 在分布意义下收敛到 $[0,X]$ 的特征函数，则较容易看出，素数定理的误差项具有
+\begin{equation}\tag{2.6}\label{eq:2.6}
+\psi(X)=\sum_{p^{k}\le X}(\log p)=X+O(X^{\beta^{*}})
+\quad\text{当 } X\to+\infty
+\end{equation}
+形式的估计，当且仅当 $\beta^{*}>\sup\{\operatorname{Re}(\rho)\}$。既然函数方程蕴涵 $\sup\{\operatorname{Re}(\rho)\}\ge 1/2$，Riemann 假设就无非是断言素数“以最佳可能的方式”分布。
+
+按标准术语，必含非平凡零点的带域 $0\le\operatorname{Re}(s)\le 1$ 称为\emph{临界带}，直线 $\operatorname{Re}(s)=1/2$ 称为\emph{临界线}。这对前两章的所有 L 函数都适用；但对自守 L 函数，临界带可能（也取决于归一化）整体右移若干。
+
+\section{Dirichlet L 函数}\label{sec:3}
+
+尽管 Riemann zeta 函数的情形是基本的，它并未展现一般理论中若干极重要的特征。这些特征，尤其是“导子”与“本原性”的概念，以及与类域论乃至代数数论的联系，最先出现在 Dirichlet L 函数的情形。Dirichlet 定义这些函数 [Di] 是为了证明他著名的定理。
+
+\par\medskip\noindent\textbf{定理 3.1}\quad 设 $q\ge 1$，$a\ge 1$，且 $(a,q)=1$。则有无穷多个素数 $p\equiv a\pmod q$；更精确地，
+\[
+\sum_{\substack{p\le X\\ p\equiv a\,(\mathrm{mod}\,q)}}\frac{1}{p}
+=\frac{1}{\varphi(q)}\log\log X+O(1)
+\]
+当 $X\to+\infty$。
+
+他通过在 $(\mathbb{Z}/q\mathbb{Z})^{\times}$ 上作调和分析来检测模 $q$ 的可逆同余类，由此引入了 Dirichlet 特征：
+
+算术函数 $\chi\colon\mathbb{Z}\to\mathbb{C}$ 称为模 $q\ge 1$ 的\emph{Dirichlet 特征}，若存在群同态
+\[
+\tilde\chi\colon(\mathbb{Z}/q\mathbb{Z})^{\times}\to\mathbb{C}^{\times},
+\]
+使得当 $(x,q)=1$ 时 $\chi(x)=\tilde\chi\bigl(x\ (\mathrm{mod}\ q)\bigr)$，而当 $(x,q)\neq 1$ 时 $\chi(x)=0$。对这样的特征，延拓 Euler 的定义，可以联系 L 函数
+\[
+L(\chi,s)=\sum_{n\ge 1}\chi(n)n^{-s}=\prod_{p}\bigl(1-\chi(p)p^{-s}\bigr)^{-1},
+\]
+末一式即 Euler 乘积，它是分解唯一性与 $\chi$ 的完全乘性
+\[
+\chi(mn)=\chi(m)\chi(n)\quad\text{对一切 } m\ge 1,\ n\ge 1
+\]
+的推论。
+
+有限群特征的正交关系立刻给出关系
+\[
+\sum_{\substack{p\le X\\ p\equiv a\,(\mathrm{mod}\,q)}}\frac{1}{p}
+=\frac{1}{\varphi(q)}\sum_{p\le X}\frac{1}{p}
++\frac{1}{\varphi(q)}\sum_{\chi\neq 1}\overline{\chi}(a)\sum_{p\le X}\frac{\chi(p)}{p},
+\]
+而容易看出，Dirichlet 定理等价于断言：若 $\chi\neq 1$ 是 Dirichlet 特征，则 $L(\chi,1)\neq 0$。对 Dirichlet（早于 Riemann）而言，这不是解析延拓意义下的陈述，而是关于“等于” $L(\chi,1)$ 的那个（条件）收敛级数之和的陈述。\footnote{对 $\chi\neq 1$，部分和有界，故级数收敛。} 例如对模 $4$ 的非平凡特征 $\chi_4$，该级数就是
+\[
+L(\chi_4,1)=1-\frac{1}{3}+\frac{1}{5}-\cdots=\frac{\pi}{4}.
+\]
+
+\begin{annote}
+正交关系之所以能推出 Dirichlet 定理，关键在 $\sum_p\chi(p)/p$ 对 $\chi\neq 1$ 的收敛性：由 $L(\chi,s)$ 的 Euler 乘积取对数，$\log L(\chi,s)=\sum_p\sum_{k\ge 1}\chi(p)^{k}/(k\,p^{ks})$，当 $s\to 1^{+}$ 时只有 $k=1$ 的项可能发散。故 $\sum_p\chi(p)/p$ 收敛 $\iff$ $L(\chi,1)\neq 0$，而前者连同 $\sum_p 1/p=\log\log X+O(1)$ 就给出算术级数中的 $\tfrac1{\varphi(q)}\log\log X$ 主项。换句话说，“非主特征的素数倒数和收敛”是 Dirichlet 定理的全部困难所在。
+\par\vspace{0.15em}{\raggedleft 【来源：Serre《A Course in Arithmetic》Ch.~VI \S2（A）】\par}
+\end{annote}
+
+不过，由于 $\chi$ 是 $n\ge 1$ 的周期函数，把基于 Poisson 求和公式与 theta 函数的 $\zeta(s)$ 解析延拓及其函数方程的证明（第二章将解释）加以推广，以建立 Dirichlet 特征的类似结论，并不困难。这几乎迫使我们引入本原性概念：模 $q$ 的 Dirichlet 特征 $\chi$ 称为\emph{本原的}，$q$ 称为它的\emph{导子}，若不存在 $\tilde q\mid q$，$\tilde q<q$，以及 $(\mathbb{Z}/\tilde q\mathbb{Z})^{\times}$ 的特征 $\tilde\chi$，使得
+\[
+\chi(n)=\tilde\chi\bigl(n\ (\mathrm{mod}\ \tilde q)\bigr)\quad\text{对 }(n,\tilde q)=1.
+\]
+
+若 $q$ 为素数，则任何非平凡特征都是模 $q$ 本原的。任何 Dirichlet 特征都可由唯一的本原特征 $\tilde\chi$ 按上述方式诱导，并有关系
+\begin{equation}\tag{3.1}\label{eq:3.1}
+L(\chi,s)=L(\tilde\chi,s)\prod_{p\mid q/\tilde q}\bigl(1-\chi(p)p^{-s}\bigr),
+\end{equation}
+这说明 Dirichlet L 函数的解析性质可立刻归结为本原特征所联系的那些，第二个因子是有限乘积（因而是整函数）。
+
+对 $\chi$ 本原的情形，$q=1$ 对应 zeta 函数，是特殊的；若 $q>1$，则 $\chi$ 非平凡，可以证明 $L(\chi,s)$ 延拓为 $\mathbb{C}$ 上的整函数。函数方程需要更多区分：若 $\chi(-1)=1$，称 $\chi$ 为\emph{偶的}，定义
+\[
+\Lambda(\chi,s)=\pi^{-s/2}\Gamma(s/2)L(\chi,s),
+\]
+而若 $\chi(-1)=-1$（称 $\chi$ 为\emph{奇的}），定义
+\[
+\Lambda(\chi,s)=\pi^{-(s+1)/2}\Gamma\bigl((s+1)/2\bigr)L(\chi,s).
+\]
+
+又设 $\tau(\chi)$ 为联系于 $\chi$ 的 Gauss 和，
+\begin{equation}\tag{3.2}\label{eq:3.2}
+\tau(\chi)=\sum_{x\,(\mathrm{mod}\,q)}\chi(x)\,e(x/q),
+\end{equation}
+其中 $e(z)=e^{2i\pi z}$。则函数方程为
+\begin{equation}\tag{3.3}\label{eq:3.3}
+\Lambda(\chi,s)=\varepsilon(\chi)\,q^{1/2-s}\,\Lambda(\overline{\chi},1-s),
+\end{equation}
+其中
+\begin{equation}\tag{3.4}\label{eq:3.4}
+\varepsilon(\chi)=
+\begin{cases}
+\dfrac{\tau(\chi)}{\sqrt{q}} & \text{若 } \chi(-1)=1,\\[2.6mm]
+-i\,\dfrac{\tau(\chi)}{\sqrt{q}} & \text{若 } \chi(-1)=-1.
+\end{cases}
+\end{equation}
+
+于是出现了若干特征，它们在更一般的背景下无处不在：
+
+\begin{itemize}[leftmargin=1.6em]
+\item 函数方程 \eqref{eq:3.3} 涉及 Dirichlet 特征的某些整体不变量。首先是它的导子 $q$；注意即使从非本原特征出发，函数方程也只对相联的（“诱导”它的）本原特征才可能成立，于是先验未知的导子 $\tilde q$ 便以这种方式出现。这一观察在其他场合极为有效（见第 \ref{sec:4} 节）。
+\item 第二个不变量是函数方程的辐角 $\varepsilon(\chi)$，也称\emph{根数}。它是绝对值为 $1$ 的复数（对本原特征，简单的计算或再次应用函数方程即可看出），并且与 Gauss 和 $\tau(\chi)$ 相关。注意后者也是伽马函数的某种有限域类比（加法特征的乘法 Fourier 变换）。一般地，函数方程的辐角是非常微妙的不变量。
+\item 函数方程把 $L(\chi,s)$ 与对偶特征 $\overline{\chi}$ 在 $1-s$ 处的值联系起来。
+\end{itemize}
+
+\begin{annote}
+\eqref{eq:3.4} 的两个分支可以统一写成 $\varepsilon(\chi)=\tau(\chi)/(i^{a}\sqrt{q})$，其中 $a\in\{0,1\}$ 由 $\chi(-1)=(-1)^{a}$ 确定；写分段式时最容易漏掉奇情形的因子 $-i$，从而把符号算反。另须注意 $\sqrt{q}$ 取正实根，$|\tau(\chi)|=\sqrt{q}$ 只对本原特征成立；非本原特征要用其导子 $\tilde q$ 代替 $q$，否则 \eqref{eq:3.3} 不成立。
+\par\vspace{0.15em}{\raggedleft 【来源：Serre《A Course in Arithmetic》Ch.~VI \S2（A）；Iwaniec--Kowalski 前引书 Gauss 和一节（A）】\par}
+\end{annote}
+
+一个重要的特殊情形是实值特征，即 $2$ 阶特征（或\emph{二次特征}）。此时 $\overline{\chi}=\chi$，辐角 $\varepsilon(\chi)$ 变成符号 $\pm1$。事实上，Gauss 算出了 $\tau(\chi)$ 的精确值（Dirichlet 给出了简单的解析证明），它蕴涵对任何本原二次特征 $\chi$ 有 $\varepsilon(\chi)=+1$：即当 $\chi(-1)=1$ 时 $\tau(\chi)=\sqrt{q}$，当 $\chi(-1)=-1$ 时 $\tau(\chi)=i\sqrt{q}$。
+
+现在回到 Dirichlet 对定理 3.1 的证明。只需证明对 $\chi\neq 1$ 有 $L(\chi,1)\neq 0$，而由 \eqref{eq:3.1} 可设 $\chi$ 本原。Dirichlet 不难证明：若 $\chi$ 非实，则 $L(\chi,1)\neq 0$（否则 $1$ 也是 $L(\overline{\chi},s)\neq L(\chi,s)$ 的零点，而这容易排除）。困难的情形——至今仍是困难情形——是二次 $\chi$。Dirichlet 对 $L(\chi,1)\neq 0$ 的证明直接应用了他的解析类数公式（见下文 \eqref{eq:4.5}），由此引入另一个反复出现且至关重要的主题：把解析方式定义的 L 函数（这里是 Dirichlet L 函数）与来自代数数论或代数几何的 L 函数（这里是二次域的 Dedekind zeta 函数）联系起来。\footnote{今天人们会说这是“动机的”来源。} 我们将在下一节于数域的更一般背景下解释这一点；这里只说：这个 $L(\chi,1)$ 非零的证明很精彩，却多少有误导性。对 $q>1$，人们确实能给出非常自然、初等的证明，说明
+\[
+L(\chi,1)\gg\frac{1}{\sqrt{q}},
+\]
+这是类数公式（至少在虚情形）更精确的推论。更重要的是，关于二次域类数量级这一（可追溯到 Gauss 的）问题的全部进展，都来自相反的方向：用类数公式把它与 L 函数的特殊值联系起来，再用解析方法估计（更常见的是估计不了）后者（例如见 Landau [L]、Siegel [Si]、Goldfeld [Go]）。
+
+\section{Dedekind zeta 函数}\label{sec:4}
+
+设 $K$ 为数域，即 $K/\mathbb{Q}$ 是次数 $d=[K:\mathbb{Q}]$ 的有限域扩张。以 $\mathcal{O}$ 或 $\mathcal{O}_K$ 记 $K$ 中的整数环。Dedekind 用级数
+\[
+\zeta_K(s)=\sum_{\mathfrak{a}}\frac{1}{(N\mathfrak{a})^{s}}
+\]
+定义 $K$ 的 zeta 函数（对 $\mathcal{O}$ 中非零整理想 $\mathfrak{a}$ 求和），容易看出它在 $\operatorname{Re}(s)>1$ 时绝对收敛。于是当 $K=\mathbb{Q}$ 时回到 $\zeta(s)$。由于 $\mathcal{O}$ 中理想分解为素理想乘积是唯一的，与 $\zeta(s)$ 相同的论证给出 Euler 乘积展开
+\[
+\zeta_K(s)=\prod_{\mathfrak{p}}\bigl(1-(N\mathfrak{p})^{-s}\bigr)^{-1},
+\]
+而 $\zeta_K(s)$ 确实承载了与 $\zeta(s)$ 关于普通素数大致相同的信息，只不过换成了 $K$ 中素理想的分布。
+
+然而其中还有更多内容：若把 $\zeta_K(s)$ 写成带系数 $r_K(n)$ 的普通 Dirichlet 级数
+\begin{equation}\tag{4.1}\label{eq:4.1}
+\zeta_K(s)=\sum_{n\ge 1}r_K(n)n^{-s},
+\end{equation}
+立刻看到，知道 $\zeta_K(s)$ 就等于知道素数在 $\mathcal{O}$ 中如何分裂：因为 $r_K(p^{k})$ 是范数为 $p^{k}$ 的理想的个数，故 $r_K(p)=d$ 当且仅当 $p$ 在 $K$ 中完全分裂，$r_K(p)=1$ 意味着 $p$ 完全分歧，等等。这一信息对研究 $K$ 的算术最为切要，这就使探索 $\zeta_K(s)$ 的性质有了新的紧迫性；而这一探索真正关注的是 zeta 函数本身而非其对数导数（后者才是素理想解析分布的关键），并且几乎把 $\zeta(s)$ 当作“平凡情形”。
+
+由于定义是级数展开，仍可推广用于 $\zeta(s)$（以及 $L(\chi,s)$）的方法，以导出 $\zeta_K(s)$ 的类似解析性质。不过这并不完全直接，其中包含或用到代数数论的多数“基本”概念与结果，现回顾如下（例如见 [La]、[CF]）：
+
+\begin{itemize}[leftmargin=1.6em]
+\item 域 $K$ 有 $d=r_1+2r_2$ 个嵌入 $\sigma\colon K\hookrightarrow\mathbb{C}$，其中 $r_1$ 个实嵌入、$r_2$ 对复嵌入。每个嵌入联系一个绝对值 $|\cdot|_{\sigma}$：若 $\sigma$ 实，
+$|z|_{\sigma}=|\sigma(z)|$；若 $\sigma$ 复，$|z|_{\sigma}=|\sigma(z)|^{2}$。这些绝对值也称为 $K$ 的\emph{阿基米德位}；注意 $\sigma$ 与 $\overline{\sigma}$ 给出同一个位。我们通常用 $v$ 记位。令 $d_v=1$（$v$ 实）或 $d_v=2$（其余）。注意元素 $z\in K$ 的范数由
+\[
+Nz=\prod_{v}|z|_{v}
+\]
+给出（对位取乘积）。
+\item 环 $\mathcal{O}$ 的秩为 $d=[K:\mathbb{Q}]$。设 $(\omega_i)$，$1\le i\le d$，为 $\mathbb{Z}$-基。$K$ 的判别式是
+\[
+D=\det\bigl(\omega_i^{\sigma}\bigr)_{i,\sigma}^{2}.
+\]
+对 $\mathcal{O}$ 中每个素理想 $\mathfrak{p}$，商 $\mathbb{F}_{\mathfrak{p}}=\mathcal{O}_K/\mathfrak{p}$ 是有限域，$\mathfrak{p}$ 的（绝对）范数是 $\mathbb{F}_{\mathfrak{p}}$ 的基数。
+\item 单位乘法群 $U=\mathcal{O}^{\times}$ 是秩为 $r_1+r_2-1$ 的有限生成交换群，其自由部分通过对数映射
+\[
+\ell\colon\ u\mapsto\bigl(\log|\sigma(u)|\bigr)_{\sigma}
+\]
+单射入 $\mathbb{R}^{d}$，像在子空间
+\[
+V=\bigl\{(x_{\sigma})\ \big|\ \sum_{\sigma}x_{\sigma}=0\ \text{且}\ x_{\sigma}=x_{\overline{\sigma}}\bigr\}
+\]
+中是格。$\ell(U)\subset V$ 的基本域的体积 $R>0$（关于 $V$ 上的 Lebesgue 测度）称为 $K$ 的\emph{调节子}。
+\item 以 $w=w_K$ 记 $U$ 的挠子群的阶（$K$ 中单位根的个数）。
+\item $K$ 的理想类群，记作 $\operatorname{Pic}(\mathcal{O})$ 或 $H(K)$，是阶为 $h(K)=h(\mathcal{O})$ 的有限交换群，$h(K)$ 称为 $K$ 的\emph{类数}。环 $\mathcal{O}$ 为主理想环（即每个理想都是主理想）当且仅当 $h(K)=1$。
+\end{itemize}
+
+若 $E/K$ 是数域的有限 Galois 扩张，Galois 群为 $G$，则对 $K$ 中每个素理想 $\mathfrak{p}$ 及 $E$ 中 $\mathfrak{p}$ 上方的一个素理想 $\mathfrak{P}$，定义 $\mathfrak{P}$ 的\emph{分解群}
+\[
+G_{\mathfrak{P}}=\{\sigma\in G\mid \sigma\mathfrak{P}=\mathfrak{P}\}
+\]
+与\emph{惯性子群}
+\[
+I_{\mathfrak{P}}=\{\sigma\in G_{\mathfrak{P}}\mid
+\sigma(x)\equiv x\ (\mathrm{mod}\ \mathfrak{P})\ \text{对一切}\ x\in\mathcal{O}_E\}\lhd G_{\mathfrak{P}},
+\]
+若 $I_{\mathfrak{P}}=1$，称 $\mathfrak{P}$ \emph{无分歧}。
+
+\emph{Frobenius 共轭类} $\sigma_{\mathfrak{P}}$，也记作 $[\mathfrak{P},E/K]$，是 $G_{\mathfrak{P}}/I_{\mathfrak{P}}$（若 $\mathfrak{P}$ 无分歧，即分解群）中满足
+\[
+\sigma(x)\equiv x^{N\mathfrak{p}}\ (\mathrm{mod}\ \mathfrak{P})
+\quad\text{对一切 } x\in\mathcal{O}_E
+\]
+的那些元素 $\sigma$ 的共轭类；也就是说，$\sigma_{\mathfrak{P}}$ 的“模 $\mathfrak{P}$ 约化”是有限域扩张 $\mathbb{F}_{\mathfrak{P}}/\mathbb{F}_{\mathfrak{p}}$ 的典范生成元。$\sigma$ 在 $G$ 中的共轭类只依赖于 $\mathfrak{p}$，记作 $\sigma_{\mathfrak{p}}$。
+
+若 $G$ 为交换群，Frobenius 共轭类退化为单个元素，即 Frobenius 自同构，它只依赖于 $\mathfrak{p}$，记作 $\sigma_{\mathfrak{p}}$。
+
+$\zeta_K(s)$ 的解析延拓与函数方程的精确陈述如下：令
+\[
+\Lambda_K(s)=\pi^{-r_1s/2}(2\pi)^{-r_2s}
+\Gamma(s/2)^{r_1}\Gamma(s)^{r_2}\zeta_K(s).
+\]
+则 $\Lambda_K(s)$ 可解析延拓为 $\mathbb{C}$ 上的亚纯函数，在 $s=1$ 与 $s=0$ 处有单极点。于是 $\zeta_K(s)$ 亚纯，在 $s=1$ 处有单极点。此外 $\zeta_K(s)$ 在 $s=1$ 的留数由\emph{解析类数公式}给出：
+\begin{equation}\tag{4.2}\label{eq:4.2}
+\operatorname{Res}_{s=1}\zeta_K(s)=\frac{2^{r_1}(2\pi)^{r_2}h(K)R}{w\sqrt{|D|}}.
+\end{equation}
+
+$\Lambda_K(s)$ 满足的函数方程是
+\begin{equation}\tag{4.3}\label{eq:4.3}
+\Lambda_K(s)=|D|^{1/2-s}\Lambda_K(1-s).
+\end{equation}
+
+与先前的函数方程相比，可以看到判别式出现的位置正如 Dirichlet L 函数中的导子，而相应的根数恒为 $+1$。
+
+公式 \eqref{eq:4.2} 在此是新面孔，是一大类公式（已证或猜想成立）的原型；这些公式用 L 函数所联系的“动机”对象的整体不变量，来表达 L 函数的\emph{特殊值}。最著名的推广是 Birch 与 Swinnerton-Dyer 的猜想，但还有许多其他猜想。
+
+“特殊值”的概念可以放进严格的概念框架（Deligne 等），它解释了对给定 L 函数哪些值才应有这些性质。也许应提到，解析数论学家常有必要把逃出这一代数框架的点也视为“特殊”：一个典型例子是 Phillips 与 Sarnak 的形变理论 [PS]，其中所论的点（很可能）是超越的。
+
+现在解释这个一般公式与 Dirichlet 对定理 3.1 的证明有何关系。设 $\chi$ 是导子为 $q$ 的非平凡本原二次特征。论证的要点是存在关系
+\begin{equation}\tag{4.4}\label{eq:4.4}
+\zeta(s)L(\chi,s)=\zeta_K(s),
+\end{equation}
+其中 $K=\mathbb{Q}\bigl(\sqrt{\chi(-1)q}\bigr)$ 是二次域（故 $\chi(-1)=-1$ 时 $K$ 为虚二次域，$\chi(-1)=1$ 时为实二次域）。这个看似简单的陈述背后有大量数学：它是 Gauss 二次互反律的重新表述，因此对整个 L 函数理论的发展有相当大的影响。
+
+在进一步讨论之前，注意到 \eqref{eq:4.4} 两边的 $\zeta(s)$ 与 $\zeta_K(s)$ 在 $s=1$ 处都有单极点，由此推出 $L(\chi,1)\neq 0$，更精确地有
+\begin{equation}\tag{4.5}\label{eq:4.5}
+L(\chi,1)=
+\begin{cases}
+\dfrac{2\pi h(K)}{w\sqrt{q}} & \text{若 } K \text{ 为虚二次域},\\[2.6mm]
+\dfrac{2h(K)\log\varepsilon}{\sqrt{q}} & \text{若 } K \text{ 为实二次域},
+\end{cases}
+\end{equation}
+其中 $\varepsilon>1$ 是 $K$ 的基本单位。从而 $L(\chi,1)>0$（甚至当 $K$ 为虚二次域时 $L(\chi,1)\gg q^{-1/2}$）；另见第 \ref{sec:3} 节的讨论。
+
+\begin{annote}
+\eqref{eq:4.5} 与 \eqref{eq:4.2} 的换算值得手推一遍：虚二次域 $r_1=0,r_2=1$，\eqref{eq:4.2} 给出 $\operatorname{Res}\zeta_K=2\pi h/(w\sqrt{|D|})$；又 $\zeta_K=\zeta L(\chi,\cdot)$ 且 $\operatorname{Res}\zeta=1$，故 $L(\chi,1)=2\pi h/(w\sqrt{q})$，其中 $q=|D|$。这立即给出 Siegel 型下界 $h\gg\sqrt{|D|}/w$ 与 $L(\chi,1)\gg q^{-1/2}$ 的等价。实二次域的情形多出 $\log\varepsilon$：因为基本单位 $\varepsilon$ 可以很小（$\log\varepsilon$ 与 $\sqrt D$ 同阶时 $h$ 才会大），这正是实二次域类数问题比虚情形难得多的根源。
+\par\vspace{0.15em}{\raggedleft 【来源：Lang《Algebraic Number Theory》类数公式一章（A）；Siegel 1935 “Über die Classenzahl quadratischer Zahlkörper”（A）】\par}
+\end{annote}
+
+回到 \eqref{eq:4.4}。素数 $p$ 在二次域 $K$ 中或分歧、或惰性、或分裂。把这一点显式写进 $\zeta_K(s)$ 的 Euler 乘积，得
+\begin{equation}\tag{4.6}\label{eq:4.6}
+\zeta_K(s)=\prod_{p\ \text{分裂}}(1-p^{-s})^{-2}
+\prod_{p\ \text{惰性}}(1-p^{-2s})^{-1}
+\prod_{p\ \text{分歧}}(1-p^{-s})^{-1},
+\end{equation}
+与 \eqref{eq:4.4} 比较可知后者等价于下述素分裂的刻画：
+\begin{equation}\tag{4.7}\label{eq:4.7}
+\left\{
+\begin{aligned}
+&p\ \text{分歧}\iff \chi(p)=0\iff p\mid q,\\
+&p\ \text{在}\ K\ \text{中分裂}\iff \chi(p)=1,\\
+&p\ \text{在}\ K\ \text{中惰性}\iff \chi(p)=-1.
+\end{aligned}
+\right.
+\end{equation}
+
+要点在于，这一刻画用的是 Dirichlet 特征 $\chi$，它是与 $\mathbb{Q}$ 有关而与 $K$ 无关的有限数据（毕竟它只是一个周期为 $q$ 的特定周期算术函数）。
+
+更具体地说，基础代数数论表明还存在用 Legendre 符号给出的另一刻画：
+\begin{equation}\tag{4.8}\label{eq:4.8}
+\left\{
+\begin{aligned}
+&p\ \text{分歧}\iff p\mid q,\\
+&p\ \text{在}\ K\ \text{中分裂}\iff \Bigl(\dfrac{D}{p}\Bigr)=1,\\
+&p\ \text{在}\ K\ \text{中惰性}\iff \Bigl(\dfrac{D}{p}\Bigr)=-1
+\end{aligned}
+\right.
+\end{equation}
+（其中 $D$ 是 $K$ 的判别式）；但先验地没有理由指望映射
+\[
+p\mapsto\Bigl(\frac{D}{p}\Bigr)
+\]
+（只定义在相当“混沌”的素数集合上！）具有任何特别好的性质。而本原二次特征用 $(\mathbb{Z}/q\mathbb{Z})^{\times}$ 的结构极易刻画。特别地，若 $q$ 无平方因子且为奇数，则存在唯一的模 $q$ 本原特征，由
+\[
+\chi(n)=\prod_{p\mid n}\Bigl(\frac{n}{p}\Bigr)
+\]
+给出（这显然是模 $q$ 的二次特征；且因对任何 $p\mid q$（$p>2$）模 $p$ 既有二次剩余又有二次非剩余，$\chi$ 不能从 $q/p$ 诱导）。
+
+此时 $\chi(-1)\equiv q\pmod 4$，故二次域为 $K=\mathbb{Q}(\sqrt{q})$（若 $q\equiv 1\pmod 4$）、$K=\mathbb{Q}(\sqrt{-q})$（若 $q\equiv 3\pmod 4$），判别式 $D=\chi(q)q$。取 $q$ 为素数 $>2$：则 $\chi(-1)=(-1)^{(q-1)/2}$，于是比较 \eqref{eq:4.7} 与 \eqref{eq:4.8}（稍作检验）给出
+\[
+\Bigl(\frac{p}{q}\Bigr)=\Bigl(\frac{D}{p}\Bigr)
+=\Bigl(\frac{(-1)^{(q-1)/2}}{p}\Bigr)\Bigl(\frac{q}{p}\Bigr)
+=(-1)^{(p-1)(q-1)/4}\Bigl(\frac{q}{p}\Bigr),
+\]
+这正是二次互反律的原始形式。对二次特征的偶导子同理。事实上，对所有二次域成立 \eqref{eq:4.4} 等价于二次互反律。
+
+\begin{annote}
+最后这个等式链要看清每一步用的是哪条性质：$D=\chi(q)q$ 使 $(D/p)=(\chi(q)/p)(q/p)$；而 $\chi(q)=(-1)^{(q-1)/2}$ 把第一个因子化成 $((-1)^{(q-1)/2}/p)$；再用 Euler 判据 $(-1/p)=(-1)^{(p-1)/2}$ 便得 $(-1)^{(p-1)(q-1)/4}$。因此 \eqref{eq:4.4} 与二次互反律等价并非巧合：$\zeta_K$ 的 Euler 乘积把“$p$ 在 $K$ 中的分裂型”编码成 $\chi(p)$，而 $\chi$ 只依赖 $q$。这正是“互反律＝用基域数据描述扩域分裂”的第一个实例。
+\par\vspace{0.15em}{\raggedleft 【来源：Gauss《Disquisitiones Arithmeticae》Art.~131--152（A）；Neukirch《Algebraic Number Theory》Ch.~I 二次互反律一节（A）】\par}
+\end{annote}
+
+这解释了为何寻求 \eqref{eq:4.4} 对其他 L 函数的推广显得自然且值得期待，首先是对 Dedekind zeta 函数；也解释了为何人们会把这类分解看作某种“互反律”——如果出现的因子（像 $L(\chi,s)$ 那样）是用基域 $\mathbb{Q}$ 的对象定义的，因为这相当于仅用属于 $\mathbb{Q}$ 的数据来描述素数在 $K$ 中的分裂。
+
+当然，也自然期待数域的相对扩张 $E/K$ 有类似情形。
+
+这一想法的普遍形式（至今仍多为猜想）属于 Artin L 函数理论以及 Langlands 的某些猜想，将在后面涉及。不过有一个重要的特殊情形已有（大体上）令人满意的理论，我以此结束本章：即当扩张 $L/K$ 为\emph{交换}扩张时，相应结果就是\emph{类域论}。
+
+\section{Hecke L 函数与类域论}\label{sec:5}
+
+设 $E/K$ 是数域扩张，并设它是 Galois 群为交换群 $G$ 的 Galois 扩张。特别地，对 $K$ 的每个在 $E$ 中无分歧的素理想 $\mathfrak{p}$，Frobenius 元 $\sigma_{\mathfrak{p}}\in G$ 有定义。
+
+一个形式计算——尽管并不平凡（它是 Artin L 函数“由诱导不变”的一个特例）——表明 $\zeta_E(s)$ 有分解
+\begin{equation}\tag{5.1}\label{eq:5.1}
+\zeta_E(s)=\prod_{\rho\in\widehat{G}}L(\rho,s),
+\end{equation}
+其中 $\widehat{G}$ 是 $G$ 的（对偶）特征群，且
+\[
+L(\rho,s)=\prod_{\mathfrak{p}}\bigl(1-\rho(\sigma_{\mathfrak{p}})(N\mathfrak{p})^{-s}\bigr)^{-1},
+\]
+这里 $\rho(\sigma_{\mathfrak{p}})$ 指 Frobenius 元在 $\mathbb{C}^{I_{\mathfrak{p}}}$ 上诱导的 Galois 表示（$0$ 维或 $1$ 维）下的像，以处理分歧。当然，若 $\mathfrak{p}$ 在 $E$ 中无分歧，这就字面地是 $\rho(\sigma_{\mathfrak{p}})$。（例如，若 $\mathfrak{p}$ 在 $E$ 中完全分裂且 $N\mathfrak{p}=q$，则 \eqref{eq:5.1} 左端的 $\mathfrak{p}$-因子由 $d=[E:K]$ 个因子 $(1-q^{-s})^{-1}$ 组成，每个 $\mathfrak{p}$ 上方素理想一个；右端有 $|\widehat{G}|=|G|=d$ 个特征 $\rho$，且对每个 $\rho$ 有 $\rho(\sigma_{\mathfrak{p}})=\rho(1)=1$，故 $\mathfrak{p}$-因子确实相同。）
+
+这个新的 Euler 乘积由于平凡的理由在 $\operatorname{Re}(s)>1$ 时仍绝对收敛（因为对任何 $\sigma\in G$ 有 $|\rho(\sigma)|=1$）；但对单个 $\rho$ 而言，其解析延拓绝非显然：可以看出，把它当作级数而非乘积来简单定义，并不会立刻显现。没有清楚的理由说明这个 Dirichlet 级数的系数应有任何好性质（与上面关于二次互反律的讨论比较）。\footnote{例如，系数的部分和是否像 Dirichlet 特征那样有界？} 特别地，乍看之下，计算 $(N\mathfrak{a})^{-s}$ 的系数似乎需要知道 $\mathfrak{a}$ 在 $E$ 中的分解。
+
+\par\medskip\noindent\textbf{例 5.1}\quad 对二次域 $K/\mathbb{Q}$，有两个特征：平凡特征，其 L 函数等于 $\zeta(s)$；以及二次特征 $\chi_2$，满足
+\[
+L(\chi_2,s)=\prod_{p\ \text{分裂}}(1-p^{-s})^{-1}
+\prod_{p\ \text{惰性}}(1+p^{-s})^{-1},
+\]
+因为 $G\cong\{\pm1\}$，且 $\chi_2(\sigma_{\mathfrak{p}})=+1$（相应地 $-1$）当且仅当 $p$ 分裂（相应地惰性）。当然，在涉及 Dirichlet 特征的分解 \eqref{eq:4.4} 中有 $L(\chi_2,s)=L(\chi,s)$（与 \eqref{eq:4.8} 比较）。
+
+类域论的 L 函数部分，可以看作是用 \eqref{eq:4.4} 中出现的二次 Dirichlet 特征的推广来识别 Galois 特征的 L 函数。对一般基域 $K$，这些推广由 Hecke 定义。然而在 $\mathbb{Q}$ 的情形，只需考虑原来的 Dirichlet 特征（不必是二次的），我们陈述如下，不求最大精确：
+
+\par\medskip\noindent\textbf{定理 5.2（Kronecker--Weber 定理）}\quad 设 $K/\mathbb{Q}$ 是 Galois 群为 $G$ 的交换扩张，$\rho\colon G\to\mathbb{C}^{\times}$ 是 Galois 特征，$L(\rho,s)$ 为上述 L 函数。则存在唯一的本原 Dirichlet 特征 $\chi$（模某个 $q\ge 1$），使得
+\[
+L(\rho,s)=L(\chi,s).
+\]
+
+特别地，$L(\chi,s)$ 的解析延拓、函数方程及其他性质于是被所有这些 L 函数继承。作为推论，得到描述素数在 $\mathbb{Q}$ 的交换扩张中分裂的“互反律”，以及下述推论（Kronecker--Weber 定理更常见的形式）。
+
+\par\medskip\noindent\textbf{推论 5.3}\quad 设 $K/\mathbb{Q}$ 是交换扩张。则 $K$ 含于某个分圆域中，即存在 $m\ge 1$ 使 $K\subset\mathbb{Q}(\mu_m)$，其中 $\mu_m$ 是 $\mathbb{C}$ 中 $m$ 次单位根群。
+
+\begin{proof}[推论的证明]
+设
+\begin{equation}\tag{5.2}\label{eq:5.2}
+\zeta_K(s)=\prod_{\chi}L(\chi,s)
+\end{equation}
+是由 \eqref{eq:5.1} 与定理 5.2 得到的、用（某些）Dirichlet 特征表示的分解。设 $m$ 为所出现特征的导子 $q_{\chi}$ 的最小公倍数。则事实上 $K\subset\mathbb{Q}(\mu_m)$。
+
+为证明这一点，我们回忆数域的一个简单一般事实（也可有其他证明）：对 Galois 扩张 $E/\mathbb{Q}$ 与 $K/\mathbb{Q}$，有 $E\subset K$，当且仅当在 $K$ 中完全分裂的素数除有限多个外都在 $E$ 中完全分裂。
+
+于是设 $p$ 是在 $\mathbb{Q}(\mu_m)$ 中完全分裂的素数。由分圆域的初等理论 [CF, 第 3 章]，这意味着 $p\equiv 1\pmod m$。于是对任何模 $m$ 的特征 $\chi$ 有 $\chi(p)=1$，特别地对 \eqref{eq:5.2} 中出现的所有特征有 $\chi(p)=1$；即由 Kronecker--Weber 定理，对一切 $\rho\in\widehat{G}$ 有 $\rho(\sigma_p)=1$。这意味着 $\sigma_p=1\in G$，从而 $p$ 在 $K$ 中完全分裂。
+\end{proof}
+
+关于 Dirichlet 特征与分圆域之间关系的更多内容，例如见 [Wa, 第 3 章]。
+
+\begin{annote}
+推论 5.3 的证明用了一条比“Dirichlet 定理”强得多的事实：完全分裂素数的集合（差有限个）决定扩张。这正是 Chebotarev 密度定理的定性形式；只用 Dirichlet 定理是不够的，因为后者只给出 $\mathbb{Q}$ 的交换扩张中的分裂信息。原书把它称为“数域的简单一般事实”，读者若想补全，可查 [CF] 第 3 章或 Neukirch 第 VII 章。
+\par\vspace{0.15em}{\raggedleft 【来源：Cassels--Fröhlich《Algebraic Number Theory》Ch.~3（A）；Neukirch《Algebraic Number Theory》Ch.~VII（A）】\par}
+\end{annote}
+
+\par\medskip\noindent\textbf{注 5.4}\quad 这里陈述的 Kronecker--Weber 定理，与椭圆曲线模性猜想的 L 函数形式（de Shalit 的章节将解释）有惊人的相似。可以循 Wiles 论证 [Tu] 的一般原则来证明定理 5.2（Galois 表示的形变，以及在两个环同构的交换代数判据中计算数值不变量）。
+
+下面进入数域 $K$ 的 Hecke L 函数的定义。可以想见，它们是形如
+\begin{equation}\tag{5.3}\label{eq:5.3}
+L(\chi,s)=\sum_{\mathfrak{a}}\chi(\mathfrak{a})(N\mathfrak{a})^{-s}
+=\prod_{\mathfrak{p}}\bigl(1-\chi(\mathfrak{p})(N\mathfrak{p})^{-s}\bigr)^{-1}
+\end{equation}
+的 L 函数，其中 $\chi$ 是定义在 $K$ 的整理想 $\mathfrak{a}$ 上的某种“算术”函数。恰当的定义若用理想的语言，需要一些小心；这一点在伊代尔式的描述中清楚得多。例如见 [Co] 中“经典”语言下的更多细节。困难来自各种阿基米德位以及类数可能 $>1$。
+
+设 $\mathfrak{m}$ 是 $K$ 的非零整理想，它将扮演\emph{模}的角色。定义 $K$ 的分式理想群 $I$（相应地，主理想子群）的子群 $I_{\mathfrak{m}}$（相应地 $P_{\mathfrak{m}}$）为
+\[
+I_{\mathfrak{m}}=\{\mathfrak{a}\in I\mid(\mathfrak{a},\mathfrak{m})=1\},\qquad
+P_{\mathfrak{m}}=\{\mathfrak{a}=(\alpha)\in I_{\mathfrak{m}}\cap P\mid
+\alpha\equiv 1\ (\mathrm{mod}\ \mathfrak{m})\}.
+\]
+有限交换群 $H_{\mathfrak{m}}=I_{\mathfrak{m}}/P_{\mathfrak{m}}$ 称为模 $\mathfrak{m}$ 的\emph{射线类群}。又设 $U_{\mathfrak{m}}$ 为 $P_{\mathfrak{m}}$ 中的单位群。
+
+设 $\xi_{\infty}$ 是（酉）特征
+\[
+\xi_{\infty}\colon K^{\times}/\mathbb{Q}^{\times}\to\mathbb{C}^{\times}
+\]
+（这些容易用无穷处的各个位来描述，见下面的例子），满足 $U_{\mathfrak{m}}\subset\ker\xi_{\infty}$。于是 $\xi_{\infty}$ 诱导同态
+\[
+\xi_{\infty}\colon P_{\mathfrak{m}}\to\mathbb{C}^{\times}.
+\]
+
+\par\medskip\noindent\textbf{定义}\quad 模 $\mathfrak{m}$、权为 $\xi_{\infty}$ 的 Hecke 特征，是同态 $\chi\colon I_{\mathfrak{m}}\to\mathbb{C}^{\times}$（酉的），满足
+\[
+\chi\bigl((\alpha)\bigr)=\xi_{\infty}(\alpha)
+\]
+若 $\mathfrak{a}=(\alpha)\in P_{\mathfrak{m}}$。特征 $\chi$ 被延拓到 $I$ 上：若 $(\mathfrak{a},\mathfrak{m})\neq 1$，则令 $\chi(\mathfrak{a})=0$。
+
+可以完全类似 Dirichlet 特征的方式定义本原 Hecke 特征，且有相同的基本性质：任何特征都由唯一本原特征诱导，它们的 L 函数至多相差一个有限 Euler 乘积，如 \eqref{eq:3.1} 那样。
+
+对 Hecke 特征 $\chi$，L 函数 $L(\chi,s)$ 由乘性有 Euler 乘积展开 \eqref{eq:5.3}，并在 $\operatorname{Re}(s)>1$ 时绝对收敛。
+
+\par\medskip\noindent\textbf{例 5.5}\quad 若取 $\mathfrak{m}=1$ 且 $\xi_{\infty}=1$，则相应的 Hecke 特征恰是\emph{理想类群特征}，即理想类群 $H(K)\to\mathbb{C}^{\times}$ 的（有限多个）特征。更一般地，若 $\mathfrak{m}$ 任意但 $\xi_{\infty}=1$，所得的 Hecke 特征称为模 $\mathfrak{m}$ 的\emph{射线类特征}。对平凡 Hecke 特征 $\chi_0$，有 $L(\chi_0,s)=\zeta_K(s)$。
+
+\par\medskip\noindent\textbf{例 5.6}\quad 设 $K=\mathbb{Q}$。则唯一可能是 $\xi_{\infty}=1$，$\mathfrak{m}=(m)$ 对某个唯一的 $m\ge 1$；模 $\mathfrak{m}$ 的 Hecke 特征与模 $m$ 的 Dirichlet 特征是同一回事。本原性也相对应。这对任何类数为 $1$ 的域都可类似地推广。
+
+\par\medskip\noindent\textbf{例 5.7}\quad 设 $K$ 为二次域，$\sigma$ 为 $K$ 的 Galois 群中的非平凡元。则 $K^{\times}/\mathbb{Q}^{\times}\cong\{a\in K^{\times}\mid Na=1\}$，对应 $a\mapsto a/a^{\sigma}$。先设 $K$ 为虚二次域。则容易验证 $\xi_{\infty}$ 必形如
+\[
+\xi_{\infty}(a)=\Bigl(\frac{a}{|a|}\Bigr)^{u}
+\]
+（即 $\arg(a)^{u}$），其中 $u\in\mathbb{Z}$，权可与之等同。另一方面，若 $K$ 为实二次域，则可得
+\[
+\xi_{\infty}(a)=\Bigl(\frac{a}{|a|}\Bigr)^{u_1}
+\Bigl(\frac{a^{\sigma}}{|a^{\sigma}|}\Bigr)^{u_2}
+\]
+其中 $u_1,u_2\in\{0,1\}$。
+
+Hecke 成功证明了他的 L 级数的基本解析性质，与 Dirichlet L 函数的情形完全类似。下一章将勾勒其证明，该证明在阿代尔的语言下变得更为透明：这一翻译正是 Tate 著名论文 [Ta] 的主题。
+
+\par\medskip\noindent\textbf{定理 5.8（Hecke）}\quad 设 $\chi\neq 1$ 是 $K$ 的本原、非平凡 Hecke 特征。则 $L(\chi,s)$ 解析延拓为整函数，且存在仅依赖于权的伽马因子 $\Gamma(\xi_{\infty},s)$（它是伽马函数的乘积），使
+\[
+\Lambda(\chi,s)=\Gamma(\xi_{\infty},s)L(\chi,s)
+\]
+满足如下函数方程：
+\begin{equation}\tag{5.4}\label{eq:5.4}
+\Lambda(\chi,s)=\varepsilon(\chi)\,\bigl(|D|Nm\bigr)^{1/2-s}
+\Lambda(\overline{\chi},1-s),
+\end{equation}
+其中 $\varepsilon(\chi)$ 是绝对值 $1$ 的某个复数。这里 $D$ 是 $K/\mathbb{Q}$ 的（绝对）判别式，$Nm$ 是 $K$ 到 $\mathbb{Q}$ 的范数。
+
+我们说得有点含糊：确实可以写出 $\varepsilon(\chi)$（用 $\chi$ 的 Gauss 和）以及 $\Gamma(\xi_{\infty},s)$ 的公式。要点在于它们“自然地”出现在证明过程中。把伽马因子“写成权的函数”，其实让人想起阿代尔式的论证。当然，应把这与 \eqref{eq:3.3} 和 \eqref{eq:4.3} 比较。
+
+\begin{annote}
+\eqref{eq:5.4} 的幂次底数是 $|D|Nm$ 而不是单独的 $Nm$：Hecke 特征的“导子”是判别式与模的合并 $|D|\cdot N\mathfrak{m}$，它在函数方程中占的位置与 \eqref{eq:3.3} 的 $q$、\eqref{eq:4.3} 的 $|D|$ 完全相同。三条函数方程对照记忆：$q^{1/2-s}$（Dirichlet）、$|D|^{1/2-s}$（Dedekind）、$(|D|Nm)^{1/2-s}$（Hecke）。另注意右端是 $\Lambda(\overline{\chi},1-s)$，共轭不可省。
+\par\vspace{0.15em}{\raggedleft 【来源：Tate 论文（Cassels--Fröhlich 编《Algebraic Number Theory》）（A）；Neukirch《Algebraic Number Theory》Ch.~VII（A）】\par}
+\end{annote}
+
+现在可以陈述定理 5.2 对一般数域 $K$ 的交换扩张的类比，它极为相似，并涵盖了类域论的大部分内容。
+
+\par\medskip\noindent\textbf{定理 5.9（Artin）}\quad 设 $K$ 为数域，$E/K$ 为有限交换扩张，Galois 群为 $G$，$\rho\colon G\to\mathbb{C}^{\times}$ 为 Galois 特征，$L(\rho,s)$ 为相联 L 函数。则存在 $K$ 的唯一的本原 Hecke 特征 $\chi$，其模为 $\mathfrak{m}$，使得
+\[
+L(\rho,s)=L(\chi,s).
+\]
+事实上，这个等式局部成立：Euler 乘积的 $\mathfrak{p}$-分量对 $K$ 的所有素理想 $\mathfrak{p}$ 都相等\footnote{正如 Serre 常指出的，当 $K\neq\mathbb{Q}$ 时，后一陈述强于前一陈述；与 \eqref{eq:2.4} 后的脚注比较。}。换言之，
+\[
+\rho(\sigma_{\mathfrak{p}})=\chi(\mathfrak{p})
+\quad\text{对一切与}\ \mathfrak{m}\ \text{互素的}\ \mathfrak{p}.
+\]
+
+\par\medskip\noindent\textbf{注 5.10}\quad 事实上，如同 Artin L 函数更一般的情形，可以事先仅用 $\rho$ 定义\emph{导子} $\mathfrak{f}(\rho)$ 与\emph{权} $\xi_{\infty}(\rho)$。定理的证明表明 $\mathfrak{f}=\mathfrak{m}$ 且 $\chi$ 的权为 $\xi_{\infty}$。这一附加的精确性在应用中极为重要，哪怕只是因为它使该陈述对任何给定的 $\rho$ 在理论上可通过暴力搜索验证（这类似于 Weil 的要求：$\mathbb{Q}$ 上椭圆曲线相联模形式的级应等于其导子）。
+
+\par\medskip\noindent\textbf{注 5.11}\quad 应用定理 5.9 后比较 \eqref{eq:5.1} 两边的函数方程，可得联系于 $E/K$ 的 Galois（或 Hecke）特征的导子与 $E$ 的判别式之间的关系。在 $K=\mathbb{Q}$ 的简单情形，这取形式
+\[
+|D|=\prod_{\chi}q_{\chi},
+\]
+其中 $D$ 是 $E/\mathbb{Q}$ 的判别式，$\chi$ 是 \eqref{eq:5.2} 中的 Dirichlet 特征，$q_{\chi}$ 是它们的导子。对 $E=\mathbb{Q}(\mu_{\ell})$（$\ell>2$ 为素数），分解为
+\[
+\zeta_E(s)=\prod_{\chi\,(\mathrm{mod}\,\ell)}L(\chi,s).
+\]
+
+共有 $\ell-1$ 个 Dirichlet 特征，其中一个导子为 $1$，$\ell-2$ 个导子为 $\ell$，于是得到众所周知的判别式 $|D|=\ell^{\ell-2}$。
+
+\begin{annote}
+$\ell^{\ell-2}$ 值得代两个数验证：$\ell=3$ 时 $|D|=3$，而 $\operatorname{disc}\mathbb{Q}(\zeta_3)=-3$，绝对值相符；$\ell=5$ 时 $5^{3}=125$，而 $\operatorname{disc}\mathbb{Q}(\zeta_5)=5^{3}$，也相符。数清特征个数是常错处：$\ell-1$ 个特征中，平凡特征导子为 $1$，其余 $\ell-2$ 个导子为 $\ell$（不是 $\ell-1$ 个）。这条 $|D|=\prod q_{\chi}$ 就是导子—判别式公式的交换情形，一般情形的表述见 Cassels--Fröhlich 第 3 章。
+\par\vspace{0.15em}{\raggedleft 【来源：Cassels--Fröhlich《Algebraic Number Theory》Ch.~3（A）；Hasse《Vorlesungen über Klassenkörpertheorie》（A）】\par}
+\end{annote}
+
+类似地，由于 $\zeta_E(s)$ 的根数为 $1$，可以推出 $\varepsilon(\chi)$ 之间的关系。也可以富有成效地比较两边在 $s=1$ 处的留数。
+
+正如 Dirichlet 特征的情形，数域 $K$ 的 Hecke 特征（与类域论无关地）对理想在各理想类中的等分布有许多应用。实际上它们自然地分为两类：一类涉及 $K$ 中素理想 $\mathfrak{p}$ 的分布，基于同样的、使用 Hecke L 函数对数导数的方法。另一类涉及 $K$ 中整理想范数在 $\mathbb{N}$ 中的分布，即 \eqref{eq:4.1} 中算术函数 $r_K(n)$ 的（平均）性质。这里用的是 $\zeta_K(s)$ 与 Hecke L 函数本身，且较为简单，因为它们的奇点完全已知。例如可以推出
+\[
+\bigl|\{\mathfrak{a}\subset\mathcal{O}\mid N\mathfrak{a}\le X\}\bigr|
+=\bigl(\operatorname{Res}_{s=1}\zeta_K(s)\bigr)X+O\bigl(X^{1-1/d}\bigr)
+\]
+当 $X\to+\infty$，且理想在各理想类中等分布。例如取二次域 $K$，就得到由二次型表示的整数 $n\le X$ 的个数的渐近公式（计重数）。标准解析数论方法还可用来推出 $K$ 中作为某个理想范数的整数个数的渐近公式（不计重数）。
+
+\par\medskip\noindent\textbf{例 5.12}\quad 取 $K=\mathbb{Q}(i)$。则 $\mathcal{O}=\mathbb{Z}[i]$ 类数为 $1$，范数 $\le X$ 的理想的个数等于 $\mathbb{C}$ 中半径 $\sqrt{X}$ 的圆盘内的格点数（Gauss 圆问题）。此时平凡地得到
+\[
+\sum_{n^{2}+m^{2}\le X}1=\pi X+O(\sqrt{X})
+\quad\text{当 } X\to+\infty
+\]
+（$r(n)$ 是 $n$ 表为两平方和的表示数）。更精细的论证给出同样公式但误差项为 $X^{1/3}$。猜想任何 $>1/4$ 的指数都行，而这是最佳可能的。在适当光滑化的形式下，已知更好的结果；例如 theta 函数的自守性（见第 3 章）容易推出：若 $\varphi$ 是 $[0,+\infty[$ 中具紧支集的光滑函数，则
+\[
+\sum_{n,m}\varphi\Bigl(\frac{n^{2}+m^{2}}{X}\Bigr)
+=\pi X\int_{0}^{+\infty}\varphi(x)\,dx+c_0\varphi(0)+O\bigl(X^{-1/2}\bigr)
+\]
+当 $X\to+\infty$，其中 $c_0$ 是某个常数。（用 Mellin 变换并把积分线移到 $\operatorname{Re}(s)=-1/2$。）
+
+\begin{annote}
+“范数 $\le X$ 的理想个数”与“圆盘内格点数”严格说差一个单位群因子：$\mathbb{Z}[i]$ 有 $4$ 个单位，每个理想对应 $4$ 个格点，故
+$\#\{\mathfrak{a}:N\mathfrak{a}\le X\}=\tfrac14\#\{n^2+m^2\le X\}\sim\tfrac{\pi}{4}X$。而由 \eqref{eq:4.2} 与 $\operatorname{Res}\zeta_{\mathbb{Q}(i)}=\zeta\cdot L(\chi_4)$ 得留数 $1\cdot\tfrac{\pi}{4}=\tfrac{\pi}{4}$，两者一致。原文“等于”是就单位平均而言，读公式 \eqref{eq:4.2} 时务必自己乘回这个 $4$。
+\par\vspace{0.15em}{\raggedleft 【来源：原书 (4.2) 与 (5.3) 的数值自洽核对（I）；Iwaniec--Kowalski 前引书 Gauss 圆问题一节（A）】\par}
+\end{annote}
+
+\section{函数域}\label{sec:6}
+
+关于前面各种理论的“几何”类比（或“函数域情形”），我只说很少几句，主要是因为缺乏足够的学养。更详细的解释将在后面的章节出现。
+
+$\mathbb{Z}$ 的算术与域 $k$ 上多项式环 $k[X]$ 的算术之间的类比非常古老。若取 $k$ 为有 $q=p^{d}$ 个元素的有限域 $\mathbb{F}_q$，类比便加深。例如若 $P$ 是不可约多项式，则剩余域 $\mathbb{F}_q[X]/(P)$ 是有限域，这与数域的情形相同。
+
+这导致一个在许多方面与前述理论非常相似的理论，尽管几何直观与某些其他内在特征往往使它更简单（例如多项式可以求导，整数则不能）。它既提供了一套不同的问题，也提供了为在数域上仍难以驾驭的猜想（例如关于 L 函数零点的猜想）取得证据的途径（例如 Katz 与 Sarnak [KS] 关于零点精细分布的工作，或 Lafforgue 最近关于函数域上 $\mathrm{GL}(n)$ 整体 Langlands 对应的工作）。
+
+这里简要描述曲线的情形。设 $C/\mathbb{F}_q$ 是 $\mathbb{F}_q$ 上的代数曲线（还有别的吗？），由齐次多项式 $F\in\mathbb{F}_q[X,Y,Z]$ 在 $\mathbb{P}^{2}$ 中的零点集给出。设 $D/\mathbb{F}_q$ 是 $C$ 的“那个”光滑射影模型。用 Hasse 与 Artin 的语言，这将等同于 $C$ 的\emph{函数域} $K=\mathbb{F}_q(C)$，它是单变量有理函数域 $\mathbb{F}_q(X)$ 的有限扩张（几何上，后者对应 $\mathbb{P}^{1}$，而该扩张对应一个分歧覆盖 $C\to\mathbb{P}^{1}$）。
+
+$K$ 的非阿基米德赋值与 $C$ 的闭点集一一对应（用概形论语言），换言之，与 $\operatorname{Gal}(\overline{\mathbb{F}}_q/\mathbb{F}_q)$ 在 $C$ 的代数闭包上点集的作用轨道一一对应。若 $C$ 是仿射的，它们也对应 $C$ 上正则函数环的极大理想。用 Euler 乘积定义 $C$ 的\emph{zeta 函数}
+\[
+Z(C;s)=\prod_{x}\bigl(1-(Nx)^{-s}\bigr)^{-1},
+\]
+对闭点集取乘积，$Nx$ 等于 $x$ 处剩余域的基数。这显然是域 $K$ 的 Dedekind zeta 函数的类比，而它确实满足许多相同的性质。
+
+由于 $x$ 的范数总是形如 $q^{a}$（$a\ge 1$，即 $x$ 的次数 $\deg(x)$），方便地置 $T=q^{-s}$，把 $Z(C)$ 看作 $T$ 的形式幂级数
+\[
+Z(C)=\prod_{x}\bigl(1-T^{\deg(x)}\bigr)^{-1}.
+\]
+这原来还有另一个表达式，为几何情形所独有，它给出该 zeta 函数的直接丢番图解释。
+
+\par\medskip\noindent\textbf{引理 6.1}\quad 有
+\[
+Z(C)=\exp\Bigl(\sum_{n\ge 1}\frac{|C(\mathbb{F}_{q^{n}})|}{n}T^{n}\Bigr),
+\]
+作为形式幂级数。
+
+\begin{proof}[证明梗概]
+对两边施加算子 $T\frac{d}{dT}\log$。右端的结果是
+\[
+\sum_{n\ge 1}|C(\mathbb{F}_{q^{n}})|T^{n},
+\]
+而左端展开几何级数后得到
+\[
+\sum_{x}\deg(x)\sum_{k\ge 1}T^{k\deg(x)}=\sum_{n}N_nT^{n},
+\]
+其中
+\[
+N_n=\sum_{d\mid n}d\,\bigl|\{x\mid \deg(x)=d\}\bigr|.
+\]
+次数 $d$ 是闭点 $x$ 的 Galois 轨道的基数，故 $N_n=|C(\mathbb{F}_{q^{n}})|$，如所欲证。
+\end{proof}
+
+\begin{annote}
+原文此处的 “$T\,d\log$” 是排版遗漏，应为算子 $T\frac{d}{dT}\log=T\cdot\frac{1}{Z}\frac{dZ}{dT}$；按字面读成 $T\,d\log$ 无法得到下一行。核对时可用最简例子：$C=\mathbb{P}^{1}$，$|C(\mathbb{F}_{q^{n}})|=q^{n}+1$，则 $\exp\bigl(\sum(q^{n}+1)T^{n}/n\bigr)=\exp\bigl(-\log(1-qT)-\log(1-T)\bigr)=\frac{1}{(1-T)(1-qT)}$，与定理 6.2 中 $g=0$ 时的 $P_0=1$ 相符。
+\par\vspace{0.15em}{\raggedleft 【来源：Weil 1948 “Numbers of solutions of equations in finite fields”（A）；nLab “zeta function of a curve” 条目（B，与 A 交叉）】\par}
+\end{annote}
+
+zeta 函数的基本性质如下。
+
+\par\medskip\noindent\textbf{定理 6.2}\quad 设 $C$ 光滑射影。则 zeta 函数有解析延拓与函数方程。更精确地（！），$Z(C)$ 是 $T$ 的有理函数，形如
+\[
+Z(C)=\frac{P_{2g}}{(1-T)(1-qT)},
+\]
+其中 $P_{2g}\in\mathbb{Z}[T]$ 是首一的偶次 $2g$ 多项式，$g$ 等于 $C$ 的亏格。它满足
+\[
+Z(C)=\varepsilon(C)\,q^{-\chi/2}T^{-\chi}\,Z\bigl(1/(qT)\bigr),
+\]
+其中 $\varepsilon(C)=\pm1$，$\chi=2-2g$ 是 $C$ 的 Euler--Poincaré 示性数。多项式 $P_{2g}$ 在 $\mathbb{C}$ 上可表为
+\[
+P_{2g}=\prod_{i=1}^{2g}(1-\alpha_iT),
+\]
+且对一切 $i$ 有 $|\alpha_i|=\sqrt{q}$。
+
+第一部分由 Schmidt 一般地证明；它基于 Riemann--Roch 定理。第二部分也由这一论证得到。最后一部分是关于 $Z(C)$ 的 Riemann 假设：它最先由 A.~Weil 证明。Weil 还提出了把这些陈述推广到高维簇的猜想，而它们通过 Grothendieck 学派的工作、尤其是当然通过 P.~Deligne 的工作，以更强有力得多的形式得到证明。这些结果基于把多项式 $P_{2g}$ 表达为某个算子（Frobenius 算子）在某个上同调群上作用的特征多项式——这一点似乎特别有意义：在数域情形，人们热切地寻找这种现象的（自然）类比。
+
+\begin{annote}
+定理 6.2 的函数方程里 $\chi=2-2g$ 是“示性数”，而指数写成 $q^{-\chi/2}T^{-\chi}$；换回 $s$ 变量即注 6.3 的 $q^{\chi(s-1/2)}$，两者相差 $T=q^{-s}$ 的代换，符号最易出错。与 \eqref{eq:4.3} 对照：数域情形的 $|D|^{1/2-s}$ 在曲线情形对应 $q^{\chi(1/2-s)}$，可见 $\chi$ 扮演的是“判别式的对数”角色。Deligne 1974 的证明把 $|\alpha_i|=\sqrt q$ 归结为 Frobenius 在 $H^{1}$ 上作用的权的纯性。
+\par\vspace{0.15em}{\raggedleft 【来源：Weil 1948（A）；Deligne 1974 “La conjecture de Weil I”（A）】\par}
+\end{annote}
+
+\par\medskip\noindent\textbf{注 6.3}\quad 用 $s$ 表示，函数方程变为
+\[
+Z(C;s)=\varepsilon(C)\,q^{\chi(s-1/2)}\,Z(C;1-s),
+\]
+而 Riemann 假设说 $Z(C;s)$ 的零点满足
+\[
+q^{-\sigma}=|T|=|\alpha_i|^{-1}=q^{-1/2},
+\]
+即 $\operatorname{Re}(s)=1/2$。可见类比确实非常清楚。

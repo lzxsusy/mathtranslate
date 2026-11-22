@@ -1,0 +1,531 @@
+\chapter{L 函数的初等理论 II}\label{ch:02}
+
+\begin{center}
+E. Kowalski
+\end{center}
+
+\section{引言}\label{c2:sec:1}
+
+本章一半是展开第 1 章的主要论点，并给出其中一些证明的梗概；另一半是对 L 函数零点这一重要课题的综述。
+
+\section{Hecke L 函数的函数方程}\label{c2:sec:2}
+
+我们将叙述 Dedekind zeta 函数函数方程的证明，并简要说明一般 Hecke L 函数情形所需的改动。这一经典做法见 [La, XIII-3] 或 Hecke 的原始论文。它有着良好的历史动机（基于 Riemann 的一个证明），并通过 theta 函数与模形式有清晰的联系；但在某些方面并不完全令人满意（例如伽马因子的出现）。不过，它的显式性使其实在很有价值（见下文公式 \eqref{c2:eq:2.6}）。
+
+\begin{annote}
+“并不完全令人满意”指的是：在这条路线里，伽马因子只是从伽马积分的计算中冒出来的，并没有得到概念上的解释。用阿代尔语言重写，整个证明就是 $K$ 的阿代尔环上商 $\mathbb{A}_K/K$ 的一次 Poisson 求和；各阿基米德位贡献局部的伽马因子，非阿基米德位贡献 Euler 因子。Tate 的论文正是把这一点讲清楚的地方，此后“伽马因子是阿基米德位的局部因子”才成为标准说法。读 (2.6) 时不妨把它看成这个阿代尔公式的“展开写法”。
+\par\vspace{0.15em}{\raggedleft 【来源：Tate《Fourier analysis in number fields and Hecke's zeta-functions》（A）；Lang《Algebraic Number Theory》Ch.~XIII（A）；nLab “Poisson summation formula” 条目（B，与 A 交叉）】\par}
+\end{annote}
+
+设 $K$ 为 $\mathbb{Q}$ 上次数为 $d$ 的数域，
+\begin{equation}\tag{2.1}\label{c2:eq:2.1}
+\zeta_K(s)=\sum_{\mathfrak{a}}(N\mathfrak{a})^{-s}
+\end{equation}
+为其 Dedekind zeta 函数。
+
+由调和分析得到解析延拓的基本工具是 \emph{Poisson 求和公式}。
+
+\par\medskip\noindent\textbf{命题 2.1}\quad 设 $f\colon\mathbb{R}^d\to\mathbb{C}$ 是（欧氏）$\mathbb{R}^d$ 上的 Schwartz 函数，并令
+\[
+\hat f(\xi)=\int_{\mathbb{R}^d}f(x)e(-\langle x,\xi\rangle)\,dx
+\]
+为其 Fourier 变换。则对一切 $a\in\mathbb{R}^d$ 有
+\[
+\sum_{m\in\mathbb{Z}^d}f(m+a)=\sum_{\mu\in\mathbb{Z}^d}\hat f(\mu)e(\langle a,\mu\rangle),
+\]
+两端的级数都绝对收敛，且对 $a$ 在紧集上一致。
+
+\begin{annote}
+记号 $e(z)=e^{2\pi iz}$ 与第 1 章一致，故这里的 $\hat f$ 就是 $\int f(x)e^{-2\pi i\langle x,\xi\rangle}dx$，指数中的 $2\pi$ 已被 $e(\cdot)$ 吸收。若改用无 $2\pi$ 的约定 $\hat f(\xi)=\int f(x)e^{-i\langle x,\xi\rangle}dx$，则右端须写成 $\sum_\mu\hat f(2\pi\mu)e(\langle a,\mu\rangle)$，对偶格也要整体放大 $2\pi$ 倍。抄写 Poisson 公式时的常见错误，正是漏掉 $\hat f$ 的自变量上的这个 $2\pi$。
+\par\vspace{0.15em}{\raggedleft 【来源：Titchmarsh《The Theory of the Riemann Zeta-Function》第 2 章（A）；nLab “Poisson summation formula” 条目（B，与 A 交叉）】\par}
+\end{annote}
+
+\begin{proof}[证明梗概]
+只需注意：左端经平均化之后，是 $\mathbb{R}^d$ 上对 $\mathbb{Z}^d$ 的平移作用不变的函数，而右端正是它的 Fourier 级数展开。可与第 3 章关于 Poincaré 级数与 Eisenstein 级数的讨论相比较。
+\end{proof}
+
+这样的结果显然切题；人们或许要问，为何不直接把它用于 $\zeta(s)$，取 $f(x)=x^{-s}$（$x>0$）？当然，这个函数不在 Schwartz 空间中。
+
+我们把级数 \eqref{c2:eq:2.1} 按理想类拆分，以便求和集能用 $d$ 元整数组方便地参数化：有
+\begin{equation}\tag{2.2}\label{c2:eq:2.2}
+\zeta_K(s)=\sum_{a}\zeta(s;a),
+\end{equation}
+其中
+\[
+\zeta(s;a)=\sum_{[\mathfrak{a}]=a}(N\mathfrak{a})^{-s}
+\]
+对任意理想类 $a$ 成立。沿用第 4 节中关于 $K$ 的不变量的记号，则有
+
+\par\medskip\noindent\textbf{命题 2.2}\quad 设 $a$ 为 $K$ 的任意理想类，令
+\[
+\Lambda(s;a)=\pi^{-r_1s/2}(2\pi)^{-r_2s}\Gamma(s/2)^{r_1}\Gamma(s)^{r_2}\zeta(s;a).
+\]
+则 $\Lambda(s;a)$ 解析延拓为 $\mathbb{C}$ 上的亚纯函数，在 $s=1$ 与 $s=0$ 处有单极点，并满足函数方程
+\[
+\Lambda(s;a)=|D|^{1/2-s}\Lambda\bigl(1-s;(a\mathfrak{d})^{-1}\bigr),
+\]
+其中 $\mathfrak{d}$ 为 $K/\mathbb{Q}$ 的 different 的理想类。部分 zeta 函数 $\zeta(s;a)$ 亚纯，在 $s=1$ 处有单极点，留数等于
+\[
+\operatorname{Res}_{s=1}\zeta(s;a)=\frac{2^{r_1}(2\pi)^{r_2}R}{w\sqrt{|D|}}.
+\]
+
+\begin{annote}
+different 是 $\mathcal{O}_K$ 的整理想 $\mathfrak{d}$，满足 $\mathfrak{d}^{-1}=\{x\in K\mid \operatorname{Tr}_{K/\mathbb{Q}}(x\mathcal{O}_K)\subset\mathbb{Z}\}$；它满足 $N\mathfrak{d}=|D|$，这正是 (2.5) 中判别式与 $\mathfrak{d}^{-1}$ 同时出现的原因。函数方程把理想类 $a$ 送到 $(a\mathfrak{d})^{-1}$ 而不是 $a^{-1}$：theta 变换把 $\mathcal{O}$ 的格对偶到 $\mathfrak{d}^{-1}$ 的格，而不是对偶回 $\mathcal{O}$。抄写函数方程时漏掉 $\mathfrak{d}$，会使 $|D|^{1/2-s}$ 的指数也跟着错位。
+\par\vspace{0.15em}{\raggedleft 【来源：Lang《Algebraic Number Theory》Ch.~XIII（A）；Milne《Algebraic Number Theory》zeta 函数一章（A）】\par}
+\end{annote}
+
+对 $a\in H(K)$ 求和，本命题就给出第 4 节所陈述的 $\zeta_K(s)$ 的解析延拓与函数方程。
+
+若事先知道 $\zeta_K(s)$ 在 $s=1$ 处至多有单极点，命题 2.2 实际上就给出了类数有限性的一个证明：因为 $\zeta_K(s)$ 的级数、从而展开式 \eqref{c2:eq:2.2}，在 $\operatorname{Re}(s)>1$ 时绝对收敛，而所有部分 zeta 函数在 $s=1$ 处有相同的留数。
+
+\begin{annote}
+把这段论证写出来就是 Dirichlet 类数公式的解析形式：设 $h=|H(K)|$，则
+\[
+\lim_{s\to1}(s-1)\zeta_K(s)=h\cdot\frac{2^{r_1}(2\pi)^{r_2}R}{w\sqrt{|D|}},
+\]
+左端有限，故 $h$ 有限。反过来，若已知 $h$ 有限，此式就是类数公式本身。注意论证只用到“所有部分 zeta 留数相同”与“级数在 $\operatorname{Re}(s)>1$ 收敛”，完全没有用到 Euler 乘积。
+\par\vspace{0.15em}{\raggedleft 【来源：Lang 前引书 Ch.~XIII（A）；Milne 前引书（A）；原书命题 2.2（A）】\par}
+\end{annote}
+
+\par\medskip\noindent\textbf{注 2.3}\quad 解析延拓关键在于可用 Poisson 求和公式的级数表达式 \eqref{c2:eq:2.1}，与 Euler 乘积无关；通过部分 zeta 函数给出的证明即可看出这一点（当 $h>1$ 时，部分 zeta 函数没有 Euler 乘积）。然而正是 Euler 乘积承载着最深的算术内容，尤其是它的局部—整体解释，以及它对 L 函数零点位置的推论。
+
+为简单起见，设 $a=1$ 是平凡理想类，从而由 $\mathcal{O}=\mathcal{O}_K$ 代表。该类中的理想于是与非零整数 $z\in\mathcal{O}$ 一一对应，对应到乘以单位 $u\in U$ 为止。
+
+设 $z\in\mathcal{O}$，$z\neq0$。对 $K$ 的每个嵌入 $\sigma$，由伽马函数的定义有
+\[
+\pi^{-s/2}\Gamma(s/2)|z|_\sigma^{-s}=\int_0^{+\infty}\exp\bigl(-\pi y|z|_\sigma^2\bigr)y^{s/2}\,\frac{dy}{y},
+\]
+\[
+(2\pi)^{-s}\Gamma(s)|z|_\sigma^{-s}=\int_0^{+\infty}\exp\bigl(-2\pi y|z|_\sigma^2\bigr)y^{s}\,\frac{dy}{y}.
+\]
+
+我们对实嵌入用前式、对（成对的）复嵌入用后式，并在 $\operatorname{Re}(s)>1$ 时对 $z\in\mathcal{O}$ 模单位求和。得到公式
+\begin{equation}\tag{2.3}\label{c2:eq:2.3}
+\Lambda(s;\mathcal{O})=\int\Theta_1(y;\mathcal{O})\,\|y\|^{s/2}\,\frac{dy}{y},
+\end{equation}
+其中积分的区域是 $(\mathbb{R}^+)^{r_1+r_2}$，坐标对应 $K$ 的阿基米德位，且
+\[
+\|y\|=\prod_v y_v^{d_v},\qquad \frac{dy}{y}=\prod_v\frac{dy_v}{y_v},
+\]
+而核几乎就是一个 theta 函数：
+\[
+\Theta_1(y;\mathcal{O})=\sum_{\substack{z\in\mathcal{O}/U\\ z\neq0}}\exp\Bigl(-\pi\sum_v y_vd_v|z|_v^2\Bigr).
+\]
+该和绝对收敛，且对 $\operatorname{Re}(s)>1+\delta$（任意 $\delta>0$）一致，因为 $\zeta(s;\mathcal{O})$ 具有这一性质。
+
+现在重排这个积分公式，先对 $t=\|y\|$ 积分：令
+\[
+G_1=\{y\mid \|y\|=1\};
+\]
+并注意 $U$ 作用于 $G_1$（实际上让 $u$ 以 $u^2$ 的“显然”作用而作用），而由 Dirichlet 单位定理，商 $G_1/U$ 紧。我们改写
+\[
+\int_{\mathcal{O}/U}\sum\cdots=\int_0^{+\infty}\int_{G_1/U}\sum_{u\in U}\sum_{\mathcal{O}/U}\cdots=\int_0^{+\infty}\int_{G_1/U}\sum_{z\in\mathcal{O},\,z\neq0}\cdots
+\]
+于是经过一些重排（并处理单位根等细节）之后得到
+\[
+\Lambda(s;\mathcal{O})=\frac{1}{w}\int_0^{+\infty}\int_{G_1/U}\bigl(\Theta(t^{1/d}x;\mathcal{O})-1\bigr)t^{s/2}\,d\mu(x)\,\frac{dt}{t},
+\]
+其中 $d\mu(x)$ 是 $G_1/U$ 上的相应测度，而 $\Theta(x;\mathcal{O})$ 是 Hecke theta 函数（对应 $a=\mathcal{O}$）：
+\begin{equation}\tag{2.4}\label{c2:eq:2.4}
+\Theta(x;\mathcal{O})=\sum_{z\in\mathcal{O}}\exp\bigl(-\pi\langle |z|^2,x\rangle\bigr),
+\end{equation}
+对 $x\in(\mathbb{R}^+)^{r_1+r_2}$ 成立，这里用了略显笨拙的简写
+\[
+\langle x,y\rangle=\sum_v d_vx_vy_v\qquad\text{与}\qquad |z|^2=(|z|_v^2)_v.
+\]
+
+\begin{annote}
+原书第二个等号处的求和下标影印作 $u\in\mathcal{O}$，与上一行的 $u\in U$ 不一致；对照上下文，两层求和（单位群与理想类代表元）在此合并为对 $\mathcal{O}$ 中非零元的一次求和，故第二个下标当作 $z\in\mathcal{O}$。译文按此排出。这类排印小疵在下文 (3.6) 的求和下标处还会出现一次，读者不必怀疑自己的推导。
+\par\vspace{0.15em}{\raggedleft 【来源：原书 p.23 影印逐字核对（A）；本书对明显排印小疵的处理体例（I）】\par}
+\end{annote}
+
+在这个积分表达式里，对任何 $s\in\mathbb{C}$ 在 $+\infty$ 处都没有问题，因为 theta 函数减去其常数项 $1$ 之后速降；但在 $0$ 处，当 $s$ 小时可能有问题。于是我们把对 $t$ 的积分拆成两段，而对小的 $t$ 需要分析 theta 函数的行为；这正是 Poisson 求和公式的用武之处。
+
+\par\medskip\noindent\textbf{引理 2.4}\quad 沿用上面的记号，theta 函数满足
+\begin{equation}\tag{2.5}\label{c2:eq:2.5}
+\Theta(x;\mathcal{O})=\frac{1}{\sqrt{|D|}\prod_i x_i}\Theta\bigl(|D|^{-2/d}x^{-1};\mathfrak{d}^{-1}\bigr).
+\end{equation}
+
+\begin{proof}[证明梗概]
+取 $\mathcal{O}$ 的一组基 $(\omega_i)$，并令 $\ell_i$ 为“$\omega_i$ 分量”线性型；则 theta 函数在 $x$ 处的值形如
+\[
+\sum_{n\in\mathbb{Z}^d}f(n),
+\]
+其中 $f(n)=\exp(-\pi Q(n))$ 是 Schwartz 函数，$Q$ 是 $\mathbb{R}^d$ 上正定二次型（依赖于 $x$），由
+\[
+Q(n_1,\dots,n_d)=\sum_v d_vx_v|z|_v^2=\sum_{\sigma\colon K\hookrightarrow\mathbb{C}}x_\sigma\Bigl|\sum_{j=1}^d n_j\omega_j^\sigma\Bigr|^2
+\]
+定义。这种函数的 Fourier 变换是众所周知的（通过对角化）：
+\[
+\hat f(\xi)=\frac{1}{|\det(Q)|^{1/2}}\exp\bigl(-\pi Q'(\xi)\bigr),
+\]
+其中 $Q'(x)$ 是对偶二次型（其矩阵为 $Q$ 的矩阵之逆）。算出行列式即得结论（判别式作为行列式出现）。
+\end{proof}
+
+令
+\[
+m=\int_{G_1/U}d\mu(x)<+\infty
+\]
+（因为 $G_1/U$ 紧）。我们把对 $t$ 的积分在 $t=\alpha$ 处拆开，并把第一个积分中的 $t$ 换成 $\beta/t$，同时把涉及 $-1$ 的部分分离出来并显式算出：
+\begin{align*}
+w\Lambda(s;\mathcal{O})&=\int_\alpha^{+\infty}\int_{G_1/U}\bigl(\Theta(t^{1/d}x;\mathcal{O})-1\bigr)t^{s/2}\,d\mu(x)\,\frac{dt}{t}\\
+&\quad+\int_0^{\alpha}\int_{G_1/U}\Theta(t^{1/d}x;\mathcal{O})t^{s/2}\,d\mu(x)\,\frac{dt}{t}-\frac{2m}{s}\alpha^{s/2}\\
+&=\int_\alpha^{+\infty}\int_{G_1/U}\bigl(\Theta(t^{1/d}x;\mathcal{O})-1\bigr)t^{s/2}\,d\mu(x)\,\frac{dt}{t}\\
+&\quad+\beta^{s/2}\int_{\beta/\alpha}^{+\infty}\int_{G_1/U}\Theta(\beta^{1/d}t^{-1/d}x;\mathcal{O})t^{-s/2}\,d\mu(x)\,\frac{dt}{t}-\frac{2m}{s}\alpha^{s/2}\\
+&=\int_\alpha^{+\infty}\int_{G_1/U}\bigl(\Theta(t^{1/d}x;\mathcal{O})-1\bigr)t^{s/2}\,d\mu(x)\,\frac{dt}{t}+|D|^{1/2}\beta^{(s-1)/2}\\
+&\quad\cdot\int_{\beta/\alpha}^{+\infty}\int_{G_1/U}\Theta\bigl(|D|^{-2/d}\beta^{-1/d}t^{1/d}x;\mathfrak{d}^{-1}\bigr)t^{(1-s)/2}\,d\mu(x)\,\frac{dt}{t}\\
+&\quad-\frac{2m}{s}\alpha^{s/2}\\
+&=\int_\alpha^{+\infty}\int_{G_1/U}\bigl(\Theta(t^{1/d}x;\mathcal{O})-1\bigr)t^{s/2}\,d\mu(x)\,\frac{dt}{t}+|D|^{1/2}\beta^{(s-1)/2}\\
+&\quad\cdot\int_{\beta/\alpha}^{+\infty}\int_{G_1/U}\Bigl(\Theta\bigl(|D|^{-2/d}\beta^{-1/d}t^{1/d}x;\mathfrak{d}^{-1}\bigr)-1\Bigr)t^{(1-s)/2}\,d\mu(x)\,\frac{dt}{t}\\
+&\quad-\frac{2m}{s}\alpha^{s/2}-|D|^{-1/2}\beta^{(s-1)/2}\frac{2m}{1-s}\Bigl(\frac{\beta}{\alpha}\Bigr)^{(1-s)/2}.
+\end{align*}
+
+在上述计算中用到 $d\mu$ 在 $x\mapsto x^{-1}$ 下不变，以及 $\|x\|=1$（$x\in G_1$），以便应用 theta 函数的变换公式。
+
+末式中两个积分现在是 $s\in\mathbb{C}$ 的整函数（$\alpha>0$，$\beta>0$）；而原式是在 $\operatorname{Re}(s)>1$ 的假设下推出的，故每一步都合法。于是 $\Lambda(s;\mathcal{O})$ 亚纯，在 $s=1$ 与 $s=0$ 处有单极点。
+
+此外，取 $\beta=|D|^{-2}$、$\alpha=1/|D|$，即得
+\begin{equation}\tag{2.6}\label{c2:eq:2.6}
+\begin{aligned}
+\Lambda(s;\mathcal{O})=\frac{1}{w}\biggl\{&|D|^{1/2-s}\int_{\beta/\alpha}^{+\infty}\int_{G_1/U}\bigl(\Theta(t^{1/d}x;\mathfrak{d}^{-1})-1\bigr)t^{(1-s)/2}\,d\mu(x)\,\frac{dt}{t}\\
+&+\int_{\alpha}^{+\infty}\int_{G_1/U}\bigl(\Theta(t^{1/d}x;\mathcal{O})-1\bigr)t^{s/2}\,d\mu(x)\,\frac{dt}{t}-\frac{2m}{s}\alpha^{s/2}\\
+&-|D|^{1/2-s}\frac{2m}{1-s}\Bigl(\frac{\beta}{\alpha}\Bigr)^{(1-s)/2}\biggr\}.
+\end{aligned}
+\end{equation}
+
+又因 $\beta/\alpha=\alpha$，函数方程立刻推出。
+
+要显式算出留数，需要算出 $m$；这可以通过更具体地描述 $G_1$ 中 $U$ 作用的基本域来完成。
+
+\par\medskip\noindent\textbf{例 2.5}\quad 对 Riemann zeta 函数，我们得到
+\[
+\pi^{-s/2}\Gamma(s/2)\zeta(s)=\frac{1}{2}\int_0^{+\infty}(\theta(y)-1)y^{s/2}\,\frac{dy}{y},
+\]
+其中
+\[
+\theta(y)=\sum_{n\in\mathbb{Z}}e^{-\pi n^2y}.
+\]
+$\theta$ 的函数方程为
+\[
+\theta(y)=y^{-1/2}\theta(y^{-1}).
+\]
+
+\begin{annote}
+这个变换公式就是 $d=1$、$a=0$ 时的 Poisson 求和，作用于 $f(x)=e^{-\pi x^2y}$：其 Fourier 变换仍是同一形状 $y^{-1/2}e^{-\pi\xi^2/y}$。指数里的 $-\pi$（而非 $-1$）归一化使 $f$ 成为自对偶函数，变换式中才不出现多余常数；用别的归一化，$y^{-1/2}$ 前会多一个因子。类数公式里的 $2^{r_1}(2\pi)^{r_2}$ 与这里的两个伽马积分，正是同一归一化在两处留下的痕迹。
+\par\vspace{0.15em}{\raggedleft 【来源：Titchmarsh 前引书第 2 章（A）；Serre《A Course in Arithmetic》Ch.~VII（A）；nLab “Theta function” 条目（B，与 A 交叉）】\par}
+\end{annote}
+
+\par\medskip\noindent\textbf{注 2.6}\quad 我们用了 $K$ 的 Dirichlet 单位定理来说明 $G_1/U$ 紧：这两个陈述其实显然等价，且等价于 $G_1/U$ 的测度 $m$ 有限这一陈述。既然第一个积分表达式 \eqref{c2:eq:2.3} 先验地对 $\operatorname{Re}(s)>1$ 成立，就不难在不知道 $m<+\infty$ 的情况下完成上面的计算，反过来由 \eqref{c2:eq:2.6} 推出这一点。（这个证明是 Bill Duke 告诉我的。）
+
+\section{L 函数的零点、显式公式}\label{c2:sec:3}
+
+对所有第 1 章中考虑过的 L 函数，如同对 Riemann zeta 函数一样，人们预期广义 Riemann 假设（缩写为 GRH）成立：数域 $K$ 的 Hecke L 函数\footnote{第 1 章中所有其他 L 函数都是 Hecke L 函数的特例。} $L(\chi,s)$ 的所有非平凡零点，即临界带 $0<\operatorname{Re}(s)<1$ 中的零点，都应落在临界线 $\operatorname{Re}(s)=1/2$ 上。这至今完全未解决，但关于零点已有大量结果，故在许多情形下，人们能把最初只在 GRH 之下成立的结果无条件地证明出来。
+
+头一批基本结果给出零点分布的粗略图景。令
+\[
+N(\chi;T_1,T_2)=\bigl|\{\rho=\beta+i\gamma\mid L(\chi,\rho)=0,\ 0<\beta<1,\ T_1\le\gamma\le T_2\}\bigr|,
+\]
+\[
+N(\chi;T)=N(\chi;-|T|,|T|).
+\]
+又令 $\Lambda$ 为 $K$ 上的 von Mangoldt 函数，即对任意非零整理想 $\mathfrak{a}\subset\mathcal{O}$ 有
+\[
+\Lambda(\mathfrak{a})=\begin{cases}\log N\mathfrak{p}, & \text{若 }\mathfrak{a}=\mathfrak{p}^k,\ k\ge1,\\ 0, & \text{其他}.\end{cases}
+\]
+要点在于：$L(\chi,s)$ 的 Euler 乘积 \eqref{eq:5.3} 蕴涵其对数导数在 $\operatorname{Re}(s)>1$ 时有绝对收敛的 Dirichlet 级数展开
+\begin{equation}\tag{3.1}\label{c2:eq:3.1}
+-\frac{L'}{L}(\chi,s)=\sum_{\mathfrak{a}}\chi(\mathfrak{a})\Lambda(\mathfrak{a})(N\mathfrak{a})^{-s}.
+\end{equation}
+
+\begin{annote}
+本章自 (2.1) 起另起编号，故正文中出现的 (4.5)、(5.1)、(5.3)、(5.4) 以及“第 5 节”“第 6 节”“命题 2.1”，一律指\textbf{第 1 章}的编号：(4.5) 是类数公式，(5.3) 是 Hecke L 函数的 Euler 乘积，(5.4) 是 Hecke L 函数的函数方程，第 5 节讲射线类与 Frobenius，第 6 节讲函数域情形，“命题 2.1”与 (5.1) 分别指第 1 章的显式公式与 $\zeta_E(s)=\prod_\rho L(\rho,s)$。译文照录这些编号，不另加“第 1 章”字样以免与原文体例不一致；读者遇到时回第 1 章查即可。
+\par\vspace{0.15em}{\raggedleft 【来源：原书第 1 章 (4.5)、(5.1)、(5.3)、(5.4) 与命题 2.1 的逐条编号对照（A）】\par}
+\end{annote}
+
+\par\medskip\noindent\textbf{命题 3.1}\quad 设 $K$ 为次数 $d=[K:\mathbb{Q}]$ 的数域，$\chi$ 为 $K$ 的模 $\mathfrak{m}$ 本原 Hecke 特征。则有
+\begin{equation}\tag{3.2}\label{c2:eq:3.2}
+N(\chi;T)=\frac{T}{2\pi}\log\Bigl(\frac{T^d|D|N\mathfrak{m}}{(2\pi e)^d}\Bigr)+O\bigl(\log(T^d|D|N\mathfrak{m})\bigr)
+\end{equation}
+对 $T\ge2$ 成立，且该估计对所有参数一致。对任意 $\varepsilon>0$，级数
+\begin{equation}\tag{3.3}\label{c2:eq:3.3}
+\sum_\rho\frac{1}{|\rho|^{1+\varepsilon}}
+\end{equation}
+绝对收敛。
+
+这个渐近公式的证明原则上直截了当：在矩形 $[-1/2,3/2]\times[-T,T]$ 上，对函数 $\Lambda(\chi,s)$（它与 $L(\chi,s)$ 有相同的零点）的对数导数应用 Cauchy 定理。主要贡献来自 $\chi$ 的伽马因子。为控制来自 $L(\chi,s)$ 的部分，人们使用 $\Lambda(\chi,s)$ 的 Weierstrass 乘积展开，这要归功于 Hadamard：若 $\chi\neq1$，则\footnote{若 $\chi=1$，须乘以 $s(1-s)$ 以消去极点。}存在依赖于 $\chi$ 的 $a,b\in\mathbb{C}$，使得
+\[
+\Lambda(\chi,s)=e^{a+bs}\prod_\rho\Bigl(1-\frac{s}{\rho}\Bigr)e^{s/\rho},
+\]
+乘积取遍 $L(\chi,s)$ 的全部非平凡零点（这是有限阶整函数的一般理论，$\Lambda(\chi,s)$ 就是一例；\eqref{c2:eq:3.3} 其实也属于这一理论）。这个乘积用来证明：$-L'/L(\chi,s)$ 相当精确地等于由靠近 $s$ 的零点所贡献的项之和，即满足 $|s-\rho|\le1$ 的那些零点（由 \eqref{c2:eq:3.2} 先验可知，当 $s$ 在临界带中时这样的零点相当多）。常数 $a$ 不成问题，但 $b$ 的处理需要一些巧思，且人们对其作为 $\chi$ 的函数的了解并不多。
+
+下一条重要信息——它是素理想等分布定理（切博塔廖夫密度定理）的关键——是：在直线 $\operatorname{Re}(s)=1$（临界带的边缘）上没有零点。这最早由 Hadamard 与 de la Vallée Poussin 于 1896 年独立证明，而他们的方法至今本质上仍是证明 L 函数无零点区域的唯一已知方法。所谓 Landau--Siegel 零点\footnote{Iwaniec 与 Sarnak 建议此名，以替代通常所称的 Siegel 零点，彰显 Landau 的贡献 [L]。}也正是在这里首次出现。
+
+\par\medskip\noindent\textbf{定理 3.2}\quad 存在绝对常数 $c_1>0$，具有下述性质：对任意上述 $K$ 与 $\chi$，Hecke L 函数 $L(\chi,s)$ 在区域 $s=\sigma+it$，$\sigma>1-\frac{c_1}{\log(T^d|D|N\mathfrak{m})}$ 中没有零点，至多可能有一个单重实零点 $\beta_1$。后者只可能在 $\chi$ 为二次（实）特征时出现，此时称为 $\chi$（与 $c_1$）的 Landau--Siegel 零点。\footnote{这只有在固定 $c_1$ 的一个可能值之后才有定义。}
+
+下文固定 $c_1$ 使定理成立，并记 $\delta^*(\mathfrak{m})=1$（若存在 $K$ 的模 $\mathfrak{m}$ 的 Hecke 特征的 Landau--Siegel 零点），否则 $\delta^*(\mathfrak{m})=0$。容易证明对应的模 $\mathfrak{m}$ 实特征是唯一的。
+
+\par\medskip\noindent\textbf{例 3.3}\quad 经典情形是 $K=\mathbb{Q}$：此时模 $q$ 的本原奇二次特征 $\chi$ 的 $\beta_1$ 是否存在，直接联系于相应虚二次域 $K=\mathbb{Q}(\sqrt{-q})$ 的类数是否很小。由类数公式 \eqref{eq:4.5} 容易推出这一点。改进“平凡界” $h(K)\gg q^{-1/2}$ 极其困难，尽管广义 Riemann 假设蕴涵
+\[
+L(\chi,1)\gg\frac{1}{\log q},\qquad\text{从而}\qquad h(K)\gg\frac{\sqrt{q}}{\log q}.
+\]
+Siegel [Si] 证明了：对任意 $\varepsilon>0$ 有
+\begin{equation}\tag{3.4}\label{c2:eq:3.4}
+L(\chi,1)\gg_\varepsilon q^{-\varepsilon}
+\end{equation}
+对 $q>1$ 成立；但这个结果是非实效的，即给定 $\varepsilon>0$，没有（已知的）办法真正算出常数 $C(\varepsilon)$，使所承诺的不等式
+\[
+L(\chi,1)\ge C(\varepsilon)q^{-\varepsilon}
+\]
+对 $q>1$ 成立。这种非实效性与 Thue--Siegel 定理中的非实效性类似：Siegel 估计的证明基于假设存在 $L(\chi,1)$ 极小的 $\chi$，并利用这个假设中的特征去证明对其他特征的界。由于人们并不预期这种坏特征存在，也就明白为何使 Siegel 定理实效化如此困难。
+
+Goldfeld 的定理 [Go] 基于椭圆曲线上 Birch--Swinnerton-Dyer 猜想的已知情形，是目前已知的对平凡界的唯一实效改进：
+\[
+L(\chi,1)\gg\frac{\log q}{\sqrt{q}\log\log q}
+\]
+对 $q\ge3$ 成立，隐含常数是实效的（Oesterlé 确实把它算了出来）。只多得了一个对数因子。
+
+\begin{annote}
+Siegel 的论证是“二分法”：先假设存在 $L(\chi,1)$ 极小的特征 $\chi_1$，用它的实零点去排斥其他特征的零点，得到对一切 $\chi$ 一致的下界；若不存在这样的 $\chi_1$，则结论平凡成立。代价是常数的不可计算性，与 Thue--Siegel 定理同源。Goldfeld 把杠杆换成真正有实零点的 L 函数：Gross--Zagier 定理给出秩 $1$ 椭圆曲线在其中心点的单零点，而对秩 $3$ 的曲线（例如导子 $5077$ 的那条）可算出中心零点恰为三阶，这正是论证所需。这些零点在本章的酉归一化下位于中心点 $s=1/2$（椭圆曲线的经典归一化把它记作 $s=1$），与 $s=1$ 相距 $1/2$，故“排斥力”弱，结果只比平凡界多一个对数因子。
+\par\vspace{0.15em}{\raggedleft 【来源：Goldfeld [Go]（A）；Davenport《Multiplicative Number Theory》Siegel 零点一章（A）；Iwaniec--Kowalski《Analytic Number Theory》相应章节（A）】\par}
+\end{annote}
+
+粗略地说，Siegel 所用的假设特征具有小的 $L(\chi,1)$，当且仅当它有一个靠近 $s=1$ 的实零点；这里的非实效性来自：这样的零点会与 Riemann 假设矛盾，人们不相信它存在。它的“好”效应在于“排斥”其他零点，从而给出下界。在 Goldfeld 的论证中，\footnote{J. Friedlander 有类似想法。}所用的杠杆是真正有实零点的 L 函数，而这个零点必然是中心临界点 $s=1/2$。离 $s=1$ 远使其排斥效应弱得多，带来两个后果：第一，该零点重数必须 $\ge3$，论证才行得通；第二，所得下界远弱于 Siegel 的。
+
+\par\medskip\noindent\textbf{注 3.4}\quad 不能指望产生定理 3.2 的方法给出好得多的结果：事实上，它确实给出了所述区域内 $L(\chi,s)$ 的下界（这也解释了上面的例子），而且可以证明，在（比如说）宽度为正的带 $1-\delta<\operatorname{Re}(s)\le1$ 中不存在“简单”的下界。不过，Vinogradov 的指数和方法（例如见 [Ti]）可以把无零点区域略微扩大一点，这在应用中有时很重要。
+
+由 Dedekind zeta 函数的无零点区域，Hadamard 与 de la Vallée Poussin 的原始方法（或显式公式，见下）推出素数定理的类比。固定模 $\mathfrak{m}$ 与射线类 $a\in H_{\mathfrak{m}}$（见第 5 节），并令
+\[
+\pi_K(X;\mathfrak{m},a)=\bigl|\{\mathfrak{p}\mid \mathfrak{p}\text{ 的类为 }a\text{ 且 }N\mathfrak{p}\le X\}\bigr|.
+\]
+则有
+\begin{equation}\tag{3.5}\label{c2:eq:3.5}
+\begin{aligned}
+\pi_K(X;\mathfrak{m},a)&=\frac{1}{|H_{\mathfrak{m}}|}\operatorname{li}(X)+\frac{1}{|H_{\mathfrak{m}}|}\delta^*(\mathfrak{m})X^{\beta_1}\\
+&\quad+O\bigl(X\exp(-c_2\sqrt{\log(X|D|N\mathfrak{m})})\bigr),
+\end{aligned}
+\end{equation}
+当 $X\to+\infty$。这里估计对所有参数一致，且 $c_2$ 是绝对且实效的。由于 $\beta_1<1$，对固定 $\mathfrak{m}$，这给出 $\pi_K(X;\mathfrak{m},a)$ 的渐近行为；但在多数应用中，对 $\mathfrak{m}$ 的一致性才是关键。
+
+例如当 $K=\mathbb{Q}$（经典情形）时，Siegel 估计 \eqref{c2:eq:3.4} 立刻蕴涵 Siegel--Walfisz 定理：对任意 $A>0$，有
+\[
+\pi(X;q,a)\sim\frac{1}{\varphi(q)}\operatorname{li}(X)
+\]
+对一切 $q<(\log X)^A$ 与所有模 $q$ 的 $a$ 一致成立。若存在 Landau--Siegel 零点，这是非实效的。
+
+广义 Riemann 假设蕴涵相应的陈述对 $q<\sqrt{X}(\log X)^{-2}$ 一致成立。在解析数论的许多应用中，\footnote{例如 Titchmarsh 除数问题：当 $X\to+\infty$ 时渐近估计和
+\[
+\sum_{p\le X}d(p-1),
+\]
+它可改写为
+\[
+2\sum_{d\le\sqrt{X-1}}\bigl(\pi(X;d,1)-\pi(d^2+1;d,1)\bigr)+O(\sqrt{X}).
+\]} 这种一致性不可或缺，尽管往往只需平均意义下的形式。
+
+关于算术级数中素数的最好已知结果——用自守形式谱理论（见第 3 章）证明——超出了 GRH 直接可得的东西（Bombieri--Friedlander--Iwaniec）；它们在应用中常被使用。
+
+同样的结果与困难也出现在 Artin L 函数的切博塔廖夫密度定理中，而且往往更严重：因为所关心的域族的次数大于分圆域的次数，以致连基于 GRH 的素理想定理的形式也不够应用所需。\footnote{例如若 $E/\mathbb{Q}$ 是无 CM 的椭圆曲线，其 $d$-挠群 $\mathbb{Q}(E[d])$ 的次数按 Serre 定理约为 $d^4$，而 GRH 只给出 $d<X^{1/8}$ 时的一致渐近公式。}
+
+考虑到近一个世纪以来，对单个 L 函数的广义 Riemann 假设几乎没有进展，人们难以不认为有某种深层结构尚未被发现：与函数域情形（第 6 节有简短提及，那里有丰富的几何与上同调形式体系）相比，这一点就更诱人了。近年来，大量工作致力于通过分析 L 函数零点的精细竖直分布（常常在 GRH 之下）来寻找这种结构的证据与线索：由此发现了与大阶随机矩阵特征值分布之间的惊人联系。对 $\zeta(s)$，这最早由 Montgomery 尝试（引出了配对相关猜想），并由 Rudnick 与 Sarnak [RS] 等人作了很大推广。由此产生的某些猜想已在函数域情形由 Katz 与 Sarnak [KS] 证明。作为这类研究之价值的一个壮观验证，Soundararajan 与 Conrey [CS] 借助基于随机矩阵的启发式论证，证明了正比例的真实 Dirichlet 特征，其 L 函数 $L(\chi,s)$ 没有 Landau--Siegel 零点！
+
+现在回到显式公式。下面的版本用于 $\zeta(s)$ 时显然归结为命题 2.1。
+
+\par\medskip\noindent\textbf{命题 3.5}\quad 设 $\varphi\colon\,]0,+\infty[\,\to\mathbb{C}$ 是具紧支集的 $C^\infty$ 函数，并令
+\[
+\hat\varphi(s)=\int_0^{+\infty}\varphi(x)x^{s-1}\,dx
+\]
+为其 Mellin 变换，它是整函数，且在竖直带内速降。令
+\[
+\psi(x)=\frac{1}{x}\varphi(x^{-1}).
+\]
+则有
+\begin{equation}\tag{3.6}\label{c2:eq:3.6}
+\begin{aligned}
+&\sum_{\mathfrak{a}}\Lambda(\mathfrak{a})\bigl(\chi(\mathfrak{a})\varphi(N\mathfrak{a})+\overline{\chi}(\mathfrak{a})\psi(N\mathfrak{a})\bigr)\\
+&\quad=(\log|D|N\mathfrak{m})\varphi(1)+\delta(\chi)\int_0^{+\infty}\varphi(x)\,dx\\
+&\qquad-\sum_{\substack{\zeta(\rho)=0\\ 0<\operatorname{Re}(\rho)<1}}\hat\varphi(\rho)
++\frac{1}{2\pi i}\int_{(-1/2)}\Bigl(\frac{\Gamma'}{\Gamma}(\xi_\infty,s)-\frac{\Gamma'}{\Gamma}(\xi_\infty,1-s)\Bigr)\hat\varphi(s)\,ds\\
+&\qquad+\operatorname{Res}_{s=0}\Bigl(-\frac{L'}{L}(\chi,s)\hat\varphi(s)\Bigr),
+\end{aligned}
+\end{equation}
+其中 $\delta(\chi)=1$（若 $\chi$ 平凡），否则为 $0$；对零点的求和计重数。
+
+\begin{annote}
+(3.6) 中零点求和的下标影印作 $\zeta(\rho)=0$，这是照抄第 1 章同一公式 \eqref{eq:2.5} 而未改符号的排印疏漏：本章 $\zeta$ 只是 $\chi=1$ 时的特例，一般情形应写成 $L(\chi,\rho)=0$。若照字面理解，零点集只含 $\zeta$ 的零点，会漏掉全部 $L(\chi,s)$ 的零点，显式公式也就不再成立。相比之下，第四项的伽马因子与末项的 $-L'/L$ 都写明取自 $L(\chi,\cdot)$，可见第三项的下标确是笔误。
+\par\vspace{0.15em}{\raggedleft 【来源：原书第 1 章显式公式 (2.5) 逐字对照（A）；Iwaniec--Kowalski 前引书显式公式一节（A）】\par}
+\end{annote}
+
+虽看似复杂，末两项在多数情形下极易处理（例如利用伽马因子的显式形式与 Stirling 公式）。
+
+\begin{proof}[证明梗概]
+由 Mellin 反演与 \eqref{c2:eq:3.1} 有
+\[
+\sum_{\mathfrak{a}}\chi(\mathfrak{a})\Lambda(\mathfrak{a})\varphi(N\mathfrak{a})=\frac{1}{2\pi i}\int_{(3/2)}-\frac{L'}{L}(\chi,s)\hat\varphi(s)\,ds.
+\]
+把积分线移到 $\operatorname{Re}(s)=-1/2$（这需要对 L 函数在竖直带中的增长作一些简单估计，很容易得到）。出现的极点在 $s=1$（若 $\chi=1$）、可能在 $s=0$（取决于伽马因子的形状）——其贡献分别对应 \eqref{c2:eq:3.6} 右端的第二项与末项——以及 $L(\chi,s)$ 的非平凡零点 $\rho$。后者是单极点，留数为 $-k\hat\varphi(\rho)$，其中 $k$ 是 $\rho$ 的重数；于是它们的贡献是 \eqref{c2:eq:3.6} 中的第三项。
+
+在直线 $\operatorname{Re}(s)=-1/2$ 上，用函数方程 \eqref{eq:5.4} 得到关系
+\[
+-\frac{L'}{L}(\chi,s)=(\log|D|N\mathfrak{m})+\Bigl(\frac{\Gamma'}{\Gamma}(\xi_\infty,s)-\frac{\Gamma'}{\Gamma}(\xi_\infty,1-s)\Bigr)-\frac{L'}{L}(\overline{\chi},1-s).
+\]
+中间那项给出 \eqref{c2:eq:3.6} 右端的第四项。然后写出
+\[
+\frac{1}{2\pi i}\int_{(-1/2)}-\frac{L'}{L}(\overline{\chi},1-s)\hat\varphi(s)\,ds=-\frac{1}{2\pi i}\int_{(3/2)}-\frac{L'}{L}(\overline{\chi},w)\hat\varphi(1-w)\,dw,
+\]
+由于 $w$ 回到绝对收敛区域，又可应用 \eqref{c2:eq:3.1}。把 Dirichlet 级数展开之后即可得到结果，同时注意（并在含 $\log|D|N\mathfrak{m}$ 的项中用到）
+\[
+\frac{1}{2\pi i}\int_{(3/2)}\hat\varphi(1-w)x^{-w}\,dw=\psi(x),
+\]
+这由 $\hat\varphi(1-w)=\hat\psi(w)$ 这一简单事实得到。
+\end{proof}
+
+\section{临界带内 L 函数的量级}\label{c2:sec:4}
+
+在许多应用中，L 函数在临界带内的量级非常重要。当然，至少要有一些简单估计，通常的解析操作（移位围道等）才能走通；但还有更深层的理由。例如类数公式联系数域的一些有趣不变量，把它们与 L 函数在 $s=1$ 处的值（或留数）联系起来。虚二次域的情形前面已经讨论过，关于这些不变量所得的信息，大部分正是通过与 L 函数打交道换来的。当然，这与 L 函数零点的分布也有密切联系。
+
+这第一个例子也说明，“量级”不仅指随复变量 $s$ 变化时的大小，也可以指按 L 函数的导子衡量的大小：事实上，在许多算术应用中，后者才是真正有趣的问题，而人们往往并不需要关于 $|s|$ 的强界。
+
+从 L 函数解析延拓的证明中，人们得不到多少信息，但足以启动进一步的研究（而得到它至关重要）：具体说来，由公式 \eqref{c2:eq:2.4} 或其类比可知，$\Lambda(\chi,s)$ 是阶至多为 $1$ 的整函数\footnote{若 $\chi=1$，乘以 $s(1-s)$。}，即对 $s\in\mathbb{C}$ 有
+\[
+\Lambda(\chi,s)\ll\exp\bigl(|s|^{1+\varepsilon}\bigr)
+\]
+对任意 $\varepsilon>0$，隐含常数依赖于 $\chi$ 与 $\varepsilon$。由于伽马因子的倒数已知是阶为 $1$ 的整函数，故 $L(\chi,s)$ 亦然。
+
+这其实与真相相去甚远。当然，当 $\operatorname{Re}(s)>1$ 时级数绝对收敛，故有
+\[
+L(\chi,s)\ll1,\qquad\text{对 }\operatorname{Re}(s)>1+\delta\ (\delta>0)\text{ 一致},
+\]
+其中隐含常数只依赖于 $K$。另一方面，当 $\operatorname{Re}(s)<0$ 时，由函数方程、Stirling 公式与伽马因子的形状可得
+\[
+L(\chi,s)\ll|s|^{(1-\sigma)/2},\qquad\text{对 }\sigma=\operatorname{Re}(s)<-\delta\ (\delta>0)\text{ 一致}.
+\]
+
+复分析中著名的 Phragmén--Lindelöf 原理蕴涵：一个阶为 $1$、在竖直带边界上按 $|s|$ 多项式增长的函数，在带内也按多项式增长，且“增长率”是实部的凸函数。这通常已是最优的；但对 L 函数，人们预期一个完全不同的答案：
+
+\par\medskip\noindent\textbf{猜想 4.1}\quad 设 $K$ 为数域，$\chi$ 为模 $\mathfrak{m}$、权为 $\xi_\infty$ 的 Hecke 特征。则有
+\[
+L(\chi,s)\ll\bigl(|D|N\mathfrak{m}(1+|s|)\bigr)^{\varepsilon}
+\]
+对任意 $\varepsilon>0$、$1/2\le\operatorname{Re}(s)<1$ 成立，隐含常数只依赖于 $\varepsilon$。若 $\chi=1$，在左端乘以 $(s-1)$。
+
+这称为 Lindelöf 猜想。可以很快给出两个动机：第一，它被 GRH 蕴涵（例如见 [Ti, 14.2]）。第二个理由更有趣，基于解析数论中有时被（不太确切地）称为\emph{近似函数方程}的一条原理；它的一个变体就是下一个命题。
+
+\par\medskip\noindent\textbf{命题 4.2}\quad 设 $K$ 与 $\chi$ 同上，并设 $s=\sigma+it$，$0<\sigma<1$。设 $G(w)$ 是任意在 $\mathbb{R}$ 上实值、在带 $-4<\operatorname{Re}(s)<4$ 中全纯、且当 $|\operatorname{Im}(w)|\to+\infty$ 时速降的函数，并满足
+\[
+G(-w)=G(w),\qquad G(0)=1,\qquad G(w)\Gamma(\xi_\infty,w)\ \text{在}\ w=0,-1,-2,-3\ \text{处全纯}.
+\]
+设 $X,Y>0$ 为实数，且 $XY=|D|N\mathfrak{m}$。则有
+\begin{equation}\tag{4.1}\label{c2:eq:4.1}
+\begin{aligned}
+L(\chi,s)&=\sum_{\mathfrak{a}}\frac{\chi(\mathfrak{a})}{(N\mathfrak{a})^s}V_s\Bigl(\frac{N\mathfrak{a}}{X}\Bigr)\\
+&\quad+\varepsilon(\chi)(|D|N\mathfrak{m})^{1/2-s}\sum_{\mathfrak{a}}\frac{\overline{\chi}(\mathfrak{a})}{(N\mathfrak{a})^{1-s}}W_s\Bigl(\frac{N\mathfrak{a}}{Y}\Bigr),
+\end{aligned}
+\end{equation}
+其中 $V_s$ 与 $W_s$ 是对 $y>0$ 定义的函数：
+\[
+V_s(y)=\frac{1}{2\pi i}\int_{(3)}G(w)y^w\frac{dw}{w},\qquad
+W_s(y)=\frac{1}{2\pi i}\int_{(3)}\frac{\Gamma(\xi_\infty,1-s+w)}{\Gamma(\xi_\infty,s+w)}G(w)y^w\frac{dw}{w}.
+\]
+
+正如（简单的）证明将显示的，$G(w)$ 的选取相当任意，可以用许多方式调制。需要时写出具体的 $G$ 显然很容易。（注意 $G$ 可以依赖于 $s$；不过应用中常常固定 $s$，而让特征变化。）
+
+这个公式的要点在于：$V_s$ 与 $W_s$ 可以用移位围道与 Stirling 公式容易地估计。这表明它们的行为很像截断函数，即当 $y$ 大时速降。更精确地说，按 $s$ 衡量的衰减率使得在 \eqref{c2:eq:4.1} 中容易看出：第一个和本质上是范数 $N\mathfrak{a}\lesssim X$ 的理想之和，第二个则是范数 $N\mathfrak{a}\lesssim Y(1+|s|)^{d/2}$ 的理想之和（这意味着尾部非常小）。于是 \eqref{c2:eq:4.1} 用收敛极快的级数给出了临界带内 L 函数的表达式。这样的公式是绝对收敛域之外关于 L 函数的绝大多数（解析）工作的基础。
+
+无论如何，取 $X=Y=\sqrt{|D|N\mathfrak{m}}$，对两个和作平凡估计（即逐项估计；回忆 $|\varepsilon(\chi)|=1$），立刻得到
+
+\par\medskip\noindent\textbf{推论 4.3}\quad 对 $s=\sigma+it$，$0<\operatorname{Re}(s)<1$，有
+\[
+L(\chi,s)\ll_\varepsilon\bigl((1+|t|)^d|D|N\mathfrak{m}\bigr)^{\ell(\sigma)+\varepsilon}
+\]
+对任意 $\varepsilon>0$ 成立，隐含常数只依赖于 $\varepsilon$；其中 $\ell(\sigma)$ 是 $[0,1]$ 上满足 $\ell(1)=0$、$\ell(0)=1/2$ 的仿射函数。若 $\chi=1$，在左端乘以 $(s-1)$。
+
+特别地（在最有趣的情形），在临界线 $\operatorname{Re}(s)=1/2$ 上有
+\[
+L(\chi,s)\ll_\varepsilon\bigl((1+|t|)^d|D|N\mathfrak{m}\bigr)^{1/4+\varepsilon}.
+\]
+
+推论的界称为\emph{凸性界}。它也可以由 Phragmén--Lindelöf 原理推出。然而从 \eqref{c2:eq:4.1} 的观点看，它确实相当于逐个估计两个和中的每一项。但对“小”的 $N\mathfrak{a}$，这些项有非平凡的振荡，这既来自 $\chi(\mathfrak{a})$（若 $\chi\neq1$），也来自 $(N\mathfrak{a})^{-s}=(N\mathfrak{a})^{-\sigma-it}$。这种振荡预期会在和中产生抵消，从而给出 $L(\chi,s)$ 的更好估计。事实上，振荡和的著名\emph{平方根哲学}\footnote{若
+\[
+S=\sum_{1\le n\le N}e(\theta_n)
+\]
+是真正振荡（无偏）的指数和，则 $|S|\ll\sqrt{N}$，“至多差小量”。}若在此适用，立即（通过部分求和）就会给出 Lindelöf 猜想。
+
+\begin{annote}
+“近似函数方程”这个名字确实不确切：\eqref{c2:eq:4.1} 是精确等式，不是近似；近似的是其中两个和都被截断到 $N\mathfrak{a}\lesssim X$ 与 $N\mathfrak{a}\lesssim Y(1+|s|)^{d/2}$，而截断的误差极小。两条截断长度的乘积 $XY=|D|N\mathfrak{m}$ 正好与函数方程的对称性 $s\leftrightarrow1-s$ 相配。凸性界里的 $\ell(\sigma)$ 是连接 $(0,1/2)$ 与 $(1,0)$ 的直线，Phragmén--Lindelöf 保证的正是这种凸性；Lindelöf 猜想则说这条斜线可以压成水平线 $\ell\equiv0$，即抵消强到几乎不增长。
+\par\vspace{0.15em}{\raggedleft 【来源：Titchmarsh 前引书近似函数方程与 Lindelöf 猜想各章（A）；Iwaniec--Kowalski 前引书相应部分（A）】\par}
+\end{annote}
+
+以上讨论很容易推广到其他章讨论的更一般的自守 L 函数。一个在哲学上理解得很差的重要现象是：许多重要问题可以通过（定性地）证明某族 L 函数的任一优于推论中凸性界的估计而完全解决（即把指数 $\ell(\sigma)+\varepsilon$ 换成 $\ell(\sigma)-\delta$，其中 $\delta>0$ 的大小与结论无关）。即便不谈应用，上面的梗概也表明：任何这样的估计都等价于证明 \eqref{c2:eq:4.1} 中两个和有某种非平凡抵消，而这显然是深刻的算术结果。
+
+这种\emph{突破凸性界}的估计可追溯到 Weyl，他证明了：对 $\zeta(s)$，
+\[
+\zeta(1/2+it)\ll_\varepsilon(1+|t|)^{1/6+\varepsilon}
+\]
+对 $t\in\mathbb{R}$ 成立，常数只依赖于 $\varepsilon>0$。如今对 Dirichlet 特征已知的情形多得多，无论按 $s$ 还是按导子衡量；后者是最有趣（也最困难）的情形，最早由 Burgess 证明，最近由 Conrey 与 Iwaniec 改进（对二次特征，关键地用到自守 L 函数）。
+
+这些估计对模形式的应用很引人注目，应归功于 Iwaniec（球面上整点的等分布）、Sarnak 等人。Sarnak [Sa] 尤其发展了背后的哲学，并说明它与“算术量子混沌”的联系，即研究负曲率流形上 Laplace 算子特征函数随特征值增大时的分布。
+
+我们以命题的证明作结。
+
+\begin{proof}
+考虑沿直线 $\operatorname{Re}(s)=3$ 的积分
+\[
+I=\frac{1}{2\pi i}\int_{(3)}L(\chi,s+w)G(w)\frac{dw}{w}.
+\]
+把 L 函数展开为 Dirichlet 级数，它等于
+\[
+\sum_{\mathfrak{a}}\frac{\chi(\mathfrak{a})}{(N\mathfrak{a})^s}V_s\Bigl(\frac{N\mathfrak{a}}{X}\Bigr),
+\]
+即 \eqref{c2:eq:4.1} 中的第一个和。
+
+另一方面，把围道移到直线 $\operatorname{Re}(s)=-3$（这里用到 $G(w)$ 的选取已消去伽马因子可能的极点），并拣出 $s=0$ 处的单极点，得到
+\[
+I=G(0)L(\chi,s)+\frac{1}{2\pi i}\int_{(-3)}L(\chi,s+w)G(w)\frac{dw}{w}.
+\]
+现在对 $L(\chi,s)$ 应用函数方程：最后的积分（记为 $J$）变为
+\begin{align*}
+J&=\varepsilon(\chi)(|D|N\mathfrak{m})^{1/2-s}\\
+&\quad\cdot\frac{1}{2\pi i}\int_{(-3)}\frac{\Gamma(\xi_\infty,1-s-w)}{\Gamma(\xi_\infty,s+w)}L(\overline{\chi},1-s-w)G(w)\Bigl(\frac{X}{|D|N\mathfrak{m}}\Bigr)^{w}\frac{dw}{w}\\
+&=-\varepsilon(\chi)(|D|N\mathfrak{m})^{1/2-s}\\
+&\quad\cdot\frac{1}{2\pi i}\int_{(3)}\frac{\Gamma(\xi_\infty,1-s-w)}{\Gamma(\xi_\infty,s+w)}L(\overline{\chi},1-s+w)G(w)\Bigl(\frac{X}{|D|N\mathfrak{m}}\Bigr)^{-w}\frac{dw}{w}.
+\end{align*}
+我们回到了绝对收敛区域，再次展开为 Dirichlet 级数，可得
+\[
+J=-\varepsilon(\chi)(|D|N\mathfrak{m})^{1/2-s}\sum_{\mathfrak{a}}\frac{\overline{\chi}(\mathfrak{a})}{(N\mathfrak{a})^{1-s}}W_s\Bigl(\frac{N\mathfrak{a}}{Y}\Bigr).
+\]
+由 $G(0)=1$ 即得结论。
+\end{proof}
+
+\section{零碎内容，包括极点}\label{c2:sec:5}
+
+L 函数理论的一个特征——一半已知、一半属于猜想——似乎是：在酉归一化之下（即把临界线平移到 $\operatorname{Re}(s)=1/2$），$s=1$ 是（自守）L 函数唯一可能的极点；而且这样的极点总可以由 Riemann zeta 函数的单极点解释，意思是 L 函数 $L(f,s)$ 有分解
+\[
+L(f,s)=\zeta(s)^kL(f_1,s),
+\]
+其中 $L(f_1,s)$ 是另一个 L 函数，且为整函数。对 Dedekind zeta 函数确实如此，如 \eqref{eq:5.1} 所示；在另外若干情形也成立（例如 $\mathrm{GL}(2)$ 上的 Rankin--Selberg 卷积 L 函数 $L(f\otimes\overline{f},s)$，其中“商” $f_1$ 是对称平方 L 函数，这将在其他章解释）。对 Artin L 函数也已知，只需用 Brauer 定理与 Hecke L 函数在 $s=1$ 的非零性。于是 $L(\rho,s)$ 在 $s=1$ 处极点的阶数就是 $\rho$ 中平凡表示的重数。
+
+这个表述在算术几何的许多猜想中反复出现，例如 Tate 关于有限域上簇的 $k$-循环空间维数的猜想。
+
+当 L 函数（作为 Dirichlet 级数）的系数为正时，极点典型地出现（也只在这时？）。解析上，这个猜想可以改述为：“调和级数是唯一真正发散的级数。”
+
+\begin{annote}
+“正系数”与极点的联系是 Landau 定理（有时称 Pringsheim 定理）：系数非负的 Dirichlet 级数若在实点 $s_0$ 处收敛，则在半平面 $\operatorname{Re}(s)>s_0$ 内解析；故收敛边界上的实点必是奇点，收敛横坐标本身就是一个极点。$s=1$ 处的极点因此对应系数均值非零，最典型的就是 $\zeta$ 的系数全为 $1$。反过来说，系数有正有负的 L 函数（例如非平凡 Dirichlet 特征、一般的自守 L 函数）在 $s=1$ 处应当全纯，这正是本节开头那条“唯一可能极点”的现象的解析解释。
+\par\vspace{0.15em}{\raggedleft 【来源：Titchmarsh 前引书 Dirichlet 级数一章（A）；Davenport 前引书（A）】\par}
+\end{annote}
+
+下面这个漂亮的观察（Serre 告诉我的）给出一个有趣的例证：回忆 Euler 关于 zeta 函数在负整数处取值的公式
+\begin{equation}\tag{5.1}\label{c2:eq:5.1}
+\zeta(0)=-1/2,\qquad \zeta(1-k)=-\frac{b_k}{k}\quad(k\ge2),
+\end{equation}
+其中 $b_k$ 是第 $k$ 个 Bernoulli 数（例如见 [Wa]）。现在 von Staudt 与 J.C. Adams 的定理 [IR, 第 15 章, Theorem 3 与 Proposition 15.2.4] 证明：$-b_k/k$ 的分母含所有满足 $p-1\mid2k$ 的素数 $p$，且仅含它们；于是对分母中的 $p$ 有
+\[
+x^{k-1}\equiv x^{-1}\ (\mathrm{mod}\ p).
+\]
+
+\begin{annote}
+标准的 von Staudt--Clausen 定理说：$B_k$（$k$ 为偶数）的分母恰为 $\prod_{p-1\mid k}p$，故使分母含 $p$ 的条件是 $p-1\mid k$，而不是书中的 $p-1\mid2k$；相应地，同余 $x^{k-1}\equiv x^{-1}\pmod p$ 成立当且仅当 $p-1\mid k$（此时 $k\equiv0\pmod{p-1}$，故对一切 $x\not\equiv0$ 有 $x^{k}\equiv1$，从而 $x^{k-1}\equiv x^{-1}$）。书中的写法或许来自 $b_k=B_{2k}$ 的另一种编号习惯。无论采用哪种编号，要点不变：当 $p-1\mid k$ 时 $1-k\equiv1\pmod{p-1}$，$n^{1-k}$ 与 $n$ 模 $p$ 一致，于是 $\zeta(s)$ 在 $s=1$ 的发散被 $p$ 进地“搬运”到 $s=1-k$。
+\par\vspace{0.15em}{\raggedleft 【来源：Ireland--Rosen《A Classical Introduction to Modern Number Theory》Ch.~15（A）；Washington《Introduction to Cyclotomic Fields》Ch.~5（A）】\par}
+\end{annote}
+
+因此，即使 $\zeta(1-k)$ 模素数时的“极点”，也仍旧由调和级数的发散“解释”！反过来看，Bernoulli 数的分子始终如此神秘，也许就不那么令人惊讶了。
+
+最后只提一句：zeta 函数在负整数处取值的同余性质，是 Leopoldt 发现 $p$ 进 zeta 函数的动机；后来他人把它大大推广为各种 $p$ 进 L 函数。入门可参看 [Wa, 第 5 章]。

@@ -2,6 +2,13 @@
 
 > **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
 
+## 《朗兰兹纲领导论》全书 12 章中译注本 — 2026-11-23
+
+- 新增 `08_source_code/SY02-24_朗兰兹纲领导论_全书中文译注`：Bernstein–Gelbart 编 *An Introduction to the Langlands Program*（Birkhäuser 2004）十二章全译，234 页，xelatex 三遍 0 error / 0 undefined / 0 Overfull / 0 缺字。
+- 译注 154 条（A/B/I 分级并标来源）、术语 126 条、TeX 10,878 行；每章附通读笔记与疑点清单（`工程文件/notes/`）。
+- 页次：底本 PDF 相对印刷本缺 6 页，偏移 8→2，对照表见 `工程文件/PAGE_MAP.md`。
+- 权利：底本为在版图书，按 COMPLIANCE R3 成品 PDF 不入库，仅登记源码 L2 与工程文件；`RELEASE_REGISTER.csv` 已登记 SY02-24（成品在仓=否）。
+
 
 ## 微信「几何朗兰兹纲领」六篇讲稿收口：SY02-20 / SY02-21 / SY02-22 中译注本 — 2026-11-22
 
