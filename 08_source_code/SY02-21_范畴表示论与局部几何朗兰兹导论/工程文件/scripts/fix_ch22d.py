@@ -1,0 +1,25 @@
+import io
+p = 'chunks/ch22.tex'
+s = io.open(p, encoding='utf-8').read()
+
+old = r"""	{\footnotesize
+	\begin{align*}
+	     \Vect &\simeq  \QCoh( \pt / \cG) \\
+	     &\qquad \otimes_{\Hom_{\TwoIC(\LS)}(\QCoh(\pt / \cG), \QCoh(\pt / \cG))}
+	     \Hom_{\TwoIC(\LS)}( \QCoh(\pt / \cG), \QCoh(\pt)) \\ &\simeq
+	     \QCoh( \pt / \cG) \otimes_{\ICn(\pt / \cG \underset \LS \times \pt /
+	     \cG)} \ICn( \pt \underset \LS \times \pt ).
+	\end{align*}}"""
+new = r"""	{\footnotesize
+	\begin{align*}
+	     \Vect &\simeq  \QCoh( \pt / \cG) \\
+	     &\quad \otimes_{\Hom_{\TwoIC(\LS)}(\QCoh(\pt / \cG), \QCoh(\pt / \cG))} \\
+	     &\qquad \Hom_{\TwoIC(\LS)}( \QCoh(\pt / \cG), \QCoh(\pt)) \\
+	     &\simeq
+	     \QCoh( \pt / \cG) \otimes_{\ICn(\pt / \cG \underset \LS \times \pt /
+	     \cG)} \ICn( \pt \underset \LS \times \pt ).
+	\end{align*}}"""
+assert old in s, 'B'
+s = s.replace(old, new)
+io.open(p, 'w', encoding='utf-8').write(s)
+print('ok')
