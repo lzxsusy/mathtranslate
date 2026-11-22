@@ -2,6 +2,12 @@
 
 > **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
 
+## lbook04 资料卡：全书 56 张 — 2026-11-23
+
+- 新增 `datasets/lbook04/`：为《朗兰兹纲领导论》第 1–11 章新建 56 张概念卡（五轨 O/L/M/T/G），覆盖 L 函数、模形式与自守表示、Tate 与迹公式、GL_n 的 Langlands 纲领；第 12 章沿用 `gaits04/`（23 张）。
+- 每卡带 `annotations`（96 条批注：易错预警 / 含糊点拨 / 背景直觉）、原书印刷页锚与中译本 `chNN.tex` 行号锚、`verification: source-only`；`python tools/build.py` 生成 JSON、索引、核验台账与 Markdown 渲染，0 错误 0 警告。
+- 站点重建：`site/p/SY02-24.html` 上线（成品不公开，源码与工程文件入口可点）；`_meta/stats.json` 与 README 统计块刷新。
+
 ## 《朗兰兹纲领导论》全书 12 章中译注本 — 2026-11-23
 
 - 新增 `08_source_code/SY02-24_朗兰兹纲领导论_全书中文译注`：Bernstein–Gelbart 编 *An Introduction to the Langlands Program*（Birkhäuser 2004）十二章全译，234 页，xelatex 三遍 0 error / 0 undefined / 0 Overfull / 0 缺字。

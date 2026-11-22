@@ -1,0 +1,55 @@
+# Goldfeld 的椭圆曲线中心零点论证
+
+> `lbook04/concept/ch2-goldfeld` · 轨 L L 函数 · 状态 reviewed · 核验 source-only
+
+**问题：** 为什么椭圆曲线中心点的三阶零点，能反过来给出类数/Dirichlet L 的实效下界？
+
+**一句话：** Goldfeld 用椭圆曲线 L 在中心点的三阶零点（Gross–Zagier）作杠杆，把 Siegel 的非实效下界改进为实效的 $\log q/(\sqrt q\log\log q)$。
+
+**别名：** `Goldfeld 定理`、`Gross–Zagier`、`中心零点`
+
+## 定义
+
+Siegel 的下界非实效，Goldfeld 的定理是目前唯一已知的实效改进。它的杠杆不是「假设存在坏特征」，而是一个真正有实零点的 L 函数：Gross–Zagier 定理给出秩 $1$ 椭圆曲线在其中心点的单零点；对秩 $3$ 的曲线（例如导子 $5077$ 的那条）可算出中心零点恰为三阶，这正是论证所需。这些零点在本章的酉归一化下位于中心点 $s=1/2$（椭圆曲线的经典归一化把它记作 $s=1$），与 $s=1$ 相距 $1/2$，故「排斥力」弱，结果只比平凡界多一个对数因子：$L(\chi,1)\gg\log q/(\sqrt q\log\log q)$，常数已由 Oesterlé 算出。
+
+**记号：** $E$：椭圆曲线；$L(E,s)$：其 L 函数；$\operatorname{rank}E$：Mordell–Weil 秩；导子 $5077$：书中用作三阶零点的例子；$s=1/2$：酉归一化的中心点。
+
+## 要点
+
+- Gross–Zagier：秩 $1$ 椭圆曲线的 L 在中心有单零点，且导数与 Heegner 点的高度有关；这是「解析秩 = 代数秩」的第一个一般情形。
+- Goldfeld 的杠杆是「三阶」而非「一阶」：中心零点阶数越高，排斥实零点的力量越强；但中心点距 $s=1$ 只有 $1/2$，故只多出一个 $\log$ 因子。
+- 书中的归一化要留意：第 2 章的 $L(\chi,s)$ 的算术位置是 $s=1$（$\zeta$ 的极点），而椭圆曲线 L 的中心是 $s=1/2$（酉归一化）。
+
+## 公式
+
+$$
+L(E,s)\ \text{在 }s=1/2\text{ 有单零点}\qquad(\operatorname{rank}E=1,\ \text{Gross--Zagier})
+$$
+
+$$
+L(E,s)\ \text{在 }s=1/2\text{ 有三阶零点}\qquad(E:\ \text{导子 }5077)
+$$
+
+$$
+L(\chi,1)\gg\frac{\log q}{\sqrt q\,\log\log q}\qquad(\text{Goldfeld，实效})
+$$
+
+## 易错点
+
+- 把 Gross–Zagier 当成「所有椭圆曲线」：它给的是秩 $1$ 情形的单零点；三阶零点是另一个（秩 $3$）例子，书中用导子 $5077$ 的曲线。
+- 把 $s=1/2$ 与 $s=1$ 混用：第 2 章的 $L(\chi,s)$ 的算术关注点是 $s=1$（$\zeta$ 的极点所在），椭圆曲线 L 的中心在 $s=1/2$（酉归一化；经典归一化记作 $s=1$）。书中明说两者相距 $1/2$，这使 Goldfeld 的结论只多一个对数因子。
+
+## 批注
+
+**〔背景直觉〕为什么三阶零点更强**　若 $L(E,s)$ 在中心有三阶零点，则对每个 $\chi$ 的 twist，中心附近被迫有零点；函数方程把这些零点「反射」到 $\chi$ 的 L 函数在 $1$ 附近，从而排斥 $\beta_1$。阶数越高，排斥区间越宽，但仍只到 $1-O(1/\log q)$。
+
+**〔含糊点拨〕只多一个对数因子**　书中说 Goldfeld 的下界比 Siegel 的 $q^{-\varepsilon}$ 弱（多 $\log$ 因子），原因是中心点 $1/2$ 与 $1$ 的距离固定为 $1/2$，twist 的导子只能把零点推到 $1-O(1/\log q)$ 处，无法更远。这是「杠杆位置」而非「杠杆长度」的限制。
+
+## 相关
+
+[[ch2-nonvanishing]]、[[ch2-explicit-formula]]、[[ch1-dedekind-zeta]]
+
+## 来源
+
+- Bernstein–Gelbart 编《朗兰兹纲领导论》（An Introduction to the Langlands Program），Birkhäuser 2004，§3，原书 pp. 29–31（PDF pp. 37–39）
+  - 锚点：`08_source_code/SY02-24_朗兰兹纲领导论_全书中文译注/源码/chapters/ch02.tex:271-300`

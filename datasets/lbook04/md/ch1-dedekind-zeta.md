@@ -1,0 +1,59 @@
+# Dedekind zeta 与 Hecke L 函数
+
+> `lbook04/concept/ch1-dedekind-zeta` · 轨 L L 函数 · 状态 reviewed · 核验 source-only
+
+**问题：** Dedekind zeta 的系数 $r_K(n)$ 如何读出素数在 $K$ 中的分裂方式，Hecke L 函数又为什么必须引入射线类群？
+
+**一句话：** $\zeta_K(s)=\sum_{\mathfrak a}(N\mathfrak a)^{-s}$ 的 Euler 因子记录素理想分裂型；Hecke 特征把 Dirichlet 特征搬到射线类群上，其 L 函数以 $|D|N\mathfrak m$ 为导子。
+
+**别名：** `Dedekind zeta function`、`Hecke L-function`、`射线类群`
+
+## 定义
+
+$\zeta_K(s)=\sum_{\mathfrak a\ne0}(N\mathfrak a)^{-s}$ 对 $\operatorname{Re}(s)>1$ 绝对收敛并有 Euler 乘积；写成 Dirichlet 级数 $\zeta_K(s)=\sum r_K(n)n^{-s}$ 后，$r_K(p)$ 编码 $p$ 的分裂型：$r_K(p)=d$ 当且仅当 $p$ 完全分裂；$r_K(p)=1$ 则可能是完全分歧也可能是惰性（只有一个次数 $d$ 的素理想）。完备化 $\Lambda_K$ 满足 $\Lambda_K(s)=|D|^{1/2-s}\Lambda_K(1-s)$，根数恒为 $+1$，判别式的位置「正如 Dirichlet L 函数中的导子」；留数由类数公式 (4.2) 给出。Hecke 的推广是：取模 $\mathfrak m$、射线类群 $H_{\mathfrak m}=I_{\mathfrak m}/P_{\mathfrak m}$，特征 $\chi$ 经权 $\xi_\infty$ 与 $\chi((\alpha))=\xi_\infty(\alpha)$ 相容，于是 $L(\chi,s)=\prod_{\mathfrak p}(1-\chi(\mathfrak p)(N\mathfrak p)^{-s})^{-1}$。$K=\mathbb Q$ 时回到 Dirichlet（例 5.6），$\mathfrak m=1$、$\xi_\infty=1$ 时回到理想类群特征（例 5.5）。
+
+**记号：** $K$：数域；$\mathcal O_K$：整数环；$\mathfrak a,\mathfrak p$：整理想/素理想；$N\mathfrak a$：绝对范数；$D$：判别式；$r_1,r_2$：实/复嵌入个数；$h$：类数；$R$：调节子；$\mathfrak m$：模；$H_{\mathfrak m}$：射线类群；$\xi_\infty$：无穷位权。
+
+## 要点
+
+- $\zeta_K$ 是「$K$ 中素数分布」的生成函数：$r_K(p)$ 数出 $p$ 上方素理想的个数与次数，完全分裂、惰性、分歧三种情形在系数上可区分。
+- $h>1$ 时 Hecke 特征不能只看元素，必须看理想/射线类群；这正是 Hecke L 比 Dirichlet L 多出来的结构。
+- (4.3) 的根数恒为 $+1$，因为 $\zeta_K$ 来自平凡表示；一般 Hecke L 的根数 $\varepsilon(\chi)$ 才可能非平凡，且底数从 $|D|$ 变成 $|D|N\mathfrak m$。
+
+## 公式
+
+$$
+\zeta_K(s)=\sum_{\mathfrak a\ne0}\frac{1}{(N\mathfrak a)^{s}}=\prod_{\mathfrak p}\bigl(1-(N\mathfrak p)^{-s}\bigr)^{-1}
+$$
+
+$$
+\Lambda_K(s)=|D|^{1/2-s}\Lambda_K(1-s),\qquad \Lambda_K(s)=\pi^{-r_1s/2}(2\pi)^{-r_2s}\Gamma(s/2)^{r_1}\Gamma(s)^{r_2}\zeta_K(s)
+$$
+
+$$
+L(\chi,s)=\prod_{\mathfrak p}\bigl(1-\chi(\mathfrak p)(N\mathfrak p)^{-s}\bigr)^{-1},\qquad \Lambda(\chi,s)=\varepsilon(\chi)\,(|D|N\mathfrak m)^{1/2-s}\,\Lambda(\overline\chi,1-s)
+$$
+
+## 易错点
+
+- 把 (4.3) 的根数也写成 $\varepsilon$：$\zeta_K$ 的根数恒为 $+1$；只有 Hecke L 的 (5.4) 里才出现 $\varepsilon(\chi)(|D|N\mathfrak m)^{1/2-s}$。
+- $r_K(p)=1$ 不能直接判为惰性：完全分歧也只有一个素理想；要区分得看 $r_K(p^k)$ 的整组数据（$e$、$f$、$g$ 的组合）。
+
+## 批注
+
+**〔易错预警〕判别式的位置**　书中明说判别式在 (4.3) 中的位置「正如 Dirichlet L 函数中的导子」，这把 $|D|$ 与 $q$ 放在同一角色。但 $|D|$ 只由 $K$ 决定，不是可选的「模」；真正的模是 $\mathfrak m$，两者在 (5.4) 中才合并成 $|D|N\mathfrak m$。
+
+**〔背景直觉〕类数公式是特殊值原理的原型**　(4.2) $\operatorname{Res}_{s=1}\zeta_K=\frac{2^{r_1}(2\pi)^{r_2}hR}{w\sqrt{|D|}}$ 用整体不变量表达 $\zeta_K$ 在 $s=1$ 的留数。书中把它与 Deligne 的特殊值框架、BSD 猜想并置：椭圆曲线 L 在中心点的导数对应 regulator，是同一个原理的算术几何版本。
+
+## 相关
+
+[[ch1-zeta-euler]]、[[ch1-cft-entry]]、[[ch4-artin-hecke]]
+
+## 来源
+
+- Bernstein–Gelbart 编《朗兰兹纲领导论》（An Introduction to the Langlands Program），Birkhäuser 2004，§4，原书 pp. 7–9（PDF pp. 15–17）
+  - 锚点：`08_source_code/SY02-24_朗兰兹纲领导论_全书中文译注/源码/chapters/ch01.tex:213-235`
+- Bernstein–Gelbart 编《朗兰兹纲领导论》（An Introduction to the Langlands Program），Birkhäuser 2004，§4，原书 pp. 10–12（PDF pp. 18–20）
+  - 锚点：`08_source_code/SY02-24_朗兰兹纲领导论_全书中文译注/源码/chapters/ch01.tex:278-300`
+- Bernstein–Gelbart 编《朗兰兹纲领导论》（An Introduction to the Langlands Program），Birkhäuser 2004，§5，原书 pp. 13–16（PDF pp. 21–24）
+  - 锚点：`08_source_code/SY02-24_朗兰兹纲领导论_全书中文译注/源码/chapters/ch01.tex:433-465`

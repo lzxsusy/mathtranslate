@@ -1,0 +1,57 @@
+# 非主特征 L 函数的非 vanishing
+
+> `lbook04/concept/ch2-nonvanishing` · 轨 L L 函数 · 状态 reviewed · 核验 source-only
+
+**问题：** 非主特征的 $L(\chi,1)$ 为什么可能接近 $0$，Landau–Siegel 零点又如何阻碍实效下界？
+
+**一句话：** Dirichlet 定理归结为 $L(\chi,1)\ne0$；实特征情形靠类数公式与 Siegel 下界 $L(\chi,1)\gg_\varepsilon q^{-\varepsilon}$，但 Siegel 的方法非实效。
+
+**别名：** `L(χ,1)≠0`、`Landau–Siegel 零点`、`Siegel 定理`
+
+## 定义
+
+Dirichlet 定理等价于：每个非主特征都满足 $L(\chi,1)\ne0$。非实特征容易处理：若 $L(\chi,1)=0$，则 $L(\overline\chi,1)=0$，乘积 $\zeta(s)L(\chi,s)L(\overline\chi,s)$ 在 $s=1$ 有高于一阶的零点，与 $\zeta$ 的单极点矛盾。实特征没有这种配对，只能借助类数公式：$L(\chi,1)$ 小对应虚二次域类数小。定理 3.2 给出无零点区域 $\sigma>1-c_1/\log(T^d|D|N\mathfrak m)$，至多允许一个单重实零点 $\beta_1$，且只在二次（实）特征时出现，称为 Landau–Siegel 零点。Siegel 的 $L(\chi,1)\gg_\varepsilon q^{-\varepsilon}$ 是非实效的：常数 $C(\varepsilon)$ 无法算出。机制是二分法：若存在极小 $L(\chi,1)$ 的特征 $\chi_1$，用它靠近 $1$ 的实零点排斥其他零点；若不存在，结论平凡。
+
+**记号：** $\beta_1$：可能的 Landau–Siegel 实零点；$\delta^*(\mathfrak m)$：其存在性指示；$\gg_\varepsilon$：常数依赖 $\varepsilon$ 而不可算；$h(K)$：类数；$q$：导子。
+
+## 要点
+
+- 非实特征用 $L(\chi,1)L(\overline\chi,1)$ 的乘积论证；实特征没有配对，只能靠类数公式与零点排斥。
+- Siegel 的非实效性来自「不知道 $\beta_1$ 是否存在」：反证法只能在「若存在则……」的二分法里给出常数，无法判定哪一支成立。
+- 无零点区域与 $L(\chi,1)\ne0$ 是两件事：定理 3.2 允许一个 $\beta_1<1$，它不影响 $s=1$ 处的非零性，但破坏有效的零点排斥。
+
+## 公式
+
+$$
+L(\chi,1)\gg_\varepsilon q^{-\varepsilon}\qquad(\text{Siegel，非实效})
+$$
+
+$$
+L(\chi,1)\gg\frac{1}{\log q},\qquad h(K)\gg\frac{\sqrt q}{\log q}\qquad(\text{GRH 蕴涵})
+$$
+
+$$
+\sigma>1-\frac{c_1}{\log(T^d|D|N\mathfrak m)}\ \Longrightarrow\ L(\chi,s)\ne0\ \text{（至多一个实零点 }\beta_1\text{）}
+$$
+
+## 易错点
+
+- 把 Siegel 的 $\gg_\varepsilon q^{-\varepsilon}$ 当成可计算的下界：常数 $C(\varepsilon)$ 无法算出，这是数论中著名的非实效性，与 Thue–Siegel 定理同源。
+- 混淆「无零点区域」与「$L(\chi,1)\ne0$」：定理 3.2 允许 $\beta_1<1$，它不影响 $s=1$ 处的非零性，但使零点排斥论证失去统一常数。
+
+## 批注
+
+**〔易错预警〕β₁ 只在二次（实）特征**　定理 3.2 说那个可能的单重实零点只可能在 $\chi$ 为二次（实）特征时出现；不要把它安到复特征上。书中还固定 $c_1$ 之后才定义 $\delta^*(\mathfrak m)$，因为「是否存在」本身依赖这个常数。
+
+**〔背景直觉〕Siegel 二分法**　书中例 3.3 说明：若存在靠近 $1$ 的实零点，类数就小；若不存在，就得到统一的下界。两条路各给一半，故称二分法；正因为无法判定哪一支成立，结论里的常数不可计算。
+
+## 相关
+
+[[ch2-goldfeld]]、[[ch1-dirichlet-char]]、[[ch2-euler-vonstaudt]]
+
+## 来源
+
+- Bernstein–Gelbart 编《朗兰兹纲领导论》（An Introduction to the Langlands Program），Birkhäuser 2004，§3，原书 pp. 26–27（PDF pp. 34–35）
+  - 锚点：`08_source_code/SY02-24_朗兰兹纲领导论_全书中文译注/源码/chapters/ch02.tex:245-260`
+- Bernstein–Gelbart 编《朗兰兹纲领导论》（An Introduction to the Langlands Program），Birkhäuser 2004，§3，原书 pp. 27–29（PDF pp. 35–37）
+  - 锚点：`08_source_code/SY02-24_朗兰兹纲领导论_全书中文译注/源码/chapters/ch02.tex:261-300`

@@ -1,0 +1,57 @@
+# Artin L 函数的定义
+
+> `lbook04/concept/ch4-artin-definition` · 轨 L L 函数 · 状态 reviewed · 核验 source-only
+
+**问题：** 为什么 Artin 的 L 函数必须在惯性不变量 $V^{I_v}$ 上取行列式，而不能直接用 $\rho(\sigma_v)$？
+
+**一句话：** Artin 把 Dirichlet L 从交换群推广到任意 Galois 表示：$L(\chi,s)=\prod_v\det(1-\sigma_vq_v^{-s}\mid V^{I_v})^{-1}$，只用惯性不变量上的 Frobenius 作用。
+
+**别名：** `Artin L-function`、`Frobenius 元`、`惯性群`
+
+## 定义
+
+本原 Dirichlet 特征 $\chi\bmod m$ 对应 $K=\mathbb Q(\zeta_m)$、$G\cong(\mathbb Z/m\mathbb Z)^\times$，Artin 的第一步是 (1.1) $\chi_{\mathrm{Gal}}(\sigma_p)=\chi(p)$ 与 (1.2) 的 Euler 积。1923 年他把这推广到任意复表示：设 $\rho:G\to\mathrm{GL}(V)$，$\chi$ 为其特征。对每个素位 $v$，$G_{\bar v}/I_{\bar v}$ 作用在 $V^{I_{\bar v}}$ 上，故 $L_v(\chi,s)=\det(1-\sigma_vq_v^{-s}\mid V^{I_{\bar v}})^{-1}$ 良定；对几乎所有 $v$，$V^{I_{\bar v}}=V$，因子就等于 $\det(1-\rho(\sigma_v)q_v^{-s})^{-1}$。若 $V^{I_{\bar v}}\ne V$，称 $v$ 在 $\rho$ 中分歧；$\rho$ 忠实时这与 $v$ 在 $K/k$ 中分歧一致。坏位因子「由函数方程好看这一愿望所决定」，并非任意选择。
+
+**记号：** $G$：Galois 群；$\rho$：复表示；$\chi=\operatorname{tr}\rho$：特征；$V^{I_{\bar v}}$：惯性不变量；$\sigma_v$：Frobenius 元（定义到共轭类）；$q_v$：剩余域基数；$k$：基域。
+
+## 要点
+
+- 关键设计是「取惯性不变量」：$v$ 分歧时 $\sigma_v$ 在 $V$ 上无定义，但在 $V^{I_{\bar v}}$ 上有定义，故 Euler 因子良定。
+- 对几乎所有 $v$，$V^{I_{\bar v}}=V$，因子为 $\det(1-\rho(\sigma_v)q_v^{-s})$；坏位因子由整体函数方程与导子唯一确定。
+- $\chi$ 是表示的特征，不是一维特征：$L(\chi,s)$ 只依赖 $\chi$，但定义要经过 $\rho$ 的矩阵；同一 $\chi$ 的不同表示给同一个 L。
+
+## 公式
+
+$$
+L(\chi,s)=\prod_{v}L_v(\chi,s),\qquad L_v(\chi,s)=\det\bigl(1-\sigma_vq_v^{-s}\mid V^{I_{\bar v}}\bigr)^{-1}
+$$
+
+$$
+\chi_{\mathrm{Gal}}(\sigma_p)=\chi(p)\qquad\bigl(K=\mathbb Q(\zeta_m),\ G\cong(\mathbb Z/m\mathbb Z)^{\times}\bigr)
+$$
+
+$$
+\log L_v(\chi,s)=\sum_{n\ge1}\frac{1}{n}\operatorname{tr}\bigl(\sigma_v^{n}\mid V^{I_{\bar v}}\bigr)q_v^{-ns}
+$$
+
+## 易错点
+
+- 把 $\sigma_v$ 当成固定的 Frobenius 自同构：它只定义到惯性子群的共轭类，换 $\bar v$ 会换代表元；取 $V^{I_v}$ 后作用良定，这才是 (3.2) 的意义。
+- 把 $\chi(1)$ 与 $\dim V$ 混：$\chi(1)=\dim V$，出现在导子/函数方程的指数 $|d_k|^{\chi(1)}$ 里；不同表示可以有相同维数但不同 $L$。
+
+## 批注
+
+**〔易错预警〕Frobenius 的阶**　书中 §3.1 说 Frobenius 是「$q$ 次幂」自同构（不动域为 $\mathbb F_q$），不是「$q$ 阶」；原书 "of order $q$" 的字面容易被误读，notes 特别提醒译文作「$q$ 次幂的 Frobenius 自同构」。
+
+**〔背景直觉〕坏因子的自由度**　作者说坏 Euler 因子「由函数方程好看这一愿望所决定」——这不是循环论证，而是说局部因子被整体函数方程与导子唯一确定（Tate 的局部理论后来给出第一原理）。第 4 章 §4.1–4.2 的 $\Gamma$ 因子与 Artin 导子正是这套「由整体反推局部」的产物。
+
+## 相关
+
+[[ch4-induction]]、[[ch4-conductor-fe]]、[[ch4-artin-hecke]]
+
+## 来源
+
+- Bernstein–Gelbart 编《朗兰兹纲领导论》（An Introduction to the Langlands Program），Birkhäuser 2004，§1，原书 pp. 73–74（PDF pp. 79–80）
+  - 锚点：`08_source_code/SY02-24_朗兰兹纲领导论_全书中文译注/源码/chapters/ch04.tex:11-30`
+- Bernstein–Gelbart 编《朗兰兹纲领导论》（An Introduction to the Langlands Program），Birkhäuser 2004，§3.2，原书 pp. 75–77（PDF pp. 81–83）
+  - 锚点：`08_source_code/SY02-24_朗兰兹纲领导论_全书中文译注/源码/chapters/ch04.tex:109-142`

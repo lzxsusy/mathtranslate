@@ -1,0 +1,52 @@
+# 自守表示的定义
+
+> `lbook04/concept/ch7-automorphic-rep` · 轨 M 模形式与自守表示 · 状态 reviewed · 核验 source-only
+
+**问题：** 为什么自守表示要定义成 $(\mathfrak g,K_\infty)\times G(\mathbb A_f)$-模，而不是 $G(\mathbb A)$ 的拓扑表示？
+
+**一句话：** 自守表示是 $\mathcal A(G,\omega)$ 中的不可约容许 $(\mathfrak g,K_\infty)\times G(\mathbb A_f)$-模；$\mathcal A(G)$ 由中心特征、光滑性、$K$-有限性、$Z(\mathfrak g)$-有限性、$K'$-不变性与缓增性六条公理刻画。
+
+**别名：** `automorphic representation`、`$\mathcal A(G)$`、`$(\mathfrak g,K_\infty)$-模`
+
+## 定义
+
+定义 2.1：$\mathcal A(G,\omega)$ 为满足 (i) $\varphi(z\gamma g)=\omega(z)\varphi(g)$、(ii) 对固定 $g_f$ 关于 $g_\infty$ 光滑、(iii) 右 $K_\infty$-有限、(iv) 右某个紧开 $K'$ 不变、(v) $Z(\mathfrak g)$-有限、(vi) 缓增的函数空间。$\mathcal A_0(G)$ 再加尖点条件 $(2.6)$。$\mathcal A_0(G)$ 中的不可约容许模即不可约（尖点）自守表示；重数一定理保证 $\mathcal A_0(\pi)$ 无歧义。
+
+**记号：** $G=\operatorname{GL}(2)/\mathbb Q$；$G(\mathbb A)$；$K_\infty=O(2)$；$Z(\mathfrak g)$：泛包络代数中心；$\mathcal A(G),\mathcal A_0(G)$；$\omega$：中心特征。
+
+## 要点
+
+- 五条公理中 (iii)(iv)(v) 是「容许性」的表示论版本：$K$-有限 $+$ $Z(\mathfrak g)$-有限 $+$ 紧开不变，保证每个 $K$-类型有限维、整体可分解。
+- 缓增性 (vi) 保证求值泛函连续，才能谈谱分解与迹公式。
+- $\mathcal A_0(G)(\mathrm{hol},k,N,\chi)$ 是满足 $X_-\varphi=0$ 与特定 $K$-类型的子空间，对应经典尖点形式（定理 4.1）。
+- 一般数域 $k$ 上把 $\operatorname{GL}(2,\mathbb Q)$ 换成 $\operatorname{GL}(2,k)$、$K_\infty$ 换成 $\prod O(2)/U(2)$，定义逐字成立。
+
+## 公式
+
+$$
+\varphi(z\gamma g)=\omega(z)\varphi(g),\qquad \int_{\mathbb Q\backslash\mathbb A}\varphi\bigl((\begin{smallmatrix}1&x\\0&1\end{smallmatrix})g\bigr)\,dx=0
+$$
+
+$$
+\mathcal A_0(G)=\bigoplus_\pi \mathcal A_0(\pi)
+$$
+
+## 易错点
+
+- 不要把 $\mathcal A(G)$ 与 $L^2(G(\mathbb Q)\backslash G(\mathbb A))$ 混同：$\mathcal A(G)$ 是光滑、$K$-有限、$Z(\mathfrak g)$-有限的函数空间，$L^2$ 是它的完备化；自守表示住在 $\mathcal A(G)$ 里。
+- $\omega$ 必须是中心特征：$\operatorname{GL}(2)$ 的中心是 $Z(\mathbb A)\cong\mathbb A^\times$，忘掉 $\omega$ 会把不同中心特征的表示混在一起。
+
+## 批注
+
+**〔含糊点拨〕「容许」的确切含义**　定义 2.3 的容许性 $=$ $(\mathfrak g,K_\infty)$-模 $+$ $G(\mathbb A_f)$ 光滑作用；它等价于每个紧开子群的不变子空间有限维。书中不逐条验证，直接引用 Harish-Chandra 的定理。
+
+**〔背景直觉〕为什么切成 $(\mathfrak g,K_\infty)$**　$G(\mathbb R)$ 非紧，其不可约表示通常无限维且不代数；切成 $(\mathfrak g,K_\infty)$-模后可以用 Lie 代数与 $K$-类型做代数运算，而 $G(\mathbb A_f)$ 部分保持光滑表示，两边张量积拼成整体。
+
+## 相关
+
+[[ch7-cuspidal-whittaker]]、[[ch6-quasi-character]]、[[ch7-newform]]
+
+## 来源
+
+- Bernstein–Gelbart 编《朗兰兹纲领导论》（An Introduction to the Langlands Program），Birkhäuser 2004，§2，原书 pp. 138–140（PDF pp. 142–144）
+  - 锚点：`08_source_code/SY02-24_朗兰兹纲领导论_全书中文译注/源码/chapters/ch07.tex:258-321`

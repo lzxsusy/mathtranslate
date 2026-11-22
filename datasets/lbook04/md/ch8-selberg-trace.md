@@ -1,0 +1,52 @@
+# Selberg 迹公式
+
+> `lbook04/concept/ch8-selberg-trace` · 轨 T Tate 与迹公式 · 状态 reviewed · 核验 source-only
+
+**问题：** 迹公式左边的谱侧 $\sum h(t_i)$ 与右边的几何侧轨道积分，为什么能给出 Weyl 律？
+
+**一句话：** 把 $T_\varphi$ 的迹按共轭类展开：恒等项给出体积积分，双曲项给出 $\sum\frac{\log N_0}{N^{1/2}-N^{-1/2}}g(\log N)$，两边相等即 Selberg 迹公式。
+
+**别名：** `Selberg trace formula`、`双曲迹公式`、`Weyl 律`
+
+## 定义
+
+对双曲（无椭圆元）的 $\Gamma$，定理 31（$(37)$）：$\sum_i h(t_i)=\frac{\operatorname{vol}(\Gamma\backslash\mathfrak H)}{4\pi}\int t\,h(t)\tanh(\pi t)dt+\sum_{N_0}\frac{\log N_0}{N^{1/2}-N^{-1/2}}g(\log N)$。推导：$\operatorname{tr}T_\varphi=\sum_\gamma\int_{Z_\Gamma(\gamma)\backslash G}\varphi(g^{-1}\gamma g)dg$（定理 29），恒等元的轨道积分给出体积项，双曲元的轨道积分由定理 30 算成 $\log N_0/(N^{1/2}-N^{-1/2})g(\log N)$。
+
+**记号：** $h(t)$：谱侧测试函数；$g(u)$：其 Fourier 变换（$(21)$）；$N(\gamma)$：双曲元范数；$N_0$：本原范数；$t_i$：谱参数，$\lambda_i=1/4+t_i^2$。
+
+## 要点
+
+- 谱侧：$\sum h(t_i)$ 含离散特征值；连续谱的贡献在紧情形不出现，带尖点情形要加 Eisenstein 项（§8–§9）。
+- 几何侧：恒等项 $=\operatorname{vol}/4\pi\int t h(t)\tanh(\pi t)dt$；双曲项 $=\sum\frac{\log N_0}{N^{1/2}-N^{-1/2}}g(\log N)$。
+- 取 $h$ 逼近 $\delta$ 得 Weyl 律 $N(T)\sim\frac{\operatorname{vol}(\Gamma\backslash\mathfrak H)}{4\pi}T^2$：谱密度 $=$ 体积。
+- 一般 $\Gamma$ 还有椭圆项；原书 §6 只讨论双曲群，椭圆项在 §10 的 adelic 版本中以中心化子体积出现。
+
+## 公式
+
+$$
+\sum_i h(t_i)=\frac{\operatorname{vol}(\Gamma\backslash\mathfrak H)}{4\pi}\int t\,h(t)\tanh(\pi t)\,dt+\sum_{N_0}\frac{\log N_0}{N^{1/2}-N^{-1/2}}\,g(\log N)
+$$
+
+$$
+\operatorname{tr}T_\varphi=\sum_\gamma\int_{Z_\Gamma(\gamma)\backslash G}\varphi(g^{-1}\gamma g)\,dg
+$$
+
+## 易错点
+
+- $h$ 与 $g$ 的 Fourier 变换约定必须一致：书中 $(21)$ $h(t)=\int g(u)e^{iut}du$（notes 指出原书误印 $dt$，应为 $du$）；换约定会改变常数 $1/2\pi$。
+- 双曲项的分母是 $N^{1/2}-N^{-1/2}$，不是 $N-1$；这是轨道积分的精确值，差一个因子就会破坏 Weyl 律。
+
+## 批注
+
+**〔背景直觉〕恒等项即 Weyl 律**　取 $h$ 为 $\delta$ 逼近，左边数特征值，右边恒等项 $\sim\frac{\operatorname{vol}}{4\pi}\int t h(t)\tanh(\pi t)dt$ 给出 $T^2$ 增长；双曲项指数小，故主项由体积决定。这就是 Weyl 律的迹公式证明。
+
+**〔易错预警〕缺椭圆项**　原书 §6 假设 $\Gamma$ 无椭圆元（双曲群）；对 $\operatorname{SL}_2(\mathbb Z)$ 等一般群，迹公式还要加椭圆项。§10 的 adelic 版本用中心化子体积统一处理，不要拿 $(37)$ 直接套 $\operatorname{SL}_2(\mathbb Z)$。
+
+## 相关
+
+[[ch8-discrete-spectrum]]、[[ch8-arthur-selberg]]、[[ch8-eisenstein]]
+
+## 来源
+
+- Bernstein–Gelbart 编《朗兰兹纲领导论》（An Introduction to the Langlands Program），Birkhäuser 2004，§6，原书 pp. 173–174（PDF pp. 176–177）
+  - 锚点：`08_source_code/SY02-24_朗兰兹纲领导论_全书中文译注/源码/chapters/ch08.tex:1011-1158`

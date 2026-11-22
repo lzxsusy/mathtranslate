@@ -1,0 +1,51 @@
+# Godement–Jacquet 积分与主 $L$ 函数的位置
+
+> `lbook04/concept/ch9-godement-jacquet` · 轨 G GL_n 的 Langlands 纲领 · 状态 reviewed · 核验 source-only
+
+**问题：** 既然 Godement–Jacquet 积分已经定义了 $L(s,\pi)$，本章为什么还要另建一套 $\mathrm{GL}_n\times\mathrm{GL}_m$ 的积分？
+
+**一句话：** 本章不展开 Godement–Jacquet 的矩阵系数积分，只把主 $L$ 函数 $L(s,\pi)$ 作为 $m=1$ 的 Rankin–Selberg 特例纳入统一框架：$L(s,\pi)=L(s,\pi\times\mathbf{1})$。
+
+**别名：** `Godement–Jacquet zeta 积分`、`主 L 函数`、`L(s,π)`、`Hecke 积分`
+
+## 定义
+
+Godement–Jacquet 的 zeta 积分是 $\mathrm{GL}_n$ 上主 $L$ 函数的标准来源：取 $\pi$ 的矩阵系数 $\beta$（或 Schwartz 函数），在 $\mathrm{GL}_n(k)Z_n(\mathbb{A})\backslash\mathrm{GL}_n(\mathbb{A})$ 上作 $Z(s)=\int\beta(g)|\det g|^s\,dg$，这些积分张成同一个分数理想，归一化生成元即 $L(s,\pi)$，配上 $\varepsilon(s,\pi,\psi)$ 便有函数方程。本章章首明确不重复这套构造（只管 $\pi\times\pi'$ 的 Rankin–Selberg 族），而把它当作 $m=1$ 的端点：$\pi'=\mathbf{1}$ 时记 $L(s,\pi)=L(s,\pi\times\mathbf{1})$（§3.1 定义处）。仍值得单独记一张卡，因为本章所有局部因子都由 Whittaker 积分定义，Godement–Jacquet 走的是矩阵系数路线，二者给出同一个 $L$ 函数正是「积分表示不唯一、$L$ 函数唯一」的第一个实例；第 10 章 §2 又直接用 Godement–Jacquet 理论给 $\mathrm{GL}_n$ 的 $L$ 函数作定义，所以这张卡是第 9、10 章之间的接口。
+
+**记号：** $\pi\in\mathcal{A}_n(k)$：$\mathrm{GL}_n(k)$ 的不可约容许表示（整体时指自守表示）；$\beta$：$\pi$ 的矩阵系数；$Z(s)$：zeta 积分；$f$：$\mathrm{GL}_2$ 的尖点形式，$\Lambda(s,f)$ 为其完备 $L$ 函数。
+
+## 要点
+
+- 本章的统一定义是「先有积分族、再取分数理想的生成元」，因此单个积分（有分歧时）并不等于 $L$ 函数，Godement–Jacquet 与 Rankin–Selberg 只是两族不同的积分。
+- $m=1$ 时 $\pi'=\mathbf{1}$，Rankin–Selberg 积分退化为对单个尖点形式的 Mellin 型积分；$n=1$ 时即 Hecke 的 $\Lambda(s,f)$，这就是「主 $L$ 函数是特例」的字面含义。
+- 第 10 章 §2 用 Godement–Jacquet 理论 [24] 直接定义 $\mathrm{GL}_n$ 的 $L(s,\pi)$ 与 $\varepsilon(s,\pi,\psi)$，第 9 章则把同一对象作为 $\pi\times\mathbf{1}$ 处理；两处必须对得上。
+
+## 公式
+
+$$
+\Lambda(s,f)=(2\pi)^{-s}\Gamma(s)L(s,f)=\int_0^\infty f(iy)y^s\,d^\times y
+$$
+
+$$
+L(s,\pi)=L(s,\pi\times\mathbf{1})
+$$
+
+## 易错点
+
+- 把 $L(s,\pi\times\widetilde{\pi})$ 当作 $L(s,\pi)$ 的平方：它是对偶对的 Rankin–Selberg $L$ 函数，在 $s=1$ 有极点（内积的留数），不是主 $L$ 函数。
+- 以为 Godement–Jacquet 与 Rankin–Selberg 给出两套不同的局部因子：它们只是同一个局部 $L$ 函数的两个积分表示。
+
+## 批注
+
+**〔背景直觉〕为什么主 $L$ 函数反而是特例**　$\mathrm{GL}_2$ 的 $\Lambda(s,f)=\int_0^\infty f(iy)y^s\,d^\times y$ 是 Mellin 变换，$n=1$ 时就是 Hecke 的局部 zeta 积分；Godement–Jacquet 把「矩阵系数 × $|\det|^s$」推广到任意 $n$。本章取 $\pi'=\mathbf{1}$ 便退回这一端点，所以它虽未展开，却始终在框架之内。
+
+## 相关
+
+[[ch9-automorphic-representation]]、[[ch9-local-l-functions]]、[[ch10-local-langlands]]
+
+## 来源
+
+- Bernstein–Gelbart 编《朗兰兹纲领导论》（An Introduction to the Langlands Program），Birkhäuser 2004，§0，原书 pp. 197–197（PDF pp. 200–200）
+  - 锚点：`08_source_code/SY02-24_朗兰兹纲领导论_全书中文译注/源码/chapters/ch09.tex:37-39`
+- Bernstein–Gelbart 编《朗兰兹纲领导论》（An Introduction to the Langlands Program），Birkhäuser 2004，§2，原书 pp. 202–203（PDF pp. 205–206）
+  - 锚点：`08_source_code/SY02-24_朗兰兹纲领导论_全书中文译注/源码/chapters/ch09.tex:296-319`

@@ -1,0 +1,70 @@
+# 函数方程与导子
+
+> `lbook04/concept/ch4-conductor-fe` · 轨 L L 函数 · 状态 reviewed · 核验 source-only
+
+**问题：** Artin 导子的指数 $f(\chi,v)$ 为什么取 $|G_0|^{-1}\sum_i|G_i|\operatorname{codim}V^{G_i}$ 这种形式，它如何进入函数方程？
+
+**一句话：** Artin 导子 $\mathfrak f(\chi)=\prod_vv^{f(\chi,v)}$ 度量分歧，其整性由 Artin/Hasse–Arf 保证；完备化 $\Lambda(\chi,s)$ 满足 $\Lambda(\chi,1-s)=W(\chi)\Lambda(\widetilde\chi,s)$。
+
+**别名：** `Artin 导子`、`Artin 根数`、`函数方程`
+
+## 定义
+
+§4.1 定义 $\Gamma_{\mathbb R}(s)=\pi^{-s/2}\Gamma(s/2)$、$\Gamma_{\mathbb C}(s)=2(2\pi)^{-s}\Gamma(s)$，并用 $n_+(\chi,v)=\dim V^{G_{\bar v}}$、$n_-(\chi,v)=\dim V/V^{G_{\bar v}}$ 分配 $\Gamma_v(s)$ 与 $\Gamma_v(s+1)$。§4.2 定义高阶分歧群 $G_0\supset G_1\supset\cdots$ 与 $f(\chi,v)=|G_0|^{-1}\sum_{i\ge0}|G_i|\operatorname{codim}V^{G_i}$，$\mathfrak f(\chi)=\prod_vv^{f(\chi,v)}$；$f$ 的整性是 Artin 的深刻定理，交换情形即局部类域论的 Hasse–Arf 定理。§4.3 定义 $\Lambda(\chi,s)=(|d_k|^{\chi(1)}N\mathfrak f(\chi))^{s/2}\prod_{v\mid\infty}L_v(\chi,s)\cdot L(\chi,s)$，定理 4.1 断言其亚纯延拓并满足 $\Lambda(\chi,1-s)=W(\chi)\Lambda(\widetilde\chi,s)$；证明分两步：类域论处理一维，Brauer 处理一般情形。
+
+**记号：** $G_i$：第 $i$ 个高阶分歧群；$f(\chi,v)$：局部导子指数；$\mathfrak f(\chi)$：整体 Artin 导子；$d_k$：$k$ 的判别式；$W(\chi)$：Artin 根数；$\widetilde\chi$：反偶特征；$\Gamma_{\mathbb R},\Gamma_{\mathbb C}$：阿基米德因子。
+
+## 要点
+
+- 导子指数是分歧群上的加权平均：$|G_i|$ 递减、$\operatorname{codim}$ 递增，加权和有限且为整数（Artin 定理）。
+- 阿基米德因子用 $n_+$、$n_-$ 把 $\Gamma_v(s)$ 与 $\Gamma_v(s+1)$ 分配；复位的 $G_v$ 平凡，故 $n_+=n_-=\dim V$，回到 $\Gamma_{\mathbb C}^{\dim V}$。
+- 根数 $W(\chi)$ 是模 $1$ 复数，局部化后 $W=\prod_vW_v$，$W_v=\tau(\chi_v)/\sqrt{N\mathfrak f_v}$（(6.5)）。
+
+## 公式
+
+$$
+f(\chi,v)=|G_0|^{-1}\sum_{i\ge0}|G_i|\operatorname{codim}V^{G_i},\qquad \mathfrak f(\chi)=\prod_vv^{f(\chi,v)}
+$$
+
+$$
+\Lambda(\chi,s)=\bigl(|d_k|^{\chi(1)}N\mathfrak f(\chi)\bigr)^{s/2}\prod_{v\mid\infty}L_v(\chi,s)\cdot L(\chi,s)
+$$
+
+$$
+\Lambda(\chi,1-s)=W(\chi)\,\Lambda(\widetilde\chi,s)
+$$
+
+## 定理与证明
+
+**定理 4.1（函数方程）**　设 $\chi$ 为 $G$ 的特征。则 $\Lambda(\chi,s)$ 亚纯延拓到整个复平面，并满足 $\Lambda(\chi,1-s)=W(\chi)\Lambda(\widetilde\chi,s)$，其中 $W(\chi)$ 为模 $1$ 的 Artin 根数。
+
+1. 一维情形（交换 $G$）由类域论化为 Hecke L 的函数方程（第 1 章定理 5.8）。
+1. 一般情形用 Brauer 定理写成单项特征的整系数组合，逐项相乘；函数方程与根数在乘积下相容。
+
+> 跳步说明：书中只给两步走的框架，Brauer 定理的证明只述梗概；「亚纯」而非「整」正来自系数可能为负。
+
+*出处：ch04.tex:299-310（§4.3，定理 4.1）*
+
+## 易错点
+
+- 把 (4.2) 的 $n_-$ 当成余维：书中写 $\dim V/V^{G_{\bar v}}$（商空间维数），数值上等于余维，但记号不同；notes 特别提醒这一点。
+- 把 (6.1) 的分母写成 $\sqrt{f i^\delta}$：正确的是 $\sqrt f\,i^\delta$（中译注本回页图放大核对过）。
+
+## 批注
+
+**〔易错预警〕分母不是根号内相乘**　(6.1) $W(\chi)=\tau(\chi)/(\sqrt f\,i^\delta)$，分母是 $\sqrt f$ 乘 $i^\delta$；若误读成 $\sqrt{f i^\delta}$，相位会差 $\pi/4$。notes 记原书 p.89 的放大核对。
+
+**〔背景直觉〕根数是局部常数之积**　$W(\chi)=\prod_vW_v$ 是函数方程的「局部-整体」分解；每个 $W_v$ 由局部 Gauss 和给出，只有有限个 $v$ 非平凡。Langlands 1970 宣布、Deligne 1974 证明——这是局部常数理论的核心定理。
+
+## 相关
+
+[[ch4-artin-definition]]、[[ch4-induction]]、[[ch1-gamma-factor]]
+
+## 来源
+
+- Bernstein–Gelbart 编《朗兰兹纲领导论》（An Introduction to the Langlands Program），Birkhäuser 2004，§4.1，原书 pp. 79–80（PDF pp. 85–86）
+  - 锚点：`08_source_code/SY02-24_朗兰兹纲领导论_全书中文译注/源码/chapters/ch04.tex:252-274`
+- Bernstein–Gelbart 编《朗兰兹纲领导论》（An Introduction to the Langlands Program），Birkhäuser 2004，§4.2，原书 pp. 80–81（PDF pp. 86–87）
+  - 锚点：`08_source_code/SY02-24_朗兰兹纲领导论_全书中文译注/源码/chapters/ch04.tex:275-290`
+- Bernstein–Gelbart 编《朗兰兹纲领导论》（An Introduction to the Langlands Program），Birkhäuser 2004，§4.3，原书 pp. 81（PDF pp. 87）
+  - 锚点：`08_source_code/SY02-24_朗兰兹纲领导论_全书中文译注/源码/chapters/ch04.tex:291-310`

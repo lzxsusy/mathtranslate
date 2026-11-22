@@ -1,0 +1,57 @@
+# Hecke L 与 Gross 的类比
+
+> `lbook04/concept/ch2-hecke-gross` · 轨 L L 函数 · 状态 reviewed · 核验 source-only
+
+**问题：** Hecke L 与椭圆曲线 L 的函数方程结构相似，为什么中心点的零点能承载算术信息？
+
+**一句话：** Hecke L 把 Dirichlet L 搬到数域与射线类群；Gross–Zagier 型「中心导数 = 算术不变量」的类比，把 Hecke L 与椭圆曲线 L 的中心零点并置。
+
+**别名：** `Gross 的类比`、`Hecke L 函数`、`中心零点与特殊值`
+
+## 定义
+
+Hecke L 的函数方程 (5.4) $\Lambda(\chi,s)=\varepsilon(\chi)(|D|N\mathfrak m)^{1/2-s}\Lambda(\overline\chi,1-s)$ 与椭圆曲线 L 的函数方程形状相同：都是「导子 $\times$ 完备化 $\times$ 根数」的对称形式，函数方程的对称中心都在 $s=1/2$。差别在于算术关注点：Hecke/Dirichlet L 的关键位置是 $s=1$（$\zeta$ 的极点与非 vanishing 的战场），而椭圆曲线 L 的中心点在酉归一化下是 $s=1/2$（经典归一化记作 $s=1$）。第 2 章 §3 的 Goldfeld 论证正是利用这一点：Gross–Zagier 给出秩 $1$ 椭圆曲线中心点的单零点，$\chi$ 的 twist 把中心零点「反射」到 $\chi$ 的实零点 $\beta_1\approx1$ 附近，从而排斥 Landau–Siegel 零点。这个「中心导数 = 算术不变量」的模式（Heegner 点高度、Petersson 范数、类数公式）就是书中反复出现的「特殊值 ↔ 算术」类比；中译注本把它与 Gross–Zagier 并提，但未把它命名为定理。
+
+**记号：** $\Lambda(\chi,s)$：完备化 Hecke L；$\varepsilon(\chi)$：根数；$\mathfrak m$：模；$|D|N\mathfrak m$：导子；$s=1/2$：函数方程的对称中心（也是椭圆曲线 L 的酉归一化中心）；$s=1$：$\zeta$ 的极点与 Dirichlet 非 vanishing 的位置。
+
+## 要点
+
+- 两种 L 的局部因子形状一致（一次项、二次项），函数方程的「导子 $\times$ 完备化 $\times$ 根数」结构也一致；差别在算术关注点（$s=1$ 与椭圆曲线的中心）与阿基米德因子的具体形状。
+- Gross–Zagier 是「中心导数 = 算术不变量」的第一个一般定理：秩 $1$ 时 $L'(E,1)$ 与 Heegner 点高度成正比；这给 Goldfeld 提供了真正的实零点杠杆。
+- 书中并没有把「Gross 的类比」列为一条定理；这里按上下文把它理解为「Hecke L 的特殊值/中心零点 ↔ 椭圆曲线 L 的中心导数」这一类比的统称。
+
+## 公式
+
+$$
+\Lambda(\chi,s)=\varepsilon(\chi)\,(|D|N\mathfrak m)^{1/2-s}\,\Lambda(\overline\chi,1-s)
+$$
+
+$$
+\Lambda(E,s)=\varepsilon(E)\,N^{1-s}\,\Lambda(E,2-s)\qquad(\text{权 }2\text{ 的椭圆曲线 L})
+$$
+
+$$
+L'(E,1)\ \sim\ \hat h(P)\qquad(\operatorname{rank}E=1,\ P\in E(K)\ \text{Heegner 点})
+$$
+
+## 易错点
+
+- 把「极点所在 $s=1$」当成「函数方程中心」：Dirichlet/Hecke L 的函数方程中心也是 $s=1/2$，但算术关注点是 $s=1$（$\zeta$ 的极点与非 vanishing）；椭圆曲线 L 在经典归一化下中心记作 $s=1$，酉归一化下才是 $s=1/2$。混用会把 Goldfeld 论证里「相距 $1/2$」的来源说错。
+- 把「Gross 的类比」当成书中的定理名：原书第 2 章只在 Goldfeld 段提到 Gross–Zagier，没有「Gross 类比」这一条；引用时应说明这是整理性的说法。
+
+## 批注
+
+**〔含糊点拨〕类比不是定理**　任务式的问题把「Hecke L 与 Gross 的类比」当成一个主题，但原书第 2 章只在 §3 的 Goldfeld 段出现 Gross–Zagier，且未命名任何「Gross 类比」。本卡按上下文把它整理为「中心导数 = 算术不变量」的类比，并在批注里标明这一点，避免把它误读成书中定理。
+
+**〔背景直觉〕为什么中心点特殊**　函数方程 $s\leftrightarrow1-s$（或 $s\leftrightarrow2-s$）把中心点固定下来；中心点的零点阶数在函数方程下不变，因此是「算术不变量」最自然的栖身处。BSD 猜想把中心零点的阶数等同于 Mordell–Weil 秩，Gross–Zagier 则给出阶数为 $1$ 时的定量版本。
+
+## 相关
+
+[[ch1-dedekind-zeta]]、[[ch2-goldfeld]]、[[ch2-nonvanishing]]
+
+## 来源
+
+- Bernstein–Gelbart 编《朗兰兹纲领导论》（An Introduction to the Langlands Program），Birkhäuser 2004，§2，原书 pp. 21–24（PDF pp. 29–32）
+  - 锚点：`08_source_code/SY02-24_朗兰兹纲领导论_全书中文译注/源码/chapters/ch02.tex:11-70`
+- Bernstein–Gelbart 编《朗兰兹纲领导论》（An Introduction to the Langlands Program），Birkhäuser 2004，§3，原书 pp. 29–31（PDF pp. 37–39）
+  - 锚点：`08_source_code/SY02-24_朗兰兹纲领导论_全书中文译注/源码/chapters/ch02.tex:281-300`

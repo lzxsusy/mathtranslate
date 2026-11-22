@@ -1,0 +1,56 @@
+# 局部成分与限制张量积
+
+> `lbook04/concept/ch7-restricted-tensor` · 轨 M 模形式与自守表示 · 状态 reviewed · 核验 source-only
+
+**问题：** 限制张量积的「限制」二字去掉后会失去什么，为什么必须几乎处处取同一个球向量？
+
+**一句话：** 整体自守表示分解为局部不可约表示的「限制张量积」：几乎处处取球向量，只有有限个位真正分歧；反之，满足条件的局部数据拼成整体表示。
+
+**别名：** `restricted tensor product`、`局部-整体原则`、`$\pi=\bigotimes\pi_v$`
+
+## 定义
+
+定理 2.5：给定每个位 $v$ 的不可约容许表示 $\pi_v$，且几乎处处 $\pi_v$ 有 $K_v$-不变的基向量 $\xi_v^0$，则限制张量积 $V=\bigotimes'_vV_v$ 是不可约容许 $(\mathfrak g,K_\infty)\times G(\mathbb A_f)$-模；反之任何不可约容许模都这样分解（注 405：$\pi=\bigotimes\pi_v$，略去同构）。局部理论（§3）：无分歧 $\pi$ 由 Satake 参数 $t(\pi)\in\operatorname{GL}_2(\mathbb C)$ 的半单共轭类决定，分歧 $\pi$ 由导子 $c(\pi)$ 与局部 $L$ 包刻画。
+
+**记号：** $\pi_v$：局部成分；$\xi_v^0$：球向量；$\bigotimes'$：限制张量积；$t(\pi_v)$：Satake 参数；$c(\pi_v)$：导子。
+
+## 要点
+
+- 限制张量积的泛性质：几乎处处 $\xi_v=\xi_v^0$；去掉这个条件，张量积会变成不可数维、不再是容许模。
+- 定理 2.5 的正向（局部 $\to$ 整体）与反向（整体 $\to$ 局部）都成立，是「局部-整体原则」的表示论形式。
+- 无分歧局部表示 $\leftrightarrow$ $\operatorname{GL}_2(\mathbb C)$ 的半单共轭类（推论 3.4），即 Satake 对应。
+- 分歧位由导子 $c(\pi_v)$ 控制：$c=0$ 无分歧，$c=1$ 无分歧特殊，$c\ge2$ 才可能超尖点。
+
+## 公式
+
+$$
+V=\bigotimes'_v V_v,\qquad \xi_v=\xi_v^0\ \text{对几乎全部 }v
+$$
+
+$$
+\pi\ \text{无分歧}\ \longleftrightarrow\ t(\pi)\in\operatorname{GL}_2(\mathbb C)/\sim
+$$
+
+$$
+N(\pi)=\prod_p p^{c(\pi_p)}
+$$
+
+## 易错点
+
+- $\bigotimes'$ 与普通张量积不同：普通张量积要求每个分量都指定向量，限制张量积只要求几乎处处等于基向量；写 $L=\bigotimes L_v$ 时也用这个约定。
+- Satake 参数是 $G^\vee=\operatorname{GL}_2(\mathbb C)$ 的共轭类，不是完整 $L$-群 ${}^LG=\operatorname{GL}_2(\mathbb C)\rtimes W_{\mathbb Q}$ 的元素；§3 注 526 专门提醒这一点。
+
+## 批注
+
+**〔背景直觉〕为什么几乎处处**　整体表示在几乎所有位无分歧，这是「整体对象比局部数据少」的体现；限制张量积正是把「有限个位的选择 $+$ 无穷多个默认值」组织成一个整体对象的技术。
+
+**〔含糊点拨〕$G^\vee$ 与 ${}^LG$**　推论 3.4 只说无分歧 $\pi$ 对应 $G^\vee$ 的共轭类；Langlands 参数（含 Frobenius 半单部分）才住在 ${}^LG$ 里。书中在此只做无分歧情形，不要提前把两者等同。
+
+## 相关
+
+[[ch7-automorphic-rep]]、[[ch7-newform]]、[[ch7-multiplicity-one]]
+
+## 来源
+
+- Bernstein–Gelbart 编《朗兰兹纲领导论》（An Introduction to the Langlands Program），Birkhäuser 2004，§3，原书 pp. 143–147（PDF pp. 147–151）
+  - 锚点：`08_source_code/SY02-24_朗兰兹纲领导论_全书中文译注/源码/chapters/ch07.tex:431-592`

@@ -1,0 +1,46 @@
+# 数域上的整体猜想与已知结果
+
+> `lbook04/concept/ch10-global-number-field` · 轨 G GL_n 的 Langlands 纲领 · 状态 reviewed · 核验 source-only
+
+**问题：** 数域上为什么不能像函数域那样用上同调统一构造整体对应？
+
+**一句话：** 数域上没有整体 $W'_k$，Langlands 群 $\mathcal{L}_k$ 以正合列 $1\to\mathcal{L}_k^0\to\mathcal{L}_k\to\mathcal{G}_k\to1$ 代替；三类对应分别配 $\mathcal{G}_k$、$\mathcal{M}_k$、$\mathcal{L}_k$，已知结果集中在 $n=2$ 与全实域。
+
+**别名：** `Langlands 群 L_k`、`Galois 型尖点`、`Wiles`、`Clozel`
+
+## 定义
+
+数域上没有整体 $W'_k$：Frobenius 只有共轭类，没有单个元素。Langlands 因此引入 $\mathcal{L}_k$，期望有正合列 $1\to\mathcal{L}_k^0\to\mathcal{L}_k\to\mathcal{G}_k\to1$，并把整体参数 $\phi:\mathcal{L}_k\to{}^LG$ 的局部化 $\iota_v\circ\phi_v$ 与局部参数相容。三类对应分别是：(i) $\mathcal{G}_k$ 的 $n$ 维不可约表示 $\leftrightarrow$ Galois 型尖点表示（限制 $\pi_\infty$）；(ii) 动机 Galois 群 $\mathcal{M}_k$ 的表示 $\leftrightarrow$ 代数尖点表示；(iii) $\mathcal{L}_k$ 的表示 $\leftrightarrow$ 全部尖点表示。已知结果大多在 (i)：Deligne 对 $n=2$、$k=\mathbb{Q}$、权 $\ge2$ 的全纯新形式；Deligne–Serre 权 $1$；全实域的 Rogawski–Tunnell、Ohta、Carayol、Wiles、Taylor、Blasius–Rogawski；虚二次域的 Harris–Soudry–Taylor、Taylor；Clozel 对一般 $n$ 的全实域。反方向有 Langlands–Tunnell（强 Artin 猜想，$n=2$）、Wiles（椭圆曲线模性）与 Breuil–Conrad–Diamond–Taylor。障碍的根源是 $\mathrm{GL}_n$ 在数域上没有自然的模问题，故自守→Galois 方向只能逐例做。
+
+**记号：** $\mathcal{L}_k$：猜想中的 Langlands 群；$\mathcal{L}_k^0$：其连通分量（猜想对象）；$\mathcal{M}_k$：动机 Galois 群；$\mathcal{G}_k$：绝对 Galois 群；$\pi_\infty$：阿基米德分量。
+
+## 要点
+
+- $\mathcal{L}_k$ 是猜想对象，不是 $W'_k$ 的整体版；正合列中的 $\mathcal{L}_k^0$ 正是需要构造的部分。
+- 三类对应按「Galois 侧目标」分层：$\mathcal{G}_k$（最小，Galois 型尖点）、$\mathcal{M}_k$（动机，代数尖点）、$\mathcal{L}_k$（全部尖点）。
+- 数域上 $\mathrm{GL}_n$ 没有自然模问题，故不能像函数域那样用 shtuka 的上同调统一处理；这是整体理论至今零散的根本原因。
+- $n=2$、$k=\mathbb{Q}$ 是唯一完整的情形；$n\ge3$ 只对全实域等特殊域有结果（Clozel 及其后续）。
+
+## 公式
+
+$$
+1\to\mathcal{L}_k^0\to\mathcal{L}_k\to\mathcal{G}_k\to1
+$$
+
+## 易错点
+
+- 把 $\mathcal{L}_k$ 与 $W'_k$ 等同：$\mathcal{L}_k$ 更大，且其结构本身是猜想的一部分。
+- 把「Galois 型尖点」当成全部尖点：还有 $\mathcal{M}_k$ 与 $\mathcal{L}_k$ 两档，分别对应代数尖点与全部尖点。
+
+## 批注
+
+**〔含糊点拨〕局部–整体相容怎么写**　整体参数 $\phi$ 的局部化是 $\phi_v=\iota_v\circ\phi$，其中 $\iota_v:{}^LG_v\to{}^LG$ 由 $\mathcal{G}_{k_v}\subset\mathcal{G}_k$ 给出；没有这条相容性，整体 $L$ 函数无法写成 Euler 乘积。第 11 章定义 2.2 正是这样写的。
+
+## 相关
+
+[[ch10-global-function-field]]、[[ch11-dual-group]]、[[ch10-local-langlands]]
+
+## 来源
+
+- Bernstein–Gelbart 编《朗兰兹纲领导论》（An Introduction to the Langlands Program），Birkhäuser 2004，§4.2，原书 pp. 245–246（PDF pp. 248–249）
+  - 锚点：`08_source_code/SY02-24_朗兰兹纲领导论_全书中文译注/源码/chapters/ch10.tex:742-807`
