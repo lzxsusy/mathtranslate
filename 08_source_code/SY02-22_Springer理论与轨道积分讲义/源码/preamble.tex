@@ -1,0 +1,132 @@
+% ============================================================
+%  SY02-22《Springer 理论与轨道积分讲义》译稿导言区
+%  底本：Zhiwei Yun, Lectures on Springer theories and orbital integrals,
+%        arXiv:1602.01451（PCMI 2015 暑期学校讲义，62 页）
+%  体例：复现原文 pcmi.cls 的编号机制——\numberwithin{equation}{subsection}，
+%        定理类环境与公式共用一个计数器（印成「定理 1.5.1」「(1.5.2)」），
+%        并且 \subsubsection 也消耗这个计数器（印成「1.5.3. 约定」）。
+% ============================================================
+
+% ---------- 页面与字体 ----------
+\usepackage{geometry}
+\geometry{a4paper, left=2.6cm, right=2.6cm, top=2.8cm, bottom=2.6cm}
+\linespread{1.22}
+\setlength{\parskip}{0.25em}
+\setlength{\emergencystretch}{1.5em}
+\sloppy
+
+% ---------- 数学 ----------
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage{stmaryrd}
+\usepackage{bm}
+\allowdisplaybreaks[2]
+
+% ---------- 图表 ----------
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{cd, arrows.meta, positioning, calc}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{xspace}   % 原文宏 \sB 等用到 \xspace
+\setlist{itemsep=2pt, topsep=3pt, parsep=0pt}
+\setlist[enumerate,1]{label=(\arabic*)}
+
+% ---------- 交换图：\xymatrix 用的 xy 必须在 tikz 之后 ----------
+\usepackage[all]{xy}
+
+% ---------- 超链接 ----------
+\usepackage[hyperfootnotes=false, colorlinks=true, linkcolor=blue!45!black, citecolor=green!35!black,
+            urlcolor=teal!60!black, bookmarksnumbered=true]{hyperref}
+\usepackage{bookmark}
+
+% ---------- 中文微调 ----------
+\xeCJKsetup{CJKecglue={\hskip 0.24em plus 0.05em minus 0.05em}}
+\ctexset{
+  section    = {name={,}, aftername={.\enspace}, format=\Large\bfseries\centering},
+  subsection = {aftername={.\enspace}, format=\large\bfseries},
+  subsubsection = {aftername={.\enspace}, format=\normalsize\bfseries}
+}
+
+% ---------- 定理环境：全部挂在 equation 计数器上（原文即如此） ----------
+% 原文用 \swapnumbers 把编号印在「Theorem」之前；中译本按汉语习惯印成
+% 「定理 1.5.1（Springer）」，编号值不变。定理头不用句点收尾。
+\makeatletter
+\newtheoremstyle{cnplain}{3pt plus 1pt minus 1pt}{3pt plus 1pt}{}{}{\bfseries}{\relax}{0.6em}{%
+  \thmname{#1}\thmnumber{\@ifnotempty{#1}{\ }#2}\@ifempty{#3}{}{（#3）}}
+\newtheoremstyle{cndefn}{3pt plus 1pt minus 1pt}{3pt plus 1pt}{}{}{\bfseries}{\relax}{0.6em}{%
+  \thmname{#1}\thmnumber{\@ifnotempty{#1}{\ }#2}\@ifempty{#3}{}{（#3）}}
+\newtheoremstyle{cnrmk}{3pt plus 1pt minus 1pt}{3pt plus 1pt}{}{}{\bfseries}{\relax}{0.6em}{%
+  \thmname{#1}\thmnumber{\@ifnotempty{#1}{\ }#2}\@ifempty{#3}{}{（#3）}}
+\makeatother
+
+\numberwithin{equation}{subsection}
+\theoremstyle{cnplain}
+\newtheorem{theorem}[equation]{定理}
+\newtheorem{lemma}[equation]{引理}
+\newtheorem{prop}[equation]{命题}
+\newtheorem{cor}[equation]{推论}
+\newtheorem{conj}[equation]{猜想}
+\newtheorem{fact}[equation]{事实}
+\newtheorem{ansatz}[equation]{拟设}
+\theoremstyle{cndefn}
+\newtheorem{defn}[equation]{定义}
+\newtheorem{cons}[equation]{构造}
+\theoremstyle{cnrmk}
+\newtheorem{remark}[equation]{注}
+\newtheorem{exam}[equation]{例}
+\newtheorem{ques}[equation]{问题}
+
+\renewcommand{\proofname}{证明}
+\renewcommand{\qedsymbol}{$\square$}
+\renewcommand{\refname}{参考文献}
+\renewcommand{\contentsname}{目\quad 录}
+
+% ---------- \subsubsection 消耗 equation 计数器（原文导言区的核心技巧） ----------
+% 原文：\let\oldsubsubsection\subsubsection 后重定义，先令 subsubsection 计数器
+% 取 equation 的当前值，再调原命令（自增 1，于是编号等于新的 equation 值），
+% 最后再 \refstepcounter{equation} 跳过这个号。空标题 \subsubsection{} 同样占号。
+\makeatletter
+\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+\let\oldsubsubsection\subsubsection
+\renewcommand{\subsubsection}[1]{%
+  \setcounter{subsubsection}{\value{equation}}%
+  \oldsubsubsection{#1}%
+  \refstepcounter{equation}%
+}
+\makeatother
+
+% ---------- 译注标记（独立脚注序列） ----------
+\usepackage{amscd}
+\usepackage{manyfoot}
+\DeclareNewFootnote[plain]{trans}
+\renewcommand{\thefootnotetrans}{译\arabic{footnotetrans}}
+\newcommand{\zy}[1]{\footnotetrans{#1}}
+\newtcolorbox{yizhu}[1][]{
+  enhanced, breakable, colback=orange!4!white, colframe=orange!55!black,
+  boxrule=0.5pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  fonttitle=\bfseries\small, title=#1,
+  before skip=6pt, after skip=6pt
+}
+
+\providecommand{\cprime}{'}
+\providecommand{\vprime}{''}
+\providecommand{\sprime}{'}
+
+% ---------- 原文宏 ----------
+\input{preamble_macros}
+
+% ---------- 原文类文件提供、但正文另需的宏 ----------
+\providecommand{\scr}[1]{\mathscr{#1}}
+\providecommand{\bR}{\mathbf{R}}
+\providecommand{\bL}{\mathbf{L}}
+
+% 参考文献用：原文 amsrefs 条目里的 \MR 与 \bibarxiv 只保留正文，不排版
+\providecommand{\MR}[1]{}
+\providecommand{\bibarxiv}[1]{arXiv:#1}
+\providecommand{\biburl}[1]{\url{#1}}
