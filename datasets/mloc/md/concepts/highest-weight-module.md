@@ -1,0 +1,94 @@
+# 最高权模
+
+> `mloc/concept/highest-weight-module` · type=concept · track=G · status=draft · verification=source-only
+
+**别名**：highest weight module、HW module、$U(\mathfrak{b}_0)$-有限的 $\mathfrak{g}$-模
+
+## 摘要
+
+有限生成且作为 $U(\mathfrak{b}_0)$-模局部有限（每个向量生成有限维）的 $\mathfrak{g}$-模；等价地，权空间分解且权集只有有限多个极大元。
+
+## 问题
+
+为什么「有限生成 + $U(\mathfrak{b}_0)$-有限」这两个条件就够刻画最高权模，而不必事先假定权空间分解？
+
+## 定义
+
+固定 $\mathfrak{g}$ 中的 Borel 子代数 $\mathfrak{b}_0$，$\mathfrak{n}_0=[\mathfrak{b}_0,\mathfrak{b}_0]$，取 Cartan 子代数 $\mathfrak{h}_0\subset\mathfrak{b}_0$，正根集 $R_0^+=\Sigma^+$。设 $V$ 是 $\mathfrak{g}$-模。若 (i) $V$ 有限生成；(ii) $V$ 是 $U(\mathfrak{b}_0)$-有限的，即对任意 $v\in V$，$U(\mathfrak{b}_0)v$ 都有限维，则称 $V$ 是（关于 $\mathfrak{b}_0$ 的）最高权模。最高权模范畴指 $\mathcal{M}_{fg}(U(\mathfrak{g}))$ 中由最高权模构成的全子范畴。对 $\lambda\in\mathfrak{h}_0^*$ 置 $V^\lambda=\{v\in V\mid \text{存在}\ k\in\mathbb{N},\ \text{使对一切}\ \xi\in\mathfrak{h}_0\ \text{有}\ (\xi-\lambda(\xi))^k v=0\}$，则 $V^\lambda$ 是 $\mathfrak{h}_0$-子模，且 $V=\bigoplus_\lambda V^\lambda$；$V^\lambda\neq0$ 时称 $\lambda$ 是 $V$ 的权。
+
+记号：$\mathfrak{b}_0$：Borel 子代数；$\mathfrak{n}_0=[\mathfrak{b}_0,\mathfrak{b}_0]$；$\bar{\mathfrak{n}}_0$：负根张成的幂零子代数；$\mathfrak{h}_0\subset\mathfrak{b}_0$：Cartan 子代数；$\Sigma^+=R_0^+$：正根集；$W$：Weyl 群；$\rho=\frac12\sum_{\alpha\in\Sigma^+}\alpha$。
+
+## 要点
+
+- 定义是两条代数的要求，不含任何「权」的字眼：有限生成（$U(\mathfrak{g})$-模意义）与 $U(\mathfrak{b}_0)$-有限（每个向量在 Borel 下生成有限维空间）。
+- 权空间 $V^\lambda$ 是广义权空间（$(\xi-\lambda(\xi))^k v=0$），不是特征空间；对最高权模，$V=\bigoplus_\lambda V^\lambda$ 且各 $V^\lambda$ 有限维，并且权集在「差为正根和」的偏序下有有限多个极大元（引理 1.1）。
+- 引理 1.1 给出反向刻画：若 $V$ 有限生成、权空间分解、每个权空间有限维、且权集有有限多个极大元，则 $V$ 是最高权模。这两条路的差别在于「局部有限」是逐向量的，不是整体的。
+- 最高权模范畴可等同于 $\mathcal{M}_{fg}(\mathfrak{g},N_0)$ 中被 $Z(\mathfrak{g})$ 的某个有限余维理想零化的对象（命题 1.4 之后的讨论）：这就是第 5 章能调用第 4 章 HC 模理论的原因。
+- 范畴对正合列封闭（引理 1.2），并且每个对象有有限长度（命题 1.8）；这两条是整套理论的技术支柱。
+- 术语陷阱：书中「最高权为 $\lambda$」指 $V^\lambda\neq0$ 且 $\lambda+\alpha$（$\alpha\in\Sigma^+$）都不是权；而 Verma 模 $M(\lambda)$ 的最高权是 $\lambda-\rho$，不是 $\lambda$。
+
+## 公式
+
+$$\text{最高权模}=\text{有限生成}+U(\mathfrak{b}_0)\text{-有限}$$
+
+$$V=\bigoplus_{\lambda\in\mathfrak{h}_0^*}V^\lambda,\qquad V^\lambda=\{v\in V\mid(\xi-\lambda(\xi))^k v=0\ \text{对一切}\ \xi\in\mathfrak{h}_0\}$$
+
+$$U(\bar{\mathfrak{n}}_0)\otimes_{\mathbb{C}}U\twoheadrightarrow V\quad(U\subset V\ \text{有限维}\ \mathfrak{b}_0\text{-不变})$$
+
+$$\nu\leq\lambda\iff\lambda-\nu\ \text{是若干正根之和}$$
+
+## 相关定理
+
+### 引理 1.1（§5.1：最高权模的权刻画）
+
+设 $V$ 是有限生成 $\mathfrak{g}$-模。则 $V$ 是最高权模，当且仅当：(a) $V=\bigoplus_\lambda V^\lambda$ 且每个 $V^\lambda$ 有限维；(b) 存在有限权集 $S_0$，使每个权 $\nu$ 都有 $\mu\in S_0$ 满足 $\mu-\nu$ 是若干正根之和。
+
+证明状态：`complete`
+
+1. 设 $V$ 是最高权模。按定义，$V$ 由某个有限维 $\mathfrak{b}_0$-不变子空间 $U$ 生成（取生成元在 $U(\mathfrak{b}_0)$ 下的有限维包）。
+   - 为什么：有限生成给有限个生成元，$U(\mathfrak{b}_0)$-有限给每个生成元张成有限维空间，取和即得有限维 $\mathfrak{b}_0$-不变 $U$。
+2. 由 PBW 定理，自然映射 $U(\bar{\mathfrak{n}}_0)\otimes_{\mathbb{C}}U\to V$ 是 $\mathfrak{h}_0$-模的满射。
+   - 为什么：$U(\mathfrak{g})=U(\bar{\mathfrak{n}}_0)U(\mathfrak{h}_0)U(\mathfrak{n}_0)$，而 $U$ 已被 $\mathfrak{b}_0=\mathfrak{h}_0\oplus\mathfrak{n}_0$ 保持；负根部分把 $\mathfrak{h}_0$-权降低。
+3. 于是 $V$ 的权都形如 $\mu-\nu$（$\mu$ 为 $U$ 中的权，$\nu$ 为正根和），权空间是有限维 $\bar{\mathfrak{n}}_0$-模，且权集有有限多个极大元——因为 $U$ 有限维只有有限多个权。这给出 (a) 与 (b)。
+   - 为什么：$\bar{\mathfrak{n}}_0$ 只降低权，故每个权空间落在有限维的 $U(\bar{\mathfrak{n}}_0)\cdot U^\mu$ 中；$\dim U<\infty$ 给出 $S_0$ 有限。
+4. 反之设 (a) 与 (b)。取 $v\in V^\lambda$；$U(\mathfrak{b}_0)v$ 含于那些 $V^\nu$ 的直和中，其中 $\nu-\lambda$ 是若干正根之和。
+   - 为什么：$\mathfrak{n}_0$ 提高权、$\mathfrak{h}_0$ 保持权，故 $U(\mathfrak{b}_0)$ 只把 $\lambda$ 移到 $\lambda+$（正根和）。
+5. 由 (b)，这样的权只有有限多个；由 (a)，相应权空间有限维，故 $U(\mathfrak{b}_0)v$ 有限维，即 $V$ 是最高权模。
+   - 为什么：(b) 的 $S_0$ 有限，每个权空间有限维，有限个有限维空间之和仍有限维。
+
+### 命题 1.4（§5.1：最高权模的判别）
+
+设 $\mathfrak{g}$-模 $V$ 满足：(i) $V$ 有限生成；(ii) 对任意 $v\in V$，存在 $k\in\mathbb{N}$ 使 $\mathfrak{n}_0^k\cdot v=0$；(iii) $V$ 在 $Z(\mathfrak{g})$ 中的零化子有限余维。则 $V$ 是最高权模。
+
+证明状态：`complete`
+
+1. 设 $U$ 是生成 $V$ 的有限维 $\mathfrak{n}_0$-不变子空间，对 $\dim U$ 作归纳。
+   - 为什么：$V$ 有限生成，取生成元的有限维包（用 (ii) 的幂零性可把生成元在 $\mathfrak{n}_0$ 下取成有限维不变量）。
+2. 若 $\dim U=1$，则 $U$ 被 $U(\mathfrak{g})\mathfrak{n}_0$ 零化；由 Harish-Chandra 同态 $Z(\mathfrak{g})\subset U(\mathfrak{h}_0)\oplus U(\mathfrak{g})\mathfrak{n}_0$，$U(\mathfrak{h}_0)U=U(\mathfrak{b}_0)U$ 有限维。
+   - 为什么：$Z(\mathfrak{g})$ 沿 $U(\mathfrak{g})\mathfrak{n}_0$ 投影到 $U(\mathfrak{h}_0)$ 是代数同态，且 $U(\mathfrak{h}_0)$ 在其像上有限生成；再乘上有限维的 $U$ 仍有限维。
+3. 由一切使 $U(\mathfrak{b}_0)u$ 有限维的 $u$ 构成的子空间 $V'$ 是 $\mathfrak{g}$-子模；它包含 $U$，从而 $V'=V$。
+   - 为什么：$\mathfrak{b}_0$-有限性在 $\mathfrak{g}$ 作用下保持（共轭改变的是 Borel，而 $V'$ 用 $U(\mathfrak{b}_0)$ 定义，需用 PBW 验证），故 $V'$ 是子模；$U$ 生成 $V$ 给出 $V'=V$。
+4. 若 $\dim U>1$，由 Engel 定理取一维 $U_0\subset U$ 使 $\mathfrak{n}_0U_0=0$；由 $U_0$ 生成的子模 $V_0$ 是最高权模。
+   - 为什么：Engel 定理保证幂零李代数在有限维模上有非零零化向量；上一段已处理 $\dim U_0=1$ 的情形。
+5. 商 $V_1=V/V_0$ 由 $U_1=U/(U\cap V_0)$ 生成，$\dim U_1\le\dim U-1$，由归纳假设是最高权模；再由引理 1.2（对正合列封闭）得 $V$ 是最高权模。
+   - 为什么：归纳假设与正合列封闭性把两端拼成中间；$U_1$ 仍满足 (ii) 与 (iii)。
+
+## 易错点
+
+- $U(\mathfrak{b}_0)$-有限不是「$V$ 有限维」：它只要求每个向量在 Borel 下生成有限维空间，$V$ 本身可以无限维（Verma 模就是）。
+- 权空间 $V^\lambda$ 是广义权空间；对非半单的 $\mathfrak{h}_0$ 作用（比如 $V$ 上有 Jordan 块），$V^\lambda$ 比特征空间大，漏掉「$k$ 次幂」会把权集算小。
+- 「最高权」的标签差一个 $\rho$：Verma 模 $M(\lambda)$ 的最高权是 $\lambda-\rho$，$L(\lambda)$ 的最高权也是 $\lambda-\rho$；命题 1.6 里若 $V$ 的最高权是 $\nu$，则 $V\cong L(\nu+\rho)$——书中的 $\lambda$ 是「最高权 $+\rho$」。
+- 「有限生成」不能省：局部有限（$U(\mathfrak{b}_0)$-有限）本身不足以保证有限生成，例如无限直和 $\bigoplus_\lambda\mathbb{C}_{\lambda}$ 是 $U(\mathfrak{b}_0)$-有限的但不是最高权模。
+- 偏序 $\nu\leq\lambda$（$\lambda-\nu$ 为正根和）依赖 $\Sigma^+$ 的选取；换 Borel 会换掉「最高」的方向。
+
+## 相关卡
+
+- `mloc/concept/highest-weight-category`
+- `mloc/concept/verma-module`
+- `mloc/concept/unique-irreducible-quotient`
+- `mloc/concept/harish-chandra-module`
+
+## 出处
+
+- Miličić, Localization and Representation Theory of Reductive Lie Groups · §5.1 最高权模的定义、权空间、引理 1.1 · p.[93]（PDF [97]） · `源码/chapters/ch05a.tex:7-44（$\mathfrak{b}_0$、$\mathfrak{n}_0$ 的设定、最高权模的定义、权空间、引理 1.1 及其证明）`
+- Miličić, Localization and Representation Theory of Reductive Lie Groups · §5.1 命题 1.4 与 $N_0$ 的等同 · p.[94]（PDF [98]） · `源码/chapters/ch05a.tex:56-70（命题 1.4、其证明，以及最高权模范畴与 $\mathcal{M}_{fg}(\mathfrak{g},N_0)$ 的等同）`

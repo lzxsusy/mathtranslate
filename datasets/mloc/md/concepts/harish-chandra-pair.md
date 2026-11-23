@@ -1,0 +1,89 @@
+# Harish-Chandra 对
+
+> `mloc/concept/harish-chandra-pair` · type=concept · track=F · status=draft · verification=source-only
+
+**别名**：Harish-Chandra pair、HC pair、$(\mathfrak{g},K)$-对、对合 Harish-Chandra 对
+
+## 摘要
+
+代数群 $K$ 经 $\phi:K\to\operatorname{Int}(\mathfrak{g})$ 作用在旗簇 $X$ 上；轨道只有有限多条时 $(\mathfrak{g},K)$ 称 Harish-Chandra 对。
+
+## 问题
+
+为什么「$K$ 在旗簇上只有有限多条轨道」可以作为 Harish-Chandra 对的定义，又为什么 Lie 代数是对合子代数时这一条件自动成立？
+
+## 定义
+
+设 $K$ 是代数群，$\phi:K\to\operatorname{Int}(\mathfrak{g})$ 是代数群态射，且其微分 $d\phi$ 是单射；于是 $K$ 的 Lie 代数与 $\mathfrak{g}$ 的子代数 $\mathfrak{k}$ 等同，$K$ 经 $\phi$ 自然作用在旗簇 $X=G/B$ 上。若 $K$ 在 $X$ 上的作用只有有限多条轨道，则称 $(\mathfrak{g},K)$ 是 Harish-Chandra 对。设 $\sigma$ 是 $\mathfrak{g}$ 的对合，被 $\sigma$ 固定的全体向量构成 $\mathfrak{g}$ 的 Lie 子代数 $\mathfrak{k}=\operatorname{Fix}\sigma$，称为 $\mathfrak{g}$ 的对合子代数；当 $K$ 是 $\operatorname{Int}(\mathfrak{g})$ 的闭子群、$\operatorname{Lie}K=\mathfrak{k}$ 且 $\mathfrak{k}$ 是对合子代数时，$(\mathfrak{g},K)$ 称为对合 Harish-Chandra 对（定理 2.4 说明它确实是 Harish-Chandra 对）。
+
+记号：$\mathfrak{g}$：复半单李代数；$G=\operatorname{Int}(\mathfrak{g})$；$B$：$G$ 的 Borel 子群；$X=G/B$：旗簇；$\mathfrak{k}=\operatorname{Lie}K$；$\sigma$：$\mathfrak{g}$ 的对合；$\mathfrak{b}_0$：$\mathfrak{g}$ 的 Borel 子代数，$\mathfrak{n}_0=[\mathfrak{b}_0,\mathfrak{b}_0]$；$N_0$：$\operatorname{Int}(\mathfrak{g})$ 中对应 $\mathfrak{n}_0$ 的幂幺子群。
+
+## 要点
+
+- 定义只要求轨道条数有限。原文在定义后立即指出 Harish-Chandra 对必在 $X$ 中有开轨道；当 $K$ 是 $\operatorname{Int}(\mathfrak{g})$ 的闭子群时，这两条性质等价（定理 2.1）。
+- 第一个典型例子是 $(\mathfrak{g},B)$：$B$ 在 $X$ 上轨道有限就是 Bruhat 引理（[2], 14.11），其轨道正是 Bruhat 胞腔 $C(w)$。
+- 第二个来源是对合子代数：$\mathfrak{k}=\operatorname{Fix}\sigma$ 时 $K$ 在 $X$ 上轨道有限（命题 2.2、定理 2.4），故对合 Harish-Chandra 对是一大类例子；对称对 $(\mathfrak{g},\mathfrak{k})$ 是其中的标准情形。
+- 证明的技术核心是把 $X$ 上的问题搬到 $X\times X$：$G$ 按 $g(x,y)=(gx,\sigma(g)y)$ 作用在 $X\times X$ 上时只有有限多条轨道（引理 2.3），再限制到对角线 $\Delta\cong X$ 上，用切空间比较把每个层收缩成一条 $K$-轨道。
+- 第 5 章把 $N_0$ 放进这对记号里：$(\mathfrak{g},N_0)$ 也是 Harish-Chandra 对（命题 1.13），于是第 4 章的整部 Harish-Chandra 模理论可以直接套到最高权模范畴上。这条桥是 track F 与 track G 的接口。
+- Harish-Chandra 对是「群-代数」对，不是「李代数-子代数」对：$K$ 必须真的作用在 $\mathfrak{g}$ 上（经 $\phi$），而 $\mathfrak{k}$ 只是它的微分像。
+
+## 公式
+
+$$(\mathfrak{g},K)\ \text{是 Harish-Chandra 对}\iff \operatorname{Card}(K\backslash X)<\infty$$
+
+$$X=G/B,\qquad \mathfrak{k}=\operatorname{Lie}K\subset\mathfrak{g}$$
+
+$$g(x,y)=(gx,\sigma(g)y),\qquad g\in G=\operatorname{Int}(\mathfrak{g}),\ x,y\in X$$
+
+$$\mathfrak{k}=\operatorname{Fix}\sigma=\{X\in\mathfrak{g}\mid \sigma(X)=X\}$$
+
+## 相关定理
+
+### 引理 2.3（§4.2：$X\times X$ 上的轨道有限）
+
+设 $\sigma$ 是 $\mathfrak{g}$ 的对合，$G=\operatorname{Int}(\mathfrak{g})$ 按 $g(x,y)=(gx,\sigma(g)y)$ 作用在 $X\times X$ 上。则这个作用只有有限多条轨道。
+
+证明状态：`complete`
+
+1. 固定 $v\in X$，设 $B_v$ 是对应于 $v$ 的 Borel 子群，并令 $B=\sigma(B_v)$。则 $X\times X$ 中每条 $G$-轨道都与 $X\times\{v\}$ 相交。
+   - 为什么：给定 $(u,w)$，取 $h\in G$ 使 $hw=v$，再取 $g=\sigma^{-1}(h)$，则 $\sigma(g)w=v$，而第一坐标 $gu$ 任意——轨道在第二个因子上可迁。
+2. 设 $u\in X$。则过 $(u,v)$ 的 $G$-轨道 $Q$ 与 $X\times\{v\}$ 的交等于 $Bu\times\{v\}$。
+   - 为什么：稳定化子计算：使 $\sigma(g)v=v$ 的 $g\in G$ 构成的正是 $B=\sigma(B_v)$，故该交就是 $B$-轨道 $Bu$ 乘上 $\{v\}$。
+3. 由 Bruhat 分解，$B$ 在 $X$ 上只有有限多条轨道。于是 $X\times X$ 中 $G$-轨道的条数有限。
+   - 为什么：第一步把 $G$-轨道与 $X\times\{v\}$ 中的交一一对应，第二步把这些交与 $X$ 的 $B$-轨道一一对应，而双陪腔 $B\backslash G/B$ 有限。
+
+### 命题 2.2（§4.2：对合子代数给出有限轨道）
+
+设 $K$ 是 $\operatorname{Int}(\mathfrak{g})$ 的闭子群，其 Lie 代数 $\mathfrak{k}$ 是 $\mathfrak{g}$ 的对合子代数。则 $K$ 在 $X$ 上的作用只有有限多条轨道。
+
+证明状态：`complete`
+
+1. 可设 $K$ 连通。把微分为 $\sigma$ 的 $G$ 的对合自同构仍记作 $\sigma$，则 $\mathfrak{k}=\operatorname{Fix}\sigma$。
+   - 为什么：取连通分支后 $K$ 的轨道数至多乘以有限的分支数；对合子代数的条件在单位分支上不变。
+2. 由引理 2.3，$X\times X$ 被有限多个 $G$-轨道分层；限制到对角线 $\Delta\cong X$ 得到有限多个不可约层 $V$，它们都 $K$-不变。
+   - 为什么：层是各 $G$-轨道与 $\Delta$ 的交的不可约分支；$K$ 保 $\Delta$（$k(x,x)=(kx,\sigma(k)x)=(kx,kx)$），故层 $K$-不变，是若干 $K$-轨道的并。
+3. 设 $V$ 是这样的层，$(x,x)\in V$，$Q$ 是 $(x,x)$ 的 $K$-轨道。把 $T_x(X)$ 与 $\mathfrak{g}/\mathfrak{b}_x$ 等同，则轨道映射 $f(g)=g(x,x)$ 在单位元处的微分是 $\xi\mapsto(p_x(\xi),p_x(\sigma(\xi)))$。
+   - 为什么：$f$ 的两个分量分别是在两个因子上作轨道映射 $G\to X$ 再复合 $\sigma$；而 $T_1(f_x)$ 把 $\mathfrak{g}/\mathfrak{b}_x$ 与 $T_x(X)$ 等同。
+4. 于是 $T_{(x,x)}V$ 含于微分像与对角线的交 $\{(p_x(\xi),p_x(\xi))\mid \xi\in\mathfrak{k}\}=T_{(x,x)}Q$，故 $Q$ 在 $V$ 中开；由 $V$ 不可约得 $V=Q$。
+   - 为什么：$V$ 是 $\Delta$ 中的层，其切空间必落在 $\Delta$ 的切空间里，又被微分像包含（层是 $G$-轨道的一部分）；两条件一交正好是 $\mathfrak{k}$ 的像。不可约簇的稠密开子簇等于自身。
+5. 因此 $\Delta$ 上的分层正是 $X$ 的 $K$-轨道分层经对角映射拉回，只有有限多层，即 $K$ 在 $X$ 上只有有限多条轨道。
+   - 为什么：第二步的层数有限，第四步说明每层恰是一条 $K$-轨道，而 $\Delta\cong X$。
+
+## 易错点
+
+- Harish-Chandra 对不是「$K$ 是某个对合子代数的不动点群」的缩写：一般情形 $K$ 是抽象代数群加态射 $\phi$，只要 $d\phi$ 单射且轨道有限即可；对合子代数只是充分条件（定理 2.4），不是定义的一部分。
+- 「轨道有限」是 $K$ 在旗簇 $X$ 上的性质，不是 $K$ 在 $\mathfrak{g}$ 或 $G/K$ 上的性质；$X$ 的选法与 $\mathfrak{g}$ 的 Borel 结构固定有关。
+- 当 $K\subset\operatorname{Int}(\mathfrak{g})$ 闭时「有开轨道」与「轨道有限」等价（定理 2.1）；对一般代数群 $K$ 不要反过来把「有开轨道」当定义——定义用的是轨道条数。
+- $(\mathfrak{g},B)$ 与 $(\mathfrak{g},N_0)$ 都是 Harish-Chandra 对，但 $B$ 可解、$N_0$ 幂幺，两者的轨道分解相同（Bruhat 胞腔）而稳定化子不同；第 4 章只用到轨道几何，第 5 章才用到 $N_0$ 的代数作用。
+
+## 相关卡
+
+- `mloc/concept/harish-chandra-module`
+- `mloc/concept/harish-chandra-sheaf`
+- `mloc/concept/highest-weight-category`
+- `dmod/concept/kashiwara-theorem`
+
+## 出处
+
+- Miličić, Localization and Representation Theory of Reductive Lie Groups · §4.2 Harish-Chandra 对（定义、定理 2.1、$(\mathfrak{g},B)$ 的例子） · p.[86]（PDF [90]） · `源码/chapters/ch04.tex:49-66（§4.2 开头：$\phi$ 的设定、HC 对的定义、定理 2.1、Bruhat 引理的例子）`
+- Miličić, Localization and Representation Theory of Reductive Lie Groups · §4.2 对合子代数、引理 2.3、命题 2.2、定理 2.4 · p.[86, 87]（PDF [90, 91]） · `源码/chapters/ch04.tex:68-97（对合子代数、引理 2.3、命题 2.2、定理 2.4 与「对合 Harish-Chandra 对」的命名）`

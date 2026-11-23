@@ -1,0 +1,104 @@
+# $\mathfrak{n}$-同调 $H_\bullet(\mathfrak{n}_x,V)$
+
+> `mloc/concept/n-homology` · type=concept · track=D · status=draft · verification=source-only
+
+**别名**：n-homology、$\mathfrak{n}$-同调、第 3 章引理 2.1、第 3 章引理 2.2
+
+## 摘要
+
+$\mathfrak{n}$-同调用 Tor 定义；$U_\theta$ 对 $U(\mathfrak{n}_x)$ 自由，故 $H_0$ 是 $V_\theta$ 的直和，特征多项式 $P_\xi$ 消灭一切 $H_p$。
+
+## 问题
+
+$\mathfrak{n}$-同调如何定义？为什么 $U_\theta$ 的 $\mathfrak{n}$-同调可以被完全算清？
+
+## 定义
+
+对 $x\in X$，$\mathfrak{n}_x$ 是 $x$ 处的幂零根。$\mathfrak{n}$-同调 $H_\bullet(\mathfrak{n}_x,V)$ 是 $V$ 的 $\mathfrak{n}_x$-同调，等价地是 $\operatorname{Tor}^{U(\mathfrak{n}_x)}$。它是局部化函子在一点处取纤维时出现的代数量，也是第 4 章 Harish-Chandra 模 $\mathfrak{n}$-同调的非交换版本。
+
+记号：$V_{\mathfrak{n}_x}=V/\mathfrak{n}_xV=\mathbb{C}\otimes_{U(\mathfrak{n}_x)}V$ 是 $\mathfrak{n}_x$-余不变量；$H_p(\mathfrak{n}_x,-)=\operatorname{Tor}_p^{U(\mathfrak{n}_x)}(\mathbb{C},-)$；$V_\theta=U(\mathfrak{h})/\gamma(J_\theta)U(\mathfrak{h})$，维数 $\operatorname{Card}W$；$\gamma:Z(\mathfrak{g})\to U(\mathfrak{h})$ 是 Harish-Chandra 同态。
+
+## 要点
+
+- 由 PBW，自由 $U(\mathfrak{g})$-模也是自由 $U(\mathfrak{n}_x)$-模，故 $\operatorname{Tor}^{U(\mathfrak{n}_x)}$ 与李代数同调 $H_\bullet(\mathfrak{n}_x,-)$ 一致；两种记法可互换。
+- 第 3 章引理 2.1：$U_\theta$ 作为 $U(\mathfrak{n}_x)$-模自由。证明用 $\mathfrak{g}=\mathfrak{n}_x\oplus\mathfrak{c}\oplus\bar{\mathfrak{n}}$ 的 PBW 分解与滤过归纳。
+- 第 3 章引理 2.2：$V_\theta$ 维数 $\operatorname{Card}W$；$\xi\in\mathfrak{h}$ 在 $V_\theta$ 上的特征多项式为 $P_\xi(t)=\prod_{w\in W}(t-(w\lambda+\rho)(\xi))$；$H_0(\mathfrak{n}_x,U_\theta)$ 是可数多个 $V_\theta$ 的直和。
+- 第 3 章推论 2.3：$P_\xi$ 消灭所有 $H_p(\mathfrak{n}_x,V)$；第 3 章推论 2.4：$\lambda$ 正则时 $H_p(\mathfrak{n}_x,V)$ 作为 $U(\mathfrak{h})$-模半单，按权 $(w\lambda+\rho)$ 分解。
+- $(w\lambda+\rho)$ 的 $\rho$ 来自 $V_\theta$ 的定义（$U(\mathfrak{h})$ 经 $\gamma$ 作用在 $U(\mathfrak{h})/\gamma(J_\theta)$ 上），不是 $\lambda$ 的平移笔误。
+
+## 公式
+
+$$$H_p(\mathfrak{n}_x,V)=\operatorname{Tor}_p^{U(\mathfrak{n}_x)}(\mathbb{C},V)$$$
+
+$$$V_\theta=U(\mathfrak{h})/\gamma(J_\theta)U(\mathfrak{h}),\qquad \dim V_\theta=\operatorname{Card}W$$$
+
+$$$P_\xi(t)=\prod_{w\in W}\bigl(t-(w\lambda+\rho)(\xi)\bigr)$$$
+
+$$$H_0(\mathfrak{n}_x,U_\theta)=\bigoplus_{I}V_\theta$$$
+
+## 相关定理
+
+### 第 3 章引理 2.1（$U_\theta$ 对 $U(\mathfrak{n}_x)$ 自由）
+
+设 $\lambda\in\mathfrak{h}^*$、$x\in X$。则 $U_\theta$ 作为 $U(\mathfrak{n}_x)$-模是自由的。
+
+证明状态：`complete`
+
+1. 固定 $\mathfrak{h}$ 的一个特化 $\mathfrak{c}\cong\mathfrak{h}$，得分解 $\mathfrak{g}=\mathfrak{n}_x\oplus\mathfrak{c}\oplus\bar{\mathfrak{n}}_x$。
+   - 为什么：$\mathfrak{n}_x$ 与 $\bar{\mathfrak{n}}_x$ 是相对的一对幂零子代数，$\mathfrak{c}$ 是 Cartan。
+2. 由 PBW，$U(\mathfrak{g})$ 是 $U(\mathfrak{n}_x)\otimes S(\mathfrak{c})\otimes U(\bar{\mathfrak{n}}_x)$ 的自由模；取 $\operatorname{Gr}$ 后 $\operatorname{Gr}J_\theta U(\mathfrak{g})=U(\mathfrak{n}_x)\otimes I_+(\mathfrak{c})S(\mathfrak{c})\otimes U(\bar{\mathfrak{n}}_x)$。
+   - 为什么：$J_\theta$ 的生成元在 $\operatorname{Gr}$ 中给出 $I_+(\mathfrak{c})S(\mathfrak{c})$。
+3. 对滤过长度归纳：每步商去的是自由的 $U(\mathfrak{n}_x)$-模，故 $U_\theta=U(\mathfrak{g})/J_\theta U(\mathfrak{g})$ 自由。
+   - 为什么：自由模的商按滤过逐层自由，归纳保持自由性。
+
+### 第 3 章引理 2.2（$V_\theta$ 与 $H_0(\mathfrak{n}_x,U_\theta)$）
+
+(i) $\dim V_\theta=\operatorname{Card}W$；(ii) 对 $\xi\in\mathfrak{h}$，$\xi$ 在 $V_\theta$ 上的特征多项式为 $P_\xi(t)=\prod_{w\in W}(t-(w\lambda+\rho)(\xi))$；(iii) $H_0(\mathfrak{n}_x,U_\theta)$ 是可数多个 $V_\theta$ 的直和。
+
+证明状态：`complete`
+
+1. 由 $\dim S(\mathfrak{h})/(I_+S(\mathfrak{h}))=\operatorname{Card}W$ 与 $\operatorname{Gr}(U(\mathfrak{h})/\gamma(J_\theta)U(\mathfrak{h}))=S(\mathfrak{h})/I_+S(\mathfrak{h})$ 得 (i)。
+   - 为什么：$J_\theta$ 在 $U(\mathfrak{h})$ 中的像由 $I_+$ 生成，$\operatorname{Gr}$ 取到 $S(\mathfrak{h})/I_+S(\mathfrak{h})$，维数是 $\operatorname{Card}W$。
+2. $U(\mathfrak{h})$ 是 $Z(\mathfrak{g})$-自由模（第 2 章引理 6.4），基给出 $V_\theta$ 的权 $(w\lambda+\rho)$，故特征多项式为 (ii)。
+   - 为什么：$Z(\mathfrak{g})$ 通过 $\gamma$ 作用，$\gamma(J_\theta)$ 的特征标是 $\chi_\lambda$；$U(\mathfrak{h})$ 的 $Z(\mathfrak{g})$-基按 $W$ 编号。
+3. 由第 3 章引理 2.1，$U_\theta$ 是自由 $U(\mathfrak{n}_x)$-模，$H_0(\mathfrak{n}_x,U_\theta)=U_\theta/\mathfrak{n}_xU_\theta$ 是自由模的商，逐项分解为 $V_\theta$ 的直和。
+   - 为什么：自由 $U(\mathfrak{n}_x)$-模的零次同调就是其基空间的直和。
+
+### 第 3 章推论 2.3（$P_\xi$ 消灭 $\mathfrak{n}$-同调）
+
+设 $V\in\mathcal{M}(U_\theta)$、$\xi\in\mathfrak{h}$、$p\ge0$。则 $P_\xi(\xi)$ 在 $H_p(\mathfrak{n}_x,V)$ 上为零，即 $P_\xi$ 消灭 $H_p(\mathfrak{n}_x,V)$。
+
+证明状态：`complete`
+
+1. $H_p(\mathfrak{n}_x,-)$ 是 $\operatorname{Tor}$，由 $U_\theta$ 的自由消解计算；$P_\xi$ 在 $H_0(\mathfrak{n}_x,U_\theta)=\oplus V_\theta$ 上为零（第 3 章引理 2.2(ii)）。
+   - 为什么：$V_\theta$ 上 $\xi$ 满足特征多项式 $P_\xi$。
+2. 对自由消解逐项使用，$P_\xi$ 在整条消解上同伦于零，故在同调上为零。
+   - 为什么：同伦的零化子在同调上诱导零映射。
+
+### 第 3 章推论 2.4（正则时半单分解）
+
+设 $\lambda\in\mathfrak{h}^*$ 正则，$V\in\mathcal{M}(U_\theta)$。则 $H_p(\mathfrak{n}_x,V)$ 作为 $U(\mathfrak{h})$-模半单，且 $H_p(\mathfrak{n}_x,V)=\sum_{w\in W}H_p(\mathfrak{n}_x,V)_{(w\lambda+\rho)}$，其中下标表示广义权空间。
+
+证明状态：`complete`
+
+1. $\lambda$ 正则时权 $(w\lambda+\rho)$ 两两不同，$P_\xi$ 无重根，故 $U(\mathfrak{h})$ 的作用半单。
+   - 为什么：$w\lambda+\rho=w'\lambda+\rho$ 迫使 $w=w'$，故特征多项式无重根。
+2. 由第 3 章推论 2.3，$H_p$ 被 $P_\xi$ 消灭，故分解为各权空间的直和。
+   - 为什么：半单作用按特征值分解。
+
+## 易错点
+
+- $H_p(\mathfrak{n}_x,V)$ 的下标 $x$ 是旗簇上的点；$\mathfrak{n}_x$ 随 $x$ 变化，但不同 $x$ 的 $\mathfrak{n}$-同调通过 $G$-作用相互识别，不要固定一个 $x$ 后忘记共轭作用。
+- $V_\theta$ 的权是 $(w\lambda+\rho)$，$\rho$ 来自 $U(\mathfrak{h})/\gamma(J_\theta)$ 的定义；漏掉 $\rho$ 会与 $H_0$ 的权错位。
+- $\operatorname{Tor}^{U(\mathfrak{n}_x)}$ 与李代数同调一致依赖 PBW（自由 $U(\mathfrak{g})$-模也是自由 $U(\mathfrak{n}_x)$-模）；对一般环不成立，不能随意换。
+- 第 4 章的 Harish-Chandra 模 $\mathfrak{n}$-同调（用标准复形 $C_\bullet(\mathfrak{n}_x,V)$）是另一套构造；本卡是第 3 章用 $\operatorname{Tor}$ 定义的版本，两者由 PBW 一致但适用对象不同。
+
+## 相关卡
+
+- `mloc/concept/n-homology-of-hc-modules`
+- `mloc/concept/localization-and-n-homology`
+- `mloc/concept/left-cohomological-dimension`
+
+## 出处
+
+- Miličić, Localization and Representation Theory of Reductive Lie Groups · §2 $\mathfrak{n}$-同调的定义与基本性质 · p.[43, 44, 45]（PDF [47, 48, 49]） · `源码/chapters/ch03b.tex:4-33（定义、第 3 章引理 2.1）、ch03b.tex:37-93（第 3 章引理 2.2、第 3 章推论 2.3、2.4）`

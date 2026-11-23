@@ -1,0 +1,101 @@
+# 局部化与 $\mathfrak{n}$-同调的对应
+
+> `mloc/concept/localization-and-n-homology` · type=concept · track=D · status=draft · verification=source-only
+
+**别名**：localization and n-homology、局部化与 $\mathfrak{n}$-同调、第 3 章定理 2.5、第 3 章推论 2.6
+
+## 摘要
+
+正则时 $LT_x\circ L\Delta_\lambda$ 与 $V_\theta$ 上的 $\mathfrak{n}$-同调导出复合同构，给出局部化与 $\mathfrak{n}$-同调的谱序列。
+
+## 问题
+
+$\Delta_\lambda(V)$ 在一点处的纤维，与 $V$ 的 $\mathfrak{n}$-同调如何对应？
+
+## 定义
+
+局部化函子把 $U_\theta$-模变成 $D_\lambda$-模；在点 $x\in X$ 取纤维 $T_x$ 后，得到复向量空间复形。第 3 章定理 2.5 说这一复合与「先取 $\mathfrak{n}_x$-同调、再张量到 $V_\theta$ 上」的导出函子同构。它是把局部化理论（第 3 章 §1）与 $\mathfrak{n}$-同调（§2）连接起来的主定理。
+
+记号：$T_x(F)=F_x/\mathfrak{m}_xF_x$ 是 $F$ 在 $x$ 处的纤维；$LT_x$ 是其左导出；$\mathbb{C}_{\lambda+\rho}$ 是一维 $V_\theta$-模；$V_\theta=U(\mathfrak{h})/\gamma(J_\theta)U(\mathfrak{h})$；$W(p)=\{w\in W\mid\ell(w)=p\}$。
+
+## 要点
+
+- 关键计算是 $T_x(D_\lambda)=\mathbb{C}_{\lambda+\rho}\otimes_{V_\theta}H_0(\mathfrak{n}_x,U_\theta)$：点纤维把 $D_\lambda$ 的 $U_\theta$-作用压成 $V_\theta$。
+- 第 3 章定理 2.5 是导出范畴层面的同构 $LT_x\circ L\Delta_\lambda\cong\mathbb{C}_{\lambda+\rho}\otimes^L_{V_\theta}(\mathbb{C}\otimes^L_{U(\mathfrak{n}_x)}-)$，从左有界导出范畴出发。
+- 第 3 章推论 2.6：$\lambda$ 正则时得到谱序列 $L_pT_x(L_q\Delta_\lambda(V))\Rightarrow H_{-(p+q)}(\mathfrak{n}_x,V)_{(\lambda+\rho)}$，把局部化左上同调与 $\mathfrak{n}$-同调直接连起来。
+- 第 3 章命题 2.9：有限维不可约 $\mathfrak{g}$-模 $F$（最低权 $\lambda$）的 $\mathfrak{n}$-同调只在 $p=\ell(w)$ 出现，且 $H_p(\mathfrak{n}_x,F)=\sum_{w\in W(p)}\mathbb{C}_{w(\lambda-\rho)+\rho}$。
+- 这些结果解释为什么 $\mathfrak{n}$-同调是局部化函子在一点处的「影子」；它们也是第 3 章导出等价在局部层面的显式化。
+
+## 公式
+
+$$$T_x(D_\lambda)=\mathbb{C}_{\lambda+\rho}\otimes_{V_\theta}H_0(\mathfrak{n}_x,U_\theta)$$$
+
+$$$LT_x\circ L\Delta_\lambda\cong\mathbb{C}_{\lambda+\rho}\otimes^L_{V_\theta}\bigl(\mathbb{C}\otimes^L_{U(\mathfrak{n}_x)}-\bigr)$$$
+
+$$$L_pT_x(L_q\Delta_\lambda(V))\Longrightarrow H_{-(p+q)}(\mathfrak{n}_x,V)_{(\lambda+\rho)}$$$
+
+$$$H_p(\mathfrak{n}_x,F)=\sum_{w\in W(p)}\mathbb{C}_{w(\lambda-\rho)+\rho}$$$
+
+## 相关定理
+
+### 第 3 章定理 2.5（局部化与 $\mathfrak{n}$-同调的导出同构）
+
+设 $\lambda\in\mathfrak{h}^*$、$x\in X$。则从 $D^-(U_\theta)$ 到复向量空间复形的导出范畴，有自然同构 $LT_x\circ L\Delta_\lambda\cong\mathbb{C}_{\lambda+\rho}\otimes^L_{V_\theta}(\mathbb{C}\otimes^L_{U(\mathfrak{n}_x)}-)$。
+
+证明状态：`complete`
+
+1. 由第 3 章引理 2.1，$U_\theta$ 是自由 $U(\mathfrak{n}_x)$-模，故 $\mathbb{C}\otimes^L_{U(\mathfrak{n}_x)}U_\theta=H_0(\mathfrak{n}_x,U_\theta)$ 且 $U_\theta$ 对 $\otimes_{U(\mathfrak{n}_x)}$ 零调。
+   - 为什么：自由模对 $\operatorname{Tor}$ 零调。
+2. 由第 3 章引理 2.2(iii)，$H_0(\mathfrak{n}_x,U_\theta)=\oplus V_\theta$，故 $\mathbb{C}_{\lambda+\rho}\otimes_{V_\theta}H_0(\mathfrak{n}_x,U_\theta)$ 只需算 $V_\theta$-张量。
+   - 为什么：$V_\theta$ 的直和分解使张量逐项计算。
+3. 计算 $T_x(\Delta_\lambda(U_\theta))=T_x(D_\lambda)=\mathbb{C}_{\lambda+\rho}\otimes_{V_\theta}H_0(\mathfrak{n}_x,U_\theta)$。
+   - 为什么：$D_\lambda$ 在 $x$ 处的纤维由 $U_\theta$ 的 $\mathfrak{n}_x$-余不变量与 $\lambda+\rho$ 特征标决定。
+4. 两端都对 $U_\theta$ 的投射消解零调，故该同构在导出范畴中成立；自然性来自构造。
+   - 为什么：零调消解上的同构导出为导出函子的同构。
+
+### 第 3 章推论 2.6（局部化—$\mathfrak{n}$-同调谱序列）
+
+设 $\lambda\in\mathfrak{h}^*$ 正则，$V\in\mathcal{M}(U_\theta)$。则存在谱序列 $L_pT_x(L_q\Delta_\lambda(V))\Longrightarrow H_{-(p+q)}(\mathfrak{n}_x,V)_{(\lambda+\rho)}$。
+
+证明状态：`complete`
+
+1. 对第 3 章定理 2.5 的导出同构取超同调谱序列。
+   - 为什么：复合函子的超同调谱序列给出 $L_pT_x(L_q\Delta_\lambda(V))\Rightarrow H^{p+q}(LT_xL\Delta_\lambda(V))$。
+2. 右端由第 3 章定理 2.5 等于 $\mathbb{C}_{\lambda+\rho}\otimes^L_{V_\theta}(\mathbb{C}\otimes^L_{U(\mathfrak{n}_x)}V)$ 的同调。
+   - 为什么：同构代入，右端是 $V$ 的 $\mathfrak{n}_x$-同调与 $V_\theta$-张量的导出复合。
+3. $\lambda$ 正则时 $V_\theta$-张量的同调只在权 $(w\lambda+\rho)$ 上，取 $(\lambda+\rho)$-特征部分后只剩 $H_{-(p+q)}(\mathfrak{n}_x,V)_{(\lambda+\rho)}$。
+   - 为什么：正则使权空间分解直接，$(\lambda+\rho)$-部分由 $w=e$ 给出。
+
+### 第 3 章命题 2.9（有限维不可约模的 $\mathfrak{n}$-同调）
+
+设 $F$ 是以 $\lambda\in\mathfrak{h}^*$ 为最低权的不可约有限维 $\mathfrak{g}$-模。则对一切 $p\ge0$，$H_p(\mathfrak{n}_x,F)=\sum_{w\in W(p)}\mathbb{C}_{w(\lambda-\rho)+\rho}$。
+
+证明状态：`sketch`
+
+1. $F$ 是 $U_\theta$-模（$\theta=W\cdot\lambda$），且 $F=L^{-\ell(w)}\Delta_\mu(F)$ 型的结果（第 3 章命题 1.24）给出 $\Delta_\mu(F)$ 的左上同调。
+   - 为什么：第 3 章命题 1.24：$\mu=w(\lambda-\rho)$ 时 $L^p\Delta_\mu(F)=0$（$p\neq-\ell(w)$）。
+2. 把第 3 章推论 2.6 用于 $V=F$ 与 $\Delta_\mu(F)$，谱序列退化，只剩 $p=\ell(w)$ 项。
+   - 为什么：$L_q\Delta_\mu(F)$ 只在 $q=-\ell(w)$ 非零。
+3. 逐项比对权，得 $H_p(\mathfrak{n}_x,F)=\sum_{w\in W(p)}\mathbb{C}_{w(\lambda-\rho)+\rho}$。
+   - 为什么：$\Delta_\mu(F)$ 在 $x$ 处的纤维是 $\mathbb{C}_{\mu+\rho}=\mathbb{C}_{w(\lambda-\rho)+\rho}$。
+
+> 缺口：第 3 章命题 2.9 的证明依赖第 3 章命题 1.24 与第 3 章推论 2.6 的谱序列退化；译本在此处只给结论与简要说明，未展开谱序列逐项比对。
+
+## 易错点
+
+- 第 3 章定理 2.5 右端是 $\mathbb{C}_{\lambda+\rho}\otimes^L_{V_\theta}$，不是 $\otimes^L_{U(\mathfrak{h})}$；$V_\theta$ 是 $U(\mathfrak{h})$ 的商，张量基不同。
+- 第 3 章推论 2.6 要求 $\lambda$ 正则；奇异时权空间不半单，谱序列的 $(\lambda+\rho)$-部分不能这样读。
+- 谱序列的度数是 $-(p+q)$（同调次数取负），不是 $p+q$；把符号写反会错位 $\ell(w)$。
+- 译本 annote（ch03b.tex:129-131）指出底本在此处把 $\mathbb{C}_{\lambda+\rho}$ 印成 $\mathbb{C}_\lambda$；按上下文应取 $\lambda+\rho$。
+- $D_\lambda=D_{X,\lambda+\rho}$ 与右端的 $\lambda+\rho$ 是同一处 $\rho$ 平移；两处要一致。
+- 与第 2 章 §6 的分工：那里算的是 $D_\lambda$ 本身（及 $D_h\otimes_{U(\mathfrak{h})}V$）的上同调，故 $H^0=U_\theta$、高阶为零；这里对一般 $V$ 用谱序列联系 $H^\bullet(X,\Delta_\lambda(V))$ 与 $H_\bullet(\mathfrak{n}_x,V)$，两者不可混用。
+
+## 相关卡
+
+- `mloc/concept/n-homology`
+- `mloc/concept/localization-functor-delta`
+- `mloc/concept/left-cohomological-dimension`
+
+## 出处
+
+- Miličić, Localization and Representation Theory of Reductive Lie Groups · §2 局部化与 $\mathfrak{n}$-同调 · p.[45, 46, 47]（PDF [49, 50, 51]） · `源码/chapters/ch03b.tex:95-120（第 3 章定理 2.5）、ch03b.tex:122-143（第 3 章推论 2.6）、ch03b.tex:183-190（第 3 章命题 2.9）`

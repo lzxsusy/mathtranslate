@@ -1,0 +1,105 @@
+# 不可约 $D_\lambda$-模的整体截面
+
+> `mloc/concept/irreducible-d-lambda-sections` · type=concept · track=E · status=draft · verification=source-only
+
+**别名**：整体截面 $\Gamma(X,V)$、不可约 $D_\lambda$-模的截面、定理 5.9
+
+## 摘要
+
+$\lambda$ 反支配时，不可约 $D_\lambda$-模的整体截面是否为零，可由单反射交织函子是否消没判定。
+
+## 问题
+
+对不可约 $D_\lambda$-模 $V$，$\Gamma(X,V)$ 什么时候为 $0$，这与其在单反射交织函子下的行为有什么关系？
+
+## 定义
+
+设 $\lambda$ 反支配。此时任意拟凝聚 $D_\lambda$-模的高次上同调 $H^i(X,\mathcal{V})=0\ (i>0)$，故只需研究 $\Gamma(X,\mathcal{V})$。命题 5.1：$V$ 不可约时，$\Gamma(X,V)$ 或为 $0$，或 $V$ 由 $\Gamma(X,V)$ 生成且后者是不可约 $U_\theta$-模。命题 5.2：每个不可约 $U_\theta$-模都唯一地（同构意义下）实现为某个不可约 $D_\lambda$-模 $V$ 的整体截面。本节主定理是定理 5.9：设 $S$ 是 $\Pi_\lambda$ 中由与 $\lambda$ 正交的根组成的子集，$V$ 不可约，则 $\Gamma(X,V)=0$ 当且仅当存在 $\alpha\in S$ 使 $I_{s_\alpha}(V)=0$（§3.5，ch03e.tex:256-261）。
+
+记号：$\Pi_\lambda=\{\alpha\in\Pi\mid\check{\alpha}(\lambda)\in\mathbb{Z}\}$，$W(\lambda)=\{w\mid w\lambda=\lambda\}$ 由 $\Pi_\lambda$ 中与 $\lambda$ 正交的根的反射生成（ch03e.tex:267）；$S\subset\Pi_\lambda$ 取这些正交根。$I_{s_\alpha}$ 的定义与显式公式见 §3.8（ch03f.tex:131-134, 208-228）；$\Gamma=\Gamma(X,-)$ 为整体截面，$H^i$ 为其右导出。$D_\lambda=D_{X,\lambda+\rho}$ 按 §2.1 约定。
+
+## 要点
+
+- 命题 5.1 说明 $\Gamma$ 在不可约模上只有两种命运：$0$，或「满的」不可约 $U_\theta$-模；没有中间情形（$\Gamma(X,V)\ne0$ 时它不可约且生成 $V$）。
+- 定理 5.9 把「$\Gamma(X,V)=0$」这个整体条件翻译成单反射交织函子的消没：$\alpha$ 只需取遍 $\Pi_\lambda$ 中与 $\lambda$ 正交的根，正是稳定化子 $W(\lambda)$ 对应的那组。
+- $\lambda$ 反支配是 5.9 的前提：此时 $H^i(X,-)=0\ (i>0)$，一切信息都在 $\Gamma$ 里；去掉它，5.8 的平移论证与 5.9 的归纳都失效。
+- (ii)$\Rightarrow$(i) 很直接：由 5.4，$\alpha$ 是 $\Pi_\lambda$ 中唯一与 $\lambda$ 正交的根时 $L_{-1}I_{s_\alpha}(V)=V$，再由 5.5 得 $\Gamma(X,V)=0$。
+- (i)$\Rightarrow$(ii) 是反向的技术核心：取最低权正则的有限维 $F$，用 $\Gamma(X,V\otimes F)=0$ 与滤过把问题降到权 $w\nu$，再对 $w\in W(\lambda)$ 的 $\ell_\lambda$ 长度归纳、用推论 5.8 出矛盾。
+- 本节的结论与 $\theta$-结构的信息量匹配：$\Gamma(X,V)\ne0$ 时 $V$ 由 $\Gamma$ 生成，所以「有没有整体截面」是 $V$ 是否属于该 $\theta$ 的某个真子范畴的判据。
+
+## 公式
+
+$$$\Gamma(X,V)=0\iff\exists\,\alpha\in S:\ I_{s_\alpha}(V)=0$$$
+
+$$$\Gamma(X,V)\ne0\ \Longrightarrow\ V\ \text{由}\ \Gamma(X,V)\ \text{生成，且}\ \Gamma(X,V)\ \text{是不可约}\ U_\theta\text{-模}$$$
+
+$$$L_{-1}I_{s_\alpha}(V)=V,\qquad I_{s_\alpha}(V)=0\qquad(\alpha\in\Pi_\lambda,\ \check{\alpha}(\lambda)=0)$$$
+
+$$$\Gamma\bigl(X,V(p\alpha)\bigr)\ne0\qquad\bigl(-\check{\alpha}(\lambda)=p\in\mathbb{Z}_+,\ \Gamma(X,V)\ne0,\ L_{-1}I_{s_\alpha}(V)=0\bigr)$$$
+
+## 相关定理
+
+### 定理 5.9：整体截面消没的等价刻画
+
+设 $\lambda\in\mathfrak{h}^*$ 反支配，$S$ 是 $\Pi_\lambda$ 中由与 $\lambda$ 正交的根组成的子集，$\mathcal{V}$ 是不可约 $D_\lambda$-模。则以下等价：(i) $\Gamma(X,\mathcal{V})=0$；(ii) 存在 $\alpha\in S$ 使 $I_{s_\alpha}(\mathcal{V})=0$。
+
+证明状态：`sketch`
+
+1. 证 (ii)$\Rightarrow$(i)：由引理 5.4，$L_{-1}I_{s_\alpha}(\mathcal{V})=\mathcal{V}$；再由引理 5.5 得 $\Gamma(X,\mathcal{V})=0$。
+   - 为什么：5.4 的前提是 $\alpha$ 为 $\Pi_\lambda$ 中唯一与 $\lambda$ 正交的根，5.5 则把 $L_{-1}I_{s_\alpha}$ 的非零与截面的消没连起来。
+2. 证 (i)$\Rightarrow$(ii)：反设对一切 $\alpha\in S$ 有 $L_{-1}I_{s_\alpha}(\mathcal{V})=0$。取有限维 $F$，其最低权 $\nu$ 正则，置 $\mathcal{F}=\mathcal{O}_X\otimes_\mathbb{C}F$，则 $\Gamma(X,\mathcal{V}\otimes\mathcal{F})=\Gamma(X,\mathcal{V})\otimes_\mathbb{C}F=0$。
+   - 为什么：$\Gamma$ 与 $\otimes_\mathbb{C}F$ 在平坦 $F$ 上交换，故整体截面仍为 $0$；这一步把问题从 $\mathcal{V}$ 搬到张量积。
+3. 用 C.2 的 $F$-滤过看出 $(\mathcal{V}\otimes\mathcal{F})[\lambda+\nu]$ 的分次层是若干 $\mathcal{V}(\mu)$ 的直和，其中 $\mu$ 取遍 $F$ 的、满足 $w(\lambda+\nu)=\lambda+\mu$ 的权；比较权可知对应的 $w$ 落在 $W(\lambda)$ 内。
+   - 为什么：特征标 $χ_{\lambda+\nu}$ 的分量只能来自 $\lambda+\mu$ 与 $\lambda+\nu$ 在同一 $W$-轨道上的权，而 $\nu$ 正则排除了额外的对称性。
+4. 取 $w_1\in W(\lambda)$ 使 $\mathcal{V}(w_1\nu)$ 是该分次层的 $\mathcal{O}_X$-子模，则 $\Gamma(X,\mathcal{V}(w_1\nu))=0$；对 $w\in W(\lambda)$ 的 $\ell_\lambda$ 长度归纳，用推论 5.8 得 $\Gamma(X,\mathcal{V}(w\nu))\ne0$ 对一切 $w$ 成立，与上一步矛盾。
+   - 为什么：归纳每步用 $w=s_\alpha w'$（$\alpha\in S$）与 $\check{\alpha}(\lambda+w'\nu)\in-\mathbb{N}$ 把 5.8 的前提验证出来。
+
+> 缺口：第 3 步用到 C.2 的 $F$-滤过与 [5]（Bourbaki）关于 $W(\lambda)$ 与 $W_\lambda$ 长度相等的两条结论（ch03e.tex:269），第 4 步用 C.4.4；本卡未复核这些附录引理。
+
+### 命题 5.1：不可约模的整体截面
+
+设 $\lambda$ 反支配，$\mathcal{V}$ 是不可约 $D_\lambda$-模。则或 $\Gamma(X,\mathcal{V})=0$，或 $\mathcal{V}$ 由 $\Gamma(X,\mathcal{V})$ 生成且 $\Gamma(X,\mathcal{V})$ 是不可约 $U_\theta$-模。
+
+证明状态：`complete`
+
+1. 令 $\mathcal{V}'$ 为 $\mathcal{V}$ 中由整体截面生成的子模；若 $\mathcal{V}'=0$ 则 $\Gamma(X,\mathcal{V})=0$，否则 $\mathcal{V}'=\mathcal{V}$（$\mathcal{V}$ 不可约）。
+   - 为什么：由截面生成的子模是 $\mathcal{V}$ 的非零子模，不可约性迫使它等于全空间。
+2. 设 $\Gamma(X,\mathcal{V})\ne0$。任取非零 $v\in\Gamma(X,\mathcal{V})$，$U_\theta$-模 $U_\theta v$ 非零；由 $\mathcal{V}$ 的不可约性，$D_\lambda v=\mathcal{V}$，故 $\Gamma(X,\mathcal{V})$ 在 $\mathcal{V}$ 上生成。
+   - 为什么：局部化函子 $\Delta_\lambda$ 与截面互为伴随，$D_\lambda$-模由任一非零截面生成即说明该截面是「循环」的。
+3. 若 $\Gamma(X,\mathcal{V})$ 有真子模 $W$，则 $\Delta_\lambda(W)\subsetneq\mathcal{V}$ 是 $\mathcal{V}$ 的非零真子模，与不可约性矛盾。
+   - 为什么：$\Delta_\lambda$ 正合且忠实，把真包含保持为真包含；再由 5.1 前半，$\Delta_\lambda(W)\ne0$。
+
+### 引理 5.7：$L_{-1}I_{s_\alpha}$ 消没时的短正合列
+
+设 $L_{-1}I_{s_\alpha}(\mathcal{V})=0$（$\lambda$ 反支配，$-\check{\alpha}(\lambda)=p\in\mathbb{Z}$）。则 $I_{s_\alpha}(\mathcal{V})$ 有最大拟凝聚子模 $\mathcal{U}$，且有正合列 $0\to\mathcal{U}\to I_{s_\alpha}(\mathcal{V})\to\mathcal{V}(p\alpha)\to0$；并且 $L_{-1}I_{s_\alpha}(\mathcal{U})=\mathcal{U}(-p\alpha)$，当 $q\ne-1$ 时 $L_qI_{s_\alpha}(\mathcal{U})=0$；若 $p\ge0$ 则 $\Gamma(X,\mathcal{U})=0$。
+
+证明状态：`sketch`
+
+1. 取 $\mathcal{U}$ 为 $I_{s_\alpha}(\mathcal{V})$ 中不含非零整体截面的最大拟凝聚子模（引理 5.3 保证存在）。
+   - 为什么：5.3 说明这种最大子模总存在，它是把「无截面部分」从 $I_{s_\alpha}(\mathcal{V})$ 中剔出去的标准做法。
+2. 由 5.2 得 $(I_{s_\alpha}(\mathcal{V})/\mathcal{U})(s_\alpha\nu)=\mathcal{V}(\nu)$，故商同构于 $\mathcal{V}(p\alpha)$，得正合列。
+   - 为什么：$I_{s_\alpha}(\mathcal{V})$ 与 $\mathcal{V}$ 的权只差 $s_\alpha$，商的权自然落到 $p\alpha$ 的平移上。
+3. 对 $\mathcal{U}(s_\alpha\nu)$ 用引理 5.4，得 $L_{-1}I_{s_\alpha}(\mathcal{U})=\mathcal{U}(s_\alpha\nu-\nu)=\mathcal{U}(-p\alpha)$ 与 $q\ne-1$ 时 $L_qI_{s_\alpha}(\mathcal{U})=0$；$p\ge0$ 时由 5.5 得 $\Gamma(X,\mathcal{U})=0$。
+   - 为什么：5.4 在「无截面 + $\alpha$ 唯一正交」的模上给出单反射交织函子的完全消没，正好适用于平移后的 $\mathcal{U}(s_\alpha\nu)$（见 ch03e.tex:241-245）。
+
+> 缺口：第 1 步与第 3 步依赖引理 5.3、5.4 的证明（ch03e.tex:138-181），本卡未逐行复核其中「最大子模的拟凝聚性」论证。
+
+## 易错点
+
+- 定理 5.9 的 $S$ 必须是「$\Pi_\lambda$ 中与 $\lambda$ 正交的根」，不能换成全部 $\Pi$：$\alpha\in\Pi\setminus\Pi_\lambda$ 时 $I_{s_\alpha}$ 已是范畴等价（推论 3.22），谈不上消没。
+- 定理 5.9 的 (ii) 只要求**存在**一个 $\alpha\in S$；不是对一切 $\alpha\in S$ 都成立。而 5.4 需要 $\alpha$ 是 $\Pi_\lambda$ 中**唯一**与 $\lambda$ 正交的根，那才是 (ii)$\Rightarrow$(i) 可直接引用的形式。
+- 5.2 的唯一性只在同构意义下、且只对「有整体截面」的那部分不可约模成立；不要把它读成 $\Gamma$ 给出不可约 $D_\lambda$-模与不可约 $U_\theta$-模的一一对应（$\Gamma(X,V)=0$ 的那些模没有对应物）。
+- 命题 5.1 的前提「$\lambda$ 反支配」不能省：一般 $\lambda$ 时 $H^i(X,\mathcal{V})\ (i>0)$ 未必为零，$\Gamma$ 不再包含全部信息。
+
+## 相关卡
+
+- `mloc/concept/single-reflection-intertwining`
+- `mloc/concept/intertwining-functor-i-w`
+- `mloc/concept/intertwining-and-holonomic`
+- `mloc/concept/support-and-n-homology`
+
+## 出处
+
+- Miličić, Localization and Representation Theory of Reductive Lie Groups · §3.5 不可约模的整体截面（命题 5.1–5.3） · p.[61, 62]（PDF [65, 66]） · `源码/chapters/ch03e.tex:104-139（命题 5.1、5.2、引理 5.3）`
+- Miličić, Localization and Representation Theory of Reductive Lie Groups · §3.5 单反射情形（引理 5.6、5.7、推论 5.8） · p.[63, 64]（PDF [67, 68]） · `源码/chapters/ch03e.tex:191-249（引理 5.6、5.7、推论 5.8）`
+- Miličić, Localization and Representation Theory of Reductive Lie Groups · §3.5 主定理（定理 5.9） · p.[64, 65]（PDF [68, 69]） · `源码/chapters/ch03e.tex:256-274（定理 5.9 及其证明）`

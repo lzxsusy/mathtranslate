@@ -1,0 +1,358 @@
+\section{Kazhdan--Lusztig 算法}
+\label{sec:05.5.2}
+
+本节要给出一个计算 Verma 模合成列中重数的算法。出发点是下述关键的组合结果。
+
+设 $W$ 是约化根系 $\Sigma$ 的 Weyl 群，$S$ 是相应于单根集 $\Pi$ 的单反射集。记 $\ell:W\to\Z_+$ 为 $(W,S)$ 上的长度函数。设 $\Z[q,q^{-1}]$ 是 $\Z[q]$ 在 $(q)$ 处的局部化，即 $q$ 的有限 Laurent 级数环。记 $H$ 为以诸 $\delta_w$（$w\in W$）为基的 $\Z[q,q^{-1}]$-模。
+
+设 $\alpha\in\Pi$。对任意 $w\in W$，或者 $\ell(ws_\alpha)=\ell(w)+1$，或者 $\ell(ws_\alpha)=\ell(w)-1$。兹如下定义 $H$ 的 $\Z[q,q^{-1}]$-模自同态 $T_\alpha$：
+$$T_\alpha(\delta_w)=
+\begin{cases}
+q\delta_w+\delta_{ws_\alpha}, & \ell(ws_\alpha)=\ell(w)+1;\\[2pt]
+q^{-1}\delta_w+\delta_{ws_\alpha}, & \ell(ws_\alpha)=\ell(w)-1.
+\end{cases}$$
+
+上述组合结果即下述定理。
+
+\begin{theorem}\label{thm:05.2.1}
+存在唯一的函数 $\phi:W\to H$，满足下述性质：
+\begin{enumerate}[label=(\roman*)]
+\item 对 $w\in W$ 有
+$$\phi(w)=\delta_w+\sum_{v<w}P_{wv}\delta_v,$$
+其中 $P_{wv}\in q\Z[q]$；
+\item 对 $\alpha\in\Pi$ 与满足 $\ell(ws_\alpha)=\ell(w)-1$ 的 $w\in W$，存在 $c_v\in\Z$（它们依赖于 $\alpha$ 与 $w$），使
+$$T_\alpha(\phi(ws_\alpha))=\sum_{v\leq w}c_v\phi(v).$$
+\end{enumerate}
+\end{theorem}
+
+函数 $\phi:W\to H$ 确定 $\Z[q]$ 中唯一的一族多项式 $\{P_{wv}\mid w,v\in W,\ v\leq w\}$，使对 $w\in W$ 有 $\phi(w)=\sum_{v\leq w}P_{wv}\delta_v$。这些多项式称为 $(W,S)$ 的 \emph{Kazhdan--Lusztig 多项式}。
+
+\begin{remark}\label{rem:05.2.2}
+我们的 Kazhdan--Lusztig 多项式与最初定义 [?] 的多项式在归一化上不同。两种归一化之间的联系，稍后再讨论。
+\end{remark}
+
+先证 2.1 的唯一性部分。为证存在性，需要它的一个略强的形式。对 $k\in\Z_+$，记 $W_{\leq k}$ 为一切满足 $\ell(w)\leq k$ 的 $w\in W$ 构成的集合。
+
+\begin{lemma}\label{lem:05.2.3}
+设 $k\in\N$。则至多存在一个函数 $\phi:W_{\leq k}\to H$，满足下述性质：
+\begin{enumerate}[label=(\roman*)]
+\item 对 $w\in W_{\leq k}$ 有
+$$\phi(w)=\delta_w+\sum_{v<w}P_{wv}\delta_v,$$
+其中 $P_{wv}\in q\Z[q]$；
+\item 对 $\alpha\in\Pi$ 与满足 $\ell(ws_\alpha)=\ell(w)-1$ 的 $w\in W_{\leq k}$，存在 $c_v\in\Z$（它们依赖于 $\alpha$ 与 $w$），使
+$$T_\alpha(\phi(ws_\alpha))=\sum_{v\leq w}c_v\phi(v).$$
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+对 $k$ 作归纳。设 $k=0$。此时 $W_{\leq k}=\{1\}$。显然，由 (i) 得 $\phi(1)=\delta_1$；而 (ii) 在此情形下是空条件。
+
+设 $k>0$。由归纳假设，$\phi|_{W_{\leq k-1}}$ 唯一。设 $w\in W_{\leq k}$ 满足 $\ell(w)=k$。则可取单根 $\alpha$，使 $\ell(ws_\alpha)=\ell(w)-1=k-1$。由 (ii) 知
+$$T_\alpha(\phi(ws_\alpha))=\sum_{v\leq w}c_v\phi(v).$$
+在 $q=0$ 处取值，并利用 (i)，得到
+$$T_\alpha(\phi(ws_\alpha))(0)=\sum_{v\leq w}c_v\delta_v.$$
+由归纳假设，左端唯一确定。这说明诸 $c_v$ 唯一确定。另一方面，置 $y=ws_\alpha$，则
+\begin{align*}
+T_\alpha(\phi(ws_\alpha))
+&=T_\alpha\Bigl(\delta_y+\sum_{v<y}P_{yv}\delta_v\Bigr)
+=T_\alpha(\delta_y)+\sum_{v<y}P_{yv}T_\alpha(\delta_v)\\
+&=q\delta_y+\delta_w+\sum_{v<y}P_{yv}T_\alpha(\delta_v).
+\end{align*}
+按归纳的构造，$\ell(v)<\ell(y)=k-1$。故 $T_\alpha(\delta_v)$ 的展开中只出现满足 $\ell(u)\leq k-1$ 的 $\delta_u$。特别地，其中不出现 $\delta_w$。这说明 $c_w=1$。于是
+$$\phi(w)=T_\alpha(\phi(ws_\alpha))-\sum_{v<w}c_v\phi(v).$$
+\end{proof}
+
+\begin{annote}
+底本此处有两处小疵。其一，作「设 $k>1$」；但归纳只用到 $k-1$ 的情形，$k=1$ 时论证同样成立，故应为 $k>0$——否则 $W_{\leq 1}$ 未被覆盖，归纳有缺口。已按 $k>0$ 读出。其二，谓 $T_\alpha(\delta_y)$ 的展开中只出现 $\ell(u)\leq k-1$ 的 $\delta_u$；但由上一式，$T_\alpha(\delta_y)=q\delta_y+\delta_w$ 恰含 $\delta_w$，此句只对 $v<y$ 的 $T_\alpha(\delta_v)$ 成立，已改。[来源：底本 p.104--105，2.3 的证明]
+\end{annote}
+
+2.1 的唯一性部分立刻由 2.3 推出。2.1 的证明中困难的是存在性。我们将把 Kazhdan--Lusztig 多项式与范畴 $\mathcal{M}_{coh}(\D_X,N_0)$ 的结构联系起来，以此证明存在性。作为这一分析的副产物，还将得到 Kazhdan--Lusztig 多项式与 Verma 模中不可约 $\g$-模重数之间的联系。
+
+先建立 2.3 的解的一个「奇偶」性质。兹定义 $\Z[q,q^{-1}]$ 与 $H$ 上的加法对合 $i$ 与 $\iota$：
+$$i(q^m)=(-1)^mq^m\quad (m\in\Z),\qquad
+\iota(q^m\delta_w)=(-1)^{m+\ell(w)}q^m\delta_w\quad (m\in\Z,\ w\in W).$$
+则 $\iota T_\alpha\iota$ 是 $H$ 的 $\Z[q,q^{-1}]$-线性自同态。若 $\ell(ws_\alpha)=\ell(w)+1$，则
+$$(\iota T_\alpha\iota)(\delta_w)=(-1)^{\ell(w)}\iota\bigl(T_\alpha(\delta_w)\bigr)
+=(-1)^{\ell(w)}\iota(q\delta_w+\delta_{ws_\alpha})
+=-(q\delta_w+\delta_{ws_\alpha})=-T_\alpha(\delta_w);$$
+若 $\ell(ws_\alpha)=\ell(w)-1$，则同样有
+$$(\iota T_\alpha\iota)(\delta_w)=(-1)^{\ell(w)}\iota\bigl(T_\alpha(\delta_w)\bigr)
+=(-1)^{\ell(w)}\iota(q^{-1}\delta_w+\delta_{ws_\alpha})
+=-(q^{-1}\delta_w+\delta_{ws_\alpha})=-T_\alpha(\delta_w).$$
+故
+$$\iota T_\alpha\iota=-T_\alpha.$$
+
+\begin{lemma}\label{lem:05.2.4}
+设 $k\in\N$，$\phi:W_{\leq k}\to H$ 是满足 2.3.(i) 与 2.3.(ii) 的函数。则
+$$P_{wv}=q^{\ell(w)-\ell(v)}Q_{wv},$$
+其中 $Q_{wv}\in\Z[q^2,q^{-2}]$。
+\end{lemma}
+
+\begin{proof}
+置 $\psi(w)=(-1)^{\ell(w)}\iota(\phi(w))$。则 $\psi:W_{\leq k}\to H$，且
+$$\psi(w)=(-1)^{\ell(w)}\iota\Bigl(\delta_w+\sum_{v<w}P_{wv}\delta_v\Bigr)
+=\delta_w+\sum_{v<w}(-1)^{\ell(w)-\ell(v)}i(P_{wv})\delta_v,$$
+故 $\psi$ 满足 2.3.(i)。又由上一注记，对 $\alpha\in\Pi$ 与满足 $\ell(ws_\alpha)=\ell(w)-1$ 的 $w\in W_{\leq k}$ 有
+\begin{align*}
+T_\alpha(\psi(ws_\alpha))
+&=-(-1)^{\ell(w)}T_\alpha\bigl(\iota(\phi(ws_\alpha))\bigr)
+=(-1)^{\ell(w)}\iota\bigl(T_\alpha(\phi(ws_\alpha))\bigr)\\
+&=(-1)^{\ell(w)}\iota\Bigl(\sum_{v\leq w}c_v\phi(v)\Bigr)
+=\sum_{v\leq w}(-1)^{\ell(w)-\ell(v)}c_v\psi(v),
+\end{align*}
+故 $\psi$ 也满足 2.3.(ii)。于是由 2.3 得 $\psi=\phi$。比较 $\delta_v$ 的系数，即得 $P_{wv}=(-1)^{\ell(w)-\ell(v)}i(P_{wv})$；也就是说，$P_{wv}$ 的展开中只出现与 $\ell(w)-\ell(v)$ 同奇偶的 $q$ 的幂，故 $P_{wv}=q^{\ell(w)-\ell(v)}Q_{wv}$，其中 $Q_{wv}\in\Z[q^2,q^{-2}]$。
+\end{proof}
+
+设 $F\in\mathcal{M}_{coh}(\D_X,N_0)$。对 $w\in W$，记 $i_w$ 为 Bruhat 胞腔 $C(w)$ 到 $X$ 的典范浸入。显然，对任意 $k\in\Z$，$L^{-k}i_w^+(F)$ 是 $C(w)$ 上的 $N_0$-齐性联络，即同构于若干 $\calO_{C(w)}$ 的直和。另一方面，$\dim C(w)=\ell(w)$，故对任意 $k\in\Z$ 有
+$$R^{n-\ell(w)-k}i_w^!(F)=L^{-k}i_w^+(F).$$
+置
+$$\nu(F)=\sum_{w\in W}\sum_{m\in\Z}\dim_\C\bigl(R^mi_w^!(F)\bigr)q^m\delta_w.$$
+于是 $\nu$ 是从 $\mathcal{M}_{coh}(\D_X,N_0)$ 到 $H$ 的映射。
+
+对任意 $w\in W$，置
+$$I_w=I(w,-\rho),\qquad L_w=L(w,-\rho).$$
+2.1 的存在性部分由下述结果推出。
+
+\begin{proposition}\label{prop:05.2.5}
+设 $\phi(w)=\nu(L_w)$。则 $\phi$ 满足 2.1.(i) 与 2.1.(ii)。
+\end{proposition}
+
+验证 $\phi$ 满足 2.1.(i) 相当直接。
+
+\begin{lemma}\label{lem:05.2.6}
+设 $\phi(w)=\nu(L_w)$。则
+$$\phi(w)=\delta_w+\sum_{v<w}P_{wv}\delta_v,$$
+其中 $P_{wv}\in q\Z[q]$。
+\end{lemma}
+
+\begin{proof}
+显然 $\Supp L_w=C(w)$。按 Bruhat 序的定义，$v\leq w$ 等价于 $C(v)\subset\overline{C(w)}$。因此，若 $v$ 不满足 $v\leq w$，则对一切 $m\in\Z$ 有 $R^mi_v^!(L_w)=0$。由 Kashiwara 定理，
+$$R^0i_w^!(L_w)=R^0i_w^!(I_w)=R^0i_w^!\bigl(R^0i_{w+}(\calO_{C(w)})\bigr)=\calO_{C(w)},$$
+且当 $m\neq 0$ 时
+$$R^mi_w^!(L_w)=R^mi_w^!(I_w)=R^mi_w^!\bigl(R^0i_{w+}(\calO_{C(w)})\bigr)=0.$$
+最后，设 $v<w$。记 $X'$ 为 $X$ 中 $C(v)$ 的边界 $\partial C(v)=\overline{C(v)}-C(v)$ 的补集。由于不可约 $\D_X$-模限制到开集上或者为零或者不可约，$L_w|_{X'}$ 是不可约 $\D_{X'}$-模。设 $j_v$ 为 $C(v)$ 到 $X'$ 的自然包含。则 $j_v$ 是闭浸入。另一方面，$R^0j_{v+}\bigl(R^0i_v^!(L_w)\bigr)$ 是 $L_w|_{X'}$ 中由支集含于 $C(v)$ 的局部截面构成的 $\D_{X'}$-子模。故必有 $R^0j_{v+}\bigl(R^0i_v^!(L_w)\bigr)=0$。于是推出 $R^0i_v^!(L_w)=0$。
+\end{proof}
+
+证明的主要部分是验证 $\phi(w)=\nu(L_w)$ 满足 2.1.(ii)。先需要一个辅助结果。
+
+设 $\alpha\in\Pi$，$X_\alpha$ 是相应的 $\alpha$ 型抛物子代数构成的旗簇。记 $p_\alpha:X\to X_\alpha$ 为自然投影。设 $C(v)$ 是 $X$ 中的 Bruhat 胞腔（$v\in W$）。因它同构于 $\C^{\ell(v)}$，自然嵌入 $i_v:C(v)\to X$ 是仿射态射。$C(v)$ 在 $X_\alpha$ 中的投影 $p_\alpha(C(v))$ 也是仿射空间，从而仿射嵌入 $X_\alpha$。由于纤维化 $p_\alpha:X\to X_\alpha$ 局部平凡，可见 $p_\alpha^{-1}\bigl(p_\alpha(C(v))\bigr)$ 是 $X$ 的光滑仿射子簇。设 $P_\alpha$ 是含 Borel 子群 $B$ 的 $\alpha$ 型标准抛物子群，则 $P_\alpha=B\cup Bs_\alpha B$。这说明
+$$p_\alpha^{-1}\bigl(p_\alpha(C(v))\bigr)=C(v)\cup C(vs_\alpha).$$
+这两个 Bruhat 胞腔之一在 $p_\alpha^{-1}\bigl(p_\alpha(C(v))\bigr)$ 中开稠密，另一个在其中闭。或者 $\ell(vs_\alpha)=\ell(v)+1$，或者 $\ell(vs_\alpha)=\ell(v)-1$。在第一种情形，$\dim p_\alpha^{-1}\bigl(p_\alpha(C(v))\bigr)=\ell(v)+1$，$C(vs_\alpha)$ 在其中开而 $C(v)$ 闭；在第二种情形，$\dim p_\alpha^{-1}\bigl(p_\alpha(C(v))\bigr)=\ell(v)$，$C(v)$ 在其中开而 $C(vs_\alpha)$ 闭。此外，第一种情形下 $p_\alpha:C(v)\to p_\alpha(C(v))$ 是同构，第二种情形下它是纤维同构于仿射直线的纤维化。
+
+兹定义函子
+$$U^q_\alpha(F)=p_\alpha^+\bigl(R^qp_{\alpha+}(F)\bigr),$$
+它从 $\mathcal{M}_{qc}(\D_X)$ 映入自身（$q\in\Z$）。由于投影 $p_\alpha:X\to X_\alpha$ 的纤维是一维的，$U^q_\alpha$ 只在 $q\in\{-1,0,1\}$ 时可能非零。这些函子与 L.5 中讨论的函子密切相关。特别地，有下述引理。
+
+\begin{lemma}\label{lem:05.2.7}
+设 $w\in W$、$\alpha\in\Pi$ 满足 $\ell(ws_\alpha)=\ell(w)-1$。则：
+\begin{enumerate}[label=(\roman*)]
+\item 对一切 $q\neq 0$ 有 $U^q_\alpha(L_{ws_\alpha})=0$；
+\item $U^0_\alpha(L_{ws_\alpha})$ 是若干 $L_v$（$v\leq w$）的直和。
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+首先，按构造，$U^q_\alpha(L_{ws_\alpha})$ 是支集落在 $\overline{p_\alpha^{-1}(p_\alpha(C(w)))}$ 内的完整 $(\D_X,N_0)$-模；由上述讨论，这个闭包等于 $\overline{C(w)}$。这说明诸 $U^q_\alpha(L_{ws_\alpha})$ 有有限长度，且其合成因子只能是 $L_v$（$v\leq w$）。因 $p_\alpha$ 是纤维同构于 $\mathbb{P}^1$ 的局部平凡纤维化，而 $L_{ws_\alpha}$ 是 $\calO_{C(ws_\alpha)}$ 的直像，从而有几何来源（……），故由分解定理（……），$R^qp_{\alpha+}(L_{ws_\alpha})$ 半单。再次利用 $p_\alpha$ 的局部平凡性，这说明诸 $U^q_\alpha(L_{ws_\alpha})$ 半单，从而 (ii) 得证。
+
+为证 (i)，我们与 L.5 中的结果建立联系。仍记 $Y_\alpha=X\times_{X_\alpha}X$ 为 $X$ 关于态射 $p_\alpha$ 与自身的纤维积。记 $q_1$、$q_2$ 为 $Y_\alpha$ 到第一、第二因子的相应投影。则下述图表交换：
+\begin{center}
+\begin{tikzcd}
+Y_\alpha \arrow[r,"q_2"] \arrow[d,"q_1"'] & X \arrow[d,"p_\alpha"]\\
+X \arrow[r,"p_\alpha"'] & X_\alpha
+\end{tikzcd}
+\end{center}
+由基变换，
+$$U^q_\alpha(L_{ws_\alpha})=p_\alpha^+\bigl(R^qp_{\alpha+}(L_{ws_\alpha})\bigr)
+=R^qq_{1+}\bigl(q_2^+(L_{ws_\alpha})\bigr).$$
+由于 $\D_X=\D_{-\rho}$，容易验证 $U^q_\alpha(L_{ws_\alpha})$ 与 L.5 的函子 $U^q(L_{ws_\alpha})$ 只相差一个扭。于是，只要说明 $I_{s_\alpha}(L_{ws_\alpha})\neq 0$，(i) 便立刻由 L.5.4 推出。而后一断言由 1.25 立见。
+\end{proof}
+
+\begin{annote}
+底本此处把 1.25 引作 1.21。1.21 讲的是 $M(\lambda)$ 在 $U_\theta$ 中的零化子，与 $I_{s_\alpha}(L_{ws_\alpha})$ 是否非零无关；给出这一非消没性的正是 1.25.(ii)(a)：当 $\ell(ws_\alpha)=\ell(w)+1$ 时 $I_{s_\alpha}(L(w,\lambda))\neq 0$。已按 1.25 读出。[来源：底本 p.108，2.7 的证明；与 1.21、1.25 的陈述对勘]
+\end{annote}
+
+现在计算 $\nu\bigl(U^0_\alpha(L_{ws_\alpha})\bigr)$，其中 $w\in W$、$\alpha\in\Pi$ 满足 $\ell(ws_\alpha)=\ell(w)-1$。设 $v\in W$ 满足 $v\leq w$。则 $C(v)$ 含于 $\overline{C(w)}$ 中。按假设，$\overline{C(w)}$ 也等于 $\overline{p_\alpha^{-1}(p_\alpha(C(w)))}$，故 $p_\alpha^{-1}\bigl(p_\alpha(C(v))\bigr)=C(v)\cup C(vs_\alpha)$ 也含于 $\overline{C(w)}$ 中，即 $vs_\alpha\leq w$。因此不妨设 $\ell(v)=\ell(vs_\alpha)+1$，即 $C(v)$ 在 $Z_\alpha=p_\alpha^{-1}\bigl(p_\alpha(C(v))\bigr)$ 中开。设 $j:Z_\alpha\to X$ 与 $j_v:p_\alpha(C(v))\to X_\alpha$ 为自然包含，则有下述交换图表：
+\begin{center}
+\begin{tikzcd}
+Z_\alpha \arrow[r,"j"] \arrow[d,"q_\alpha"'] & X \arrow[d,"p_\alpha"]\\
+p_\alpha(C(v)) \arrow[r,"j_v"'] & X_\alpha
+\end{tikzcd}
+\end{center}
+由基变换与 2.7，得到
+\begin{align*}
+R^kj_!\bigl(U^0_\alpha(L_{ws_\alpha})\bigr)
+&=H^k\Bigl(Rj_!\bigl(p^+_\alpha\bigl(Rp_{\alpha+}(\D(L_{ws_\alpha}))\bigr)\bigr)\Bigr)\\
+&=H^{k-1}\Bigl(Rj_!\bigl(Rp^!_\alpha\bigl(Rp_{\alpha+}(\D(L_{ws_\alpha}))\bigr)\bigr)\Bigr)\\
+&=H^{k-1}\Bigl(R(p_\alpha\circ j)_!\bigl(Rp_{\alpha+}(\D(L_{ws_\alpha}))\bigr)\Bigr)\\
+&=H^{k-1}\Bigl(R(j_v\circ q_\alpha)_!\bigl(Rp_{\alpha+}(\D(L_{ws_\alpha}))\bigr)\Bigr)\\
+&=H^{k-1}\Bigl(Rq^!_\alpha\bigl(Rj^!_v\bigl(Rp_{\alpha+}(\D(L_{ws_\alpha}))\bigr)\bigr)\Bigr)\\
+&=q^+_\alpha\Bigl(H^k\bigl(Rj^!_v\bigl(Rp_{\alpha+}(\D(L_{ws_\alpha}))\bigr)\bigr)\Bigr)\\
+&=q^+_\alpha\Bigl(H^k\bigl(Rq_{\alpha+}\bigl(Rj_!(\D(L_{ws_\alpha}))\bigr)\bigr)\Bigr).
+\end{align*}
+
+下面更细致地分析复形 $Rj_!\bigl(\D(L_{ws_\alpha})\bigr)$ 的结构。如前所述，$Z_\alpha=C(v)\cup C(vs_\alpha)$，$C(v)$ 在 $Z_\alpha$ 中开，$C(vs_\alpha)$ 在其中闭。记 $i:C(v)\to Z_\alpha$ 与 $i':C(vs_\alpha)\to Z_\alpha$ 为典范仿射浸入。则对任意对象 $F^\bullet$，在范畴 $D^b(\D_{Z_\alpha})$ 中有下述特异三角
+$$i'_+\bigl(Ri'^!(F^\bullet)\bigr)\longrightarrow F^\bullet\longrightarrow i_+\bigl(F^\bullet|_{C(v)}\bigr).$$
+特别地，有下述特异三角
+$$i'_+\bigl(Ri'^!\bigl(Rj_!(\D(L_{ws_\alpha}))\bigr)\bigr)\longrightarrow Rj_!(\D(L_{ws_\alpha}))\longrightarrow i_+\bigl(Rj_!(\D(L_{ws_\alpha}))|_{C(v)}\bigr),$$
+以及
+$$i'_+\bigl(Ri^!_{vs_\alpha}(\D(L_{ws_\alpha}))\bigr)\longrightarrow Rj_!(\D(L_{ws_\alpha}))\longrightarrow i_+\bigl(Ri^!_v(\D(L_{ws_\alpha}))\bigr).$$
+对之施以函子 $Rq_{\alpha+}$，得到 $D^b(\D_{p_\alpha(C(v))})$ 中的特异三角
+$$Rq_{\alpha+}\Bigl(i'_+\bigl(Ri^!_{vs_\alpha}(\D(L_{ws_\alpha}))\bigr)\Bigr)
+\longrightarrow Rq_{\alpha+}\bigl(Rj_!(\D(L_{ws_\alpha}))\bigr)
+\longrightarrow Rq_{\alpha+}\Bigl(i_+\bigl(Ri^!_v(\D(L_{ws_\alpha}))\bigr)\Bigr).$$
+由于 $p_\alpha(C(v))$ 是 $X_\alpha$ 中的 $N_0$-轨道，而前述论证中涉及的 $\D$-模都是 $N_0$-等变的，此三角中各复形的上同调都是若干 $\calO_{p_\alpha(C(v))}$ 的直和。此外，
+$$Rq_{\alpha+}\Bigl(i'_+\bigl(Ri^!_{vs_\alpha}(\D(L_{ws_\alpha}))\bigr)\Bigr)
+=R(q_\alpha\circ i')_+\bigl(Ri^!_{vs_\alpha}(\D(L_{ws_\alpha}))\bigr),$$
+而 $q_\alpha\circ i':C(vs_\alpha)\to p_\alpha(C(v))$ 是同构。因此，对任意 $k\in\Z$ 有
+$$\dim_\C H^k\Bigl(R(q_\alpha\circ i')_+\bigl(Ri^!_{vs_\alpha}(\D(L_{ws_\alpha}))\bigr)\Bigr)
+=\dim_\C R^ki^!_{vs_\alpha}(L_{ws_\alpha}).$$
+另一方面，
+$$Rq_{\alpha+}\Bigl(i_+\bigl(Ri^!_v(\D(L_{ws_\alpha}))\bigr)\Bigr)
+=R(q_\alpha\circ i)_+\bigl(Ri^!_v(\D(L_{ws_\alpha}))\bigr),$$
+而 $q_\alpha\circ i:C(v)\to p_\alpha(C(v))$ 是纤维同构于仿射直线的局部平凡投影。因此，由于 $Ri^!_v(\D(L_{ws_\alpha}))$ 的上同调都是若干 $\calO_{C(v)}$ 的直和，对任意 $k\in\Z$ 有
+$$\dim_\C H^k\Bigl(R(q_\alpha\circ i)_+\bigl(Ri^!_v(\D(L_{ws_\alpha}))\bigr)\Bigr)
+=\dim_\C R^{k+1}i^!_v(L_{ws_\alpha}).$$
+这又给出长正合列
+{\small
+\begin{align*}
+\cdots&\longrightarrow H^k\Bigl(R(q_\alpha\circ i')_+\bigl(Ri^!_{vs_\alpha}(\D(L_{ws_\alpha}))\bigr)\Bigr)
+\longrightarrow H^k\Bigl(Rq_{\alpha+}\bigl(Rj_!(\D(L_{ws_\alpha}))\bigr)\Bigr)\\
+&\longrightarrow H^k\Bigl(R(q_\alpha\circ i)_+\bigl(Ri^!_v(\D(L_{ws_\alpha}))\bigr)\Bigr)
+\longrightarrow H^{k+1}\Bigl(R(q_\alpha\circ i')_+\bigl(Ri^!_{vs_\alpha}(\D(L_{ws_\alpha}))\bigr)\Bigr)
+\longrightarrow\cdots,
+\end{align*}
+}
+它由 $\D_{p_\alpha(C(v))}$-模构成，而这些模都是若干 $\calO_{p_\alpha(C(v))}$ 的直和。
+
+现在按 $w\in W$ 的长度归纳，证明 $\phi(w)=\nu(L_w)$ 满足 2.1.(ii)。若 $\ell(w)=0$，则 $w=1$，而 2.1.(ii) 在此情形下是空条件。故可设对某个 $k\in\N$，$\phi(w)=\nu(L_w)$ 已在 $W_{\leq k}$ 上满足 2.1.(ii)。由 2.4，它在 $W_{\leq k}$ 上还满足奇偶条件：对任意 $u\in W_{\leq k}$、$v\in W$ 以及满足 $m\equiv\ell(v)-\ell(u)-1\pmod 2$ 的 $m\in\Z_+$，有 $R^mi^!_v(L_u)=0$。设 $w\in W$ 满足 $\ell(w)=k+1$。则可取 $\alpha\in\Pi$ 使 $\ell(ws_\alpha)=k$，即 $ws_\alpha\in W_{\leq k}$。于是对前述计算中的任意 $v\in W$，或者 $k\equiv\ell(v)-\ell(ws_\alpha)\pmod 2$，或者 $k\equiv\ell(v)-\ell(ws_\alpha)-1\pmod 2$。在第一种情形，$R^{k+1}i^!_v(L_{ws_\alpha})=0$ 且 $R^ki^!_{vs_\alpha}(L_{ws_\alpha})=0$，从而 $H^k\bigl(Rq_{\alpha+}(Rj_!(\D(L_{ws_\alpha}))))\bigr)=0$。在第二种情形则有
+$$\dim_\C H^k\bigl(Rq_{\alpha+}(Rj_!(\D(L_{ws_\alpha}))))\bigr)
+=\dim_\C R^{k+1}i^!_v(L_{ws_\alpha})+\dim_\C R^ki^!_{vs_\alpha}(L_{ws_\alpha}).$$
+这说明：当 $k\equiv\ell(v)-\ell(ws_\alpha)\pmod 2$ 时 $R^kj_!\bigl(U^0_\alpha(L_{ws_\alpha})\bigr)=0$；而当 $k\equiv\ell(v)-\ell(ws_\alpha)-1\pmod 2$ 时
+$$\dim_\C R^kj_!\bigl(U^0_\alpha(L_{ws_\alpha})\bigr)
+=\dim_\C R^{k+1}i^!_v(L_{ws_\alpha})+\dim_\C R^ki^!_{vs_\alpha}(L_{ws_\alpha}).$$
+再限制到 $C(v)$ 与 $C(vs_\alpha)$ 上，最终对一切 $k\in\Z_+$ 得到
+$$\dim_\C R^ki^!_v\bigl(U^0_\alpha(L_{ws_\alpha})\bigr)
+=\dim_\C R^{k+1}i^!_v(L_{ws_\alpha})+\dim_\C R^ki^!_{vs_\alpha}(L_{ws_\alpha}),$$
+以及
+$$\dim_\C R^ki^!_{vs_\alpha}\bigl(U^0_\alpha(L_{ws_\alpha})\bigr)
+=\dim_\C R^ki^!_v(L_{ws_\alpha})+\dim_\C R^{k-1}i^!_{vs_\alpha}(L_{ws_\alpha}).$$
+
+以下为简洁计，把 $L_{ws_\alpha}$ 简记作 $L$。于是
+{\small
+\begin{align*}
+\nu\bigl(U^0_\alpha(L_{ws_\alpha})\bigr)
+&=\sum_{v\in W}\sum_{k\in\Z}\dim_\C R^ki^!_v\bigl(U^0_\alpha(L_{ws_\alpha})\bigr)q^k\delta_v\\
+&=\sum_{vs_\alpha<v}\sum_{k\in\Z}\dim_\C R^ki^!_v\bigl(U^0_\alpha(L)\bigr)q^k\delta_v
++\sum_{vs_\alpha<v}\sum_{k\in\Z}\dim_\C R^ki^!_{vs_\alpha}\bigl(U^0_\alpha(L)\bigr)q^k\delta_{vs_\alpha}\\
+&=\sum_{vs_\alpha<v}\sum_{k\in\Z}\bigl(\dim_\C R^{k+1}i^!_v(L)+\dim_\C R^ki^!_{vs_\alpha}(L)\bigr)q^k\delta_v\\
+&\quad+\sum_{vs_\alpha<v}\sum_{k\in\Z}\bigl(\dim_\C R^ki^!_v(L)+\dim_\C R^{k-1}i^!_{vs_\alpha}(L)\bigr)q^k\delta_{vs_\alpha}\\
+&=\sum_{vs_\alpha<v}\sum_{k\in\Z}\bigl(\dim_\C R^{k+1}i^!_v(L)+\dim_\C R^ki^!_{vs_\alpha}(L)\bigr)q^k(\delta_v+q\delta_{vs_\alpha})\\
+&=\sum_{vs_\alpha<v}\sum_{k\in\Z}\dim_\C R^{k+1}i^!_v(L)q^{k+1}(q^{-1}\delta_v+\delta_{vs_\alpha})\\
+&\quad+\sum_{vs_\alpha<v}\sum_{k\in\Z}\dim_\C R^ki^!_{vs_\alpha}(L)q^k(\delta_v+q\delta_{vs_\alpha})\\
+&=T_\alpha\bigl(\nu(L_{ws_\alpha})\bigr)=T_\alpha\bigl(\phi(ws_\alpha)\bigr).
+\end{align*}
+}
+结合 2.7，得到
+$$T_\alpha\bigl(\phi(ws_\alpha)\bigr)=\nu\bigl(U^0_\alpha(L_{ws_\alpha})\bigr)
+=\sum_{v\leq w}c_v\nu(L_v)=\sum_{v\leq w}c_v\phi(v),$$
+即 2.1.(ii) 对 $\phi$ 在 $W_{\leq k+1}$ 上成立。由归纳法，$\phi$ 满足 2.1.(ii)；这就结束了 2.5 的证明，也完成了 2.1 的证明。
+
+现在建立 Kazhdan--Lusztig 多项式与 Verma 模中不可约 $\g$-模重数之间的联系。先作一个观察。
+
+\begin{lemma}\label{lem:05.2.8}
+映射 $\nu$ 在 $-1$ 处的取值，通过 $\mathcal{M}_{coh}(\D_X,N_0)$ 的 Grothendieck 群分解。
+\end{lemma}
+
+\begin{proof}
+显然
+$$\nu(F)(-1)=\sum_{w\in W}\sum_{m\in\Z}(-1)^m\dim_\C\bigl(R^mi^!_w(F)\bigr)\delta_w.$$
+另一方面，若
+$$0\longrightarrow F_1\longrightarrow F_2\longrightarrow F_3\longrightarrow 0$$
+是 $\mathcal{M}_{coh}(\D_X,N_0)$ 中的正合列，则得到 $C(w)$ 上 $N_0$-齐次联络的长正合列
+$$\cdots\to R^mi^!_w(F_1)\to R^mi^!_w(F_2)\to R^mi^!_w(F_3)\to R^{m+1}i^!_w(F_1)\to\cdots.$$
+由 Euler 原理，
+\begin{align*}
+\sum_{m\in\Z}(-1)^m\dim_\C\bigl(R^mi^!_w(F_2)\bigr)
+&=\sum_{m\in\Z}(-1)^m\dim_\C\bigl(R^mi^!_w(F_1)\bigr)\\
+&\quad+\sum_{m\in\Z}(-1)^m\dim_\C\bigl(R^mi^!_w(F_3)\bigr).
+\end{align*}
+\end{proof}
+
+此外还需要下述简单事实。
+
+\begin{lemma}\label{lem:05.2.9}
+$\nu(I_w)=\delta_w$。
+\end{lemma}
+
+\begin{proof}
+按定义，$I_w=R^0i_{w+}(\calO_{C(w)})$。故由 Kashiwara 定理，
+$$R^0i^!_w(I_w)=R^0i^!_w\bigl(R^0i_{w+}(\calO_{C(w)})\bigr)=\calO_{C(w)},$$
+且当 $m\neq 0$ 时
+$$R^mi^!_w(I_w)=R^mi^!_w\bigl(R^0i_{w+}(\calO_{C(w)})\bigr)=0.$$
+此外，由基变换，对任意 $y\in W$、$y\neq w$ 有
+$$R^mi^!_y(I_w)=R^mi^!_y\bigl(R^0i_{w+}(\calO_{C(w)})\bigr)=0.$$
+\end{proof}
+
+记 $\chi$ 为范畴 $\mathcal{M}_{coh}(\D_X,N_0)$ 到其 Grothendieck 群 $K(\mathcal{M}_{coh}(\D_X,N_0))$ 的天然映射。
+
+\begin{theorem}\label{thm:05.2.10}
+设 $P_{wv}$（$w,v\in W$）是 $(W,S)$ 的 Kazhdan--Lusztig 多项式。则
+$$\chi(L_w)=\chi(I_w)+\sum_{v<w}P_{wv}(-1)\chi(I_v).$$
+\end{theorem}
+
+\begin{proof}
+因 $I_w$ 以 $L_w$ 为唯一的不可约子模，而其余合成因子都是 $L_v$（$v<w$），可见诸 $\chi(I_w)$（$w\in W$）构成 $K(\mathcal{M}_{coh}(\D_X,N_0))$ 的一组基。故
+$$\chi(L_w)=\sum_{v\leq w}\lambda_{wv}\chi(I_v),$$
+其中 $\lambda_{wv}\in\Z$。由 2.8，$\nu(-1)$ 通过 $K(\mathcal{M}_{coh}(\D_X,N_0))$ 分解；又由 2.9 有 $\nu(I_v)(-1)=\delta_v$（$v\in W$）。于是
+$$\nu(L_w)(-1)=\sum_{v\leq w}\lambda_{wv}\nu(I_v)(-1)=\sum_{v\leq w}\lambda_{wv}\delta_v.$$
+故由 $P_{wv}$ 的定义可得 $\lambda_{ww}=1$ 且 $P_{wv}(-1)=\lambda_{wv}$。
+\end{proof}
+
+这就给出一个计算无穷小特征标 $\chi_\rho$ 下 Verma 模中不可约模重数的有效算法。取 $W$ 上的一个与 Bruhat 序相容的线性序。则矩阵 $(\lambda_{wv};w,v\in W)$ 是下三角的，且对角元为 $1$。设 $(\mu_{wv};w,v\in W)$ 为其逆矩阵的系数。由 2.10 可见
+\begin{align*}
+\chi(I_w)&=\sum_{u\in W}\sum_{v\in W}\mu_{wv}\lambda_{vu}\chi(I_u)
+=\sum_{v\in W}\mu_{wv}\Bigl(\sum_{u\in W}\lambda_{vu}\chi(I_u)\Bigr)\\
+&=\sum_{v\in W}\mu_{wv}\chi(L_v)=\sum_{v\leq w}\mu_{wv}\chi(L_v),
+\end{align*}
+且对任意 $w\in W$ 有 $\mu_{ww}=1$。最后由 1.11、1.14 与 1.19 得到下述结果。
+
+\begin{corollary}\label{cor:05.2.11}
+不可约模 $L(-v\rho)$ 在 Verma 模 $M(-w\rho)$ 中的重数等于 $\mu_{wv}$。
+\end{corollary}
+
+显然，用齐性可逆 $\calO_X$-模去扭，即得与 2.10 类似的结果：对任意权重 $\mu\in P(\Sigma)$，该结果关于 $\mathcal{M}_{coh}(\D_\mu,N_0)$ 中的标准模成立。这立刻给出 2.11 对无穷小特征标 $\chi_\mu$（$\mu\in P(\Sigma)$ 正则）下 Verma 模的类似结果。下一节将讨论任意正则无穷小特征标下 Verma 模的类似问题。
+
+最后，列出 $P_{wv}$ 的几条简单性质。
+
+\begin{corollary}\label{cor:05.2.12}
+Kazhdan--Lusztig 多项式 $P_{wv}$ 的系数是非负整数。
+\end{corollary}
+
+\begin{proof}
+这立刻由 2.5 与映射 $\nu$ 的定义推出。
+\end{proof}
+
+\begin{lemma}\label{lem:05.2.13}
+设 $w\in W$ 满足 $\ell(ws_\alpha)=\ell(w)-1$。则对任意 $v\in W$，$vs_\alpha\leq w$ 等价于 $v\leq w$。又若 $v\leq w$ 且 $\ell(vs_\alpha)=\ell(v)-1$，则
+$$qP_{wv}=P_{w,vs_\alpha}.$$
+\end{lemma}
+
+\begin{proof}
+在 1.25 的证明中，我们已说明 $\ell(ws_\alpha)=\ell(w)-1$ 等价于 $C(w)=p_\alpha^{-1}\bigl(p_\alpha(C(w))\bigr)$。故 $C(v)\subset\overline{C(w)}$ 推出
+$$C(v)\cup C(vs_\alpha)=p_\alpha^{-1}\bigl(p_\alpha(C(v))\bigr)\subset\overline{C(w)},$$
+即 $vs_\alpha\leq w$。这证明第一个断言。
+
+此外，由 1.25 与 L.5.6，$L_w$ 形如 $p_\alpha^+(V)$。故沿用 2.5 证明中的记号，对满足 $\ell(vs_\alpha)=\ell(v)-1$ 的任意 $v\leq w$ 有
+\begin{align*}
+\dim_\C R^pi^!_{vs_\alpha}(L_w)
+&=\dim_\C L^{p-n+\ell(v)-1}i^+_{vs_\alpha}(L_w)
+=\dim_\C L^{p-n+\ell(v)-1}j^+_v(V)\\
+&=\dim_\C L^{p-n+\ell(v)-1}i^+_v(L_w)
+=\dim_\C R^{p-1}i^!_v(L_w).
+\end{align*}
+比较 $\nu(L_w)$ 中 $\delta_{vs_\alpha}$ 与 $\delta_v$ 的系数，即得 $qP_{wv}=P_{w,vs_\alpha}$。
+\end{proof}
+
+\begin{annote}
+底本此证明有两处引用编号之误。其一，「在 1.21 的证明中」：$\ell(ws_\alpha)=\ell(w)-1$ 与 $C(w)=p_\alpha^{-1}\bigl(p_\alpha(C(w))\bigr)$ 的等价性，见于 1.25 的证明（(ii) 的开头）；1.21 讲的是 $M(\lambda)$ 在 $U_\theta$ 中的零化子。其二，「由 1.24 与 L.5.6」：$\ell(ws_\alpha)=\ell(w)-1$ 时 $I_{s_\alpha}(L_w)=0$，这是 1.25.(ii)(b) 的结论；1.24 是 Verma 模不可约的充要条件，与 $L_w$ 的形状无关。两处均已按 1.25 读出。[来源：底本 p.112，2.13 的证明；与 1.21、1.24、1.25 的陈述对勘]
+\end{annote}

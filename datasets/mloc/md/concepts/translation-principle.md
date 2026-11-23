@@ -1,0 +1,119 @@
+# 平移原理：$\lambda\mapsto\lambda+\mu$
+
+> `mloc/concept/translation-principle` · type=concept · track=C · status=draft · verification=source-only
+
+**别名**：translation principle、平移原理、几何平移、第 2 章引理 2.3
+
+## 摘要
+
+$V\mapsto V\otimes\mathcal{O}(\mu)$ 把 $D_\lambda$-模范畴等价到 $D_{\lambda+\mu}$；配合特征层引理与降 $n(\lambda)$ 的正合列，归约到反支配或正则参数。
+
+## 问题
+
+为什么可以只对反支配或正则的 $\lambda$ 证明消没、非消没与 BWB？$\lambda$ 与 $\lambda+\mu$ 的 $D$-模理论如何互相搬运？
+
+## 定义
+
+平移原理指：对整权 $\mu\in P(\Sigma)$，函子 $V\mapsto V(\mu)=V\otimes_{\mathcal{O}_X}\mathcal{O}(\mu)$ 把 $D_\lambda$-模变成 $D_{\lambda+\mu}$-模，并且是范畴等价。它把不同 $\lambda$ 的表示论连成一片，使得消没定理、非消没定理与 BWB 可以沿 $\lambda$ 的平移互相归约；再配合第 2 章引理 2.3（把 $n(\lambda)$ 严格降下来），一切归纳都能落到 $\lambda$ 反支配的底情形。
+
+记号：$P(\Sigma)$ 是权格；$V(\mu)=V\otimes_{\mathcal{O}_X}\mathcal{O}(\mu)$；$[\lambda]$ 表示取 $Z(\mathfrak{g})$ 的广义特征层（特征标 $\chi_\lambda$）；$W_\lambda$、$n(\lambda)$ 同消没定理卡；$F$ 是有限维 $\mathfrak{g}$-模，$\mathcal{F}=\mathcal{O}_X\otimes F$。
+
+## 要点
+
+- 平移是范畴等价，不只是函子：$M(D_\lambda)\to M(D_{\lambda+\mu})$ 等价，并保持拟凝聚、凝聚子范畴与导出范畴；因此可以双向搬运。
+- 参数要平移 $\mu\in P(\Sigma)$（整权），否则 $\mathcal{O}(\mu)$ 不存在；$\mu$ 不是任意 $\mathfrak{h}^*$ 元素。
+- 第 2 章引理 2.1/2.2 是两条「张量有限维模再取广义特征层仍为恒等」的技术引理，保证平移与 $[\lambda]$-截断相容；它们是把 $V(\mu)$ 的合成因子算清的关键。
+- 第 2 章引理 2.3 把任意 $\lambda$ 通过 $0\to V\to G\to V(p_\alpha)\to0$ 与更小的 $n(\lambda+p_\alpha)<n(\lambda)$ 联系起来；这是对 $n(\lambda)$ 归纳的实际引擎。
+- 三个主定理的证明都以此归约：消没定理对 $n(\lambda)$ 归纳、非消没定理对 $n(\lambda)$ 归纳、BWB 对 $\ell(w)$ 归纳并用平移把 $\mathcal{O}(\lambda+p_\alpha)$ 与 $\mathcal{O}(\lambda)$ 的上同调移位。
+- 与本库另一张 `geometric-translation-functor` 的分工：那张卡讲平移函子本身的构造与几何性质，本卡讲「平移原理」作为证明策略与参数归约的使用方式。
+
+## 公式
+
+$$$V(\mu)=V\otimes_{\mathcal{O}_X}\mathcal{O}(\mu),\qquad \mathcal{M}(D_\lambda)\simeq\mathcal{M}(D_{\lambda+\mu})$$$
+
+$$$\bigl(V(-\mu)\otimes\mathcal{F}\bigr)[\lambda]\cong V\qquad(F\ \text{以}\ w\mu\ \text{为最高权})$$$
+
+$$$0\longrightarrow V\longrightarrow G\longrightarrow V(p_\alpha)\longrightarrow 0,\qquad n(\lambda+p_\alpha)<n(\lambda)$$$
+
+$$$H^i(X,\mathcal{O}(\lambda+p_\alpha))=H^{i+1}(X,\mathcal{O}(\lambda))$$$
+
+## 相关定理
+
+### 平移等价
+
+设 $\lambda\in\mathfrak{h}^*$、$\mu\in P(\Sigma)$。则 $V\mapsto V(\mu)=V\otimes_{\mathcal{O}_X}\mathcal{O}(\mu)$ 是 $D_\lambda$-模与 $D_{\lambda+\mu}$-模之间的范畴等价，并诱导拟凝聚、凝聚子范畴及导出范畴的等价。
+
+证明状态：`complete`
+
+1. $\mathcal{O}(\mu)$ 是 $G$-齐性可逆层，$D_\lambda\otimes\mathcal{O}(\mu)$ 自然地是 $D_{\lambda+\mu}$-模；张量函子 $V\mapsto V(\mu)$ 有逆 $W\mapsto W(-\mu)$。
+   - 为什么：$\mathcal{O}(\mu)\otimes\mathcal{O}(-\mu)=\mathcal{O}_X$，张量逆给出范畴等价。
+2. $\mathcal{O}(\mu)$ 局部自由，故 $V$ 拟凝聚（凝聚）当且仅当 $V(\mu)$ 拟凝聚（凝聚）。
+   - 为什么：局部自由层张量保持拟凝聚性与凝聚性。
+3. 张量函子正合且保持内射，故导出范畴上同法等价。
+   - 为什么：$\mathcal{O}(\mu)$ 局部自由，$-\otimes\mathcal{O}(\mu)$ 正合。
+
+### 第 2 章引理 2.1（平移与特征层相容，最高权版）
+
+设 $\lambda\in\mathfrak{h}^*$、$\mu\in P(\Sigma)$、$w\in W$，$w\lambda$ 与 $-w\mu$ 反支配。设 $F$ 是以 $w\mu$ 为最高权的有限维 $\mathfrak{g}$-模。则 $V\mapsto(V(-\mu)\otimes\mathcal{F})[\lambda]$ 是 $\mathcal{M}(D_\lambda)$ 到自身的自然等价（恒等）。
+
+证明状态：`complete`
+
+1. 对 $V$ 取合成列，只需对 $V=\mathcal{O}(\nu)$ 验证；此时 $V(-\mu)=\mathcal{O}(\nu-\mu)$。
+   - 为什么：两端对短正合列正合，故只需检验标准模。
+2. 计算 $(\mathcal{O}(\nu-\mu)\otimes F)[\lambda]$ 的合成因子；$F$ 的权为 $w\mu$ 减去正根和，$\mathcal{O}(\nu-\mu)$ 的权为 $\nu-\mu$。
+   - 为什么：$\mathcal{O}(\nu)$ 的权是 $\nu$ 减去正根和；$F$ 的最高权为 $w\mu$。
+3. 设 $s\in W$ 使 $s\lambda=\lambda-\mu+\nu$；则 $s'=wsw^{-1}$ 满足 $s'\lambda'-\lambda'=w\nu-2w\mu\in Q(\Sigma)$，其中 $\lambda'=w\lambda$。
+   - 为什么：由 $s\lambda=\lambda-\mu+\nu$ 两边施 $w$，再把 $s'$ 写成共轭。
+4. 由 $w\lambda$ 反支配、$w(\lambda-\mu+\nu)=w\lambda-w\mu+w\nu$ 的最高权性质夹出 $s\lambda=\lambda$ 与 $\nu=\mu$，故只剩下 $V$ 自身。
+   - 为什么：反支配与最高权的双重夹逼把唯一的合成因子钉在 $\nu=\mu$。
+
+### 第 2 章引理 2.2（平移与特征层相容，最低权版）
+
+设 $\lambda,\mu\in\mathfrak{h}^*$、$w\in W$，$w\lambda$ 与 $-w\mu$ 反支配，且 $\lambda$ 与 $\lambda-\mu$ 的稳定化子相同。设 $F$ 是以 $-w\mu$ 为最低权的有限维 $\mathfrak{g}$-模。则 $V\mapsto(V(\mu)\otimes\mathcal{F})[\lambda-\mu]$ 是 $\mathcal{M}(D_\lambda)$ 到自身的自然等价（恒等）。
+
+证明状态：`complete`
+
+1. 同第 2 章引理 2.1，先对 $V=\mathcal{O}(\nu)$ 验证，再取合成列。
+   - 为什么：函子正合，标准模足够。
+2. $F$ 的最低权为 $-w\mu$，$V(\mu)$ 的权为 $\nu+\mu$ 减正根和；取 $[\lambda-\mu]$-部分后可能留下 $\nu=\mu$ 之外的项。
+   - 为什么：最低权与平移量正好相差 $\mu$。
+3. 用稳定化子相同的条件排除额外项：若 $s(\lambda-\mu)=\lambda-\mu+\nu$，则 $s'\lambda'-\lambda'=w\nu$，结合反支配与最低权得 $\nu=0$。
+   - 为什么：稳定化子假设把 $\lambda-\mu$ 与 $\lambda$ 的 Weyl 群作用对齐，夹出 $\nu=0$。
+4. 故只剩 $V$ 自身，函子为恒等。
+   - 为什么：所有其他合成因子被 $[\lambda-\mu]$-截断杀掉。
+
+### 第 2 章引理 2.3（把 $n(\lambda)$ 严格降下来）
+
+设 $\lambda\in\mathfrak{h}^*$、$n(\lambda)=k>0$，取 $w\in W_\lambda$ 使 $\ell_\lambda(w)=k$、$w\lambda$ 反支配，写 $w=s_{\beta_1}\cdots s_{\beta_k}$ 既约。置 $\alpha=w^{-1}\beta_1$、$p_\alpha=-\alpha^\vee(\lambda)$。则存在从 $\mathcal{M}(D_\lambda)$ 到 $U^\circ$-模短正合列范畴的共变函子 $V\mapsto(0\to V\to G\to V(p_\alpha)\to0)$，其中 $G=(V(-s_\alpha w^{-1}\sigma)\otimes\mathcal{F})[\lambda]$ 对某支配权 $\sigma$ 与最高权 $\sigma$ 的 $F$ 取得，且 $n(\lambda+p_\alpha)<k$、$n(\lambda-s_\alpha w^{-1}\sigma)<k$。
+
+证明状态：`sketch`
+
+1. 由 $w\lambda$ 反支配与 $w'=s_{\beta_1}w$ 满足 $w's_\alpha\lambda=w\lambda$，得 $n(s_\alpha\lambda)\le\ell_\lambda(w')=k-1$。
+   - 为什么：$s_\alpha\lambda=\lambda+p_\alpha$，而 $\ell_\lambda(w')=k-1$。
+2. 取 $\sigma\in P(\Sigma)\cap C_\lambda$ 使 $\beta_1^\vee(\sigma)=p=-\beta_1^\vee(w\lambda)$，并以最高权 $\sigma$ 的 $F$ 构造 $G$。
+   - 为什么：$C_\lambda$ 是 $\Sigma_\lambda^+$ 的 Weyl 房，$\beta_1^\vee$ 在其墙上取到所需整数。
+3. 对 $G$ 的合成列逐项计算，只有两个合成因子落入 $\theta$：$V$ 与 $V(p_\alpha)$；其余被 $[\lambda]$-截断杀掉，得到所需短正合列。
+   - 为什么：$\sigma$ 的选取使 $w\nu-s_{\beta_1}\sigma$ 是 $\Pi_\lambda$ 中根的非负整数组合，只剩两个极端权。
+4. 函子性由构造对 $V$ 的自然性给出；$n(\lambda+p_\alpha)<k$ 与 $n(\lambda-s_\alpha w^{-1}\sigma)<k$ 由第一步与 $\sigma$ 的选取得到。
+   - 为什么：$n(\lambda-s_\alpha w^{-1}\sigma)<k$ 来自 $w'$ 的长度 $k-1$ 与 $s_\alpha w^{-1}\sigma$ 的配对。
+
+> 缺口：正合列的逐项构造（合成因子计算与 $\sigma$、$\mathcal{F}$ 的选取）在 ch02a.tex:209-273；讲义只记录结论与函子性，本卡未重复逐项验证。
+
+## 易错点
+
+- $V(\mu)$ 的下标是「张量 $\mathcal{O}(\mu)$」，而 $D_\lambda$ 的参数也随 $\mu$ 变成 $\lambda+\mu$；只搬 $V$ 不搬 $D$ 会得到错误的模结构。
+- $\mu$ 必须是整权 $P(\Sigma)$；用任意 $\mathfrak{h}^*$ 元素写 $V(\mu)$ 无意义。
+- $[\lambda]$ 是广义特征层（依赖 $\chi_\lambda$），不是 $\mathcal{O}(\lambda)$；两者都记作 $\lambda$，但一个是中心特征标截断，一个是可逆层。
+- 第 2 章引理 2.3 给出的是 $n(\lambda+p_\alpha)<n(\lambda)$，其中 $p_\alpha=-\alpha^\vee(\lambda)$ 可能为负；不要把它当成 $\lambda$ 的「正向」平移。
+- $D_\lambda=D_{X,\lambda+\rho}$：平移 $\mu$ 在 $D_{X,\cdot}$ 记号下同时把 $\lambda+\rho$ 移成 $\lambda+\mu+\rho$，写 anchor 或公式时勿丢 $\rho$。
+
+## 相关卡
+
+- `mloc/concept/vanishing-theorem`
+- `mloc/concept/nonvanishing-theorem`
+- `mloc/concept/borel-weil-bott-for-d-lambda`
+
+## 出处
+
+- Miličić, Localization and Representation Theory of Reductive Lie Groups · §2 平移原理 · p.[21, 22, 23]（PDF [25, 26, 27]） · `源码/chapters/ch02a.tex:144-207（平移等价、第 2 章引理 2.1、2.2）`
+- Miličić, Localization and Representation Theory of Reductive Lie Groups · §2 末 第 2 章引理 2.3 · p.[23, 24, 25]（PDF [27, 28, 29]） · `源码/chapters/ch02a.tex:209-273 与 ch02b.tex:4-9（第 2 章引理 2.3 的构造与陈述）`

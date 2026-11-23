@@ -2,6 +2,18 @@
 
 > **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
 
+## SY07-11《局部化与约化李群的表示论》（Miličić）全书中译、入库与资料卡 — 2026-11-23
+
+- 新增 `08_source_code/SY07-11_局部化与约化李群的表示论（Miličić）`。底本是 Dragan Miličić 的作者自排讲义 *Localization and Representation Theory of Reductive Lie Groups*（pdfTeX 1.40.18，2017-10-22；133 PDF 页 / 129 印刷页，6 章 27 节，229 条编号条目）。**收到的底本文件名是 `benzvi__book.pdf`，内容与 Ben-Zvi 无关**，按作者归入 SY07 系列（前作 *Lectures on Algebraic Theory of D-Modules* 是 SY07-10）。
+- 全书译毕：`源码/chapters/` 20 个 tex、5,123 行、**42,788 汉字**；xelatex→makeindex→xelatex×2 共 **150 页**，0 error / 0 Overfull / 0 Underfull / 0 缺字 / 0 undefined。体例保留原书「节.条」编号（`\thesection` 改纯序号），并发 **42 条校注**（`annote` 环境，每条带 `[来源：底本 p.N]`）、登记 **43 条疑点**（笔误 28 / 跳步 6 / 记号 4 / 外引 3 / 概念 2，全部已解）。
+- 术语 **134 条**（`工程文件/work/术语表.tsv`），正文、`成品/术语对照表.md`、书末**术语索引**三处同步：`工程文件/tools/insert_index.py` 按术语表在首次出现处插 `\index{拼音@显示名|hyperpage}`，101 条入索引、75 处落页，`main.ind` 由 makeindex 生成。
+- 工具：`fix_labels.py` 跨单元统一标签（266 个标签、141 处引用，复查 0 退化）；`insert_index.py`（幂等）；`make_corpus.py`（切段入语料）；`工程文件/work/sub/harness.tex` 供分单元独立编译（每单元私有 `/tmp/u-<单元>/`）。
+- 语料层：`01_corpus_zh/zh_paragraphs.jsonl` 追加 **793 段 / 41,276 汉字**（pkg=`SY07-11`），`termbase.jsonl` +93 条；两个文件分别增至 50,115 行与 1,913 行。
+- 资料卡：新建 `datasets/mloc/`（SCHEMA、taxonomy、lint、`verification.jsonl`），**44 张** concept 卡（track A 5 / B 5 / C 5 / D 6 / E 10 / F 5 / G 8），全部 `verification=source-only`；`verification.jsonl` 原文对齐 **43/43 match、broken 0**，`pdf_pages − pages = 4` 全部成立（lint 硬校验）。
+- 台账：`RELEASE_REGISTER.csv` 增 SY07-11 一行（讲义、风险中、L2 公开·受限、**成品在仓=否**——按纪律书籍不发成品 PDF，`成品/` 只留术语对照表、交付报告与预览）。
+- 工作流与思考链：`工程文件/精选片段.md` 与 `02_trajectories/SY07-11_精选片段.md` 各 12 条判定链（底本认错、页码映射、术语裁决、编号统一、标签去重、`D_λ=D_{X,λ+ρ}` 裁定、校注门槛、引理编号错位不改书、并发撞车教训、索引三处同步、四零闸门、mloc 与 dmod 立卡边界）。
+- 插件测试并记录问题（`工程文件/work/kb插件测试笔记.md`）：`kb_search`/`kb_brief` 多词查询为严格 AND 且无部分命中回退，长查询几乎必然空手，提示语「库里没有已核卡片覆盖这个主题」会误导；卡片页码为启发式抽取；`kb_stats` 未提示「默认只查已核」；`hindsight_*` 全部 401（api key 未配置）。
+
 ## SY02-10《几何朗兰兹对偶是什么？》补回丢失的引言（v1.1） — 2026-11-23
 
 - **修 bug**：底本 Ben-Zvi, *What Is the Geometric Langlands Correspondence About?*（arXiv:2605.23167v1，34 页，2026-05-22）在摘要与 §1 之间有一段**不编号的引言**（原文 pp.2–3：谱定理与傅里叶变换 → 盲人摸象 → GLC 证明里程碑 → 全文路线图 → *Caveat lector* → 致谢），v1.0 译本整段遗漏。本轮新增 `源码/chunks/ch0.tex`（五段全译）并在 `main.tex` 中 `\input{chunks/ch0}`，位置在 `chunks/ch1` 之前；TOC 以无编号条目「引言 … 5」出现，与原文顺序一致。
@@ -19,6 +31,35 @@
 - 工程文件：`BRIEF.md`、`STYLE_GUIDE.md`、`work/{通读笔记,疑点清单,glossary(约 190 条),lecture_pages}`、`work/src/lec01–27.txt`、`tools/{extract_src,compile_chunk,check_numbers}.py`、`build.sh`。
 - 资料卡五件套：`00-速览`、`01-概念` 264 条、`02-命题` 286 条、`03-论证链` 11 条、`04-术语文献勘误`（E1–E14）；`index.jsonl` 554 行（概念 + 命题 + 对齐），`cards/` 550 个 JSON，`alignment.jsonl` 4 张（拟范畴 / Yoneda / 伴随 / 稳定化，status=gap）。
 - 登记：`RELEASE_REGISTER.csv` SY02-27 一行；`03_translations_meta/SY02-27/投稿信息.md`；风险中、L2 公开·受限（可撤下）、成品随仓公开。
+
+## SY01-07《几何内窥与镜像对称》审校、资料卡与对齐卡 — 2026-11-23
+
+- 对 Frenkel–Witten *Geometric Endoscopy and Mirror Symmetry*（arXiv:0710.5939v3，130 页）中译注本完成 13 块逐页对照审校，正文修订 18 处（P1 9、P2 9），记入 `工程文件/work/audit/fixes.tsv`；成品 97 页，xelatex 三遍 0 error、无 Label warning，入 `工程文件/deliverable/`。
+- 182 条批注全部补齐 v2.1 §2.5.6 来源标记（Tutor Note 135、原文疑误 29、存疑 12、背景补充 6）；5 条页码来源抽查通过，记入 `work/audit/source_spotcheck.md`；`审校批注索引.md` 按 182 条重建。
+- 新建资料卡五件套（00 速览 / 01 结果清单 / 02 论证地图 / 03 条款索引 / 04 术语文献勘误），并登记 `kb/cards/SY01-07.jsonl`（work 卡，draft）。
+- 新增 leanstmt 对齐卡 `leanstmt/fw08-g01`（定理 7.1 的奇偶判据，gap）：Lean 侧只记录 `IsAutomorphic S ↔ S.length % 2 = 0` 的语句骨架，明确标注自守表示/adele/局部 L-包缺口；`lake env lean` exit 0，`lint_cards.py --strict` 0 error，已进 `index.jsonl`。
+- 留下：定理 7.1 的忠实形式化、其余章节对齐卡、`RELEASE_REGISTER` 复核与最终提交。
+
+## SY02-08《圈群的 Langlands 对应》v2 校订译注本 — 2026-11-23
+
+- 重校 `08_source_code/SY02-08_圈群的Langlands对应`：Frenkel *Langlands Correspondence for Loop Groups*（CUP 2007，Cambridge Studies in Advanced Mathematics 103）中译注本，364 页，三遍 xelatex **0 error / 0 Overfull / 0 Missing character / 0 undefined reference**。
+- 逐章对照原书 150 dpi 页图复核：正文改动 149 处（误译、漏译、术语、中文、编号、记号），公式仅改 7 处旧译转写错误（页图 + 第二独立出处，逐条见 `工程文件/reports/formula-fixes.tsv`）；原书 96 条疑似笔误保留原文并以译注说明。
+- 旧版 372 条源码 Tutor Note 合并去重后升级为 **243 条编译可见译注**（241 条带可追溯来源，2 条【译者按（无外部依据）】），未引黑名单来源。
+- 新增两章（不改原书编号）：**前置知识导引**（李代数/中心扩张/仿射 Kac–Moody/顶点代数/Wakimoto/D-模/Hecke 算子，中文 PDF p.1–5）与 **2007 年之后的进展**（2024 Gaitsgory–Raskin 五篇预印本、q-Langlands、Arakawa、Kapustin–Witten 后续，p.319–325；逐条标已证/部分/猜测/未核实）。
+- 术语统一：本征层、旗簇、外尔群、极小、紧合、幂幺、留数；附录 B 术语表 + `工程文件/work/glossary.tsv` 206 条。
+- 资料卡五件套 + `资料卡/对齐卡/index.jsonl` 6 张（rights=rewritten）；`投稿信息.md` 由 C 升 **A（首发推荐）**；`RELEASE_REGISTER.csv` 成品在仓=是。
+- 权利：底本为在版图书，译本为演绎作品，底本权利归作者/出版方；仅学术研读，权利人通知即撤。
+
+## 《顶点代数与代数曲线（第二版）》全书中译注本 + 资料卡 — 2026-11-23
+
+- 新增 `08_source_code/SY02-25_顶点代数与代数曲线（第二版）`：Frenkel–Ben-Zvi *Vertex Algebras and Algebraic Curves*, 2nd ed.（AMS Colloquium Publications 61，2004）全书翻译，20 章 + 导论 + 附录 A；译本 346 页，xelatex 三遍 **0 error / 0 undefined / 0 missing char / 0 Overfull**。
+- 译注 148 条（带来源或【译者按】）、编号断言 370 个、带号公式 338 条（编号照录原书）、术语 434 条、勘误 146 条（34 块，逐条附判据）、34 份分块报告。
+- 体例：`\para` / `\statement` 照录原书编号，`\stmtlabel` 让 `\ref` 显示原书编号；书末补「常用记号」与「汉英术语对照表」（434 条）替代原书索引。
+- 资料卡五件套（00 速览 / 01 概念 / 02 命题与证明骨架 / 03 论证链 / 04 术语文献勘误）+ 对齐卡 `index.jsonl`。
+- 权利：底本为在版图书，按 COMPLIANCE R3 **成品 PDF 不入库**（本地留 `工程文件/deliverable/`，可由源码重建）；`RELEASE_REGISTER.csv` 登记 SY02-25（成品在仓=否）。
+- **第二轮校对**：依作者官网勘误文件 <https://math.berkeley.edu/~frenkel/BOOK/corrections.pdf>（4 条，针对 2001 年第一版，其中第 1 条第二版未吸收）重新通校全书。10 个校对组逐块重读页面图，记 92 条发现：误译 9、漏译 9、公式 17、术语 23、中文 6、原书缺陷 25、未定 3。实质修补包括第 11 章 §11.2.3 末整两段漏译、第 7 章交换图包含箭头方向、第 2 章换指标误读为删因子；原书缺陷 18 条新增入勘误（E127–E144），2 条经复核判为误报。记录见 `工程文件/校订记录-第二轮.md`。
+- **第三轮通读比对**：4 个 agent 分片把译文与底本逐段对照（34 块全覆盖），记 33 条发现：数学 11、漏译 1、术语 11、中文 5、未定 5；28 条已改进正文。实质修补包括第 19 章 §19.6.3 补译漏句、第 18 章帽/波浪号记号的统一、第 19 章 §19.6.3 两条译注自相矛盾、第 11–16 章若干上标/花体/半直积与术语。未定 5 条由 Lead 逐条定夺：2 条入勘误（E145 径改、E146 照排加注），3 条判为不需改。另修掉两处 Markdown 残留（`**…**`）与参考文献 3 处法语重音（`` `e ``→`` \`e ``）。记录见 `工程文件/校订记录-第三轮.md`。
+- 资料卡据此给 5 张卡加 `note`（§1.2.1 场条件精确界、作者勘误吸收情况、§19.6.3「不分裂」读法、§20.3.4 漏下标、§20.3.5 下标不一致）。
 
 ## lbook04 资料卡：全书 56 张 — 2026-11-23
 

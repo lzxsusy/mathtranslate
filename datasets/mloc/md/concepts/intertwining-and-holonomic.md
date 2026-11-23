@@ -1,0 +1,107 @@
+# 交织函子与完整复形
+
+> `mloc/concept/intertwining-and-holonomic` · type=concept · track=E · status=draft · verification=source-only
+
+**别名**：$D^b_{hol}$ 上的等价、完整复形、holonomic complexes、定理 6.2
+
+## 摘要
+
+$LI_w$ 把上同调完整的复形送到上同调完整的复形，并在 $D^b_{hol}$ 上给出范畴等价；由此完整模的整体上同调是有限长的 $U_\theta$-模。
+
+## 问题
+
+$LI_w$ 为什么保持完整复形，$D^b_{hol}$ 上的等价又能推出哪些有限性结论？
+
+## 定义
+
+完整模范畴是 $\mathcal{M}_{qc}(D_\lambda)$ 的厚子范畴；每个完整模都有有限长。$D^b_{hol}(D_\lambda)$ 定义为 $D^b(D_\lambda)$ 中由上同调完整的复形所成的满子范畴。几何平移诱导等价 $D^b_{hol}(D_\lambda)\simeq D^b_{hol}(D_{\lambda+\mu})$（§3.6，ch03e.tex:276-278）。按定义 $LI_w$ 把 $D^b_{hol}(D_\lambda)$ 映入 $D^b_{hol}(D_{w\lambda})$（ch03e.tex:299），而定理 6.2 断言这实际上是范畴等价。引理 6.1：不可约完整 $D_\lambda$-模在 $D^b_{hol}(D_\lambda)$ 中构成生成类。
+
+记号：$\mathcal{M}_{hol}(D_\lambda)$ 为完整模范畴，$D^b_{hol}$ 为 $D^b$ 中上同调完整的满子范畴（注意：厚的是模范畴，复形范畴只取满子范畴）；$\mathbb{D}$ 为 §3.4 的对偶；$H^p(X,-)$ 为整体截面的上同调；$\theta=W\cdot\lambda$，$U_\theta$ 为其完全素化包络；$\mathfrak{n}_x$ 为 $x$ 处幂零根。$D_\lambda=D_{X,\lambda+\rho}$ 按 §2.1 约定。
+
+## 要点
+
+- $D^b_{hol}$ 是 $D^b$ 的满子范畴；完整的模范畴才是厚子范畴。定理 6.2 的等价只在完整复形之间断言，$D^b_{coh}$ 上的等价是另一个定理（3.20）。
+- 定理 6.2 的证明用乘积公式归约到单反射，再用几何平移把 $\lambda$ 搬到反支配正则位置；之后分 $\check{\alpha}(\lambda)\notin-\mathbb{N}$（此时由 3.22，$I_{s_\alpha}$ 已正合）与 $\check{\alpha}(\lambda)\in-\mathbb{N}$ 两种情形。
+- 后一种情形是唯一需要 §3.8 显式序列的难点：由 5.6 把不可约完整模分成两型，型 (i) 直接得 $LI_{s_\alpha}(\mathbb{D}(\mathcal{V}))=\mathbb{D}(\mathcal{V}(p\alpha))[1]$，型 (ii) 用 5.7 的短正合列、5.9 判定合成因子、再取特异三角。
+- 定理 6.3 是 6.2 的直接后果：取 $C^\bullet$ 使 $LI_w(C^\bullet)=\mathbb{D}(\mathcal{V})$，则 $\Gamma$ 正合、$R\Gamma(C^\bullet)=\Gamma(C^\bullet)$，再用命题 5.1 得每项有限长。
+- 命题 6.4 把「完整」翻译成 $\mathfrak{n}_x$-同调的有限维性：$\lambda$ 正则反支配时，$\Delta_\lambda(V)$ 完整等价于 $H^p(\mathfrak{n}_x,V)$ 对一切 $x$ 有限维。
+- 完整复形上的等价是 $W$-作用的一个稳定版本：它说明把 $\lambda$ 沿 $W$ 搬运不会破坏完整性，也不会破坏有限长性。
+
+## 公式
+
+$$$LI_w:\ D^b_{hol}(D_\lambda)\xrightarrow{\ \sim\ }D^b_{hol}(D_{w\lambda})$$$
+
+$$$LI_w\ \text{把}\ D^b_{hol}(D_\lambda)\ \text{映入}\ D^b_{hol}(D_{w\lambda})\quad(\text{ch03e.tex:299})$$$
+
+$$$\mathcal{V}\ \text{完整}\ \Longrightarrow\ H^p(X,\mathcal{V})\ \text{是有限长}\ U_\theta\text{-模}\quad(p\ge0)$$$
+
+$$$\Delta_\lambda(V)\ \text{完整}\iff H^p(\mathfrak{n}_x,V)\ \text{有限维}\ \forall x\quad(\lambda\ \text{正则反支配})$$$
+
+## 相关定理
+
+### 定理 6.2：$D^b_{hol}$ 上的等价
+
+设 $w\in W$，$\lambda\in\mathfrak{h}^*$。则 $LI_w$ 是范畴 $D^b_{hol}(D_\lambda)$ 与 $D^b_{hol}(D_{w\lambda})$ 的等价。
+
+证明状态：`sketch`
+
+1. 由乘积公式（定理 3.18），只需对单反射 $w=s_\alpha$ 证明；再由几何平移与引理 3.5，可设 $\lambda$ 反支配且正则。
+   - 为什么：乘积公式把一般 $w$ 拆成单反射的复合，而几何平移是范畴等价、只搬运权，不改变完整性。
+2. 情形 (a)：$\check{\alpha}(\lambda)\notin-\mathbb{N}$。此时 $s_\alpha\lambda$ 仍正则反支配，由推论 3.22，$I_{s_\alpha}$ 是正合函子且以 $I_{s_\alpha^{-1}}$ 为逆，断言立即成立。
+   - 为什么：$\Sigma^+_{s_\alpha}\cap\Sigma_\lambda=\varnothing$ 正是 3.22 的条件，此时 $I_{s_\alpha}$ 与 $LI_{s_\alpha}$ 重合。
+3. 情形 (b)：$p=-\check{\alpha}(\lambda)\in\mathbb{N}$。令 $\mathcal{A}$ 为 $D^b_{hol}(D_{s_\alpha\lambda})$ 中由形如 $LI_{s_\alpha}(C^\bullet)$ 的对象生成的满子范畴；由引理 6.1，只需证明 $\mathcal{A}$ 含一切 $\mathbb{D}(\mathcal{V}(p\alpha))$（$\mathcal{V}$ 取遍不可约完整 $D_\lambda$-模）。
+   - 为什么：6.1 说不可约完整模在 $D^b_{hol}$ 中生成，故只要生成元都在 $\mathcal{A}$ 里，$\mathcal{A}$ 就是整个范畴。
+4. 由引理 5.6 对不可约 $\mathcal{V}$ 分两型：型 (i) 有 $L_{-1}I_{s_\alpha}(\mathcal{V})=\mathcal{V}(p\alpha)$ 且 $I_{s_\alpha}(\mathcal{V})=0$，于是 $LI_{s_\alpha}(\mathbb{D}(\mathcal{V}))=\mathbb{D}(\mathcal{V}(p\alpha))[1]$，把 $[1]$ 移走即得 $\mathbb{D}(\mathcal{V}(p\alpha))\in\mathcal{A}$。
+   - 为什么：型 (i) 的交织函子整体消没，只剩一个平移次数为 $-1$ 的项，锥正好是被平移的对偶模。
+5. 型 (ii) 有 $L_{-1}I_{s_\alpha}(\mathcal{V})=0$；由 5.7 得短正合列 $0\to\mathcal{U}\to I_{s_\alpha}(\mathcal{V})\to\mathcal{V}(p\alpha)\to0$。选 $\nu$ 使 $\lambda+\nu$ 反支配且 $\alpha$ 是 $\Pi_\lambda$ 中唯一与它正交的根，则由 5.9 知 $\mathcal{U}(s_\alpha\nu)$ 的合成因子全为 (i) 型；再取附着于 $I_{s_\alpha}(\mathcal{V})\to\mathcal{V}(p\alpha)$ 的特异三角，用锥 $\cong\mathbb{D}(\mathcal{U})[-1]$ 完成归纳。
+   - 为什么：5.9 给出「无截面」的判据，(i) 型是已处理过的情形，特异三角把 (ii) 型化归到 (i) 型。
+
+> 缺口：第 5 步依赖引理 5.6、5.7、5.9 与 8.3、8.5 的细节（底本 ch03e.tex:305-337 把 §5 条目误引作 4.1/4.6/4.7/4.9，译本 annote 已改正为 5.1/5.6/5.7/5.9）；本卡未逐行复核该归纳。
+
+### 定理 6.3：完整模的截面有限长
+
+设 $\theta=W\cdot\lambda$，$\mathcal{V}$ 是完整 $D_\lambda$-模。则 $H^p(X,\mathcal{V})$（$p\in\mathbb{Z}_+$）是有限长 $U_\theta$-模。
+
+证明状态：`complete`
+
+1. 取 $\mu\in\theta$ 反支配、$w\in W$ 使 $\lambda=w\mu$。由定理 6.2，存在上同调完整的复形 $C^\bullet$ 使 $LI_w(C^\bullet)=\mathbb{D}(\mathcal{V})$。
+   - 为什么：6.2 的等价是满的，故 $\mathbb{D}(\mathcal{V})$ 必有原像；$\mathbb{D}(\mathcal{V})$ 自身上同调完整。
+2. 因 $\Gamma$ 是从 $\mathcal{M}_{qc}(D_\mu)$ 到 $\mathcal{M}(U_\theta)$ 的正合函子，$R\Gamma(C^\bullet)=\Gamma(C^\bullet)$，且 $H^p(R\Gamma(C^\bullet))=\Gamma(X,H^p(C^\bullet))$。由命题 5.1，这些 $\Gamma$ 都是有限长 $U_\theta$-模。
+   - 为什么：反支配的 $\mu$ 使高次上同调消失（$\Gamma$ 正合），而完整模的 $H^p$ 是不可约完整模的有限次扩张，5.1 逐因子给出有限长。
+3. 最后由定理 3.23（反支配时 $R\Gamma\circ LI_w\cong R\Gamma$）得 $H^p(X,\mathcal{V})=H^p(R\Gamma(\mathbb{D}(\mathcal{V})))=H^p(R\Gamma(C^\bullet))$，故有限长。
+   - 为什么：3.23 把 $LI_w$ 从 $R\Gamma$ 中消去，把 $\mathcal{V}$ 的上同调换回 $C^\bullet$ 的上同调。
+
+### 命题 6.4：完整性的 $\mathfrak{n}_x$-同调判据
+
+设 $\lambda$ 正则反支配，$V$ 是有限生成 $U_\theta$-模。则等价：(i) $\Delta_\lambda(V)$ 是完整 $D_\lambda$-模；(ii) 存在 $w\in W$ 使 $L\Delta_{w\lambda}(V)$ 是上同调完整的复形；(iii) $H^p(\mathfrak{n}_x,V)$ 对一切 $x\in X$ 有限维；(iv) 存在 $w\in W$ 使 $H^p(\mathfrak{n}_x,V)(w\lambda+\rho)$ 对一切 $x$ 有限维。
+
+证明状态：`sketch`
+
+1. 由定理 1.19，对任意 $w$ 有 $L\Delta_{w\lambda}(V)\in D^b_{coh}(D_{w\lambda})$；再由定理 3.19 与 6.2，(i) 与 (ii) 等价。
+   - 为什么：$L\Delta$ 的有界凝聚性与 $D^b_{hol}$ 上的等价合起来，说明完整性沿 $W$ 搬运不变。
+2. (iii)$\Rightarrow$(iv) 显然。设 (ii) 成立，对 $x\in X$ 记 $i_x$ 为 $\{x\}\hookrightarrow X$，则 $LT_x(L\Delta_{w\lambda}(V))=Li_x^*(L\Delta_{w\lambda}(V))$ 是上同调有限维的复形；由推论 2.6 的谱序列得 (iv)。
+   - 为什么：$T_x$ 就是沿 $i_x$ 的逆像，故几何纤维的上同调就是 $\mathfrak{n}_x$-同调的 graded 部分（推论 2.6）。
+3. 反之设 (iv)，则 $LT_x(L\Delta_{w\lambda}(V))$ 对一切 $x$ 有有限维上同调；由 [1, VII.10.7(ii)] 推得 (ii)。
+   - 为什么：该判据把「所有纤维上的上同调有限维」等价于复形的有界凝聚性，从而回到 (ii)。
+
+> 缺口：第 3 步引用外部文献 [1]（Kashiwara–Schapira）VII.10.7(ii)，本卡未核对该判据的原文条件。
+
+## 易错点
+
+- 「完整」在本书里蕴含有限长（ch03e.tex:280），不要套用一般 $D$-模理论里「完整 $\ne$ 有限长」的直觉；这里的 $D_\lambda$ 是旗簇上的扭 $D$-模，结构更特殊。
+- 定理 6.2 的等价只涉及完整复形；$D^b_{coh}$ 上的等价是定理 3.20。两者的证明与前提都不同，不能互相替代。
+- 命题 6.4 的 (iii)/(iv) 都要求 $\lambda$ 正则反支配；离开这个前提，「$\mathfrak{n}_x$-同调有限维」不保证 $\Delta_\lambda(V)$ 完整。
+- 推论 6.5 只断言 $V$ 有限长，不给出 $H^p(\mathfrak{n}_x,V)$ 的显式维数；把它当作维数公式是过度解读。
+
+## 相关卡
+
+- `mloc/concept/inverse-intertwining-functor`
+- `mloc/concept/iw-exactness`
+- `mloc/concept/irreducible-d-lambda-sections`
+- `mloc/concept/support-and-n-homology`
+
+## 出处
+
+- Miličić, Localization and Representation Theory of Reductive Lie Groups · §3.6 完整复形与生成类（引理 6.1） · p.[65]（PDF [69]） · `源码/chapters/ch03e.tex:276-299（$D^b_{hol}$、引理 6.1、$LI_w$ 保持完整）`
+- Miličić, Localization and Representation Theory of Reductive Lie Groups · §3.6 主定理与有限性（定理 6.2、6.3） · p.[66, 67]（PDF [70, 71]） · `源码/chapters/ch03e.tex:301-348（定理 6.2、6.3 及其证明）`
+- Miličić, Localization and Representation Theory of Reductive Lie Groups · §3.6 完整性判据（命题 6.4、推论 6.5） · p.[67]（PDF [71]） · `源码/chapters/ch03e.tex:350-371（命题 6.4、推论 6.5）`

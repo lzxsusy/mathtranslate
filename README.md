@@ -38,7 +38,7 @@
 | --- | --- |
 | 总览：十三个数字、8 条主线、卡片/语料/术语样例 | [`site/index.html`](site/index.html) |
 | 124 部工程总表（可按主题搜） | [`site/p/index.html`](site/p/index.html) |
-| 1,219 张资料卡统一入口（按系列/类型/状态筛） | [`site/cards/index.html`](site/cards/index.html) |
+| 1,346 张资料卡统一入口（按系列/类型/状态筛） | [`site/cards/index.html`](site/cards/index.html) |
 | 49,322 段语料里的 400 段抽样 | [`site/corpus.html`](site/corpus.html) |
 | 1,820 条术语表（可搜索） | [`site/terms.html`](site/terms.html) |
 | 三层许可与五条合规红线 | [`site/compliance.html`](site/compliance.html) |
@@ -122,12 +122,12 @@ AI 辅助翻译的过程轨迹、以及威腾文章研讨班的组织资料整�
 | 仓库文件（git 跟踪） | 13,356 个 / **458.8 MB** |
 | LaTeX 源文件 / 插图 | 2,363 个 `.tex` / 2,320 张图 |
 | 成品 PDF（预印本类） | 41 部 / **50.8 MB**（Release 附件） |
-| 中文段落语料 | **49,322** 段（唯一 47,756），其中 **42,396** 段含公式（86%）；汉字 4,055,500 字 |
-| 语料覆盖 | **82** 个工程有段落入库 |
+| 中文段落语料 | **50,115** 段（唯一 48,549），其中 **43,150** 段含公式（86%）；汉字 4,096,776 字 |
+| 语料覆盖 | **83** 个工程有段落入库 |
 | 近重复标注 | 1,418 段（保留，标 `near_dup_of`） |
 | 原书页码锚点 | 4,023 段（`page_orig`） |
-| 术语基 | 1,820 条 |
-| 资料卡 | 1,279 张（28 个数据集） |
+| 术语基 | 1,913 条 |
+| 资料卡 | 1,346 张（31 个数据集） |
 | 形式化陈述对齐 | 40 条（21 certified + 19 gap；7 个 `.lean`，24 处 `sorry` / 19 条声明） |
 | 精选轨迹 | 402 条 |
 | 原始会话分片 | 4 片 / **144.6 MB**（Release 附件） |
@@ -236,7 +236,7 @@ Bourbaki 报告、Astérisque 专辑、arXiv 预印本、论文集（proceedings
 | `08_source_code/` | **每部译本的完整工程**：`工程文件/`（BRIEF、构建脚本、交付清单、术语表、校对记录、逐章报告）+ `源码/`（LaTeX 源与插图） |
 | `07_refs_nlab/` | **nLab 参考资料库**（几何 Langlands 线专用）：120 条 nLab 条目摘要（含 `last_revised`，可直接写进译注来源行）+ 37 份替代来源卡（nLab 只有存根时改引 A 级教材 / MathWorld / Stacks）+ 110 条来源真实性抽查记录 |
 | `10_gmn_series/` | **GMN 系列研究与译注层**：Gaiotto–Moore–Neitzke 五篇（穿墙公式、BPS 态、超凯勒几何、红外代数）的资料卡、阅读报告、术语与索引；译文源码在 `08_source_code/` |
-| `datasets/` | **可训练数据集**（**26 个集 / 1,219 张资料卡**）：数学推理条目（`math/`）、原文片段↔译文↔译法理由（`parallel/`）、精读卡（`deepread/`）、高光与难证标注（`highlights/`）、事件级工作流（`traces/`）、概念图谱（`kg/`）、held-out 评测（`bench/`）、按概念组织的词条库（`encyclopedia/`）、单章资料卡（`geoq/`、`pathintegral/`、`csw/`、`glc/`、`kshms/`、`ggl19/` …）、**自然语言↔Lean 4 对齐卡（`leanstmt/`，本库未来重心）**；规则见 `datasets/README.md`，权利分 `self / arxiv / book / rewritten` 四层，`book` 只进 `_internal/` |
+| `datasets/` | **可训练数据集**（**31 个集 / 1,346 张资料卡**）：数学推理条目（`math/`）、原文片段↔译文↔译法理由（`parallel/`）、精读卡（`deepread/`）、高光与难证标注（`highlights/`）、事件级工作流（`traces/`）、概念图谱（`kg/`）、held-out 评测（`bench/`）、按概念组织的词条库（`encyclopedia/`）、单章资料卡（`geoq/`、`pathintegral/`、`csw/`、`glc/`、`kshms/`、`ggl19/` …）、**自然语言↔Lean 4 对齐卡（`leanstmt/`，本库未来重心）**；规则见 `datasets/README.md`，权利分 `self / arxiv / book / rewritten` 四层，`book` 只进 `_internal/` |
 | `site/` | 静态站点（`site/index.html` 双击即开，无需服务器） |
 
 ## `01_corpus_zh/`：语料的形态

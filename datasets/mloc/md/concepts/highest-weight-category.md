@@ -1,0 +1,95 @@
+# 最高权模范畴
+
+> `mloc/concept/highest-weight-category` · type=concept · track=G · status=draft · verification=source-only
+
+**别名**：category of highest weight modules、$\mathcal{M}_{fg}(\mathfrak{g},N_0)$、最高权模范畴 $\mathcal{M}$
+
+## 摘要
+
+所有最高权模构成的全子范畴：对正合列封闭、对偶自反、每个对象有限长，并按无穷小特征标分解成块。
+
+## 问题
+
+为什么最高权模的「全子范畴」能对正合列封闭，而一般的有限生成模范畴不能？
+
+## 定义
+
+最高权模范畴 $\mathcal{M}$ 指 $\mathcal{M}_{fg}(U(\mathfrak{g}))$ 中以最高权模为对象、以 $\mathfrak{g}$-模同态为态射的全子范畴。等价地（命题 1.4 之后的讨论），$\mathcal{M}$ 等同于 $\mathcal{M}_{fg}(\mathfrak{g},N_0)$ 中被 $Z(\mathfrak{g})$ 的某个有限余维理想零化的对象的全子范畴。按无穷小特征标 $\theta\in\mathfrak{h}_0^*/W$ 分解，$\mathcal{M}=\bigoplus_\theta\mathcal{M}_{fg}(U_\theta,N_0)$，其中 $\mathcal{M}_{fg}(U_\theta,N_0)$ 是无穷小特征标为 $\chi_\lambda$（$\lambda\in\theta$）的块。
+
+记号：$U_\theta$：$U(\mathfrak{g})$ 中由 $\ker\chi_\lambda$（$\lambda\in\theta$）生成的理想所定的商；$N_0$：由 $\mathfrak{n}_0$ 指数化得到的幂幺群；$\mathcal{M}_{fg}(U_\theta,N_0)$：同时是有限生成 $U_\theta$-模与代数 $N_0$-模、且两作用相容的对象范畴。
+
+## 要点
+
+- 定义只规定对象，态射取全部 $\mathfrak{g}$-模同态。引理 1.2 的实质内容是：核、像、商都仍是最高权模，因此它确实是 abelian 全子范畴，而「对正合列封闭」正是这一点的展开。
+- 引理 1.2 的证明不是范畴套话，而是逐项用引理 1.1 的 (a)(b)：权空间分解与有限维性对子模、商模逐个传递，权集的有界性用「$\mu-\nu$ 为正根和」的偏序传递。
+- 引理 1.3 给出零化子的有限余维性，这使按 $\theta$ 分块成为可能；每个块 $\mathcal{M}_{fg}(U_\theta,N_0)$ 是有限长对象的范畴（命题 1.8）。
+- 对偶 $V\mapsto\tilde V$ 是 $\mathcal{M}$ 到自身的反变正合函子；限制在每个块 $\mathcal{M}_{fg}(U_\theta,N_0)$ 上是反等价（用引理 1.9：$\tau|_{Z(\mathfrak{g})}=\mathrm{id}$），且双对偶 $\tilde{\tilde V}\cong V$（引理 1.10(ii)）。
+- 命题 1.13 指出 $(\mathfrak{g},N_0)$ 是 Harish-Chandra 对，于是 $\mathcal{M}$ 落在第 4 章的 HC 模范畴里；这是第 5 章后半用旗簇局部化研究最高权模的入口。
+- 范畴不是半单的：$M(\lambda)$ 一般可约，块内的合成因子由 $L(w\lambda)$ 之类给出，合成重数需要几何方法（标准模 $I(w,\lambda)$ 的滤过）来算。
+
+## 公式
+
+$$\mathcal{M}=\{\text{最高权模}\}\subset\mathcal{M}_{fg}(U(\mathfrak{g}))$$
+
+$$\mathcal{M}=\bigoplus_{\theta\in\mathfrak{h}_0^*/W}\mathcal{M}_{fg}(U_\theta,N_0)$$
+
+$$0\to V\to V'\to V''\to 0\ \text{正合}\quad\Longrightarrow\quad V'\in\mathcal{M}\iff V,V''\in\mathcal{M}$$
+
+$$V\mapsto\tilde V\ \text{反变正合},\qquad \tilde{\tilde V}\cong V$$
+
+## 相关定理
+
+### 引理 1.2（§5.1：对正合列封闭）
+
+设 $0\to V\to V'\to V''\to 0$ 是 $\mathfrak{g}$-模的正合列。则 $V'$ 是最高权模，当且仅当 $V$ 与 $V''$ 都是最高权模。
+
+证明状态：`complete`
+
+1. 设 $V,V''$ 是最高权模。由引理 1.1，它们各自满足 (a) 权空间分解且有限维、(b) 权集有有限多个极大元；把 $V$ 的权集与 $V''$ 的权集之并取作 $S_0$。
+   - 为什么：有限并仍有限，故 $S_0$ 满足 (b) 的要求。
+2. 对 $V'$ 中任一向量 $v'$，其像在 $V''$ 中、其在 $V$ 中的「差」都可分解到有限多个权空间；由正合列，$v'$ 落在有限多个 $V'^\lambda$ 的直和中。
+   - 为什么：$\mathfrak{h}_0$ 作用在短正合列上逐项，长正合列给出权空间的逐项正合，$V'^\lambda$ 夹在 $V^\lambda$ 与 $V''^\lambda$ 之间。
+3. 于是 $V'=\bigoplus_\lambda V'^\lambda$，且每个 $V'^\lambda$ 作为 $V^\lambda$ 与 $V''^\lambda$ 的扩张是有限维的——(a) 成立。
+   - 为什么：有限维空间对扩张封闭；逐项正合列 $0\to V^\lambda\to V'^\lambda\to V''^\lambda\to0$。
+4. 由第 1 步的 $S_0$（覆盖 $V$ 与 $V''$ 的权集）覆盖 $V'$ 的权集，故 (b) 成立；由 $V'$ 是有限生成 $\mathfrak{g}$-模（$V$ 与 $V''$ 有限生成），引理 1.1 给出 $V'$ 是最高权模。
+   - 为什么：引理 1.1 的「当且仅当」只需要 (a)(b) 与有限生成。
+5. 反之设 $V'$ 是最高权模。$V$ 是 $V'$ 的 $\mathfrak{g}$-子模，$U(\mathfrak{b}_0)$-有限性限制到子模上仍成立，故 $V$ 是最高权模；$V''$ 是 $V'$ 的商，$U(\mathfrak{b}_0)$-有限性对商也传递，且有限生成传递，故 $V''$ 也是。
+   - 为什么：子模与商模继承「每个向量生成有限维 $U(\mathfrak{b}_0)$-模」这条性质。
+
+### 命题 1.8（§5.1：有限长度）
+
+每个最高权模都有有限长度（即存在有限滤过，其各商是不可约最高权模）。
+
+证明状态：`complete`
+
+1. 反设 $V$ 无限长。取递降滤过 $V=V_0\supset V_1\supset\cdots$ 使各商 $V_i/V_{i+1}$ 不可约；由引理 1.2 的「反之」部分，每个 $V_i$ 是最高权模，每个商是不可约最高权模。
+   - 为什么：无限长意味着存在无限严格递降链；对最高权模范畴可用 Zorn 取极大真子模逐步截断。
+2. 由命题 1.6，每个不可约最高权模都同构于某个 $L(\lambda_i)$；由引理 1.7，$L(\lambda_i)$ 是 $U_{\theta_i}$-模，其中 $\theta_i=W\cdot\lambda_i$。
+   - 为什么：命题 1.6 给出不可约最高权模的分类，$L(\lambda_i)$ 的标签 $\lambda_i$ 就是其无穷小特征标的代表。
+3. 由引理 1.3 与 1.7，可能的 $\theta_i$ 只有有限多个；由命题 1.6(ii)（$L(\lambda)\cong L(\mu)\iff\lambda=\mu$）与引理 1.1（权空间有限维、权集有有限多极大元），同一 $\theta$ 下可能的 $L(\lambda_i)$ 也只有有限多个。
+   - 为什么：$Z(\mathfrak{g})$ 的零化子有限余维只允许有限多个中心特征标；固定 $\theta$ 后权集受 $S_0$ 约束，可能的最高权只有有限多个。
+4. 于是无限长的递降链中必有两个相邻商同构，记为 $L(\lambda)$；这迫使 $V_i/V_{i+2}\cong L(\lambda)\oplus L(\lambda)$，与权空间维数在 $\lambda$ 处的可加性矛盾。
+   - 为什么：有限个可能的合成因子不能支撑无限长的链：某个 $L(\lambda)$ 必出现无限多次，而 $V$ 在权 $\lambda$ 处的权空间有限维。
+5. 矛盾说明 $V$ 有限长。
+   - 为什么：假设唯一可能导致矛盾，故结论成立。
+
+## 易错点
+
+- 「对正合列封闭」不等于「有足够多内射对象」或「是 Grothendieck 范畴」：$\mathcal{M}$ 一般没有足够投射，标准模 $I(w,\lambda)$ 也不是投射对象。
+- 有限长（命题 1.8）依赖 $Z(\mathfrak{g})$ 零化子有限余维；只假设有限生成是不够的。
+- 分块 $\mathcal{M}=\bigoplus_\theta\mathcal{M}_{fg}(U_\theta,N_0)$ 的指标是 $\theta=W\cdot\lambda$，不是 $\lambda$ 本身；同一块里不同 $\lambda$ 给出不同的 $M(\lambda)$ 与 $L(\lambda)$。
+- 对偶 $V\mapsto\tilde V$ 是反变函子；说它「是范畴的自等价」是错的，正确的是「在每个块上是反等价」且双对偶给出自然同构。
+- 把 $\mathcal{M}$ 与第 4 章的 $\mathcal{M}_{fg}(U(\mathfrak{g}),K)$ 直接等同也不严谨：等同需要命题 1.13（$(\mathfrak{g},N_0)$ 是 HC 对）与 $Z(\mathfrak{g})$-有限余维零化这两个附加条件。
+
+## 相关卡
+
+- `mloc/concept/highest-weight-module`
+- `mloc/concept/verma-module`
+- `mloc/concept/duality-and-standard-modules`
+- `mloc/concept/harish-chandra-module`
+
+## 出处
+
+- Miličić, Localization and Representation Theory of Reductive Lie Groups · §5.1 引理 1.2（对正合列封闭）与引理 1.3 · p.[93, 94]（PDF [97, 98]） · `源码/chapters/ch05a.tex:32-52（引理 1.2、其证明、引理 1.3）`
+- Miličić, Localization and Representation Theory of Reductive Lie Groups · §5.1 命题 1.8（有限长度） · p.[95]（PDF [99]） · `源码/chapters/ch05a.tex:113-117（命题 1.8 及其证明）`
+- Miličić, Localization and Representation Theory of Reductive Lie Groups · §5.1 对偶函子的正合性与反等价 · p.[96]（PDF [100]） · `源码/chapters/ch05a.tex:145-155（对偶函子的正合性、反等价与引理 1.11）`
