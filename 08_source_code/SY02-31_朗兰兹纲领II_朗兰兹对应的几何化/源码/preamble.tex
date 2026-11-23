@@ -1,0 +1,183 @@
+% preamble.tex —— SY02-31《朗兰兹纲领 II》中文译注本 导言区
+% 引擎：XeLaTeX（ctexbook）；要求 0 error / 0 undefined / 0 缺字
+\documentclass[11pt,a4paper,UTF8,fontset=windows,openany]{ctexbook}
+
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{mathrsfs}
+\usepackage{stmaryrd}
+\usepackage{bm}
+\usepackage{geometry}
+\geometry{a4paper,top=2.4cm,bottom=2.4cm,left=2.6cm,right=2.6cm,
+  marginparwidth=1.35cm,marginparsep=0.18cm,headsep=0.5cm,footskip=0.9cm}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{cd,arrows.meta,positioning}
+\usepackage{tikz-cd}
+\usepackage[shortlabels]{enumitem}
+\usepackage{booktabs,array,longtable,multirow}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,urlcolor=blue!45!black,
+  citecolor=blue!45!black]{hyperref}
+% 节标题里含数学时，PDF 书签串会出错；统一关掉书签，保留正文与目录超链接。
+% （目录本身仍正常排版，因为那是排版结果而非 PDF 字符串。）
+\hypersetup{bookmarks=false}
+
+% ---------- 版式 ----------
+\linespread{1.18}
+\setlength{\parskip}{0.15em}
+% 底本的编号是「篇.节.小节」三级（如 4.3.2），故须让 subsubsection 带编号。
+\setcounter{secnumdepth}{3}
+% 中文正文不靠连字符断行，长数学串最容易压出页边；给 TeX 三轮加宽容忍度。
+\setlength{\emergencystretch}{3em}
+\tolerance=3000
+\hbadness=4000
+\ctexset{
+  chapter/format = \Large\bfseries\centering,
+  chapter/name = {},
+  chapter/number = {},
+  chapter/beforeskip = 1.2em,
+  chapter/afterskip = 1.0em,
+  section/format = \large\bfseries\raggedright,
+  subsection/format = \normalsize\bfseries\raggedright,
+  subsubsection/format = \normalsize\bfseries\raggedright,
+}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[CE]{\small 朗兰兹纲领 II：朗兰兹对应的几何化}
+\fancyhead[CO]{\small\leftmark}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+% 每篇（章）内小节号从 1 重新起，忠实原文各文独立编号
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+
+% ---------- 页锚：每页原文页码标在切口侧 ----------
+\newcommand{\ysrc}[1]{\marginpar{\raggedleft\scriptsize\color{black!55}#1}%
+  \hypertarget{src:#1}{}}
+
+% ---------- 定理类环境：编号沿用原文，手工传入 ----------
+% 用法：\begin{thm}{1.2.3} ... \label{thm:xxx} ... \end{thm}
+% \ref{thm:xxx} 得到 1.2.3（已用 \p@ 前缀为空的标准环境，无节号前缀）
+\newtheorem{ithm}{定理}
+\newtheorem{iprop}{命题}
+\newtheorem{ilem}{引理}
+\newtheorem{icor}{推论}
+\newtheorem{iconj}{猜想}
+\newtheorem{idefn}{定义}
+\newtheorem{irem}{注}
+\newtheorem{iexam}{例}
+\newtheorem{iques}{问题}
+\newtheorem{iclaim}{断言}
+\newtheorem{inotn}{记号}
+\newtheorem{ihyp}{假设}
+\newtheorem{ifact}{事实}
+\newtheorem{iprob}{问题}
+\newenvironment{thm}[1]{\renewcommand{\theithm}{#1}\begin{ithm}}{\end{ithm}}
+\newenvironment{prop}[1]{\renewcommand{\theiprop}{#1}\begin{iprop}}{\end{iprop}}
+\newenvironment{lem}[1]{\renewcommand{\theilem}{#1}\begin{ilem}}{\end{ilem}}
+\newenvironment{cor}[1]{\renewcommand{\theicor}{#1}\begin{icor}}{\end{icor}}
+\newenvironment{conj}[1]{\renewcommand{\theiconj}{#1}\begin{iconj}}{\end{iconj}}
+\newenvironment{defn}[1]{\renewcommand{\theidefn}{#1}\begin{idefn}}{\end{idefn}}
+\newenvironment{rem}[1]{\renewcommand{\theirem}{#1}\begin{irem}}{\end{irem}}
+\newenvironment{exam}[1]{\renewcommand{\theiexam}{#1}\begin{iexam}}{\end{iexam}}
+\newenvironment{ques}[1]{\renewcommand{\theiques}{#1}\begin{iques}}{\end{iques}}
+\newenvironment{claim}[1]{\renewcommand{\theiclaim}{#1}\begin{iclaim}}{\end{iclaim}}
+\newenvironment{notn}[1]{\renewcommand{\theinotn}{#1}\begin{inotn}}{\end{inotn}}
+\newenvironment{hyp}[1]{\renewcommand{\theihyp}{#1}\begin{ihyp}}{\end{ihyp}}
+\newenvironment{fact}[1]{\renewcommand{\theifact}{#1}\begin{ifact}}{\end{ifact}}
+\newenvironment{prob}[1]{\renewcommand{\theiprob}{#1}\begin{iprob}}{\end{iprob}}
+
+% 证明环境
+\renewenvironment{proof}[1][证明]{\par\medskip\noindent\textit{#1.}\hspace{0.4em}}{\hfill$\square$\par\medskip}
+
+% ---------- 参考文献 ----------
+\newenvironment{refs}{\begin{list}{}{\leftmargin=3.8em\labelwidth=3.6em\labelsep=0.4em
+  \itemindent=-3.8em\parsep=0.1em\topsep=0.3em\small\raggedright}}{\end{list}}
+% 文献条目里作者名与英文标题很长，两端对齐必然溢出，故整段左对齐（不改变内容）。
+
+% ---------- 译注 ----------
+\newcommand{\tn}[1]{\footnote{译者注：#1}}
+\newcommand{\ednote}[1]{\footnote{编者注：#1}}
+
+% ---------- 数学常用宏（与原文一致） ----------
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\GG}{\mathbb{G}}
+\newcommand{\OO}{\mathcal{O}}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\Frobq}{Frob}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\Qcoh}{Qcoh}
+\providecommand{\QC}{\Qcoh}% 兼容分片里的简写
+\DeclareMathOperator{\Mod}{Mod}
+\DeclareMathOperator{\Rep}{Rep}
+\DeclareMathOperator{\Ind}{Ind}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\Tor}{Tor}
+\DeclareMathOperator{\Sym}{Sym}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\Sect}{Sect}
+\DeclareMathOperator{\Sing}{Sing}
+\DeclareMathOperator{\Gr}{Gr}
+\DeclareMathOperator{\Bun}{Bun}
+\DeclareMathOperator{\Loc}{Loc}
+\DeclareMathOperator{\LocSys}{LocSys}
+\DeclareMathOperator{\Perf}{Perf}
+\DeclareMathOperator{\IndCoh}{IndCoh}
+\DeclareMathOperator{\Coh}{Coh}
+\DeclareMathOperator{\QCoh}{QCoh}
+\DeclareMathOperator{\Map}{Map}
+\DeclareMathOperator{\Spf}{Spf}
+\DeclareMathOperator{\Proj}{Proj}
+\DeclareMathOperator{\Spa}{Spa}
+\DeclareMathOperator{\Sp}{Sp}
+\DeclareMathOperator{\HH}{HH}
+\DeclareMathOperator{\HC}{HC}
+\DeclareMathOperator{\TP}{TP}
+\DeclareMathOperator{\TC}{TC}
+\DeclareMathOperator{\Frob}{Frob}
+\newcommand{\LG}{{}^L G}
+\newcommand{\hatG}{\widehat{G}}
+\newcommand{\frakg}{\mathfrak{g}}
+\newcommand{\frakn}{\mathfrak{n}}
+\newcommand{\frakb}{\mathfrak{b}}
+\newcommand{\frakt}{\mathfrak{t}}
+\newcommand{\frakh}{\mathfrak{h}}
+\newcommand{\frakm}{\mathfrak{m}}
+\newcommand{\frakp}{\mathfrak{p}}
+\newcommand{\frakz}{\mathfrak{z}}
+\newcommand{\hG}{\widehat{G}}
+\newcommand{\hZ}{\widehat{Z}}
+\newcommand{\ol}{\overline}
+\newcommand{\wt}{\widetilde}
+\newcommand{\wh}{\widehat}
+\newcommand{\CC}{\mathcal{C}}
+\newcommand{\DD}{\mathcal{D}}
+\newcommand{\FF}{\mathcal{F}}
+\newcommand{\GGG}{\mathcal{G}}
+\newcommand{\LL}{\mathcal{L}}
+\newcommand{\MM}{\mathcal{M}}
+\newcommand{\NN}{\mathcal{N}}
+\newcommand{\TS}{\mathcal{T}}
+\newcommand{\XX}{\mathcal{X}}
+\newcommand{\ZZ}{\mathcal{Z}}
+\newcommand{\isom}{\xrightarrow{\ \sim\ }}
+\newcommand{\into}{\hookrightarrow}
+\newcommand{\onto}{\twoheadrightarrow}
+\newcommand{\ra}{\rightarrow}
+\newcommand{\lra}{\longrightarrow}
+\newcommand{\dfn}{:=}
+\newcommand{\eqdef}{\overset{\mathrm{def}}{=}}

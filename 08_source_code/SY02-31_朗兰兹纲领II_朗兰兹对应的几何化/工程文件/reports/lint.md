@@ -1,0 +1,59 @@
+# 译文静态检查（自动生成）
+
+| 文件 | 页锚数 | 首末页 | 问题 |
+|---|---|---|---|
+| chunks/ch-a1-00.tex | 2 | 3–4 | — |
+| chunks/ch-a1-01.tex | 10 | 5–14 | — |
+| chunks/ch-a1-02.tex | 12 | 15–26 | — |
+| chunks/ch-a1-03.tex | 11 | 27–37 | — |
+| chunks/ch-a2-01.tex | 13 | 39–51 | — |
+| chunks/ch-a2-02.tex | 13 | 52–64 | — |
+| chunks/ch-a2-03.tex | 13 | 65–77 | — |
+| chunks/ch-a2-04.tex | 13 | 78–90 | — |
+| chunks/ch-a2-05.tex | 13 | 91–103 | — |
+| chunks/ch-a2-06.tex | 10 | 104–113 | — |
+| chunks/ch-a2-07.tex | 10 | 114–123 | — |
+| chunks/ch-a3-01.tex | 12 | 125–136 | — |
+| chunks/ch-a3-02.tex | 12 | 137–148 | — |
+| chunks/ch-a3-03.tex | 9 | 149–157 | — |
+| chunks/ch-a3-04.tex | 8 | 158–165 | — |
+| chunks/ch-a4-01.tex | 12 | 167–178 | — |
+| chunks/ch-a4-02.tex | 12 | 179–190 | — |
+| chunks/ch-a4-03.tex | 12 | 191–202 | — |
+| chunks/ch-a4-04.tex | 12 | 203–214 | — |
+| chunks/ch-a4-05.tex | 12 | 215–226 | — |
+| chunks/ch-a4-06.tex | 12 | 227–238 | — |
+| chunks/ch-a4-07.tex | 12 | 239–250 | — |
+| chunks/ch-a4-08.tex | 12 | 251–262 | — |
+| chunks/ch-a4-09.tex | 12 | 263–274 | — |
+| chunks/ch-a4-10.tex | 12 | 275–286 | — |
+| chunks/ch-a4-11.tex | 12 | 287–298 | — |
+| chunks/ch-a4-12.tex | 12 | 299–310 | — |
+| chunks/ch-a4-13.tex | 12 | 311–322 | — |
+| chunks/ch-a4-14.tex | 12 | 323–334 | — |
+| chunks/ch-a4-15.tex | 12 | 335–346 | — |
+| chunks/ch-a4-16.tex | 12 | 347–358 | — |
+| chunks/ch-a4-17.tex | 12 | 359–370 | — |
+| chunks/ch-a4-18.tex | 12 | 371–382 | — |
+| chunks/ch-a4-19.tex | 12 | 383–394 | — |
+| chunks/ch-a4-20.tex | 12 | 395–406 | — |
+| chunks/ch-a4-21.tex | 13 | 407–419 | — |
+| chunks/ch-a5-01.tex | 12 | 421–432 | — |
+| chunks/ch-a5-02.tex | 12 | 433–444 | — |
+| chunks/ch-a5-03.tex | 12 | 445–456 | — |
+| chunks/ch-a5-04.tex | 14 | 457–470 | — |
+| chunks/ch-a6-01.tex | 12 | 471–482 | — |
+| chunks/ch-a6-02.tex | 12 | 483–494 | — |
+| chunks/ch-a6-03.tex | 12 | 495–506 | — |
+| chunks/ch-a6-04.tex | 12 | 507–518 | — |
+| chunks/ch-a6-05.tex | 12 | 519–530 | — |
+| chunks/ch-a6-06.tex | 12 | 531–542 | — |
+| chunks/ch-a6-07.tex | 12 | 543–554 | — |
+| chunks/ch-a6-08.tex | 14 | 555–568 | — |
+| front/guide.tex | 0 | — | — |
+| front/preface.tex | 0 | — | — |
+| front/translator.tex | 0 | — | — |
+| main.tex | 0 | — | — |
+| preamble.tex | 0 | — | — |
+
+合计：文件 53；禁用句式 0；旧术语 0；\\cite 0；环境不配平文件 0。
