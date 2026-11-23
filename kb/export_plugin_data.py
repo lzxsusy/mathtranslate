@@ -50,6 +50,11 @@ def main() -> None:
     ap.add_argument("--out", default=str(DEFAULT_OUT))
     a = ap.parse_args()
     out = Path(a.out)
+    # 防呆：--out 必须以 cards 结尾。这个脚本会 rmtree(out)，指错一层就会把
+    # 插件 data/ 下的 zh、src 层一起删掉（2026-11-24 SY05-30 施工时踩过）。
+    if out.name != "cards":
+        raise SystemExit(f"--out 必须指向名为 cards 的目录，收到：{out}\n"
+                         "例：--out <dsh-kb>/data/cards")
     cards = load_all()
     if not cards:
         raise SystemExit("kb/cards 与 kb/cards5 都是空的，先跑 ingest.py / ingest_gen2.py")

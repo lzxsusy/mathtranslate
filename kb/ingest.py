@@ -251,7 +251,7 @@ def adapt_json():
         caveat = None
         if not pages:
             caveat = "无页码线索：只能作为“哪本书讲过这个话题”的指针，不能作为结论引用。"
-        elif not isinstance(d.get("source"), dict):
+        elif not (isinstance(d.get("sources"), list) and d.get("sources")) and not isinstance(d.get("source"), dict):
             caveat = "页码由卡内文本启发式抽取，引用前请回源核对。"
         ver = d.get("verification") or {}
         body = "\n".join(flat_text(d.get(k)) for k in (
