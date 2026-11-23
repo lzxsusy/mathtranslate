@@ -6,6 +6,7 @@ r"""build_manifest.py —— 从 git 对象重建 MANIFEST.json。
 
 用法：
     python tools/build_manifest.py              # 用 HEAD 的内容重建
+    python tools/build_manifest.py --index      # 用当前 index（本次提交的 tree）重建
     python tools/build_manifest.py --rev HEAD
 """
 from __future__ import annotations
@@ -23,7 +24,11 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def main() -> int:
-    rev = "HEAD"
+    # --index：按当前 index（即本次提交将写入的 tree）重建，配 pre-commit 使用。
+    if "--index" in sys.argv:
+        rev = subprocess.check_output(["git", "write-tree"], cwd=REPO).decode().strip()
+    else:
+        rev = "HEAD"
     if "--rev" in sys.argv:
         rev = sys.argv[sys.argv.index("--rev") + 1]
     head = subprocess.check_output(["git", "rev-parse", rev], cwd=REPO).decode().strip()

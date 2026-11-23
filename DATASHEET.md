@@ -13,10 +13,10 @@
 
 | 层 | 目录 | 说明 |
 |---|---|---|
-| 权威层 | `08_source_code/` | **122 部工程**的 LaTeX 源码 + 工程文档（其中 **109 部带 LaTeX 源码**；13 部无源码，只有成品 PDF 或译本正文） |
+| 权威层 | `08_source_code/` | **124 部工程**的 LaTeX 源码 + 工程文档（其中 **111 部带 LaTeX 源码**；13 部无源码，只有成品 PDF 或译本正文） |
 | 衍生层 | `01_corpus_zh/`、`02_trajectories/`、`06_sessions_raw/`（分片在 Release 附件）、`03_translations_meta/` | 语料、轨迹、会话、元数据与术语 |
-| 规范层 | `01_corpus_zh/数语规范/` | **术语 1,847 条 / 记号 76 条 / 冲突 76 组 / 宏 550 个**；三份规范（术语+记号、中文语体、对齐卡） |
-| 卡片层 | `datasets/` | **21 个集 / 1,095 张资料卡**；其中 `leanstmt/` 是 **39 条自然语言↔Lean 4 对齐卡**（21 certified + 18 gap） |
+| 规范层 | `01_corpus_zh/数语规范/` | **术语 1,847 条 / 记号 76 条 / 冲突 76 组 / 宏 600 个**；三份规范（术语+记号、中文语体、对齐卡） |
+| 卡片层 | `datasets/` | **26 个集 / 1,219 张资料卡**；其中 `leanstmt/` 是 **39 条自然语言↔Lean 4 对齐卡**（21 certified + 18 gap） |
 | 过程层 | `04_playbook/`、`05_seminar_witten/`、`10_gmn_series/` | 翻译纪律、审校报告、研讨班与 GMN 系列的研究笔记 |
 | 参考层 | `07_refs_nlab/` | nLab 条目摘要 120 条 + 替代来源卡 37 份 + 110 条来源真实性抽查；几何 Langlands 线的术语与引文底账 |
 
@@ -27,7 +27,7 @@
 
 ## 2. 来源与授权
 
-- 底本分布（`RELEASE_REGISTER.csv` 台账，逐部登记，合计 **122 部**）：**arXiv 预印本 53 部、讲义 25 部、图书 23 部、待复核 9 部、学位论文 6 部、在版图书 1 部、会议论文集 1 部、作者手稿（会议报告手写笔记 + 报告幻灯片；未刊）1 部、作者自印本 1 部、研讨会内部笔记 1 部、出版社排版 PDF 1 部**。
+- 底本分布（`RELEASE_REGISTER.csv` 台账，逐部登记，合计 **124 部**）：**arXiv 预印本 54 部、讲义 25 部、图书 24 部、待复核 9 部、学位论文 6 部、在版图书 1 部、会议论文集 1 部、作者手稿（会议报告手写笔记 + 报告幻灯片；未刊）1 部、作者自印本 1 部、研讨会内部笔记 1 部、出版社排版 PDF 1 部**。
 - 发布物**不含任何原文**；不发布原文 PDF，不提供原文下载直链，不托管扫描件或页面图。
 - **许可分两层**（完整条款见 [`LICENSE`](./LICENSE)）：
   - **自产层**（元数据、术语、工程文档、方法、轨迹、站点、脚本、资料卡与对齐卡）：**CC BY 4.0**，署名即可，欢迎训练、研究与商用。
@@ -51,7 +51,7 @@
 | `text` | str | **保真文本**：`$...$`、`\[...\]`、`equation/align` 等数学环境原样保留 |
 | `dup_of` / `dup_pkg` | str\|null | 与前面某段文本完全重复时指向首次出现（重复段保留，便于下游按需过滤） |
 
-统计（2026-11-21 实测，`python make_stats.py` 写 `_meta/stats.json`，为唯一事实源）：
+统计（2026-11-23 实测，`python make_stats.py` 写 `_meta/stats.json`，为唯一事实源）：
 **49,322 段 / 95 个工程有语料 / 唯一 47,756（96.8%）/ 含公式 42,396（86.0%）/ 汉字 4,055,500 字**。
 另标 `near_dup_of`（MinHash-LSH，Jaccard≥0.8，1,418 段，保留不删；SY01-23 之后未重算，为下界）。
 `flags` 记录质检动作与已知缺陷（见 §5）：`orphan_number`（独占一行的公式号/页码 2,620 段）、
@@ -73,7 +73,7 @@ schema 已统一（`_normalize_schema.py`）：`flags` 恒为数组（可为空�
 | 术语抽取 | 同上 | 三种来源：`术语表_*.csv`、`deliverable/*.md`、`.tex` 里的术语对照；合并成 `termbase.jsonl` |
 | 术语/记号规范 | `tools/build_norm.py` | 合并 termbase + 两张冻结表 + 记号表，生成 `01_corpus_zh/数语规范/` 四张表；`--check` 作闸门 |
 | 脱敏 | `tools/scrub_publish.py` | **JSON 感知**：先 `json.loads` 再清洗字符串值，最后重新序列化（早版直接在字节上跑正则会写坏 JSON） |
-| 清单 | `build_manifest.py` + `tools/check_manifest.py` | 从 `HEAD:<path>` 的 blob 计算字节数与 sha256 前 16 位；`check_manifest.py` 单进程流式复算（万级文件，十几秒） |
+| 清单 | `tools/build_manifest.py` + `tools/check_manifest.py` | 从 `HEAD:<path>` 的 blob 计算字节数与 sha256 前 16 位；`check_manifest.py` 单进程流式复算（万级文件，十几秒） |
 | 统计 | `make_stats.py` | 生成 README 统计块与 `_meta/stats.json`，杜绝手写数字漂移；`--check` 作闸门 |
 | 数字闸门 | `tools/check_numbers.py` | 扫描文档里的退役数字（旧工程数、旧语料段数、旧资料卡数等），防止旧口径复活 |
 | 会话抽取 | `06_sessions_raw/_extract_sessions.py` | 读 `session.v4.jsonl.zstd`，按 `callId` 配对 tool/call 与 tool/result；分片从 Release `v1.0.1` 附件下载，拼接与校验见同目录 `_分片说明.md` |
@@ -93,7 +93,7 @@ schema 已统一（`_normalize_schema.py`）：`flags` 恒为数组（可为空�
 | 术语 1,847 条中 **D 级（未标级）1,411 条** | 多为抓取时自动抽出的候选，未逐条查证 | D 级不得进对齐卡；需分批提级或删除 |
 | 术语冲突 76 组未裁定 | 一外多中 12（高 9）、一中多外 28、等级不一致 33、空格/连字符 3 | 跨工程合稿时仍需人工二选一 |
 | 记号表只覆盖 1 部工程 | `symbols_frozen_FUNCTORIALITY.tsv` 76 条 | 其余 115 部的记号无登记，对齐卡只能依赖 `preamble.tex` |
-| 宏跨工程同名不同义 550 个 | `\R` 一个名字 6 种定义，`\C` 4 种 | 跨工程搬运陈述前必须按目标导言区重映射 |
+| 宏跨工程同名不同义 600 个 | `\R` 一个名字 6 种定义，`\C` 4 种 | 跨工程搬运陈述前必须按目标导言区重映射 |
 | 原文对齐（EN↔ZH）尚未发布 | 需原文与分页 OCR 文本，本次未做 | 尚无 `align.jsonl` |
 | 对齐卡 39 条中 18 条是 gap | 陈述已写出，依赖或证明未完成；22 处 `sorry`（18 条声明）已记账 | 不能当「已验证定理」使用 |
 | 会话包未做第三方审计 | 只有自述数字与脱敏脚本 | 建议使用者自行抽样审计 |
@@ -118,7 +118,7 @@ schema 已统一（`_normalize_schema.py`）：`flags` 恒为数组（可为空�
   title        = {数译：中文数学译注文献库（v1.3.0）},
   year         = {2026},
   howpublished = {\url{https://atomgit.com/lzxSUSUY/mathtranslate}},
-  note         = {122 部译注 / 49{,}322 段中文数学语料 / 1{,}847 条术语 / 1{,}095 张资料卡 / 39 条中文↔Lean 对齐卡 / 402 条 agent 轨迹}
+  note         = {124 部译注 / 49{,}322 段中文数学语料 / 1{,}847 条术语 / 1{,}219 张资料卡 / 39 条中文↔Lean 对齐卡 / 402 条 agent 轨迹}
 }
 ```
 
