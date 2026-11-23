@@ -37,11 +37,11 @@
 
 | 阶段 | 内容 | 状态 |
 |---|---|---|
-| Phase 0 | 通读笔记 + 疑点清单 + 术语表/符号表 | 进行中（2026-11-23） |
-| Phase 1 | Chapter I 样板章（p.7–44） | 待 Phase 0 |
-| Phase 2 | Chapter II–VII 逐章 | 待 |
+| Phase 0 | 通读笔记 + 疑点清单（40 行）+ 术语表 207 条/符号表 60 条 | ✅ 完成（2026-11-23） |
+| Phase 1 | Chapter I 样板章（p.7–44，三块译文 + 校对 + 统稿） | ✅ 完成：36 页，0 error，38 页锚全可见 |
+| Phase 2 | Chapter II–X 逐章（每章 1–2 天） | 待（下一章：II 完满空间，p.45–86） |
 | Phase 3 | 全书统稿/编译/索引 | 待 |
-| Phase 4 | 资料卡 + 入仓（08_source_code + datasets/fs21） | 待 |
+| Phase 4 | 资料卡 + 入仓 | ✅ 第一章已入仓：`08_source_code/SY02-26_局部Langlands对应的几何化` + `datasets/fs21`（13 张卡） |
 
 ## 怎么编译
 
