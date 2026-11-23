@@ -9,20 +9,20 @@
 **① 直接给 DSH 一条命令（推荐，最快）**
 
 ```powershell
-dsh plugin --profile desktop add https://atomgit.com/api/v5/repos/lzxSUSUY/mathtranslate/raw/plugins/dsh-kb-0.2.0.tgz
+dsh plugin --profile desktop add https://atomgit.com/api/v5/repos/lzxSUSUY/mathtranslate/raw/plugins/dsh-kb-0.2.1.tgz
 ```
 
 或在 DSH 会话里让我装：
 
 ```
 plugin_manager({ action: "install_bundle",
-                 target: "https://atomgit.com/api/v5/repos/lzxSUSUY/mathtranslate/raw/plugins/dsh-kb-0.2.0.tgz" })
+                 target: "https://atomgit.com/api/v5/repos/lzxSUSUY/mathtranslate/raw/plugins/dsh-kb-0.2.1.tgz" })
 ```
 
-**② 从本地 tarball 装**（已下载 `dsh-kb-0.2.0.tgz` 时）
+**② 从本地 tarball 装**（已下载 `dsh-kb-0.2.1.tgz` 时）
 
 ```
-plugin_manager({ action: "install_bundle", target: "file:C:/path/to/dsh-kb-0.2.0.tgz" })
+plugin_manager({ action: "install_bundle", target: "file:C:/path/to/dsh-kb-0.2.1.tgz" })
 ```
 
 **③ 从源码目录装**（想改代码）
@@ -60,7 +60,7 @@ $env:DSHM_REGISTRY_URL = "https://atomgit.com/api/v5/repos/lzxSUSUY/mathtranslat
 
 | 版本 | 变化 |
 |---|---|
-| 0.2.0 | 数据随包（1,250 卡）、纯 JS 检索、零配置；新增中文 bigram 检索（两个字的中文词也能查） |
+| 0.2.1 | 数据随包（1,250 卡）、纯 JS 检索、零配置；新增中文 bigram 检索（两个字的中文词也能查） |
 | 0.1.0 | 首个版本：调用仓库里的 Python + SQLite FTS5 |
 
 ## 已知限制
