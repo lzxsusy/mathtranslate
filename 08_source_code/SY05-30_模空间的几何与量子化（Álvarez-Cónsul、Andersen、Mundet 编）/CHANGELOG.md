@@ -11,7 +11,7 @@
 - 资料卡 10 张（9 concept + 1 work），`check_cards.py` 0 问题，入库 dsh-kb。
 - 语料 170 段 / 14,940 汉字；`kb_zh` 可检索。
 - `RELEASE_REGISTER.csv` 一行；`03_translations_meta/SY05-30/投稿信息.md`。
-- 插件测试笔记 16 条记录 / 10 个问题；工程反馈 5 节；决策链 3 条。
+- 插件测试笔记 16 条记录 / 10 个问题；工程反馈（正文报告，10 节 / 22 次调用明细）；决策链 3 条。
 
 ### 独立复校（agent `proofreader`）后的修订
 
