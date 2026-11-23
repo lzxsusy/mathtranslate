@@ -19,6 +19,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 KB = REPO / "kb"
 CARDS = KB / "cards"
+CARDS5 = KB / "cards5"
 DB = KB / "shuyi.db"
 
 REQUIRED = ("id", "work", "kind", "title", "status", "origin")
@@ -26,7 +27,8 @@ REQUIRED = ("id", "work", "kind", "title", "status", "origin")
 
 def load_cards():
     seen = {}
-    for p in sorted(CARDS.glob("*.jsonl")):
+    files = sorted(CARDS.glob("*.jsonl")) + sorted(CARDS5.glob("*.jsonl"))
+    for p in files:
         for line in p.read_text(encoding="utf-8").splitlines():
             line = line.strip()
             if not line:

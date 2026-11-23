@@ -244,6 +244,46 @@ export function search(idx, query, opts = {}) {
     out.push({ card, score: scoreDoc(idx, i, tokens) });
   }
   out.sort((a, b) => b.score - a.score || String(a.card.id).localeCompare(String(b.card.id)));
+
+  // 覆盖式降级：严格 AND 全落空时（长中文词、别名写法、多词混写）改用「最长连续子串」。
+  // 真主卡在正文里能连续命中 4~6 字（顶点代数 / 顶点算子代数），杂卡最多 2 字（代数、算子）；
+  // 再按「命中起点靠前」加权，避免 算子代数 抢走 顶点算子代数 的主卡。
+  if (out.length < 2) {
+    const cjk = tokens.filter((t) => CJK_CHAR.test(t)).join("");
+    const lat = tokens.filter((t) => !CJK_CHAR.test(t));
+    const chars = Array.from(cjk);
+    const minRun = Math.min(3, chars.length || 3);
+    const seen = new Set(out.map((x) => x.card.id));
+    const more = [];
+    for (let i = 0; i < idx.docs.length; i++) {
+      const card = idx.docs[i].card;
+      if (!includeDraft && (card.status ?? "draft") === "draft") continue;
+      if (opts.kind && card.kind !== opts.kind) continue;
+      if (opts.work && String(card.work ?? "") !== String(opts.work)) continue;
+      if (opts.level && card.level !== opts.level) continue;
+      if (seen.has(card.id)) continue;
+      const blob = idx.docs[i].blobAll ?? idx.docs[i].blob;
+      if (lat.some((t) => !blob.includes(t))) continue;
+      let run = 0;
+      let bestStart = 99;
+      for (let L = chars.length; L >= minRun && run === 0; L--) {
+        for (let a = 0; a + L <= chars.length; a++) {
+          if (blob.includes(chars.slice(a, a + L).join(""))) {
+            run = L;
+            bestStart = a;
+            break;
+          }
+        }
+      }
+      if (run < minRun) continue;
+      more.push({ card, score: run * 2 - bestStart * 3 + scoreDoc(idx, i, tokens) });
+    }
+    more.sort((a, b) => b.score - a.score || String(a.card.id).localeCompare(String(b.card.id)));
+    for (const r of more) {
+      out.push(r);
+      if (out.length >= limit) break;
+    }
+  }
   return out.slice(0, limit);
 }
 
