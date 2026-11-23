@@ -1,74 +1,53 @@
-# dsh-kb 上架材料（awesome-dsh-plugin 条目）
+# dsh-kb 上架记录（awesome-dsh-plugin）
 
-插件市场（dshmarket）本身**不是目录**：条目来自 awesome-dsh-plugin 列表，站点与市场从那里生成
-`plugins.json`。所以「上架」= 在那个仓库的列表里加一条。
+插件市场（dshmarket）本身不是目录：条目来自 [awesome-dsh-plugin](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin)
+的 `data/plugins/*.yml`，站点与 `plugins.json` 由那里的脚本生成。**上架 = 在那个仓库加一个 yml 文件。**
 
-## 一、还缺什么（不能直接提 PR 的原因）
+## 一、当前状态
 
-| 需要 | 现状 |
+| 项 | 状态 |
 |---|---|
-| GitHub 仓库 URL（`url` 字段） | ❌ 当前网络 `github.com:443` 不通，账号也没建成；代码暂在 AtomGit |
-| 图标（`icon`，市场只从 GitHub 图床加载） | ✅ 已有 `assets/icon.svg`，需放进 GitHub 仓库 |
-| 截图（`screenshots`，同样只从 GitHub 图床） | ✅ 可现生成：`kb_search` 命中卡片、`kb_stats` 输出 |
-| 可安装地址（`install`） | ✅ 已可用：AtomGit raw tarball，实测 `install_bundle` 成功 |
+| GitHub 仓库（`url` 指向的子目录） | ✅ https://github.com/lzxsusy/mathtranslate/tree/main/plugins/dsh-kb |
+| 包清单 `dsh.bundle` + `cordis.patch.yml` | ✅ `plugins/dsh-kb/package.json` 与同目录 `cordis.patch.yml` |
+| 图标（市场只从 GitHub 图床加载） | ✅ `assets/icon-180.png`（180×180 PNG，由 `assets/icon.svg` 渲染） |
+| 可安装地址 | ✅ `github:lzxsusy/mathtranslate#path:/plugins/dsh-kb`；另保留 AtomGit raw tarball |
+| 投稿 PR | ✅ [#18102](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin/pull/18102)（分支 `lzxsusy:add-dsh-kb`） |
 
-**结论**：插件已经可用（一条命令能装、装好自带数据），只是「进市场列表」这一步卡在 GitHub 可达性。
-下面的内容准备好，等 GitHub 能用（或换台机器/手机热点）10 分钟就能提 PR。
+PR 建好后 CI 显示 `action_required`（0 个 job）——这是 GitHub 对**首次贡献者**的
+「维护者批准后才运行工作流」闸门，不是检查失败；维护者批准后 `PR check` 会自动跑。
 
-## 二、要在 awesome-dsh-plugin 里加的一条
+## 二、投稿文件内容（`data/plugins/lzxsusy__mathtranslate--plugins-dsh-kb.yml`）
 
-在列表里（按其 README 的格式）新增：
-
-```markdown
-- [dsh-kb](https://github.com/<OWNER>/dsh-kb) — 数译知识库：带页码/来源/可信度的数学文献资料卡检索，
-  自带 1,250 张卡（45 部已译数学文献），纯 JS 零依赖。`kb_search` / `kb_card` / `kb_brief` / `kb_stats`。
-  `install: dsh plugin --profile desktop add <tarball URL>`
+```yaml
+url: https://github.com/lzxsusy/mathtranslate/tree/main/plugins/dsh-kb
+name: lzxsusy/mathtranslate#dsh-kb
+category: docs
+description:
+  en: '…（一行，说明它做什么：1,250 张带页码/来源等级/caveat 的数学文献卡，随包自带，纯 JS 无网络）'
+  zh: '…'
+icon: https://raw.githubusercontent.com/lzxsusy/mathtranslate/main/plugins/dsh-kb/assets/icon-180.png
 ```
 
-## 三、生成后的 registry 条目长这样（与 plugins.json 字段一致）
+文件名规则来自其 `contributing.md`：`<owner>__<repo>.yml`，monorepo 子包用
+`owner__repo--<路径用短横线连接>.yml`。
 
-```json
-{
-  "name": "dsh-kb",
-  "owner": "<OWNER>",
-  "url": "https://github.com/<OWNER>/dsh-kb",
-  "category": "knowledge",
-  "description": {
-    "en": "Math-literature knowledge base with page numbers, sources and verification status: 1,250 structured cards from 45 translated works, bundled so it works right after install. Pure-JS search, zero config. Every hit carries a page, a source grade and a caveat — leads with provenance, not answers.",
-    "zh": "带页码、带来源、带可信度的数学文献知识库：随包自带 1,250 张结构化卡片（45 部已译文献），装好即查；纯 JS 检索、零配置。每条结果都带原文页码、来源等级与 caveat —— 给的是带出处的线索，不是结论。"
-  },
-  "capabilities": [],
-  "install": "dsh plugin --profile desktop add <tarball URL>",
-  "icon": "https://raw.githubusercontent.com/<OWNER>/dsh-kb/main/assets/icon.svg",
-  "screenshots": [
-    "https://raw.githubusercontent.com/<OWNER>/dsh-kb/HEAD/docs/preview-search.png",
-    "https://raw.githubusercontent.com/<OWNER>/dsh-kb/HEAD/docs/preview-stats.png"
-  ]
-}
-```
+## 三、安装方式（不依赖市场也能装）
 
-> `capabilities: []` 是我们的卖点：不跑 shell、不写文件、不发网络请求——只读包内 JSON 再检索。
-
-## 四、今天就能做的分发（不依赖市场）
-
-1. **AtomGit raw 一条命令安装**（已验证）：
+1. **GitHub 子目录**（市场条目就是这个）：
    ```
-   dsh plugin --profile desktop add https://atomgit.com/api/v5/repos/lzxSUSUY/mathtranslate/raw/plugins/dsh-kb-0.2.0.tgz
+   dsh plugin --profile desktop add "github:lzxsusy/mathtranslate#path:/plugins/dsh-kb"
    ```
-2. **自建市场镜像**：把 `plugins/plugins.json` 挂上 `DSHM_REGISTRY_URL`，市场客户端就能列出本插件
-   （图标/截图会空，因为市场只从 GitHub 图床取图）。
+2. **预打包 tarball（AtomGit 源）**：
+   ```
+   dsh plugin --profile desktop add https://atomgit.com/api/v5/repos/lzxSUSUY/mathtranslate/raw/plugins/dsh-kb-0.2.1.tgz
+   ```
+3. **本地包**：`dsh plugin --profile desktop add ./plugins/dsh-kb-0.2.1.tgz`
 
-## 五、下次打包清单（发版时照做）
+## 四、上架后还能补的
 
-```powershell
-# 1) 从上游仓库重建卡片数据
-python kb/ingest.py all
-python kb/build_kb.py
-# 2) 把数据同步进插件包
-Copy-Item gitee_shuyi\kb\cards\*.jsonl dsh-kb\data\cards\ -Force
-# 3) 改版本号 → 打包
-node <pnpm.cjs> pack --pack-destination .
-# 4) 放到仓库 plugins/ 并推送
-Copy-Item dsh-kb-*.tgz gitee_shuyi\plugins\ -Force
-# 5) 更新 plugins/plugins.json 与 plugins/README.md 里的版本号/URL
-```
+- **screenshots**：市场仓库的 `data/screenshots.json` 按仓库名收图（GitHub 图床），可另提 PR 补 2 张
+  （`kb_search` 命中卡、`kb_stats` 输出）。
+- **npm 发布**：`npm installs are prebuilt and skip the allowBuilds approval`——发到 npm 后市场会给
+  一条 `npm i` 式安装命令，更适合普通用户。需要 npm 账号与 token。
+- **更新**：改代码后 bump `package.json` 版本号重新打 tarball；市场按 `package.json` 版本或
+  pinned commit 判断更新。
