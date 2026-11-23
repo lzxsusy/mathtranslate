@@ -2,6 +2,17 @@
 
 > **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
 
+## SY02-32《迹公式与函子性——一个纲领的开端》（Frenkel–Langlands–Ngô）全书中译、入库与资料卡 — 2026-11-24
+
+- 新增 `08_source_code/SY02-32_迹公式与函子性_一个纲领的开端`。底本是 Edward Frenkel、Robert Langlands、Ngô Bao Châu 合著的法文预印本 *Formule des traces et fonctorialité : le début d'un programme*（arXiv:1003.4578v2，2010-09-29，54 页）。**原文为法文**，无通行中译；按用户指定收于 SY02（几何朗兰兹与电磁对偶）系列，编号顺延为 SY02-32。
+- 全书译毕：`源码/sections/` 9 个 tex（导引、§1–§5、文献），**39 页**，xelatex 两遍 **0 error / 0 Overfull / 0 undefined**；保留原文 **72 处编号公式**（(1.1)–(5.13)）与 **10 条编号断言**（Lemma 2.6 … Lemma 5.13），页锚 `\srcpage` 覆盖 p.1–54 共 **58 处**。
+- 体例：译文另加 **14 条译注**（`\yizhu`，每条带 `[来源：…]` 或 `[依据：原书 p.N]`），使译本脚注为连续编号，与原书 10 条脚注不一一对应（已在 SPEC/README/译者说明注明）。原文笔误一律照录 + 出注，登记勘误 **E1–E16**（含 (1.7)(1.8) 求和指标、p.32 交叉引用、(1.6) 余项指数、`Tan_b` 下标、证明中 `a_i` 当为 `b_i` 等）。
+- 资料卡：`datasets/sy02-32/` **31 张**（24 概念 + 7 推导），轨 A/B/C/D/E，`status=draft`、`rights=rewritten`；A 类来源 31 条逐字法语引文经 `verify_quotes.py` **31/31 命中**，`lint_cards.py --prefix sy32` 报 **0 错误**。检索层 `kb/cards/sy32.jsonl` 31 条已入 `kb/shuyi.db`。
+- 叙述五件套：`资料卡/{00-速览,01-结果清单,02-论证地图,03-条款索引,04-术语文献勘误}`；工程 `README.md`、`精选片段.md`（12 段）、`03_translations_meta/SY02-32/{投稿信息,精选片段}`。
+- 分章审校：四路子智能体并行审（rev-a 导引+§1、rev-b §2+3.1–3.2、rev-c §3.3–3.5、rev-d §4+§5+文献），共 **113 条**（高 6 / 中 39 / 低 68），高、中全修，报告存 `工程文件/reports/review-{a,b,c,d}.md` 与 `分章报告.md`。
+- 台账：`RELEASE_REGISTER.csv` 增 SY02-32 一行（预印本；演绎作品，底本权利归原作者；风险低；L2 公开·受限；**成品不公开，成品在仓=否**，PDF 只放本地 `成品/`）。
+- 统计：`python make_stats.py --write` 后工程数 133→134、带 tex 工程 120→121、资料卡 1,356→1,387；`tools/build_manifest.py` + `check_manifest.py` 报 mismatch=0 / missing=0 / unlisted=0。
+
 ## SY07-11《局部化与约化李群的表示论》（Miličić）全书中译、入库与资料卡 — 2026-11-23
 
 - 新增 `08_source_code/SY07-11_局部化与约化李群的表示论（Miličić）`。底本是 Dragan Miličić 的作者自排讲义 *Localization and Representation Theory of Reductive Lie Groups*（pdfTeX 1.40.18，2017-10-22；133 PDF 页 / 129 印刷页，6 章 27 节，229 条编号条目）。**收到的底本文件名是 `benzvi__book.pdf`，内容与 Ben-Zvi 无关**，按作者归入 SY07 系列（前作 *Lectures on Algebraic Theory of D-Modules* 是 SY07-10）。

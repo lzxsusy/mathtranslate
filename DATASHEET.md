@@ -13,10 +13,10 @@
 
 | 层 | 目录 | 说明 |
 |---|---|---|
-| 权威层 | `08_source_code/` | **124 部工程**的 LaTeX 源码 + 工程文档（其中 **111 部带 LaTeX 源码**；13 部无源码，只有成品 PDF 或译本正文） |
+| 权威层 | `08_source_code/` | **134 部工程**的 LaTeX 源码 + 工程文档（其中 **121 部带 LaTeX 源码**；13 部无源码，只有成品 PDF 或译本正文） |
 | 衍生层 | `01_corpus_zh/`、`02_trajectories/`、`06_sessions_raw/`（分片在 Release 附件）、`03_translations_meta/` | 语料、轨迹、会话、元数据与术语 |
 | 规范层 | `01_corpus_zh/数语规范/` | **术语 1,847 条 / 记号 76 条 / 冲突 76 组 / 宏 600 个**；三份规范（术语+记号、中文语体、对齐卡） |
-| 卡片层 | `datasets/` | **31 个集 / 1,346 张资料卡**；其中 `leanstmt/` 是 **39 条自然语言↔Lean 4 对齐卡**（21 certified + 18 gap） |
+| 卡片层 | `datasets/` | **33 个集 / 1,387 张资料卡**；其中 `leanstmt/` 是 **39 条自然语言↔Lean 4 对齐卡**（21 certified + 18 gap） |
 | 过程层 | `04_playbook/`、`05_seminar_witten/`、`10_gmn_series/` | 翻译纪律、审校报告、研讨班与 GMN 系列的研究笔记 |
 | 参考层 | `07_refs_nlab/` | nLab 条目摘要 120 条 + 替代来源卡 37 份 + 110 条来源真实性抽查；几何 Langlands 线的术语与引文底账 |
 
