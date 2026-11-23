@@ -10,7 +10,7 @@
 | p.24 | `ggl22/deriv/monopole-r-charge` monopole 算子的 R-荷与 good 判据 | derivation |
 | p.50 | `ggl22/concept/t-su-n` T(SU(n))：自镜的边界 SCFT | concept |
 | p.50 | `ggl22/deriv/dirichlet-dual-t-su-n` Dirichlet 边界条件的对偶是 Neumann 加 T(SU(n)) | derivation |
-| p.55 | `ggl22/concept/nahm-pole-bc` Nahm 极点边界条件 | concept |
+| p.55 | `ggl22/concept/nahm-pole-bc` Nahm 极点边界条件（半 BPS 与幂零轨道） | concept |
 | p.55 | `ggl22/concept/nilpotent-young-duality` 幂零轨道、Young 图与对偶 ρ^D | concept |
 | p.55 | `ggl22/deriv/nahm-pole-young-transpose` 由分拆到 Young 图转置：Nahm 极点边界条件的对偶 | derivation |
 | p.56 | `ggl22/concept/t-rho-su-n` T_ρ(SU(n))：带 Nahm 极点的边界 SCFT | concept |

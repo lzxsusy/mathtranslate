@@ -2,7 +2,7 @@
 
 | 页 | 卡 | 类型 |
 |---|---|---|
-| p.2 | `ggl19/concept/twisted-d-module` 扭化 D-模 | concept |
+| p.2 | `ggl19/concept/twisted-d-module` 扭化 D-模与量子参数 | concept |
 | p.3 | `ggl19/concept/quantum-geometric-langlands` 量子几何朗兰兹对偶 | concept |
 | p.4 | `ggl19/deriv/montonen-olive-parameter-map` MO 对偶如何把参数搬到纯虚 q 上 | derivation |
 | p.5 | `ggl19/concept/gl-twist-at-t-zero` GL 扭化的 t=0 端点 | concept |
