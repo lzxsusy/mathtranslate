@@ -54,6 +54,7 @@
 | 页边「p.N」跑到纸外 | `book` 默认 `\marginparwidth=116pt` > 2.6cm 页边距 | `\setlength{\marginparwidth}{1.9cm}`、`\marginparsep=2pt` |
 | 单章各自 `\providecommand{\llbracket}` 等 | 各译手并行、互不知情 | 宏集中到 preamble（`stmaryrd` + `\Perf` + `\Ql`），删各文件局部定义 |
 | 子代理派工被拒 `active child limit: 8` | 同时活跃 8 个（7 译手 + 1 卡片组） | 按空槽数逐个补派，完成通知到即补位 |
+| 同一术语三写（`torsor`／挠子／扭子） | 7 名译手各自体例、glossary 未先收该条 | 统一保留英文 `torsor`（首现括注「主齐性空间」），glossary 补条，台账 `CF-2026-11-23-06` 关单 |
 
 ## 6. 工具
 
