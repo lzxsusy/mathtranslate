@@ -1,0 +1,402 @@
+% =============================================================================
+%  lec12.tex —— 第 12 讲 伴随函子（底本 PDF 第 97–103 页）
+% =============================================================================
+\lecture{12}{伴随函子}
+\begin{center}\small\color{black!55}（底本 PDF 第 97–103 页）\end{center}
+
+本讲介绍 $\infty$-范畴之间的伴随函子。
+
+\section{定义}
+
+\nitem\label{L12-1.1} 回忆普通范畴论中的下述定义。
+
+\begin{definition}\label{L12-1.2}
+设 $F\colon\cC\rightleftarrows\cD:G$ 是普通范畴之间的函子。$F$ 与 $G$ 之间的一个\textbf{伴随}（adjunction）是一族双射
+\[
+\rho_{x,y}\colon\Hom_{\cD}(F(x),y)\xrightarrow{\ \simeq\ }\Hom_{\cC}(x,G(y)),
+\]
+它们对 $x\in\cC^{\op}$ 与 $y\in\cD$ 具有函子性。我们也说构造 $(x,y)\mapsto\rho_{x,y}$ \textbf{展示 $F$ 为 $G$ 的左伴随}。
+\end{definition}
+
+\nitem\label{L12-1.3} 对偶地，我们也说 $(x,y)\mapsto\rho_{x,y}$ \textbf{展示 $G$ 为 $F$ 的右伴随}。
+
+\nitem\label{L12-1.4} 上文中，双射 $\rho_{x,y}$ 可以编码为下图从顺时针弧到逆时针弧的可逆自然变换：
+\[
+\begin{tikzcd}[column sep=4.2em,row sep=3.2em]
+\cC^{\op}\times\cD \arrow[r,"{(F^{\op},\id)}"] \arrow[d,"{(\id,G)}"'] & \cD^{\op}\times\cD \arrow[d,"{\Hom_{\cD}(-,-)}"] \\
+\cC^{\op}\times\cC \arrow[r,"{\Hom_{\cC}(-,-)}"'] & \Set.
+\end{tikzcd}
+\]
+但请注意，在 $\infty$-范畴的情形，函子 $\operatorname{Maps}_{\cC}(-,-)\colon\cC^{\op}\times\cC\to\Grpd_{\infty}$ 的构造要复杂得多。因此我们宁愿用另一种方式来编码 $\rho_{\bullet,\bullet}$。
+
+\begin{definition}\label{L12-1.5}
+设 $F\colon\cC\rightleftarrows\cD:G$ 是 $\infty$-范畴之间的函子。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em,itemsep=0.4em]
+\item 设 $\mu\colon\id_{\cC}\to G\circ F$ 是自然变换。若对任意对象 $x\in\cC$ 与 $y\in\cD$，复合
+\begin{equation}\label{L12-eq1.1}
+\operatorname{Maps}_{\cD}(F(x),y)\xrightarrow{G(-)}\operatorname{Maps}_{\cC}(G\circ F(x),G(y))\xrightarrow{-\circ\mu(x)}\operatorname{Maps}_{\cC}(x,G(y))
+\end{equation}
+可逆，则称 $\mu$ \textbf{展示 $F$ 为 $G$ 的左伴随}。
+\item 设 $\kappa\colon F\circ G\to\id_{\cD}$ 是自然变换。若对任意对象 $x\in\cC$ 与 $y\in\cD$，复合
+\begin{equation}\label{L12-eq1.2}
+\operatorname{Maps}_{\cC}(x,G(y))\xrightarrow{F(-)}\operatorname{Maps}_{\cD}(F(x),F\circ G(y))\xrightarrow{\kappa(y)\circ-}\operatorname{Maps}_{\cD}(F(x),y)
+\end{equation}
+可逆，则称 $\kappa$ \textbf{展示 $F$ 为 $G$ 的左伴随}。
+\end{enumerate}
+\end{definition}
+
+\begin{definition}\label{L12-1.6}
+设 $F\colon\cC\rightleftarrows\cD:G$ 是 $\infty$-范畴之间的函子。若一对自然变换 $\mu\colon\id_{\cC}\to G\circ F$ 与 $\kappa\colon F\circ G\to\id_{\cD}$ 满足下述两个条件，则称它们\textbf{在同伦意义下相容}（compatible up to homotopy）：
+\begin{enumerate}[label=(\roman*),leftmargin=2.6em,itemsep=0.3em]
+\item 复合
+\[
+F\xrightarrow{\id_F\circ\mu}F\circ G\circ F\xrightarrow{\kappa\circ\id_F}F
+\]
+在 $\Fun(\cC,\cD)$ 中同伦于 $\id_F$。
+\item 复合
+\[
+G\xrightarrow{\mu\circ\id_G}G\circ F\circ G\xrightarrow{\id_G\circ\kappa}G
+\]
+在 $\Fun(\cC,\cD)$ 中同伦于 $\id_F$。
+\end{enumerate}
+\end{definition}
+
+\yizhu{条件 (ii) 中的复合是 $G\to G$，原文却写作“在 $\Fun(\cC,\cD)$ 中同伦于 $\id_F$”。按上下文，此处应为“在 $\Fun(\cD,\cD)$ 中同伦于 $\id_G$”。译文照录原文。\textbf{[译者按（无外部依据）]}}
+
+\begin{warning}\label{L12-1.7}
+上述定义中，我们\textbf{并不}提供 2-单形
+\[
+\begin{tikzcd}[column sep=2.8em,row sep=2.4em]
+& F\circ G\circ F \arrow[dl,"\id\circ\mu"'] \arrow[dr,"\kappa\circ\id"] & \\
+F \arrow[rr, Rightarrow] & & F
+\end{tikzcd}
+\qquad
+\begin{tikzcd}[column sep=2.8em,row sep=2.4em]
+& G\circ F\circ G \arrow[dl,"\mu\circ\id"'] \arrow[dr,"\id\circ\kappa"] & \\
+G \arrow[rr, Rightarrow] & & G
+\end{tikzcd}
+\]
+来见证这些同伦。
+\end{warning}
+
+\begin{definition}\label{L12-1.8}
+我们说：
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em,itemsep=0.2em]
+\item 设 $\mu$ 是上面的自然变换。若存在与它同伦相容的 $\kappa$，则称 $\mu$ 是 $F$ 与 $G$ 之间伴随的\textbf{单位}（unit）。
+\item 设 $\kappa$ 是上面的自然变换。若存在与它同伦相容的 $\mu$，则称 $\kappa$ 是 $F$ 与 $G$ 之间伴随的\textbf{余单位}（counit）。
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}\label{L12-1.9}（Ker.02FX）
+设 $F\colon\cC\rightleftarrows\cD:G$ 是 $\infty$-范畴之间的函子，$\mu\colon\id_{\cC}\to G\circ F$ 是自然变换。则下述条件等价：
+\begin{itemize}[leftmargin=2.2em,itemsep=0.1em]
+\item $\mu$ 是 $F$ 与 $G$ 之间伴随的单位。
+\item $\mu$ 展示 $F$ 为 $G$ 的左伴随。
+\end{itemize}
+对偶地，对 $\kappa\colon F\circ G\to\id_{\cD}$，下述条件等价：
+\begin{itemize}[leftmargin=2.2em,itemsep=0.1em]
+\item $\kappa$ 是 $F$ 与 $G$ 之间伴随的余单位。
+\item $\kappa$ 展示 $F$ 为 $G$ 的左伴随。
+\end{itemize}
+\end{proposition}
+
+\begin{remark}\label{L12-1.10}
+$\Rightarrow$ 方向很容易。假设 $(\mu,\kappa)$ 同伦相容，则我们有下述交换图：
+\[
+\begin{tikzcd}[column sep=3.2em,row sep=2.8em]
+{[Fx,y]} \arrow[r,"G"] \arrow[d,equal] & {[GFx,Gy]} \arrow[r,"-\circ\mu(x)"] \arrow[d,"F"] & {[x,Gy]} \arrow[d,"F"] \\
+{[Fx,y]} \arrow[r,"FG"] \arrow[d,"\id_{\cD}"'] & {[FGFx,FGy]} \arrow[r,"-\circ\mu(Fx)"] \arrow[d,"\kappa(y)\circ-"] & {[Fx,FGy]} \arrow[d,"\kappa(y)\circ-"] \\
+{[Fx,y]} \arrow[r,"-\circ\kappa(Fx)"'] & {[FGFx,y]} \arrow[r,"-\circ\mu(Fx)"'] & {[Fx,y].}
+\end{tikzcd}
+\]
+现在定义~\ref{L12-1.6} 中的公理 (i) 说明底部的水平复合同伦于恒等函子。由此可知，顶部水平函子与右侧竖直函子的复合，即 $\eqref{L12-eq1.2}\circ\eqref{L12-eq1.1}$，同伦于恒等函子。对偶地，公理 (ii) 说明 $\eqref{L12-eq1.1}\circ\eqref{L12-eq1.2}$ 同伦于恒等函子。因此 \eqref{L12-eq1.1} 与 \eqref{L12-eq1.2} 都可逆。
+
+$\Leftarrow$ 方向可以这样证明：只要能为 (1.6) 指定一个足够函子性的逆，以诱导出自然变换 $\kappa$。
+\end{remark}
+
+\yizhu{本节只有 \eqref{L12-eq1.1} 与 \eqref{L12-eq1.2} 两个编号公式，原文此处引用的 (1.6) 并不存在；按上下文，它应指 \eqref{L12-eq1.1}。译文照录原文。\textbf{[译者按（无外部依据）]}}
+
+\nitem\label{L12-1.11} \textbf{推论—定义}\quad 设 $F\colon\cC\to\cD$ 是 $\infty$-范畴之间的函子。下述条件等价：
+\begin{itemize}[leftmargin=2.2em,itemsep=0.1em]
+\item 存在 $G\colon\cD\to\cC$ 与 $\mu\colon\id_{\cC}\to G\circ F$，使得 $\mu$ 展示 $G$ 为 $F$ 的右伴随。
+\item 存在 $G\colon\cD\to\cC$ 与 $\kappa\colon F\circ G\to\id_{\cD}$，使得 $\kappa$ 展示 $G$ 为 $F$ 的右伴随。
+\item 存在 $G\colon\cD\to\cC$ 以及如上的一对 $(\mu,\kappa)$，它在同伦意义下相容。
+\end{itemize}
+若 $F$ 满足上述条件，则说 $F$ \textbf{有右伴随}，或称 $F$ \textbf{右可伴随}。对偶地，我们定义\textbf{左可伴随}函子的概念。
+
+\nitem\label{L12-1.12} 实践中，伴随数据（adjunction datum）更适于形式证明。下述练习给出一个例子。
+
+\begin{exercise}\label{L12-1.13}
+设 $F\colon\cC\rightleftarrows\cD:G$ 是由其单位或余单位展示的伴随。设 $\cE$ 是任意 $\infty$-范畴，证明：
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em,itemsep=0.2em]
+\item 我们有伴随
+\[
+F\circ-\colon\Fun(\cE,\cC)\rightleftarrows\Fun(\cE,\cD):G\circ-,
+\]
+它由同一类型的数据展示。
+\item 我们有伴随
+\[
+-\circ G\colon\Fun(\cD,\cE)\rightleftarrows\Fun(\cC,\cE):-\circ F,
+\]
+它由同一类型的数据展示。
+\end{enumerate}
+\end{exercise}
+
+\section{可伴随性判据}
+
+\begin{proposition}\label{L12-2.1}
+我们有：
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em,itemsep=0.2em]
+\item 若 $G\colon\cD\to\cC$ 有左伴随，则 $G$ 保持 $\cD$ 中存在的所有小极限。
+\item 若 $F\colon\cC\to\cD$ 有右伴随，则 $F$ 保持 $\cD$ 中存在的所有小余极限。
+\end{enumerate}
+\end{proposition}
+
+\yizhu{第 (2) 条中的“$\cD$ 中”按对偶应作“$\cC$ 中”，因为 $F$ 的定义域是 $\cC$。译文照录原文。\textbf{[译者按（无外部依据）]}}
+
+\begin{proof}[证明梗概]
+我们可以假定 $\cC$ 与 $\cD$ 都是本质小的。则
+\[
+\begin{aligned}
+\operatorname{Maps}_{\cC}(x,G(\lim y_i))&\simeq\operatorname{Maps}_{\cD}(F(x),\lim y_i)\simeq\lim\operatorname{Maps}_{\cD}(F(x),y_i)\simeq\\
+&\simeq\lim\operatorname{Maps}_{\cD}(x,G(y_i))\simeq\operatorname{Maps}_{\cD}(x,\lim G(y_i)).
+\end{aligned}
+\]
+这表明 $G(\lim y_i)\simeq\lim G(y_i)$。
+\end{proof}
+
+\begin{exercise}\label{L12-2.2}
+把上述梗概改写为严格的证明。
+\end{exercise}
+
+\begin{remark}\label{L12-2.3}
+在以后的讲次中，我们会看到：若 $\cC$ 与 $\cD$ 可表现，则该命题的逆命题成立。
+\end{remark}
+
+\begin{proposition}\label{L12-2.4}
+设 $G\colon\cD\to\cC$ 是 $\infty$-范畴之间的函子。下述条件等价：
+\begin{enumerate}[label=(\roman*),leftmargin=2.6em,itemsep=0.2em]
+\item 函子 $G$ 有左伴随。
+\item 对任意 $x\in\cC$，函子 $\operatorname{Maps}_{\cC}(x,G(-))\colon\cD\to\Grpd_{\infty}$ 余可表示\footnote{我们选取 $\Grpd_{\infty}$ 中对象的大小界，使得 $\cC$ 与 $\cD$ 相对于它是局部小的。}。
+\item 对任意 $x\in\cC$，纤维积 $\cD\times_{\cC}\cC_{x/}$ 有始对象。
+\end{enumerate}
+此外，在这些条件下，逐点的 $\mathrm{RKE}_{G}\id_{\cD}$ 存在，且
+\[
+\begin{tikzcd}[column sep=5em,row sep=3.4em]
+& \cC \arrow[dl,"G"'] \arrow[dr,dotted,"F"] \arrow[d,dotted,Rightarrow,"{\kappa}"'] & \\
+\cD \arrow[rr,"\id_{\cD}"'] & \phantom{\cD} & \cD
+\end{tikzcd}
+\]
+展示 $F$ 为该 RKE，当且仅当它展示 $F$ 为 $G$ 的左伴随。
+\end{proposition}
+
+\begin{proof}[证明梗概]
+(i)$\Rightarrow$(ii)：设 $F$ 是由 $\mu\colon\id_{\cC}\to G\circ F$ 展示的 $G$ 的左伴随。则 $\mu(x)\in\operatorname{Maps}_{\cC}(x,G\circ F(x))$ 展示 $\operatorname{Maps}_{\cC}(x,G(-))$ 由 $F(x)$ 余表示。
+
+(ii)$\Rightarrow$(iii)：设 $e\in\operatorname{Maps}_{\cC}(x,G(y))$ 展示 $\operatorname{Maps}_{\cC}(x,G(-))$ 由 $y$ 余表示。则 $(y,e)$ 是 $\cD\times_{\cC}\cC_{x/}$ 中的始对象。
+
+（然后可以验证 $\mathrm{RKE}_{G}\id_{\cD}$ 确实是 $G$ 的左伴随。）
+\end{proof}
+
+\begin{exercise}\label{L12-2.5}
+补全上述梗概的细节。
+\end{exercise}
+
+\begin{exercise}\label{L12-2.6}
+叙述上述命题的对偶版本。
+\end{exercise}
+
+\begin{warning}\label{L12-2.7}
+逐点 $\mathrm{RKE}_{G}\id_{\cD}$ 的存在性并不蕴涵 $G$ 的左伴随存在。
+\end{warning}
+
+\begin{exercise}\label{L12-2.8}
+设 $G\colon\cD\to\cC$ 是任意函子，其中 $\cD\defeq[0]$。证明 $\mathrm{RKE}_{G}\id_{\cD}$ 总存在，而 $G$ 有左伴随当且仅当 $G$ 是终的。
+\end{exercise}
+
+\begin{exercise}\label{L12-2.9}
+设 $F\colon\cC\rightleftarrows\cD:G$ 是 $\infty$-范畴之间的函子，并考虑同伦范畴之间诱导的函子 $hF\colon h\cC\rightleftarrows h\cD:hG$。假设 $G$ 左可伴随。证明：$\mu$（相应地，$\kappa$）展示 $F$ 为 $G$ 的左伴随，当且仅当 $h\mu$（相应地，$h\kappa$）展示 $hF$ 为 $hG$ 的左伴随。
+\end{exercise}
+
+\begin{exercise}\label{L12-2.10}
+设 $G\colon\cD\to\cC$ 是 $\infty$-范畴之间的函子。证明：$x\in\cC$ 满足命题~\ref{L12-2.4} 中的 (ii)，当且仅当它满足其中的 (iii)。
+\end{exercise}
+
+\begin{exercise}\label{L12-2.11}
+上文中，设 $\cC_0\subset\cC$ 是由这些对象构成的全子 $\infty$-范畴。\textbf{挑战：}构造函子 $F_0\colon\cC_0\to\cD$，使得 $F_0(x)$ 余表示 $\operatorname{Maps}_{\cC}(x,G(-))$。
+\end{exercise}
+
+\begin{exercise}\label{L12-2.12}
+设 $G\colon\cD\to\cC$ 是 $\infty$-范畴之间的函子，$\iota\colon\cC_0\to\cC$ 是全忠实函子。为下述概念找出正确的定义：自然变换 $\mu_0\colon\iota\to G\circ F_0$ 展示 $F_0$ 为 $G$ 的\textbf{部分定义的左伴随}（partially defined left adjoint）。
+\end{exercise}
+
+\section{唯一性}
+
+\nitem\label{L12-3.1} 命题~\ref{L12-2.4} 蕴涵：对左可伴随函子 $G$，使得 $\kappa$ 展示 $F$ 为 $G$ 的左伴随的数据 $(F,\kappa)$ 本质唯一。事实上，我们有下述更强的结果，遗憾的是它尚未被文献记载\footnote{留意 Ker.02F4 中缺失的标签。关于 (1)、(1$^{\prime}$)、(2) 与 (2$^{\prime}$) 的同伦范畴之间的等价，见 Ker.02D4。}。
+
+\begin{claim}\label{L12-3.2}
+设 $\cC$ 与 $\cD$ 是 $\infty$-范畴。下述数据被等价的 $\infty$-范畴分类：
+\begin{itemize}[leftmargin=3.2em,itemsep=0.3em,label={}]
+\item[(1)] 右可伴随函子 $F\colon\cC\to\cD$ 的数据。
+\item[(1$^{\prime}$)] 左可伴随函子 $G\colon\cD\to\cC$ 的数据。
+\item[(2)] $(F,G,\mu)$ 的数据，其中 $\mu\colon\id_{\cC}\to G\circ F$ 是伴随的单位。
+\item[(2$^{\prime}$)] $(F,G,\kappa)$ 的数据，其中 $\kappa\colon F\circ G\to\id_{\cD}$ 是伴随的余单位。
+\item[(3)] $(F,G,\mu,\kappa,\sigma)$ 的数据，其中 $\mu$ 与 $\kappa$ 同伦相容，且 $\sigma$ 是 2-单形
+\[
+\begin{tikzcd}[column sep=2.8em,row sep=2.2em]
+& F\circ G\circ F \arrow[dl,"\id\circ\mu"'] \arrow[dr,"\kappa\circ\id"] & \\
+F \arrow[rr, Rightarrow] & & F
+\end{tikzcd}
+\]
+它见证定义~\ref{L12-1.6} 中的公理 (i)。
+\item[(3$^{\prime}$)] $(F,G,\mu,\kappa,\tau)$ 的数据，其中 $\mu$ 与 $\kappa$ 同伦相容，且 $\tau$ 是 2-单形
+\[
+\begin{tikzcd}[column sep=2.8em,row sep=2.2em]
+& G\circ F\circ G \arrow[dl,"\mu\circ\id"'] \arrow[dr,"\id\circ\kappa"] & \\
+G \arrow[rr, Rightarrow] & & G
+\end{tikzcd}
+\]
+它见证定义~\ref{L12-1.6} 中的公理 (ii)。
+\end{itemize}
+\[\cdots\]
+\end{claim}
+
+\begin{exercise}\label{L12-3.3}
+把上述断言与[第 4 讲，附录 A]相比较。
+\end{exercise}
+
+\begin{warning}\label{L12-3.4}
+注意，下述数据并未列在上述层级中：
+\begin{itemize}[leftmargin=2.2em,itemsep=0.1em]
+\item 使得 $F$ 与 $G$ 之间存在伴随的 $(F,G)$ 的数据。
+\item 使得 $\mu$ 与 $\kappa$ 同伦相容的 $(F,G,\mu,\kappa)$ 的数据。
+\item 使得 …… 的 $(F,G,\mu,\kappa,\sigma,\tau)$ 的数据。
+\item ……
+\end{itemize}
+\end{warning}
+
+\begin{exercise}\label{L12-3.5}
+把上述警告与下述事实相比较：$\mathbb{S}^{1},\mathbb{S}^{2},\mathbb{S}^{3},\dots$ 不可缩，而 $\mathbb{D}^{0},\mathbb{D}^{1},\mathbb{D}^{2},\dots$ 可缩。
+\end{exercise}
+
+\begin{warning}\label{L12-3.6}
+断言~\ref{L12-3.2} 所指的 $\infty$-范畴并不是朴素的那些。例如，若 (1) 中的态射由 $F_1\to F_2$ 给出，则 (1$^{\prime}$) 中相应的态射由 $G_1\leftarrow G_2$ 给出。更糟的是，(2) 中相应的态射由下述交换图给出：
+\[
+\begin{tikzcd}[column sep=4.5em,row sep=3.2em]
+\id_{\cC} \arrow[r,"\mu_1"] \arrow[d,"\mu_2"'] & G_1\circ F_1 \arrow[d] \\
+G_2\circ F_2 \arrow[r] & G_1\circ F_2.
+\end{tikzcd}
+\]
+这些可从下述构造看出。
+\end{warning}
+
+\begin{construction}\label{L12-3.7}
+设 $F_1,F_2\colon\cC\to\cD$ 是 $\infty$-范畴之间的函子，$\alpha\colon F_1\to F_2$ 是自然变换。假设
+\begin{itemize}[leftmargin=2.2em,itemsep=0.1em]
+\item $\mu_1\colon\id_{\cC}\to G_1\circ F_1$ 展示 $G_1$ 为 $F_1$ 的右伴随。
+\item $\kappa_2\colon F_2\circ G_2\to\id_{\cD}$ 展示 $G_2$ 为 $F_2$ 的右伴随。
+\end{itemize}
+则我们有按下述复合构造的自然变换 $G_2\to G_1$：
+\[
+G_2\xrightarrow{\mu_1\circ\id}G_1\circ F_1\circ G_2\xrightarrow{\id\circ\alpha\circ\id}G_1\circ F_2\circ G_2\xrightarrow{\id\circ\kappa_2}G_1.
+\]
+\end{construction}
+
+\nitem\label{L12-3.8} 设 $\cC$ 与 $\cD$ 是 $\infty$-范畴。我们把 $\Fun(\cC,\cD)$ 中由有右伴随的函子构成的全子 $\infty$-范畴记为\footnote{当所引处的 $\cC$ 本质小时，此记号与[第 11 讲，定义 5.1]相容；这由注~\ref{L12-2.3} 推出。}
+\[
+\mathrm{LFun}(\cC,\cD)\subset\Fun(\cC,\cD).
+\]
+对偶地，我们把 $\Fun(\cD,\cC)$ 中由有左伴随的函子构成的全子 $\infty$-范畴记为
+\[
+\mathrm{RFun}(\cD,\cC)\subset\Fun(\cD,\cC).
+\]
+于是断言~\ref{L12-3.2} 中 (1) 与 (1$^{\prime}$) 之间的等价可写成：
+
+\begin{proposition}\label{L12-3.9}（HTT.5.2.6.5）
+存在典范等价
+\[
+\mathrm{LFun}(\cC,\cD)\simeq\mathrm{RFun}(\cD,\cC)^{\op}.
+\]
+\end{proposition}
+
+\nitem\label{L12-3.10} 设 $F$ 是右可伴随函子。由断言~\ref{L12-3.2}，只要我们把 $\mu$ 或 $\kappa$ 作为其定义中数据的一部分，就可以谈论 $F$ 的右伴随。我们把这个右伴随函子记为 $F^{R}$。
+
+对偶地，我们把左可伴随函子 $G$ 的左伴随记为 $G^{L}$。
+
+\section{全忠实函子与伴随}
+
+\begin{exercise}\label{L12-4.1}
+设 $F\colon\cC\rightleftarrows\cD:G$ 是伴随\footnote{这样说时，我们把 $\mu$ 或 $\kappa$ 视为数据的一部分。}。证明：
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em,itemsep=0.2em]
+\item $F$ 全忠实，当且仅当单位自然变换 $\mu\colon\id_{\cC}\to G\circ F$ 可逆。
+\item $G$ 全忠实，当且仅当余单位自然变换 $\kappa\colon F\circ G\to\id_{\cD}$ 可逆。
+\end{enumerate}
+并推出：$F$ 与 $G$ 互为逆，当且仅当 $F$ 与 $G$ 都全忠实。
+\end{exercise}
+
+\begin{exercise}\label{L12-4.2}
+证明上文中，我们实际上只需一个函子全忠实、另一个函子保守。
+\end{exercise}
+
+\begin{exercise}\label{L12-4.3}
+设 $F\colon\cC\to\cD$ 是有全忠实右伴随的函子。证明：对任意 $\cE$，函子
+\[
+-\circ F\colon\Fun(\cD,\cE)\to\Fun(\cC,\cE)
+\]
+全忠实。并推出：$F$ 展示 $\cD$ 为 $\cC[W^{-1}]$，其中 $W$ 是态射 $\mu(x)\colon x\to F^{R}\circ F(x)$ 构成的类。
+\end{exercise}
+
+\begin{warning}\label{L12-4.4}
+包括 Lurie 在内的一些作者，把有全忠实右伴随的函子 $F\colon\cC\to\cD$ 称为\textbf{局部化函子}（localization functor）。但要注意，对一般的 $W$，函子 $\cC\to\cC[W^{-1}]$ 可能没有任何伴随。
+\end{warning}
+
+\section{Beck–Chevalley 自然变换}
+
+\begin{construction}\label{L12-5.1}
+设
+\begin{equation}\label{L12-eq5.1}
+\begin{tikzcd}[column sep=4.5em,row sep=3.2em]
+\cC_1 \arrow[r,"f"] \arrow[d,"p"'] & \cC_2 \arrow[d,"q"] \\
+\cD_1 \arrow[r,"g"'] & \cD_2
+\end{tikzcd}
+\end{equation}
+是 $\infty$-范畴的交换图，且 $f^{R}$ 与 $g^{R}$ 存在。我们可以构造自然变换
+\begin{equation}\label{L12-eq5.2}
+\begin{tikzcd}[column sep=5em,row sep=3.8em]
+\cC_1 \arrow[d,"p"'] & \cC_2 \arrow[l,"f^{R}"'] \arrow[d,"q"] \arrow[dl,Rightarrow,shift left=1.6pt,shorten <=0.9em,shorten >=0.9em] \arrow[dl,Rightarrow,shift right=1.6pt,shorten <=0.9em,shorten >=0.9em] \\
+\cD_1 & \cD_2 \arrow[l,"g^{R}"']
+\end{tikzcd}
+\end{equation}
+如下述复合：
+\[
+p\circ f^{R}\xrightarrow{\mu\circ\id}g^{R}\circ g\circ p\circ f^{R}\simeq g^{R}\circ q\circ f\circ f^{R}\xrightarrow{\id\circ\kappa}g^{R}\circ q.
+\]
+我们称它为从 (5.1) 得到的\textbf{（右）Beck–Chevalley 自然变换}，或\textbf{（右）基变换自然变换}。
+\end{construction}
+
+\begin{exercise}\label{L12-5.2}
+上文中，假设 $p^{L}$ 与 $q^{L}$ 也存在。构造左 Beck–Chevalley 自然变换
+\begin{equation}\label{L12-eq5.3}
+\begin{tikzcd}[column sep=5em,row sep=3.8em]
+\cC_1 \arrow[r,"f"] & \cC_2 \\
+\cD_1 \arrow[u,"p^{L}"'] \arrow[r,"g"'] \arrow[ur,Rightarrow,shift left=1.6pt,shorten <=0.9em,shorten >=0.9em] \arrow[ur,Rightarrow,shift right=1.6pt,shorten <=0.9em,shorten >=0.9em] & \cD_2 \arrow[u,"q^{L}"']
+\end{tikzcd}
+\end{equation}
+证明：(5.3) 与 (5.2) 作为 $\mathrm{LFun}(\cD_1,\cC_2)\simeq\mathrm{RFun}(\cC_2,\cD_1)^{\op}$ 中的态射相互对应。
+\end{exercise}
+
+\begin{remark}\label{L12-5.3}
+Beck–Chevalley 自然变换的高阶函子性可以用 $(\infty,2)$-范畴理论描述。遗憾的是，我未能找到令人满意的参考文献。
+\end{remark}
+
+\appendixsection{对偶与伴随}
+
+\begin{exercise}\label{L12-A.1}
+在任意 $(\infty,2)$-范畴中定义伴随的概念，使得对小 $\infty$-范畴构成的 $(\infty,2)$-范畴，可恢复本讲中的伴随概念。
+\end{exercise}
+
+\begin{exercise}\label{L12-A.2}
+设 $\cB$ 是只有一个对象的 $(\infty,2)$-范畴。用 $\infty$-范畴 $\cA\defeq\operatorname{Maps}_{\cB}(*,*)$ 及其上的乘法结构，描述态射 $f$ 与 $g$ 之间伴随的含义。
+\end{exercise}
+
+\nitem\label{L12-A.3} \textbf{建议阅读}\quad Ker.02CA.

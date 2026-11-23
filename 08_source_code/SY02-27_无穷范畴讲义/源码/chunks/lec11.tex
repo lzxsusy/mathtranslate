@@ -1,0 +1,461 @@
+% =============================================================================
+%  lec11.tex —— 第 11 讲 Yoneda 引理（底本 PDF 第 88–96 页）
+% =============================================================================
+\lecture{11}{Yoneda 引理}
+\begin{center}\small\color{black!55}（底本 PDF 第 88–96 页）\end{center}
+
+本讲讨论 $\infty$-范畴的 Yoneda 引理。
+
+\section{可表函子}
+
+\begin{definition}\label{L11-1.1}
+设 $\cC$ 是 $\infty$-范畴，$F\colon\cC^{\op}\to\Grpd_\infty$ 是函子。若对任意对象 $y$，复合
+\begin{equation}\label{L11-eq1.1}
+\mathrm{Maps}_{\cC^{\op}}(x,y)\to\mathrm{Maps}_{\Grpd_\infty}(F(x),F(y))\xrightarrow{\ \mathrm{ev}_\eta\ }F(y)
+\end{equation}
+是 $\infty$-群胚之间的等价，则称对象 $\eta\in F(x)$ 展示 $F$ 被对象 $x\in\cC$ 表示。若这样的 $x$ 与 $\eta$ 存在，则称 $F$ 是\textbf{可表的}。
+
+对偶地，设 $G\colon\cC\to\Grpd_\infty$ 是函子。若对任意对象 $y$，复合
+\[
+\mathrm{Maps}_{\cC}(x,y)\to\mathrm{Maps}_{\Grpd_\infty}(G(x),G(y))\xrightarrow{\ \mathrm{ev}_\eta\ }G(y)
+\]
+是 $\infty$-群胚之间的等价，则称对象 $\eta\in G(x)$ 展示 $G$ 被对象 $x\in\cC^{\op}$ 余表示。若这样的 $x$ 与 $\eta$ 存在，则称 $G$ 是\textbf{余可表的}。
+\end{definition}
+
+\nitem\label{L11-1.2} 注意，$\eta\in F(x)$ 展示 $F\colon\cC^{\op}\to\Grpd_\infty$ 被 $x\in\cC$ 表示，当且仅当同一对象展示 $F$ 被对应的对象 $x\in\cC^{\op}$ 余表示。因此我们将专注于可表函子。
+
+\begin{remark}\label{L11-1.3}
+复合 \eqref{L11-eq1.1} 只定义到同伦为止。但注意，等价在同伦下不变。
+\end{remark}
+
+\begin{remark}\label{L11-1.4}
+复合 \eqref{L11-eq1.1} 把 $\id_x$ 送到 $\eta\in F(x)$。
+\end{remark}
+
+\nitem\label{L11-1.5} 容易看出，定义~\ref{L11-1.1} 在等价下不变。具体地说：
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em,itemsep=0.1em]
+\item 设 $\eta_1,\eta_2\in F(x)$ 同构，则 $\eta_1$ 展示 $F$ 被 $x$ 表示，当且仅当 $\eta_2$ 如此。
+\item 设 $f\colon x\to x'$ 是同构，则 $\eta\in F(x)$ 展示 $F$ 被 $x$ 表示，当且仅当 $F(f)(\eta)\in F(x')$ 展示 $F$ 被 $x'$ 表示。
+\end{enumerate}
+
+\begin{warning}\label{L11-1.6}
+可能出现 $\eta_1$ 与 $\eta_2$ 都展示 $F$ 被 $x$ 表示、但彼此不同构的情形。也就是说，若 $\eta_1$ 展示 $F$ 被 $x$ 表示，则任意自同构 $f\colon x\to x$ 都给出一个满足同一性质的对象 $F(f)(\eta_1)$。可以证明：$\eta_1$ 与 $F(f)(\eta_1)$ 同构，当且仅当 $f$ 同伦于 $\id_x$。
+\end{warning}
+
+\begin{exercise}\label{L11-1.7}
+设 $F\colon\cC^{\op}\to\Grpd_\infty$ 是任意函子。证明：存在函子 $\pi_0F\colon h\cC^{\op}\to\Set$，它在唯一等价的意义下唯一，并使下图交换：
+\begin{center}
+\begin{tikzcd}[column sep=4.4em,row sep=3em]
+\cC^{\op}\arrow[r,"F"]\arrow[d] & \Grpd_\infty\arrow[d,"\pi_0"]\\
+h\cC^{\op}\arrow[r,"\pi_0F"'] & \Set
+\end{tikzcd}
+\end{center}
+并证明：若 $F$ 可表，则 $\pi_0F$ 作为普通范畴之间的函子可表。
+\end{exercise}
+
+\begin{warning}\label{L11-1.8}
+练习~\ref{L11-1.7} 的逆命题不成立。换言之，在定义~\ref{L11-1.1} 中，我们不能把 \eqref{L11-eq1.1} 换成映射
+\[
+\pi_0\mathrm{Maps}_{\cC^{\op}}(x,y)\to\pi_0\mathrm{Maps}_{\Grpd_\infty}(F(x),F(y))\xrightarrow{\ \mathrm{ev}_\eta\ }\pi_0F(y).
+\]
+\end{warning}
+
+\begin{exercise}\label{L11-1.9}
+考虑取值 $\{\ast\}$ 的常值函子 $F\colon\cC^{\op}\to\Grpd_\infty$。$F(x)$ 中的唯一对象展示 $F$ 被 $x$ 表示，当且仅当 $x$ 在 $\cC$ 中是终对象。但注意，$\pi_0F$ 可表，当且仅当 $h\cC$ 有终对象。
+\end{exercise}
+
+\nitem\label{L11-1.10} 然而，我们还有下述结果：
+
+\begin{proposition}\label{L11-1.11}
+设 $F\colon\cC^{\op}\to\Grpd_\infty$ 是可表函子。则 $\eta\in F(x)$ 展示 $F$ 被 $x\in\cC$ 表示，当且仅当对任意对象 $y$，$\eta$ 诱导集合之间的双射
+\[
+\pi_0\mathrm{Maps}_{\cC^{\op}}(x,y)\to\pi_0F(y).
+\]
+\end{proposition}
+
+\begin{proof}
+按假设，存在 $\eta'\in F(x')$ 展示 $F$ 被 $x'$ 表示。于是按定义，对象 $\eta\in F(x)$ 对应 $\cC$ 中的态射 $x'\xleftarrow{\ \alpha\ }x$，使得 $F(x')\to F(x)$ 把 $\eta'$ 送到与 $\eta$ 同构的对象。由此得到交换图
+\begin{center}
+\begin{tikzcd}[column sep=5.2em,row sep=3em]
+\pi_0\mathrm{Maps}_{\cC^{\op}}(x,y)\arrow[r]\arrow[d,"-\circ\alpha"'] & \pi_0F(y)\arrow[d,equal]\\
+\pi_0\mathrm{Maps}_{\cC^{\op}}(x',y)\arrow[r,"\simeq"'] & \pi_0F(y).
+\end{tikzcd}
+\end{center}
+展开定义，我们得到：
+\begin{center}
+\begin{tabular}{ll}
+$\eta$ 展示 $F$ 被 $x$ 表示 & $\Leftrightarrow$ $\alpha$ 是 $\cC^{\op}$ 中的同构\\
+ & $\Leftrightarrow$ $\alpha$ 是 $h\cC^{\op}$ 中的同构\\
+ & $\Leftrightarrow$ 对任意 $y$，左侧竖直映射是双射\\
+ & $\Leftrightarrow$ 对任意 $y$，上方的水平映射是双射。
+\end{tabular}
+\end{center}
+\end{proof}
+
+\begin{remark}\label{L11-1.12}
+普通范畴 $h\cC$ 自然地（严格地）充实于普通对称幺半范畴 $\hGrpd_\infty$（见第 4 讲第 10 节），至少当 $\cC$ 局部小时如此。把这个 $\hGrpd_\infty$-充实范畴\footnote{警告：在 HTT 中，Lurie 只用 $h\cC$ 记它，这与普通同伦范畴的符号相同。}记为 $\overline{h}\cC$。类似地，可以定义可表的 $\hGrpd_\infty$-充实函子 $\overline{h}\cC^{\op}\to\hGrpd_\infty$ 这一概念。于是按定义即知：函子 $F\colon\cC^{\op}\to\Grpd_\infty$ 可表，当且仅当充实函子 $\overline{h}F$ 可表。
+\end{remark}
+
+\section{可表函子作为左 Kan 扩张}
+
+\nitem\label{L11-2.1} 注意，二元组 $(F,\eta)$ 可以看成一个图：
+\begin{equation}\label{L11-eq2.1}
+\begin{tikzpicture}[>=stealth,baseline=(current bounding box.center)]
+\node (D) at (0,0) {$\Delta^0$};
+\node (C) at (2.8,2.6) {$\cC^{\op}$};
+\node (G) at (6,0) {$\Grpd_\infty$};
+\draw[->] (D) -- (C) node[midway,above left=-2pt] {$x$};
+\draw[->] (D) -- (G) node[midway,below] {$\{\ast\}$};
+\draw[->,dotted] (C) -- (G) node[midway,above right=-2pt] {$F$};
+\draw[double,->,dotted] (1.7,0.12) -- (1.7,1.5) node[midway,left=2pt] {$\eta$};
+\end{tikzpicture}
+\end{equation}
+
+\begin{proposition}\label{L11-2.2}
+设 $\cC$ 是 $\infty$-范畴，$(F,\eta)$ 如上。则 $\eta$ 展示 $F$ 被 $x$ 表示，当且仅当
+\begin{enumerate}[label=(\roman*),leftmargin=2.6em,itemsep=0.1em]
+\item 对每个 $y\in\cC^{\op}$，$\infty$-群胚 $\mathrm{Maps}_{\cC^{\op}}(x,y)$ 本质小；
+\item 在 \eqref{L11-eq2.1} 中，$\eta$ 展示 $F$ 为常值函子 $\{\ast\}\colon\Delta^0\to\Grpd_\infty$ 沿 $x\colon\Delta^0\to\cC^{\op}$ 的左 Kan 扩张。
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[证明梗概]
+首先注意，若 $F$ 被 $x$ 表示，则每个 $\mathrm{Maps}_{\cC^{\op}}(x,y)$ 都等价于 $F(y)\in\Grpd_\infty$，因而本质小。于是我们可以只考虑 (i) 成立的情形。按定义，
+\[
+(\cC^{\op})_{/y}\times_{\cC^{\op}}\Delta^0\simeq\mathrm{Maps}_{\cC^{\op}}(x,y).
+\]
+由此
+\begin{equation}\label{L11-eq2.2}
+(\mathrm{LKE}_x\{\ast\})(y)\simeq\colim_{\mathrm{Maps}_{\cC^{\op}}(x,y)}\{\ast\}\simeq\mathrm{Maps}_{\cC^{\op}}(x,y).
+\end{equation}
+现在 (ii) 等价于：
+\begin{itemize}[leftmargin=2.2em,itemsep=0.1em]
+\item 由 $\eta$ 诱导的自然变换 $\mathrm{LKE}_x\{\ast\}\to F$ 可逆。
+\end{itemize}
+这又等价于
+\begin{itemize}[leftmargin=2.2em,itemsep=0.1em]
+\item 对任意 $y\in\cC^{\op}$，由 $\eta$ 诱导的态射 $(\mathrm{LKE}_x\{\ast\})(y)\to F(y)$ 可逆。
+\end{itemize}
+展开定义，上述态射同伦于 \eqref{L11-eq1.1} 与 \eqref{L11-eq2.2} 的复合，这就推出所需断言。
+\end{proof}
+
+\begin{corollary}\label{L11-2.3}
+设 $\cC$ 是 $\infty$-范畴，$x\in\cC$ 是满足大小条件 (i) 的固定对象。则使 $\eta$ 展示 $F$ 被 $x$ 表示的那些二元组 $(F,\eta\in F(x))$ 本质唯一。
+\end{corollary}
+
+\begin{remark}\label{L11-2.4}
+上述推论的确切含义如下。二元组 $(F,\eta\in F(x))$ 由下述 $\infty$-范畴的纤维积分类：
+\begin{center}
+\begin{tikzcd}[column sep=4.8em,row sep=2.8em]
+& (\Grpd_\infty)_{\{\ast\}/}\arrow[d] &\\
+\Fun(\cC^{\op},\Grpd_\infty)\arrow[r,"\mathrm{ev}_x"'] & \Grpd_\infty
+\end{tikzcd}
+\end{center}
+现在命题断言：该纤维积中由满足可表性条件的二元组构成的全子 $\infty$-范畴等价于 $[0]$。
+\end{remark}
+
+\nitem\label{L11-2.5} 由上述推论，在放大 $\Grpd_\infty$ 中对象的大小界之后，只要把对象 $\eta$ 作为其定义的一部分数据纳入，我们就可以谈论由对象 $x\in\cC$ 表示的函子 $\cC^{\op}\to\Grpd_\infty$。我们把这个函子记为 $h_x$。使用这些记号时，我们总把它视为 $\Fun(\cC^{\op},\Grpd_\infty)$ 中的对象，并配以 $h_x(x)$ 中的一个典范对象。由于注~\ref{L11-1.4}，我们常把这个对象记为 $\id_x$。现在命题~\ref{L11-2.2} 可以非形式地写成
+\[
+h_x\xleftarrow{\ \simeq\ }\mathrm{LKE}_x\{\ast\}.
+\]
+对偶地，被 $x$ 余表示的函子记为 $h^x$。
+
+\begin{exercise}\label{L11-2.6}
+把余可表函子 $h^x$ 描述为左 Kan 扩张。
+\end{exercise}
+
+\section{Yoneda 引理}
+
+\begin{theorem}\label{L11-3.1}
+设 $\cC$ 是 $\infty$-范畴，$h_x\colon\cC^{\op}\to\Grpd_\infty$ 是被 $x$ 表示的函子。则对任意函子 $G\colon\cC^{\op}\to\Grpd_\infty$，复合
+\[
+\mathrm{Maps}_{\Fun(\cC^{\op},\Grpd_\infty)}(h_x,G)\to\mathrm{Maps}_{\Grpd_\infty}(h_x(x),G(x))\xrightarrow{\ \mathrm{ev}_{\id_x}\ }G(x)
+\]
+是 $\infty$-范畴之间的等价。
+\end{theorem}
+
+\begin{proof}
+通过等价 $h_x\xleftarrow{\ \simeq\ }\mathrm{LKE}_x\{\ast\}$，该复合为
+\begin{multline*}
+\mathrm{Maps}_{\Fun(\cC^{\op},\Grpd_\infty)}(\mathrm{LKE}_x\{\ast\},G)\to\mathrm{Maps}_{\Fun(\Delta^0,\Grpd_\infty)}((\mathrm{LKE}_x\{\ast\})\big|_{x},G\big|_{x})\\
+\to\mathrm{Maps}_{\Fun(\Delta^0,\Grpd_\infty)}(\{\ast\},G\big|_{x})\simeq G(x),
+\end{multline*}
+由 LKE 的定义，它是等价。
+\end{proof}
+
+\begin{exercise}\label{L11-3.2}
+证明警告~\ref{L11-1.6} 中的最后一项断言。
+\end{exercise}
+
+\nitem\label{L11-3.3} 由命题~\ref{L11-2.2}，函子 $h_x$ 由定理~\ref{L11-2.2} 的结论刻画。事实上，下述更强的结果成立。
+
+\yizhu{原文此处称“定理 2.2”，但第 2 节只有命题 2.2，所指应为命题 2.2；译文照录原文。\textbf{[译者按（无外部依据）]}}
+
+\begin{proposition}\label{L11-3.4}
+设 $\cC$ 是 $\infty$-范畴，$x\in\cC$ 是满足大小条件 (i) 的对象。设 $F\colon\cC^{\op}\to\Grpd_\infty$ 是函子，$\eta\in F(x)$。则下列条件等价：
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em,itemsep=0.15em]
+\item $\eta$ 展示 $F$ 是被 $x$ 表示的函子；
+\item 对任意函子 $G\colon\cC^{\op}\to\Grpd_\infty$，$\eta$ 诱导 $\infty$-范畴之间的等价
+\[
+\mathrm{Maps}_{\Fun(\cC^{\op},\Grpd_\infty)}(F,G)\to G(x);
+\]
+\item 对任意函子 $G\colon\cC^{\op}\to\Grpd_\infty$，$\eta$ 诱导集合之间的等价
+\[
+\pi_0\mathrm{Maps}_{\Fun(\cC^{\op},\Grpd_\infty)}(F,G)\to\pi_0G(x).
+\]
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+只需证明 (3)$\Rightarrow$(1)。大小假设蕴含 $h_x$ 存在。由定理~\ref{L11-3.1}，存在自然变换 $\alpha\colon h_x\to F$，把 $\id_x\in h_x(x)$ 送到与 $\eta\in F(x)$ 同构的对象。由此得到交换图
+\begin{center}
+\begin{tikzcd}[column sep=6.2em,row sep=3.2em]
+\pi_0\mathrm{Maps}_{\Fun(\cC^{\op},\Grpd_\infty)}(F,G)\arrow[r,"\simeq"]\arrow[d,"-\circ\alpha"'] & \pi_0G(x)\arrow[d,equal]\\
+\pi_0\mathrm{Maps}_{\Fun(\cC^{\op},\Grpd_\infty)}(h_x,G)\arrow[r,"\simeq"'] & \pi_0G(x).
+\end{tikzcd}
+\end{center}
+这蕴含 $\alpha$ 是 $h\Fun(\cC^{\op},\Grpd_\infty)$ 中的同构，从而是 $\Fun(\cC^{\op},\Grpd_\infty)$ 中的同构，而这蕴含 (1)。
+\end{proof}
+
+\begin{remark}\label{L11-3.5}
+在本注中，我们比较命题~\ref{L11-1.11} 与命题~\ref{L11-3.4}。
+
+一旦发展了部分定义的伴随函子的理论，我们就能把定义~\ref{L11-1.1} 与命题~\ref{L11-1.11} 中的条件分别改述为
+\begin{enumerate}[label=(\alph*),leftmargin=2.6em,itemsep=0.2em]
+\item $\eta$ 展示 $x$ 为 $\{\ast\}\in\Grpd_\infty$ 在函子 $F\colon\cC^{\op}\to\Grpd_\infty$ 的左伴随函子下的可能取值。
+\item[(a$'$)] $\eta$ 展示 $x$ 为 $\{\ast\}\in\hGrpd_\infty$ 在函子 $\overline{h}F\colon\overline{h}\cC^{\op}\to\hGrpd_\infty$ 的左伴随函子下的可能取值。
+\end{enumerate}
+命题~\ref{L11-1.11} 说的是：若 $F$ 的部分定义左伴随在 $\{\ast\}$ 处有定义，则其取值可由同伦范畴检测。
+
+类似地，我们可以把命题~\ref{L11-3.4} 中的 (2) 与 (3) 分别改述为：
+\begin{enumerate}[label=(\alph*),leftmargin=2.6em,itemsep=0.2em,start=2]
+\item $\eta$ 展示 $F$ 为 $\{\ast\}\in\Grpd_\infty$ 在函子 $\mathrm{ev}_x\colon\Fun(\cC^{\op},\Grpd_\infty)\to\Grpd_\infty$ 的左伴随函子下的可能取值。
+\item[(b$'$)] $\eta$ 展示 $F$ 为 $\{\ast\}\in\hGrpd_\infty$ 在函子 $\overline{h}(\mathrm{ev}_x)\colon\overline{h}\Fun(\cC^{\op},\Grpd_\infty)\to\hGrpd_\infty$ 的左伴随函子下的可能取值。
+\end{enumerate}
+命题~\ref{L11-3.4} 说的是：若 $\mathrm{ev}_x$ 的部分定义左伴随在 $\{\ast\}$ 处有定义，则其取值可由同伦范畴检测。
+
+事实上，对任意函子的部分定义伴随函子，类似的断言都成立。
+\end{remark}
+
+\begin{exercise}\label{L11-3.6}
+将上述范式应用于 $\infty$-范畴中的终对象。与第 6 讲练习 2.8 比较。
+\end{exercise}
+
+\begin{exercise}\label{L11-3.7}
+找出下述论证中的错误。
+\begin{itemize}[leftmargin=2.2em,itemsep=0.1em]
+\item 错误断言：若图 $u\colon K\to\cC$ 的极限存在，则它可以在同伦范畴 $h\cC$ 中计算。
+\item 虚假证明：极限可以写成一个 LKE，而 LKE 是某个部分定义左伴随的取值。
+\end{itemize}
+\end{exercise}
+
+\section{Yoneda 嵌入}
+
+\nitem\label{L11-4.1} 本节给出函子
+\[
+\mathrm{Maps}_{\cC}(-,-)\colon\cC^{\op}\times\cC\to\Grpd_\infty
+\]
+的一个构造，方式是经由单纯范畴。在以后的讲次中，我们会利用左纤维化理论给出一个纯拟范畴的构造。
+
+\begin{construction}\label{L11-4.2}
+设 $\cC$ 是局部小的\footnote{这意指对任意对象 $x$ 与 $y$，$\mathrm{Maps}_{\cC}(x,y)$ 是小。}拟范畴，并考虑单纯范畴 $\mathbb{C}\coloneqq\mathfrak{C}(\cC)$。设 $\mathbb{C}\to\mathbb{C}'$ 是纤维替换。考虑单纯函子的复合：
+\[
+\mathfrak{C}(\cC^{\op}\times\cC)\to\mathfrak{C}(\cC^{\op})\times\mathfrak{C}(\cC)\simeq\mathbb{C}^{\op}\times\mathbb{C}\to(\mathbb{C}')^{\op}\times\mathbb{C}'\to\Kan,
+\]
+其中最后一个函子由 $\Hom_{\mathbb{C}'}(-,-)$ 给出。由伴随性，我们得到函子
+\[
+\cC^{\op}\times\cC\to N_{\bullet}(\Kan)\eqqcolon\Kan.
+\]
+\end{construction}
+
+\begin{exercise}\label{L11-4.3}
+所得函子 $\cC^{\op}\times\cC\to\Kan$ 的等价类不依赖 $\mathbb{C}'$ 的选取。换言之，我们得到
+\[
+\pi_0(\Fun(\cC^{\op}\times\cC,\Kan)^{\simeq})
+\]
+中的一个良定义元素。
+\end{exercise}
+
+\begin{exercise}\label{L11-4.4}
+上述等价类在 $\cC$ 的等价下不变。换言之，对等价 $\cC\to\cD$，映射
+\[
+\pi_0(\Fun(\cD^{\op}\times\cD,\Kan)^{\simeq})\to\pi_0(\Fun(\cC^{\op}\times\cC,\Kan)^{\simeq})
+\]
+保持相应的元素。
+\end{exercise}
+
+\nitem\label{L11-4.5} 作为推论，对局部小的 $\infty$-范畴 $\cC$，我们得到函子
+\[
+\mathrm{Maps}_{\cC}(-,-)\colon\cC^{\op}\times\cC\to\Grpd_\infty,
+\]
+其等价类不依赖任何选取。
+
+\begin{exercise}\label{L11-4.6}
+在相差等价的意义下，上述函子提升第 4 讲第 10 节中构造的函子 $\cC^{\op}\times\cC\to\hGrpd_\infty$。
+\end{exercise}
+
+\begin{exercise}\label{L11-4.7}
+对任意对象 $x\in\cC$，态射 $f\in\mathrm{Maps}_{\cC}(y,x)$ 展示函子
+\[
+\mathrm{Maps}_{\cC}(-,x)\colon\cC^{\op}\to\Grpd_\infty
+\]
+被 $y$ 表示，当且仅当 $f$ 可逆。特别地，态射 $\id_x$ 给出典范等价
+\[
+\mathrm{Maps}_{\cC}(-,x)\simeq h_x.
+\]
+对偶地，有典范等价
+\[
+\mathrm{Maps}_{\cC}(x,-)\simeq h^x.
+\]
+\end{exercise}
+
+\begin{corollary}\label{L11-4.8}
+设 $\cC$ 是局部小的 $\infty$-范畴。函子
+\[
+\cC\to\Fun(\cC^{\op},\Grpd_\infty),\qquad x\mapsto\mathrm{Maps}_{\cC}(-,x)
+\]
+全忠实，且其本质像由可表函子组成。
+\end{corollary}
+
+\begin{definition}\label{L11-4.9}
+设 $\cC$ 是局部小的 $\infty$-范畴。
+\begin{itemize}[leftmargin=2.2em,itemsep=0.1em]
+\item 一个（协变）\textbf{Yoneda 嵌入}是与 $x\mapsto\mathrm{Maps}_{\cC}(-,x)$ 等价的函子 $\cC\to\Fun(\cC^{\op},\Grpd_\infty)$。
+\item 一个（反变）\textbf{Yoneda 嵌入}是与 $x\mapsto\mathrm{Maps}_{\cC}(x,-)$ 等价的函子 $\cC^{\op}\to\Fun(\cC,\Grpd_\infty)$。
+\end{itemize}
+\end{definition}
+
+\begin{definition}\label{L11-4.10}
+设 $\cC$ 是本质小的 $\infty$-范畴。记
+\[
+\mathrm{PShv}(\cC)\coloneqq\Fun(\cC^{\op},\Grpd_\infty),
+\]
+并称之为 $\cC$ 上的\textbf{预层 $\infty$-范畴}。
+\end{definition}
+
+\begin{remark}\label{L11-4.11}
+在上述定义中，我们要求 $\cC$ 本质小而非局部小，以保证 $\mathrm{PShv}(\cC)$ 局部小。但注意，$\mathrm{PShv}(\cC)$ 几乎从不是小的。
+\end{remark}
+
+\nitem\label{L11-4.12} 设 $\cC$ 是本质小的 $\infty$-范畴。回忆 $\mathrm{PShv}(\cC)\coloneqq\Fun(\cC^{\op},\Grpd_\infty)$ 具有所有小极限与小余极限，且可以逐点计算（第 7 讲定理 2.14）。
+
+下述结果等价于第 7 讲定理 2.11。用单纯范畴的证明见 HTT.5.1.3.2。
+
+\begin{theorem}\label{L11-4.13}
+设 $\cC$ 是本质小的 $\infty$-范畴。则 Yoneda 嵌入 $\cC\to\mathrm{PShv}(\cC)$ 保持并检测所有极限。
+\end{theorem}
+
+\begin{warning}\label{L11-4.14}
+小图 $u\colon K\to\cC$ 的极限可能不存在。这发生当且仅当 $K\to\cC\to\mathrm{PShv}(\cC)$ 的极限不是可表预层。
+\end{warning}
+
+\section{余完备化}
+
+\begin{definition}\label{L11-5.1}
+设 $\cC$ 是 $\infty$-范畴。若下述条件成立，则称函子 $\cC\to\widehat{\cC}$ 展示 $\widehat{\cC}$ 为 $\cC$ 的\textbf{余完备化}：
+\begin{itemize}[leftmargin=2.2em,itemsep=0.1em]
+\item $\infty$-范畴 $\widehat{\cC}$ 具有小余极限；
+\item 对任意具有小余极限的 $\infty$-范畴 $\cD$，限制函子
+\[
+\mathrm{LFun}(\widehat{\cC},\cD)\to\Fun(\cC,\cD)
+\]
+是等价，其中 $\mathrm{LFun}(\widehat{\cC},\cD)\subset\Fun(\widehat{\cC},\cD)$ 是由保持小余极限的函子构成的全子 $\infty$-范畴。
+\end{itemize}
+\end{definition}
+
+\begin{theorem}[Ker.04BE]\label{L11-5.2}
+设 $\cC$ 是本质小的 $\infty$-范畴。Yoneda 嵌入 $\iota\colon\cC\to\mathrm{PShv}(\cC)$ 展示 $\mathrm{PShv}(\cC)$ 为 $\cC$ 的余完备化。
+\end{theorem}
+
+\begin{proof}[证明思路]
+我们只需证明限制函子
+\begin{equation}\label{L11-eq5.1}
+-\circ\iota\colon\mathrm{LFun}(\mathrm{PShv}(\cC),\cD)\to\Fun(\cC,\cD)
+\end{equation}
+是等价。我们断言 $\mathrm{LKE}_\iota$ 存在，并诱导函子
+\begin{equation}\label{L11-eq5.2}
+\mathrm{LKE}_\iota\colon\Fun(\cC,\cD)\to\mathrm{LFun}(\mathrm{PShv}(\cC),\cD),
+\end{equation}
+它与上述限制函子互逆。
+
+事实上，对任意 $F\colon\cC\to\cD$，逐点 LKE $\mathrm{LKE}_\iota F\colon\mathrm{PShv}(\cC)\to\cD$ 存在，因为
+\begin{equation}\label{L11-eq5.3}
+\cC_{/M}\coloneqq\mathrm{PShv}(\cC)_{/M}\times_{\mathrm{PShv}(\cC)}\cC
+\end{equation}
+本质小\footnote{正是在这一步，我们用到 $\cC$ 本质小而不只是局部小（Ker.03WG）。在后者这一更弱的假设下，该定理会失效（Ker.03WF）。}，从而
+\[
+(\mathrm{LKE}_\iota F)(M)\simeq\colim_{(h_x\to M)\in\cC_{/M}}F(x).
+\]
+可以证明 $\cC_{/\colim M_i}\simeq\colim\cC_{/M_i}$，并利用图的分解证明函子 $\mathrm{LKE}_\iota F$ 保持小余极限。
+
+剩下要证明所得函子 \eqref{L11-eq5.2} 是 \eqref{L11-eq5.1} 的逆。它是右逆，因为 $\iota$ 全忠实。为证明它是左逆，我们需要证明任意保持余极限的 $G\colon\mathrm{PShv}(\cC)\to\cD$ 满足
+\begin{equation}\label{L11-eq5.4}
+\mathrm{LKE}_\iota(G\circ\iota)\xrightarrow{\ \simeq\ }G.
+\end{equation}
+\end{proof}
+
+由于 $G$ 保持余极限，且上述 LKE 是逐点的，我们只需处理 $G=\mathrm{Id}$ 的万有情形。由于 $\mathrm{PShv}(\cC)$ 中的小余极限被 $h^{\op}_{\cM}\colon\mathrm{PShv}(\cC)\to\Grpd^{\op}_\infty$ 保持并检测，我们只需处理 $G=h^{\op}_{\cM}$ 的情形。
+
+换言之，我们需要证明交换图
+\begin{center}
+\begin{tikzcd}[column sep=5.2em,row sep=3.4em]
+& \mathrm{PShv}(\cC)^{\op}\arrow[dr,dotted,"h_{\cM}"] &\\
+\cC^{\op}\arrow[ur,"\iota^{\op}"]\arrow[rr,"\cM"'] & & \Grpd_\infty
+\end{tikzcd}
+\end{center}
+诱导出
+\[
+h_{\cM}\xrightarrow{\ \simeq\ }\mathrm{RKE}_{\iota^{\op}}\cM.
+\]
+这里等价 $\cM\simeq h_{\cM}\circ\iota^{\op}$ 来自 $\cC$ 的 Yoneda 引理。我们只需对任意 $N\in\mathrm{PShv}(\cC)^{\op}$ 证明
+\[
+h_{\cM}(N)\xrightarrow{\ \simeq\ }(\mathrm{RKE}_{\iota^{\op}}\cM)(N).
+\]
+对 $\mathrm{PShv}(\cC)$ 应用 Yoneda 引理，我们只需证明\footnote{奇迹就发生在这里。在一般情形下，要检验函子 $T\colon\cU^{\op}\to\cV$ 是 $\cU_0^{\op}\to\cV$ 的 RKE，需要用\emph{所有}函子 $S\colon\cU^{\op}\to\cV$ 作为检验函子并计算 $\mathrm{Maps}(S,T)$。然而当 $\cV=\Grpd_\infty$ 时，上述论证说明只需用可表函子作为检验函子。}
+\[
+h_{\cM}(N)\xrightarrow{\ \simeq\ }\mathrm{Maps}(h_N,\mathrm{RKE}_{\iota^{\op}}\cM).
+\]
+展开定义，该函子可以等同于
+\[
+h_{\cM}(N)\simeq\mathrm{Maps}(N,\cM)\simeq\mathrm{Maps}(h_N\circ\iota^{\op},\cM)\simeq\mathrm{Maps}(h_N,\mathrm{RKE}_{\iota^{\op}}\cM),
+\]
+其中最后一个等价用到 RKE 的泛性质。
+
+\nitem\label{L11-5.3} 在上述证明中，我们实际上证明了：
+
+\begin{corollary}\label{L11-5.4}
+设 $\cC$ 是本质小的 $\infty$-范畴。则 $\mathrm{PShv}(\cC)$ 由 $\iota\colon\cC\to\mathrm{PShv}(\cC)$ 的像在小余极限下生成。
+\end{corollary}
+
+\begin{remark}\label{L11-5.5}
+上述推论的确切含义是：$\mathrm{PShv}(\cC)$ 中任意对象 $M\in\mathrm{PShv}(\cC)$ 都同构于 $\iota$ 的像中对象的小余极限。事实上，对 $G\coloneqq\mathrm{Id}$ 应用 \eqref{L11-eq5.4}，我们有
+\[
+M\simeq\colim_{(h_x\to M)\in\cC_{/M}}\iota(x).
+\]
+\end{remark}
+
+\appendixsection{完全紧对象}
+
+\begin{definition}\label{L11-A.1}
+设 $\cD$ 是局部小且具有小余极限的 $\infty$-范畴。若函子
+\[
+\mathrm{Maps}_{\cD}(d,-)\colon\cD\to\Grpd_\infty
+\]
+保持小余极限，则称对象 $d\in\cD$ 是\textbf{完全紧的}。
+\end{definition}
+
+\yizhu{“完全紧”比第 13 讲的“紧对象”更强：后者只要求 $\mathrm{Maps}_{\cD}(d,-)$ 保持小滤过余极限（第 13 讲定义 2.1），而完全紧要求它保持一切小余极限。\textbf{[来源：B]}}
+
+\begin{exercise}\label{L11-A.2}
+设 $d$ 在 $\cD$ 中完全紧。证明 $d$ 的任意收缩也完全紧。这里回忆，若 $\id_c$ 分解为 $c\to d\to c$，则称 $c$ 是 $d$ 的\textbf{收缩}。
+\end{exercise}
+
+\begin{exercise}\label{L11-A.3}
+设 $\cC$ 是本质小的 $\infty$-范畴。证明可表预层 $h_x\in\mathrm{PShv}(\cC)$ 是完全紧的。
+\end{exercise}
+
+\begin{theorem}[HTT.5.1.6.8]\label{L11-A.4}
+设 $\cC$ 是本质小的 $\infty$-范畴。则预层 $M\in\mathrm{PShv}(\cC)$ 完全紧，当且仅当它是某个可表预层的收缩。
+\end{theorem}
+
+\nitem\label{L11-A.5} \textbf{建议阅读}\quad HTT.5.1.6.

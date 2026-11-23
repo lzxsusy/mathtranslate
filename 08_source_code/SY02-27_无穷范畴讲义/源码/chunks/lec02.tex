@@ -1,0 +1,390 @@
+% =============================================================================
+%  lec02.tex —— 第 2 讲 模型范畴（底本 PDF 第 8–15 页）
+% =============================================================================
+\lecture{2}{模型范畴}
+\begin{center}\small\color{black!55}（底本 PDF 第 8–15 页）\end{center}
+
+上次我们说明了如下原则：
+\begin{center}
+$\infty$-群胚的理论 $=$ 拓扑空间的同伦论；\\
+$(\infty,1)$-范畴的理论 $=$ 拓扑范畴的同伦论。
+\end{center}
+本讲我们给其中的右端以精确含义。
+
+\section{什么是同伦论？}
+
+\nitem\label{L2-1.1} 回忆：拓扑空间的同伦论由同伦范畴 $\hTop$ 编码，而 $\hTop$ 有如下两种等价的定义方式：
+\begin{itemize}[leftmargin=2.2em,itemsep=0.1em]
+\item 由 $\Top$（全体空间构成的范畴）把\textbf{弱同伦等价}可逆化所得的范畴；
+\item 由性质良好的拓扑空间构成、态射取连续映射同伦类的范畴。
+\end{itemize}
+
+\nitem\label{L2-1.2} 这提示我们，同伦论应当如下理解：
+\begin{itemize}[leftmargin=2.2em,itemsep=0.1em]
+\item 在给定范畴 $\cC$（例如 $\Top$）中指定一族态射 $W$，称为\textbf{弱等价}，并研究由 $\cC$ 把 $W$ 中态射可逆化所得的范畴 $\mathrm{h}\cC$；
+\item 找出 $\cC$ 中由“性质良好”对象构成的全子范畴 $\cC^{\circ}\subset\cC$，使得对 $X,Y\in\cC^{\circ}$，集合 $\Hom_{\mathrm{h}\cC}(X,Y)$ 可以计算为商集 $\Hom_{\cC}(X,Y)/\sim$。这里“$\sim$”指由
+\begin{equation}\label{L2-eq1.1}
+\Hom_{\cC}(CX,Y)\rightrightarrows\Hom_{\cC}(X,Y)
+\end{equation}
+所定义的关系，其中 $CX$ 是 $X$ 的一个\textbf{柱}，当 $X\in\Top$ 时其行为如同 $X\times[0,1]$。
+\end{itemize}
+
+\nitem\label{L2-1.3} 然而，从 $\Top$ 到 $\hTop$、更一般地从 $\cC$ 到 $\mathrm{h}\cC$ 的过渡会丢失大量同伦不变的信息。例如，同伦极限与同伦余极限的概念无法从范畴 $\hTop$ 中提取出来。
+
+\begin{definition}\label{L2-1.4}
+$\Top$ 中图表 $X\leftarrow Y\rightarrow Z$ 的\textbf{同伦推出}定义为
+\[
+X\sqcup^{h}_{Y}Z\coloneqq X\sqcup_{Y\times\{0\}}(Y\times[0,1])\sqcup_{Y\times\{1\}}Z.
+\]
+$\Top$ 中图表 $X\rightarrow Y\leftarrow Z$ 的\textbf{同伦拉回}定义为
+\[
+X\times^{h}_{Y}Z\coloneqq X\times^{\{0\}}_{Y}(Y^{[0,1]})\times^{\{1\}}_{Y}Z.
+\]
+\end{definition}
+
+\begin{exercise}\label{L2-1.5}
+验证上述定义是同伦不变的，即所得结果的同伦型只依赖于图表在 $\mathrm{h}\colon\Top\to\hTop$ 下的像。
+\end{exercise}
+
+\begin{exercise}\label{L2-1.6}
+考虑 $\hTop$ 中的下列图表。证明：
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em,itemsep=0.1em]
+\item $\ast\leftarrow S^1\rightarrow D^2$ 在 $\hTop$ 中的推出等价于 $\ast$，而同伦推出是 $S^2$。
+\item $\ast\leftarrow S^1\xrightarrow{\,2\,}S^1$ 在 $\hTop$ 中的推出不存在，而同伦推出是 $\R\mathrm{P}^2$。
+\item $\ast\rightarrow S^1\leftarrow\R^1$ 在 $\hTop$ 中的拉回等价于 $\R^1$，而同伦拉回是 $\Z$。
+\item $\ast\rightarrow\C\mathrm{P}^{\infty}\leftarrow\R\mathrm{P}^{\infty}$ 在 $\hTop$ 中的拉回不存在，而同伦拉回是 $S^1$。
+\end{enumerate}
+\end{exercise}
+
+\begin{remark}\label{L2-1.7}
+注意在 (1)/(3) 中，同伦推出/同伦拉回也可以计算为 $\Top$ 中通常推出/通常拉回的同伦型。这与下述事实有关：$S^1\to D^2$ 是性质良好的包含，而 $\R^1\to S^1$ 是性质良好的满射。
+\end{remark}
+
+\section{模型范畴}
+
+\nitem\label{L2-2.1} 20 世纪 60 年代，Quillen（见 [Qui67]）意识到，经典同伦论可以在任何配备了弱等价、上纤维化与纤维化这三族态射的范畴中展开，只要它们满足一列由 $\Top$ 这个例子所启发的公理。这促成了模型范畴的定义。
+
+\begin{definition}\label{L2-2.2}
+范畴 $\cC$ 上的一个\textbf{弱分解系统}（weak factorization system）是一对态射类 $(L,R)$，满足：
+\begin{itemize}[leftmargin=2.2em,itemsep=0.1em]
+\item 每个态射都可以分解为 $p\circ i$，其中 $i\in L$，$p\in R$；
+\item $L$ 恰好是对 $R$ 中每个态射都具有\textbf{左提升性质}的态射类。换言之，$i\in L$ 当且仅当：对任意 $p\in R$ 与交换方块
+\begin{center}
+\begin{tikzcd}[column sep=3.6em,row sep=2.6em]
+A \arrow[r] \arrow[d,"i"'] & X \arrow[d,"p"] \\
+B \arrow[r] & Y
+\end{tikzcd}
+\end{center}
+存在态射 $B\to X$ 使两个三角形交换；
+\item $R$ 恰好是对 $L$ 中每个态射都具有\textbf{右提升性质}的态射类。
+\end{itemize}
+\end{definition}
+
+\begin{example}\label{L2-2.3}
+范畴 $\Set$ 有一个由单射类与满射类给出的弱分解系统 $(\mathrm{inj},\mathrm{surj})$。
+\end{example}
+
+\begin{remark}\label{L2-2.4}
+以下是构造弱分解系统的一种典型方式。设 $\cC$ 是容许所有小余极限的范畴，$I$ 是一族态射，且这些态射的源在适当意义下是小对象。则存在弱分解系统 $(L,R)$，使得
+\begin{itemize}[leftmargin=2.2em,itemsep=0.1em]
+\item $R$ 是对 $I$ 具有右提升性质的态射类；
+\item $L$ 是由 $I$ 生成的弱饱和类\footnote{弱饱和指对推出、超限复合与收缩封闭。见 HTT.A.1.2.2。}。
+\end{itemize}
+这称为 Quillen 的\textbf{小对象论证}。见 HTT.A.1.2。
+\end{remark}
+
+\begin{definition}\label{L2-2.5}
+范畴 $\cC$ 上的一个\textbf{模型结构}是选定三族态射 $W$、$C$ 与 $F$，分别称为\textbf{弱等价}、\textbf{上纤维化}与\textbf{纤维化}，使得
+\begin{itemize}[leftmargin=2.2em,itemsep=0.1em]
+\item $W$ 包含所有同构，且对\textbf{三选二}封闭\footnote{对可复合的态射 $f$、$g$，若 $f$、$g$、$gf$ 三者中有两个属于 $W$，则第三个也属于 $W$。}；
+\item $(C,F\cap W)$ 与 $(C\cap W,F)$ 都是 $\cC$ 上的弱分解系统。
+\end{itemize}
+若 $\cC$ 局部小\footnote{即 $\Hom_{\cC}(-,-)$ 是集合而非真类。}、具有小极限与小余极限\footnote{Quillen 原来的定义只要求有限极限与有限余极限。}，并且配备了一个模型结构，则称 $\cC$ 为\textbf{模型范畴}。
+\end{definition}
+
+\begin{definition}\label{L2-2.6}
+在模型范畴 $\cC$ 中，$C\cap W$（相应地 $F\cap W$）中的态射称为\textbf{无环上纤维化}（相应地\textbf{无环纤维化}）。
+\end{definition}
+
+\yizhu{原文此处用 acyclic（无环），而许多文献用 trivial（平凡）指同一类态射，即 $C\cap W$ 与 $F\cap W$ 中的态射。本译本随原文用“无环”，与术语表中 trivial fibration＝平凡纤维化的译名并行不悖，读者可按上下文互换。\textbf{[来源：B]}}
+
+\begin{example}\label{L2-2.7}
+$\Top$ 上 Quillen 的经典模型结构由以下各项给出：
+\begin{itemize}[leftmargin=2.2em,itemsep=0.1em]
+\item[(W)] 弱等价就是弱同伦等价。
+\item[(C)] 上纤维化是相对胞腔复形的一个收缩（retract）。
+\item[(F)] 纤维化是 Serre 纤维化。
+\end{itemize}
+这里弱分解系统 $(C,F\cap W)$ 由对 $\{S^{n-1}\to D^n\}$ 应用小对象论证得到，而 $(C\cap W,F)$ 由对 $\{D^n\times\{0\}\to D^n\times[0,1]\}$ 应用小对象论证得到。
+\end{example}
+
+\begin{example}\label{L2-2.8}
+设 $\cA$ 是性质良好的\footnote{更确切地说，$\cA$ 具有小极限与小余极限，并有足够多的投射对象。} Abel 范畴，例如对某个环 $R$ 的 $\Mod_R$。设 $\Ch^{\le0}(\cA)$ 是 $\cA$ 中非正次数的（上链）复形构成的范畴\footnote{我们采用上同调的次数约定。}。$\Ch^{\le0}(\cA)$ 上 Quillen 的\textbf{投射模型结构}由以下各项给出：
+\begin{itemize}[leftmargin=2.2em,itemsep=0.1em]
+\item[(W)] 弱等价就是拟同构，即诱导上同调之间同构的映射。
+\item[(C)] 上纤维化是逐次单射、且余核逐次投射的态射。
+\item[(F)] 纤维化是逐次满射。
+\end{itemize}
+对偶地，$\Ch^{\ge0}(\cA)$ 上有一个\textbf{内射模型结构}。
+\end{example}
+
+\begin{example}\label{L2-2.9}
+设 $k$ 是特征零的域。设 $\mathrm{dgcAlg}^{\le0}_{k}$ 是 $k$ 上非正次数的微分分次交换代数构成的范畴。$\mathrm{dgcAlg}^{\le0}_{k}$ 上的\textbf{投射模型结构}由以下各项给出：
+\begin{itemize}[leftmargin=2.2em,itemsep=0.1em]
+\item[(W)] 弱等价就是拟同构。
+\item[(F)] 纤维化是逐次满射。
+\item[(C)] 上纤维化类由 $W\cap F$ 确定。
+\end{itemize}
+\end{example}
+
+\begin{remark}\label{L2-2.10}
+在上述两个例子中，若考虑所有无界复形，情况会变得更复杂，但也更有趣。
+\end{remark}
+
+\begin{definition}\label{L2-2.11}
+设 $\cC$ 是模型范畴，$X$、$Y$ 是 $\cC$ 中的对象。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em,itemsep=0.1em]
+\item $X$ 的一个\textbf{柱对象}（cylinder object）是一个对象 $CX$，连同余对角映射 $X\sqcup X\to X$ 的一个分解
+\[
+X\sqcup X\xrightarrow{\ i\ }CX\xrightarrow{\ p\ }X,
+\]
+使得 $i$ 是上纤维化、$p$ 是弱等价。
+\item $Y$ 的一个\textbf{道路对象}（path object）是一个对象 $PY$，连同对角映射 $Y\to Y\times Y$ 的一个分解
+\[
+Y\xrightarrow{\ i\ }PY\xrightarrow{\ p\ }Y\times Y,
+\]
+使得 $i$ 是弱等价、$p$ 是纤维化。
+\end{enumerate}
+\end{definition}
+
+\begin{remark}\label{L2-2.12}
+注意柱对象与道路对象的存在性可由模型结构中的分解公理推出。
+\end{remark}
+
+\begin{exercise}\label{L2-2.13}
+考虑例~\ref{L2-2.8} 中的模型范畴。
+\begin{itemize}[leftmargin=2.2em,itemsep=0.1em]
+\item 在投射模型范畴 $\Ch^{\le0}(\cA)$ 中找出道路对象。
+\item 在内射模型范畴 $\Ch^{\ge0}(\cA)$ 中找出柱对象。
+\end{itemize}
+\end{exercise}
+
+\begin{definition}\label{L2-2.14}
+设 $\cC$ 是模型范畴。若 $X\to\ast$（相应地 $\emptyset\to X$）是纤维化（相应地上纤维化），则称对象 $X$ 是\textbf{纤维对象}（相应地\textbf{上纤维对象}）。这里 $\ast$ 与 $\emptyset$ 分别表示 $\cC$ 中的终对象与始对象。
+
+若一个对象既是纤维对象又是上纤维对象，则称它是\textbf{双纤维对象}。记
+\begin{center}
+\begin{tikzcd}[column sep=2.8em,row sep=2.2em]
+& \cC^c \arrow[dr] & \\
+\cC^{\circ} \arrow[ur] \arrow[dr] & & \cC \\
+& \cC^f \arrow[ur] &
+\end{tikzcd}
+\end{center}
+分别为纤维对象、上纤维对象与双纤维对象构成的全子范畴。
+\end{definition}
+
+\nitem\label{L2-2.15} 我们很快就会看到，双纤维对象正是 \ref{L2-1.2} 段意义上“性质良好”的对象。
+
+\begin{exercise}\label{L2-2.16}
+对任意对象 $x$，存在弱等价 $x'\to x$ 与 $x\to x''$，使得 $x'$ 上纤维、$x''$ 纤维。这样的 $x'$（相应地 $x''$）称为 $x$ 的\textbf{上纤维替换}（相应地\textbf{纤维替换}）。
+\end{exercise}
+
+\begin{exercise}\label{L2-2.17}
+在投射模型范畴 $\Ch^{\le0}(\cA)$ 中，上纤维替换是什么？在内射模型范畴 $\Ch^{\ge0}(\cA)$ 中，纤维替换又如何？
+\end{exercise}
+
+\nitem\label{L2-2.18} 为了对模型范畴定义中的公理有所体会，鼓励读者自行证明下述结果。
+
+\begin{theoremdef}\label{L2-2.19}
+设 $\cC$ 是模型范畴，$X$ 是上纤维对象，$Y$ 是纤维对象。对态射 $f,g\colon X\to Y$，下列条件等价：
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em,itemsep=0.1em]
+\item 对 $X$ 的每个/某个柱对象 $CX$，存在交换图表
+\begin{center}
+\begin{tikzcd}[column sep=4.4em,row sep=2.6em]
+X\sqcup X \arrow[rr,"{(f,g)}"] \arrow[dr] & & Y \\
+& CX \arrow[ur,dashed] &
+\end{tikzcd}
+\end{center}
+\item 对 $Y$ 的每个/某个道路对象 $PY$，存在交换图表
+\begin{center}
+\begin{tikzcd}[column sep=4.4em,row sep=2.6em]
+X \arrow[rr,"{(f,g)}"] \arrow[dr,dashed] & & Y\times Y \\
+& PY \arrow[ur] &
+\end{tikzcd}
+\end{center}
+\end{enumerate}
+若 $f$ 与 $g$ 满足上述等价条件，则称它们\textbf{同伦}，记作 $f\sim g$。关系 $\sim$ 是集合 $\Hom_{\cC}(X,Y)$ 上的等价关系。
+\end{theoremdef}
+
+\begin{definition}\label{L2-2.20}
+设 $\cC$ 是模型范畴。$\cC$ 的\textbf{同伦范畴} $\mathrm{h}\cC$ 定义如下：
+\begin{itemize}[leftmargin=2.2em,itemsep=0.1em]
+\item 对象是 $\cC$ 的双纤维对象；
+\item 态射是 $\cC$ 中态射的同伦类。
+\end{itemize}
+\end{definition}
+
+\nitem\label{L2-2.21} Quillen 证明了同伦范畴典范地等价于 $\cC$ 关于 $W$ 的局部化，即由 $\cC$ 把弱等价可逆化所得的范畴 $\cC[W^{-1}]$\footnote{这是由下述泛性质刻画的范畴：知道一个函子 $\cC[W^{-1}]\to\cD$，等价于知道一个把 $W$ 中态射送到同构的函子 $\cC\to\cD$。}。更确切地说：
+
+\begin{theorem}\label{L2-2.22}
+（Quillen）下列函子都是等价：
+\begin{center}
+\begin{tikzcd}[column sep=3.2em,row sep=2.4em]
+& \cC^f[W^{-1}] \arrow[dl] & & \\
+\cC[W^{-1}] & & \cC^{\circ}[W^{-1}] \arrow[ul] \arrow[dl] \arrow[r] & \mathrm{h}\cC \\
+& \cC^c[W^{-1}] \arrow[ul] & &
+\end{tikzcd}
+\end{center}
+\end{theorem}
+
+\begin{exercise}\label{L2-2.23}
+当 $\cC$ 是投射模型范畴 $\Ch^{\le0}(\cA)$ 或内射模型范畴 $\Ch^{\ge0}(\cA)$ 时，该定理说的是什么？
+\end{exercise}
+
+\begin{remark}\label{L2-2.24}
+注意 $\cC[W^{-1}]$ 只依赖于 $(\cC,W)$，而 $\mathrm{h}\cC$ 依赖于 $\cC$ 的模型结构，即依赖于纤维化与上纤维化的选取。人们可以把这些辅助性的选取与流形上的局部坐标作比较：二者都提供了强大的计算工具，但或多或少会阻碍内在理论的诞生。
+\end{remark}
+
+正如后续各讲将要说明的，模型范畴的这种“内在”理论正是 $(\infty,1)$-范畴的理论。
+
+\section{拓扑范畴}
+
+\nitem\label{L2-3.1} 现在让我们尝试借助模型范畴的形式体系，发展拓扑范畴的同伦论。
+
+\nitem\label{L2-3.2} 弱等价只有一种合理的选择，定义如下。
+
+\begin{definition}\label{L2-3.3}
+设 $\cC$ 是拓扑范畴。它的\textbf{同伦范畴} $\pi_0\cC$ 由
+\[
+\Ob(\pi_0\cC)\coloneqq\Ob(\cC),\qquad
+\Hom_{\pi_0\cC}(x,y)\coloneqq\pi_0\Hom_{\cC}(x,y)
+\]
+定义。
+\end{definition}
+
+\begin{definition}\label{L2-3.4}
+设 $F\colon\cC\to\cD$ 是拓扑范畴之间的函子。若满足以下两条，则称 $F$ 是\textbf{弱等价}：
+\begin{itemize}[leftmargin=2.2em,itemsep=0.1em]
+\item 它诱导等价 $\pi_0F\colon\pi_0\cC\to\pi_0\cD$；
+\item 它在 Hom 空间之间诱导弱等价，即对任意 $x,y\in\Ob(\cC)$，连续映射 $\Hom_{\cC}(x,y)\to\Hom_{\cD}(Fx,Fy)$ 是弱等价。
+\end{itemize}
+\end{definition}
+
+\nitem\label{L2-3.5} 然而，在拓扑范畴之间定义纤维化与上纤维化并非易事。即便找到了这样的定义，所得的模型结构也不便于计算。也就是说，与拓扑空间的情形不同，许多看似无害的拓扑空间可能不是双纤维的：
+
+\begin{exercise}\label{L2-3.6}
+考虑如下空间的交换图表：
+\begin{center}
+\begin{tikzcd}[column sep=5.2em,row sep=2.6em]
+S^1\times S^1 \arrow[rr,"h'"] \arrow[dr,"h"'] & & S^1 \\
+& S^1\times D^2 \arrow[ur,"f"'] &
+\end{tikzcd}
+\end{center}
+其中 $h(t_1,t_2)\coloneqq(t_1t_2,t_2)$，$f(t_1,t_2)\coloneqq t_1$。设 $\cC$ 是以 $x$、$y$、$z$ 为对象的拓扑范畴，且
+\[
+\Hom_{\cC}(x,y)\coloneqq S^1,\qquad
+\Hom_{\cC}(y,z)\coloneqq S^1,\qquad
+\Hom_{\cC}(x,z)\coloneqq S^1\times D^2,
+\]
+使得复合映射
+\[
+\Hom_{\cC}(x,y)\times\Hom_{\cC}(y,z)\to\Hom_{\cC}(x,z)
+\]
+由 $h$ 给出。类似地，设 $\cD$ 是以 $x'$、$y'$、$z'$ 为对象的拓扑范畴，且
+\[
+\Hom_{\cD}(x',y')\coloneqq S^1,\qquad
+\Hom_{\cC}(y',z')\coloneqq S^1,\qquad
+\Hom_{\cC}(x',z')\coloneqq S^1,
+\]
+使得复合法则由 $h'$ 给出。设
+\[
+F\colon\cC\to\cD,\qquad x\mapsto x',\quad y\mapsto y',\quad z\mapsto z'
+\]
+是由 $f$ 诱导的显然函子。证明：
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em,itemsep=0.1em]
+\item 函子 $F$ 是弱等价。
+\item 不存在函子 $G\colon\cD\to\cC$，使得 $F\circ G$ 在任何合理的意义下同伦于 $\id_{\cD}$。
+\item 由此推出：或者 $\cD$ 不是上纤维的，或者 $\cC$ 不是纤维的（对 $\Cat_{\Top}$ 上任何使弱等价由定义~\ref{L2-3.4} 给出的模型结构而言）。
+\end{enumerate}
+\end{exercise}
+
+\yizhu{原文在定义 $\cD$ 时把后两个 Hom 空间的下标写作 $\Hom_{\cC}$，按上下文应为 $\Hom_{\cD}$。因数学符号照录原文，译本未改，读者按上下文理解即可。\textbf{[来源：I]}}
+
+\nitem\label{L2-3.7} 通过拓扑范畴发展 $(\infty,1)$-范畴理论的另一个困难，是定义小 $(\infty,1)$-范畴构成的 $(\infty,1)$-范畴 $\Cat_{\infty}$。也就是说，若只通过拓扑范畴来理解 $(\infty,1)$-范畴，我们就需要定义小拓扑范畴的拓扑范畴 $\Cat^{+}_{\Top}$，使得
+\[
+\pi_0\Hom_{\Cat^{+}_{\Top}}(\cC,\cD)\simeq\Hom_{\mathrm{h}\Cat_{\Top}}(\cC,\cD).
+\]
+下面的练习表明这并非易事。
+
+\begin{exercise}\label{L2-3.8}
+对任意抽象群 $G$，设 $BG$ 是只有一个对象 $\ast$、且 $\Hom_{BG}(\ast,\ast)\coloneqq G$ 的拓扑范畴。利用同伦假设证明 $\Hom_{\Cat^{+}_{\Top}}(B\ast,BG)$ 弱同伦等价于 Eilenberg--MacLane 空间 $K(G,1)$。
+\end{exercise}
+
+\begin{challenge}\label{L2-3.9}
+构造函子 $\Grp\to\Top_{\ast}$，把 $G\in\Grp$ 送到 $K(G,1)$ 的一个代表元。
+\end{challenge}
+
+\nitem\label{L2-3.10} 在后续各讲中，我们将研究并比较 $(\infty,1)$-范畴的另外两种模型：
+\begin{enumerate}[label=(\arabic*),leftmargin=2.4em,itemsep=0.1em]
+\item 单纯集范畴 $\Set_{\Delta}$ 上 Joyal 的模型结构，其双纤维对象是拟范畴；
+\item 单纯范畴范畴 $\Cat_{\Delta}$ 上 Bergner 的模型结构，其双纤维对象难以显式描述。
+\end{enumerate}
+我们将证明，小拟范畴构成的范畴 $\mathrm{QCat}\subset\Set_{\Delta}$ 具有自然的单纯充实，即我们有一个由小拟范畴构成的单纯范畴，它充当 $\Cat_{\infty}$（即 $(\infty,1)$-范畴的 $(\infty,1)$-范畴）的一个模型。
+
+\begin{remark}\label{L2-3.11}
+事实上，$\mathrm{QCat}$ 是笛卡尔闭的，因而自然地以自身充实。这反映了如下想法：$(\infty,1)$-范畴之间的函子构成一个 $(\infty,1)$-范畴。
+\end{remark}
+
+\appendixsection{更多同伦（余）极限}
+
+\begin{exercise}\label{L2-A.1}
+设 $\cC$ 是模型范畴。定义 $\cC$ 中同伦推出的概念。证明 $X\leftarrow Y\rightarrow Z$ 的同伦推出在下列两种情形下都可以计算为 $\cC$ 中的推出：
+\begin{itemize}[leftmargin=2.2em,itemsep=0.1em]
+\item 态射 $Y\to Z$ 是上纤维化，且 $X$、$Y$ 是上纤维对象；
+\item 态射 $Y\to Z$ 是上纤维化，且 $\cC$ 是左真的。
+\end{itemize}
+\end{exercise}
+
+\yizhu{“proper”在中文献中无统一译名，此处译“真”：左真（left proper）指弱等价沿上纤维化的推出仍为弱等价，右真（right proper）指弱等价沿纤维化的拉回仍为弱等价。原文未给定义，此处按同类文献通例补出。\textbf{[来源：B]}}
+
+\begin{exercise}\label{L2-A.2}
+证明同伦推出/同伦拉回在 $\hTop$ 中不是函子性的。换言之，我们并没有所期望的函子 $\mathrm{Span}(\hTop)\to\hTop$ 或 $\mathrm{coSpan}(\hTop)\to\hTop$。
+\end{exercise}
+
+\begin{exercise}\label{L2-A.3}
+设 $X\xrightarrow{p}Y\xleftarrow{q}Z$ 是 $\Top$ 中的图表，$S$ 是试验对象。比较下列态射所编码的数据：
+\[
+S\to X\times_{Y}Z,\qquad
+S\to X\times^{h}_{Y}Z,\qquad
+\mathrm{h}S\to\mathrm{h}X\times_{\mathrm{h}Y}\mathrm{h}Z.
+\]
+\end{exercise}
+
+\nitem\label{L2-A.4} 请说服自己：
+\begin{center}
+\emph{要捕捉全部同伦不变的信息，仅知道两个映射同伦是不够的；我们需要知道它们如何同伦。}
+\end{center}
+
+\begin{exercise}\label{L2-A.5}
+设
+\begin{center}
+\begin{tikzcd}[column sep=3.2em,row sep=2.4em]
+& X \arrow[dl] \arrow[d] \arrow[dr] & \\
+Y_1 \arrow[r] & Y & Y_2 \arrow[l] \\
+& Z \arrow[ul] \arrow[u] \arrow[ur] &
+\end{tikzcd}
+\end{center}
+是 $\Top$ 中的交换图表。给出该图表同伦极限的定义，并仿照练习~\ref{L2-A.3} 研究它。
+\end{exercise}
+
+\nitem\label{L2-A.6} 请说服自己：
+\begin{center}
+\emph{要捕捉全部同伦不变的信息，仅记录映射之间的同伦是不够的；我们需要记录所有高阶同伦。}
+\end{center}
+
+\nitem\label{L2-A.7} \textbf{建议阅读}\quad [BK72, Chapter XI-XII]（原始文献），[Rie14, Chapter V-VI]（较新）。
+
+\subsection*{参考文献}
+\par\noindent\hangindent=5.2em\hangafter=1 [BK72]\hspace{0.6em}Aldridge Knight Bousfield and Daniel Marinus Kan. \emph{Homotopy limits, completions and localizations}, volume 304. Springer Science \& Business Media, 1972.
+\par\noindent\hangindent=5.2em\hangafter=1 [Qui67]\hspace{0.6em}Daniel G Quillen. \emph{Homotopical algebra}. Lecture Notes in Mathematics, 1967.
+\par\noindent\hangindent=5.2em\hangafter=1 [Rie14]\hspace{0.6em}Emily Riehl. \emph{Categorical Homotopy Theory}, volume 24. Cambridge University Press, 2014.

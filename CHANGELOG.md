@@ -2,6 +2,15 @@
 
 > **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
 
+## SY02-27《无穷范畴讲义》（陈麟）全书中译注本与资料卡 — 2026-11-23
+
+- 新增 `08_source_code/SY02-27_无穷范畴讲义`：陈麟（Lin Chen，清华大学求真书院）*Lectures on Infinity Categories*（2024 年秋课程讲义，27 讲，203 PDF 页，未正式出版）全书翻译。译本 219 页，xelatex 三遍 **0 error / 0 undefined / 0 missing character**；底本 PDF 不入仓（存于仓库外 `_底本/SY02-27/`）。
+- 体例：`\lecture` 每讲重置节号，全部编号对象（编号段落、Definition/Theorem/Exercise 等）共用一个 `nitem` 计数器，复现原书“定义 2.2”“2.1.”式编号；附录按讲重置 A/B。正文 1326 个 + 附录 129 个编号对象，全部带 `L<讲>-<节>.<序>` 标签；`check_numbers.py` 27 讲 27/27 通过。
+- 译注 66 条（`\yizhu`，均标 A/B/I 或“译者按”）；底本笔误经核实记入 `资料卡/04-术语文献勘误.md` E1–E14（径改 2、照录出注 12）。第 3 讲 5 幅编号图（PDF p019–p020）以 TikZ 重绘；第 1 讲一幅未编号 2-态射示意图从略并说明。
+- 工程文件：`BRIEF.md`、`STYLE_GUIDE.md`、`work/{通读笔记,疑点清单,glossary(约 190 条),lecture_pages}`、`work/src/lec01–27.txt`、`tools/{extract_src,compile_chunk,check_numbers}.py`、`build.sh`。
+- 资料卡五件套：`00-速览`、`01-概念` 264 条、`02-命题` 286 条、`03-论证链` 11 条、`04-术语文献勘误`（E1–E14）；`index.jsonl` 554 行（概念 + 命题 + 对齐），`cards/` 550 个 JSON，`alignment.jsonl` 4 张（拟范畴 / Yoneda / 伴随 / 稳定化，status=gap）。
+- 登记：`RELEASE_REGISTER.csv` SY02-27 一行；`03_translations_meta/SY02-27/投稿信息.md`；风险中、L2 公开·受限（可撤下）、成品随仓公开。
+
 ## lbook04 资料卡：全书 56 张 — 2026-11-23
 
 - 新增 `datasets/lbook04/`：为《朗兰兹纲领导论》第 1–11 章新建 56 张概念卡（五轨 O/L/M/T/G），覆盖 L 函数、模形式与自守表示、Tate 与迹公式、GL_n 的 Langlands 纲领；第 12 章沿用 `gaits04/`（23 张）。
