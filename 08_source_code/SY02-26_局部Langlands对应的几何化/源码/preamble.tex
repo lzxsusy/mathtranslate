@@ -1,0 +1,144 @@
+% preamble.tex —— 《局部 Langlands 对应的几何化》中译注本 全局导言
+% 编译：xelatex ×2（有索引时 xelatex → makeindex → xelatex ×2）
+\usepackage[a4paper,margin=2.6cm,footskip=1.2cm]{geometry}
+\usepackage{ctex}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{mathrsfs,bbm}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usetikzlibrary{arrows.meta,decorations.pathmorphing,calc}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{booktabs,array,multirow}
+\usepackage{graphicx}
+\usepackage{marginnote}
+\usepackage[unicode,bookmarksnumbered,bookmarksopen=true]{hyperref}
+\usepackage{imakeidx}
+\makeindex[intoc]
+
+% ---------- 译者体例开关：\showyizhufalse 可一键隐藏全部译注 ----------
+\newif\ifshowyizhu
+\showyizhutrue
+
+% ---------- 颜色 ----------
+\definecolor{yizhuGray}{gray}{0.30}
+\definecolor{srcBlue}{RGB}{20,70,140}
+
+% ---------- 译注：\yizhu{内容}{来源} ----------
+% 体例：以脚注形式排，楷体，来源用 [来源：…] 标注；无外部依据写 [译者按（无外部依据）]
+\newcommand{\yizhu}[2]{%
+  \ifshowyizhu
+    \footnote{\textcolor{yizhuGray}{\kaishu #1}\quad{\scriptsize\textcolor{srcBlue}{[来源：#2]}}}%
+  \fi}
+\newcommand{\yizhuw}[1]{%
+  \ifshowyizhu
+    \footnote{\textcolor{yizhuGray}{\kaishu #1}\quad{\scriptsize\textcolor{srcBlue}{[译者按（无外部依据）]}}}%
+  \fi}
+
+% ---------- 原文页码锚点：\srcpage{7} ----------
+% 1) 版式上用 marginnote（比 marginpar 稳：跨页段、定理环境、脚注附近都不易丢）；
+% 2) 同时把页码写进 <jobname>.pagemarks，任何不可见的情况都能事后核查（工具见 tools/check_pagemarks.py）。
+\newif\ifsrcmark
+\srcmarktrue
+\newwrite\srcpageout
+\immediate\openout\srcpageout=\jobname.pagemarks
+\newcommand{\srcpage}[1]{%
+  \ifsrcmark\immediate\write\srcpageout{#1}\fi
+  \phantomsection\label{srcpage:#1}%
+  \marginnote{\raggedleft\scriptsize\textcolor{yizhuGray}{p.#1}}}
+% 无 margin 的精简版（用于窄页/表格内）：\pgref{N}
+\newcommand{\pgref}[1]{\textsuperscript{\scriptsize\textcolor{yizhuGray}{[p.#1]}}}
+% 页界落在句子中间时用这个：行内小号上标，保证不会被排版吞掉
+\newcommand{\srcpageinl}[1]{%
+  \ifsrcmark\immediate\write\srcpageout{#1}\fi
+  \phantomsection\label{srcpage:#1}%
+  \textsuperscript{\tiny\textcolor{yizhuGray}{〔p.#1〕}}}
+
+
+% ---------- 编号：章用罗马数字，节/定理沿用原文「I.6.3」式编号 ----------
+\renewcommand{\thechapter}{\Roman{chapter}}
+\renewcommand{\thesection}{\thechapter.\arabic{section}}
+
+% ---------- 定理环境（编号保持「章.节.序」） ----------
+\theoremstyle{plain}
+\newtheorem{theorem}{定理}[section]
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{corollary}[theorem]{推论}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{定义}
+\newtheorem{example}[theorem]{例}
+\newtheorem{construction}[theorem]{构造}
+\newtheorem{question}[theorem]{问题}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{注}
+\newtheorem{conjecture}[theorem]{猜想}
+
+% ---------- 常用记号 ----------
+\newcommand{\FF}{\mathbb{F}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\PP}{\mathbb{P}}
+\renewcommand{\AA}{\mathbb{A}}% 覆盖 Å
+\newcommand{\GG}{\mathbb{G}}
+\newcommand{\mm}{\mathfrak{m}}
+\newcommand{\pp}{\mathfrak{p}}
+\newcommand{\oo}{\mathcal{O}}
+\newcommand{\Bun}{\mathrm{Bun}}
+\newcommand{\Spa}{\mathrm{Spa}}
+\newcommand{\SpaS}{\mathrm{Spa}}
+\newcommand{\Div}{\mathrm{Div}}
+\newcommand{\Gr}{\mathrm{Gr}}
+\newcommand{\Hck}{\mathrm{Hck}}
+\newcommand{\perf}{\mathrm{perf}}
+\newcommand{\Adic}{\mathrm{Adic}}
+\newcommand{\Crys}{\mathrm{Crys}}
+\newcommand{\Isoc}{\mathrm{Isoc}}
+\newcommand{\Vect}{\mathrm{Vect}}
+\newcommand{\LocSys}{\mathrm{LocSys}}
+\newcommand{\Rep}{\mathrm{Rep}}
+\newcommand{\QCoh}{\mathrm{QCoh}}
+\newcommand{\IndCoh}{\mathrm{IndCoh}}
+\newcommand{\Dmod}{D\text{-}\mathrm{mod}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\wt}[1]{\widetilde{#1}}
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\ul}[1]{\underline{#1}}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\Tor}{Tor}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\coker}{coker}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Pic}{Pic}
+\DeclareMathOperator{\Lie}{Lie}
+\DeclareMathOperator{\Sym}{Sym}
+\DeclareMathOperator{\Ind}{Ind}
+\DeclareMathOperator{\Res}{Res}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\Weil}{Weil}
+\DeclareMathOperator{\Frob}{Frob}
+\DeclareMathOperator{\Sht}{Sht}
+\DeclareMathOperator{\Art}{Art}
+
+% 交叉引用：\cref 风格
+\newcommand{\thmref}[1]{定理~\ref{#1}}
+\newcommand{\propref}[1]{命题~\ref{#1}}
+\newcommand{\lemref}[1]{引理~\ref{#1}}
+\newcommand{\defref}[1]{定义~\ref{#1}}
+\newcommand{\remref}[1]{注~\ref{#1}}
