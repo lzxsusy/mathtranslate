@@ -1,23 +1,27 @@
-# nLab 批注清单（12 条译注）
+# 批注清单（14 条译注：12 条 nLab 批注 + 引言 2 条）
 
 全部批注均以脚注形式嵌在正文首现处（「译注｜」），文末附录「译注汇总」另有重列版本与 32 行对照表。
-来源等级一律 **B**（nLab 属权威综述/百科级）。链接可访问性与修订日期核对于 2026-11-15，
-词条原文已抓取进发布仓 `07_refs_nlab/pages/`（本次新增 16 条），故每条批注都可回溯到具体修订版本。
+其中 §1–§5 的 12 条 nLab 批注来源等级一律 **B**（nLab 属权威综述/百科级），链接可访问性与修订日期
+核对于 2026-11-15，词条原文已抓取进发布仓 `07_refs_nlab/pages/`（本次新增 16 条），故每条批注都可
+回溯到具体修订版本。**2026-11-23 补译引言（原译本遗漏）**，随之新增 2 条引言批注：GLC 分期说明
+（**A 级**，作者自述）与 Current Events Bulletin 说明（**B 级**，AMS 会议页），共 14 条。
 
 | # | 节 | 概念 | 批注要点 | nLab 词条（last revised） |
 |---|---|---|---|---|
-| 1 | §1.1 | Tannaka 对偶 | 把谱定理读成「表示范畴 ≃ 谱侧范畴」，是 Tannaka 对偶在交换群上的特例；谱侧是「颜色」的栖身之处 | `Tannaka+duality`（2025-07-28） |
-| 2 | §1.4 | 朗兰兹对偶群 | $\check G$ 的组合定义只用根数据的对偶；给出 $\mathrm{SL}_{n}\leftrightarrow\mathrm{PGL}_{n}$、$\mathrm{SO}_{2n+1}\leftrightarrow\mathrm{Sp}_{2n}$ | `Langlands+dual+group`（2014-09-07） |
-| 3 | §1.4 | S-对偶与 Kapustin–Witten | 「电磁对偶把 $G$ 换成 $\check G$」由 Montonen–Olive 实现，Kapustin–Witten 进一步化为 GLC | `S-duality`（2026-09-18）、`Kapustin-Witten+TQFT`（2026-09-28） |
-| 4 | §2.1 | 六函子形式 | 六个操作在导出范畴层面公理化；「brave new harmonic analysis」= 积分/乘法/函数空间对应推前/张量积/导出范畴 | `six+operations`（2026-09-30） |
-| 5 | §2.2.2 | Weil 单值化 | 阿代尔双陪集描述与 Weil 单值化定理是同一陈述（$\prod'G(\mathbb C(\!(z)\!))$ 模 $\prod G(\mathbb C[[z]])$） | `Weil+uniformization+theorem`（2023-04-04） |
-| 6 | §2.4 | 几何类域论 | $G=\mathrm{GL}_{1}$ 情形即 $\mathrm{Pic}^{0}(C)\cong\mathrm{Loc}_{\mathrm{GL}_{1}}(C)$（Abel–Jacobi） | `geometric+class+field+theory`（2025-05-11） |
-| 7 | §2.5 | 归纳凝聚层 | $\IndCoh$ 与 $\QCoh$ 之别（同时记录推前与反常推前，容纳「错维」层）；下标 $\Nilp$ = 幂零奇异支撑 | `ind-coherent+sheaves`（2015-10-05） |
-| 8 | §3.2 | 因子化同调 | 局部数据 ⇒ 整体可观测量的装配机制；拓扑原型为 Ayala–Françis | `factorization+homology`（2026-05-30） |
-| 9 | §3.3 | 几何 Satake 等价 | $\Sph_{G}$ 的 Tannaka 谱恰为 $\Rep(\check G)$，对偶群由自同构群重建——Tannaka 重构的几何版 | `geometric+Satake+equivalence`（2024-07-22） |
-| 10 | §3.5 | 谱作用 | $\QCoh(\Loc_{\check G})$ 经因子化同调粘成整体作用；单点情形退回几何 Satake | `geometric+Langlands+correspondence`（2026-04-11） |
-| 11 | §4.2 | 奇异支撑 | 相空间 $T^{*}X$ 中的子簇，记录「何处、沿何方向不光滑」，是波前集的代数对应物；对 D-模它与特征簇在 Riemann–Hilbert 下相合；$\Nilp$ 即自守层奇异支撑所在的锥 | `characteristic+variety`（2017-08-29）——**见下条说明** |
-| 12 | §5.2 | 周期与相对 Langlands | 此「周期」非代数几何的周期积分，而是自守形式上的不变线性泛函 | `relative+Langlands+program`（2025-04-29） |
+| 1 | 引言 | GLC 的两个阶段 | Phase I 自 [Dri83, Lau87] 到 $\mathrm{GL}_{n}$ 的 Hecke 本征层（[FGV01, Gai04]）；Phase II 即范畴化 GLC，自 [BD] 经 [AG15] 至 2024 年证明（[GR24a, GR24b, ABC$^{+}$24a, ABC$^{+}$24b, CCF$^{+}$24]） | —（作者自述分期，A 级；nLab 无对应词条） |
+| 2 | 引言 | Current Events Bulletin | AMS 年度联合数学会议上的综述报告系列，本文即该系列报告之一，致谢对象为当届组织者 | —（非 nLab 概念；见 AMS 会议页） |
+| 3 | §1.1 | Tannaka 对偶 | 把谱定理读成「表示范畴 ≃ 谱侧范畴」，是 Tannaka 对偶在交换群上的特例；谱侧是「颜色」的栖身之处 | `Tannaka+duality`（2025-07-28） |
+| 4 | §1.4 | 朗兰兹对偶群 | $\check G$ 的组合定义只用根数据的对偶；给出 $\mathrm{SL}_{n}\leftrightarrow\mathrm{PGL}_{n}$、$\mathrm{SO}_{2n+1}\leftrightarrow\mathrm{Sp}_{2n}$ | `Langlands+dual+group`（2014-09-07） |
+| 5 | §1.4 | S-对偶与 Kapustin–Witten | 「电磁对偶把 $G$ 换成 $\check G$」由 Montonen–Olive 实现，Kapustin–Witten 进一步化为 GLC | `S-duality`（2026-09-18）、`Kapustin-Witten+TQFT`（2026-09-28） |
+| 6 | §2.1 | 六函子形式 | 六个操作在导出范畴层面公理化；「brave new harmonic analysis」= 积分/乘法/函数空间对应推前/张量积/导出范畴 | `six+operations`（2026-09-30） |
+| 7 | §2.2.2 | Weil 单值化 | 阿代尔双陪集描述与 Weil 单值化定理是同一陈述（$\prod'G(\mathbb C(\!(z)\!))$ 模 $\prod G(\mathbb C[[z]])$） | `Weil+uniformization+theorem`（2023-04-04） |
+| 8 | §2.4 | 几何类域论 | $G=\mathrm{GL}_{1}$ 情形即 $\mathrm{Pic}^{0}(C)\cong\mathrm{Loc}_{\mathrm{GL}_{1}}(C)$（Abel–Jacobi） | `geometric+class+field+theory`（2025-05-11） |
+| 9 | §2.5 | 归纳凝聚层 | $\IndCoh$ 与 $\QCoh$ 之别（同时记录推前与反常推前，容纳「错维」层）；下标 $\Nilp$ = 幂零奇异支撑 | `ind-coherent+sheaves`（2015-10-05） |
+| 10 | §3.2 | 因子化同调 | 局部数据 ⇒ 整体可观测量的装配机制；拓扑原型为 Ayala–Françis | `factorization+homology`（2026-05-30） |
+| 11 | §3.3 | 几何 Satake 等价 | $\Sph_{G}$ 的 Tannaka 谱恰为 $\Rep(\check G)$，对偶群由自同构群重建——Tannaka 重构的几何版 | `geometric+Satake+equivalence`（2024-07-22） |
+| 12 | §3.5 | 谱作用 | $\QCoh(\Loc_{\check G})$ 经因子化同调粘成整体作用；单点情形退回几何 Satake | `geometric+Langlands+correspondence`（2026-04-11） |
+| 13 | §4.2 | 奇异支撑 | 相空间 $T^{*}X$ 中的子簇，记录「何处、沿何方向不光滑」，是波前集的代数对应物；对 D-模它与特征簇在 Riemann–Hilbert 下相合；$\Nilp$ 即自守层奇异支撑所在的锥 | `characteristic+variety`（2017-08-29）——**见下条说明** |
+| 14 | §5.2 | 周期与相对 Langlands | 此「周期」非代数几何的周期积分，而是自守形式上的不变线性泛函 | `relative+Langlands+program`（2025-04-29） |
 
 ## 核词条时发现并修正的两处问题
 
@@ -34,8 +38,9 @@
 - **只补定义、给链接，不替作者立论。** 凡涉及「何为真、何为未决」的判断，一律回到原文措辞，
   译者不加评价。
 - **不引非权威网络来源。** 若 nLab 无对应词条（如 opers、nilpotent cone、character variety），
-  宁可不给链接，只作文字说明，也不改引其它百科或博客。
-- **不与「原注」混排。** 作者原有脚注 14 条，译注 12 条，分别以「原注｜」「译注｜」起首，
+  宁可不给链接，只作文字说明，也不改引其它百科或博客。引言的两条批注同理：分期说明标 A 级（作者自述），
+  Current Events Bulletin 只引 AMS 官方会议页。
+- **不与「原注」混排。** 作者原有脚注 14 条，译注 14 条，分别以「原注｜」「译注｜」起首，
   颜色与位置一致，读者可一眼区分哪些是 Ben-Zvi 自己的话。
 - **重定向不冒充词条。** 页面跳到别的题目时，即使 HTTP 200 也不当作「nLab 有此概念」的证据；
   本次三处重定向都是这样被抓出来的。

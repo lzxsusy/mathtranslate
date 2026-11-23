@@ -2,6 +2,15 @@
 
 > **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
 
+## SY02-10《几何朗兰兹对偶是什么？》补回丢失的引言（v1.1） — 2026-11-23
+
+- **修 bug**：底本 Ben-Zvi, *What Is the Geometric Langlands Correspondence About?*（arXiv:2605.23167v1，34 页，2026-05-22）在摘要与 §1 之间有一段**不编号的引言**（原文 pp.2–3：谱定理与傅里叶变换 → 盲人摸象 → GLC 证明里程碑 → 全文路线图 → *Caveat lector* → 致谢），v1.0 译本整段遗漏。本轮新增 `源码/chunks/ch0.tex`（五段全译）并在 `main.tex` 中 `\input{chunks/ch0}`，位置在 `chunks/ch1` 之前；TOC 以无编号条目「引言 … 5」出现，与原文顺序一致。
+- 成品由 48 页增至 **49 页**（印刷页码：译者说明 1 / 摘要 2 / 目录 3–4 / 引言 5 / 正文 6–33 / 参考文献 34–42 / 译注汇总 43–45 / 术语表 46–48）；xelatex 三遍 exit 0，Overfull 仍为原有 2 条（ch5、ch6），无新增告警。
+- 译注 **12 → 14 条**：新增「引言　GLC 的两个阶段（A 级）」（Phase I 自 [Dri83, Lau87] 到 GL_n Hecke 本征层 [FGV01, Gai04]、综述 [Fre04, Gai17a]；Phase II 自 [BD] 经 [AG15] 至 2024 年证明）与「引言　Current Events Bulletin（B 级）」（AMS 联合数学会议综述系列）；`chunks/notes.tex` 汇总同步补两条，`工程文件/reports/03_nLab批注清单.md` 重排为 14 行（引言两条为 #1/#2）。
+- 元数据：`工程文件/投稿信息.md` 升 v1.1（页数构成、14 条译注、latexmk 编排、建议阅读顺序，新增「修订记录」）；`README.md`、`BRIEF.md`、`STYLE_GUIDE.md`、`00_开工必读.md`、`reports/02_疑点清单.md` 与工程根 `投稿信息.md` 同步计数（.tex 11 → 12）；按「08 为源、03 为派生」把上述改动同步到 `03_translations_meta/SY02-10/`。
+- 成品：`几何朗兰兹对偶是什么_中译注本_v1.1.pdf`（49 页，1.34 MB）与 `源码_v1.1.zip`，存于仓外投稿包与作者工程目录；按 `RELEASE_REGISTER` 该工程「成品在仓=否」，不入库。
+- 语料层：`01_corpus_zh/zh_paragraphs.jsonl` 中 SY02-10 仍为 v1.0 的 **183 段**，ch0 五段待下一轮语料流水线重跑时纳入（本轮不手工改写 jsonl，以免与生成器 schema 不一致）。
+
 ## SY02-27《无穷范畴讲义》（陈麟）全书中译注本与资料卡 — 2026-11-23
 
 - 新增 `08_source_code/SY02-27_无穷范畴讲义`：陈麟（Lin Chen，清华大学求真书院）*Lectures on Infinity Categories*（2024 年秋课程讲义，27 讲，203 PDF 页，未正式出版）全书翻译。译本 219 页，xelatex 三遍 **0 error / 0 undefined / 0 missing character**；底本 PDF 不入仓（存于仓库外 `_底本/SY02-27/`）。
