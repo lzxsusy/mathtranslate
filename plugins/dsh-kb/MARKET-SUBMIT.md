@@ -39,9 +39,9 @@ icon: https://raw.githubusercontent.com/lzxsusy/mathtranslate/main/plugins/dsh-k
    ```
 2. **预打包 tarball（AtomGit 源）**：
    ```
-   dsh plugin --profile desktop add https://atomgit.com/api/v5/repos/lzxSUSUY/mathtranslate/raw/plugins/dsh-kb-0.3.0.tgz
+   dsh plugin --profile desktop add https://atomgit.com/api/v5/repos/lzxSUSUY/mathtranslate/raw/plugins/dsh-kb-0.3.1.tgz
    ```
-3. **本地包**：`dsh plugin --profile desktop add ./plugins/dsh-kb-0.3.0.tgz`
+3. **本地包**：`dsh plugin --profile desktop add ./plugins/dsh-kb-0.3.1.tgz`
 
 ## 四、上架后还能补的
 

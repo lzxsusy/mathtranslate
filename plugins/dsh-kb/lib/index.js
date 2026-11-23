@@ -27,6 +27,16 @@ import {
   sourceStamp,
   sourceStats,
 } from "./source.js";
+import {
+  bestPara,
+  buildZhIndex,
+  loadZhRows,
+  paraContext,
+  searchZh,
+  snippet as zhSnippet,
+  zhStats,
+  zhStamp,
+} from "./zh.js";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const PKG_ROOT = resolve(HERE, "..");
@@ -92,6 +102,28 @@ function getSourceIndex(config) {
   return { idx: srcCache.idx, dir, source, stamp };
 }
 
+const BUNDLED_ZH = join(PKG_ROOT, "data", "zh");
+
+/** 译文层数据目录：外部仓库优先 01_corpus_zh，否则用包内 data/zh */
+function zhDirOf(config) {
+  if (config.repo) {
+    const p = join(config.repo, "01_corpus_zh");
+    if (existsDir(p)) return { dir: p, source: "repo" };
+  }
+  if (existsDir(BUNDLED_ZH)) return { dir: BUNDLED_ZH, source: "bundled" };
+  return { dir: null, source: "missing" };
+}
+
+let zhCache = { key: "", idx: null };
+
+function getZhIndex(config) {
+  const { dir, source } = zhDirOf(config);
+  if (!dir) return { idx: null, dir: null, source: "missing", stamp: null };
+  const stamp = zhStamp(dir);
+  const key = `${dir}|${stamp?.mtime ?? 0}|${stamp?.files ?? 0}`;
+  if (zhCache.key !== key) zhCache = { key, idx: buildZhIndex(loadZhRows(dir)) };
+  return { idx: zhCache.idx, dir, source, stamp };
+}
 function getIndex(config) {
   const { dir, source, repo } = dataDirOf(config);
   if (!dir) {
@@ -183,6 +215,21 @@ function renderSourcePage(ctx, config) {
   return `${head}\n\n${body}\n${tail}`;
 }
 
+function renderZhHits(items, q) {
+  if (!items.length)
+    return "（译文层没有命中。译文是逐段对照底本译的中文，换成更朴素的词、或只留一个关键词再试。）";
+  return items
+    .map(({ row }, i) => {
+      const pg = row.page != null ? ` · 原书 p.${row.page}` : "";
+      const tier = row.tier ? ` · ${row.tier} 级` : "";
+      return (
+        `[${i + 1}] ${row.pkg} · 段 ${row.para ?? "?"} · ${row.env}${pg}${tier}` +
+        `\n   ${zhSnippet(row.text, q, 220)}` +
+        `\n   → 读前后文：kb_zh(pkg="${row.pkg}", para=${row.para ?? 1})`
+      );
+    })
+    .join("\n\n");
+}
 function renderCard(card, config) {
   const lines = [
     `${card.title}${card.title_en ? `  /  ${card.title_en}` : ""}`,
@@ -211,6 +258,7 @@ function renderCard(card, config) {
   if (card.caveat) lines.push("", `⚠ ${card.caveat}`);
   const root = config.pageRoots?.[card.work];
   if (root) lines.push("", `回源：${join(root, `p${String((card.pages ?? [0])[0] ?? 0).padStart(3, "0")}.png`)}`);
+
   return lines.join("\n");
 }
 
@@ -238,17 +286,19 @@ export function apply(ctx, rawConfig) {
     name: "kb_search",
     description:
       "检索数译知识库：默认查资料卡（structure 化、带页码与可信度）；也可以查原文层（底本逐字文本，覆盖卡片还没做到的部分）。" +
-      "layer=cards 只查卡片，layer=source 只查原文，layer=both 两层都给。" +
+      "layer=cards 只查卡片，layer=zh 只查中文译文，layer=source 只查原文，layer=both / all 三层都给。" +
       CONTRACT,
     parameters: {
       type: "object",
       properties: {
         query: { type: "string", description: '关键词或术语，可中英混写（例："Hecke 特征层"、"Gromov-Witten"、"仿射 Grassmann"）。按空白分词，全部词都要命中。' },
-        layer: { type: "string", description: '查哪一层：cards（默认，资料卡）/ source（原文段落）/ both（两层都查）' },
+        layer: { type: "string", description: '查哪一层：cards（默认，资料卡）/ zh（中文译文）/ source（原文）/ both 或 all（三层都给）' },
         kind: { type: "string", description: "只查某一类卡：concept/theorem/proof/chain/example/term/errata/alignment/work/note" },
         work: { type: "string", description: "只查某一部作品，如 SY02-14 / glc / bdh" },
         level: { type: "string", description: "只查某一深度层：L0 名词 / L1 定义 / L2 定理 / L3 证明骨架 / L4 跨书论证链" },
         lang: { type: "string", description: "原文层限定语种：en / ja / zh / other" },
+        env: { type: "string", description: "译文层限定段落类型：text/theorem/proof/definition/example/remark" },
+        tier: { type: "string", description: "译文层限定等级：A / B" },
         include_draft: { type: "boolean", description: "卡片层是否包含未复核卡片（default false）。返回里会标“未复核”。" },
         limit: { type: "number", description: "每层返回条数上限，默认 6，最大 20" },
       },
@@ -259,11 +309,16 @@ export function apply(ctx, rawConfig) {
     execute(args = {}) {
       const q = String(args.query ?? "").trim();
       if (!q) return { ok: false, text: "query 不能为空。" };
-      const layer = ["cards", "source", "both"].includes(String(args.layer ?? "")) ? String(args.layer) : "cards";
+      const rawLayer = String(args.layer ?? "").trim();
+      const layer = ["cards", "source", "zh", "both", "all"].includes(rawLayer) ? rawLayer : "cards";
       const limit = Math.min(Math.max(Number(args.limit) || 6, 1), 20);
+      const wantCards = layer === "cards" || layer === "both" || layer === "all";
+      const wantZh = layer === "zh" || layer === "both" || layer === "all";
+      const wantSrc = layer === "source" || layer === "both" || layer === "all";
+      const multi = (wantCards ? 1 : 0) + (wantZh ? 1 : 0) + (wantSrc ? 1 : 0) > 1;
       return guarded(() => {
         const parts = [];
-        if (layer === "cards" || layer === "both") {
+        if (wantCards) {
           const { idx } = getIndex(config);
           const items = search(idx, q, {
             kind: args.kind,
@@ -273,10 +328,27 @@ export function apply(ctx, rawConfig) {
             limit,
           });
           parts.push(
-            layer === "both" ? `## 资料卡层（结构化结论，带页码与可信度）\n\n${renderHits(items)}` : renderHits(items),
+            multi ? `## 资料卡层（结构化结论，带页码与可信度）\n\n${renderHits(items)}` : renderHits(items),
           );
         }
-        if (layer === "source" || layer === "both") {
+        if (wantZh) {
+          const { idx: zidx } = getZhIndex(config);
+          if (!zidx) parts.push("译文层数据缺失（包内 data/zh 没有，也没找到 repo/01_corpus_zh）。");
+          else {
+            const items = searchZh(zidx, q, {
+              pkg: args.work && zidx.byPkg.has(String(args.work)) ? String(args.work) : undefined,
+              env: args.env,
+              tier: args.tier,
+              limit,
+            });
+            parts.push(
+              multi
+                ? `## 译文层（我们自己的中文译文，覆盖最全）\n\n${renderZhHits(items, q)}`
+                : renderZhHits(items, q),
+            );
+          }
+        }
+        if (wantSrc) {
           const { idx: sidx } = getSourceIndex(config);
           if (!sidx) parts.push("原文层数据缺失（包内 data/src 没有，也没找到 repo/01_corpus_src）。");
           else {
@@ -286,7 +358,7 @@ export function apply(ctx, rawConfig) {
               limit,
             });
             parts.push(
-              layer === "both"
+              multi
                 ? `## 原文层（底本逐字文本，卡片没覆盖的地方看这里）\n\n${renderSourceHits(items)}`
                 : renderSourceHits(items),
             );
@@ -334,6 +406,61 @@ export function apply(ctx, rawConfig) {
       });
     },
   };
+
+  const zhTool = {
+    name: "kb_zh",
+    description:
+      "读中文译文的某一段及前后文（默认前后各 2 段）。只知道工程编号时可给 query，自动在这一部里找最相关的一段。" +
+      "与 kb_source 的区别：kb_source 回到底本原文，kb_zh 看我们自己译成中文的对应段落。",
+    parameters: {
+      type: "object",
+      properties: {
+        pkg: { type: "string", description: "工程编号，如 SY01-07（用 kb_search layer=zh 找）" },
+        para: { type: "number", description: "段号（zh_paragraphs.jsonl 里的 para）" },
+        query: { type: "string", description: "不给 para 时，用它在这一部里找最相关的一段" },
+        around: { type: "number", description: "前后各取几段，默认 2，最大 6" },
+      },
+      required: ["pkg"],
+    },
+    output: { schema: outSchema, render: renderText },
+    timeoutMs: 15000,
+    execute(args = {}) {
+      const pkg = String(args.pkg ?? "").trim();
+      if (!pkg) return { ok: false, text: "pkg 不能为空。" };
+      const around = Math.min(Math.max(Number(args.around) || 2, 0), 6);
+      return guarded(() => {
+        const { idx } = getZhIndex(config);
+        if (!idx) return "译文层数据缺失（包内 data/zh 没有，也没找到 repo/01_corpus_zh）。";
+        if (!idx.byPkg.has(pkg)) return `没有这个工程的译文：${pkg}（用 kb_search(layer="zh") 找工程编号）`;
+        let para = args.para != null && Number.isFinite(Number(args.para)) ? Number(args.para) : null;
+        if (para == null) {
+          const q2 = String(args.query ?? "").trim();
+          if (!q2) return "要么给 para，要么给 query。";
+          const best = bestPara(idx, pkg, q2);
+          if (!best) return `${pkg} 里没有命中「${q2}」的段落。`;
+          para = best.para;
+        }
+        const ctx = paraContext(idx, pkg, para, around);
+        if (!ctx) return `没有这一段：${pkg} 段 ${para}`;
+        const head = `# ${pkg} · 段 ${para} 中文译文（前后各 ${around} 段）`;
+        const body = ctx.span
+          .map((r) => {
+            const mark = r.para === para ? "▍" : " ";
+            const meta = `[段 ${r.para ?? "?"} · ${r.env}${r.tier ? ` · ${r.tier} 级` : ""}${
+              r.page != null ? ` · 原书 p.${r.page}` : ""
+            }]`;
+            return `${mark} ${meta}\n${String(r.text).trim()}`;
+          })
+          .join("\n\n");
+        const tail = [
+          "",
+          '—— 以上是本库自己的中文译文。想核对底本原话：kb_source(pkg, page)；想找结构化结论：kb_search(layer="cards")。',
+        ].join("\n");
+        return `${head}\n\n${body}\n${tail}`;
+      });
+    },
+  };
+
 
   const cardTool = {
     name: "kb_card",
@@ -482,6 +609,27 @@ export function apply(ctx, rawConfig) {
         } else {
           lines.push("", "== 原文层 ==", "未安装原文数据（包内 data/src 缺失）。卡片层不受影响。");
         }
+        // 译文层
+        const { idx: zidx, dir: zdir, source: zsource } = getZhIndex(config);
+        if (zidx) {
+          const zt = zhStats(zidx);
+          const envs = [...zt.envs.entries()]
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 6)
+            .map(([k, v]) => `${k} ${v}`)
+            .join(" · ");
+          lines.push(
+            "",
+            "== 译文层（我们自己的中文译文）==",
+            `来源：${zsource === "bundled" ? "包内自带数据（data/zh）" : `外部仓库 ${zdir}`}`,
+            `共 ${zt.paragraphs} 段 / ${zt.projects} 个工程 / ${(zt.chars / 1e4).toFixed(1)} 万汉字 · 带页码 ${zt.pages} 页`,
+            `段落类型：${envs}`,
+            '检索：kb_search(layer="zh") / 读前后文：kb_zh(pkg, para)',
+          );
+        } else {
+          lines.push("", "== 译文层 ==", "未安装译文数据（包内 data/zh 缺失）。卡片层不受影响。");
+        }
+
         return lines.join("\n");
       });
     },
@@ -489,6 +637,7 @@ export function apply(ctx, rawConfig) {
 
   ctx.effect(() => ctx.tools.register(searchTool), "dsh-kb: tool kb_search");
   ctx.effect(() => ctx.tools.register(sourceTool), "dsh-kb: tool kb_source");
+  ctx.effect(() => ctx.tools.register(zhTool), "dsh-kb: tool kb_zh");
   ctx.effect(() => ctx.tools.register(cardTool), "dsh-kb: tool kb_card");
   ctx.effect(() => ctx.tools.register(briefTool), "dsh-kb: tool kb_brief");
   ctx.effect(() => ctx.tools.register(statsTool), "dsh-kb: tool kb_stats");

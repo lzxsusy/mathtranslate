@@ -40,6 +40,17 @@ export PYTHONIOENCODING=utf-8
 去页眉页脚与页码行、按空行切段；不新做任何原文摘录。当前 **7,644 段 / 33 个工程 / 5.2M 字符**。
 同一工程若已有 `full.txt`，就不再扫它的 `split/`（同一份内容的不同切法），按文本哈希去重。
 
+### 2.2 译文层（v0.3.1 起）
+
+插件从 `01_corpus_zh/zh_paragraphs.jsonl` 打一份 gz 进包（`plugins/dsh-kb/data/zh/`，8.1 MB），
+`kb_search(layer="zh")` 直接在中译文里找，`kb_zh(pkg, para)` 读某段前后文。
+
+这一层是为「卡片没覆盖到、但我们已经译了」的情况准备的：例如 `datasets/` 里没有一张卡讲几何内窥，
+但 `SY01-07` 有 166 段译文在讲它——只查卡片会让人以为库里没有，查译文层就能找到。
+
+打包脚本 `tools/pack_zh_corpus.py`（只留检索/阅读要用的字段，长段按文本去重）。
+
+
 ## 3. 查询
 
 ```bash

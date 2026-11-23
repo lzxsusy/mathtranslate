@@ -74,6 +74,19 @@ export function dataStamp(dir) {
 }
 
 /** 建索引：bigram（中文）+ 词表（拉丁） */
+/** 整卡文本（含 definition/key_points 等未进索引的字段），只用于判断题「库里到底有没有这个词」 */
+function flatAll(card) {
+  const parts = [];
+  const walk = (v) => {
+    if (v == null) return;
+    if (typeof v === "string") parts.push(v);
+    else if (Array.isArray(v)) v.forEach(walk);
+    else if (typeof v === "object") Object.values(v).forEach(walk);
+  };
+  walk(card);
+  return parts.join("\n").toLowerCase();
+}
+
 export function buildIndex(cards) {
   const byId = new Map();
   const bigram = new Map();
@@ -100,7 +113,7 @@ export function buildIndex(cards) {
     byId.set(card.id, i);
     // flat：去掉 LaTeX 结构字符，让「Bun_G」「$\operatorname{Bun}$」这类标识符也能子串命中
     const flat = blob.replace(/[\\{}$^_]/g, "");
-    docs.push({ card, fields, blob, flat });
+    docs.push({ card, fields, blob, flat, blobAll: flatAll(card) });
   });
 
   return { docs, byId, bigram, lex };
@@ -207,7 +220,13 @@ export function search(idx, query, opts = {}) {
         }
       }
     }
-    if (set === null) continue;        // 这个词无法约束（单字/无命中）→ 忽略，不判死整条查询
+    if (set === null) {
+      // 词表与 bigram 都没命中：先确认整卡文本里到底有没有这个词。
+      // 有 → 只是它落在没建索引的字段里（definition/key_points…），忽略该词继续；
+      // 没有 → 这就是真没命中，不能拿全库兜底（否则乱码查询也会返回一堆卡）。
+      if (!idx.docs.some((d) => d.blobAll.includes(t))) return [];
+      continue;
+    }        // 这个词无法约束（单字/无命中）→ 忽略，不判死整条查询
     cand = cand === null ? set : new Set([...cand].filter((x) => set.has(x)));
     if (!cand.size) return [];
   }
