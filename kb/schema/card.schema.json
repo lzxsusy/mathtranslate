@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://shuyi.local/kb/card.schema.json",
+  "title": "数译知识库卡片契约 v1",
+  "description": "一张卡 = 一条可被检索、可回溯、可互链的知识声明。索引只收 status=checked/verified 的卡。",
+  "type": "object",
+  "required": ["id", "work", "kind", "title", "status", "origin"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9_.\\-]+$", "description": "全局唯一，形如 SY01-26.MS-05 或 bdh.concept.affine-flag-d-affine"},
+    "work": {"type": "string", "description": "所属作品编号：SY01-26 / bdh / ggl20 …"},
+    "kind": {"enum": ["concept", "theorem", "proof", "chain", "example", "term", "errata", "alignment", "work", "note"]},
+    "level": {"enum": ["L0", "L1", "L2", "L3", "L4"], "description": "L0 名词 / L1 定义 / L2 定理 / L3 证明骨架 / L4 跨书论证链"},
+    "title": {"type": "string"},
+    "title_en": {"type": "string"},
+    "aliases": {"type": "array", "items": {"type": "string"}},
+    "summary": {"type": "string", "description": "卡面正文（Markdown 或纯文本），检索主体"},
+    "pages": {"type": "array", "items": {"type": "integer"}, "description": "原文 PDF 页序（1-based）；无页码的卡不得进入索引"},
+    "prereqs": {"type": "array", "items": {"type": "string"}, "description": "前置卡 id"},
+    "links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["rel", "to"],
+        "additionalProperties": false,
+        "properties": {
+          "rel": {"enum": ["depends_on", "generalizes", "special_case", "equivalent", "contradicts", "uses", "refines"]},
+          "to": {"type": "string"},
+          "note": {"type": "string"}
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["text"],
+        "additionalProperties": false,
+        "properties": {
+          "grade": {"enum": ["A", "B", "C", null], "description": "A 一手出版物 / B 讲义与综述 / C 二手转述"},
+          "text": {"type": "string"},
+          "loc": {"type": "string", "description": "定位：§号 / 定理号 / 页码"}
+        }
+      }
+    },
+    "evidence_quote": {"type": "string", "maxLength": 200, "description": "≤120 字符原文引文（英文/原文语种），供回源核对"},
+    "status": {"enum": ["draft", "checked", "verified", "disputed"]},
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "drafter": {"type": "string"},
+        "reviewer": {"type": "string"},
+        "blindtest": {"type": "string"},
+        "rounds": {"type": "integer", "minimum": 0},
+        "last_verified_at": {"type": "string"}
+      }
+    },
+    "terms": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {"en": {"type": "string"}, "zh": {"type": "string"}, "ja": {"type": "string"}, "ru": {"type": "string"}, "fr": {"type": "string"}}
+      }
+    },
+    "symbols": {"type": "array", "items": {"type": "string"}},
+    "caveat": {"type": "string", "description": "检索时必须一并显示的不确定性说明"},
+    "updated": {"type": "string"},
+    "origin": {"type": "string", "description": "卡片来源文件（仓库相对路径），用于回源与重建"}
+  }
+}
