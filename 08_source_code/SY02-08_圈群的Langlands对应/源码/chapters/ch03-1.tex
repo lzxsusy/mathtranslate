@@ -1,0 +1,835 @@
+% =====================================================================
+%  U04 —— 第 3 章「构造中心元」章首 + §3.1–§3.3
+%  覆盖 PDF p.75–94（原书印刷 p.61–80）
+%  底本：E. Frenkel, Langlands Correspondence for Loop Groups, CUP 2007
+% =====================================================================
+
+% --------------------------------------------------------------- p.61
+\chapter{构造中心元}
+
+在上一章里，我们开始研究 $\gghat$ 的完备泛包络代数 $\widetilde U_\kappa(\gghat)$ 的中心。写下一些显式公式之后，我们意识到：必须先发展若干技术，才能完成这些计算。这促使我们引入顶点代数与顶点算子的概念。现在我们就用这套形式体系来描述中心。
+
+在 §3.1 中，我们将利用顶点算子的 Fourier 系数之间的一般对易关系 (2.3-8)，来证明 Segal--Sugawara 算子与 $\gghat$ 的生成元之间的对易关系公式 (2.1-11)。但我们很快会发现，这个证明给出的对易关系，并不在我们想要的 $\widetilde U_\kappa(\gghat)$ 中，而在 $V_\kappa(\fg)$ 的自同态代数中。要证明同一公式在 $\widetilde U_\kappa(\gghat)$ 中成立，还得再费些功夫。为此，我们在 §3.2 中对任意顶点代数 $V$ 联系一个李代数 $U(V)$，然后讨论 $U(V_\kappa(\fg))$ 与 $\widetilde U_\kappa(\gghat)$ 之间的关系。结论是：公式 (2.1-11) 在完备泛包络代数 $\widetilde U_\kappa(\gghat)$ 中确实成立。特别地，当 $\kappa=\kappa_c$（临界水平）时，Segal--Sugawara 算子是 $\widetilde U_\kappa(\gghat)$ 的中心元。
+
+接着，在 §3.3 中我们引入顶点代数中心的概念。我们证明：顶点代数 $V_\kappa(\fg)$ 的中心是一个交换代数，并且可以自然地实现为 $\widetilde U_\kappa(\gghat)$ 的中心的商。我们还证明：当 $\kappa\neq\kappa_c$ 时，$V_\kappa(\fg)$ 的中心是平凡的。因此，我们的目标就是求出 $V_{\kappa_c}(\fg)$ 的中心 $\mathfrak z(\fg)$。下文将会看到，这同时也使我们能够描述 $\widetilde U_\kappa(\gghat)$ 的中心。
+
+作为第一步，我们讨论 $\mathfrak z(\fg)$ 的分次伴随对象。为了描述它，我们需要在 §3.4 中绕道去讲射流概形理论。§3.4 的结果已足以对 $\fg=\mathfrak{sl}_2$ 求出 $\mathfrak z(\fg)$：我们在 §3.5 中证明，$\mathfrak z(\mathfrak{sl}_2)$ 由 Segal--Sugawara 算子生成。然而我们对这个结果并不满意，因为它没有给出中心的与坐标无关的描述。因此，我们还需要弄清楚圆盘上坐标变换群如何作用在 $\mathfrak z(\mathfrak{sl}_2)$ 上。这一计算在 §3.5 中完成；由它我们发现，$\mathfrak z(\mathfrak{sl}_2)$ 典范同构于圆盘上射影联络空间的函数代数。这就是下一章所得到的关于中心 $\mathfrak z(\fg)$ 的描述的原型，而那个描述是本书的核心结果之一。
+
+% [Tutor Note: 本章的最终目标是刻画 $\widetilde U_{\kappa_c}(\gghat)$ 的中心。历史上的原型是 Feigin–Frenkel 定理：该中心同构于圆盘上 opers 空间（对 $\fg=\mathfrak{sl}_2$ 即射影联络空间）的函数代数，这也是几何 Langlands 对应中「中心特征标 ↔ opers」这一构想的顶点代数来源。此处 §3.5 关于 $\mathfrak z(\mathfrak{sl}_2)$ 的结论正是这条线索的第一个具体实例。]
+
+\begin{keypoints}
+    \item \textbf{核心思想：}中心元来自顶点算子 Fourier 系数之间的对易关系；Segal--Sugawara 算子只在临界水平 $\kappa=\kappa_c$ 处成为中心的。
+    \item \textbf{数学工具：}OPE 与 Fourier 系数公式 (2.3-8)、Virasoro 代数、顶点代数 $V$ 对应的李代数 $U(V)$ 及其包络代数 $\widetilde U(V)$。
+    \item \textbf{关键结论：}式 (2.1-11) 在完备泛包络代数 $\widetilde U_\kappa(\gghat)$ 中成立（推论 3.2.3）；顶点代数的中心 $\mathfrak z(\fg)=V_{\kappa_c}(\fg)^{\fg[[t]]}$ 是交换顶点代数。
+    \item \textbf{路线图：}仿射 Kac--Moody 顶点代数 $\to$ 其中心 $\to$ 分次伴随代数 $\to$ 射流概形（§3.4）$\to$ $\mathfrak{sl}_2$ 情形（§3.5）。
+\end{keypoints}
+
+% --------------------------------------------------------------- p.62
+\section{Segal--Sugawara 算子}
+
+\begin{keypoints}
+    \item \textbf{核心思想：}直接对顶点算子的 Fourier 系数做 OPE，即可算出 $S_n$ 与 $J^a_m$ 的对易关系，并定出唯一使两者交换的临界水平 $\kappa_c=-\tfrac12\kappa_\fg$。
+    \item \textbf{数学工具：}正规序乘积、态-场对应、OPE 与 Fourier 系数公式 (2.3-8)、内积 $\kappa$ 的不变性、Casimir 元。
+    \item \textbf{关键结论：}式 (2.1-11) 成立；$\widetilde S_n$ 之间的对易关系恰是 Virasoro 代数 (3.1-3)，中心荷为 $c_\kappa$。
+    \item \textbf{记号提醒：}$S_n=S_{(n+1)}$，即 $S(z)=\sum S_n z^{-n-2}$ 而 $S(z)=\sum S_{(n)}z^{-n-1}$；$J^a_n=J^a_{(n)}$。
+\end{keypoints}
+
+有了上一章发展起来的技术，我们现在就可以证明式 (2.1-11)：它给出 Segal--Sugawara 算子 $S_n$ 与 $\gghat_\kappa$ 的生成元 $J^a_n$ 之间的对易关系。
+
+\subsection{与 $\gghat_\kappa$ 的对易关系}
+
+我们已经发现，$J^a_n$ 之间的对易关系 (2.2-7) 可以相当整齐地写成场 $J^a(z)$ 的对易关系：
+\[
+    \bigl[ J^a(z), J^b(w) \bigr] = [J^a,J^b](w)\,\delta(z-w) + \kappa (J^a,J^b)\,\partial_w\delta(z-w).
+\]
+用上一节的形式体系，可以把它改写成等价的 OPE 形式
+\[
+    J^a(z)J^b(w) \sim \frac{[J^a,J^b](w)}{z-w} + \frac{\kappa(J^a,J^b)}{(z-w)^2}.
+\]
+现在回忆
+\[
+    S(z) = \frac12\sum_a Y\bigl(J^a_{(-1)}J_{a,(-1)}|0\rangle,\, z\bigr)
+         = \frac12\sum_a \,:J^a(z)J_a(z): ,
+\]
+其中 $\{J_a\}$ 是在某个固定内积 $\kappa_0$ 下与 $\{J^a\}$ 对偶的基。由先前关于正规序乘积的讨论可知，这是一个良定义的场；于是我们想算出 $S(z)$ 的 Fourier 系数与 $J^a_{(n)}$ 的对易关系，这里 $J^a_{(n)}$ 是 $J^a(z)$ 的 Fourier 系数。
+
+令
+\begin{equation}
+    S = \frac12\sum_a J^a_{(-1)}J_{a,(-1)}|0\rangle ,
+    \tag{3.1-1}
+\end{equation}
+于是 $S$ 就是 $V_\kappa(\fg)$ 中生成场 $S(z)$ 的元素：
+\[
+    S(z) = Y(S,z) = \sum_{n\in\Z} S_{(n)}z^{-n-1}.
+\]
+注意，由于我们定义算子 $S_n$ 所用的公式是
+\[
+    S(z) = \sum_{n\in\Z} S_n z^{-n-2},
+\]
+所以
+\[
+    S_n = S_{(n+1)}.
+\]
+我们需要计算 OPE
+\[
+    Y(J^b,z)Y(S,w) \sim \sum_{n\ge 0}\frac{Y\bigl(J^b_{(n)}S,\,w\bigr)}{(z-w)^{n+1}}.
+\]
+这就是说，需要计算元素
+\[
+    \frac12 J^b_{(n)}\sum_a J^a_{(-1)}J_{a,(-1)}|0\rangle \in V_\kappa(\fg),
+    \qquad n\ge 0.
+\]
+我们将会看到，这比去计算表示 $S_n$ 的无穷和与 $J^b_m$ 的对易子要容易得多。
+
+% --------------------------------------------------------------- p.63
+顶点代数 $V_\kappa(\fg)$ 是 $\Z_+$-分次的，且 $S$ 的次数等于 2。因此必须有 $n\le 2$；否则所得元素的次数为负，而这样的非零元素并不存在。于是只有三种情形要讨论：
+
+\textbf{$n=2$：}此时反复使用对易关系与内积 $\kappa$ 的不变性，很快得到结果为
+\[
+    \frac12\sum_a \kappa\bigl(J^b,[J^a,J_a]\bigr)|0\rangle .
+\]
+若进一步取 $\{J^a\}$ 为标准正交基（这不妨碍一般性），于是 $J^a=J_a$，便知此式为 $0$。
+
+\textbf{$n=1$：}我们得到
+\[
+    \sum_a \kappa(J^b,J_a)\,J^a_{-1}|0\rangle
+    + \frac12\sum_a \bigl[[J^b,J^a],J_a\bigr]_{-1}|0\rangle .
+\]
+其中第一项看起来像是用基 $J^a_{-1}$ 展开 $J^b_{-1}$。但要小心：$\kappa$ 未必与 $\kappa_0$ 是同一个内积，两者只相差一个倍数。因此第一项其实就是 $\frac{\kappa}{\kappa_0}J^b_{-1}|0\rangle$。
+
+第二项是 $U(\fg)$ 的 Casimir 元在 $\fg$ 的伴随表示上的作用，这里伴随表示实现为子空间 $\fg\otimes t^{-1}|0\rangle\subset V_\kappa(\fg)$。这是个中心元，因而作用为一个标量，记作 $\lambda$。$\fg$ 的任一有限维表示 $V$ 都自然带有一个内积
+\[
+    \kappa_V(x,y) = \Tr \rho_V(x)\rho_V(y).
+\]
+特别地，$\kappa_\fg$ 是由伴随表示得到的内积，也就是我们在 §1.3.5 见过的 \textbf{Killing 型}。若取 $\kappa_0=\kappa_\fg$，则显然标量 $\lambda$ 应当是 $1/2$（因为公式中整体带有因子 $1/2$）。所以对一般的 $\kappa_0$，第二项是 $\frac12\frac{\kappa_\fg}{\kappa_0}J^b_{-1}|0\rangle$。
+
+\textbf{$n=0$：}我们得到
+\[
+    \frac12\sum_a\Bigl( J^a_{-1}[J^b,J_a]_{-1} + [J^b,J^a]_{-1}J_{a,-1}\Bigr).
+\]
+这相当于与 Casimir 元取对易子，因此为 $0$（Casimir 元是中心的）。
+
+于是该 OPE 为
+\[
+    J^b(z)S(w) \sim \frac{\kappa+\frac12\kappa_\fg}{\kappa_0}\,
+    \frac{J^b(w)}{(z-w)^2}.
+\]
+由此发现：内积 $\kappa$ 有一个\textbf{临界值}，在该值处这两个场 $S(z)$ 与 $J^b(z)$（从而它们的 Fourier 系数）彼此交换。临界值是
+\[
+    \kappa_c = -\frac12\kappa_\fg .
+\]
+利用公式 (2.3-8) 与 OPE 的第一种写法，我们立刻得到对易关系
+\[
+    [J^a_n, S_{(m)}] = \frac{\kappa-\kappa_c}{\kappa_0}\, n\, J^a_{n+m-1}.
+\]
+回忆我们把 $S_n$ 定义为 $S_{(n+1)}$。换言之，我们把分次平移了 $1$，使 $S_n$ 的次数变成 $-n$（但请注意 $J^a_n=J^a_{(n)}$）。这样便得到下面这个与 (2.1-11) 一致的公式：
+\[
+    [S_n, J^a_m] = -\frac{\kappa-\kappa_c}{\kappa_0}\, n\, J^a_{n+m}.
+\]
+于是，当 $\kappa=\kappa_c$ 时，算子 $S_n$ 与李代数 $\gghat$ 的作用交换，这正是我们要证明的。
+
+% --------------------------------------------------------------- p.64
+我们指出，比值 $\frac12\kappa_\fg/\kappa_0$ 与 $\fg$ 的\textbf{对偶 Coxeter 数}有关。更确切地说，若 $\kappa_0$ 取得使最大根的平方长度为 $2$（这是标准归一化 [Kac 1990]），则该比值等于 $h^\vee$，即 $\fg$ 的对偶 Coxeter 数（例如对 $\fg=\mathfrak{sl}_n$ 它就等于 $n$）。\transnote{临界水平 $\kappa_c=-\frac12\kappa_\fg$ 的数值依赖不变形式的归一化：若取 $\kappa_0$ 使长根的平方长度为 $2$（[Kac 1990] 的标准约定），则 $\kappa_\fg=2h^\vee\kappa_0$，故 $\kappa_c=-h^\vee\kappa_0$；换用其他标度只会整体改变 $\kappa$ 的单位。这里的 $h^\vee$ 是对偶 Coxeter 数（$\mathfrak{sl}_n$ 的为 $n$），不要与 Coxeter 数 $h$ 混淆。[来源：Kac, \textit{Infinite-Dimensional Lie Algebras}, 3rd ed.；原书 p.63--64。]}对这个 $\kappa_0$，上式变为
+\[
+    [S_n, J^a_m] = -(k+h^\vee)\, n\, J^a_{n+m}.
+\]
+% [Tutor Note: 此处 $k$ 是归一化后的水平，即 $\kappa=k\kappa_0$ 中的 $k$；此后书中会交替使用 $k$ 与 $\kappa$。因为 $\kappa_c=-\tfrac12\kappa_\fg=-h^\vee\kappa_0$，所以 $\kappa-\kappa_c=(k+h^\vee)\kappa_0$，这正是 $-(k+h^\vee)$ 的来源。推导时极易把 $\kappa$、$\kappa_0$、$\kappa_\fg$ 三者的比例关系弄错，请对照第 64 页原文的约定逐一核对。]
+
+即便偏离临界值，对易关系也相当漂亮。为简化公式，对 $\kappa\neq\kappa_c$ 我们重新标度 $S$ 与 $S(w)$，令
+\[
+    \widetilde S = \frac{\kappa_0}{\kappa+\frac12\kappa_\fg}S,
+    \qquad
+    \widetilde S(z) = \frac{\kappa_0}{\kappa+\frac12\kappa_\fg}S(z).
+\]
+% --------------------------------------------------------------- p.65
+于是有 OPE
+\[
+    J^a(z)\widetilde S(w) \sim \frac{J^a(w)}{(z-w)^2}.
+\]
+注意这个式子常写成相反的顺序，只要利用局部性交换 $z$ 与 $w$ 再用 Taylor 公式即可：
+\begin{equation}
+    \widetilde S(z)J^a(w) \sim \frac{J^a(w)}{(z-w)^2} + \frac{\partial_w J^a(w)}{z-w}.
+    \tag{3.1-2}
+\end{equation}
+利用公式 (2.3-8) 与 OPE 的第一种写法，我们得到
+\[
+    [J^a_n, \widetilde S_{(m)}] = n\, J^a_{n+m-1}.
+\]
+再令 $\widetilde S_n=\widetilde S_{(n+1)}$，则对易关系可改写为
+\[
+    [\widetilde S_n, J^a_m] = -m\, J^a_{n+m}.
+\]
+这些对易关系极具启发性。回忆 $J^a_n$ 代表 $\gghat_\kappa$ 中的元素 $J^a\otimes t^n$。因此，由 $\operatorname{ad}(\widetilde S_n)$ 给出的运算看上去非常像
+\[
+    \operatorname{ad}(\widetilde S_n) = -t^{n+1}\partial_t .
+\]
+于是可以问：算子 $\operatorname{ad}(\widetilde S_n)$ 是否真的生成这种形式的向量场构成的李代数？答案几乎是肯定的（说“几乎”，是因为我们实际得到的是这个李代数的一个中心扩张）。\transnote{因子 $\kappa_0/(\kappa-\kappa_c)$ 把 $S$ 重标度为 Virasoro 向量 $\widetilde S$：对易关系 (3.1-2) 说明 $\operatorname{ad}(\widetilde S_n)$ 正好是向量场 $-t^{n+1}\partial_t$ 的作用。$\kappa=\kappa_c$ 时分母为零，这个重标度失效，所以临界水平必须单独处理；这也解释了为何 $S_n$ 在临界水平才与 $\hat\fg$ 交换，而 $\widetilde S_n$ 一般不对易。[依据：原书 p.64--65。][来源：本书 p.65。]}
+
+为看清这一点，我们下面来计算 $\widetilde S(z)\widetilde S(w)$ 的 OPE。
+
+\subsection{Segal--Sugawara 算子之间的关系}
+
+为完成计算，我们需要求出 $V_\kappa(\fg)$ 中由下式给出的元素
+\[
+    \widetilde S_{(n)}\,\frac12\,\frac{\kappa_0}{\kappa-\kappa_c}\sum_a J^a_{(-1)}J_{a,(-1)}|0\rangle
+\]
+其中 $n\ge 0$。由分次方面的考虑可知必须有 $n\le 3$（否则所得元素次数为负）。于是有四种情形要讨论：
+
+\textbf{$n=3$：}此时反复使用上面的对易关系，很快就得到结果为
+\[
+    \frac12\,\frac{\kappa_0}{\kappa-\kappa_c}\sum_a \kappa\bigl(J^a,J_a\bigr)|0\rangle .
+\]
+于是得到 $\frac12\frac{\kappa}{\kappa-\kappa_c}\dim\fg\,|0\rangle$。
+
+\textbf{$n=2$：}我们得到
+\[
+    \frac12\,\frac{\kappa_0}{\kappa-\kappa_c}\sum_a [J^a,J_a]_{(-1)}|0\rangle ,
+\]
+% --------------------------------------------------------------- p.66
+此式为 $0$，只要取 $J^a=J_a$ 便可看出。
+
+\textbf{$n=1$：}我们得到
+\[
+    \frac12\,\frac{\kappa_0}{\kappa-\kappa_c}\sum_a 2J^a_{(-1)}J_{a,(-1)}|0\rangle ,
+\]
+而这正是 $2\widetilde S$。
+
+\textbf{$n=0$：}我们得到
+\[
+    \frac12\,\frac{\kappa_0}{\kappa-\kappa_c}\sum_a
+    \Bigl( J^a_{(-1)}J_{a,(-2)} + J^a_{(-2)}J_{a,(-1)} \Bigr)|0\rangle ,
+\]
+而这正是 $T(\widetilde S)$。
+
+因此该 OPE 为
+\[
+    \widetilde S(z)\widetilde S(w) \sim
+    \frac{\frac{\kappa}{\kappa-\kappa_c}\dim\fg/2}{(z-w)^4}
+    + \frac{2\widetilde S(w)}{(z-w)^2}
+    + \frac{\partial_w\widetilde S(w)}{z-w}.
+\]
+我们把第一项中出现的常数记作 $c_\kappa/2$（后面会看到，$c_\kappa$ 就是所谓的\textbf{中心荷}）。\transnote{由 (3.1-3) 第一项的系数读出 $c_\kappa=\kappa\dim\fg/(\kappa-\kappa_c)$；在标准归一化 $\kappa=k\kappa_0$、$\kappa_c=-h^\vee\kappa_0$ 下即 $k\dim\fg/(k+h^\vee)$，当 $k\to\infty$ 时趋于 $\dim\fg$。注意 $c_\kappa$ 是标量中心荷，而 (3.1-4) 中的 $C$ 是中心元；把 $C$ 作用为 $c_\kappa$ 才能把两式等同。[来源：原书 p.66；Kac 1990。]}接着用这个 OPE 与公式 (2.3-8)，计算各系数 $\widetilde S_n=\widetilde S_{(n+1)}$ 之间的对易关系：
+\begin{equation}
+    [\widetilde S_n, \widetilde S_m]
+    = (n-m)\widetilde S_{n+m} + \frac{n^3-n}{12}\,c_\kappa\,\delta_{n,-m}.
+    \tag{3.1-3}
+\end{equation}
+% [Tutor Note: 由第一项可得 $c_\kappa=\kappa\dim\fg/(\kappa-\kappa_c)$；若取标准归一化 $\kappa=k\kappa_0$、$\kappa_c=-h^\vee\kappa_0$，它就化为熟知的 $k\dim\fg/(k+h^\vee)$。这是检验中心荷符号与极限（$k\to\infty$ 时趋于 $\dim\fg$）的最简依据。推导时请务必核对 (3.1-3) 与 (3.1-4) 中 $\frac{n^3-n}{12}$ 的约定一致，差一个符号就会使 $c_\kappa$ 变号。]
+
+这正是 Virasoro 代数的定义关系，下一小节就来讨论它。
+
+\subsection{Virasoro 代数}
+
+令 $\cK=\C((t))$，考虑 $\cK$ 的（连续）导子构成的李代数
+\[
+    \operatorname{Der}\cK = \C((t))\partial_t
+\]
+并赋予通常的李括号
+\[
+    [f(t)\partial_t,\, g(t)\partial_t] = \bigl(f(t)g'(t)-f'(t)g(t)\bigr)\partial_t .
+\]
+\textbf{Virasoro 代数}是 $\operatorname{Der}\cK$ 的中心扩张。中心元记作 $C$，于是有短正合列
+\[
+    0\to \C C \to \mathit{Vir} \to \operatorname{Der}\cK \to 0 .
+\]
+作为向量空间，$\mathit{Vir}=\operatorname{Der}\cK\oplus\C C$，因此 $\mathit{Vir}$ 有一组拓扑基
+\[
+    L_n = -t^{n+1}\partial_t, \qquad n\in\Z,
+\]
+以及 $C$（我们加上负号是为了遵循标准约定）。Virasoro 代数中的李括号由下式给出：
+\begin{equation}
+    [L_n, L_m] = (n-m)L_{n+m} + \frac{n^3-n}{12}\,\delta_{n+m}\,C.
+    \tag{3.1-4}
+\end{equation}
+% --------------------------------------------------------------- p.67
+事实上已知 $\mathit{Vir}$ 是 $\operatorname{Der}\cK$ 的泛中心扩张，正如 $\gghat_\kappa$ 是 $\fg((t))$ 的泛中心扩张一样。\transnote{$\operatorname{Der}\cK=\C((t))\partial_t$ 的泛中心扩张由 Gelfand--Fuks 2-上循环 $\omega(f\partial_t,g\partial_t)=\frac1{12}\Res_{t=0}\bigl(f'''g\,\dd t\bigr)$ 给出（符号随约定而异），故 $H^2(\operatorname{Der}\cK;\C)$ 一维，Virasoro 代数就是它的泛中心扩张。书中把它与 $\gghat_\kappa$ 并列，是因为二者都可从 $\widetilde{\mathfrak{gl}}_\infty$ 的一维中心扩张限制得到（见 §3.1.5）。[来源：Gelfand--Fuks 1968；Kac 1990；原书 p.67、p.69--70。]}
+
+% [Tutor Note: 「$\mathit{Vir}$ 是泛中心扩张」对 $\operatorname{Der}\cK$ 的证明要用到一维上同调群 $H^2(\operatorname{Der}\cK;\C)$ 的计算（Gelfand–Fuks 上循环）；书中未给证明，可参见 [Kac 1990] 或 [Frenkel–Ben-Zvi 2004] 第 3 章。注意这里的 $C$ 与 (3.1-3) 中的 $c_\kappa$ 在式 (3.1-4) 中并不等同：前者是中心元，后者是中心荷标量，识别时须令 $C$ 作用为 $c_\kappa$。]
+
+若把 $C$ 与 $c_\kappa$ 等同，关系 (3.1-4) 就恰好变成公式 (3.1-3) 中算子 $\widetilde S_n$ 之间的关系。这意味着，对 $\kappa\neq\kappa_c$，$\widetilde S_n$ 在 $V_\kappa(\fg)$ 上生成一个 Virasoro 代数的作用。
+
+下面仿照仿射 Kac--Moody 代数的情形，构造与 Virasoro 代数相联系的顶点代数。
+
+令 $\cO=\C[[t]]$，考虑李代数 $\operatorname{Der}\cO=\C[[t]]\partial_t\subset\operatorname{Der}\cK$。它由 $\{L_{-1},L_0,L_1,\dots\}$ 拓扑生成。李代数 $\operatorname{Der}\cO\oplus\C C$ 有一个一维表示 $\C_c$：$\operatorname{Der}\cO$ 作用为 $0$，中心元 $C$ 作用为标量 $c\in\C$。把这个表示诱导到 Virasoro 代数，得到一个 $\mathit{Vir}$-模，称为\textbf{中心荷为 $c$ 的真空模}：
+\[
+    \mathit{Vir}_c = \Ind_{\operatorname{Der}\cO\oplus\C C}^{\mathit{Vir}}\C_c
+    = U(\mathit{Vir})\otimes_{U(\operatorname{Der}\cO\oplus\C C)}\C_c .
+\]
+这将是我们顶点代数底层的向量空间。由 Poincaré--Birkhoff--Witt 定理，该模的一组基由单项式
+\[
+    L_{n_1}L_{n_2}\cdots L_{n_m}|0\rangle
+\]
+给出，其中 $n_1\le n_2\le\cdots\le n_m<-1$，而 $|0\rangle$ 表示 $\C_c$ 的一个生成向量。它将是我们顶点代数的真空向量。
+
+令 $\deg L_n=-n$，就得到 $\mathit{Vir}$ 上的一个 $\Z$-分次。再令 $\deg|0\rangle=0$，便得到 $\mathit{Vir}_c$ 上的一个 $\Z_+$-分次。注意 $1$ 次子空间为零，而 $2$ 次子空间是一维的，由 $L_{-2}|0\rangle$ 张成。
+
+回忆算子 $L_{-1}$ 实现的是 $-\partial_t$，因此我们取它为平移算子 $T$。接着需要定义态-场对应。仿照顶点代数 $V_\kappa(\fg)$，我们令
+\[
+    Y(L_{-2}|0\rangle,\, z) = T(z)
+    \overset{\mathrm{def}}{=} \sum_{n\in\Z} L_n z^{-n-2}.
+\]
+注意 $L_n$ 前面 $z$ 的幂必须是 $-n-2$ 而不是 $-n-1$，因为我们希望 $\mathit{Vir}_c$ 成为 $\Z_+$-分次顶点代数（按 §2.2.2 的约定）。对易关系 (3.1-4) 蕴涵下述公式：
+\[
+    [T(z), T(w)] = \frac{C}{12}\,\partial_w^3\delta(z-w)
+    + 2T(w)\,\partial_w\delta(z-w)
+    + \partial_w T(w)\cdot\delta(z-w).
+\]
+因此
+\[
+    (z-w)^4\,[T(z), T(w)] = 0 .
+\]
+于是顶点算子 $Y(L_{-2}|0\rangle,z)$ 与它自身是局部的。因此可以应用重构定理，为 $\mathit{Vir}_c$ 赋予顶点代数结构。\transnote{重构定理断言：给定 $\Z$-分次向量空间 $V$、真空向量 $|0\rangle\in V_0$、平移算子 $T$ 以及一族满足真空公理、平移相容性与两两局部性的顶点算子 $Y(A,z)$，则存在唯一的顶点代数结构以这些数据为态-场对应。这里只需验证 $Y(L_{-2}|0\rangle,z)$ 与自身的局部性，其余公理逐项核对是标准的。参见 [Frenkel--Ben-Zvi 2004], Theorem 4.4.1。[来源：Frenkel--Ben-Zvi 2004；原书 p.67。]}
+
+% [Tutor Note: 「重构定理」的精确内容是：给定 $\Z$-分次向量空间 $V$、真空向量、平移算子 $T$ 以及一族两两局部的顶点算子，若它们满足真空公理与平移相容性，则可唯一重建 $V$ 上的顶点代数结构（参见 [Frenkel–Ben-Zvi 2004] 第 4 章）。此处只验证了 $Y(L_{-2}|0\rangle,z)$ 与自身的局部性；其余公理（真空、平移、$L_{-1}=-\partial_t$ 的实现）逐项核对是标准的，作者从略。]
+
+% --------------------------------------------------------------- p.68
+\begin{theorem}
+    上述结构使 $\mathit{Vir}_c$ 具有顶点代数结构。其定义 OPE 为
+    \[
+        T(z)T(w) \sim \frac{c/2}{(z-w)^4} + \frac{T(w)}{(z-w)^2} + \frac{\partial_w T(w)}{z-w}.
+    \]
+    数 $c$ 称为\textbf{中心荷}。
+\end{theorem}
+
+% [Tutor Note: 关于定理类环境的编号：原书按「章.节-序号」编号。本片段的原书编号依次为：定理 3.1.1、引理 3.1.2；命题 3.2.1、又一个命题 3.2.1、推论 3.2.2、引理 3.2.2；引理 3.3.1、引理 3.3.2、命题 3.3.3、又一个引理 3.3.1。其中第二个「命题 3.2.1」与第二个「引理 3.3.1」显然与前者重号，应属原书印刷错误（按顺序应分别为 3.2.2 与 3.3.4）。本译本不手写编号，环境标题由导言区按出现顺序自动编号；原书的重号在此相应顺延（第二个命题作 3.2.2、其推论作 3.2.3、引理作 3.2.4；§3.3 的第二个引理作 3.3.4），正文引用统一用译本编号。注意导言区现已改为按 [section] 编号（得到「定理 3.1.1」），此事曾向 Lead 报告并已修订。]
+
+\subsection{共形顶点代数}
+
+Virasoro 代数在顶点代数理论与共形场论中都扮演着突出角色。它的李子代数 $\operatorname{Der}\cO=\C[[t]]\partial_t$ 可以看作圆盘 $D=\Spec\C[[t]]$ 上无穷小变量变换构成的李代数，这是一个重要的对称性，下文将大量使用。此外，完整的 Virasoro 代数“单值化”了带点曲线的模空间（见 [Frenkel and Ben-Zvi 2004] 第 17 章）。
+
+% [Tutor Note: 「单值化带点曲线模空间」指的是 Krichever–Novikov 意义下，带形式参数的带点曲线模空间是 Virasoro 群的齐性空间：Virasoro 代数正是通过圆盘上的坐标变换（改变形式参数）作用在该模空间上。对本书只需知道它提供了圆盘上坐标变换的无穷小作用，作者引用的是 [Frenkel and Ben-Zvi 2004] 第 17 章。]
+
+这一对称性常常实现为顶点代数 $V$ 的“内部对称性”，也就是说，$V$ 上有一个 Virasoro 代数的作用，它由某个顶点算子 $Y(\omega,z)$（其中 $\omega\in V$）的 Fourier 系数生成。这引出如下定义。
+
+一个 $\Z$-分次顶点代数 $V$ 称为\textbf{共形的}、\textbf{中心荷为 $c$}，是指给定了非零的\textbf{共形向量} $\omega\in V_2$，使得相应顶点算子
+\begin{equation}
+    Y(\omega,z) = \sum_{n\in\Z} L^V_n z^{-n-2}
+    \tag{3.1-5}
+\end{equation}
+的 Fourier 系数 $L^V_n$ 满足中心荷为 $c$ 的 Virasoro 代数的定义关系，并且还有 $L^V_{-1}=T$、$L^V_0|_{V_n}=n\operatorname{Id}$。注意我们有 $L^V_n=\omega_{(n+1)}$。\transnote{约定 $Y(\omega,z)=\sum L^V_nz^{-n-2}$ 等价于 $L^V_n=\omega_{(n+1)}$，因此 $L^V_{-2}|0\rangle=\omega_{(-1)}|0\rangle=\omega$、$L^V_{-1}=\omega_{(0)}=T$。$L^V_0$ 在 $V_n$ 上作用为 $n$ 这一条把共形向量与 $\Z$-分次联系起来；由 Virasoro 关系还可推出 $L^V_2\omega=\frac c2|0\rangle$（即定理 3.1.1 的 OPE）。若把 $L^V_n$ 的指标平移一位，这些公式都会错位。[来源：Frenkel--Ben-Zvi 2004, §3.4；原书 p.68。]}
+
+共形顶点代数的一个显然例子是 $\mathit{Vir}_c$ 本身，取 $\omega=L_{-2}|0\rangle$。另一个例子是 $V_\kappa(\fg)$，其中 $\kappa\neq\kappa_c$。此时如上面所见，$\omega=\widetilde S$ 使它成为中心荷为 $c_\kappa$ 的共形顶点代数。
+
+% --------------------------------------------------------------- p.69
+一个有用的观察是：共形顶点代数 $V$ 自动带有一个同态 $\phi:\mathit{Vir}_c\to V$，它由性质 $\phi(L_{-2}|0\rangle)=\omega$ 唯一确定。
+
+这里所谓\textbf{顶点代数同态}，指的是线性映射 $\phi:V\to V'$（若 $V,V'$ 是 $\Z$-分次的，则要求它是 $0$ 次齐次的），其中 $V,V'$ 是顶点代数，并且满足
+\begin{enumerate}[label=(\arabic*),leftmargin=2.2em,itemsep=1pt,topsep=2pt]
+    \item $\phi$ 把 $|0\rangle$ 送到 $|0\rangle'$；
+    \item $\phi$ 与 $T,T'$ 相容，即 $\phi\circ T=T'\circ\phi$；
+    \item $\phi$ 与 $Y,Y'$ 相容，即
+    \[
+        \phi\circ Y(A,z)B = Y'\bigl(\phi(A),z\bigr)\phi(B).
+    \]
+\end{enumerate}
+
+\begin{lemma}
+    一个 $\Z_+$-分次顶点代数 $V$ 是共形的、中心荷为 $c$，当且仅当它含有一个非零向量 $\omega\in V_2$，使得相应顶点算子
+    \[
+        Y(\omega,z) = \sum_{n\in\Z} L^V_n z^{-n-2}
+    \]
+    的 Fourier 系数 $L^V_n$ 满足下列条件：$L^V_{-1}=T$，$L^V_0$ 是分次算子，且 $L^V_2\cdot\omega=\frac{c}{2}|0\rangle$。此外，此时存在唯一的顶点代数同态 $\mathit{Vir}_c\to V$，使得 $|0\rangle\mapsto|0\rangle$、$L_{-2}v_c\mapsto\omega$。
+\end{lemma}
+
+% [Tutor Note: 此处 $v_c$ 是真空模 $\mathit{Vir}_c$ 的真空向量（即 $\C_c$ 的生成向量在诱导模中的像），它与左端 $V$ 的真空向量 $|0\rangle$ 不是同一个对象，故同态写作 $|0\rangle\mapsto|0\rangle$、$L_{-2}v_c\mapsto\omega$。若把 $v_c$ 误读成 $|0\rangle$，会看不出这条「唯一性」究竟唯一在何处。]
+
+证明留给读者（见 [Frenkel and Ben-Zvi 2004], 引理 3.4.5；在那里需要把陈述中的“$\Z$-分次”改为“$\Z_+$-分次”）。
+
+\subsection{题外话：中心扩张为何不断出现？}
+
+与去心圆盘 $D^\times=\Spec\C((t))$ 相联系的那些李代数，例如形式圈代数 $\fg((t))$ 和 $D^\times$ 上向量场构成的李代数 $\operatorname{Der}\cK$，都带有典范的中心扩张——这看起来像是一个有趣的巧合。于是自然要问：这一现象背后是否有共同的原因？
+
+答案是“有”。最好的理解方式，是引入一个把上述例子全部囊括在内的“主李代数”。这个李代数就是 $\widetilde{\fgl}_\infty$，其元素是只有有限多条非零对角线的无穷矩阵 $(a_{ij})_{i,j\in\Z}$，换位子由通常的公式 $[A,B]=AB-BA$ 给出。它比 $\fgl_\infty$ 的朴素定义（即李代数 $\fgl_n$ 的正向极限，其元素是只有有限多个非零元素的无穷矩阵）要大。
+
+% [Tutor Note: $\widetilde{\fgl}_\infty$ 与 $\fgl_\infty$ 的差别正是理解「同一中心扩张为何同时给出 Kac–Moody 与 Virasoro」的关键：$\widetilde{\fgl}_\infty$ 允许无穷多条非零元素但只允许有限条非零对角线，因此它的泛中心扩张只有一维（$H^2(\widetilde{\fgl}_\infty)\cong\C$），才能同时承载 Kac–Moody 与 Virasoro 两种中心扩张。参见 [Frenkel–Ben-Zvi 2004] §4.3 及其脚注。]
+
+设 $\fg$ 是有限维李代数，则 $\fg\otimes\C[t,t^{-1}]$ 通过伴随表示作用在自身上。在 $\fg$ 中取一组基，就得到 $\fg\otimes\C[t,t^{-1}]$ 的一组以整数标记的基。因此，对 $\fg\otimes\C[t,t^{-1}]$ 的每个元素都可以配上无穷矩阵；显然这个矩阵只有有限多条非零对角线（但有无限多个非零元素！）。于是我们得到李代数同态
+\[
+    \fg\otimes\C[t,t^{-1}] \to \widetilde{\fgl}_\infty,
+\]
+它实际上是单射。
+
+同样，李代数 $\operatorname{Der}\C[t,t^{-1}]=\C[t,t^{-1}]\partial_t$ 在自身上的伴随作用也给出单的李代数同态 $\operatorname{Der}\C[t,t^{-1}]\to\widetilde{\fgl}_\infty$。
+
+关键在于：$\widetilde{\fgl}_\infty$ 有一维的泛中心扩张；把这个中心扩张限制到李子代数
+\[
+    \fg\otimes\C[t,t^{-1}]
+    \qquad\text{和}\qquad
+    \operatorname{Der}\C[t,t^{-1}]
+\]
+上，就分别得到对应于仿射 Kac--Moody 代数与 Virasoro 代数的中心扩张。\footnote{更确切地说，是它们的洛朗多项式版本；但若过渡到 $\widetilde{\fgl}_\infty$ 的某个完备化，用同样的方式就得到相应的完备拓扑李代数的中心扩张。}
+
+% --------------------------------------------------------------- p.70
+这个中心扩张的 2-上循环可以如下定义。把矩阵 $A$ 写成
+\[
+    \begin{pmatrix}
+        A_{-+} & A_{++} \\[2pt]
+        A_{--} & A_{+-}
+    \end{pmatrix}.
+\]
+则该扩张的 2-上循环由
+\[
+    \gamma(A,B) = \Tr\bigl(A_{++}B_{--} - B_{++}A_{--}\bigr)
+\]
+给出。容易验证，括号中的表达式只有有限多个非零元素，因此迹是良定义的。既然可以把我们的李代数看作嵌在 $\widetilde{\fgl}_\infty$ 内部，就可以借助 $\widetilde{\fgl}_\infty$ 的中心扩张得到它们各自的中心扩张。把这些扩张在我们的具体情形中算出来，结果恰好就是我们一直使用的那些中心扩张。这就解释了 Virasoro 中心扩张与 Kac--Moody 中心扩张在结构上的相似性。\transnote{$\widetilde{\mathfrak{gl}}_\infty$ 的泛中心扩张是一维的，其 2-上循环由 $\gamma(A,B)=\Tr(A_{++}B_{--}-B_{++}A_{--})$ 给出。书中把指标分为正、负两半，$A_{++}$ 等是相应的交叉块；$\gamma$ 只取两个交叉方向，故迹只含有限多个非零项（不同文献对分块下标行列顺序的约定可能相反，引用时以书中的矩阵写法为准）。限制到 $\fg\otimes\C[t,t^{-1}]$ 与 $\operatorname{Der}\C[t,t^{-1}]$，分别得到 Kac--Moody 与 Virasoro 的中心扩张，这正是两类扩张结构相似的共同原因。[来源：Frenkel--Ben-Zvi 2004, §4.3；原书 p.69--70。]}
+
+% [Tutor Note: 上循环 $\gamma(A,B)=\Tr(A_{++}B_{--}-B_{++}A_{--})$ 只取矩阵在「正/负指标」分块上的交叉项，正是为了保证迹收敛。把它限制到 $\fg\otimes\C[t,t^{-1}]$ 得到 $\kappa(J^a,J^b)\cdot\mathrm{Res}$ 型上循环；限制到 $\operatorname{Der}\C[t,t^{-1}]$ 得到 Gelfand–Fuks 上循环。核对符号时请注意分块记号 $A_{+-}$ 与 $A_{-+}$ 的位置（第一个下标对应行指标的正负区间），此处最容易配错。]
+
+% --------------------------------------------------------------- p.70
+\section{与顶点代数相联系的李代数}
+
+\begin{keypoints}
+    \item \textbf{核心思想：}§3.1 的计算只在 $\End V_\kappa(\fg)$ 中进行；要把它搬到 $\widetilde U_\kappa(\gghat)$，需对任意顶点代数 $V$ 构造李代数 $U(V)$，并证明 $U(V_\kappa(\fg))\to\widetilde U_\kappa(\gghat)$ 是李代数同态。
+    \item \textbf{数学工具：}Borcherds 的构造 $U(V)$、$U'(V)=V\otimes\C[t,t^{-1}]/\operatorname{Im}\partial$、括号公式 (3.2-2)、完备化 $U(V)=(V\otimes\C((t)))/\operatorname{Im}\partial$。
+    \item \textbf{关键结论：}式 (2.1-11) 在 $\widetilde U_\kappa(\gghat)$ 中成立（推论 3.2.3）；并对任意 $\Z$-分次顶点代数 $V$ 构造出完备结合代数 $\widetilde U(V)$，且 $\widetilde U(V_\kappa(\fg))\simeq\widetilde U_\kappa(\gghat)$。
+    \item \textbf{记号提醒：}$A_{[n]}$ 是 $U(V)$ 中的形式符号，$A_{(n)}$ 是 $V$ 上的 Fourier 系数算子；二者的指标约定不可混淆。
+\end{keypoints}
+
+我们先来总结一下：在描述完备泛包络代数 $\widetilde U_\kappa(\gghat)$ 的中心这一目标上，目前进展如何。
+
+我们已经显式构造了 $\widetilde U_\kappa(\gghat)$ 中的二次元素 $S_n$，即 Segal--Sugawara 算子，它们是我们最初的中心元候选。此外，§3.1 算出了 $S_n$ 与 $\gghat_\kappa$ 之间以及 $S_n$ 彼此之间的对易关系。特别地，我们看到当 $\kappa=\kappa_c$ 时这些算子与 $\gghat_\kappa$ 交换。
+
+% [Tutor Note: 这里指出了本章的技术难点所在：$\widetilde U_\kappa(\gghat)\to\End V_\kappa(\fg)$ 在临界水平不是单射，其核包含零化真空向量的元素。因此不能仅凭 $\End V_\kappa(\fg)$ 中的计算断言中心性；必须借助 $U(V_\kappa(\fg))$ 这个「中间对象」，把它在完备泛包络代数中重新实现。这也解释了为何本节要绕道 Borcherds 的构造。]
+
+然而还有一个尚未讨论的重要微妙之处。§3.1 的计算给出的是来自顶点代数 $V_\kappa(\fg)$ 的顶点算子的 Fourier 系数之间的对易关系。按定义，这些 Fourier 系数是 $V_\kappa(\fg)$ 的自同态，而不是 $\widetilde U_\kappa(\gghat)$ 的元素。因此先验地看，我们的计算只在代数 $\End V_\kappa(\fg)$ 中有效，在 $\widetilde U_\kappa(\gghat)$ 中并不成立。尽管如此，本节将说明同一结果在 $\widetilde U_\kappa(\gghat)$ 中仍然成立。特别地，这将推出 Segal--Sugawara 算子的确是 $\widetilde U_\kappa(\gghat)$ 的中心元。
+
+这一点并不显然。比较显然的是：存在自然的李代数同态 $\widetilde U_\kappa(\gghat)\to\End V_\kappa(\fg)$。如果这个同态是单射，那么知道 $\End V_\kappa(\fg)$ 中的对易关系就足够了。但恰恰在临界水平 $\kappa=\kappa_c$ 处，这个同态不是单射。事实上，Segal--Sugawara 算子 $S_n$（$n\ge-1$）零化真空向量 $|0\rangle\in V_{\kappa_c}(\fg)$；而它们又是中心元，所以在 $\End V_{\kappa_c}(\fg)$ 中的像为 $0$。因此我们需要找到一种方式，把关于顶点算子 Fourier 系数之间关系的计算解释得在 $\widetilde U_\kappa(\gghat)$ 中有意义，而不只是在 $\End V_{\kappa_c}(\fg)$ 中有意义。
+
+% --------------------------------------------------------------- p.71
+本节紧密依照 [Frenkel and Ben-Zvi 2004] 第 4.1–4.3 节的材料。
+
+\subsection{Fourier 系数构成的李代数}
+
+我们仿照 [Borcherds 1986]，对每个顶点代数 $V$ 定义一个李代数 $U(V)$：它由形式符号 $A_{[n]}$（$A\in V$，$n\in\Z$）张成，其李括号模仿公式 (2.3-8)。
+
+下面是更精确的定义。令 $U'(V)$ 为向量空间
+\[
+    V\otimes\C[t,t^{-1}]/\operatorname{Im}\partial,
+    \qquad\text{其中}\quad
+    \partial = T\otimes 1 + 1\otimes\partial_t .
+\]
+把 $A\otimes t^n\in V\otimes\C[t,t^{-1}]$ 在 $U'(V)$ 中的投影记作 $A_{[n]}$。于是 $U'(V)$ 由这些元素张成，并满足关系
+\begin{equation}
+    (TA)_{[n]} = -n A_{[n-1]}.
+    \tag{3.2-1}
+\end{equation}
+我们用下式在 $U'(V)$ 上定义一个双线性括号：
+\begin{equation}
+    [A_{[m]}, B_{[k]}] = \sum_{n\ge 0}\binom{m}{n}\,(A_{(n)}B)_{[m+k-n]}
+    \tag{3.2-2}
+\end{equation}
+（可与公式 (2.3-8) 比较）。利用 $\End V$ 中的恒等式
+\[
+    [T, A_{(n)}] = -n A_{(n-1)},
+\]
+它由平移公理得到，容易验证这个映射是良定义的。
+
+若 $V$ 是 $\Z$-分次的，则我们在 $U'(V)$ 上引入 $\Z$-分次：对 $V$ 的每个齐次元素 $A$，令 $\deg A_{[n]}=-n+\deg A-1$。映射 (3.2-2) 保持这个分次。\transnote{$\deg A_{[n]}=-n+\deg A-1$ 中的 $-1$ 保证嵌入 $A\mapsto A_{[-1]}$ 保持次数：$\deg A_{[-1]}=\deg A$。若误写成 $-n+\deg A$，则 $U'(V)$ 与 $V$ 的分次整体错位，$I_N$ 的条件 $n\ge N+m$ 以及 p.75 脚注对 $n>N$ 的更正都会差一。注意 $A_{[n]}$ 是 $U(V)$ 中的形式符号，$A_{(n)}$ 是 $V$ 上的算子，两者不可混用。[依据：原书 p.71；Frenkel--Ben-Zvi 2004, §4.1。][来源：本书 p.71。]}
+
+% [Tutor Note: 次数约定 $\deg A_{[n]}=-n+\deg A-1$ 是本节最容易出错的地方：多出的 $-1$ 是为了让嵌入 $A\mapsto A_{[-1]}$ 保持次数：$\deg A_{[-1]}=\deg A$。于是 $\gghat$ 的生成元 $J^a_{-1}$（次数 $1$）对应 $A=J^a$（次数 $1$）；而 $(|0\rangle)_{[-1]}$ 的次数为 $0$，它对应 $U(V)$ 中的单位元（由 $Y(|0\rangle,z)=1$ 得 $|0\rangle_{(-1)}=\operatorname{Id}$）。后面 §3.2.3 引理 3.2.4 的脚注（原书 p.75）对 $n\ge N+m$ 的更正，正源于此约定。]
+
+我们还考虑 $U'(V)$ 关于 $\C[t,t^{-1}]$ 上自然拓扑的完备化 $U(V)$：
+\[
+    U(V) = \bigl(V\otimes\C((t))\bigr)/\operatorname{Im}\partial .
+\]
+它由线性组合 $\sum_{n\ge N} f_n A_{[n]}$（$f_n\in\C$，$A\in V$，$N\in\Z$）张成，并满足由恒等式 (3.2-1) 推出的那些关系。由公式 (3.2-2) 给出的括号显然是连续的，因此它给出 $U(V)$ 上的一个括号。
+
+我们有线性映射 $U(V)\to\End V$：
+\[
+    \sum_{n\ge N} f_n A_{[n]} \mapsto \sum_{n\ge N} f_n A_{(n)}
+    = \Res_{z=0} Y(A,z)f(z)\dd z,
+\]
+其中 $f(z)=\sum_{n\ge N}f_n z^n\in\C((z))$。\transnote{$\Res_{z=0}$ 是形式留数，只取 $z^{-1}$ 的系数，与任何收敛性无关；$\dd z$ 不可省略，因为 $Y(A,z)$ 的展开约定是 $z^{-n-1}$，乘以 $f(z)\dd z$ 后 $z^{-1}$ 项才给出 $\sum f_nA_{(n)}$。计算时先把 $f$ 展开成有限和再逐项取留数，不要先代入 $z=0$。[依据：原书 p.71。][来源：本书 p.71。]}
+
+% [Tutor Note: 这里的 $\Res_{z=0}$ 是形式留数，即取 $z^{-1}$ 的系数，不需要（也不应设想）任何收敛性；$f(z)\dd z$ 与 $Y(A,z)$ 的乘积中 $z^{-1}$ 项恰好给出 $\sum f_n A_{(n)}$。注意 $\Res_{z=0}Y(A,z)f(z)\dd z$ 中 $\dd z$ 不可或缺，因为 $Y(A,z)$ 的展开约定是 $z^{-n-1}$。]
+
+\begin{proposition}
+    括号 (3.2-2) 在 $U'(V)$ 与 $U(V)$ 上定义了李代数结构。此外，自然映射 $U'(V)\to\End V$ 与 $U(V)\to\End V$ 都是李代数同态。
+\end{proposition}
+
+% [Tutor Note: 这个构造属于 Borcherds（[Borcherds 1986]），是「顶点代数 → 李代数」函子的标准实现。证明的关键技巧是把 $U'(V)_0$ 写成某个更大的顶点代数 $W=V\otimes\C[t,t^{-1}]$ 的 $U'(W)_0$，从而把一般括号化归为 $[0]$-括号 (3.2-3)，而不必直接验证双线性括号的 Jacobi 恒等式。此处用到的恒等式 $Y(A,z)B=e^{zT}Y(B,-z)A$ 即「反对称性」，是顶点代数公理中结合性与局部性的直接推论。]
+
+% --------------------------------------------------------------- p.72
+\begin{proof}
+    令 $U'(V)_0\subset U(V)$ 为商
+    \[
+        U'(V)_0 = V/\operatorname{Im}T = (V\otimes 1)/\operatorname{Im}\partial,
+    \]
+    因此它是 $U'(V)$ 中只由元素 $A_{[0]}$ 张成的子空间。
+
+    括号 (3.2-2) 限制为 $U'(V)_0$ 上的括号：
+    \begin{equation}
+        [A_{[0]}, B_{[0]}] = (A_{(0)}B)_{[0]}.
+        \tag{3.2-3}
+    \end{equation}
+    我们先证明它使 $U'(V)_0$ 在所定义的括号下成为李代数。需要说明该括号反对称，并满足 Jacobi 恒等式。回忆命题 2.3.2 中的恒等式
+    \[
+        Y(A,z)B = e^{zT}Y(B,-z)A.
+    \]
+    看 $z^{-1}$ 的系数，得到
+    \[
+        A_{(0)}B = -B_{(0)}A + T(\cdots).
+    \]
+    取此式的 $[0]$ 部分，并注意我们对 $T$ 的像取商，便知
+    \[
+        (A_{(0)}B)_{[0]} = -(B_{(0)}A)_{[0]}.
+    \]
+    换言之，括号是反对称的。
+
+    Jacobi 恒等式等价于
+    \[
+        \bigl[C_{[0]}, [A_{[0]}, B_{[0]}]\bigr]
+        = \bigl[[C_{[0]}, A_{[0]}], B_{[0]}\bigr]
+        + \bigl[A_{[0]}, [C_{[0]}, B_{[0]}]\bigr].
+    \]
+    此式右端给出
+    \[
+        \bigl((C_{(0)}A)_{(0)}B\bigr)_{[0]} + \bigl(A_{(0)}(C_{(0)}B)\bigr)_{[0]}.
+    \]
+    但由顶点算子 Fourier 系数的对易关系 (2.3-8) 可知
+    \[
+        [C_{(0)}, A_{(0)}] = (C_{(0)}A)_{(0)}.
+    \]
+    这就证明了 Jacobi 恒等式。
+
+    下面我们由此推出 $U'(V)$ 上的括号 (3.2-2) 满足李代数公理，办法是构造一个更大的顶点代数 $W$，使 $U'(V)$ 就是 $U'(W)_0$（而后者已知是李代数）。
+
+    由于 $\C[t,t^{-1}]$ 是带有导子 $T=-\partial_t$ 的交换、结合、含幺代数，按 §2.2.2 所述可把它作成交换顶点代数。令 $W=V\otimes\C[t,t^{-1}]$，以显然的方式赋予顶点代数结构。则 $U'(V)=U'(W)_0$。下面证明 $U'(V)$ 中的公式 (3.2-2) 与 $U'(W)_0$ 中的公式 (3.2-3) 一致。后者读作
+    \[
+        [(A\otimes t^n)_{[0]}, (B\otimes t^m)_{[0]}]
+        = \bigl((A\otimes t^n)_{(0)}(B\otimes t^m)\bigr)_{[0]}.
+    \]
+% --------------------------------------------------------------- p.73
+    设 $f(t)\in\C[t,t^{-1}]$。则与 $f(t)$ 相联系的顶点算子为
+    \[
+        Y(f(t),z) = \operatorname{mult}\bigl(e^{zT}f(t)\bigr) = \operatorname{mult}\bigl(f(t+z)\bigr),
+    \]
+    其中必要的展开在区域 $|z|<|t|$ 中进行。在我们的情形中，这意味着需要求
+    \[
+        Y(A,z)\otimes (t+z)^m
+    \]
+    的 $z^{-1}$ 系数，而它是
+    \[
+        \sum_{n\ge 0}\binom{m}{n} A_{(n)}\otimes t^{m-n}.
+    \]
+    把这些放在一起便得到
+    \[
+        [(A\otimes t^m)_{[0]}, (B\otimes t^k)_{[0]}]
+        = \sum_{n\ge 0}\binom{m}{n}(A_{(n)}B)\otimes t^{m+k-n},
+    \]
+    这与我们为 $U'(V)$ 想要的公式 (3.2-2) 一致。
+
+    映射 $U'(V)\to\End V$ 是李代数同态，这一点可由公式 (2.3-8) 与 (3.2-2) 的对比得到。$U'(V)$ 上的李括号可延拓为 $U(V)$ 上的李括号，且相应的映射 $U(V)\to\End V$ 也是李代数同态，这一点由连续性得到。
+\end{proof}
+
+给定顶点代数同态 $\phi:V\to V'$，定义 $\widetilde\phi$ 为映射 $U(V)\to U'(V)$，它把 $A_{[n]}$ 送到 $\phi(A)_{[n]}$（并按连续性延拓）。这是一个李代数同态。为看出这一点，需要验证
+\[
+    \widetilde\phi\bigl([A_{[n]}, B_{[m]}]\bigr)
+    = \bigl[\widetilde\phi(A_{[n]}), \widetilde\phi(B_{[m]})\bigr].
+\]
+把左端展开、使用括号的定义，再把 $\widetilde\phi$ 的定义作用于两端，就化归为
+\[
+    \phi(A_{(n)}B) = \phi(A)_{(n)}\phi(B).
+\]
+而这来自 $\phi$ 是顶点代数同态这一事实。
+
+于是我们得到：对应 $V\mapsto U'(V)$ 与 $V\mapsto U(V)$ 分别定义了从顶点代数范畴到李代数范畴与完备拓扑李代数范畴的函子。
+
+最后指出：若 $V$ 是 $\Z$-分次顶点代数，则李代数 $U'(V)$ 关于次数约定 $\deg A_{[n]}=-n+\deg A-1$ 也是 $\Z$-分次的。
+
+% --------------------------------------------------------------- p.74
+\subsection{从顶点算子到包络代数}
+
+现在更仔细地考察李代数 $U(V_\kappa(\fg))$。由定理 2.2.2，对应 $V_\kappa(\fg)$ 中元素的顶点算子是形式幂级数
+\[
+    :\partial_z^{n_1}J^{a_1}(z)\cdots\partial_z^{n_m}J^{a_m}(z):
+\]
+的有限线性组合。这意味着，可以把 $U(V_\kappa(\fg))$ 的元素看作这些级数的 Fourier 系数的有限线性组合。一般而言，每个这样的系数都是 $\gghat$ 的基元素 $J^a_n$ 的无穷级数。然而归纳地可以验证：对任意 $N\ge 0$，每个这样的级数模去左理想 $\widetilde U_\kappa(\fg)\cdot\fg\otimes t^N\C[[t]]$ 后都变成有限和。因此它们各自给出 $\widetilde U_\kappa(\gghat)$ 中一个良定义的元素。我们已经看到 Segal--Sugawara 元素 (2.1-9) 就是这种情形：它们是 $\widetilde U_\kappa(\gghat)$ 中名副其实的元素。
+
+于是我们得到一个线性映射 $V\otimes\C((t))\to\widetilde U_\kappa(\gghat)$，显然它在上 $\partial$ 的像上为零。因此我们得到线性映射 $U(V_\kappa(\fg))\to\widetilde U_\kappa(\gghat)$。不难证明它实际上是单射，但我们这里不用这个事实。使我们能够把先前的计算从 $\End V$ 搬到 $\widetilde U_\kappa(\gghat)$ 的关键结果如下：
+
+% 原书 p.74 第二次印作 Proposition 3.2.1（与 p.71 的第一个 3.2.1 重号）；本译本按出现顺序自动编号，此处为 3.2.2
+\begin{proposition}
+    映射 $U(V_\kappa(\fg))\to\widetilde U_\kappa(\gghat)$ 是李代数同态。\transnote{原书 p.74 在此第二次印作 Proposition 3.2.1，与 p.71 的第一个命题 3.2.1 重号；按顺序此处应作 3.2.2。同页的推论 3.2.2 又与 p.75 的引理 3.2.2 同号，且推论排在引理之前。本译本按出现顺序自动编号：此处为 3.2.2，其后的推论为 3.2.3、引理为 3.2.4；引用原书时请以页码区分。[依据：原书 p.71、p.74、p.75 的编号对照。][来源：本书 p.74。]}
+\end{proposition}
+
+% [Tutor Note: 原书在此处再次印作「Proposition 3.2.1」，与第 71 页的命题 3.2.1 重号，应属印刷错误（按顺序此处应为 3.2.2）。本译本按顺序重编为 3.2.2，并在译注中说明原书编号异常。证明涉及较多繁琐计算，作者省略，可参见 [Frenkel and Ben-Zvi 2004] 命题 4.2.2。]
+
+其证明涉及一些相当繁琐的计算，我们略去，请读者参阅 [Frenkel and Ben-Zvi 2004], Proposition 4.2.2。
+
+现在可以看出，§3.1 中的所有计算在 $\widetilde U_\kappa(\gghat)$ 中其实都成立。
+
+\begin{corollary}
+    当 $\kappa=\kappa_c$ 时，Segal--Sugawara 算子 $S_n$ 在 $\widetilde U_\kappa(\gghat)$ 中是中心的。当 $\kappa\neq\kappa_c$ 时，它们在 $\widetilde U_\kappa(\gghat)$ 内生成 Virasoro 代数。
+\end{corollary}
+
+\subsection{与顶点代数相联系的包络代数}
+
+这里我们对任意 $\Z$-分次顶点代数 $V$ 构造拓扑结合代数 $\widetilde U_\kappa(\gghat)$ 的类似物。
+
+注意 $U(V_\kappa(\fg))$ 在 $\widetilde U_\kappa(\gghat)$ 中的像对乘法不封闭。例如，$U(V_\kappa(\fg))$ 包含 $\gghat$ 作为李子代数，它由 $A_n=(A_{-1}|0\rangle)_{[n]}$（$A\in\fg$，$n\in\Z$）与 $(|0\rangle)_{[-1]}$ 张成。但 $U(V_\kappa(\fg))$ 不含 $\gghat$ 的元素之乘积，例如 $A_nB_k$。事实上，$U(V_\kappa(\fg))$ 中所有二次元素都是无穷级数。
+
+不过，我们可以把 $\widetilde U_\kappa(\gghat)$ 实现为 $U(V_\kappa(\fg))$ 的泛包络代数模去某些自然关系的完备化。事实上，对任意 $\Z$-分次顶点代数 $V$ 都可以做类似的构造，方式如下。用 $U(U(V))$ 表示李代数 $U(V)$ 的泛包络代数。定义其完备化
+\[
+    \widetilde U\bigl(U(V)\bigr) = \varprojlim U\bigl(U(V)\bigr)/I_N,
+\]
+% --------------------------------------------------------------- p.75
+其中 $I_N$ 是由 $A_{[n]}$（$A\in V_m$，$n\ge N+m$）生成的左理想。\footnote{这里我们更正了 [Frenkel and Ben-Zvi 2004] 第 4.3.1 节的一处错误：那里的条件写成了 $n>N$；要点在于 $\deg A_{[n]}=-n+m-1$（见 §3.2.1 末）。} 令 $\widetilde U(V)$ 为 $\widetilde U(U(V))$ 对由下述级数的 Fourier 系数生成的双边理想的商：
+\[
+    Y[A_{(-1)}B, z] - \,:Y[A,z]Y[B,z]:,
+    \qquad A,B\in V,
+\]
+其中我们令
+\[
+    Y[A,z] = \sum_{n\in\Z} A_{[n]}z^{-n-1},
+\]
+而正规序的定义与顶点算子 $Y(A,z)$ 的情形相同。
+
+显然 $\widetilde U(V)$ 是完备拓扑结合代数（其拓扑以左理想 $I_N$（$N>0$）的完备化为 $0$ 的基本邻域基）。对应 $V\mapsto\widetilde U(V)$ 给出从顶点代数范畴到完备拓扑结合代数范畴的函子。
+
+% [Tutor Note: 这里「完备化」的拓扑与 $\widetilde U_\kappa(\gghat)$ 的拓扑是同一类：开邻域由「$t$ 的幂次足够高」的左理想给出，因而可以取极限而不必担心无穷和的收敛性。注意 $I_N$ 用的是左理想而非双边理想，因为我们要的是「按模 $t^N$ 逐阶」的完备化，这保证了 $\widetilde U(V)$ 上的乘法连续。]
+
+结合代数 $\widetilde U(V)$ 可以看作完备泛包络代数 $\widetilde U_\kappa(\gghat)$ 的推广；因为如下引理所表明，对 $V=V_\kappa(\fg)$ 有 $\widetilde U(V_\kappa(\fg))\simeq\widetilde U_\kappa(\gghat)$。
+
+% 原书 p.75 的 Lemma 3.2.2 与 Corollary 3.2.2 同号；本译本按顺序自动编号，此处引理为 3.2.4
+\begin{lemma}
+    对一切 $\kappa\in\C$，存在自然同构 $\widetilde U(V_\kappa(\fg))\simeq\widetilde U_\kappa(\gghat)$。
+\end{lemma}
+
+\begin{proof}
+    我们需要在 $\widetilde U(V_\kappa(\fg))$ 与 $\widetilde U_\kappa(\gghat)$ 之间定义互逆的代数同态。命题 3.2.2 的李代数同态 $U(V_\kappa(\fg))\to\widetilde U_\kappa(\gghat)$ 给出从 $U(V_\kappa(\fg))$ 的泛包络代数到 $\widetilde U_\kappa(\gghat)$ 的同态。显然，在此同态下理想 $I_N$ 的任一元素都被送到由 $A_n$（$A\in\fg$，$n>M$）生成的 $U(V_\kappa(\fg))$ 的左理想，其中 $M$ 充分大。因此这个同态延拓为从 $U(V_\kappa(\fg))$ 的泛包络代数的完备化到 $\widetilde U_\kappa(\gghat)$ 的同态。但按定义，这个映射把级数 $Y[A_{(-1)}B,z]$ 恰好送到级数 $:Y[A,z]Y[B,z]:$（对一切 $A,B\in V_\kappa(\fg)$）。于是我们得到同态 $\widetilde U(V_\kappa(\fg))\to\widetilde U_\kappa(\gghat)$。
+
+    为构造逆同态，注意 $\gghat$ 自然地是 $U(V_\kappa(\fg))$ 的李子代数。因此有从 $U(\gghat)$ 到李代数 $U(V_\kappa(\fg))$ 的泛包络代数的同态。此同态按连续性延拓为从 $\widetilde U_\kappa(\gghat)$ 到 $U(V_\kappa(\fg))$ 的泛包络代数的完备化的同态，从而延拓到 $\widetilde U(V_\kappa(\fg))$。现在注意，所得映射 $\widetilde U_\kappa(\gghat)\to\widetilde U(V_\kappa(\fg))$ 是满射，因为每个级数 $Y[A,z]$ 都是 $\gghat$ 的元素 $J^a_n$ 的生成级数 $J^a(z)=\sum_{n\in\Z}J^a_n z^{-n-1}$ 的正规序乘积的线性组合。此外，由构造可以看出
+% --------------------------------------------------------------- p.76
+    复合映射 $\widetilde U_\kappa(\gghat)\to\widetilde U(V_\kappa(\fg))\to\widetilde U_\kappa(\gghat)$ 是恒等映射。这意味着映射 $\widetilde U_\kappa(\gghat)\to\widetilde U(V_\kappa(\fg))$ 也是单射。因此这两个映射确实定义了互逆的同构。
+\end{proof}
+
+% --------------------------------------------------------------- p.76
+\section{顶点代数的中心}
+
+\begin{keypoints}
+    \item \textbf{核心思想：}中心元就是被 $\fg[[t]]$ 零化的向量；顶点代数的中心 $\cZ(V)$ 是交换顶点代数，可由它生成包络代数的中心。
+    \item \textbf{数学工具：}$\fg[[t]]$-不变子、正规序、OPE、分次伴随代数、$\operatorname{Fun}\fg^*[[t]]$ 与不变量代数。
+    \item \textbf{关键结论：}$\cZ(V_\kappa(\fg))=\C\cdot|0\rangle$（$\kappa\neq\kappa_c$）；$\mathfrak z(\fg)=V_{\kappa_c}(\fg)^{\fg[[t]]}\simeq\End_{\gghat_{\kappa_c}}V_{\kappa_c}(\fg)$，且 $\operatorname{gr}\mathfrak z(\fg)\hookrightarrow(\operatorname{Fun}\fg^*[[t]])^{\fg[[t]]}$。
+    \item \textbf{记号提醒：}一般顶点代数的中心记作 $\cZ(V)$，临界水平的 $\mathfrak z(\fg)$ 是它的特例：$\mathfrak z(\fg)=\cZ(V_{\kappa_c}(\fg))$。
+\end{keypoints}
+
+由推论 3.2.3，对特殊水平 $\kappa=\kappa_c$，Segal--Sugawara 元素确实是完备泛包络代数 $\widetilde U_\kappa(\gghat)$ 的中心元。现在我们要看是否还有别的中心元；若有，又该如何构造。
+
+\subsection{中心的定义}
+
+为此，应当想一想：我们构造的那些元素究竟为什么是中心的。
+
+\begin{lemma}
+    $\widetilde U_\kappa(\gghat)$ 中的元素 $A_{[n]}$（$A\in V_\kappa(\fg)$，$n\in\Z$）是中心元，只要 $A$ 被所有满足 $n>0$ 的算子 $J^a_n$ 零化。
+\end{lemma}
+
+\begin{proof}
+    这由对易关系公式 (3.2-2) 推出。
+\end{proof}
+
+元素 $J^a_n$（$n\ge 0$）张成李代数 $\fg[[t]]$。这促使我们把顶点代数 $V_\kappa(\fg)$ 的中心 $\mathfrak z(V_\kappa(\fg))$ 定义为其 $\fg[[t]]$-不变子空间：
+\begin{equation}
+    \mathfrak z\bigl(V_\kappa(\fg)\bigr) = V_\kappa(\fg)^{\fg[[t]]}.
+    \tag{3.3-1}
+\end{equation}
+% [Tutor Note: 这个定义把「中心」等同于「被 $\fg[[t]]$ 零化」这个看似更强、实则等价的条件：因为 $A_{(n)}B=0$（$n\ge0$）正是 $[Y(A,z),Y(B,w)]=0$ 的展开系数条件（见下文 OPE 公式 (2.3-7) 的等价定义）。直观上，$\fg[[t]]$ 作用对应圆盘上「局部」的规范变换，被它零化的向量就是「在圆盘各处都规范不变」的向量；这正是中心与 opers 发生联系的第一层原因。]
+为把这个定义推广到其他顶点代数，我们注意：任一元素 $B\in\mathfrak z(V_\kappa(\fg))$ 都满足 $A_{(n)}B=0$，对一切 $A\in V_\kappa(\fg)$、$n\ge 0$。这由公式 (2.2-8) 与正规序的定义对 $m$ 作归纳得到。\transnote{按 (3.3-1)，临界水平的中心就是被 $\fg[[t]]$ 零化的向量；这与 Feigin--Frenkel 定理所描述的中心密切相关：其分次伴随给出到 $\operatorname{Fun}\fg^*[[t]]$ 的 $\fg[[t]]$-不变量的单射（§3.3.3），填满不变量代数是 §3.4--§3.5 与第 4 章的核心。中心与 opers 的几何联系要到第 4 章才展开；这里只需记住“中心 = 圆盘上局部规范不变的向量”这一直观。[来源：Feigin--Frenkel 1992；原书 p.76；第 4 章。]}
+
+于是，我们定义任意顶点代数 $V$ 的\textbf{中心}为
+\[
+    \cZ(V) = \{ B\in V \mid A_{(n)}B = 0\ \text{对一切}\ A\in V,\ n\ge 0 \}.
+\]
+由 OPE 公式 (2.3-7)，等价的定义是
+\[
+    \cZ(V) = \{ B\in V \mid [Y(A,z), Y(B,w)] = 0\ \text{对一切}\ A\in V \}.
+\]
+公式 (3.2-2) 蕴涵：若 $B\in\cZ(V)$，则对一切 $n\in\Z$，$B_{[n]}$ 是 $U(V)$ 与 $\widetilde U(V)$ 中的中心元。
+
+空间 $\cZ(V)$ 显然非零，因为真空向量 $|0\rangle$ 属于 $\cZ(V)$。
+
+\begin{lemma}
+    顶点代数 $V$ 的中心 $\cZ(V)$ 是交换顶点代数。
+\end{lemma}
+
+\begin{proof}
+    我们已经知道 $|0\rangle$ 在中心里。简单的计算表明 $T$ 把 $\cZ(V)$ 映入 $\cZ(V)$：
+    \[
+        A_{(n)}(TB) = T(A_{(n)}B) - [T, A_{(n)}]B = nA_{(n-1)}B = 0.
+    \]
+% --------------------------------------------------------------- p.77
+    设 $B,C\in\cZ(V)$ 是中心元。则
+    \[
+        A_{(n)}B_{(m)}C = B_{(m)}A_{(n)}C + [A_{(n)}, B_{(m)}]C = 0.
+    \]
+    因此 $\cZ(V)$ 在态-场对应下封闭。交换性是显然的。
+\end{proof}
+
+\subsection{仿射 Kac--Moody 顶点代数的中心}
+
+于是，我们现在的计划是：先研究顶点代数 $V_\kappa(\fg)$ 的中心，再说明 $\widetilde U_\kappa(\gghat)$ 的一切中心元都可以由 $\cZ(V_\kappa(\fg))$ 中的元素取 Fourier 系数（看作 $\widetilde U_\kappa(\gghat)$ 的元素）得到。
+
+由于 $V_\kappa(\fg)$ 比 $\widetilde U_\kappa(\gghat)$ 小得多，这看起来是个好策略。我们先从 $\kappa\neq\kappa_c$ 的情形开始。
+
+\begin{proposition}
+    若 $\kappa\neq\kappa_c$，则 $V_\kappa(\fg)$ 的中心是平凡的，即
+    \[
+        \cZ\bigl(V_\kappa(\fg)\bigr) = \C\cdot|0\rangle .
+    \]
+\end{proposition}
+
+\begin{proof}
+    设 $A$ 是中心 $\cZ(V_\kappa(\fg))$ 中的齐次元素。令 $\widetilde S$ 是前面引入的、生成 Virasoro 场的向量
+    \[
+        Y(\widetilde S, z) = \sum_{n\in\Z} L_n z^{-n-2}.
+    \]
+    回忆为了让这个元素有定义，需要 $\kappa\neq\kappa_c$，因为要除以此因子。现在，若 $B\in\cZ(V_\kappa(\fg))$，则如上面所见 $A_{(n)}B=0$，对一切 $A\in V_\kappa(\fg)$、$n\ge 0$。特别地，取 $A=\widetilde S$、$n=1$，得到 $L_0B=0$（回忆 $L_0=\widetilde S_{(1)}$）。但 $L_0$ 是分次算子，所以 $B$ 的次数必为 $0$，从而它必是真空向量 $|0\rangle$ 的倍数。
+\end{proof}
+
+% [Tutor Note: 证明只用了「中心元被 $L_0$ 零化」这一条：$L_0$ 在次数 $m$ 的子空间上作用为 $m$，故 $L_0B=0$ 迫使 $m=0$，而 $0$ 次子空间在 $V_\kappa(\fg)$ 中只有真空向量（一维）。这里 $L_0=\widetilde S_{(1)}$ 的识别依赖 $Y(\widetilde S,z)=\sum L_nz^{-n-2}$，即 $L_n=\widetilde S_{(n+1)}$；若把它与 $S_n$ 的编号混淆，就会误用 $L_1$ 而得不到结论。]
+
+注意先验地并不能推出 $\widetilde U_\kappa(\gghat)$（$\kappa\neq\kappa_c$）的中心是平凡的；只能推出：用上述构造无法从顶点代数 $V_\kappa(\fg)$ 得到 $\widetilde U_\kappa(\gghat)$ 的非平凡中心元。不过，我们将在后面命题 4.3.9 中证明，$\widetilde U_\kappa(\gghat)$ 的中心其实确实是平凡的。
+
+从现在起，我们把注意力集中到临界水平 $\kappa=\kappa_c$。我们将看到，$\widetilde U_{\kappa_c}(\gghat)$ 的中心可以由顶点代数 $V_{\kappa_c}(\fg)$ 的中心生成。为简化记号，以下我们把后者记作 $\mathfrak z(\fg)$，于是
+\[
+    \mathfrak z(\fg) = \cZ\bigl(V_{\kappa_c}(\fg)\bigr).
+\]
+下面讨论 $\mathfrak z(\fg)$ 的各种解释。
+
+$\mathfrak z(\fg)$ 上的交换顶点代数结构给它带来通常的交换代数结构。注意它是 $\Z_+$-分次的。自然要问：从 $V_{\kappa_c}(\fg)$ 的角度看，这个代数结构的含义是什么？
+
+% --------------------------------------------------------------- p.78
+由 (3.3-1) 我们有
+\begin{equation}
+    \mathfrak z(\fg) = V_{\kappa_c}(\fg)^{\fg[[t]]}.
+    \tag{3.3-2}
+\end{equation}
+这使我们能够把 $\mathfrak z(\fg)$ 等同于 $V_{\kappa_c}(\fg)$ 的 $\gghat_{\kappa_c}$-自同态代数。事实上，$\fg[[t]]$-不变向量 $A\in V_{\kappa_c}(\fg)$ 给出 $V$ 的一个非平凡自同态，它把最高权向量 $v_{\kappa_c}$ 送到 $A$。另一方面，给定 $V_{\kappa_c}(\fg)$ 的自同态 $e$，我们得到 $\fg[[t]]$-不变向量 $e(|0\rangle)$。显然这两个映射互逆，于是得到同构
+\[
+    V_{\kappa_c}(\fg)^{\fg[[t]]} \simeq \End_{\gghat_{\kappa_c}} V_{\kappa_c}(\fg).
+\]
+现在设 $A_1,A_2$ 是 $V_{\kappa_c}(\fg)$ 中两个 $\fg[[t]]$-不变向量，$e_1,e_2$ 是相应的 $V_{\kappa_c}(\fg)$ 的自同态。则 $|0\rangle$ 在复合 $e_1e_2$ 下的像等于
+\[
+    e_1(A_2) = e_1\circ (A_2)_{(-1)}|0\rangle
+    = (A_2)_{(-1)}\circ e_1(|0\rangle)
+    = (A_2)_{(-1)}A_1.
+\]
+最后的表达式不是别的，正是来自 $\mathfrak z(\fg)$ 上交换代数结构的乘积 $A_2A_1$。因此我们发现：作为代数，$\mathfrak z(\fg)$ 同构于带相反乘法的代数 $\End_{\gghat_{\kappa_c}}V_{\kappa_c}(\fg)$。但 $\mathfrak z(\fg)$ 是交换的，所以我们得到代数同构
+\begin{equation}
+    \mathfrak z(\fg) \simeq \End_{\gghat_{\kappa_c}} V_{\kappa_c}(\fg).
+    \tag{3.3-3}
+\end{equation}
+特别地，我们发现代数 $\End_{\gghat_{\kappa_c}}V_{\kappa_c}(\fg)$ 是交换的，而这是先验并不显然的。（同样的论证对其他水平 $\kappa$ 也适用，但在那些情形由命题 3.3.3 得到 $\mathfrak z(V_\kappa(\fg))\simeq\End_{\gghat_\kappa}V_\kappa(\fg)=\C$。）\transnote{$V_{\kappa_c}(\fg)$ 作为 $\gghat_{\kappa_c}$-模是光滑的：每个向量都被某个 $t^N\fg[[t]]$（$N\gg0$）零化；但它对 Cartan 的权空间通常是无穷维的，故一般不是容许模。$\End_{\gghat_{\kappa_c}}V_{\kappa_c}(\fg)$ 的自同态代数由 $\fg[[t]]$-不变向量给出，这正是 (3.3-2)--(3.3-3)。$K$-有限性与 Harish--Chandra 范畴见第 10 章 §10.2（原书 p.311 起）；Iwahori 子群、球面 Hecke 代数、Satake 同构、仿射 Grassmannian 与 Borel--Weil--Bott 的圈群版本要到本书后面才系统出现，本片段不涉及。[译者按（无外部依据）：本片段只用到 $G[[t]]$ 的连通性，末句仅为阅读路线提示。]}
+
+% [Tutor Note: 「相反乘法」的细节：把 $\mathfrak z(\fg)$ 的元素 $A$ 送到自同态 $e_A=(A)_{(-1)}$，则复合 $e_{A_1}e_{A_2}$ 在真空上的像为 $e_{A_1}(A_2)=(A_2)_{(-1)}A_1=A_2A_1$（即 $\mathfrak z(\fg)$ 中的乘积），故复合对应乘积的反序，$\mathfrak z(\fg)$ 与 $\End$ 代数反同构；又因 $\mathfrak z(\fg)$ 交换，反序不影响结果，故得到同构 (3.3-3)。这一观察是 Feigin–Frenkel 定理中「中心 ≅ 不变量代数」的起点：$\End_{\gghat_{\kappa_c}}V_{\kappa_c}(\fg)$ 的自然来源是 $\fg[[t]]$-不变的微分算子，最终可解释为 opers 空间上的函数。]
+
+最后我们指出，$V_{\kappa_c}(\fg)$ 同构于泛包络代数 $U(\fg\otimes t^{-1}\C[t^{-1}])$（但这个同构不是典范的：它依赖于坐标 $t$ 的选取）。在此同构下，我们得到单射
+\[
+    \mathfrak z(\fg)\hookrightarrow U\bigl(\fg\otimes t^{-1}\C[t^{-1}]\bigr).
+\]
+由上面的计算可知这是一个代数同态。因此，$\mathfrak z(\fg)$ 可以看作 $U(\fg\otimes t^{-1}\C[t^{-1}])$ 的交换子代数。
+
+\subsection{分次伴随代数}
+
+我们的目标是描述 $V_{\kappa_c}(\fg)$ 的中心 $\mathfrak z(\fg)$。先描述它的分次类似物是富有启发的。回忆在 §2.2.5 中我们在 $V_\kappa(\fg)$ 上定义了被 $\gghat_\kappa$ 的作用保持的滤过，其分次伴随空间为
+\[
+    \operatorname{gr} V_\kappa(\fg) = \Sym\bigl(\fg((t))/\fg[[t]]\bigr).
+\]
+% --------------------------------------------------------------- p.79
+$\fg((t))/\fg[[t]]$ 的拓扑对偶空间自然地等同于空间 $\fg^*[[t]]\dd t$，配对为
+\[
+    \langle \phi(t)\dd t,\, A(t)\rangle = \Res_{t=0}\langle \phi(t), A(t)\rangle \dd t.
+\]
+这个配对是典范的，意即它不依赖于坐标 $t$ 的选取。
+
+不过，为简化下面的公式，我们将用坐标 $t$ 把 $\fg^*[[t]]\dd t$ 与 $\fg^*[[t]]$ 等同起来。后者是有限维向量空间的逆向极限
+\[
+    \fg^*[[t]] = \varprojlim \fg^*\otimes\C[[t]]/(t^N),
+\]
+因此其上的正则函数代数就是自由多项式代数的正向极限
+\[
+    \operatorname{Fun}\fg^*[[t]] = \varinjlim \operatorname{Fun}\bigl(\fg^*\otimes\C[[t]]/(t^N)\bigr).
+\]
+由于 $\fg^*[[t]]$ 同构于 $\fg((t))/\fg[[t]]$ 的拓扑对偶向量空间，我们有自然同构
+\[
+    \Sym\bigl(\fg((t))/\fg[[t]]\bigr) \simeq \operatorname{Fun}\fg^*[[t]],
+\]
+于是
+\[
+    \operatorname{gr} V_\kappa(\fg) \simeq \operatorname{Fun}\fg^*[[t]].
+\]
+现在 $V_{\kappa_c}(\fg)$ 上的滤过诱导出 $\mathfrak z(\fg)$ 上的滤过。令
+\[
+    \operatorname{gr}\mathfrak z(\fg) \subset \operatorname{Fun}\fg^*[[t]]
+\]
+为分次伴随空间。$\mathfrak z(\fg)$ 上的交换代数结构在 $\operatorname{gr}\mathfrak z(\fg)$ 上给出同样的结构。还要注意李代数 $\fg[[t]]$ 通过伴随表示作用在自身上，这诱导出它在 $\operatorname{Fun}\fg^*[[t]]$ 上的作用。
+
+% 原书 p.79 第二次印作 Lemma 3.3.1（与 p.76 的第一个 3.3.1 重号）；本译本按顺序自动编号，此处为 3.3.4
+\begin{lemma}
+    存在交换代数的单同态\transnote{原书 p.79 在此第二次印作 Lemma 3.3.1，与 p.76 的第一个引理 3.3.1 重号；按顺序此处应作 3.3.4。本译本按出现顺序自动编号，此处为 3.3.4；下文“与引理 3.3.4 同样地”即指此引理。[依据：原书 p.76、p.79 的编号对照。][来源：本书 p.79。]}
+    \[
+        \operatorname{gr}\mathfrak z(\fg) \hookrightarrow
+        \bigl(\operatorname{Fun}\fg^*[[t]]\bigr)^{\fg[[t]]}.
+    \]
+\end{lemma}
+
+\begin{proof}
+    嵌入 $\operatorname{gr}\mathfrak z(\fg)\hookrightarrow\operatorname{Fun}\fg^*[[t]]$ 是代数同态，这一点由同构 (3.3-3) 推出。
+
+    设 $A\in V_{\kappa_c}(\fg)_{\le i}$，用 $\operatorname{Symb}_i(A)$ 表示 $A$ 到
+    \[
+        \operatorname{gr}_i\bigl(V_{\kappa_c}(\fg)\bigr)
+        = V_{\kappa_c}(\fg)_{\le i}/V_{\kappa_c}(\fg)_{\le(i-1)}
+    \]
+    的投影。容易看出
+    \[
+        \operatorname{Symb}_i(x\cdot A) = x\cdot\operatorname{Symb}_i(A),
+        \qquad x\in\fg[[t]].
+    \]
+    若 $A\in\mathfrak z(\fg)$，则 $x\cdot A=0$，从而 $x\cdot\operatorname{Symb}_i(A)=0$。
+\end{proof}
+
+% [Tutor Note: 原书在第 76 页与第 79 页两次印作「引理 3.3.1」，重号；按顺序第二处应为 3.3.4。本译本按顺序重编为 3.3.4，并在译注中说明原书编号异常。另需注意：此引理只给出「符号层面的」单射，真正的难点在于证明 $\operatorname{gr}\mathfrak z(\fg)$ 已经填满不变量代数，这正是 §3.4–§3.5 乃至第 4 章的技术核心（射流概形与 opers）。]
+
+% --------------------------------------------------------------- p.80
+于是 $\mathfrak z(\fg)$ 中元素的符号被实现为 $\fg^*[[t]]$ 上的 $\fg[[t]]$-不变函数。现在我们开始研究这些函数构成的代数，记作
+\[
+    \operatorname{Inv}\fg^*[[t]] = \bigl(\operatorname{Fun}\fg^*[[t]]\bigr)^{\fg[[t]]}.
+\]
+注意李代数 $\fg[[t]]$ 在 $\operatorname{Fun}\fg^*[[t]]$ 上的作用来自 $\fg$ 在 $\fg^*$ 上的余伴随作用。这个作用可以指数化为群 $G[[t]]$ 的伴随作用，其中 $G$ 是李代数为 $\fg$ 的连通单连通李群。因此 $G[[t]]$ 作用在 $\operatorname{Fun}\fg^*[[t]]$ 上。由于 $G[[t]]$ 连通，由此得到
+\[
+    \operatorname{Inv}\fg^*[[t]] = \bigl(\operatorname{Fun}\fg^*[[t]]\bigr)^{G[[t]]}.
+\]
+如果我们能算出这个不变量函数代数的规模，就能对 $\mathfrak z(\fg)$ 的规模给出上界；而这个上界将会小到足以让我们断定：后面构造出的元素给出了 $V_{\kappa_c}(\fg)$（并最终给出 $\widetilde U_{\kappa_c}(\gghat)$）的整个中心。
+
+% [Tutor Note: 这里体现了 Feigin–Frenkel 方法的标准路线：先在分次伴随层面求出「可能的最大中心」——不变量代数 $\operatorname{Inv}\fg^*[[t]]$，再显式构造出同样多的中心元（Segal–Sugawara 算子及其推广，其思想源自 Feigin–Frenkel，详见第 4 章），最后由两边规模相符得出相等。注意：$\operatorname{Inv}\fg^*[[t]]$ 是无穷维的，其规模用射流概形的「函数增长阶」来度量；这一步用到了 $\operatorname{gr}\mathfrak z(\fg)$ 与 $V_{\kappa_c}(\fg)$ 的滤过之间的相容性。]
+
+\subsection{中心元的符号}
+
+考察有限维单李代数 $\fg$ 的情形是富有启发的。此时 $\mathfrak z(\fg)$ 的对应物是 $\fg$ 的泛包络代数 $U(\fg)$ 的中心 $Z(\fg)$。令 $\operatorname{gr}U(\fg)$ 为关于 Poincaré--Birkhoff--Witt 滤过的分次伴随代数。则
+\[
+    \operatorname{gr}U(\fg) = \Sym\fg = \operatorname{Fun}\fg^*.
+\]
+令 $\operatorname{gr}Z(\fg)$ 为 $Z(\fg)$ 关于诱导滤过的分次伴随代数。与引理 3.3.4 同样地，我们得到单同态
+\[
+    \operatorname{gr}Z(\fg) \hookrightarrow \operatorname{Inv}\fg^*
+    = \bigl(\operatorname{Fun}\fg^*\bigr)^{\fg}
+    = \bigl(\operatorname{Fun}\fg^*\bigr)^{G}.
+\]
+它其实是同构，因为 $U(\fg)$ 与 $\Sym\fg$ 作为 $\fg$-模（关于伴随作用）是同构的。这来自如下事实：两者都是有限维表示的正向极限，而这类表示之间没有非平凡扩张。
+
+回忆由定理 2.1.1 我们有
+\[
+    Z(\fg) = \C[P_i]_{i=1,\dots,\ell}.
+\]
+令 $\bar P_i$ 为 $P_i$ 在 $\operatorname{Fun}\fg^*$ 中的符号。则
+\[
+    \operatorname{Inv}\fg^* = \C[\bar P_i]_{i=1,\dots,\ell}.
+\]
+由定理 2.1.1，$\deg\bar P_i=d_i+1$。\transnote{经典 Harish--Chandra 同构断言 $\operatorname{gr}Z(\fg)\cong(\Sym\fg)^{\fg}=\operatorname{Inv}\fg^*$，且 $\deg\bar P_i=d_i+1$，其中 $d_i$ 是 $\fg$ 的 exponents；对 $\mathfrak{sl}_n$ 即 $2,3,\dots,n$。书中把此同构归因于 $U(\fg)$ 与 $\Sym\fg$ 作为 $\fg$-模同构，这依赖半单性与完全可约性。§3.3 的整个论证就是把这一有限维原型逐阶提升到 $\operatorname{gr}\mathfrak z(\fg)\hookrightarrow(\operatorname{Fun}\fg^*[[t]])^{\fg[[t]]}$。[来源：Harish-Chandra 1951；原书 p.80。]}
+
+% [Tutor Note: 「$\operatorname{gr}Z(\fg)\hookrightarrow\operatorname{Inv}\fg^*$ 是同构」即经典的 Harish--Chandra 同构（Chevalley 限制定理的代数形式）：$Z(\fg)\simeq(\Sym\fg)^{\fg}$，而 $\operatorname{Inv}\fg^*=(\Sym\fg)^{\fg}$。书中给出的理由是「$U(\fg)$ 与 $\Sym\fg$ 作为 $\fg$-模同构」，这依赖半单性（完全可约）与两者的表示为有限维表示的正向极限。这里 $d_i$ 是 $\fg$ 的 exponents，故 $\deg\bar P_i=d_i+1$；对 $\fg=\mathfrak{sl}_n$ 即 $2,3,\dots,n$。]
+
+下面我们将用元素 $\bar P_i$ 在 $\operatorname{Inv}\fg^*[[t]]$ 中造出大量元素。我们将使用 $\Sym(\fg((t))/\fg[[t]])=\operatorname{Fun}\fg^*[[t]]$ 的生成元 $J^a_n$（$n<0$），
+
+% 本片段到此结束：原书 p.80 页末，句子尚未完结（逗号收尾），下接 ch03-2.tex 的 p.81 起。

@@ -1,0 +1,689 @@
+% =====================================================================
+%  第 3 章 构造中心元（续）
+%  §3.4 射流概形（印刷 p.81 下半页 – p.86）；§3.5 sl_2 情形的中心（印刷 p.87–p.100）
+%  对应 PDF p.95–p.114。本文件不含 \chapter。
+%
+%  【接缝说明】PDF p.95 的页眉虽印作 “3.4. JET SCHEMES”，但该页上三分之一
+%  仍属 §3.3.4“中心元的符号”：含式 (3.3-4)、引理 3.3.4 及其后的同态。
+%  为免与 ch03-1.tex（U04，止于 PDF p.94 页末，句子未完）之间断句、漏译，
+%  这里把这一小段接续文字原样放在第一个 section 标题之前。
+%  若 ch03-1.tex 末尾已含同样内容，合成时删去本文件开头至第一个 section 之前的一段即可。
+% =====================================================================
+
+它们就是 $V_{\kappa_c}(\fg)$ 中 $\bar J^a_n|0\rangle$ 的符号。这些符号是 $\fg^*[[t]]$ 上的线性函数，由公式
+\begin{equation}
+    \bar J^a_n(\phi(t)) = \operatorname{Res}_{t=0}\langle \phi(t), J^a\rangle\, t^n dt
+    \tag{3.3-4}
+\end{equation}
+定义。我们还会写
+\[
+    \bar J^a(z) = \sum_{n<0} \bar J^a_n z^{-n-1}.
+\]
+设把 $\bar P_i$ 写成这些线性元素的多元多项式，记作 $\bar P_i(\bar J^a)$。再按公式
+\[
+    \bar P_i(\bar J^a(z)) = \sum_{n<0} \bar P_{i,n} z^{-n-1}
+\]
+定义一族元素 $\bar P_{i,n}\in\operatorname{Fun}\fg^*[[t]]$。注意每个 $\bar P_{i,n}$ 都是 $\bar J^a_n$ 的有限多项式。
+
+\begin{lemma}
+    多项式 $\bar P_{i,n}$ 属于 $\operatorname{Inv}\fg^*[[t]]$。
+\end{lemma}
+
+证明直接，留给读者。
+
+% [Tutor Note: p.81 的记号提醒“符号层”与“算子层”的区别。带横线的 $\bar J^a_n$、$\bar P_{i,n}$ 是分次伴随代数 $\operatorname{gr}V_{\kappa_c}(\fg)\simeq\operatorname{Fun}\fg^*[[t]]$ 中的函数；不带横线的 $J^a_n$ 是 $V_{\kappa_c}(\fg)$ 上的算子。本页式 (3.3-4) 中配对 $\langle\phi(t),J^a\rangle$ 是 $\fg^*$ 与 $\fg$ 的自然配对，$\operatorname{Res}_{t=0}$ 只取 $t^{-1}dt$ 的系数；两者都不可与算子的正规序乘积混淆。]
+
+于是有同态
+\[
+    \mathbb{C}[\bar P_{i,n}]_{i=1,\dots,\ell;\,n<0}\longrightarrow\operatorname{Inv}\fg^*[[t]].
+\]
+我们希望证明它实际上是同构，但为此还需再发展一些技术。
+
+\section{射流概形}
+
+\begin{keypoints}
+    \item \textbf{核心思想：}射流概形 $JX$ 是“$X$ 上形式道路”的模空间，即把圆盘 $D=\Spec\mathbb{C}[[t]]$ 到 $X$ 的映射组织成一个概形；而 $\fg^*[[t]]$ 正是 $\fg^*$（看作仿射代数簇）的射流概形。
+    \item \textbf{数学工具：}点函子与可表示性；有限阶射流概形 $J_nX$ 及其逆向极限；形式光滑性的提升判据。
+    \item \textbf{关键结论：}定理 3.4.2 给出 $\operatorname{Inv}\fg^*[[t]]=\mathbb{C}[\bar P_{i,n}]_{i=1,\dots,\ell;n<0}$。证明路线是把 $\fg^*_{\mathrm{reg}}\to\mathcal{P}$ 的单轨道纤维性质“射流化”。
+    \item \textbf{记号提醒：}本节的 $\bar P_{i,n}$、$\bar P_i$ 是符号，不是算子；$T$ 是函数环上由 $\partial_t$ 诱导的导子。
+\end{keypoints}
+
+设 $X$ 是复代数簇。$X$ 的\emph{射流概形}是一个代数对象，它表示“$X$ 上的形式道路空间”，即从圆盘 $D=\Spec\mathbb{C}[[t]]$ 到 $X$ 的态射。我们希望把它当作概形来看待，即看作用多项式方程在仿射空间中切出的仿射代数簇粘合而成的东西。本节给出这些对象的精确定义。我们之所以关心它们，理由很简单：$\fg^*[[t]]$ 就是 $\fg^*$（看作仿射代数簇）的射流概形。借助射流概形这一技术，我们将能描述 $\fg^*[[t]]$ 上不变函数的代数。
+
+\subsection{概形的一般性}
+
+在代数几何中，用\emph{点函子}来描述代数簇（或概形）往往很方便。例如，域 $k$ 上的仿射代数簇 $X$ 由它的正则函数环完全决定。记该环为 $\operatorname{Fun}X$，于是可写 $X=\Spec(\operatorname{Fun}X)$。现取 $k$-代数 $R$，把 $X$ 的 $R$-点集（记作 $X(R)$）定义为态射 $\Spec R\to X$ 的集合。这与 $k$-代数同态 $\operatorname{Fun}X\to R$ 的集合相同。
+
+若 $R=k$，就回到通常的 $k$-点概念，因为每个同态 $\operatorname{Fun}X\to k$ 相当于在一点 $x\in X(k)$ 处取函数值。然而一般而言，$k$-点集本身并不能抓住 $X$ 的全部结构。例如当 $k$ 不是代数闭域时，$X(k)$ 完全可能为空，但这并不意味着 $X$ 为空。看 $X=\Spec\mathbb{R}[x]/(x^2+1)$：$X(\mathbb{R})$ 为空，而 $X(\mathbb{C})$ 恰含一个元素。可见只看 $k$-点确实可能丢失 $X$ 的信息。若 $X$ 是仿射代数簇，则刻画其结构的是代数 $\operatorname{Fun}X$，而非集合 $X(k)$。对一般代数簇 $X$，刻画它的是 $X$ 上的概形结构；这本质上就是用仿射代数簇覆盖 $X$，每块由它的正则函数代数描述。
+
+现在固定 $X$、让 $k$-代数 $R$ 变动，便得到从交换 $k$-代数范畴到集合范畴的一个函子，它满足若干自然条件（在适当意义下是 $k$-代数范畴上的“层”）。这些条件保证它可以唯一地延拓为从 $k$ 上概形范畴（这些对象由仿射代数簇粘合而成）到集合范畴的函子。这就是所谓的“点函子”。
+
+对 $k$ 上任意代数簇 $X$（不必仿射），点函子可类似地定义。一个重要结果是：点函子唯一决定 $X$（同构意义下）。从 $k$-代数范畴（或 $k$ 上概形范畴）到集合范畴的这类函子称为\emph{可表示的}；此时称簇 $X$ \emph{表示}该函子。
+
+% [Tutor Note: p.82 这段是本节的方法论前提，也是全书反复使用的“先造点函子、再证可表示”套路。技术出处是 Grothendieck 的函子观点（见 EGA 0 与 [Grothendieck–Dieudonné 1971]）；要点在于：$k$-点集不是函子，$R$ 跑遍所有 $k$-代数得到的才是；概形范畴正是使这种可表示性成立的最小扩充。]
+
+因此，若要定义一个“设想的”代数簇 $X$，先定义其“设想的”点函子并不丢失任何信息。先验地看，该函子未必真是点函子（即未必能由上述构造实现）。所以需要回答的问题是：这个函子可表示吗？若可表示，则表示它的对象就是所要的代数簇。
+
+\subsection{射流概形的定义}
+
+现在来看看射流概形的情形如何运作。此时“设想的”点函子容易定义。设 $X$ 是代数簇，为确定起见设在 $\mathbb{C}$ 上。则 $X$ 的 $R$-点是态射 $\Spec R\to X$，等价地是代数同态 $\operatorname{Fun}X\to R$。“设想的”射流概形 $JX$ 的 $R$-点，应看成从 $\Spec(R)$ 上的圆盘（即 $\Spec(R[[t]])$）到 $X$ 的态射。于是这样定义 $JX$ 的点函子：把 $\mathbb{C}$-代数 $R$ 送到态射 $\Spec(R[[t]])\to X$ 的集合，把同态 $R\to R'$ 送到这些集合之间显然的映射。不难看出它是“层”，因而唯一地延拓到 $\mathbb{C}$ 上概形范畴。以下只考察它在 $\mathbb{C}$-代数范畴上的限制。
+
+若 $X$ 是仿射簇，则态射 $\Spec R[[t]]\to X$ 等同于同态 $\operatorname{Fun}X\to R[[t]]$，于是得到“设想的”集合概形（set scheme）$JX$ 的点函子一个非常具体的实现。\transnote{原文作“the ‘would be’ functor of points of the set scheme $JX$”，其中 set scheme（集合概形）应为 jet scheme（射流概形）之误：本段正是在把 $JX$ 定义为 $R\mapsto\operatorname{Hom}(\Spec R[[t]],X)$ 所表示的函子，“集合概形”并非标准对象，且下文（原书 p.85）随即把 $JX$ 写成 $J_nX$ 的逆向极限。[依据：原书 p.83][来源：本书 p.83。]}
+
+例如设 $X$ 是仿射空间 $\mathbb{A}^N$。在 $\mathbb{A}^N$ 上取坐标函数 $x_1,\dots,x_N$，得 $\operatorname{Fun}\mathbb{A}^N=\mathbb{C}[x_1,\dots,x_N]$，即 $\mathbb{A}^N=\Spec\mathbb{C}[x_1,\dots,x_N]$。于是 $\mathbb{A}^N$ 的 $\mathbb{C}$-点是同态 $\phi:\mathbb{C}[x_1,\dots,x_N]\to\mathbb{C}$；它们由 $(a_1,\dots,a_N)$ 这样的复数元组给出，其中 $\phi(x_i)=a_i$，符合预期。同样，它的 $R$-点由 $R$ 中元素构成的 $N$ 元组给出。
+
+按定义，射流概形 $J\mathbb{A}^N$ 的 $R$-点集应由同态
+\[
+    \mathbb{C}[x_1,\dots,x_N]\longrightarrow R[[t]]
+\]
+给出。这样的同态由生成元 $x_i$ 的像唯一确定，而这些像现在是形式幂级数
+\begin{equation}
+    a_i(t)=\sum_{n<0} a_{i,n} t^{-n-1},\qquad a_{i,n}\in R,\quad i=1,\dots,N
+    \tag{3.4-1}
+\end{equation}
+（指标如此选取，是为了与前面公式的约定一致）。注意这些形式幂级数没有任何收敛性要求。换言之，我们描述的确实是“形式”道路。
+
+等价地，可以把这 $N$ 个形式幂级数看成它们全部 Fourier 系数的汇集。于是 $J\mathbb{A}^N$ 的 $R$-点集是
+\[
+    \{a_{i,n}\in R \mid i=1,\dots,N;\ n<0\}.
+\]
+相应的函子由
+\[
+    J\mathbb{A}^N \overset{\mathrm{def}}{=} \Spec\mathbb{C}[x_{i,n}]_{i=1,\dots,N;\,n<0}
+\]
+表示。这样就得到了 $\mathbb{A}^N$ 的射流概形 $J\mathbb{A}^N$ 的定义。如所预期，$J\mathbb{A}^N$ 是无穷维仿射空间（有限维仿射空间的逆向极限）。
+
+% [Tutor Note: p.83 式 (3.4-1) 的指标约定 $t^{-n-1}$（$n<0$）与 §3.3 中 $J^a(z)=\sum_{n<0}J^a_n z^{-n-1}$ 一致，它保证 $a_i(t)\in R[[t]]$ 而非 $R((t))$。若误取 $t^n$（$n<0$），得到的将是 Laurent 级数，射流概形会退化为圈群；此处极易出错。]
+
+现设 $X$ 是有限维仿射代数簇。它的射流概形长什么样？可以写
+\[
+    X=\Spec\left(\mathbb{C}[x_1,\dots,x_N]/\langle F_1,\dots,F_M\rangle\right),
+\]
+其中 $F_i$ 是变元 $x_1,\dots,x_N$ 的多项式。这意味着 $X$ 的复点就是满足方程
+\[
+    F_i(a_1,\dots,a_N)=0\qquad\text{对一切 } i
+\]
+的复数元组 $(a_1,\dots,a_N)$。
+
+按定义，$X$ 的射流概形 $JX$ 的 $R$-点集，是同态
+\[
+    \mathbb{C}[x_1,\dots,x_N]/\langle F_1,\dots,F_M\rangle\longrightarrow R[[t]]
+\]
+的集合。这样的同态仍由 $x_j$ 的像唯一确定，而这些像是形如 (3.4-1) 的形式幂级数 $a_i(t)$，只是现在还必须满足方程
+\begin{equation}
+    F_i(a_1(t),\dots,a_N(t))\equiv 0,\qquad i=1,\dots,N.
+    \tag{3.4-2}
+\end{equation}
+读出 $t^m$ 的系数，就得到关于 Fourier 系数 $a_{i,n}$ 的方程。\transnote{(3.4-2) 中印作 $i=1,\dots,N$，应为 $i=1,\dots,M$：$X$ 由 $M$ 个方程 $F_1,\dots,F_M$ 定义，每个 $F_i$ 给出一个方程，与坐标个数 $N$ 无关；同页下文 $T^mF_i$ 的指标也沿用了 $N$，宜一并读作 $M$。[依据：原书 p.84][来源：本书 p.84。]}
+
+把这些方程整理成紧凑形式，做法如下。定义代数 $\mathbb{C}[x_{j,n}]$ 的导子 $T$：
+\[
+    T(x_{j,n})=-n x_{j,n-1}.
+\]
+把定义多项式 $F_i$ 中的 $x_j$ 都换成 $x_{j,-1}$，并仍记作 $F_i$。则来自于 (3.4-2) 的方程恰为
+\[
+    T^m F_i=0,\qquad i=1,\dots,N;\ m\ge 0.
+\]
+因此该点函子由概形
+\[
+    JX=\Spec\left(\mathbb{C}[x_{j,n}]_{j=1,\dots,N;\,n<0}\big/\langle T^m F_i\rangle_{i=1,\dots,M;\,m\ge 0}\right)
+\]
+表示。这就是 $X$ 的\emph{射流概形}。
+
+% [Tutor Note: p.84 的导子 $T$ 就是 $\partial_t$ 在系数坐标上的作用。约定 $x_{j,n}$ 是 $t^{-n-1}$ 的系数（$n<0$），记指数 $m=-n-1\ge0$；对级数求导后，$t^{m}$ 的系数等于 $(m+1)$ 乘原级数中 $t^{m+1}$ 的系数，换成指标即 $T(x_{j,n})=-n x_{j,n-1}$。于是 $T^mF_i=0$（$m\ge0$）恰好逐条写出 $F_i(a(t))\equiv0$ 的全部系数方程，$m=0$ 即常数项。自检可取 $n=-1$：$T(x_{j,-1})=x_{j,-2}$，正对应 $t^1$ 的系数。]
+
+特别地，$JX$ 上的函数代数带有从 $\mathbb{C}[x_{j,n}]_{j=1,\dots,N;n<0}$ 继承来的导子 $T$，因此它是交换顶点代数。
+
+至此我们定义了任意仿射概形的射流概形。更一般的概形呢？任意概形都有仿射概形覆盖；要定义 $X$ 的射流概形，只需弄清如何把各仿射块的射流概形粘起来。例如 $\PP^1$ 可分解为两个仿射概形 $\mathbb{A}^1\cup\mathbb{A}^1$，它们分别是 $\infty$ 与 $0$ 的补集，由 $\Spec(\mathbb{C}[x])$ 与 $\Spec(\mathbb{C}[y])$ 给出，并以 $x\leftrightarrow y^{-1}$ 等同。我们已知如何得到这些仿射块的射流概形。推广粘合条件的显然做法，是把形式幂级数代入其中，即
+\[
+    x(t)\longleftrightarrow y(t)^{-1}.
+\]
+要把 $y(t)^{-1}$ 写成 $t$ 的形式幂级数，只需将 $y_{-1}$ 求逆，而它在 $\PP^1$ 中两条仿射直线的重叠处可逆。因此该公式在重叠处有定义，并把两条仿射直线的射流概形粘成 $\PP^1$ 的射流概形。
+
+类似结论在一般情形也成立，粘合因此可行（唯一的困难来自被求逆的变量，但它们与原概形中的情形一样是相容的）。于是对任意（有限型）概形 $X$ 都构造出了射流概形 $JX$。
+
+令
+\[
+    D_n=\Spec(\mathbb{C}[[t]]/(t^{n+1}))
+\]
+为一点的 $n$ 阶邻域。可以构造 $n$ 阶射流概形 $J_nX$，它表示从 $D_n$ 到 $X$ 的映射。自然映射 $D_{n-1}\to D_n$ 给出映射 $J_nX\to J_{n-1}X$。于是可以把（无穷阶）射流概形 $JX$ 表示成有限射流概形的逆向极限：
+\[
+    JX=\varprojlim J_n X.
+\]
+这把射流概形实现为有限型概形的逆向极限。
+
+下面的引理直接来自光滑性判据：$\mathbb{C}$ 上有限型概形的态射 $\phi:X\to Y$ 光滑，当且仅当对任意 $\mathbb{C}$-代数 $R$ 及其幂零扩张 $R_{\mathrm{nilp}}$（即商掉幂零元生成的理想后得到 $R$ 的 $\mathbb{C}$-代数），以及态射
+\[
+    p:\Spec(R)\longrightarrow Y,
+\]
+只要 $p$ 能经由 $\phi$ 提升到 $X$，则 $p$ 到态射
+\[
+    \Spec(R_{\mathrm{nilp}})\longrightarrow Y
+\]
+的任意延拓也能提升到 $X$。
+
+% [Tutor Note: p.85 这个判据即“形式光滑性 + 有限型”（也称无穷小提升判据）。它把“光滑”翻译成对幂零扩张的提升性质，正是它能原样搬到射流概形上的原因：$J_n$ 只依赖环 $R$ 的幂零部分。标准出处见 EGA IV（17.14.2）或 [Hartshorne 1977] 关于形式态射的章节；原书此处未给引用。]
+
+称 $\mathbb{C}$-概形态射 $X\to Y$ \emph{满}，是指相应的 $\mathbb{C}$-点集映射 $X(\mathbb{C})\to Y(\mathbb{C})$ 满。
+
+\begin{lemma}
+    若态射 $\phi:X\to Y$ 光滑且满，则相应的射流概形态射 $J_n\phi:J_nX\to J_nY$ 与 $J\phi:JX\to JY$ 也（形式地）光滑且满。
+\end{lemma}
+
+\subsection{$J\fg$ 上不变函数的描述}
+
+现在用射流概形的概念来证明下面这个关于 $\fg^*[[t]]$ 上不变函数的定理。它属于 A. Beilinson 与 V. Drinfeld [1997]（另见 [Mustață 2001] 的命题 A.1）。回忆 $\fg$ 是秩为 $\ell$ 的单李代数。
+
+\begin{theorem}
+    代数 $\operatorname{Inv}\fg^*[[t]]$ 等于 $\mathbb{C}[\bar P_{i,n}]_{i=1,\dots,\ell;\,n<0}$。
+\end{theorem}
+
+\begin{proof}
+    回忆 $\operatorname{Inv}\fg^*[[t]]$ 是 $\fg^*[[t]]$ 上 $G[[t]]$-不变函数的代数。用射流概形的语言可写 $\fg^*[[t]]=J\fg^*$、$G[[t]]=JG$，于是空间 $\operatorname{Inv}\fg^*[[t]]=(\operatorname{Fun}J\fg^*)^{JG}$ 应看成“商” $J\fg^*/JG$ 上函数的代数。可惜它不是簇，因为 $JG$ 在 $J\fg^*$ 中的轨道结构相当复杂。
+
+    更确切地说，令 $\mathcal{P}=\Spec\operatorname{Inv}\fg^*=\Spec\mathbb{C}[\bar P_i]_{i=1,\dots,\ell}$。于是 $\mathcal{P}$ 是以 $\bar P_i$（$i=1,\dots,\ell$）为坐标的仿射空间。包含 $\operatorname{Inv}\fg^*\hookrightarrow\operatorname{Fun}\fg^*$ 给出满射 $p:\fg^*\to\mathcal{P}$。群 $G$ 沿纤维作用，但纤维未必由单个 $G$-轨道组成。
+
+    例如 $0$ 的原像是\emph{幂零锥}。用非退化不变内积把 $\fg$ 与 $\fg^*$ 等同。当 $\fg=\mathfrak{sl}_n$ 时，幂零锥由 $\mathfrak{sl}_n$ 中所有幂零 $n\times n$ 矩阵组成。幂零矩阵的轨道由 Jordan 标准形、等价地由 $n$ 的划分参数化。有一个稠密轨道，由只含一个 Jordan 块的矩阵组成；此外还有若干较小轨道，对应其他的 Jordan 块形状。正是这些小轨道造成麻烦。特别地，态射 $\fg^*\to\mathcal{P}$ 不光滑。于是我们把这些轨道扔掉，定义正则元素的稠密开子集
+    \[
+        \fg^*_{\mathrm{reg}}=\{x\in\fg^*\mid \dim\fg_x=\ell\},
+    \]
+    其中 $\fg_x$ 是 $x$ 在 $\fg$ 中的中心化子。\footnote{这是中心化子所能具有的最小维数。}
+
+    限制所得的映射
+    \[
+        p_{\mathrm{reg}}:\fg^*_{\mathrm{reg}}\longrightarrow\mathcal{P}
+    \]
+    已经光滑。而且它满，每条纤维是单个 $G$-轨道 [Kostant 1963]。
+
+    对射流概形函子作用，得到态射
+    \[
+        Jp_{\mathrm{reg}}:J\fg^*_{\mathrm{reg}}\longrightarrow J\mathcal{P},
+    \]
+    由引理 3.4.1，它（形式地）光滑且满。这里
+    \[
+        J\mathcal{P}=\Spec\mathbb{C}[\bar P_{i,n}]_{i=1,\dots,\ell;\,n<0}
+    \]
+    是以 $\bar P_{i,n}$（$i=1,\dots,\ell$；$n<0$）为坐标的无穷维仿射空间。
+
+    我们要证明 $Jp_{\mathrm{reg}}$ 的纤维同样由单个 $JG$-轨道组成。为此考虑映射
+    \[
+        G\times\fg^*_{\mathrm{reg}}\longrightarrow\fg^*_{\mathrm{reg}}\times_{\mathcal{P}}\fg^*_{\mathrm{reg}}.
+    \]
+    它仍是光滑态射。但注意：它满，当且仅当 $\fg^*_{\mathrm{reg}}\to\mathcal{P}$ 的纤维由单个轨道组成。取射流概形，得到态射
+    \[
+        JG\times J\fg^*_{\mathrm{reg}}\longrightarrow J\fg^*_{\mathrm{reg}}\times_{J\mathcal{P}}J\fg^*_{\mathrm{reg}}.
+    \]
+    由引理 3.4.1，它（形式地）光滑且满。这说明 $Jp_{\mathrm{reg}}$ 的每条纤维是单个 $JG$-轨道。
+
+    于是 $J\fg^*_{\mathrm{reg}}$ 上 $JG$-不变函数的代数等于 $\operatorname{Fun}(J\mathcal{P})=\mathbb{C}[\bar P_{i,n}]_{i=1,\dots,\ell;n<0}$。
+
+    确切地说，先对有限射流概形证明相应结论。对每个 $N\ge 0$ 有态射 $J_N\fg^*_{\mathrm{reg}}\to J_N\mathcal{P}$，并配有逐纤维的 $J_NG$-作用。与上面相同，可得该态射的每条纤维是单个 $J_NG$-轨道。于是 [Mumford 1965] 的命题 0.2 表明，$J_N\fg^*_{\mathrm{reg}}$ 上 $J_NG$-不变函数的代数等于 $\operatorname{Fun}(J_N\mathcal{P})=\mathbb{C}[\bar P_{i,n}]_{i=1,\dots,\ell;-N-1\le n<0}$。\transnote{命题 0.2 在此处的用法是：若 $Y\to Z$ 的每条纤维恰为一个 $G$-轨道，则 $Y$ 上的 $G$-不变函数正好是 $Z$ 上的函数。原书先在 $\fg^*_{\mathrm{reg}}\to\mathcal{P}$ 上用 Kostant 的结论（纤维单轨道）得到光滑性，再逐阶射流化；幂零锥上的小轨道使纤维不再是单轨道，这正是必须先扔掉它们的原因。[依据：原书 p.86；[Mumford 1965] 命题 0.2][来源：本书 p.86。]}
+
+    现在，$J\fg^*_{\mathrm{reg}}$ 上任何 $JG$-不变函数都来自某个 $J_N\fg^*_{\mathrm{reg}}$ 上 $J_NG$-不变函数的拉回。由此得到 $J\fg^*_{\mathrm{reg}}$ 上 $JG$-不变函数的代数等于 $\operatorname{Fun}(J\mathcal{P})=\mathbb{C}[\bar P_{i,n}]_{i=1,\dots,\ell;n<0}$。
+
+    但正则元素在 $\fg^*$ 中开且稠密，故 $J_N\fg^*_{\mathrm{reg}}$ 在 $J_N\fg^*$ 中开且稠密（$N$ 有限或无穷均如此）。因此 $J_N\fg^*$ 上的函数由它们在 $J_N\fg^*_{\mathrm{reg}}$ 上的限制唯一决定（$N$ 有限或无穷均如此）。所以 $J_N\fg^*$ 上 $J_NG$-不变函数的代数等于 $\operatorname{Fun}(J_N\mathcal{P})=\mathbb{C}[\bar P_{i,n}]_{i=1,\dots,\ell;-N-1\le n<0}$。
+\end{proof}
+
+% [Tutor Note: p.86 证明的关键一步是“纤维单轨道 ⇒ 不变函数 = 底空间函数”，这是 GIT 的基本事实：若 $Y\to Z$ 的每条纤维恰是一个 $G$-轨道，则 $\operatorname{Fun}(Y)^G=\operatorname{Fun}(Z)$。原书用 [Mumford 1965] 命题 0.2 在有限阶射流概形上逐阶执行，再取极限；此处不可把“纤维单轨道”换成“轨道闭”，否则幂零锥的小轨道会破坏结论——这正是作者先扔掉奇异纤维、只保留 $\fg^*_{\mathrm{reg}}$ 的原因。]
+
+\section{$\mathfrak{sl}_2$ 情形的中心}
+
+\begin{keypoints}
+    \item \textbf{核心思想：}临界水平中心的生成元 $S_n$ 不是普通函数，而是射影联络 $\partial_t^2-v(t)$ 的坐标函数（取 $v$ 的 $t^{-m-2}$ 系数）；中心因此是射影联络空间上的函数代数。
+    \item \textbf{数学工具：}伴随分次代数 $\operatorname{gr}\mathfrak{z}(\gghat)$ 加定理 3.4.2 定出“尽可能大”；用 $\operatorname{Aut}\mathcal{O}$ 的作用与torsor扭构造实现坐标无关化；Schwarz 导数给出坐标变换公式。
+    \item \textbf{关键结论：}$\mathfrak{z}(\widehat{\fsl}_2)=\mathbb{C}[S_n]_{n\le-2}|0\rangle$（定理 3.5.1）；$\mathfrak{z}(\widehat{\fsl}_2)\simeq\operatorname{Fun}\mathcal{P}roj(D)$（引理 3.5.1、定理 3.5.2）。
+    \item \textbf{记号提醒：}$L_n=-t^{n+1}\partial_t$；$\kappa_c=-2\kappa_0$，其中 $\kappa_0(A,B)=\Tr_{\mathbb{C}^2}(AB)$。归一化不同会带来符号与因子 2 的差异。
+    \item \textbf{伏笔：}射影联络即 $PGL_2$（$SL_2$ 的 Langlands 对偶群）的联络；下一章把它推广为 $^LG$-oper。
+\end{keypoints}
+
+这样，我们描述了中心 $\mathfrak{z}(\gghat)$ 的分次伴随 $\operatorname{gr}\mathfrak{z}(\gghat)$。现在该来描述中心 $\mathfrak{z}(\gghat)$ 本身了。我们从最简单的情形 $\fg=\mathfrak{sl}_2$ 开始。
+
+\subsection{第一种描述}
+
+由引理 3.3.1 知，中心 $\mathfrak{z}(\gghat)$ 的分次伴随 $\operatorname{gr}\mathfrak{z}(\gghat)$ 单射入 $\fg^*[[t]]$ 上不变函数的代数 $\operatorname{Inv}\fg^*[[t]]$。我们刚刚证明 $\operatorname{Inv}\fg^*[[t]]$ 等于多项式环 $\mathbb{C}[\bar P_{i,n}]_{i=1,\dots,\ell;n<0}$。当 $\fg=\mathfrak{sl}_2(\mathbb{C})$ 时，这已足以确定顶点代数 $V_{\kappa_c}(\mathfrak{sl}_2)$ 的中心 $\mathfrak{z}(\widehat{\fsl}_2)$ 的结构。确切地说，我们证明：
+
+\begin{theorem}
+    顶点代数 $V_{\kappa_c}(\mathfrak{sl}_2)$ 的中心 $\mathfrak{z}(\widehat{\fsl}_2)$ 等于
+    \[
+        \mathbb{C}[S_n]_{n\le -2}\,|0\rangle .
+    \]
+    这里 $S_n$ 是 Segal–Sugawara 算子（注意：$n\ge -1$ 的算子 $S_n$ 湮灭真空向量 $|0\rangle$）。
+\end{theorem}
+
+% [Tutor Note: p.87 定理 3.5.1 之所以对 $\mathfrak{sl}_2$ 能“一行解决”，是因为 $\ell=1$：不变函数代数只有一族生成元 $\bar P_{1,n}$，故只需确认 $S_n$ 的符号恰好填满它。一般 $\fg$ 的困难在于 $\bar P_{2,n},\dots,\bar P_{\ell,n}$ 对应的中心元没有显式公式。]
+
+\begin{proof}
+    我们已知 Segal–Sugawara 算子 $S_n$（$n\in\mathbb{Z}$）是临界水平完备泛包络代数的中心元。因此有映射
+    \begin{equation}
+        \mathbb{C}[S_n]_{n\le -2}\,|0\rangle \longrightarrow V_{\kappa_c}(\fsl_2)^{\fsl_2[[t]]}=\mathfrak{z}(\widehat{\fsl}_2).
+        \tag{3.5-1}
+    \end{equation}
+    需证此映射是等号，即算子 $S_n$（$n\le -2$）代数无关，且 $\mathfrak{z}(\widehat{\fsl}_2)$ 中没有其他元素。为此只需证明分次伴随代数的映射是同构。
+
+    回忆
+    \begin{equation}
+        S_n=\frac12\sum_a\sum_{j+k=n}{:}J^a_j J_{a,k}{:}.
+        \tag{3.5-2}
+    \end{equation}
+    当 $n\le -2$ 时，其中一部分项的两个指标 $j,k$ 均为负，其余项至少有一个指标为正。前者作用为
+    \[
+        V(\fg)_{\le i}\longrightarrow V(\fg)_{\le (i+2)}
+    \]
+    （因为它们是产生算子），其余项作用为
+    \[
+        V(\fg)_{\le i}\longrightarrow V(\fg)_{\le (i+1)}
+    \]
+    （因为它们至少含一个湮灭算子）。因此后一类项在取符号时被消去；于是单项式 $S_{n_1}\cdots S_{n_m}$（$n_i\le -2$）的符号等于 $\bar P_{1,n_1+1}\cdots\bar P_{1,n_m+1}$。这里
+    \[
+        \bar P_1(z)=\sum_{n<0}\bar P_{1,n}z^{-n-1}=\frac12\sum_a \bar J^a(z)\bar J_a(z)
+    \]
+    是上面考虑过的生成级数 $\bar P_i(z)$ 中的第一个（对 $\fg=\fsl_2$ 也是唯一一个）。
+
+    特别地，映射 (3.5-1) 与自然滤过相容，相应的分次伴随空间映射分解为
+    \[
+        \operatorname{gr}\mathbb{C}[S_n]_{n\le-2}|0\rangle\simeq\mathbb{C}[\bar P_n]_{n\le-2}
+        \longrightarrow(\operatorname{gr}V_{\kappa_c}(\fsl_2))^{\fsl_2[[t]]}
+        \simeq\operatorname{Inv}(\fsl_2)^*[[t]],
+    \]
+    其中第一个映射把 $S_n$ 送到 $\bar P_{1,n}$。\transnote{“把 $S_n$ 送到 $\bar P_{1,n}$”与上一段“符号等于 $\bar P_{1,n_1+1}\cdots$”相差一个指标：按上下文应读作 $S_n\mapsto\bar P_{1,n+1}$，或理解为把生成元 $\bar P_{1,n+1}$ 重新编号为 $\bar P_n$（目标环正记作 $\mathbb{C}[\bar P_n]_{n\le-2}$）。[依据：原书 p.88] 另：上段“其余项至少有一个指标为正”严格说应作“非负”——$j=0$ 或 $k=0$ 的项同样只提升一级滤过，原文措辞从宽，不影响结论。[来源：本书 p.88。]}由定理 3.4.2 知第二个映射是同构。因此
+    \[
+        \operatorname{gr}\mathbb{C}[S_n]_{n\le-2}|0\rangle\simeq\operatorname{Inv}(\fsl_2)^*[[t]].
+    \]
+    但我们知道
+    \[
+        \operatorname{gr}\mathbb{C}[S_n]_{n\le-2}|0\rangle\subset\operatorname{gr}\mathfrak{z}(\widehat{\fsl}_2)
+        \subset\operatorname{Inv}(\fsl_2)^*[[t]]
+    \]
+    （见引理 3.3.1）。于是上面两个包含都是等号，故 $\operatorname{gr}\mathbb{C}[S_n]_{n\le-2}|0\rangle=\operatorname{gr}\mathfrak{z}(\widehat{\fsl}_2)$。又已知 $\mathbb{C}[S_n]_{n\le-2}|0\rangle\subset\mathfrak{z}(\widehat{\fsl}_2)$，于是推出 $\mathbb{C}[S_n]_{n\le-2}|0\rangle=\mathfrak{z}(\widehat{\fsl}_2)$。
+\end{proof}
+
+% [Tutor Note: p.88 此处有一处疑似笔误：上文刚算出 $S_n$ 的符号是 $\bar P_{1,n+1}$，而紧接着说“第一个映射把 $S_n$ 送到 $\bar P_{1,n}$”，指标差 1。按上下文（以及目标环记作 $\mathbb{C}[\bar P_n]_{n\le-2}$ 的重新编号）应读作 $S_n\mapsto\bar P_{1,n+1}$，或理解为把生成元 $\bar P_{1,n+1}$ 重新记作 $\bar P_n$。译文保留原文写法，仅在此提示核对。]
+
+% [Tutor Note: p.88 式 (3.5-2) 是正规序乘积，展开时 $j,k$ 的先后次序决定符号；$\fsl_2$ 情形下 $\sum_a J^a_j J_{a,k}$ 用 Killing 型配对。核对符号的稳妥办法是取 $n=-2$ 的二次 Casimir 元：$S_{-2}|0\rangle=\frac12 J^a_{-1}J_{a,-1}|0\rangle$，其符号应为 $\frac12\bar J^a_{-1}\bar J_{a,-1}$，与 $P_1$ 的符号一致。]
+
+对完备泛包络代数 $\widetilde{U}_{\kappa_c}(\widehat{\fsl}_2)$ 的中心可得类似结果：中心由 $S_n$（$n\in\mathbb{Z}$）拓扑生成（所以这次用到了全部 $S_n$）。论证基本相同，但我们将把这个证明推迟到 §4.3.2。
+
+下面将看到，这两个结果对更一般的李代数 $\fg$ 仍成立。换言之，我们将证明 $\mathfrak{z}(\gghat)$ “尽可能大”，即 $\operatorname{gr}\mathfrak{z}(\gghat)=\operatorname{Inv}\fg^*[[t]]$。这等价于存在中心元 $S_i\in\mathfrak{z}(\gghat)\subset V_{\kappa_c}(\fg)$，其符号等于 $\bar P_{i,-1}\in\operatorname{Inv}\fg^*[[t]]$。于是如同 $\fg=\fsl_2$ 的情形，将推出
+\[
+    \mathfrak{z}(\gghat)=\mathbb{C}[S_{i,[n]}]_{i=1,\dots,\ell;n<0},
+\]
+其中 $S_{i,[n]}$ 是形式幂级数 $Y[S_i,z]$ 的 Fourier 系数。此外还可推出，$\widetilde{U}_{\kappa_c}(\gghat)$ 的中心由 $S_{i,[n]}$（$i=1,\dots,\ell$；$n\in\mathbb{Z}$）拓扑生成。
+
+我们已经构造了其中第一个元素，即二次元素 $\frac12 J^a_{-1}J_{a,-1}|0\rangle\in\mathfrak{z}(\gghat)$，其符号为 $\frac12\bar J^a_{-1}\bar J_{a,-1}$，对应二次 Casimir 元 $\bar P_1$。可惜对应高阶 Casimir 元 $\bar P_{i,-1}$（$i>1$）的中心元的公式一般未知（首项显然，麻烦在于求低阶项）。因此不能像 $\fg=\fsl_2$ 时那样直接证明该结果，须另想办法。
+
+\subsection{坐标无关性}
+
+目前的处理还有另一类缺陷：迄今一切做法都依赖坐标。我们从李代数 $\fg$ 出发，把 $\gghat$ 构造为 $\fg\otimes\mathbb{C}((t))$ 的中心扩张。然而有许多局部域同构于域 $\mathbb{C}((t))$，但同构并不自然。
+
+% [Tutor Note: p.89 “坐标无关性”是全章的技术枢纽。注意区别两类同构：$\mathcal{K}_x\simeq\mathbb{C}((t))$ 作为抽象域总是存在（选一个局部坐标即可），但非典范；而 §3.5.3–3.5.4 要做的，是把“依赖 $t$ 的结果”升级为“带 $\operatorname{Aut}\mathcal{O}$ 作用的结果”，再由torsor扭构造得到典范版本。]
+
+例如设 $X$ 是 $\mathbb{C}$ 上的光滑代数曲线，$x$ 是 $X$ 上任一点。取定 $x$ 给出有理函数域 $\mathbb{C}(X)$ 上的赋值 $|\cdot|_x$。该赋值定义为 $f$ 在 $x$ 处的消没阶数，与坐标无关。此赋值下函数代数的完备化记为 $\mathcal{K}_x$。取 $x$ 处的一个局部坐标，即在 $x$ 处消没阶为 1 的有理函数（更一般地，可取“形式坐标”，即 $\mathcal{K}_x$ 中在 $x$ 处消没阶为 1 的任意元素）。记该函数为 $t$，则得到同构 $\mathbb{C}((t))\to\mathcal{K}_x$。于是每选一个 $x$ 处的坐标，就把 $\mathcal{K}_x$ 与 $\mathbb{C}((t))$ 等同起来。但通常没有优选的坐标，因此没有典范同构 $\mathcal{K}_x\simeq\mathbb{C}((t))$。
+
+不过，迄今讨论的所有对象都可以典范地附着于 $\mathcal{K}_x$，无需援引特定坐标。事实上，附着于 $\mathcal{K}_x$ 的仿射 Kac–Moody 代数 $\hat{\fg}_{\kappa,x}$ 定义为由二上循环
+\[
+    c(A\otimes f,B\otimes g)=-\kappa(A,B)\operatorname{Res}_x(f\,dg)
+\]
+给出的中心扩张
+\[
+    0\longrightarrow\mathbb{C}\mathbf{1}\longrightarrow\hat{\fg}_{\kappa,x}\longrightarrow\fg\otimes\mathcal{K}_x\longrightarrow 0 .
+\]
+该公式与坐标无关，因为 $f\,dg$ 是一形式，其留数有典范定义。然后定义与点 $x$ 相伴的坐标无关真空 $\hat{\fg}_{\kappa,x}$-模为
+\begin{equation}
+    V_\kappa(\fg)_x=\operatorname{Ind}^{\hat{\fg}_{\kappa,x}}_{\fg\otimes\mathcal{O}_x\oplus\mathbb{C}\mathbf{1}}\mathbb{C},
+    \tag{3.5-3}
+\end{equation}
+其中 $\mathcal{O}_x$ 是 $\mathcal{K}_x$ 的整数环（由 $\mathcal{K}_x$ 中在 $x$ 处无极点的元素组成）。
+
+现在的任务是描述代数
+\begin{equation}
+    \mathfrak{z}(\gghat)_x=\operatorname{End}_{\hat{\fg}_x}V_{\kappa_c}(\fg)_x
+    =(V_{\kappa_c}(\fg)_x)^{\fg\otimes\mathcal{O}_x},
+    \tag{3.5-4}
+\end{equation}
+而且应当设法以坐标无关的方式来做这件事。可惜迄今一切都拴在域 $\mathbb{C}((t))$ 上，因此要把结果解释到任意局部域 $\mathcal{K}_x$，须在 $x$ 处选坐标 $t$。问题在于我们还不知道换用另一坐标 $t'$ 会怎样。所以目前无法用定理 3.5.1 描述 $\mathfrak{z}(\gghat)_x$：例如它并未用内在几何术语描述中心。为此需要知道生成中心的 Segal–Sugawara 算子在坐标变换下如何变换。下一节处理这些问题。
+
+% [Tutor Note: p.90 式 (3.5-4) 中的 $\operatorname{End}_{\hat{\fg}_x}$ 是连续自同态；第二个等号用的是“$V_{\kappa_c}(\fg)_x$ 上被 $\fg\otimes\mathcal{O}_x$ 湮灭的向量即 $\hat{\fg}_x$-模自同态”这一标准对应。注意 $\hat{\fg}_x$ 与式 (3.5-3) 的 $\hat{\fg}_{\kappa,x}$ 记号相差一个 $\kappa$：前者指点的抽象圈代数，后者指带水平 $\kappa$ 的中心扩张，原文在 (3.5-4) 处写作 $\hat{\fg}_x$。]
+
+\subsection{坐标变换群}
+
+先做一件看似依赖坐标的事，但它最终将使我们能以坐标无关的方式行事。
+
+记 $\mathcal{K}$ 为完备拓扑代数 $\mathbb{C}((t))$，$\mathcal{O}=\mathbb{C}[[t]]$ 带诱导拓扑。研究 $\mathcal{O}$ 的连续自同构群，记作 $\operatorname{Aut}\mathcal{O}$。它可看成圆盘 $D=\Spec\mathcal{O}$ 的自同构群。\footnote{有时 $D$ 被称为“形式圆盘”，但我们宁愿用“圆盘”一词，而把“形式圆盘”留给形式概形 $\operatorname{Spf}\mathcal{O}$（详见 [Frenkel and Ben-Zvi 2004] 附录 A.1.1）。}由于 $t$ 是代数 $\mathcal{O}$ 的拓扑生成元，连续自同构由它在 $t$ 上的作用决定。于是写
+\[
+    \rho(t)=a_0+a_1t+a_2t^2+\cdots.
+\]
+它成为自同构的充要条件是 $a_0=0$ 且 $a_1\ne 0$。注意 $\operatorname{Aut}\mathcal{O}$ 中的复合公式：
+\[
+    \rho(t)\circ\phi(t)=\phi(\rho(t)).
+\]
+
+% [Tutor Note: p.91 复合公式的次序与通常函数复合相反：这里把 $\rho$ 记作“坐标函数”$\rho(t)$，故 $\rho\circ\phi$ 表示先作 $\rho$ 再作 $\phi$，标准记号下应写作 $\phi\circ_{\text{std}}\rho$。正因如此，下文 $\operatorname{Aut}\mathcal{O}$ 对形式坐标集 $\mathcal{A}ut_x$ 的作用是\emph{右}作用；用左作用去读 §3.5.4 的无穷小公式会差一个符号，属易错点。]
+
+设 $x$ 是复曲线 $X$ 的光滑点。有前节定义的局部域 $\mathcal{K}_x$ 及其整数环 $\mathcal{O}_x$。环 $\mathcal{O}_x$ 是完备局部环，其极大理想 $\mathfrak{m}_x$ 由在 $x$ 处消没的元素组成。按定义，$x$ 处的\emph{形式坐标}是 $\mathfrak{m}_x$ 的拓扑生成元。定义 $\mathcal{A}ut_x$ 为 $x$ 处所有形式坐标的集合。群 $\operatorname{Aut}\mathcal{O}$ 通过公式 $t\mapsto\rho(t)$ 自然作用在 $\mathcal{A}ut_x$ 上。注意按上述复合公式，这是右作用。
+
+回忆：若 $G$ 是群，则 $G$-\emph{torsor}（$G$-主齐性空间）是非空集合 $S$，带 $G$ 的右作用，且该作用单可迁。取定 $s_0\in S$，便得到 $G$ 与 $S$ 之间显然的同构 $g\mapsto g(s_0)$。然而先验地没有这样的点的自然选择，因而两者之间没有自然同构（只有 $G$-作用）。
+
+给定 $G$-torsor $S$ 与 $G$ 的表示 $M$，可用 $S$ 来\emph{扭}（twist）$M$，即定义
+\[
+    \mathcal{M}=S\times_G M .
+\]
+把 $G$-torsor $S$ 看成一点上的主 $G$-丛，这是有益的；此时 $\mathcal{M}$ 就是该点上与表示 $M$ 相伴的向量丛。\transnote{按全书体例，torsor 保留英文，首现括注“主齐性空间”。此处要点是 $\mathcal{A}ut_x$ 上没有典范点：每个点都是一个形式坐标，$\operatorname{Aut}\mathcal{O}$ 在其上单可迁地右作用，故它只是 torsor 而非群；凡“坐标无关”的陈述都靠扭积把对 $t$ 的依赖消掉。[依据：原书 p.91][来源：本书 p.91。]}
+
+% [Tutor Note: p.91 “torsor”一词建议统一译为“torsor”，不要译作“扭量”或“挠子”。它的要点是：$\mathcal{A}ut_x$ 上没有任何典范点（没有典范局部坐标），所以 $\mathcal{O}_x=\mathcal{A}ut_x\times_{\operatorname{Aut}\mathcal{O}}\mathbb{C}[[t]]$ 只能作为扭积来定义。这正是“坐标无关化”的代数骨架。]
+
+现在注意，$\operatorname{Aut}\mathcal{O}$ 的上述作用使 $\mathcal{A}ut_x$ 成为 $\operatorname{Aut}\mathcal{O}$-torsor。因此可以扭 $\operatorname{Aut}\mathcal{O}$ 的表示。最显然的表示是 $\mathbb{C}[[t]]$ 与 $\mathbb{C}((t))$。不出所料，
+\begin{equation}
+    \mathcal{O}_x=\mathcal{A}ut_x\times_{\operatorname{Aut}\mathcal{O}}\mathbb{C}[[t]],
+    \qquad
+    \mathcal{K}_x=\mathcal{A}ut_x\times_{\operatorname{Aut}\mathcal{O}}\mathbb{C}((t)).
+    \tag{3.5-5}
+\end{equation}
+换言之，可以用群 $\operatorname{Aut}\mathcal{O}$ 的作用从 $\mathbb{C}((t))$ 与 $\mathbb{C}[[t]]$ 恢复局部域 $\mathcal{K}_x$ 及其整数环 $\mathcal{O}_x$。这提示了处理上节所说坐标无关性问题的办法：若把关于域 $\mathbb{C}((t))$ 的一切结果都表述成“跟踪其对称群 $\operatorname{Aut}\mathcal{O}$ 的作用”的形式，就能借助“用torsor扭”的构造，无缝地从 $\mathbb{C}((t))$ 过渡到任意局部域 $\mathcal{K}_x$。为把这一点讲得更精确，我们讨论应当允许 $\operatorname{Aut}\mathcal{O}$ 的哪类表示。
+
+\subsection{坐标变换的作用}
+
+令 $\operatorname{Aut}_+\mathcal{O}$ 为 $\operatorname{Aut}\mathcal{O}$ 中满足 $a_1=1$ 的 $\rho(t)$ 所成的子群。群 $\operatorname{Aut}\mathcal{O}$ 是半直积
+\[
+    \operatorname{Aut}\mathcal{O}=\mathbb{C}^\times\ltimes\operatorname{Aut}_+\mathcal{O},
+\]
+其中 $\mathbb{C}^\times$ 实现为伸缩群 $t\mapsto at$。
+
+记 $\operatorname{Aut}\mathcal{O}$（相应地 $\operatorname{Aut}_+\mathcal{O}$）的李代数为 $\operatorname{Der}_0\mathcal{O}$（相应地 $\operatorname{Der}_+\mathcal{O}$）。易见
+\[
+    \operatorname{Der}_0\mathcal{O}=t\mathbb{C}[[t]]\partial_t,\qquad
+    \operatorname{Der}_+\mathcal{O}=t^2\mathbb{C}[[t]]\partial_t .
+\]
+特别地，这说明 $\operatorname{Der}_+\mathcal{O}$ 是 pro-幂零李代数，因而 $\operatorname{Aut}_+\mathcal{O}$ 是 pro-幂幺群。\footnote{$\operatorname{Aut}\mathcal{O}$ 的李代数是 $\operatorname{Der}_0\mathcal{O}$，而不是 $\operatorname{Der}\mathcal{O}=\mathbb{C}[[t]]\partial_t$，这看似奇怪。原因是由平移向量场 $\partial_t$ 张成的那部分 $\operatorname{Der}\mathcal{O}$ 无法在代数群范围内指数化，只能在 ind-群范围内指数化；详见 [Frenkel and Ben-Zvi 2004] §6.2.3。}
+
+我们要描述 $\operatorname{Aut}\mathcal{O}$ 在离散拓扑向量空间上的连续表示范畴。由于 $\operatorname{Aut}_+\mathcal{O}$ 是 pro-幂幺群，指数映射 $\operatorname{Der}_+\mathcal{O}\to\operatorname{Aut}_+\mathcal{O}$ 是同构。因此 $\operatorname{Aut}_+\mathcal{O}$ 的离散表示等同于 $\operatorname{Der}_+\mathcal{O}$ 的离散表示，即对任意向量 $v$，当 $n$ 大于某个正整数 $N$ 时有 $t^n\partial_t\cdot v=0$。\transnote{指数化的障碍只在 $L_{-1}=-\partial_t$：$\operatorname{Der}_+\mathcal{O}=t^2\mathbb{C}[[t]]\partial_t$ 是 pro-幂零的，指数映射是同构；$\operatorname{Der}_0\mathcal{O}$ 另含 $L_0=-t\partial_t$ 与 $L_{-1}$，前者要求半单且本征值为整数，后者只能在 ind-群中指数化，故 $\operatorname{Aut}\mathcal{O}$ 的李代数取 $\operatorname{Der}_0\mathcal{O}$。[依据：原书 p.92 脚注 5；并见 [Frenkel and Ben-Zvi 2004] §6.2.3][来源：本书 p.92。]}
+
+% [Tutor Note: p.92 脚注 5 解释了为什么李代数只能是 $\operatorname{Der}_0\mathcal{O}$ 而不是 $\operatorname{Der}\mathcal{O}$；这也解释了 §3.1.3 的约定：$L_n=-t^{n+1}\partial_t$ 中 $n\ge0$ 给出 $\operatorname{Der}_0\mathcal{O}$，$n>0$ 给出 $\operatorname{Der}_+\mathcal{O}$，而 $L_{-1}=-\partial_t$ 是唯一不能指数化的生成元。下文把 $\operatorname{Der}_0$ 作用“扩充”到 $\operatorname{Der}$，正是为了使用 $\partial_t$ 这个“联络”。]
+
+伸缩群 $\mathbb{C}^\times=\{t\mapsto at\}$ 的李代数是 $\mathbb{C}t\partial_t\simeq\mathbb{C}$。这里有落差：李代数的不可约表示由复数参数化，而 $\mathbb{C}^\times$ 的表示只由整数参数化：在对应 $n\in\mathbb{Z}$ 的表示上，元素 $a\in\mathbb{C}^\times$ 作用为 $a^n$。此外，向量空间 $V$ 上任一线性变换 $T$ 都定义了 $\mathbb{C}$ 的一个表示，$\lambda\mapsto T$（特别地，由于非平凡 Jordan 块，非平凡扩张是可能的）；但 $\mathbb{C}^\times$ 的任何表示都是一维表示的直和，这些一维表示由整数标号。所以李代数 $\mathbb{C}$ 的表示中，能提升为 $\mathbb{C}^\times$ 表示的，只有那些使元素 $1\in\mathbb{C}$（在我们的情形对应向量场 $t\partial_t$）半单作用、且本征值为整数的表示。\transnote{原文“$\lambda\mapsto T$”应为“$\lambda\mapsto\lambda T$”（或“$1\mapsto T$”）：$\mathbb{C}$ 作为交换李代数的表示由生成元 $1$ 的像决定，若所有 $\lambda$ 都映到同一个 $T$，映射便不是线性的，也就不成其为表示。[依据：原书 p.92][来源：本书 p.92。]}
+
+% [Tutor Note: p.92 “$\lambda\mapsto T$”应是笔误。$\mathbb{C}$ 作为李代数的表示由生成元 $1$ 的像决定，故正确写法是 $\lambda\mapsto\lambda T$（或“$1\mapsto T$”）；若真把每个 $\lambda$ 都送到同一个 $T$，就不成其为表示。译文保留原文，请以 $\lambda\mapsto\lambda T$ 理解。]
+
+总之，$\operatorname{Aut}\mathcal{O}$ 的离散表示等同于李代数 $\operatorname{Der}_0\mathcal{O}$ 的离散表示，且生成元 $t\partial_t$ 半单作用、本征值为整数。在我们考察的大多数情形，李代数 $\operatorname{Der}_0\mathcal{O}$ 的作用可以扩充为 $\operatorname{Der}\mathcal{O}=\mathbb{C}[[t]]\partial_t$ 的作用。（额外生成元 $\partial_t$ 的作用很重要，它扮演联络的角色，使我们能等同曲线 $X$ 上邻近点 $x,x'$ 所对应的对象。）
+
+在 §3.1.3 我们引入了 Virasoro 代数的一个拓扑基。其中元素 $L_n=-t^{n+1}\frac{\partial}{\partial t}$ 在 $n\ge 0$（相应地 $n>0$）时生成 $\operatorname{Der}_0\mathcal{O}$（相应地 $\operatorname{Der}_+\mathcal{O}$）。李代数 $\mathbb{C}$ 由 $L_0=-t\partial_t$ 生成。设 $V$ 是 $\operatorname{Der}_0\mathcal{O}$ 的表示，$L_0$ 在其上半单作用、本征值为整数。于是 $V$ 上有 $\mathbb{Z}$-分次。$\operatorname{Der}_0\mathcal{O}$ 中的对易关系蕴含 $L_n$ 把分次平移 $-n$。因此若 $\mathbb{Z}$-分次有下界，则 $V$ 中每个向量都被充分大 $n$ 对应的 $L_n$ 湮灭，于是 $V$ 是 $\operatorname{Der}_0\mathcal{O}$ 的离散表示，从而可以指数化到 $\operatorname{Aut}\mathcal{O}$。
+
+真空模 $V_\kappa(\fg)$ 就是这类表示的一个例子。李代数 $\operatorname{Der}_0\mathcal{O}$（乃至更大的 $\operatorname{Der}\mathcal{O}$）自然作用于它，因为它作用于 $\fg((t))$ 并保持子代数 $\fg[[t]]\oplus\mathbb{C}\mathbf{1}$ 不变，而 $V_\kappa(\fg)$ 正是由此诱导的。特别地，$L_0$ 成为顶点代数的分次算子；由于该分次只取非负值，$\operatorname{Der}_0\mathcal{O}$ 的作用可以指数化到 $\operatorname{Aut}\mathcal{O}$。中心 $\mathfrak{z}(\gghat)$ 是 $V_{\kappa_c}(\fg)$ 的 $\operatorname{Aut}\mathcal{O}$-不变子空间，因而是 $V_{\kappa_c}(\fg)$ 的子表示。
+
+于是可以把扭构造用于 $V_\kappa(\fg)$ 与 $\mathfrak{z}(\gghat)$。利用公式 (3.5-5) 得到
+\[
+    \mathcal{A}ut_x\times_{\operatorname{Aut}\mathcal{O}}V_\kappa(\fg)=V_\kappa(\fg)_x,
+    \qquad
+    \mathcal{A}ut_x\times_{\operatorname{Aut}\mathcal{O}}\mathfrak{z}(\gghat)=\mathfrak{z}(\gghat)_x,
+\]
+其中 $V_\kappa(\fg)_x$ 与 $\mathfrak{z}(\gghat)_x$ 分别由公式 (3.5-3) 与 (3.5-4) 定义。
+
+于是我们找到了同时描述不同局部域 $\mathcal{K}_x$ 所对应的全部空间 $\mathfrak{z}(\gghat)_x$ 的办法：只需描述 $\operatorname{Der}\mathcal{O}$ 在 $\mathfrak{z}(\gghat)$ 上的作用。下面在 $\fg=\fsl_2$ 时来做这件事。
+
+\subsection{热身：Kac–Moody 场作为一形式}
+
+先看一个较简单的例子：代数 $\operatorname{gr}V_\kappa(\fg)$。如前所见，它自然同构于
+\[
+    \Sym(\fg((t))/\fg[[t]])=\operatorname{Fun}\fg^*[[t]]dt .
+\]
+在 §3.3.3 我们曾把 $\fg^*[[t]]dt$ 与 $\fg^*[[t]]$ 等同起来；但既然现在要以坐标无关的方式表述结果，我们就不再这样做。
+
+% [Tutor Note: p.93 这一小节是 §3.5.6 的“模型计算”：$\operatorname{gr}V_\kappa(\fg)$ 只是一形式空间上的函数，变换公式短、易核对；下一节对中心做同样的事，只是把一形式换成射影联络。看清“两个作用相互抵消”这一机制，是理解引理 3.5.1 证明的钥匙。]
+
+给定曲线 $X$ 的光滑点 $x$，有圆盘 $D_x=\Spec\mathcal{O}_x$ 与去心圆盘 $D_x^\times=\Spec\mathcal{K}_x$。令 $\Omega_{\mathcal{O}_x}$ 为微分的 $\mathcal{O}_x$-模。$\Omega_{\mathcal{O}_x}$ 的元素可以看成圆盘 $D_x$ 上的一形式。考察附着于 $x$ 的 $\hat{\fg}_{\kappa,x}$-模 $V_\kappa(\fg)_x$ 及其分次伴随 $\operatorname{gr}V_\kappa(\fg)_x$。现在注意
+\[
+    \mathcal{A}ut_x\times_{\operatorname{Aut}\mathcal{O}}(\fg^*[[t]]dt)=\fg^*\otimes\Omega_{\mathcal{O}_x}.
+\]
+于是 $\operatorname{gr}V_\kappa(\fg)_x$ 被典范地等同于 $D_x$ 上 $\fg^*$-值一形式空间的函数代数。
+
+现在希望用显式计算得到这一结果。该计算将作为下一节计算的模型，届时我们将把 $\mathfrak{z}(\widehat{\fsl}_2)_x$ 等同于 $D_x$ 上射影联络空间的函数代数。
+
+把元素 $\phi\in\fg^*[[t]]dt$ 表示为形式幂级数
+\[
+    \phi(J^a)=\bar J^a(t)=\sum_{n<0}\bar J^a_n t^{-n-1},\qquad a=1,\dots,\dim\fg .
+\]
+则 $\bar J^a_n$ 是 $\fg^*[[t]]dt$ 上的坐标，并且
+\[
+    \operatorname{Fun}\fg^*[[t]]dt\simeq\mathbb{C}[\bar J^a_n]_{a=1,\dots,\dim\fg;\,n<0}.
+\]
+李代数 $\operatorname{Der}\mathcal{O}$ 通过导子作用在 $\operatorname{Fun}\fg^*[[t]]dt$ 上。因此只需描述它在生成元 $\bar J^a_m$ 上的作用：
+\begin{equation}
+    L_n\cdot\bar J^a_m=
+    \begin{cases}
+        -m\bar J^a_{n+m} & \text{若 } n+m\le -1,\\
+        0 & \text{其他情形}.
+    \end{cases}
+    \tag{3.5-6}
+\end{equation}
+
+由前面的讨论已知
+\[
+    \bar J^a(t)dt=\sum_{m\le -1}\bar J^a_m t^{-m-1}dt
+\]
+是圆盘 $D=\Spec\mathcal{O}$ 上的典范一形式。现在用公式 (3.5-6) 重新推出这一结果。要证明的是：$\bar J^a(t)dt$ 在圆盘 $D$ 的坐标变换群 $\operatorname{Aut}\mathcal{O}$ 的作用下不变；等价地（因为 $\operatorname{Aut}\mathcal{O}$ 连通），在李代数 $\operatorname{Der}_0\mathcal{O}$ 的作用下不变。该李代数以两种方式作用：按 (3.5-6) 作用在元素 $\bar J^a_n$ 上，并以通常方式作用在 $t^{-n-1}dt$ 上。我们要说的是这两种作用相互抵消。\transnote{(3.5-6) 中条件 $n+m\le-1$ 保证作用后仍落在 $\bar J^a$ 的指标范围 $m\le-1$ 内。两种作用抵消的实质是留数配对：$\operatorname{Res}(t^kdt)=0$（$k\ne-1$）、$\operatorname{Res}(t^{-1}dt)=1$，故 $\{t^n\}_{n<0}$ 与 $\{t^{-n-1}dt\}_{n<0}$ 互为对偶基，而配对在 $\operatorname{Aut}\mathcal{O}$ 下不变。[依据：原书 p.93–95][来源：本书 p.94。]}
+
+% [Tutor Note: p.94 式 (3.5-6) 的条件是 $n+m\le-1$（不是 $n+m\le0$）：因为 $\bar J^a_m$ 只在 $m\le-1$ 时有定义，作用后仍须落在 $m$ 的指标范围内。此处若误写成 $n+m\le0$，会把 $m=0$ 的非存在项算进去，导致后面求和错位。另注意 (3.5-6) 与 (3.5-7) 是两个不同的作用，见 p.95 脚注 6。]
+
+事实上，$L_n$ 对 $t^{-m-1}dt$ 的作用为
+\[
+    L_n\circ(t^{-m-1}dt)=(m-n)t^{n-m-1}dt .
+\]
+因此
+\begin{align*}
+    L_n\cdot\bar J^a(t)dt
+    &=\sum_{m\le-1}(L_n\cdot\bar J^a_m)\,t^{-m-1}dt
+      +\sum_{m\le-1}\bar J^a_m\,(L_n\cdot t^{-m-1}dt)\\
+    &=-\sum_{m\le-1;\,n+m\le-1}m\bar J^a_{m+n}\,t^{-m-1}dt
+      +\sum_{m\le-1}\bar J^a_m(m-n)t^{n-m-1}dt\\
+    &=\sum_{k\le-1}(n-k)\bar J^a_k\,t^{n-k-1}dt
+      +\sum_{m\le-1}(m-n)\bar J^a_m\,t^{n-m-1}dt\\
+    &=0,
+\end{align*}
+如所预期。于是对任意局部域 $\mathcal{K}_x$ 都有典范同构 $\operatorname{gr}V_\kappa(\fg)_x\simeq\operatorname{Fun}\fg^*\otimes\Omega_{\mathcal{O}_x}$；但现在只用变换公式 (3.5-6) 就导出了它。
+
+当然，回头看来这个计算近乎同义反复。我们只说明了一件事：在 $\operatorname{Aut}\mathcal{O}$ 的作用下，$\operatorname{gr}V_\kappa(\fg)$ 的生成元 $\bar J^a_n$（固定 $a$）与 $t^n\in\mathcal{K}/\mathcal{O}$ 的变换方式相同。$\mathcal{K}/\mathcal{O}=\mathbb{C}((t))/\mathbb{C}[[t]]$ 与 $\Omega_{\mathcal{O}}=\mathbb{C}[[t]]dt$ 之间有留数配对，关于它，$\{t^n\}_{n<0}$ 与 $\{t^{-n-1}dt\}_{n<0}$ 互为对偶（拓扑）基。表达式 $\bar J^a(t)dt$ 把这两组基配对起来。由于留数配对在 $\operatorname{Aut}\mathcal{O}$ 下不变，显然 $\bar J^a(t)$ 也在 $\operatorname{Aut}\mathcal{O}$ 下不变。因此，一旦意识到 $\operatorname{gr}V_\kappa(\fg)$ 的生成元 $\{\bar J^a_n\}$ 在 $\operatorname{Aut}\mathcal{O}$ 作用下与函数 $\{t^n\}$ 变换方式相同，$\bar J^a(t)$ 是典范一形式这一事实便立刻得到。下一节将对中心 $\mathfrak{z}(\widehat{\fsl}_2)$ 的生成元，即 Segal–Sugawara 算子 $S_n$，得到类似结论。这将使我们能给出 $\mathfrak{z}(\widehat{\fsl}_2)$ 的坐标无关描述。
+
+% [Tutor Note: p.95 留数配对是“拓扑”对偶：$\{t^n\}_{n<0}$ 与 $\{t^{-n-1}dt\}_{n<0}$ 的对偶性来自 $\operatorname{Res}(t^{k}dt)=0$（除 $k=-1$）与 $\operatorname{Res}(t^{-1}dt)=1$。整个“编码坐标无关性”的技巧可概括为：把对象写成对偶基的配对，配对不变，对象就不变。]
+
+\subsection{中心元的变换公式}
+
+由上节分析，要对 $\mathfrak{z}(\widehat{\fsl}_2)$ 作坐标无关的描述，该做什么是很清楚的：需要弄清 $\mathfrak{z}(\widehat{\fsl}_2)$ 的生成元 $S_n$ 在 $\operatorname{Der}\mathcal{O}$ 作用下如何变换。一种办法是用公式 (3.5-2) 以及 $\operatorname{Der}\mathcal{O}$ 对 Kac–Moody 生成元 $J^a_n$ 的作用公式\footnote{注意公式 (3.5-6) 与 (3.5-7) 的差别。前者描述 $\operatorname{Der}\mathcal{O}$ 在分次伴随代数 $\operatorname{gr}V_\kappa(\fg)$ 上的作用，后者描述在 $V_\kappa(\fg)$ 或 $\widetilde{U}_\kappa(\gghat)$ 上的作用。两种作用不同：例如 $J^a_n$（$n\ge 0$）在 $\operatorname{gr}V_\kappa(\fg)$ 上作用为 0，而在 $V_\kappa(\fg)$ 上作用非平凡。}
+\begin{equation}
+    L_n\cdot J^a_m=-mJ^a_{n+m}.
+    \tag{3.5-7}
+\end{equation}
+这是相当繁重的计算，所幸另有更简便的办法。
+
+设 $\kappa\ne\kappa_c$。如 §3.1.1 那样定义重整化的 Segal–Sugawara 算子 $\widetilde{S}_n=\frac{\kappa_0}{\kappa-\kappa_c}S_n$（$n\ge -1$）。它们是完备泛包络代数 $\widetilde{U}_\kappa(\gghat)$ 的元素，与 $\gghat$ 中元素的交换方式，与算子 $L_n=-t^{n+1}\partial_t$（$n\ge -1$）相同；见公式 (3.5-7)。因此 $L_n$ 对 $\widetilde{U}_\kappa(\gghat)$ 中任何其他元素 $X$ 的作用等于 $[\widetilde{S}_n,X]$。
+
+我们关心 $X=S_m$ 的情形。相应的交换子已在公式 (3.1-3) 中算出。该公式给出：
+\[
+    L_n\cdot S_m=[\widetilde{S}_n,S_m]
+    =(n-m)S_{n+m}+\frac{n^3-n}{12}\dim(\fg)\frac{\kappa}{\kappa_0}\delta_{n,-m}.
+\]
+虽然此公式是在 $\kappa\ne\kappa_c$ 时导出的，但它在 $\kappa=\kappa_c$ 时有良好定义的极限，因此给出所要的变换公式
+\begin{equation}
+    L_n\cdot S_m=(n-m)S_{n+m}+\frac{n^3-n}{12}\dim(\fg)\frac{\kappa_c}{\kappa_0}\delta_{n,-m}
+    \tag{3.5-8}
+\end{equation}
+（它依赖于 $\kappa_0$，因为 $\kappa_0$ 显式地进入 $S_m$ 的定义）。\transnote{“$\kappa_0$ 显式地进入 $S_m$ 的定义”严格说应指重整化算子 $\widetilde{S}_m=\frac{\kappa_0}{\kappa-\kappa_c}S_m$；$S_m$ 本身只依赖 Segal–Sugawara 构造与水平。另请注意归一化：$\kappa_c=-h^\vee\kappa_0$，$\mathfrak{sl}_2$ 时 $h^\vee=2$ 故 $\kappa_c=-2\kappa_0$，代入 (3.5-8) 的常数项得 $-\frac12(n^3-n)$。[依据：原书 p.95][来源：本书 p.95。]}
+
+% [Tutor Note: p.95 此处极易出现符号与归一化错误，务必核对约定：本章用不变内积 $\kappa_0$ 与 $\kappa$ 本身作水平参数（不是 $c=k\dim\fg/(k+h^\vee)$ 中的 $k$），并以 $\kappa_c=-h^\vee\kappa_0$ 定义临界水平；$\fsl_2$ 时 $h^\vee=2$，故 $\kappa_c=-2\kappa_0$，代入后常数项为 $-\frac12(n^3-n)$。式 (3.5-8) 的分子 $n^3-n$ 与分母 12 是 Virasoro 中心荷的标准形式。若把 $\kappa_0$ 改取 $\frac12\Tr$ 或 Killing 型归一化，$\kappa/\kappa_0$ 这一项不变，但 $v(t)\mapsto v(t)+\epsilon(\cdots)$ 中各系数会随之变化，务必全程用同一归一化。原句“$\kappa_0$ 显式地进入 $S_m$ 的定义”严格说应指重整化算子 $\widetilde{S}_m$ 的定义。]
+
+现在专门讨论 $\fsl_2$ 的情形。我们将使用由 $\kappa_0(A,B)=\Tr_{\mathbb{C}^2}(AB)$ 定义的内积 $\kappa_0$。此时 $\kappa_c=-2\kappa_0$，公式 (3.5-8) 变成
+\[
+    L_n\cdot S_m=(n-m)S_{n+m}-\frac12(n^3-n)\delta_{n,-m}.
+\]
+
+这是 $\widetilde{U}_{\kappa_c}(\widehat{\fsl}_2)$ 的元素 $S_m$ 的变换公式。它特别决定了群 $\operatorname{Aut}\mathcal{O}$ 在 $\widetilde{U}_{\kappa_c}(\widehat{\fsl}_2)$ 的中心上的作用，而该中心由 $S_m$ 拓扑生成。不过我们希望先理解 $\operatorname{Aut}\mathcal{O}$ 在顶点代数 $V_{\kappa_c}(\fsl_2)$ 的中心 $\mathfrak{z}(\widehat{\fsl}_2)$ 上的作用。
+
+由定理 3.5.1，有同态
+\[
+    \mathbb{C}[S_m]_{m\in\mathbb{Z}}\longrightarrow\mathfrak{z}(\widehat{\fsl}_2),
+    \qquad X\mapsto X|0\rangle,
+\]
+它诱导出 $\mathbb{C}[S_m]_{m\in\mathbb{Z}}$ 对由 $S_m$（$m\ge -1$）生成的理想之商与 $\mathfrak{z}(\widehat{\fsl}_2)$ 的一个同构。该理想在 $\operatorname{Der}\mathcal{O}$ 作用下保持。因此，为求 $\operatorname{Der}\mathcal{O}$ 在 $\mathfrak{z}(\widehat{\fsl}_2)\simeq\mathbb{C}[S_m]_{m\le-2}$ 上的作用，只需令 $S_m$（$m\ge -1$）等于 0。
+
+这导致如下变换律：
+\begin{equation}
+    L_n\cdot S_m=
+    \begin{cases}
+        (n-m)S_{n+m} & \text{若 } n+m\le -2,\\
+        -\frac12(n^3-n) & \text{若 } n+m=0,\\
+        0 & \text{其他情形}.
+    \end{cases}
+    \tag{3.5-9}
+\end{equation}
+
+% [Tutor Note: p.96 式 (3.5-9) 的三种情形要按“$n+m$”而不是按 $m$ 分类：$n\ge-1$ 是坐标变换的指标，$m\le-2$ 是中心元的指标。令 $S_m=0$（$m\ge-1$）后，原本 $\delta_{n,-m}$ 的项只在 $n+m=0$（即 $n=-m\ge2$，故 $n\ge2$）时存活，这才出现常数项 $-\frac12(n^3-n)$。核对时可直接取 $n=2,m=-2$。]
+
+现在要弄清：哪种几何对象会产生这类变换律？答案是圆盘 $D=\Spec\mathbb{C}[[t]]$ 上的射影联络。
+
+\subsection{射影联络}
+
+$D=\Spec\mathbb{C}[[t]]$ 上的\emph{射影联络}是二阶微分算子
+\begin{equation}
+    \rho:\Omega^{-1/2}_{\mathcal{O}}\longrightarrow\Omega^{3/2}_{\mathcal{O}},
+    \tag{3.5-10}
+\end{equation}
+其主符号为 1，次主符号为 0。
+
+% [Tutor Note: p.96 (3.5-10) 里 $\rho$ 与 §3.5.3 中坐标变换 $\rho(t)$ 用了同一个字母，但含义无关；阅读时按上下文区分。另注意 $\Omega^{-1/2}$、$\Omega^{3/2}$ 是半整数次微分形式（不是张量幂的记号），它们的配对 $\Omega^{-1/2}\otimes\Omega^{3/2}\to\Omega$ 使 $\rho$ 可以逐点讨论主符号。]
+
+解释一下这意味着什么。如前，$\Omega_{\mathcal{O}}$ 是微分的 $\mathcal{O}$-模，即 $D$ 上的一形式，形如 $f(t)dt$。现定义 $\mathcal{O}$-模 $\Omega^\lambda_{\mathcal{O}}$ 为“$\lambda$-形式”的集合，即形如 $f(t)(dt)^\lambda$ 的对象。它是有一个生成元的自由 $\mathcal{O}$-模，但向量场 $\xi(t)\partial_t\in\operatorname{Der}\mathcal{O}$ 对它的作用依赖于 $\lambda$。为求变换公式，把变换 $t\mapsto t+\epsilon\xi(t)$（看作对偶复数环 $\mathbb{C}[\epsilon]/(\epsilon^2)$ 上群 $\operatorname{Aut}\mathcal{O}$ 的元素）作用到 $f(t)(dt)^\lambda$ 上。得到
+\[
+    f(t)(dt)^\lambda\longmapsto f(t+\epsilon\xi(t))\,d\big((t+\epsilon\xi(t))\big)^\lambda .
+\]
+现在取 $\epsilon$-线性项。结果为
+\[
+    \xi(t)\partial_t\cdot f(t)(dt)^\lambda=(\xi(t)f'(t)+\lambda f(t)\xi'(t))(dt)^\lambda .
+\]
+但要注意：$t\partial_t$ 的作用半单，不过本征值形如 $\lambda+n$（$n\in\mathbb{Z}_+$）。因此若 $\lambda\notin\mathbb{Z}$，$\operatorname{Der}\mathcal{O}$ 的作用不能指数化到 $\operatorname{Aut}\mathcal{O}$ 的作用，也就不能用扭构造把 $\Omega^\lambda_{\mathcal{O}}$ 对应到圆盘 $D_x=\Spec\mathcal{O}_x$（或任意光滑代数曲线）上的线丛。若 $\lambda$ 是半整数，例如 $\lambda=1/2$，可以通过对 $\Omega$ 开平方构造 $\Omega^{1/2}$。在一般曲线上这有歧义：所要的线丛仅在差一个线丛 $\mathcal{L}$ 的张量因子的意义下有定义，其中 $\mathcal{L}^{\otimes 2}$ 被典范平凡化。但在圆盘上这不成问题，因为这样的 $\mathcal{L}$ 几乎被典范地平凡化；两个平凡化相差一个符号，所以歧义很轻微。\transnote{$\lambda\notin\mathbb{Z}$ 时 $t\partial_t$ 的本征值为 $\lambda+n$（$n\ge0$），不是整数，故 $\operatorname{Der}\mathcal{O}$ 的作用不能指数化，$\Omega^\lambda_{\mathcal{O}}$ 也就无法经扭构造搬到曲线上。半整数情形可先对 $\Omega$ 开平方；$X$ 紧时 $\Omega^{1/2}$ 有 $2^{2g}$ 个选择（theta 特征），但射影联络空间与这些选择无关。[依据：原书 p.96–97][来源：本书 p.96。]}
+
+无论如何，我们关心的不是 $\Omega^{1/2}_{\mathcal{O}}$ 本身，而是线性算子 (3.5-10)。一旦选定两个可能模 $\Omega^{1/2}_{\mathcal{O}}$ 之一，就取它的逆作为 $\Omega^{-1/2}_{\mathcal{O}}$，取它的三次张量幂（在 $\mathcal{O}$ 上）作为 $\Omega^{3/2}_{\mathcal{O}}$。两者之间的微分算子空间已经不依赖任何选择。同样的构造对任意曲线也适用，例如 $X$ 紧时，$\Omega^{1/2}$ 有 $2^{2g}$ 种不同选择（称为 theta 特征），但相应的射影联络空间对所有这些选择都典范等同。
+
+二阶微分算子 (3.5-10) 可以写成
+\[
+    \rho=v_2(t)\partial_t^2+v_1(t)\partial_t+v_0(t).
+\]
+注意每个 $v_i(t)\in\mathbb{C}[[t]]$，但它在群 $\operatorname{Aut}\mathcal{O}$ 下的变换公式先验地并不是普通函数的变换公式，下文将看到这一点。
+
+该微分算子的\emph{主符号}是系数 $v_2(t)$。所以射影联络的第一个条件意味着 $\rho$ 形如
+\[
+    \rho=\partial_t^2+v_1(t)\partial_t+v_0(t).
+\]
+该算子的\emph{次主符号}是系数 $v_1(t)$。$v_1(t)=0$ 意味着算子形如
+\[
+    \rho(t)=\frac{\partial}{\partial t^2}-v(t),
+\]
+其中为记号方便令 $v(t)=-v_0(t)$。
+
+% [Tutor Note: p.97 原文在中间用 $\partial_t^2$、随后又写成 $\frac{\partial}{\partial t^2}$，两者是同一个算子的不同排版（并非 $(\partial/\partial t)^2$ 之外的另一个对象）。译文照原文保留，以免与式 (3.5-11) 的引用错位。另：主符号为 1、次主符号为 0 这两条把 $\Omega^{-1/2}\to\Omega^{3/2}$ 的算子约束成由 $v(t)\in\mathbb{C}[[t]]$ 参数化的无穷维仿射空间——这就是“射影联络空间”是仿射空间的原因。]
+
+射影联络在向量场 $\xi(t)\partial_t\in\operatorname{Der}\mathcal{O}$ 作用下如何变换？既然已知 $\xi(t)\partial_t$ 在 $\Omega^{-1/2}$ 与 $\Omega^{3/2}$ 上的作用，就容易求出它在 $\rho:\Omega^{-1/2}\to\Omega^{3/2}$ 上的作用。具体地，我们得到
+\begin{align*}
+    &\xi(t)\partial_t\cdot\left((\partial_t^2-v(t))\cdot f(t)(dt)^{-1/2}\right)\\
+    &\qquad=\xi(t)\partial_t\cdot\left((f''(t)-v(t)f(t))(dt)^{3/2}\right)\\
+    &\qquad=\left(\xi(t)\big(f'''(t)-v'(t)f(t)-v(t)f'(t)\big)
+      +\frac32\big(f''(t)-v(t)f(t)\big)\xi'(t)\right)(dt)^{3/2},
+\end{align*}
+以及
+\begin{align*}
+    &(\partial_t^2-v(t))\cdot\left(\xi(t)\partial_t\cdot f(t)(dt)^{-1/2}\right)\\
+    &\qquad=(\partial_t^2-v(t))\left(\xi(t)f'(t)-\frac12 f(t)\xi'(t)\right)(dt)^{-1/2}\\
+    &\qquad=\left(\frac32\xi'(t)f''(t)+\xi(t)f'''(t)-v(t)\xi(t)f'(t)
+      -\frac12 f(t)\xi'''(t)+\frac12 v(t)f(t)\xi'(t)\right)(dt)^{3/2}.
+\end{align*}
+对射影联络的作用将来自这两个表达式之差：
+\[
+    -\xi(t)v'(t)-2v(t)\xi'(t)+\frac12\xi'''(t).
+\]
+于是，在无穷小坐标变换 $t\mapsto t+\epsilon\xi(t)$ 下，
+\begin{equation}
+    v(t)\longmapsto v(t)+\epsilon\left(\xi(t)v'(t)+2v(t)\xi'(t)-\frac12\xi'''(t)\right).
+    \tag{3.5-11}
+\end{equation}
+
+% [Tutor Note: p.98 这段是纯计算，但极易丢项：第二个表达式中 $\xi'(t)f''(t)$ 的系数 $3/2$ 与 $-\frac12 f(t)\xi'''(t)$ 两项来自对 $\left(\xi f'-\frac12 f\xi'\right)$ 二次求导的乘积法则。最终差值中 $f$ 的系数必须全部抵消（因为作用在“联络”上不应依赖测试函数 $f$），只留下 $-\xi v'-2v\xi'+\frac12\xi'''$；可用此不变量做自检。符号约定：$v$ 取“$+$”号在 $\partial_t^2-v$ 中，若写成 $\partial_t^2+v$，则 (3.5-11) 整体变号。]
+
+$\operatorname{Der}\mathcal{O}$ 的作用可以指数化，给出 $\operatorname{Aut}\mathcal{O}$ 在射影联络上的作用。这可以通过显式但繁琐的计算完成，也可以走更快的路，见 [Frenkel and Ben-Zvi 2004] §9.2。设两个形式坐标 $t$ 与 $s$ 由 $t=\varphi(s)$ 联系。设关于坐标 $t$，射影联络 $\rho$ 形如 $\partial_t^2-v(t)$；则关于坐标 $s$，它形如 $\partial_s^2-\tilde v(s)$，其中
+\[
+    \tilde v(s)=v(\varphi(s))\varphi'(s)^2-\frac12\{\varphi,s\},
+\]
+而
+\begin{equation}
+    \{\varphi,s\}=\frac{\varphi'''}{\varphi'}-\frac32\left(\frac{\varphi''}{\varphi'}\right)^2
+    \tag{3.5-12}
+\end{equation}
+是 $\varphi$ 的所谓 Schwarz 导数（Schwarzian derivative）。\transnote{(3.5-12) 即 Schwarz 导数。直接验算：$\varphi$ 为分式线性变换时 $\{\varphi,s\}=0$，此时 $\tilde v(s)=v(\varphi(s))\varphi'(s)^2$，即射影联络按二次微分的张量式变换；一般 $\varphi$ 多出的 $-\frac12\{\varphi,s\}$ 就是所谓“仿射项”。射影联络的坐标变换律见本段所引 [Frenkel and Ben-Zvi 2004] §9.2。[依据：原书 p.98][来源：本书 p.98。]}
+
+% [Tutor Note: p.98 式 (3.5-12) 的 Schwarz 导数是 $H^1(\mathrm{Vect},\Omega^2)$ 上非平凡 1-上循环的经典代表：它正是射影联络在坐标变换下多出来的“仿射项”，也是 $c=-6$ 的 Virasoro 余循环的同一物件（相差归一化）。核对时取 $\varphi(s)=s$：$\{\varphi,s\}=0$，$\tilde v=v$；再取 Möbius 变换 $\varphi(s)=(as+b)/(cs+d)$，应有 $\{\varphi,s\}=0$（Schwarz 导数的 SL_2-不变性），此时射影联络按 $(dt/ds)^2$ 张量式变换。]
+
+\subsection{回到中心}
+
+现在可以准确说出 Segal–Sugawara 算子 $S_m$ 是何类几何对象了：算子 $S_m$ 的作用，相当于在射影联络空间 $\partial_t^2-v(t)$ 上取 $v(t)$ 的 $t^{-m-2}$ 系数的那个函数。
+
+% [编号说明（供 Lead 合成时裁定，不在正文显示）] 原书 §3.5 内各编号陈述依次为
+% Theorem 3.5.1、引理 3.5.1、Theorem 3.5.2、Corollary 3.5.2：引理与定理同号，
+% 无法仅靠 preamble 现用的单一共享计数器（[section]）自动复现；按现设置将打印为
+% 3.5.1 / 3.5.2 / 3.5.3 / 3.5.4。正文明文引用一律按原书编号书写。详见 reports/U05.md。
+% 如需复现原书编号，可在本引理 \begin{lemma} 前加 \addtocounter{theorem}{-1}，
+% 在推论 \begin{corollary} 前同样加一次；本文件未启用，留待合成时统一裁定。
+\begin{lemma}
+    表达式
+    \[
+        \rho_S=\partial_t^2-\sum_{m\le -2}S_m t^{-m-2}
+    \]
+    定义了圆盘 $D=\Spec\mathbb{C}[[t]]$ 上的典范射影联络，即它与坐标 $t$ 的选取无关。\transnote{原书此处编作“Lemma 3.5.1”，与前面的 Theorem 3.5.1 同号（后面的 Corollary 3.5.2 亦与 Theorem 3.5.2 同号），应是排版笔误。译文沿用原书编号，正文引用一律按原书号码；若排版自动编号与此不符，以原书号码为准。[依据：原书 p.99–100][来源：本书 p.99。]}
+\end{lemma}
+
+\begin{proof}
+    论证与 §3.5.5 类似。需要验证：$L_n$（$n\ge -1$）对 $\rho_S$ 的合并作用等于 0，其中作用一部分来自对 $S_n$ 的作用（由公式 (3.5-9) 给出），另一部分来自对射影联络的作用（由公式 (3.5-11) 给出）。
+
+    前者为
+    \begin{align*}
+        &-\sum_{m\le-2;\,n+m\le-2}(n-m)S_{n+m}t^{-m-2}
+         +\sum_{m\le-2;\,n+m=0}\frac12(n^3-n)t^{-m-2}\\
+        &\qquad=-\sum_{k\le-2}(2n-k)S_k t^{n-k-2}+\frac12(n^3-n)t^{n-2},
+    \end{align*}
+    后者为
+    \begin{align*}
+        &t^{n+1}v'(t)+2(n+1)t^n v(t)-\frac12(n^3-n)t^{n-2}\\
+        &\qquad=\sum_{m\le-2}\left(-(m+2)S_m t^{n-m-2}+2(n+1)S_m t^{n-m-2}\right)
+          -\frac12(n^3-n)t^{n-2}\\
+        &\qquad=\sum_{m\le-2}(2n-m)S_m t^{n-m-2}-\frac12(n^3-n)t^{n-2}.
+    \end{align*}
+    两者相加为 0。
+\end{proof}
+
+% [Tutor Note: p.99 引理 3.5.1 的证明与 §3.5.5 的“一形式”计算完全同构：一边是 $S_m$ 按 (3.5-9) 变换，一边是 $\partial_t^2-v$ 的系数按 (3.5-11)（取 $v(t)=\sum S_m t^{-m-2}$）变换，两种作用恰好抵消。核对第一式时注意换指标 $k=n+m$ 使 $(n-m)S_{n+m}\mapsto(2n-k)S_k$；核对第二式时注意 $t^{-m-2}$ 的导数为 $-(m+2)t^{-m-3}$，乘 $t^{n+1}$ 后指数为 $n-m-2$。]
+
+于是，临界水平 $\widehat{\fsl}_2$ 顶点代数的中心 $\mathfrak{z}(\widehat{\fsl}_2)$ 的几何意义终于显现：
+
+\begin{quote}
+    \itshape
+    中心 $\mathfrak{z}(\widehat{\fsl}_2)$ 同构于圆盘 $D$ 上射影联络空间 $\mathcal{P}roj(D)$ 上的函数代数。
+\end{quote}
+
+把 torsor $\mathcal{A}ut_x$ 的扭构造应用于定理 3.5.1，得到如下结果。
+
+\begin{theorem}
+    附着于曲线上点 $x$ 的中心 $\mathfrak{z}(\widehat{\fsl}_2)_x$ 典范同构于 $\operatorname{Fun}\mathcal{P}roj(D_x)$，其中 $\mathcal{P}roj(D_x)$ 是点 $x$ 周围圆盘 $D_x=\Spec\mathcal{O}_x$ 上射影联络的空间。
+\end{theorem}
+
+% [Tutor Note: p.100 定理 3.5.2 是本章的目标定理：中心的“内在”描述。它把定理 3.5.1 中依赖坐标 $t$ 的 $\mathbb{C}[S_n]_{n\le-2}$ 换成几何上不变的 $\operatorname{Fun}\mathcal{P}roj(D_x)$。注意 $\mathcal{P}roj$ 用花体 A 只是记法，指的是仿射空间（以 $v$ 为坐标），不是概形的 Proj 构造。]
+
+同样，可得完备泛包络代数 $\widetilde{U}_\kappa(\widehat{\fsl}_{2,x})$ 的中心 $Z(\widehat{\fsl}_{2,x})$ 的坐标无关描述（这将在 §4.3.2 证明）。
+
+\begin{corollary}
+    附着于曲线 $X$ 上点 $x$ 的中心 $Z(\widehat{\fsl}_2)_x$ 典范同构于去心圆盘 $D_x^\times=\Spec\mathcal{K}_x$ 上射影联络空间上的函数代数 $\operatorname{Fun}\mathcal{P}roj(D_x^\times)$。
+\end{corollary}
+
+可以用定理 3.5.2 构造一族以 $D_x$ 上射影联络为参数的 $\hat{\fsl}_{2,\kappa_c,x}$-模。具体地，给定 $\rho\in\mathcal{P}roj(D_x)$，令 $\tilde\rho:\mathfrak{z}(\widehat{\fsl}_2)_x\to\mathbb{C}$ 为相应的特征标，并置
+\[
+    V_\rho=V_{\kappa_c}(\fsl_2)\big/\operatorname{Im}(\operatorname{Ker}\tilde\rho).
+\]
+下面将看到，所有这些模都不可约；而且它们事实上穷尽了所有可能的不可约无分歧 $\hat{\fsl}_{2,\kappa_c,x}$-模。于是我们把仿射 Kac–Moody 代数的表示与射影联络联系了起来；下文将看到，射影联络正是群 $PGL_2$（即 $SL_2$ 的 Langlands 对偶群）的一类特殊联络。这是通向圈群局部 Langlands 对应征途的第一步。
+
+% [Tutor Note: p.100 构造 $V_\rho=V_{\kappa_c}(\fsl_2)/\operatorname{Im}(\operatorname{Ker}\tilde\rho)$ 是“以中心特征标对真空模作商”的标准手法：$\tilde\rho$ 是中心在 $\mathbb{C}$-值特征标，$\operatorname{Ker}\tilde\rho$ 是理想，取其像再商掉。此处原书把 $Z$ 用于完备泛包络代数的中心、$\mathfrak{z}$ 用于顶点代数的中心，而定理 3.5.2 与推论 3.5.2 中 $\mathfrak{z}(\widehat{\fsl}_2)_x$ 与 $Z(\widehat{\fsl}_2)_x$ 的记号略有混用（原文如此），译文未改。]
+
+但对任意临界水平的仿射 Kac–Moody 代数，类似的结构是什么？下一章引入 \emph{oper} 的概念，它是射影联络对一般单李群的推广。届时将看到，$V_{\kappa_c}(\fg)$ 的中心 $\mathfrak{z}(\gghat)$ 同构于圆盘上 ${}^L G$-oper 空间上的函数代数，其中 ${}^L G$ 是 $G$ 的 Langlands 对偶群。

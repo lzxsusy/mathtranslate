@@ -77,8 +77,11 @@ xelatex main.tex
 
 - 成品页数：**97 页**（原书 130 页；中文本增页来自中文排印与批注区）
 - 带编号公式：**225 个**（照原文编号 (1.1)–(11.6)，缺号 0、重号 0，已用脚本比对）
-- 审校批注：**182 条**（Tutor Note 134、原文疑误 29、存疑 13、背景补充 6；按页索引见 `审校批注索引.md`）
+- 审校批注：**182 条**（Tutor Note 135、原文疑误 29、存疑 12、背景补充 6；按页索引见 `审校批注索引.md`）
+- 对照审校：13 块逐页核对，正文修订 **18 处**（P1 9、P2 9）；批注来源抽查 5/5 通过
+- 资料卡：五件套（`资料卡/00`–`04`）+ `kb/cards/SY01-07.jsonl`（work 卡）
+- 对齐卡：`datasets/leanstmt/cards/statements/sy0107-g01.json`（定理 7.1 奇偶判据，track `FW08`，gap）
 - 插图：**1 幅**（原书 p.18，600 dpi 裁剪，图注译中文）
-- 编译自检：xelatex 两遍 → 97 页，0 error、0 overfull、0 missing character、0 undefined、
+- 编译自检：xelatex 三遍 → 97 页，0 error、0 overfull、0 missing character、0 undefined、
   0 hyperref 书签警告；另有 3 处 underfull（排版松散提示，不影响正确性）
 - 源码规模：约 8.9 万汉字（不含公式与英文文献）

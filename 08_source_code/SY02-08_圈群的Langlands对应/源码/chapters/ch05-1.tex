@@ -1,0 +1,514 @@
+% =====================================================================
+%  U07 —— 第 5 章 自由场实现
+%  PDF p.140–153（原书印刷 p.126–139）
+%  内容：章首页、5.1 概览、5.2 有限维情形、5.3 仿射代数情形（至 5.3.3 中段）
+% =====================================================================
+
+\chapter{自由场实现}
+
+我们现在着手证明定理 4.3.2：它建立顶点代数 $V_{\kappa_c}(\mathfrak{g})$ 的中心与圆盘上 ${}^LG$-opers 空间上的函数代数之间的同构。证明中起本质作用的是 $\hat{\mathfrak{g}}_{\kappa_c}$ 上的 \textbf{Wakimoto 模}。当务之急是构造这些模并研究其性质。本章与下一章将按 [Feĭgin and Frenkel 1990a; Frenkel 2005b] 完成这一工作。
+
+\begin{keypoints}
+    \item \textbf{核心思想：} 为证明 $V_{\kappa_c}(\mathfrak{g})$ 的中心同构于圆盘上 ${}^LG$-opers 的函数代数（定理 4.3.2），需要构造 $\hat{\mathfrak{g}}_{\kappa_c}$ 的 Wakimoto 模；其来源是 $\mathfrak{g}$ 到（完备）Weyl 代数的自由场实现。
+    \item \textbf{数学工具：} 旗簇大胞腔上的无穷小作用、无穷维 Weyl 代数 $\mathcal{A}^{\mathfrak{g}}$ 及其完备化、局部向量场代数的二上循环、Chevalley 上同调。
+    \item \textbf{关键结论：} 任何 $\widetilde{\mathcal{D}}(N_+((t)))$-模都自动是临界水平的 $\hat{\mathfrak{g}}_{\kappa_c}$-模，这为临界水平的特殊地位提供了另一种解释。
+    \item \textbf{记号提醒：} ${}^LG$ 为 Langlands 对偶群，$\operatorname{Op}_{{}^LG}(D)$ 为形式圆盘上 ${}^LG$-opers 构成的空间，$\kappa_c$ 为临界水平。
+\end{keypoints}
+
+\section{概览}
+
+\begin{keypoints}
+    \item \textbf{核心思想：} 仿射情形照搬有限维策略：用圈代数在 $N_+((t))$ 上的作用构造中心同态，但必须先取微分算子代数的完备化。
+    \item \textbf{数学工具：} Harish--Chandra 同态 $Z(\mathfrak{g})\to(\operatorname{Fun}\mathfrak{h}^*)^W$、圈空间上的完备化 $\widetilde{\mathcal{D}}(N_+((t)))$、$\operatorname{Conn}(\Omega^{-\rho})_{D^\times}$ 这个 torsor。
+    \item \textbf{关键结论：} 提升存在上同调障碍；障碍部分消解后得到 $\hat{\mathfrak{g}}_{\kappa_c}\to\widetilde{\mathcal{D}}(N_+((t)))$，且 $1\mapsto1$，故其上的模都是临界水平模。
+    \item \textbf{关键结论：} 中心之像等于屏蔽算子 $\overline{V}_i[1]$ 的中心化子，也等于 $\operatorname{Fun}\operatorname{Op}_{{}^LG}(D^\times)$，后者经 Miura 变换嵌入联络空间。
+    \item \textbf{记号提醒：} 结合代数中心记 $Z(\hat{\mathfrak{g}})$，顶点代数中心记 $\mathfrak{z}(\hat{\mathfrak{g}})$；二者分别对应 $D^\times$ 与 $D$ 上的 opers。
+\end{keypoints}
+
+我们的最终目标是证明顶点代数 $V_{\kappa_c}(\mathfrak{g})$ 的中心同构于圆盘上 ${}^LG$-opers 空间上的函数代数。先看有限维情形中相应命题（即定理 2.1.1）的证明，会很有启发。描述 $U(\mathfrak{g})$ 的中心 $Z(\mathfrak{g})$ 最直接的办法，是使用所谓的 Harish--Chandra 同态 $Z(\mathfrak{g})\to\operatorname{Fun}\mathfrak{h}^*$（其中 $\mathfrak{h}$ 是 $\mathfrak{g}$ 的 Cartan 子代数），并证明它的像等于 $W$-不变函数构成的子代数 $(\operatorname{Fun}\mathfrak{h}^*)^W$，这里 $W$ 是作用在 $\mathfrak{h}^*$ 上的外尔群（见附录 A.3）。这个同态如何构造？一种办法是借助几何：李代数 $\mathfrak{g}$ 在旗簇 $\operatorname{Fl}=G/B_-$ 上有无穷小作用，其中 $B_-$ 是 $G$ 的下 Borel 子群。该作用保持 $\operatorname{Fl}$ 中的开稠密 $B_+$-轨道 $\mathcal{U}$（$B_+$ 是 $G$ 的上 Borel 子群），即 $B_+\cdot[1]\simeq N_+=[B_+,B_+]$。于是得到李代数同态 $\mathfrak{g}\to\mathcal{D}(N_+)$，其中 $\mathcal{D}(N_+)$ 是幂幺子群 $N_+\subset G$ 上的微分算子代数。
+
+% [Tutor Note: p.127 处作者说 Harish--Chandra 同态“one can show”，跳过了论证。其核心正是下文 p.134 的完整推导：任一 $\mathfrak{h}$-不变一上循环都给出一个提升，而由 Shapiro 引理 $H^1(\mathfrak{g},\operatorname{Fun}N_+)\simeq\mathfrak{h}^*$ 参数化所有这类提升；“给出 $Z(\mathfrak{g})$ 大小的估计”一步用到 Chevalley 限制定理，详见 [Dixmier 1977] 或 [Humphreys 1972]。]
+
+可以证明，这样的同态其实有一族，以 $\mathfrak{h}^*$ 为参数。于是得到李代数同态 $\mathfrak{g}\to\operatorname{Fun}\mathfrak{h}^*\otimes\mathcal{D}(N_+)$，从而得到代数同态 $U(\mathfrak{g})\to\operatorname{Fun}\mathfrak{h}^*\otimes\mathcal{D}(N_+)$。下一步要证明 $Z(\mathfrak{g})\subset U(\mathfrak{g})$ 的像完全落在这个张量积的第一个因子中，即交换子代数 $\operatorname{Fun}\mathfrak{h}^*$；这就是所求的 Harish--Chandra 同态。然后可以证明该像在单反射 $s_i$（$W$ 的生成元）下不变。至此，要完成证明只剩对 $Z(\mathfrak{g})$ 的“大小”作估计。
+
+在仿射情形我们采用同一策略。取代 $\operatorname{Fl}$ 的开 $B_+$-轨道（它同构于 $N_+$），我们考虑 $\operatorname{Fl}$ 的“圈空间”的一个开轨道，它同构于 $N_+((t))$。$\mathfrak{g}((t))$ 在 $N_+((t))$ 上的无穷小作用给出李代数同态 $\mathfrak{g}((t))\to\operatorname{Vect}N_+((t))$。但这里出现了有限维情形所没有的新现象：由于 $N_+((t))$ 是无穷维的，我们必须考虑相应微分算子代数的一个完备化 $\widetilde{\mathcal{D}}(N_+((t)))$。结果，把这个同态提升为同态 $\mathfrak{g}((t))\to\widetilde{\mathcal{D}}(N_+((t)))$ 存在上同调障碍。但我们将按 [Feĭgin and Frenkel 1990a; Frenkel 2005b] 证明，这一障碍可以被部分消解：它给出中心扩张 $\hat{\mathfrak{g}}_{\kappa_c}$ 到 $\widetilde{\mathcal{D}}(N_+((t)))$ 的同态，且 $1\mapsto1$。因此，$\widetilde{\mathcal{D}}(N_+((t)))$ 上的任何模都是临界水平的 $\hat{\mathfrak{g}}_{\kappa_c}$-模。这为临界水平的特殊地位提供了另一种解释。\transnote{本节是全章策略的缩影：先在有限维情形把 Harish--Chandra 同态实现为“$\mathfrak{g}\to\operatorname{Fun}\mathfrak{h}^*\otimes\mathcal{D}(N_+)$，并证明 $Z(\mathfrak{g})$ 的像落进第一个因子”这一几何构造——其中微分算子来自 $\mathfrak{g}$ 在旗簇开轨道 $N_+$ 上的无穷小作用——再把整个构造“圈化”。仿射情形唯一的新困难是 $N_+((t))$ 无穷维，$\mathcal{D}(N_+((t)))$ 必须换成完备化 $\widetilde{\mathcal{D}}(N_+((t)))$，提升才可能出现障碍；而中心扩张 $\hat{\mathfrak{g}}_{\kappa_c}$ 的作用恰好消解这一障碍——这正是临界水平特殊地位的另一种解释，也是它与 opers 相联系的入口。[来源：原书 p.127–128；同一构造的展开见 Frenkel and Ben-Zvi 2004, 第 11–12 章。]}
+
+与有限维情形一样，上述同态可以形变，得到从 $\hat{\mathfrak{g}}_{\kappa_c}$（从而从 $\widehat{U}_{\kappa_c}(\hat{\mathfrak{g}})$）到 $\widetilde{\mathcal{D}}(N((t)))$ 与 $\operatorname{Fun}\mathfrak{h}^*((t))$ 的（完备）张量积的同态。\transnote{此处原书把 $\widetilde{\mathcal{D}}(N_+((t)))$ 印成了 $\widetilde{\mathcal{D}}(N((t)))$：本节前文一律写 $N_+((t))$，而 $N$ 在书中从未单独定义，按上下文只能指 $N_+$。译文按原书保留，读时自行补上下标即可。[来源：原书 p.128（PDF p.141）页图。]}但是我们将会看到，要使之成为 $\operatorname{Aut}\mathcal{O}$-等变的，就必须修改 $\operatorname{Aut}\mathcal{O}$ 在 $\mathfrak{h}^*((t))$ 上的作用：代替 $\mathfrak{h}^*((t))\simeq\mathfrak{h}^*\otimes\Omega_{\mathcal{K}}$ 上的通常作用，我们需要与去心圆盘上 ${}^LH$-丛 $\Omega^{-\rho}$ 的联络构成的 $\Omega_{\mathcal{K}}$-torsor $\operatorname{Conn}(\Omega^{-\rho})_{D^\times}$ 相对应的作用。这里 ${}^LH$ 是 Langlands 对偶群的 Cartan 子群（其李代数与 $\mathfrak{h}^*$ 等同）。这是联络与 Langlands 对偶群首次露面的迹象。
+
+% [Tutor Note: $\operatorname{Conn}(\Omega^{-\rho})_{D^\times}$ 是 torsor 而不是向量空间：$\Omega^{-\rho}$ 是去心圆盘上的 ${}^LH$-丛（由 $\Omega_{\mathcal{K}}$ 的 $-\rho$ 次幂扭变而得），选定一个联络就把它与 $\mathfrak{h}^*((t))$ 等同起来，但 $\operatorname{Aut}\mathcal{O}$ 的作用依赖这一选择。这种“依赖选择的等同”正是 Miura 变换与 oper 结构出现的根源。]
+
+其次，我们证明在此同态下，中心 $Z(\hat{\mathfrak{g}})\subset\widehat{U}_{\kappa_c}(\hat{\mathfrak{g}})$ 的像含于子代数 $\operatorname{Fun}\operatorname{Conn}(\Omega^{-\rho})_{D^\times}$。进一步，我们将证明这个像等于某些“屏蔽算子” $\overline{V}_i[1]$（$i=1,\ldots,\ell$）的中心化子（可以认为它们是外尔群单反射的类比）。另一方面，我们还将证明这个中心化子也等于代数 $\operatorname{Fun}\operatorname{Op}_{{}^LG}(D^\times)$，而后者经所谓的 Miura 变换嵌入 $\operatorname{Fun}\operatorname{Conn}(\Omega^{-\rho})_{D^\times}$ 之中。
+
+这样我们就得到所求同构 $Z(\hat{\mathfrak{g}})\simeq\operatorname{Fun}\operatorname{Op}_{{}^LG}(D^\times)$，即定理 4.3.6：中心等同于 Langlands 对偶群的 opers 上的函数代数。实际上，下文将在顶点代数的框架中工作，并以类似方式得到定理 4.3.2 的同构 $\mathfrak{z}(\hat{\mathfrak{g}})\simeq\operatorname{Fun}\operatorname{Op}_{{}^LG}(D)$。（正如 4.3.2 节所见，它蕴含定理 4.3.6 的同构。）
+
+同态 $\widehat{U}_{\kappa_c}(\hat{\mathfrak{g}})\to\widetilde{\mathcal{D}}(N((t)))\widehat{\otimes}\operatorname{Fun}\mathfrak{h}^*((t))$ 及其顶点代数版本，称为 $\hat{\mathfrak{g}}_{\kappa_c}$ 的自由场实现。它也可以形变离开临界水平，下一章将会看到。这一实现是 M. Wakimoto 于 1986 年在 $\widehat{\mathfrak{sl}}_2$ 情形引入的，B. Feigin 与作者于 1988 年在一般情形引入 [Feĭgin and Frenkel 1988]。它给出一族 $\hat{\mathfrak{g}}_\kappa$-模，称为 Wakimoto 模。它们在表示论、几何与共形场论中有许多应用。
+
+% [Tutor Note: 此处目标印作 $\widetilde{\mathcal{D}}(N((t)))$，而本节前文（p.128）一律写 $N_+((t))$；$N$ 在书中并未单独定义，按上下文应指 $N_+$。译文保留原样，阅读时请自行补下标。]
+
+% [Tutor Note: 原文 p.129 先说 Wakimoto 1986 处理的是 $\widehat{\mathfrak{sl}}_2$，紧接着又写 $\mathfrak{g}=\mathfrak{sl}_2$；二者不可混淆：Wakimoto 的原构造针对仿射代数 $\widehat{\mathfrak{sl}}_2$，有限维 $\mathfrak{sl}_2$ 只是 5.2 节的原型。]
+
+本章与下一章将给出自由场实现与 Wakimoto 模的构造。当 $\mathfrak{g}=\mathfrak{sl}_2$ 时，构造在 [Frenkel and Ben-Zvi 2004] 第 11–12 章中有详细展开，读者可去那里寻找更多动机与背景。这里我们解释任意 $\mathfrak{g}$ 的情形。我们沿用 [Feĭgin and Frenkel 1990a] 的原始进路（其中有些修改来自 [Frenkel 2005b]），并借助上同调方法证明自由场实现的存在性。注意，Wakimoto 实现的显式公式已在 [Feĭgin and Frenkel 1988]（$\mathfrak{g}=\mathfrak{sl}_n$）与 [de Boer and Fehér 1997]（一般 $\mathfrak{g}$）中给出。自由场实现存在性的另一证明见 [Feigin and Frenkel 1999]。这一构造还被推广到扭仿射代数 [Szczesny 2002]。
+
+以下是本章内容的较详细描述。5.2 节从简单有限维李代数 $\mathfrak{g}$ 表示的几何构造开始：把 $\mathfrak{g}$ 嵌入一个 Weyl 代数，该嵌入来自 $\mathfrak{g}$ 在旗簇上的无穷小作用。这将作为后续各节 Wakimoto 模构造的原型。5.3 节引入 Wakimoto 模构造所需的主要构件：无穷维 Weyl 代数 $\mathcal{A}^{\mathfrak{g}}$、相应的顶点代数 $M_{\mathfrak{g}}$，以及圈代数 $L\mathfrak{g}$ 在 $\mathfrak{g}$ 的旗簇的大胞腔 $\mathcal{U}$ 的形式圈空间 $L\mathcal{U}$ 上的无穷小作用。我们还引入 $L\mathcal{U}$ 上阶数不超过 $1$ 的微分算子构成的局部李代数 $\mathcal{A}^{\mathfrak{g}}_{\le1,\mathfrak{g}}$。我们证明它是 $L\mathcal{U}$ 上局部向量场李代数被 $L\mathcal{U}$ 上局部泛函所作的非平凡扩张，并计算相应的二上循环（这部分材料大多已在 [Frenkel and Ben-Zvi 2004] 第 12 章出现过）。5.4 节给出此扩张的顶点代数解释。我们证明，圈代数 $L\mathfrak{g}$ 到 $L\mathcal{U}$ 上局部向量场李代数的嵌入可以提升为中心扩张 $\hat{\mathfrak{g}}$ 到 $\mathcal{A}^{\mathfrak{g}}_{\le1,\mathfrak{g}}$ 的嵌入。为此需要证明，上述二上循环在 $L\mathfrak{g}$ 上的限制，与它的 Kac--Moody 中心扩张（水平为 $\kappa_c$）所对应的二上循环在上同调意义下等价。5.5 节通过把标准上同调 Chevalley 复形换成一个小得多的局部子复形（两个上循环都属于它）来实现这一点。5.6 节计算后者的上同调，并证明两个上循环确实上同调等价。
+
+\section{有限维情形}
+
+本节回顾 $\mathfrak{g}$-模在旗簇大胞腔上的函数空间中的实现。它将作为以下各节仿射 Kac--Moody 代数自由场实现的蓝图。
+
+\begin{keypoints}
+    \item \textbf{核心思想：} $\mathfrak{g}$ 在旗簇大胞腔 $N_+$ 上的无穷小作用给出嵌入 $\mathfrak{g}\hookrightarrow\mathcal{D}_{\le1}(N_+)\subset\mathcal{D}(N_+)$，这是 Wakimoto 模构造的有限维原型。
+    \item \textbf{数学工具：} 大胞腔 $\mathcal{U}\simeq N_+$、齐次坐标 $y_\alpha$（$\alpha\in\Delta_+$）、微分算子代数（Weyl 代数）$\mathcal{D}(\mathcal{U})$ 及其按阶数的滤过。
+    \item \textbf{关键结论：} 作为 $\mathfrak{g}$-模有 $\operatorname{Fun}N_+\simeq M_0^*$；对一般的 $\chi$，经提升 $\rho_\chi$ 修改作用后 $\operatorname{Fun}N_+\simeq M_\chi^*$。
+    \item \textbf{关键结论：} 所有提升合并为泛同态 $\widetilde{\rho}:U(\mathfrak{g})\to\operatorname{Fun}\mathfrak{h}^*\otimes\mathcal{D}(N_+)$（式 (5.2-10)）。
+    \item \textbf{记号提醒：} 限制对偶记作 $U(\mathfrak{n}_+)^\vee$，反变 Verma 模记作 $M_\chi^*$，两者记号不同，不可混用。
+\end{keypoints}
+
+\subsection{旗簇}
+
+仍设 $\mathfrak{g}$ 是秩为 $\ell$ 的简单李代数，带 Cartan 分解
+\begin{equation}
+    \mathfrak{g}=\mathfrak{n}_+\oplus\mathfrak{h}\oplus\mathfrak{n}_- ,
+    \tag{5.2-1}
+\end{equation}
+其中 $\mathfrak{h}$ 是 Cartan 子代数，$\mathfrak{n}_\pm$ 是上、下幂零子代数。令
+\[
+    \mathfrak{b}_\pm=\mathfrak{h}\oplus\mathfrak{n}_\pm
+\]
+为上、下 Borel 子代数。我们沿用附录 A.3 的记号。
+
+% [Tutor Note: 与常见教材不同，本书用下 Borel 子群 $B_-$ 作商，使由正根生成的 $N_+$ 成为大胞腔 $G/B_-$ 中的开轨道；式 (5.2-1) 中 $\mathfrak{n}_+$ 对应正根、$\mathfrak{n}_-$ 对应负根。坐标约定 $h\cdot y_\alpha=-\alpha(h)y_\alpha$（负号！）与式 (5.2-5)、(5.2-13) 的负号都源于此，极易搞错。]
+
+设 $G$ 是 $\mathfrak{g}$ 对应的连通单连通李群，$N_\pm$（相应地 $B_\pm$）是 $G$ 中对应于 $\mathfrak{n}_\pm$（相应地 $\mathfrak{b}_\pm$）的上、下幂幺子群（相应地 Borel 子群）。
+
+齐性空间 $\operatorname{Fl}=G/B_-$ 称为 $\mathfrak{g}$ 对应的\textbf{旗簇}。例如 $G=SL_n$ 时，它是 $\mathbb{C}^n$ 的子空间全旗簇：$V_1\subset\cdots\subset V_{n-1}\subset\mathbb{C}^n$，$\dim V_i=i$。群 $SL_n$ 传递地作用于该簇，而旗 $V_i=\operatorname{span}(e_n,\ldots,e_{n-i+1})$ 的稳定子是下三角矩阵构成的子群 $B_-$。
+
+旗簇有唯一的开 $N_+$-轨道，即所谓的大胞腔 $\mathcal{U}=N_+\cdot[1]\subset G/B_-$，它同构于 $N_+$。由于 $N_+$ 是幂幺李群，指数映射 $\mathfrak{n}_+\to N_+$ 是同构。因此 $N_+$ 同构于向量空间 $\mathfrak{n}_+$。于是 $N_+$ 同构于仿射空间 $\mathbb{A}^{|\Delta_+|}$，其中 $\Delta_+$ 是 $\mathfrak{g}$ 的正根系。从而 $N_+$ 上正则函数的代数 $\operatorname{Fun}N_+$ 是自由多项式代数。若 $N_+$ 上的坐标组 $\{y_\alpha\}_{\alpha\in\Delta_+}$ 满足
+\[
+    h\cdot y_\alpha=-\alpha(h)y_\alpha,\qquad h\in\mathfrak{h},
+\]
+则称之为\textbf{齐次的}。下文只考虑 $N_+$ 上的齐次坐标组。\transnote{负号是本书的约定，并非笔误：$h\cdot y_\alpha=-\alpha(h)y_\alpha$ 使 $y_\alpha$ 的权为 $-\alpha$，这样 $e_\alpha\cdot y_\alpha=1$ 才成立，$\operatorname{Fun}N_+$ 的权分解才是 $\bigoplus_\gamma(\operatorname{Fun}N_+)_{-\gamma}$，式 (5.2-5) 的 $h\mapsto-2y\partial_y$ 与式 (5.2-13) 的负号也都由它决定。若改用通常的 $h\cdot y_\alpha=+\alpha(h)y_\alpha$，本节的公式会整体差一个负号。[来源：原书 p.130；与式 (5.2-5)、(5.2-13) 对照。]}
+
+注意，定义 $\mathcal{U}$ 只需选取 $G$ 的一个 Borel 子群 $B_+$。此时 $N_+=[B_+,B_+]$，而 $\mathcal{U}$ 是旗簇（即 $G$ 的所有 Borel 子群构成的簇）中的开 $N_+$-轨道（故 $\mathcal{U}$ 是 $N_+$-torsor）。本章所有构造只需取定 $B_+$ 即可，也就是说，无需选取嵌入 $H=B_+/[B_+,B_+]\hookrightarrow B_+$（后者特别地给出反 Borel 子群 $B_-$，见 4.2.1 节）。但为叙述简便，我们同时固定 Cartan 子群 $H\subset B_+$。后面会看到构造与这一选择无关。
+
+$G$ 在 $G/B_-$ 上的作用给出从 $\mathfrak{g}$ 到 $G/B_-$ 上向量场李代数的映射，从而给出到其开稠密子集 $\mathcal{U}\simeq N_+$ 上向量场的映射。于是得到李代数同态 $\mathfrak{g}\to\operatorname{Vect}N_+$。
+
+这个同态可以显式描述如下。记 $G^\circ$ 为 $G$ 中形如 $g_+g_-$（$g_+\in N_+$，$g_-\in B_-$）的元素构成的稠密开子流形（注意这样的表达必唯一，因为 $B_-\cap N_+=1$）。换言之，$G^\circ=p^{-1}(\mathcal{U})$，其中 $p$ 是投影 $G\to G/B_-$。给定 $a\in\mathfrak{g}$，考虑 $G$ 中的单参数子群 $\gamma(\epsilon)=\exp(\epsilon a)$。由于 $G^\circ$ 在 $G$ 中开稠密，当 $\epsilon$ 在 $0$ 的形式邻域内时 $\gamma(\epsilon)x\in G^\circ$，故可写
+\[
+    \gamma(\epsilon)^{-1}x=Z_+(\epsilon)Z_-(\epsilon),\qquad
+    Z_+(\epsilon)\in N_+,\quad Z_-(\epsilon)\in B_-.
+\]
+因子 $Z_+(\epsilon)$ 正是子群 $\gamma(\epsilon)$ 在映射 $p$ 下到 $N_+\simeq\mathcal{U}\subset G/B_-$ 的投影。于是对应于 $a$ 的向量场 $\xi_a$（等价地，$\operatorname{Fun}N_+$ 的一个导子）由公式
+\begin{equation}
+    (\xi_a f)(x)=\left(\frac{d}{d\epsilon}f(Z_+(\epsilon))\right)\bigg|_{\epsilon=0}
+    \tag{5.2-2}
+\end{equation}
+给出。
+
+为把 $\xi_a$ 的公式写得更具体，选取 $\mathfrak{g}$ 的一个忠实表示 $V$（比如伴随表示）。计算中只需 $\epsilon$ 的线性项，故可以也的确假设 $\epsilon^2=0$。把 $x\in N_+$ 看作 $\operatorname{End}V$ 中的矩阵，其矩阵元是坐标 $y_\alpha$（$\alpha\in\Delta_+$）的多项式；这样的矩阵表达 $N_+$ 的一般元素。则有
+\begin{equation}
+    (1-\epsilon a)x=Z_+(\epsilon)Z_-(\epsilon).
+    \tag{5.2-3}
+\end{equation}
+由此式可得 $Z_+(\epsilon)=x+\epsilon Z_+^{(1)}$，其中 $Z_+^{(1)}\in\mathfrak{n}_+$；且 $Z_-(\epsilon)=1+\epsilon Z_-^{(1)}$，其中 $Z_-^{(1)}\in\mathfrak{b}_-$。因此由公式 (5.2-2) 与 (5.2-3) 得到
+\begin{equation}
+    \xi_a\cdot x=-x(x^{-1}ax)_+ ,
+    \tag{5.2-4}
+\end{equation}
+其中 $z_+$ 表示元素 $z\in\mathfrak{g}$ 沿 $\mathfrak{b}_-$ 到 $\mathfrak{n}_+$ 的投影。
+
+% [Tutor Note: 式 (5.2-4) 的负号来自 $\gamma(\epsilon)^{-1}x$ 而非 $x\gamma(\epsilon)^{-1}$，若误用右作用会得到相反符号。推导要点：由 (5.2-3) 写成 $x(1-\epsilon x^{-1}ax)$，再按 $\mathfrak{g}=\mathfrak{b}_-\oplus\mathfrak{n}_+$ 分解，得 $Z_+(\epsilon)=x\bigl(1-\epsilon(x^{-1}ax)_+\bigr)$，故 $Z_+^{(1)}=-x(x^{-1}ax)_+$。此处极易出现符号与左右作用的混淆，请对照原文核对。]
+
+例如取 $\mathfrak{g}=\mathfrak{sl}_2$。则 $G/B_-=\mathbb{P}^1$，即 $\mathbb{C}^2$ 中直线构成的簇。取 $\mathbb{CP}^1$ 的开子集
+\[
+    \mathcal{U}=\left\{\mathbb{C}\binom{y}{-1}\right\}\subset\mathbb{CP}^1
+\]
+（这里选负号是为了记号方便）。得到李代数同态 $\mathfrak{sl}_2\to\operatorname{Vect}\mathcal{U}$，把 $a$ 送到 $\xi_a$；它可由公式
+\[
+    (v_a\cdot f)(y)=\frac{d}{d\epsilon}f(\exp(-\epsilon a)y)\big|_{\epsilon=0}
+\]
+显式计算。
+
+容易求出 $\mathfrak{sl}_2$ 的标准基（见 2.1.1 节）的元素对应的向量场的显式公式：
+\begin{equation}
+    e\mapsto\frac{\partial}{\partial y},\qquad
+    h\mapsto -2y\frac{\partial}{\partial y},\qquad
+    f\mapsto -y^2\frac{\partial}{\partial y}.
+    \tag{5.2-5}
+\end{equation}
+
+% [Tutor Note: 式 (5.2-5) 的符号完全取决于 2.1.1 节的对易关系约定 $[h,e]=2e$、$[h,f]=-2f$ 以及齐次坐标的负号约定：若按通常约定会写成 $+2y\partial_y$ 与 $+y^2\partial_y$，与本书相差一个整体负号。核对 $\mathfrak{sl}_2$ 三生成元时务必以 2.1.1 节为准。]
+
+\subsection{微分算子代数}
+
+$\mathcal{U}$ 上微分算子的代数 $\mathcal{D}(\mathcal{U})$ 同构于以 $\{y_\alpha,\partial/\partial y_\alpha\}_{\alpha\in\Delta_+}$ 为生成元、满足标准关系的 Weyl 代数：
+\[
+    \left[\frac{\partial}{\partial y_\alpha},y_\beta\right]=\delta_{\alpha,\beta},
+    \qquad
+    \left[\frac{\partial}{\partial y_\alpha},\frac{\partial}{\partial y_\beta}\right]
+    =[y_\alpha,y_\beta]=0.
+\]
+代数 $\mathcal{D}(\mathcal{U})$ 带有按微分算子阶数给出的自然滤过 $\{\mathcal{D}_{\le i}(\mathcal{U})\}$。特别地，有正合列
+\begin{equation}
+    0\to\operatorname{Fun}\mathcal{U}\to\mathcal{D}_{\le1}(\mathcal{U})\to\operatorname{Vect}\mathcal{U}\to 0,
+    \tag{5.2-6}
+\end{equation}
+其中 $\operatorname{Fun}\mathcal{U}\simeq\operatorname{Fun}N_+$ 表示 $\mathcal{U}$ 上正则函数环，$\operatorname{Vect}\mathcal{U}$ 表示 $\mathcal{U}$ 上向量场的李代数。此正合列有典范分裂：把 $\xi\in\operatorname{Vect}\mathcal{U}$ 提升为唯一一个一阶微分算子 $D_\xi$，其符号等于 $\xi$，且消灭常函数，即满足 $D_\xi\cdot1=0$。利用这个分裂，得到嵌入 $\mathfrak{g}\hookrightarrow\mathcal{D}_{\le1}(N_+)$，从而在函数空间 $\operatorname{Fun}N_+=\mathbb{C}[y_\alpha]_{\alpha\in\Delta_+}$ 上得到 $\mathfrak{g}$-模结构。
+
+% [Tutor Note: 式 (5.2-6) 的典范分裂用“符号等于 $\xi$ 且消灭常函数”唯一确定一阶算子，这一步是全节的技术支点：它把向量场（李代数）嵌入微分算子代数而不改变交换子，从而使 $\mathfrak{g}$ 能作用在函数空间上。注意“符号”指按阶数滤过取出的最高阶部分。]
+
+\subsection{Verma 模与反变 Verma 模}
+
+由构造，$\mathfrak{n}_+$ 在 $\operatorname{Fun}N_+$ 上的作用满足 $e_\alpha\cdot y_\alpha=1$，且当 $\alpha$ 不大于 $\beta$ 时 $e_\alpha\cdot y_\beta=0$；这里的序是正根集合上通常的偏序（若 $\beta-\alpha$ 是正单根的非负系数线性组合，则记 $\alpha\le\beta$）。因此由归纳可得：对任意 $A\in\operatorname{Fun}N_+$，存在 $P\in U(\mathfrak{n}_+)$ 使 $P\cdot A=1$。
+
+考虑配对
+\[
+    U(\mathfrak{n}_+)\times\operatorname{Fun}N_+\to\mathbb{C},
+\]
+它把 $(P,A)$ 送到函数 $P\cdot A$ 在 $N_+$ 的单位元处的值。此配对是 $\mathfrak{n}_+$-不变的。此外，$U(\mathfrak{n}_+)$ 与 $\operatorname{Fun}N_+$ 都按 $\mathfrak{g}$ 根格的正部分 $Q_+$（在 Cartan 子代数 $\mathfrak{h}$ 作用下）分次：
+\[
+    U(\mathfrak{n}_+)=\bigoplus_{\gamma\in Q_+}U(\mathfrak{n}_+)_\gamma,
+    \qquad
+    \operatorname{Fun}N_+=\bigoplus_{\gamma\in Q_+}(\operatorname{Fun}N_+)_{-\gamma},
+\]
+其中
+\[
+    Q_+=\left\{\sum_{i=1}^{\ell}n_i\alpha_i\ \middle|\ n_i\in\mathbb{Z}_+\right\},
+\]
+且此配对是齐次的。这意味着，齐次元素的配对只有当它们的次数相反时才非零。
+
+来看配对在有限维子空间 $U(\mathfrak{n}_+)_\gamma$ 与 $(\operatorname{Fun}N_+)_{-\gamma}$（对某个 $\gamma\in Q_+$）上的限制。考虑 $U(\mathfrak{n}_+)_\gamma$ 的 Poincaré--Birkhoff--Witt 基元素
+\begin{equation}
+    \left\{e_{\alpha(1)}\cdots e_{\alpha(k)}\ ,\ \sum_{i=1}^{k}\alpha(i)=\gamma\right\}
+    \tag{5.2-7}
+\end{equation}
+（相对于某个字典序），以及 $\operatorname{Fun}N_+$ 的单项基
+\[
+    \left\{y_{\beta(1)}\cdots y_{\beta(m)}\ ,\ \sum_{i=1}^{m}\beta(i)=\gamma\right\}.
+\]
+利用公式 (5.2-4) 得到 $e_\alpha$ 对应的向量场在 $\operatorname{Fun}N_+$ 上作用的如下公式：
+\begin{equation}
+    e_\alpha\mapsto\frac{\partial}{\partial y_\alpha}
+    +\sum_{\beta\in\Delta_+,\ \beta>\alpha}P_\beta^\alpha\frac{\partial}{\partial y_\beta},
+    \tag{5.2-8}
+\end{equation}
+其中 $P_\beta^\alpha\in\operatorname{Fun}N_+$ 是次数为 $\alpha-\beta$ 的多项式，而 $\alpha-\beta$ 是 $-Q_+$ 的非零元素（上式中的 $\beta>\alpha$ 就是这个意思）。
+
+我们这样选取单项式 (5.2-7) 的字典序：仅当 $i>j$ 时 $\alpha(i)>\alpha(j)$。于是由公式 (5.2-8) 容易看出，配对限制在次数 $\gamma$ 上是对角矩阵，且对角元非零，因此是非退化的。\transnote{这里的“非退化”并非显然，原书说“容易看出”，实际用到的是 PBW 基与根序的相容性：由 (5.2-8)，$e_\alpha$ 的首项 $\partial/\partial y_\alpha$ 在每个次数上给出对角项 $1$，其余项 $\partial/\partial y_\beta$（$\beta>\alpha$）只把单项式送到字典序更小的单项式，故配对矩阵可逆。$U(\mathfrak{n}_+)^\vee$ 指分次限制对偶 $\bigoplus_\gamma(U(\mathfrak{n}_+)_\gamma)^*$，即只在有限个次数上非零的线性函数。[来源：原书 p.132–133。]}
+
+% [Tutor Note: “容易看出”省略的关键是三角性：由 (5.2-8)，$e_\alpha$ 作用在单项式 $y_{\beta(1)}\cdots y_{\beta(m)}$ 上只产生 $\alpha\le\beta(i)$ 的项，再配合所取的字典序即得配对矩阵为上三角且对角元非零（对角项来自 (5.2-8) 中的 $\partial/\partial y_\alpha$），从而可逆。]
+
+因此我们发现，$\mathfrak{n}_+$-模 $\operatorname{Fun}N_+$ 同构于 $U(\mathfrak{n}_+)$ 的限制对偶 $U(\mathfrak{n}_+)^\vee$：
+\[
+    U(\mathfrak{n}_+)^\vee\overset{\text{def}}{=}\bigoplus_{\gamma\in Q_+}(U(\mathfrak{n}_+)_\gamma)^*.
+\]
+现在回顾 Verma 模与反变 Verma 模的定义。
+
+对每个 $\chi\in\mathfrak{h}^*$，考虑 $\mathfrak{b}_\pm$ 的一维表示 $\mathbb{C}_\chi$，其中 $\mathfrak{h}$ 按 $\chi$ 作用，$\mathfrak{n}_\pm$ 作用为 $0$。以 $\chi\in\mathfrak{h}^*$ 为最高权的 \textbf{Verma 模} $M_\chi$ 是诱导模
+\[
+    M_\chi=\operatorname{Ind}_{\mathfrak{b}_+}^{\mathfrak{g}}\mathbb{C}_\chi
+    \overset{\text{def}}{=}U(\mathfrak{g})\otimes_{U(\mathfrak{b}_+)}\mathbb{C}_\chi.
+\]
+Cartan 分解 (5.2-1) 给出向量空间同构
+\[
+    U(\mathfrak{g})\simeq U(\mathfrak{n}_-)\otimes_{\mathbb{C}}U(\mathfrak{b}_+).
+\]
+因此作为 $\mathfrak{n}_-$-模，$M_\chi\simeq U(\mathfrak{n}_-)$。
+
+以 $\chi\in\mathfrak{h}^*$ 为最高权的\textbf{反变 Verma 模} $M_\chi^*$ 定义为（限制）余诱导模
+\begin{equation}
+    M_\chi^*=\operatorname{Coind}_{\mathfrak{b}_-}^{\mathfrak{g}}\mathbb{C}_\chi
+    \overset{\text{def}}{=}\operatorname{Hom}^{\text{res}}_{U(\mathfrak{b}_-)}(U(\mathfrak{g}),\mathbb{C}_\chi).
+    \tag{5.2-9}
+\end{equation}
+这里考虑的是在 $U(\mathfrak{g})$ 的左 $U(\mathfrak{b}_-)$-作用下不变的同态；下标“res”表示只考虑这样的线性映射 $U(\mathfrak{g})\to\mathbb{C}_\chi$：它们是支撑在向量空间同构 $U(\mathfrak{g})\simeq U(\mathfrak{b}_-)\otimes U(\mathfrak{n}_+)$ 的直接加项 $U(\mathfrak{b}_-)\otimes U(\mathfrak{n}_+)_\gamma$ 上的映射的有限线性组合。于是作为 $\mathfrak{n}_+$-模，$M_\chi^*\simeq U(\mathfrak{n}_+)^\vee$。\transnote{两处容易混淆：$M_\chi$ 是诱导模、$M_\chi^*$ 是余诱导模，星号表示“反变”，不是 $M_\chi$ 的对偶空间；作为 $\mathfrak{n}_+$-模有 $M_\chi^*\simeq U(\mathfrak{n}_+)^\vee$，而 $M_\chi$ 只在 $\mathfrak{n}_-$-模的意义下同构于 $U(\mathfrak{n}_-)$，方向相反。式 (5.2-9) 中 $\operatorname{Hom}^{\text{res}}$ 的“res”要求线性泛函只在有限多个直和项 $U(\mathfrak{b}_-)\otimes U(\mathfrak{n}_+)_\gamma$ 上非零。[来源：原书 p.134 式 (5.2-9)。]}
+
+% [Tutor Note: 注意两套对偶记号：$U(\mathfrak{n}_+)^\vee$ 是限制对偶（分次直和的对偶），而 $M_\chi^*$ 是星号（反变 Verma 模），不要把 $M_\chi^*$ 读成 $M_\chi$ 的对偶空间。式 (5.2-9) 中 $\operatorname{Hom}^{\text{res}}$ 先用 $U(\mathfrak{g})\simeq U(\mathfrak{b}_-)\otimes U(\mathfrak{n}_+)$ 的直和分解，再要求在每个直和项上只有有限个非零取值。]
+
+\subsection{$\operatorname{Fun}N_+$ 与 $M_\chi^*$ 的等同}
+
+模 $M_0^*$ 同构于带上述 $\mathfrak{g}$-模结构的 $\operatorname{Fun}N_+$。事实上，向量 $1\in\operatorname{Fun}N_+$ 被 $\mathfrak{n}_+$ 零化，且关于 $\mathfrak{h}$ 的权为 $0$。因此存在非零同态 $\varphi:\operatorname{Fun}N_+\to M_0^*$，把 $1\in\operatorname{Fun}N_+$ 送到 $M_\chi^*$ 中一个权为 $0$ 的非零向量 $v_0^*$。由于作为 $\mathfrak{n}_+$-模，$\operatorname{Fun}N_+$ 同构于 $U(\mathfrak{n}_+)^\vee$，此同态是单射。事实上，对任意 $P\in\operatorname{Fun}N_+$，存在 $u\in U(\mathfrak{n}_+)$ 使 $U\cdot P=1$。因此 $u\cdot\varphi(P)=\varphi(1)=v_0^*\ne0$，从而 $\varphi(P)\ne0$。又因作为 $\mathfrak{n}_+$-模，$M_\chi^*$ 也同构于 $U(\mathfrak{n}_+)^\vee$，所以 $\varphi$ 必是同构。\transnote{本页（原书 p.134）有几处印刷错误，译文均照原样保留：5.2.4 节标题的 $M_\chi^*$ 应为 $M_0^*$（本节先讨论权 $0$ 的情形）；“$v_0^*\in M_\chi^*$”与下段“但 $M_\chi^*$ 也同构于 $U(\mathfrak{n}_+)^\vee$”两处下标 $\chi$ 应为 $0$；“$U\cdot P=1$”中的大写 $U$ 应为小写 $u$（指上句的 $u\in U(\mathfrak{n}_+)$）；本节后文“$\mathfrak{h}$ 在 $V$ 上的修改作用”中的 $V$ 应为 $\operatorname{Fun}N_+$（$V$ 只是把 $N_+$ 实现为矩阵群时所用的忠实表示，与可对角化无涉）。[来源：原书 p.134（PDF p.147）页图。]}
+
+% [Tutor Note: 原书 p.134 本节标题印作 $M_\chi^*$，紧接的正文却写 $M_0^*$；同页“$v_0^*\in M_\chi^*$”与下一段“但 $M_\chi^*$ 也同构于 $U(\mathfrak{n}_+)^\vee$”两处的下标 $\chi$ 按上下文应为 $0$：此处讨论的是权 $0$ 的向量 $v_0^*$，一般 $\chi$ 的情形要到本节后段才处理。同页“$U\cdot P=1$”中的大写 $U$ 亦应为小写 $u$（指上句的 $u\in U(\mathfrak{n}_+)$）。译文均保留原样，存疑待考。]
+
+现在我们把任意权 $\chi$ 的模 $M_\chi^*$ 与 $\operatorname{Fun}N_+$ 等同，后者带有修改过的 $\mathfrak{g}$ 作用。
+
+回顾我们有 $\mathfrak{g}$ 到 $\mathcal{D}_{\le1}(N_+)$ 的典范提升 $a\mapsto\xi_a$。这个提升不唯一。我们可以给每个 $\xi_a$ 加上一个函数 $\phi_a\in\operatorname{Fun}N_+$（要求 $\phi_{a+b}=\phi_a+\phi_b$）来修改它。容易验证，修改后的微分算子 $\xi_a+\phi_a$ 满足 $\mathfrak{g}$ 的对易关系，当且仅当线性映射 $\mathfrak{g}\to\operatorname{Fun}N_+$，$a\mapsto\phi_a$ 是 $\mathfrak{g}$ 的、系数在 $\operatorname{Fun}N_+$ 中的一上循环。
+
+每个这样的提升都给 $\operatorname{Fun}N_+$ 一个 $\mathfrak{g}$-模结构。我们再要求 $\mathfrak{h}$ 在 $V$ 上的修改作用保持可对角化。这意味着对每个 $h\in\mathfrak{h}$，$\phi_h$ 是 $N_+$ 上的常函数，因而我们的一上循环应当是 $\mathfrak{h}$-不变的：$\phi_{[h,a]}=\xi_h\cdot\phi_a$，对一切 $h\in\mathfrak{h}$、$a\in\mathfrak{g}$。我们断言：$\mathfrak{g}$ 的、系数在 $\mathbb{C}[N_+]$ 中的 $\mathfrak{h}$-不变一上循环构成的空间，与 $\mathfrak{g}$ 的、系数在 $\mathbb{C}[N_+]$ 中的一阶上同调 $H^1(\mathfrak{g},\mathbb{C}[N_+])$ 典范同构。
+
+% [Tutor Note: 上一句“$\mathfrak{h}$ 在 $V$ 上的修改作用保持可对角化”中的 $V$ 按上下文应指所构造的模 $\operatorname{Fun}N_+$：$V$ 是前面用来把 $N_+$ 实现为矩阵群的忠实表示，与可对角化无关。译文保留原样，疑为笔误。]
+
+事实上，众所周知（例如见 [Fuks 1986]），若 $\mathfrak{g}$ 的李子代数 $\mathfrak{h}$ 在 $\mathfrak{g}$ 与某个 $\mathfrak{g}$-模 $M$ 上均对角地作用，则 $\mathfrak{h}$ 在 $H^1(\mathfrak{g},M)$ 上必作用为 $0$。因此 $H^1(\mathfrak{g},\mathbb{C}[N_+])$ 等于 $\mathfrak{h}$-不变一上循环空间对其 $\mathfrak{h}$-不变上边缘子空间的商（所谓上边缘，指形如 $\phi_b=\xi_b\cdot f$（某个 $f\in\mathbb{C}[N_+]$）的上循环）。但显然在我们的情形中 $\mathfrak{h}$-不变上边缘空间等于 $0$，故得结论。
+
+于是，把 $\mathfrak{g}$ 提升到 $\mathcal{D}_{\le1}(N_+)$、并使 $\mathbb{C}[N_+]$ 成为 $\mathfrak{h}$ 对角作用的 $\mathfrak{g}$-模的所有提升，自然同构于 $H^1(\mathfrak{g},\mathbb{C}[N_+])$。由于
+\[
+    \operatorname{Fun}N_+=M_0^*=\operatorname{Coind}^{\mathfrak{g}}_{\mathfrak{b}_-}\mathbb{C}_0,
+\]
+由 Shapiro 引理（见 [Fuks 1986] 5.4 节）得
+\[
+    H^1(\mathfrak{g},\operatorname{Fun}N_+)\simeq H^1(\mathfrak{b}_-,\mathbb{C}_0)
+    =(\mathfrak{b}_-/{[\mathfrak{b}_-,\mathfrak{b}_-]})^*\simeq\mathfrak{h}^*.
+\]
+因此，对每个 $\chi\in\mathfrak{h}^*$ 得到李代数同态 $\rho_\chi:\mathfrak{g}\to\mathcal{D}_{\le1}(N_+)$，从而在 $\operatorname{Fun}N_+$ 上得到 $\mathfrak{h}^*$-分次的 $\mathfrak{g}$-模结构。我们来更细致地分析这个 $\mathfrak{g}$-模。
+
+我们有 $\xi_h\cdot y_\alpha=-\alpha(h)y_\alpha$，$\alpha\in\Delta_+$，故 $\operatorname{Fun}N_+$ 中任何单项式的权都等于若干负根之和。由于一上循环是 $\mathfrak{h}$-不变的，我们得到
+\[
+    \xi_h\cdot\phi_{e_\alpha}=\phi_{[h,e_\alpha]}=\alpha(h)\phi_{e_\alpha},
+    \qquad\alpha\in\Delta_+,
+\]
+所以 $\phi_{e_\alpha}$ 的权必须等于正根 $\alpha$。因此对一切 $\alpha\in\Delta_+$，$\phi_{e_\alpha}=0$。于是 $\mathfrak{n}_+$ 在 $\operatorname{Fun}N_+$ 上的作用没有被修改。另一方面，由构造，$h\in\mathfrak{h}$ 的作用被修改为 $h\mapsto h+\chi(h)$。因此向量 $1\in\operatorname{Fun}N_+$ 仍被 $\mathfrak{n}_+$ 零化，但关于 $h$ 现在的权为 $\chi$。从而存在非零同态 $\operatorname{Fun}N_+\to M_\chi^*$，把 $1\in\operatorname{Fun}N_+$ 送到 $M_\chi^*$ 中权为 $\chi$ 的非零向量 $v_\chi^*$。由于 $\operatorname{Fun}N_+$ 与 $M_\chi^*$ 作为 $\mathfrak{n}_+$-模都同构于 $U(\mathfrak{n}_+)^\vee$，我们得到此同态是同构（与本节开头对 $\chi=0$ 的做法相同）。因此，在经由提升 $\rho_\chi$ 得到的修改作用下，$\mathfrak{g}$-模 $\operatorname{Fun}N_+$ 同构于反变 Verma 模 $M_\chi^*$。
+
+总结一下：我们构造了一族李代数同态
+\[
+    \rho_\chi:\mathfrak{g}\to\mathcal{D}_{\le1}(N_+)\to\mathcal{D}(N_+),
+    \qquad\chi\in\mathfrak{h}^*,
+\]
+它们给出代数同态
+\[
+    \widetilde{\rho}_\chi:U(\mathfrak{g})\to\mathcal{D}(N_+),
+    \qquad\chi\in\mathfrak{h}^*.
+\]
+这些同态合并为一个泛同态
+\begin{equation}
+    \widetilde{\rho}:U(\mathfrak{g})\to\operatorname{Fun}\mathfrak{h}^*\otimes_{\mathbb{C}}\mathcal{D}(N_+),
+    \tag{5.2-10}
+\end{equation}
+使得对每个 $\chi\in\mathfrak{h}^*$，$\rho_\chi$ 等于 $\widetilde{\rho}$ 与“沿第一个因子在 $\chi$ 处取值”的同态 $\operatorname{Fun}\mathfrak{h}^*\to\mathbb{C}$ 的复合。
+
+\subsection{显式公式}
+
+取 $\mathfrak{g}$ 的一组基 $\{J^a\}_{a=1,\ldots,\dim\mathfrak{g}}$。在同态 $\rho_\chi$ 下，有
+\begin{equation}
+    J^a\mapsto P_a\left(y_\alpha,\frac{\partial}{\partial y_\alpha}\right)+f_a(y_\alpha),
+    \tag{5.2-11}
+\end{equation}
+其中 $P_a$ 是 $y_\alpha$ 与 $\partial/\partial y_\alpha$ 的多项式，关于 $\partial/\partial y_\alpha$ 的次数为 $1$，且与 $\chi$ 无关；$f_a$ 只是 $y_\alpha$ 的多项式，依赖于 $\chi$。
+
+设 $e_i,h_i,f_i$（$i=1,\ldots,\ell$）是 $\mathfrak{g}$ 的生成元。利用公式 (5.2-4) 得到
+\begin{align}
+    \rho_\chi(e_i)&=\frac{\partial}{\partial y_{\alpha_i}}
+        +\sum_{\beta\in\Delta_+}P_\beta^i(y_\alpha)\frac{\partial}{\partial y_\beta},
+        \tag{5.2-12}\\
+    \rho_\chi(h_i)&=-\sum_{\beta\in\Delta_+}\beta(h_i)y_\beta
+        \frac{\partial}{\partial y_\beta}+\chi(h_i),
+        \tag{5.2-13}\\
+    \rho_\chi(f_i)&=\sum_{\beta\in\Delta_+}Q_\beta^i(y_\alpha)\frac{\partial}{\partial y_\beta}
+        +\chi(h_i)y_{\alpha_i},
+        \tag{5.2-14}
+\end{align}
+其中 $P_\beta^i,Q_\beta^i$ 是 $y_\alpha$（$\alpha\in\Delta_+$）的某些多项式。
+
+% [Tutor Note: 式 (5.2-13) 中 $-\sum\beta(h_i)y_\beta\partial/\partial y_\beta$ 的负号不是笔误：它来自齐次坐标约定 $h\cdot y_\beta=-\beta(h)y_\beta$，与 (5.2-5) 中 $h\mapsto-2y\partial_y$ 一致。式 (5.2-14) 中 $\chi(h_i)y_{\alpha_i}$ 是修改项，注意其指标是 $\alpha_i$ 而非 $\beta$。]
+
+此外，还有李代数反同态 $\rho^R:\mathfrak{n}_+\to\mathcal{D}_{\le1}(N_+)$，它对应于 $\mathfrak{n}_+$ 在 $N_+$ 上的\textbf{右}作用。微分算子 $\rho^R(x)$（$x\in\mathfrak{n}_+$）与 $\rho_\chi(x')$（$x'\in\mathfrak{n}_+$）对易；但它们与 $\rho_\chi(x')$（$x'\notin\mathfrak{n}_+$）的对易关系一般很复杂。我们有
+\[
+    \rho^R(e_i)=\frac{\partial}{\partial y_{\alpha_i}}
+    +\sum_{\beta\in\Delta_+}P_\beta^{R,i}(y_\alpha)\frac{\partial}{\partial y_\beta},
+\]
+其中 $P_\beta^{R,i}$ 是 $y_\alpha$（$\alpha\in\Delta_+$）的某些多项式。
+
+\section{仿射代数情形}
+
+本节为仿射 Kac--Moody 代数建立类似的形式体系。这将使我们能够构造 Wakimoto 模，而这是本纲领中重要的一步。
+
+\begin{keypoints}
+    \item \textbf{核心思想：} 把有限维构造“圈化”：$N_+$ 换成 $N_+((t))$，微分算子代数换成无穷维 Weyl 代数 $\mathcal{A}^{\mathfrak{g}}$ 及其完备化 $\widetilde{\mathcal{A}}^{\mathfrak{g}}$。
+    \item \textbf{数学工具：} 仿射 ind-概形 $L\mathcal{U}=\mathcal{U}((t))$、拓扑李代数 $\operatorname{Vect}L\mathcal{U}$、坐标 $y_{\alpha,n}$（$\alpha\in\Delta_+$，$n\in\mathbb{Z}$）。
+    \item \textbf{关键结论：} 存在自然同态 $\widehat{\rho}:L\mathfrak{g}\to\operatorname{Vect}L\mathcal{U}$（式 (5.3-2)），它是有限维同态 $\rho_0$ 的“圈版本”，可由变量替换显式得到。
+    \item \textbf{关键结论：} 有李代数的短正合列 $0\to\operatorname{Fun}L\mathcal{U}\to\widetilde{\mathcal{A}}^{\mathfrak{g}}_{\le1}\to\operatorname{Vect}L\mathcal{U}\to0$（命题 5.3.1），它是 (5.2-6) 的完备化类比。
+    \item \textbf{记号提醒：} $a_{\alpha,n}=\partial/\partial y_{\alpha,n}$，$a^*_{\alpha,n}=y_{\alpha,-n}$；定义中 $n$ 的变号使对易子出现 $\delta_{n,-m}$。
+\end{keypoints}
+
+\subsection{无穷维 Weyl 代数}
+
+我们的目标是把上述构造推广到仿射 Kac--Moody 代数。仍设 $\mathcal{U}$ 是 $G$ 的旗簇的开 $N_+$-轨道，我们把它与群 $N_+$ 等同，从而与李代数 $\mathfrak{n}_+$ 等同。考虑形式圈空间 $L\mathcal{U}=\mathcal{U}((t))$，把它看作完备拓扑向量空间，其 $0\in L\mathcal{U}$ 的开邻域基由子空间
+\[
+    \mathcal{U}\otimes t^N\mathbb{C}[[t]]\subset L\mathcal{U},\qquad N\in\mathbb{Z},
+\]
+构成。于是 $L\mathcal{U}$ 是仿射 ind-概形
+\[
+    L\mathcal{U}=\varinjlim\,\mathcal{U}\otimes t^N\mathbb{C}[[t]],\qquad N<0.
+\]
+利用 $\mathcal{U}$ 上的坐标 $y_\alpha$（$\alpha\in\Delta_+$），可写
+\[
+    \mathcal{U}\otimes t^N\mathbb{C}[[t]]
+    \simeq\left\{\sum_{n\ge N}y_{\alpha,n}t^n\right\}_{\alpha\in\Delta_+}
+    =\operatorname{Spec}\mathbb{C}[y_{\alpha,n}]_{n\ge N}.
+\]
+因此，$L\mathcal{U}$ 上的函数环（记作 $\operatorname{Fun}L\mathcal{U}$）是环 $\mathbb{C}[y_{\alpha,n}]_{\alpha\in\Delta_+,n\ge N}$（$N<0$）关于自然满同态
+\[
+    s_{N,M}:\mathbb{C}[y_{\alpha,n}]_{\alpha\in\Delta_+,n\ge N}
+    \to\mathbb{C}[y_{\alpha,n}]_{\alpha\in\Delta_+,n\ge M},
+    \qquad N<M,
+\]
+的逆向极限，其中 $y_{\alpha,n}\mapsto0$（$N\le n<M$），$y_{\alpha,n}\mapsto y_{\alpha,n}$（$n\ge M$）。这是完备拓扑环，其 $0$ 的开邻域基由 $y_{\alpha,n}$（$n<N$）生成的理想给出，即同态 $s_{\infty,M}:\operatorname{Fun}L\mathcal{U}\to\operatorname{Fun}\mathcal{U}\otimes t^N\mathbb{C}[[t]]$ 的核。\transnote{原书此处把靶印作 $\operatorname{Fun}\mathcal{U}\otimes t^N\mathbb{C}[[t]]$，应为 $t^M$：按上面的定义 $s_{N,M}$ 把第 $N$ 层送到第 $M$ 层，$N\to\infty$ 后极限同态落在第 $M$ 层；$s_{\infty,M}$ 的核按定义由 $y_{\alpha,n}$（$n<M$）生成（原书同句把这里也印成了 $n<N$），两处应一并读作 $M$。译文按原书保留。[来源：原书 p.137（PDF p.150）页图。]}
+
+% [Tutor Note: 此处 $s_{\infty,M}$ 的靶应为 $\operatorname{Fun}\mathcal{U}\otimes t^M\mathbb{C}[[t]]$：按上面的定义 $s_{N,M}$ 把层级 $N$ 送到层级 $M$，故 $N\to\infty$ 时极限同态的目标是层级 $M$；核由 $y_{\alpha,n}$（$n<M$）生成也印证这一点。原文印作 $t^N$，疑为笔误，译文保留原样。]
+
+$L\mathcal{U}$ 上的向量场，按定义是 $\operatorname{Fun}L\mathcal{U}$ 的连续线性自同态 $\xi$，且满足 Leibniz 法则：$\xi(fg)=\xi(f)g+f\xi(g)$。换言之，向量场是 $\operatorname{Fun}L\mathcal{U}$ 的线性自同态 $\xi$，使得对任意 $M<0$ 存在 $N\le M$ 与导子
+\[
+    \xi_{N,M}:\mathbb{C}[y_{\alpha,n}]_{\alpha\in\Delta_+,n\ge N}
+    \to\mathbb{C}[y_{\alpha,n}]_{\alpha\in\Delta_+,n\ge M},
+\]
+满足
+\[
+    s_{\infty,M}(\xi\cdot f)=\xi_{N,M}\cdot s_{\infty,N}(f)
+\]
+对一切 $f\in\operatorname{Fun}L\mathcal{U}$ 成立。向量场空间自然是拓扑李代数，记作 $\operatorname{Vect}L\mathcal{U}$。
+
+更具体地，$\operatorname{Fun}L\mathcal{U}$ 的元素可以表示为（可能无穷的）级数
+\[
+    \sum_{m\le -M}P_{\alpha,m}y_{\alpha,m},
+\]
+其中 $P_{\alpha,m}$ 是 $y_{\alpha,n}$（$n\in\mathbb{Z}$）的任意（有限）多项式。在此式及下文类似公式中，总默认对 $\alpha\in\Delta_+$ 求和。
+
+$\operatorname{Vect}L\mathcal{U}$ 还可以如下描述。把 $L\mathcal{U}$ 在原点的切空间 $T_0L\mathcal{U}$ 与 $L\mathcal{U}$ 等同，赋予其完备拓扑向量空间结构。则 $\operatorname{Vect}L\mathcal{U}$ 同构于 $\operatorname{Fun}L\mathcal{U}$ 与 $L\mathcal{U}$ 的完备张量积。这意味着 $L\mathcal{U}$ 上的向量场可以更具体地写成级数
+\[
+    \sum_{n\in\mathbb{Z}}P_{\alpha,n}\frac{\partial}{\partial y_{\alpha,n}},
+\]
+其中 $P_{\alpha,n}\in\operatorname{Fun}L\mathcal{U}$ 满足如下性质：对每个 $M\ge0$，存在 $K\ge M$，使得每个 $P_n$（$n\le -K$）都落在 $y_{\alpha,m}$（$\alpha\in\Delta_+$，$m\le -M$）生成的理想中。
+
+这样的元素可以写成
+\begin{equation}
+    \sum_{n\ge N}P_{\alpha,n}\frac{\partial}{\partial y_{\alpha,n}}
+    +\sum_{m\le -M}y_{\alpha,m}V_{\alpha,m},
+    \tag{5.3-1}
+\end{equation}
+其中 $P_{\alpha,n}$ 是多项式，$V_{\alpha,m}$ 是多项式向量场。
+
+换言之，$\operatorname{Vect}L\mathcal{U}$ 是变量 $y_{\alpha,n}$（$n\in\mathbb{Z}$）的多项式向量场李代数关于如下拓扑的完备化：$0$ 的开邻域基由子空间 $\widetilde{I}_{N,M}$ 组成，后者由形如 $P_{\alpha,n}\partial/\partial y_{\alpha,n}$（$n\ge N$）与 $y_{\alpha,m}V_{\alpha,m}$（$m\le -M$）的向量场的线性组合构成。
+
+向量场的李括号关于此拓扑连续。这意味着，两条形如 (5.3-1) 的级数的对易子按标准方式（逐项）计算后，仍是上述形式的级数。
+
+% [Tutor Note: 本节的技术核心是“完备化”：$\operatorname{Fun}L\mathcal{U}$ 取逆向极限，$\operatorname{Vect}L\mathcal{U}$ 取完备张量积，二者都不再是通常的代数对象；命题 5.3.1 正是有限维正合列 (5.2-6) 的完备化版本。证明其中映射良定义时，完全依赖本节末对 $\operatorname{Vect}L\mathcal{U}$ 的拓扑描述。]
+
+\subsection{$L\mathfrak{g}$ 在 $L\mathcal{U}$ 上的作用}
+
+从现在起，我们用记号 $L\mathfrak{g}$ 表示 $\mathfrak{g}((t))$（$L$ 代表“loops”）。
+
+有自然的李代数同态
+\[
+    \widehat{\rho}:L\mathfrak{g}\to\operatorname{Vect}L\mathcal{U},
+\]
+它可以由有限维情形得到的公式显式描述，只需把通常变量 $y_\alpha$ 换成“圈变量” $y_{\alpha,n}$。更确切地说，有如下与 (5.2-3) 类似的公式：
+\[
+    (1-\epsilon A\otimes t^m)x(t)=Z_+(\epsilon)Z_-(\epsilon),
+\]
+其中 $x\in N_+((t))$，$Z_+(\epsilon)=x(t)+\epsilon Z_+^{(1)}$，$Z_+^{(1)}\in\mathfrak{n}_+((t))$，且 $Z_-(\epsilon)=1+\epsilon Z_-^{(1)}$，$Z_-^{(1)}\in\mathfrak{b}_-((t))$。\transnote{上面与 (5.2-3) 类似的式子原书印作 $(1-\epsilon A\otimes t^m)x(t)$，而紧接着定义 $\widehat{\rho}$ 时用的是 $a\otimes t^m$；二者应是同一元素，$A$ 为 $a$ 之误。译文按原书保留。[来源：原书 p.138（PDF p.151）页图。]}与之前一样，我们选取 $\mathfrak{g}$ 的忠实有限维表示 $V$，把 $x(t)$ 看作矩阵，其元素是 $t$ 的洛朗幂级数、系数为坐标 $y_{\alpha,n}$（$\alpha\in\Delta_+$，$n\in\mathbb{Z}$）的多项式，它表达 $N_+((t))$ 在 $\operatorname{End}V((t))$ 中的一般元素。我们由公式
+\[
+    \widehat{\rho}(a\otimes t^m)\cdot x(t)=Z_+^{(1)}
+\]
+定义 $\widehat{\rho}$。于是有与公式 (5.2-4) 类似的
+\begin{equation}
+    \widehat{\rho}(a\otimes t^m)\cdot x(t)
+    =-x(t)\left(x(t)^{-1}(a\otimes t^m)x(t)\right)_+ ,
+    \tag{5.3-2}
+\end{equation}
+其中 $z_+$ 表示元素 $z\in\mathfrak{g}((t))$ 沿 $\mathfrak{b}_-((t))$ 到 $\mathfrak{n}_+((t))$ 的投影。
+
+% [Tutor Note: 原文 p.138 此处的类似式 (5.2-3) 中印作 $A\otimes t^m$（大写 $A$），而紧接着“定义 $\widehat{\rho}$”又用 $a\otimes t^m$；按上下文两者应是同一个元素，$A$ 疑为 $a$ 之误。式 (5.3-2) 的负号与投影方向同 (5.2-4)，务必与 $z_+$ 的约定一并核对。]
+
+此公式蕴含：对任意 $a\in\mathfrak{g}$，级数
+\[
+    \widehat{\rho}(a(z))=\sum_{n\in\mathbb{Z}}\widehat{\rho}(a\otimes t^n)z^{-n-1}
+\]
+可以由 $\rho_0(a)=\xi_a$ 的公式作替换
+\[
+    y_\alpha\mapsto\sum_{n\in\mathbb{Z}}y_{\alpha,n}z^{n},
+    \qquad
+    \frac{\partial}{\partial y_\alpha}\mapsto
+    \sum_{n\in\mathbb{Z}}\frac{\partial}{\partial y_{\alpha,n}}z^{-n-1}
+\]
+得到。
+
+\subsection{Weyl 代数}
+
+设 $\mathcal{A}^{\mathfrak{g}}$ 是以
+\[
+    a_{\alpha,n}=\frac{\partial}{\partial y_{\alpha,n}},
+    \qquad
+    a^*_{\alpha,n}=y_{\alpha,-n},
+    \qquad
+    \alpha\in\Delta_+,\ n\in\mathbb{Z},
+\]
+为生成元、满足关系
+\begin{equation}
+    [a_{\alpha,n},a^*_{\beta,m}]=\delta_{\alpha,\beta}\delta_{n,-m},
+    \qquad
+    [a_{\alpha,n},a_{\beta,m}]=[a^*_{\alpha,n},a^*_{\beta,m}]=0
+    \tag{5.3-3}
+\end{equation}
+的 Weyl 代数。在 $a^*_{\alpha,n}$ 的定义中把 $n$ 变号，是为了使公式 (5.3-3) 中出现 $\delta_{n,-m}$ 而不是 $\delta_{n,m}$。这在用顶点代数形式体系时会带来方便。
+
+引入生成函数
+\begin{align}
+    a_\alpha(z)&=\sum_{n\in\mathbb{Z}}a_{\alpha,n}z^{-n-1},
+        \tag{5.3-4}\\
+    a^*_\alpha(z)&=\sum_{n\in\mathbb{Z}}a^*_{\alpha,n}z^{-n}.
+        \tag{5.3-5}
+\end{align}
+在 $\mathcal{A}^{\mathfrak{g}}$ 上考虑这样的拓扑：$0$ 的开邻域基由左理想 $I_{N,M}$（$N,M\in\mathbb{Z}$）组成，它们由 $a_{\alpha,n}$（$\alpha\in\Delta_+$，$n\ge N$）与 $a^*_{\alpha,m}$（$\alpha\in\Delta_+$，$m\ge M$）生成。\textbf{完备 Weyl 代数} $\widetilde{\mathcal{A}}^{\mathfrak{g}}$ 按定义是 $\mathcal{A}^{\mathfrak{g}}$ 关于此拓扑的完备化。应把代数 $\widetilde{\mathcal{A}}^{\mathfrak{g}}$ 看作 $L\mathcal{U}$ 上微分算子代数的类比（细节见 [Frenkel and Ben-Zvi 2004] 第 12 章）。\transnote{$\mathcal{A}^{\mathfrak{g}}$ 只是多项式系数版本的 Weyl 代数，真正与 $\widetilde{\mathcal{D}}(L\mathcal{U})$ 对应的是 $\widetilde{\mathcal{A}}^{\mathfrak{g}}$：由于 $L\mathcal{U}$ 是 ind-概形，向量场代数取的是完备张量积 $\operatorname{Fun}L\mathcal{U}\,\widehat{\otimes}\,L\mathcal{U}$，所以 Weyl 代数必须按左理想 $I_{N,M}$ 决定的拓扑完备化，元素才能是式 (5.3-6) 那样的无穷级数。命题 5.3.1 的短正合列就是 (5.2-6) 在这套完备化下的版本。[来源：原书 p.139；另见 Frenkel and Ben-Zvi 2004, 第 12 章。]}
+
+具体地说，$\widetilde{\mathcal{A}}^{\mathfrak{g}}$ 的元素可以看作形如
+\begin{equation}
+    \sum_{n\ge N}P_{\alpha,n}a_{\alpha,n}
+    +\sum_{m\ge M}Q_{\alpha,m}a^*_{\alpha,m},
+    \qquad P_n,Q_m\in\mathcal{A}^{\mathfrak{g}}
+    \tag{5.3-6}
+\end{equation}
+的任意级数。
+
+% [Tutor Note: 式 (5.3-3) 中的变号约定与 (5.3-4)、(5.3-5) 的生成函数配套：$a_\alpha(z)$ 的指数是 $z^{-n-1}$、$a^*_\alpha(z)$ 的指数是 $z^{-n}$，这正是顶点代数中“场”与“态”指数相差 $1$ 的惯例。若改用通常 Fock 空间的 $a^*_n=y_n$，则 (5.3-3) 变成 $\delta_{n,m}$，生成函数的展开指数会错位，后续 OPE 计算将整体偏移。]
+
+设 $\mathcal{A}^{\mathfrak{g}}_0$ 是 $\mathcal{A}^{\mathfrak{g}}$ 中由 $a^*_{\alpha,n}$（$\alpha\in\Delta_+$，$n\in\mathbb{Z}$）生成的（交换）子代数，$\widetilde{\mathcal{A}}^{\mathfrak{g}}_0$ 是它在 $\widetilde{\mathcal{A}}^{\mathfrak{g}}$ 中的完备化。其次，设 $\mathcal{A}^{\mathfrak{g}}_{\le1}$ 是由 $\mathcal{A}^{\mathfrak{g}}_0$ 的元素与生成元 $a_{\alpha,n}$ 的乘积张成的 $\mathcal{A}^{\mathfrak{g}}$ 的子空间。以 $\widetilde{\mathcal{A}}^{\mathfrak{g}}_{\le1}$ 记它在 $\widetilde{\mathcal{A}}^{\mathfrak{g}}$ 中的完备化。于是 $\widetilde{\mathcal{A}}^{\mathfrak{g}}_{\le1}$ 由 $\widetilde{\mathcal{A}}^{\mathfrak{g}}$ 中满足
+\[
+    P\bmod I_{N,M}\in\mathcal{A}^{\mathfrak{g}}_{\le1}\bmod I_{N,M},
+    \qquad \forall\,N,M\in\mathbb{Z}
+\]
+的一切元素 $P$ 组成。
+
+下面利用 $\widetilde{\mathcal{A}}^{\mathfrak{g}}$ 由形如 (5.3-6) 的级数实现，更具体地描述 $\widetilde{\mathcal{A}}^{\mathfrak{g}}_0$ 与 $\widetilde{\mathcal{A}}^{\mathfrak{g}}_{\le1}$。空间 $\widetilde{\mathcal{A}}^{\mathfrak{g}}_0$ 由形如 (5.3-6)、其中所有 $P_{\alpha,n}=0$ 且 $Q_{\alpha,m}\in\mathcal{A}^{\mathfrak{g}}_0$ 的级数组成。换言之，这些级数不含 $a_{\alpha,n}$（$n\in\mathbb{Z}$）。空间 $\widetilde{\mathcal{A}}^{\mathfrak{g}}_{\le1}$ 由形如 (5.3-6)、其中 $P_{\alpha,n}\in\mathcal{A}^{\mathfrak{g}}_0$ 且 $Q_{\alpha,m}\in\mathcal{A}^{\mathfrak{g}}_{\le1}$ 的元素组成。
+
+\begin{proposition}
+    存在李代数的短正合列
+    \begin{equation}
+        0\to\operatorname{Fun}L\mathcal{U}\to\widetilde{\mathcal{A}}^{\mathfrak{g}}_{\le1}
+        \to\operatorname{Vect}L\mathcal{U}\to0.
+        \tag{5.3-7}
+    \end{equation}
+\end{proposition}
+
+\begin{proof}
+命题可由以下三条断言推出：
+
+（1）$\widetilde{\mathcal{A}}^{\mathfrak{g}}_{\le1}$ 是李代数，且 $\widetilde{\mathcal{A}}^{\mathfrak{g}}_0$ 是它的理想。
+
+（2）$\widetilde{\mathcal{A}}^{\mathfrak{g}}_0\simeq\operatorname{Fun}L\mathcal{U}$。
+
+（3）存在李代数的满同态 $\widetilde{\mathcal{A}}^{\mathfrak{g}}_{\le1}\to\operatorname{Vect}L\mathcal{U}$，其核为 $\widetilde{\mathcal{A}}^{\mathfrak{g}}_0$。
+
+（1）由 $\widetilde{\mathcal{A}}^{\mathfrak{g}}_{\le1}$ 与 $\widetilde{\mathcal{A}}^{\mathfrak{g}}_0$ 分别是 $\mathcal{A}^{\mathfrak{g}}_{\le1}$ 与 $\mathcal{A}^{\mathfrak{g}}_0$ 的完备化这一事实、$\mathcal{A}^{\mathfrak{g}}_{\le1}$ 是含 $\mathcal{A}^{\mathfrak{g}}_0$ 为理想的李代数，以及李括号的连续性推出。
+
+（2）由定义推出。
+
+为证（3），我们构造线性满射 $\widetilde{\mathcal{A}}^{\mathfrak{g}}_{\le1}\to\operatorname{Vect}L\mathcal{U}$，其核为 $\widetilde{\mathcal{A}}^{\mathfrak{g}}_0$，并证明它是李代数同态。
+
+$\widetilde{\mathcal{A}}^{\mathfrak{g}}_{\le1}$ 的一般元素可写成
+\[
+    \sum_{n\ge N}P_{\alpha,n}a_{\alpha,n}
+    +\sum_{m\ge M_1}\sum_{k\in K_m}Q^{(1)}_{\alpha,\beta,k,m}a_{\beta,k}a^*_{\alpha,m}
+    +\sum_{m\ge M_2}Q^{(2)}_{\alpha,m}a^*_{\alpha,m},
+\]
+其中 $N,M_1,M_2$ 为某些整数，$P_{\alpha,n}$、$Q^{(1)}_{\alpha,\beta,k,m}$、$Q^{(2)}_{\alpha,m}\in\mathcal{A}^{\mathfrak{g}}_0$，且每个 $K_m\subset\mathbb{Z}$ 是有限集。我们定义的映射把这个元素送到
+\[
+    \sum_{n\ge N}P_{\alpha,n}a_{\alpha,n}
+    +\sum_{m\ge M_1}\sum_{k\in K_m}a^*_{\alpha,m}Q^{(1)}_{\alpha,\beta,k,m}a_{\beta,k},
+\]
+按 5.3.1 节末尾对 $\operatorname{Vect}L\mathcal{U}$ 的描述，它是 $\operatorname{Vect}L\mathcal{U}$ 的良定义元素。
+
+显然，$\widetilde{\mathcal{A}}^{\mathfrak{g}}_{\le1}$ 中属于 $a_{\alpha,n}$（$n\ge N$）与 $a^*_{\alpha,m}$（$n\ge M$）生成的左理想的元素，被送到 $\operatorname{Vect}L\mathcal{U}$ 中属于 $a_{\alpha,n}$（$n\ge N$）的左理想与 $a^*_{\alpha,m}$（$m\ge M$）的右理想之和的元素。因此我们得到相应商空间之间的映射。\transnote{上一句中 $a^*_{\alpha,m}$ 后面的 $n\ge M$ 应为 $m\ge M$：生成元是 $a^*_{\alpha,m}$，同句后半讨论右理想时也正写作 $m\ge M$。译文按原书保留。[来源：原书 p.140（PDF p.153）页图。]}由于这些商空间的元素
+
+% [Tutor Note: 上一句中“$a^*_{\alpha,m}$（$n\ge M$）”的指标应为 $m\ge M$：生成元是 $a^*_{\alpha,m}$，而同一句后半讨论右理想时即写作 $m\ge M$。原文印作 $n$，属笔误，译文保留原样。]
+
+% 本单元到此为止（原书 p.140 在句中截断）；下接 U08（PDF p.154）。
+% （接 U08：本段证明在 ch05-2.tex 中继续，勿在此关闭 proof 环境。）

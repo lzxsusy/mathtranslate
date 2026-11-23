@@ -1,0 +1,1528 @@
+% =====================================================================
+% 第 2 章 顶点代数
+% 覆盖：PDF p045--p074（原书印刷 p.31--p.60）
+% 底本：Frenkel, Langlands Correspondence for Loop Groups, CUP 2007
+% =====================================================================
+%
+% 编号说明：preamble.tex 中定理类环境各自独立按节编号
+% （\newtheorem{theorem}{定理}[section]、\newtheorem{lemma}{引理}[section] 等），
+% 而原书的编号方式不同：定理与引理共用同一个按节编号的计数器，命题与推论共用
+% 另一个计数器（例如 p.42--p.52：引理 2.2.1、定理 2.2.2、引理 2.2.3、定理 2.2.4、
+% 定理 2.2.5；p.54--p.59：引理 2.3.1、推论 2.3.1、引理 2.3.2、命题 2.3.2、
+% 定理 2.3.3、引理 2.3.4、推论 2.3.3）。自动编号无法复现这一结果，故下面在
+% 每条陈述之前按原书印刷页逐一设定该环境的编号显示。整章包在
+% \begingroup...\endgroup 中，文件末尾自动恢复 preamble 的定义。
+%
+\begingroup
+
+\chapter{顶点代数}
+
+设 $\fg$ 是有限维单李代数，$\gghat_\kappa$ 是相应的仿射 Kac--Moody 代数，即
+$\fg(\!(t)\!)$ 的中心扩张，已在 \S1.3.6 中引入。\transnote{圈代数 $\fg(\!(t)\!)$ 的中心扩张由连续第二上同调 $H^2(\fg(\!(t)\!),\C)$ 分类：对单李代数它是一维的，并与 $\fg$ 上的不变内积一一对应，相应的 2-上循环为 $c(A\otimes f,B\otimes g)=\kappa(A,B)\Res_{t=0}f\,dg$（原书式 (1.3-3)）。由此得到的交换关系 (1.3-4) 的中心项是 $-\kappa(A,B)\Res f\,dg$；取 $f=t^n$、$g=t^m$，中心项为 $-m\kappa\delta_{n+m,0}$，当 $n+m=0$ 时即 $n\kappa\delta_{n,-m}$，正是式 (2.2-7) 中的 $n\kappa(J^a,J^b)\delta_{n,-m}$。本书把 $\kappa$ 称为\textbf{水平}。[来源：原书 p.28 引理 1.3.2 与 p.29 式 (1.3-3)--(1.3-4)。]}我们有范畴
+$\gghat_\kappa\text{-}\mathrm{mod}$，其对象是光滑 $\gghat_\kappa$-模，中心元
+$\mathbf{1}$ 在其上作用为恒等。正如上一章末尾所解释的，我们希望证明这个范畴
+“纤维化”于 Langlands 参数空间之上；Langlands 参数是去心圆盘 $D^\times$ 上
+${}^LG$-联络的规范等价类（或者某种类似的东西）。此外，圈群 $G(\!(t)\!)$ 应当
+沿纤维作用在这个范畴上。
+
+任何阿贝尔范畴都可以看成“纤维化”于其中心的谱之上。因此首先想到的办法，
+是描述范畴 $\gghat_\kappa\text{-}\mathrm{mod}$ 的中心，指望它的谱与 Langlands
+参数有关。我们将会看到，对 $\kappa$ 的一个特定值，情况确实如此。
+
+不过，为了证明这一点，我们首先需要一套处理 $\gghat_\kappa$ 的完备泛包络代数的
+技术，这就是顶点代数的形式体系。本章先说明为什么需要顶点代数，然后介绍顶点
+代数理论的基础。
+
+\begin{keypoints}
+    \item \textbf{核心思想：} 范畴 $\gghat_\kappa\text{-}\mathrm{mod}$ 的中心问题
+    可以化归为顶点代数问题：中心元（Segal--Sugawara 算子 $S_n$）正是顶点算子
+    $S(z)$ 的 Fourier 系数。
+    \item \textbf{数学工具：} 完备泛包络代数 $\widetilde U_\kappa(\fg)$、正规序、
+    态-场对应 $Y(\cdot,z)$、局部性公理与重构定理。
+    \item \textbf{关键结论：} $S_n$ 只在临界水平 $\kappa=\kappa_c$ 才中心；顶点
+    代数的局部性等价于“同一个有理函数在不同区域展开”，由此推出 OPE 与结合性。
+    \item \textbf{记号提醒：} $A(z)=\sum_{n\in\Z}A_n z^{-n-1}$ 中 $z$ 的指数含平移
+    $-1$；$\kappa_c$ 的定义 (2.1-10) 带负号，临界水平是 $\kappa=\kappa_c$。
+\end{keypoints}
+
+\section{中心}
+
+\begin{keypoints}
+    \item \textbf{核心思想：} 阿贝尔范畴 $A\text{-}\mathrm{mod}$ 的中心等于 $Z(A)$，
+    因此 $\gghat_\kappa\text{-}\mathrm{mod}$ 的中心归结为完备泛包络代数
+    $\widetilde U_\kappa(\fg)$ 的中心。
+    \item \textbf{数学工具：} 泛包络代数的 PBW 滤过与“阶”、不变内积、Casimir 元、
+    由左理想 $I_N$ 定义的线性拓扑及其完备化。
+    \item \textbf{关键结论：} 仿射 Casimir 算子必须经正规序正则化才落在完备化内；
+    正则化后的 Segal--Sugawara 算子 $S_n$ 只在临界水平为中心，其交换子见
+    式 (2.1-11)。
+    \item \textbf{记号提醒：} 原书用 $Z(\fg)$ 简记 $U(\fg)$ 的中心（滥用记号）；
+    $\kappa_c$ 由迹形式定义，式 (2.1-10) 前有负号。
+\end{keypoints}
+
+\subsection{单李代数情形}
+
+先回顾阿贝尔范畴的中心是什么。设 $\cC$ 是 $\C$ 上的阿贝尔范畴。中心
+$Z(\cC)$ 按定义是 $\cC$ 上恒等函子的自同态集合。回忆这样的自同态是一族自同态
+$e_M\in\Hom_\cC(M,M)$（对每个对象 $M$ 各一个），并与 $\cC$ 中的态射相容：对
+$\cC$ 中任意态射 $f:M\to N$，有 $f\circ e_M=e_N\circ f$。显然 $Z(\cC)$ 具有
+$\C$ 上交换代数的自然结构。
+
+令 $S=\Spec Z(\cC)$。这是仿射代数簇，$Z(\cC)$ 是 $S$ 上的函数代数。每个点
+$s\in S$ 给出一个代数同态（等价地，一个特征标）
+$\rho_s:Z(\cC)\to\C$（在点 $s$ 处求值）。定义 $\cC$ 的满子范畴 $\cC_s$，
+其对象是 $\cC$ 中使 $Z(\cC)$ 按特征标 $\rho_s$ 作用的那些对象。把 $\cC$
+想象成“纤维化”于 $S$ 之上、纤维为 $\cC_s$，这是很有启发性的。
+
+现在设 $\cC=A\text{-}\mathrm{mod}$ 是结合 $\C$-代数 $A$ 上左模范畴。则 $A$
+本身作为左 $A$-模是 $\cC$ 的对象，于是得到同态
+\[
+    Z(\cC)\to Z(\End_A A)=Z(A^{\mathrm{opp}})=Z(A),
+\]
+其中 $Z(A)$ 是 $A$ 的中心。另一方面，$Z(A)$ 的每个元素定义了 $A\text{-}\mathrm{mod}$
+每个对象的一个自同态，于是又得到同态 $Z(A)\to Z(\cC)$。容易看出，这两个映射
+给出 $Z(\cC)$ 与 $Z(A)$ 之间互逆的同构。
+
+若 $\fg$ 是李代数，则 $\fg$-模范畴 $\fg\text{-}\mathrm{mod}$ 与
+$U(\fg)$-模范畴 $U(\fg)\text{-}\mathrm{mod}$ 重合，其中 $U(\fg)$ 是 $\fg$ 的
+泛包络代数（见附录 A.2）。因此范畴 $\fg\text{-}\mathrm{mod}$ 的中心等于
+$U(\fg)$ 的中心；我们滥用记号，把它记为 $Z(\fg)$。
+
+下面回顾 $\fg$ 是 $\C$ 上秩为 $\ell$ 的有限维单李代数时 $Z(\fg)$ 的描述
+（见 \S A.3）。这可以由 Harish--Chandra 与 Chevalley 的结果结合起来证明
+（见 [Dixmier 1977]）。
+
+\renewcommand{\thetheorem}{2.1.1}
+\begin{theorem}
+    中心 $Z(\fg)$ 是多项式代数 $\C[P_i]_{i=1,\dots,\ell}$，由元素
+    $P_i$，$i=1,\dots,\ell$ 生成，其阶分别为 $d_i+1$，其中 $d_i$ 是 $\fg$
+    的指数。
+\end{theorem}
+
+称 $U(\fg)$ 的元素 $P$ 的阶为 $i$，如果它属于 $U(\fg)$ 上
+Poincar\'e--Birkhoff--Witt 滤过的第 $i$ 项 $U(\fg)_{\le i}$（见附录 A.2），
+但不属于 $U(\fg)_{\le(i-1)}$。
+
+指数是附在每个单李代数上的一组正整数。例如对 $\fg=\fsl_n$，这组是
+$\{1,\dots,n-1\}$。指数有若干等价定义，上面的定理可以取作其中之一
+（我们将在下文 \S4.2.4 遇到另一种定义）。
+
+任何单李代数 $\fg$ 的第一个指数总是 $1$，所以 $U(\fg)$ 的中心里总有一个
+二次元。这个元素称为 Casimir 元，可以如下构造。设 $\{J^a\}$ 是 $\fg$ 作为
+向量空间的一组基。固定 $\fg$ 上任一非零不变内积 $\kappa_0$，并令 $\{J_a\}$
+是 $\{J^a\}$ 关于 $\kappa_0$ 的对偶基。则 Casimir 元由公式
+\[
+    P=\frac12\sum_{a=1}^{\dim\fg}J^aJ_a
+\]
+给出。注意它不依赖基 $\{J^a\}$ 的选取。此外，把 $\kappa_0$ 换成
+$\kappa_0'$ 只会把 $P$ 乘上一个标量 $\lambda$，其中
+$\kappa=\lambda\kappa_0'$。
+% [Tutor Note: 末句中的 $\kappa=\lambda\kappa_0'$ 疑为原文笔误，按文意应为 $\kappa_0=\lambda\kappa_0'$：Casimir 元只依赖不变内积的成比例类，与“水平” $\kappa$ 无关。此处按原文照译，请对照原书 p.32。]
+
+这是对 $\fg=\fsl_2$ 的情形计算该元素的一个好练习。$\fsl_2$ 的标准生成元为
+\[
+    e=\begin{pmatrix}0&1\\0&0\end{pmatrix},\qquad
+    h=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad
+    f=\begin{pmatrix}0&0\\1&0\end{pmatrix},
+\]
+内积为
+\[
+    \kappa_0(a,b)=\Tr ab.
+\]
+于是 Casimir 元是
+\[
+    P=\frac12\left(ef+fe+\frac12h^2\right).
+\]
+
+\subsection{仿射李代数情形}
+
+我们希望得到与定理 2.1.1 类似的结果，用其描述仿射 Kac--Moody 代数的泛包络
+代数。
+
+第一步是定义一个适当的泛包络代数，使它的模范畴与范畴
+$\gghat_\kappa\text{-}\mathrm{mod}$ 重合。回忆 \S1.3.6：范畴
+$\gghat_\kappa\text{-}\mathrm{mod}$ 的对象是 $\gghat_\kappa$-模 $M$，中心元
+$\mathbf{1}$ 在其上作用为恒等，且 $M$ 是光滑的，即对任意向量 $v\in M$ 与
+充分大的 $N$，有
+\begin{equation}
+    (\fg\otimes t^N\C[[t]])\cdot v=0.
+    \tag{2.1-1}
+\end{equation}
+
+作为一段简短的插叙，我们指出仿射李代数有一个多项式版本
+$\gghat^{\mathrm{pol}}_\kappa$，它是多项式圈代数 $\fg[t,t^{-1}]$ 的中心扩张。
+令 $\gghat^{\mathrm{pol}}_\kappa\text{-}\mathrm{mod}$ 是光滑
+$\gghat^{\mathrm{pol}}_\kappa$-模范畴，其定义与上面相同，只是把
+$\fg\otimes t^N\C[[t]]$ 换成 $\fg\otimes t^N\C[t]$。光滑性条件使我们可以把
+$\gghat^{\mathrm{pol}}_\kappa$ 在该范畴任一对象上的作用延拓为
+$\gghat_\kappa$ 的作用。因此范畴 $\gghat^{\mathrm{pol}}_\kappa\text{-}\mathrm{mod}$
+与 $\gghat_\kappa\text{-}\mathrm{mod}$ 重合。
+
+这里值得说明，为什么我们宁愿使用李代数 $\gghat_\kappa$，而不用
+$\gghat^{\mathrm{pol}}_\kappa$。这是因为 $\gghat_\kappa$ 自然地附着于
+（形式的）去心圆盘 $D^\times=\Spec\C(\!(t)\!)$，而
+$\gghat^{\mathrm{pol}}_\kappa$ 附着于
+$\C^\times=\Spec\C[t,t^{-1}]$（或单位圆）。特别地，与
+$\gghat^{\mathrm{pol}}_\kappa$ 不同，李代数 $\gghat_\kappa$ 不绑定于某个特定
+坐标 $t$，我们可以把 $t$ 换成去心圆盘上任一其他形式坐标。这意味着（正如我们
+将在 \S3.5.2 所做的）可以把 $\gghat_\kappa$ 附着到光滑代数曲线上任一点的形式
+邻域，而这一性质对我们所关心的应用非常重要，例如从局部 Langlands 对应过渡到
+整体 Langlands 对应。相反，多项式版本 $\gghat^{\mathrm{pol}}_\kappa$ 则永远
+绑定于 $\C^\times$。
+% [Tutor Note: 这里“不绑定于坐标 $t$”是全书反复使用的要点：$\C(\!(t)\!)$ 在坐标变换 $t\mapsto t'=t+\dots$ 下不变，而 $\C[t,t^{-1}]$ 会变。只有用 $\gghat_\kappa$ 才能谈论“曲线上的顶点代数”，这是第 3 章把局部对象整体化的技术前提。]
+
+回到范畴 $\gghat_\kappa\text{-}\mathrm{mod}$：它的对象满足上面两条性质，因此
+该范畴不与 $U(\gghat_\kappa)$ 上所有模构成的范畴（即所有 $\gghat_\kappa$-模范畴）
+重合。我们需要改造这个代数。
+
+首先，因为 $\mathbf{1}$ 作用为恒等，$U(\gghat_\kappa)$ 的作用通过商
+\[
+    U_\kappa(\fg)\overset{\mathrm{def}}{=}U(\gghat_\kappa)/(\mathbf{1}-1)
+\]
+分解。其次，光滑性条件 (2.1-1) 说明 $U_\kappa(\fg)$ 的作用可以延拓为其完备化
+的作用，完备化定义如下。
+
+在 $U_\kappa(\fg)$ 上定义线性拓扑，取下列左理想作为 $0$ 的邻域基：
+\[
+    I_N=U_\kappa(\fg)(\fg\otimes t^N\C[[t]]),\qquad N\ge0.
+\]
+令 $\widetilde U_\kappa(\fg)$ 是 $U_\kappa(\fg)$ 关于该拓扑的完备化。我们称它
+为 $\gghat_\kappa$ 的\textbf{完备泛包络代数}。注意，等价地可以写成
+\[
+    \widetilde U_\kappa(\fg)=\varprojlim_N U_\kappa(\fg)/I_N.
+\]
+
+尽管 $I_N$ 只是左理想（不是双边理想），仍可验证 $U_\kappa(\fg)$ 上的结合乘法
+结构按连续性延拓为 $\widetilde U_\kappa(\fg)$ 上的结合乘法结构（这来自
+$U_\kappa(\fg)$ 上的李括号在所述拓扑下连续）。于是 $\widetilde U_\kappa(\fg)$
+是完备拓扑代数。由定义可知，范畴 $\gghat_\kappa\text{-}\mathrm{mod}$ 与
+$\widetilde U_\kappa(\fg)$ 上的离散模范畴重合，后者要求
+$\widetilde U_\kappa(\fg)$ 的作用逐点连续（这恰好等价于条件 (2.1-1)）。\transnote{这里 $I_N=U_\kappa(\fg)(\fg\otimes t^N\C[[t]])$ 只是左理想，故 $\widetilde U_\kappa(\fg)$ 不是 $\hat\fg_\kappa$-模，不能直接对它套用“$Z(A\text{-}\mathrm{mod})=Z(A)$”。代之以有限对象 $\widetilde U_\kappa(\fg)/I_N$：中心等于逆向极限 $\varprojlim Z(\End_{\hat\fg_\kappa}\widetilde U_\kappa(\fg)/I_N)$，按定义即 $Z_\kappa(\fg)$。乘法能延拓到完备化，靠的是 $\hat\fg_\kappa$ 的括号关于该拓扑连续。[来源：原书 p.34。]}
+% [Tutor Note: “$\widetilde U_\kappa(\fg)$ 本身不是 $\gghat_\kappa\text{-}\mathrm{mod}$ 的对象”是理解后面中心论证的关键：完备化只对逐点连续（离散）模有定义，所以不能用平凡模 $\widetilde U_\kappa(\fg)$ 直接套用“$Z(A\text{-}\mathrm{mod})=Z(A)$”，必须改用下面一族有限对象 $\widetilde U_\kappa(\fg)/I_N$ 取逆向极限。]
+
+现在容易看出，范畴 $\gghat_\kappa\text{-}\mathrm{mod}$ 的中心等于代数
+$\widetilde U_\kappa(\fg)$ 的中心，我们把它记为 $Z_\kappa(\fg)$。论证与上面
+类似：虽然 $\widetilde U_\kappa(\fg)$ 本身不是 $\gghat_\kappa\text{-}\mathrm{mod}$
+的对象，但我们有一族对象 $\widetilde U_\kappa(\fg)/I_N$。利用这族对象，得到
+范畴 $\gghat_\kappa\text{-}\mathrm{mod}$ 的中心与代数
+$Z(\End_{\gghat_\kappa}\widetilde U_\kappa(\fg)/I_N)$ 的逆向极限之间的同构，
+而按定义后者与 $Z_\kappa(\fg)$ 重合。
+
+现在可以提出第一个问题：
+\begin{center}
+    \itshape 对所有水平 $\kappa$，描述中心 $Z_\kappa(\fg)$。
+\end{center}
+我们将会看到，除非 $\kappa=\kappa_c$（临界水平），中心 $Z_\kappa(\fg)$ 都是
+平凡的（即等于标量）。然而在临界水平 $Z_{\kappa_c}(\fg)$ 很大，其结构与
+定理 2.1.1 所描述的 $Z(\fg)$ 相仿。精确的陈述见定理 4.3.6。
+
+\subsection{仿射 Casimir 元}
+
+在试图描述整个中心之前，让我们先“手工”构造一些中心元。在有限维情形，
+$Z(\fg)$ 最简单的生成元特别容易构造。因此我们着手在仿射情形定义类似的算子。
+
+设 $A$ 是 $\fg$ 的任意元素，$n$ 是整数。则 $A\otimes t^n$ 是
+$\fg\otimes\C(\!(t)\!)$ 的元素，从而是 $\gghat_\kappa$ 的元素。把这个元素记为
+$A_n$。把 $A\in\fg$ 对应的所有元素汇集到一个以辅助变量 $z$ 为变量的形式幂级数中：
+\[
+    A(z)=\sum_{n\in\Z}A_nz^{-n-1}.
+\]
+$z$ 的指数平移一位，初看可能有点奇怪，但这样很方便。例如我们有如下公式
+\[
+    A_n=\Res_{z=0}A(z)z^n\,dz.
+\]
+注意这只是一个形式记号。我们用到的幂级数都不必在任何地方收敛。
+
+现在，Casimir 算子的一个显然的类比是形式幂级数
+\begin{equation}
+    \frac12\sum_{a=1}^{\dim\fg}J^a(z)J_a(z).
+    \tag{2.1-2}
+\end{equation}
+然而这个表达式有许多问题。若提取这个和的系数，会看到它们是双向无穷和。无穷
+本身不是问题，因为我们的完备泛包络代数 $\widetilde U_\kappa(\fg)$ 允许无穷和。
+但不幸的是，这里遇到的是“错误的无穷”，需要修正。
+% [Tutor Note: “正确的无穷”指系数型（对偶）完备化中允许的无穷：每个系数只含有限个 $n$；而这里的双向求和使每个 $z^N$ 系数含无穷多项，且不同项的指标跨越零点，故不属于 $\widetilde U_\kappa(\fg)$。判据是逐项作用在任一向量上是否只有有限多项非零，见式 (2.1-1) 后的说明。]
+
+说得更具体些，我们来详细看 $\fg=\fsl_2$ 的情形。此时设想的 Casimir 元是
+\begin{equation}
+    P(z)=\frac12\left(e(z)f(z)+f(z)e(z)+\frac12h(z)h(z)\right).
+    \tag{2.1-3}
+\end{equation}
+写出这个级数中 $z$ 的特定幂前的系数很容易。若记
+\[
+    P(z)=\sum_{N\in\Z}P_Nz^{-N-2},
+\]
+则
+\begin{equation}
+    P_N=\sum_{m+n=N}\left(e_mf_n+f_me_n+\frac12h_mh_n\right).
+    \tag{2.1-4}
+\end{equation}
+这些表达式没有一个属于 $\widetilde U_\kappa(\widehat{\fsl}_2)$。
+
+为看出这一点，注意按定义，$\widetilde U_\kappa(\widehat{\fsl}_2)$ 的元素
+可以写成
+\[
+    K+\sum_{n\ge0}(Q_ne_n+R_nf_n+S_nh_n),
+\]
+其中 $K,Q_n,R_n,S_n$ 是生成元 $e_m,f_m,h_m$（$m\in\Z$）的单项式的有限线性
+组合。
+
+考察 (2.1-4) 的第一项。它可以写成两项之和
+\begin{equation}
+    \sum_{n+m=N;\,n\ge0}e_mf_n+\sum_{n+m=N;\,n<0}e_mf_n.
+    \tag{2.1-5}
+\end{equation}
+其中第一项属于 $\widetilde U_\kappa(\widehat{\fsl}_2)$，第二项不属于：两个因子
+的顺序不对！这意味着该元素不能在范畴 $\widehat{\fsl}_{2,\kappa}\text{-}\mathrm{mod}$
+的模上给出定义良好的算子。事实上，我们可以写
+\[
+    e_mf_n=f_ne_m+[e_m,f_n]=f_ne_m+h_{m+n}.
+\]
+于是交换顺序的代价是两个因子的交换子，它非零。因此，尽管和
+\[
+    \sum_{n+m=N;\,n<0}f_ne_m
+\]
+属于 $\widetilde U_\kappa(\widehat{\fsl}_2)$，且其作用在
+$\widehat{\fsl}_{2,\kappa}\text{-}\mathrm{mod}$ 的任一模上都有定义，我们所给定的和
+\[
+    \sum_{n+m=N;\,n<0}e_mf_n
+\]
+却与它相差无穷多个 $h_{m+n}$ 之和，这是没有意义的。
+
+为解决这个问题，需要重新定义算子 $P_N$，使它们落入完备化
+$\widetilde U_\kappa(\widehat{\fsl}_2)$ 中。有一个显然的办法：我们直接手工
+交换 (2.1-5) 中第二个求和的顺序，以符合要求：
+\begin{equation}
+    \sum_{n+m=N;\,n\ge0}e_mf_n+\sum_{n+m=N;\,n<0}f_ne_m.
+    \tag{2.1-6}
+\end{equation}
+但要注意，这不是唯一可能的修改方式。另一种方式是
+\begin{equation}
+    \sum_{n+m=N;\,m<0}e_mf_n+\sum_{n+m=N;\,m\ge0}f_ne_m.
+    \tag{2.1-7}
+\end{equation}
+由于 $n$ 与 $m$ 受方程 $n+m=N$ 约束，容易看出这个表达式也属于
+$\widetilde U_\kappa(\widehat{\fsl}_2)$。但它与 (2.1-6) 不同，因为有限多个
+项的顺序被交换了。例如当 $N\ge0$ 时，(2.1-6) 中的项 $e_mf_n$（$0\le m\le N$）
+在 (2.1-7) 中被换成了 $f_ne_m$。于是两个表达式之差是 $(N+1)h_{n+m}$，它当然
+是包络代数中定义良好的元素。
+
+由此可见，对无意义的表达式 (2.1-5) 有几种互不相同的“正则化”方式，它们彼此只在
+有限多个位置上有差别。下文我们采用第二种方案。为把它写得更方便，我们引入\textbf{正规序}
+的概念。对任意 $A,B\in\fsl_2$（或任意单李代数 $\fg$），置
+\[
+    :\!A_mB_n\!:\overset{\mathrm{def}}{=}
+    \begin{cases}
+        A_mB_n, & m<0,\\
+        B_nA_m, & m\ge0.
+    \end{cases}
+\]
+于是 (2.1-7) 可以改写为
+\[
+    \sum_{n+m=N}:\!e_mf_n\!:,
+\]
+它就是 $:\!e(z)f(z)\!:$ 的 $z^{-N-2}$ 系数，其中正规序按线性延拓。\transnote{正规序的判据只看\textbf{左因子}的指标 $m$：$m<0$ 时不交换，$m\ge0$ 时把 $A_m$ 移到右边（而不是按右因子 $n$ 判定）。于是 $:\!A_mB_n\!:$ 与 $:\!B_nA_m\!:$ 只在 $0\le m\le N$ 的有限多项上不同，差为 $(N+1)h_{n+m}\in U(\hat{\fsl}_2)$；这就是“只在有限多个位置上有差别”的确切含义，误按 $n$ 判定则得到另一套正则化 (2.1-6)。[来源：原书 p.37 式 (2.1-6)--(2.1-7)。]}
+% [Tutor Note: 注意正规序的判据是左因子的指标 $m$，而不是右因子的指标 $n$：$m<0$（产生算子）时保持原序，$m\ge0$（湮灭算子）时把右因子提到左边。若误按 $n$ 判定，会得到另一套正则化，即式 (2.1-6)，两者相差有限项（见上）。]
+
+现在把正规序应用到由公式 (2.1-3) 给出的形式幂级数 $P(z)$ 上。结果得到另一个
+形式幂级数
+\begin{equation}
+    S(z)=\sum_{N\in\Z}S_Nz^{-N-2}
+    =\frac12\left(:\!e(z)f(z)\!:+:\!f(z)e(z)\!:
+    +\frac12:\!h(z)h(z)\!:\right).
+    \tag{2.1-8}
+\end{equation}
+相应的系数 $S_N$ 现在是完备化 $\widetilde U_\kappa(\widehat{\fsl}_2)$ 中
+定义良好的元素。
+
+对一般的单李代数，我们写
+\begin{equation}
+    S(z)=\sum_{N\in\Z}S_Nz^{-N-2}
+    =\frac12\sum_{a=1}^{\dim\fg}:\!J^a(z)J_a(z)\!:.
+    \tag{2.1-9}
+\end{equation}
+注意 $S(z)$ 不依赖基 $\{J^a\}$ 的选取。$S(z)$ 的系数
+$S_N\in\widetilde U_\kappa(\fg)$ 称为\textbf{Segal--Sugawara 算子}。它们是不是
+$\widetilde U_\kappa(\fg)$ 的中心元？要回答这个问题，需要对所有 $A\in\fg$
+计算 $\widetilde U_\kappa(\fg)$ 中的交换子
+\[
+    [S_n,A_m]=S_nA_m-A_mS_n.
+\]
+$S_n$ 是中心元，当且仅当这些交换子全为零。
+
+这个计算并不容易。让我们先给出答案。设 $\kappa_c$ 是 $\fg$ 上的临界不变
+内积，由公式
+\begin{equation}
+    \kappa_c(A,B)=-\frac12\Tr_\fg\operatorname{ad}A\operatorname{ad}B
+    \tag{2.1-10}
+\end{equation}
+定义。则有
+\begin{equation}
+    [S_n,A_m]=-\frac{\kappa-\kappa_c}{\kappa_0}\,nA_{n+m}.
+    \tag{2.1-11}
+\end{equation}
+由于单李代数上的不变内积构成一维向量空间，此公式中出现的比值是有意义的
+（回忆按假设 $\kappa_0\ne0$）。\transnote{取 $\kappa_0$ 使最大根的平方长度为 $2$，则 $\Tr_\fg(\operatorname{ad}A\operatorname{ad}B)=2h^\vee\kappa_0(A,B)$，其中 $h^\vee$ 是对偶 Coxeter 数（$\fsl_n$ 的 $h^\vee=n$，$\fsl_2$ 的 $h^\vee=2$）。于是 $\kappa_c=-h^\vee\kappa_0$，临界水平为 $k=-h^\vee$，(2.1-11) 化为 $[S_n,A_m]=-(k+h^\vee)nA_{n+m}$。第 3 章中心荷 $c=k\dim\fg/(k+h^\vee)$ 中的平移 $k\mapsto k+h^\vee$ 正来自这里。[来源：原书 p.38 式 (2.1-10)--(2.1-11)；第 3 章 p.64。]}
+% [Tutor Note: 此处符号极易出错，务必核对约定：式 (2.1-10) 的 $\kappa_c$ 前有负号，且 $\kappa_c(A,B)=-\frac12\Tr(\operatorname{ad}A\operatorname{ad}B)$。若把内积归一化为长根平方长度 $2$，则 $\Tr(\operatorname{ad}A\operatorname{ad}B)=2h^\vee(A,B)$，从而 $\kappa_c=-h^\vee(\cdot,\cdot)$，临界水平为 $k=-h^\vee$；此时式 (2.1-11) 化为 $[S_n,A_m]=-(k+h^\vee)\,nA_{n+m}$，与 $c=k\dim\fg/(k+h^\vee)$ 中的平移一致。]
+
+公式 (2.1-11) 令人意外。它表明 Segal--Sugawara 算子确实对某个特定的
+$\kappa$ 值中心，但这个值不是人们可能天真预期的 $\kappa=0$，而是临界值
+$\kappa=\kappa_c$！这可以看作我们的正则化方案（正规序）带来的“量子修正”。
+事实上，如果只是形式地计算原来的（未正则化的）级数 (2.1-2) 的系数与 $A_m$
+的交换子，会发现在 $\kappa=0$ 时它们是中心元，与天真预期一致。但这些系数不是
+完备化 $\widetilde U_\kappa(\fg)$ 的元素，因此不可能在
+$\widetilde U_\kappa(\fg)$ 中定义中心元。（它们属于 $U_\kappa(\fg)$ 的另一个
+完备化，该完备化不作用在光滑 $\gghat_\kappa$-模上，因此与我们的目的无关。）
+正则化后的元素 $S_n$ 只有在把水平平移 $\kappa_c$ 之后才成为中心元。这是临界
+水平 $\kappa_c$ 在仿射 Kac--Moody 代数表示论中扮演特殊角色的第一个迹象。\transnote{未正则化的系数只在“另一个完备化”里中心，而那个完备化不作用在光滑模上，故在本书的范畴中不构成中心元。临界水平处 $Z_{\kappa_c}(\hat\fg)$ 反而变大，其结构与定理 2.1.1 中的 $Z(\fg)$ 相似，精确陈述见原书定理 4.3.6；本章只解释“为什么 $S_n$ 恰在 $\kappa_c$ 处中心”。[来源：原书 p.34、p.38。]}
+
+如何证明公式 (2.1-11)？直接计算既繁琐又启发性不大。即使算出来，下一个问题
+是计算 $S_n$ 之间的交换关系（如下文所见，这与中心上的 Poisson 结构有关），
+若用“赤手空拳”的方法，这是更困难的计算。这说明我们需要发展更得力的工具来
+做这类计算。毕竟，我们现在讨论的只是二次 Casimir 元。那么更高阶的中心元呢？
+
+所需的工具由顶点代数理论提供；特别地，它给出计算诸如 (2.1-11) 这类交换关系的
+漂亮而紧凑的公式。粗略地说，基本对象不是 $\gghat_\kappa$ 的元素 $J^a_n$ 及其
+生成的拓扑代数 $\widetilde U_\kappa(\fg)$，而是生成级数 $J^a(z)$ 及其生成的
+顶点代数。我们将在下一节展开这一理论。
+% [Tutor Note: 这里预告了第 4 章的主线：$\kappa=\kappa_c$ 时 $Z_{\kappa_c}(\fg)$ 同构于某个“经典”对象（与 opers 有关），其 Poisson 结构由 $S_n$ 的交换子给出。式 (2.1-11) 只处理二次情形；高阶中心元需要顶点代数的 OPE 与结合性（\S2.3），最终结论见定理 4.3.6 与 [Feigin and Frenkel 1992]。]
+
+\section{顶点代数基础}
+
+\setcounter{theorem}{0}
+
+\begin{keypoints}
+    \item \textbf{核心思想：} 顶点代数把“带奇点的算子乘积”公理化：态-场对应
+    $Y(\cdot,z)$ 把向量变成场，局部性公理取代交换性。
+    \item \textbf{数学工具：} 形式幂级数 $R[[z^{\pm1}]]$、形式 delta 函数
+    $\delta(z-w)$、分式域 $\C(\!(z,w)\!)$ 的两种嵌入、正规序。
+    \item \textbf{关键结论：} 交换顶点代数恰好是带导子的交换结合代数
+    （引理 2.2.1）；对 $\gghat_\kappa$ 的真空模 $V_\kappa(\fg)$，式 (2.2-8)
+    定义了 $\Z_+$-分次顶点代数结构（定理 2.2.2）。
+    \item \textbf{记号提醒：} 场按 $A(z)=\sum_n A_nz^{-n-1}$ 展开；$-n-1$ 与
+    $A_{(n)}$ 的配对约定贯穿全章，换成别的约定会改变所有符号。
+\end{keypoints}
+
+本节给出顶点代数理论的速成课，我们追随 [Frenkel and Ben-Zvi 2004]，读者可在
+那里找到更多细节。
+
+顶点代数最初由 R. Borcherds [1986] 定义，理论的基础在
+[Frenkel et al. 1988; Frenkel et al. 1993] 中奠定。本书所用的形式体系接近
+[Frenkel and Ben-Zvi 2004; Kac 1998]，下文关于顶点代数的所有结果都取自这两
+本书。我们还指出，顶点代数有几何对应物：\textbf{手性代数}与\textbf{分解代数}
+（chiral algebra, factorization algebra），由 [Beilinson and Drinfeld 2004]
+引入。它们与顶点代数之间的联系在 [Frenkel and Ben-Zvi 2004] 中有解释。\transnote{手性代数是顶点代数在代数曲线 $X$ 上的整体化：它在每点的形式圆盘上给出一个顶点代数，并要求这些局部结构按 $X$ 的坐标相容地粘合；分解代数则把“乘法”换成曲线嵌入态射上的相容族，从而无须预先取定坐标。两套语言的比较属于 Ran 空间形式化，本书只在需要整体化时用到。[来源：Beilinson--Drinfeld, \emph{Chiral Algebras}, AMS Colloquium Publications 51, 2004；Frenkel--Ben-Zvi, \emph{Vertex Algebras and Algebraic Curves}, 2nd ed., AMS 2004。]}
+
+\subsection{场}
+
+设 $R$ 是 $\C$ 上的代数；$R$ 上关于变量 $z_1,\dots,z_n$ 的\textbf{形式幂级数}
+是形如
+\[
+    \sum_{i_1,\dots,i_n\in\Z}A_{i_1\cdots i_n}z_1^{i_1}\cdots z_n^{i_n}
+\]
+的和。所有这类形式幂级数构成的集合记为 $R[[z_1^{\pm1},\dots,z_n^{\pm1}]]$。
+
+请仔细区分形式幂级数 $R[[z^{\pm1}]]$（$z$ 的幂可以任意大也可以任意小）、
+Taylor 幂级数 $R[[z]]$（没有 $z$ 的负幂）与洛朗幂级数 $R(\!(z)\!)$（$z$ 的
+负幂有下界）。
+
+对形式幂级数可以做哪些运算？当然可以相加、求导、乘以多项式。但是不能把它们
+彼此相乘。原因是乘积的系数会成为无穷和，例如
+\[
+    \left(\sum_nA_nz^n\right)\left(\sum_mB_mz^m\right)
+    =\sum_nz^n\left(\sum_{i+j=n}A_iB_j\right).
+\]
+不过，如果两个形式幂级数所在的变量互不相交，就可以相乘；例如 $f(z)g(w)$
+作为两个变量 $z,w$ 的形式幂级数是有意义的。
+
+一个特别重要的场的例子是\textbf{形式 delta 函数}。它记作 $\delta(z-w)$\footnote{%
+它不是 $z-w$ 的函数。这只是记号，表示这个形式 delta 函数的性质与通常
+delta 函数的性质密切对应。}，定义为
+\[
+    \delta(z-w)=\sum_{n\in\Z}z^nw^{-n-1}.
+\]
+它有下列容易验证的性质：
+\begin{enumerate}[label=(\arabic*)]
+    \item $A(z)\delta(z-w)=A(w)\delta(z-w)$，
+    \item $(z-w)\delta(z-w)=0$，
+    \item $(z-w)^{n+1}\partial_w^n\delta(z-w)=0$。
+\end{enumerate}
+第一条性质告诉我们
+\[
+    \Res_{z=0}\left(A(z)\delta(z-w)dz\right)=A(w),
+\]
+这正是我们期待 delta 函数具有的性质。
+
+可以用下述方式把 $\C[[z^{\pm1}]]$ 与分布之间的类比做得更精确。给定 $z$ 的
+一个形式幂级数 $A(z)$，在多项式空间 $\C[z,z^{-1}]$ 上用公式
+\[
+    \phi_A(f(z))=\Res A(z)f(z)\,dz
+\]
+定义线性泛函（“分布”）$\phi_A$。回忆乘积 $A(z)f(z)$ 是有意义的，因为 $f(z)$
+是多项式，乘积中只出现有限和。反之，给定 $\C[z,z^{-1}]$ 上的分布 $\phi$，由
+\[
+    A_\phi(z)=\sum_{n\in\Z}\phi(z^n)z^{-n-1}
+\]
+定义形式幂级数 $A_\phi$。容易看出这两个运算互逆。因此 $\C[[z^{\pm1}]]$ 恰好
+是多项式空间 $\C[z,z^{-1}]$ 上所有分布构成的空间。
+
+现在可以把 $\delta(z-w)$ 看成变量 $z$ 的形式幂级数，其中 $w\in\C^\times$ 是
+任意非零复数。在上述对应下容易看出，我们得到的是通常意义下对应于 $w$ 的
+delta 函数。
+
+下面把\textbf{场}定义为特殊类型的形式幂级数。设 $V$ 是 $\C$ 上的向量空间，
+于是 $\End V$ 是 $\C$ 上的代数。场是 $\End V[[z^{\pm1}]]$ 中的形式幂级数。
+我们把场写成
+\[
+    A(z)=\sum_{n\in\Z}A_nz^{-n-1}.
+\]
+这样选取 $z$ 的幂，是为了使后面许多记号更简单。场还必须满足下述附加性质：
+对每个 $v\in V$，存在整数 $N\ge0$，使得对一切 $n>N$ 有 $A_n\cdot v=0$。这个
+条件也可以重述为：对任意 $v\in V$，$A(z)\cdot v$ 是洛朗多项式。
+
+若向量空间 $V$ 是 $\Z$-分次的，即 $V=\bigoplus_{n\in\Z}V_n$，则有通常的
+齐次元素与齐次自同态概念：若 $\phi(V_n)\subset V_{n+m}$ 对一切 $n$ 成立，则
+称 $\phi\in\End V$ 是 $m$ 次齐次的。在顶点代数情形，通常把 $V$ 中向量的齐次
+次数称为\textbf{共形维数}。
+
+\subsection{定义}
+
+现在可以给出顶点代数的定义了。\textbf{顶点代数}由下述数据组成：
+\begin{enumerate}[label=(\arabic*)]
+    \item 向量空间 $V$（\textbf{状态空间}）；
+    \item $V$ 中一个向量，记作 $|0\rangle$（\textbf{真空向量}）；
+    \item 自同态 $T:V\to V$（\textbf{平移算子}）；
+    \item 线性映射 $Y(\cdot,z):V\to\End V[[z^{\pm1}]]$，把 $V$ 中向量送到
+    $V$ 上的场（也称为\textbf{顶点算子}）
+    \[
+        A\in V\mapsto Y(A,z)=\sum_{n\in\Z}A_{(n)}z^{-n-1}
+    \]
+    （即\textbf{态-场对应}）。
+\end{enumerate}
+它们满足下列公理：
+\begin{enumerate}[label=(\arabic*)]
+    \item $Y(|0\rangle,z)=\id_V$；
+    \item $Y(A,z)|0\rangle=A+z(\dots)\in V[[z]]$；
+    \item $[T,Y(A,z)]=\partial_zY(A,z)$；
+    \item $T|0\rangle=0$；
+    \item（\textbf{局部性}）对任意两个向量 $A,B\in\Z$，存在非负整数 $N$，使得
+    \[
+        (z-w)^N[Y(A,z),Y(B,w)]=0.
+    \]
+\end{enumerate}
+% [Tutor Note: 公理 (5) 中的 “$A,B\in\Z$” 是原书笔误，应为 $A,B\in V$：局部性是 $V$ 中任意两个向量所对应的场之间的性质。此处按原文照译，请对照原书 p.41。另注意原书公理列表用 (1)--(5) 编号，正文却按 (i)--(v) 引用（见下文“公理 (ii)”“公理 (iv)”），这是原书编号体例不统一，译文一律照原样保留。]
+
+由顶点代数的公理可以推出，$T$ 的作用可由公式
+\[
+    T(A)=A_{(-2)}|0\rangle
+\]
+定义，因此 $T$ 不是独立的数据。但是我们把 $T$ 列入数据之中，因为这样公理
+更透明、也更容易陈述。\transnote{原书 p.41 的公理 (5) 印作“$A,B\in\Z$”，显系 $A,B\in V$ 之误（$\Z$ 是整数集，不是状态空间）；译文照录原文以便对照。同页公理用 (1)--(5) 编号，正文却按 (i)/(ii)/(iv) 引用，这是原书体例不统一，译文一律照原样保留，读者按内容对应即可。[依据：原书 p.41。][来源：本书 p.41。]}
+
+若 $V$ 是 $\Z$-（相应地 $\Z_+$-）分次向量空间、$|0\rangle$ 是 $0$ 次向量、
+$T$ 是 $1$ 次线性算子，并且对 $A\in V_m$，场 $Y(A,z)$ 的共形维数为 $m$，即
+\[
+    \deg A_{(n)}=-n+m-1,
+\]
+则称顶点代数是 $\Z$-（相应地 $\Z_+$-）分次的。
+
+一个特别简单的顶点代数例子可由带导子的交换结合幺代数构造。设 $V$ 是带导子
+$T$ 的交换结合幺代数。如下定义顶点代数结构：
+\begin{equation}
+    Y(|0\rangle,z)=\mathrm{Id}_V,\qquad
+    Y(A,z)=\sum_{n\ge0}\frac{z^n}{n!}\operatorname{mult}(T^nA)
+    =\operatorname{mult}(\ee^{Tz}A),
+    \tag{2.2-1}
+\end{equation}
+\begin{equation}
+    T=T.
+    \tag{2.2-2}
+\end{equation}
+这里幂级数中的算子 $\operatorname{mult}(A)$ 表示左乘 $A$。
+% [Tutor Note: 式 (2.2-2) 的“$T=T$”看似平凡，含义是：作为顶点代数数据的平移算子，就是原来交换代数上那个导子 $T$ 本身，没有经过任何修改。这也说明该构造下 $T$ 是 $1$ 次导子。]
+
+容易验证这给出了顶点代数结构。这个顶点代数结构特别简单，因为局部性公理变成了
+交换性
+\[
+    [Y(A,z),Y(B,w)]=0
+\]
+的形式。这是非常特殊的性质。具有这个性质的顶点代数称为\textbf{交换的}。这个
+顶点代数结构还有一个不寻常的性质：出现的所有形式幂级数只含 $z$ 的非负幂。
+事实上，这两个性质是等价的。
+
+\renewcommand{\thelemma}{2.2.1}
+\begin{lemma}
+    顶点代数是交换的，当且仅当对一切 $A\in V$ 有
+    $Y(A,z)\in\End V[[z]]$。
+\end{lemma}
+
+\begin{proof}
+    若 $V$ 是交换的，则
+    \[
+        Y(A,z)Y(B,w)|0\rangle=Y(B,w)Y(A,z)|0\rangle.
+    \]
+    把它们按 $w$ 的幂展开，并利用\textbf{公理 (ii)} 取 $w$ 的常数项，可知对
+    任意 $A,B$，$Y(A,z)B\in V[[z]]$。这说明 $Y(A,z)\in\End V[[z]]$。
+
+    反之，若对一切 $A\in V$ 有 $Y(A,z)\in\End V[[z]]$，则
+    $Y(A,z)Y(B,w)\in\End V[[z,w]]$。此时局部性说
+    \[
+        (z-w)^NY(A,z)Y(B,w)=(z-w)^NY(B,w)Y(A,z).
+    \]
+    由于 $(z-w)^N$ 在 $\End V[[z,w]]$ 中没有零因子，可知 $V$ 是交换的。
+\end{proof}
+
+于是我们看到，带导子的交换结合幺代数给出交换顶点代数。容易看出，上述构造
+可以反向进行，因此这两个范畴等价。特别地，$\Z$-分次交换顶点代数对应于带
+$1$ 次导子的 $\Z$-分次交换结合代数。\transnote{反向构造为 $A\cdot B:=A_{(-1)}B$，$T$ 取公理中的平移算子；由 (2.2-1)，$Y(A,z)=\sum_{n\ge0}\frac{z^n}{n!}\operatorname{mult}(T^nA)$ 又还原出原来的场。两个方向互逆，故“交换顶点代数”与“带导子的交换幺代数”是等价范畴；\S2.2.6 借 $\operatorname{gr}V_\kappa(\fg)$ 过渡，正是靠这个等价。[依据：原书 p.42 与式 (2.2-1)。][来源：本书 p.42。]}
+
+\subsection{再论局部性}
+
+刚才看到，顶点代数中的交换性是非常强的限制。顶点代数理论的要点在于，用一条
+更一般的公理——局部性——来代替它。在这个意义上，可以把顶点代数概念看作对
+熟悉的交换代数概念的推广。本节仔细考察局部性公理，试图理解它的含义。
+
+设 $v\in V$ 是 $V$ 中向量，$\phi:V\to\C$ 是 $V$ 上的线性泛函。给定
+$A,B\in V$，可以构造两个形式幂级数
+\[
+    \langle\phi,Y(A,z)Y(B,w)v\rangle
+    \qquad\text{和}\qquad
+    \langle\phi,Y(B,w)Y(A,z)v\rangle.
+\]
+这两个形式幂级数先验地属于 $\C[[z^{\pm1},w^{\pm1}]]$，但实际上分别属于子空间
+$\C(\!(z)\!)(\!(w)\!)$ 与 $\C(\!(w)\!)(\!(z)\!)$。这两个子空间不同：前者对
+$w$ 的幂有下界，但对 $z$ 的幂没有一致的界；后者对 $z$ 的幂有下界，但对 $w$ 的
+幂没有一致的界。
+% [Tutor Note: 记号约定：$\C(\!(z)\!)(\!(w)\!)$ 表示在 $\C(\!(z)\!)$ 上再对 $w$ 取有下界负幂的级数（即先对 $w$ 展开、系数在 $z$ 的洛朗级数中）；外层变量对应“先展开、视为小量”的变量。此类嵌套级数在本章反复出现，读公式时务必先确认外层变量。]
+
+两个空间的交，由那些对 $z$ 和 $w$ 的幂都有下界的级数组成。换言之，
+\begin{equation}
+    \C(\!(z)\!)(\!(w)\!)\cap\C(\!(w)\!)(\!(z)\!)
+    =\C[[z,w]][z^{-1},w^{-1}].
+    \tag{2.2-3}
+\end{equation}
+注意 $\C(\!(z)\!)(\!(w)\!)$ 与 $\C(\!(w)\!)(\!(z)\!)$ 对乘法封闭，实际上
+是域（这里“域”取通常的代数含义！）。它们的交是子代数
+$\C[[z,w]][z^{-1},w^{-1}]$。因此在这两个域中各自都有
+$\C[[z,w]][z^{-1},w^{-1}]$ 的分式域。这个分式域记作 $\C(\!(z,w)\!)$，
+由比值 $f(z,w)/g(z,w)$ 组成，其中 $f,g\in\C[[z,w]]$。
+
+然而，$\C(\!(z,w)\!)$ 到 $\C(\!(z)\!)(\!(w)\!)$ 与
+$\C(\!(w)\!)(\!(z)\!)$ 的嵌入是不同的。这些嵌入容易描述：我们只是假定其中
+一个变量“小”，作洛朗幂级数展开。下面用元素 $\frac{1}{z-w}\in\C(\!(z,w)\!)$
+说明其运作方式。
+
+假设 $w$ 是“小”变量，即 $|w|<|z|$。则可以按 $w/z$ 的正幂展开
+\[
+    \frac{1}{z-w}=\frac{1}{z\left(1-\frac{w}{z}\right)}
+    =z^{-1}\sum_{n\ge0}\left(\frac{w}{z}\right)^n.
+\]
+注意结果对 $w$ 的幂有下界，因此属于 $\C(\!(z)\!)(\!(w)\!)$。
+
+再假设 $z$ 是“小”变量，即 $|z|<|w|$。由于 $|z|<|w|$，可以按 $w/z$ 的负幂
+展开
+\[
+    \frac{1}{z-w}=-\frac{1}{w\left(1-\frac{z}{w}\right)}
+    =-z^{-1}\sum_{n<0}\left(\frac{w}{z}\right)^n.
+\]
+注意结果对 $z$ 的幂有下界，因此属于 $\C(\!(w)\!)(\!(z)\!)$。
+
+把两个环 $\C(\!(w)\!)(\!(z)\!)$ 与 $\C(\!(z)\!)(\!(w)\!)$ 想象成二元函数
+的表示，其中一个变量远小于另一个，这是很有启发性的。这两个函数的“定义域”
+分别是 $|w|\gg|z|$ 与 $|z|\gg|w|$。
+
+于是我们看到，$\C(\!(w)\!)(\!(z)\!)$ 与 $\C(\!(z)\!)(\!(w)\!)$ 中的元素
+虽然可能看起来很不一样，实际上却可能表示 $\C(\!(z,w)\!)$ 的同一个元素。这
+与复分析中解析延拓的思想非常相似。当这样两个不同的元素来自 $z,w$ 的同一个
+有理函数时，可以把它们看作“表示同一个函数”（甚至可以认为基本对象是有理函数，
+而不是各个单独的表示）。
+
+局部性所告诉我们的确切含义是：形式幂级数
+\begin{equation}
+    \langle\phi,Y(A,z)Y(B,w)v\rangle
+    \qquad\text{和}\qquad
+    \langle\phi,Y(B,w)Y(A,z)v\rangle
+    \tag{2.2-4}
+\end{equation}
+分别在 $\C(\!(w)\!)(\!(z)\!)$ 与 $\C(\!(z)\!)(\!(w)\!)$ 中表示 $z,w$ 的
+同一个有理函数。
+
+事实上，局部性公理说
+\[
+    (z-w)^N\langle\phi,Y(A,z)Y(B,w)v\rangle
+    \quad\text{与}\quad
+    (z-w)^N\langle\phi,Y(B,w)Y(A,z)v\rangle
+\]
+作为 $\C[[z^{\pm1},w^{\pm1}]]$ 的元素彼此相等。由等式 (2.2-3) 可知，两者实际
+都属于 $\C[[z,w]][z^{-1},w^{-1}]$。因此形式幂级数 (2.2-4) 分别是
+$\C[[z,w]][z^{-1},w^{-1},(z-w)^{-1}]$ 的同一个元素在
+$\C(\!(w)\!)(\!(z)\!)$ 与 $\C(\!(z)\!)(\!(w)\!)$ 中的表示。如果还要求当
+$v$ 与 $\phi$ 变化时，分母中出现的 $(z-w)$ 的幂有一个统一的界，就得到局部性
+公理的等价形式。这一重述在下面很有用。\footnote{%
+我们只允许三类奇点：$z=0$、$w=0$ 和 $z=w$，这看起来可能有点奇怪。但这三种
+方程是唯一不依赖坐标选择的方程，而我们需要顶点算子与顶点代数的无坐标描述，
+因此这是一个宝贵的性质。}
+
+\subsection{与 $\gghat_\kappa$ 相伴的顶点代数}
+
+现在给出非交换顶点代数的主要例子，它基于仿射 Kac--Moody 代数
+$\gghat_\kappa$。顶点代数的许多有趣性质都将在这个例子中显现。
+
+设 $\fg$ 是有限维复单李代数，取定有序基 $\{J^a\}$，$a=1,\dots,\dim\fg$
+（见 \S A.3）。回忆仿射 Kac--Moody 代数 $\gghat$ 有一组基，由元素
+$J^a_n$（$a=1,\dots,\dim\fg$，$n\in\Z$）与 $\mathbf{1}$ 组成。
+
+前面我们把与 $J^a$ 对应的元素汇集为形式幂级数
+\[
+    J^a(z)=\sum_{n\in\Z}J^a_nz^{-n-1}.
+\]
+这就给出了一个提示：这个顶点代数中的某些场应该是什么。
+
+我们首先应描述顶点代数所依托的向量空间 $V$。我们知道需要一个特殊向量
+$|0\rangle\in V$ 作为真空向量。我们还知道，若 $J^a(z)$ 确实是顶点算子，则
+$J^a_n$ 应是 $V$ 上的线性算子，并且由\textbf{公理 (i)}，$n\ge0$ 的
+$J^a_n$ 应湮灭真空向量 $|0\rangle$。
+
+注意，按定义应当湮灭 $|0\rangle$ 的那些李代数元素，构成
+$\gghat_\kappa$ 的李子代数 $\fg[[t]]$。于是 $\C|0\rangle$ 是 $\fg[[t]]$
+的一维平凡表示。我们还如下定义中心元 $\mathbf{1}$ 在 $|0\rangle$ 上的作用：
+$\mathbf{1}|0\rangle=1$。把所得的 $\fg[[t]]\oplus\C\mathbf{1}$ 的表示记为
+$\C_\kappa$。
+
+现在用诱导函子定义一个 $\gghat_\kappa$-模：
+\[
+    V_\kappa(\fg)=\operatorname*{Ind}_{\fg[[t]]\oplus\C\mathbf{1}}^{\gghat_\kappa}\C_\kappa
+    =U(\gghat_\kappa)\otimes_{U(\fg[[t]]\oplus\C\mathbf{1})}\C_\kappa.
+\]
+它称为水平 $\kappa$ 的\textbf{真空 Verma 模}。\transnote{“Verma”只表示这是诱导模：$V_\kappa(\fg)$ 是从抛物子代数 $\fg[[t]]\oplus\C\mathbf1$ 诱导的\textbf{广义} Verma 模，而非从 Borel 子代数诱导的最高权 Verma 模 $\mathbb M_{\lambda,\kappa}$（后者见第 6 章式 (6.3-9)，其最高权还带 $\fh$ 分量）。两者一般不同：$V_\kappa(\fg)$ 是 $\lambda=k\Lambda_0$ 的 Verma 模的商。文献中常直接称它为真空模，记作 $V_k(\fg)$。[来源：原书 p.45；第 6 章式 (6.3-9)。]}
+% [Tutor Note: “真空 Verma 模”这个名字容易误导：它并不是 Verma 模 $M(\lambda)$ 的特例，而是把平凡一维表示从抛物线子代数 $\fg[[t]]\oplus\C\mathbf{1}$ 诱导到整个 $\gghat_\kappa$ 所得。其结构由 PBW 定理完全决定（见下文），因此在很多文献中直接称为“真空模” $V_k(\fg)$。]
+
+回忆 $\kappa$ 在相差一个标量的意义下唯一。因此常常方便的做法是固定一个特定
+不变内积 $\kappa_0$，把任意内积写成 $\kappa=k\kappa_0$，$k\in\C$。例如
+[Frenkel and Ben-Zvi 2004] 就采取这个观点：其中的 $\kappa_0$ 取使最大根长度的
+平方等于 $2$ 的内积，并把相应的真空模记为 $V_k(\fg)$。
+
+$V_\kappa(\fg)$ 的结构容易描述。由 Poincar\'e--Birkhoff--Witt 定理，
+$V_\kappa(\fg)$ 同构于 $U(\fg\otimes t^{-1}\C[t^{-1}])|0\rangle$。因此它
+有一组基，由按字典序排列的单项式
+\begin{equation}
+    J^{a_1}_{n_1}\cdots J^{a_m}_{n_m}|0\rangle
+    \tag{2.2-5}
+\end{equation}
+组成，其中 $n_1\le n_2\le\dots\le n_m<0$，且当 $n_i=n_{i+1}$ 时
+$a_i\le a_{i+1}$。用公式 $\deg J^a_n=-n$、$\deg|0\rangle=0$ 定义
+$\gghat_\kappa$ 与 $V_\kappa(\fg)$ 上的 $\Z$-分次。$V_\kappa(\fg)$ 的齐次
+分次分量是有限维的，并且只在非负次数上非零。下图是 $V_\kappa(\fg)$ 最初几个
+齐次分量的图示：
+\[
+    \begin{array}{c}
+        |0\rangle\\[3pt]
+        \{J^a_{-1}|0\rangle\}\\[3pt]
+        \{J^a_{-2}|0\rangle\}\qquad\{J^a_{-1}J^b_{-1}|0\rangle\}\\[3pt]
+        \{J^a_{-3}|0\rangle\}\qquad\cdots\qquad\cdots\qquad\cdots
+    \end{array}
+\]
+% [Tutor Note: 原书此处是一个三角形的格点示意图（顶点为 $|0\rangle$，第 $k$ 层为次数 $k$ 的齐次分量，层与层之间画箭头），本书排版用上面的阵列代替，内容与原文一致：第 $1$ 层是 $\{J^a_{-1}|0\rangle\}$，第 $2$ 层有两组基向量，第 $3$ 层是 $\{J^a_{-3}|0\rangle\}$ 与两个 $\cdots$。]
+
+$\gghat_\kappa$ 的作用描述如下。$n<0$ 时 $J^a_n$ 的作用就是它在
+$U(\fg\otimes t^{-1}\C[t^{-1}])\simeq V_\kappa(\fg)$ 上的显然作用。要作用
+$n\ge0$ 的 $J^a_n$，我们利用李代数 $\gghat_\kappa$ 中的交换关系，把这一项
+移到真空向量上，而 $n\ge0$ 的 $J^a_n$ 湮灭真空向量。
+
+下面用仿射李代数 $\widehat{\fsl}_2$ 说明 $V_\kappa(\fg)$ 的结构。此时元素
+$J^a$ 改记为 $e,f,h$，它们之间的交换关系为
+\[
+    [h,e]=2e,\qquad[h,f]=-2f,\qquad[e,f]=h.
+\]
+例如考虑向量
+\[
+    e_{-1}f_{-2}|0\rangle\in V_\kappa(\fsl_2).
+\]
+若用 $h_1$ 作用，得到
+\[
+    \begin{aligned}
+        h_1e_{-1}f_{-2}|0\rangle
+        &=\left([h_1,e_{-1}]+e_{-1}h_1\right)f_{-2}|0\rangle\\
+        &=\left(2e_0+e_{-1}h_1\right)f_{-2}|0\rangle\\
+        &=2\left([e_0,f_{-2}]+f_{-2}e_0\right)|0\rangle
+        +e_{-1}\left([h_1,f_{-2}]+f_{-2}h_1\right)|0\rangle\\
+        &=2h_{-2}|0\rangle+0-2e_{-1}f_{-1}|0\rangle+0\\
+        &=2\left(h_{-2}-e_{-1}f_{-1}\right)|0\rangle.
+    \end{aligned}
+\]
+于是每一步只是把湮灭算子越来越近地移向真空，直到把它们全部消去。
+% [Tutor Note: 此计算是检验 $\gghat_\kappa$ 符号约定的好例子，务必核对三处：$[h,e]=2e$、$[h,f]=-2f$、$[e,f]=h$（若把后两式的符号弄反，最后一项会变成 $+2e_{-1}f_{-1}|0\rangle$）。另外 $[e_0,f_{-2}]=h_{-2}$，$[h_1,f_{-2}]=-2f_{-1}$，分别来自模式指标的加法约定。]
+
+现在我们已经有了顶点代数的向量空间 $V=V_\kappa(\fg)$ 与真空向量
+$|0\rangle$。还需要定义平移算子 $T$ 与态-场对应 $Y(\cdot,z)$。
+
+平移算子 $T$ 通过把 $-\partial_t$ 解释为向量场来定义（这样做的理由以后会更
+清楚）。这个向量场自然作用在李代数 $\fg(\!(t)\!)$ 上，并保持李子代数
+$\fg[[t]]$。因此它作用在 $V_\kappa(\fg)$ 上。具体地说，这意味着有下列交换
+关系
+\[
+    [T,J^a_n]=-nJ^a_{n-1},
+\]
+并且真空向量在 $T$ 下不变，
+\[
+    T|0\rangle=0,
+\]
+这正是顶点代数的\textbf{公理 (iv)} 所要求的。这两个条件唯一地确定 $T$ 在向量
+空间 $V_\kappa(\fg)$ 上的作用。\transnote{负号来自次数约定：$\deg J^a_n=-n$、$\deg T=1$，故 $[T,J^a_n]=-nJ^a_{n-1}$；若取 $T=\partial_t$ 会得到 $+nJ^a_{n-1}$，与公理 (3) 相反。原书 p.46 明确写的是 $-\partial_t$。第 3 章把 $T$ 与曲线上的联络联系起来时会再次用到同一约定。[来源：原书 p.46。]}
+% [Tutor Note: 原书取 $T=-\partial_t$（印刷页面上是 $-\partial_t$，不是 $\partial_t$）。请核对这个负号：$J^a_n$ 对应 $t^n$，故 $\partial_t$ 给出 $[T,J^a_n]=nJ^a_{n-1}$；要得到式中的 $-nJ^a_{n-1}$ 必须取 $T=-\partial_t$。这是第 3 章把 $T$ 与曲线上的联络、以及 $-\partial_t$ 与射影联络联系起来的伏笔。]
+
+\subsection{顶点算子的定义}
+
+最后需要定义态-场对应。对真空向量，这由\textbf{公理 (i)} 确定：
+\[
+    Y(|0\rangle,z)=\mathrm{Id}.
+\]
+下一个次数的元素，即次数为 $1$ 的元素，形如 $J^a_{-1}|0\rangle$。为了猜测与它们
+对应的顶点算子 $Y(J^a_{-1}|0\rangle,z)$ 的形式，我们先看 $V_\kappa(\fg)$ 的
+分次伴随空间，它是一个交换顶点代数。
+
+为描述这个分次伴随空间，注意 $U(\gghat_\kappa)$ 上的
+Poincar\'e--Birkhoff--Witt 滤过在 $V_\kappa(\fg)$ 上诱导出滤过。这个滤过的
+第 $i$ 项记作 $V_\kappa(\fg)_{\le i}$，它是所有满足 $m\le i$ 的单项式
+(2.2-5) 张成的空间。关于此滤过的分次伴随代数 $\operatorname{gr}V_\kappa(\fg)$
+是对称代数，其生成元对应于 $n<0$ 的 $J^a_n$。为了与真正的 $J^a_n$ 区别，
+把这些生成元记作 $\bar J^a_n$。
+
+回忆对任意李代数 $\fg$，分次伴随 $\operatorname{gr}U(\fg)$ 同构于
+$\Sym\,\fg$。这说明对任意 $\kappa$ 有
+\[
+    \operatorname{gr}V_\kappa(\fg)
+    =\Sym(\fg(\!(t)\!)/\fg[[t]])
+    \simeq\Sym(t^{-1}\fg[[t^{-1}]]).
+\]
+于是 $\operatorname{gr}V_\kappa(\fg)$ 是带导子 $T$ 的交换幺代数，$T$ 对应
+向量场 $-\partial_t$。它由公式
+$T\cdot\bar J^a_n=-n\bar J^a_{n-1}$ 唯一确定。因此，按 \S2.2.2 的讨论，
+$\operatorname{gr}V_\kappa(\fg)$ 具有交换顶点代数的自然结构。按定义（见公式
+(2.2-1)），在这个顶点代数中有
+\[
+    Y(\bar J^a_{-1},z)
+    =\sum_{n\ge0}\frac{z^n}{n!}\operatorname{mult}(T^n\cdot\bar J^a_{-1})
+    =\sum_{n\ge0}\operatorname{mult}(\bar J^a_{-n-1})z^n.
+\]
+我们滥用记号，把它写成
+\begin{equation}
+    Y(\bar J^a_{-1},z)=\sum_{m<0}\bar J^a_mz^{-m-1},
+    \tag{2.2-6}
+\end{equation}
+并约定右端的 $\bar J^a_m$ 表示在 $\operatorname{gr}V_\kappa(\fg)$ 上作用的
+相应乘法算子。
+% [Tutor Note: 式 (2.2-6) 的关键是“只出现一半生成元”：$m<0$。这保证求和没有 $z$ 的负幂，符合交换顶点代数的要求。下一段把同一公式推广到非交换情形时，允许 $m\in\Z$，于是出现负幂，这正是“从交换到非交换”的机械来源，也是正规序要处理的问题。]
+
+公式 (2.2-6) 只涉及 $\gghat_\kappa$ 的“一半”生成元，即 $m<0$ 的那些。这
+保证所得的求和没有 $z$ 的负幂，正如交换顶点代数中所期望的。现在把这个公式
+推广到非交换顶点代数 $V_\kappa(\fg)$ 的情形，此时允许顶点算子中出现 $z$ 的
+负幂。这引导我们对对应于 $J^a_{-1}|0\rangle\in V_\kappa(\fg)$ 的顶点算子
+作如下猜测：\footnote{注意这里 $J^a_n$ 指的是 $J^a_n$ 在表示
+$V_\kappa(\fg)$ 上的作用算子。}
+\[
+    Y(J^a_{-1}|0\rangle,z)=\sum_{n\in\Z}J^a_nz^{-n-1}=J^a(z).
+\]
+容易看出这些顶点算子满足顶点代数公理要求的下列关系：
+\[
+    Y(J^a_{-1}|0\rangle,z)|0\rangle=J^a_{-1}|0\rangle+z(\dots),
+    \qquad
+    [T,Y(J^a_{-1}|0\rangle,z)]=\partial_zY(J^a_{-1}|0\rangle,z).
+\]
+
+我们还必须验证这些顶点算子满足局部性公理。为此利用 $\gghat_\kappa$ 中的
+交换关系
+\begin{equation}
+    [J^a_n,J^b_m]=[J^a,J^b]_{n+m}+n\kappa(J^a,J^b)\delta_{n,-m}\mathbf{1}
+    \tag{2.2-7}
+\end{equation}
+来计算 $J^a(z)$ 与 $J^b(w)$ 的交换子：
+\[
+    \left[J^a(z),J^b(w)\right]
+    =\left[J^a,J^b\right](w)\delta(z-w)
+    +\kappa(J^a,J^b)\partial_w\delta(z-w).
+\]
+现在回忆 \S2.2.1 中 $(z-w)^2$ 湮灭 $\delta(z-w)$ 及其导数，便知局部性公理
+成立。
+% [Tutor Note: 式 (2.2-7) 中的 $\delta_{n,-m}$ 极易写错（文字层常被抽成 $\delta_{n,m-1}$ 之类）。请验证：由 $A(z)=\sum A_nz^{-n-1}$ 与中心项 $n\kappa\delta_{n,-m}$，在 $\sum_{n,m}$ 中恰好给出 $\kappa\partial_w\delta(z-w)$；若把 $\delta_{n,-m}$ 误写成 $\delta_{n,m-1}$ 或把 $\kappa$ 前的符号弄反，下面的局部性论证就会失败。]
+
+现在需要定义对应于 $V_\kappa(\fg)$ 中更一般元素的顶点算子。事实上，下文
+定理 2.2.5 将表明，已经定义的数据 $|0\rangle$、$T$ 与
+$Y(J^a_{-1}|0\rangle,z)$ 唯一确定 $V_\kappa(\fg)$ 上整个顶点代数结构（只要
+它存在！）。原因是向量 $J^a_{-1}|0\rangle$ 在下述意义下生成 $V_\kappa(\fg)$：
+把顶点算子 $Y(J^a_{-1}|0\rangle,z)$ 的系数依次作用到真空向量 $|0\rangle$ 上
+所得的向量张成 $V_\kappa(\fg)$。
+
+这里我们从分次伴随代数 $\operatorname{gr}V_\kappa(\fg)$ 上的结构出发，为
+其余结构提供动机。首先，通过显式计算可以发现在
+$\operatorname{gr}V_\kappa(\fg)$ 中有
+\[
+    Y(\bar J^a_n,z)
+    =\frac{1}{(-n-1)!}\partial_z^{-n-1}\sum_{m<0}\bar J^a_mz^{-m-1}.
+\]
+这启发我们在 $V_\kappa(\fg)$ 中写下公式
+\[
+    Y(J^a_n|0\rangle,z)
+    =\frac{1}{(-n-1)!}\partial_z^{-n-1}J^a(z).
+\]
+其次，注意在任意交换顶点代数 $V$ 中都有下述简单恒等式
+\[
+    Y(AB,z)=Y(A,z)Y(B,z),
+\]
+它来自公式 (2.2-1) 与导子 $T$ 的 Leibniz 法则（这里左端的 $AB$ 指通常的
+交换代数乘法）。因此，人们会忍不住设
+\[
+    Y(J^a_{-1}J^b_{-1}|0\rangle,z)
+    =Y(J^a_{-1},z)Y(J^b_{-1},z)=J^a(z)J^b(z).
+\]
+但是我们已经知道，右端乘积的系数作为 $V_\kappa(\fg)$ 的自同态并没有良好
+定义。问题在于湮灭算子没有出现在产生算子的右边。我们也已经提示过补救办法：
+交换某些项的顺序。
+
+下面更系统地定义这个手续，称为\textbf{正规序}。对形式幂级数
+\[
+    f(z)=\sum_{n\in\Z}f_nz^n\in R[[z^{\pm1}]],
+\]
+其中 $R$ 是任意 $\C$-代数，把只含 $z$ 非负幂的部分记为 $f(z)_+$，把只含
+$z$ 严格负幂的部分记为 $f(z)_-$：
+\[
+    f_+(z)=\sum_{n\ge0}f_nz^n,\qquad
+    f_-(z)=\sum_{n<0}f_nz^n.
+\]
+两个场 $A(z)$ 与 $B(z)$ 的\textbf{正规序乘积}定义为
+\[
+    :\!A(z)B(z)\!:\overset{\mathrm{def}}{=}
+    A(z)_+B(z)+B(z)A(z)_-.
+\]
+容易验证（留给读者）$:\!A(z)B(z)\!:$ 仍是场（$z$ 的系数可能是无穷和，但
+作用到向量上时成为有限和）。当有两个以上的场时，正规序乘积按从右到左的次序
+定义，例如
+\[
+    :\!A(z)B(z)C(z)\!:=:\!A(z)(:\!B(z)C(z)\!)\!:.
+\]
+这个公式看起来有点临时拼凑，但我们将在下文定理 2.2.5 中看到，它由顶点代数
+公理唯一确定。
+
+正规序乘积的定义还有另一种写法，使用留数。对二元函数 $F(z,w)$，把
+$F|_{|z|>|w|}$ 定义为假定 $z$ 是“大”变量时的展开（$F|_{|w|>|z|}$ 类似）。
+例如
+\[
+    \left(\frac{1}{z-w}\right)_{|z|>|w|}
+    =z^{-1}\sum_{n=0}^{\infty}\left(\frac{w}{z}\right)^n,
+    \qquad
+    \left(\frac{1}{z-w}\right)_{|w|>|z|}
+    =-w^{-1}\sum_{n=0}^{\infty}\left(\frac{z}{w}\right)^n.
+\]
+于是可以把正规序乘积表示为
+\[
+    :\!A(z)B(z)\!:
+    =\Res_{w=0}\left(
+    \left(\frac{1}{w-z}\right)_{|w|>|z|}A(w)B(z)
+    -\left(\frac{1}{w-z}\right)_{|z|>|w|}B(z)A(w)
+    \right)dw.
+\]
+这个恒等式容易由下列公式看出
+\[
+    \Res_{z=0}\left(A(z)
+    \left(\frac{1}{z-w}\right)_{|z|>|w|}\right)dz=A(w)_+,
+\]
+\[
+    \Res_{z=0}\left(A(z)
+    \left(\frac{1}{z-w}\right)_{|w|>|z|}\right)dz=-A(w)_-,
+\]
+而这些公式可由简单计算证明。
+% [Tutor Note: 第二个留数公式带负号，容易漏掉：$(1/(z-w))_{|w|>|z|}$ 的展开中最低次项是 $-w^{-1}$，因此留数给出 $-A(w)_-$。这正是正规序乘积定义中两项符号的来源；若漏掉负号，$:AB:$ 与 $:BA:$ 的对称性会被破坏。]
+
+用归纳法使用正规序，得到 $V_\kappa(\fg)$ 中一般顶点算子的如下猜测：
+\begin{equation}
+    \begin{aligned}
+        &Y(J^{a_1}_{n_1}\cdots J^{a_m}_{n_m}|0\rangle,z)\\
+        &\qquad=\frac{1}{(-n_1-1)!}\cdots\frac{1}{(-n_m-1)!}
+        :\!\partial_z^{-n_1-1}J^{a_1}(z)\cdots
+        \partial_z^{-n_m-1}J^{a_m}(z)\!:.
+    \end{aligned}
+    \tag{2.2-8}
+\end{equation}
+\renewcommand{\thetheorem}{2.2.2}
+\begin{theorem}
+    上述公式在 $V_\kappa(\fg)$ 上定义了 $\Z_+$-分次顶点代数的结构。
+\end{theorem}
+
+\subsection{定理的证明}
+
+按定义有 $Y(|0\rangle,z)=\mathrm{Id}$。其次需要验证
+\[
+    Y(A,z)|0\rangle=A+z(\dots),
+\]
+以说明真空公理成立。当 $A=|0\rangle$ 时这显然成立。然后用归纳法证明一般
+情形：假设它对 $B\in V_\kappa(\fg)_{\le i}$ 的 $Y(B,z)$ 成立，则对任意
+$A\in\fg$ 有
+\[
+    Y(A_{-n}B|0\rangle,z)|0\rangle
+    =\frac{1}{(-n-1)!}:\!\partial_z^{-n-1}A(z)\cdot Y(B,z)\!:|0\rangle
+    =A_{-n}B+z(\dots).
+\]
+平移公理 (iii) 归结为证明恒等式
+\[
+    [T,:\!A(z)B(z)\!:]=\partial_z:\!A(z)B(z)\!:,
+\]
+其中假定 $[T,A(z)]=\partial_zA(z)$ 与 $[T,B(z)]=\partial_zB(z)$。这一条以
+及 $\Z_+$-分次与顶点算子相容的事实，我们都留给读者。
+
+局部性来自下面陈述的 Dong 引理，它表明局部场的正规序乘积仍然局部。显然
+局部场的导数也仍然局部。因此只需验证生成场 $J^a(z)$ 两两局部。由交换关系
+得到
+\[
+    \left[J^a(z),J^b(w)\right]
+    =\left[J^a,J^b\right](w)\delta(z-w)
+    -\kappa(J^a,J^b)\partial_w\delta(z-w).
+\]
+% [Tutor Note: 这里的 $\kappa$ 项符号为负，与 p.48（PDF p062）同一交换子公式中的正号矛盾。由式 (2.2-7) 直接计算可得应为正号 $+\kappa(J^a,J^b)\partial_w\delta(z-w)$（因为 $(z-w)^2$ 湮灭 $\partial_w\delta$ 与符号无关，局部性本身不受影响）。此处按原文照译，并在报告中登记为疑似笔误。]
+由此显然有
+\[
+    (z-w)^2\left[J^a(z),J^b(w)\right]=0,
+\]
+于是得到所需的局部性。\transnote{原书 p.50 此处印作 $-\kappa(J^a,J^b)\partial_w\delta(z-w)$，与 p.48 的 $+\kappa(\cdots)$ 矛盾。由 (2.2-7) 直算，$\kappa$ 项为 $\kappa\sum_{n\in\Z}nz^{-n-1}w^{n-1}=\kappa\partial_w\delta(z-w)$，确为正号；故 p.48 正确、p.50 为笔误，译文按原书照录，读者应以 (2.2-7) 为准（局部性只用到 $(z-w)^2$ 消去二阶极点，与符号无关）。[依据：原书 p.48、p.50 与式 (2.2-7)。][来源：本书 p.50。]}
+
+这就完成了证明，只差下面的引理。
+
+\renewcommand{\thelemma}{2.2.3}
+\begin{lemma}[Dong]
+    若场 $A(z)$、$B(z)$、$C(z)$ 两两局部，则
+    $:\!A(z)B(z)\!:$ 与 $C(z)$ 也两两局部。
+\end{lemma}
+
+\begin{proof}
+    只需证明：乘以 $(y-z)$ 的适当幂之后，下述两个表达式相等，结论便由取
+    $\Res_{x=0}$ 得到：
+    \[
+        \begin{aligned}
+            F&=\left(\frac{1}{x-y}\right)_{|x|>|y|}A(x)B(y)C(z)
+            -\left(\frac{1}{x-y}\right)_{|y|>|x|}B(y)A(x)C(z),\\
+            G&=\left(\frac{1}{x-y}\right)_{|x|>|y|}C(z)A(x)B(y)
+            -\left(\frac{1}{x-y}\right)_{|y|>|x|}C(z)B(y)A(x).
+        \end{aligned}
+    \]
+    由于 $A,B,C$ 两两局部，存在整数 $N$，使得
+    \[
+        \begin{gathered}
+            (x-y)^NA(x)B(y)=(x-y)^NB(y)A(x),\\
+            (y-z)^NB(y)C(z)=(y-z)^NC(z)B(y),\\
+            (x-z)^NA(x)C(z)=(x-z)^NC(z)A(x).
+        \end{gathered}
+    \]
+    下面证明
+    \[
+        (y-z)^{3N}F=(y-z)^{3N}G.
+    \]
+    二项式恒等式给出
+    \[
+        (y-z)^{3N}
+        =\sum_{n=0}^{2N}\binom{2N}{n}(y-x)^{2N-n}(x-z)^n(y-z)^N.
+    \]
+    现在，若 $0\le n<N$，则 $(y-x)$ 的幂足够大，可以交换 $A(x)$ 与 $B(y)$；
+    于是 $F$（以及 $G$）中相应的两项相消，故这些项没有贡献。若 $n\ge N$，
+    则 $(x-z)$ 与 $(y-z)$ 的幂足够大，可以交换 $A(x)$ 与 $C(z)$，以及
+    $B(y)$ 与 $C(z)$。这使我们能把 $F$ 中的项变成 $G$ 中的项。于是
+    \[
+        (y-z)^{3N}F=(y-z)^{3N}G,
+    \]
+    证毕。
+\end{proof}
+
+定理 2.2.2 的证明适用于比仿射 Kac--Moody 代数更一般的情形。在这个一般形式
+下，它称为（弱）\textbf{重构定理}。
+
+\renewcommand{\thetheorem}{2.2.4}
+\begin{theorem}[弱重构]
+    设 $V$ 是向量空间，$|0\rangle$ 是 $V$ 中向量，$T$ 是 $V$ 的自同态。
+    设
+    \[
+        a^\alpha(z)=\sum_{n\in\Z}a^\alpha_{(n)}z^{-n-1},
+    \]
+    其中 $\alpha$ 取遍有序集 $I$，是一族 $V$ 上的场，满足
+    \begin{enumerate}[label=(\arabic*)]
+        \item $[T,a^\alpha(z)]=\partial_za^\alpha(z)$；
+        \item $T|0\rangle=0$，$a^\alpha(z)|0\rangle=a^\alpha+z(\dots)$；
+        \item $a^\alpha(z)$ 与 $a^\beta(z)$ 两两局部；
+        \item 按字典序排列的单项式
+        $a^{\alpha_1}_{(n_1)}\cdots a^{\alpha_m}_{(n_m)}|0\rangle$
+        （$n_i<0$）构成 $V$ 的一组基。
+    \end{enumerate}
+    则由公式
+    \begin{equation}
+        \begin{aligned}
+            &Y(a^{\alpha_1}_{(n_1)}\cdots a^{\alpha_m}_{(n_m)}|0\rangle,z)\\
+            &\qquad=\frac{1}{(-n_1-1)!}\cdots\frac{1}{(-n_m-1)!}
+            :\!\partial_z^{-n_1-1}a^{\alpha_1}(z)\cdots
+            \partial_z^{-n_m-1}a^{\alpha_n}(z)\!:,
+        \end{aligned}
+        \tag{2.2-9}
+    \end{equation}
+    其中 $n_i<0$，在 $V$ 上定义了顶点代数结构，使得 $|0\rangle$ 是真空向量，
+    $T$ 是平移算子，且对一切 $\alpha\in I$ 有 $Y(a^\alpha,z)=a^\alpha(z)$。\transnote{原书 p.52 式 (2.2-9) 的末因子印作 $a^{\alpha_n}(z)$，应为 $a^{\alpha_m}(z)$：左端是 $m$ 个因子 $a^{\alpha_1},\dots,a^{\alpha_m}$ 的单项式，指标 $n$ 只出现在 $\partial_z^{-n_i-1}$ 中。译文按原书照录。[依据：原书 p.52。][来源：本书 p.52。]}
+\end{theorem}
+% [Tutor Note: 式 (2.2-9) 最末一个因子印作 $a^{\alpha_n}(z)$，按上下文应为 $a^{\alpha_m}(z)$（第 $m$ 个生成元），因为求和项的下标是 $n_1,\dots,n_m$ 与 $\alpha_1,\dots,\alpha_m$。此处按原文照译，并在报告中登记为疑似笔误。]
+
+证明只是重复 $V=V_\kappa(\fg)$ 情形所用的论证。
+
+重构定理实际上在宽松得多的情形下也成立：不必假定 (4) 中的向量构成基，只需
+它们张成 $V$。即使在这种情形，也可以推出所得的顶点代数结构唯一。
+
+\renewcommand{\thetheorem}{2.2.5}
+\begin{theorem}[强重构]
+    设 $V$ 是向量空间，带有定理 2.2.4 中满足条件 (i)--(iii) 的结构，并且
+    满足条件 (iv$'$)：向量
+    $a^{\alpha_1}_{(-j_1-1)}\cdots a^{\alpha_n}_{(-j_n-1)}|0\rangle$
+    （$j_s\ge 0$）张成 $V$。则这些结构与公式 (2.2-9) 一起在 $V$ 上定义顶点
+    代数结构。此外，这是 $V$ 上满足条件 (i)--(iii) 与 (iv$'$) 且满足对一切
+    $\alpha\in I$ 有 $Y(a^\alpha,z)=a^\alpha(z)$ 的唯一顶点代数结构。
+\end{theorem}
+
+这里不证明这个结果，请读者参阅 [Frenkel and Ben-Zvi 2004], Theorem 4.4.1。
+特别地，我们看到 \S2.2.5 中对顶点算子的指定没有任何任意性。\transnote{条件 (iv$'$) 与定理 2.2.4 的条件 (4) 相比只要求“张成”而非“构成基”：$j_s\ge0$ 时 $-j_s-1\le-1$，正是弱形式中 $n_i<0$ 的指标。强重构定理说，仅凭这套数据与式 (2.2-9)，$V$ 上的顶点代数结构已被唯一确定——这正是 \S2.2.5 中对 $Y(a^\alpha,z)$ 的“猜测”没有任意性的原因。[来源：原书 p.52；Frenkel--Ben-Zvi 2004, Theorem 4.4.1（原书同页所引）。]}
+
+\section{顶点代数中的结合性}
+
+\setcounter{theorem}{0}
+
+\begin{keypoints}
+    \item \textbf{核心思想：} 局部性说明三个表达式是同一个有理型对象在三个区域中的
+    展开；结合性把“乘积”$Y(A,z)Y(B,w)$ 写成顶点算子的展开（OPE）。
+    \item \textbf{数学工具：} 三个区域 $V(\!(z)\!)(\!(w)\!)$、$V(\!(w)\!)(\!(z)\!)$、
+    $V(\!(w)\!)(\!(z-w)\!)$；Taylor 展开；$\delta(z-w)$ 的导数展开。
+    \item \textbf{关键结论：} 定理 2.3.3（结合性）与 OPE 公式 (2.3-1)；推论给出
+    正规序与顶点算子公式 (2.2-8)、(2.2-9) 的唯一性，以及 Fourier 系数的交换
+    关系 (2.3-8)。
+    \item \textbf{记号提醒：} $Y(A,z-w)$ 中的负幂按 $w$ “小”展开；
+    式 (2.3-8) 中的 $\binom{m}{n}$ 对 $m\in\Z$ 按下降阶乘定义，不能当成通常的
+    二项式系数。
+\end{keypoints}
+
+我们已经走完了通往为 Segal--Sugawara 算子 $S_n$（由公式 (2.1-9) 定义）寻找
+合适形式体系这一目标的大约一半路程。我们引入了顶点代数的概念，并看到顶点代数
+恰当地编码了与形式幂级数（例如 Segal--Sugawara 算子的生成级数 $S(z)$）有关的
+结构。事实上，级数 $S(z)$ 本身就是顶点代数 $V_\kappa(\fg)$ 中的一个顶点算子：
+\[
+    S(z)=\frac12\sum_{a=1}^{\dim\fg}
+    Y(J^a_{-1}J_{a,-1}|0\rangle,z).
+\]
+现在需要学会把顶点算子（如 $S(z)$）的性质——它来自顶点代数结构——与它们的
+Fourier 系数 $S_n$ 的性质联系起来，后者与我们关心的完备泛包络代数
+$\widetilde U_\kappa(\fg)$ 的中心的描述有关。为此，需要把顶点代数理论再推进
+一步，特别是理解这个背景中结合性的含义。
+
+\subsection{三个区域}
+
+我们已经看到，顶点代数的局部性公理告诉我们，两个形式幂级数
+\[
+    Y(A,z)Y(B,w)C
+    \qquad\text{和}\qquad
+    Y(B,w)Y(A,z)C
+\]
+是 $V[[z,w]][z^{-1},w^{-1},(z-w)^{-1}]$ 的同一个元素在两种不同区域中的展开。
+其中一个展开 $V(\!(z)\!)(\!(w)\!)$ 对应 $w$ 是“小”的；另一个
+$V(\!(w)\!)(\!(z)\!)$ 对应 $z$ 是“小”的。若把 $z$ 与 $w$ 看成复数（也就是
+黎曼球面上的点），可以把这两个展开看成在区域“$w$ 非常接近 $0$”与“$w$ 非常
+接近 $\infty$”中进行的。现在还有一个显然的第三选择：“$w$ 非常接近 $z$”，
+我们还没有讨论它。
+
+代数上，对应于区域“$w$ 非常接近 $z$”的空间是 $V(\!(w)\!)(\!(z-w)\!)$
+（或者 $V(\!(z)\!)(\!(z-w)\!)$；两者实际上是同一个）。按顶点代数的观点，
+我们期望住在这个空间里的表达式是
+\[
+    Y(Y(A,z-w)B,w)C.
+\]
+为看出这一点，来看交换顶点代数的情形。在交换顶点代数中，局部性等价于交换性
+\[
+    Y(A,z)Y(B,w)C=Y(B,w)Y(A,z)C,
+\]
+但我们还有恒等式
+\[
+    Y(A,z)Y(B,w)C=Y(Y(A,z-w)B,w)C,
+\]
+它表达底层交换代数的结合性。在一般顶点代数中，局部性只在“从不同区域解析
+延拓”的意义下成立。同样，应当期望结合性也在类似意义下成立。更确切地说，
+我们期望 $Y(Y(A,z-w)B,w)C$ 是 $V[[z,w]][z^{-1},w^{-1},(z-w)^{-1}]$ 中与
+另外两个表达式相同的那个元素的展开，只不过是在空间 $V(\!(w)\!)(\!(z-w)\!)$
+中的展开（即假定 $z-w$ 是“小”的）。下面证明情况确实如此。
+
+\subsection{若干有用的事实}
+
+我们从几个基本而有用的结果开始。
+
+\renewcommand{\thelemma}{2.3.1}
+\begin{lemma}
+    设 $U$ 是向量空间，$f(z)\in U[[z]]$ 是幂级数，$R\in\End U$ 是自同态。
+    若 $f(z)$ 满足
+    \[
+        \partial_zf(z)=Rf(z),
+    \]
+    则它由值 $f(0)$ 唯一确定。
+\end{lemma}
+
+\begin{proof}
+    简单的归纳表明 $f(z)$ 必为如下形式：
+    \[
+        f(z)=K+R(K)z+\frac{R^2}{2!}(K)z^2+\frac{R^3}{3!}(K)z^3+\dots,
+    \]
+    因此它由 $K=f(0)$ 确定。
+\end{proof}
+
+\renewcommand{\thecorollary}{2.3.1}
+\begin{corollary}
+    对顶点代数 $V$ 中任意向量 $A$，有
+    \[
+        Y(A,z)|0\rangle=\ee^{zT}A.
+    \]
+\end{corollary}
+
+\begin{proof}
+    两边都属于 $V[[z]]$。因此由引理 2.3.1，只需证明它们满足同一个微分方程，
+    因为两者的常数项都等于 $A$。由顶点代数公理，
+    \[
+        \partial_zY(A,z)|0\rangle=[T,Y(A,z)]|0\rangle=TY(A,z)|0\rangle.
+    \]
+    另一方面，显然有 $\partial_z\ee^{zT}A=T\ee^{zT}A$。\transnote{推论 2.3.1 说明态-场对应完全由真空决定：$Y(A,z)|0\rangle=\ee^{zT}A$，令 $z=0$ 得 $A_{(-1)}|0\rangle=A$。这也是证明斜对称性（命题 2.3.2）的关键一步，它把对 $Y(A,z)B$ 的讨论化归为对 $\ee^{zT}Y(B,-z)A$ 的讨论。[依据：原书 p.54--p.55。][来源：本书 p.54。]}
+\end{proof}
+
+\renewcommand{\thelemma}{2.3.2}
+\begin{lemma}
+    在任意顶点代数中有
+    \[
+        \ee^{wT}Y(A,z)\ee^{-wT}=Y(A,z+w),
+    \]
+    其中 $(z+w)$ 的负幂按 $w$ 是“小”的假定展开为幂级数（即按 $w/z$ 的正幂
+    展开）。
+\end{lemma}
+
+\begin{proof}
+    在任意李代数中有下列恒等式
+    \[
+        \ee^{wT}G\ee^{-wT}=\sum_{n\ge0}\frac{w^n}{n!}
+        (\operatorname{ad}T)^nG.
+    \]
+    于是，在我们的情形，利用公式 $[T,Y(A,z)]=\partial_zY(A,z)$ 以及
+    $[T,\partial_z]=0$，得到
+    \[
+        \begin{aligned}
+            \ee^{wT}Y(A,z)\ee^{-wT}
+            &=\sum_{n\ge0}\frac{w^n}{n!}(\operatorname{ad}T)^nY(A,z)\\
+            &=\sum_{n\ge0}\frac{w^n}{n!}\partial_z^nY(A,z)
+            =\ee^{w\partial_z}Y(A,z).
+        \end{aligned}
+    \]
+    为完成证明，使用恒等式 $\ee^{w\partial_z}f(z)=f(z+w)$（在
+    $R[[z^{\pm1},w]]$ 中），它对任意 $f(z)\in R[[z^{\pm1}]]$ 与任意
+    $\C$-代数 $R$ 成立。
+\end{proof}
+
+这个引理告诉我们，把无穷小平移算子 $T$ 指数化，确实给出平移算子
+$z\mapsto z+w$。
+% [Tutor Note: 引理 2.3.2 与“平移”的严格含义值得留意：$e^{wT}Y(A,z)e^{-wT}=Y(A,z+w)$ 是形式恒等式，$(z+w)^{-1}$ 必须按 $w/z$ 的正幂展开（即 $|w|<|z|$）。若按另一区域展开，等式只在“解析延拓”意义下成立。下面对称性证明中会两次用到这一点。]
+
+\renewcommand{\theproposition}{2.3.2}
+\begin{proposition}[斜对称]
+    在任意顶点代数中有恒等式
+    \[
+        Y(A,z)B=\ee^{zT}Y(B,-z)A\qquad\text{在 }V(\!(z)\!)\text{ 中}.
+    \]
+\end{proposition}
+
+\begin{proof}
+    由局部性，存在大整数 $N$，使得
+    \[
+        (z-w)^NY(A,z)Y(B,w)|0\rangle
+        =(z-w)^NY(B,w)Y(A,z)|0\rangle.
+    \]
+    这实际上是 $V[[z,w]]$ 中的等式（注意左边没有 $w$ 的负幂，右边没有 $z$ 的
+    负幂）。现在利用上面的结果计算：
+    \[
+        \begin{aligned}
+            (z-w)^NY(A,z)Y(B,w)|0\rangle
+            &=(z-w)^NY(B,w)Y(A,z)|0\rangle\\
+            \Longrightarrow\quad
+            (z-w)^NY(A,z)\ee^{wT}B
+            &=(z-w)^NY(B,w)\ee^{zT}A\\
+            \Longrightarrow\quad
+            (z-w)^NY(A,z)\ee^{wT}B
+            &=(z-w)^N\ee^{zT}Y(B,w-z)A\\
+            \Longrightarrow\quad
+            z^NY(A,z)B
+            &=z^N\ee^{zT}Y(B,-z)A\\
+            \Longrightarrow\quad
+            Y(A,z)B
+            &=\ee^{zT}Y(B,-z)A.
+        \end{aligned}
+    \]
+    在第四行中令 $w=0$，这是允许的，因为上述表达式中没有 $w$ 的负幂。
+\end{proof}
+
+用 Fourier 系数写出，斜对称性质可以写成
+\[
+    A_{(n)}B=(-1)^{n+1}\left(
+    B_{(n)}A-T(B_{(n-1)}A)+\frac12T^2(B_{(n-2)}A)-\dots\right).
+\]
+% [Tutor Note: 斜对称的符号与 $(-1)^{n+1}$ 因子极易搞错，根源是 $A_{(n)}$ 与 $A_n$ 的配对约定（场按 $z^{-n-1}$ 展开）。可用 $n=0$ 的简单例子检验：$A_{(0)}B=-B_{(0)}A+T(B_{(-1)}A)-\dots$，它对应 $[A_{(0)},B_{(0)}]$ 的斜对称性。另注意等式右端是 $Y(B,-z)$，负号在 $z$ 上而不在 $T$ 的指数上。]
+
+\subsection{结合性的证明}
+
+现在具备足够工具来证明结合性。
+
+\renewcommand{\thetheorem}{2.3.3}
+\begin{theorem}
+    在任意顶点代数中，表达式
+    \[
+        Y(A,z)Y(B,w)C,\qquad
+        Y(B,w)Y(A,z)C,\qquad
+        Y(Y(A,z-w)B,w)C
+    \]
+    分别是 $V[[z,w]][z^{-1},w^{-1},(z-w)^{-1}]$ 的同一个元素在
+    \[
+        V(\!(z)\!)(\!(w)\!),\qquad
+        V(\!(w)\!)(\!(z)\!),\qquad
+        V(\!(w)\!)(\!(z-w)\!)
+    \]
+    中的展开。
+\end{theorem}
+
+\begin{proof}
+    前两个表达式由局部性已知，因此只需对第一个与最后一个证明。利用
+    命题 2.3.2 与引理 2.3.2，计算
+    \[
+        \begin{aligned}
+            Y(A,z)Y(B,w)C
+            &=Y(A,z)\ee^{wT}Y(C,-w)B\\
+            &=\ee^{wT}Y(A,z-w)Y(C,-w)B
+        \end{aligned}
+    \]
+    （注意在左边乘以幂级数 $\ee^{wT}$ 是允许的，因为它没有 $w$ 的负幂）。在
+    最后的表达式中，按 $w$ 是“小”的假定展开 $(z-w)$ 的负幂。这定义了映射
+    $V(\!(z-w)\!)(\!(w)\!)\to V(\!(z)\!)(\!(w)\!)$，容易看出它是同构，并且
+    与 $V[[z,w]][z^{-1},w^{-1},(z-w)^{-1}]$ 到这两个空间的嵌入相容。
+
+    另一方面，再次利用命题 2.3.2 计算
+    \[
+        \begin{aligned}
+            Y(Y(A,z-w)B,w)C
+            &=Y\left(\sum_nA_{(n)}B(z-w)^{-n-1},w\right)C\\
+            &=\sum_nY(A_{(n)}B,w)C(z-w)^{-n-1}\\
+            &=\sum_n\ee^{wT}Y(C,-w)A_{(n)}B(z-w)^{-n-1}\\
+            &=\ee^{wT}Y(C,-w)Y(A,z-w)B.
+        \end{aligned}
+    \]
+    这个计算在 $V(\!(w)\!)(\!(z-w)\!)$ 中成立。
+
+    由局部性可知
+    \[
+        Y(C,-w)Y(A,z-w)B
+        \qquad\text{和}\qquad
+        Y(A,z-w)Y(C,-w)B
+    \]
+    是 $V[[z,w]][z^{-1},w^{-1},(z-w)^{-1}]$ 中同一个元素的展开。这说明
+    $Y(Y(A,z-w)B,w)C$ 与 $Y(A,z)Y(B,w)C$ 也是同一个元素的展开。
+\end{proof}
+
+我们现在建立了顶点代数的结合性。把这一性质说成
+\begin{equation}
+    \begin{aligned}
+        Y(A,z)Y(B,w)
+        &=Y(Y(A,z-w)B,w)\\
+        &=\sum_{n\in\Z}Y(A_{(n)}B,w)(z-w)^{-n-1}
+    \end{aligned}
+    \tag{2.3-1}
+\end{equation}
+是很有启发性的。这非常有用，因为它给出把两个顶点算子的乘积表示为顶点算子
+线性组合的办法。不过，解释这个公式时必须小心。两边是不同向量空间
+$V(\!(z)\!)$ 与 $V(\!(w)\!)(\!(z-w)\!)$ 中的形式幂级数。把其中各项作用到固定
+向量 $C\in V$ 上时确实“收敛”，但即便如此，两个表达式也不相等，因为
+它们是同一个“函数”在两个不同区域中的展开。\transnote{式 (2.3-1) 的等号不是逐项相等，而是“同一个元素在两个区域中的展开”：左端在 $V(\!(z)\!)(\!(w)\!)$ 中展开，右端在 $V(\!(w)\!)(\!(z-w)\!)$ 中展开。逐项真正收敛（在 $\End V[[z^{-1},w^{-1}]]$ 中）的是式 (2.3-6)；忘记这一点就会把 OPE 当成普通等式，从而得出错误的交换子。[依据：原书 p.57 与式 (2.3-6)。][来源：本书 p.57。]}
+
+按上述形式并带上上述理解，式 (2.3-1) 称为\textbf{算子乘积展开}（OPE）。
+这类公式最初出现在共形场论的物理学文献中。发展顶点代数理论的动机之一，就是
+为这些公式找到数学上严格的解释。
+% [Tutor Note: OPE 里的“等号”是带保留条件的：严格地说它是 $V[[z,w]][z^{-1},w^{-1},(z-w)^{-1}]$ 中同一个元素在 $V(\!(z)\!)(\!(w)\!)$ 与 $V(\!(w)\!)(\!(z-w)\!)$ 两个区域中的展开，不能当作幂级数的逐项恒等式。后面的 (2.3-6) 才是在 $\End V[[z^{-1},w^{-1}]]$ 中真正有意义的等式。这一区别是理解顶点代数与“形式 OPE 演算”的关键。]
+
+\subsection{结合性的推论}
+
+下面看结合律的推论。特别地，将会看到我们先前对正规序乘积的定义以及
+$V_\kappa(\fg)$ 情形顶点算子的公式基本上是唯一的。
+
+\renewcommand{\thelemma}{2.3.4}
+\begin{lemma}
+    设 $\phi(z)$ 与 $\psi(w)$ 是两个场。则下列条件等价：
+    \begin{enumerate}[label=(\arabic*)]
+        \item $[\phi(z),\psi(w)]=\sum_{i=0}^{N-1}\frac{1}{i!}
+        \gamma_i(w)\partial_w^i\delta(z-w)$；
+        \item
+        \[
+            \phi(z)\psi(w)=\sum_{i=0}^{N-1}\gamma_i(w)
+            \left(\frac{1}{(z-w)^{i+1}}\right)_{|z|>|w|}
+            +:\!\phi(z)\psi(w)\!:,
+        \]
+        且
+        \[
+            \psi(w)\phi(z)=\sum_{i=0}^{N-1}\gamma_i(w)
+            \left(\frac{1}{(z-w)^{i+1}}\right)_{|w|>|z|}
+            +:\!\phi(z)\psi(w)\!:,
+        \]
+    \end{enumerate}
+    其中 $\gamma_i(w)$ 是场，$N$ 是非负整数，且
+    \[
+        :\!\phi(z)\psi(w)\!:=\phi_+(z)\psi(w)+\psi(w)\phi_-(z).
+    \]
+\end{lemma}
+
+\begin{proof}
+    假定 (ii)，则交换子 $[\phi(z),\psi(w)]$ 是 $(z-w)^{-i-1}$ 在区域
+    $|z|>|w|$ 与 $|w|>|z|$ 中两个展开之差。显然
+    \[
+        \left(\frac{1}{z-w}\right)_{|z|>|w|}
+        -\left(\frac{1}{z-w}\right)_{|w|>|z|}
+        =\delta(z-w).
+    \]
+    对 $w$ 求导 $i$ 次，得到
+    \[
+        \left(\frac{1}{(z-w)^{i+1}}\right)_{|z|>|w|}
+        -\left(\frac{1}{(z-w)^{i+1}}\right)_{|w|>|z|}
+        =\frac{1}{i!}\partial_w^i\delta(z-w).
+    \]
+    这给出 (i)。
+
+    反之，假定 (i)，并写
+    \[
+        \begin{aligned}
+            \phi(z)\psi(w)
+            &=(\phi(z)_++\phi(z)_-)\psi(w)\\
+            &=(\phi(z)_+\psi(w)+\psi(w)\phi(z)_-)
+            +(\phi(z)_-\psi(w)-\psi(w)\phi(z)_-)\\
+            &=:\!\phi(z)\psi(w)\!:+[\phi(z)_-,\psi(w)].
+        \end{aligned}
+    \]
+    在 (i) 的右端取 $z$ 的负幂项，就得到 (ii) 中的第一个公式。对乘积
+    $\psi(w)\phi(z)$ 作同样的计算即可。
+\end{proof}
+
+现在设场 $\phi(z)$ 与 $\psi(w)$ 是顶点代数 $V$ 中的顶点算子 $Y(A,z)$ 与
+$Y(B,w)$。则局部性告诉我们，交换子 $[Y(A,z),Y(B,w)]$ 被 $(z-w)^N$ 湮灭
+（对某个 $N$）。容易看出，在 $\End V[[z^{\pm1},w^{\pm1}]]$ 中乘以
+$(z-w)^N$ 的算子的核，由形如 $\gamma(w)\partial_w^i\delta(z-w)$
+（$i=0,\dots,N-1$）的级数线性生成。于是可以写
+\[
+    [Y(A,z),Y(B,w)]=\sum_{i=0}^{N-1}\frac{1}{i!}
+    \gamma_i(w)\partial_w^i\delta(z-w),
+\]
+其中 $\gamma_i(w)$（$i=0,\dots,N-1$）是 $V$ 上的某些场（我们还不知道它们
+也是顶点算子）。因此 $Y(A,z)$ 与 $Y(B,w)$ 满足引理 2.3.4 的条件 (i)，从而
+也满足条件 (ii)：
+\begin{equation}
+    Y(A,z)Y(B,w)=\sum_{i=0}^{N-1}\frac{\gamma_i(w)}{(z-w)^{i+1}}
+    +:\!Y(A,z)Y(B,w)\!:,
+    \tag{2.3-2}
+\end{equation}
+其中 $(z-w)^{-1}$ 按 $w/z$ 的正幂展开。
+
+于是对任意 $C\in V$，级数 $Y(A,z)Y(B,w)C\in V(\!(z)\!)(\!(w)\!)$ 是
+\[
+    \left(\sum_{i=0}^{N-1}\frac{\gamma_i(w)}{(z-w)^{i+1}}
+    +:\!Y(A,z)Y(B,w)\!:\right)C
+    \in V[[z,w]][z^{-1},w^{-1},(z-w)^{-1}]
+\]
+的展开。
+
+利用 Taylor 公式，该元素在 $V(\!(w)\!)(\!(z-w)\!)$ 中的展开等于
+\begin{equation}
+    \left(\sum_{i=0}^{N-1}\frac{\gamma_i(w)}{(z-w)^{i+1}}
+    +\sum_{m\ge0}\frac{(z-w)^m}{m!}
+    :\!\partial_w^mY(A,w)\cdot Y(B,w)\!:\right)C.
+    \tag{2.3-3}
+\end{equation}
+
+式 (2.3-3) 右端 $(z-w)^k$（$k\in\Z$）前的系数，必须等于公式 (2.3-1) 右端
+相应的项。先看 $k\ge0$ 的项。比较两个公式得到
+\begin{equation}
+    Y(A_{(n)}B,z)=\frac{1}{(-n-1)!}
+    :\!\partial_z^{-n-1}Y(A,z)\cdot Y(B,z)\!:,
+    \qquad n<0.
+    \tag{2.3-4}
+\end{equation}
+特别地，取 $B=|0\rangle$、$n=-2$，并回忆 $A_{(-2)}|0\rangle=TA$，得到
+\begin{equation}
+    Y(TA,z)=\partial_zY(A,z).
+    \tag{2.3-5}
+\end{equation}
+利用公式 (2.3-4)，对 $m$ 作归纳（回忆我们的约定：正规序从右到左嵌套），得到
+下述推论。
+
+\renewcommand{\thecorollary}{2.3.3}
+\begin{corollary}
+    对任意 $A^1,\dots,A^m\in V$ 与 $n_1,\dots,n_m<0$，有
+    \[
+        \begin{aligned}
+            &Y(A^1_{(n_1)}\cdots A^m_{(n_m)}|0\rangle,z)\\
+            &\qquad=\frac{1}{(-n_1-1)!}\cdots\frac{1}{(-n_m-1)!}
+            :\!\partial_z^{-n_1-1}Y(A^1,z)\cdots
+            \partial_z^{-n_m-1}Y(A^m,z)\!:.
+        \end{aligned}
+    \]
+\end{corollary}
+% [Tutor Note: 本节的印刷编号与出现次序不一致（引理 2.3.1 与推论 2.3.1 同号、引理 2.3.2 与命题 2.3.2 同号、定理 2.3.3 与推论 2.3.3 同号，且缺少 2.3.3 号引理）。为忠实于原书，此处逐一保留原印刷编号，请对照原书 p.54--p.59。]
+
+这证实了公式 (2.2-8) 与 (2.2-9)。
+
+现在比较公式 (2.3-1) 与 (2.3-3) 中 $(z-w)^k$（$k<0$）前的系数。得到
+\[
+    \gamma_i(w)=Y(A_{(i)}B,w),\qquad i\ge0,
+\]
+于是公式 (2.3-2) 可以改写为
+\begin{equation}
+    Y(A,z)Y(B,w)=\sum_{n\ge0}\frac{Y(A_{(n)}B,w)}{(z-w)^{n+1}}
+    +:\!Y(A,z)Y(B,w)\!:.
+    \tag{2.3-6}
+\end{equation}
+注意与公式 (2.3-1) 不同，只要把 $(z-w)^{-1}$ 按 $w/z$ 的正幂展开，这个
+恒等式在 $\End V[[z^{-1},w^{-1}]]$ 中就有意义。
+
+现在引理 2.3.4 推出下述交换关系：
+\begin{equation}
+    [Y(A,z),Y(B,w)]=\sum_{n\ge0}\frac{1}{n!}
+    Y(A_{(n)}B,w)\partial_w^n\delta(z-w).
+    \tag{2.3-7}
+\end{equation}
+
+把 (2.3-7) 两边展开为形式幂级数，并利用等式
+\[
+    \frac{1}{n!}\partial_w^n\delta(z-w)
+    =\sum_{m\in\Z}\binom{m}{n}z^{-m-1}w^{m-n},
+\]
+得到任意顶点算子的 Fourier 系数之间的交换子的下述恒等式：
+\begin{equation}
+    [A_{(m)},B_{(k)}]=\sum_{n\ge0}\binom{m}{n}
+    (A_{(n)}B)_{(m+k-n)}.
+    \tag{2.3-8}
+\end{equation}
+这里按定义，对任意 $m\in\Z$，
+\[
+    \binom{m}{n}=\frac{m(m-1)\cdots(m-n+1)}{n!},\quad n\in\Z_{>0};
+    \qquad\binom{m}{0}=1.
+\]
+关于这个公式，应作几点重要的说明。它表明所有顶点算子的所有 Fourier 系数构成
+一个李代数；并且 Fourier 系数的交换子只依赖 OPE 中的奇异项。\transnote{这里 $\binom{m}{n}$ 对任意 $m$ 按下降阶乘 $m(m-1)\cdots(m-n+1)/n!$ 理解，不是组合数；当 $m\ge0$ 且 $n>m$ 时分子含零因子，故为零。(2.3-8) 的求和其实是有限和：由局部性，$A_{(n)}B=0$ 对充分大的 $n$ 成立。[依据：原书 p.60 式 (2.3-7)--(2.3-8)。][来源：本书 p.60。]}
+% [Tutor Note: 式 (2.3-8) 中 $\binom{m}{n}$ 的 $m$ 是整数（可正可负），必须按下降阶乘 $m(m-1)\cdots(m-n+1)/n!$ 理解，而不是组合数恒等式中的非负整数二项式系数；当 $m\ge0$ 且 $n>m$ 时约定它按同一公式取值（此时分子含零因子为零）。另注意求和是 $n\ge0$ 的“有限和”：对固定 $m$，$A_{(n)}B=0$ 当 $n$ 充分大，因为局部性给出有限的极点阶。]
+
+我们通常按下述方式简化上述引理中的记号：把
+\[
+    \phi(z)\psi(w)=\sum_{i=0}^{N-1}\gamma_i(w)
+    \left(\frac{1}{(z-w)^{i+1}}\right)_{|z|>|w|}
+    +:\!\phi(z)\psi(w)\!:
+\]
+写成
+\[
+    \phi(z)\psi(w)\sim\sum_{i=0}^{N-1}
+    \frac{\gamma_i(w)}{(z-w)^{i+1}}.
+\]
+在物理学文献中，这通常就是写下来的 OPE。我们实质上做的是删去所有在 $z=w$
+处非奇异的项。可以这样做，是因为所有交换关系的结构只依赖奇异项。
+
+% \endgroup 恢复 preamble.tex 中定理环境的默认定义，不影响后续各章。
+\endgroup
