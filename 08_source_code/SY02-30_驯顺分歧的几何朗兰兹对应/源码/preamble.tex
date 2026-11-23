@@ -1,0 +1,265 @@
+% preamble.tex —— 《走向驯顺分歧的几何朗兰兹对应》中译注本 全局导言
+% 编译：xelatex ×2（有索引时 xelatex → makeindex → xelatex ×2）
+\usepackage[a4paper,margin=2.6cm,footskip=1.2cm]{geometry}
+% 页锚放在页边：book 类默认 \marginparwidth=116pt，比 2.6cm 的页边距还宽，
+% marginnote 会被排到纸外；这里把它压到页边距以内（编译自检见 _check*.log 的 Overfull）。
+\setlength{\marginparwidth}{1.9cm}
+\setlength{\marginparsep}{2pt}
+\usepackage{ctex}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{mathrsfs,bbm}
+\usepackage{stmaryrd}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usetikzlibrary{arrows.meta,decorations.pathmorphing,calc}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{booktabs,array,multirow}
+\usepackage{graphicx}
+\usepackage{marginnote}
+\usepackage[unicode,bookmarksnumbered,bookmarksopen=true]{hyperref}
+\usepackage{imakeidx}
+\makeindex[intoc]
+
+% ---------- 译者体例开关：\showyizhufalse 可一键隐藏全部译注 ----------
+\newif\ifshowyizhu
+\showyizhutrue
+
+% ---------- 颜色 ----------
+\definecolor{yizhuGray}{gray}{0.30}
+\definecolor{srcBlue}{RGB}{20,70,140}
+
+% ---------- 译注：\yizhu{内容}{来源} ----------
+% 体例：以脚注形式排，楷体，来源用 [来源：…] 标注；无外部依据写 [译者按（无外部依据）]
+\newcommand{\yizhu}[2]{%
+  \ifshowyizhu
+    \footnote{\textcolor{yizhuGray}{\kaishu #1}\quad{\scriptsize\textcolor{srcBlue}{[来源：#2]}}}%
+  \fi}
+\newcommand{\yizhuw}[1]{%
+  \ifshowyizhu
+    \footnote{\textcolor{yizhuGray}{\kaishu #1}\quad{\scriptsize\textcolor{srcBlue}{[译者按（无外部依据）]}}}%
+  \fi}
+
+% ---------- 原文页码锚点：\srcpage{7} ----------
+% 1) 版式上用 marginnote；2) 同时把页码写进 <jobname>.pagemarks，便于事后核查。
+\newif\ifsrcmark
+\srcmarktrue
+\newwrite\srcpageout
+\immediate\openout\srcpageout=\jobname.pagemarks
+\newcommand{\srcpage}[1]{%
+  \ifsrcmark\immediate\write\srcpageout{#1}\fi
+  \phantomsection\label{srcpage:#1}%
+  \marginnote{\raggedleft\scriptsize\textcolor{yizhuGray}{p.#1}}}
+\newcommand{\pgref}[1]{\textsuperscript{\scriptsize\textcolor{yizhuGray}{[p.#1]}}}
+\newcommand{\srcpageinl}[1]{%
+  \ifsrcmark\immediate\write\srcpageout{#1}\fi
+  \phantomsection\label{srcpage:#1}%
+  \textsuperscript{\tiny\textcolor{yizhuGray}{〔p.#1〕}}}
+
+% ---------- 编号：本文定理编号形如 2.3.1.2（章.节.小节.序号） ----------
+\renewcommand{\thechapter}{\arabic{chapter}}
+\renewcommand{\thesection}{\thechapter.\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
+\numberwithin{equation}{section}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\quad #1}}
+
+% ---------- 定理环境（编号 = 小节号.序号，与原文一致） ----------
+\theoremstyle{plain}
+\newtheorem{theorem}{定理}[subsection]
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{corollary}[theorem]{推论}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{定义}
+\newtheorem{example}[theorem]{例}
+\newtheorem{construction}[theorem]{构造}
+\newtheorem{question}[theorem]{问题}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{注}
+\newtheorem{conjecture}[theorem]{猜想}
+\newtheorem{hope}[theorem]{期望}
+
+% ---------- 常用记号 ----------
+\newcommand{\FF}{\mathbb{F}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\PP}{\mathbb{P}}
+\renewcommand{\AA}{\mathbb{A}}
+\newcommand{\GG}{\mathbb{G}}
+\newcommand{\Gm}{\mathbb{G}_m}
+\newcommand{\Ga}{\mathbb{G}_a}
+\newcommand{\mm}{\mathfrak{m}}
+\newcommand{\pp}{\mathfrak{p}}
+\newcommand{\oo}{\mathcal{O}}
+\newcommand{\Bun}{\mathrm{Bun}}
+% 分层记号：原文以 ° 前缀记开 stratum，以反斜杠前缀记闭 stratum
+\newcommand{\uB}{\underline{B}}
+\DeclareMathOperator{\gr}{gr}
+\newcommand{\pt}{\mathrm{pt}}
+\newcommand{\opn}[1]{{}^{\circ}#1}
+\DeclareMathOperator{\dgr}{deg}
+
+\newcommand{\Div}{\mathrm{Div}}
+\newcommand{\Gr}{\mathrm{Gr}}
+\newcommand{\Fl}{\mathrm{Fl}}
+\newcommand{\Hck}{\mathit{Hecke}}
+\newcommand{\perf}{\mathrm{perf}}
+\newcommand{\Vect}{\mathrm{Vect}}
+\newcommand{\LocSys}{\mathrm{LocSys}}
+\newcommand{\LS}{\mathrm{LS}}
+\newcommand{\Rep}{\mathrm{Rep}}
+\newcommand{\QCoh}{\mathrm{QCoh}}
+\newcommand{\IndCoh}{\mathrm{IndCoh}}
+\newcommand{\Coh}{\mathrm{Coh}}
+\newcommand{\Dmod}{D\text{-}\mathrm{mod}}
+\newcommand{\Whit}{\mathrm{Whit}}
+\newcommand{\Sph}{\mathrm{Sph}}
+\newcommand{\Aff}{\mathrm{Aff}}
+\newcommand{\KL}{\mathrm{KL}}
+\newcommand{\IKL}{\mathrm{IKL}}
+\newcommand{\Sat}{\mathrm{Sat}}
+\newcommand{\CS}{\mathrm{CS}}
+\newcommand{\Poinc}{\mathrm{Poinc}}
+\newcommand{\B}{\mathrm{B}}
+\newcommand{\AB}{\mathrm{AB}}
+\newcommand{\FLE}{\mathrm{FLE}}
+\newcommand{\IFLE}{\mathrm{IFLE}}
+\newcommand{\Op}{\mathrm{Op}}
+\newcommand{\Ran}{\mathrm{Ran}}
+\newcommand{\Conn}{\mathrm{Conn}}
+\newcommand{\Jets}{\mathrm{Jets}}
+\newcommand{\DS}{\mathrm{DS}}
+\newcommand{\Nilp}{\mathrm{Nilp}}% 词尾（Nilp 支撑）
+\newcommand{\Nil}{\mathrm{Nilp}}% 备用
+\newcommand{\FactAlgCat}{\mathrm{FactAlgCat}}
+\newcommand{\FactModCat}{\mathrm{FactModCat}}
+\newcommand{\FactAlg}{\mathrm{FactAlg}}
+\newcommand{\FactMod}{\mathrm{FactMod}}
+\newcommand{\Fact}{\mathrm{Fact}}
+\newcommand{\Shv}{\mathrm{Shv}}
+\newcommand{\ShvCat}{\mathrm{ShvCat}}
+\newcommand{\CrysCat}{\mathrm{CrysCat}}
+\newcommand{\Inertia}{\mathrm{Inertia}}
+\newcommand{\Alg}{\mathrm{Alg}}
+\newcommand{\ModCat}{\mathrm{ModCat}}
+\newcommand{\QLisse}{\mathrm{QLisse}}
+\newcommand{\FactRes}{\mathrm{FactRes}}
+\newcommand{\Facts}{\mathrm{Fact}}
+\newcommand{\Crys}{\mathrm{Crys}}
+\newcommand{\Isoc}{\mathrm{Isoc}}
+% 说明性子标：\Op^{\mer}_{\Gd}
+\newcommand{\mer}{\mathrm{mer}}
+\newcommand{\reg}{\mathrm{reg}}
+\newcommand{\Temp}{\mathrm{Temp}}
+\newcommand{\crit}{\mathrm{crit}}
+\newcommand{\monfree}{\mathrm{mon-free}}
+\newcommand{\temp}{\mathrm{temp}}
+\newcommand{\disj}{\mathrm{disj}}
+\newcommand{\spec}{\mathrm{spec}}
+\newcommand{\co}{\mathrm{co}}
+\newcommand{\ctr}{\mathrm{ctr}}
+\newcommand{\dR}{\mathrm{dR}}
+\newcommand{\admissible}{\mathrm{admissible}}
+\newcommand{\op}{\mathrm{op}}
+% 对偶群与对偶李代数
+\newcommand{\Gd}{\check{G}}
+\newcommand{\Bd}{\check{B}}
+\newcommand{\Td}{\check{T}}
+\newcommand{\Md}{\check{M}}
+\newcommand{\Nd}{\check{N}}
+\newcommand{\Ndote}{\check{\dot{N}}}
+\newcommand{\Gde}{\check{\dot{G}}}
+\newcommand{\gd}{\check{\mathfrak{g}}}
+\newcommand{\bd}{\check{\mathfrak{b}}}
+\newcommand{\nd}{\check{\mathfrak{n}}}
+\newcommand{\td}{\check{\mathfrak{t}}}
+\newcommand{\frg}{\mathfrak{g}}
+\newcommand{\frb}{\mathfrak{b}}
+\newcommand{\frn}{\mathfrak{n}}
+\newcommand{\frp}{\mathfrak{p}}
+\newcommand{\frt}{\mathfrak{t}}
+\newcommand{\frm}{\mathfrak{m}}
+\newcommand{\Lam}{\Lambda}
+\newcommand{\Lamd}{\check{\Lambda}}
+\newcommand{\Oc}{\mathcal{O}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cE}{\mathcal{E}}
+% 花体字母宏：\cA–\cZ 之外的按需（避免与上面冲突，这里不再批量定义）
+\newcommand{\wt}[1]{\widetilde{#1}}
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\ul}[1]{\underline{#1}}
+\newcommand{\chr}[1]{\check{#1}}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\Tor}{Tor}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\coker}{coker}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Pic}{Pic}
+\DeclareMathOperator{\Lie}{Lie}
+\DeclareMathOperator{\Sym}{Sym}
+\DeclareMathOperator{\Ind}{Ind}
+\DeclareMathOperator{\Res}{Res}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\Proj}{Proj}
+\DeclareMathOperator{\Spf}{Spf}
+\DeclareMathOperator{\Isom}{Isom}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\HN}{HN}
+\DeclareMathOperator{\Maps}{Maps}
+\DeclareMathOperator{\Fun}{Fun}
+\DeclareMathOperator{\Functs}{Functs}
+\DeclareMathOperator{\Funexact}{Fun}
+\DeclareMathOperator{\Sect}{Sect}
+\DeclareMathOperator{\ev}{ev}
+\DeclareMathOperator*{\colim}{colim}
+\DeclareMathOperator{\imf}{im}
+\DeclareMathOperator{\Grass}{Gr}
+\DeclareMathOperator{\Loc}{Loc}
+\DeclareMathOperator{\oblv}{oblv}
+\DeclareMathOperator{\ind}{ind}
+\newcommand{\DGCat}{\mathrm{DGCat}}
+\newcommand{\DGSch}{\mathrm{DGSch}}
+
+\DeclareMathOperator{\cores}{cores}
+\DeclareMathOperator{\coact}{coact}
+\DeclareMathOperator{\act}{act}
+\DeclareMathOperator{\Fib}{Fib}
+\DeclareMathOperator{\Tot}{Tot}
+\DeclareMathOperator{\St}{St}
+\newcommand{\Lang}{\mathbb{L}}% 原文的 Langlands 函子 𝕃
+\newcommand{\Ql}{\ol{\QQ}_\ell}
+
+% 交叉引用
+% 行宽调节：中文长段落 + 长公式易出 Overfull
+\tolerance=3000
+\emergencystretch=4em
+\hbadness=10000
+
+\newcommand{\thmref}[1]{定理~\ref{#1}}
+\newcommand{\propref}[1]{命题~\ref{#1}}
+\newcommand{\lemref}[1]{引理~\ref{#1}}
+\newcommand{\defref}[1]{定义~\ref{#1}}
+\newcommand{\remref}[1]{注~\ref{#1}}
+\newcommand{\secref}[1]{§\ref{#1}}
