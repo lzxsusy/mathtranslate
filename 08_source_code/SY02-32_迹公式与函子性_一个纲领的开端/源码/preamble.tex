@@ -1,0 +1,152 @@
+% preamble.tex —— 《迹公式与函子性：一个纲领的开端》中译注本 全局导言
+% 编译：xelatex ×2（有索引时 xelatex → makeindex → xelatex ×2）
+\usepackage[a4paper,margin=2.6cm,footskip=1.2cm]{geometry}
+% 页锚放在页边：book 类默认 \marginparwidth=116pt，比 2.6cm 的页边距还宽，
+% marginnote 会被排到纸外；这里把它压到页边距以内。
+\setlength{\marginparwidth}{1.9cm}
+\setlength{\marginparsep}{2pt}
+% 中西文混排 + 长公式常造成 overfull，放宽断行
+\setlength{\emergencystretch}{3em}
+\tolerance=2500
+\usepackage{ctex}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{mathrsfs,bbm}
+\usepackage{stmaryrd}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usetikzlibrary{arrows.meta,decorations.pathmorphing,calc}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{booktabs,array,multirow}
+\usepackage{graphicx}
+\usepackage{marginnote}
+\usepackage[unicode,bookmarksnumbered,bookmarksopen=true]{hyperref}
+\usepackage{imakeidx}
+\makeindex[intoc]
+
+% ---------- 译者体例开关：\showyizhufalse 可一键隐藏全部译注 ----------
+\newif\ifshowyizhu
+\showyizhutrue
+
+% ---------- 颜色 ----------
+\definecolor{yizhuGray}{gray}{0.30}
+\definecolor{srcBlue}{RGB}{20,70,140}
+
+% ---------- 译注：\yizhu{内容}{来源} ----------
+% 体例：以脚注形式排，楷体，来源用 [来源：…] 标注；无外部依据写 [译者按（无依据）]
+\newcommand{\yizhu}[2]{%
+  \ifshowyizhu
+    \footnote{\textcolor{yizhuGray}{\kaishu #1}\quad{\scriptsize\textcolor{srcBlue}{[来源：#2]}}}%
+  \fi}
+\newcommand{\yizhuw}[1]{%
+  \ifshowyizhu
+    \footnote{\textcolor{yizhuGray}{\kaishu #1}\quad{\scriptsize\textcolor{srcBlue}{[译者按（无外部依据）]}}}%
+  \fi}
+
+% ---------- 原文页码锚点：\srcpage{7} ----------
+\newif\ifsrcmark
+\srcmarktrue
+\newwrite\srcpageout
+\immediate\openout\srcpageout=\jobname.pagemarks
+\newcommand{\srcpage}[1]{%
+  \ifsrcmark\immediate\write\srcpageout{#1}\fi
+  \phantomsection
+  \marginnote{\raggedleft\scriptsize\textcolor{yizhuGray}{p.#1}}}
+% 无 margin 的精简版（用于窄页/表格内）：\pgref{N}
+\newcommand{\pgref}[1]{\textsuperscript{\scriptsize\textcolor{yizhuGray}{[p.#1]}}}
+% 页界落在句子中间时用这个：行内小号上标，保证不会被排版吞掉
+\newcommand{\srcpageinl}[1]{%
+  \ifsrcmark\immediate\write\srcpageout{#1}\fi
+  \phantomsection
+  \textsuperscript{\tiny\textcolor{yizhuGray}{〔p.#1〕}}}
+
+% ---------- 编号：单篇论文，节号从 1 起 ----------
+\renewcommand{\sectionmark}[1]{\markright{\thesection\quad #1}}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\thesection.\arabic{subsection}.\arabic{subsubsection}}
+
+% ---------- 定理环境：编号按「节.序」，与原文 Lemme 2.6、Proposition 3.29 对齐 ----------
+\theoremstyle{plain}
+\newtheorem{theorem}{定理}[section]
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{corollary}[theorem]{推论}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{定义}
+\newtheorem{example}[theorem]{例}
+\newtheorem{conjecture}[theorem]{猜想}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{注}
+
+% ---------- 常用记号 ----------
+\newcommand{\FF}{\mathbb{F}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\PP}{\mathbb{P}}
+\renewcommand{\AA}{\mathbb{A}}% 覆盖 Å
+\newcommand{\GG}{\mathbb{G}}
+\newcommand{\oo}{\mathcal{O}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\Bun}{\mathrm{Bun}}
+\newcommand{\Hck}{\mathrm{Hecke}}
+\newcommand{\Hecke}{\mathrm{Hecke}}
+\newcommand{\shF}{\mathcal F}
+
+
+\newcommand{\Orb}{\mathrm{Orb}}
+\newcommand{\Rep}{\mathrm{Rep}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\SL}{\mathrm{SL}}
+\newcommand{\Gal}{\mathrm{Gal}}
+\newcommand{\Frob}{\mathrm{Frob}}
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\Aut}{\operatorname{Aut}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\Sym}{\operatorname{Sym}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\rk}{\operatorname{rk}}
+\newcommand{\Lie}{\operatorname{Lie}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\coker}{\operatorname{coker}}
+\newcommand{\divi}{\operatorname{div}}
+\newcommand{\res}{\operatorname{res}}
+\newcommand{\nrd}{N}
+\newcommand{\Ql}{\overline{\QQ}_\ell}
+\newcommand{\LG}{{}^{L}G}
+\newcommand{\LH}{{}^{L}H}
+\newcommand{\lamG}{{}^{\lambda}G}
+\newcommand{\lamH}{{}^{\lambda}H}
+\newcommand{\lamGphi}{{}^{\lambda}G_{\varphi}}
+\newcommand{\lamHpi}{{}^{\lambda}H_{\pi}}
+\newcommand{\wt}[1]{\widetilde{#1}}
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\ul}[1]{\underline{#1}}
+\newcommand{\p}{\mathfrak{p}}
+\newcommand{\g}{\mathfrak{g}}
+\newcommand{\sG}{\boldsymbol{G}}
+\DeclareMathOperator{\tam}{tam}
+\DeclareMathOperator{\meas}{meas}
+\DeclareMathOperator{\cnd}{cnd}
+
+% 交叉引用
+\newcommand{\thmref}[1]{定理~\ref{#1}}
+\newcommand{\propref}[1]{命题~\ref{#1}}
+\newcommand{\lemref}[1]{引理~\ref{#1}}
+\newcommand{\defref}[1]{定义~\ref{#1}}
+\newcommand{\remref}[1]{注~\ref{#1}}
