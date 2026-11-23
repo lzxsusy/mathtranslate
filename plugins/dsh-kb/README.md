@@ -19,17 +19,17 @@
 
 ```powershell
 # 一条命令（从数译仓库直接装）
-dsh plugin --profile desktop add https://atomgit.com/api/v5/repos/lzxSUSUY/mathtranslate/raw/plugins/dsh-kb-0.3.2.tgz
+dsh plugin --profile desktop add https://atomgit.com/api/v5/repos/lzxSUSUY/mathtranslate/raw/plugins/dsh-kb-0.3.3.tgz
 ```
 
 或在 DSH 会话里：
 
 ```
 plugin_manager({ action: "install_bundle",
-                 target: "https://atomgit.com/api/v5/repos/lzxSUSUY/mathtranslate/raw/plugins/dsh-kb-0.3.2.tgz" })
+                 target: "https://atomgit.com/api/v5/repos/lzxSUSUY/mathtranslate/raw/plugins/dsh-kb-0.3.3.tgz" })
 ```
 
-本地 tarball：`install_bundle({ target: "file:C:/…/dsh-kb-0.3.2.tgz" })`。
+本地 tarball：`install_bundle({ target: "file:C:/…/dsh-kb-0.3.3.tgz" })`。
 装完重启 DSH 桌面端，工具出现在会话里。
 
 ## 五个工具

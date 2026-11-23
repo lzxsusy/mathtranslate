@@ -11,20 +11,20 @@
 **① 直接给 DSH 一条命令（推荐，最快）**
 
 ```powershell
-dsh plugin --profile desktop add https://atomgit.com/api/v5/repos/lzxSUSUY/mathtranslate/raw/plugins/dsh-kb-0.3.2.tgz
+dsh plugin --profile desktop add https://atomgit.com/api/v5/repos/lzxSUSUY/mathtranslate/raw/plugins/dsh-kb-0.3.3.tgz
 ```
 
 或在 DSH 会话里让我装：
 
 ```
 plugin_manager({ action: "install_bundle",
-                 target: "https://atomgit.com/api/v5/repos/lzxSUSUY/mathtranslate/raw/plugins/dsh-kb-0.3.2.tgz" })
+                 target: "https://atomgit.com/api/v5/repos/lzxSUSUY/mathtranslate/raw/plugins/dsh-kb-0.3.3.tgz" })
 ```
 
-**② 从本地 tarball 装**（已下载 `dsh-kb-0.3.2.tgz` 时）
+**② 从本地 tarball 装**（已下载 `dsh-kb-0.3.3.tgz` 时）
 
 ```
-plugin_manager({ action: "install_bundle", target: "file:C:/path/to/dsh-kb-0.3.2.tgz" })
+plugin_manager({ action: "install_bundle", target: "file:C:/path/to/dsh-kb-0.3.3.tgz" })
 ```
 
 **③ 从源码目录装**（想改代码）

@@ -156,7 +156,7 @@ const srcLine = (card) => {
   if (!s.length) return "";
   const first = s[0];
   const grade = first?.grade ? `[${first.grade}] ` : "";
-  const text = String(first?.text ?? first ?? "").replace(/\s+/g, " ").slice(0, 140);
+  const text = String(first?.text ?? first?.ref ?? first ?? "").replace(/\s+/g, " ").slice(0, 140);
   return `\n   来源：${grade}${text}`;
 };
 
@@ -249,7 +249,7 @@ function renderCard(card, config) {
   if (Array.isArray(card.sources) && card.sources.length) {
     lines.push("", "来源:");
     for (const s of card.sources.slice(0, 8)) {
-      lines.push(`  · ${s?.grade ? `[${s.grade}] ` : ""}${String(s?.text ?? s).slice(0, 200)}`);
+      lines.push(`  · ${s?.grade ? `[${s.grade}] ` : ""}${String(s?.text ?? s?.ref ?? s).slice(0, 200)}`);
     }
   }
   if (card.evidence_quote) lines.push("", `证据引文：${String(card.evidence_quote).slice(0, 220)}`);
