@@ -61,5 +61,6 @@
   `PYTHONIOENCODING=utf-8 python 工程文件/tools/render_pages.py 3-10 --dpi 150`。
 - 资料卡质检：`python 资料卡/tools/lint_cards.py 资料卡/cards --prefix sy29 --max-pages 46`、
   `python 资料卡/tools/verify_quotes.py 资料卡/cards --root . --strict`。
-  注意 `verify_quotes.py` 硬性要求工程根存在 `01_pages/`（真正读的是 `工程文件/work/src/`），
-  故保留一个空的 `01_pages/` 标记目录。
+  注意 `verify_quotes.py` 原先硬性要求工程根存在 `01_pages/`（真正读的是
+  `工程文件/work/src/`）。后改为 `_has_pages(root)`：`01_pages/` 或 `工程文件/work/src/`
+  任一存在即可，故空的 `01_pages/` 标记目录已删；两套目录都按 COMPLIANCE L4 不入仓。
