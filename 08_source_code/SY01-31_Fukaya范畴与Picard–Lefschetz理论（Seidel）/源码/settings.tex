@@ -1,0 +1,135 @@
+\counterwithout{section}{chapter}
+\setcounter{tocdepth}{1}
+\setcounter{secnumdepth}{2}
+\hypersetup{bookmarksdepth=2,pdftitle={Fukaya 范畴与 Picard–Lefschetz 理论},pdfauthor={Paul Seidel}}
+\renewcommand{\thechapter}{\Roman{chapter}}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{(\arabic{section}\alph{subsection})}
+\counterwithout{equation}{chapter}
+\counterwithin{equation}{section}
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
+\makeatletter
+% Place page destinations in the shipout foreground so figures cannot discard them.
+\let\Hy@EveryPageAnchor\relax
+\AddToHook{shipout/foreground}{%
+  \ifHy@pageanchor
+    \xdef\@currentHpage{page.\thepage}%
+    \put(0,-18){\hyper@anchorstart{page.\thepage}\hyper@anchorend}%
+  \fi
+}
+\renewcommand{\theELEGANT@samecnt}{\thesection.\arabic{ELEGANT@samecnt}}
+\AtBeginEnvironment{note}{\refstepcounter{ELEGANT@samecnt}}
+\renewcommand{\notename}{笔记~\theELEGANT@samecnt}
+\AtBeginEnvironment{assumption}{\refstepcounter{ELEGANT@samecnt}}
+\renewcommand{\assumptionname}{假设~\theELEGANT@samecnt}
+\AtBeginEnvironment{example}{\stepcounter{ELEGANT@samecnt}}
+\AtBeginEnvironment{exercise}{\stepcounter{ELEGANT@samecnt}}
+\AtBeginEnvironment{problem}{\stepcounter{ELEGANT@samecnt}}
+\renewcommand{\theexam}{\theELEGANT@samecnt}
+\renewcommand{\theexer}{\theELEGANT@samecnt}
+\renewcommand{\theprob}{\theELEGANT@samecnt}
+\newcommand{\StatementNumber}[1]{\setcounter{ELEGANT@samecnt}{\numexpr#1-1\relax}}
+\makeatother
+\newcommand{\SourcePage}[1]{\phantomsection\label{source:#1}\ignorespaces}
+\newcommand{\sr}[2]{\hyperref[#1]{#2}}
+\newcommand{\secref}[1]{\hyperref[sec:#1]{小节~(#1)}}
+\newcommand{\stref}[2]{\hyperref[st:#2]{#1~#2}}
+\newcommand{\eref}[1]{\hyperref[eq:#1]{(#1)}}
+\newcommand{\bcite}[1]{[\hyperlink{bib:#1}{#1}]}
+\newcounter{citetag}
+\ExplSyntaxOn
+\cs_new_protected:Npn \book_cite:n #1
+  {
+    \stepcounter{citetag}
+    \phantomsection\label{cite:\arabic{citetag}}
+    \clist_if_exist:cF {g_book_bib_#1_clist}{\clist_new:c {g_book_bib_#1_clist}}
+    \clist_gput_right:cx {g_book_bib_#1_clist}{cite:\arabic{citetag}}
+    [\hyperlink{bib:#1}{#1}]
+  }
+\cs_new_protected:Npn \book_backref:n #1
+  {
+    \group_begin:
+    \seq_clear:N \l_tmpa_seq
+    \clist_if_exist:cT {g_book_bib_#1_clist}
+      {
+        \clist_map_inline:cn {g_book_bib_#1_clist}
+          {
+            \tl_set:Nx \l_tmpa_tl {\getpagerefnumber{##1}}
+            \exp_args:NNV \seq_if_in:NnF \l_tmpa_seq \l_tmpa_tl
+              {
+                \seq_put_right:NV \l_tmpa_seq \l_tmpa_tl
+                \allowbreak\enspace\hyperref[##1]{\pageref*{##1}}
+              }
+          }
+      }
+    \group_end:
+  }
+\renewcommand{\bcite}[1]{\book_cite:n{#1}}
+\newcommand{\BibBackref}[1]{{\footnotesize\book_backref:n{#1}}}
+\ExplSyntaxOff
+\newcommand{\Ai}{A_\infty}
+\newcommand{\A}{\mathcal A}
+\newcommand{\B}{\mathcal B}
+\newcommand{\C}{\mathcal C}
+\newcommand{\F}{\mathcal F}
+\newcommand{\G}{\mathcal G}
+\newcommand{\M}{\mathcal M}
+\newcommand{\N}{\mathcal N}
+\newcommand{\Y}{\mathcal Y}
+\newcommand{\LG}{\mathcal L}
+\newcommand{\RG}{\mathcal R}
+\newcommand{\sgnmark}{\maltese}
+\newcommand{\Q}{\mathcal Q}
+\newcommand{\K}{\mathbb K}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\R}{\mathbb R}
+\newcommand{\CC}{\mathbb C}
+\DeclareMathOperator{\Ob}{Ob}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Tw}{Tw}
+\DeclareMathOperator{\Cone}{Cone}
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\HH}{HH}
+\DeclareMathOperator{\End}{End}
+\newcommand{\nufun}{\operatorname{nu\text{-}fun}}
+\newcommand{\modcat}{\operatorname{mod}}
+\newcommand{\Ch}{\operatorname{Ch}}
+\newcommand{\dg}{\mathrm{dg}}
+\newcommand{\CP}{\mathbb{CP}}
+\newcommand{\RP}{\mathbb{RP}}
+\newcommand{\br}{\sharp}
+\newcommand{\eps}{\epsilon}
+\newcommand{\ACone}{\mathcal C\!\mathit{one}}
+\newcommand{\ModShift}{\mathit{SS}}
+\setCJKfamilyfont{zhkai}[BoldFont=SimHei,ItalicFont=KaiTi,BoldItalicFont=SimHei]{KaiTi}
+\setCJKfamilyfont{zhfs}[BoldFont=SimHei,ItalicFont=FangSong,BoldItalicFont=SimHei]{FangSong}
+\allowdisplaybreaks[2]
+\emergencystretch=2em
+\usepackage{float}
+\newcommand{\SourceDiagram}[2]{\begin{figure}[H]\centering\includegraphics[width=#2\paperwidth]{images/#1.pdf}\end{figure}}
+\newcommand{\SourceEquationDiagram}[3]{\begin{figure}[H]\begin{equation}\label{eq:#3}\includegraphics[width=#2\paperwidth]{images/#1.pdf}\end{equation}\end{figure}}
+
+\counterwithout{figure}{chapter}
+\counterwithin{figure}{section}
+\renewcommand{\thefigure}{\thesection.\arabic{figure}}
+\newcommand{\SourceFigure}[3]{\begin{figure}[H]\centering\includegraphics[width=#2\paperwidth]{images/#1.pdf}\caption{}\label{fig:#3}\end{figure}}
+
+\newcommand{\Efamily}{\widetilde{\mathcal E}}
+\newcommand{\Sfamily}{\widetilde{\mathcal S}}
+
+% ---- 译者注体例（2026-11 校订版）----
+\newif\ifshownotes
+\shownotestrue
+\newcommand{\znote}[2]{\ifshownotes\latexendnote{\textbf{【原书 p.~#1】}\ #2}\fi}
+\renewcommand{\notesname}{译者注}
+\renewcommand{\enoteformat}{%
+  \rightskip=0pt \leftskip=3.0em \parindent=-3.0em \parskip=4pt plus 1pt
+  \leavevmode\makebox[3.0em][l]{\normalfont\bfseries\theenmark.}\ignorespaces}
+\renewcommand{\enoteheading}{%
+  \cleardoublepage
+  \chapter*{译者注}%
+  \markboth{译者注}{译者注}%
+  \addcontentsline{toc}{chapter}{译者注}%
+  \noindent\small 本附录汇集全书译者注。方括号内为原书页码；每条注末给出依据或来源。}%
