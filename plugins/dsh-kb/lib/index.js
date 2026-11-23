@@ -16,10 +16,22 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { buildIndex, cardById, crossBook, dataStamp, loadCards, search, worksOf, STATUS_W } from "./engine.js";
+import {
+  bestPageFor,
+  buildSourceIndex,
+  existsDir,
+  loadSourceRows,
+  pageContext,
+  pkgList,
+  searchSource,
+  sourceStamp,
+  sourceStats,
+} from "./source.js";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const PKG_ROOT = resolve(HERE, "..");
 const BUNDLED_DATA = join(PKG_ROOT, "data", "cards");
+const BUNDLED_SRC = join(PKG_ROOT, "data", "src");
 
 export const name = "dsh-kb";
 export const inject = ["tools"];
@@ -56,6 +68,29 @@ function dataDirOf(config) {
 
 /** 索引缓存：按数据目录 mtime 失效（换库/更新数据后自动重建） */
 let cache = { key: "", idx: null };
+
+/** 原文层数据目录：外部仓库优先 01_corpus_src，否则用包内 data/src */
+function srcDirOf(config) {
+  if (config.repo) {
+    const p = join(config.repo, "01_corpus_src");
+    if (existsDir(p)) return { dir: p, source: "repo" };
+  }
+  if (existsDir(BUNDLED_SRC)) return { dir: BUNDLED_SRC, source: "bundled" };
+  return { dir: null, source: "missing" };
+}
+
+let srcCache = { key: "", idx: null };
+
+function getSourceIndex(config) {
+  const { dir, source } = srcDirOf(config);
+  if (!dir) return { idx: null, dir: null, source: "missing", stamp: null };
+  const stamp = sourceStamp(dir);
+  const key = `${dir}|${stamp?.mtime ?? 0}|${stamp?.files ?? 0}`;
+  if (srcCache.key !== key) {
+    srcCache = { key, idx: buildSourceIndex(loadSourceRows(dir)) };
+  }
+  return { idx: srcCache.idx, dir, source, stamp };
+}
 
 function getIndex(config) {
   const { dir, source, repo } = dataDirOf(config);
@@ -112,6 +147,42 @@ function renderHits(items) {
     .join("\n\n");
 }
 
+const LANG_LABEL = { en: "英文", ja: "日文", zh: "中文", other: "其它" };
+
+function renderSourceHits(items) {
+  if (!items.length)
+    return "（原文层没有命中。原文段落是底本逐字文本，换个更贴近原文的说法试试——比如把中文术语换成英文/日文写法。）";
+  return items
+    .map(({ row, snippet: sn }, i) => {
+      const page = row.page != null ? `p.${row.page}` : "无页码";
+      return (
+        `[${i + 1}] ${row.pkg} · ${page} · 原文(${LANG_LABEL[row.lang] ?? row.lang})` +
+        `\n   ${sn}` +
+        `\n   → 读整页上下文：kb_source(pkg="${row.pkg}", page=${row.page ?? 1})`
+      );
+    })
+    .join("\n\n");
+}
+
+function renderSourcePage(ctx, config) {
+  if (!ctx) return "没有这一段（检查 pkg 与 page）。";
+  const head = `# ${ctx.pkg} · p.${ctx.page} 原文`;
+  const body = ctx.rows
+    .map((r) => {
+      const mark = r.page === ctx.page ? "▍" : " ";
+      const page = r.page != null ? `p.${r.page}` : "—";
+      const text = String(r.text).replace(/\s+\n/g, "\n").trim();
+      return `${mark} [${page}] ${text}`;
+    })
+    .join("\n\n");
+  const tail = [
+    "",
+    "—— 以上是底本原文（本库不发布原文 PDF，只放已公开的抽文）。",
+    "卡片层对着同一件事可能有更省事的说法：kb_search(query=…, layer=\"cards\")。",
+  ].join("\n");
+  return `${head}\n\n${body}\n${tail}`;
+}
+
 function renderCard(card, config) {
   const lines = [
     `${card.title}${card.title_en ? `  /  ${card.title_en}` : ""}`,
@@ -165,16 +236,21 @@ export function apply(ctx, rawConfig) {
 
   const searchTool = {
     name: "kb_search",
-    description: "检索数译知识库（已译数学文献的结构化资料卡）。" + CONTRACT,
+    description:
+      "检索数译知识库：默认查资料卡（structure 化、带页码与可信度）；也可以查原文层（底本逐字文本，覆盖卡片还没做到的部分）。" +
+      "layer=cards 只查卡片，layer=source 只查原文，layer=both 两层都给。" +
+      CONTRACT,
     parameters: {
       type: "object",
       properties: {
         query: { type: "string", description: '关键词或术语，可中英混写（例："Hecke 特征层"、"Gromov-Witten"、"仿射 Grassmann"）。按空白分词，全部词都要命中。' },
+        layer: { type: "string", description: '查哪一层：cards（默认，资料卡）/ source（原文段落）/ both（两层都查）' },
         kind: { type: "string", description: "只查某一类卡：concept/theorem/proof/chain/example/term/errata/alignment/work/note" },
         work: { type: "string", description: "只查某一部作品，如 SY02-14 / glc / bdh" },
         level: { type: "string", description: "只查某一深度层：L0 名词 / L1 定义 / L2 定理 / L3 证明骨架 / L4 跨书论证链" },
-        include_draft: { type: "boolean", description: "是否包含未复核卡片（default false）。返回里会标“未复核”。" },
-        limit: { type: "number", description: "返回条数上限，默认 6，最大 20" },
+        lang: { type: "string", description: "原文层限定语种：en / ja / zh / other" },
+        include_draft: { type: "boolean", description: "卡片层是否包含未复核卡片（default false）。返回里会标“未复核”。" },
+        limit: { type: "number", description: "每层返回条数上限，默认 6，最大 20" },
       },
       required: ["query"],
     },
@@ -183,16 +259,78 @@ export function apply(ctx, rawConfig) {
     execute(args = {}) {
       const q = String(args.query ?? "").trim();
       if (!q) return { ok: false, text: "query 不能为空。" };
+      const layer = ["cards", "source", "both"].includes(String(args.layer ?? "")) ? String(args.layer) : "cards";
+      const limit = Math.min(Math.max(Number(args.limit) || 6, 1), 20);
       return guarded(() => {
-        const { idx } = getIndex(config);
-        const items = search(idx, q, {
-          kind: args.kind,
-          work: args.work,
-          level: args.level,
-          include_draft: !!args.include_draft,
-          limit: Math.min(Math.max(Number(args.limit) || 6, 1), 20),
-        });
-        return renderHits(items);
+        const parts = [];
+        if (layer === "cards" || layer === "both") {
+          const { idx } = getIndex(config);
+          const items = search(idx, q, {
+            kind: args.kind,
+            work: args.work,
+            level: args.level,
+            include_draft: !!args.include_draft,
+            limit,
+          });
+          parts.push(
+            layer === "both" ? `## 资料卡层（结构化结论，带页码与可信度）\n\n${renderHits(items)}` : renderHits(items),
+          );
+        }
+        if (layer === "source" || layer === "both") {
+          const { idx: sidx } = getSourceIndex(config);
+          if (!sidx) parts.push("原文层数据缺失（包内 data/src 没有，也没找到 repo/01_corpus_src）。");
+          else {
+            const items = searchSource(sidx, q, {
+              lang: args.lang,
+              pkg: args.work && sidx.byPkg.has(String(args.work)) ? String(args.work) : undefined,
+              limit,
+            });
+            parts.push(
+              layer === "both"
+                ? `## 原文层（底本逐字文本，卡片没覆盖的地方看这里）\n\n${renderSourceHits(items)}`
+                : renderSourceHits(items),
+            );
+          }
+        }
+        return parts.join("\n\n");
+      });
+    },
+  };
+
+  const sourceTool = {
+    name: "kb_source",
+    description:
+      "读底本原文的整页上下文（默认前后各 2 段）。资料卡说“某书 p.12 讲了 X”时，用这个把那一页原文调出来自己核一遍；" +
+      "也可以只给 pkg + query，会自动找最相关的一页。只覆盖仓库已公开的原文抽文（不是全书）。",
+    parameters: {
+      type: "object",
+      properties: {
+        pkg: { type: "string", description: "工程/作品编号，如 SY02-15、SEM-9407087（用 kb_search layer=source 找）" },
+        page: { type: "number", description: "页码（底本 PDF 页）。省略时按 query 自动选页" },
+        query: { type: "string", description: "只给 pkg 时用来定位最相关页面的关键词" },
+        around: { type: "number", description: "上下文段数，默认 2，最大 6" },
+      },
+      required: ["pkg"],
+    },
+    output: { schema: outSchema, render: renderText },
+    timeoutMs: 15000,
+    execute(args = {}) {
+      const pkg = String(args.pkg ?? "").trim();
+      if (!pkg) return { ok: false, text: "pkg 不能为空。" };
+      const around = Math.min(Math.max(Number(args.around) || 2, 0), 6);
+      return guarded(() => {
+        const { idx: sidx, source } = getSourceIndex(config);
+        if (!sidx) return "原文层数据缺失（包内 data/src 没有，也没找到 repo/01_corpus_src）。";
+        if (!sidx.byPkg.has(pkg)) {
+          const have = pkgList(sidx);
+          return `原文层没有工程 ${pkg}。目前有原文的 ${have.length} 个工程：${have.join(", ")}`;
+        }
+        const page = Number.isFinite(Number(args.page))
+          ? Number(args.page)
+          : bestPageFor(sidx, pkg, String(args.query ?? ""));
+        const ctx = pageContext(sidx, pkg, page, around);
+        if (!ctx) return `${pkg} 没有 p.${page} 这一段。`;
+        return renderSourcePage(ctx, config);
       });
     },
   };
@@ -319,12 +457,38 @@ export function apply(ctx, rawConfig) {
         ];
         const drafts = cards.filter((c) => c.status === "draft").length;
         if (drafts) lines.push("", `未复核（draft）：${drafts} 张 —— 默认不会被检索到，需 include_draft。`);
+
+        // 原文层
+        const { idx: sidx, dir: sdir, source: ssource } = getSourceIndex(config);
+        if (sidx) {
+          const st = sourceStats(sidx);
+          const langs = [...st.langs.entries()]
+            .sort((a, b) => b[1] - a[1])
+            .map(([k, v]) => `${LANG_LABEL[k] ?? k} ${v}`)
+            .join(" · ");
+          lines.push(
+            "",
+            "== 原文层（底本逐字文本）==",
+            `来源：${ssource === "bundled" ? "包内自带数据（data/src）" : `外部仓库 ${sdir}`}`,
+            `共 ${st.total} 段 / ${st.pkgs.size} 个工程 / ${(st.chars / 1e6).toFixed(1)}M 字符 · ${langs}`,
+            "检索：kb_search(layer=\"source\") / 读页：kb_source(pkg, page)",
+            "",
+            "原文段落最多的 10 个工程：",
+            ...[...st.pkgs.entries()]
+              .sort((a, b) => b[1].paras - a[1].paras)
+              .slice(0, 10)
+              .map(([p, e]) => `  ${String(p).padEnd(14)} ${String(e.paras).padStart(5)} 段 · ${e.pages.size} 页`),
+          );
+        } else {
+          lines.push("", "== 原文层 ==", "未安装原文数据（包内 data/src 缺失）。卡片层不受影响。");
+        }
         return lines.join("\n");
       });
     },
   };
 
   ctx.effect(() => ctx.tools.register(searchTool), "dsh-kb: tool kb_search");
+  ctx.effect(() => ctx.tools.register(sourceTool), "dsh-kb: tool kb_source");
   ctx.effect(() => ctx.tools.register(cardTool), "dsh-kb: tool kb_card");
   ctx.effect(() => ctx.tools.register(briefTool), "dsh-kb: tool kb_brief");
   ctx.effect(() => ctx.tools.register(statsTool), "dsh-kb: tool kb_stats");

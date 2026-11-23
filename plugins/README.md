@@ -1,28 +1,29 @@
 # plugins/ — dsh-kb 插件分发
 
 `dsh-kb` 是本仓库的配套插件：**把 kb/ 里的资料卡变成 agent 能直接检索的工具**。
-包内自带数据（`data/cards/*.jsonl`，1,250 张卡 / 45 部作品），装好即查，不需要 clone 本仓库，
-不需要 Python、不需要 SQLite、不需要配置任何路径。
+包内自带两层数据：`data/cards/*.jsonl`（1,250 张卡 / 45 部作品）与
+`data/src/src_paragraphs.jsonl.gz`（7,644 段底本原文抽文 / 33 个工程）。装好即查，
+不需要 clone 本仓库，不需要 Python、不需要 SQLite、不需要配置任何路径。
 
 ## 安装（三种方式，任选其一）
 
 **① 直接给 DSH 一条命令（推荐，最快）**
 
 ```powershell
-dsh plugin --profile desktop add https://atomgit.com/api/v5/repos/lzxSUSUY/mathtranslate/raw/plugins/dsh-kb-0.2.1.tgz
+dsh plugin --profile desktop add https://atomgit.com/api/v5/repos/lzxSUSUY/mathtranslate/raw/plugins/dsh-kb-0.3.0.tgz
 ```
 
 或在 DSH 会话里让我装：
 
 ```
 plugin_manager({ action: "install_bundle",
-                 target: "https://atomgit.com/api/v5/repos/lzxSUSUY/mathtranslate/raw/plugins/dsh-kb-0.2.1.tgz" })
+                 target: "https://atomgit.com/api/v5/repos/lzxSUSUY/mathtranslate/raw/plugins/dsh-kb-0.3.0.tgz" })
 ```
 
-**② 从本地 tarball 装**（已下载 `dsh-kb-0.2.1.tgz` 时）
+**② 从本地 tarball 装**（已下载 `dsh-kb-0.3.0.tgz` 时）
 
 ```
-plugin_manager({ action: "install_bundle", target: "file:C:/path/to/dsh-kb-0.2.1.tgz" })
+plugin_manager({ action: "install_bundle", target: "file:C:/path/to/dsh-kb-0.3.0.tgz" })
 ```
 
 **③ 从源码目录装**（想改代码）
@@ -31,7 +32,8 @@ plugin_manager({ action: "install_bundle", target: "file:C:/path/to/dsh-kb-0.2.1
 plugin_manager({ action: "install_bundle", target: "file:C:/path/to/dsh-kb" })
 ```
 
-装完重启 DSH 桌面端，会话里会出现 4 个工具：`kb_search` / `kb_card` / `kb_brief` / `kb_stats`。
+装完重启 DSH 桌面端，会话里会出现 5 个工具：
+`kb_search`（`layer=cards|source|both`）/ `kb_source` / `kb_card` / `kb_brief` / `kb_stats`。
 
 ## 挂到自己的数据（可选）
 
@@ -60,6 +62,7 @@ $env:DSHM_REGISTRY_URL = "https://atomgit.com/api/v5/repos/lzxSUSUY/mathtranslat
 
 | 版本 | 变化 |
 |---|---|
+| 0.3.0 | 新增**原文层**：`kb_search(layer=source/both)` + `kb_source(pkg,page)`，随包 7,644 段原文抽文（33 个工程，2.2 MB gz） |
 | 0.2.1 | 数据随包（1,250 卡）、纯 JS 检索、零配置；新增中文 bigram 检索（两个字的中文词也能查） |
 | 0.1.0 | 首个版本：调用仓库里的 Python + SQLite FTS5 |
 
@@ -68,3 +71,4 @@ $env:DSHM_REGISTRY_URL = "https://atomgit.com/api/v5/repos/lzxSUSUY/mathtranslat
 - 中文检索按 bigram 切分，**单个汉字**查询会退化为全库扫描（能查，但慢）。
 - 卡片复核对数不一：`draft` 默认不返回；`pages` 多为启发式抽取，卡上 `caveat` 会说明。
 - 没有向量检索：1–3 万卡规模下，倒排 + 术语归一已经够用；需要语义检索时再上。
+- 原文层只有 33 个工程（仓库里公开了原文文本的那些），592 段无页码；不是全书全文。

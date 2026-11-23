@@ -27,6 +27,19 @@ export PYTHONIOENCODING=utf-8
 
 `kb/shuyi.db` 是**生成物**，不进 git（见 `.gitignore`）；重建只需两步。
 
+### 2.1 原文层（v0.3.0 起）
+
+插件除了资料卡，还能直接检索**底本原文抽文**。它不经过 `kb/`，由单独的脚本生成：
+
+```bash
+"$PY" tools/build_src_corpus.py            # → 01_corpus_src/src_paragraphs.jsonl + plugins/dsh-kb/data/src/*.gz
+```
+
+扫的是仓库里**已经公开**的原文文本（`08_source_code/*/工程文件/work/full.txt`、
+`work/split/pNNN.txt`、`05_seminar_witten/**/source/text/pNNN.txt`），按页标记切页、
+去页眉页脚与页码行、按空行切段；不新做任何原文摘录。当前 **7,644 段 / 33 个工程 / 5.2M 字符**。
+同一工程若已有 `full.txt`，就不再扫它的 `split/`（同一份内容的不同切法），按文本哈希去重。
+
 ## 3. 查询
 
 ```bash
