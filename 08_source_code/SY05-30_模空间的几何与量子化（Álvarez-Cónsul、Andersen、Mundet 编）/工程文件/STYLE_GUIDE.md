@@ -16,6 +16,7 @@
 
 - 引擎 xelatex；`ctexbook[a4paper,11pt,openany]`；中文字体 Noto Serif SC / Noto Sans SC。
 - 编译三遍（交叉引用 + 目录）；验收：`grep -c '^!' main.log` 为 0、`grep -c Overfull main.log` 为 0。
+- **插图**（2026-11-24 定）：**交换图一律 TikZ 重画**（`tikzcd`，标签规则见上）；**示意图不重画**，从底本 PDF 按 300 dpi 裁切存为 `源码/figs/f<章>-<两位图号>.png`，正文用 `\includegraphics[width=<原宽 pt × 1.1>]{figs/f1-01}`，图注仍用中文译文，编号由 `figure` 环境自动推进（不再用 `\figomit`、不再手工 `\setcounter{figure}`）。已裁 42 张：第 1 章 1.1–1.28、第 3 章 3.1–3.13、第 4 章 4.1；第 2 章样张无 `figure` 环境，其行内交换图保持 TikZ。
 - `Underfull \hbox` 的处理分三级（2026-11-24 定，四次实测后的结论）：① badness ≥ 5000 必须改写正文（通常是段落里夹了一个不可断的长数学串，改词序或把式子挪到独立显示即可）；② 1000–3500 属轻微松散，preamble 用 `\hbadness=3500` 不再报警，不改正文；③ `Underfull \vbox`（页底拉伸）由 `\raggedbottom` 统一消除。报警门槛的改动必须记在本文件与 `work/进度.md`，不许静默调参。
 - `main.pdf` 是本地构建产物，不入仓（`.gitignore` 已覆盖 `源码/main.pdf`），预览图放 `成品/预览/`。
 
