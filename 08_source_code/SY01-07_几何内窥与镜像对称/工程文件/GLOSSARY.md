@@ -327,7 +327,7 @@ A. Kapustin / A. Strominger / S.-T. Yau / E. Zaslow / G. 't Hooft / K. Wilson / 
 |---|---|---|
 | perverse sheaf | 反常层（单独用） | 与 anomaly（反常）撞车；必须写「反常层」，或首次括注（perverse sheaf） |
 | fibration | 丛化 | 应为「纤维化」 |
-| endoscopy | 内视、内窥镜 | 统一「内窥」（与用户文件名一致） |
+| endoscopy | ~~内视~~、~~内窥镜~~ | 全库冻结为「内窥」（SY01-07 定名，2026-11-24 用户确认） |
 | brane | 膜（英文语境中） | A-brane 写作 A-膜，但 D-brane 写作 D-膜 |
 | proper | 恰当 | proper morphism 是「正常态射」 |
 | ample | 充足 | 应为「丰富」 |

@@ -50,7 +50,7 @@
 
 - **§4 例子（pp. 260–265）**
   - $H=\{1\}$：${}^{L}H=W'_k$（Weil–Deligne 形式的 L 群），$u$ 即容许同态，函子性 $=$ 局部 Langlands；整体用 Galois 形式即得 $\GL_n$ 整体猜想。这是 Langlands 视函子性为「包含猜想」的理由。
-  - 两类：Galois 理论（基变换、自守诱导、内型）与群论（张量积、对称幂、典型群）。明确不涉及内视（endoscopy）：内视是 $u$ 把 ${}^{L}H^{0}$ 实现为 ${}^{L}G^{0}$ 中某对合的不动点者，其重要性在于理解迹公式。
+  - 两类：Galois 理论（基变换、自守诱导、内型）与群论（张量积、对称幂、典型群）。明确不涉及内窥（endoscopy）：内窥是 $u$ 把 ${}^{L}H^{0}$ 实现为 ${}^{L}G^{0}$ 中某对合的不动点者，其重要性在于理解迹公式。
   - §4.1：基变换（$G=R_{K/k}H$，$u$ 把 ${}^{L}H^{0}\times\mathcal{G}_k$ 对角嵌入 $\prod_{\mathcal{G}_K\backslash\mathcal{G}_k}{}^{L}H^{0}\rtimes\mathcal{G}_k$；$n=2$ Langlands，可解扩张 Arthur–Clozel，非正规三次 JPSS）；自守诱导（$H=R_{K/k}\GL_n$、$G=\GL_{dn}$，分块对角 + $\mathfrak{S}_d$ 置换矩阵；Arthur–Clozel，$n=2$ Jacquet–Langlands，Henniart–Herb，$n=1$ Kazhdan）；内型（${}^{L}H={}^{L}G$，恒等映射；Jacquet–Langlands $D^{\times}\to\GL_2$；Rogawski $m=1$；Deligne–Kazhdan–Vignéras）。
   - §4.2：张量积（$\GL_m\times\GL_n\to\GL_{mn}$，$u_\otimes$）；对称幂（$\mathrm{sym}^n:\GL_2(\mathbb{C})\to\GL_{n+1}(\mathbb{C})$，Gelbart–Jacquet $n=2$，Kim–Shahidi $n=3$，Kim $n=4$，全 $n$ $\Rightarrow$ Ramanujan）；典型群（表：$H$、${}^{L}H^{0}$、$u^{0}$、${}^{L}G^{0}$、$G$；CKPS 弱提升 $\mathrm{SO}_{2n+1}\to\GL_{2n}$，GRS 强化并刻画像，Jiang–Soudry 局部推论）。
   - 逆定理方法总述：逐位点局部提升 $\Pi_v$ $\to$ 局部 L 因子等式 $\to$ 整体 $L(s,\pi,r)=L(s,\Pi,\iota)$ $\to$ 扭 $L(s,\pi\times\pi',r\otimes\iota)$ 的解析控制（Langlands–Shahidi）$\to$ 逆定理得 $\Pi$ 自守。
