@@ -16,6 +16,7 @@
 
 - 引擎 xelatex；`ctexbook[a4paper,11pt,openany]`；中文字体 Noto Serif SC / Noto Sans SC。
 - 编译三遍（交叉引用 + 目录）；验收：`grep -c '^!' main.log` 为 0、`grep -c Overfull main.log` 为 0。
+- `Underfull \hbox` 的处理分三级（2026-11-24 定，四次实测后的结论）：① badness ≥ 5000 必须改写正文（通常是段落里夹了一个不可断的长数学串，改词序或把式子挪到独立显示即可）；② 1000–3500 属轻微松散，preamble 用 `\hbadness=3500` 不再报警，不改正文；③ `Underfull \vbox`（页底拉伸）由 `\raggedbottom` 统一消除。报警门槛的改动必须记在本文件与 `work/进度.md`，不许静默调参。
 - `main.pdf` 是本地构建产物，不入仓（`.gitignore` 已覆盖 `源码/main.pdf`），预览图放 `成品/预览/`。
 
 ## 2. 文件名与切块
