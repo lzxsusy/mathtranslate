@@ -1,0 +1,159 @@
+\chapter{范畴猜想}\label{ch:10}
+\begingroup
+\setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
+\setlength{\belowdisplayshortskip}{3pt}
+\setlength{\intextsep}{8pt}
+% 原PDF第53页，第10章开始；第9章结尾不在本文件中重复。
+现在，我们从单个 Hecke 特征层转向几何 Langlands 的范畴形式。本章取 $k=\mathbb C$，系数域也取 $\mathbb C$。除非另有说明，均在 de Rham 情形下讨论。记 $\LocSys_{\checkG}$ 为 $X$ 上 de Rham $\checkG$-局部系统的导出叠。忽略惯常的半扭转，预期的等价采用 Arinkin–Gaitsgory／Gaitsgory–Raskin 的表述\cite{AG15,GR24a}：
+
+\begin{transnote}{含糊点拨}
+「半扭转」指 Hecke 特征层与 Eisenstein 函子上各差一个 Tate 扭转 $(\text{--})(1/2)$：几何 Satake 把 $V$ 送到 $\mathrm{IC}_V$ 时，$\ell$-进归一化要乘上权 $q^{1/2}$ 的那一半，两侧的权因此差半格。Arinkin–Gaitsgory 与 Gaitsgory–Raskin 的两种表述差的正是这个半整扭转，忽略它之后两个函子才能逐项对上；后面 §10.4、§10.5 的归一化都以此为基准。[来源：nLab "Tate twist"，https://ncatlab.org/nlab/show/Tate+twist（Last revised 2025-08-10；2026-11-17 访问）；并见原书 p.53 本段与 [AG15]、[GR24a]。]
+\end{transnote}
+\begin{conjecture*}{}
+\[\DMod(\Bun_G)\simeq\IndCoh_{\mathrm{Nilp}}(\LocSys_{\checkG}).\]
+\end{conjecture*}
+右端之所以采用这个范畴，是因为 $\LocSys_{\checkG}$ 作为导出叠通常是奇异的。因此，$\QCoh(\LocSys_{\checkG})$、$\IndCoh(\LocSys_{\checkG})$，以及通过奇异支撑条件得到的中间范畴 $\IndCoh_{\mathrm{Nilp}}(\LocSys_{\checkG})$，确实是不同的范畴。
+
+\section{为何出现 ind-凝聚层}\label{sec:10.1}\index{ind-凝聚层|hyperpage}\index{完美复形|hyperpage}\index{奇异支撑!谱侧|hyperpage}
+对于奇异导出概形或导出叠 $Y$，完美对象与凝聚对象未必相同；一般而言，只存在包含关系
+\[\operatorname{Perf}(Y)\subseteq\Coh(Y),\]
+而且这个包含往往是严格的。
+\begin{example}
+取 $A=k[\varepsilon]$，其中 $\deg(\varepsilon)=-1$，并令 $Y=\Spec A$。则 $k\in\Coh(Y)$，但 $k\notin\operatorname{Perf}(Y)$；从下面的无限周期解消可以看出这一点：
+\[\cdots\xrightarrow{\varepsilon}A\xrightarrow{\varepsilon}A\xrightarrow{\varepsilon}A\longrightarrow k.\]
+\end{example}
+进行 ind-完备化后，对满足适当条件的 $Y$，有
+\[\QCoh(Y)=\operatorname{Ind}(\operatorname{Perf}(Y))\subseteq\IndCoh(Y)=\operatorname{Ind}(\Coh(Y)),\]
+在上述奇异例子中，包含仍是严格的。因此，$\IndCoh$ 保留了 $\QCoh$ 可能遗漏的凝聚对象。
+
+不过，在 $\operatorname{Perf}$ 与 $\Coh$ 之间，存在一族可以控制的范畴。依照 Arinkin–Gaitsgory\cite{AG15}，若 $Y$ 是拟光滑的，定义它的奇异概形为
+\begin{definition*}{}
+\[\operatorname{Sing}(Y):=\Spec_{Y^{\mathrm{cl}}}\Sym_{\cO_{Y^{\mathrm{cl}}}}\bigl(H^1(T_Y)\bigr).\]
+等价地，它是 $(-1)$ 次移位余切叠的底层经典叠。若 $Y$ 光滑，则 $\operatorname{Sing}(Y)$ 是 $Y$ 上的零向量丛，也就是零截面。对 $\cF\in\Coh(Y)$，可以赋予一个锥形支撑 $\supp(\cF)\subset\operatorname{Sing}(Y)$。对锥形闭子集 $N\subset\operatorname{Sing}(Y)$，置
+
+\begin{transnote}{易错预警}
+$\operatorname{Sing}(Y)$ 不是 $Y$ 的奇点集，而是「$(-1)$ 次移位余切叠的底层经典叠」：$\operatorname{Sing}(Y)=\Spec_{Y^{\mathrm{cl}}}\Sym(H^1(T_Y))$，把 $H^1(T_Y)$ 当作余切方向、并且取了负一次移位。$Y$ 光滑时 $H^1(T_Y)=0$，只剩零截面，这才是「光滑时 $\operatorname{Sing}(Y)$ 是零向量丛」的意思。用 $H^1$ 而不是 $H^0$，正是准光滑导出概形与通常余切丛的差别所在。[依据：原书 p.53 本段；并见 [AG15] 对 $\operatorname{Sing}(Y)$ 的定义。]
+\end{transnote}
+\[\Coh_N(Y):=\{\cF\in\Coh(Y)\mid\supp(\cF)\subset N\},\qquad
+\IndCoh_N(Y):=\operatorname{Ind}(\Coh_N(Y)).\]
+\end{definition*}
+零支撑范畴恢复完美对象：
+\[\Coh_0(Y)\simeq\operatorname{Perf}(Y),\qquad\IndCoh_0(Y)\simeq\QCoh(Y).\]
+\srcpage{54}
+\Needspace{6\baselineskip}
+\begin{example}
+一个有用的局部模型是导出交 $Y=\mathrm{pt}\times_V\mathrm{pt}$，其中两个到向量空间 $V$ 的映射都是零映射。此时 $H^1(T_Y)=V$，所以 $\operatorname{Sing}(Y)=V^*$。Koszul 对偶给出
+\[\IndCoh(\mathrm{pt}\times_V\mathrm{pt})\simeq\Sym(V[-2])\text{-}\mathrm{Mod}.\]
+因此，$H^\bullet(\cF)$ 是一个分次 $\Sym(V)$-模，等价地，是 $V^*$ 上的拟凝聚层；$\supp(\cF)$ 就是这个模通常意义下的锥形支撑。
+\end{example}
+对于一般概形，形式邻域 $\widehat Y_y$ 的一阶行为由 $T_yY$ 上的导出自交控制；这给出同样的支撑。对于叠，则通过下降将这一构造粘合起来。
+
+\section{谱侧的幂零奇异支撑}\label{sec:10.2}\index{幂零奇异支撑|hyperpage}
+令 $(E,\nabla)\in\LocSys_{\checkG}$。伴随丛 $\check{\mathfrak g}_E$ 带有诱导的联络。切复形为
+\[T_{(E,\nabla)}\LocSys_{\checkG}\simeq\RGamma_{\mathrm{dR}}(X,\check{\mathfrak g}_E)[1]
+\simeq\RGamma\bigl(X,\check{\mathfrak g}_E\xrightarrow{\operatorname{ad}(\nabla)}\check{\mathfrak g}_E\otimes\Omega_X\bigr)[1].\]
+$\operatorname{Sing}(\LocSys_{\checkG})$ 在 $(E,\nabla)$ 上的纤维是 $H^1(T_{(E,\nabla)}\LocSys_{\checkG})^\vee$。由于 $H^1(T)=H^2_{\mathrm{dR}}(X,\check{\mathfrak g}_E)$，Poincaré 对偶将这个对偶空间识别为 $H^0_{\mathrm{dR}}(X,\check{\mathfrak g}_E^*)$。因而，经典奇异叠的点为
+\[\operatorname{Sing}(\LocSys_{\checkG})=
+\{(E,\nabla,A)\mid A\in H^0_{\mathrm{dR}}(X,\check{\mathfrak g}_E^*)\}.\]
+等价地，$A$ 是余伴随局部系统的水平截面。利用不变双线性形式 $\check{\mathfrak g}^*\simeq\check{\mathfrak g}$，定义
+\begin{definition*}{}
+\[\mathrm{Nilp}:=\{(E,\nabla,A)\mid A_x\in\check{\mathfrak g}\text{ 对每个 }x\in X\text{ 都是幂零的}\}
+\subset\operatorname{Sing}(\LocSys_{\checkG}).\]
+\end{definition*}
+因此，$\IndCoh_{\mathrm{Nilp}}(\LocSys_{\checkG})$ 由奇异方向为全局幂零水平场的 ind-凝聚层组成。
+\begin{example}
+
+即使最简单的曲线也能说明导出结构为何重要。对于 $X=\mathbb P^1$，非导出的 de Rham 局部系统叠本质上是 $\mathrm{pt}/\checkG$，但导出叠则是导出零纤维
+\[\LocSys_{\checkG}(\mathbb P^1)\simeq\mathrm{pt}/\checkG\times_{\check{\mathfrak g}/\checkG}\mathrm{pt}/\checkG.\]
+若只保留 $\QCoh(\mathrm{pt}/\checkG)\simeq\Rep(\checkG)$，就会失去在自守侧可见的导出 $\Ext$ 数据，例如球面范畴
+\[\DMod(G(\cO)\backslash G(\mathcal K)/G(\cO))\]
+中的数据。导出自交上的范畴 $\IndCoh_{\mathrm{Nilp}}$ 才是正确的细化。
+\end{example}
+
+\section{相容性检验一：导出 Satake}\label{sec:10.3}\index{导出 Satake 等价|hyperpage}\index{谱 Hecke 叠|hyperpage}
+与 Arinkin–Gaitsgory 的奇异支撑形式体系\cite{AG15}相容的局部球面范畴为
+\[\operatorname{Sph}_{G,x}:=\DMod(G(\cO_x)\backslash G(\mathcal K_x)/G(\cO_x)).\]
+通常的几何 Satake 等价给出心范畴 $\Rep(\checkG)$。在导出范畴层面，正确的谱对象是谱 Hecke 叠
+\[\Hecke^{\mathrm{spec}}_{\checkG}:=\mathrm{pt}/\checkG\times_{\check{\mathfrak g}/\checkG}\mathrm{pt}/\checkG
+\simeq(\mathrm{pt}\times_{\check{\mathfrak g}}\mathrm{pt})/\checkG.\]
+\begin{theorem*}{导出 Satake}
+\[\operatorname{Sph}_{G,x}\simeq\IndCoh_{\mathrm{Nilp}(\check{\mathfrak g}^*)/\checkG}(\Hecke^{\mathrm{spec}}_{\checkG}).\]
+
+\begin{transnote}{背景直觉}
+导出 Satake 把几何 Satake 的心范畴等价提升到导出层：左端是球面 Hecke 范畴（$\operatorname{Sph}_{G,x}$），右端是谱 Hecke 叠 $\Hecke^{\mathrm{spec}}_{\check G}$ 上「奇异支撑落在幂零锥内」的 ind-凝聚层。下标 $\mathrm{Nilp}(\check{\mathfrak g}^*)/\check G$ 就是允许的奇异支撑范围——只有支撑落在幂零锥的部分才对应球面对象的谱侧。这解释了为什么范畴猜想里必须用 $\IndCoh_{\mathrm{Nilp}}$ 而不能用普通 $\QCoh$：$\QCoh$ 看不见奇异支撑。[来源：nLab "geometric Satake equivalence"，https://ncatlab.org/nlab/show/geometric+Satake+equivalence（Last revised 2024-07-22；2026-11-17 访问）；并见 [AG15]。]
+\end{transnote}
+\end{theorem*}
+这里，$\operatorname{Sing}(\Hecke^{\mathrm{spec}}_{\checkG})\simeq\check{\mathfrak g}^*/\checkG$，而幂零锥 $\mathrm{Nilp}(\check{\mathfrak g}^*)/\checkG$ 恰好是允许的奇异支撑。这是全局范畴 $\IndCoh_{\mathrm{Nilp}}(\LocSys_{\checkG})$ 的局部模型。
+
+\section{相容性检验二：Eisenstein 级数}\label{sec:10.4}\index{Eisenstein 函子!谱侧|hyperpage}
+\srcpage{55}
+令 $P\subset G$ 为抛物子群，Levi 商为 $M$。在自守侧，有
+\origdiagram{p055-automorphic.pdf}{0.3734}
+以及 Eisenstein 函子
+\[\operatorname{Eis}_{P,!}:=p_!q^*:\DMod(\Bun_M)\longrightarrow\DMod(\Bun_G).\]
+它的连续右伴随是常数项函子
+\[\CT_{P,*}:=q_*p^!:\DMod(\Bun_G)\longrightarrow\DMod(\Bun_M).\]
+因此，自守侧的形式体系在取伴随时是稳定的。
+
+另一方面，谱侧的图表为
+\origdiagram{p055-spectral.pdf}{0.4622}
+朴素的函子
+\[\check p_*\check q^*:\QCoh(\LocSys_{\check M})\longrightarrow\QCoh(\LocSys_{\checkG})\]
+没有所需的连续右伴随。障碍在于，$\check p$ 的真性足以保证它保持凝聚层，但它并不保持完美复形。恰当的修正正是采用幂零 ind-凝聚范畴。示意地，谱 Eisenstein 函子为
+\[\operatorname{Eis}^{\mathrm{spec}}_{\check P}:=(\check p)_*^{\IndCoh}\circ\check q^!,\]
+而且它将 Levi 侧的完美对象送入具有幂零奇异支撑的范畴：
+\[\operatorname{Eis}^{\mathrm{spec}}_{\check P}(\operatorname{Perf}(\LocSys_{\check M}))\subset\Coh_{\mathrm{Nilp}}(\LocSys_{\checkG}).\]
+此外，$\IndCoh_{\mathrm{Nilp}}(\LocSys_{\checkG})$ 由所有 Levi 子群 $\check M$ 对应的对象 $\operatorname{Eis}^{\mathrm{spec}}_{\check P}(\operatorname{Perf}(\LocSys_{\check M}))$ 生成，其中也包括 $\check M=\checkG$。这说明幂零条件不能任意舍弃：Eisenstein 相容性迫使我们采用这一条件。
+
+\section{温和对象与 Whittaker 检测}\label{sec:10.5}\index{温和对象|hyperpage}\index{Whittaker 系数!检测|hyperpage}
+还有一个范围较小的预期等价
+\begin{conjecture*}{}
+\[\DMod(\Bun_G)^{\mathrm{temp}}\simeq\QCoh(\LocSys_{\checkG}).\]
+\end{conjecture*}
+从基本思想上说，温和部分是 $\DMod(\Bun_G)$ 中能够被 Whittaker 系数检测到的部分。对一般位置定义的 $N$-约化，有相应的 Whittaker 范畴和一个自然的 $!$-推前
+\[\operatorname{Wh}(\Bun_G^{N\text{-}\mathrm{gen}})\longrightarrow\DMod(\Bun_G).\]
+所需的局部输入是：仿射 Grassmann 簇的 Whittaker 范畴的手征同调，与 $\Rep(\checkG)$ 的手征同调相匹配。这提供了生成对象，但单凭这一点，并不能识别定义温和子范畴的 Verdier 商。实际使用的现代定义采用球面 Hecke 作用。
+\srcpage{56}
+
+对每个 $x\in X$，范畴 $\operatorname{Sph}_{G,x}$ 以幺半方式作用于 $\DMod(\Bun_G)$。在导出 Satake 等价下，
+\[\operatorname{Sph}_{G,x}\simeq\IndCoh_{\mathrm{Nilp}}(\mathrm{pt}/\checkG\times_{\check{\mathfrak g}/\checkG}\mathrm{pt}/\checkG),\]
+而温和的，也称为左完备化的谱 Hecke 范畴是
+\[\QCoh(\mathrm{pt}/\checkG\times_{\check{\mathfrak g}/\checkG}\mathrm{pt}/\checkG).\]
+\begin{definition*}{}
+若由 $\cF\in\DMod(\Bun_G)$ 生成的 $\operatorname{Sph}_{G,x}$-模经由上述左完备化范畴分解，则称 $\cF$ 是温和的。
+\end{definition*}
+\begin{theorem*}{Færgeman–Raskin\cite{FR23}}
+由此得到的子范畴与所选的点 $x$ 无关。
+\end{theorem*}
+
+整个自守范畴由温和紧对象的 Eisenstein 级数生成：
+\[\DMod(\Bun_G)=\bigl\langle\operatorname{Eis}_P(\DMod(\Bun_M)^{\mathrm{temp},c})\mid P\subset G\bigr\rangle.\]
+因此，温和猜想连同上述 Eisenstein 相容性，等价于完整的范畴猜想。
+
+\newpage
+\section{Betti 理论与其他层理论}\label{sec:10.6}\index{奇异支撑!微局部|hyperpage}\index{全局幂零锥|hyperpage}\index{Higgs 叠|hyperpage}
+对于其他层理论，特别是 Betti 层或 $\ell$-进层，自守范畴本身也必须受到奇异支撑的限制\cite{BZN16,NY19,AGK20a}。在 Betti 情形，$\LocSys_{\checkG}$ 是 $\pi_1(X)$ 到 $\checkG$ 的表示所组成的导出特征叠；在最精确的层论表述中，还可以将它替换为相应的受限变体。猜想的形式为
+\begin{conjecture*}{}
+\[\Shv_{\mathrm{Nilp}}(\Bun_G)\simeq\IndCoh_{\mathrm{Nilp}}(\LocSys_{\checkG}).\]
+\end{conjecture*}
+这里，$\Shv_{\mathrm{Nilp}}(\Bun_G)$ 用微局部奇异支撑定义。对层 $\cF\in\Shv(Y)$，它的奇异支撑是闭锥形子集 $\operatorname{SS}(\cF)\subset T^*Y$，通过微局部分析定义；等价地，可以用非特征方向上邻近圈的消失来描述。一个层是局部系统，当且仅当 $\operatorname{SS}(\cF)$ 包含于零截面。
+
+\begin{transnote}{含糊点拨}
+两种定义等价，但方向要分清：微局部定义说 $\mathrm{SS}(\cF)$ 由「微茎非零的余方向」组成；非特征方向 $v$ 上的邻近圈消失，则说沿 $v$ 没有微局部信息，即 $\cF$ 沿 $v$ 局部常值。两者配对给出同一锥。「局部系统 $\Leftrightarrow$ $\mathrm{SS}\subset$ 零截面」是同一说法的极端情形：只有零余方向允许非零微茎，其余方向全消失。在 de Rham 情形 $\mathrm{SS}$ 可与 $D$ 模的特征簇比较，Betti 情形则与微支撑直接对应。[来源：nLab "singular support"（该条目无 Last revised，2026-11-17 访问）；并见原书 p.56 本段与 [BZN16]。]
+\end{transnote}
+
+在 $G$-丛 $P$ 处，
+\[T_P\Bun_G\simeq\RGamma(X,\mathfrak g_P)[1],\qquad
+T_P^*\Bun_G\simeq\RGamma(X,\mathfrak g_P^*\otimes\Omega_X).\]
+经典余切叠就是 Higgs 叠：
+\[T^*\Bun_G=\operatorname{Higgs}_G,\qquad
+\operatorname{Higgs}_G(\mathbb C)=\{(P,\varphi)\mid\varphi\in H^0(X,\mathfrak g_P^*\otimes\Omega_X)\}.\]
+\begin{definition*}{}
+全局幂零锥是
+\[\mathrm{Nilp}_{\mathrm{glob}}:=\{(P,\varphi)\in\operatorname{Higgs}_G\mid
+\varphi_x\in\mathcal N_{\mathfrak g^*}\text{ 对每个 }x\in X\text{ 都成立}\}.\]
+置
+\[\Shv_{\mathrm{Nilp}}(\Bun_G):=\{\cF\in\Shv(\Bun_G)\mid\operatorname{SS}(\cF)\subset\mathrm{Nilp}_{\mathrm{glob}}\}.\]
+\end{definition*}
+这就是在谱侧的 ind-凝聚范畴上施加幂零奇异支撑条件的 Betti 对应版本。
+\endgroup
