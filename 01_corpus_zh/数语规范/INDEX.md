@@ -7,10 +7,10 @@
 
 | 表 | 行数 | 覆盖 |
 |---|---|---|
-| 术语（TERMS.tsv） | 1847 | 6 个工程；去重键＝外文＋语种＋译名＋工程 |
+| 术语（TERMS.tsv） | 2063 | 8 个工程；去重键＝外文＋语种＋译名＋工程 |
 | 记号（SYMBOLS.tsv） | 76 | 1 个工程（仅 FUNCTORIALITY 有冻结记号表） |
-| 冲突（CONFLICTS.tsv） | 76 | 高 9 / 中 27 / 低 40 |
-| 宏（MACROS.tsv） | 613 | 跨工程同名不同含义；其中出现在 ≥5 个工程的 332 个 |
+| 冲突（CONFLICTS.tsv） | 79 | 高 9 / 中 28 / 低 42 |
+| 宏（MACROS.tsv） | 636 | 跨工程同名不同含义；其中出现在 ≥5 个工程的 344 个 |
 
 ## 二、术语分级
 
@@ -19,17 +19,17 @@
 | A | 170 | 原文页码/式号锚定 |
 | B | 152 | 外部权威（nLab 等） |
 | I | 114 | 本库定案 |
-| D | 1411 | 未标级（待考） |
+| D | 1627 | 未标级（待考） |
 
-语种：en 1294 / ja 325 / other 228。状态：frozen 432 / confirmed 4 / candidate 1411。
+语种：en 1510 / ja 325 / other 228。状态：frozen 432 / confirmed 4 / candidate 1627。
 
 ## 三、冲突分类
 
 | 类型 | 条数 | 含义 |
 |---|---|---|
 | 一外多中 | 12 | 同一外文有两个以上真正不同的译名——最需要裁决的一类 |
-| 一中多外 | 28 | 同一译名对应多个外文（同语种才算撞车） |
-| 等级不一致 | 33 | 同一译名在不同工程里标了不同等级 |
+| 一中多外 | 29 | 同一译名对应多个外文（同语种才算撞车） |
+| 等级不一致 | 34 | 同一译名在不同工程里标了不同等级 |
 
 ## 四、优先处理（高严重度）
 
@@ -51,14 +51,14 @@
 
 | 宏 | 出现工程数 | 不同含义数 | 含义变体 |
 |---|---|---|---|
-| `\R` | 76 | 5 | \ensuremath{\mathbb{R}} ｜ \mathbb{R} ｜ \mathbf R |
-| `\Z` | 75 | 3 | \ensuremath{\mathbb{Z}} ｜ \mathbb{Z} ｜ \mathbf Z |
-| `\C` | 74 | 4 | \ensuremath{\mathbb{C}} ｜ \mathbb{C} ｜ \mathbf C |
-| `\Tr` | 71 | 7 | Tr ｜ \mathop{\mathrm{Tr}}\nolimits ｜ \mathsf{Tr} |
-| `\Hom` | 70 | 5 | Hom ｜ \mathop{\mathrm{Hom}} ｜ \operatorname{Hom} |
-| `\id` | 67 | 6 | \mathbf{1} ｜ \mathsf{Id} ｜ \operatorname{id} |
-| `\tr` | 60 | 9 | \mathop{\mathrm{tr}}\nolimits ｜ \mathsf{tr} ｜ \operatorname{Tr} |
-| `\N` | 60 | 5 | \mathbb{N} ｜ \mathbb{Z}_{\geq 0} ｜ \mathcal{N} |
+| `\R` | 80 | 5 | \ensuremath{\mathbb{R}} ｜ \mathbb{R} ｜ \mathbf R |
+| `\Z` | 79 | 3 | \ensuremath{\mathbb{Z}} ｜ \mathbb{Z} ｜ \mathbf Z |
+| `\C` | 78 | 4 | \ensuremath{\mathbb{C}} ｜ \mathbb{C} ｜ \mathbf C |
+| `\Hom` | 76 | 5 | Hom ｜ \mathop{\mathrm{Hom}} ｜ \operatorname{Hom} |
+| `\Tr` | 74 | 7 | Tr ｜ \mathop{\mathrm{Tr}}\nolimits ｜ \mathsf{Tr} |
+| `\id` | 70 | 6 | \mathbf{1} ｜ \mathsf{Id} ｜ \operatorname{id} |
+| `\Aut` | 65 | 5 | Aut ｜ \operatorname{Aut} ｜ \operatorname{\text{Aut}} |
+| `\Q` | 64 | 5 | \Theta ｜ \ensuremath{\mathbb{Q}} ｜ \mathbb{Q} |
 
 完整清单见 `MACROS.tsv`。注意：`\R` 这类「同一含义的多种写法」已在判定时折算（`\Bbb`→`\mathbb`、`\operatorname{}`/`\text{}`/`{\rm }`→`\mathrm{}`），
 剩下的 `真冲突` 才是语义不同。
@@ -70,4 +70,4 @@
 3. `CONFLICTS.tsv` 的「建议」列是机械推断，**裁定权在仓主**；裁定后改源表，不要改生成物。
 4. 改完跑 `python tools/build_norm.py --check`；表与源数据不一致会让闸门失败，确认无误再重建。
 
-本表由 `tools/build_norm.py` 生成于 2026-11-21（术语 1847 / 记号 76 / 冲突 76 / 宏 613）。
+本表由 `tools/build_norm.py` 生成于 2026-11-21（术语 2063 / 记号 76 / 冲突 79 / 宏 636）。
