@@ -2,6 +2,17 @@
 
 > **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
 
+## SY04-04《膜与层》（Nekrasov–Okounkov）全书校订、入库与资料卡 — 2026-11-24
+
+- 新增 `08_source_code/SY04-04_膜与层（Nekrasov–Okounkov）`。底本是 Nikita Nekrasov、Andrei Okounkov 的 *Membranes and Sheaves*（arXiv:1404.2323v1，2014-04-09，**77 页正文 / 9 节 / 39 条文献**）。与多数工程不同，本篇**来件已带完整中译**（`源码/MDT_zh.tex`，3,114 行、87 KB、65 页），本轮工作是**对照校订 + 修编译 + 出资料卡**，不是重译。
+- 编译：来件 PDF（65 页）与来件源码对不上——在当前 LaTeX2e（2026-11）下源码编不过。三类根因已修：①**158 处**数学上下标后紧跟裸文本字体宏（`ds_\textup{TN}^2`、`\tO_\MM`）未加花括号；②§2.3 交换图 `tikzcd` 箭头指向空网格，报 `No shape named tikz@f@1-3-2`，按三行网格重排并给标签内宏加括号；③`\newcommand{\bPhi}{\mathbf{\Phi}}` 在 TU 编码下无希腊大写字形，改 `\boldsymbol{\Phi}`（原报 6 条 `Missing character: There is no ^^H`）。修后 `xelatex` 两遍 **65 页 / 0 error / 0 缺字 / 0 undefined**（已在仓内 `源码/` 实测复现；成品 PDF 按 R3 不入库）。
+- 结构审计：`\label` 129、`\ref` 71、`\eqref` 95、`\footnote` 9、`\begin{equation}` 67 **与底本逐项相等**；`\cite` 55（底本）对 54 的差额来自底本一段被作者 `%` 注释掉的正文，非漏译；`\bibitem` 39 条键集一致。编号陈述 **21 条**（底本 23 条，其中 2 条引理被原作者 `%` 注释）。
+- 校订 **20 处（P1 16 / P2 4）**，另 3 条核验后判定不改（共 22 行记录，见 `工程文件/校对报告.md`）：扭结→扭变（twisted 误作 knot）、外部代数→外代数、minimal resolution 最小分解→最小解消、toric chart 环面图→环面坐标卡（与 toric diagram 区分）、fixed locus 不动点→不动点轨迹、「蕴含」方向译反、*The proof below*「上面的证明」→「下面的证明」、删「迄今为止」（*by far*）、`specializes`/`numerous`/`torsion-free` 三处英文残片、「唯一的极点」→「仅有的极点」等。
+- 审议后**不改并归档**（`资料卡/04-术语文献勘误.md`）：proper=固有（主流「紧合」只入档）、cycle=循环、n-fold=「n 重流形」、§5.5 指数 `x^{b_j-a_i}`（底本作 `b_j-a_j`，判为译者修原书笔误，按 `07` 判据保留）、`\subsubsection{\ }` 空标题印出的 2.3.4/5.5.7 编号、xymatrix→tikz-cd 的现代化改写。
+- 资料卡五件套 `资料卡/{00-速览,01-结果清单,02-论证地图,03-条款索引,04-术语文献勘误}`，页码一律「原文 pN / 译本 pM」（两版节级目录逐节对齐，见 `工程文件/BRIEF.md`）；术语表 `工程文件/work/glossary.tsv` **53 条**（A 底本自用 / B 数学名词 / I 本库既有）。
+- 台账：`RELEASE_REGISTER.csv` 增 SY04-04 一行（arXiv 预印本；演绎作品，底本权利归原作者；风险低；L2 公开·受限；**成品不公开，成品在仓=否**，PDF 本地交付，如需公开再走 Release 外链并回填直链）。
+- 未做（已在 BRIEF「状态」列明）：未并入 `01_corpus_zh/zh_paragraphs.jsonl` 与 termbase（未跑 `build_norm`）、未出 `datasets/` 机器卡、未做二次独立复核（卡片强度标 `checked` 而非 `verified`）、§2.4 与 §8.1 未逐句精读。统计数字未手改（`make_stats.py --check` 在本轮前已因他人未提交改动报 FAIL，本轮未处理）。
+
 ## SY02-32《迹公式与函子性——一个纲领的开端》（Frenkel–Langlands–Ngô）全书中译、入库与资料卡 — 2026-11-24
 
 - 新增 `08_source_code/SY02-32_迹公式与函子性_一个纲领的开端`。底本是 Edward Frenkel、Robert Langlands、Ngô Bao Châu 合著的法文预印本 *Formule des traces et fonctorialité : le début d'un programme*（arXiv:1003.4578v2，2010-09-29，54 页）。**原文为法文**，无通行中译；按用户指定收于 SY02（几何朗兰兹与电磁对偶）系列，编号顺延为 SY02-32。
