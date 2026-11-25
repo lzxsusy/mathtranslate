@@ -2,6 +2,18 @@
 
 > **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
 
+## SY02-17《仿射 Grassmann 簇与几何 Satake 等价》全本校订 + 17 条 nLab 译注 — 2026-11-25
+
+- 校订 `08_source_code/SY02-17_仿射Grassmann簇与几何Satake等价`（朱歆文 Xinwen Zhu，arXiv:1603.05593v2，95 页）。v1.0 已交 89 页全译（2026-11-22），本轮是**逐行校对 + 批注**，不是重译；全文 22 个 chunk（3,318 行）读完。
+- 结构对账（`scripts/check_align.py`）：定理类环境两侧各 **212 个**，label 序列逐位相同、类型逐一相同；显示公式原文 **220** / 译文 **297**（多出部分是 `\varinjlim`、`\xymatrix`→tikz、`split`→`array` 等写法差异，无整条漏译）；`\label` 原文 214 / 译文 215，无缺失。
+- 文字修正 **13 处**（`scripts/fix_text_round1.py`）：§5.4 一句语义拧了（「显出……对称性的对称性」）、§5.1 `strata` 未译（→层片）、§2.3 脱字「这也命题等价」、§0.3 定冠词直搬（「那个圆盘」→「圆盘」）、§1.3 语序等；机械体检（`lint_cjk.py` / `lint_english.py`）命中 0。
+- 参考文献 **22 条**重写（`scripts/check_bib.py` 两级核对 + `fix_bib.py`）：v1.0 系统性把「会议年」当「出版年」并丢丛书名——BBD 1981→**1982**（Astérisque 100）、KL 1979→**1980**、Sp/Ti 1977→**1979**、SGA4.5 补「Lecture Notes in Math. 569 / Cohomologie étale」等，导致 `,  (1977), 3--27.` 空括号；preprint 条目补回 MVy 的 arXiv:0712.4160、RZ 的「Appendix to Z11」、Sch/St 的链接、Yu 的 These Proceedings。复算 **硬问题 0 / 可选项 7**（题献类）。
+- 原文笔误 **2 处**按纪律分流：§1.3 例 1.3.12 的 $\pi_0(G)=\bZ$（实质错误）按文意译出并**加译注**、登记疑点清单（E5）；§5.6 的 $(A_2)$（漏 `\m`）直接补正并登记 `work/typos.txt`（E6）。
+- **17 条译注**（`\zy`，manyfoot 独立序列，译1–译17 连续，每条带 `[来源：…]` 或 `[译者按`）：14 条据 nLab（词条名 + 永久链接 + last revised 日期），3 条为译者按 + A 级文献。查证时逐页读过原页，实测 `central extension`（2025-02-16）、`Langlands dual group`（2014-09-07）**只有导引/参考文献而无定义**，`fusion product` **无词条（404）**，均如实记录、不冒充依据；Stacks `Tag 022Y` 实测为 §39.10 *Actions of group schemes*，未引。细则见新增 `资料卡/05-卡点与nLab批注.md`。
+- 排版：新增 `\usepackage{xurl}`（译注里的长 URL 需任意位置断行，缺它会新增 Underfull）；重编译 **90 页 / 0 error / 0 Overfull / 0 缺字**，Underfull 4 条（全在参考文献区，与 v1.0 同）。
+- 资料卡 5→**6 件**（新增 05），`04-术语文献勘误.md` 补 E5/E6 与文献第二轮审计；`精选片段.md` 8→**12 条**判定链（nLab 空壳、会议年 vs 出版年、原文笔误分流、xurl）；新增 `工程文件/reports/校订报告_R2_2026-11-25.md`；BRIEF 补译注机制/xurl/笔误分流三条坑。
+- 台账：`RELEASE_REGISTER.csv` SY02-17 行更新（90 页、译注 17、参考文献硬问题 0、勘误 E1–E6、复核日期 2026-11-25）；成品 `成品/…_v1.1.pdf` 本地交付，v1.0 一并保留，成品仍不入仓。
+
 ## SY04-04《膜与层》（Nekrasov–Okounkov）全书校订、入库与资料卡 — 2026-11-24
 
 - 新增 `08_source_code/SY04-04_膜与层（Nekrasov–Okounkov）`。底本是 Nikita Nekrasov、Andrei Okounkov 的 *Membranes and Sheaves*（arXiv:1404.2323v1，2014-04-09，**77 页正文 / 9 节 / 39 条文献**）。与多数工程不同，本篇**来件已带完整中译**（`源码/MDT_zh.tex`，3,114 行、87 KB、65 页），本轮工作是**对照校订 + 修编译 + 出资料卡**，不是重译。

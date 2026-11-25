@@ -51,6 +51,8 @@
 | ch19–ch20 | 空（内容并入 ch18） | — | — | `chunks/ch19.tex`、`chunks/ch20.tex` | 占位 |
 | ch21 | 参考文献 | 3700–4868（amsrefs 源） | 80–89 | `chunks/ch21.tex` | 完成（82 条） |
 
+> **v1.1（2026-11-25）**：全文校订 + 17 条译注后共 **90 页**（v1.0 为 89 页）。上表「译本页」仍是 v1.0 页码，误差 ≤1 页；本轮未增删定理与公式（仍 212 个定理环境、220 条显示公式），故编号索引不变。校订明细见 `reports/校订报告_R2_2026-11-25.md`。
+
 ## 施工流程（每块）
 
 1. 读原文该行段，逐句核符号；2. 译成中文，编号一律 `\ref`/`\eqref`，label 沿用原文；3. `cd 源码 && xelatex -interaction=nonstopmode main.tex` 跑两遍；4. 过滤 `^!`／`Missing character`／`Overfull`；5. `scripts/render.py` 渲染该块首页目视核对；6. 在 `工程文件/reports/` 记该块报告。
@@ -62,3 +64,6 @@
 - amscd 箭头标注里写中文会缺字，须 `@V{\text{拉回}}VV`；tikz-cd 不可留空格子，三角图改用 plain tikz。
 - 本机 `pymupdf`/`pdftotext` 抽不出本译本 PDF 的中文（`Unknown font tag 'F7'`），PDF 端自动编号对账不可用；改用**标签集合对账**（见 `work/label_check.txt`）。
 - 目录里 `参考文献` 需手工 `\clearpage\phantomsection\addcontentsline`。
+- **译注机制**：`\zy{…}`（`manyfoot`，印作「译1、译2…」独立序列）与作者 `\footnote` 并行不冲突；每条译注必须带 `[来源：…]` 或 `[译者按`。现有 17 条，见 `资料卡/05-卡点与nLab批注.md`。
+- **`\usepackage{xurl}` 不可删**（在 preamble 的 hyperref 之后）：译注里的 nLab 永久链接很长，缺了它会新增 Underfull/溢出风险。
+- 原文笔误两类处理：实质错误（如 §1.3 的 $\pi_0(G)$）**加译注并登记疑点清单**，不静默改；纯记号漏字（如 §5.6 的 $(A_2)$）直接补正并登记 `work/typos.txt`。
