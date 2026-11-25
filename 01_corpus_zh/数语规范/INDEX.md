@@ -7,29 +7,29 @@
 
 | 表 | 行数 | 覆盖 |
 |---|---|---|
-| 术语（TERMS.tsv） | 2241 | 8 个工程；去重键＝外文＋语种＋译名＋工程 |
+| 术语（TERMS.tsv） | 2277 | 9 个工程；去重键＝外文＋语种＋译名＋工程 |
 | 记号（SYMBOLS.tsv） | 76 | 1 个工程（仅 FUNCTORIALITY 有冻结记号表） |
-| 冲突（CONFLICTS.tsv） | 82 | 高 9 / 中 31 / 低 42 |
-| 宏（MACROS.tsv） | 637 | 跨工程同名不同含义；其中出现在 ≥5 个工程的 344 个 |
+| 冲突（CONFLICTS.tsv） | 91 | 高 11 / 中 31 / 低 49 |
+| 宏（MACROS.tsv） | 662 | 跨工程同名不同含义；其中出现在 ≥5 个工程的 359 个 |
 
 ## 二、术语分级
 
 | 等级 | 条数 | 含义 |
 |---|---|---|
 | A | 170 | 原文页码/式号锚定 |
-| B | 152 | 外部权威（nLab 等） |
-| I | 114 | 本库定案 |
+| B | 167 | 外部权威（nLab 等） |
+| I | 135 | 本库定案 |
 | D | 1805 | 未标级（待考） |
 
-语种：en 1688 / ja 325 / other 228。状态：frozen 432 / confirmed 4 / candidate 1805。
+语种：en 1724 / ja 325 / other 228。状态：frozen 468 / confirmed 4 / candidate 1805。
 
 ## 三、冲突分类
 
 | 类型 | 条数 | 含义 |
 |---|---|---|
-| 一外多中 | 12 | 同一外文有两个以上真正不同的译名——最需要裁决的一类 |
+| 一外多中 | 14 | 同一外文有两个以上真正不同的译名——最需要裁决的一类 |
 | 一中多外 | 32 | 同一译名对应多个外文（同语种才算撞车） |
-| 等级不一致 | 34 | 同一译名在不同工程里标了不同等级 |
+| 等级不一致 | 38 | 同一译名在不同工程里标了不同等级 |
 
 ## 四、优先处理（高严重度）
 
@@ -41,9 +41,11 @@
 | 一外多中 | `cocycle` | 余循环（I，1 处） ｜ 上闭链（D，1 处） | 取「余循环」（等级更高） |
 | 一外多中 | `exact triangle` | 正合三角（B，1 处） ｜ 正合三角形（D，1 处） | 取「正合三角」（等级更高） |
 | 一外多中 | `idempotent` | 幂等（B，1 处） ｜ 幂等元（D，1 处） | 取「幂等」（等级更高） |
+| 一外多中 | `monodromy` | 单值性（I，1 处） ｜ 单值化作用（D，1 处） | 取「单值性」（等级更高） |
 | 一外多中 | `obstruction` | 障碍（A，1 处） ｜ 阻碍（D，1 处） | 取「障碍」（等级更高） |
 | 一外多中 | `skyscraper sheaf` | 摩天层（B，1 处） ｜ 摩天楼层（D，1 处） | 取「摩天层」（等级更高） |
 | 一外多中 | `spin structure` | spin 结构（B，1 处） ｜ 旋量结构（D，1 处） ｜ 自旋结构（D，1 处） | 取「spin 结构」（等级更高） |
+| 一外多中 | `unipotent` | 幂幺（B，1 处） ｜ 幺幂（I，1 处） | 取「幂幺」（等级更高） |
 
 ## 五、宏：形式化之前必须先对齐的部分
 
@@ -51,14 +53,14 @@
 
 | 宏 | 出现工程数 | 不同含义数 | 含义变体 |
 |---|---|---|---|
-| `\R` | 80 | 5 | \ensuremath{\mathbb{R}} ｜ \mathbb{R} ｜ \mathbf R |
-| `\Z` | 79 | 3 | \ensuremath{\mathbb{Z}} ｜ \mathbb{Z} ｜ \mathbf Z |
-| `\C` | 78 | 4 | \ensuremath{\mathbb{C}} ｜ \mathbb{C} ｜ \mathbf C |
-| `\Hom` | 76 | 5 | Hom ｜ \mathop{\mathrm{Hom}} ｜ \operatorname{Hom} |
-| `\Tr` | 74 | 7 | Tr ｜ \mathop{\mathrm{Tr}}\nolimits ｜ \mathsf{Tr} |
+| `\R` | 81 | 5 | \ensuremath{\mathbb{R}} ｜ \mathbb{R} ｜ \mathbf R |
+| `\Z` | 80 | 3 | \ensuremath{\mathbb{Z}} ｜ \mathbb{Z} ｜ \mathbf Z |
+| `\C` | 79 | 4 | \ensuremath{\mathbb{C}} ｜ \mathbb{C} ｜ \mathbf C |
+| `\Hom` | 78 | 5 | Hom ｜ \mathop{\mathrm{Hom}} ｜ \operatorname{Hom} |
+| `\Tr` | 75 | 7 | Tr ｜ \mathop{\mathrm{Tr}}\nolimits ｜ \mathsf{Tr} |
 | `\id` | 70 | 6 | \mathbf{1} ｜ \mathsf{Id} ｜ \operatorname{id} |
-| `\Aut` | 65 | 5 | Aut ｜ \operatorname{Aut} ｜ \operatorname{\text{Aut}} |
-| `\Q` | 64 | 5 | \Theta ｜ \ensuremath{\mathbb{Q}} ｜ \mathbb{Q} |
+| `\Aut` | 68 | 5 | Aut ｜ \operatorname{Aut} ｜ \operatorname{\text{Aut}} |
+| `\Q` | 65 | 5 | \Theta ｜ \ensuremath{\mathbb{Q}} ｜ \mathbb{Q} |
 
 完整清单见 `MACROS.tsv`。注意：`\R` 这类「同一含义的多种写法」已在判定时折算（`\Bbb`→`\mathbb`、`\operatorname{}`/`\text{}`/`{\rm }`→`\mathrm{}`），
 剩下的 `真冲突` 才是语义不同。
@@ -70,4 +72,4 @@
 3. `CONFLICTS.tsv` 的「建议」列是机械推断，**裁定权在仓主**；裁定后改源表，不要改生成物。
 4. 改完跑 `python tools/build_norm.py --check`；表与源数据不一致会让闸门失败，确认无误再重建。
 
-本表由 `tools/build_norm.py` 生成于 2026-11-21（术语 2241 / 记号 76 / 冲突 82 / 宏 637）。
+本表由 `tools/build_norm.py` 生成于 2026-11-21（术语 2277 / 记号 76 / 冲突 91 / 宏 662）。

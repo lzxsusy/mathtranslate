@@ -2,6 +2,17 @@
 
 > **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
 
+## SY02-36《约化群的 Kloosterman 层》（Heinloth–Ngô–Yun）全书中译、入库与资料卡 — 2026-11-25
+
+- 新增 `08_source_code/SY02-36_约化群的Kloosterman层`。底本是 Jochen Heinloth、Bao-Châu Ngô、Zhiwei Yun 的 *Kloosterman sheaves for reductive groups*（arXiv:1005.2765v1，2010-05-16，**58 页**；已发表版 *Ann. of Math.* **177** (2013) 241–310）。入库前已核查全库与知识库：**无既有译本、无资料卡**（`grep -ril kloosterman` 只命中引文），故为**新译**，不是校订。
+- 译本 `源码/main.tex`（ctexart + fandol）分 15 块（`源码/chunks/ch01–ch15`），覆盖 §0 引言到 §11 四个附录与 36 条参考文献；`工程文件/work/` 下有 `fulltext.txt`、`pages/`、`glossary.tsv`（37 条）、`definitions.tsv`（15 条）、`通读笔记.md`、`疑点清单.tsv`（11 条，全部已解）、`contracts/ch01–ch15.md`（全部 `状态: 已审`）。
+- **编号逐条对齐原文**：主定理沿用全局编号 1–4；引理/命题/推论/定义/注/猜想与编号公式**共用一个按节计数器**，用 `\newtheorem{lemma}[equation]` + `\numberwithin{equation}{section}` 复现；引言置为 §0（`\setcounter{section}{-1}` + `\thesection` 对负号的处理）。终稿把 §0–§11 的每一条编号（1.1–11.2）与原文核对为连续且逐条同号，缺号只出现在原文本身缺号处。
+- 编译：`xelatex` 三遍 **61 页 / 0 error / 0 缺字 / 0 undefined / 2 Overfull（0.82pt、2.41pt）**。修掉的坑：`\AA` 与 LaTeX 内置 Å 冲突（改 `\Aff`）、`\Vec` 已被宏包占用（改 `\renewcommand`）、tikzcd 引号标签内不能出现 `]` 与裸括号（加花括号保护）、8 处超宽公式改 `aligned/split`。
+- 三条**译注**（均带 `[来源：…]`）记原文笔误：注 2.5 的 $I(1)/I(0)$ 应为 $I(1)/I(2)$；注 5.14 引作 "Definition 2.2" 实为定义 2.4；§11 第二步末句「$=-1$」与小标题「$=0$」及代入结果矛盾，按 $0$ 译。另有 15 条 `\routenote` 标出每块对应的原文页码。
+- 资料卡五件套 `资料卡/{00-速览,01-结果清单,02-论证地图,03-条款索引,04-术语文献勘误}`：00 含节级页码对照（原文 pX / 译本 pY）与「已证 vs 猜想」分流；01 列全 53 条编号陈述（定理 4、命题 4、引理 19、推论 6、定义 1、注 14、猜想 4、表 2）；03 为 60 余条编号环境的条款索引 + 编号公式缺号说明 + 译注/路线注清单；04 含 37 条术语、36 条文献分组与 7 条勘误。
+- 台账：`RELEASE_REGISTER.csv` 增 SY02-36 一行（arXiv 预印本；演绎作品，底本权利归原作者；风险低；L2 公开·受限；**成品不公开，成品在仓=否**）。底本 PDF 属 **L4 禁入**，按 `COMPLIANCE.md` R1/R2 **不入库、不给直链**；成品 PDF 存 `成品/`（被 `.gitignore` 忽略）本地交付，源码与资料卡随仓。
+- 统计未手改：跑 `make_stats.py --write` 重算 `_meta/stats.json` 与 README 的数字块，再跑 `tools/build_site.py` 刷新站点。
+
 ## SY02-17《仿射 Grassmann 簇与几何 Satake 等价》全本校订 + 17 条 nLab 译注 — 2026-11-25
 
 - 校订 `08_source_code/SY02-17_仿射Grassmann簇与几何Satake等价`（朱歆文 Xinwen Zhu，arXiv:1603.05593v2，95 页）。v1.0 已交 89 页全译（2026-11-22），本轮是**逐行校对 + 批注**，不是重译；全文 22 个 chunk（3,318 行）读完。

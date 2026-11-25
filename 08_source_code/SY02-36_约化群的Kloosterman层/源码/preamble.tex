@@ -1,0 +1,189 @@
+% ============================================================
+%  SY02-36 约化群的 Kloosterman 层 —— 导言区
+%  原文：J. Heinloth, B.-C. Ngô, Z. Zhiwei Yun,
+%        "Kloosterman sheaves for reductive groups"
+%        arXiv:1005.2765v1 (16 May 2010), 58 页
+% ============================================================
+
+\usepackage[a4paper,margin=2.6cm]{geometry}
+
+\PassOptionsToPackage{leqno}{amsmath}% 原文公式号在左
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{xspace}
+\usepackage{tikz}
+\usetikzlibrary{cd}
+\usepackage{tikz-cd}
+\usepackage{microtype}
+
+\usepackage[bookmarks=true,bookmarksnumbered=true,
+  colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,
+  urlcolor=teal!70!black,filecolor=teal!70!black,
+  pdftitle={约化群的 Kloosterman 层},
+  pdfauthor={J. Heinloth, B.-C. Ngô, Z. Yun（译者：数译）}]{hyperref}
+
+\linespread{1.22}
+\setlength{\parskip}{.25em}
+\setlength{\emergencystretch}{3em}
+\sloppy
+
+% ---------- 中文排版 ----------
+\xeCJKsetup{CJKecglue={\hskip 0.24em plus 0.05em minus 0.05em}}
+\ctexset{
+  section    = {name={,}, number=\thesection,    aftername={\enspace}},
+  subsection = {name={,}, number=\thesubsection, aftername={\enspace}},
+  subsubsection = {name={,}, number=\thesubsubsection, aftername={\enspace}},
+}
+% 引言为「第 0 节」：section 计数器从 -1 起，显示为 0
+\renewcommand{\thesection}{%
+  \ifnum\value{section}<0 0\else\arabic{section}\fi}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+
+% ---------- 编号 ----------
+% 原文：主定理 Theorem 1–4 全局编号（用 mainthm 手写号）；
+% 其余定理类与编号公式共用一个按节递增的计数器。
+\numberwithin{equation}{section}
+\theoremstyle{plain}
+\newtheorem{theorem}[equation]{定理}
+\newtheorem{lemma}[equation]{引理}
+\newtheorem{proposition}[equation]{命题}
+\newtheorem{corollary}[equation]{推论}
+\newtheorem{definition}[equation]{定义}
+\newtheorem{example}[equation]{例}
+\newtheorem{remark}[equation]{注}
+\newtheorem{claim}[equation]{断言}
+\newtheorem{notation}[equation]{记号}
+\newtheorem{conjecture}[equation]{猜想}
+\newtheorem{fact}[equation]{事实}
+\theoremstyle{definition}
+
+% 主定理：全局号 1–4，不占节内计数器
+\newenvironment{mainthm}[1][]{%
+  \par\addvspace{\medskipamount}%
+  \noindent\textbf{定理 #1.}\ \itshape\ignorespaces
+}{%
+  \par\addvspace{\medskipamount}%
+}
+\newenvironment{mainthmstar}[1][]{%
+  \par\addvspace{\medskipamount}%
+  \noindent\textbf{定理 #1}\ \itshape\ignorespaces
+}{%
+  \par\addvspace{\medskipamount}%
+}
+
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{3}
+
+% ---------- 译注 ----------
+\newcounter{transnote}
+\newtcolorbox{yizhu}{
+  colback=orange!4, colframe=orange!55!black, boxrule=.4pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt,
+  fontupper=\small,
+  before skip=6pt, after skip=6pt,
+}
+\makeatletter
+\renewenvironment{yizhu}{%
+  \refstepcounter{transnote}%
+  \begin{tcolorbox}[colback=orange!4, colframe=orange!55!black, boxrule=.4pt,
+    left=6pt, right=6pt, top=4pt, bottom=4pt, fontupper=\small,
+    before skip=6pt, after skip=6pt]%
+  \noindent\textbf{译注 \thetransnote：}\ignorespaces
+}{%
+  \end{tcolorbox}%
+}
+\makeatother
+
+% 行内译注：橙色小字脚注
+\newcommand{\zhnote}[1]{%
+  \footnote{\textcolor{orange!70!black}{【译注】}#1}}
+
+% 路线注：每块开头标原文页码
+\newcommand{\routenote}[1]{%
+  \par\noindent{\footnotesize\color{gray}［对应原文 #1］}\par\addvspace{.2em}}
+
+% ---------- 常用记号 ----------
+\newcommand{\Bun}{\mathrm{Bun}}
+\newcommand{\Gr}{\mathrm{Gr}}
+\newcommand{\Loc}{\mathrm{Loc}}
+\newcommand{\Rep}{\mathrm{Rep}}
+\renewcommand{\Vec}{\mathrm{Vec}}
+\newcommand{\Perv}{\mathrm{Perv}}
+\newcommand{\IC}{\mathrm{IC}}
+\newcommand{\AS}{\mathrm{AS}}
+\newcommand{\Kum}{\mathrm{Kum}}
+\newcommand{\Swan}{\mathrm{Swan}}
+\newcommand{\Kl}{\mathrm{Kl}}
+\newcommand{\Hk}{\mathrm{Hk}}
+\newcommand{\Hecke}{\mathcal{H}\mathrm{ecke}}
+\newcommand{\Fl}{\mathrm{Fl}}
+\newcommand{\Aut}{\mathrm{Aut}}
+\newcommand{\Out}{\mathrm{Out}}
+\newcommand{\Stab}{\mathrm{Stab}}
+\newcommand{\Sat}{\mathcal{S}\mathrm{at}}
+\newcommand{\semiSat}{\mathcal{S}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\ck}{\check}
+\newcommand{\ckG}{\check G}
+\newcommand{\ckT}{\check T}
+\newcommand{\ckg}{\check{\mathfrak g}}
+\newcommand{\ckb}{\check{\mathfrak b}}
+\newcommand{\ckn}{\check{\mathfrak n}}
+\newcommand{\LG}{{}^L G}
+\newcommand{\frakg}{\mathfrak{g}}
+\newcommand{\frakt}{\mathfrak{t}}
+\newcommand{\frakb}{\mathfrak{b}}
+\newcommand{\frakn}{\mathfrak{n}}
+\newcommand{\frakh}{\mathfrak{h}}
+\newcommand{\fraku}{\mathfrak{u}}
+\newcommand{\frakm}{\mathfrak{m}}
+\newcommand{\frakz}{\mathfrak{z}}
+\newcommand{\ev}{\mathrm{ev}}
+\newcommand{\pr}{\mathrm{pr}}
+\newcommand{\ad}{\mathrm{ad}}
+\newcommand{\Ad}{\mathrm{Ad}}
+\newcommand{\mult}{\mathrm{mult}}
+\newcommand{\inv}{\mathrm{inv}}
+\newcommand{\St}{\mathrm{Std}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\sgn}{\mathrm{sgn}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\GG}{\mathbb{G}}
+\newcommand{\Aff}{\mathbb{A}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\FF}{\mathbb{F}}
+\newcommand{\Ql}{\bar{\mathbb{Q}}_\ell}
+\newcommand{\Wt}{\widetilde{W}}
+\newcommand{\It}{I^t}
+\newcommand{\Ip}{I^+}
+\newcommand{\Satgeo}{\Sat^{\mathrm{geo}}}
+\newcommand{\Grtriv}{\Gr^{\mathrm{triv}}}
+\newcommand{\KlG}{\Kl_{\ckG}}
+\newcommand{\Klg}{\Kl_{\mathfrak g}}
+\newcommand{\red}{\mathrm{red}}
+\newcommand{\der}{\mathrm{der}}
+\newcommand{\loc}{\mathrm{loc}}
+\newcommand{\rs}{r_s}
+\newcommand{\rl}{r_\ell}
+
+\pagestyle{plain}
