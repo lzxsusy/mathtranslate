@@ -1,0 +1,175 @@
+% rosetta/flow/flow.tex — KW06 论证逻辑流程图（独立编译）
+% 编译：xelatex -interaction=nonstopmode -file-line-error flow.tex
+\documentclass[12pt,border=2mm]{standalone}
+\usepackage[UTF8,fontset=windows]{ctex}
+\usepackage{amsmath,amssymb}
+% 让 ①–⑩ 走中文字体（否则 Latin Modern 缺字）
+\xeCJKDeclareCharClass{CJK}{"2460 -> "2473, "2474 -> "249B}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds,calc,shapes.geometric,decorations.pathreplacing}
+
+\definecolor{pcol}{RGB}{150,74,10}   % 物理侧：橙
+\definecolor{mcol}{RGB}{28,78,140}   % 数学侧：蓝
+\definecolor{gcol}{RGB}{105,105,105} % 公共结构：灰
+
+\newcommand{\boxtitle}[2]{{\normalsize\bfseries\color{#1}#2}}
+\newcommand{\stag}[1]{{\small\color{gcol}#1}}
+\newcommand{\note}[1]{{\small\color{gcol}#1}}
+
+\tikzset{
+  box/.style={rectangle,rounded corners=3pt,draw,line width=0.7pt,
+              align=center,inner sep=4.5pt,font=\small,text=black!90},
+  phys/.style={box,draw=pcol!85!black,fill=pcol!8},
+  mathbox/.style={box,draw=mcol!85!black,fill=mcol!7},
+  bridge/.style={box,draw=gcol!90!black,fill=gcol!8},
+  stage/.style={box,draw=mcol!65!black,fill=mcol!4,line width=1.1pt},
+  endbox/.style={box,draw=mcol!85!black,fill=mcol!11,line width=1.3pt},
+  gapbox/.style={box,draw=gcol!90!black,fill=gcol!4,dashed,line width=0.9pt},
+  arr/.style={-{Stealth[length=2.6mm,width=2.0mm]},line width=0.9pt,draw=black!70},
+  darr/.style={arr,dashed},
+  lbl/.style={font=\small,text=black!75,fill=white,inner sep=1.5pt}
+}
+
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm]
+\useasboundingbox (0,0) rectangle (26,19.4);
+
+% ================= 泳道底色 =================
+\begin{scope}[on background layer]
+  \fill[pcol!5,rounded corners=8pt] (0.15,15.35) rectangle (25.85,18.25);
+  \fill[gcol!6,rounded corners=8pt] (0.15, 9.50) rectangle (25.85,14.40);
+  \fill[gcol!6,rounded corners=8pt] (0.15, 4.65) rectangle (25.85, 9.05);
+  \fill[mcol!5,rounded corners=8pt] (0.15, 0.55) rectangle (25.85, 4.30);
+\end{scope}
+
+% 泳道标签（竖排）
+\node[rotate=90,font=\small\bfseries,text=pcol!75!black] at (0.60,16.72) {物理输入};
+\node[rotate=90,align=center,font=\small\bfseries,text=gcol!85!black]
+  at (0.62,12.00) {主干 ①\\几何舞台与镜像};
+\node[rotate=90,align=center,font=\small\bfseries,text=gcol!85!black]
+  at (0.62, 6.85) {主干 ②\\膜 $\to$ $\mathcal D$-模};
+\node[rotate=90,align=center,font=\small\bfseries,text=mcol!80!black]
+  at (0.60, 2.45) {终点\\GL 对应};
+
+% ================= 标题 =================
+\node[anchor=west,font=\large\bfseries,text=black!90] at (0.55,19.00)
+  {KW06 的逻辑骨架};
+\node[anchor=west,font=\small,text=black!65] at (6.30,19.00)
+  {Kapustin--Witten 2006，arXiv:hep-th/0604151};
+% 图例：箭头
+\begin{scope}[shift={(18.55,19.00)}]
+  \draw[arr] (0,0)--(0.95,0);
+  \node[right,font=\small,text=black!70] at (0.95,0) {正文建立的蕴含};
+\end{scope}
+\begin{scope}[shift={(22.40,19.00)}]
+  \draw[darr] (0,0)--(0.95,0);
+  \node[right,font=\small,text=black!70] at (0.95,0) {纲要 / 待补};
+\end{scope}
+\node[anchor=west,font=\small,text=black!70] at (0.55,18.50)
+  {12 节论证的一条物理推导主线：4d $\mathcal N=4$ 电磁对偶
+   $\Longrightarrow$ 几何 Langlands 对应};
+% 图例：颜色
+\node[anchor=east,font=\small,text=black!70] at (25.80,18.50)
+  {\textcolor{pcol}{$\blacksquare$}\,物理 \quad
+   \textcolor{mcol}{$\blacksquare$}\,数学 \quad
+   \textcolor{gcol}{$\blacksquare$}\,公共 / 桥};
+
+% ================= 第一带：物理输入（左→右） =================
+\node[phys,text width=6.4cm] (p1) at (4.60,16.75) {%
+\boxtitle{pcol}{① 4d $\mathcal N=4$ 超对称杨--米尔斯}\hfill\stag{§2}\\[3pt]
+规范群 $G$，复耦合 $\tau=\tfrac{\theta}{2\pi}+\tfrac{4\pi i}{g^{2}}$\\[2pt]
+线算子：Wilson 线 / 't Hooft 线\\[2pt]
+\note{（$G$：单连通单李群）}};
+
+\node[phys,text width=6.4cm] (p2) at (12.90,16.75) {%
+\boxtitle{pcol}{② 电磁 $S$-对偶}\hfill\stag{§2}\\[3pt]
+$(G,\tau)\;\longleftrightarrow\;({}^LG,\,-1/\tau)$\\[2pt]
+GNO：磁对偶群 $=$ Langlands 对偶群\\[2pt]
+\note{§7：$\pi_1(G)$ 离散通量的精细修正}};
+
+\node[phys,text width=7.6cm] (p3) at (21.80,16.75) {%
+\boxtitle{pcol}{③ GL 拓扑扭化}\hfill\stag{§3}\\[3pt]
+$Q=uQ_l+vQ_r$，$Q^2=0$，$\Psi=\Psi(t,\tau)$\\[2pt]
+典范参数 $\Psi$：整族 4d 拓扑场论 $T(\Psi)$\\[2pt]
+\note{$t=v/u\in\mathbb P^1$；$t=\pm i$：$\Psi=\infty$ 退化}};
+
+\draw[arr] (p1.east) -- (p2.west) node[midway,above,lbl] {对偶};
+\draw[arr] (p2.east) -- (p3.west) node[midway,above,lbl] {扭化};
+
+% ================= 第二带：紧化 → 舞台 → 镜像（右→左） =================
+\node[phys,text width=7.6cm] (c1) at (21.80,12.00) {%
+\boxtitle{pcol}{④ 紧化在曲线 $C$ 上}\hfill\stag{§4}\\[3pt]
+$\Sigma\times C$ 上的 4d TFT $\Longrightarrow$ $\Sigma$ 上的 2d TFT\\[2pt]
+（$C$ 取得很小）得 $\sigma$-模型\\[2pt]
+目标空间：Hitchin 模空间 $\mathcal M_H(G,C)$};
+
+\node[stage,text width=6.4cm] (c2) at (12.90,12.00) {%
+\boxtitle{mcol}{⑤ 几何舞台}\hfill\stag{§4}\\[3pt]
+$\mathcal M_H(G,C)$：Hitchin 模空间\\[2pt]
+$F-\varphi\wedge\varphi=0$，$D\!\star\!\varphi=0$\\[2pt]
+超凯勒：$I$（Higgs 丛）、$J$（平坦丛）、$K=IJ$\\[2pt]
+纤维化 $\pi:\mathcal M_H\to\mathcal B$：SLag 环面、可积};
+
+\node[bridge,text width=6.4cm] (c3) at (4.60,12.00) {%
+\boxtitle{gcol}{⑥ 对偶 $\Leftrightarrow$ 镜像对称}\hfill\stag{§5}\\[3pt]
+$\mathrm{B}\big(\mathcal M_H({}^LG),J\big)$\\[1pt]
+$\;\cong\;\mathrm{A}\big(\mathcal M_H(G),\omega_K\big)$\\[2pt]
+对偶 Hitchin 纤维（同一基 $\mathcal B$）：SYZ 纤维 $T$-对偶\\[2pt]
+$\tau\mapsto-1/\tau$，$\Psi\mapsto-1/\Psi$：同一对偶机};
+
+\draw[arr] (p3.south) -- (c1.north) node[midway,right,lbl] {紧化};
+\draw[arr] (c1.west) -- (c2.east) node[midway,above,lbl] {2d TFT};
+\draw[arr] (c2.west) -- (c3.east) node[midway,above,lbl] {镜像};
+
+% ================= 第三带：膜 → 线算子 → 翻译器（左→右） =================
+\node[mathbox,text width=6.4cm] (b1) at (4.60,6.85) {%
+\boxtitle{mcol}{⑦ A-膜 / B-膜}\hfill\stag{§5.2--6}\\[3pt]
+B-膜 $=$ 导出范畴 $\mathrm{Coh}$\\[2pt]
+A-膜 $=$ Fukaya / 余各向同性\\[2pt]
+0-膜 $\mathcal O_E\;\longleftrightarrow\;(F_b,\nabla_E)$\\[2pt]
+\note{即 Hitchin 纤维 + 平坦线丛}};
+
+\node[mathbox,text width=6.4cm] (b2) at (12.90,6.85) {%
+\boxtitle{mcol}{⑧ 线算子的作用}\hfill\stag{§6, §8--10}\\[3pt]
+Wilson 线 $\mapsto$ 电特征膜\\[1pt]
+$\mapsto$ 局部系统 $\pi_1(C)\to{}^LG$\\[2pt]
+'t Hooft 线 $\mapsto$ Hecke 算子\\[2pt]
+单极子冒泡 $=$ Hecke 修改（§10）\\[2pt]
+\note{特征膜 $=$ Hecke 特征层（M3、M4）}};
+
+\node[mathbox,text width=7.6cm] (b3) at (21.80,6.85) {%
+\boxtitle{mcol}{⑨ 翻译器 $\mathcal B_{cc}$}\hfill\stag{§11}\\[3pt]
+$\mathcal B_{cc}$：典范余各向同性 A-膜\\[1pt]
+$A\;\mapsto\;\operatorname{Hom}(\mathcal B_{cc},A)$\\[2pt]
+A-膜范畴 $\simeq$ $\mathcal D$-模范畴\\[1pt]
+（c.c.\ A-膜、开弦 BRST）\\[2pt]
+\note{M5：翻译器闭合}};
+
+\draw[arr] (c3.south) -- (b1.north) node[midway,right,lbl] {边界条件};
+\draw[arr] (b1.east) -- (b2.west) node[midway,above,lbl] {线算子};
+\draw[arr] (b2.east) -- (b3.west) node[midway,above,lbl] {同一性};
+
+% ================= 第四带：终点与缺口 =================
+\node[endbox,text width=17.4cm] (d1) at (10.10,2.45) {%
+\boxtitle{mcol}{⑩ 终点：几何 Langlands 对应}\hfill\stag{§3.1, §11}\\[4pt]
+$\mathcal D\text{-mod}\big(\mathrm{Bun}_G\big)\;\simeq\;
+ \mathrm{Coh}\big(\mathrm{Loc}_{{}^LG}\big)$\\[4pt]
+Hecke 特征层 $\mathcal F_E\;\longleftrightarrow$ 平坦 ${}^LG$-丛 $E$\\[2pt]
+\note{（$S$-对偶的数学化身）}};
+
+\node[gapbox,text width=5.8cm] (d2) at (22.70,2.40) {%
+\boxtitle{gcol}{§12 缺口与展望}\\[2pt]
+仅非分歧；物理推导，非定理\\[1pt]
+四维提升：三类边界条件\\[1pt]
+$(\mathrm{B,B,B})/(\mathrm{B,A,A})/(\mathrm{A,B,A})$\\[1pt]
+$\mathcal D$-模严格化、't Hooft--Hecke 待补};
+
+\coordinate (qa) at (18.40,0);
+\coordinate (qb) at (22.70,0);
+\draw[arr] (b3.south -| qa) -- (d1.north -| qa)
+  node[midway,left,lbl] {范畴等价};
+\draw[darr] (b3.south -| qb) -- (d2.north -| qb)
+  node[midway,left,lbl] {§12 提升};
+
+\end{tikzpicture}
+\end{document}
