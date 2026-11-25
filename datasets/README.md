@@ -33,6 +33,7 @@
 | `kw06/` | 单篇论文资料卡（Kapustin–Witten 2006）：概念卡 + 推导卡 + 骨架图 + 渲染 Markdown | 一张可独立使用的卡（JSON） | 单卡 3,000 字 |
 | `csw/` | 单篇论文资料卡（Witten 1989，Chern–Simons / Jones 多项式）：31 张概念卡 + 9 张例子卡 + 依赖图 + 生产工作流 | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
 | `glc/` | 整本讲义资料卡（陈麟《几何 Langlands 讲义》，16 章）：154 张概念卡，逐卡经外部核验（`verification.jsonl` 记对齐结论与核验页面） | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
+| `benzvi_glc/` | 单篇综述资料卡（Ben-Zvi《What is the Geometric Langlands Correspondence about?》，arXiv:2605.23167v1，34 页）：42 张概念卡，六轨 O/A–E，全部 `reviewed` + `source-only`，逐卡锚到节与页；用于定位 GLC 陈述、证明架构与可形式化切口 | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
 | `seidel/` | 专著资料卡（Seidel《Fukaya categories and Picard–Lefschetz theory》）：32 张概念卡 + 8 张推导卡 + 30 张校订卡（初版错译→改译→理由），三轨 A/B/C | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
 | `siebert/` | 讲义资料卡（Siebert《镜像对称》讲义译本裁切卡，2019 年秋课程）：概念卡 + 推导卡 + 勘误卡，七轨 A–F + O | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
 | `dmod/` | 整本讲义资料卡（Miličić《D-模的代数理论讲义》，5 章 35 节 283 条）：61 张卡（59 概念 + 2 例子），九轨 O–H，逐卡对齐校订批注本源码行号并在 nLab / Stacks Project 找依据（`verification.jsonl` 记 `alignment` 与核验页面） | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
@@ -85,6 +86,7 @@ datasets/
 ├── ggl19/                     # 单篇论文资料卡：Kapustin arXiv:0811.3264（8 概念 + 4 推导，status=dev）
 ├── hausel22/                  # 单篇论文资料卡：Hausel ICM 2022《增强镜像对称》（概念/推导，六轨 A–E+O）
 ├── grassmann/                 # 整本论文集资料卡：Grassmannians, Moduli Spaces and Vector Bundles（9 篇，90 卡，十轨 A+1–9）
+├── benzvi_glc/                # 单篇综述资料卡：Ben-Zvi《What is the Geometric Langlands Correspondence about?》（42 概念卡，六轨 O/A–E，source-only）
 ├── math/<pkg>.<split>.jsonl   # 数学推理条目（主力）
 ├── parallel/<pkg>.<split>.jsonl
 ├── deepread/<pkg>.<split>.jsonl
