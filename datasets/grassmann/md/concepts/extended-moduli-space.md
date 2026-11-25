@@ -1,0 +1,68 @@
+# 扩张模空间
+
+> `grassmann/concept/extended-moduli-space` · 轨道 4 · 奇异模空间的相交配对 · 状态 draft
+
+> **先自测**：为什么要把不可解的群关系 Φ(h)=1 换成 Φ(h)=exp X，这个 X 到底记录了什么？
+
+## 一句话
+
+把基本群表示的唯一关系 ∏[a_j,b_j]=1 抬到李代数，得到带矩映射的光滑空间；其辛商就是奇异的向量丛模空间 M(n,d)。
+
+## 定义
+
+设 $\Sigma$ 是亏格 $g\ge2$ 的紧 Riemann 曲面，$K=SU(n)$。**扩张模空间** $M^{\mathrm{ext}}$ 由纤维积
+$$\begin{array}{ccc} M^{\mathrm{ext}} & \xrightarrow{\ \mu\ } & \mathrm{Lie}(K)\\ \downarrow & & \downarrow\scriptstyle{\exp}\\ K^{2g} & \xrightarrow{\ \Phi\ } & K \end{array}$$
+给出，即
+$$M^{\mathrm{ext}}=\{(h,X)\in K^{2g}\times\mathrm{Lie}(K):\ \Phi(h)=\exp X\},\qquad \Phi(k_1,\dots,k_{2g})=\prod_{j=1}^{g}k_{2j-1}k_{2j}k_{2j-1}^{-1}k_{2j}^{-1}.$$
+它带 $K$ 的 Hamilton 作用与矩映射 $\mu(h,X)=X$（差一个中心元），在一个稠密开集上光滑且带辛结构；其辛商 $\mu^{-1}(0)/K=\{h: \Phi(h)=1\}/K$ 就是秩 $n$、次数 $d$ 的半稳定丛模空间 $M(n,d)$。
+
+**记号约定**：$K=SU(n)$，$T$ 极大环面，$\mathrm{Lie}(K)=\mathfrak{su}(n)$；$2g$ 是 $\pi_1(\Sigma)$ 的生成元个数；$\Phi$ 是换位子积；$\exp$ 是指数映射；$\mu$ 是 $K$ 作用的矩映射。
+
+## 要点（为什么需要它）
+
+- 动机：$\pi_1(\Sigma)$ 的 $2g$ 个生成元之间只有一条关系 $\prod_j[a_j,b_j]=1$，它在 $K^{2g}$ 里一般无解；抬到 $\mathrm{Lie}(K)$ 就变成 $\Phi(h)=\exp X$，$X$ 记录「差多少」。
+- $\dim M^{\mathrm{ext}}=2g\dim K$，辛形式只在 $\Phi(h)$ 的稳定子非平凡处退化——退化处正是 $M(n,d)$ 的奇点来源，也是 §2 要部分消奇异的原因。
+- $\mu^{-1}(0)/K$ 同时是平坦联络模空间与 $M(n,d)$：扩张空间把「奇异的商」换成「光滑空间 + 矩映射」，等变上同调与局部化才有舞台。
+- 在代数几何中最接近的类似物是 Seshadri 的带水平结构（level structure）向量丛模空间；「带层结构」是误译，与 sheaf 无关。
+- 同一空间也是第 1 篇（Hitchin 联络、Verlinde 丛）的舞台，但那边用复结构做量子化，本章只用辛结构与等变上同调。
+
+## 关键公式
+
+$$
+M^{\mathrm{ext}}=\{(h,X)\in K^{2g}\times\mathrm{Lie}(K):\Phi(h)=\exp X\}
+$$
+
+$$
+\Phi(k_1,\dots,k_{2g})=\prod_{j=1}^{g}k_{2j-1}k_{2j}k_{2j-1}^{-1}k_{2j}^{-1}
+$$
+
+$$
+\mu^{-1}(0)/K\ \cong\ M(n,d)
+$$
+
+## 定理与证明（或缺口）
+
+### 扩张模空间的辛商是 $M(n,d)$
+
+$K=SU(n)$ 在 $M^{\mathrm{ext}}$ 上的 Hamilton 作用有矩映射 $\mu$；辛商 $\mu^{-1}(0)/K$ 同构于 $\Sigma$ 上秩 $n$、次数 $d$ 的半稳定全纯向量丛模空间 $M(n,d)$，其奇点由共轭作用的稳定子群决定（稳定子维数越高越奇异）。
+
+**证明状态：只引出处，原书不重证**
+
+
+出处：中译 p.73（§1，L30–41；构造见 Jeffrey, Math. Ann. 298 (1994)）
+
+## 易错点
+
+- 把 $M^{\mathrm{ext}}$ 当成 $M(n,d)$ 的爆破：它是纤维积（$\Phi(h)=\exp X$ 的图），爆破要沿稳定子层另做（§2）；混为一谈会把 $\dim M^{\mathrm{ext}}=2g\dim K$ 算成 $\dim M(n,d)$。
+- 把「带层结构」读成「带一个层结构的丛」：原文 level structure（Seshadri 的 niveau）指离散水平数据，与 sheaf 无关，中译 p.73 的译名会把人带偏。
+- 把 $\mu$ 写成 $\mu(h,X)=X$ 就以为它是 $K$-等变的：$X$ 与 $\Phi(h)$ 只差一个中心元，忽略这点会把 $\mu^{-1}(0)$ 算错一个中心。
+
+## 相关卡
+
+- [部分消奇异](../concepts/partial-desingularization.md)
+- [Kirwan 映射与正根类](../concepts/kirwan-map-and-class-d.md)
+- [α-稳定凝聚系](../concepts/alpha-stable-coherent-system.md)
+
+## 出处
+
+- ch4 §1 扩张模空间；中译 p.73（英文 PDF p.79），源码 `chapters/ch04.tex:30`

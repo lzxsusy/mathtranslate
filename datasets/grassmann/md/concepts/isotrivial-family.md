@@ -1,0 +1,75 @@
+# 等平凡族 / 簇的形式
+
+> `grassmann/concept/isotrivial-family` · 轨道 6 · 曲线上层的算术 · 状态 draft
+
+> **先自测**：为什么「形式」这个看似抽象的等价关系可以用一个 Aut-扭子的上同调类来记账？
+
+## 一句话
+
+在所有忠实平坦拉回下变成积的族；一个簇的形式就是它的等平凡族，因此形式由 Aut 的扭子（上同调类）分类。
+
+## 定义
+
+给定代数闭域 $k$，$k$-概形的态射 $f:X\to Y$ 称为**等平凡的**（isotrivial），如果存在忠实平坦态射 $g:Z\to Y$、一个 $k$-概形 $W$ 以及同构
+$$X\times_YZ\ \xrightarrow{\ \sim\ }\ W\times Z .$$
+概形 $M$ 的**形式**（form）指与 $M$ 在忠实平坦拓扑下局部同构的概形；等价地说，形式就是等平凡族 $f:X\to Y$ 在 $Y=\mathrm{pt}$ 附近的纤维。分类方式是下降理论：若 $M$ 的自同构群为 $\mathrm{Aut}(M)$，则 $M$ 的形式由扭子
+$$T=\mathrm{Isom}_{Y}(X,\ M\times Y)$$
+给出，它自成一个 $\mathrm{Aut}(M)$-左扭子，故对应于 $\mathrm{H}^1(Y,\mathrm{Aut}(M))$ 中的一个类。
+
+**记号约定**：$f:X\to Y$ 是 $k$-概形态射；$g:Z\to Y$ 忠实平坦；$W$ 是「纤维」的模型；$\mathrm{Aut}(M)$ 是 $M$ 的自同构群概形；扭子指在忠实平坦拓扑下局部平凡、带群作用的丛。
+
+## 要点（为什么需要它）
+
+- 「等平凡」是「局部（忠实平坦地）是积」，不是「纤维都同构」：后者是弱得多的条件，不足以保证下降。
+- 曲线 $C$ 上秩 $r$、次数 $d$ 稳定丛的模空间给出一族基本例子：$\det:M_C(r,d)\to\mathrm{Pic}^d_{C/k}$ 的所有纤维彼此同构，因为 $L'\otimes L^{-1}$ 是 $\mathcal{O}_C$ 的无穷小形变，取 $r$ 次根即给出模问题的同构。
+- 假设 1.3（$C$ 自同构群平凡、$r$ 与 $d$ 均为奇数）把 $\mathrm{Aut}(M_C(r,L))$ 压成 $\mathrm{Pic}_C[r]$ 的像，于是扭子类落在 $\mathrm{H}^1(\mathrm{Pic}^d_{C/k},\mathbf{R}^1\mathrm{pr}_{2*}\boldsymbol{\mu}_r)$ 里。
+- 这一类正是 Kummer 正合列给出的 Chern 类映射下 $\mathscr{L}\otimes L^{-1}$ 的像（断言 1.4），$\mathscr{L}$ 是 $C\times\mathrm{Pic}^d$ 上的重言层。
+- 曲线本身的「叠式形式」是 $\boldsymbol{\mu}_r$-gerbe $\mathscr{C}\to C$：平凡 gerbe $\mathsf{B}\boldsymbol{\mu}_r\times C$ 对应 $C$ 自己。
+
+## 关键公式
+
+$$
+X\times_YZ\ \cong\ W\times Z\qquad(\text{等平凡})
+$$
+
+$$
+T=\mathrm{Isom}_{\mathrm{Pic}^d_{C/k}}(M(r,d),\ M\times\mathrm{Pic}^d_{C/k})
+$$
+
+$$
+\overline{\alpha}\in\mathrm{H}^1(\mathrm{Pic}^d_{C/k},\ \mathbf{R}^1\mathrm{pr}_{2*}\boldsymbol{\mu}_r)
+$$
+
+## 定理与证明（或缺口）
+
+### 扭曲模叠是通常模叠的形式（命题 1.6）
+
+设 $f:C\to S$ 是亏格 $g\ge2$ 的固有光滑相对曲线，$\mathscr{C}\to C$ 是相伴类 $[\mathscr{C}]\in\mathrm{H}^2(C,\boldsymbol{\mu}_r)$ 在 $f$ 的所有几何纤维上平凡的 $\boldsymbol{\mu}_r$-gerbe。则存在 \'etale 满射 $U\to S$ 与叠的同构
+$$\tau: \mathscr{M}_{\mathscr{C}_U/U}(r,L)\xrightarrow{\ \sim\ }\mathscr{M}_{C_U/U}(r,L).$$
+换言之，秩 $r$、行列式 $L$ 的稳定 $\mathscr{C}$-扭曲层的叠是 $C$ 上同类稳定层叠的一种形式。
+
+**证明状态：完整**
+
+1. 由固有光滑基变换定理与 \'etale 上同调构造和极限的相容性，取 \'etale 满射 $U\to S$ 使 $[\mathscr{C}]_U=0$。
+   - *为什么*：[$\mathscr{C}$] 在几何纤维上平凡是闭条件，$\mathrm{H}^2$ 的构造与极限交换，故可在 \'etale 局部把类杀掉。
+2. 此时 $\mathscr{C}\cong\mathsf{B}\boldsymbol{\mu}_{r,C}$，取可逆 $\mathscr{C}$-层 $\chi$ 使 $\chi^{\otimes r}\cong\mathcal{O}$，与 $\chi^{-1}$ 作张量积即得 $\mathscr{M}_{\mathscr{C}/S}(r,L)\cong\mathscr{M}_{C/S}(r,L)$。
+   - *为什么*：中性 gerbe 上的层就是带 $\boldsymbol{\mu}_r$-作用的层，扭 $\chi^{-1}$ 把作用平凡化，同时把行列式由 $L$ 拨回 $L$。
+
+
+出处：中译 p.99（§1 命题 1.6）
+
+## 易错点
+
+- 把等平凡与「所有纤维同构」混为一谈：纤维同构只给出一个集合论上的族，没有下降数据，构不成 $\mathrm{H}^1$ 的类。
+- 忘了假设 1.3 就套断言 1.4：没有「$r,d$ 奇数 + $C$ 无自同构」，$\mathrm{Aut}(M_C(r,L))$ 会更大，$\overline{\alpha}$ 不再是 $\mathrm{Pic}_C[r]$ 的像。
+- 把形式理解成「同一个模空间换基」：形式可以来自非平凡的 gerbe（例 1.8 中 $\mathscr{C}=C\times\mathscr{S}$），此时粗模空间同构而叠不同构。
+
+## 相关卡
+
+- [等平凡 Torelli 定理](../examples/isotrivial-torelli.md)
+- [μ_n-带化的 gerbe](../concepts/gerbe-banded-by-mu-n.md)
+- [凝聚系](../concepts/coherent-system.md)
+
+## 出处
+
+- ch6 §1 定义 1.1–例 1.8；中译 p.97（英文 PDF p.107），源码 `chapters/ch06.tex:70`

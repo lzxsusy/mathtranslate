@@ -1,0 +1,77 @@
+# Petri 映射
+
+> `grassmann/concept/petri-map` · 轨道 7 · α-稳定凝聚系 · 状态 draft
+
+> **先自测**：为什么 Petri 映射的单射性能同时控制模空间的光滑性与维数？
+
+## 一句话
+
+由截面乘法给出的 $V\otimes H^0(E^*\otimes K)\to H^0(\mathrm{End}E\otimes K)$；它的单射性恰好等价于模空间在该点光滑且维数等于 $\beta$，是 Petri 型定理的高秩版本。
+
+## 定义
+
+设 $(E,V)$ 是型为 $(n,d,k)$ 的凝聚系。$(E,V)$ 的 **Petri 映射**是由截面乘法给出的线性映射 $V\otimes H^0(E^*\otimes K)\longrightarrow H^0(\mathrm{End}E\otimes K)$，其中 $K$ 为典范丛。$n=1$ 时它就是 $H^0(L)\otimes H^0(K\otimes L^{-1})\to H^0(K)$。
+
+**记号约定**：$\mathrm{End}E=E\otimes E^*$；$V\subset H^0(E)$ 是 $k$ 维子空间。
+
+## 要点（为什么需要它）
+
+- 经典情形 $n=1$：Petri 映射 $H^0(L)\otimes H^0(K\otimes L^{-1})\to H^0(K)$ 的单射性就是 Petri 定理，其核对应「典范曲线上的二次关系」。
+- 引理 1.8：$G$ 在 $(E,V)$ 处光滑且维数 $\beta$ $\iff$ Petri 映射单射；所以 Petri 单射就是「模空间没有超出预期维数」。
+- 源里用 $V$ 而不是 $H^0(E)$，这正是「凝聚系」相对「向量丛」多出来的信息：把 $k$ 维子空间固定下来，乘法映射才是一个有限的线性映射。
+- $k=n+1$ 时 §6 用对偶张成把 $G_L(n,d,n+1)$ 与线丛的 $G(1,d,n+1)=G^n_d$ 联系起来（定理 6.2 二者双有理），Petri 映射的单射性在两边保持。
+
+## 关键公式
+
+$$
+V\otimes H^0(E^*\otimes K)\longrightarrow H^0(\mathrm{End}E\otimes K)
+$$
+
+$$
+H^0(L)\otimes H^0(K\otimes L^{-1})\longrightarrow H^0(K)\quad(n=1)
+$$
+
+$$
+\dim G=\beta(n,d,k)\iff \text{Petri 映射单射}
+$$
+
+## 定理与证明（或缺口）
+
+### 引理 1.8（Petri 单射 = 光滑 + 维数 $\beta$）
+
+设 $(E,V)\in G(\alpha;n,d,k)$。则 $G(\alpha;n,d,k)$ 在 $(E,V)$ 处光滑且维数为 $\beta(n,d,k)$，当且仅当 $(E,V)$ 的 Petri 映射是单射。
+
+**证明状态：提纲（有缺口）**
+
+
+> **缺口**：原文只引用 [17]。缺的两步是：把 $G$ 在 $(E,V)$ 处的切空间与 Petri 映射的核等同（用 $V\otimes\mathcal{O}\to E$ 的形变），把障碍空间与其上核等同；再由 $\dim\mathrm{coker}=0$ 得光滑、由 $\dim\ker$ 算出 $\beta$。
+
+
+出处：中译 p.118（引理 1.8，引 [17, Prop. 3.10]）
+
+### 定理 6.2（$k=n+1$ 的双有理化）
+
+设 $C$ 是 Petri 曲线，$L$ 是次数 $d>0$ 的线丛且 $(L,V)$ 生成、$\dim V=n+1$。则 $G_L(n,d,n+1)$ 双有理于 $G(1,d,n+1)=G^n_d$，对偶张成 $D$ 给出这个双有理对应。
+
+**证明状态：只引出处，原书不重证**
+
+
+出处：中译 p.121（定理 6.2）
+
+## 易错点
+
+- 把 Petri 映射的源写成 $H^0(E)\otimes H^0(E^*\otimes K)$：凝聚系的 Petri 映射只用 $V$，用 $H^0(E)$ 会把它变成另一个（可能不同的）映射。
+- 把「Petri 映射单射」当成「$G$ 非空」：单射只给出光滑性与维数，存在性仍要看 $d$ 与 $d_0$（模型定理）。
+- 在 $n=1$ 时把 $K\otimes L^{-1}$ 写成 $K-L$ 之外的东西：Petri 映射的靶是 $H^0(K)$，不是 $H^0(K\otimes L)$。
+
+## 相关卡
+
+- [Petri 曲线](../concepts/petri-curve.md)
+- [Brill–Noether 数 $\beta$](../concepts/brill-noether-number.md)
+- [Green 猜想](../concepts/greens-conjecture.md)
+- [Max Noether 定理即 $K_{0,2}=0$](../examples/max-noether-theorem.md)
+
+## 出处
+
+- ch7 §1 定义 1.7（Petri 映射）；中译 p.118（英文 PDF p.132），源码 `chapters/ch07.tex:113`
+- ch7 §1 引理 1.8；中译 p.118（英文 PDF p.132），源码 `chapters/ch07.tex:117`

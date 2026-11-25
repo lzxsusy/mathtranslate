@@ -1,0 +1,89 @@
+# 连续整体生成
+
+> `grassmann/concept/continuously-globally-generated` · 轨道 8 · 阿贝尔簇上的正则性 · 状态 draft
+
+> **先自测**：为什么让 $\alpha$ 在一个开集里连续变动，比固定有限多个 $\alpha$ 的整体生成强得多？
+
+## 一句话
+
+在一个非空开集里让 twisting 参数 $\alpha$ 连续变动，若所有局部截面的求值映射仍满射，就称层关于 $a$ 连续整体生成；它是 $M$-正则性的几何等价说法。
+
+## 定义
+
+设 $a\colon Y\to X$ 是到阿贝尔簇的态射，$\mathcal F$ 是 $Y$ 上的凝聚层。记 $$\operatorname{Ev}_U\colon\bigoplus_{\alpha\in U}H^0(Y,\mathcal F\otimes a^*\alpha)\otimes a^*\alpha^{-1}\longrightarrow\mathcal F,\qquad (s,\alpha)\mapsto s.$$ 若对每个非空开子集 $U\subset\operatorname{Pic}^0(X)$ 都有 $\operatorname{Ev}_U$ 满射，就称 $\mathcal F$ **关于 $a$ 连续整体生成**。更一般地，若 $\operatorname{Supp}\operatorname{Coker}\operatorname{Ev}_U\subset T$ 对一切 $U$ 成立，称 $\mathcal F$ 在闭子集 $T$ 之外连续整体生成；当 $a=\operatorname{alb}_Y$ 时略去 $a$。
+
+**记号约定**：$\alpha\in\operatorname{Pic}^0(X)$ 既表示线丛也表示它沿 $a$ 的拉回；$U$ 取 Zariski 开集（可任意小）；$T$ 为给定的闭子集（例外轨迹），$Z$ 是其补的开集。
+
+## 要点（为什么需要它）
+
+- 与『整体生成』的差别只在量词：整体生成要求所有 $\alpha$ 的截面一起张成，这里只要求任意非空开集里的那些 $\alpha$ 就够——开集可任意小，所以是『连续』的。
+- 定理 5.1 给出等价判定：$GV$ 层 $\mathcal F$ 是 $M$-正则的 $\iff$ 对每个 $IT_0$ 局部自由层 $H$ 与每个非空开集 $U\subset\widehat X$，$\mathcal M_U\colon\bigoplus_{\alpha\in U}H^0(\mathcal F\otimes\alpha^{-1})\otimes H^0(H\otimes\alpha)\to H^0(\mathcal F\otimes H)$ 满射。
+- 推论 5.3：取 $H=\mathcal O_X$（它满足 $IT_0$）得 $M$-正则 $\Rightarrow$ 整体生成；取 $H$ 充分正得连续整体生成。
+- 命题 5.4（可约截面法）：若 $\mathcal F$、$\mathcal A$ 都连续整体生成，则对每个 $\alpha$，$\mathcal F\otimes\mathcal A\otimes a^*\alpha$ 整体生成；在 $T$、$W$ 之外的版本同样成立。
+- 命题 5.5 把机器开到几何：$\dim Y=\dim a(Y)$ 且像不被子环面直纹化时，$a_*\omega_Y$ 是 $M$-正则、连续整体生成，且 $\omega_Y^{\otimes k}\ (k\ge2)$ 在例外轨迹外整体生成。
+
+## 关键公式
+
+$$
+\operatorname{Ev}_U\colon\bigoplus_{\alpha\in U}H^0(Y,\mathcal F\otimes a^*\alpha)\otimes a^*\alpha^{-1}\longrightarrow\mathcal F
+$$
+
+$$
+\mathcal M_U\colon\bigoplus_{\alpha\in U}H^0(X,\mathcal F\otimes\alpha^{-1})\otimes H^0(X,H\otimes\alpha)\longrightarrow H^0(X,\mathcal F\otimes H)
+$$
+
+$$
+M\text{-正则}\iff \mathcal M_U\ \text{对一切 }IT_0\text{ 局部自由的 }H\text{ 与一切非空 }U\text{ 满射}
+$$
+
+## 定理与证明（或缺口）
+
+### 定理 5.1（$M$-正则性的求值判别）
+
+设 $\mathcal F$ 是 $X$ 上的 $GV$-层，则 $\mathcal F$ 是 $M$-正则的，当且仅当对每个满足 $IT_0$ 的局部自由层 $H$ 与每个非空开集 $U\subset\widehat X$，映射 $\mathcal M_U$ 满射。
+
+**证明状态：完整**
+
+1. 对偶化：由 Serre 对偶与 $GV$ 假设，$\operatorname{Ext}^g(H,\mathbf R\Delta\mathcal F)\cong\operatorname{Hom}\bigl(\widehat H,\mathbf R\widehat{\mathcal S}(\mathbf R\Delta\mathcal F)[g]\bigr)$（式 (5)），于是 $\mathcal M_U$ 的对偶就是『对每个 $\alpha\in U$ 取纤维求值』的映射。
+   - *为什么*：式 (5) 把 $H^0$ 层的乘法映射搬到 $\operatorname{Hom}$ 层，满射性因此变成单射性。
+2. 该求值映射是单射，当且仅当 $\mathbf R\widehat{\mathcal S}(\mathbf R\Delta\mathcal F)[g]$ 无挠（式 (6)：无挠层的 $\operatorname{Hom}$ 由各点纤维求值决定）。
+   - *为什么*：这正是命题 2.8 的无挠判别，把几何条件换成代数条件。
+3. 再对偶回来：求值映射单射 $\iff\mathcal M_U$ 满射；又无挠 $\iff M$-正则。两条件等价。
+   - *为什么*：有限维向量空间上的对偶反变正合，单射与满射互换。
+
+
+出处：中译 p.143，定理 5.1（chapters/ch08.tex:320）
+
+### 命题 5.5（极大 Albanese 维数下的生成性）
+
+设 $a\colon Y\to X$ 满足 $\dim Y=\dim a(Y)$ 且 $a(Y)$ 不被子环面直纹化，$Z\subset Y$ 为 $\omega_Y$ 相对 $a$ 的例外轨迹。则 (i) $a_*\omega_Y$ 是 $M$-正则的；(ii) $a_*\omega_Y$ 连续整体生成；(iii) $\omega_Y$ 在 $Z$ 之外连续整体生成；(iv) 对 $k\ge2$ 与任意 $\alpha\in\operatorname{Pic}^0(X)$，$\omega_Y^{\otimes k}\otimes a^*\alpha$ 在 $Z$ 之外整体生成。
+
+**证明状态：提纲（有缺口）**
+
+1. 由 Grauert–Riemenschneider 消没，$R^ia_*\omega_Y=0\ (i\ne0)$，投影公式给出 $V_a^i(\omega_Y)=V^i(a_*\omega_Y)$，故只需对 $a_*\omega_Y$ 验证余维条件。
+   - *为什么*：直像只有第零次非零，Fourier–Mukai 与 $a$ 的拉回可交换，支集轨迹整体搬过去。
+2. Green–Lazarsfeld 的定理给 $\operatorname{codim}V^i(a_*\omega_Y)\ge i$，即 $a_*\omega_Y$ 是 $GV$；若某个 $i$ 取等号，则 Ein–Lazarsfeld 的定理说 $a(Y)$ 被子环面直纹化，与假设矛盾，故余维严格大于 $i$，即 $M$-正则。
+   - *为什么*：『不被直纹化』这个几何假设正是用来堵住等号情形的。
+3. 把 $M$-正则代入定理 5.1（取适当的 $H$）得 (ii)(iii)，再对 $\omega_Y^{\otimes k}=\omega_Y\otimes\omega_Y^{\otimes(k-1)}$ 用命题 5.4 的可约截面法得 (iv)。
+   - *为什么*：§5 的机器就是为这种迭代乘积设计的。
+
+> **缺口**：缺的一步是从『$R^ia_*\omega_Y=0$』与投影公式到『$V_a^i(\omega_Y)=V^i(a_*\omega_Y)$ 且余维逐项相等』的完整交换性论证；原文只用一句『由投影公式』带过，纤维维数、$a$ 的有限性、以及 $a^*$ 与 $\operatorname{Pic}^0$ 平移的相容性都需要单独核对。
+
+
+出处：中译 p.143–144，命题 5.4 与 5.5（chapters/ch08.tex:320 起的 §5）
+
+## 易错点
+
+- 别把『连续整体生成』读成『对每个 $\alpha$ 都整体生成』：定义要求任意非空开集里的 $\alpha$ 的截面总量已经满射，单个 $\alpha$ 的截面可以很少，这正是它比逐点陈述强的地方。
+- 命题 5.5 不能去掉『不被子环面直纹化』：若 $a(Y)$ 恰被子环面直纹化，某个 $\operatorname{codim}V^i$ 会取等号，正则性掉回 $GV$，生成性失效（Ein–Lazarsfeld 的反例机制）。
+- 推论 5.3 里取 $H=\mathcal O_X$ 只给整体生成，取 $H$ 充分正才给连续整体生成；把两者混同会误以为『$M$-正则 $\Rightarrow$ 任意小开集都行』不需要额外论证。
+
+## 相关卡
+
+- [$M$-正则层](../concepts/m-regular-sheaf.md)
+- [$GV$-层](../concepts/gv-sheaf.md)
+- [性质 (N_p)](../concepts/property-np.md)
+
+## 出处
+
+- ch8 §5 连续整体生成（定义 5.2 与定理 5.1）；中译 p.143（英文 PDF p.159），源码 `chapters/ch08.tex:320`

@@ -1,0 +1,98 @@
+# μ_n-带化的 gerbe
+
+> `grassmann/concept/gerbe-banded-by-mu-n` · 轨道 6 · 曲线上层的算术 · 状态 draft
+
+> **先自测**：为什么把惯性从 G_m 换成 μ_n，就能把「Brauer 类」提升成一个可计算的 μ_n-上同调类？
+
+## 一句话
+
+惯性叠同构于 μ_n 的 gerbe：它在 H²(-,μ_n) 里给一个类，这个类到 H²(-,G_m) 的像就是 Brauer 类。
+
+## 定义
+
+一个 **$\boldsymbol{\mu}_n$-gerbe** 是指一个 $S$-叠 $\mathscr{Y}$ 连同一个同构
+$$\boldsymbol{\mu}_{n,\mathscr{Y}}\xrightarrow{\ \sim\ }\mathscr{I}(\mathscr{Y}),$$
+其中 $\mathscr{I}(\mathscr{Y})$ 是惯性叠。称 $\mathscr{Y}$ 是 $Y$ 上的 $\boldsymbol{\mu}_n$-gerbe，如果存在态射 $\mathscr{Y}\to Y$，使得自然映射 $\operatorname{Sh}(\mathscr{Y})\to Y$ 是同构，其中 $\operatorname{Sh}(\mathscr{Y})$ 表示 $\mathscr{Y}$ 在 $S$ 的大 étale 景上的层化。
+
+**可直接核对的等价说法**：
+(1) 存在 étale（或 fppf）满射 $U\to Y$ 使 $\mathscr{Y}\times_YU\cong\mathsf{B}\boldsymbol{\mu}_n\times U$；
+(2) $\mathscr{Y}$ 的同构类落在 $\mathrm{H}^{2}(Y,\boldsymbol{\mu}_n)$，它沿 $1\to\boldsymbol{\mu}_n\to\mathbf{G}_m\to\mathbf{G}_m\to1$ 的像就是 $\mathscr{Y}$ 的 Brauer 类；
+(3) 由于 $\boldsymbol{\mu}_n$-带化，$\mathscr{Y}$ 上的任意拟凝聚层都可分解为特征层的直和 $\mathscr{F}=\mathscr{F}_{0}\oplus\cdots\oplus\mathscr{F}_{n-1}$，其中稳定子群在 $\mathscr{F}_{i}$ 上的自然（左）作用通过 $i$ 次幂映射给出。
+
+**记号约定**：$n$ 在 $S$ 上可逆；$\mathscr{Y}\to X\to S$ 是 $\boldsymbol{\mu}_n$-gerbe；$\mathscr{I}$ 是惯性叠；$\mathsf{B}\boldsymbol{\mu}_n$ 是分类叠；$\operatorname{Sh}$ 是层化；度数：可逆 $\mathscr{X}$-扭曲层 $L$ 满足 $L^{\otimes n}\cong\pi^{*}L'$（$L'$ 为 $X$ 上唯一可逆层），令 $\deg L=\frac{1}{n}\deg L'$；一般局部自由 $V$ 令 $\deg V=\deg\det V$。
+
+## 要点（为什么需要它）
+
+- 「带化」= 把惯性从 $\mathbf{G}_m$ 缩小到 $\boldsymbol{\mu}_n$：$\mathbf{G}_m$-gerbe 只给 Brauer 类 $[\mathscr{X}]\in\mathrm{H}^{2}(X,\mathbf{G}_m)$，$\boldsymbol{\mu}_n$-带化额外给一个提升 $\tilde{c}\in\mathrm{H}^{2}(X,\boldsymbol{\mu}_n)$；Kummer 正合列把两者连起来，提升存在与否是一个真实的障碍（例 1.8 的 $[\mathscr{N}]^{1/r}$ 就是造这个提升）。
+- 层论后果是本章全文真正用到的唯一后果：$\mathscr{X}$ 上的拟凝聚层按 $\boldsymbol{\mu}_n$ 的特征标劈成 $n$ 块。第 $i$ 块 $\mathscr{F}_{i}$ 上 $\zeta\in\boldsymbol{\mu}_n$ 作用为 $\zeta^{i}$，这就是「扭曲层可以按次数做变换」的技术根源。
+- 度数的特设定义：可逆 $\mathscr{X}$-扭曲层 $L$ 的 $L^{\otimes n}$ 带平凡惯性，故下降为 $X$ 上唯一可逆层 $L'$，$\deg L=\frac{1}{n}\deg L'$；对一般局部自由 $V$ 令 $\deg V=\deg\det V$，再令 $\mu(V)=\deg V/\operatorname{rk}V$。
+- 稳定性（A.1.2）：$V$ 稳定当且仅当对所有局部分裂真子层 $W\subsetneqq V$ 有 $\mu(W)<\mu(V)$；半稳定把 $<$ 换成 $\le$。模叠到粗模空间的映射 $\mathscr{M}_{X/k}(n,L)\to M_{X/k}(n,L)$ 本身就是 $\boldsymbol{\mu}_n$-gerbe——这是「粗模空间丢掉带化信息」的最简单例子。
+- 变形三件套（定理 A.2.1）：把小扩张 $0\to I\to\widetilde{A}\to A\to0$ 下延拓扭曲层的障碍放在 $\mathrm{Ext}^{2}_{\mathscr{X}}(\mathscr{F},\mathscr{F}\otimes I)$，所有延拓构成 $\mathrm{Ext}^{1}$ 下的扭子，保持恒等的自同构由 $\mathrm{Hom}(\mathscr{F},\mathscr{F}\otimes I)$ 参数化；相对曲线时 $\mathrm{Ext}^{2}=0$，于是扭曲层叠光滑（推论 A.2.2）。
+
+## 关键公式
+
+$$
+\boldsymbol{\mu}_{n,\mathscr{Y}}\xrightarrow{\ \sim\ }\mathscr{I}(\mathscr{Y})
+$$
+
+$$
+\mathscr{F}=\bigoplus_{i=0}^{n-1}\mathscr{F}_{i},\qquad \zeta\in\boldsymbol{\mu}_n\ \text{acts on}\ \mathscr{F}_{i}\ \text{as}\ \zeta^{i}
+$$
+
+$$
+\deg L=\frac{1}{n}\deg L',\qquad \deg V=\deg\det V,\qquad \mu(V)=\frac{\deg V}{\operatorname{rk}V}
+$$
+
+$$
+\mu(W)<\mu(V)\qquad\text{for every locally split proper subsheaf }W\subsetneqq V
+$$
+
+$$
+\mathfrak{o}\in\mathrm{Ext}^{2}_{\mathscr{X}}(\mathscr{F},\mathscr{F}\otimes I)
+$$
+
+## 定理与证明（或缺口）
+
+### 定理 A.2.1（Illusie 形变理论的三件套）
+
+设 $0\to I\to\widetilde{A}\to A\to0$ 是 $\mathscr{X}$ 上的小扩张，$\mathscr{F}$ 是 $A$ 上的 $\mathscr{X}$-扭曲层（$\mathscr{X}$ 为 $S$ 上的 $\boldsymbol{\mu}_n$-gerbe）。则把 $\mathscr{F}$ 延拓到 $\widetilde{A}$ 的障碍是 $\mathrm{Ext}^{2}_{\mathscr{X}}(\mathscr{F},\mathscr{F}\otimes I)$ 中的一个类；存在延拓时，所有延拓构成 $\mathrm{Ext}^{1}_{\mathscr{X}}(\mathscr{F},\mathscr{F}\otimes I)$ 下的扭子；保持恒等映射的自同构由 $\mathrm{Hom}_{\mathscr{X}}(\mathscr{F},\mathscr{F}\otimes I)$ 参数化。
+
+**证明状态：只引出处，原书不重证**
+
+
+> 原文说明这是把 Illusie 的形变理论照搬到叠 $\mathscr{X}$ 上（$\mathscr{X}$-扭曲层就是 $\mathscr{X}$ 的 étale 拓扑斯上的 $\mathcal{O}$-模），未重写证明；故按 reference 记。
+
+
+出处：ch6 附录 A 定理 A.2.1（原文 p. 113 / en PDF p. 123）
+
+### 推论 A.2.2（相对曲线时扭曲层叠光滑）
+
+若 $\mathscr{X}\to X$ 是 $S$ 上的相对曲线（相对维数 $1$）上的 $\boldsymbol{\mu}_n$-gerbe，则局部自由 $\mathscr{X}$-扭曲层的模叠在 $S$ 上光滑。
+
+**证明状态：完整**
+
+1. 相对维数 $1$ 时 $\mathrm{Ext}^{2}_{\mathscr{X}}(\mathscr{F},\mathscr{F}\otimes I)=0$：$\mathscr{X}$ 相对 $S$ 的纤维维数为 $1$，故扭曲层的形变障碍空间消失。
+   - *为什么*：曲线上的层没有二阶形变障碍（$\mathrm{Ext}^{2}$ 沿维数 $1$ 的纤维为零），这是「曲线上向量丛的形变无障碍」的叠版本。
+2. 障碍群为零 + 模叠局部有限表现 + 形式光滑，推出模叠在 $S$ 上光滑。
+   - *为什么*：形式光滑性由障碍消失给出（逐小扩张可延拓），局部有限表现是标准事实，两者合起来即光滑。
+
+
+出处：ch6 附录 A 推论 A.2.2（中译 p. 114 / en PDF p. 124）
+
+## 易错点
+
+- 把 $\boldsymbol{\mu}_n$-gerbe 与 $\mathbf{G}_m$-gerbe 当成一回事：后者只带 Brauer 类，前者多一个 $\mathrm{H}^{2}(-,\boldsymbol{\mu}_n)$ 的提升；提升不一定存在，Kummer 序列的边界映射正是障碍。
+- 原文定理 A.2.1 把障碍印成 $\mathfrak{o}\subset\mathrm{Ext}^{2}_{\mathscr{X}}(\mathscr{F},\mathscr{F}\otimes I)$，正确记号是 $\in$（译注 11）：障碍是一个类，不是子集。
+- 忘记「$n$ 在 $S$ 上可逆」：特征标分解、Kummer 序列与 $\frac{1}{n}\deg$ 都要求 $\boldsymbol{\mu}_n$ 是常值群概形，正特征下会退化。
+- 把 $\deg$ 当成整数：根叠上 $\deg\mathscr{O}(\xi_{i})=\frac{1}{2}[\kappa_{i}:k]$ 是半整数（批注 7），抛物权取 $\{0,\frac{1}{2}\}$ 而不是整数正因如此。
+
+## 相关卡
+
+- [扭曲层](../concepts/twisted-sheaf.md)
+- [周期与指标](../concepts/period-and-index.md)
+- [根叠](../concepts/root-stack.md)
+- [凝聚系](../concepts/coherent-system.md)
+
+## 出处
+
+- ch6 附录 A 定义 A.1–A.1.2、定理 A.2.1–推论 A.2.2；中译 p.112（英文 PDF p.122），源码 `chapters/ch06.tex:521`

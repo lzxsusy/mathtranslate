@@ -2,6 +2,15 @@
 
 > **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
 
+## GRASSMANN-精读《Grassmannians, Moduli Spaces and Vector Bundles》全书精读 + 90 张资料卡 — 2026-11-26
+
+- 新增 `08_source_code/GRASSMANN-精读_格拉斯曼模空间与向量丛精读/`：Clay Math. Proc. 14（AMS/Clay 2011，9 篇独立论文，中译本 170 页）的逐章精读与审校工程。BRIEF（Phase 0–4 与质量门）、STATUS（全部完成）、9 个工具、13 份任务书、`产出/{导读,批注,笔记,汇总}` 71 个文件。
+- 九章并行（9 个 subagent；并发上限 8，ch9 在 reader8 交卷后补位）：每章六件套 = 导读（≥1200 字）+ 批注（≥12 条，五类）+ errata（10 列）+ 笔记（≥1500 字）+ 卡片候选 + 章报告。总产出：导读 **15,669** 汉字、笔记 **19,421** 汉字、批注 **159** 条、errata **58** 条。
+- errata 合并（`tools/merge_errata.py`）：**58 条**，high 2 / medium 18 / low 38；类型 original-error 22、translation-error 14、term 11、formula 5、typo 4、numbering 2；`existing-note-wrong` **0 条**（81 条已有译注逐条复核，内容全对；仅 ch05 有 5 条页码元数据 +1）。三条实质发现：ch2 两处「把点对粘合」实为「用 $\mathbb{P}^1$ 接桥」（high）；ch4 定义 5.1 的 $\beta\in A$ 与权 $\alpha\in t^*$ 类型错位；ch9 §4 扭转符号与 §6 算例维数 6≠5。
+- 新增 `datasets/grassmann/`：**90 张资料卡**（73 概念 + 17 例子），十轨 A + 1–9，90 张渲染 Markdown，`MAP.md`（三条路线 + 15 条跨章依赖）、`index.jsonl`、`validate_cards.py` / `build_index.py` / `render_md.py`；`--strict` 0 error。
+- 新增思考链 `09_thinking/chains/GRASSMANN_2026-11-25_九章精读流水线.md`（并在 `index.csv` 登记）：九章并行、errata 10 列口径、四组卡手、页表偏差（ch4 +2、ch9 −6）等 6 条决策与 6 条自纠。
+- 统计未手改：跑 `make_stats.py --write` 重算 `_meta/stats.json`；`00_README.md`、`DATASHEET.md` 与 `datasets/README.md` 的计数同步（39 个集 / 1,563 张资料卡，以 `make_stats.py` 实测为准）。
+
 ## SY02-36《约化群的 Kloosterman 层》（Heinloth–Ngô–Yun）全书中译、入库与资料卡 — 2026-11-25
 
 - 新增 `08_source_code/SY02-36_约化群的Kloosterman层`。底本是 Jochen Heinloth、Bao-Châu Ngô、Zhiwei Yun 的 *Kloosterman sheaves for reductive groups*（arXiv:1005.2765v1，2010-05-16，**58 页**；已发表版 *Ann. of Math.* **177** (2013) 241–310）。入库前已核查全库与知识库：**无既有译本、无资料卡**（`grep -ril kloosterman` 只命中引文），故为**新译**，不是校订。

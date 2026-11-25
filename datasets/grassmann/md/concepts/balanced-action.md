@@ -1,0 +1,79 @@
+# 平衡作用
+
+> `grassmann/concept/balanced-action` · 轨道 4 · 奇异模空间的相交配对 · 状态 draft
+
+> **先自测**：为什么平衡性要逐层检验稳定子群的辛切片，只查整个群在向量空间上的作用不够？
+
+## 一句话
+
+Kiem 的判据：辛商上每点的稳定子群单位分支都要在其辛切片上线性平衡；满足时相交上同调恰是等变上同调的一个截面 V_M，配对才能用杯积算。
+
+## 定义
+
+设 $G$ 是连通约化群，$K$ 是其极大紧子群，$G=K^{\mathbb{C}}$ 线性作用于复向量空间 $A$。称 $\beta\in\mathcal{B}$，如果 $\beta$ 是极大环面作用的某个权子集的凸包中距 $0$ 最近的点；令 $n(\beta)=\#\{\alpha: \langle\alpha,\beta\rangle<\langle\beta,\beta\rangle\}$ 为满足该严格不等式的权的个数。若对每个 $\beta\in\mathcal{B}$ 有
+$$2n(\beta)\ \ge\ \tfrac12\dim A,$$
+则称该线性作用是**线性平衡的**（linearly balanced）。设 $U$ 是带矩映射 $\mu:U\to\mathfrak{g}^*$ 的 Hamilton 空间，$Z=\mu^{-1}(0)$，并对 $p\in Z$ 记其稳定子群单位连通分支为 $H$、辛切片为
+$$\widehat W_p=(T_p(G\cdot p))^{\omega}/T_p(G\cdot p),\qquad \widehat W_p=\widehat W_p^H\oplus W_p .$$
+若 (i) 对每个 $p\in Z$，$H$ 在 $W_p$ 上的作用线性平衡；(ii) 对同样作为 $Z$ 中某点稳定子单位分支出现的子群 $K\subset H$，$N^K\cap H/K$ 在 $K$-不动点子空间 $W_p^{\mathfrak{k}}$ 上的作用也线性平衡（$N^K$ 是 $K$ 的正规化子），则称 $G$ 在 $U$ 上的作用是**平衡的**（balanced）。
+
+**记号约定**：$G$ 连通约化群，$K$ 极大紧子群，$\mathfrak{g},\mathfrak{k}$ 为 Lie 代数；$T$ 极大环面，权 $\alpha\in\mathfrak{t}^*$；$n(\beta)$ 只数严格不等式 $\langle\alpha,\beta\rangle<\langle\beta,\beta\rangle$ 的权；$W_p$ 是辛切片 $\widehat W_p$ 中 $H$-不动部分的补。
+
+## 要点（为什么需要它）
+
+- 平衡性是逐点、逐层的条件：先取 $Z=\mu^{-1}(0)$ 上每点的稳定子单位分支 $H$，再看 $H$ 在辛切片 $W_p$ 上的作用；只看 $G$ 在 $A$ 上的整体作用不够。
+- $n(\beta)$ 用严格不等号计数，$\beta$ 越过超平面 $\langle\alpha,\beta\rangle=\langle\beta,\beta\rangle$ 时 $n(\beta)$ 跳变——这就是穿墙在权空间里的样子。
+- 对 $G=\mathbb{C}^*$ 的线性作用，「正权个数等于负权个数」是线性平衡的充分条件而非必要条件：这个加强的「当且仅当」是译文加出来的，两种读法下都有反例。
+- 弱平衡（weakly balanced）是更弱的条件，定理 5.4 与 5.5 在弱平衡下仍成立；$SL(p)$ 在 $R(n,d)^{ss}$ 上正是弱平衡的（定理 5.6），所以框架真的落在 $M(n,d)$ 上。
+- 定义 5.3 的第二条要遍历 $H$ 内的子群 $K$，这一条是「弱」与「平衡」的分界，漏掉它会把弱平衡误判成平衡。
+
+## 关键公式
+
+$$
+2n(\beta)\ \ge\ \tfrac12\dim A,\qquad n(\beta)=\#\{\alpha: \langle\alpha,\beta\rangle<\langle\beta,\beta\rangle\}
+$$
+
+$$
+\widehat W_p=(T_p(G\cdot p))^{\omega}/T_p(G\cdot p),\qquad \widehat W_p=\widehat W_p^H\oplus W_p
+$$
+
+$$
+\kappa_M^{ss}:V_M\ \xrightarrow{\ \sim\ }\ IH^*(M//G)\qquad(\text{作用平衡时})
+$$
+
+## 定理与证明（或缺口）
+
+### 平衡作用给出相交上同调的截面（定理 5.4）
+
+若 $G$ 在 $M$ 上的作用是平衡的，则存在 $H_G^*(M^{ss})$ 的向量子空间 $V_M$，使得 Kirwan 映射的限制
+$$\kappa_M^{ss}:V_M\to IH^*(M//G)$$
+是双射；弱平衡作用同样满足此结论。
+
+**证明状态：只引出处，原书不重证**
+
+
+出处：中译 p.77（§5 定理 5.4，引 Kiem, Invent. Math. 155 (2004) §7）
+
+### $SL(p)$ 作用是弱平衡的（定理 5.6）
+
+$M(n,d)=R(n,d)^{ss}//SL(p)$，其中 $p=d-n(g-1)$；$SL(p)$ 在光滑拟射影簇 $R(n,d)^{ss}$ 上的作用是弱平衡的，故定理 5.4、5.5 适用于 $M(n,d)$。
+
+**证明状态：只引出处，原书不重证**
+
+
+出处：中译 p.78（§5 定理 5.6，引 Kiem, Contemp. Math. 258 (2000) Prop. 7.4）
+
+## 易错点
+
+- 把 $n(\beta)$ 的不等号写成 $\le$：$\beta=0$ 会给出 $n(0)=0$，于是任何非平凡作用都不平衡，与定理 5.6（$SL(p)$ 弱平衡）直接冲突——原书没交代 $\mathcal{B}$ 是否含 $0$，实用中按 $\beta\ne0$ 读。
+- 把「当且仅当」照抄下来：$G=\mathbb{C}^*$ 取 $A=\mathbb{C}^2$、权 $(1,0)$，正权 1 个、负权 0 个，按充要条件应不平衡，实际 $\beta=1$ 时 $2n=2=\tfrac12\dim_{\mathbb{R}}A$ 是平衡的；中译 p.76 这里比英文原文强，见 errata。
+- 只验证 $G$ 在 $A$ 上的线性平衡就宣布「平衡」：定义 5.3 的两条要逐个稳定子层验证，$M(n,d)$ 里稳定子可以整个 $SU(2)$，漏层就是把奇点当光滑点处理。
+
+## 相关卡
+
+- [用 V_M 表示的相交配对](../concepts/intersection-pairing-via-vm.md)
+- [部分消奇异](../concepts/partial-desingularization.md)
+- [部分 Grothendieck 解消与幂零切片](../concepts/partial-grothendieck-resolution-and-nilpotent-slice.md)
+
+## 出处
+
+- ch4 §5 定义 5.1–5.3；中译 p.77（英文 PDF p.83），源码 `chapters/ch04.tex:172`

@@ -1,6 +1,6 @@
 # Dataset Card · 数译中文数学译注语料
 
-> 版本 `v1.3.0`（2026-11-21；统计改为从 `_meta/stats.json` 单一来源取数，新增「数语规范」与「对齐卡」两层）· 维护者：超对称梦想家（chaoduicheng）
+> 版本 `v1.4.0`（2026-11-26；新增 `grassmann/` 90 卡与 `GRASSMANN-精读` 工程；上一版 v1.3.0 为 2026-11-21，统计改为从 `_meta/stats.json` 单一来源取数，新增「数语规范」与「对齐卡」两层）· 维护者：超对称梦想家（chaoduicheng）
 > 仓库：<https://atomgit.com/lzxSUSUY/mathtranslate> · 镜像：<https://gitee.com/supersymmetry-dream-home/shuyi>
 
 ## 1. 这是什么
@@ -16,7 +16,7 @@
 | 权威层 | `08_source_code/` | **138 部工程**的 LaTeX 源码 + 工程文档（其中 **125 部带 LaTeX 源码**；13 部无源码，只有成品 PDF 或译本正文） |
 | 衍生层 | `01_corpus_zh/`、`02_trajectories/`、`06_sessions_raw/`（分片在 Release 附件）、`03_translations_meta/` | 语料、轨迹、会话、元数据与术语 |
 | 规范层 | `01_corpus_zh/数语规范/` | **术语 2,277 条 / 记号 76 条 / 冲突 91 组 / 宏 662 个**；三份规范（术语+记号、中文语体、对齐卡） |
-| 卡片层 | `datasets/` | **36 个集 / 1,446 张资料卡**；其中 `leanstmt/` 是 **40 条自然语言↔Lean 4 对齐卡**（21 certified + 19 gap） |
+| 卡片层 | `datasets/` | **39 个集 / 1,563 张资料卡**；其中 `leanstmt/` 是 **40 条自然语言↔Lean 4 对齐卡**（21 certified + 19 gap） |
 | 过程层 | `04_playbook/`、`05_seminar_witten/`、`10_gmn_series/` | 翻译纪律、审校报告、研讨班与 GMN 系列的研究笔记 |
 | 参考层 | `07_refs_nlab/` | nLab 条目摘要 120 条 + 替代来源卡 37 份 + 110 条来源真实性抽查；几何 Langlands 线的术语与引文底账 |
 
@@ -118,7 +118,7 @@ schema 已统一（`_normalize_schema.py`）：`flags` 恒为数组（可为空�
   title        = {数译：中文数学译注文献库（v1.3.0）},
   year         = {2026},
   howpublished = {\url{https://atomgit.com/lzxSUSUY/mathtranslate}},
-  note         = {138 部译注 / 51{,}009 段中文数学语料 / 2{,}214 条术语 / 1{,}446 张资料卡 / 40 条中文↔Lean 对齐卡 / 402 条 agent 轨迹}
+  note         = {138 部译注 / 51{,}009 段中文数学语料 / 2{,}214 条术语 / 1{,}563 张资料卡 / 40 条中文↔Lean 对齐卡 / 402 条 agent 轨迹}
 }
 ```
 

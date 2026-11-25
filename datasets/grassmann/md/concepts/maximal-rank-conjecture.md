@@ -1,0 +1,84 @@
+# 极大秩猜想
+
+> `grassmann/concept/maximal-rank-conjecture` · 轨道 2 · Koszul 上同调 · 状态 draft
+
+> **先自测**：为什么「$\nu_n$ 极大秩」等价于知道曲线在 $\mathbb{P}^r$ 中的 Hilbert 函数？
+
+## 一句话
+
+预言 Hilbert 概形中含一般模曲线的分支里，一般嵌入曲线 $C\subset\mathbb{P}^r$ 的各次限制映射 $\nu_n$ 都有极大秩（单射或满射）；它统一了超曲面计数与 Green 猜想。
+
+## 定义
+
+固定 $g,r,d$ 使 $\rho(g,r,d)\ge0$，记 $\mathfrak{I}_{d,g,r}$ 为 Hilbert 概形 $\mathrm{Hilb}_{d,g,r}$ 中含一般模曲线的唯一分支（一般点是光滑的 $C\subset\mathbb{P}^r$，$\deg C=d$、$g(C)=g$，且模映射支配 $\mathcal{M}_g$）。**极大秩猜想**（猜想 5.1）断言：一般嵌入曲线 $[C\hookrightarrow\mathbb{P}^r]\in\mathfrak{I}_{d,g,r}$ 对一切 $n\ge1$ 使限制映射 $\nu_n(C):H^0(\mathbb{P}^r,\mathcal{O}_{\mathbb{P}^r}(n))\to H^0(C,\mathcal{O}_C(n))$ 具有极大秩，即单射或满射。
+
+**记号约定**：$\nu_n(L):\mathrm{Sym}^nH^0(C,L)\to H^0(C,L^{\otimes n})$ 是 $|L|$ 给出的 $n$ 次乘法映射。
+
+## 要点（为什么需要它）
+
+- 这是「数超曲面」的经典问题的现代形式（Harris）：$\nu_n$ 的核就是 $h^0(\mathbb{P}^r,\mathcal{I}_{C/\mathbb{P}^r}(n))$，极大秩意味着这个数取到可能的最小值。
+- 当 $C$ 是 Petri 一般曲线且 $n\ge2$ 时 $H^1(C,\mathcal{O}_C(n))=0$，故 $h^0(C,\mathcal{O}_C(n))=nd+1-g$；于是极大秩等价于「知道 Hilbert 函数」。
+- $\rho(g,r,d)=0$ 时强极大秩猜想（5.4）与 5.1 等价（分支唯一性的单值性论证），并把失效轨迹写成行列式簇 $\Sigma^r_{n,g,d}(C)$。
+- 例 5.2 是最简单的失效：$\mathfrak{I}_{6,3,3}$ 中位于二次曲面上的曲线，$\nu_2$ 不同构。
+
+## 关键公式
+
+$$
+\nu_n(C):H^0(\mathbb{P}^r,\mathcal{O}_{\mathbb{P}^r}(n))\to H^0(C,\mathcal{O}_C(n))
+$$
+
+$$
+\mathrm{rank}(\mathcal{E}_n)=\binom{r+n}{n},\qquad \mathrm{rank}(\mathcal{F}_n)=h^0(C,L^{\otimes n})=nd+1-g
+$$
+
+$$
+\dim\Sigma^r_{n,g,d}(C)=\rho(g,r,d)-1-\left|\mathrm{rank}(\mathcal{E}_n)-\mathrm{rank}(\mathcal{F}_n)\right|
+$$
+
+## 定理与证明（或缺口）
+
+### 猜想 5.1（极大秩猜想）
+
+一般嵌入光滑曲线 $[C\hookrightarrow\mathbb{P}^r]\in\mathfrak{I}_{d,g,r}$ 具有极大秩：对所有 $n\ge1$，限制映射 $\nu_n(C):H^0(\mathbb{P}^r,\mathcal{O}_{\mathbb{P}^r}(n))\to H^0(C,\mathcal{O}_C(n))$ 要么单射、要么满射。
+
+**证明状态：只引出处，原书不重证**
+
+
+出处：中译 p.49（猜想 5.1，引 Harris）
+
+### 猜想 5.4（强极大秩猜想）
+
+固定 $g,r,d\ge1$ 与 $n\ge2$。对一般曲线 $[C]\in\mathcal{M}_g$，行列式簇 $\Sigma^r_{n,g,d}(C):=\{L\in G^r_d(C):\nu_n(L)$ 不具极大秩$\}$ 有预期维数 $\rho(g,r,d)-1-|\mathrm{rank}\mathcal{E}_n-\mathrm{rank}\mathcal{F}_n|$，负维数按约定表示空集。
+
+**证明状态：只引出处，原书不重证**
+
+
+出处：中译 p.50（猜想 5.4）
+
+### 定理 5.3（$\rho=0$ 的极大秩除子）
+
+设 $g=s(2s+1)$、$r=2s$、$d=2s(s+1)$。则 $\mathcal{Z}_{g,0}:=\{[C]:\exists L\in W^r_d,\ \nu_2(L):\mathrm{Sym}^2H^0(C,L)\xrightarrow{\not\cong}H^0(C,L^{\otimes2})\}$ 是 $\mathcal{M}_g$ 上的有效除子；等价地，一般曲线对所有 $L\in W^r_d(C)$ 满足极大秩。
+
+**证明状态：只引出处，原书不重证**
+
+
+出处：中译 p.50（定理 5.3，引 Farkas）
+
+## 易错点
+
+- 把「极大秩」读成「满射」：它视两端维数而定——$\binom{r+n}{n}\le nd+1-g$ 时要求单射，反之要求满射。
+- 把 5.1 与 5.4 当成同一猜想：5.1 只对 $\mathfrak{I}_{d,g,r}$ 的一般点陈述，5.4 对每条一般曲线上的每个 $L\in G^r_d$ 陈述；只有 $\rho=0$ 时二者才等价。
+- $|\mathrm{rank}\mathcal{E}_n-\mathrm{rank}\mathcal{F}_n|$ 的绝对值不能丢：负维数按约定表示空集，丢绝对值会把该空集算成正维数。
+- 忘记 $H^1(C,\mathcal{O}_C(n))=0$ 的前提：「极大秩 $\iff$ 知道 Hilbert 函数」用到 $h^0(C,\mathcal{O}_C(n))=nd+1-g$，对特殊曲线不成立。
+
+## 相关卡
+
+- [Koszul 闭链与退化轨迹](../concepts/koszul-cycle.md)
+- [$(6,3,3)$ 上二次曲面上的曲线](../examples/degree-6-genus-3-quadric.md)
+- [极小合冲猜想](../concepts/minimal-syzygy-conjecture.md)
+- [$g=10$、$(2,12,4)$ 的 $d_0$（例 7.5）](../examples/example-genus-10-d0.md)
+
+## 出处
+
+- ch2 §5.1 极大秩猜想；中译 p.49（英文 PDF p.53），源码 `chapters/ch02.tex:803`
+- ch2 §5.1 强极大秩猜想；中译 p.50（英文 PDF p.54），源码 `chapters/ch02.tex:853`

@@ -1,0 +1,79 @@
+# $m$-$\Theta$-正则性
+
+> `grassmann/concept/m-theta-regular` · 轨道 8 · 阿贝尔簇上的正则性 · 状态 draft
+
+> **先自测**：为什么把正则性写成『扭 $(m-1)\Theta$ 之后 $M$-正则』，就能得到与射影空间上完全平行的 Castelnuovo–Mumford 引理？
+
+## 一句话
+
+若层 $\mathcal F$ 扭上 $(m-1)\Theta$ 之后是 $M$-正则的，就称 $\mathcal F$ 为 $m$-$\Theta$-正则；这一坐标化把 $M$-正则性搬到极化阿贝尔簇上，换来阿贝尔版 Castelnuovo–Mumford 引理与正规生成判据。
+
+## 定义
+
+设 $(X,\Theta)$ 是极化阿贝尔簇、$\mathcal F$ 是 $X$ 上的凝聚层。记 $\mathcal F(k\Theta):=\mathcal F\otimes\mathcal O_X(k\Theta)$。若 $\mathcal F((m-1)\Theta)$ 是 $M$-正则的，就称 $\mathcal F$ 是 **$m$-$\Theta$-正则的**。于是 $0$-$\Theta$-正则就是『$\mathcal F(-\Theta)$ 是 $M$-正则的』，而 $(-1)$-$\Theta$-正则就是『$\mathcal F(-2\Theta)$ 是 $M$-正则的』。
+
+**记号约定**：$\Theta$ 是主极化除子；$IT_0$ 指对一切 $\alpha\in\operatorname{Pic}^0(X)$ 与 $i>0$ 有 $H^i(\mathcal F\otimes\alpha)=0$ 且 $R^0\widehat{\mathcal S}\mathcal F$ 局部自由；$r_F=\operatorname{rk}F$，$r'_E=\operatorname{rk}\widehat E(-\Theta)$。
+
+## 要点（为什么需要它）
+
+- 定理 7.24（阿贝尔 Castelnuovo–Mumford 引理）：$\mathcal F$ 是 $0$-$\Theta$-正则的 $\Rightarrow$ (1) 整体生成；(2) 对一切 $m\ge1$ 是 $m$-$\Theta$-正则的；(3) 对 $k\ge2$，$H^0(\mathcal F(\Theta))\otimes H^0(\mathcal O(k\Theta))\to H^0(\mathcal F((k+1)\Theta))$ 满射。
+- 定理 7.34：对 $(-1)$-$\Theta$-正则的向量丛 $E,F$，乘法映射 $H^0(E)\otimes H^0(F)\to H^0(E\otimes F)$ 满射；推论 7.35 得每个这样的丛都正规生成。
+- 半齐次丛是计算入口：引理 7.29 说半齐次 $E$ 是 $m$-$\Theta$-正则的 $\iff E((m-1)\Theta)$ 满足 $IT_0$，于是抽象正则性变成可算的消没。
+- 例 7.36：$L=\mathcal O_X(m\Theta)$ 在 $m\ge3$ 时是 $(-1)$-$\Theta$-正则的，于是恢复古典事实『$\mathcal O_X(m\Theta)$ 射影正规』。
+- 定理 7.30 给半齐次丛的数值判据：$E,F$ 半齐次且均 $0$-$\Theta$-正则，若 $\frac1{r_F}c_1(F(-\Theta))+\frac1{r'_E}\phi_\Theta^*c_1(\widehat E(-\Theta))>0$，则 $H^0(E)\otimes H^0(t_x^*F)\to H^0(E\otimes t_x^*F)$ 对一切 $x$ 满射。
+
+## 关键公式
+
+$$
+\mathcal F\ \text{是 }m\text{-}\Theta\text{-正则}\iff \mathcal F((m-1)\Theta)\ \text{是 }M\text{-正则}
+$$
+
+$$
+H^0(\mathcal F(\Theta))\otimes H^0(\mathcal O(k\Theta))\twoheadrightarrow H^0(\mathcal F((k+1)\Theta))\qquad(k\ge2)
+$$
+
+$$
+\tfrac1{r_F}c_1(F(-\Theta))+\tfrac1{r'_E}\phi_\Theta^*c_1(\widehat E(-\Theta))>0
+$$
+
+## 定理与证明（或缺口）
+
+### 定理 7.24（阿贝尔 Castelnuovo–Mumford 引理）
+
+设 $(X,\Theta)$ 是极化阿贝尔簇，$\mathcal F$ 是 $0$-$\Theta$-正则的凝聚层。则 (1) $\mathcal F$ 整体生成；(2) 对每个 $m\ge1$，$\mathcal F$ 是 $m$-$\Theta$-正则的；(3) 对每个 $k\ge2$，乘法映射 $H^0(\mathcal F(\Theta))\otimes H^0(\mathcal O(k\Theta))\to H^0(\mathcal F((k+1)\Theta))$ 满射。
+
+**证明状态：只引出处，原书不重证**
+
+
+出处：中译 p.153，定理 7.24，出自 [PP1] Thm 6.3（章内未重证）
+
+### 定理 7.34（$(-1)$-$\Theta$-正则丛的乘法映射）
+
+设 $E,F$ 是 $X$ 上 $(-1)$-$\Theta$-正则的向量丛，则乘法映射 $H^0(E)\otimes H^0(F)\to H^0(E\otimes F)$ 满射，且每个这样的 $E$ 都正规生成。
+
+**证明状态：完整**
+
+1. 把乘法映射放进一个 Kempf 型图表：底行是 $H^0(E)\otimes H^0(F)\to H^0(E\otimes F)$，上方几行是把 $E,F$ 分别扭 $\Theta$ 之后的乘法映射，竖箭头来自定理 7.24 的 (3)（对 $k=2$）。
+   - *为什么*：图表把待证映射夹在已知满射之间，中间项的满射性由定理 7.24(3) 提供。
+2. 底行右端的满射性由定理 5.1 的求值判别给出：$(-1)$-$\Theta$-正则意味着 $E(-2\Theta)$、$F(-2\Theta)$ 都 $M$-正则，故它们的乘法映射对每个 $IT_0$ 局部自由层满射。
+   - *为什么*：定理 5.1 把 $M$-正则性等价地写成 $\mathcal M_U$ 满射，正好是所需形态。
+
+
+出处：中译 p.157（§7.3 末，紧接定理 7.30 之后）
+
+## 易错点
+
+- $0$-$\Theta$-正则不是『$\mathcal F$ 本身 $M$-正则』，而是『$\mathcal F(-\Theta)$ 是 $M$-正则的』；差这一格 $\Theta$ 在定理 7.24 的结论里会被放大成整体生成与射影正规的差别。
+- 别以为定义只对线丛说：定义 7.23 对任意凝聚层说，定理 7.34 用的正是向量丛 $E,F$ 以及它们的斜 Pontrjagin 积。
+- 定理 7.24 在章内是从 [PP1, Thm 6.3] 引进的（未重证）；引用时要把出处带全，否则写证明时会卡在『$H^0(\mathcal O(k\Theta))$ 如何扫出 $\mathcal F((k+1)\Theta)$』这一步。
+
+## 相关卡
+
+- [$M$-正则层](../concepts/m-regular-sheaf.md)
+- [半齐次向量丛](../concepts/semihomogeneous-bundle.md)
+- [$M$-正则性指标 $m(L)$](../concepts/m-regularity-index.md)
+- [Koszul 上同调](../concepts/koszul-cohomology.md)
+
+## 出处
+
+- ch8 §7.3 $m$-$\Theta$-正则性（定义 7.23）；中译 p.153（英文 PDF p.170），源码 `chapters/ch08.tex:771`

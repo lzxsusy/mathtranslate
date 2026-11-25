@@ -1,0 +1,87 @@
+# Green 猜想
+
+> `grassmann/concept/greens-conjecture` · 轨道 2 · Koszul 上同调 · 状态 draft
+
+> **先自测**：为什么只要验证 $p=g-\mathrm{Cliff}(C)-1$ 这一个下标，Green 猜想就成立？
+
+## 一句话
+
+预言典范曲线的 Koszul 上同调恰在 Clifford 指标处开始消没：$K_{p,2}(C,K_C)=0\iff p<\mathrm{Cliff}(C)$；它把曲线的外在方程与内在线性系连成一句话。
+
+## 定义
+
+设 $C$ 是亏格 $g\ge2$ 的光滑射影曲线。**Green 猜想**断言 $K_{p,2}(C,K_C)=0\iff p<\mathrm{Cliff}(C)$（原文式 (1)）。等价的**猜想 4.1**（$q=1$ 的形式）是：对任意 $[C]\in\mathcal{M}_g$ 及所有 $p\ge g-\mathrm{Cliff}(C)-1$，有 $K_{p,1}(C,K_C)=0$。两种形式由 Koszul 对偶（定理 2.7）互换。
+
+**记号约定**：$b_{p,q}=\dim K_{p,q}(C,K_C)$ 排成 Betti 表；$p$ 的范围是 $0\le p\le g-2$。
+
+## 要点（为什么需要它）
+
+- 它是「外在 vs 内在」的等式：左边是典范嵌入 $C\subset\mathbb{P}^{g-1}$ 的理想与合冲，右边是曲线所有线性系的 Clifford 指标。
+- 由定理 2.7（$n=1$、$q=1$，此时 $r=g-1$）得 $K_{p,1}(C,K_C)^{\vee}\cong K_{g-2-p,1}(C,K_C)$，于是 $p\ge g-\mathrm{Cliff}-1$ 的消没与 $p\le\mathrm{Cliff}-1$ 的消没互为镜像；原文再把它归结为 $K_{\mathrm{Cliff}-1,2}=0$。
+- $p=0$ 是 Max Noether 定理（$K_{0,2}=0\iff$ 射影正规），$p=1$ 是 Enriques–Babbage–Petri 定理；$p\ge2$ 才是真正的新内容。
+- 已知情形：一般曲线（Voisin，$g=2p+3$ 与 $g=2p+4$）、一般 $d$-棱曲线、极大棱性曲线；迄今无反例。边界由定理 2.4 钉死，故猜想若成立即最优。
+
+## 关键公式
+
+$$
+K_{p,2}(C,K_C)=0\iff p<\mathrm{Cliff}(C)
+$$
+
+$$
+K_{p,1}(C,K_C)=0\quad\text{对所有 } p\ge g-\mathrm{Cliff}(C)-1
+$$
+
+$$
+b_{i,j}=b_{g-2-i,\,3-j}
+$$
+
+## 定理与证明（或缺口）
+
+### 猜想 4.1（Green 猜想）
+
+对任意 $[C]\in\mathcal{M}_g$ 与所有满足 $p\ge g-\mathrm{Cliff}(C)-1$ 的 $p$，有 $K_{p,1}(C,K_C)=0$；等价地 $K_{p,2}(C,K_C)=0\iff p<\mathrm{Cliff}(C)$。
+
+**证明状态：只引出处，原书不重证**
+
+
+出处：中译 p.44（猜想 4.1）
+
+### Voisin 定理（一般曲线的 Green 猜想）
+
+对一般曲线 $[C]\in\mathcal{M}_{2p+3}$ 及 $[C]\in\mathcal{M}_{2p+4}$ 有 $K_{p,2}(C,K_C)=0$。因此 Green 猜想对每个亏格的一般曲线成立。
+
+**证明状态：只引出处，原书不重证**
+
+
+出处：中译 p.30（§1，引 Voisin 2002/2005）
+
+### 定理 2.4（Green–Lazarsfeld 非消没）
+
+设 $X$ 光滑，$L=L_1\otimes L_2$ 且 $h^0(X,L_i)=r_i+1\ge2$。则 $K_{r_1+r_2-1,1}(X,L)\neq0$。对 $L=K_C$ 取 $L_1$ 有贡献，得 $K_{g-\mathrm{Cliff}(C)-2,1}(C,K_C)\neq0$，即猜想的边界是最优的。
+
+**证明状态：提纲（有缺口）**
+
+
+> **缺口**：原文把它作为「非消没定理」直接引用，证明要到 Green 1984 原文；正文只给了它在 $L=K_C$ 分解上的应用（L583–600），没有给出复形层面的构造。
+
+
+出处：中译 p.34（定理 2.4，引 Green 1984 / Lazarsfeld）
+
+## 易错点
+
+- 把式 (1) 的「$\iff$」用到 $p>g-2$：那里 $K_{p,2}$ 按定义为 $0$（没有 $\wedge^{p+1}H^0$），陈述只在 $0\le p\le g-2$ 内有意义。
+- 「只需证 $p=g-\mathrm{Cliff}(C)-1$」这一步原文没有解释：更大的 $p$ 为何自动消没并没有在正文给出论证（笔记疑问之一），引用时不要把结论当成充分理由。
+- Betti 表对称写成 $b_{i,j}=b_{g-2-i,3-j}$（$q\mapsto3-q$），定理 2.7 给的是 $q\mapsto2-q$；对 $K_C$ 差的一次平移来自 Gorenstein 自对偶，原文未解释，别把两个公式混用。
+- 超椭圆曲线 $\mathrm{Cliff}=0$，猜想对 $p\ge g-1$ 陈述而 Betti 表里 $p\le g-2$，故对它是空断言——不能当作验证。
+
+## 相关卡
+
+- [Clifford 指标](../concepts/clifford-index.md)
+- [Max Noether 定理即 $K_{0,2}=0$](../examples/max-noether-theorem.md)
+- [Enriques–Babbage–Petri 定理即 $K_{1,2}=0$](../examples/enriques-babbage-petri.md)
+- [Petri 映射](../concepts/petri-map.md)
+
+## 出处
+
+- ch2 §4.1 Green 猜想；中译 p.44（英文 PDF p.48），源码 `chapters/ch02.tex:604`
+- ch2 §4.1 猜想 4.1 的等价形式；中译 p.44（英文 PDF p.48），源码 `chapters/ch02.tex:608`
