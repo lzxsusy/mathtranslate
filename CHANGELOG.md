@@ -2,6 +2,16 @@
 
 > **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
 
+## SY02-39《Drinfeld chtoucas 与 Langlands 对应》（Lafforgue, IHES/M/02/45）中译注本 + 18 张资料卡 — 2026-11-26
+
+- 新增 `08_source_code/SY02-39_Drinfeld-chtoucas与Langlands对应（Lafforgue）/`：Laurent Lafforgue 2001 年 2 月在孟买 Tata 基础科学研究所十二小时课程的法语笔记（IHES 预印本 **IHES/M/02/45**，Juin 2002，57 页 PDF / 印刷页 1–56）全文中文译注本，**42 页**。
+- **底本抢救**：原 PDF 文本层由 2002 年 Ghostscript 5.10 以 **Type3 位图字体**生成，`pymupdf`/`pdftotext`/`mutool` 抽取全部乱码（`tesseract.js` 路线输出空文本）；改为 150 dpi 灰度渲染 57 页 PNG，6 批子代理逐页读图转录 + 主译逐页复核，`\origpage{1..56}` 共 56 个连续无重。
+- 编译：MiKTeX `xelatex` 两遍 **42 页 / 0 error / 0 Overfull / 0 Underfull / 0 undefined / 0 缺字**；`\proofname` 改「证明」，PDF 内 `Proof.` 计数 0。修掉的坑：`\centering` 放进 `p{}` 单元格导致 `Extra alignment tab`（改用 `\multicolumn{1}{c}{}`）；正文直写 Unicode `φ`/`τ` 掉字（改 `$\varphi$`/`$\tau$`）；`\ul` 原子盒不可断行导致 121.6 pt Overfull（拆两段 + `\linebreak[0]`）。
+- 译注 **42 条**；原文 **9 处笔误**照录并加注（p.9 展示式缺 $\subset$、p.20 `comment $u$ dégénère` 应为 $v$、p.21 两个 (ii)、p.27 $\mathcal F_s$ 疑为 $\mathcal E'_s$、p.33 「凸」与图不符、p.37 `ne présente par`、p.40 `peut-être transformé`、p.41 $M,M'=2$、p.55 `Landlands'`），登记于 `工程文件/reports/02_疑点清单.tsv`（16 行，未解 0）。
+- 新增 `datasets/lafforgue02/`：**18 张资料卡**（概念 14 + 推导 4），两轨 A（对应/chtouca/截断/可忽略性/迹公式）/B（fourre-tout/完整同态/$\varphi$-格/退化子/紧合性赋值判据）；`lint_cards.py` **0 error**、`index.jsonl` 18 条、`render_md.py` 18 卡；附 `SCHEMA.md`、`MAP.md`、`workflow/PRODUCTION.md`。
+- 术语：`chtouca`、`fourre-tout` 保留原文不译（循 SY02-18 对 `shtuka` 的先例）；`cohomologie essentielle` = 本质上同调、`cohomologie négligeable` = 可忽略上同调。
+- 台账：`RELEASE_REGISTER.csv` 增 SY02-39 一行（讲义；演绎作品，底本权利归作者与 IHES；风险低；L2 公开·受限（可撤下）；成品随仓公开）；`03_translations_meta/SY02-39/投稿信息.md` 已建。统计跑 `make_stats.py --write` 重算（**142 部工程 / 128 部带源码 / 1,676 张卡 / 42 个数据集**）。
+
 ## SY02-38《朗兰兹纲领入门课程讲义》（Anschütz，含 Heuer 三讲）全书中译 + 53 张资料卡 — 2026-11-26
 
 - 新增 `08_source_code/SY02-38_朗兰兹纲领入门课程讲义/`：J. Anschütz *Lecture notes for an introductory course on the Langlands program*（2020-07-22 修订稿，**103 页**，其中第 7、8、10 讲由 Ben Heuer 撰写）的全文中文译注本。口径号 LL-E02（原判「候补」，本轮立项）。

@@ -1,0 +1,62 @@
+# 本质同调上的迹公式
+
+> `lafforgue02/concept/trace-formula-essential-cohomology` · 轨道 A · 镜像对称与几何 Langlands · 状态 dev
+
+> **先自测**：既然 Hecke 对应在紧化上不给出模作用，为什么迹公式还能把 $\mathrm{Tr}_\pi(f)$ 读出来？
+
+## 一句话
+
+Hecke 代数在本质部分上的作用由一条「不动点定理」给出：对 $f\times\mathrm{Frob}_x^{-s/\deg x}$ 的迹写成 $q^{(r-1)s}\sum_\pi\mathrm{Tr}_\pi(f)$ 乘两个局部和。
+
+## 定义
+
+设 $H_{N,\mathrm{cusp}}$ 为 $H^{2r-2}_c(\Cht^{r}_N/a^{\mathbb Z})$ 的本质部分作为 $\mathcal H^r_N\times(W_{(X-N)\times(X-N)}\rtimes\mathbb Z)$ 的半单表示。对 $f\in\mathcal H^r_N$、闭点 $x\in|X\times X|$ 与 $s=\deg(\infty)s'=\deg(0)u'$，迹公式给出 $\mathrm{Tr}_{H_{N,\mathrm{cusp}}}(f\times\mathrm{Frob}_x^{-s/\deg(x)})$ 的显式表达式，求和跑遍 $\{\pi\}^N_r$。
+
+**记号**：$\mathrm{Tr}_\pi(f)$；$z_i(\pi_\infty)$、$z_i(\pi_0)$ 为局部 Frobenius 特征值；$q^{(r-1)s}$ 来自 $1-r$ 扭。
+
+## 要点（为什么需要它）
+
+1. 迹公式先把上同调的迹写成不动点贡献之和（Lefschetz），再把不动点按边界分层拆开；边界项被「$r$-可忽略」吸收，只剩本质项。
+2. Hecke 代数不整体作用于紧化，但每个 $f$ 的作用仍存在且可与部分 Frobenius 交换，故迹有意义——这是公式能写出来的前提。
+3. 右边的 $\mathrm{Tr}_\pi(f)$ 乘两个局部和，正是「$\pi$ 的局部特征值」的两个端点（$\infty$ 与 $0$）的乘积。
+4. 证明还用了两件工具：Pink 的关于对应的论证，以及 $N\ne\varnothing$ 时 Fujiwara 关于 Deligne 猜想的定理（用来消去无穷远项）。
+
+## 核心公式
+
+$$
+$\Tr_{H_{N,\mathrm{cusp}}}(f\times\Frob_x^{-s/\deg(x)})=q^{(r-1)s}\sum_{\pi\in\{\pi\}^N_r}\Tr_\pi(f)\prod_{i}(z_i(\pi_\infty)^{-s'})\prod_{i}(z_i(\pi_0)^{u'})$$\sum_\nu(-1)^\nu\Tr_{H^\nu_c(\mathcal X)}(f\times\Frob_x^{-s/\deg(x)})+\sum_{\underline r}(-1)^{|\underline r|-1}\sum_\nu(-1)^\nu\Tr_{H^\nu_c(\mathcal X_{\underline r})}(\mathrm{cl}(f)_{\underline r}\times\Frob_x^{-s/\deg(x)})$$H_{N,\mathrm{cusp}}-(1/r!)\sum_{k=1}^{r!}(\Frob_X^k\times\mathrm{Id}_X)^*H^*_c$ 是 $r$-可忽略的
+$$
+
+$$
+$\sum_\nu(-1)^\nu\Tr_{H^\nu_c(\mathcal X)}(f\times\Frob_x^{-s/\deg(x)})+\sum_{\underline r}(-1)^{|\underline r|-1}\sum_\nu(-1)^\nu\Tr_{H^\nu_c(\mathcal X_{\underline r})}(\mathrm{cl}(f)_{\underline r}\times\Frob_x^{-s/\deg(x)})$
+$$
+
+$$
+$H_{N,\mathrm{cusp}}-(1/r!)\sum_{k=1}^{r!}(\Frob_X^k\times\mathrm{Id}_X)^*H^*_c$ 是 $r$-可忽略的
+$$
+
+## 定理与证明（或缺口）
+
+### 本质同调上的迹公式
+
+对每个 $f\in\mathcal H^r_N$、闭点 $x\in|X\times X|$ 与倍数 $s=\deg(\infty)s'=\deg(0)u'$，$\Tr_{H_{N,\mathrm{cusp}}}(f\times\Frob_x^{-s/\deg(x)})$ 等于 $q^{(r-1)s}\sum_{\pi}\Tr_\pi(f)\big(\sum_i z_i(\pi_\infty)^{-s'}\big)\big(\sum_i z_i(\pi_0)^{u'}\big)$。
+
+> 证明状态：**sketch**。讲义只给框架与关键化简；$\mathrm{cl}(f)_{\underline r}$ 的构造依赖 Pink 的论证与 Fujiwara 的定理，细节均在 [Lafforgue 1997][Lafforgue 1998]。
+
+出处：`A p.17`
+
+## 常见误解
+
+- 迹公式左边是「本质部分」的迹，不是整个 $H^{2r-2}_c$ 的迹；把两者混同会让右边多出边界项。
+- 右边的求和跑遍 $\{\pi\}^N_r$（带水平 $N$ 的尖点表示），不是全部尖点表示；$N$ 的选取同时影响左边与右边。
+- $q^{(r-1)s}$ 这个因子来自 $1-r$ 扭，漏掉它会让权对不上。
+
+## 相关卡
+
+[Hecke 对应与 Hecke 代数](../concepts/hecke-correspondence.md) · [$r$-可忽略表示与本质上同调](../concepts/r-negligible-representation.md) · [为什么本质部分集中在中间次数 $2r-2$](../derivations/essential-part-in-middle-degree.md)
+
+## 出处（印刷页）
+
+- A p.14–18（A p.17）
+
+> 说明：迹公式取第 II 章 p.17 的定理；一般不动点公式与 $\mathrm{cl}(f)_{\underline r}$ 取 p.18；可忽略性来自 p.14–16。$\mathrm{Lef}_x$ 的写法照讲义 p.18 原文。
