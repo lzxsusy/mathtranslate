@@ -24,7 +24,7 @@ $$\operatorname{Tr}(H_I(V_I,{-})\circ\operatorname{Fr};\operatorname{Shv}_{\math
 
 - 对 $V_I\in\operatorname{Rep}(\check G)^{\otimes I}$，$H_I(V_I,{-})\circ\operatorname{Fr}$ 是以 $X^I$ 为参数的自函子，其范畴迹落在 $\operatorname{QLisse}(X^I)$ 中。
 - 猜想中的识别：这个迹对象就是相应 shtuka 模空间的上同调。
-- 因此范畴迹形式体系把从几何 Langlands 到函数论 Langlands 的过渡、以及 V. Lafforgue 的游走算子都几何化了 [Gai16a, Laf18]。
+- 因此范畴迹形式体系把从几何 Langlands 到函数论 Langlands 的过渡、以及 V. Lafforgue 的巡游算子都几何化了 [Gai16a, Laf18]。
 - $\operatorname{QCoh}(\operatorname{LocSys}^{\mathrm{restr}}_{\check G})$ 在 $\operatorname{Shv}_{\mathrm{Nilp}}(\operatorname{Bun}_G)$ 上的谱作用，把迹提升为 Frobenius 扭曲不动点叠上的拟凝聚层。
 
 ## 关键公式
@@ -47,7 +47,7 @@ $\operatorname{Tr}(H_I(V_I,{-})\circ\operatorname{Fr};\operatorname{Shv}_{\mathr
 
 > 缺口：这是猜想性识别，讲义未证明（p.63）；相关构造见 [Gai16a, Laf18]，本章只述其几何化图景。
 
-*出处*：命题（§12.7，讲义无编号） / 原书 p.63
+*出处*：命题（§12.7，讲义无编号） / 原书 p.63–64
 
 
 ## 易错点
@@ -56,7 +56,7 @@ $\operatorname{Tr}(H_I(V_I,{-})\circ\operatorname{Fr};\operatorname{Shv}_{\mathr
 
 ## 出处
 
-- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§12.7 范畴迹与有限域上的函数，p.63（PDF p.63），`源码/chapters/ch12.tex:148-160（Frobenius 扭扭曲的迹与谱分解，§12.7）`
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§12.7 范畴迹与有限域上的函数，p.63-64（PDF p.63-64），`源码/chapters/ch12.tex:148-160（Frobenius 扭扭曲的迹与谱分解，§12.7）`
 
 ## 核验
 

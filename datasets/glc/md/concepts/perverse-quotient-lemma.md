@@ -6,7 +6,7 @@ track: E
 
 # 引理 8.5.2：向量丛经 $\mathbb G_m$-商的推前仍反常
 
-> 若 $\mathcal K$ 是 $\mathbb G_m$-等变、$\pi_*\mathcal K$ 反常，则下降到 $\mathbb P(\mathcal E)$ 后沿 $\bar\pi$ 的 $!$ 推前仍反常。
+> 若 $\mathcal K$ 是 $\mathbb G_m$-等变、$\pi_!\mathcal K$ 与 $\pi_*\mathcal K$ 均反常，则下降到 $\mathbb P(\mathcal E)$ 后沿 $\bar\pi$ 的 $!$ 推前仍反常。
 
 **问题**：把 $\mathbb G_m$-等变的反常层沿零截面去掉、再沿射影丛推前，为什么反常性不会在商这一步丢掉？
 

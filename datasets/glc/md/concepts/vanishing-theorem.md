@@ -19,7 +19,7 @@ track: D
 ## 要点
 
 - 界 $d>nk(2g-2)$ 中 $n=\operatorname{rank}(E)$，$k$ 是 $\operatorname{Bun}_k$ 的下标。
-- 更一般的界把假设放宽为 $\operatorname{rank}(E)>k$（不再要求 $k<n$ 且 $E$ 几何不可约），界为 $d>(2g-2)k\cdot\operatorname{rank}(E)$；两式是同一增长率的不同写法，不是两个独立条件。
+- 更一般的界把假设放宽为 $\operatorname{rank}(E)>k$，界为 $d>(2g-2)k\cdot\operatorname{rank}(E)$；两式是同一增长率的不同写法，不是两个独立条件。
 - $k=1$ 时这是 Deligne 关于 Abel–Jacobi 的消失定理。
 - 第 6 章用本定理证明洁净性定理。
 

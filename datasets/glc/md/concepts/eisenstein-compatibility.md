@@ -23,7 +23,7 @@ $$\operatorname{LocSys}_{\check M}\xleftarrow{q}\operatorname{LocSys}_{\check P}
 - 图表 (16.1) 交换：$\mathbb L_G\circ\operatorname{Eis}_P$ 与 $\operatorname{Eis}^{\mathrm{spec}}_{\check P}\circ\mathbb L_M$ 自然同构（讲义只画方块，未写出复合等式）。
 - 谱侧函子只由对应 $q$、$p$ 定义；讲义没有写出 $q^!p_*$ 或 $p_*q^!$ 一类的显式公式。
 - 按 [CCF24] 的形式，(16.1) 的证明归约到两个方块：一个涉及 Whittaker 系数的几何方块，一个涉及表示的谱方块。
-- 在几何 Casselman–Schalika 等价 $\operatorname{Whit}(H)_x\simeq\operatorname{Rep}(\check H)_x$ 下，这一比较变为 Whittaker 系数的抛物限制与表示上相应 Chevalley 函子之间的相容性。
+- 在几何 Casselman–Shalika 等价 $\operatorname{Whit}(H)_x\simeq\operatorname{Rep}(\check H)_x$ 下，这一比较变为 Whittaker 系数的抛物限制与表示上相应 Chevalley 函子之间的相容性。
 - 常数项方向的对应陈述是 (16.2)，由 Kac–Moody–Whittaker 对偶证明（见「Kac–Moody–Whittaker 对偶」一卡）。
 
 ## 关键公式
@@ -47,7 +47,7 @@ $$\operatorname{LocSys}_{\check M}\xleftarrow{q}\operatorname{LocSys}_{\check P}
 
 > 缺口：讲义只述证明的归约，未展开 [CCF24] 的细节；完整证明见该文。
 
-*出处*：§16.2 图表 (16.1) / 原书 p.76
+*出处*：§16.2 图表 (16.1) / 原书 p.77
 
 
 ## 易错点

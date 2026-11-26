@@ -38,7 +38,7 @@ track: A
 
 > 缺口：讲义只述不证：§1.1 在陈述后仅说明它是类域论中乘法性与 Frobenius 特征值方程的层论替代，未写出证明步骤。
 
-*出处*：引理 1.1.4 / 原书 p.6
+*出处*：引理 1.1.4 / 原书 p.7
 
 
 ## 易错点
@@ -49,7 +49,7 @@ track: A
 
 ## 出处
 
-- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§1.1 几何类域论，p.6（PDF p.6），`源码/chapters/ch01.tex:106-109（引理 1.1.4）`
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§1.1 几何类域论，p.7（PDF p.7），`源码/chapters/ch01.tex:106-109（引理 1.1.4）`
 
 ## 核验
 

@@ -41,9 +41,9 @@ $\operatorname{Coh}_0(Y)\simeq\operatorname{Perf}(Y)$ 且 $\operatorname{IndCoh}
 2. 在奇异支撑形式体系中，这部分恰好是完美复形；再取 ind-完备化得 $\operatorname{QCoh}$。  
    *为什么*：完美复形是凝聚对象中“局部可逆元”的部分，其 ind-完备化就是拟凝聚层。
 
-> 缺口：讲义只陈述这两个等价（原书 p.54），未给证明；它属于 Arinkin–Gaitsgory 的奇异支撑形式体系（[AG15]）。
+> 缺口：讲义只陈述这两个等价（原书 p.53），未给证明；它属于 Arinkin–Gaitsgory 的奇异支撑形式体系（[AG15]）。
 
-*出处*：§10.1 / 原书 p.54
+*出处*：§10.1 / 原书 p.53
 
 
 ## 易错点

@@ -46,7 +46,7 @@ $c\ne0$ 时预期 $\widehat{\mathfrak g}_{\kappa}\text{-}\mathrm{Mod}^{L^+G}\sim
 
 > 缺口：讲义把它作为「预期」陈述，未证明；本书只用到其边界值 FLE。
 
-*出处*：无编号陈述 / 原书 p.73
+*出处*：无编号陈述 / 原书 p.74
 
 
 ## 易错点
@@ -56,7 +56,7 @@ $c\ne0$ 时预期 $\widehat{\mathfrak g}_{\kappa}\text{-}\mathrm{Mod}^{L^+G}\sim
 
 ## 出处
 
-- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§15.4 与量子局部 Langlands 的关系，p.73-74（PDF p.73-74），`源码/chapters/ch15.tex:66-93（水平关系、预期等价、极限与对应表）`
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§15.4 与量子局部 Langlands 的关系，p.74（PDF p.74），`源码/chapters/ch15.tex:66-93（水平关系、预期等价、极限与对应表）`
 
 ## 核验
 

@@ -40,7 +40,7 @@ track: E
 2. $k[x]$-模同构即与该矩阵共轭的 $\operatorname{GL}_d$-作用，故模叠是 $\mathfrak{gl}_d$ 对 $\operatorname{GL}_d$ 的商叠。  
    *为什么*：换基把矩阵变成 $gAg^{-1}$，反之共轭的矩阵给出同构的模。
 
-*出处*：§7.4 证明 / 原书 p.43
+*出处*：§7.4 证明 / 原书 p.42
 
 
 ## 易错点
@@ -51,7 +51,7 @@ track: E
 
 ## 出处
 
-- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§7.4 Laumon 层通过短正合列的因子化（证明），p.43（PDF p.43），`源码/chapters/ch07.tex:94-103（$X=\mathbb A^1$ 的模型与抛物对应）`
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§7.4 Laumon 层通过短正合列的因子化（证明），p.42-43（PDF p.42-43），`源码/chapters/ch07.tex:94-103（$X=\mathbb A^1$ 的模型与抛物对应）`
 
 ## 核验
 

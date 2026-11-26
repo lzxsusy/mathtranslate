@@ -39,9 +39,9 @@ $$\operatorname{Shv}_{\mathrm{Nilp}}(\operatorname{Bun}_G)\overset{?}{\simeq}\op
 2. 检查所得等价是否过大，必要时限制到直和因子。  
    *为什么*：讲义明确指出朴素形式在某些表述中不成立。
 
-> 缺口：这是猜想，讲义未证明；且讲义自己声明朴素形式可能过大或需限制到直和因子（p.62–63）。
+> 缺口：这是猜想，讲义未证明；且讲义自己声明朴素形式可能过大或需限制到直和因子（p.63）。
 
-*出处*：猜想（§12.6，讲义无编号） / 原书 p.62–63
+*出处*：猜想（§12.6，讲义无编号） / 原书 p.63
 
 
 ## 易错点
@@ -50,7 +50,7 @@ $$\operatorname{Shv}_{\mathrm{Nilp}}(\operatorname{Bun}_G)\overset{?}{\simeq}\op
 
 ## 出处
 
-- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§12.6 受限范畴 Langlands，p.62-63（PDF p.62-63），`源码/chapters/ch12.tex:110-122（受限猜想与注意事项，§12.6，跨 p.62–63）`
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§12.6 受限范畴 Langlands，p.63（PDF p.63），`源码/chapters/ch12.tex:110-122（受限猜想与注意事项，§12.6，跨 p.62–63）`
 
 ## 核验
 

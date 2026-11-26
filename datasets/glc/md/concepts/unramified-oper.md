@@ -41,7 +41,7 @@ $$\operatorname{Op}^{\mathrm{unr}}_{\check G}:=\operatorname{Op}_{\check G}(D^\t
 
 ## 出处
 
-- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§15.2 非分歧 oper，p.72（PDF p.72），`源码/chapters/ch15.tex:23-33（$\operatorname{Op}^{\mathrm{unr}}_{\check G}$ 的定义、$\check\lambda$ 分层与分解）`
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§15.2 非分歧 oper，p.72-73（PDF p.72-73），`源码/chapters/ch15.tex:23-33（$\operatorname{Op}^{\mathrm{unr}}_{\check G}$ 的定义、$\check\lambda$ 分层与分解）`
 
 ## 核验
 

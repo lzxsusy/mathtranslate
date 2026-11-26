@@ -21,7 +21,7 @@ track: C
 - $B_{\lambda,x}$ 是幂零轨道（局部层）闭包上的 IC 层，定义本身只用到 $\operatorname{Tor}_x^\lambda$ 与其闭包，属局部构造。
 - $f$ 把 $\mathcal{O}_x^n$ 的长度 $d$ 商送到该商作为挠层；像不是整个 $\operatorname{Tor}_x^d$，而是「最多 $n$ 个元素生成」的开子叠，讲义指出 $f$ 在该像上光滑、相对维数为 $nd$。
 - 两个 IC 的差别只是移位：约定 IC 含反常上同调移位、不含 Tate 扭转；$f$ 光滑且相对维数 $nd$，故光滑拉回把 $\operatorname{IC}$ 搬成 $\operatorname{IC}$ 再移位 $-dn$。
-- 局部 Laumon 公式里的 Tate 因子 $-n(\lambda)$ 不属于这个比较，它属于 Whittaker／Casselman–Shalala 归一化；因此 $B_{\lambda,x}$ 与 $A_\lambda$ 的对应里没有 $n(\lambda)$，只有 $dn$。
+- 局部 Laumon 公式里的 Tate 因子 $-n(\lambda)$ 不属于这个比较，它属于 Whittaker／Casselman–Shalika 归一化；因此 $B_{\lambda,x}$ 与 $A_\lambda$ 的对应里没有 $n(\lambda)$，只有 $dn$。
 
 ## 关键公式
 
@@ -51,7 +51,7 @@ track: C
 
 ## 易错点
 
-- 移位是 $dn$，不是 $n(\lambda)$：$n(\lambda)=\sum_i(i-1)\lambda_i$ 属 Whittaker／Casselman–Shalala 归一化，不在这个光滑拉回比较里出现。
+- 移位是 $dn$，不是 $n(\lambda)$：$n(\lambda)=\sum_i(i-1)\lambda_i$ 属 Whittaker／Casselman–Shalika 归一化，不在这个光滑拉回比较里出现。
 - $\operatorname{Gr}_{n,x}^{d,\mathrm{mod}}$ 是「长度 $d$ 商」的轨迹，不是正则幂零轨迹；讲义专门提醒这一记号易混。
 - $f$ 的像只是开子叠（最多 $n$ 个元素生成的挠层），不是整个 $\operatorname{Tor}_x^d$；在该像之外不能直接用这个拉回比较。
 

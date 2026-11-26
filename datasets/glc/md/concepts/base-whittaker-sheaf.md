@@ -6,7 +6,7 @@ track: D
 
 # 基础 Whittaker 层 W_k
 
-> 把 exp_ψ 从 Bun_{N_k} 直像到 Bun_k 得到的层；基础情形中 q_!j_{k,!}F_k 是 Av_E^d(W_k) 的茎。
+> 把 exp_ψ 从 Bun_{N_k} 直像到 Bun_k 得到的层；基础情形中 q_!j_{k,!}F_k 是 Av_E^d(W_k) 限制到 C_k^{tor=0} 上的层。
 
 **问题**：W_k 的移位与扭转为什么要与 F_k 相同？
 

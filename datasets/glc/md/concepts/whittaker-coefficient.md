@@ -39,7 +39,7 @@ $\operatorname{coeff}:\operatorname{DMod}(\operatorname{Bun}_G)\to\operatorname{
 
 > 缺口：讲义只述不证：§13.1 把「$\operatorname{coeff}$ 经由到温和商的投影分解」作为第一个基本事实直接引用，未作说明。
 
-*出处*：§13.1（讲义未编号的正文陈述）/ 原书 p.64
+*出处*：§13.1（讲义未编号的正文陈述）/ 原书 p.65
 
 
 ## 易错点

@@ -12,7 +12,7 @@ track: C
 
 ## 定义
 
-令 $V=E_x$ 为 $E$ 在 $x$ 处的纤维。对满足 $s\le n$ 的分拆 $\lambda=(\lambda_1\ge\cdots\ge\lambda_s>0)$，添零将其扩展为 $\operatorname{GL}(V)\simeq\operatorname{GL}_n$ 的优势权 $(\lambda_1,\ldots,\lambda_s,0,\ldots,0)$；令 $V^\lambda$ 为 $\operatorname{GL}(V)$ 中最高权为 $\lambda$ 的不可约最高权表示。等价地，若 $\chi^\lambda\in\operatorname{Irr}(S_d)$ 是与 $\lambda$ 对应的 Specht 表示，则 Schur–Weyl 对偶给出 $V^\lambda\simeq(V^{\otimes d}\otimes\chi^\lambda)^{S_d}$；若 $s>n$ 这个向量空间为零。置 $n(\lambda):=\sum_{i\ge1}(i-1)\lambda_i$，按通常的 Casselman–Shalala 归一化看作 $n(\lambda)=\langle\lambda,(0,1,\ldots,n-1)\rangle$。则对每个几何点 $x\in X$ 与整数 $d\ge0$，$\mathcal{L}_{E,x}^d[-d]\simeq\bigoplus_{\lambda\vdash d,\ \ell(\lambda)\le n}B_{\lambda,x}\otimes E_x^\lambda(-n(\lambda))$。
+令 $V=E_x$ 为 $E$ 在 $x$ 处的纤维。对满足 $s\le n$ 的分拆 $\lambda=(\lambda_1\ge\cdots\ge\lambda_s>0)$，添零将其扩展为 $\operatorname{GL}(V)\simeq\operatorname{GL}_n$ 的优势权 $(\lambda_1,\ldots,\lambda_s,0,\ldots,0)$；令 $V^\lambda$ 为 $\operatorname{GL}(V)$ 中最高权为 $\lambda$ 的不可约最高权表示。等价地，若 $\chi^\lambda\in\operatorname{Irr}(S_d)$ 是与 $\lambda$ 对应的 Specht 表示，则 Schur–Weyl 对偶给出 $V^\lambda\simeq(V^{\otimes d}\otimes\chi^\lambda)^{S_d}$；若 $s>n$ 这个向量空间为零。置 $n(\lambda):=\sum_{i\ge1}(i-1)\lambda_i$，按通常的 Casselman–Shalika 归一化看作 $n(\lambda)=\langle\lambda,(0,1,\ldots,n-1)\rangle$。则对每个几何点 $x\in X$ 与整数 $d\ge0$，$\mathcal{L}_{E,x}^d[-d]\simeq\bigoplus_{\lambda\vdash d,\ \ell(\lambda)\le n}B_{\lambda,x}\otimes E_x^\lambda(-n(\lambda))$。
 
 *记号*：$\lambda\vdash d$，$\ell(\lambda)=s\le n$；$E_x^\lambda$ 为最高权 $\lambda$ 的不可约表示，$(m)$ 为 Tate 扭转；$B_{\lambda,x}=\operatorname{IC}_{\overline{\operatorname{Tor}_x^\lambda}}$；$n(\lambda)=\langle\lambda,(0,1,\ldots,n-1)\rangle$。
 
@@ -21,7 +21,7 @@ track: C
 - 公式把 $x$ 处的局部反常对象写成有限直和：按分拆 $\lambda\vdash d$、$\ell(\lambda)\le n$ 编号，每一项是幂零轨道闭包的 IC 层 $B_{\lambda,x}$ 张量表示 $E_x^\lambda$，再作 Tate 扭转 $(-n(\lambda))$。
 - $E_x^\lambda$ 有两种等价刻画：作为 $\operatorname{GL}_n$ 的最高权表示；或经 Schur–Weyl 对偶写成 $(E_x^{\otimes d}\otimes\chi^\lambda)^{S_d}$，后者正是 §4.11 证明中所用的形式。
 - $\ell(\lambda)>n$ 时求和项消失（$V^\lambda=0$），因此直和只到 $\ell(\lambda)\le n$ 为止，与 $E$ 的秩 $n$ 匹配。
-- $n(\lambda)$ 是 Casselman–Shalala 归一化下的 Tate 指数：它不来自 IC 层本身（§4.10 的比较里只有 $dn$），而来自 Whittaker 归一化，正如 §3.4 局部 Whittaker 函数公式中的 $q_x^{-\sum_i(i-1)\lambda_i}$。
+- $n(\lambda)$ 是 Casselman–Shalika 归一化下的 Tate 指数：它不来自 IC 层本身（§4.10 的比较里只有 $dn$），而来自 Whittaker 归一化，正如 §3.4 局部 Whittaker 函数公式中的 $q_x^{-\sum_i(i-1)\lambda_i}$。
 
 ## 关键公式
 
@@ -51,9 +51,9 @@ track: C
 7. 写 $\chi=\chi^\lambda$（$d=\lambda_1+\cdots+\lambda_s$，$\lambda_1\ge\cdots\ge\lambda_s>0$），由 Schur–Weyl 对偶 $(\chi^\lambda\otimes E_x^{\otimes d})^{S_d}\simeq E_x^\lambda$；若 $s>\dim E_x=n$ 则它消失。  
    *为什么*：这正是命题陈述中 $V^\lambda\simeq(V^{\otimes d}\otimes\chi^\lambda)^{S_d}$ 的同一件事，添零把 $\lambda$ 扩成长度 $n$ 的优势权。
 8. 在 $\operatorname{Tor}_x^d\simeq\mathcal{N}_d/\operatorname{GL}_d$ 下 $\operatorname{IC}_{\overline{\mathcal{O}_\lambda}}=B_{\lambda,x}$；恢复 Tate 扭转（指数 $-n(\lambda)$）便得到命题关于 $\mathcal{L}_{E,x}^d[-d]$ 的公式。  
-   *为什么*：$B_{\lambda,x}$ 的定义即 $\operatorname{IC}_{\overline{\operatorname{Tor}_x^\lambda}}$；Tate 扭转按 Casselman–Shalala 归一化补回。
+   *为什么*：$B_{\lambda,x}$ 的定义即 $\operatorname{IC}_{\overline{\operatorname{Tor}_x^\lambda}}$；Tate 扭转按 Casselman–Shalika 归一化补回。
 
-> 缺口：讲义在 §4.11 原位给出完整证明（引用经典 Springer 对应 [GPR20,AHJR14] 作为外部工具），无证明缺口；Tate 扭转的指数由 Casselman–Shalala 归一化给出。
+> 缺口：讲义在 §4.11 原位给出完整证明（引用经典 Springer 对应 [GPR20,AHJR14] 作为外部工具），无证明缺口；Tate 扭转的指数由 Casselman–Shalika 归一化给出。
 
 *出处*：§4.9 命题 4.9.1（原书 p.31）、§4.11 证明（原书 p.31–32）
 

@@ -44,7 +44,7 @@ track: F
 
 状态：`external-confirmed`（2026-11-18）
 - Arinkin-Gaitsgory-Kazhdan-Raskin-Rozenblyum-Varshavsky, The stack of local systems with restricted variation and geometric Langlands theory with nilpotent singular support：https://arxiv.org/abs/2010.01906 — §0.5.4「Consider its ind-completion, denoted IndLisse(X). Finally, let QLisse(X) be the left completion of [IndLisse(X)]」，并说 S=Spec(A) 点时 LocSys^restr 的 S-点是对称幺半函子 Rep(G)→A-mod⊗QLisse(X)（右 t-正合）、e-点即 G-局部系统——支持卡中点函子定义与 de Rham 平行表述。
-- Arinkin-Gaitsgory-Kazhdan-Raskin-Rozenblyum-Varshavsky, The stack of local systems with restricted variation and geometric Langlands theory with nilpotent singular support：https://arxiv.org/abs/2010.01906 — 同一段把 QLisse(X) 定义为有限秩局部系统范畴 Lisse(X) 的 ind-完备化 IndLisse(X) 在自然 t-结构下的左完备化（quasi-lisse），并非「拟凝聚的局部系统」；卡中 definition.notation 的说法与此冲突 → P1，alignment=error。
+- Arinkin-Gaitsgory-Kazhdan-Raskin-Rozenblyum-Varshavsky, The stack of local systems with restricted variation and geometric Langlands theory with nilpotent singular support：https://arxiv.org/abs/2010.01906 — 同一段把 QLisse(X) 定义为有限秩局部系统范畴 Lisse(X) 的 ind-完备化 IndLisse(X) 在自然 t-结构下的左完备化（quasi-lisse），并非「拟凝聚的局部系统」；卡中 definition.notation 已按此写成「IndLisse 的左完备化」，与之一致。
 - Beraldo, On the geometric Ramanujan conjecture：https://arxiv.org/abs/2103.17211 — Ber21 摘要「any cuspidal D-module on Bun_G is tempered」，§1.1.2 给出尖点定义 CT_P(F)=0（P 真抛物）——支持卡中「Betti/可构造情形落在 D_Nilp」与「本身不蕴涵整个 D(Bun_G) 的消失定理」的背景（讲义 ch09.tex:101-109 同述）。
 
 ## 关联

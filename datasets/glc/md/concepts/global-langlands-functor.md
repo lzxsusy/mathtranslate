@@ -48,7 +48,7 @@ Langlands 函子给出等价 $\mathbb L_G:\operatorname{DMod}(\operatorname{Bun}
 
 > 缺口：讲义只给证明架构，逐步细节分散在原书所引 [CCF24]、[ABC24b]、[GR24b] 中，本书未逐一展开。
 
-*出处*：章首定理（无编号）/ 原书 p.75
+*出处*：章首定理（无编号）/ 原书 p.76
 
 
 ## 易错点
@@ -59,7 +59,7 @@ Langlands 函子给出等价 $\mathbb L_G:\operatorname{DMod}(\operatorname{Bun}
 
 ## 出处
 
-- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），第 16 章 整体猜想的证明（章首定理），p.75（PDF p.75），`源码/chapters/ch16.tex:3-9（整体定理的陈述与证明策略）`
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），第 16 章 整体猜想的证明（章首定理），p.76（PDF p.76），`源码/chapters/ch16.tex:3-9（整体定理的陈述与证明策略）`
 - 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§16.1 粗 Langlands 函子，p.76（PDF p.76），`源码/chapters/ch16.tex:11-25（$\mathbb L_G^0$、提升与 $\operatorname{QCoh}^!$）`
 
 ## 核验

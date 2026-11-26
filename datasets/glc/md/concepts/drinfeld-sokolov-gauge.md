@@ -39,7 +39,7 @@ track: G
 
 > 缺口：讲义只述不证（§14.2），引 [BD05]、[Fre02]。
 
-*出处*：§14.2 局部正规形 / 原书 p.68
+*出处*：§14.2 局部正规形 / 原书 p.69
 
 
 ## 易错点
@@ -49,7 +49,7 @@ track: G
 
 ## 出处
 
-- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§14.2 局部正规形，p.68（PDF p.68），`源码/chapters/ch14.tex:46-55（oper 联络与 Drinfeld–Sokolov 规范）`
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§14.2 局部正规形，p.69（PDF p.69），`源码/chapters/ch14.tex:46-55（oper 联络与 Drinfeld–Sokolov 规范）`
 
 ## 核验
 

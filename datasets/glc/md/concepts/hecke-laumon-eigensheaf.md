@@ -56,7 +56,7 @@ track: E
 
 ## 出处
 
-- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§8.4 Hecke–Laumon 对应，p.46（PDF p.46），`源码/chapters/ch08.tex:66-83（定义*、迭代相容与 $k=0$ 的 Laumon 因子化）`
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§8.4 Hecke–Laumon 对应，p.45-46（PDF p.45-46），`源码/chapters/ch08.tex:66-83（定义*、迭代相容与 $k=0$ 的 Laumon 因子化）`
 
 ## 核验
 
