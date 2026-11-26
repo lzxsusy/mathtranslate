@@ -30,6 +30,7 @@
 | 20:52–20:58 | 用户要求「对英文原本再核」：逐页重读 38 处定位、12 处内容、5 张单方卡；英文原本即 `glc.pdf`（85 页，sha256 f79cd79c…）；写 `EXTERNAL_VERIFICATION.md` §9（3 张单方被原书证实），更新 `report.md` §8/§9 |
 | 21:00–21:12 | 用户 m01466 要求「先用 nLab/全网检索佐证，成立就修」：检索 nLab `l-adic cohomology`/`geometric class field theory`/`extension`、CAG 2001 的 Ext¹ 参数化、Casselman–Shalika 1980 与 BIRS/Chhaibi 讲义；三条判断均有 E1+E2 支持 |
 | 21:12–21:20 | 写 `tmp/make_followup_plan.py` → `tmp/fix_plan_followup.json`（3 卡 5 处）；`apply_fixes.py --check` 通过；`--apply --log fix_log_followup.json` 写 3 卡 5 处，md 同步 |
+| 21:30–21:38 | 写 §10 证据表、TRACE §7.5、案例 23–25；commit `83043f32`；push AtomGit `main`、Gitee `master`（a5a22926..83043f32） |
 | 21:20–21:30 | 合并 `fix_log.json`（25 卡 56 处：`fixes` 22/51＋`followup` 3/5）；`issues.jsonl` 3 行改 `confirmed_fixed_followup`；更新 `report.md` §4.2/§5/§8/§9/§10、`EXTERNAL_VERIFICATION.md` §0/§10、README/MEMORY、案例 23–25 与 `index.json` |
 
 ## 2. 命令日志（关键步骤）

@@ -86,7 +86,7 @@ source_card: datasets/_audit/glc_full_2026-11-26/report.md
 - 修改：第一批 `APPLIED: 22 cards, 51 edits`；follow-up `APPLIED: 3 cards, 5 edits`（`--log fix_log_followup.json`）；合并后 `fix_log.json` 记录 25 卡 56 处，每处 before/after 与 sha256。
 - 回读：`verify_final.py` → `ok:true`、`fails:[]`、`fix_edits_checked:56`、`md_not_synced:[]`、`diff_check:"clean"`；154 卡 0 错、全库 1676 卡 0 错；`git diff --numstat -- datasets/glc` 恰为 25 卡 + 25 md。
 - 外部核验：`EXTERNAL_VERIFICATION.md` 56/56 通过、0 推翻；35 处可机械重算的定位编辑由 `reverify_pages.py` 独立重算，21 处差异全部落在已知 `\srcpage` 漂移类型内；follow-up 5 处另有 nLab/CAG 2001/CS 文献佐证（§10）。
-- 发布：commit `7d79721e`（工程归档）、`bfffe0cc`（TRACE 补记）；AtomGit `main` 与 Gitee `master` 均已推送，HEAD 与记录一致。
+- 发布：commit `7d79721e`（工程归档）、`bfffe0cc`（TRACE 补记）、`a5a22926`（英文原本再核）、`83043f32`（3 张单方卡 follow-up 修复，25 卡 56 处）；AtomGit `main` 与 Gitee `master` 均已推送，HEAD 与记录一致。
 - 已知遗留：4 条旧链（SY02-31、GRASSMANN、SY02-38×2）索引指向不存在的按项目目录路径，`thinking_audit.py check` 在本次之前即失败；本次 GLC 条目按 checker 约定放 `chains/GLC-154/GLC-154-AUDIT-01.md`，不再增加新失败。
 
 ## 7. 逆转条件
