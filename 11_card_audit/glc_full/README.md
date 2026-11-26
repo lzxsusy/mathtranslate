@@ -30,6 +30,7 @@
 11_card_audit/glc_full/
 ├── README.md            本文件：范围、方法、结论、用法
 ├── TRACE.md             审计轨迹：时间线、命令、关键决策与返工
+├── MEMORY.md            工程备忘录：定稿数字、关键修正、未解项、可复用约定、发布信息
 ├── index.json           22 个案例的索引（slug / mode / severity / fields / confirmed_by / file）
 ├── casebook/
 │   ├── README.md        案例库说明与失效模式统计
@@ -71,6 +72,7 @@
 - 想复核证据：案例里的页码对应 `datasets/_audit/glc_full_2026-11-26/tmp/pages/pNNN.txt`（PDF 逐页文本，页码＝印刷页）；源码行号指向 `08_source_code/SY02-33_…/源码/chapters/chNN.tex`。
 - 想重跑/复现：见 `raw/report.md` §11 与 `tools/`；`reverify_pages.py` 可独立重算定位编辑的页码。
 - 想给下一批审计立规矩：读 `TRACE.md` 的「决策日志」「返工记录」与「外部核验与发布」。
+- 想知道这轮工作「怎么想的」：读 `09_thinking/chains/GLC-154/GLC-154-AUDIT-01.md`（L2 思考链，只放判断与否决，不放原文 CoT）与 `MEMORY.md`。
 
 ## 维护约定
 

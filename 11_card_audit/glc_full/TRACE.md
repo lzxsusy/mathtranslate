@@ -26,6 +26,7 @@
 | 20:12 | 用户要求「外部核验 22 卡 51 处 + 推送工程与思考链」；`tools/reverify_pages.py` 独立重算 35 处定位编辑（21 处差异逐条归因到 `\srcpage` 漂移） |
 | 20:16–20:24 | 外郭取 E1/E2 证据：Gaitsgory math/0204081（vanishing 条件）、CCF24 2409.07051 TeX（Casselman–Shalika）、AGKRRV 2010.01906 TeX（QLisse 左完备化）、原书逐页引文；写 `EXTERNAL_VERIFICATION.md`（51/51 通过，0 推翻） |
 | 20:21–20:24 | 更新 `report.md` §8/§9/§10 与本文；审计工程复制为 `11_card_audit/glc_full/{raw,tools}/`；commit `7d79721e`；push AtomGit `master:main`、Gitee `master`（6a488d50..7d79721e） |
+| 20:25–20:27 | 按 `09_thinking/README.md` 写 L2 链 `GLC-154-AUDIT-01`（6516 字符，九节）、登记 `index.csv`；写 `MEMORY.md`（Hindsight 401 无 token 的回退）；commit `c50e7c27`；再 push AtomGit/Gitee（bfffe0cc..c50e7c27） |
 
 ## 2. 命令日志（关键步骤）
 
@@ -120,7 +121,7 @@ python datasets/_audit/glc_full_2026-11-26/tools/verify_final.py
   raw/               # passA 8、passB 3、tiebreak 2 的 JSONL；compare.json/md、
                      # issues.jsonl、fix_log.json、fix_plan.json、sample_inventory.json、
                      # verify_report.json、report.md、EXTERNAL_VERIFICATION.md、三份 brief
-  tools/             # 从审计目录复制的 8 个脚本（可复现，不含 PDF/审计包）
+  tools/             # 从审计目录复制的 13 个脚本（可复现，不含 PDF/审计包）
 ```
 
 `datasets/_audit/glc_full_2026-11-26/` 仍是真实工作目录（含 `tmp/` 的 PDF 副本、逐页文本、审计包），**不入库**：其中含有讲义正文，版权理由与体积理由都不适合推公开仓库。
@@ -130,3 +131,10 @@ python datasets/_audit/glc_full_2026-11-26/tools/verify_final.py
 - **D11 外部核验与审计分离**：审计阶段的「卡 vs 来源」判断不再复用，独立用 anchor＋`\srcpage`＋PDF 正文页重算；目的不是再判一遍对错，而是证明「修复没有把错的改得更错」。
 - **D12 发布件只保留一份真实目录**：`11_card_audit/glc_full/raw|tools` 是拷贝件，修改仍回 `datasets/_audit/...` 源头；`tmp/` 永不入库。
 - **D13 残余风险显式化**：arbiter pass 但 lead 外部复核仍认为成立的三条不硬改（守协议），但必须写进两处报告，避免「审计通过」被误读成「这些卡没问题」。
+
+### 7.4 思考链与工程记忆
+
+- 按 `09_thinking/README.md`（L2 纪律）写 `09_thinking/chains/GLC-154/GLC-154-AUDIT-01.md`：6516 字符，九节（审计结论/任务/为什么值得看/关键片段/决策与替代方案/自纠与回退/验证证据/逆转条件/交付物），`score: pending` 等人工复核；登记在 `09_thinking/index.csv` 第 5 行。
+- 该链只放「判断 + 否决 + 证据 + 逆转条件」，不放 raw CoT；会话原文留在 L0，不进仓库。
+- 云端 Hindsight 在本机不可用：`hindsight_ingest_document` 返回 `401 Authentication failed: API key required`，`hindsight_diagnose` 显示 `C:\Users\admin\.hindsight\coding-agent.json` 不存在、`api_token_configured=false`。回退为仓库内 `MEMORY.md`（工程备忘录：定稿数字、关键修正、未解项、可复用约定、发布信息）。
+- `thinking_audit.py check` 现存 4 条失败均来自上一批旧链（索引指向 `chains/SY02-31/…` 等不存在的按项目目录），本批之前即失败；本批条目按 checker 约定放 `chains/GLC-154/`，未新增失败。
