@@ -1,0 +1,5 @@
+- 页数：PDF p.070–p.078 共 9 页；`% ===== PDF p.0xx =====` 页标记 9 条，与原文逐页对齐（含跨页断开的 itemize 与公式）。
+- 译注：共 7 条（`\znote` 3 条：p.071 大空间与第 8 讲 $\widehat X(\C)$ 的对应、p.074 Riemann–Roch 与 Serre 对偶补中间两步、p.078 $\cL_k$ 与第 6 讲 p.053 预告呼应；`\znoteplain` 4 条：p.072 $V(\chi)$ 扭记号、p.074 原文脚注 15、p.075 $X_K$ 记号冲突、p.076 算术/几何 Frobenius 经对偶互换）。
+- 重建：p.072 的 $X^*_K$ 定义原文漏写 $/K$，按上下文补；p.073 反全纯形式的映射原文作 $\alpha\colon S_2(K)\to\tilde H^1$，按上下文作 $\bar\alpha\colon\bar S_2(K)\to\tilde H^1$、$f\mapsto[\chi_{no}f\,\mathrm d\bar z]$（提取文本丢失了全部上划线，tilde 被写成 e）；p.076 证明中的 $\overline\Q$、$\overline\Q_p$、$\overline\F_p$ 的上划线同理由上下文补。
+- 存疑：p.074「若 $\beta(f+g)=0$，则 $\beta(f+g)\cup\alpha(f)=\langle f,f\rangle=0$」照原文直译未改动；按标准论证此处应是 $\beta(f)$ 与 $\alpha(f)$ 的配对，原文此步疑有笔误，已在正文保留原式，待复核。
+- 笔误处理：p.074 脚注 15 原文 $\omega^2(-\text{cusps})\cong\Omega^1$，按第 7 讲同一笔误（p.58 脚注 11）处理为 $\omega^{\otimes2}(-\text{尖点})\cong\Omega^1$ 并在译注中注明原文；p.077「we get $(\Frob^{\mathrm{arith}})^2-\tilde T_p\Frob^{\mathrm{arith}}+p\tilde S_p$ on $\rho_f$」原文缺 `=0`，按上下文补足。未编译，未改 main.tex、其它 lecture 与 work/*.tsv。

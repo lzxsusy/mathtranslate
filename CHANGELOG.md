@@ -2,6 +2,17 @@
 
 > **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
 
+## SY02-38《朗兰兹纲领入门课程讲义》（Anschütz，含 Heuer 三讲）全书中译 + 53 张资料卡 — 2026-11-26
+
+- 新增 `08_source_code/SY02-38_朗兰兹纲领入门课程讲义/`：J. Anschütz *Lecture notes for an introductory course on the Langlands program*（2020-07-22 修订稿，**103 页**，其中第 7、8、10 讲由 Ben Heuer 撰写）的全文中文译注本。口径号 LL-E02（原判「候补」，本轮立项）。
+- 流水线：`translate_kit.py prep`（103 页 → `work/pages/pNNN.txt`、`fulltext.txt` 6,032 行、18 块）→ 通读（`通读笔记.md` 六节含机器可读 YAML）→ `疑点清单.tsv` **25 条全部 `已解`** → 术语冻结（`glossary.tsv` 约 100 行、`definitions.tsv` 21 行，对齐 SY02-09 与 SY02-24）→ 分章译（Lead 讲 1–2；7 名译手分讲 3–12）→ 编译校订 → 资料卡 → 登记。
+- 编译：`xelatex` 三遍 **101 页（含术语索引 1 页） / 0 error / 0 Overfull / 0 Undefined control**（3 处 Underfull 无害）。修掉的坑：`unicode-math` 下 `\Z`、`\R` 紧跟 `_ ^ \widehat` 触发 `\__um_group_begin:`，整套退回 `amssymb + mathtools` 的 CM 数学；`\t \k \b` 与 LaTeX 内置命令冲突；elegantbook 默认封面留 `example-image` 灰框 → 自绘 titlepage；5 处 Overfull（`aligned` 断行、`smallmatrix`、`gathered`、`emergencystretch`）。
+- 译注约 **90 条**，其中 6 条记原文笔误（`errata.tsv`：p.22 `ωω^k`→`ω^{⊗k}`、p.43 `Γ_0(m)` 的 `c≡1`→`c≡0`、p.68 `E(F_p)`→`E[p](\bar F_p)`、p.81 `G_k` 求和下标、p.82 定理 10.8 的 `ℓ/p` 混用、p.89 Casimir 中间步），正文按校正后含义译、原文写法留在译注。存疑未擅改 4 处：p.59 定理 (2) 的 `Γ(N)∩Γ₀(pⁿ)`、p.60 遗忘态射方向、p.62 脚注 14 底本缺正文、p.74 单射性一步。
+- 新增 `datasets/sy0238/`：**53 张资料卡**（概念 48 + 推导 5），十轨覆盖 adèle 化/自守表示/Hecke 代数/模形式/Galois 表示/模 p 与 Deligne–Serre/一般群与 L-群/Shimura 簇；`lint_cards.py --strict` **0 error**，`verify_quotes.py` 核 **179 条** `sources[].quote` 逐字命中、0 问题；附 `SCHEMA.md`、`SOURCE.md`、`notes.md`（核对与勘误节）、`errata.tsv`（28 行）。
+- 新增思考链两条（`09_thinking/chains/`，并登记 `index.csv`）：`SY02-38-WF01`（字体退回 CM、页标记用注释、疑点清单先清零 三条决定性判断；6 决策 / 6 自纠）、`SY02-38-KB01`（本地知识库插件 `kb_locate/kb_ctx/kb_get` 六用例实测：**覆盖率与答案性脱钩**，100% 覆盖率可命中错误条目；6 问题 + 5 建议）。
+- 台账：`RELEASE_REGISTER.csv` 增 SY02-38 一行（讲义；演绎作品，底本权利归原作者；风险低；L2 公开·受限（可撤下）；**成品随仓公开，成品在仓=是**，`.gitignore` 增白名单）；底本 PDF 属 L4 禁入，不入库。
+- 统计未手改：跑 `make_stats.py --write` 重算 `_meta/stats.json`。
+
 ## GRASSMANN-精读《Grassmannians, Moduli Spaces and Vector Bundles》全书精读 + 90 张资料卡 — 2026-11-26
 
 - 新增 `08_source_code/GRASSMANN-精读_格拉斯曼模空间与向量丛精读/`：Clay Math. Proc. 14（AMS/Clay 2011，9 篇独立论文，中译本 170 页）的逐章精读与审校工程。BRIEF（Phase 0–4 与质量门）、STATUS（全部完成）、9 个工具、13 份任务书、`产出/{导读,批注,笔记,汇总}` 71 个文件。
