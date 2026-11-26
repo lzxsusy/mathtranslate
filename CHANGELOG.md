@@ -3,6 +3,17 @@
 > **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
 
 
+## SY02-41《局部 Langlands 对应的几何化——Berkeley 讲义》中译注本 + 资料卡五件套 — 2026-11-27
+
+- **底本与译本**：Peter Scholze 讲授、Tony Feng 记录的 *Geometrization of the local Langlands correspondence*，UC Berkeley 课程（首讲 Oct 30、末讲 Feb 12，讲义只印月日，按周一/周五排课推断为 2020–2021 学年），自印 pdfTeX 1.40.17，2022-03-19 生成，148 页 / 27 讲 / 484 条编号条目。中译注本 **153 页**，xelatex 三遍 **0 error**，11 处 Overfull（均数个 pt）；24 幅手绘示意图全部 TikZ 重绘（`\figP{...}`，图内英文标签中文化），译注 30 条（A/B/I 分级），术语表 215 条。
+- **术语**：沿用 SY02-26 已冻结译名（完满空间、菱形、倾斜、adic 空间、等晶体……），开工前按用户要求先核香蕉空间（bananaspace.org）：其用词为「完全胚空间／钻石／斜置／正置／进制空间」。判据取**导航框、正文例句与 transbox**（页面「块」明列 shtuka = 块、leg = 爪；「错致层」= perverse sheaf；「解析叠」transbox 给 analytic stack = 解析叠、condensed anima = 凝聚态生象），逐条对照与取舍理由记入 `资料卡/04-术语文献勘误.md` §二。结论：核心五词从本库（跨工程一致性），本库无先例者（解析环/解析叠/棱镜/凝聚态生象）采香蕉空间。
+- **逐页对译**：每页原文用 `p.NN` 边注标出，可与底本逐页对照；`\srcpage` 页锚 148 个全部落位。
+- **外部核验**：22 条参考文献全部核到卷期页——Crossref 为主，Crossref 未收录的（Münster J. Math.）与疑似著录错误（RR96 页码）转 zbMATH；纠正 2 条底本著录（RR96 页码、BFHHLWY 缺卷期），核实 4 条讲义/预印本（DHKM arXiv v3、F17 法文预印本、S17 与 Berk 站点 PDF 均 200）。另核原文本体：开课年份未印，用 27 个日期与 2020–2021 学年周一/周五排课比对，25 个吻合、2 个（Nov 5、Nov 21）疑为 Nov 6/Nov 20 之误。原文 39 处笔误与内部不一致（如 p.40/p.41 的 $\mathcal O(1/(n-1))$ 与 $\mathcal O(1/n)$、p.109 的 $j\colon U\hookrightarrow\Bun^b_G$）逐条登记，正文照原文排印，仅会误导处加 A 级译注。
+- **资料卡五件套**：`00-速览.md`（一页读懂 + 3 小时讨论班路线）、`01-结果清单.md`（135 条主要结果，每条带原文页）、`02-论证地图.md`、`03-条款索引.md`（484 条全覆盖）、`04-术语文献勘误.md`（术语冻结表 + 香蕉空间对照 + 22 条文献核验 + 39 条勘误）。
+- **对齐卡**：3 张 gap 卡进 `datasets/leanstmt/cards/statements/scholzeff-g01..g03.json`（FF 曲线上 $\mathrm{Pic}\cong\mathbb Z$、$GL_n$ 超尖 ↔ $n$ 维 Weil 表示、几何 Satake 的 Tannaka 形式），Lean 语句经 `lean` 直跑 exit=0（`lake` 因 mathlib 包 git 检出失败，改 `LEAN_PATH` 指向已编译 olean），盲回译由独立 subagent 完成；`lint_cards.py --strict` cards=43 errors=0；`check_lean.py` 静态 0 problem。
+- **工程**：`源码/{main.tex,preamble.tex,sections/*.tex}`、`工程文件/{BRIEF.md,STYLE_GUIDE.md,work/,reports/}`（27 份逐讲报告 + 215 条疑点清单 + 条目总表）、`工程文件/tools/{check_sections.py,diff_items.py,index_items.py}`（编号/页锚/交叉引用/禁用命令四类自动核验；检查器 v3 支持 fact / exercise / 条目回指去误报）。**新发现并修好的结构缺口**：原文有独立条目类型 Fact（第 19、20 讲共 5 条）与 Exercise，preamble 补 `\newtheorem{fact}[theorem]{事实}`、`\newtheorem{exercise}[theorem]{练习}`，否则全讲编号会整体错位。
+- **台账**：`03_translations_meta/SY02-41/投稿信息.md`（推荐等级 A）、`RELEASE_REGISTER.csv` 第 146 行登记。
+
 ## SY02-15《相对朗兰兹对偶》v1.1 校对 + 卡片外部核验 + 思维导图/研读笔记 — 2026-11-27
 
 - **校对**：4 路并行逐章改稿，共 **95 处**（ch01–04 20、ch05–08 45、ch09–12 10、ch13–15 20），每处在 `工程文件/work/reports/校对v1.1_*.md` 记「行号｜原文页/英文原句｜原译｜改译｜依据」。主要修正：不交并→无交并、Hamilton→哈密顿、示性函数、$\mathbb F_p$ 上划线、raviolo 图题、几何 Satake 等价全称、图示箭头/三角图还原、漏译与病句。重编译 **65 页、0 error / 0 Overfull**；v1.0→v1.1 文本 diff 172 块。
