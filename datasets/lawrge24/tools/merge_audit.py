@@ -37,16 +37,22 @@ for path in sorted(glob.glob(os.path.join(AUDIT, "track-*.jsonl"))):
             if cid.startswith("lawrge/"):
                 rid = cid.replace("lawrge/concepts/", "lawrge/concept/").replace(
                     "lawrge/derivations/", "lawrge/deriv/")
-            else:
+            elif "/" in cid:
                 typ, slug = cid.split("/", 1)
                 typ = {"concepts": "concept", "derivations": "deriv"}.get(typ, typ)
                 rid = f"lawrge/{typ}/{slug}"
+            else:
+                hits = [k for k in by_id if k.endswith("/" + cid)]
+                if len(hits) != 1:
+                    raise SystemExit(f"ambiguous bare card id {cid}: {hits}")
+                rid = hits[0]
             r = by_id.get(rid)
             if r is None:
                 raise SystemExit(f"unknown card id in audit: {rid}")
+            ev = a.get("sources") or a.get("evidence") or []
             srcs = "; ".join(
-                f'{s.get("name","?")} {s.get("locator","")}'.strip()
-                for s in a.get("sources", [])
+                f'{s.get("name") or s.get("source","?")} {s.get("locator","")}'.strip()
+                for s in ev
             )
             r.setdefault("checks", []).append({
                 "kind": "audit",

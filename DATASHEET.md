@@ -1,6 +1,6 @@
 # Dataset Card · 数译中文数学译注语料
 
-> 版本 `v1.5.1`（2026-11-27；SY02-15 v1.1 校对/审计轮 + 其它会话新增 1 部工程，统计刷新为 **144 部工程 / 47 个数据集 / 1,804 张资料卡**；v1.5.0 新增 `lawrge24/` 47 卡并补 SY02-15 登记，当时为 143 部工程 / 46 个数据集 / 1,777 张资料卡；上一版 v1.4.0 为 2026-11-26，新增 `grassmann/` 90 卡与 `GRASSMANN-精读` 工程；统计自 v1.3.0 起从 `_meta/stats.json` 单一来源取数）· 维护者：超对称梦想家（chaoduicheng）
+> 版本 `v1.5.1`（2026-11-27；SY02-15 v1.1 校对/审计轮 + 其它会话新增 1 部工程，统计刷新为 **144 部工程 / 47 个数据集 / 1,807 张资料卡**；v1.5.0 新增 `lawrge24/` 47 卡并补 SY02-15 登记，当时为 143 部工程 / 46 个数据集 / 1,777 张资料卡；上一版 v1.4.0 为 2026-11-26，新增 `grassmann/` 90 卡与 `GRASSMANN-精读` 工程；统计自 v1.3.0 起从 `_meta/stats.json` 单一来源取数）· 维护者：超对称梦想家（chaoduicheng）
 > 仓库：<https://atomgit.com/lzxSUSUY/mathtranslate> · 镜像：<https://gitee.com/supersymmetry-dream-home/shuyi>
 
 ## 1. 这是什么
@@ -16,7 +16,7 @@
 | 权威层 | `08_source_code/` | **144 部工程**的 LaTeX 源码 + 工程文档（其中 **130 部带 LaTeX 源码**；14 部无源码，只有成品 PDF 或译本正文） |
 | 衍生层 | `01_corpus_zh/`、`02_trajectories/`、`06_sessions_raw/`（分片在 Release 附件）、`03_translations_meta/` | 语料、轨迹、会话、元数据与术语 |
 | 规范层 | `01_corpus_zh/数语规范/` | **术语 2,277 条 / 记号 76 条 / 冲突 91 组 / 宏 662 个**；三份规范（术语+记号、中文语体、对齐卡） |
-| 卡片层 | `datasets/` | **47 个集 / 1,804 张资料卡**；其中 `leanstmt/` 是 **40 条自然语言↔Lean 4 对齐卡**（21 certified + 19 gap） |
+| 卡片层 | `datasets/` | **47 个集 / 1,807 张资料卡**；其中 `leanstmt/` 是 **40 条自然语言↔Lean 4 对齐卡**（21 certified + 19 gap） |
 | 过程层 | `04_playbook/`、`05_seminar_witten/`、`10_gmn_series/` | 翻译纪律、审校报告、研讨班与 GMN 系列的研究笔记 |
 | 参考层 | `07_refs_nlab/` | nLab 条目摘要 120 条 + 替代来源卡 37 份 + 110 条来源真实性抽查；几何 Langlands 线的术语与引文底账 |
 
