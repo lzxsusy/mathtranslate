@@ -87,6 +87,7 @@ python datasets/_audit/glc_full_2026-11-26/tools/verify_final.py
 - 13 个 JSONL（A1–A8、B1–B3、T1a–T1b）checker 全部 0 error / 0 warning。
 - 外部核验：51/51 通过、0 推翻（`EXTERNAL_VERIFICATION.md`）。
 - 发布：`11_card_audit/glc_full/`（README/TRACE/casebook/index + `raw/` 数据件 + `tools/` 脚本）与 22 卡＋22 md 的改动一起 commit（`7d79721e`），push 到 AtomGit `master:main` 与 Gitee `master`（均为 `6a488d50..7d79721e`，快进，无强推）。
+- 复跑口径：`verify_final.py` 的「`git diff --numstat` 只含确认卡」与「HEAD 未动」只在 commit 前成立；修复已随 `7d79721e` 入库后，原地复跑会在这两条报红（预期）。发布后核对改用 `fix_log.json` 的 51 处 sha256 与 `git show --stat 7d79721e`；其余检查（154/1676 解析、md 同步、sha256 在位）随时可复跑。
 
 ## 6. 边界（本批没做）
 

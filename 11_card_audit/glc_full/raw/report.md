@@ -185,6 +185,8 @@ B2 独立给出一个系统性观察：它报的 8 条里有 5 条同源于「`\
 | 13 个 JSONL（A1–A8、B1–B3、T1a–T1b）checker | 全部 0 error / 0 warning | 各 pass/tiebreak 目录 |
 | 外部核验 22 卡 51 处 | 51/51 通过，0 推翻（38 定位＋12 内容/术语＋1 内部一致性） | `EXTERNAL_VERIFICATION.md` |
 
+> 复跑口径：`verify_final.py` 的「`git diff --numstat` 只含确认卡」与「HEAD 未动」两条只在 **commit 前**成立。修复已随 `7d79721e` 入库（随后 `bfffe0cc`/`c50e7c27`/`e1d4fc8c` 为文档与思考链提交），所以发布后原地复跑会在这两条报红，属预期；发布后核对改用 fix_log 的 51 处 sha256 与 `git show --stat 7d79721e`。其余检查（154/1676 解析、md 同步、sha256 在位）任何时刻都可复跑。
+
 ## 9. 残余风险与未解决
 
 1. **5 张单方发现未修**（§5）。外部复核（`EXTERNAL_VERIFICATION.md` §5）判定：`affine-grassmannian`、`euler-characteristic-trace-test` 维持不改；`deligne-gl1-existence`（系数域写成 k）、`hecke-laumon-stack`（三者互相决定其二）、`local-whittaker-eigenfunction`（有效优势权「指数为负」，λ_n=0 时实为 0）三处 A 方观察仍有依据，但按「arbiter pass 不修」的协议保留，列为残余风险，建议下一轮用单方发现二审通道处理。
