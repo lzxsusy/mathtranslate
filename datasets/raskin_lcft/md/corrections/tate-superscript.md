@@ -1,0 +1,40 @@
+# M_{hG} 应为 M^{hG}（同伦不变子模）
+
+> `raskin_lcft/correction/tate-superscript` ｜ 原书 p.57 ｜ reviewed
+
+**一句话**：该复形是 Hom_G(P_G^can,M)，其零阶上同调是不变子模 M^G、一阶是通常 H¹；故应记上标 M^{hG} 而非下标。
+
+**自测**：为什么「同伦不变子模」用上标、而「同伦余不变商」用下标？
+
+## 初版
+
+```
+经由某个进一步的微分得到 $M_{hG}$；$M_{hG}$ 的一阶上同调即 $H^1(G,M)$。
+```
+
+## 改后
+
+```
+经由某个进一步的微分得到 $M^{hG}$；$M^{hG}$ 的一阶上同调即 $H^1(G,M)$。
+```
+
+## 为什么改
+
+$\operatorname{Hom}_G(P_G^{\mathrm{can}},M)$ 的零阶项是 $M^G$（不变子模），一阶上同调是 $H^1(G,M)$，都是「取 Hom」得到的对象，按本书约定记上标 $M^{hG}$；下标留给张量积版本（余不变商）。若留下标，$H^0(M_{hG})=M_G$ 与「不变子模」矛盾。
+
+## 补注
+
+译文把该段三处一并改为上标并加注；同页下文 $H^1(G,M)=H^1(M^{hG})$ 因此自洽。
+
+## 易错点
+
+- 把 $M^{hG}$ 与 $M^G$ 当成同一物：前者是复形，后者只是它的零阶上同调。
+- 只改一处：该段有三处出现，必须一起改。
+
+## 参考与关联
+
+- Raskin, Lectures on Cohomological Class Field Theory (MIT 18.786, Spring 2016; notes by Oron Propp)，第 13 讲 同伦余不变商、交换化与 Tate 上同调，p.57–58（原书 p.57）
+
+关联：`raskin_lcft/concept/tate-cohomology-unbounded`、`raskin_lcft/concept/tate-cohomology`
+
+来源说明：勘误来自本次校对（对照 MIT OCW 公开讲义 PDF 逐页核校）；译文用 % [原文疑误：…] 注释留痕，注释不进 PDF。

@@ -1,0 +1,40 @@
+# 断言 23.10 四角图的左端花括号标签易被误读
+
+> `raskin_lcft/correction/second-inequality-diagram` ｜ 原书 p.105 ｜ reviewed
+
+**一句话**：原图左端用花括号把上、下两个 Br(F/E) 括在一起并标乘以 [F(ζ_p):F]；该标签属于左列两条竖直箭头的复合，不是同层箭头间的映射。
+
+**自测**：为什么这个标签必须理解为左列的复合，而不是某一条水平箭头？
+
+## 初版
+
+```
+左端标 $\times[F(\zeta_p):F]$ 的花括号跨越上、下两个 $\mathrm{Br}(F/E)$。
+```
+
+## 改后
+
+```
+左列复合 $\mathrm{Br}(F/E)\to\mathrm{Br}(F(\zeta_p)/E(\zeta_p))\to\mathrm{Br}(F/E)$ 是乘以 $[F(\zeta_p):F]$；它在 $\mathrm{Br}(F/E)$ 上单射，故 $\gamma$ 单射。
+```
+
+## 为什么改
+
+图上 $\gamma$（上→中）与中→下（回到 $\mathrm{Br}(F/E)$）是两条不同映射，花括号把两端的 $\mathrm{Br}(F/E)$ 连起来，说明的正是这两条竖直箭头的复合。由「限制与膨胀」的复合等于乘以 $[F(\zeta_p):F]$，而 $\mathrm{Br}(F/E)$ 是 $p$-挠的、$[F(\zeta_p):F]\mid(p-1)$，故复合单射，于是 $\gamma$ 单射。
+
+## 补注
+
+译文改为三行 array（上排 $\mathrm{Br}(F/E)\xrightarrow{\alpha}\oplus_v\mathrm{Br}(F_v/E_w)$，中排 $\mathrm{Br}(F(\zeta_p)/E(\zeta_p))\xrightarrow{\beta}\oplus_v\mathrm{Br}(F(\zeta_p)_w)$，下行回到 $\mathrm{Br}(F/E)$），并把正文改写为「左列复合…」。
+
+## 易错点
+
+- 把标签当作 $\alpha$ 或 $\beta$ 的倍数：$\alpha,\beta$ 是水平映射，与被乘的 $[F(\zeta_p):F]$ 无关。
+- 忽略「$[F(\zeta_p):F]\mid(p-1)$」这一步：没有它与 $p$-挠性，单射性不成立。
+
+## 参考与关联
+
+- Raskin, Lectures on Cohomological Class Field Theory (MIT 18.786, Spring 2016; notes by Oron Propp)，第 23 讲 第二不等式的证明，p.105–107（原书 p.105）
+
+关联：`raskin_lcft/concept/brauer-group`、`raskin_lcft/concept/vanishing-theorem`
+
+来源说明：勘误来自本次校对（对照 MIT OCW 公开讲义 PDF 逐页核校）；译文用 % [原文疑误：…] 注释留痕，注释不进 PDF。

@@ -1,0 +1,172 @@
+% 第 10 讲 同伦、拟同构与余不变商
+% 源：src/lecture10.txt（199 行）
+\section*{第 10 讲\quad 同伦、拟同构与余不变商}
+
+请注意，本讲中许多断言的证明留作习题集 5。
+
+回忆：带微分 $d$ 的阿贝尔群序列若满足 $d^2=0$，就称为\textbf{复形}；若 $df=fd$，则 $f\colon X\to Y$ 称为链复形的\textbf{态射}；若 $dh+hd=f$，则 $h$ 称为（$f$ 的）\textbf{零伦}。下图示意这一情形：
+\[
+\begin{array}{ccccccccc}
+\cdots & \longrightarrow & X_{-1} & \xrightarrow{\ d\ } & X_0 & \xrightarrow{\ d\ } & X_1 & \longrightarrow & \cdots\\[5pt]
+& & {\scriptstyle f}\big\downarrow & & {\scriptstyle f}\big\downarrow & & {\scriptstyle f}\big\downarrow & & \\[5pt]
+\cdots & \longrightarrow & Y_{-1} & \xrightarrow{\ d\ } & Y_0 & \xrightarrow{\ d\ } & Y_1 & \longrightarrow & \cdots
+\end{array}
+\]
+其中竖直箭头为 $f$；零伦 $h$ 由一组斜箭头（从 $X_i$ 指向 $Y_{i-1}$）给出，条件 $dh+hd=f$ 说的正是：「先沿上排走 $d$、再沿 $h$ 下行」与「先沿 $h$ 下行、再沿下排走 $d$」二者之和等于 $f$（原图用 $h$ 标出这些斜箭头，此处从略）。
+
+链复形的不变量是同调群
+\[
+H_i(X):=\ker(d\colon X_i\to X_{i+1})/\operatorname{Im}(d\colon X_{i-1}\to X_i),
+\]
+而对 $f,g\colon X\to Y$，我们称 $f\simeq g$（即 $f$ 与 $g$ \textbf{同伦}），当且仅当 $f-g$ 存在零伦；由引理 9.10，这迫使 $f$ 与 $g$ 在上同调上诱导相同的映射。
+
+设 $G$ 为有限群，$L/K$ 为局部域扩张且 $G=\Gal(L/K)$。按定义有 $\HH^0(G,L^\times)=K^\times/NL^\times$。我们的目标是证明 $\HH^0(G,L^\times)\cong G^{\mathrm{ab}}$（典范地），即 $G$ 的交换化。本讲的计划是：对每个 $i\in\Z$ 定义 Tate 上同调群 $\HH^i$（对非循环群要复杂一些），然后用它们开始走向这一事实的证明。
+
+回忆我们的基本原则：给定同伦 $h\colon f\simeq g$，则 $f$ 与 $g$ 在实践中已无法区分（这一点我们直接采信）。这一原则的一个应用是锥（或称同伦余核）的构造：
+
+\textbf{断言 10.1.} 若 $f\colon X\to Y$ 是复形的映射，则同伦余核 $\operatorname{hCoker}(f)$（又称锥 $\operatorname{Cone}(f)$）存在；刻画它的万有性质是：链复形映射 $\operatorname{hCoker}(f)\to Z$ 等价于映射 $g\colon Y\to Z$ 连同 $g\circ f\colon X\to Z$ 的一个零伦 $h$。
+
+\textit{证明.} 我们断言下列链复形就是 $\operatorname{hCoker}(f)$：
+\[
+(10.1)\qquad \cdots\to X_0\oplus Y_{-1}\to X_1\oplus Y_0\to X_2\oplus Y_1\to\cdots
+\]
+其微分为
+\[
+X_i\oplus Y_{i-1}\ni\begin{pmatrix}x\\ y\end{pmatrix}
+\xrightarrow{\ d\ }
+\begin{pmatrix}-dx\\ f(x)+dy\end{pmatrix}\in X_{i+1}\oplus Y_i,
+\]
+注意其次数恰好增加 $1$。可将该微分写成矩阵 $\begin{pmatrix}-d&0\\ f&d\end{pmatrix}$；它平方为零：
+\[
+\begin{pmatrix}-d&0\\ f&d\end{pmatrix}\begin{pmatrix}-d&0\\ f&d\end{pmatrix}
+=\begin{pmatrix}d^2&0\\ -fd+df&d^2\end{pmatrix}
+=\begin{pmatrix}0&0\\0&0\end{pmatrix},
+\]
+这里用了链复形态射的定义（$df=fd$）以及 $X$、$Y$ 均为复形这一点。
+
+现在验证该链复形满足 $\operatorname{hCoker}(f)$ 的万有性质。设有映射 $\operatorname{hCoker}(f)\to Z$，即下图交换：
+\[
+\begin{array}{ccccccc}
+\cdots & \longrightarrow & X_{i+1}\oplus Y_i & \longrightarrow & X_{i+2}\oplus Y_{i+1} & \longrightarrow & \cdots\\
+& & \big\downarrow & & \big\downarrow & & \\
+\cdots & \longrightarrow & Z_i & \longrightarrow & Z_{i+1} & \longrightarrow & \cdots
+\end{array}
+\]
+若把该映射写成 $(x,y)\mapsto h(x)+g(y)$，则上述交换性意味着
+\[
+dh(x)+dg(y)=d(h(x)+g(y))=h(-dx)+g(f(x)+dy)=-h(dx)+gf(x)+g(dy).
+\]
+取 $x=0$ 得 $dg=gd$；于是必须有 $dh+hd=g\circ f$，即 $h$ 是 $g\circ f$ 的零伦，如所欲证。\hfill$\square$
+
+\textbf{推论 10.2.} 复合 $X\to Y\to\operatorname{hCoker}(f)$ 典范地零伦（作为练习，请把这个零伦显式构造出来！）。
+
+\textbf{例 10.3.} 设
+\[
+X:=(\cdots\to0\to A\to0\to\cdots),\qquad Y:=(\cdots\to0\to B\to0\to\cdots),
+\]
+其中 $A,B$ 是位于次数 $0$ 的有限阿贝尔群，并设 $f\colon A\to B$。则
+\[
+\operatorname{hCoker}(f)=(\cdots\to0\to A\xrightarrow{\ f\ }B\to0\to\cdots),
+\]
+$B$ 位于次数 $0$。于是
+\[
+H_0\operatorname{hCoker}(f)=\operatorname{Coker}(f),\qquad H_{-1}\operatorname{hCoker}(f)=\ker(f),
+\]
+可见链复形的语言推广了先前的概念。
+
+\textbf{记号 10.4.} 对链复形 $X$，记 $X[n]$ 为 $X$ 平移 $n$ 位所得的链复形，即第 $i$ 次为 $X_{i+n}$、微分为 $(-1)^nd$（$d$ 仍记 $X$ 的微分）的链复形。例如 $X[1]=\operatorname{hCoker}(X\to0)$。其含义是：给出 $0\colon X\to Y$ 的一个零伦，等价于给出映射 $X[1]\to Y$。
+
+\textbf{引理 10.5.} 对任意映射 $f\colon X\to Y$，序列
+\[
+H_iX\to H_iY\to H_i\operatorname{hCoker}(f)
+\]
+对一切 $i$ 正合。
+
+\textit{证明.} 复合为零，因为 $X\to Y\to\operatorname{hCoker}(f)$ 零伦（引理 9.10）。为证正合性，取 $y\in Y_i$ 使 $dy=0$，并设它在 $H_i\operatorname{hCoker}(f)$ 中的像为零，即
+\[
+\begin{pmatrix}0\\ y\end{pmatrix}
+=\begin{pmatrix}-d&0\\ f&d\end{pmatrix}\begin{pmatrix}\alpha\\ \beta\end{pmatrix}
+=\begin{pmatrix}-d\alpha\\ f(\alpha)+d\beta\end{pmatrix}
+\]
+其中 $\alpha\in X_i$、$d\alpha=0$，$\beta\in Y_{i-1}$。于是 $f(\alpha)+d\beta=y$ 给出 $f(\alpha)=y$（在 $H_iY$ 中），如所欲证。\hfill$\square$
+
+\textbf{断言 10.6.} 还有同伦核 $\operatorname{hKer}(f)$ 的概念，由下述万有性质刻画：映射 $Z\to\operatorname{hKer}(f)$ 等价于映射 $Z\to X$ 连同复合 $Z\to X\to Y$ 的一个零伦。特别地，$\operatorname{hKer}(f)=\operatorname{hCoker}(f)[-1]$。
+
+\textbf{例 10.7.} 设 $f\colon A\to B$ 是阿贝尔群的映射（仍位于次数 $0$）。则
+\[
+\begin{aligned}
+\operatorname{hCoker}(f)&=(\cdots\to0\to A\xrightarrow{\ f\ }B\to0\to0\to\cdots),\\
+\operatorname{hKer}(f)&=(\cdots\to0\to0\to A\xrightarrow{\ f\ }B\to0\to\cdots),
+\end{aligned}
+\]
+其中 $\operatorname{hKer}(f)_0=A$。同伦余核也在其同调中还原出核与余核。
+
+\textbf{断言 10.8.} 复合
+\[
+X\xrightarrow{\ f\ }Y\to\operatorname{hCoker}(f)
+\]
+零伦，故存在典范映射
+\[
+X\to\operatorname{hKer}\bigl(Y\to\operatorname{hCoker}(f)\bigr),
+\]
+后者称为「映射柱」。该映射是同伦等价。
+
+\textbf{定义 10.9.} 映射 $f\colon X\to Y$ 称为\textbf{同伦等价}，若存在映射 $g\colon Y\to X$ 以及同伦 $gf\simeq\operatorname{id}_X$、$fg\simeq\operatorname{id}_Y$，此时记 $X\simeq Y$。若 $H_i(f)\colon H_i(X)\xrightarrow{\sim}H_i(Y)$ 对每个 $i$ 都是同构（即 $X$ 与 $Y$ 在上同调层面相等），则称 $f$ 为\textbf{拟同构}。
+
+\textbf{断言 10.10.} 若 $f\colon X\to Y$ 是同伦等价，则它是拟同构。
+
+\textit{证明.} 这是引理 9.10 的直接推论：该引理保证 $f$ 与 $g$ 在上同调层面互为逆。\hfill$\square$
+
+\textbf{推论 10.11.} 给定 $f\colon X\to Y$，有长正合列
+\[
+\cdots\to H_{i-1}\operatorname{hCoker}(f)\to H_iX\to H_iY\to H_i\operatorname{hCoker}(f)\to H_{i+1}X\to\cdots.
+\]
+
+\textit{证明.} 记 $g$ 为映射 $Y\to\operatorname{hCoker}(f)$，则复合
+\[
+Y\xrightarrow{\ g\ }\operatorname{hCoker}(f)\to\operatorname{hCoker}(g)=\operatorname{hKer}(g)[1]\simeq X[1]
+\]
+由推论 10.2 零伦，而同伦等价由断言 10.8 给出。故由引理 10.5，序列
+\[
+H_iY\to H_i\operatorname{hCoker}(f)\to H_iX[1]=H_{i+1}X
+\]
+正合；再用一次引理 10.5 即得结论。\hfill$\square$
+
+\textbf{断言 10.12.} 设 $f_i\colon X_i\to Y_i$ 对每个 $i$ 都是单射。则 $\operatorname{hCoker}(f)\to Y/X$（即第 $i$ 次为 $Y_i/X_i$ 的复形）是拟同构。
+
+\textbf{例 10.13.} 若 $f\colon A\hookrightarrow B$ 是位于次数 $0$ 的阿贝尔群映射，则映射 $\operatorname{hCoker}(f)\to B/A$ 形如
+\[
+\begin{array}{ccccccccc}
+\cdots & \longrightarrow & A & \longrightarrow & B & \longrightarrow & 0 & \longrightarrow & \cdots\\
+& & \big\downarrow & & \big\downarrow & & \big\downarrow & & \\
+\cdots & \longrightarrow & 0 & \longrightarrow & B/A & \longrightarrow & 0 & \longrightarrow & \cdots
+\end{array}
+\]
+容易看出这确实是拟同构。注意有对偶的论断：若每个 $f_i$ 都是满射，则同伦核拟同构于朴素核。
+
+\textbf{注 10.14.} 若 $A$ 是结合代数（例如 $\Z$ 或 $\Z[G]$），则可考虑 $A$-模的链复形
+\[
+\cdots\to X_{-1}\xrightarrow{\ d\ }X_0\xrightarrow{\ d\ }X_1\to\cdots,
+\]
+其中 $X_i$ 是 $A$-模、$d$ 是 $A$-模映射。此时上同调也自动是 $A$-模。
+
+现在回到原问题：对有限群 $G$ 在某个 $A$ 上的作用定义 Tate 上同调。注意
+\[
+\HH^0(G,A)=A^G/N(A)=\operatorname{Coker}(N\colon A\to A^G).
+\]
+事实上，我们可以做得比 $N\colon A\to A^G$ 更好：范映射经过我们将称为余不变商的模分解。
+
+\textbf{定义 10.15.} $A$ 的\textbf{余不变商}为 $A_G:=A/\sum_{g\in G}(g-1)A$；它满足万有性质：$A_G$ 是满足「对一切 $x\in A$、$g\in G$ 都有 $gx=x$」的 $A$ 的最大商模。
+
+注意可把不变子模 $A^G$ 看成各 $(g-1)A$ 的核的交，故它同样是对一切 $g$ 满足 $gx=x$ 的 $A$ 的最大子模。于是范映射分解为 $A\to A_G\xrightarrow{N}A^G$，即
+\[
+\begin{array}{ccc}
+A & \xrightarrow{\ N\ } & A^G\\
+& \searrow{\scriptstyle N} & \big\uparrow\\[2pt]
+& A_G &
+\end{array}
+\]
+
+现在的计划是为 $A^G$ 与 $A_G$ 定义导出（复形）版本，记作 $A^{hG}$ 与 $A_{hG}$，并考虑范映射 $N\colon A_{hG}\to A^{hG}$；Tate 上同调将是此映射的同伦余核。基本观察是：$\Z$ 以平凡方式成为 $G$-模（即 $\Z[G]$ 通过增广作用在 $\Z$ 上），$G$ 的每个元素都作为恒等自同构作用。若 $M$ 是 $G$-模，则 $M^G=\operatorname{Hom}_G(\Z,M)$（因为 $1\in\Z$ 的像必须是 $G$-不变的，且与 $M^G$ 的元素一一对应），并且 $M_G=M\otimes_{\Z[G]}\Z$。事实上，设 $I\subseteq A$ 是作用在 $M$ 上的理想，则由张量积的右正合性有 $A/I\otimes_AM=M/IM$。这里 $\Z=\Z[G]/I$，其中 $I$ 是由元素 $g-1$ 生成的「增广理想」，因此 $M_G=M/IM$，如所欲证。
+
+现在面临一般问题：$A$ 是结合代数、$M$ 是结合 $A$-模，我们想「导出」函子 $-\otimes_AM$ 与 $\operatorname{Hom}_A(M,-)$。它们应把 $A$-模的链复形变成阿贝尔群的复形，并保持锥与拟同构。我们将在下一讲开始处理。

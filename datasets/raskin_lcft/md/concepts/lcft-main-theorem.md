@@ -1,0 +1,61 @@
+# 局部类域论主定理（lcft）
+
+> `raskin_lcft/concept/lcft-main-theorem` ｜ track A ｜ reviewed
+
+**一句话**：非阿基米德局部域上，有限阿贝尔扩张的 Galois 群同构于范数商群：Gal(L/K) ≅ K^×/NL^×；取极限即 Gal(K^ab/K) ≅ K̂^×。
+
+**自测**：为什么范数群 NL^× 能完全决定 Gal(L/K)？这条同构在上同调里是怎么被证明的？
+
+## 定义
+
+设 K 是非阿基米德局部域，L/K 是有限阿贝尔扩张，N: L^× → K^× 为范映射。局部类域论断言存在典范同构 K^×/NL^× ≅ Gal(L/K)；取遍有限阿贝尔扩张的逆向极限得 Gal(K^ab/K) ≅ K̂^×（K^× 的完备化）。本书的路线是用 Tate 上同调重证此同构，核心是消没定理（15.3/15.5）⟹ 上同调 lcft（14.2）⟹ 18.14。
+
+记号：N: L^× → K^×；C_K = K^×；K̂^× = lim K^×/U。
+
+## 要点
+
+- 同构的两端都是「商」：左边 K^×/NL^×，右边 Gal(L/K)；范数群越大，扩张越小。
+- 对应是反序的：L₁ ⊆ L₂ ⟺ NL₂^× ⊆ NL₁^×，这正是「范数群 ↔ 阿贝尔扩张」的字典。
+- n=2 情形（希尔伯特符号论）已经包含全部内容的结构：双乘性 + 非退化性 ⟺ 二次扩张的范数群指数 2。
+- 本书不假设 lcft 而证明它：定理 1.5 是目标，第 14–18 讲给出上同调版本，第 16–17 讲证消没定理。
+
+## 公式
+
+\mathrm{Gal}(L/K)\cong K^\times/NL^\times
+\mathrm{Gal}(K^{\mathrm{ab}}/K)\cong \hat{K^\times}
+
+## 定理与证明
+
+### 定理 1.5（局部类域论）
+
+设 $L/K$ 是非阿基米德局部域的有限阿贝尔扩张，则存在典范同构 $\mathrm{Gal}(L/K)\cong K^\times/NL^\times$。
+
+（sketch；来源：原书 p.2）
+
+
+缺口：第 1 讲只作陈述；书在第 14–18 讲用上同调给出证明（见「消没定理 ⟹ lcft」卡）。
+
+### 推论 18.14（Kummer 对偶版的互反律）
+
+对无限 Galois 扩张 $L/K$，有 $K^\times/NL^\times\cong G^{\mathrm{ab}}$，其中 $G=\mathrm{Gal}(L/K)$。
+
+（sketch；来源：原书 p.80）
+
+
+缺口：由命题 18.13 的 $H^1(G,L^	imes)=0$ 与 Tate 上同调的双对偶得到。
+
+## 易错点
+
+- 把 K^×/NL^× 误读成 NL^× 本身（商群才是 Galois 群）
+- 忘记 K̂^× 是 K^× 的完备化（profinite completion），不是 K^× 本身
+- 把 L/K 的「有限阿贝尔」省成「有限」：非阿贝尔扩张上断言不成立
+- 把「K^ab」想成某个具体域：它只是「一切有限阿贝尔扩张的并」，靠同构来把握，不靠构造。
+
+## 参考与关联
+
+- Raskin, Lectures on Cohomological Class Field Theory (MIT 18.786, Spring 2016; notes by Oron Propp)，第 1 讲 引言，p.1–5（原书 p.1）
+- Raskin, Lectures on Cohomological Class Field Theory (MIT 18.786, Spring 2016; notes by Oron Propp)，第 18 讲 范数群与 Kummer 理论，p.76–80（原书 p.76）
+
+关联：`raskin_lcft/concept/hilbert-symbol`、`raskin_lcft/concept/norm-group`、`raskin_lcft/concept/idele-class-group`
+
+来源说明：卡由中译本的数学内容改写，不含底本原文；页码为底本印刷页。

@@ -1,0 +1,166 @@
+% 第 1 讲 引言
+% 源：src/lecture01.txt（Raskin, 18.786 讲义，2017-08-21 版）
+% 说明：原文页眉「1. INTRODUCTION 3/5」为 PDF 页眉残留，已删。
+
+\section*{第 1 讲\quad 引言}
+
+本课程先研究类域论（class field theory，cft）的二次情形，重点在显式 cft。随后我们将发展一套处理 cft 的上同调方法。最后，若时间允许，我们还会讨论若干附加课题，例如（更深入的）显式 cft、用 Fontaine--Herr 方法处理局部类域论（local class field theory，lcft）、代数群，以及 Tate 对偶。
+
+类域论在十九世纪至少从三条研究线索中浮现出来。第一条是根式可解性问题：$\mathbb{Q}$ 中哪些代数数可以用 $n$ 次根、和等等表示出来？Abel 与 Galois 证明了：对某个数域 $K$，不可约多项式 $f(x)\in K[x]$ 的根可用根式表示，当且仅当 $f$ 的分裂域的 Galois 群可解，也就是说，$f$ 的分裂域是一串阿贝尔扩张的迭代扩张，例如
+\[
+  \mathbb{Q}\overset{\mathbb{Z}/2\mathbb{Z}}{\subseteq}\mathbb{Q}(\zeta_3)
+  \overset{\mathbb{Z}/3\mathbb{Z}}{\subseteq}\mathbb{Q}(\zeta_3,\sqrt[3]{2}),
+\]
+其中我们把每个子扩张的 Galois 群写在相应的包含关系上方。这条判据把「判定哪些代数数可以写成根式」的问题，归结为理解数域的阿贝尔（乃至循环）扩张。遗憾的是，这个问题尚未解决，尽管人们可以梦想前沿研究正在逐步逼近它。不过，$\mathbb{Q}$ 的阿贝尔扩张是已知的：
+
+\textbf{定理 1.1（Kronecker--Weber）.} $\mathbb{Q}$ 的每个阿贝尔扩张都包含于某个 $\mathbb{Q}(\zeta_n)$ 之中，其中 $\zeta_n$ 是本原 $n$ 次单位根。
+
+也就是说，若 $f\in\mathbb{Q}[x]$ 的分裂域的 Galois 群阿贝尔，则 $f$ 的全部（等价地，某一些）根都可写成某个 $n$ 对应的 $\zeta_n$ 的有理函数。简要回顾：$[\mathbb{Q}(\zeta_n):\mathbb{Q}]=\varphi(n)$（$\varphi$ 为 Euler 函数），且 $\operatorname{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q})=(\mathbb{Z}/n\mathbb{Z})^{\times}$，其中 $m\in(\mathbb{Z}/n\mathbb{Z})^{\times}$ 的作用为 $\zeta_n\mapsto\zeta_n^m$。对 $\mathbb{Q}$ 而言，cft 本质上等价于 Kronecker--Weber 定理，但它对一般数域给出了额外（尽管不显式）的掌控。
+
+第二条线索是寻找代数数之间的恒等式。我们将会看到，Gauss 说明了 $\mathbb{Q}$ 中不明显的恒等式具有非平凡的算术后果。例如如下恒等式
+\[
+  \sqrt{2}=\zeta_8+\zeta_8^{-1}=\zeta_8+\bar\zeta_8=\frac{1+i}{\sqrt{2}}+\frac{1-i}{\sqrt{2}},
+\]
+\[
+  \sqrt{-3}=\zeta_3-\zeta_3^{-1}=\zeta_3-\bar\zeta_3=\frac{-1+\sqrt{-3}}{2}-\frac{-1-\sqrt{-3}}{2},
+\]
+都由 Kronecker--Weber 定理所预言（因为这些数对应的 Galois 群是阿贝尔群 $\mathbb{Z}/2\mathbb{Z}$）。这些算术后果表明，我们应当尝试更充分地理解此类恒等式。
+
+最后，第三个领域是丢番图方程的可解性。下面是典型定理的一个例子：
+
+\textbf{定理 1.2（Hasse 原理）.} 设 $K$ 为数域，且
+\[
+  q(x_1,\ldots,x_n)=\sum_i a_i x_i^2+\sum_{i\neq j}a_{ij}x_ix_j,
+  \qquad a_i,a_{ij}\in K.
+\]
+则对任意 $y\in K$，方程 $q(x_1,\ldots,x_n)=y$ 有解，当且仅当它在 $\mathbb{R}$ 中以及在所有 $\mathbb{Q}_p$（$p$ 遍历素数）中都有解。
+
+在 $\mathbb{R}$ 上检验有解是容易的；在 $\mathbb{Q}_p$ 上，问题化归为初等的同余性质；而事实证明这个问题完全可以算法化地解决。我们可以把这类问题改述为：$y\in\mathbb{Q}$ 是否为二次扩张 $\mathbb{Q}(\sqrt{d})/\mathbb{Q}$ 中的范数——至少对形式 $N(x+y\sqrt{d})=x^2-dy^2$（$x,y\in\mathbb{Q}$）是如此，而这本来就是上述情形中最难的情形。这个问题，以及「联系局部与整体」这一更宏大的想法，将会再次出现。
+
+现在我们转向 cft 主定理的陈述，它们或许眼下还不那么令人振奋。设 $K$ 是局部域，于是或者 $K$ 是阿基米德的，此时 $K=\mathbb{R},\mathbb{C}$；或者 $K$ 是非阿基米德的，此时 $K$ 是 $\mathbb{Q}_p$ 的有限扩张，或 $K=\mathbb{F}_{p^n}((t))$（对某对 $p,n$）。设 $K^{\mathrm{sep}}$ 为其可分闭包。注意：若 $K$ 是任意域，而 $K^{\mathrm{sep}}/K_1/K$ 与 $K^{\mathrm{sep}}/K_2/K$ 是阿贝尔扩张（它们必然是 Galois 的），则复合域 $K_1\cdot K_2$ 也阿贝尔，这为下述定义提供了依据：
+
+\textbf{定义 1.3.} 极大阿贝尔扩张 $K^{\mathrm{ab}}/K$ 是所有阿贝尔扩张 $K^{\mathrm{sep}}/K'/K$ 的复合域，而 $\operatorname{Gal}^{\mathrm{ab}}(K):=\operatorname{Gal}(K^{\mathrm{ab}}/K)$ 是绝对 Galois 群 $\operatorname{Gal}(K):=\operatorname{Gal}(K^{\mathrm{sep}}/K)$ 的交换化。
+
+我们还回忆下述定义：
+
+\textbf{定义 1.4.} 对群 $G$，逆向极限
+\[
+  \widehat{G}:=\varprojlim_{\substack{H\triangleleft G\\ [G:H]<\infty}} G/H
+\]
+（对有限指数正规子群的商取极限）称为 $G$ 的投射有限完备化。
+
+现在可以陈述局部类域论的主定理了：
+
+\textbf{定理 1.5（lcft 主定理）.} 对任意有限扩张 $K/\mathbb{Q}_p$，存在投射有限群的标准同构
+\[
+  \operatorname{Gal}^{\mathrm{ab}}(K)\cong\widehat{K^{\times}}.
+\]
+
+\textbf{例 1.6.} $K^{\times}$ 的一阶结构由短正合列
+\begin{equation}\tag{1.1}
+  1\to\mathcal{O}_K^{\times}\to K^{\times}\xrightarrow{v}\mathbb{Z}\to 0
+\end{equation}
+给出，其中 $v$ 是相对极大理想 $\mathfrak{p}_K\subseteq\mathcal{O}_K$ 取的赋值同态（即它把 $\mathcal{O}_K$ 的一个素元送到 $1$）；整数环的单位群 $\mathcal{O}_K^{\times}$ 是投射有限的，且在 $K^{\times}$ 中开。$K^{\times}$ 的二阶结构由逆向极限
+\[
+  \mathcal{O}_K^{\times}=\varprojlim_n \mathcal{O}_K^{\times}/(1+\mathfrak{p}_K^n)
+\]
+给出，于是取投射有限完备化后，(1.1) 变为
+\[
+  1\to\widehat{\mathcal{O}_K^{\times}}\to\widehat{K^{\times}}\xrightarrow{\hat v}\widehat{\mathbb{Z}}\to 0.
+\]
+
+现在，对任意有限 Galois 扩张 $L/K$，$\operatorname{Gal}(L/K)$ 作用在 $L$ 上并保持 $\mathcal{O}_L$ 与 $\mathfrak{p}_L$。因此它下降为作用在 $k_L:=\mathcal{O}_L/\mathfrak{p}_L$ 上、固定 $k_K:=\mathcal{O}_K/\mathfrak{p}_K$ 的作用；这些都是有限域，记 $k_L=\mathbb{F}_{q^n}$、$k_K=\mathbb{F}_q$（$q$ 为某个素幂）。于是我们有映射
+\[
+  \operatorname{Gal}(L/K)\to\operatorname{Gal}(k_L/k_K)=\mathbb{Z}/n\mathbb{Z},
+\]
+当 $L/K$ 非分歧时它是同构；群 $\operatorname{Gal}(k_L/k_K)$ 由 Frobenius 自同构 $x\mapsto x^q$ 生成。对所有这些 $L/K$ 取逆向极限，便得到同态
+\[
+  \operatorname{Gal}(K)\to\operatorname{Gal}(k)=\widehat{\mathbb{Z}},
+\]
+它由 Frobenius 元给出，并按交换化的泛性质穿过 $\operatorname{Gal}^{\mathrm{ab}}(K)$。在 lcft 之下，这个映射与上面的映射 $\hat v$ 一致。
+
+现在回忆，数域 $F$ 的阿代尔环定义为正向极限
+\[
+  \mathbb{A}_F:=\varinjlim_{S}\Big(\prod_{v\in S}F_v\times\prod_{v\notin S}\mathcal{O}_{F_v}\Big),
+\]
+其中 $S$ 取遍 $F$ 的素位的有限集。它带有对角嵌入
+\[
+  F\hookrightarrow\mathbb{A}_F,
+\]
+$F$ 经由它是离散嵌入的（想想 $\mathbb{Z}\hookrightarrow\mathbb{R}$）。粗略地说，$\mathbb{A}_F$ 汇集了 $F$ 的全部局部信息，而这个嵌入则编码了它的整体面向。$\mathbb{A}_F$ 内部有单位群 $\mathbb{A}_F^{\times}$，其拓扑由正向极限
+\[
+  \mathbb{A}_F^{\times}=\varinjlim_{S}\Big(\prod_{v\in S}F_v^{\times}\times\prod_{v\notin S}\mathcal{O}_{F_v}^{\times}\Big)
+\]
+给出（$S$ 同上，且各项在 $\mathbb{A}_F^{\times}$ 中开），而不是更细的子空间拓扑。现在我们可以陈述整体类域论（global class field theory，gcft）的主定理了：
+
+\textbf{定理 1.7（gcft 主定理）.} 对任意有限扩张 $F/\mathbb{Q}$，存在投射有限群的标准同构
+\[
+  \operatorname{Gal}^{\mathrm{ab}}(F)\cong\widehat{\mathbb{A}_F^{\times}/F^{\times}}.
+\]
+
+这两个主定理以下述方式相容。若 $v$ 是全球域 $F$ 的一个素位（$\bar F$ 为其代数闭包），则我们有映射 $F\hookrightarrow F_v$ 与 $\bar F\hookrightarrow\bar F_v$，它们诱导出（单射）映射
+\[
+  \operatorname{Gal}(F_v)\to\operatorname{Gal}(F),\qquad
+  \operatorname{Gal}^{\mathrm{ab}}(F_v)\to\operatorname{Gal}^{\mathrm{ab}}(F).
+\]
+下图
+\[
+  \begin{CD}
+    F_v^{\times} @>{x\mapsto(1,\ldots,1,x,1,\ldots)}>> \mathbb{A}_F^{\times}/F^{\times}\\
+    @V{\mathrm{LCFT}}VV @V{\mathrm{GCFT}}VV\\
+    \operatorname{Gal}^{\mathrm{ab}}(F_v) @>>> \operatorname{Gal}^{\mathrm{ab}}(F)
+  \end{CD}
+\]
+的竖直箭头，由「各群到其投射有限完备化的自然映射」与「局部、整体 cft 主定理的相应等同」复合得到，并且此图交换。
+
+我们将先花几周时间为局部域与 $\mathbb{Q}$ 的二次扩张搭建 cft，因为这很好地捕捉了这门学科令人兴奋之处，而且比我们之后要发展的上同调方法更贴近手算。为开端，设 $K$ 是任意特征 $\operatorname{char}(K)\neq 2$ 的域。令 $\operatorname{Gal}_2(K)$ 为 $\operatorname{Gal}(K)$ 的极大商群，使得其中每个元素的平方都为 $1$。它必然阿贝尔，故有满射
+\[
+  \operatorname{Gal}^{\mathrm{ab}}(K)\twoheadrightarrow\operatorname{Gal}_2(K),
+\]
+并且它带有 $\mathbb{F}_2$-向量空间的结构。
+
+\textbf{断言 1.8.} 存在 $\mathbb{F}_2$-向量空间的标准同构
+\[
+  \operatorname{Gal}_2(K)\cong\big(K^{\times}/(K^{\times})^2\big)^{\vee}
+  :=\operatorname{Hom}\big(K^{\times}/(K^{\times})^2,\mathbb{Z}/2\mathbb{Z}\big).
+\]
+
+\textit{证明.} 我们先如下构造这样的映射：给定 $\sigma\in\operatorname{Gal}_2(K)$，定义 $\chi_\sigma\in\big(K^{\times}/(K^{\times})^2\big)^{\vee}$ 为
+\[
+  \chi_\sigma\colon K^{\times}/(K^{\times})^2\to\mathbb{Z}/2\mathbb{Z},\qquad
+  d\mapsto
+  \begin{cases}
+    0, & \sigma(\sqrt{d})=\sqrt{d},\\
+    1, & \sigma(\sqrt{d})=-\sqrt{d}.
+  \end{cases}
+\]
+容易看出它确实是同态：给定 $\sigma_1,\sigma_2\in\operatorname{Gal}_2(K)$ 与 $d\in K^{\times}/(K^{\times})^2$，我们有
+\[
+  (\sigma_1\sigma_2)(\sqrt{d})=(-1)^{\chi_{\sigma_1}(d)}(-1)^{\chi_{\sigma_2}(d)}\sqrt{d},
+\]
+% [原文疑误：抽出文本第二个指数写作 χ_{σ1}(d)，按上下文应为 χ_{σ2}(d)；此处按更正排，见报告。]
+从而 $\chi_{\sigma_1\sigma_2}=\chi_{\sigma_1}+\chi_{\sigma_2}$。
+
+现在，由于源与靶都是投射有限的 $2$-挠阿贝尔群，只需证明该映射在取连续对偶后是同构。按通常的做法，我们有
+\[
+  \operatorname{Hom}_{\mathrm{cts}}\Big(\big(K^{\times}/(K^{\times})^2\big)^{\vee},\mathbb{Z}/2\mathbb{Z}\Big)
+  =K^{\times}/(K^{\times})^2,
+\]
+而给出连续映射 $\operatorname{Gal}_2(K)\to\mathbb{Z}/2\mathbb{Z}$，等同于给出一个二次扩张 $K\subset F\subset K^{\mathrm{sep}}$，它形如 $K(\sqrt{d})$，其中 $d\in K^{\times}$ 在乘以平方的意义下确定。\hfill$\square$
+
+\textbf{例 1.9.} 在 $K=\mathbb{Q}$ 的情形，此结果给出同构
+\[
+  \mathbb{Q}^{\times}/(\mathbb{Q}^{\times})^2
+  \xrightarrow{\ \sim\ }\bigoplus_p \mathbb{Z}/2\mathbb{Z}\oplus\mathbb{Z}/2\mathbb{Z},
+\]
+其中直和遍历所有素数 $p$。然而，如何把这个群与投射有限完备化
+\[
+  \big[\mathbb{Q}^{\times}\backslash\mathbb{A}_{\mathbb{Q}}^{\times}/(\mathbb{A}_{\mathbb{Q}}^{\times})^2\big]^{\wedge}
+\]
+相比较，则完全不显然——而 gcft 主定理正是要我们做这样的比较。
+
+现在，若 $K$ 是局部域，则 lcft 预言 $K^{\times}/(K^{\times})^2$ 标准地自对偶；实现这一对偶的配对
+\[
+  (\cdot,\cdot)\colon K^{\times}/(K^{\times})^2\times K^{\times}/(K^{\times})^2\to\{1,-1\}
+\]
+称为希尔伯特符号。我们接下来几讲的目标就是构造它，并证明事情确实如此。

@@ -2,6 +2,18 @@
 
 > **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
 
+## SY99-04《上同调类域论讲义》（Raskin, MIT 18.786）中译注本 + 27 张资料卡 — 2026-11-27
+
+- 新增 `08_source_code/SY99-04_上同调类域论（Raskin 讲义）/`：Sam Raskin 讲授、Oron Propp 整理的 *Lectures on Cohomological Class Field Theory*（MIT 18.786《数论 II》2016 年春季课程讲义，2017-08-21 整理版，**119 页 / 23 讲 / 印刷页 1–115**，经 MIT OCW 公开）全文中文译注本，**91 页**。首译 2026-11-25（自动流程 + 人工合稿），本轮为**校对轮**。
+- **核对底气**：找到 MIT OCW 上公开的同一份底本 PDF，`pdftotext -layout` 重抽一份排版保真文本（349,524 字节 / 6,022 行），`pdftoppm -r 150` 逐页渲图，**23 讲逐讲对照页面核对**（页眉页码关系 physical = printed + 4）。旧流程只有文本层抽取，公式上下标普遍错位；本轮全部按原图重排。
+- 编译：`cd 源码 && xelatex main` 三遍 **91 页 / 0 error / 0 undefined reference**；`pdftotext -enc UTF-8` 与工程内成品 PDF **文本逐字节相同**（源码可独立重建成品）。成品 `成品/SY99-04_上同调类域论（Raskin）_中译注本_2026-11-26.pdf`，681,798 字节，sha256 `788574fecfa6d9dfb995a6b4e4e9d517dc01577764cdd032ab450bdeb2a24205`。
+- **校对轮统计**（`工程文件/ERRATA.md`，29 条，逐条带讲次与 `源码/chunks/` 行号）：原文排印/表述有误 **22** 处已订正并留 `% [原文疑误：…]` 注释（不进 PDF）；交换图按原 PDF 复原 **4** 幅（第 18 讲推论 18.7、第 19 讲断言 19.4、第 20 讲断言 20.13、第 23 讲断言 23.10；第 17 讲断言 17.2 的图另计于正文改写）；原文如此、仅加注 **2** 处；抽取乱码已核无误 **1** 处。原先 14 条 `% [TODO: 公式待核]` 全部结清。
+- 典型的四处易看错的图（旧译全错，均按原图复原）：断言 19.4 上下排左右顺序与箭头方向、竖直箭头是 lcft 同构「$\|$」；断言 20.13 蛇引理图另有整行 $0\to0\to0$、$\varphi$ 在下排向左箭头、$\psi$ 在右列第二处竖直箭头；断言 23.10 左端花括号把同两项括在一起并标 $\times[F(\zeta_p):F]$（旧译把标签错当同层箭头间的映射）；断言 17.2 的复合是「包含 + 两个范映射」，故取 $m$ 次幂而非 $n$ 次幂。
+- 新增 `datasets/raskin_lcft/`：**27 张资料卡**（概念 12 + 推导 5 + 勘误 10），五轨 A（第 1–5 讲 局部类域论与希尔伯特符号）/B（第 6–12 讲 同调代数工具）/C（第 13–17 讲 无界复形 Tate 上同调与消没定理）/D（第 18 讲 范数群与 Kummer）/E（第 19–23 讲 布劳尔群与两个不等式）；印刷页 1–107 覆盖 81 页，27 个推导步骤（每步带 `locator` 与 A/B/C 来源）、22 条定理陈述、70 条 pitfalls、13 条 gaps；`lint_cards.py --strict` **0 error / 0 warn**、`index.jsonl` 27 条、`render_md.py` 27 卡；附 `SCHEMA.md`、`MAP.md`（逐讲矩阵）、`workflow/PRODUCTION.md`。
+- 术语：译前冻结 102 条（sha256 前 16 位 `7820a349c8c20eaa`）并追加 7 条，共 **109 条**（`工程文件/work/glossary.tsv`）；`cocycle` 全书统一「上闭链」；$X^{hG}$（上标，不变子模）与 $X_{hG}$（下标，余不变商）分列，不混用。
+- 台账：`RELEASE_REGISTER.csv` 增 SY99-04 一行（讲义；演绎作品，底本权利归原作者；风险中；L2 公开·受限（可撤下）；**成品随仓公开，成品在仓=是**，底本 PDF 属 L4 禁入不入库）；`03_translations_meta/SY99-04/投稿信息.md` 已建；`datasets/README.md` 的「数据集类型」表与目录树各加一行；`datasets/README.md` 版本记 `v0.28`。
+- 口径：统计跑 `make_stats.py --write` 重算 `_meta/stats.json`，本条目里的数字随后由 `check_numbers.py` 校验。
+
 ## SY02-39《Drinfeld chtoucas 与 Langlands 对应》（Lafforgue, IHES/M/02/45）中译注本 + 18 张资料卡 — 2026-11-26
 
 - 新增 `08_source_code/SY02-39_Drinfeld-chtoucas与Langlands对应（Lafforgue）/`：Laurent Lafforgue 2001 年 2 月在孟买 Tata 基础科学研究所十二小时课程的法语笔记（IHES 预印本 **IHES/M/02/45**，Juin 2002，57 页 PDF / 印刷页 1–56）全文中文译注本，**42 页**。
