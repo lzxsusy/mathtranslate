@@ -2,6 +2,14 @@
 
 > **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
 
+## SY02-38《朗兰兹纲领入门课程讲义》（Anschütz, 含 Heuer 三讲）中译注本 + 53 张资料卡 — 校对轮 2026-11-27
+
+- **本轮内容**：译名对齐中文数学社区 + 四路独立校对（104 条意见：严重 5 / 中等 43 / 轻微 52），按意见修稿并复核排版。
+- 译名：以仓内 `01_corpus_zh/数语规范/TERMS.tsv`（2214 条）与 138 部源码的用字频次交叉，外部抽查 GRID 名词库；确认本库与中文数学社区一致采用「人名/定理名保留拉丁，普通名词译中文」，故 Hecke/Langlands/Satake/Frobenius 等不改汉字。改 2 处：`幺幂根基`→`幂幺根`、`Hermite 对称域`→`埃尔米特对称域`（正文 6 处 + glossary + 6 张卡）。报告 `工程文件/work/reports/译名社区对照.md`。
+- 校对修订要点：`lecture03` 的 $|\det|^{-1/2}|ci+d|$ 关系式方向、`lecture04` 的 $Y$ 矩阵分解符号、`lecture05` 恢复底本原式 $\Af^S=\Q\otimes_{\Z}\widehat{\Z}^S$（第 1 轮误判为笔误，本轮推翻）、`lecture08` 的 $E^{(p-1)}\!\to\!E^{(p^{-1})}$ 12 处、`lecture12` 的 Satake 多项式通项 $X^i\!\to\!X^{n-i}$、以及全书 `等类→同构类`、`单根→幂幺根` 等通稿。四份报告在 `工程文件/work/reports/校对_rev-{a,b,c,d}.md`。
+- 排版：中文粗体改用 `\setCJKmainfont{SimSun}[AutoFakeBold=2.5]` 后生效；PDF 第 24 页 2.17pt vbox 溢处以 `\vfuzz=3pt` 抑制（已在流程记录中注明属抑制而非消除）。
+- 复编译：**101 页、0 error、0 Overfull**；疑点清单 39 条（全部已解）、errata 38 条；`lint_cards.py` 53 张 0 error、`verify_quotes.py` 179 条 0 问题。
+
 ## SY99-04《上同调类域论讲义》（Raskin, MIT 18.786）中译注本 + 27 张资料卡 — 2026-11-27
 
 - 新增 `08_source_code/SY99-04_上同调类域论（Raskin 讲义）/`：Sam Raskin 讲授、Oron Propp 整理的 *Lectures on Cohomological Class Field Theory*（MIT 18.786《数论 II》2016 年春季课程讲义，2017-08-21 整理版，**119 页 / 23 讲 / 印刷页 1–115**，经 MIT OCW 公开）全文中文译注本，**91 页**。首译 2026-11-25（自动流程 + 人工合稿），本轮为**校对轮**。

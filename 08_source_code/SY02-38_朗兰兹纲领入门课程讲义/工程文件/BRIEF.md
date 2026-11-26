@@ -71,7 +71,9 @@ C:\Users\admin\Desktop\数译发布\gitee_shuyi\08_source_code\SY02-38_朗兰兹
 - [x] 通读（103 页，2026-11-26 完成）→ `work/通读笔记.md`、`work/疑点清单.tsv`
 - [x] 术语冻结（`work/glossary.tsv`、`work/definitions.tsv`）
 - [x] 讲 1–12 译文（Lead 讲 1–2；tr-heuer-1 讲 7–8；tr3 讲 3–4；tr4 讲 5–6；tr5 讲 9；tr-heuer-2 讲 10；tr6 讲 11–12）
-- [x] 全书编译与校订（xelatex 三遍：0 error、0 Overfull，成品 101 页（38 条术语索引））
+- [x] 全书编译与校订（xelatex 三遍：0 error、0 Overfull，成品 101 页（38 条术语索引）；第 2 轮四路校对 104 条意见已处理，中文粗体生效）
 - [x] 资料卡集 `datasets/sy0238/`（53 张：概念 48 + 推导 5；lint 0 error，quote 179 条 0 问题）
 - [x] 登记与上传（`RELEASE_REGISTER.csv`、`03_translations_meta/SY02-38/`、AtomGit）
+- [x] 译名对齐中文数学社区（`work/reports/译名社区对照.md`；改 `幂幺根`、`埃尔米特对称域` 2 处）
+- [x] 四路校对（`work/reports/校对_rev-{a,b,c,d}.md`，104 条）与修稿复编译
 - [x] 知识库插件测试反馈（`工程文件/work/reports/kb_plugin_feedback.md`，另见 `09_thinking/chains/SY02-38_本地知识库插件实测反馈.md`）
