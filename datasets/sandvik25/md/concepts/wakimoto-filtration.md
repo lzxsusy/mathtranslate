@@ -1,0 +1,57 @@
+# 中心层的 Wakimoto 滤链（定理 2.5.3）
+
+> `sandvik25/concept/wakimoto-filtration` · 轨道 A · 中心层与 Wakimoto 层 · 状态 dev
+
+> **先自测**：Wakimoto 滤链的存在性与重数公式，分别在整条证明链上兑现了什么？
+
+## 一句话
+
+每个中心层 $Z(\mathcal F)$ 都有滤链，各项商为 $\mathbb W_{\lambda_i}$；且 $\mathbb W_\lambda$ 的重数恰是 $\mathrm{Sat}^{-1}(\mathcal F)$ 的 $\lambda$-权空间维数。
+
+## 定义
+
+定理 2.5.3：对 $\mathcal F\in\mathrm{Perv}(L^+G\backslash\mathrm{Gr}_G)$，(1) $Z(\mathcal F)$ 有滤链 $0=\mathcal F_0\subset\mathcal F_1\subset\dots\subset\mathcal F_n=Z(\mathcal F)$，使每个 $\mathcal F_i/\mathcal F_{i-1}$ 形如 $\mathbb W_{\lambda_i}$；(2) $\mathbb W_\lambda$ 在该滤链中的重数等于 $\mathrm{Sat}^{-1}(\mathcal F)$ 的 $\lambda$-权空间维数。记 $\mathcal P_I^{\mathrm{Wak}}$ 为允许 Wakimoto 滤链的反常层构成的全子范畴。
+
+**记号**：$\mathrm{Sat}\colon\mathrm{Rep}(G^\vee)\xrightarrow{\sim}\mathrm{Perv}(L^+G\backslash\mathrm{Gr}_G)$ 为几何 Satake；$\mathcal P_I^{\mathrm{Wak}}\subset\mathcal P_I=\mathrm{Perv}(I\backslash\mathrm{Fl}_G)$。
+
+## 要点（为什么需要它）
+
+1. 这条定理是全文的「转换器」：它把几何侧的 Filtrations 与表示侧的权重数对接，正是「几何化 Bernstein 同构」的具体兑现。
+2. 引理 2.5.4 说 $\mathcal P_I^{\mathrm{Wak}}$ 对卷积封闭，于是函子 I（$V\otimes k_{T^\vee}(\lambda)\mapsto Z(\mathrm{Sat}(V))\star\mathbb W_\lambda$）才有值域；没有这条滤链，$F_1$ 甚至无法定义。
+3. 重数公式让「$Z^{\mathrm{IW}}(V)$ 是倾斜层且重数为 $\dim V_\lambda$」（定理 4.5.1）成为可计算的陈述：倾斜层两侧的重数相等，于是上限与下限重合。
+4. 滤链的存在性依赖 $V$ 有限维、$Z(\mathrm{Sat}(V))$ 的反常性，以及 $\nabla/\Delta$ 的卷积公式；它不是「任意反常层都有」的普遍事实。
+
+## 核心公式
+
+$$
+$0=\mathcal F_0\subset\mathcal F_1\subset\dots\subset\mathcal F_n=Z(\mathcal F),\qquad \mathcal F_i/\mathcal F_{i-1}\cong\mathbb W_{\lambda_i}$$[Z(\mathcal F):\mathbb W_\lambda]=\dim(\mathrm{Sat}^{-1}(\mathcal F))_\lambda$
+$$
+
+$$
+$[Z(\mathcal F):\mathbb W_\lambda]=\dim(\mathrm{Sat}^{-1}(\mathcal F))_\lambda$
+$$
+
+## 定理与证明（或缺口）
+
+### 定理 2.5.3（Arkhipov–Bezrukavnikov）
+
+中心层带有 Wakimoto 滤链，且 $\mathbb W_\lambda$ 的重数等于对应 $G^\vee$-表示的 $\lambda$-权空间维数。
+
+> 证明状态：**gap**。原文只陈述、不证。标准证明走「先对 $\mathrm{Sat}(V)$ 的每个权做归纳，再用 §2.5 的卷积公式」，本译本未补。
+
+出处：`A p.5`
+
+## 常见误解
+
+- 滤链不是典范的：对象本身没有「唯一的」Wakimoto 滤链，定理只保证存在性与重数；下游用的也只是 $K_0$ 中的类。
+- 重数公式里的 $\mathrm{Sat}^{-1}$ 不能省：直接写「$V$ 的权空间」在 $G^\vee$ 与 $G$ 之间的对偶上会错位（$\lambda$ 是余根格里的权）。
+
+## 相关卡
+
+[Wakimoto 层 $\mathbb W_\lambda$](../concepts/wakimoto-sheaves.md) · [Gaitsgory 中心函子 $Z$](../concepts/gaitsgory-central-functor.md) · [Wakimoto 滤链的重数如何变成 $\dim V_\lambda$](../derivations/wakimoto-multiplicity.md)
+
+## 出处（印刷页）
+
+- A p.5（A p.5）
+
+> 说明：定理 2.5.3 与引理 2.5.4 都在 p.5；重数公式的用途见 §4.5（p.11）。

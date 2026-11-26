@@ -1,0 +1,43 @@
+# 反球商 $\mathcal P_I^{\mathrm{asph}}$
+
+> `sandvik25/concept/antispherical-quotient` · 轨道 C · Iwahori–Whittaker 侧 · 状态 dev
+
+> **先自测**：反球 Hecke 范畴是对哪些对象作商得到的，为什么恰是「非极小代表元」那一批？
+
+## 一句话
+
+把 $\mathcal P_I=\mathrm{Perv}(I\backslash\mathrm{Fl}_G)$ 按那些 $w\notin\widetilde W_{\mathrm{ext}}$ 的单对象 $\mathrm{IC}_w$ 生成的 Serre 子范畴作商，得反球 Hecke 范畴，带商函子 $\mathcal P_I\to\mathcal P_I^{\mathrm{asph}}$。
+
+## 定义
+
+记 $\mathcal P_I:=\mathrm{Perv}(I\backslash\mathrm{Fl}_G)$；令 $\widetilde W_{\mathrm{ext}}\subseteq W_{\mathrm{ext}}$ 为在双边陪集 $Ww$ 中取极小的元素集。反球 Hecke 范畴 $\mathcal P_I^{\mathrm{asph}}$ 定义为 $\mathcal P_I$ 对由 $\{\mathrm{IC}_w\mid w\notin\widetilde W_{\mathrm{ext}}\}$ 生成的 Serre 子范畴的商，附带商函子 $\mathcal P_I\to\mathcal P_I^{\mathrm{asph}}$。
+
+**记号**：$\mathrm{IC}_w$ 为 $\mathrm{Fl}_{G,w}$ 上的反常上同调单层；$\widetilde W_{\mathrm{ext}}$ 是每个双边胞腔的最小长度代表元。
+
+## 要点（为什么需要它）
+
+1. 「反球」在几何侧的体现就是这一步：球情形保留 $L^+G$-等变（即 $\mathrm{Gr}_G$ 上的层），反球情形则把 $I$-等变层里「非极小」的那些单层全部杀掉，只留下与 $\mathrm{Gr}_G$ 同构对应的那一片。
+2. 商掉的是 Serre 子范畴而非厚子范畴，所以商仍是 Abel 范畴，才能谈反常 $t$-结构与滤链。
+3. 定理 4.4.1(2) 说 $\mathrm{Av}^{\mathrm{IW}}$ 限制到 $\mathcal P_I$ 上会穿过 $\mathcal P_I^{\mathrm{asph}}$ 并成为全忠实函子——反球商存在的意义就是让这句话有意义。
+4. 它与模论侧的反球模 $M^{\mathrm{asph}}$ 共用一套下标：模是 $\mathbb Z\otimes_{\mathbb Z[W]}\mathbb Z[W_{\mathrm{ext}}]$，范畴是「按 $W$-胞腔取极小」。
+
+## 核心公式
+
+$$
+$\mathcal P_I^{\mathrm{asph}}:=\mathcal P_I\big/\langle \mathrm{IC}_w\mid w\notin\widetilde W_{\mathrm{ext}}\rangle_{\mathrm{Serre}}$
+$$
+
+## 常见误解
+
+- 把 $\widetilde W_{\mathrm{ext}}$ 与 $W_{\mathrm{ext}}$ 混淆：前者是极小代表元集，每个双边胞腔取一个，元素个数一般远少于 $W_{\mathrm{ext}}$。
+- 「商」在这里是 Serre 商（Abel 范畴层面），不是 Verdier 商（三角范畴层面）；两者不可互换。
+
+## 相关卡
+
+[反球模 $M^{\mathrm{asph}}$](../concepts/antispherical-module.md) · [Iwahori–Whittaker 范畴 $\mathcal D^b_{\mathrm{IW}}(\mathrm{Fl}_G)$](../concepts/iw-category.md) · [IW 平均函子 $\mathrm{Av}^{\mathrm{IW}}$（定理 4.4.1）](../concepts/iw-averaging.md)
+
+## 出处（印刷页）
+
+- A p.6（A p.6）
+
+> 说明：§2.6 只在 p.6 出现一段，定义与记号 $\mathcal P_I$ 同页给出。

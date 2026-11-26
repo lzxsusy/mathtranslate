@@ -1,0 +1,92 @@
+%% 导言区 —— SY02-40《Arkhipov–Bezrukavnikov 等价》中译注本
+%% 底本：Colton Sandvik, "The Arkhipov–Bezrukavnikov Equivalence",
+%%       BunG Seminar, 2025-01-29（13 页，pdfTeX）
+%% 编译：xelatex main.tex（三遍，待目录与交叉引用稳定）
+\usepackage[UTF8, fontset=windows, heading=true]{ctex}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage[a4paper,left=2.5cm,right=2.5cm,top=2.6cm,bottom=2.6cm]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tikz-cd}
+\usepackage[font=small,labelfont=bf,labelsep=quad]{caption}
+\usepackage[colorlinks=true,
+            linkcolor=blue!45!black,
+            citecolor=blue!45!black,
+            urlcolor=blue!45!black]{hyperref}
+
+%% 公式按全文单一序列编号 (1)–(8)，与原文一致；不按节编号。
+\setlength{\emergencystretch}{3em}
+\allowdisplaybreaks[3]
+\linespread{1.12}
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+\ctexset{
+  section/name       = {},
+  section/number     = \arabic{section},
+  subsection/name    = {},
+  subsection/number  = \thesection.\arabic{subsection},
+  subsubsection/name = {},
+}
+
+%% ---------- 定理类环境 ----------
+%% 原文所有定理类环境共用一个计数器，编号形如「节.小节.序号」；
+%% §1、§5 无小节，故小节号为 0，得到 1.0.1、5.0.1。
+\theoremstyle{plain}
+\newtheorem{theorem}{定理}[subsection]
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{corollary}[theorem]{推论}
+\newtheorem{definition}[theorem]{定义}
+\newtheorem{remark}[theorem]{注}
+\newtheorem{aside}[theorem]{旁注}
+\newtheorem{example}[theorem]{例}
+
+%% ---------- 「本节重点」（译者所加） ----------
+\newtcolorbox{keytakeaways}[1][本节重点]{
+  enhanced,
+  colback  = blue!3!white,
+  colframe = blue!35!black,
+  boxrule  = 0.4pt,
+  arc      = 2pt,
+  left     = 7pt, right = 7pt, top = 5pt, bottom = 5pt,
+  title    = {#1\,{\normalfont\scriptsize（译者所加）}},
+  fonttitle= \bfseries\small,
+  before skip = 10pt, after skip = 10pt,
+}
+
+%% ---------- 译注（译者所加，成品中可见；可一键关闭） ----------
+\newif\ifshowyizhu
+\showyizhutrue
+\newcounter{yizhu}
+\makeatletter
+\newenvironment{yizhu}[1][]{%
+  \ifshowyizhu
+    \refstepcounter{yizhu}%
+    \par\addvspace{5pt}\noindent
+    \begin{tcolorbox}[enhanced, breakable,
+      colback  = orange!4!white,
+      colframe = orange!55!black,
+      boxrule  = 0.3pt,
+      arc      = 1.5pt,
+      left     = 6pt, right = 6pt, top = 4pt, bottom = 4pt,
+      title    = {\small\bfseries 译注~\theyizhu
+                  \if\relax\detokenize{#1}\relax\else\ ——#1\fi}]%
+    \small
+  \else
+    \setbox\z@\vbox\bgroup\small
+  \fi
+}{%
+  \ifshowyizhu
+    \end{tcolorbox}%
+  \else
+    \egroup
+  \fi
+}
+\makeatother

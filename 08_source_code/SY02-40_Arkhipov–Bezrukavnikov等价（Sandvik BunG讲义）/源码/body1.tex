@@ -1,0 +1,474 @@
+% =============================================================================
+%  §1–§2
+% =============================================================================
+\section{引言}
+
+设 $G$ 是 $\bbF$ 上的连通约化代数群，其中 $\bbF=\overline{\bbF}_p$。
+设 $B$ 是 $G$ 的 Borel 子群，其极大环面为 $T$。
+记 $\Wex=W\ltimes X^\vee$ 为扩张仿射 Weyl 群。
+反球模（antispherical module）$M^{\mathrm{asph}}$ 是由张量积
+\begin{equation}
+M^{\mathrm{asph}} := \bbZ\otimes_{\bbZ[W]}\bbZ[\Wex]
+\end{equation}
+给出的右 $\bbZ[\Wex]$-模，其中 $\bbZ[W]$ 通过符号表示（sign representation）作用在 $\bbZ$ 上。
+
+\begin{yizhu}[术语背景：反球模]
+$M^{\mathrm{asph}}$ 作为 $\bbZ$-模就是 $\bbZ[\Wex]$ 本身；$\bbZ[W]$ 经符号表示作用，
+等价于把每个生成元 $w\in W$ 送到 $-1$，于是张量积做的是「反称化」——把 $\bbZ[\Wex]$ 中
+被 $W$ 以符号表示作用的不变部分留下来。这正是「反球（antispherical）」一词的来源：
+球（spherical）方向取 $W$-不变部分，反球方向取 $W$-反不变部分。
+\end{yizhu}
+
+反球模还有另外两种有用的描述。
+第一种由 Springer 解消 $\tN$ 上 $G^\vee$-等变凝聚层的 $K$-理论给出：
+\begin{equation}
+[D^b\Coh^{G^\vee}(\tN)]\cong M^{\mathrm{asph}}.
+\end{equation}
+第二种是把 $M^{\mathrm{asph}}$ 作 $q$-形变，得到 $p$ 进群理论中的 Whittaker 模 $M_q^{\mathrm{asph}}$。
+这些 Whittaker 模由 $G_\circ(\bbF_q((x)))$ 上的「Iwahori–Whittaker」函数描述，
+其中 $G=\bbF\otimes_{\bbF_q}G_\circ$。
+反球模的这三种描述给出三种可能的范畴化：
+\begin{enumerate}[label=(\arabic*),leftmargin=2.2em,itemsep=1pt]
+\item $\Pasph$：把仿射旗簇上的反常层取商而得到的 Abel 范畴（对应第 1 种）；
+\item $D^b\Coh^{G^\vee}(\tN)$：$\tN$ 上 $G^\vee$-等变凝聚层的导出范畴（对应第 2 种）；
+\item $\PIW$：由 Iwahori–Whittaker 函数的层–函数字典的某个版本给出的、
+      Iwahori–Whittaker 反常层构成的 Abel 范畴。
+\end{enumerate}
+
+\begin{yizhu}[原文含糊：三种范畴化各自的「层」在哪]
+上表第 1、3 项都建立在仿射旗簇 $\Fl_G$ 上，第 2 项却建立在辛解消 $\tN$ 上；
+三者能互相等价，靠的正是本文要证的定理 1.0.1 与推论 5.0.2。
+读下文时可先记住这条「翻译链」：$\tN$ 上的凝聚层 $\to$ $\Fl_G$ 上的反常层 $\to$ 平均到
+Iwahori–Whittaker 层；三条腿分别对应「$K$-理论」「中心层」「Whittaker 泛函」。
+\end{yizhu}
+
+Arkhipov 与 Bezrukavnikov 著名的等价把反球模的不同描述提升为范畴的等价。
+
+\begin{theorem}[Arkhipov–Bezrukavnikov, \cite{ArBe}]
+存在三角范畴的等价
+\[
+D^b\Coh^{G^\vee}(\tN)\;\cong\;D^b\Pasph\;\cong\;D^b\PIW .
+\]
+\end{theorem}
+
+\begin{keytakeaways}
+全篇的目标就是定理 1.0.1：三个看起来毫不相干的范畴——辛解消上的等变凝聚层、
+仿射旗簇上的（反球）反常层、仿射旗簇上的 Iwahori–Whittaker 层——其实两两等价。
+证明路线是「造一个函子，证它本质满，再证它全忠实」，见 \S\ref{sec:outline} 的四步。
+\end{keytakeaways}
+
+\noindent\textbf{提纲 1.0.2.}\label{sec:outline}
+\begin{enumerate}[label=(\arabic*),leftmargin=2.2em,itemsep=2pt]
+\item 我们将讨论中心层与 Wakimoto 层。
+      它们构成仿射旗簇上一类重要的层，对于构造从凝聚层到可构造层的函子是关键的。
+\item 然后我们将研究 Springer 解消的几何，并利用中心层与 Wakimoto 层来定义函子
+      $D^b\Coh(\tN/G^\vee)\to D^b\Pasph$。从某种意义上说，这是最困难的部分。
+\item 接着，我们将解释 Iwahori–Whittaker 反常层的构造，以及函子 $\Pasph\to\PIW$。
+\item 在构造出函子 $D^b\Coh^{G^\vee}(\tN)\to D^b\PIW$ 之后，证明它是等价就相当简单了。
+\end{enumerate}
+
+\begin{yizhu}[术语背景：$\Coh(\tN/G^\vee)$ 与 $\Coh^{G^\vee}(\tN)$]
+提纲第 (2) 条写作 $D^b\Coh(\tN/G^\vee)$，用的是商栈（quotient stack）的记号；
+正文其余各处写作 $D^b\Coh^{G^\vee}(\tN)$，用的是等变层的记号。
+在 $G^\vee$ 作用足够好的情形下二者是同一件事，本文不加区分地混用，读者不必在意。
+\end{yizhu}
+
+% =============================================================================
+\section{中心层与 Wakimoto 层}
+
+\subsection{$p$ 进动机}\label{sec:padic}
+
+设 $G$ 是域 $\bbF_q$ 上的连通约化群，$G_F$ 是其在 $F=\bbF_q((t))$ 上的相应群。
+设 $G_{\mathcal{O}}$ 是 $G_F$ 的极大紧子群（这里 $\mathcal{O}=\bbF_q[[t]]$）。
+设 $I\subset G_{\mathcal{O}}$ 是 Iwahori 子群。
+考虑映射\footnote{记号 $\mathcal{C}(\cdot)$ 指紧支集的不变函数；$\pi$ 的定义域是仿射 Hecke 代数，$\pi$ 的余定义域是球 Hecke 代数。}
+\begin{align*}
+\pi:\;&\mathcal{C}(I\backslash G_F/I)\longrightarrow \mathcal{C}(G_{\mathcal{O}}\backslash G_F/I),\\
+     &f\longmapsto \int_{G_{\mathcal{O}}} f(x\cdot g)\,dg .
+\end{align*}
+不难验证，$\pi$ 限制为代数同态
+\[
+Z\bigl(\mathcal{C}(I\backslash G_F/I)\bigr)\longrightarrow \mathcal{C}(G_{\mathcal{O}}\backslash G_F/G_{\mathcal{O}}).
+\]
+此外，由 Bernstein 的一个定理，后一个映射实际上是代数的同构。
+
+\begin{yizhu}[术语背景：两条 Hecke 代数与 Bernstein 定理]
+$\mathcal{C}(I\backslash G_F/I)$ 是紧支集 I-双不变函数的卷积代数，即仿射 Hecke 代数；
+$\mathcal{C}(G_{\mathcal{O}}\backslash G_F/G_{\mathcal{O}})$ 是球 Hecke 代数。
+Bernstein 定理断言球 Hecke 代数是仿射 Hecke 代数的中心——准确地说，
+$\mathcal{C}(G_{\mathcal{O}}\backslash G_F/G_{\mathcal{O}})$ 同构于
+$\mathcal{C}(I\backslash G_F/I)$ 的中心。
+本文的全部工作就是把这条「中心 $\cong$ 球」的 $p$ 进事实几何化：
+把函数换成层、把卷积换成 $\conv$、把中心换成中心层。
+\end{yizhu}
+
+中心层的基本想法是为这个同构的逆提供几何范畴化。
+为了构造相应的函子，需要一套附近循环（nearby cycles）的理论。
+
+\subsection{附近循环}\label{sec:nearby}
+
+设 $X$ 是复代数簇，$f:X\to\bbC$ 是代数映射。考虑子簇
+\[
+X^{\times}:=f^{-1}(\bbC^{\times}),\qquad X^{0}:=f^{-1}(0).
+\]
+我们还可以考虑指数映射 $\exp:\bbC\to\bbC^{\times}$，并置
+$\tilde X^{\times}=X\times_{\bbC^{\times}}\bbC$。\footnote{$\tilde X^{\times}$ 是解析空间，但不是代数簇。}
+于是有如下交换图：
+\begin{equation}
+\begin{tikzcd}[column sep=1.6em, row sep=2.2em]
+X^{0} \arrow[d,"f"] & X \arrow[l,hook,"i"'] \arrow[d,"f"]
+  & X^{\times} \arrow[l,hook',"j"'] \arrow[d,"f"]
+  & \tilde X^{\times} \arrow[l,"\exp_X"'] \arrow[d,"f"] \\
+\{0\} & \bbC \arrow[l,hook,""'] & \bbC^{\times} \arrow[l,""']
+  & \bbC \arrow[l,"\exp"']
+\end{tikzcd}
+\end{equation}
+
+\begin{definition}\label{def:nearby}
+\emph{附近循环函子}是函子\footnote{眼下应把这些层视为系数在代数闭域 $\bbk$（特征 $0$）中的层。}
+\begin{align*}
+\Psi_f:\;&D^b_c(X^{\times})\longrightarrow D^b_c(X^{0}),\\
+&\cF\longmapsto \bigl(i^*j_*\exp_{X*}\exp_X^*\cF\bigr)[-1].
+\end{align*}
+\end{definition}
+
+\begin{yizhu}[术语背景：附近循环]
+设 $X\to\bbC$ 是复代数簇上的代数映射，$\bbC^{\times}\subset\bbC$ 是穿孔邻域。
+附近循环函子把 $f^{-1}(\bbC^{\times})$ 上的层沿着「$\bbC^{\times}\rightsquigarrow 0$」这个退化方向
+延拓到特殊纤维 $f^{-1}(0)$ 上，是 SGA 7 II（Deligne）建立的那套机器在代数情形下的版本。
+nLab 上没有独立的 \texttt{nearby cycles} 条目，只有 \texttt{vanishing cycle} 一条
+（\url{https://ncatlab.org/nlab/show/vanishing+cycle}）交代历史与 SGA 7 的出处。
+定义中先取 $\exp_X$ 的拉回、再沿 $\exp_X$ 推、再取 $j_*$ 与 $i^*$，是因为
+$\exp:\bbC\to\bbC^{\times}$ 不是代数映射、$\tilde X^{\times}$ 只是解析空间（脚注 2），
+所以只能在解析范畴里做，最后再落回代数纤维 $X^0$ 上。
+移位 $[-1]$ 是把反常 $t$-结构的中心归一化回去，使 $\Psi_f$ 成为 $t$-正合。
+\end{yizhu}
+
+附近循环的理论丰富而非常一般。人们常常愿意把函子的几何「黑箱化」，
+转而考虑它的形式层论性质。
+
+\begin{proposition}\label{prop:properties}
+\begin{enumerate}[label=(\arabic*),leftmargin=2.2em,itemsep=1pt]
+\item 函子 $\Psi_f$ 把有界可构造复形送到有界可构造复形。\footnote{这一点并不显然，因为 $\exp_X$ 不是代数映射。}
+\item 函子 $\Psi_f$ 是反常 $t$-正合的。
+\item 若 $\phi:Y\to X$ 是光滑映射，则 $\phi^*$ 与附近循环可交换，即存在函子的同构
+      \[
+      \Psi_{f\circ\phi}\circ\bigl(\phi|_{(f\circ\phi)^{-1}(\bbC^{\times})}\bigr)^*
+      \;\cong\;\bigl(\phi|_{(f\circ\phi)^{-1}(\{0\})}\bigr)^*\circ\Psi_f .
+      \]
+\item 若 $\phi:Y\to X$ 是真映射，则存在函子的同构
+      \[
+      \Psi_{f\circ\phi}\circ\bigl(\phi|_{(f\circ\phi)^{-1}(\bbC^{\times})}\bigr)_*
+      \;\cong\;\bigl(\phi|_{(f\circ\phi)^{-1}(\{0\})}\bigr)_*\Psi_{f\circ\phi}.
+      \]
+\item 若 $f:X\times\bbC\to\bbC$ 是投影映射，且 $\cF\in D^b_c(X)$，则层的自然同构
+      \[
+      \Psi_f(\cF\boxtimes\bbk_{\bbC^{\times}}[1])\;\cong\;\cF .
+      \]
+\end{enumerate}
+\end{proposition}
+
+\begin{yizhu}[原文含糊：命题 2.2.2 的编号与证明归属]
+命题 (3)(4) 是附近循环的「基变换」性质：光滑映射下用拉回、真映射下用推前，
+这正是把 $\Psi_f$ 与六函子运算相容的两条基本规则。
+(5) 说明乘上「$\bbC^{\times}$ 方向的常层再移位一次」是 $\Psi_f$ 的一个截面，
+它是后面定理 2.4.1 之 (5) 与 $\pi_*\circ Z\cong\mathrm{id}$ 的技术核心。
+原文没有给出 (3)(4) 的证明，标准参考文献是 SGA 7 II 的 XIII 节。
+\end{yizhu}
+
+\subsection{仿射 Grassmann 簇与仿射旗簇}\label{sec:gr}
+
+设 $G$ 是 $\bbC$ 上的连通约化群。考虑其环路群 $LG$ 与其正环路群 $L^+G$。
+固定一个 Borel 子群 $B^+=T\times U$，其对立的 Borel 子群记为 $B^-=T\times U^-$。
+我们用 $I$ 表示 $L^+G$ 中对应于 $B^-$ 的 Iwahori 子群。
+用 $\Gr_G$ 表示 $G$ 的仿射 Grassmann 簇；具体地说，它是商 $LG/L^+G$ 的 fppf 层化。
+类似地，用 $\Fl_G$ 表示 $G$ 的仿射旗簇；具体地说，它是商 $LG/I$ 的 fppf 层化。
+
+\begin{yizhu}[术语背景：为什么是 fppf 层化]
+$\Gr_G$ 与 $\Fl_G$ 都是 ind-簇：$LG$ 不是概型，商 $LG/L^+G$ 作为预层才说得通。
+取 fppf 层化，是为了让「$R$-点」的定义（$R$ 上 $G$-torsor 加一个在穿孔圆盘上的平凡化）
+成为一个 fppf 层，从而使 $\Gr_G$ 具有 ind-概型结构；这是 \cite{Zhu} 与 Bhatt–Scholze 的标准做法，
+nLab 条目 \texttt{affine Grassmannian}（\url{https://ncatlab.org/nlab/show/affine+Grassmannian}）
+给出了 $GL_n$ 情形的格（lattice）描述与一般的 torsor 描述。
+\end{yizhu}
+
+\subsection{Gaitsgory 的中心函子}\label{sec:central}
+
+中心函子的构造需要引入一个新的几何对象，有时称为\emph{中心仿射 Grassmann 簇}。
+它是一个 ind-概型 $\Gr_G^{\Cen}$，配有一个正则映射 $f:\Gr_G^{\Cen}\to\bbC$。
+中心仿射 Grassmann 簇满足
+\[
+\Gr_G^{\Cen,\times}:=f^{-1}(\bbC^{\times})=\Gr_G\times\bbC^{\times},
+\qquad
+\Gr_G^{\Cen,\times}:=f^{-1}(\bbC^{\times})=\Fl_G .
+\]
+
+\begin{yizhu}[原文疑误]
+第二个等式与第一个逐字相同，显然是笔误：按文意与上下文，它应当写作
+\[
+\Gr_G^{\Cen,0}:=f^{-1}(0)=\Fl_G ,
+\]
+即「$0$ 纤维是仿射旗簇、一般纤维是仿射 Grassmann 簇」。
+译文照录原文，此处标出以便读者对照。
+\end{yizhu}
+
+这样一来，中心仿射 Grassmann 簇可以看成把仿射 Grassmann 簇形变到仿射旗簇。
+
+我们现在处在可以应用上一节附近循环构造的情形。\footnote{严格地说，我们的附近循环构造是对复代数簇、而非对 ind-簇建立的。不过，中心仿射 Grassmann 簇可以构造为 $\bbA^1$ 上一族有限维簇的归纳极限，其一般纤维看起来像 $\Gr_G$ 的有限维逼近，而在 $0$ 处看起来像 $\Fl_G$ 的有限维逼近。}
+具体地说，我们定义函子
+\begin{align*}
+Z:\;&D^b_c(\Gr_G)\longrightarrow D^b_c(\Fl_G)\\
+&\cF\longmapsto \Psi_f(\cF\boxtimes\bbk_{\bbC^{\times}}[1]).
+\end{align*}
+这可以升级为等变层的函子\footnote{这需要额外的一个部件：我们构造 $\bbA^1$ 上的群 ind-概型 $L^+G$，其一般纤维是 $L^+G$，而在 $0$ 处是 $I$。见 \cite{AcRi} 的第 2.2 节与第 10.3 节。}
+\[
+Z:D^b_c(L^+G\backslash\Gr_G)\longrightarrow D^b_c(I\backslash\Fl_G).
+\]
+我们称此函子为 \emph{Gaitsgory 的中心函子}。
+
+\begin{yizhu}[术语背景：中心仿射 Grassmann 簇]
+$\Gr_G^{\Cen}$ 的几何可以这样理解：把 $\Gr_G$ 的「基点」换成一个在 $\bbA^1$ 上退化的族，
+一般纤维 $t\neq0$ 时是 $\Gr_G$，特殊纤维 $t=0$ 时退化成 $\Fl_G$；$f$ 就是记录这个参数的映射。
+于是「从 $\Gr_G$ 到 $\Fl_G$ 的中心函子」不过是沿这条退化做一次附近循环，
+而「中心」二字来自定理 2.4.1 (3)：其像落在 $\Fl_G$ 上仿射 Hecke 范畴的中心里。
+\cite{AcRi} 是这个构造的原始出处（其第 2.2 节与第 10.3 节）。
+\end{yizhu}
+
+\begin{yizhu}[{原文含糊：为什么是 $\bbC^{\times}$ 与 $[1]$}]
+底层直觉是：$\Gr_G^{\Cen}$ 在 $\bbC^{\times}$ 上的部分就是 $\Gr_G\times\bbC^{\times}$，
+所以在 $\bbC^{\times}$ 方向乘上常层 $\bbk_{\bbC^{\times}}$ 再对 $f$ 取 $\Psi$，得到的是「原封不动」的 $\cF$（命题 2.2.2 (5)）。
+移位 $[1]$ 的用处是把 $f$ 的方向上的反常次数补齐，使 $Z$ 成为反常 $t$-正合函子（定理 2.4.1 (2)）。
+读到这里若觉得 $[1]$ 出现得突兀，不妨先跳读定理 2.4.1 (5) 的证明：
+其中的同构 $\cF\cong\Psi_{pr_2}(\cF\boxtimes\bbk_{\bbC}[1])$ 就是 (5) 在 $\bbC$（而非 $\bbC^{\times}$）方向的版本，
+两处合起来看，移位的位置就确定下来了。
+\end{yizhu}
+
+回忆 $D^b_c(L^+G\backslash\Gr_G)$ 与 $D^b_c(I\backslash\Fl_G)$ 都可以赋予幺半结构，
+分别记为 $\conv^{L^+G}$ 与 $\conv^{I}$。\footnote{$\Gr_G$ 上的卷积是反常 $t$-正合的，$\Fl_G$ 上的卷积则不是 $t$-正合的。}
+
+\begin{theorem}[Gaitsgory, \cite{Gai1}]\label{thm:Z}
+\begin{enumerate}[label=(\arabic*),leftmargin=2.2em,itemsep=1pt]
+\item 函子 $Z$ 是幺半的。
+\item 函子 $Z$ 是反常 $t$-正合的。
+\item 函子 $Z$ 的像落在 $D^b_c(I\backslash\Fl_G)$ 的中心里：即对
+      $\cF\in D^b_c(L^+G\backslash\Gr_G)$ 与 $\cG\in D^b_c(I\backslash\Fl_G)$，
+      存在典范同构
+      \[
+      Z(\cF)\conv^{I}\cG\;\cong\;\cG\conv^{I}Z(\cF).
+      \]
+\item 对 $\cF\in\Perv(L^+G\backslash\Gr_G)$ 与 $\cG\in\Perv(I\backslash\Fl)$，卷积 $Z(\cF)\conv\cG$ 是反常层。
+\item 对任意 $\cF\in D^b_c(L^+G\backslash\Gr_G)$，存在典范同构
+      $\pi_*\circ Z(\cF)\cong\cF$，其中 $\pi:\Fl_G\to\Gr_G$ 是典范映射。
+\end{enumerate}
+\end{theorem}
+
+\begin{yizhu}[原文笔误：isomorphsisms]
+(3) 处原文作「there are canonical isomorphsisms」，系 isomorphisms 之误；
+同段还有「there are isomorphism」（p.7 证明末）等拼写与单复数疏漏。
+译文按正确拼写译出，不影响数学内容。此类纯拼写笔误不再逐条标注。
+\end{yizhu}
+
+\begin{proof}
+我们将证明 (2) 与 (5)，以显示这些陈述大多如何由命题 2.2.2 推出。
+
+(2) 的证明几乎是显然的。即：函子 $\cF\mapsto\cF\boxtimes\bbk_{\bbC^{\times}}[1]$ 是反常 $t$-正合的，
+而由命题 2.2.2 (2)，附近循环是反常 $t$-正合的。
+
+为证 (5)，先构造一个映射 $\varpi:\Gr_G^{\Cen}\to\Gr_G\times\bbC$，使得
+\[
+\varpi|_{\Gr_G\times\bbC^{\times}}=\mathrm{id}_{\Gr_G\times\bbC^{\times}},
+\qquad
+\varpi|_{\Gr_G\times\{0\}}=\pi,
+\qquad
+\mathrm{pr}_2\circ\varpi=f .
+\]
+由命题 2.2.2 (4) 与命题 2.2.2 (5)，有同构
+\[
+\cF\cong\Psi_{\mathrm{pr}_2}(\cF\boxtimes\bbk_{\bbC}[1])
+\cong\pi_*\Psi_f(\cF\boxtimes\bbk_{\bbC}[1])=\pi_*Z(\cF).
+\]
+\end{proof}
+
+\begin{yizhu}[原文含糊：$\varpi$ 为什么存在]
+$\Gr_G^{\Cen}$ 在 $\bbC^{\times}$ 上的纤维是 $\Gr_G\times\bbC^{\times}$，在 $0$ 上的纤维是 $\Fl_G$；
+$\varpi$ 就是把这两半分别取恒等与 $\pi$ 拼起来的映射。
+由 $\Psi$ 对光滑映射的基变换（命题 2.2.2 (3)）把 $\Psi_{\mathrm{pr}_2}$ 拉回到 $\Psi_f$，
+这一步在形式上是「先一般纤维、再落到 $0$」，与 $\pi_*$ 的作用完全一致。
+\end{yizhu}
+
+受定理 2.4.1 的启发，形如 $Z(\cF)$（其中 $\cF\in\Perv(L^+G\backslash\Gr_G)$）的反常层
+称为\emph{中心层}。
+
+\begin{aside}
+结合定理 2.4.1 与 $p$ 进群的 Bernstein 定理，人们或许会猜测存在一个等价
+\[
+D^b_c(L^+G\backslash\Gr_G)\;\cong\; Z\bigl(D^b_c(I\backslash\Fl_G)\bigr),
+\]
+它由 Gaitsgory 的中心函子诱导。
+而事实上并非如此：仿射 Hecke 范畴的中心实际上要大得多。
+关于中心的一个谱描述，可参见 \cite{BNP}。
+\end{aside}
+
+\begin{yizhu}[术语背景：旁注 2.4.2 里的「中心」]
+旁注说的「差得远」，指的是 $p$ 进侧球 Hecke 代数确实等于仿射 Hecke 代数的中心，
+而几何侧 $Z(D^b_c(I\backslash\Fl_G))$ 只是 $D^b_c(L^+G\backslash\Gr_G)$ 的一个子范畴，
+真正的中心由 \cite{BNP} 用谱（即 $G^\vee$ 的稳定中心与 $T^\vee$-等变参数）刻画。
+换句话说：定理 2.4.1 给出的是「中心同态」，而不是「中心同构」。
+\end{yizhu}
+
+\begin{remark}
+回忆几何 Satake 等价给出张量范畴的等价
+\[
+\Sat:\Rep(G^\vee)\;\xrightarrow{\;\cong\;}\;\Perv(L^+G\backslash\Gr_G).
+\]
+这样就有中心函子
+\[
+\Rep(G^\vee)\longrightarrow\Perv(I\backslash\Fl_G),
+\]
+它由几何 Satake 等价与 Gaitsgory 中心函子复合而成。
+我们常常滥用记号，把这两个函子都记作 $Z$。
+\end{remark}
+
+\begin{yizhu}[术语背景：几何 Satake]
+几何 Satake（又称 Satake 同构的几何化）断言：
+$\Gr_G$ 上 $L^+G$-等变反常层构成的张量范畴（卷积为张量积、以 $\delta_e$ 为单位元）
+等价于对偶群 $G^\vee$ 的有限维表示范畴。
+nLab 条目 \texttt{geometric Satake equivalence}
+（\url{https://ncatlab.org/nlab/show/geometric+Satake+equivalence}）记其经典形式为
+$H\otimes\bbZ[q^{\pm1/2}]\cong R({}^LG)\otimes\bbZ[q^{\pm1/2}]$，
+并指出「交换性约束」在几何一侧是额外数据而非自动性质。
+本文只用其结论：$\Rep(G^\vee)$ 里的 $V$ 对应 $\Gr_G$ 上可构造层 $\Sat(V)$。
+\end{yizhu}
+
+\subsection{Wakimoto 层}\label{sec:wakimoto}
+
+回忆 Bruhat 分解把仿射旗簇分层为子簇
+\[
+\Fl_G=\bigsqcup_{w\in\Wex}\Fl_{G,w}.
+\]
+用 $j_w:\Fl_{G,w}\to\Fl_G$ 表示嵌入。每个 $\Fl_{G,w}$ 是维数为 $\ell(w)$ 的仿射空间，
+其中 $\ell:\Wex\to\bbZ_{\ge0}$ 是 $\Wex$ 上拟 Coxeter 结构的长度函数。
+对每个 $w\in\Wex$，我们定义反常层
+\[
+\Delta_w=j_{w!}\bbk_{\Fl_{G,w}}[\ell(w)],
+\qquad
+\nabla_w=j_{w*}\bbk_{\Fl_{G,w}}[\ell(w)].
+\]
+这些反常层分别称为\emph{标准层}（standard sheaf）与\emph{余标准层}（costandard sheaf）。
+人们还可以考虑单反常层，记作 $\mathrm{IC}_w$，它由自然映射 $\Delta_w\to\nabla_w$ 的像给出。
+标准层、余标准层与 $\mathrm{IC}$-复形都自然地是 $I$-等变的。
+
+\begin{yizhu}[术语背景：$\Wex$ 上的长度函数]
+$\Wex=W\ltimes X^\vee$ 是扩张仿射 Weyl 群，它带有一个拟 Coxeter 结构：
+长度函数 $\ell$ 在 $X^\vee$ 上取 $\ell(\lambda)=\sum_{\alpha>0}\langle\lambda,\alpha^\vee\rangle$（对支配的 $\lambda$），
+并满足 $\ell(w\lambda)=\ell(w)+\ell(\lambda)$。$\Wex$ 一般不是 Coxeter 群
+（除非 $G$ 单连通），故原文说「拟 Coxeter 结构」。
+Bruhat 分层号与 $\ell$ 的关系决定了 $\Delta_w$ 与 $\nabla_w$ 的反常次数：$\Fl_{G,w}$ 是 $\ell(w)$ 维仿射空间。
+\end{yizhu}
+
+标准层与余标准层在卷积下的行为特别好。
+
+\begin{proposition}\label{prop:wak1}
+\begin{enumerate}[label=(\arabic*),leftmargin=2.2em,itemsep=1pt]
+\item 对任意 $x,y\in\Wex$，只要 $\ell(xy)=\ell(x)+\ell(y)$，就存在典范同构
+      \[
+      \Delta_x\conv^{I}\Delta_y\cong\Delta_{xy},
+      \qquad
+      \nabla_x\conv^{I}\nabla_y\cong\nabla_{xy}.
+      \]
+\item 对任意 $x\in\Wex$，存在典范同构
+      \[
+      \Delta_x\conv^{I}\nabla_{x^{-1}}\cong\Delta_e\cong\nabla_{x^{-1}}\conv^{I}\Delta_x .
+      \]
+\item 对任意 $x,y\in\Wex$，层 $\Delta_x\conv^{I}\nabla_y$ 是反常层。
+\end{enumerate}
+\end{proposition}
+
+对 $\lambda\in X^\vee$，选取 $\lambda_1,\lambda_2\in X^\vee_+$ 使得 $\lambda=\lambda_1-\lambda_2$。
+我们定义反常层
+\[
+\mathcal{W}_\lambda=\nabla_{\lambda_1}\conv^{I}\Delta_{-\lambda_2}.
+\]
+这样得到的层的全体称为 \emph{Wakimoto 层}。
+
+\begin{yizhu}[术语背景：Wakimoto 层]
+这个名字来自 $p$ 进侧的 Wakimoto 模：Verma 模的一种「自由场」实现。
+几何上，$\mathcal{W}_\lambda$ 是「先余标准、再标准」的一次卷积，
+即先在 $\Fl_{G,\lambda_1}$ 上取 $*$、再在 $-\lambda_2$ 上取 $!$，把两段奇异性「抵消」掉，
+所得对象仍落在反常层的 Abel 范畴里（命题 2.5.2 (3) 保证它对 $\lambda$ 的选择无关）。
+Wakimoto 层不是 $\mathrm{IC}$-层，但它张成 $K_0$ 的一组基，这是定理 2.5.3 的起点。
+\end{yizhu}
+
+\begin{proposition}[Mirkovi\'c]\label{prop:wak2}
+设 $\lambda,\mu\in X^\vee$。
+\begin{enumerate}[label=(\arabic*),leftmargin=2.2em,itemsep=1pt]
+\item 层 $\mathcal{W}_\lambda$ 不依赖于 $\lambda=\lambda_1-\lambda_2$ 的选取。
+\item 层 $\mathcal{W}_\lambda$ 支撑在 $\Fl_{G,\lambda}$ 上。
+\item 有
+      \[
+      \mathcal{W}_\lambda\conv^{I}\mathcal{W}_\mu\cong\mathcal{W}_{\lambda+\mu}.
+      \]
+\end{enumerate}
+\end{proposition}
+
+\begin{yizhu}[原文含糊：$\Fl_{G,\lambda}$ 里的 $\lambda$]
+(2) 中的 $\Fl_{G,\lambda}$ 是把 $\lambda\in X^\vee$ 看作 $\Wex$ 中元素 $\lambda$ 所对应的 Bruhat 层片
+（$X^\vee\subset\Wex$ 是平移子群），并非另立一套下标。
+在同一记号下，$\mathcal{W}_\lambda$ 与 $\Delta_\lambda$ 支撑在同一个层片上，但前者是「双向」卷积的产物。
+\end{yizhu}
+
+\begin{theorem}[Arkhipov–Bezrukavnikov, \cite{ArBe}]\label{thm:wakfilt}
+\begin{enumerate}[label=(\arabic*),leftmargin=2.2em,itemsep=1pt]
+\item 对任意 $\cF\in\Perv(L^+G\backslash\Gr_G)$，反常层 $Z(\cF)$ 带有一个滤过
+      \[
+      0=\cF_0\subset\cF_1\subset\cdots\subset\cF_n=Z(\cF),
+      \]
+      使得 $\cF_i/\cF_{i-1}$ 形如 $\mathcal{W}_{\lambda_i}$，其中 $\lambda_i\in X^\vee$。
+\item 对任意 $\lambda\in X^\vee$，$\mathcal{W}_\lambda$ 在上述 $Z(\cF)$ 的滤过中的重数，
+      等于 $\Sat^{-1}(\cF)$ 的 $\lambda$-权空间的维数。
+\end{enumerate}
+\end{theorem}
+
+\begin{yizhu}[原文含糊：权空间]
+(2) 里的「$\lambda$-权空间」指有限维 $G^\vee$-模 $\Sat^{-1}(\cF)$ 按极大环面 $T^\vee$ 的权分解中
+权为 $\lambda$ 的部分；$\Sat^{-1}$ 是几何 Satake 等价之逆，故 $\Sat^{-1}(\cF)$ 是 $\Rep(G^\vee)$ 的对象。
+由于 $Z(\cF)$ 是反常层、滤过商是 Wakimoto 层，这条定理实际上是说：
+「中心层的 Wakimoto 滤过的重数 = 该表示的权重数」，
+即几何侧的中心层完整记录了表示的权数据。
+\end{yizhu}
+
+我们将用 $\PWak$ 表示 $\Perv(I\backslash\Fl_G)$ 中由「容许 Wakimoto 滤过的反常层」构成的全子范畴。
+
+\begin{lemma}\label{lem:wakstable}
+范畴 $\PWak$ 在 $D^b_c(I\backslash\Fl_G)$ 中的卷积下稳定。
+\end{lemma}
+
+\subsection{反球商}\label{sec:asph}
+
+把 $\Fl_G$ 上 $I$-等变反常层的记号缩短一些会很有用。
+具体地说，我们将写作 $P_I=\Perv(I\backslash\Fl_G)$。
+
+设 $\Wf\subseteq\Wex$ 是「在 $Ww$ 中极小」的元素 $w$ 构成的子集。
+我们定义\emph{反球 Hecke 范畴}，记作 $\Pasph$，为如下构造的 Abel 范畴：
+取 $P_I$ 对由单对象 $\mathrm{IC}_w$（$w\notin\Wf$）生成的 Serre 子范畴的 Serre 商。
+它带有商函子
+\[
+P_I\longrightarrow\Pasph .
+\]
+
+\begin{yizhu}[术语背景：Serre 商与「反球」]
+Serre 商 $P_I/P_I^{\mathrm{neg}}$ 的对象仍是 $P_I$ 的对象，
+态射则是把「由 $\mathrm{IC}_w$（$w\notin\Wf$）生成的子范畴」中的对象零化后得到的。
+$\Wf$ 是 $\Wex$ 中在每个左 $W$-陪集里取长度最小者，故 $\Pasph$ 恰好保留了「反球」方向：
+把球（$W$-不变）方向杀掉，剩下的就是反球部分。
+Serre 商自动是 Abel 范畴，且商函子是正合的——这是它比「取子范畴」更好用的原因。
+nLab 上没有反球 Hecke 范畴的独立条目，可参看 \texttt{Hecke category}
+（\url{https://ncatlab.org/nlab/show/Hecke+category}）关于 Hecke 范畴的一般框架。
+\end{yizhu}
+
+\begin{keytakeaways}
+本节搭好了两件工具：中心函子 $Z$（把 $\Gr_G$ 上的层搬到 $\Fl_G$ 上，且落在中心里），
+以及 Wakimoto 层 $\mathcal{W}_\lambda$（$\Fl_G$ 上一组「可计算」的反常层）。
+定理 2.5.3 说：中心层总能按 Wakimoto 层滤过，且重数由表示 $V$ 的权给出——
+这就是第 3 节要把 $\tN$ 上的凝聚层「翻译」成 $\Fl_G$ 上的层时所用的字典。
+\end{keytakeaways}
