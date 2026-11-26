@@ -33,6 +33,8 @@
 | 21:30–21:38 | 写 §10 证据表、TRACE §7.5、案例 23–25；commit `83043f32`；push AtomGit `main`、Gitee `master`（a5a22926..83043f32） |
 | 21:20–21:30 | 合并 `fix_log.json`（25 卡 56 处：`fixes` 22/51＋`followup` 3/5）；`issues.jsonl` 3 行改 `confirmed_fixed_followup`；更新 `report.md` §4.2/§5/§8/§9/§10、`EXTERNAL_VERIFICATION.md` §0/§10、README/MEMORY、案例 23–25 与 `index.json` |
 
+| 2026-11-27 01:00–01:12 | 插件检索演示（`kb.mjs locate/get`）定位 `SY02-33:2.4` 与 `ch02.tex:84-98`；发现 `affine-grassmannian` 的 `sources.pages [13]` 漏 p.14；按用户当场指令以 E1 复核后改为 `[13,14]`，md 同步；`fix_log.json#spot_fixes`（1 卡 2 处）、`SPOT_FIX_2026-11-27.md`；`verify_final.py` ok（58 处） |
+
 ## 2. 命令日志（关键步骤）
 
 ```bash

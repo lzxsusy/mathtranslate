@@ -50,7 +50,7 @@ $\operatorname{Gr}_{G,X}$ 是 ind-局部有限型的 ind-概形。若 $G$ 约化
 
 ## 出处
 
-- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§2.4 仿射 Grassmann 簇与局部模型，p.13（PDF p.13），`源码/chapters/ch02.tex:84-86（定理 2.4.1）；定义与扭曲积见 76-98 行`
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§2.4 仿射 Grassmann 簇与局部模型，p.13-14（PDF p.13-14），`源码/chapters/ch02.tex:84-86（定理 2.4.1）；定义与扭曲积见 76-98 行`
 
 ## 核验
 

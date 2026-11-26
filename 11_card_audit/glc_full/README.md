@@ -15,13 +15,14 @@
 | 单方判 issue（a_issue_only） | 12 张 |
 | arbiter 确认 | 7 张（另 4 张 arbiter 判 pass、1 张只认另一字段） |
 | **确认修复** | **25 张 / 56 处**（22 张 51 处双盲确认＋3 张 5 处 follow-up 外部核验） |
-| 单方未修 | 2 张（affine-grassmannian、euler-characteristic-trace-test） |
-| 单方未修 | 5 张 |
+| 单方未修 | 1 张（euler-characteristic-trace-test；affine-grassmannian 于 2026-11-27 插件检索演示中单点修复，见 `SPOT_FIX_2026-11-27.md`，不计入本表） |
 | unverifiable | 0 |
-| severity | minor 26 / major 1（`vanishing-theorem`） |
+| severity | minor 29 / major 1（30 条确认 issue，`vanishing-theorem` 为 major） |
 | 外部核验 | 56/56 通过、0 推翻（51 处主核＋5 处 follow-up；含 nLab/CAG 2001/CS 文献） |
 
 完整数字、逐条证据与残余风险见 `raw/report.md`；56 处修改的外部核验见 `raw/EXTERNAL_VERIFICATION.md`。
+
+> **2026-11-27 追加**：插件检索演示中另修 1 张单方卡（`affine-grassmannian`，`sources.pages [13] → [13,14]`），见 `SPOT_FIX_2026-11-27.md` 与 `raw/spot_fix_2026-11-27.md`；该处与审计的 25 卡 56 处分账，`fix_log.json#spot_fixes` 单列。
 
 > 工作副本在 `datasets/_audit/glc_full_2026-11-26/`（含 PDF 与逐页文本，**不入库**，版权理由）；本目录的 `raw/`、`tools/` 是发布拷贝。
 
@@ -31,6 +32,7 @@
 11_card_audit/glc_full/
 ├── README.md            本文件：范围、方法、结论、用法
 ├── TRACE.md             审计轨迹：时间线、命令、关键决策与返工
+├── SPOT_FIX_2026-11-27.md  运行期单点修复（插件检索演示；不计入 25/56）
 ├── MEMORY.md            工程备忘录：定稿数字、关键修正、未解项、可复用约定、发布信息
 ├── index.json           25 个案例的索引（slug / mode / severity / fields / confirmed_by / file）
 ├── casebook/
@@ -81,4 +83,4 @@
 1. **卡与 md 必须同步改**：`datasets/glc/md/concepts/<slug>.md` 是卡的渲染副本，只改 JSON 会造成卡/md 不一致。修复脚本 `apply_fixes.py` 强制 md 同步，歧义时拒写。
 2. **最小编辑**：只改确认的字段，old 必须逐字匹配当前值（`substring` 模式要求恰好出现一次），不做整体重排。改后统一 `json.dumps(ensure_ascii=False, indent=2) + "\n"`。
 3. **页码以 PDF 正文页眉为准**，`\srcpage` 与 PDF 目录只作线索（底本有漂移，见 `report.md` §7）。
-4. 本目录的 25 例是**已确认并修复**的案例；单方未修的 2 张只记在 `report.md` §5，不进 casebook。
+4. 本目录的 25 例是**审计确认并修复**的案例；单方未修的 1 张（`euler-characteristic-trace-test`）只记在 `report.md` §5，不进 casebook；2026-11-27 的单点修复（`affine-grassmannian`）记在 `SPOT_FIX_2026-11-27.md`，同样不进 casebook。

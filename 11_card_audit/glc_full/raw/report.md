@@ -255,3 +255,12 @@ python datasets/_audit/glc_full_2026-11-26/tools/apply_fixes.py --plan datasets/
 python datasets/_audit/glc_full_2026-11-26/tools/apply_fixes.py --plan datasets/_audit/glc_full_2026-11-26/tmp/fix_plan_followup.json --apply --log datasets/_audit/glc_full_2026-11-26/fix_log_followup.json
 python datasets/_audit/glc_full_2026-11-26/tools/verify_final.py
 ```
+
+## 11. 运行期单点修复（2026-11-27，不计入 25/56）
+
+用户要求用知识库插件做一次检索并修一张卡。插件 CLI（`kb.mjs locate/get`）定位到 `SY02-33:2.4` 与 `ch02.tex:84-98`；英文原书 p.13 给定理 2.4.1，p.14 给 `L^+G_X`、`LG_X`、`Gr_{G,X}≃LG_X/L^+G_X`、`Bun_G^∞` 与 Hecke 扭曲积。卡 `affine-grassmannian` 的 `definition.notation` 与 `key_points[2][3][4]` 引用的正是 p.14 内容，而 `sources[0].pages` 只写 `[13]`（anchor 自述 76-98 行，跨 p.13-14）。
+
+- 修改：`sources[0].pages` / `pdf_pages` `[13] → [13,14]`，md 同步。
+- 记录：`fix_log.json#spot_fixes`（1 卡 2 处）、`11_card_audit/glc_full/SPOT_FIX_2026-11-27.md`。
+- 该卡原为 Pass A 单方发现、arbiter 判 pass 保留未修；本次按用户当场指令以 E1（原书页）直接复核后修复，不改写 A/B/arbiter 原始记录，也**不计入**第 4 节的 25 卡 56 处。
+- 验收：`verify_final.py` 的 `fix_edits_checked` 由 56 变为 58（含 spot 2 处），`fix_cards` 26；`ok:true`。

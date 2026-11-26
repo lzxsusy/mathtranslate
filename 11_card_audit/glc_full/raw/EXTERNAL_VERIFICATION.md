@@ -318,3 +318,7 @@ python tools/apply_fixes.py --plan tmp/fix_plan_followup.json --check
 python tools/apply_fixes.py --plan tmp/fix_plan_followup.json --apply --log fix_log_followup.json
 python tools/verify_final.py
 ```
+
+## 11. 补充：插件检索演示中的单点修复（2026-11-27）
+
+不在 §0–§10 的 56 处之内。`affine-grassmannian` 的 `sources[0].pages` 由 `[13]` 改为 `[13,14]`：原书 p.13 仅有定理 2.4.1，卡片 `definition.notation` 与 `key_points[2][3][4]` 引用的 `L^+G_X`、`LG_X`、`Gr≃LG/L^+G`、`Bun_G^∞`、Hecke 扭曲积都在 p.14（`ch02.tex:86-88` 的 `\srcpage{14}` 之后）。证据为英文底本 p.13–14 逐页对读与插件 unit 的源码行号；插件 unit 的 `page` 字段为空，不能作页码证据。详见 `11_card_audit/glc_full/SPOT_FIX_2026-11-27.md`。

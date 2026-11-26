@@ -4,10 +4,10 @@
 
 Checks
   1. 154 glc cards: every file parses, id matches filename, ids unique
-  2. whole library (datasets/*/cards/**/*.json == 1676): 0 parse errors
-  3. git diff --numstat -- datasets/glc  ⊆  baseline dirty files ∪ fix_log targets
+  2. whole library (datasets/*/cards/**/*.json >= 1676 at audit time): 0 parse errors
+  3. git diff --numstat baseline_head..worktree -- datasets/glc ⊆ baseline dirty files ∪ fix_log targets
   4. git diff --check: no whitespace errors introduced
-  5. HEAD unchanged (nothing committed)
+  5. HEAD is baseline or a descendant of it (fixes may be committed)
   6. fix_log integrity: sha256_after matches on disk; every `after` present,
      every `before` gone (unless still legitimately present elsewhere)
   7. md mirror: every fixed card's md parses as text and holds no stale `before`
@@ -76,15 +76,17 @@ def main():
             fails.append("library parse error: %s" % p)
     rep["library_cards"] = len(lib)
     rep["library_parse_errors"] = lib_bad
-    if len(lib) != 1676:
-        fails.append("library card count %d != 1676" % len(lib))
+    if len(lib) < 1676:
+        fails.append("library card count %d < audit-time 1676" % len(lib))
 
     # fix log
     fix = {"fixes": []}
     if os.path.isfile(args.fix_log):
         with open(args.fix_log, "r", encoding="utf-8") as f:
             fix = json.load(f)
-    all_fixes = list(fix.get("fixes", [])) + list(fix.get("followup", {}).get("fixes", []))
+    all_fixes = (list(fix.get("fixes", []))
+                 + list(fix.get("followup", {}).get("fixes", []))
+                 + list(fix.get("spot_fixes", {}).get("fixes", [])))
     expected = set()
     for r in all_fixes:
         expected.add(r["path"])
@@ -92,7 +94,9 @@ def main():
             expected.add(r["md_sync"]["md_path"])
 
     # 3. diff numstat
-    rc, out, err = run(["git", "diff", "--numstat", "--", "datasets/glc"])
+    _bp = os.path.join(ROOT, "tmp", "git_baseline_head.txt")
+    _base = open(_bp, encoding="utf-8").read().strip() if os.path.exists(_bp) else "HEAD"
+    rc, out, err = run(["git", "diff", "--numstat", _base, "--", "datasets/glc"])
     changed = {}
     for line in out.splitlines():
         parts = line.split("\t")
