@@ -19,9 +19,15 @@
 
 - 对象：`datasets/glc/cards/**/*.json` 全部 **154** 张 `concept` 卡，**全量**审计（不抽样）。
 - 流程：8 名 Pass A（154 行）→ Pass B 52 张盲审（27 张 A-issue 全覆盖 + 25 张随机 20%）→ 12 张单方发现交第三名 arbiter 盲审 → 22 张确认修复（15 both_issue + 7 arbiter 同字段）。
-- 结果：**22 张卡 / 51 处**（26 minor + 1 major），5 张单方未修，0 unverifiable；另做 51 处外部核验（原书页 + arXiv 一手，51/51 通过、0 推翻）。
-- 归档：[`glc_full/`](glc_full/)——结构与上一批同构：`README.md`（范围/结论）、`TRACE.md`（时间线/决策/返工）、`raw/`（passA、passB、tiebreak、compare、issues、fix_log、report、EXTERNAL_VERIFICATION、三份 brief）、`tools/`（13 个脚本）、`casebook/`（22 例七节）+ `index.json`。
+- 结果：**25 张卡 / 56 处**（主 22 卡 51 处：26 minor + 1 major；follow-up 3 卡 5 处）——15 张 both_issue + 7 张 arbiter 同字段，另 3 张单方卡经用户 m01466 授权的英文原书/nLab/CAG 2001 补核后修复；剩 2 张单方未修，0 unverifiable。外部核验 56/56 通过、0 推翻。
+- 归档：[`glc_full/`](glc_full/)——`README.md`（范围/结论）、`TRACE.md`（时间线/决策/返工）、`raw/`（passA、passB、tiebreak、compare、issues、fix_log、fix_log_followup、report、EXTERNAL_VERIFICATION、三份 brief）、`tools/`（13 个脚本）、`casebook/`（25 例七节）+ `index.json`。
 - 与上一批互不影响：本批不改 `casebook/` 的 32 例与其 `index.json`。
+
+## 每日外部核验（2026-11-27 起）
+
+- 规范：[`DAILY_VERIFICATION_PLAYBOOK.md`](DAILY_VERIFICATION_PLAYBOOK.md) —— 证据等级、找源方法、逐卡清单（陈述/出处/内部一致/形式化就绪）、判定与 JSONL schema、反模式、质量闸门。
+- 工作区：[`daily_verify/`](daily_verify/) —— 每日抽 20 张做外部核验，只记录不改卡；`tools/` 提供确定性抽样与记录校验，`ledger.jsonl` 是已核台账。
+- 排程：由 DSH 定时任务每天 12:30（Asia/Shanghai）在新会话执行；产物写到 `daily_verify/<date>/`。
 
 ## 目录
 
