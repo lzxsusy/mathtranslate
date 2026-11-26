@@ -2,6 +2,15 @@
 
 > **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
 
+## SY02-15《相对朗兰兹对偶》（LAWRGE 2024 工作坊笔记）中译注本 + 47 张资料卡 — 2026-11-27
+
+- **底本与译本**：*LAWRGE 2024 NOTES — Relative Langlands Duality*，Ben-Zvi / Sakellaridis / Venkatesh 主讲的工作坊参会者笔记（2024-12-03，73 页，15 讲，无 arXiv、无正式出版信息，开篇自述「极不完整、未校订」）。中译注本 65 页（封面 1 + 译者说明 1 + 目录 2 + 正文 61），2026-11-21 v1.0、2026-11-22 补译注标记；0 error / 0 Overfull / 0 Missing character / 0 未定义引用，167 个编号对象与原文逐条对齐，图 12 张、脚注 1–12 保号、译注 3 条、疑点清单 12 行（未解 0）。
+- **本轮不重译**：用户提供的 PDF 与工程内 `工程文件/work/原文/chNN.txt` 逐讲核对——15 个标题逐字相同，末段几乎逐字相同且同带字体缺字 `��Fq`，确认同一底本、同一抽取链；仅补卡片层与登记。
+- **新增 `datasets/lawrge24/`**：**47 张卡**（41 概念 + 6 推导），六轨 O（总览）/A（TQFT 与算术–拓扑字典，§1–§3）/B（raviolo、Hecke、Satake，§4、§7）/C（球簇与对偶群，§8–§10）/D（Plancherel 与局部范畴化，§8、§11）/E（周期层与 L-层，§5、§12–§15）。一卡一 JSON，锚**原文 PDF 页**（1–73）；`quote` 逐字取自原文分页文本并经 lint 逐条命中；概念卡正文 400–800 汉字、`key_points` 5、`pitfalls` 3、`related` ≥4；推导卡 7 步、每步带 `locator` 与 A/B `provenance`。`lint_cards.py` → **cards=47 errors=0 warnings=0**；`index.jsonl` 47 条、`taxonomy.md` 六轨总表、`verification.jsonl` 47 条全 `source-only`；附 `README.md`、`SCHEMA.md`、`_BRIEF.md` 与 5 个工具脚本。全部 `status: draft`——原文自述不完整，卡片只作读懂笔记的地图，不作定理级引用。
+- **译名核对**：按用户要求先查香蕉空间（bananaspace.org），22 词记录见 `工程文件/work/术语外部核对_香蕉空间.md`；采用「无交并」「几何 Satake 等价」（全称），保留「栈」并注「叠」、「仿射 Grassmann 流形」收异名「仿射 Graßmann 形」。该站对相对 Langlands 覆盖极薄（搜「朗兰兹」仅命中「局部类域论」一条），记录中如实标注缺口，不伪称社区标准。已发布 v1.0 正文不动，术语统一留 v1.1。
+- **台账**：`RELEASE_REGISTER.csv` 第 116 行补资料卡信息；新建 `03_translations_meta/SY02-15/投稿信息.md`；`datasets/README.md` 登记 `lawrge24/`（v0.27）。
+- **统计**：`python make_stats.py --write` 重算 `_meta/stats.json` → **143 部工程（129 部带源码）/ 15,887 个跟踪文件 / 约 531 MB / 46 个数据集 / 1,777 张资料卡**；`DATASHEET.md` 升 v1.5.0。
+
 ## SY02-38《朗兰兹纲领入门课程讲义》（Anschütz, 含 Heuer 三讲）中译注本 + 53 张资料卡 — 校对轮 2026-11-27
 
 - **本轮内容**：译名对齐中文数学社区 + 四路独立校对（104 条意见：严重 5 / 中等 43 / 轻微 52），按意见修稿并复核排版。
