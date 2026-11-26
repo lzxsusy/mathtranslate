@@ -25,7 +25,7 @@
 | 20:00 | 本批文档：`report.md`、本 README、TRACE |
 | 20:12 | 用户要求「外部核验 22 卡 51 处 + 推送工程与思考链」；`tools/reverify_pages.py` 独立重算 35 处定位编辑（21 处差异逐条归因到 `\srcpage` 漂移） |
 | 20:16–20:24 | 外郭取 E1/E2 证据：Gaitsgory math/0204081（vanishing 条件）、CCF24 2409.07051 TeX（Casselman–Shalika）、AGKRRV 2010.01906 TeX（QLisse 左完备化）、原书逐页引文；写 `EXTERNAL_VERIFICATION.md`（51/51 通过，0 推翻） |
-| 20:2x | 更新 `report.md` §8/§9/§10 与本文；把审计工程复制为可发布布局 `11_card_audit/glc_full/{raw,tools}/`；commit 并 push（AtomGit / Gitee） |
+| 20:21–20:24 | 更新 `report.md` §8/§9/§10 与本文；审计工程复制为 `11_card_audit/glc_full/{raw,tools}/`；commit `7d79721e`；push AtomGit `master:main`、Gitee `master`（6a488d50..7d79721e） |
 
 ## 2. 命令日志（关键步骤）
 
@@ -85,7 +85,7 @@ python datasets/_audit/glc_full_2026-11-26/tools/verify_final.py
 - `git diff --numstat -- datasets/glc` 恰为 22 卡 + 22 md（其中 `frobenius-twisted-trace` 卡/md 另含进入本任务前就存在的 1 行无关改动「游走→巡游」）。
 - 13 个 JSONL（A1–A8、B1–B3、T1a–T1b）checker 全部 0 error / 0 warning。
 - 外部核验：51/51 通过、0 推翻（`EXTERNAL_VERIFICATION.md`）。
-- 发布：`11_card_audit/glc_full/`（README/TRACE/casebook/index + `raw/` 数据件 + `tools/` 脚本）与 22 卡＋22 md 的改动一起 commit，push 到 AtomGit `master:main` 与 Gitee `master`。
+- 发布：`11_card_audit/glc_full/`（README/TRACE/casebook/index + `raw/` 数据件 + `tools/` 脚本）与 22 卡＋22 md 的改动一起 commit（`7d79721e`），push 到 AtomGit `master:main` 与 Gitee `master`（均为 `6a488d50..7d79721e`，快进，无强推）。
 
 ## 6. 边界（本批没做）
 
