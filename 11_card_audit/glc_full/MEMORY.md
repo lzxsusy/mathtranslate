@@ -7,12 +7,12 @@
 ## 1. 这是什么
 
 2026-11-26 对 `datasets/glc/cards/**/*.json` 全部 **154 张** `concept` 卡做**全量**（非抽样）独立审计：
-Pass A（8 人 × 17–20 张）→ Pass B（52 张盲审）→ 单方发现交第三名 arbiter 盲审 → lead 逐条复核 → 22 张卡最小修复 → 51 处外部核验 → 发布。
+Pass A（8 人 × 17–20 张）→ Pass B（52 张盲审）→ 单方发现交第三名 arbiter 盲审 → lead 逐条复核 → 22 张卡最小修复 → 51 处外部核验；用户 m01466 追加 nLab/文献补核后 3 张单方卡再修 → 25 卡 56 处发布。
 
 - 主报告：`raw/report.md`（审计全过程、逐卡修复表、验收、残余风险）
-- 外部核验：`raw/EXTERNAL_VERIFICATION.md`（51 处逐条 before/after、原书页、arXiv 一手）
+- 外部核验：`raw/EXTERNAL_VERIFICATION.md`（56 处逐条 before/after、原书页、arXiv 一手、nLab/CAG 2001 follow-up）
 - 过程：`TRACE.md`（时间线、命令、决策 D1–D13、8 条返工）
-- 逐卡对比：`casebook/`（22 例，七节）＋`index.json`
+- 逐卡对比：`casebook/`（25 例，七节）＋`index.json`
 
 ## 2. 定稿数字
 
@@ -22,11 +22,11 @@ Pass A（8 人 × 17–20 张）→ Pass B（52 张盲审）→ 单方发现交�
 | B | 52 行（27 张 A-issue + 25 张随机 A-pass，seed 20261126），15 issue |
 | 对照 | both_issue 15 / a_issue_only 12 / both_pass 25 / b_not_sampled 102 |
 | arbiter | 12 行，8 issue（7 张与 A 同字段确认）/ 4 pass |
-| 确认修复 | **22 卡 / 51 处**（15 both + 7 arbiter 同字段） |
+| 确认修复 | **25 卡 / 56 处**（15 both + 7 arbiter 同字段 + 3 单方经 E1/E2 补核） |
 | severity | 26 minor + 1 major（`vanishing-theorem`） |
 | 单方未修 | 5 张 |
 | unverifiable | 0 |
-| 外部核验 | 51/51 通过，0 推翻 |
+| 外部核验 | 56/56 通过，0 推翻 |
 
 ## 3. 关键修正（数学/术语）
 

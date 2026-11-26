@@ -145,6 +145,7 @@ def main():
     ap.add_argument("--plan", default=os.path.join(ROOT, "fix_plan.json"))
     ap.add_argument("--check", action="store_true")
     ap.add_argument("--apply", action="store_true")
+    ap.add_argument("--log", default=None, help="path for the fix log (default: <audit>/fix_log.json)")
     args = ap.parse_args()
     if args.check == args.apply:
         sys.exit("pass exactly one of --check / --apply")
@@ -267,7 +268,9 @@ def main():
                      " NOT_FOUND=" + ",".join(md["not_found"])))
         return
 
-    logpath = os.path.join(ROOT, "fix_log.json")
+    logpath = args.log or os.path.join(ROOT, "fix_log.json")
+    if not os.path.isabs(logpath):
+        logpath = os.path.join(ROOT, logpath)
     with open(logpath, "w", encoding="utf-8") as f:
         json.dump({
             "campaign": "glc_full_2026-11-26",

@@ -22,7 +22,7 @@ track: C
 - 特征值常数是 $q_x^{-d(d-1)/2}$，用 $\gamma$ 书写；与 §3.2 用 $\sigma(\operatorname{Fr}_x)$ 书写的 $q_x^{d(n-d)/2}$ 相容，差别来自 $\operatorname{Tr}(\bigwedge^d\gamma_x)=q_x^{d(n-1)/2}\operatorname{Tr}(\bigwedge^d\sigma(\operatorname{Fr}_x))$。
 - Casselman–Shalika 公式：对余权 $\lambda=(\lambda_1,\ldots,\lambda_n)$，优势时 $W_{\gamma,x}(t_x^\lambda)=q_x^{-\sum_i(i-1)\lambda_i}\operatorname{Tr}(\gamma,V^\lambda)$，非优势时为 $0$。
 - 范畴形式：$\operatorname{Perv}^{\mathrm{Wh}}(\dot{\operatorname{Gr}}_{G,x})\simeq\operatorname{Rep}(\check G)$，导出层面为 $D^{\mathrm{Wh}}(\dot{\operatorname{Gr}}_{G,x})\simeq D^b(\operatorname{Rep}(\check G))$；这是几何 Satake 的 Whittaker 形式。
-- 公式中的和 $\sum_i(i-1)\lambda_i$ 不取绝对值：仅当 $\lambda$ 为有效优势权（$\lambda_n\ge 0$，如 $\lambda=(2,1,0)$）时各项非负、指数为负；一般优势权指数可正可负（$n=2$、$\lambda=(0,-1)$ 时指数为 $+1$），这与 Casselman–Shalika 公式的指数约定一致。
+- 公式中的和 $\sum_i(i-1)\lambda_i$ 不取绝对值：仅当 $\lambda$ 为有效优势权（$\lambda_n\ge 0$，如 $\lambda=(2,1,0)$）时各项非负、指数非正（$\lambda=(c,0,\ldots,0)$、$c\ge 0$ 时恰为 $0$）；一般优势权指数可正可负（$n=2$、$\lambda=(0,-1)$ 时指数为 $+1$），这与 Casselman–Shalika 公式的指数约定一致。
 
 ## 关键公式
 
@@ -64,7 +64,7 @@ track: C
 状态：`source-only`（2026-11-18）
 - FGKV98：https://arxiv.org/abs/alg-geom/9703022 — 四条归一化性质：W(1)=1、右 GL_n^J(O_x) 不变、Ψ_x 等变、T_x^iW=q_x^{-i(i-1)/2}Tr(Λ^iγ)W；CS 值 q_x^{n(λ)}Tr(γ,V^λ)
 - FGKV98：https://arxiv.org/abs/alg-geom/9703022 — CS 公式的 q^{-(μ,ρ)} 形式与唯一性
-- FGKV98：https://arxiv.org/abs/alg-geom/9703022 — 卡3 KP4：「λ 为优势权时各项非负，指数为负」
+- FGKV98：https://arxiv.org/abs/alg-geom/9703022 — 卡3 KP4（2026-11-26 修订后）：有效优势权（$\lambda_n\ge 0$）时各项非负、指数非正（$\lambda=(c,0,\ldots,0)$ 时恰为 $0$）；一般优势权指数可正可负。
 
 ## 关联
 

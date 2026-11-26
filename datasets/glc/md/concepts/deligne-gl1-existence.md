@@ -14,7 +14,7 @@ track: A
 
 设 $X$ 是 $k=\mathbb{F}_q$ 上光滑完备曲线，$\sigma$ 是 $X$ 上秩为一的局部系统。定理断言：在 $\operatorname{Pic}_{X/k}$ 上存在 Hecke 特征层 $\operatorname{Aut}_\sigma$，它以 $\sigma$ 为特征值（即 $\operatorname{add}^*\operatorname{Aut}_\sigma\simeq\sigma\boxtimes\operatorname{Aut}_\sigma$ 且满足两次修改的交换性条件，见定义 1.1.3），而且 $\operatorname{Aut}_\sigma$ 是局部系统。「本质唯一」是指：忽略与 $\operatorname{Shv}(\operatorname{Spec} k)$ 中对象的张量积后唯一，而这种张量积保持特征值不变。
 
-*记号*：$\operatorname{Aut}_\sigma$：以 $\sigma$ 为特征值的 Hecke 特征层；$\operatorname{Shv}(\operatorname{Spec} k)$：$k$-向量空间（分次）构成的层范畴，其对象张量到 $\operatorname{Pic}_{X/k}$ 上的层不改变特征值。
+*记号*：$\operatorname{Aut}_\sigma$：以 $\sigma$ 为特征值的 Hecke 特征层；$\operatorname{Shv}(\operatorname{Spec} k)$：系数域 $e$ 上的（分次）向量空间构成的层范畴（$\ell$-进情形 $e=\overline{\mathbb{Q}}_{\ell}$；底域 $k=\mathbb{F}_q$ 不充当系数域），其对象张量到 $\operatorname{Pic}_{X/k}$ 上的层不改变特征值。
 
 ## 要点
 

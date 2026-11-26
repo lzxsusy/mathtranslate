@@ -15,11 +15,12 @@
 | 定位类（页码、定理出处） | 38 | PDF 原书正文页逐字核对；其中 35 处另做独立的「源码行号 → 原书页」重算 | 全部通过 |
 | 内容／术语类 | 12 | 原书原文句＋arXiv 一手论文（5 张卡有 arXiv 佐证）＋卡内一致性 | 全部通过 |
 | 内部一致性类 | 1 | 只针对卡内自相矛盾的最小修补，不主张新数学命题 | 通过（不要求外部命题支撑） |
-| **合计** | **51** | | **51 通过，0 推翻，0 需回退** |
+| Follow-up（3 张原单方卡） | 5 | 用户 m01466 授权：E1 原书逐句＋E2 nLab / CAG 2001 / Casselman–Shalika 文献 | 全部通过（见 §10） |
+| **合计** | **56** | | **56 通过，0 推翻，0 需回退** |
 
-- 22 张卡**每一张**都至少有一手来源（陈麟讲义 PDF 正文页）支撑其修改，没有一张只靠「卡内推理」或「模型记忆」。
+- 25 张卡**每一张**都至少有一手来源（陈麟讲义 PDF 正文页）支撑其修改，没有一张只靠「卡内推理」或「模型记忆」。
 - 唯一重大级（major）修改 `vanishing-theorem` 有两重独立依据：原书 Theorem 5.7.2 的原文 + Gaitsgory 原始论文的 Conjecture 1.3。
-- 本轮**没有**把任何单方未修的卡偷偷改掉；5 张单方未修卡的外部复核结果见 §5，其中 3 条被列为残余风险，建议下一轮处理。
+- 第一批**没有**把任何单方未修的卡偷偷改掉；5 张单方未修卡的外部复核见 §5，其中 3 条被英文原书证实，在用户 m01466 授权下按 §10 修复并留档，2 条维持不改。
 
 ---
 
@@ -172,7 +173,7 @@ eisenstein 的两处修改（theorem.source p.77、kp3 Shalika）分别归入 §
 
 ---
 
-## 5. 5 张单方未修卡的外部复核
+## 5. 5 张单方卡的外部复核（3 张已在 §10 修复）
 
 按流程（arbiter 判 pass 的保留为单方发现、不修），这 5 张未改。外部复核结果如下——**3 张维持不改，2 张的 A 方观察在外部来源上仍成立，列入残余风险**。
 
@@ -275,5 +276,45 @@ python datasets/_audit/glc_full_2026-11-26/tools/verify_final.py
 
 - **已修 51 处**：英文原本逐句再核后 **51/51 维持**，无一处需要回退。
 - **单方未修 5 张**：2 张维持（`euler-characteristic-trace-test` 页码可接受；`affine-grassmannian` 只涉及补页，不影响数学），**3 张有决定性证据**（`deligne-gl1-existence` 系数域、`hecke-laumon-stack` 决定关系、`local-whittaker-eigenfunction` 指数符号）。按双盲协议它们仍是 single_sided，但在「英文原本再核」这一层，它们不再算「存疑」，而是「证据充分、因协议未修」。
-- 若用户授权，可作为 follow-up 修 3 卡 3 处（`notation` 1、`key_points` 2），md 同步，确认数从 22 卡 51 处变为 25 卡 54 处；不改变已归档的 A/B/arbiter 记录，只在 `fix_log` 追加 `followup` 段并更新 `issues.jsonl` 的 3 行状态为 `confirmed_fixed_followup`。
-- 不授权则维持现状，但 §5 与 `report.md` §9 的表述改为「其中 3 条已被英文原书证实，仅因协议保留」。
+- 用户 m01466 已授权补核。实际修复 **3 卡 5 处**（`definition.notation` 1、`key_points` 1、`verification.checks` 3），md 同步；确认数从 22 卡 51 处变为 **25 卡 56 处**。详见 §10。未改动已归档的 A/B/arbiter 记录，只在 `fix_log.json` 追加 `followup` 段，并把 `issues.jsonl` 的 3 行状态改为 `confirmed_fixed_followup`。
+
+
+## 10. Follow-up：3 张单方卡的修复（2026-11-26 晚，用户 m01466 授权）
+
+### 10.1 授权与范围
+
+用户 m01466 要求先用 nLab / 全网检索佐证判断，成立则修复，并把修改理由与正误对照写入仓库。检索后三条判断均有 E1（英文原本）＋E2（nLab、CAG 2001、Casselman–Shalika 文献）支持，按 §9.3 的裁决执行修复。修复不触碰 `passA/`、`passB/`、`tiebreak/` 的任何行，只在 `fix_log.json` 增加 `followup` 段、在 `issues.jsonl` 改 3 行状态。
+
+### 10.2 外部支持表
+
+| 卡 | 争议点 | E1 英文原本 | E2 外部证据 | 结论 |
+|---|---|---|---|---|
+| `deligne-gl1-existence` | `Shv(Spec k)` 的系数域 | p.7 L22–24 `Fix a reasonable sheaf theory with algebraically closed coefficient field e.` | nLab `l-adic cohomology`：系数 $\mathbb{Q}_\ell$，底域 $k$ 且 $\ell\neq\operatorname{char}k$；nLab `geometric class field theory`：对任意常值完全域 $k$ 表述（可为 $\mathbb{C}$） | 卡写 $k$-向量空间错；应为系数域 $e$ |
+| `hecke-laumon-stack` | 「三者互相决定其中之二」 | p.45–46 只给 $\mathrm{HL}_k^d=\{0\to M'\to M\to\mathcal T\to0\}$ 与两条腿，未称任两者决定第三 | CAG 2001（`CAG-2001-0009-0004-a003.pdf`）：`s = dim Ext^1(O_x, L) > 1. They will be parametrized by a projective space P^{s-1}.`；nLab `extension`：扩张由 Ext 分类 | 固定 $(\mathcal T,M')$ 时 $M$ 只在 $\operatorname{Ext}^1(\mathcal T,M')$ 的 torsor 意义下确定；与同卡 `pitfalls[1]` 一致，与原句矛盾 |
+| `local-whittaker-eigenfunction` | 有效优势权「指数为负」 | p.21 L24 指数 $-\sum_i(i-1)\lambda_i$；$\lambda=(c,0,\ldots,0)$ 时为 $0$ | Casselman–Shalika, Compositio Math. 41 (1980) 207；BIRS 13w5154 幻灯片、Chhaibi ART 幻灯片同指数形状 | 「负」不成立；应为「非正，$\lambda=(c,0,\ldots,0)$ 时恰为 $0$」 |
+
+### 10.3 Before / after（5 处）
+
+1. `deligne-gl1-existence` / `definition.notation`：`$\operatorname{Shv}(\operatorname{Spec} k)$：$k$-向量空间（分次）构成的层范畴…` → `…系数域 $e$ 上的（分次）向量空间构成的层范畴（$\ell$-进情形 $e=\overline{\mathbb{Q}}_{\ell}$；底域 $k=\mathbb{F}_q$ 不充当系数域）…`
+2. `hecke-laumon-stack` / `key_points[0]`：`…三者互相决定其中之二。` → `…已知 $M$ 与 $\mathcal T$（或 $M$ 与 $M'$）时第三个由正合列确定，但只知 $(\mathcal T,M')$ 时 $M$ 还要额外选取 $\operatorname{Ext}^1(\mathcal T,M')$ 中的一个类…（$\mathcal T=\mathcal O_x$ 时 $\operatorname{Ext}^1(\mathcal O_x,M')\cong M'|_x$，可以多于一个）。`
+3. `local-whittaker-eigenfunction` / `key_points[4]`：`…各项非负、指数为负；` → `…各项非负、指数非正（$\lambda=(c,0,\ldots,0)$、$c\ge 0$ 时恰为 $0$）；`
+4. 同卡 `verification.checks[2].asserts`：旧引文 `卡3 KP4：「λ 为优势权时各项非负，指数为负」` → 指向修订后的 KP4。
+5. 同卡 `verification.checks[2].verdict`：`contradicts: …` → `supports: …`（保留旧判词针对旧表述的说明）。
+
+### 10.4 数字更新
+
+- 确认修复：**25 卡 / 56 处**（22 卡 51 处双盲确认＋3 卡 5 处 follow-up）。
+- `issues.jsonl`：32 行不变，其中 `confirmed_fixed` 27、`confirmed_fixed_followup` 3、`single_sided` 2；severity：30 条确认（29 minor＋1 major）＋2 条单方（均 minor）。
+- 外部核验：**56/56 通过，0 推翻**。
+- 单方未修：2 张（`affine-grassmannian`、`euler-characteristic-trace-test`）。
+- 案例库：25 例（23–25 为本轮 follow-up，确认链写 `lead+E1/E2`）。
+
+### 10.5 复现
+
+```bash
+cd C:/Users/admin/Desktop/数译发布/gitee_shuyi/datasets/_audit/glc_full_2026-11-26
+python tmp/make_followup_plan.py
+python tools/apply_fixes.py --plan tmp/fix_plan_followup.json --check
+python tools/apply_fixes.py --plan tmp/fix_plan_followup.json --apply --log fix_log_followup.json
+python tools/verify_final.py
+```

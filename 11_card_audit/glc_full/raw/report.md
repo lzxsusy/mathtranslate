@@ -4,9 +4,9 @@
 - 对象：`datasets/glc/cards/**/*.json`，154 张，全部 `type=concept`
 - 底本：`datasets/_audit/third_party_2026-11-26/tmp/sources/glc.pdf`（85 页，正文 p.5–p.83，页码偏移 0）
 - 中译源码：`08_source_code/SY02-33_几何Langlands理论导论（陈麟）_中文译注校订版/源码/chapters/ch01.tex…ch16.tex`（119 节）
-- 仓库基线：HEAD `6a488d50dc9c47b9b8801d597c7a36d683046aea`，未 commit、未 push
+- 仓库基线：HEAD `6a488d50dc9c47b9b8801d597c7a36d683046aea`；审计与修复完成后按用户要求 commit 并 push（AtomGit `main`、Gitee `master`）
 
-**结论一句话**：154 张全部过审；Pass A 判 27 张有问题，Pass B 盲审 52 张（27 张 A-issue 全覆盖 + 25 张 A-pass 随机样本），对照后 15 张双方同判、12 张单方，第三名 arbiter 盲审后 **确认 22 张、51 处** 并已修复；**5 张保留为单方发现不修**；`unverifiable` 0 张；severity 26 minor + 1 major。修复后 154 张卡 JSON 0 错误、全库 1676 张 0 错误、`git diff --check` 干净、diff 范围仅限本次确认的 22 张卡与其 22 个 md 镜像。
+**结论一句话**：154 张全部过审；Pass A 判 27 张有问题，Pass B 盲审 52 张（27 张 A-issue 全覆盖 + 25 张 A-pass 随机样本），对照后 15 张双方同判、12 张单方，第三名 arbiter 盲审后 **确认 22 张、51 处** 并已修复；随后用户 m01466 要求用 nLab/文献复核对 5 张单方卡，其中 **3 张被英文原书与外部文献证实**，追加修复 3 卡 5 处，最终 **确认 25 张、56 处**，**2 张保留为单方发现不修**；`unverifiable` 0 张；severity 29 minor + 1 major。修复后 154 张卡 JSON 0 错误、全库 1676 张 0 错误、`git diff --check` 干净、diff 范围仅限本次确认的 25 张卡与其 25 个 md 镜像。
 
 ---
 
@@ -114,7 +114,10 @@ B2 独立给出一个系统性观察：它报的 8 条里有 5 条同源于「`\
 
 ## 4. 修复
 
-**22 张卡、51 处编辑**（`fix_log.json` 逐处记录 before/after、sha256 前后值、md 镜像改动；卡与 md 同步修改）。其中 39 处是出处/页码/定理编号定位，12 处是数学内容、术语或内部一致性。
+**25 张卡、56 处编辑**：22 张卡 51 处（双盲确认）＋ 3 张卡 5 处（follow-up 外部核验，见 §4.2）。`fix_log.json` 逐处记录 before/after、sha256 前后值、md 镜像改动；卡与 md 同步修改。51 处主核中 39 处是出处/页码/定理编号定位，12 处是数学内容、术语或内部一致性；follow-up 5 处为 1 处术语、1 处数学断言、3 处卡内一致性。
+
+### 4.1 双盲确认的 22 卡 51 处
+
 
 | # | 卡 | 编辑数 | severity | 确认链 |
 |---|---|---|---|---|
@@ -143,15 +146,24 @@ B2 独立给出一个系统性观察：它报的 8 条里有 5 条同源于「`\
 
 字段分布：`sources[].pages/pdf_pages` 24 处、`theorems[].source` 11 处、`theorems[].proof.gap_note` 4 处、`theorems[].proof.steps` 2 处、`key_points` 4 处、`summary` 2 处、`pitfalls` 1 处、`definition.text` 1 处、`verification.checks` 2 处，合计 51。
 
-## 5. 单方未修（5 张，保留为发现）
+### 4.2 Follow-up：3 张单方卡 5 处（用户 m01466 授权）
+
+| # | 卡 | 编辑数 | severity | 确认链 | 字段 |
+|---|---|---|---|---|---|
+| 23 | deligne-gl1-existence | 1 | minor | lead+E1/E2（原 single_sided） | `definition.notation` |
+| 24 | hecke-laumon-stack | 1 | minor | lead+E1/E2（原 single_sided） | `key_points[0]` |
+| 25 | local-whittaker-eigenfunction | 3 | minor | lead+E1/E2（原 single_sided） | `key_points[4]`、`verification.checks[2].asserts/verdict` |
+
+外部证据：原书 p.7 系数域 `e`、p.45–46 Hecke–Laumon 定义、p.21 指数公式；nLab `l-adic cohomology` / `geometric class field theory` / `extension`；CAG 2001 的 `Ext^1(O_x,L)` 参数化；Casselman–Shalika 1980 与 BIRS/Chhaibi 讲义。详见 `EXTERNAL_VERIFICATION.md` §10。
+
+## 5. 单方未修（2 张，保留为发现）
 
 | 卡 | A（或 arbiter）指出 | 为什么没修 |
 |---|---|---|
 | affine-grassmannian | `sources[0].pages=[13]`，而 `L^±G_X` 的记号句在 p.14 | arbiter 复核：§2.4 与 Theorem 2.4.1 都在 p.13，p.14 的 `L^±G_X` 只是备注性补充，不构成卡的断言错误 → 按「pages 已覆盖主对象」规则不修 |
-| deligne-gl1-existence | `definition.notation` 把系数域写成底域 k（F_q），原文 p.7 明确「algebraically closed coefficient field e」 | arbiter 认为该句在 `Shv(Spec k)` 语境下可读作「k 上的分次向量空间」而判 pass → 单方发现，保留 |
 | euler-characteristic-trace-test | `pages=[45]`，χ_K 的定义首句在 p.44 | arbiter：定义首句 p.44、判据主体 p.45，卡引的是判据 → 单方发现 |
-| hecke-laumon-stack | `key_points[0]` 的「三者互相决定其中之二」不成立（(M′,T) 不给 M） | arbiter 判 pass → 单方发现；A 引的 `Ext^1(T,M′)` 结构其实与卡内 `pitfalls[1]` 自述矛盾，仍保留为待议 |
-| local-whittaker-eigenfunction | `key_points[4]` 说有效优势权「指数为负」，而 λ=(c,0,…,0) 指数为 0 | arbiter 判 issue 但找的是 `verification.checks[2]` 的陈旧判词，不是同一字段 → 按字段不确认，保留 |
+
+原 5 张中另 3 张（`deligne-gl1-existence`、`hecke-laumon-stack`、`local-whittaker-eigenfunction`）在用户 m01466 授权下用 E1 英文原本＋E2 nLab/CAG 2001/CS 文献补核后确认成立并修复，见 §4.2 与 `EXTERNAL_VERIFICATION.md` §10；它们不再留在本节。
 
 ## 6. 关键修正（数学内容）
 
@@ -161,7 +173,10 @@ B2 独立给出一个系统性观察：它报的 8 条里有 5 条同源于「`\
 4. **`fourier-deligne-transform`**：`theorems[0].proof.steps[2].why` 写「t-正合函子把单对象送到单对象（至多差平移）」，与本步 text「单靠 t-正合不足」及 `key_points[2]`「等价 + t-正合才保持单对象，且不产生平移」矛盾 → 改为「等价加 t-正合才保持单对象，且不产生平移」。
 5. **`restricted-local-systems`**：`verification.checks[1]` 仍保留「卡中 definition.notation 与此冲突 → P1, alignment=error」的陈旧判词，而 notation 已按 AGK20a §0.5.4 改成 IndLisse 左完备化 → 判词与 verdict 同步改为 confirmed，消除卡内自相矛盾。
 6. **`eisenstein-compatibility`**：图表 (16.1) 在 PDF p.77（p.76 只有 §16.2 标题与 q,p 对应）→ 出处改 p.77；另 `key_points[3]` 人名误拼 `Casselman–Schalika` → `Casselman–Shalika`（同卡 proof step 2、`ch16.tex:38`、PDF p.76 均为 Shalika）。
-7. 其余 39 处为**页码/出处定位**修正，两类根因：①`\srcpage{N}` 被放在段落或公式中间，导致卡把跨页陈述记成单页（13 处）；②章节起始页判断错（第 16 章实起 p.76，源码旧注释写 p.75；§12.6 整节在 p.63 而非跨 p.62–63；§15.4 在 p.74 而非 p.73）。
+7. **`deligne-gl1-existence`**：`definition.notation` 把系数域写成底域 `k=F_q`；原书 p.7 固定代数闭系数域 `e`（ℓ-进即 Q̄_ℓ），nLab `l-adic cohomology` 亦以 Q_ℓ 为系数、k 为底域 → 改为「系数域 $e$ 上的（分次）向量空间」，并注明底域不充当系数域。
+8. **`hecke-laumon-stack`**：`key_points[0]` 的「三者互相决定其中之二」不成立；CAG 2001 原文 `s = dim Ext^1(O_x,L) > 1 … parameterized by P^{s-1}` 说明固定 `(T,M′)` 时中间项成一个 Ext¹-torsor，且与同卡 `pitfalls[1]` 矛盾 → 改为「(T,M′) 只给 Ext¹ 中一个类」。
+9. **`local-whittaker-eigenfunction`**：`key_points[4]` 写有效优势权「指数为负」，但 λ=(c,0,…,0) 时 Σ(i−1)λ_i=0、指数为 0；原书 p.21 公式与 CS 文献同形 → 改为「非正（λ=(c,0,…,0) 时恰为 0）」，并同步 `verification.checks[2]` 的旧引文与 verdict。
+10. 其余 39 处为**页码/出处定位**修正，两类根因：①`\srcpage{N}` 被放在段落或公式中间，导致卡把跨页陈述记成单页（13 处）；②章节起始页判断错（第 16 章实起 p.76，源码旧注释写 p.75；§12.6 整节在 p.63 而非跨 p.62–63；§15.4 在 p.74 而非 p.73）。
 
 ## 7. 页码体系（可复用的底本知识）
 
@@ -177,22 +192,20 @@ B2 独立给出一个系统性观察：它报的 8 条里有 5 条同源于「`\
 |---|---|---|
 | 154 张目标卡 JSON 解析 | 0 错误，id 与清单一一对应 | `verify_report.json` |
 | 全库 `datasets/*/cards/**/*.json` 1676 张 | 0 解析错误 | 同上 |
-| `git diff --numstat -- datasets/glc` | 仅 22 卡 + 22 md（另含基线既有 frobenius-twisted-trace 卡/md 的无关改动） | 同上 |
+| `git diff --numstat -- datasets/glc` | 仅 25 卡 + 25 md（另含基线既有 frobenius-twisted-trace 卡/md 的无关改动） | 同上 |
 | `git diff --check` | clean（无空白错误） | 同上 |
-| HEAD 未动 | `6a488d50dc9c…` | 同上 |
-| fix_log 51 处 sha256/after 文本在位 | 51/51 | `fix_edits_checked: 51` |
+| HEAD | 基线 `6a488d50` 是当前 HEAD 的祖先；期间提交均为本次审计/文档（`verify_report.json` 的 `commits_since_baseline`） | 同上 |
+| fix_log 56 处 sha256/after 文本在位 | 56/56 | `fix_edits_checked: 56` |
 | 卡与 md 镜像同步 | `md_not_synced: []` | 同上 |
 | 13 个 JSONL（A1–A8、B1–B3、T1a–T1b）checker | 全部 0 error / 0 warning | 各 pass/tiebreak 目录 |
-| 外部核验 22 卡 51 处 | 51/51 通过，0 推翻（38 定位＋12 内容/术语＋1 内部一致性） | `EXTERNAL_VERIFICATION.md` |
-| 英文原本逐句再核（追加） | 51/51 维持；5 张单方中 3 张被原书证实（系数域/决定关系/指数符号） | `EXTERNAL_VERIFICATION.md` §9 |
+| 外部核验 25 卡 56 处 | 56/56 通过，0 推翻（51 主核＋5 follow-up：nLab/CAG 2001/CS 文献） | `EXTERNAL_VERIFICATION.md` |
+| 英文原本逐句再核（追加） | 51/51 维持；5 张单方中 3 张被原书证实并已修（系数域/决定关系/指数符号） | `EXTERNAL_VERIFICATION.md` §9–§10 |
 
-> 复跑口径：`verify_final.py` 的「`git diff --numstat` 只含确认卡」与「HEAD 未动」两条只在 **commit 前**成立。修复已随 `7d79721e` 入库（随后 `bfffe0cc`/`c50e7c27`/`e1d4fc8c` 为文档与思考链提交），所以发布后原地复跑会在这两条报红，属预期；发布后核对改用 fix_log 的 51 处 sha256 与 `git show --stat 7d79721e`。其余检查（154/1676 解析、md 同步、sha256 在位）任何时刻都可复跑。
+> 复跑口径：`verify_final.py` 的「`git diff --numstat` 只含确认卡」在 commit 后按已提交内容仍成立；「HEAD」一条改为校验基线 `6a488d50` 是当前 HEAD 的祖先并列出其间提交（`commits_since_baseline`）。fix_log 的 sha256/after 文本与 md 同步任何时刻都可复跑；发布后另可用 `git show --stat` 核对提交范围。
 
 ## 9. 残余风险与未解决
 
-1. **5 张单方发现未修**（§5）。英文原本逐句再核（`EXTERNAL_VERIFICATION.md` §9.3）后分成两类：
-   - 维持不改：`euler-characteristic-trace-test`（判据主体在 p.45，p.44 只是 χ_K 定义式开头）、`affine-grassmannian`（p.13 已有 Gr 与 Theorem 2.4.1，p.14 的 L±G_X 属同一 anchor 自述范围，补 [13,14] 更好但不动数学）。
-   - **证据充分、仅因协议未修**：`deligne-gl1-existence`（原书 p.7「coefficient field e」，不是 k=F_q）、`hecke-laumon-stack`（(M′,T) 不决定 M，扩展类由 Ext¹(T,M′) 参数化，且与同卡 pitfall[1] 矛盾）、`local-whittaker-eigenfunction`（λ=(c,0,…,0) 时 Σ(i−1)λ_i=0，指数为 0 而非负）。这三条不再算「存疑」，建议作为用户授权的 follow-up 一次修完（3 卡 3 处），或维持现状并在外部发布的报告里如实标注。
+1. **2 张单方发现未修**（§5）：`affine-grassmannian`（p.13 已有 Gr 与 Theorem 2.4.1，p.14 的 L±G_X 属同一 anchor 自述范围，补 [13,14] 更好但不动数学）、`euler-characteristic-trace-test`（判据主体在 p.45，p.44 只是 χ_K 定义式开头）。原另外 3 张已被英文原书证实并在 m01466 授权下修复（§4.2），不再属于未解决项。
 2. **Pass B 只覆盖协议规定的 52 张**：其余 102 张只有 Pass A 一个判断。为弥补，lead 对 8 个机械 flag、27 张 A-issue 卡全部亲核；但「A 与 B 都没抽到」的卡不排除仍有同类页码漂移。
 3. **底本自身缺陷未改源码**：`ch16.tex:2` 的错误注释、`\srcpage` 漂移、ch11/ch12 缺页标记都还在；本次只在卡照抄了错误时改卡。若要根治，应另开一轮修源码任务。
 4. **卡内 `verification` 字段**（nLab/Stacks 判词）未逐条重审，只核了被审计员引用到的条目；其中 `restricted-local-systems`、`local-whittaker-eigenfunction` 两处已证陈旧。
@@ -210,15 +223,15 @@ B2 独立给出一个系统性观察：它报的 8 条里有 5 条同源于「`\
 | `passB/B1–B3.jsonl` | Pass B 52 行 |
 | `tiebreak/T1a–T1b.jsonl` | arbiter 12 行 |
 | `compare.json` / `compare.md` | 对照分类、字段重叠、仲裁与最终确认 |
-| `issues.jsonl` | 27 张卡 32 条 issue（22 张确认卡 27 条 confirmed_fixed + 5 张 single_sided） |
-| `fix_log.json` | 22 卡 51 处 before/after、sha256、md 同步 |
-| `fix_plan.json` | 修复计划（含 evidence 与确认链） |
+| `issues.jsonl` | 27 张卡 32 条 issue（25 张确认卡 30 条：27 条 confirmed_fixed + 3 条 confirmed_fixed_followup；2 张 single_sided） |
+| `fix_log.json` | 25 卡 56 处 before/after、sha256、md 同步（`fixes` 22/51＋`followup` 3/5） |
+| `fix_plan.json` / `tmp/fix_plan_followup.json` | 修复计划（含 evidence 与确认链；follow-up 计划在 `tmp/`） |
 | `verify_report.json` | 终验结果 |
-| `EXTERNAL_VERIFICATION.md` | 22 卡 51 处的逐条外部核验（原书页＋arXiv 一手，0 推翻） |
+| `EXTERNAL_VERIFICATION.md` | 25 卡 56 处的逐条外部核验（原书页＋arXiv/nLab/CAG 2001，0 推翻；§9 英文再核、§10 follow-up） |
 | `AUDITOR_BRIEF.md` / `PASSB_BRIEF.md` / `ARBITER_BRIEF.md` | 三份盲审协议 |
 | `groups/` `tmp/` `tools/` | 分组清单、页码/PDF 文本缓存、工具脚本 |
 
-案例与日志 `11_card_audit/glc_full/`：`README.md`、`TRACE.md`、`casebook/`（22 例，七节）、`index.json`。
+案例与日志 `11_card_audit/glc_full/`：`README.md`、`TRACE.md`、`MEMORY.md`、`casebook/`（25 例，七节）、`index.json`、`raw/`、`tools/`。
 
 ## 11. 复现
 
@@ -236,5 +249,9 @@ python datasets/_audit/glc_full_2026-11-26/tools/apply_fixes.py --plan datasets/
 python datasets/_audit/glc_full_2026-11-26/tools/apply_fixes.py --plan datasets/_audit/glc_full_2026-11-26/fix_plan.json --apply
 python datasets/_audit/glc_full_2026-11-26/tools/finalize.py
 python datasets/_audit/glc_full_2026-11-26/tools/make_casebook.py
+# follow-up（3 张单方卡；独立日志）：
+python datasets/_audit/glc_full_2026-11-26/tmp/make_followup_plan.py
+python datasets/_audit/glc_full_2026-11-26/tools/apply_fixes.py --plan datasets/_audit/glc_full_2026-11-26/tmp/fix_plan_followup.json --check
+python datasets/_audit/glc_full_2026-11-26/tools/apply_fixes.py --plan datasets/_audit/glc_full_2026-11-26/tmp/fix_plan_followup.json --apply --log datasets/_audit/glc_full_2026-11-26/fix_log_followup.json
 python datasets/_audit/glc_full_2026-11-26/tools/verify_final.py
 ```

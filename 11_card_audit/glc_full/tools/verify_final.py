@@ -84,8 +84,9 @@ def main():
     if os.path.isfile(args.fix_log):
         with open(args.fix_log, "r", encoding="utf-8") as f:
             fix = json.load(f)
+    all_fixes = list(fix.get("fixes", [])) + list(fix.get("followup", {}).get("fixes", []))
     expected = set()
-    for r in fix.get("fixes", []):
+    for r in all_fixes:
         expected.add(r["path"])
         if r.get("md_sync", {}).get("status") == "ok":
             expected.add(r["md_sync"]["md_path"])
@@ -120,12 +121,20 @@ def main():
     bp = os.path.join(ROOT, "tmp", "git_baseline_head.txt")
     if os.path.isfile(bp):
         base_head = open(bp, "r", encoding="utf-8").read().strip()
+    rep["baseline_head"] = base_head
     if base_head and rep["head"] != base_head:
-        fails.append("HEAD moved: %s -> %s" % (base_head, rep["head"]))
+        rc2, _, _ = run(["git", "merge-base", "--is-ancestor", base_head, rep["head"]])
+        if rc2 != 0:
+            fails.append("HEAD moved and baseline is not an ancestor: %s -> %s"
+                         % (base_head, rep["head"]))
+        else:
+            rc3, out3, _ = run(["git", "log", "--format=%h %s",
+                                base_head + ".." + rep["head"]])
+            rep["commits_since_baseline"] = [x for x in out3.splitlines() if x.strip()]
 
     # 6. fix log integrity
     checked = 0
-    for r in fix.get("fixes", []):
+    for r in all_fixes:
         absp = os.path.join(REPO, r["path"])
         if not os.path.isfile(absp):
             fails.append("fix target missing: %s" % r["path"])
@@ -145,12 +154,12 @@ def main():
                     fails.append("after-text absent in %s [%s]"
                                  % (r["path"], e["field"]))
     rep["fix_edits_checked"] = checked
-    rep["fix_cards"] = len(fix.get("fixes", []))
+    rep["fix_cards"] = len(all_fixes)
     rep["fix_edits"] = fix.get("n_edits")
 
     # 7. md mirrors
     stale = []
-    for r in fix.get("fixes", []):
+    for r in all_fixes:
         ms = r.get("md_sync", {})
         if ms.get("status") != "ok":
             stale.append({"id": r["id"], "md": ms.get("status")})

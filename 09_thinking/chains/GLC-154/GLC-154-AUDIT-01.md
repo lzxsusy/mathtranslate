@@ -7,19 +7,19 @@ approved_by: lzxSUSUY（用户 m01030 明确要求「外部核验 + 推送工程
 approved_at: 2026-11-26
 score: pending
 reasoning_chars: n/a（13 个子会话，未统计）
-decision: 154 张全量双盲 + 第三方仲裁；只修 22 卡 51 处；5 张单方发现保留不修；页码以 PDF 正文页眉为准而非源码 \srcpage
-audit_note: 51/51 外部核验通过、0 推翻；1 处（fourier）仅有内部一致性依据，未主张新命题；5 张单方卡的外部依据仍成立，列残余风险
+decision: 154 张全量双盲 + 第三方仲裁；修 25 卡 56 处（主 22/51 + follow-up 3/5）；2 张单方发现保留不修；页码以 PDF 正文页眉为准而非源码 \srcpage
+audit_note: 56/56 外部核验通过、0 推翻；1 处（fourier）仅有内部一致性依据，未主张新命题；3 张单方卡经用户 m01466 授权的 E1/E2 补核后修复，2 张仍列残余风险
 source_card: datasets/_audit/glc_full_2026-11-26/report.md
 ---
 
 ## 0. 审计结论
 
-对陈麟 GLC 讲义 154 张资料卡做了一次全量、双独立、可回滚的审计：Pass A 8 名审计员共 154 条记录（127 pass / 27 issue），Pass B 盲审 52 张（37 pass / 15 issue），第三名 arbiter 盲审 12 张单方分歧（8 issue / 4 pass）。最终确认 22 卡 51 处（26 minor + 1 major），5 张单方发现按规则保留不修，0 张 unverifiable，51/51 处改动经原书 PDF 与 arXiv 一手材料复核、0 推翻。
+对陈麟 GLC 讲义 154 张资料卡做了一次全量、双独立、可回滚的审计：Pass A 8 名审计员共 154 条记录（127 pass / 27 issue），Pass B 盲审 52 张（37 pass / 15 issue），第三名 arbiter 盲审 12 张单方分歧（8 issue / 4 pass）。第一批确认 22 卡 51 处（26 minor + 1 major），5 张单方发现按规则保留不修，0 张 unverifiable，51/51 处改动经原书 PDF 与 arXiv 一手材料复核、0 推翻。用户 m01466 要求对单方卡补做 nLab/全网佐证后，其中 3 张（5 处）被 E1 原书与 nLab/CAG 2001/Casselman–Shalika 文献证实，按同一套最小编辑修复并单独存档为 follow-up；最终为 25 卡 56 处，外部核验 56/56。
 
 三条改变交付物的判断：
 
 1. **`sources.pages` 必须以 PDF 正文页眉为准，不能信源码 `\srcpage`**。该标记会漂移（插在段末、标题后、缺页），本批 21 处「机械映射页 ≠ 卡写页」全部可归因到它，而不是卡错。
-2. **只有 both_issue 或 arbiter 同字段 issue 才允许改卡**。12 张单方分歧里 4 张 arbiter 判 pass、1 张 arbiter 只认另一个字段，全部保留原样并写进残余风险，避免把有争议的解释性判断写进数据。
+2. **只有 both_issue 或 arbiter 同字段 issue 才允许改卡**。12 张单方分歧里 4 张 arbiter 判 pass、1 张 arbiter 只认另一个字段，第一批全部保留原样并写进残余风险，避免把有争议的解释性判断写进数据。后续经用户明确授权，对其中 3 张做 E1/E2 补核并以 `followup` 段单独修复，不回写成 A/B/arbiter 确认。
 3. **修卡的字符串编辑必须带足 TeX 边界**。一次 `old` 少了前导 `$`，产生 `"$等价加 $t$-正合…"` 的坏公式；回滚该卡、重做编辑、合并 fix_log 才恢复。此后所有 substring 编辑都断言「当前值中恰好出现 1 次」且带完整 `$...$` 或标点。
 
 ## 1. 任务
@@ -83,9 +83,9 @@ source_card: datasets/_audit/glc_full_2026-11-26/report.md
 
 - `check_audit.py`：passA 8 份共 154 行、passB 3 份 52 行、tiebreak 2 份 12 行，全部 0 error 0 warning，行序与组清单逐行一致。
 - 对照：`compare.json` 37 个抽样/命中卡的分类如上；15 张 both_issue 中 13 张字段完全重叠，2 张是同一缺陷不同字段。
-- 修改：`APPLIED: 22 cards, 51 edits`；`fix_log.json` 记录每处 before/after 与 sha256。
-- 回读：`verify_final.py` → `ok:true`、`fails:[]`、`fix_edits_checked:51`、`md_not_synced:[]`、`diff_check:"clean"`；154 卡 0 错、全库 1676 卡 0 错；`git diff --numstat -- datasets/glc` 恰为 22 卡 + 22 md。
-- 外部核验：`EXTERNAL_VERIFICATION.md` 51/51 通过、0 推翻；35 处可机械重算的定位编辑由 `reverify_pages.py` 独立重算，21 处差异全部落在已知 `\srcpage` 漂移类型内。
+- 修改：第一批 `APPLIED: 22 cards, 51 edits`；follow-up `APPLIED: 3 cards, 5 edits`（`--log fix_log_followup.json`）；合并后 `fix_log.json` 记录 25 卡 56 处，每处 before/after 与 sha256。
+- 回读：`verify_final.py` → `ok:true`、`fails:[]`、`fix_edits_checked:56`、`md_not_synced:[]`、`diff_check:"clean"`；154 卡 0 错、全库 1676 卡 0 错；`git diff --numstat -- datasets/glc` 恰为 25 卡 + 25 md。
+- 外部核验：`EXTERNAL_VERIFICATION.md` 56/56 通过、0 推翻；35 处可机械重算的定位编辑由 `reverify_pages.py` 独立重算，21 处差异全部落在已知 `\srcpage` 漂移类型内；follow-up 5 处另有 nLab/CAG 2001/CS 文献佐证（§10）。
 - 发布：commit `7d79721e`（工程归档）、`bfffe0cc`（TRACE 补记）；AtomGit `main` 与 Gitee `master` 均已推送，HEAD 与记录一致。
 - 已知遗留：4 条旧链（SY02-31、GRASSMANN、SY02-38×2）索引指向不存在的按项目目录路径，`thinking_audit.py check` 在本次之前即失败；本次 GLC 条目按 checker 约定放 `chains/GLC-154/GLC-154-AUDIT-01.md`，不再增加新失败。
 
@@ -100,6 +100,6 @@ source_card: datasets/_audit/glc_full_2026-11-26/report.md
 ## 8. 交付物
 
 - `datasets/_audit/glc_full_2026-11-26/`：`passA/A1–A8.jsonl`、`passB/B1–B3.jsonl`、`tiebreak/T1a–T1b.jsonl`、`compare.json/md`、`issues.jsonl`、`fix_log.json`、`fix_plan.json`、`sample_inventory.json`、`verify_report.json`、`report.md`、`EXTERNAL_VERIFICATION.md`、`tools/`。
-- `11_card_audit/glc_full/`：`README.md`、`TRACE.md`、`MEMORY.md`、`index.json`、`casebook/`（22 例 + README）、`raw/`（全部 JSONL 与报告拷贝）、`tools/`（13 个脚本拷贝）。
-- 数据：22 张 `datasets/glc/cards/concepts/*.json` 与对应 `datasets/glc/md/concepts/*.md` 的字段级修改（51 处）。
+- `11_card_audit/glc_full/`：`README.md`、`TRACE.md`、`MEMORY.md`、`index.json`、`casebook/`（25 例 + README）、`raw/`（全部 JSONL 与报告拷贝，含 `fix_log_followup.json`/`fix_plan_followup.json`）、`tools/`（13 个脚本拷贝）。
+- 数据：25 张 `datasets/glc/cards/concepts/*.json` 与对应 `datasets/glc/md/concepts/*.md` 的字段级修改（56 处：主 22/51 + follow-up 3/5）。
 - 登记：`09_thinking/index.csv` 新增 GLC-154 一行；本链。

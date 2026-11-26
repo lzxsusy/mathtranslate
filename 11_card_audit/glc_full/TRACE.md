@@ -28,6 +28,9 @@
 | 20:21–20:24 | 更新 `report.md` §8/§9/§10 与本文；审计工程复制为 `11_card_audit/glc_full/{raw,tools}/`；commit `7d79721e`；push AtomGit `master:main`、Gitee `master`（6a488d50..7d79721e） |
 | 20:25–20:27 | 按 `09_thinking/README.md` 写 L2 链 `GLC-154-AUDIT-01`（6516 字符，九节）、登记 `index.csv`；写 `MEMORY.md`（Hindsight 401 无 token 的回退）；commit `c50e7c27`；再 push AtomGit/Gitee（bfffe0cc..c50e7c27） |
 | 20:52–20:58 | 用户要求「对英文原本再核」：逐页重读 38 处定位、12 处内容、5 张单方卡；英文原本即 `glc.pdf`（85 页，sha256 f79cd79c…）；写 `EXTERNAL_VERIFICATION.md` §9（3 张单方被原书证实），更新 `report.md` §8/§9 |
+| 21:00–21:12 | 用户 m01466 要求「先用 nLab/全网检索佐证，成立就修」：检索 nLab `l-adic cohomology`/`geometric class field theory`/`extension`、CAG 2001 的 Ext¹ 参数化、Casselman–Shalika 1980 与 BIRS/Chhaibi 讲义；三条判断均有 E1+E2 支持 |
+| 21:12–21:20 | 写 `tmp/make_followup_plan.py` → `tmp/fix_plan_followup.json`（3 卡 5 处）；`apply_fixes.py --check` 通过；`--apply --log fix_log_followup.json` 写 3 卡 5 处，md 同步 |
+| 21:20–21:30 | 合并 `fix_log.json`（25 卡 56 处：`fixes` 22/51＋`followup` 3/5）；`issues.jsonl` 3 行改 `confirmed_fixed_followup`；更新 `report.md` §4.2/§5/§8/§9/§10、`EXTERNAL_VERIFICATION.md` §0/§10、README/MEMORY、案例 23–25 与 `index.json` |
 
 ## 2. 命令日志（关键步骤）
 
@@ -141,7 +144,16 @@ python datasets/_audit/glc_full_2026-11-26/tools/verify_final.py
 - 结果：已修 51 处 **51/51 维持**；5 张单方卡中 `deligne-gl1-existence`（p.7 coefficient field e）、`hecke-laumon-stack`（(M′,T) 不决定 M）、`local-whittaker-eigenfunction`（λ=(c,0,…) 指数为 0）**被原书/公式证实**，但按 arbiter-pass 不修协议保留，列为「证据充分、仅因协议未修」。
 - 产物：`raw/EXTERNAL_VERIFICATION.md` §9（含 3 张单方的原句对照表）。
 
-### 7.5 思考链与工程记忆
+### 7.5 Follow-up：单方卡的外部补核与修复（21:00–21:30）
+
+- **触发**：用户 m01466 要求先检索 nLab/全网佐证，再决定是否修 3 张单方卡。
+- **证据**：E1 原书 p.7（系数域 e）、p.45–46（HL 定义）、p.21（指数公式）；E2 nLab `l-adic cohomology`（Q_ℓ 系数、k 底域）、nLab `geometric class field theory`（任意完全域）、nLab `extension`、CAG 2001（`dim Ext^1(O_x,L) = s > 1`，扩展由 P^{s−1} 参数化）、Casselman–Shalika 1980（numdam）、BIRS 13w5154 / Chhaibi ART 讲义。
+- **修复**：3 卡 5 处——`deligne-gl1-existence`/`definition.notation`；`hecke-laumon-stack`/`key_points[0]`；`local-whittaker-eigenfunction`/`key_points[4]`、`verification.checks[2].asserts`、`verification.checks[2].verdict`。md 镜像同步 4 处（verdict 不渲染，属预期）。
+- **协议处理**：不改 `passA/`、`passB/`、`tiebreak/`；`fix_log.json` 增加 `followup` 段（n_cards_primary 22 / n_edits_primary 51，总 25/56）；`issues.jsonl` 3 行状态 `single_sided → confirmed_fixed_followup`；案例库新增 23–25（确认链写 `lead+E1/E2`）。
+- **决策 D14**：单方发现若被用户授权的 E1/E2 补核证实，可作为 follow-up 修复，但必须与原双盲记录分离存档（`fix_log.followup`、issues 状态区分、案例标 `lead+E1/E2`），不得回写成 A/B/arbiter 的确认。
+- **数字**：确认 25 卡 56 处（29 minor＋1 major 的 30 条确认 issue），单方未修 2 张，外部核验 56/56、0 推翻。
+
+### 7.6 思考链与工程记忆
 
 - 按 `09_thinking/README.md`（L2 纪律）写 `09_thinking/chains/GLC-154/GLC-154-AUDIT-01.md`：6516 字符，九节（审计结论/任务/为什么值得看/关键片段/决策与替代方案/自纠与回退/验证证据/逆转条件/交付物），`score: pending` 等人工复核；登记在 `09_thinking/index.csv` 第 5 行。
 - 该链只放「判断 + 否决 + 证据 + 逆转条件」，不放 raw CoT；会话原文留在 L0，不进仓库。

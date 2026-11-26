@@ -1,0 +1,80 @@
+{
+  "campaign": "glc_full_2026-11-26",
+  "kind": "followup_external_verification",
+  "note": "three cards previously single-sided; fixed after E1/E2 re-verification requested by the user (m01466)",
+  "fixes": [
+    {
+      "id": "glc/concept/deligne-gl1-existence",
+      "path": "datasets/glc/cards/concepts/deligne-gl1-existence.json",
+      "confirmed_by": "lead (m01466) + E1 glc.pdf p.7 + E2 nLab l-adic cohomology",
+      "severity": "minor",
+      "evidence": [
+        "glc.pdf p.7 L22-24: 'Fix a reasonable sheaf theory with algebraically closed coefficient field e.' (coefficient field is e, base field is k=F_q)",
+        "nLab l-adic cohomology: H^j_et(X_kbar, Q_l) := lim H^j_et(X_kbar, Z/l^n Z) ⊗ Q_l, with l a prime different from char(k) -- coefficients Q_l, base k.",
+        "nLab geometric class field theory: works over any constant perfect field k, including characteristic 0; the base field does not double as coefficients.",
+        "Card definition.text already fixes X over k=F_q, so 'k-vector spaces' in notation cannot mean the coefficient field."
+      ],
+      "edits": [
+        {
+          "field": "definition.notation",
+          "mode": "substring",
+          "old": "$\\operatorname{Shv}(\\operatorname{Spec} k)$：$k$-向量空间（分次）构成的层范畴",
+          "new": "$\\operatorname{Shv}(\\operatorname{Spec} k)$：系数域 $e$ 上的（分次）向量空间构成的层范畴（$\\ell$-进情形 $e=\\overline{\\mathbb{Q}}_{\\ell}$；底域 $k=\\mathbb{F}_q$ 不充当系数域）",
+          "why": "Shv(Spec k) is a category of graded e-vector spaces (e = Q_lbar in the l-adic setting); k=F_q is the base field, not the coefficient field."
+        }
+      ]
+    },
+    {
+      "id": "glc/concept/hecke-laumon-stack",
+      "path": "datasets/glc/cards/concepts/hecke-laumon-stack.json",
+      "confirmed_by": "lead (m01466) + E1 glc.pdf p.45-46 + E2 CAG 2001 (Ext^1)",
+      "severity": "minor",
+      "evidence": [
+        "glc.pdf p.45-46 defines HL_k^d as short exact sequences 0 -> M' -> M -> T -> 0 and the two legs; it never claims any two of (M', M, T) determine the third.",
+        "CAG 2001 (intlpress CAG-2001-0009-0004-a003.pdf): 's = dim Ext^1(O_x, L) > 1. They will be parametrized by a projective space P^{s-1}.' -- with (T, M') fixed the middle term is not unique.",
+        "nLab extension: an extension of Q by K is a short exact sequence K -> X -> Q; extensions are classified by Ext (nLab 'extension', section on Ext).",
+        "Same card pitfalls[1]: forgetting M' loses the subsheaf and cannot recover M, which contradicts 'any two determine the third'."
+      ],
+      "edits": [
+        {
+          "field": "key_points[0]",
+          "old": "一个点就是一条短正合列：$M'$ 是子层、$M$ 是大层、$\\mathcal T$ 是长度 $d$ 的挠商；三者互相决定其中之二。",
+          "new": "一个点就是一条短正合列：$M'$ 是子层、$M$ 是大层、$\\mathcal T$ 是长度 $d$ 的挠商；已知 $M$ 与 $\\mathcal T$（或 $M$ 与 $M'$）时第三个由正合列确定，但只知 $(\\mathcal T,M')$ 时 $M$ 还要额外选取 $\\operatorname{Ext}^1(\\mathcal T,M')$ 中的一个类，通常并不唯一（如 $\\mathcal T=\\mathcal O_x$ 时 $\\operatorname{Ext}^1(\\mathcal O_x,M')\\cong M'|_x$，可以多于一个）。",
+          "why": "(T, M') determines only an Ext^1(T,M')-torsor of middle terms; M+T and M+M' do determine the third term by the exact sequence."
+        }
+      ]
+    },
+    {
+      "id": "glc/concept/local-whittaker-eigenfunction",
+      "path": "datasets/glc/cards/concepts/local-whittaker-eigenfunction.json",
+      "confirmed_by": "lead (m01466) + E1 glc.pdf p.21 + E2 Casselman-Shalika literature",
+      "severity": "minor",
+      "evidence": [
+        "glc.pdf p.21 L24: exponent q^{-sum_i (i-1) lambda_i} Tr(gamma, V^lambda), lambda dominant; for lambda=(c,0,...,0) the sum is 0, so the exponent is 0.",
+        "Card key_points[2] states the same formula q_x^{-sum_i(i-1)lambda_i}; the arithmetic for lambda=(c,0,...,0) gives exponent 0, not negative.",
+        "Casselman-Shalika formula (Casselman-Shalika, Compositio Math. 41 (1980) 207; BIRS 13w5154 slides; Chhaibi ART slides) uses exponent -sum(i-1)lambda_i (up to normalization), consistent with 0 at lambda=(c,0,...,0).",
+        "The original wording 'negative' also conflicts with the card's own verification.checks[2], which records that P_n^+ has no lambda_n >= 0."
+      ],
+      "edits": [
+        {
+          "field": "key_points[4]",
+          "old": "公式中的和 $\\sum_i(i-1)\\lambda_i$ 不取绝对值：仅当 $\\lambda$ 为有效优势权（$\\lambda_n\\ge 0$，如 $\\lambda=(2,1,0)$）时各项非负、指数为负；一般优势权指数可正可负（$n=2$、$\\lambda=(0,-1)$ 时指数为 $+1$），这与 Casselman–Shalika 公式的指数约定一致。",
+          "new": "公式中的和 $\\sum_i(i-1)\\lambda_i$ 不取绝对值：仅当 $\\lambda$ 为有效优势权（$\\lambda_n\\ge 0$，如 $\\lambda=(2,1,0)$）时各项非负、指数非正（$\\lambda=(c,0,\\ldots,0)$、$c\\ge 0$ 时恰为 $0$）；一般优势权指数可正可负（$n=2$、$\\lambda=(0,-1)$ 时指数为 $+1$），这与 Casselman–Shalika 公式的指数约定一致。",
+          "why": "For effective dominant lambda the exponent -sum(i-1)lambda_i is non-positive, equal to 0 at lambda=(c,0,...,0); 'negative' is false there."
+        },
+        {
+          "field": "verification.checks[2].asserts",
+          "old": "卡3 KP4：「λ 为优势权时各项非负，指数为负」",
+          "new": "卡3 KP4（2026-11-26 修订后）：有效优势权（$\\lambda_n\\ge 0$）时各项非负、指数非正（$\\lambda=(c,0,\\ldots,0)$ 时恰为 $0$）；一般优势权指数可正可负。",
+          "why": "The verification record quotes the old KP4 wording; keep it aligned with the corrected claim (same stale-verification class as restricted-local-systems)."
+        },
+        {
+          "field": "verification.checks[2].verdict",
+          "old": "contradicts: 原文 P_n^+ 只定义为 λ_1≥λ_2≥…≥λ_n，没有 λ_n≥0。反例 n=2、λ=(0,-1) 属 P_n^+，Σ_i(i-1)λ_i=-1，讲义指数 -Σ=+1，即 q_x^{+1}，不是负指数。",
+          "new": "supports: 原文 P_n^+ 只定义为 λ_1≥λ_2≥…≥λ_n，没有 λ_n≥0；旧表述「指数为负」在 λ=(c,0,…,0) 时为 0，故改为「指数非正」，并把 λ=(0,-1) 指数 +1 的说明留在 KP4 中；修订后与 P_n^+ 一致。",
+          "why": "After the KP4 correction the contradiction no longer holds; the counterexample lambda=(0,-1) is now explicitly covered by KP4."
+        }
+      ]
+    }
+  ]
+}
