@@ -78,7 +78,7 @@
 
 - [x] 底本判读、逐页文本与页面图
 - [x] 术语外部核对（香蕉空间）
-- [x] 27 讲译文 + 编译三遍（153 页，0 error；24 幅图 TikZ 重绘；译注 30 条）
+- [x] 27 讲译文 + 编译三遍（152 页，0 error；24 幅图 TikZ 重绘；译注 30 条）
 - [x] 资料卡五件套（00 速览 / 01 结果清单 135 条 / 02 论证地图 / 03 条款索引 484 条 / 04 术语文献勘误）
 - [x] 外部核验（22 条文献经 Crossref + zbMATH + arXiv 核到卷期页；原文 39 处笔误与不一致登记）
 - [x] 对齐卡 3 张进 `datasets/leanstmt/`（gap 卡，`lint_cards.py --strict` 0 error）
@@ -89,7 +89,7 @@
 | 项 | 值 |
 | --- | --- |
 | 原文页 / 讲次 / 编号条目 | 148 / 27 / 484 |
-| 译本页数 | 153（xelatex 三遍，0 error，11 处 Overfull 均为数个 pt） |
+| 译本页数 | 152（xelatex 三遍，0 error，11 处 Overfull 均为数个 pt） |
 | 汉字 | 53858（总字符 160140） |
 | 术语表 | 215 条（`work/glossary.tsv`） |
 | 绘重图 | 24 幅（宏 `\figP{...}`，文件 `sections/figs-batch1.tex`、`figs-batch2.tex`） |

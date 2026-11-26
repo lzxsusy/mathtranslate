@@ -5,7 +5,7 @@
 
 ## SY02-41《局部 Langlands 对应的几何化——Berkeley 讲义》中译注本 + 资料卡五件套 — 2026-11-27
 
-- **底本与译本**：Peter Scholze 讲授、Tony Feng 记录的 *Geometrization of the local Langlands correspondence*，UC Berkeley 课程（首讲 Oct 30、末讲 Feb 12，讲义只印月日，按周一/周五排课推断为 2020–2021 学年），自印 pdfTeX 1.40.17，2022-03-19 生成，148 页 / 27 讲 / 484 条编号条目。中译注本 **153 页**，xelatex 三遍 **0 error**，11 处 Overfull（均数个 pt）；24 幅手绘示意图全部 TikZ 重绘（`\figP{...}`，图内英文标签中文化），译注 30 条（A/B/I 分级），术语表 215 条。
+- **底本与译本**：Peter Scholze 讲授、Tony Feng 记录的 *Geometrization of the local Langlands correspondence*，UC Berkeley 课程（首讲 Oct 30、末讲 Feb 12，讲义只印月日，按周一/周五排课推断为 2020–2021 学年），自印 pdfTeX 1.40.17，2022-03-19 生成，148 页 / 27 讲 / 484 条编号条目。中译注本 **152 页**，xelatex 三遍 **0 error**，11 处 Overfull（均数个 pt）；24 幅手绘示意图全部 TikZ 重绘（`\figP{...}`，图内英文标签中文化），译注 30 条（A/B/I 分级），术语表 215 条。
 - **术语**：沿用 SY02-26 已冻结译名（完满空间、菱形、倾斜、adic 空间、等晶体……），开工前按用户要求先核香蕉空间（bananaspace.org）：其用词为「完全胚空间／钻石／斜置／正置／进制空间」。判据取**导航框、正文例句与 transbox**（页面「块」明列 shtuka = 块、leg = 爪；「错致层」= perverse sheaf；「解析叠」transbox 给 analytic stack = 解析叠、condensed anima = 凝聚态生象），逐条对照与取舍理由记入 `资料卡/04-术语文献勘误.md` §二。结论：核心五词从本库（跨工程一致性），本库无先例者（解析环/解析叠/棱镜/凝聚态生象）采香蕉空间。
 - **逐页对译**：每页原文用 `p.NN` 边注标出，可与底本逐页对照；`\srcpage` 页锚 148 个全部落位。
 - **外部核验**：22 条参考文献全部核到卷期页——Crossref 为主，Crossref 未收录的（Münster J. Math.）与疑似著录错误（RR96 页码）转 zbMATH；纠正 2 条底本著录（RR96 页码、BFHHLWY 缺卷期），核实 4 条讲义/预印本（DHKM arXiv v3、F17 法文预印本、S17 与 Berk 站点 PDF 均 200）。另核原文本体：开课年份未印，用 27 个日期与 2020–2021 学年周一/周五排课比对，25 个吻合、2 个（Nov 5、Nov 21）疑为 Nov 6/Nov 20 之误。原文 39 处笔误与内部不一致（如 p.40/p.41 的 $\mathcal O(1/(n-1))$ 与 $\mathcal O(1/n)$、p.109 的 $j\colon U\hookrightarrow\Bun^b_G$）逐条登记，正文照原文排印，仅会误导处加 A 级译注。
