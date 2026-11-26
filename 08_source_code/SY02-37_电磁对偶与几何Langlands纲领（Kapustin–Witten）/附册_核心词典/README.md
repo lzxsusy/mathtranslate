@@ -39,7 +39,7 @@ xelatex -interaction=nonstopmode stone-onepage.tex
 
 产物：`main.pdf` 24 页；`stone-onepage.pdf` 1 页。两份都应 `grep -c '^!' main.log` = 0、`Overfull` = 0。
 
-## 质控（v1.0）
+## 质控（v1.0.3）
 
 - 编译：24 页 / 0 error / 0 overfull / 0 undefined reference。
 - 三条写作纪律：① 真伪状态必须标——每条末尾「状态与出处」写明定理（引用）/ 原文推导（argued）/ 纲要；② 例子必须可验算（如自对偶点 $g^2=4\pi$、$m_W=m_{\text{单极子}}=\sqrt{4\pi}v$；$g=2$ 亏格 $2$ 时 $\dim_{\mathbb C}\mathcal M_H=6$）；③ 单条 700–1200 汉字，定义自足。

@@ -10,7 +10,7 @@
 | 术语（TERMS.tsv） | 2277 | 9 个工程；去重键＝外文＋语种＋译名＋工程 |
 | 记号（SYMBOLS.tsv） | 76 | 1 个工程（仅 FUNCTORIALITY 有冻结记号表） |
 | 冲突（CONFLICTS.tsv） | 91 | 高 11 / 中 31 / 低 49 |
-| 宏（MACROS.tsv） | 695 | 跨工程同名不同含义；其中出现在 ≥5 个工程的 363 个 |
+| 宏（MACROS.tsv） | 697 | 跨工程同名不同含义；其中出现在 ≥5 个工程的 364 个 |
 
 ## 二、术语分级
 
@@ -53,14 +53,14 @@
 
 | 宏 | 出现工程数 | 不同含义数 | 含义变体 |
 |---|---|---|---|
-| `\R` | 82 | 6 | \ensuremath{\mathbb{R}} ｜ \mathbb{R} ｜ \mathbf R |
-| `\Z` | 81 | 4 | \ensuremath{\mathbb{Z}} ｜ \mathbb{Z} ｜ \mathbf Z |
-| `\C` | 79 | 4 | \ensuremath{\mathbb{C}} ｜ \mathbb{C} ｜ \mathbf C |
-| `\Hom` | 78 | 5 | Hom ｜ \mathop{\mathrm{Hom}} ｜ \operatorname{Hom} |
-| `\Tr` | 76 | 7 | Tr ｜ \mathop{\mathrm{Tr}}\nolimits ｜ \mathsf{Tr} |
+| `\R` | 83 | 6 | \ensuremath{\mathbb{R}} ｜ \mathbb{R} ｜ \mathbf R |
+| `\Z` | 82 | 4 | \ensuremath{\mathbb{Z}} ｜ \mathbb{Z} ｜ \mathbf Z |
+| `\C` | 80 | 4 | \ensuremath{\mathbb{C}} ｜ \mathbb{C} ｜ \mathbf C |
+| `\Hom` | 79 | 5 | Hom ｜ \mathop{\mathrm{Hom}} ｜ \operatorname{Hom} |
+| `\Tr` | 77 | 7 | Tr ｜ \mathop{\mathrm{Tr}}\nolimits ｜ \mathsf{Tr} |
 | `\id` | 70 | 6 | \mathbf{1} ｜ \mathsf{Id} ｜ \operatorname{id} |
-| `\Aut` | 68 | 5 | Aut ｜ \operatorname{Aut} ｜ \operatorname{\text{Aut}} |
-| `\End` | 65 | 6 | End ｜ \operatorname{End} ｜ \operatorname{\text{End}} |
+| `\Aut` | 69 | 5 | Aut ｜ \operatorname{Aut} ｜ \operatorname{\text{Aut}} |
+| `\End` | 66 | 6 | End ｜ \operatorname{End} ｜ \operatorname{\text{End}} |
 
 完整清单见 `MACROS.tsv`。注意：`\R` 这类「同一含义的多种写法」已在判定时折算（`\Bbb`→`\mathbb`、`\operatorname{}`/`\text{}`/`{\rm }`→`\mathrm{}`），
 剩下的 `真冲突` 才是语义不同。
@@ -72,4 +72,4 @@
 3. `CONFLICTS.tsv` 的「建议」列是机械推断，**裁定权在仓主**；裁定后改源表，不要改生成物。
 4. 改完跑 `python tools/build_norm.py --check`；表与源数据不一致会让闸门失败，确认无误再重建。
 
-本表由 `tools/build_norm.py` 生成于 2026-11-21（术语 2277 / 记号 76 / 冲突 91 / 宏 695）。
+本表由 `tools/build_norm.py` 生成于 2026-11-21（术语 2277 / 记号 76 / 冲突 91 / 宏 697）。
