@@ -27,6 +27,7 @@
 | 20:16–20:24 | 外郭取 E1/E2 证据：Gaitsgory math/0204081（vanishing 条件）、CCF24 2409.07051 TeX（Casselman–Shalika）、AGKRRV 2010.01906 TeX（QLisse 左完备化）、原书逐页引文；写 `EXTERNAL_VERIFICATION.md`（51/51 通过，0 推翻） |
 | 20:21–20:24 | 更新 `report.md` §8/§9/§10 与本文；审计工程复制为 `11_card_audit/glc_full/{raw,tools}/`；commit `7d79721e`；push AtomGit `master:main`、Gitee `master`（6a488d50..7d79721e） |
 | 20:25–20:27 | 按 `09_thinking/README.md` 写 L2 链 `GLC-154-AUDIT-01`（6516 字符，九节）、登记 `index.csv`；写 `MEMORY.md`（Hindsight 401 无 token 的回退）；commit `c50e7c27`；再 push AtomGit/Gitee（bfffe0cc..c50e7c27） |
+| 20:52–20:58 | 用户要求「对英文原本再核」：逐页重读 38 处定位、12 处内容、5 张单方卡；英文原本即 `glc.pdf`（85 页，sha256 f79cd79c…）；写 `EXTERNAL_VERIFICATION.md` §9（3 张单方被原书证实），更新 `report.md` §8/§9 |
 
 ## 2. 命令日志（关键步骤）
 
@@ -133,7 +134,14 @@ python datasets/_audit/glc_full_2026-11-26/tools/verify_final.py
 - **D12 发布件只保留一份真实目录**：`11_card_audit/glc_full/raw|tools` 是拷贝件，修改仍回 `datasets/_audit/...` 源头；`tmp/` 永不入库。
 - **D13 残余风险显式化**：arbiter pass 但 lead 外部复核仍认为成立的三条不硬改（守协议），但必须写进两处报告，避免「审计通过」被误读成「这些卡没问题」。
 
-### 7.4 思考链与工程记忆
+### 7.4 英文原本逐句再核（2026-11-26 20:55）
+
+- 底本确认：`datasets/_audit/third_party_2026-11-26/tmp/sources/glc.pdf` 就是 `LinChenGLC2023.pdf`（85 页，2025-08-08 修订），sha256 `f79cd79c…`；§2–§3 的 E1 引文本来就出自它。
+- 复核方式：逐页打开 `tmp/pages/pNNN.txt`，抄回页眉、节标题与逐字句；不再引用上一轮笔记。
+- 结果：已修 51 处 **51/51 维持**；5 张单方卡中 `deligne-gl1-existence`（p.7 coefficient field e）、`hecke-laumon-stack`（(M′,T) 不决定 M）、`local-whittaker-eigenfunction`（λ=(c,0,…) 指数为 0）**被原书/公式证实**，但按 arbiter-pass 不修协议保留，列为「证据充分、仅因协议未修」。
+- 产物：`raw/EXTERNAL_VERIFICATION.md` §9（含 3 张单方的原句对照表）。
+
+### 7.5 思考链与工程记忆
 
 - 按 `09_thinking/README.md`（L2 纪律）写 `09_thinking/chains/GLC-154/GLC-154-AUDIT-01.md`：6516 字符，九节（审计结论/任务/为什么值得看/关键片段/决策与替代方案/自纠与回退/验证证据/逆转条件/交付物），`score: pending` 等人工复核；登记在 `09_thinking/index.csv` 第 5 行。
 - 该链只放「判断 + 否决 + 证据 + 逆转条件」，不放 raw CoT；会话原文留在 L0，不进仓库。

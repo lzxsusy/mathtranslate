@@ -184,12 +184,15 @@ B2 独立给出一个系统性观察：它报的 8 条里有 5 条同源于「`\
 | 卡与 md 镜像同步 | `md_not_synced: []` | 同上 |
 | 13 个 JSONL（A1–A8、B1–B3、T1a–T1b）checker | 全部 0 error / 0 warning | 各 pass/tiebreak 目录 |
 | 外部核验 22 卡 51 处 | 51/51 通过，0 推翻（38 定位＋12 内容/术语＋1 内部一致性） | `EXTERNAL_VERIFICATION.md` |
+| 英文原本逐句再核（追加） | 51/51 维持；5 张单方中 3 张被原书证实（系数域/决定关系/指数符号） | `EXTERNAL_VERIFICATION.md` §9 |
 
 > 复跑口径：`verify_final.py` 的「`git diff --numstat` 只含确认卡」与「HEAD 未动」两条只在 **commit 前**成立。修复已随 `7d79721e` 入库（随后 `bfffe0cc`/`c50e7c27`/`e1d4fc8c` 为文档与思考链提交），所以发布后原地复跑会在这两条报红，属预期；发布后核对改用 fix_log 的 51 处 sha256 与 `git show --stat 7d79721e`。其余检查（154/1676 解析、md 同步、sha256 在位）任何时刻都可复跑。
 
 ## 9. 残余风险与未解决
 
-1. **5 张单方发现未修**（§5）。外部复核（`EXTERNAL_VERIFICATION.md` §5）判定：`affine-grassmannian`、`euler-characteristic-trace-test` 维持不改；`deligne-gl1-existence`（系数域写成 k）、`hecke-laumon-stack`（三者互相决定其二）、`local-whittaker-eigenfunction`（有效优势权「指数为负」，λ_n=0 时实为 0）三处 A 方观察仍有依据，但按「arbiter pass 不修」的协议保留，列为残余风险，建议下一轮用单方发现二审通道处理。
+1. **5 张单方发现未修**（§5）。英文原本逐句再核（`EXTERNAL_VERIFICATION.md` §9.3）后分成两类：
+   - 维持不改：`euler-characteristic-trace-test`（判据主体在 p.45，p.44 只是 χ_K 定义式开头）、`affine-grassmannian`（p.13 已有 Gr 与 Theorem 2.4.1，p.14 的 L±G_X 属同一 anchor 自述范围，补 [13,14] 更好但不动数学）。
+   - **证据充分、仅因协议未修**：`deligne-gl1-existence`（原书 p.7「coefficient field e」，不是 k=F_q）、`hecke-laumon-stack`（(M′,T) 不决定 M，扩展类由 Ext¹(T,M′) 参数化，且与同卡 pitfall[1] 矛盾）、`local-whittaker-eigenfunction`（λ=(c,0,…,0) 时 Σ(i−1)λ_i=0，指数为 0 而非负）。这三条不再算「存疑」，建议作为用户授权的 follow-up 一次修完（3 卡 3 处），或维持现状并在外部发布的报告里如实标注。
 2. **Pass B 只覆盖协议规定的 52 张**：其余 102 张只有 Pass A 一个判断。为弥补，lead 对 8 个机械 flag、27 张 A-issue 卡全部亲核；但「A 与 B 都没抽到」的卡不排除仍有同类页码漂移。
 3. **底本自身缺陷未改源码**：`ch16.tex:2` 的错误注释、`\srcpage` 漂移、ch11/ch12 缺页标记都还在；本次只在卡照抄了错误时改卡。若要根治，应另开一轮修源码任务。
 4. **卡内 `verification` 字段**（nLab/Stacks 判词）未逐条重审，只核了被审计员引用到的条目；其中 `restricted-local-systems`、`local-whittaker-eigenfunction` 两处已证陈旧。

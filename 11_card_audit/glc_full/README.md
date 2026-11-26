@@ -69,6 +69,7 @@
 
 - 想知道**某张卡改了什么、为什么**：先看 `index.json` 找 `NN-<slug>.md`。
 - 想复核某处修改是否站得住：读 `raw/EXTERNAL_VERIFICATION.md`，里面有每处的改前/改后、原书页码与逐字引文、arXiv 佐证，以及 21 处「源码分页标记漂移」的逐条归因。
+- 想知道英文原书怎么写的：`raw/EXTERNAL_VERIFICATION.md` §9 是逐页重抄的原句与「3 张单方卡被原书证实」的对照。
 - 想复核证据：案例里的页码对应 `datasets/_audit/glc_full_2026-11-26/tmp/pages/pNNN.txt`（PDF 逐页文本，页码＝印刷页）；源码行号指向 `08_source_code/SY02-33_…/源码/chapters/chNN.tex`。
 - 想重跑/复现：见 `raw/report.md` §11 与 `tools/`；`reverify_pages.py` 可独立重算定位编辑的页码。
 - 想给下一批审计立规矩：读 `TRACE.md` 的「决策日志」「返工记录」与「外部核验与发布」。

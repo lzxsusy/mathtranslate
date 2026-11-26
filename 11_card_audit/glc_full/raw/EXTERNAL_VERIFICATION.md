@@ -230,3 +230,50 @@ python datasets/_audit/glc_full_2026-11-26/tools/verify_final.py
 | `tmp/pages/pNNN.txt` | PDF 逐页文本（页码 = 印刷页） |
 | `11_card_audit/glc_full/casebook/` | 22 例逐卡对比（错误版/正确版/为什么错/证据/审计轨迹/形式化提示/防再犯） |
 | `report.md` | 审计全过程（A/B/仲裁/修复/验收/残余风险） |
+
+## 9. 英文原本逐句再核（追加，2026-11-26 20:55）
+
+§2–§3 的 E1 证据本来就取自英文原书 PDF；本节的增量是**把原书重新按页打开、逐句抄回**，而不是引用上一轮笔记，并专门处理 5 张单方未修卡。底本确认：`datasets/_audit/third_party_2026-11-26/tmp/sources/glc.pdf`，85 页，TexpadTeX 生成，sha256 `f79cd79cf65da87e50364c6f6ad57035c422bc34e52d00515c4a81c81a66651d`，即 `datasets/glc/README.md` 所说的 `LinChenGLC2023.pdf`（2025-08-08 修订版）——与审计时用的是同一份文件，不存在「只核了中译」的情况。
+
+### 9.1 定位类 38 处：逐页重读
+
+按 §2.2 的 15 张卡逐页打开 `tmp/pages/pNNN.txt`，核对三点：① 该页页眉编号；② 页内是否确有卡引用的节标题/定理；③ 陈述是否真跨页。38/38 与改后页一致；21 处「按源码行号数出来的页 ≠ 改后页」全部落在 §2.3 的四类 `\srcpage` 漂移里，没有新偏差。抽样原句：
+
+- p.42 L48–50：`For X = A1 , a length-d torsion sheaf is a d-dimensional vector space with an endomorphism, hence Tor^d ≃ gl_d /GL_d .`（`torsion-stack-local-model` 的定理在 p.42，不在 p.43）
+- p.45 L48：`αd : HLdk (K) −→ LdE ⊠ K (d ≥ 0),`（`hecke-laumon-eigensheaf` 起于 p.45）
+- p.63 L1：`12.6. Restricted categorical Langlands. The resulting restricted form of the (Betti) con-`（`restricted-categorical-langlands` 整节在 p.63）
+- p.68 L4–6：`If d1 , . . . , dr are the exponents of ĝ, then cĞ,Ω ≃ ⊕i ΩX^{d_i+1}, and the Hitchin base is HitchĞ(X) := Γ(X, cĞ,Ω).`（`hitchin-base` 的底在 p.68）
+- p.74 L11：`15.4. Relation with quantum local Langlands. The critical FLE is a boundary value of`（`quantum-local-langlands` 的 §15.4 在 p.74）
+- p.76 L4：`16. Proof of the global conjecture`（`global-langlands-functor` 章首在 p.76）
+
+### 9.2 内容/术语 12 处：英文原句对照
+
+| 卡 | 改动 | 英文原书原句（页码/行） | 判断 |
+|---|---|---|---|
+| `vanishing-theorem` | 删「不再要求 k<n 且 E 几何不可约」 | p.36 L4–5 `If E is geometrically irreducible of rank n, with k < n, and d > nk(2g − 2), then Av^d_E = 0.`；L7–8 `More generally, … when rank(E) > k, with bound d > (2g − 2)k · rank(E).` | 「更一般」只改写法（`rank(E)>k` ⇔ `k<n`），未取消两个条件；删括注正确 |
+| `b-lambda-ic` ×2 | Shalala → Shalika | p.76 L31 `Here CS denotes the geometric Casselman–Shalika equivalence.` | 拼写错误成立 |
+| `local-laumon-formula` ×4 | 同上 | 同上；CCF24（arXiv:2409.07051）TeX 8 处同为 Shalika | 成立 |
+| `eisenstein-compatibility` | 同上（key_points[3]） | 同上；同卡 proof.steps[2] 亦作 Shalika | 成立 |
+| `restricted-local-systems` ×2 | verification 旧判词改写 + verdict | AGKRRV（arXiv:2010.01906）`main.tex:1142-1150`：`Finally, let QLisse(X) be the left completion of IndLisse(X) in the natural t-structure` | 卡正文正确，旧判词才是残留 |
+| `base-whittaker-sheaf` | summary「茎」→「限制到 C_k^{tor=0}」 | p.37 L32–33 `Let q : C′k^{tor=0} → Ck^{tor=0} be the vector-bundle projection.`；L44–45 `q! jk,! Fk ≃ (r ◦ π)!(p∗1 LE ⊗ p∗2 Lψ)[shift](twist)|C_k^{tor=0}` | 对象在 `C_k^{tor=0}` 上，不是茎 |
+| `perverse-quotient-lemma` | summary 补 `π_!K` 前提 | p.47 L7–8 `Suppose K ∈ Perv(E) is Gm-equivariant and that π! K, π∗ K ∈ Perv(B). Let K̄ be the descent of K|E\0 to P(E). Then π̄! K̄ is perverse.` | 前提漏一条已补 |
+| `fourier-deligne-transform` | 删「至多差平移」 | p.33 L21–23 `The Fourier–Deligne transform [KL85] is F_{V/S}(K) := p∨!(p∗K ⊗ ⟨,⟩∗Lψ)[r](r/2)… With this normalization it is t-exact for the perverse t-structure and preserves irreducibility on simple perverse sheaves.` | t-正合（保 heart）不产生平移，改后与原文一致 |
+
+12 处结论不变（12/12 成立）；`fourier` 仍然只算「原文支持 + 卡内一致」，没有额外定理可引。
+
+### 9.3 5 张单方未修卡：英文原本裁决
+
+| 卡 | 争议点 | 英文原书证据 | 英文裁决 |
+|---|---|---|---|
+| `affine-grassmannian` | `pages` 是否补 p.14 | p.13 起 `2.4` 与 Theorem 2.4.1；p.14 L4–11 `L+ GX (S) = {(x, γ) | γ : Dx → G}, LGX (S) = {(x, γ) | γ : Dx◦ → G}`、`GrG,X ≃ LGX /L+ GX`、其后 `Bun∞G` 与 `Hecke` 扭曲积 | **支持补 [13,14]**：卡自己的 anchor 写「定义与扭曲积见 76-98 行」，其中主要定义在 p.14；arbiter 判「仅备注」，属可辩护但偏宽 |
+| `deligne-gl1-existence` | `Shv(Spec k)` 的系数域 | p.7 L22–24 `Fix a reasonable sheaf theory with algebraically closed coefficient field e.` | **决定性**：系数域是 e（ℓ-进即 Q̄_ℓ），不是 k=F_q；卡 `definition.notation`「$k$-向量空间（分次）构成」错 |
+| `euler-characteristic-trace-test` | `pages` 45 vs [44,45] | p.44 L57 `χK (y) := Σ(−1)i dim H i (Kȳ)`；p.45 L4 `for the Euler characteristic of the stalk.` | 可接受：判据主体在 p.45，p.44 只是 χ_K 的定义式开头 |
+| `hecke-laumon-stack` | 「三者互相决定其中之二」 | p.45–46 只给 `HLdk := {0 → M′ → M → T → 0}`、两条腿与 `m, s, q`；p.46 L4–9 `one compares the two ways of passing from M to M′′ through 0 → M ′ → M → T ′ → 0, 0 → M ′′ → M ′ → T ′′ → 0`，**没有**「任两者决定第三」的陈述 | **决定性（数学 + 卡内矛盾）**：给 (M′,T) 不决定 M，扩展类在 `Ext1(T,M′) ≅ ⊕x (Tx∨ ⊗ M′x)`；同卡 pitfall[1] 已写「忘记 M′ 无法还原 M」，与 key_points[0] 直接冲突 |
+| `local-whittaker-eigenfunction` | 「指数为负」是否应为「非正」 | p.21 L24 `q−i(i−1)λi Tr(γ, V λ ), λ dominant`，即指数 `−Σi(i−1)λi` | **决定性**：λ=(c,0,…,0) 时 `Σi(i−1)λi = 0`，指数为 0；「负」不成立，「非正」才对 |
+
+### 9.4 结论与处置建议
+
+- **已修 51 处**：英文原本逐句再核后 **51/51 维持**，无一处需要回退。
+- **单方未修 5 张**：2 张维持（`euler-characteristic-trace-test` 页码可接受；`affine-grassmannian` 只涉及补页，不影响数学），**3 张有决定性证据**（`deligne-gl1-existence` 系数域、`hecke-laumon-stack` 决定关系、`local-whittaker-eigenfunction` 指数符号）。按双盲协议它们仍是 single_sided，但在「英文原本再核」这一层，它们不再算「存疑」，而是「证据充分、因协议未修」。
+- 若用户授权，可作为 follow-up 修 3 卡 3 处（`notation` 1、`key_points` 2），md 同步，确认数从 22 卡 51 处变为 25 卡 54 处；不改变已归档的 A/B/arbiter 记录，只在 `fix_log` 追加 `followup` 段并更新 `issues.jsonl` 的 3 行状态为 `confirmed_fixed_followup`。
+- 不授权则维持现状，但 §5 与 `report.md` §9 的表述改为「其中 3 条已被英文原书证实，仅因协议保留」。
