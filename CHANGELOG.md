@@ -2,6 +2,16 @@
 
 > **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
 
+
+## SY02-15《相对朗兰兹对偶》v1.1 校对 + 卡片外部核验 + 思维导图/研读笔记 — 2026-11-27
+
+- **校对**：4 路并行逐章改稿，共 **95 处**（ch01–04 20、ch05–08 45、ch09–12 10、ch13–15 20），每处在 `工程文件/work/reports/校对v1.1_*.md` 记「行号｜原文页/英文原句｜原译｜改译｜依据」。主要修正：不交并→无交并、Hamilton→哈密顿、示性函数、$\mathbb F_p$ 上划线、raviolo 图题、几何 Satake 等价全称、图示箭头/三角图还原、漏译与病句。重编译 **65 页、0 error / 0 Overfull**；v1.0→v1.1 文本 diff 172 块。
+- **译名**：按香蕉空间（bananaspace.org）约 120 个标题核对，采用「无交并」「几何 Satake 等价」；「栈」保留并注「叠」、「仿射 Grassmann 流形」收异名「仿射 Graßmann 形」；记录见 `工程文件/work/术语外部核对_香蕉空间.md` 与 `work/glossary.tsv`（新增奇迹对偶、摩天楼层、超球空间）。
+- **卡片外部核验**：4 条独立审计轨（O+A 10 卡 / B 8 / C 10 / D 6），覆盖 **34 卡、95 条断言**：supported 56、partial 28、unverifiable 6、conflict 5。5 条 conflict 已就地改卡：`shearing`（改为 $\operatorname{SHV}(X_F/G_O)\simeq\mathrm{QC}^{	ext{fatslash}}(\check M/\check G)$，BZSV (11.19)）、`e3-structure`（$E_3$ 不推出对称幺半）、`derived-satake`（只到 monoidal）、`hyperspherical-structure`（$S$ 是 $H$-表示）、`hyperspherical-variety`（$T^*X$ 加条件）。另按审计加限定 6 处（8.19 单向、秩一自由 We expect、例 11.17/11.18 笔记自算、内积只对 $T_Ve$、$L(z,\check M)$ 是行列式商、provenance B→A）。`verification.jsonl` 47 卡 / 34 audited / 95 断言；`lint_cards.py` 47/0/0。
+- **新增资料卡两件**：`资料卡/05-思维导图.png`（3000×1810，六支，生成脚本 `datasets/lawrge24/tools/make_mindmap.py`）与 `资料卡/06-研读笔记.md`（12 节 + 校对/核验记录，含可再生产 A/B/C 与 5 个可检验问题，所有断言标原文页或外部文献）。
+- **成品**：`成品/相对朗兰兹对偶_LAWRGE2024_v1.1.pdf`（65 页，A4，2,151,201 B）；v1.0 保留。成品 PDF 仍按 `.gitignore` 不入库，Release 状态不变。
+- **台账**：`03_translations_meta/SY02-15/投稿信息.md` 升 v1.1；`RELEASE_REGISTER.csv` 第 116 行补校对/核验/两件资料卡；`datasets/README.md` v0.27 行与 `datasets/lawrge24/README.md` 核验表同步。
+
 ## SY02-15《相对朗兰兹对偶》（LAWRGE 2024 工作坊笔记）中译注本 + 47 张资料卡 — 2026-11-27
 
 - **底本与译本**：*LAWRGE 2024 NOTES — Relative Langlands Duality*，Ben-Zvi / Sakellaridis / Venkatesh 主讲的工作坊参会者笔记（2024-12-03，73 页，15 讲，无 arXiv、无正式出版信息，开篇自述「极不完整、未校订」）。中译注本 65 页（封面 1 + 译者说明 1 + 目录 2 + 正文 61），2026-11-21 v1.0、2026-11-22 补译注标记；0 error / 0 Overfull / 0 Missing character / 0 未定义引用，167 个编号对象与原文逐条对齐，图 12 张、脚注 1–12 保号、译注 3 条、疑点清单 12 行（未解 0）。

@@ -22,13 +22,13 @@
 
 | 状态 | 数量 | 含义 |
 | --- | ---: | --- |
-| `external-confirmed` | 0 | 尚未逐条对照 nLab / Stacks Project / 原始论文 |
 | `source-only` | 47 | 已对齐 LAWRGE 2024 原文的节与页，`quote` 经 lint 逐字命中 |
-| `rejected` | 0 | — |
+| 已外部核验（审计覆盖） | 34 卡 / 95 条断言 | 4 个独立审计轨（O+A、B、C、D），每卡 1–3 条实质断言、≥2 个外部来源 |
+| 审计结论 | supported 56 / partial 28 / unverifiable 6 / conflict 5 | 5 条 conflict 已就地改卡；未核验的 13 卡保留 `source-only` |
 
-全部卡片 `status: draft`。**这是「读懂笔记」的卡，不是「已核验定理」的卡。** 笔记本身是参会者整理，不是作者定稿；引用前请回到原文与所列参考文献。
+审计明细见 `audit/track-{oa,b,c,d}.{jsonl,md}`，汇总并入 `verification.jsonl`（34 卡、95 断言）。全部卡片 `status: draft`。**这是「读懂笔记」的卡，不是「已核验定理」的卡。** 笔记本身是参会者整理，不是作者定稿；引用前请回到原文与所列参考文献。
 
-已做的外部术语核对只有一项：译名对照香蕉空间（bananaspace.org）的社区用词，记录见 `08_source_code/SY02-15_相对朗兰兹对偶/工程文件/work/术语外部核对_香蕉空间.md`。该站对相对 Langlands 方向覆盖很薄（搜「朗兰兹」仅命中「局部类域论」一条），因此多数术语只能沿用本库既有译法。
+外部核验的两项基础工作：① 译名对照香蕉空间（bananaspace.org）约 120 个标题，记录见 `08_source_code/SY02-15_相对朗兰兹对偶/工程文件/work/术语外部核对_香蕉空间.md`；该站对相对 Langlands 方向覆盖很薄（搜「朗兰兹」仅命中「局部类域论」一条），多数术语只能沿用本库既有译法。② 断言对照 BZSV（arXiv:2409.04677）、SV17、Sak13、AG15、Gaiotto–Witten 与 nLab；「底本压缩表述/类比/笔记自算」均已在卡内标注。
 
 ## 目录
 
