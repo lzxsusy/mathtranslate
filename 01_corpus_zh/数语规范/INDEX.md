@@ -10,7 +10,7 @@
 | 术语（TERMS.tsv） | 2502 | 10 个工程；去重键＝外文＋语种＋译名＋工程 |
 | 记号（SYMBOLS.tsv） | 76 | 1 个工程（仅 FUNCTORIALITY 有冻结记号表） |
 | 冲突（CONFLICTS.tsv） | 85 | 高 0 / 中 31 / 低 54 |
-| 宏（MACROS.tsv） | 742 | 跨工程同名不同含义；其中出现在 ≥5 个工程的 388 个 |
+| 宏（MACROS.tsv） | 742 | 跨工程同名不同含义；其中出现在 ≥5 个工程的 392 个 |
 
 ## 二、术语分级
 
@@ -41,14 +41,14 @@
 
 | 宏 | 出现工程数 | 不同含义数 | 含义变体 |
 |---|---|---|---|
-| `\R` | 89 | 6 | \ensuremath{\mathbb{R}} ｜ \mathbb{R} ｜ \mathbf R |
-| `\Hom` | 89 | 5 | Hom ｜ \mathop{\mathrm{Hom}} ｜ \operatorname{Hom} |
-| `\Z` | 88 | 4 | \ensuremath{\mathbb{Z}} ｜ \mathbb{Z} ｜ \mathbf Z |
-| `\C` | 86 | 4 | \ensuremath{\mathbb{C}} ｜ \mathbb{C} ｜ \mathbf C |
-| `\Tr` | 80 | 7 | Tr ｜ \mathop{\mathrm{Tr}}\nolimits ｜ \mathsf{Tr} |
-| `\Aut` | 76 | 5 | Aut ｜ \operatorname{Aut} ｜ \operatorname{\text{Aut}} |
-| `\id` | 75 | 6 | \mathbf{1} ｜ \mathsf{Id} ｜ \operatorname{id} |
-| `\End` | 73 | 6 | End ｜ \operatorname{End} ｜ \operatorname{\text{End}} |
+| `\R` | 90 | 6 | \ensuremath{\mathbb{R}} ｜ \mathbb{R} ｜ \mathbf R |
+| `\Hom` | 90 | 5 | Hom ｜ \mathop{\mathrm{Hom}} ｜ \operatorname{Hom} |
+| `\Z` | 89 | 4 | \ensuremath{\mathbb{Z}} ｜ \mathbb{Z} ｜ \mathbf Z |
+| `\C` | 87 | 4 | \ensuremath{\mathbb{C}} ｜ \mathbb{C} ｜ \mathbf C |
+| `\Tr` | 81 | 7 | Tr ｜ \mathop{\mathrm{Tr}}\nolimits ｜ \mathsf{Tr} |
+| `\Aut` | 77 | 5 | Aut ｜ \operatorname{Aut} ｜ \operatorname{\text{Aut}} |
+| `\id` | 76 | 6 | \mathbf{1} ｜ \mathsf{Id} ｜ \operatorname{id} |
+| `\End` | 74 | 6 | End ｜ \operatorname{End} ｜ \operatorname{\text{End}} |
 
 完整清单见 `MACROS.tsv`。注意：`\R` 这类「同一含义的多种写法」已在判定时折算（`\Bbb`→`\mathbb`、`\operatorname{}`/`\text{}`/`{\rm }`→`\mathrm{}`），
 剩下的 `真冲突` 才是语义不同。
