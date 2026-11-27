@@ -23,7 +23,7 @@
 | 读者 | 学过代数几何与一点表示论的研究生；能读“层—叠—函子”的语言，但没系统学过几何 Langlands |
 | 长度 | 正文 6,000–9,000 字（不含转引的词条正文） |
 | 目标 | 读完能回答：对应是什么、自守侧与谱侧各是什么、$\GL_1$ 为什么是类域论、$\GL_n$ 主定理说了什么、证明走哪几步、哪一步最难、现状如何 |
-| 不做 | 不证主定理；不铺开 $p$ 进/局部情形；不写物理诠释（留给 `page/kapustin-witten`） |
+| 不做 | 不证主定理；不铺开 $p$ 进/局部情形；**不写物理诠释与超对称场论**（由另一队负责《超对称场论》卷，本页只留接口，见 §9） |
 
 ---
 
@@ -38,7 +38,7 @@
 | 4 $\GL_1$：几何类域论 | Abel–Jacobi、$\Aut_E$、$m^*\Aut_E\cong\Aut_E\boxtimes\Aut_E$ | `geometry/geometric-class-field-theory`、`geometry/picard-variety`、`geometry/abel-jacobi`（待建） | Laumon 定理 1.1/1.2（p5）；Raskin §1.2 | 900 | A4 |
 | 5 主定理（$\GL_n$） | 定理 2.2 陈述；$n=2$（Drinfeld）与一般 $n$（FGV）；“每个连通分支上不可约” | `geometry/geometric-langlands`、`geometry/hecke-eigensheaf` | Laumon 定理 2.2（p8，逐字）；FGV Conjecture 1.3（p4） | 1,000 | A1+A3 |
 | 6 证明路线 | ① Whittaker → Laumon 层 → Fourier → 洁净性 → 下降（FGV/Laumon 906）；② Scholze 1252 的现代叙述；③ 消没定理在哪一步用 | `geometry/perverse-sheaf`、`geometry/verdier-duality`、`geometry/affine-grassmannian` | Laumon §3–§7；Scholze 1252 §1–§3 | 2,000 | A5 |
-| 7 现状与开放问题 | 一般约化群、$p$ 进、局部几何 Langlands、形式化现状 | `algebra/langlands-correspondence` | 百科；Lean gap 卡 | 800 | A6 |
+| 7 现状与开放问题 | 一般约化群、$p$ 进、局部几何 Langlands、形式化现状；**物理侧只留一段接口**（指向《超对称场论》卷） | `algebra/langlands-correspondence` | 百科；Gaitsgory 扩展 Whittaker；Lean gap 卡 | 800 | A6 |
 
 > 第 4 节需要新建 `geometry/abel-jacobi`（百科里没有），P0 一并补。
 
@@ -104,15 +104,17 @@
 
 **产出**：第 6 节后半（消没定理 → 下降 → 得到 $\Aut_E$）+ 一张三步依赖图。
 
-### A6 · 物理与形式化（44 页）
+### A6 · 现状、形式化与物理接口（33 页）
 
 | 读物 | 页 | 为什么读 |
 |---|---|---|
-| `SY02-37` Kapustin–Witten 中译 节选 | 约 15 | 为什么物理学家关心（第 7 节一句带过即可） |
 | `SY02-44` Gaitsgory 扩展 Whittaker 范畴 | 1–24（全） | 现代证明里的 Whittaker 侧，补第 6 节 |
 | Lean gap 卡 `laumon906-g01` + `datasets/leanstmt/README` | 5 | 形式化现状要写实话：只有语句骨架，`sorry=1` |
+| 百科 `algebra/langlands-correspondence` 等 | 4 | 现状段的名词对齐 |
 
-**产出**：第 7 节草稿（现状/开放问题/形式化），不许写“已被形式化”。
+**产出**：第 7 节草稿（现状/开放问题/形式化）+ **一段物理接口**（≤150 字，只说明“物理侧见《超对称场论》卷”，不展开任何物理内容）。
+
+**明确不读**：Kapustin–Witten、任何超对称场论材料——那属于另一队。
 
 ---
 
@@ -182,6 +184,13 @@
 
 ---
 
-## 9. 待确认（一条）
+## 9. 与《超对称场论》卷的分工（已定）
+
+- 物理侧（Kapustin–Witten、超对称场论、物理诠释）**整卷由另一队负责**，他们刚完成 KW 理论资料卡的校对，本方案与页面都不写物理内容。
+- 本页只在第 7 节留 **≤150 字接口段**：说明几何 Langlands 的物理侧另有专卷，并给出卷名/链接占位；不解释、不评判、不重复其内容。
+- 合稿时他们交来稿件，我们做两件事：① 互挂链接（本页 §7 ↔ 物理卷对应节）；② 共享词条去重（同一概念只保留一个词条，另一方写 `redirects`）。**不合并正文**——两卷读者与写法不同，混排会把两边都拖垮。
+- 时间：本队 18:00 开工；他们交稿后另开一次合稿窗口。
+
+## 10. 待确认（一条）
 
 仓库里**没有**以“Schwartz / 施瓦兹”命名的讲义；最新入库的是 Raskin《射影曲线上的几何 Langlands》18 页（中译 24 页）与 Scholze 布尔巴基 1252（56/45 页）。如果你说的是另一份（例如某份 Schwartz 的英文讲义），给我文件名或链接，我替换 A1/A3 的对应读物；不影响其余分工。
