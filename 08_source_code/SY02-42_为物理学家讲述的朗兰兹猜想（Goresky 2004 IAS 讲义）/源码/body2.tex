@@ -1,0 +1,328 @@
+% =============================================================================
+%  正文 2：§4 Galois 表示、§5 $\mathrm{SL}(2)$ 的模形式
+% =============================================================================
+
+\section{Galois 表示}
+\label{sec:galois}
+
+\subsection{它们从哪来}
+
+我们想要考虑 Galois 群 $\Gal(\Qbar/\bbQ)$ 的表示以及类似的东西。
+这类东西自然出现在 \textbf{平展上同调}（étale cohomology）的理论里——那是一门真正奇妙的理论。
+现在简单介绍一下。
+
+设 $Y$ 是定义在域 $E$ 上的 $d$ 维代数簇，$\ell$ 是素数，$\ell\neq\ch(E)$。
+则对 $0\le i\le 2d$，平展上同调
+\[
+H^i_{\et}(Y,\Ql)
+\]
+有定义。它是 $\Ql$ 向量空间，$\Gal(\overline{E}/E)$ 作用其上。
+（最早人们试图找到一种「以有理数 $\bbQ$ 为系数」的良好上同调理论；后来发现这是不可能的。）
+
+\subsection{}
+
+平展上同调让我们可以把定义在有限域上的簇（比如编码论或密码学里出现的那些）当作复簇来想。
+而在这种情形下，平展上同调上的 Galois 模结构有一些惊人的性质。
+设代数簇 $Y$ 定义在 $\bbF_q$ 上（特征 $p$），并且非奇异、射影。
+那么 A. Weil 的一系列猜想（最终由 P. Deligne 证明）断言：
+
+\begin{enumerate}[leftmargin=2.2em,itemsep=2pt]
+\item Frobenius $\sigma_q$ 在 $H^{2i}(Y,\Ql)$ 上的特征值 $\alpha_j$ 满足 $|\alpha_j|=q^i$。
+\item $\sigma_q$ 在 $H^{2i+1}(Y,\Ql)$ 上的特征值 $\beta_k$ 满足 $|\beta_k|=q^i\sqrt{q}$。
+\item 点数
+\begin{equation*}
+\#\bigl(Y(\bbF_{q^r})\bigr)=\sum_j\alpha_j^r-\sum_k\beta_k^r
+\tag{4.2.1}
+\end{equation*}
+（求和跑遍 $\sigma_q$ 在所有平展上同调群上的所有特征值）。
+\item 特征值 $\alpha_j,\beta_k\in\bbC$ 由这个方程唯一确定。
+\end{enumerate}
+
+特别地，$\operatorname{rank}H^{2i}_{\et}(Y,\Ql)$ 等于 (4.2.1) 中满足 $|\alpha|=q^i$ 的 $\alpha$ 的个数，
+而 $\operatorname{rank}H^{2i+1}_{\et}(Y,\Ql)$ 等于其中满足 $|\beta|=q^i\sqrt q$ 的 $\beta$ 的个数。
+
+$\sigma_q$ 在 $H^i_{\et}(Y,\Ql)$ 上特征值的初等对称函数，就是 $\sigma_q$ 在 $H^i$ 上作用的特征多项式的系数。
+习惯上把这些特征值编码进一个 $\zeta$ 函数：
+\[
+\zeta_q(Y,t)=\frac{\prod_{i\ \text{奇}}\det(1-t\sigma_q)\ \text{在}\ H^i_{\et}(Y,\Ql)\ \text{上}}
+{\prod_{i\ \text{偶}}\det(1-t\sigma_q)\ \text{在}\ H^i_{\et}(Y,\Ql)\ \text{上}} .
+\]
+Deligne 定理第 (3) 条还可以写成
+\[
+\zeta_q(Y,t)=\exp\Biggl(\sum_{n=1}^{\infty}\#\bigl(Y(\bbF_{q^n})\bigr)\frac{t^n}{n}\Biggr).
+\]
+
+$\zeta$ 函数不依赖 $\ell$ 的选取（对几乎所有 $\ell$）。它满足如下函数方程，
+可以解释为平展上同调的 Poincaré 对偶：
+\[
+\zeta\Bigl(\frac{1}{q^dt}\Bigr)=\pm q^{\frac{d}{2}\chi(Y)}t^{\chi(Y)}\zeta(t),
+\]
+其中 $d=\dim(Y)$，$\chi(Y)$ 是 Euler 示性数
+\[
+\chi(Y)=\sum_{i=0}^{d}(-1)^i\operatorname{rank}H^i_{\et}(Y,\Ql).
+\]
+
+\begin{yizhu}[为什么系数必须换成 $\Ql$]
+若只用 $\bbQ$，$H^1$ 上就看不到 Frobenius 的特征值：$\sigma_q$ 在 $\bbQ$ 上的特征值往往需要 $\sqrt q$，
+（$|\beta|=q^i\sqrt q$，第 (2) 条），不是有理数。换成 $\Ql$（$\ell\neq p$）后，
+「$\ell$ 进系数」既能容纳这些代数数，又能保持有限性——这正是原文那句「后来发现不可能」的意思。
+\end{yizhu}
+
+\subsection{变化 $p$}
+\label{sec:vary-p}
+
+现在设 $Y$ 是定义在 $\bbZ$ 上的代数簇。
+定义 $Y$ 的方程可以模 $p$ 约化，给出定义在 $\bbF_p$ 上的代数簇 $Y\pmod p$（有时记作 $Y/\bbF_p$）。
+这时，对几乎所有素数 $p$（且 $\ell\neq p$），有
+\[
+H^i\bigl(Y(\bbC),\bbQ\bigr)\otimes_{\bbQ}\Ql\;\cong\;H^i_{\et}(Y/\bbF_p,\Ql),
+\]
+其中左边的上同调指 $Y(\bbC)$ 通常的（奇异或单纯）上同调。
+
+例如复射影空间是商
+\[
+\bbP^n(\bbC)=\bigl(\bbC^{n+1}\setminus\{0\}\bigr)/\bbC^{\times}.
+\]
+于是 $\bbF_q$ 上类似构造给出
+\[
+\#\bbP^n(\bbF_q)=\frac{q^{n+1}-1}{q-1}=1+q+q^2+\cdots+q^n,
+\]
+而这个多项式恰好描述了射影空间的奇异上同调。
+（事情并不都这么容易，但每次能数出点数时，看起来都像变戏法。）
+
+不同 $p$ 的 Frobenius 特征值可以编码进 $L$ 函数：
+\begin{equation*}
+L(Y,s)=\prod_p\zeta_p(Y,p^{-s}).
+\tag{4.3.1}
+\end{equation*}
+（实际上有有限多个素数是「坏」的；坏素数对应的因子必须用另一种方式定义。）
+
+\subsection{一个 Galois 表示的 Frobenius 特征值}
+
+若 $Y$ 是定义在整数环上的非奇异代数簇，则 $H^i_{\et}(Y,\Ql)$ 带有 $\Gal(\Qbar/\bbQ)$ 的作用。
+$\sigma_q$ 在 $H^i_{\et}(Y/\bbF_p,\Ql)$ 上的特征值，可以直接由这个 Galois 模恢复出来；
+这就给出了抽象 Galois 表示的 $L$ 函数的定义。
+
+首先注意有交换图
+\[
+\begin{array}{ccc}
+\Gal(\Qpbar/\bbQ_p) & \xrightarrow{\ r\ } & \Gal(\Qbar/\bbQ)\\[2pt]
+ & & \big\downarrow{\scriptstyle\pi}\\[2pt]
+ & & \Gal(\Fpbar/\bbF_p)
+\end{array}
+\]
+其中 $\pi$ 是满射，$r$ 是单射。映射 $r$ 存在，是因为 $\bbQ\subset\overline{\bbQ}_p$ 且 $\bbQ\subset\overline{\bbQ}_p$；
+任何固定 $\bbQ_p$ 的 $\overline{\bbQ}_p$ 自同构，限制到 $\Qbar$ 上就是固定 $\bbQ$ 的自同构。
+映射 $\pi$ 类似地由投影 $(\bmod p):\bbZ_p\to\bbF_p$ 诱导。
+
+人们想说，Frobenius $\sigma_p\in\Gal(\overline{\bbF}_p/\bbF_p)$ 有一个标准的提升，
+它的像在 $\Gal(\Qbar/\bbQ)$ 中记作 $\Fr_p$，称为 $p$ 处的 Frobenius 元素。
+可惜由于「分歧」（ramification）的存在，这话并不完全对。
+
+设 $H$ 是 $\Ql$ 上的有限维向量空间。一个表示\en{4} $\rho:\Gal(\Qbar/\bbQ)\to\GL(H)$
+称为在 $p$ 处\textbf{非分歧}（其中 $\ell\neq p$），若它在 $\Gal(\overline{\bbQ}_p/\bbQ_p)$ 上的限制经过 $\Gal(\overline{\bbF}_p/\bbF_p)$ 分解。
+于是此时有映射
+\[
+\rho_p:\Gal(\overline{\bbF}_p/\bbF_p)\to\GL(H),
+\]
+并定义 Frobenius 元素 $\Fr_p=\rho_p(\sigma_p)\in\GL(H)$。
+$\Fr_p$ 在 $H$ 上作用的特征多项式的倒数定义了一个函数
+\[
+\zeta_p(\rho,t)=\frac{1}{\det(I-t\Fr_p)}.
+\]
+利用嵌入 $\Ql\hookrightarrow\bbC$，可以把它看成复系数的有理函数。
+特征多项式的系数就是 $\Fr_p$ 的特征值，所以这个函数「编码」了 Frobenius 特征值；
+再把不同 $p$ 合起来，定义
+\begin{equation*}
+L(\rho,s)=\prod_p\zeta_p(\rho,p^{-s}).
+\tag{4.4.1}
+\end{equation*}
+（对分歧的素数 $p$ 需要稍作修改\en{5}。）
+若 $\rho$ 是一维平凡表示，则
+\[
+L(\rho,s)=\prod_p\frac{1}{1-p^{-s}},
+\]
+这就是 Riemann $\zeta$ 函数。
+
+\begin{yizhu}[原文疑误：(4.4.1) 漏了 $\rho$]
+原文把 (4.4.1) 印成 $L(\rho,s)=\prod_p\zeta_p(p^{-s})$，右端漏了表示 $\rho$。
+按上文 $\zeta_p(\rho,t)$ 的定义及 Gamma 因子的惯例，应为 $\prod_p\zeta_p(\rho,p^{-s})$。
+译文按正确形式书写；这是排印遗漏，不影响后面的讨论。
+\end{yizhu}
+
+若 $Y$ 是定义在整数环上的非奇异代数簇，$p$ 是「好」素数（只排除有限多个），
+则 $\Gal(\overline{\bbF}_p/\bbF_p)$ 在 $H^i_{\et}(Y/\bbF_p,\Ql)$ 上的表示
+（把 $Y$ 模 $p$ 约化得到）与由 Frobenius 元素决定的 $H^i_{\et}(Y,\Ql)$ 上的表示一致，于是 (4.3.1) 变为
+\[
+L(Y,s)=\frac{\prod_{i\ \text{奇}}L(H^i,s)}{\prod_{i\ \text{偶}}L(H^i,s)},
+\]
+其中 $H^i$ 是 $\Gal(\Qbar/\bbQ)$ 在平展上同调 $H^i_{\et}(Y,\Ql)$ 上的表示。
+
+关于 Galois 表示的优秀综述见 [T]。
+
+\begin{keytakeaways}
+这一节给出的是一台「特征值机器」：几何对象 $Y$ $\rightsquigarrow$ 上同调 $H^i_{\et}(Y,\Ql)$
+$\rightsquigarrow$ Frobenius 的特征值 $\alpha_j,\beta_k$ $\rightsquigarrow$ $\zeta$ 函数与 $L$ 函数。
+第 (3) 条（点数 = 特征值之和）是这台机器的引擎：它把「数点」这件离散的事，
+换成「特征值」这件线性代数的事。朗兰兹猜想要说的，就是这台机器在自守表示那一侧还有一个一模一样的孪生兄弟。
+\end{keytakeaways}
+
+\section{$\sL(2)$ 的模形式}
+\label{sec:modforms}
+
+\subsection{}
+
+本节与下一节的目的是说明：每个模形式 $f$ 都给出 $\GL(2,\bbA)$ 的一个表示，
+使得 Hecke 算子（在模形式上）的作用，翻译成 Hecke 代数的作用。
+我们还将描述看待一个 Hecke 算子的三种方式：作为几何上定义的对应、作为由某个方程给出的模形式上的算子、以及作为函数上的积分算子。
+
+我们要研究的群 $\GL(2,\bbR)$ 有两个连通分支，并且有一个由标量矩阵组成的非平凡中心 $Z(\bbR)$。
+这些性质带来一些我们宁可避开的技巧性问题。
+所以本节改为考虑 $\sL(2,\bbR)$ 的模形式理论——它类似，但更简单。
+
+\subsection{经典理论}
+
+群 $\sL(2,\bbR)$ 通过分式线性变换作用在上半平面 $\he$ 上：
+\[
+\begin{pmatrix}a&b\\ c&d\end{pmatrix}\cdot z=\frac{az+b}{cz+d}.
+\]
+「基点」$i$ 的稳定化子是极大紧子群 $\sSO(2)$，它可以通过
+$e^{i\theta}\mapsto\begin{pmatrix}\cos\theta&\sin\theta\\-\sin\theta&\cos\theta\end{pmatrix}$
+与圆群等同。
+
+权为 $k$ 的模形式，是全纯映射 $f:\he\to\bbC$（在无穷远处置为亚纯），满足对每个
+$g=\begin{pmatrix}a&b\\ c&d\end{pmatrix}\in\sL(2,\bbZ)$，
+\[
+f(g\cdot z)=(cz+d)^{-k}f(z).
+\]
+若 $z\to\infty$ 时 $f(z)\to 0$，则称模形式 $f$ 是\textbf{尖点}的。
+权为 $k$ 的尖点模形式空间 $S_k$ 是有限维的。
+每个权为 $k$ 的模形式 $f:\he\to\bbC$ 都可以解释为商
+\[
+X=\sL(2,\bbZ)\backslash\he
+\]
+上某个线丛 $E_k$ 的截面。
+这个商（并非巧合地）可以解释为椭圆曲线的模空间，因而自然带有定义在 $\bbQ$ 上的复代数簇结构。
+[Se] 用初等的方式描述了个别模形式的一些美妙的数论性质。
+
+\subsection{模形式给出表示}
+
+每个整数 $k$ 对应一个表示 $j:\sSO(2)\to\GL(1,\bbC)=\bbC^{\times}$，即
+\begin{equation*}
+j\begin{pmatrix}a&b\\ c&d\end{pmatrix}=(ci+d)^k .
+\tag{5.3.1}
+\end{equation*}
+有一个简单技巧\en{6}（也许最早出现在 [GF] 中），把一个权为 $k$ 的模形式 $f$ 变成一个函数 $\hat f:\sL(2,\bbR)\to\bbC$，
+使得对所有 $\gamma\in\sL(2,\bbZ)$、所有 $g\in\sL(2,\bbR)$、所有 $h\in\sSO(2)$，
+\[
+\hat f(\gamma gh)=j(h)^{-1}\hat f(g),
+\]
+具体就是
+\[
+\hat f\begin{pmatrix}a&b\\ c&d\end{pmatrix}
+=(ci+d)^{-k}f\Bigl(\frac{ai+b}{ci+d}\Bigr).
+\]
+换句话说，把 (5.3.1) 看成 $\sL(2,\bbR)$ 上的函数，并令 $\hat f(g)=j(g)f(g\cdot i)$。
+
+于是也可以把 $\hat f$ 看成函数
+\[
+\hat f:\sL(2,\bbZ)\backslash\sL(2,\bbR)\to\bbC .
+\]
+群 $\sL(2,\bbR)$ 通过「正则」表示作用在这类函数空间上，即 $g\in\sL(2,\bbR)$ 对函数 $\varphi$ 的作用是
+\[
+R_g(\varphi)(x)=\varphi(g^{-1}x).
+\]
+$\hat f$ 的所有平移 $R_g(\hat f)$（$g\in\sL(2,\bbR)$）张成 $\sL(2,\bbR)$ 的一个子表示。
+若 $f$ 是权为 $k$ 的尖点 Hecke 特征形式（见下），则 $\hat f$ 是 $L^2$ 函数，
+而所得的表示是不可约的，同构于权为 $k$ 的（中心特征平凡的）离散序列表示。
+
+\begin{yizhu}[自守因子：这一节的技巧在做什么]
+映射 $j$ 是 $\sSO(2)$ 的一个特征。给定特征 $j$，可以构造 $X$ 上的线丛 $E_k$，
+其截面就是满足 $f(gz)=(cz+d)^{-k}f(z)$ 的全纯函数。
+把截面「拉回」到群 $\sL(2,\bbR)$ 上，就得到满足 $\hat f(\gamma gh)=j(h)^{-1}\hat f(g)$ 的函数 $\hat f$。
+这一步在一般情形下叫\textbf{自守因子}（automorphy factor）：
+选一个映射 $J:G\times D\to\GL(V)$ 满足上循环条件，就能在 $G/K$ 上把向量值函数与 $G$ 上的函数来回搬。
+尾注 6 给出了完整的一般定义，值得一读。
+\end{yizhu}
+
+\subsection{Hecke 算子}
+
+记 $\Gamma=\sL(2,\bbZ)$。每个 $g\in\GL(2,\bbQ)$ 定义一个 \textbf{Hecke 对应}，它在函数（或模形式）上的作用称为 Hecke 算子，如下。
+设 $\Gamma'=\Gamma\cap g\Gamma g^{-1}$。它在 $\Gamma$ 与 $\Gamma'$ 中都有有限指数，因此下列映射是有限覆叠：
+\[
+\begin{array}{ccc}
+\Gamma'\backslash\he & \xrightarrow{\ s\ } & (g\Gamma g^{-1})\backslash\he\\[2pt]
+& \searrow{\scriptstyle t} & \\[2pt]
+& & \Gamma\backslash\he
+\end{array}
+\]
+其中对角同构由左乘 $g^{-1}$ 给出。
+令 $X'=\Gamma'\backslash\he$，就得到两个映射 $(s,t):X'\Rightarrow X$，等价地，一个映射 $X'\to X\times X$，
+它是嵌入，其像可以看作一个多值映射（对应）$X\to X$ 的图像。
+这个对应 $X'\Rightarrow X$ 只依赖双陪集 $\Gamma g\Gamma$。
+该对应作用在函数 $f:\Gamma\backslash\he\to\bbC$ 上，得到函数\en{7}
+\begin{equation*}
+T_g(f)=s_*t^*f .
+\tag{5.4.1}
+\end{equation*}
+
+\subsection{Hecke 代数}
+
+若 $(s_1,t_1):Y_1\Rightarrow X$ 与 $(s_2,t_2):Y_2\Rightarrow X$ 是两个对应，它们的复合是由纤维积定义的对应 $Y_3$：
+\[
+\begin{array}{ccc}
+Y_3 & \xrightarrow{\ t_2\ } & Y_2\\[2pt]
+{\scriptstyle t_1}\big\downarrow & & \big\downarrow{\scriptstyle s_2}\\[2pt]
+Y_1 & \xrightarrow{\ t_1\ } & X
+\end{array}
+\]
+即 $Y_3=\{(y_1,y_2)\in Y_1\times Y_2\mid t_1(y_1)=s_2(y_2)\}$。
+若 $Y_1=\Gamma_1\backslash\he$ 与 $Y_2=\Gamma_2\backslash\he$ 是相应于 $g_1,g_2\in\GL(2,\bbQ)$ 的 Hecke 对应，
+则 $Y_3=\Gamma_3\backslash\he$，其中 $\Gamma_3=\Gamma_2\cap g_1\Gamma_2g_1^{-1}$。
+复合 $Y_3$ 在函数上的作用由复合 $T_{g_2}\circ T_{g_1}$ 给出。
+然而它未必等于 $T_{g_2g_1}$ 的作用。
+确切地说，双陪集的乘积 $(\Gamma g_1\Gamma)(\Gamma g_2\Gamma)$ 分解成有限多个双陪集 $\Gamma h_i\Gamma$ 的并，
+带重数 $m_i$（$1\le i\le k$，某个 $k$），且
+\begin{equation*}
+T_{g_1}\circ T_{g_2}=\sum_{i=1}^{k}m_iT_{h_i}.
+\tag{5.5.1}
+\end{equation*}
+于是我们定义 \textbf{Hecke 代数}为双陪集
+\[
+\Gamma g\Gamma\in\sL(2,\bbZ)\backslash\GL(2,\bbQ)/\sL(2,\bbZ)
+\]
+的所有有限形式线性组合（系数取有理数）之集，复合律为 (5.5.1)，在函数上的作用由 (5.4.1) 或 (8.7.1) 给出。
+把 $\GL(2,\bbQ)$ 换成其单位连通分支 $\GL(2,\bbQ)^+$（正行列式元素），或换成正行列式的整矩阵 $M_2(\bbZ)^+$；
+把 $\sL(2,\bbZ)$ 换成 $\GL(2,\bbZ)$，就得到这个构造的各种变体。
+
+这种 Hecke 代数的结构已被完全弄清楚：它没有零因子，是交换的，并且对每个素数 $p$ 分解为代数 $H_p$ 的直和。
+每个 $H_p$ 同构于某些生成元上的多项式环\en{8}。
+
+回到 $\GL(2)$。设 $T(n)$ 是对应于矩阵 $\begin{pmatrix}1&0\\0&n\end{pmatrix}$ 的 Hecke 算子。
+若一个模形式 $f$ 是 Hecke 代数所有元素的公共特征向量，则称 $f$ 是 \textbf{Hecke 特征形式}。
+每个模形式 $f$ 自动是标量矩阵对应的 Hecke 对应的特征函数，故
+$f$ 是 Hecke 特征形式当且仅当存在 $\lambda_p\in\bbC$ 使 $T(p)f=\lambda_pf$ 对所有素数 $p$ 成立；
+由此也推出 $f$ 是所有 $T(n)$ 的特征形式。
+
+\subsection{Fourier 系数}
+
+若 $f:\he\to\bbC$ 是模形式，则它在无穷远附近是周期的，故有 Fourier 展开
+\[
+f(z)=\sum_{i=0}^{\infty}a_ie^{2\pi iz}.
+\]
+$f$ 尖点当且仅当 $a_0=0$，等价地 $z\to\infty$ 时 $f(z)\to 0$。
+进一步，设 $f$ 是所有 Hecke 算子的公共特征函数：$T_n(f)=\lambda_nf$，
+并设 $f$ 已归一化使 $a_1=1$。则 $a_n=\lambda_n$，即 \textbf{$f$ 的 Fourier 系数恰好等于它的 Hecke 特征值}。
+
+\subsection{小结}
+
+总而言之，权为 $k$ 的尖点模形式空间 $S_k$，在 Hecke 代数作用下分解为若干一维子空间，每个由 Hecke 特征形式张成。
+这种尖点形式的 Hecke 特征值等于它的 Fourier 系数。
+这样的尖点形式给出 $\sL(2,\bbR)$ 的一个离散序列表示。
+
+\begin{keytakeaways}
+这一节是全篇唯一「可以动手算」的部分，结论只有一句但极重要：
+\textbf{一个模形式的解析数据（Fourier 系数）等于它的算术数据（Hecke 特征值）}。
+第 6 节把这句话翻译成平代环上的语言，第 7.1 节再把它与 Frobenius 特征值对上。
+若只记一个公式，记 $a_n=\lambda_n$。
+\end{keytakeaways}
