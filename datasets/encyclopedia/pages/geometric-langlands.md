@@ -7,8 +7,11 @@ aliases:
   - geometric Langlands
 kind: topic
 status: draft
+version: 0.3
 reviewed_by: []
 reviewed_on: 2026-11-27
+related:
+  - page/kapustin-witten
 entries:
   - geometry/geometric-langlands
   - geometry/bun-n
@@ -27,7 +30,7 @@ entries:
 parents:
   - page/langlands-program
 order: 20
-note: 引文取自 arXiv PDF 文本层，上下标已压平；逐字核对以所附页面链接为准。
+note: 引文取自 arXiv PDF 文本层，上下标已压平；逐字核对以所附页面链接为准。物理侧细节见配套页 page/kapustin-witten。
 compiled_from:
   - id: sy0246/concept/betti-setting
     hash: 3d1a8cc4be76b25d
@@ -72,6 +75,14 @@ compiled_from:
 | 函数域 $\operatorname{GL}_n$：Drinfeld、Lafforgue | $\operatorname{GL}_n$：Drinfeld、FGV+Gaitsgory |
 
 表中的「函数域」一行是整体 Langlands 的结果，不要与几何侧混为一谈：前者证的是自守表示与 Galois 表示的对应，后者证的是层与局部系统的对应。
+
+最后要分清「对应」这个词的三种强度，混用是这一行最常见的误读来源。
+
+- **弱形式（集合/双射）**：谱侧的对象与自守侧的「某种东西」之间存在自然双射，但不指定自守侧对象的结构。经典的类域论与 Drinfeld 的 $\operatorname{GL}(2)$ 工作大体处在这一层。
+- **中形式（Hecke 特征层）**：给每个谱侧对象 $E$ 配一个具体的层 $K_E$，并要求 $K_E$ 是 Hecke 算子的特征层（$H(K_E)\cong E\boxtimes K_E$）。这是本页第 5 节定理 2.2 的强度，也是 Laumon 906 与 FGV 的表述。
+- **强形式（等价）**：两侧的导出范畴整体等价，例如 $D(\operatorname{Bun}_G)\simeq\operatorname{IndCoh}_{\mathrm{Nilp}}(\operatorname{LocSys}_{{}^LG})$。这是 Scholze 1252 所述 Gaitsgory–Raskin 工作的强度，需要额外的「谱侧取 nilpotent 支撑」修正。
+
+三种强度不是同一条定理的不同说法，而是三个不同的定理；引用时必须说清在哪一层。
 
 ## 1 对应的陈述
 
@@ -146,6 +157,10 @@ $$H^1_n(K)=(\operatorname{supp}\times h_\to)_!\,h_\leftarrow^*(K)\otimes\mathbb 
 
 把 $H$ 与经典 Hecke 算子对照一下会更清楚：经典情形取双陪集 $G(\mathcal O)\backslash G(F_x)/G(\mathcal O)$，卷积作用在自守形式空间上；几何情形把双陪集换成 Hecke 叠、把卷积换成推拉，作用在层的导出范畴上。$H(K)$ 多出的 $X$ 因子，正对应经典情形里「在点 $x$ 处」这个信息；$S_2$-等变则对应「不同点的 Hecke 算子交换」这一事实在层层面的加强版。
 
+### 2.5 为什么移位是 $[n-1]$
+
+Hecke 函子写作 $H(K)=(q,p')_*p^*K[n-1]$，很多人第一次看会问：这个 $[n-1]$ 从哪来。两个理由。第一是几何的：Hecke 对应中 $(q,p')$ 相对维数是 $n-1$，紧支撑前推沿纤维积分一次，就把维数降 $n-1$；要让算子把反常层送回反常层，必须补回这个次数，否则每次作用都掉进负次数。第二是结构的：$[n-1]$ 让 $H$ 成为 $t$-正合函子（把反常层送到反常层），从而「特征层」才有意义——若 $H(K)$ 不在同一个 $t$-心，$H(K)\cong E\boxtimes K$ 这句话就无从谈起。FGV 的 $\ell$-进版本把同一件事写成 $[n-1]$ 再加半 Tate 扭 $\mathbb Q_\ell(\tfrac{n-1}{2})$，扭的来历是他们的六函子约定与我们不同；两套记号不能逐字互换（见 2.4）。
+
 ## 3 谱侧：Hecke 特征层
 
 ### 3.1 特征方程
@@ -201,6 +216,12 @@ $n=1$ 时对应是定理，不是猜想。它既是整个纲领的出发点，�
 群律同构 $m^*\operatorname{Aut}_E\cong\operatorname{Aut}_E\boxtimes\operatorname{Aut}_E$ 记录 $\operatorname{Aut}_E$ 与 $\operatorname{Pic}^0$ 群结构的相容性；秩 $1$ 时它就是「$\operatorname{Aut}_E$ 是乘法群同态」的几何说法。
 
 这就是处处非分歧的 $\operatorname{GL}(1)$ 几何 Langlands；它是 {{entry:geometry/geometric-class-field-theory}} 的几何版本，而不是整体类域论的复述：整体类域论讲 $\operatorname{Gal}^{\mathrm{ab}}$ 与 idèle 类群，这里讲 $\pi_1(X)^{\mathrm{ab}}$ 与 $\operatorname{Pic}^0(X)$ 上的局部系统。
+
+### 4.3 与经典类域论的对照
+
+经典（数域或函数域上的）类域论说：$\operatorname{Gal}^{\mathrm{ab}}(\bar F/F)$ 与 $F^\times$ 的（理想类群/伊代尔类群的）商一一对应。几何版本把它换成一个几何对象：$\pi_1(C)^{\mathrm{ab}}=H_1(C,\mathbb Z)$ 对应 $\operatorname{Pic}^0(C)$，而对偶 $\mathbb C^\times$ 的角色对应 $\operatorname{Pic}^0$ 上的秩 $1$ 局部系统。定理 1.2 的「$\varphi^*\operatorname{Aut}_E=E$」正是这种一一对应的精确形式：左边是 $H_1$ 的角色（局部系统 $E$），右边是 $\operatorname{Pic}^0$ 上的对象（$\operatorname{Aut}_E$），$\varphi$ 就是互反映射。
+
+差别的要害在于「系数」：经典类域论的对象是 $\mathbb C^\times$ 值或 $\overline{\mathbb Q}_\ell$ 值的**函数**，几何版本的对象是**层**，从而可以张量化、可以取上同调、可以谈 Hecke 特征值而不必先有自守表示。这不是把定理换个说法，而是把定理放进一个更大的范畴里：$\operatorname{GL}(1)$ 之后还能往上走，正是因为层能承载非交换的 Hecke 算子。
 
 ## 5 主定理（$G=\operatorname{GL}(n)$）
 
@@ -298,9 +319,47 @@ Scholze 1252 用现代语言重述同一件事：谱投影子、Whittaker 范畴
 
 还有三类问题不在本页展开：局部几何 Langlands（把 $X$ 换成形式圆盘、把 $\operatorname{Bun}$ 换成 $\operatorname{Gr}$ 或仿射 Grassmann 的环路群版本）；metaplectic 与量子化（把 $\hat G$-局部系统换成带辛结构的对象）；以及「函子性」——给定群同态 $H\to G$，两边的特征层是否相容。它们各自有独立的文献，混进本页只会让主线失焦。
 
-**物理接口。** 几何 Langlands 与 4 维超对称规范理论的对应（Kapustin–Witten）不在本页范围，留给《超对称场论》卷；本页只留一句：谱侧的局部系统对应规范理论的真空，自守侧的层对应边界条件。
+## 8 物理侧：Kapustin–Witten 的图像
 
-## 8 怎么读这一页
+数学侧的对应在 2006 年多了一条独立解释：Kapustin 与 Witten 把它读成四维 $\mathcal N=4$ 超杨–米尔斯理论电磁对偶的一个推论。这一节只讲那条链条的骨架；细节、逐条页码与 KW 原文引文在配套页 [`page/kapustin-witten`](kapustin-witten.md)。
+
+### 8.1 对偶群：从 Montonen–Olive 到 ${}^LG$
+
+$\mathcal N=4$ 理论的 Montonen–Olive 对偶断言：规范群 $G$ 与它的 GNO 对偶群 ${}^LG$ 描述同一个物理。在 $G=\operatorname{GL}(n)$ 时 ${}^LG=\operatorname{GL}(n,\mathbb C)$——正是几何 Langlands 谱侧的那个群。KW 的第一步就是把这件事认出来：**谱侧的 ${}^LG$-局部系统，就是规范理论的对偶群。**
+
+### 8.2 扭化与紧化：Hitchin 模空间登场
+
+$\mathcal N=4$ 理论有三种拓扑扭化。KW 用的是 GL 扭化：它保留一半超对称，把理论变成四维拓扑场论；沿曲线 $C$ 紧化后，剩下的二维理论是目标为 Hitchin 模空间 $M_H(G,C)$ 的 $\sigma$-模型。四维的 $S$-对偶在这个二维理论里变成 $M_H(G,C)$ 与 $M_H({}^LG,C)$ 之间的镜像对称。整族理论由一个参数 $\Psi$ 控制；$\Psi=h$（$\mathcal N=4$ 的规范耦合）与 $\Psi=0,1,\infty$ 是三个特殊点，镜像对称在 $\Psi\mapsto-1/(n_g\Psi)$ 下交换 $G$ 与 ${}^LG$。
+
+### 8.3 线算子、膜与特征性
+
+四维理论里的 Wilson 与 't Hooft 线算子，紧化后成为作用在 $M_H$ 的膜上的算子。KW 定义：一个膜若在该算子作用下只被乘以一个数（特征值），就称**特征膜**。于是：
+
+- **电特征膜** ↔ 同态 $\pi_1(C)\to{}^LG_{\mathbb C}$，即谱侧的局部系统；
+- **磁特征膜** ↔ $\operatorname{Bun}_G$ 上的 Hecke 特征层；
+- **'t Hooft 算子** ↔ Hecke 算子。
+
+这一条是全页与数学侧最直接的接口：它把「Hecke 特征层」翻译成「磁特征膜」，把「特征值 $E$」翻译成「电特征膜」。
+
+### 8.4 落到 $\operatorname{Bun}_G$ 上
+
+磁特征膜本身还在 Hitchin 模空间上，不在 $\operatorname{Bun}_G$ 上。KW 用 c.c. 膜（$(A,B,A)$ 型）作桥梁：$M_H$ 上复结构 $K$ 的每个 A-膜自然给出 $M(G,C)$ 上的 D-模；c.c. 膜的开弦代数就是扭化微分算子层，$\Psi=h$ 时扭化为零，恰好是普通微分算子。$G=\mathrm{U}(1)$ 时这就是 $\operatorname{Jac}(C)$ 上的平坦 $\mathbb C^*$-联络，与第 4 节的几何类域论逐项对上。
+
+### 8.5 这条推导证明了什么
+
+KW 自己划了两条边界（原文 p.5）：只处理**非分歧**情形；没有说明二维共形场论对这个纲领的用处。更要紧的是性质：这是**物理图像与一致性论证**，不是数学证明。数学侧是另一条独立路线——$\operatorname{GL}(n)$ 的非分歧情形由 FGV 加 Gaitsgory 消没（本页第 5–6 节），一般约化群特征 $0$ 由 Gaitsgory–Raskin 等人（Scholze 1252 定理 2.11）。两条路线在「对应存在、由 ${}^LG$-局部系统标号」这一点上汇合；引用时应说「物理机制」而不是「物理证明」。
+
+### 8.6 三种语言对照
+
+| 算术侧 | 几何侧（本页） | 物理侧（KW） |
+|---|---|---|
+| Galois 表示 $\sigma:\operatorname{Gal}(\bar F/F)\to{}^LG$ | 局部系统 $E$（$\pi_1(C)\to{}^LG_{\mathbb C}$） | 电特征膜、$\mathcal N=4$ 的一个真空 |
+| 自守表示 $\pi$ | Hecke 特征层（perverse sheaf / D-模） | 磁特征膜、边界条件 |
+| Hecke 算子 $T_v$ | Hecke 函子 $H$（对应上的积分） | 't Hooft 线算子 |
+| 特征值 $a_v(\pi)$ | 特征同构 $H(K)\cong E\boxtimes K$ | 膜上的特征值 |
+| 互反律 | 主定理（$\operatorname{GL}_n$） | $S$-对偶 $\leftrightarrow$ 镜像对称 |
+
+## 9 怎么读这一页
 
 - 想先看「对应是什么」：第 0、1 节 + {{entry:geometry/hecke-eigensheaf}}。
 - 想先看「为什么 $\operatorname{GL}(1)$ 是定理」：第 4 节 + {{entry:geometry/abel-jacobi}}。
@@ -324,3 +383,17 @@ Scholze 1252 用现代语言重述同一件事：谱投影子、Whittaker 范畴
 - 六个 `{{entry:…}}` 链接指向的词条还是 draft，逐字引文与锚点未补；
 - 定理转引（`{{transclude:…}}`）尚未接上词条锚点，现以引文块代替；
 - 第 7 节的「一般约化群 char 0」只给 Scholze 1252 的页码，未展开 Gaitsgory–Raskin 五篇的分工。
+
+## 10 常见误解
+
+**「$\operatorname{GL}_n$ 已证」＝整体 Langlands 已证？** 不是。几何对应与整体 Langlands 是两套猜想：前者在 $\operatorname{GL}_n$ 的处处非分歧情形已由 Drinfeld、Lafforgue、FGV、Gaitsgory 证明；后者的数域情形仍是重大未决问题。函数域上整体 Langlands 由 Drinfeld（$n=2$）与 Lafforgue（任意 $n$）证明，也不能直接搬到几何侧。
+
+**FGV 证明了一般情形？** 不是。FGV 原文（`arXiv:math/0012255`）一般情形的主陈述是 Conjecture 1.3；他们把它归约到消没猜想 2.3，消没由 Gaitsgory（`arXiv:math/0204081`）处理。Laumon 906 把两者合起来陈述为定理 2.2，所以「FGV 证明了定理 2.2」这种写法不准确，应写「FGV 的构造 + Gaitsgory 的消没」。
+
+**proper 反常层＝紧合态射？** 不是。proper 在这里是定义在 $\mathbb P(V)$ 上反常层的一个性质：遗忘支撑的态射 $j_!L\to j_*L$ 是同构。它与「紧合态射（morphisme propre）」只共享词根。译名因此保留英文 proper，避免与拓扑/代数几何的「紧合」混淆。
+
+**$E^{(d)}[d]$ 是把 $E^{(d)}$ 平移 $d$ 次？** 方向相反。这里是把可构造层 $E^{(d)}$ 放在次数 $-d$（复形只有这一项），记作 $E^{(d)}[d]$；它成为反常层，是 $E^{(d)}$ 到 $\operatorname{Coh}^d_0$ 的中间延拓。把「放低次数」读成「平移」是把复形与层两个范畴混为一谈。
+
+**Betti 版与 $\ell$-进版可以逐字互换？** 不能。FGV 的 Hecke 函子带半 Tate 扭 $\mathbb Q_\ell(\tfrac{n-1}{2})$，Laumon 的 Betti 版没有；两者的六函子约定、对偶、甚至「有界」的含义都不同。跨设定引用公式时，先确认当前设定。
+
+**物理推导＝证明？** 不是。Kapustin–Witten 给的是物理图像与一致性论证（第 8 节），数学证明是另一条独立路线（FGV + Gaitsgory，或 Gaitsgory–Raskin）。说「物理推出了几何 Langlands」会把两类不同性质的证据混在一起。
