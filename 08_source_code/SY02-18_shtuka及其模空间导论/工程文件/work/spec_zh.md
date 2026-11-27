@@ -42,7 +42,7 @@
 | modification | 修正 |
 | bounded | 有界的 |
 | partial Frobenius | 部分 Frobenius |
-| excursion operator | 游走算子 |
+| excursion operator | 巡游算子 |
 | Drinfeld module | Drinfeld 模 |
 | Deligne–Lusztig variety | Deligne–Lusztig 簇 |
 | affine Deligne–Lusztig variety | 仿射 Deligne–Lusztig 簇 |

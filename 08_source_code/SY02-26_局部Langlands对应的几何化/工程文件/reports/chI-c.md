@@ -90,7 +90,7 @@ p.39 起首句为 I.10 的承接句（Remark I.10.3），已照原文译出并�
 | chart | 图卡 | $\pi_b:\mathcal{M}_b\to\Bun_G$ 的覆盖含义，避免与「图表/坐标卡」混淆 |
 | sanity check | 健全性结果 | 原文 "basic sanity results on dimensions"，取「健全性」 |
 | hadal | 深渊带（保留 hadal） | 原文戏称，见译注 2 |
-| excurson operator | （沿用）游走算子 | 已在 glossary / 裁定冻结 |
+| excurson operator | （沿用）巡游算子 | 已在 glossary / 裁定冻结 |
 
 ### 与 `symbols.tsv` 的出入（按任务要求只报告、不改表）
 

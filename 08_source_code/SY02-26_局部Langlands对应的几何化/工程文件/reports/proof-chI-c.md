@@ -19,7 +19,7 @@ s03 与上节 s02b 的衔接正常：`注 I.10.3` 由计数器自动接续（原
 | --- | --- | --- | --- | --- |
 | 1 | 漏段/并段 | p.39–p.44 共 6 页逐段比对 | 1 | p.39 §I.11 首段原文为**一整段**（"Finally, … correspondences. Fargues [Far04] has proved …" 同行续排、无缩进），译文拆成两段 → 已合并（§2 #2） |
 | 2 | 漏译/多译 | 6 页逐句 | 1 | p.40 首句漏 "**on the Fargues–Fontaine curve**" → 已补（§2 #3）；其余无增删 |
-| 3 | 术语 | 全篇 20+ 术语对 glossary/裁定 | 2 | `isocrystal` 译「同晶」2 处，glossary 第 16 条与本库 SY02-18 均为「**等晶体**」→ 已改（§2 #3、#4）；其余（完满空间、菱形、固体、游走算子、野惯性子群、G-主丛、Hecke 特征层、反常 t-结构）均一致 |
+| 3 | 术语 | 全篇 20+ 术语对 glossary/裁定 | 2 | `isocrystal` 译「同晶」2 处，glossary 第 16 条与本库 SY02-18 均为「**等晶体**」→ 已改（§2 #3、#4）；其余（完满空间、菱形、固体、巡游算子、野惯性子群、G-主丛、Hecke 特征层、反常 t-结构）均一致 |
 | 4 | 公式 | 全部显示式 5 个 + 行内式逐个回原页 | 0 | 译手报告的 6 处 txt 失真已在译文中正确处理：`\cO_X^n\to\cO_X(\frac1n)`（p.40）、`\wt{\mathbb{B}}^n_C`（p.42）、`\ol{\QQ}_\ell`×2（p.39）、p.42 有/无上划线并列、`D_{\text{ét}}` 的 é（p.41）、`\ul X`（p.44）；原页渲染逐一复核无误 |
 | 5 | 编号 | 2 个编号对象 + s02b 衔接 | 0 | `注 I.10.3`（自动）、`问题 I.11.1`（question 环境自动编号，原文 Problem I.11.1 的 problem 环境 preamble 未定义，见 `reports/chI-c.md` §7）；与 s02b 无重号 |
 | 6 | 译注 | 6 条全部审读 | 1 | 1 条来源把 §I.10 写成 §I.11 → 已改（§2 #8）；内容核对见 §4 |
@@ -118,7 +118,7 @@ Underfull 3 处均为 `\allowbreak` 附近的短行（致谢人名串、`[GKRV22
 | perfectoid space | 完满空间 | 15 | 2 | 0 | 8 | ✅ |
 | diamond | 菱形 | 13 | 6 | 0 | 5 | ✅ |
 | solid | 固体 | 0 | 5 | 0 | 4 | ✅ |
-| excursion operator | 游走算子 | 0 | 6 | 0 | 2 | ✅ |
+| excursion operator | 巡游算子 | 0 | 6 | 0 | 2 | ✅ |
 | G-torsor | G-主丛 | 26 | 2 | 1 | 1 | ✅（无「扭子/挠子」误译） |
 | Langlands dual group | 朗兰兹对偶群（裁定） | 正文均作「朗兰兹对偶群」，仅 yizhu 记别名「Langlands 对偶群」 | — | — | — | ✅ 正文一致；glossary 第 8 行仍用旧名（见 §6.2） |
 | L-parameter / L-packet / stack of L-parameters | L-参数 / L-包 / L-参数叠 | ✅ | ✅ | ✅ | ✅ | ✅ |

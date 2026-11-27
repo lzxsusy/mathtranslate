@@ -22,7 +22,7 @@
 | --- | --- | --- |
 | `spherical-hecke` | 换成 `hyperbolic-localization` | Ch I 全篇 `spherical` 出现 **0 次**（grep `01_pages/p007–p044`）——它是 Ch II 之后的语言，在本章做卡只能注水。 |
 | `euler-product` | 不做 | 同上，`Euler` 在本章出现 0 次。 |
-| `excursion-operator` | 从概念卡降为推导卡（`fs21/deriv/excursion-operator-reads-phi`） | Ch I 没有给游走算子独立定义（它只在 Prop I.9.1 的构造里出现），做成概念卡会逼我编一个原文没有的「定义」；它的内容恰好是三步构造，正是推导卡。 |
+| `excursion-operator` | 从概念卡降为推导卡（`fs21/deriv/excursion-operator-reads-phi`） | Ch I 没有给巡游算子独立定义（它只在 Prop I.9.1 的构造里出现），做成概念卡会逼我编一个原文没有的「定义」；它的内容恰好是三步构造，正是推导卡。 |
 | `whittaker-sheaf` | 不做，列入 §4 | p.38 只有一句定义，真正的使用要等 Ch IV，证据不足。 |
 | `p-adic hodge` 相关 | 不做 | 导论只在 untilt / 等晶体的语境里点到，展开就会侵入 Ch II–III；已作为 `ff-curve` 的一条 pitfall 处理。 |
 
@@ -33,7 +33,7 @@
 导论里真正「从 A 造出 B」的构造只有三处，且每处都能把每个推导步定位到原文一句或一个公式：
 
 1. `satake-to-hecke-operator`（D）：`Sat` 等价 → 层 `S_V` → 沿 Hecke 对应推拉 → `T_V`，并解释 `W_E^I`-等变性。
-2. `excursion-operator-reads-phi`（E）：`α,β,γ_i` → 游走算子 → 标量 → 唯一半单 `φ_A`。
+2. `excursion-operator-reads-phi`（E）：`α,β,γ_i` → 巡游算子 → 标量 → 唯一半单 `φ_A`。
 3. `spectral-action-compact-support`（E）：紧支撑作用 ↔ 幺半函子族，两个方向互造，收于 `Conj I.10.2`。
 
 `Thm I.2.6`（`B(G) ≅ Bun_G(Spa C)/≅`）虽然同样重要，但它的证明外包给 [Far20a] 与 [Ans19]，本章只给陈述；硬拆成推导卡会得到一张「每步都标 C」的卡，违背「每个推导步必须能定位」的要求，故只在 `bun-g-stack` 里以 `proof.status="sketch"` + `gap_note` 处理。

@@ -19,7 +19,7 @@
 | # | 维度 | 检查量 | 问题数 | 说明 |
 | --- | --- | --- | --- | --- |
 | 1 | 漏段/并段 | p.23–p.36 共 14 页逐段比对 | 1 | p.23 接缝重复「对」，且正文出现省略号「……」 |
-| 2 | 术语 | 全篇 20+ 术语对 glossary/裁定 | 1 | `congredients` 系误读（原文 congradients，本意 contragredient）；其余（完满/菱形/固体/凝聚/游走算子/ULA/shtuka/局部 Hecke 叠/谱 Bernstein 中心/好滤过/Weil 限制）均合裁定 |
+| 2 | 术语 | 全篇 20+ 术语对 glossary/裁定 | 1 | `congredients` 系误读（原文 congradients，本意 contragredient）；其余（完满/菱形/固体/凝聚/巡游算子/ULA/shtuka/局部 Hecke 叠/谱 Bernstein 中心/好滤过/Weil 限制）均合裁定 |
 | 3 | 公式 | 约 60 个显示式 + 5 个 tikzcd 逐图回原页 | 4 | 2 处数学陈述（`\varinjlim` 应为 `\varprojlim`；`有限维` 应为 `有限`）、2 处交换图箭头方向（q^- 挂在错误的源点） |
 | 4 | 编号 | 20 个编号对象 + 全部 `\ref` | 0 | Thm I.4.2、I.5.1、I.5.2、Rem I.6.1、Def I.6.2、Thm I.6.3、Prop I.6.4、Thm I.6.5、Rem I.7.1、Thm I.7.2、Cor I.7.3、Thm I.8.1、I.8.2、I.8.3、Prop I.9.1、Def I.9.2、Prop I.9.3、Rem I.9.4、Conj I.9.5、Thm I.9.6，与原文页一一对应，无缺无重 |
 | 5 | 译注 | 10 条全部审读，重点 4 条 | 4 | 3 条以「见报告 §6 未解项」结尾（书稿里指向不存在的内部报告）、1 条原文引述位置错、1 条未答「补了哪一步」 |
