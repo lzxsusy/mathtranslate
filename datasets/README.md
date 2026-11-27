@@ -140,6 +140,10 @@ datasets/
 
 `tools/ds_publish.py` 是发布过滤器：`book` 一律拦；`arxiv:*` 未确认 CC BY 的整条拦、只留 ≤300 字引用；`self` 需 `status=reviewed/published`。
 
+## 5.1 资料卡规范（强制）
+
+`datasets/*/cards/**/*.json` 一律按 [`04_playbook/23_资料卡制作规范_v1.md`](../04_playbook/23_资料卡制作规范_v1.md) 制作。新建/改卡前读该文件 §2–§9；提交前跑 `python tools/card_spec_check.py --set <set> --strict`（新卡/返工 hard=0）。历史旧形态默认按 `legacy_*` warn 报出，批量返工用 `--strict` 建队列。
+
 ## 6. 引用与署名
 
 数据条目引用格式：
