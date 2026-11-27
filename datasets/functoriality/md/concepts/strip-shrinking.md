@@ -30,7 +30,7 @@ $\HF^*(L_0,L_{01},L_{12},L_2)\xrightarrow{\simeq}\HF^*(L_0,L_{01}\circ L_{12},L_
 
 在标准单调性假设下，设 L01∘L12 是嵌入的。则典范双射 (L0×L12)∩(L01×L2)≅(L0×L2)∩(L01∘L12) 诱导拼接 Floer 上同调的同构 (62)。
 
-（sketch；来源：原书 p.25 §3.5.2）
+（sketch；来源：原书 p.27 §3.5.2）
 
 1. 把三重带的宽度看作参数，构造一族模空间，其边界对应带宽收缩为零。  
    为什么：同构必须在参数族上连续地实现，才能在链层面比较。
@@ -47,7 +47,7 @@ $\HF^*(L_0,L_{01},L_{12},L_2)\xrightarrow{\simeq}\HF^*(L_0,L_{01}\circ L_{12},L_
 
 在与 (62) 相同的假设下，若两个拼接曲面的差别只是把第一个中的某条带或某个环域收缩为一条曲线，则相应的拼接不变量相同。
 
-（none；来源：原书 p.26 §3.5.2）
+（none；来源：原书 p.28 §3.5.2）
 
 
 缺口：原文只陈述并引 WW15 定理 5.1，未给证明；本卡只记录结论。
@@ -65,4 +65,4 @@ $\HF^*(L_0,L_{01},L_{12},L_2)\xrightarrow{\simeq}\HF^*(L_0,L_{01}\circ L_{12},L_
 
 关联：`functoriality/concept/figure-eight-bubble`、`functoriality/concept/quilted-floer`、`functoriality/concept/phi-sharp`、`functoriality/deriv/mww-composition`
 
-来源说明：原书 p.25–26 §3.5.2（定理 1.0.1、定理 5.1 的转述）；公式 (62) 逐字取自中译本 chapter3.tex。
+来源说明：原书 p.27–28 §3.5.2（定理 1.0.1 在 p.27、定理 5.1 的转述在 p.28）；公式 (62) 逐字取自中译本 chapter3.tex。

@@ -37,6 +37,13 @@
 
 ## 备注
 
-- 本轮新增 ggl09 的 arXiv PDF 仅存 `%TEMP%/cardverify/`，未入库；`datasets/**` 零改动。
+- 本轮新增 ggl09 的 arXiv PDF 仅存 `%TEMP%/cardverify/`，未入库；核验轮本身对 `datasets/**` 零改动，随后的修卡见下节。
 - 工作树在本轮开始前已有大量未提交改动（11-26 的其他工程），本轮 commit 只暂存 `11_card_audit/daily_verify/2026-11-27/` 与 `11_card_audit/daily_verify/ledger.jsonl`。
 - 方法、页码表与复跑命令：`notes/METHOD.md`；复核脚本：`notes/verify_quotes.py`、`notes/assemble.py`。
+
+## 修卡（2026-11-27，核验之后）
+
+- 按用户要求把 12 条 issue 修入 `datasets/` 卡片：11 张卡、23 处字段级改动；逐处 before/after 见 `fixes/fix_log.json`，逐卡七节案例见 `fixes/casebook/`，施工说明与验证记录见 `fixes/README.md`、`fixes/TRACE.md`。
+- 派生文件同步：9 个 md 由卡片重生成后回拷，gw06 手工两行；`gw06/index.jsonl` 的 `pdf_pages` 同步；lbook04 与 benzvi 的生成器源码同步，重建结果与卡片逐字段相等。
+- 验证：`verify_final.py` 全量 1859 张 `errors: 0`；`git diff --check` 干净；既有 32 例 casebook 未动。
+- 需知：kw06 的 `theorems[0].source` 按页脚由 p.11 改为 p.10（11-26 批次此处 off-by-one），故 `verify_final.py` 对该条永久显示 1 个 STALE，属预期。

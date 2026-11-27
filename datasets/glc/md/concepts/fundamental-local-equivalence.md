@@ -52,7 +52,7 @@ track: G
 
 ## 出处
 
-- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§14.6 真空生成与下一步的局部图景，p.71（PDF p.71），`源码/chapters/ch14.tex:149-164（真空生成方块、Op^unr 与 FLE）`
+- 陈麟《Introduction to Geometric Langlands Theory》（2023 秋清华讲义，2025-08-08 修订，85 页），§14.6 真空生成与下一步的局部图景，p.71-72（PDF p.71-72），`源码/chapters/ch14.tex:149-164（真空生成方块、Op^unr 与 FLE）`
 
 ## 核验
 

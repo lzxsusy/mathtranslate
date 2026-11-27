@@ -51,5 +51,5 @@ $$
 
 ## 来源
 
-- Bernstein–Gelbart 编《朗兰兹纲领导论》（An Introduction to the Langlands Program），Birkhäuser 2004，§2，原书 pp. 39–40（PDF pp. 46–47）
+- Bernstein–Gelbart 编《朗兰兹纲领导论》（An Introduction to the Langlands Program），Birkhäuser 2004，§2，原书 pp. 39–43（PDF pp. 46–50）
   - 锚点：`08_source_code/SY02-24_朗兰兹纲领导论_全书中文译注/源码/chapters/ch03.tex:13-47`

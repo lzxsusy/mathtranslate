@@ -413,7 +413,7 @@ CARDS_1 = [
         ],
         ["ch3-theta-modularity", "ch3-eisenstein-cusp"],
         [
-            src(3, "§2", [39, 40], "ch03.tex:13-47"),
+            src(3, "§2", [39, 43], "ch03.tex:13-47"),
         ],
     ),
     card(

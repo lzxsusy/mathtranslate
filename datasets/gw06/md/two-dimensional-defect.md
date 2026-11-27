@@ -56,8 +56,8 @@
 
 ## 出处
 
-- S. Gukov & E. Witten, Gauge Theory, Ramification, And The Geometric Langlands Program（arXiv:hep-th/0612073v2）中译校订本 §2.6；印刷页 [29, 30] / PDF 页 [30, 31]；锚点 `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s02b-duality.tex:1020-1131`
-- 抛物子群、博雷尔子群与幂幺根（式 (2.57)–(2.63)），以及极大列维情形的离散 $\alpha,\eta$；印刷页 29–30，原文 PDF 第 30–31 页。
+- S. Gukov & E. Witten, Gauge Theory, Ramification, And The Geometric Langlands Program（arXiv:hep-th/0612073v2）中译校订本 §2.6；印刷页 [29, 31] / PDF 页 [30, 32]；锚点 `08_source_code/SY02-06_规范理论、分歧与几何朗兰兹纲领/源码/sections/s02b-duality.tex:1020-1131`
+- 抛物子群、博雷尔子群与幂幺根（式 (2.57)–(2.63)），以及极大列维情形的离散 $\alpha,\eta$；印刷页 29–31，原文 PDF 第 30–32 页。
 
 ---
 

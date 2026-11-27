@@ -24,26 +24,26 @@
 ## 核心公式
 
 $$
-$$I_4=\frac1{e^2}\int d^4x\,\mathrm{Tr}\Big(\frac12 F_{\mu\nu}F^{\mu\nu}+\sum_{i=1}^6 D_\mu\phi_iD^\mu\phi_i+\frac12\sum_{i,j=1}^6[\phi_i,\phi_j]^2\Big)$$$$\{Q^{AX},Q^Y_{\dot A}\}=\delta^X_Y\sum_{\mu=0}^3\Gamma^\mu_{A\dot A}P_\mu,\qquad \{Q,Q\}=\{\bar Q,\bar Q\}=0$$
+$$I_4=\frac1{e^2}\int d^4x\,\mathrm{Tr}\Big(\frac12 F_{\mu\nu}F^{\mu\nu}+\sum_{i=1}^6 D_\mu\phi_iD^\mu\phi_i+\frac12\sum_{i,j=1}^6[\phi_i,\phi_j]^2\Big)$$$$\{\bar Q_{AX},Q^Y_{\dot A}\}=\delta^X_Y\sum_{\mu=0}^3\Gamma^\mu_{A\dot A}P_\mu,\qquad \{Q,Q\}=\{\bar Q,\bar Q\}=0$$
 $$
 
 $$
-$$\{Q^{AX},Q^Y_{\dot A}\}=\delta^X_Y\sum_{\mu=0}^3\Gamma^\mu_{A\dot A}P_\mu,\qquad \{Q,Q\}=\{\bar Q,\bar Q\}=0$$
+$$\{\bar Q_{AX},Q^Y_{\dot A}\}=\delta^X_Y\sum_{\mu=0}^3\Gamma^\mu_{A\dot A}P_\mu,\qquad \{Q,Q\}=\{\bar Q,\bar Q\}=0$$
 $$
 
 ## 定理与证明（或缺口）
 
 ### 十维降维给出的四维场内容
 
-十维超对称杨–米尔斯理论（规范场加一个正手征旋量）约化到四维后，给出一个规范场、四个外尔费米子与六个实标量，共 16 个超荷，按 $(2,1,4)\oplus(1,2,\bar4)$ 变换。
+十维超对称杨–米尔斯理论（规范场加一个正手征旋量）约化到四维后，给出一个规范场、四个外尔费米子与六个实标量，共 16 个超荷，按 $(2,1,\bar4)\oplus(1,2,4)$ 变换。
 
-> 证明状态：**sketch**。原文 p.6–8 只说『most easily constructed by dimensional reduction』并列出四维表示，未逐步推导场内容；此条为按原文整理的物理陈述。
+> 证明状态：**sketch**。原文 p.7–11 只说『most easily constructed by dimensional reduction』并列出四维表示，未逐步推导场内容；此条为按原文整理的物理陈述。
 
-出处：`B p.6`
+出处：`B p.7–10（eq (2.14) 在 p.10）`
 
 ### 四维 $\mathcal N=4$ 超代数
 
-两组超荷满足 $\{Q^{AX},Q^Y_{\dot A}\}=\delta^X_Y\sum_\mu\Gamma^\mu_{A\dot A}P_\mu$，且 $\{Q,Q\}=\{\bar Q,\bar Q\}=0$。
+两组超荷满足 $\{\bar Q_{AX},Q^Y_{\dot A}\}=\delta^X_Y\sum_\mu\Gamma^\mu_{A\dot A}P_\mu$，且 $\{Q,Q\}=\{\bar Q,\bar Q\}=0$。
 
 > 证明状态：**gap**。原文 p.11 直接给出 (2.15) 作为十维 (2.9) 的维数约化，未给证明。
 
@@ -61,7 +61,7 @@ $$
 
 ## 出处（印刷页）
 
-- B p.6–7（B p.6）
+- B p.6–11（B p.7）
 - B p.9（B p.9 eq (2.10)）
 - B p.11（B p.11 eq (2.15)）
 

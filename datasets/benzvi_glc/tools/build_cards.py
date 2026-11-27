@@ -39,7 +39,8 @@ def T(name, statement, steps, gap_note, source):
 
 
 def C(slug, track, title, aliases, summary, question, definition, notation,
-      key_points, formulas, theorems, pitfalls, related, section, pages):
+      key_points, formulas, theorems, pitfalls, related, section, pages, note=None,
+      asserts=None):
     summary = SUMMARY_OVERRIDES.get(slug, summary)
     if len(summary) > 120:
         print("WARN summary %s: %d" % (slug, len(summary)))
@@ -69,6 +70,7 @@ def C(slug, track, title, aliases, summary, question, definition, notation,
             "pages": pages,
             "pdf_pages": pages,
             "anchor": "arXiv:2605.23167 %s, p.%d" % (section, pages[0]),
+            **({"page_note": note} if note else {}),
         }],
         "rights": "rewritten",
         "status": "reviewed",
@@ -80,7 +82,7 @@ def C(slug, track, title, aliases, summary, question, definition, notation,
                 "entry": "Ben-Zvi 2026, %s" % section,
                 "url": "https://arxiv.org/abs/2605.23167",
                 "last_revised": "2026-05-22",
-                "asserts": "本卡内容逐句对齐该节；尚未在 nLab / Stacks Project 找到逐字对应的外部核验页。",
+                "asserts": asserts or "本卡内容逐句对齐该节；尚未在 nLab / Stacks Project 找到逐字对应的外部核验页。",
                 "verdict": "source-only",
             }],
         },
@@ -476,7 +478,9 @@ cards.append(C(
         "核层不是普通函数；在导出范畴中要处理完各化与奇异支撑。",
     ],
     ["bzg/concept/categorical-harmonic-analysis", "bzg/concept/fourier-transform", "bzg/concept/gl1-betti-glc"],
-    "§2.1", [8],
+    "§1.3", [6],
+    asserts="本卡内容依据 §1.3（p.6）的 general theme 整理；核公式为标准的 Fourier–Mukai 变换，该节未逐字写出。",
+    note="原文只在 §1.3（p.6）以「general theme of categorical Fourier transforms」提到此类等价，未写出核公式 $FM_{\\mathcal K}(F)=p_{Y!}(p_X^*F\\otimes\\mathcal K)$；该公式按标准 Fourier–Mukai 变换给出。",
 ))
 
 # ---------------------------------------------------------------- B Bun_G / Hecke
