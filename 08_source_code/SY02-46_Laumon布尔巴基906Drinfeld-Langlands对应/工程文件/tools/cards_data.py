@@ -54,7 +54,7 @@ def build(m):
                  "模空间之间存在对应。严格陈述须先选定上同调理论；本篇取 Betti 三元组。",
          "notation": "$X$, $F=k(X)$, $G$, $\\hat G$, $\\Fib_n(X)$, $\\Aut_E$"},
         ["$G=\\GL(1)$ 时即 Rosenlicht–Lang 几何类域论，自守侧对象由定理 1.2 的 $\\Aut_E$ 给出。",
-         "$G=\\GL(2)$ 由 Drinfeld [Dr 2][Dr 3] 处理，任意阶的函数域情形由 Lafforgue [La] 证明；数域情形仍开放。",
+         "$G=\\GL(2)$ 的几何对应由 Drinfeld [Dr 2][Dr 3] 处理；（整体的）Langlands 对应则在函数域上由 Drinfeld [Dr 1]（$n=2$）与 Lafforgue [La]（任意 $n$）证明，数域情形仍是重大未决问题。",
          "本篇只讨论 $X$ 射影（处处非分歧）、$G=\\GL(n)$ 的情形，主定理为定理 2.2。",
          "$\\hat G$ 是复约化群，其根为 $G$ 的余根；$\\GL(n)$ 的对偶为 $\\GL(n,\\C)$。"],
         ["$\\Bun_G(X)\\;\\leftrightarrow\\;\\LocSys_{\\hat G}(X)$"],
@@ -86,7 +86,7 @@ def build(m):
                  "$\\cS$，$\\Dbc(\\cS)$ 记相伴解析叠上具有有界可构造上同调的 $C$-向量空间层复形的导出范畴。"
                  "当 $\\cS=[S/G]$ 时，它就是 Bernstein–Luntz 的 $D^b_{G(\\C)^{\\mathrm{an}}}(S(\\C)^{\\mathrm{an}})$。",
          "notation": "$k=\\C$, $C$, $\\Dbc(\\cS)$, $\\Perv(\\cS)$"},
-        ["六函子 $f_*,f_!,f^*,f^!$ 齐备；中间反常 $t$-结构的心 $\\Perv$ 阿贝尔、Noether、Artin、自对偶。",
+        ["六函子 $f_*,f_!,f^*,f^!$ 齐备；中间反常 $t$-结构的心 $\\Perv$ 阿贝尔、Noether、Artin、自对偶（两者见原文 p3）。",
          "模空间一律按代数叠处理，采用 [L-M] 的叠语言。",
          "FGV 原文用 $\\ell$-进三元组，并为几何 Fourier 变换额外假设 $\\operatorname{char} k=p>0$；本篇指出这一限制并不必要。",
          "原文同时指出：Betti 情形下解析叠的一般理论尚待写出。"],
@@ -98,8 +98,9 @@ def build(m):
         [src(2, "0. 预备（原文 p2）",
              "Dans le cas partout non ramifié",
              "théorie cohomologique à coefficients dans C",
-             line_anchor("s01-prelim.tex", "本文仍然使用最后这个 Betti 三元组"))],
+             line_anchor("s01-prelim.tex", "本文讨论处处非分歧的情形"))],
         [e1(2, "原文第 2 页列出三种三元组，并声明本文采用 Betti 三元组，底域 $k=\\C$。"),
+         e1(3, "原文第 3 页给出六函子、反常 $t$-结构，以及 $\\Perv$ 的阿贝尔性、Noether 性、Artin 性与自对偶性。"),
          vcheck("底本 TeX 源码（arXiv e-print）", TEX,
                 "Bourbaki2002.tex 中三种三元组的条目与 PDF 完全一致。", "supports"),
          vcheck("Bernstein–Lunts, LNM 1578", "https://doi.org/10.1007/BFb0073549",
@@ -113,7 +114,7 @@ def build(m):
         "齐次 Fourier 变换 $\\Four_{V/S}$",
         ["齐次 Fourier 变换", "几何 Fourier 变换", "homogeneous Fourier transform"],
         "$\\Gm$-等变复形上的 Fourier 变换：由公式 (0.1) 定义，是导出范畴的等价、与对偶交换、"
-        "关于反常 $t$-结构 $t$-正合；它是 §5 构造 $\\Aut'_E$ 的唯一工具。",
+        "关于反常 $t$-结构 $t$-正合；它是 §5 构造 $\\Aut'_E$ 的主要工具（还要配合 $j_!$、$(j^\\vee)^*$、$(\\iota_i)_*$ 与 $\\sL^d_E$）。",
         "齐次 Fourier 变换如何定义？它有哪些函子性质？",
         {"text": "设 $\\pi:\\cV\\to\\cS$ 为秩 $r$ 的向量丛，$\\cV=[V/\\Gm]$，$\\cV^\\vee$ 为对偶丛。"
                  "齐次 Fourier 变换 $\\Four_{\\cV/\\cS}:\\Dbc(\\cV)\\to\\Dbc(\\cV^\\vee)$ 由 (0.1) 定义；"
@@ -132,12 +133,12 @@ def build(m):
              "On a une transformation de Fourier géométrique",
              "associée au fibré vectoriel V/S (cf. [Lau 3]).",
              line_anchor("s01-prelim.tex", "齐次 Fourier 变换（参 [Lau 3]）"))],
-        [e1(3, "原文第 3 页给出齐次 Fourier 变换的等价性、逆与 $t$-正合性，公式编号 (0.1)。"),
+        [e1(3, "原文第 3 页给出齐次 Fourier 变换的等价性、逆与 $t$-正合性；(0.1) 的显式公式在下一页（p4）。"),
          vcheck("底本 TeX 源码（arXiv e-print）", TEX,
                 "Bourbaki2002.tex 中 (0.1) 的系数与平移 $[r-1]$ 与 PDF 一致。", "supports"),
          vcheck("Laumon, arXiv:math/0207129（[Lau 3]）", LAU3,
                 "该文经 arXiv/Crossref 核验存在（Bull. SMF 131 (2003) 527–551）；原文把齐次 Fourier 变换归于它，内容未逐条比对。", "partial"),
-         vcheck("本工程译稿 第 0 节", "repo:08_source_code/SY02-46_Laumon布尔巴基906Drinfeld-Langlands对应/源码/sections/s01-prelim.tex:L29-L33",
+         vcheck("本工程译稿 第 0 节", "repo:08_source_code/SY02-46_Laumon布尔巴基906Drinfeld-Langlands对应/源码/sections/s01-prelim.tex:L29-L45",
                 "中译保留 (0.1) 的配对 $\\mu$、投影与平移，未改写公式。", "supports")]))
 
     # 4 ------------------------------------------------------------------
@@ -149,7 +150,7 @@ def build(m):
         "$\\Four(j_!L)$ 仍 proper，且在 $P(\\cV^\\vee)$ 上化为 Radon 变换。",
         "proper 反常层是什么？它与 Radon 变换、Fourier 变换如何相容？",
         {"text": "$P(\\cV)$ 上的反常层 $L$ 称为 proper，若遗忘支撑的态射 $j_!L\\to j_*L$ 是同构；"
-                 "此时 $j_!L\\cong j_*L=j_{!*}L$，即 $L$ 是中间延拓。判据 (0.3)：$L$ proper 当且仅当 "
+                 "此时 $j_!L\\cong j_*L$，且这个公共对象正是 $L$ 的中间延拓 $j_{!*}L$。判据 (0.3)：$L$ proper 当且仅当 "
                  "$(\\pi^\\circ)_!L=0$。Radon 变换定义为 $\\Rad_{P(\\cV)/\\cS}(L)=(q^\\vee)_!q^*L[r-1]$。",
          "notation": "$P(\\cV)$, $j:V^\\circ\\hookrightarrow V$, $\\pi^\\circ$, $\\Rad$, $\\Four$"},
         ["(0.4)：若 $L$ proper，则 $\\Four_{\\cV/\\cS}(j_!L)$ proper，且它在 $P(\\cV^\\vee)$ 上的限制等于 $\\Rad_{P(\\cV)/\\cS}(L)$。",
@@ -188,7 +189,7 @@ def build(m):
          "秩 $1$ 时 $E^{(d)}$ 沿 $\\phi^{(d)}$ 的纤维常值，故下降为 $\\Pic^0(X)$ 上的 $\\Aut_E$；这正是处处非分歧的 GL(1) Drinfeld–Langlands。"],
         ["$(E^{(d)})_D=\\bigotimes_{x\\in X}\\Sym^{d_x}E_x$"],
         [{"name": "定理 1.1（Abel–Jacobi）", "kind": "定理",
-          "statement": "$J(X)$ 是 $\\Pic^0(X)$ 底复环面，$\\phi(x)=\\cO_X([x]-[x_0])$ 是代数态射。",
+          "statement": "$J(X)$ 是 $\\Pic^0(X)$ 的底层复环面；解析态射 $\\phi:X\\to J(X)\\cong\\Pic^0(X)$ 正是把 $x$ 送到 $\\cO_X([x]-[x_0])$ 的同构类的代数态射。",
           "proof": {"status": "cited", "steps": [],
                     "gap_note": ""},
           "source": anchor("s02-classfield.tex", "theorem", 0, "定理 1.1")},
@@ -211,11 +212,11 @@ def build(m):
              "Pour tout système local E de rang 1 sur X, il existe un unique",
              "AutE = E.",
              anchor("s02-classfield.tex", "theorem", 1, "定理 1.2"))],
-        [e1(5, "原文第 5 页陈述定理 1.1 与定理 1.2，并给出经对称积的代数证明。"),
+        [e1(5, "原文第 5 页陈述定理 1.1 与定理 1.2；经对称积的代数证明从第 5 页末延续到第 6 页。"),
          vcheck("底本 TeX 源码（arXiv e-print）", TEX,
                 "Bourbaki2002.tex 的定理 1.2 与 (1.3) 与 PDF 一致。", "supports"),
          vcheck("底本 TeX 源码中的 (1.3)", TEX,
-                "源码含纤维公式 (1.3) 的完整排版，与 PDF 第 5 页公式一致。", "supports"),
+                "源码含纤维公式 (1.3) 的完整排版，与 PDF 第 6 页公式一致。", "supports"),
          vcheck("本工程译稿 第 1 节", "repo:08_source_code/SY02-46_Laumon布尔巴基906Drinfeld-Langlands对应/源码/sections/s02-classfield.tex:L29-L75",
                 "中译保留定理 1.1/1.2 的层级与原编号，(1.3) 逐字保留。", "supports")]))
 
@@ -234,7 +235,7 @@ def build(m):
          "notation": "$\\Hck_n(X)$, $H(K)$, $S_2$-等变, $\\Fib_n^d(X)$"},
         ["$H(K)=(q,p')_*p^*K[n-1]\\in\\Dbc(X\\times\\Fib_n(X))$。",
          "$H\\circ H$ 在 $(X\\times X-\\Delta_X)\\times\\Fib_n(X)$ 上是 $S_2$-等变的（$S_2$ 交换两个 $X$ 因子）。",
-         "定义 2.1 要求 $K$ 不可约；Hecke 性质由 $H(K)\\cong E\\boxtimes K$ 与 $H\\circ H$ 的 $S_2$-等变性共同刻画。"],
+         "定义 2.1 要求 $E$ 是秩 $n$ 的不可约局部系统、$K$ 是不可约反常层；Hecke 性质由 $H(K)\\cong E\\boxtimes K$ 与 $H\\circ H$ 的 $S_2$-等变性共同刻画。"],
         ["$H(K)=(q,p')_*p^*K[n-1]$"],
         [],
         ["把 Hecke 性质写成 $H(K)\\cong K\\boxtimes E$：$E$ 在 $X$ 因子上，$K$ 在 $\\Fib_n$ 因子上，次序不可换。",
@@ -247,7 +248,7 @@ def build(m):
         [e1(7, "原文第 7 页给出 Hecke 叠、投影的相对维数与算子 $H(K)$ 的定义。"),
          vcheck("底本 TeX 源码（arXiv e-print）", TEX,
                 "Bourbaki2002.tex 的 Hecke 算子公式与 $[n-1]$ 平移与 PDF 一致。", "supports"),
-         vcheck("FGV, arXiv:math/0012255v3 第 2 页", FGV + "#page=2",
+         vcheck("FGV, arXiv:math/0012255v3 第 4 页", FGV + "#page=4",
                 "FGV §1.1 的 Hecke 特征层定义 (1.3) 为 $H^1_n(K)\\simeq E\\boxtimes K$，与本卡方向一致。", "supports"),
          vcheck("本工程译稿 第 2 节", "repo:08_source_code/SY02-46_Laumon布尔巴基906Drinfeld-Langlands对应/源码/sections/s03-main.tex:L16-L40",
                 "中译保留初等下修改与两个投影的相对维数。", "supports")]))
@@ -264,10 +265,10 @@ def build(m):
                  "对任意 $X$ 上秩 $n$ 的不可约局部系统 $E$，存在 $\\Fib_n(X)$ 上的反常层 $\\Aut_E$，"
                  "使其在每个连通分支 $\\Fib_n^d(X)$ 上的限制不可约，且相对 $E$ 有 Hecke 性质。",
          "notation": "$\\Fib_n(X)$, $\\Fib_n^d(X)$, $\\Aut_E$, $\\Fib'_n(X)$"},
-        ["第一步：在 $\\Fib'_n(X)$（$(\\cL,s)$，$s:(\\Omega^1_X)^{\\otimes(n-1)}\\hookrightarrow\\cL$，模同调）上构造 $\\Aut'_E$。",
+        ["第一步：在 $\\Fib'_n(X)$（$(\\cL,s)$，$s:(\\Omega^1_X)^{\\otimes(n-1)}\\hookrightarrow\\cL$，模数乘）上构造 $\\Aut'_E$。",
          "灵感来自 $\\GL(n)$ 尖点自守形式的 Fourier 展开与 Shintani 公式（Grothendieck 函数–层字典），但不是简单移植。",
          "第二步：在大开集上证明 $\\Aut'_E$ 是反常层，并沿遗忘 $s$ 的态射 $\\Fib'_n\\to\\Fib_n$ 下降；难点在这一步。",
-         "原文注明：FGV 原文的主陈述是猜想（Conjecture 1.3），消没部分由 Gaitsgory 的定理补足。"],
+         "核对 FGV 原文可见：其主陈述是猜想（Conjecture 1.3），消没部分由 Gaitsgory 的定理补足。"],
         [],
         [{"name": "定理 2.2", "kind": "定理",
           "statement": "对任意秩 $n$ 不可约局部系统 $E$，存在 $\\Fib_n(X)$ 上反常层 $\\Aut_E$，"
@@ -333,15 +334,15 @@ def build(m):
         "在 $\\Fib'_n(X)$（带 $s:(\\Omega^1_X)^{\\otimes(n-1)}\\hookrightarrow\\cL$ 的向量丛）上，"
         "定义 4.1 用函子 $M'^d_{n,E}$ 逐分支定义复形 $\\Aut'_E$，它是定理 2.2 证明第一阶段的产物。",
         "$\\Aut'_E$ 如何定义？为什么先要在 $\\Fib'_n(X)$ 上构造它？",
-        {"text": "$\\Fib'_n(X)$ 参数化 $(\\cL,s)$，$s:(\\Omega^1_X)^{\\otimes(n-1)}\\to\\cL$ 模同调。"
+        {"text": "$\\Fib'_n(X)$ 参数化 $(\\cL,s)$，$s:(\\Omega^1_X)^{\\otimes(n-1)}\\to\\cL$ 模数乘。"
                  "定义 4.1：$\\Aut'_E$ 在分支 $\\Fib'^{\\,n(n-1)(g-1)+d}_n(X)$ 上为 $M'^d_{n,E}(L_n)$（$d\\ge 0$），"
-                 "在 $d<0$ 时为 $0$。其中 $L_n=(f_n)_!(g_n)^*\\Psi[\\dim\\cU_n]$。",
+                 "在 $d<0$ 时为 $0$。其中 $L_n=(\\bar f_n)_!(\\bar g_n)^*\\Psi[\\dim\\bar\\cU_n]$。",
          "notation": "$\\Fib'_n(X)$, $\\cU_n$, $\\overline{\\cU}_n$, $L_n$, $M'^d_{n,E}$"},
         ["$\\cU_n$ 参数化完全旗 $(\\cL,\\cL_\\bullet,s_\\bullet)$；$f_n:\\cU_n\\to\\Fib'_n$，$g_n:\\cU_n\\to\\A^1$ 取各扩张类之和。",
          "$\\Gm$ 作用 $t\\cdot(\\cL,\\cL_\\bullet,s_\\bullet)=(\\cL,\\cL_\\bullet,t\\cdot s_\\bullet)$，$t\\cdot s_\\bullet=(t^{n-j}s_j)$；取商得 $\\overline{\\cU}_n=\\cU_n/\\Gm$。",
          "$M'^d_{n,E}(K)=p_*p'{}^*(K\\otimes q^*\\sL^d_E)[nd]$。",
          "本节起恒设 $g\\ge 2$（$g=0,1$ 无秩 $\\ge 2$ 的不可约局部系统）。"],
-        ["$L_n=(f_n)_!(g_n)^*\\Psi[\\dim\\cU_n]$",
+        ["$L_n=(\\bar f_n)_!(\\bar g_n)^*\\Psi[\\dim\\bar\\cU_n]$",
          "$M'^d_{n,E}(K)=p_*p'{}^*(K\\otimes q^*\\sL^d_E)[nd]$"],
         [{"name": "定义 4.1", "kind": "定义",
           "statement": "$\\Aut'_E$ 在 $\\Fib'^{\\,n(n-1)(g-1)+d}_n(X)$ 上为 $M'^d_{n,E}(L_n)$（$d\\ge0$），$d<0$ 为 $0$。",
@@ -352,7 +353,7 @@ def build(m):
         [ID["mainthm"], ID["diag"]],
         [src(11, "4. 复形 $\\Aut'_E$（原文 p11）",
              "Si E est un système local sur X, on définit le complexe Aut′E",
-             "par",
+             "si d < 0.",
              anchor("s05-autprime.tex", "definition", 0, "定义 4.1"))],
         [e1(11, "原文第 11 页给出定义 4.1 与 $M'^d_{n,E}$ 的公式。"),
          vcheck("底本 TeX 源码（arXiv e-print）", TEX,
@@ -404,14 +405,14 @@ def build(m):
         "基本图由哪些对象组成？$K_{E,i}$ 如何递推定义？引理 5.2 给出什么？",
         {"text": "$\\cV_i$ 参数化 $(\\cM_i,s_i)$，$\\cV_i^\\vee$ 参数化扩张 $0\\to(\\Omega^1_X)^{\\otimes i}\\to\\cM_{i+1}\\to\\cM_i\\to0$；"
                  "$\\pi_i,\\pi_i^\\vee$ 为对偶向量丛；开集 $\\cV_i^\\circ=\\{s_i$ 单射$\\}$，"
-                 "$\\cV_i^{\\vee\\circ}=\\{\\cM_{i+1}\\in\\cC_{i+1}\\}$，并有典范同构 $\\cV_i^{\\vee\\circ}\\cong\\cV_{i+1}^\\circ$。",
+                 "$\\cV_i^{\\vee\\circ}=\\{\\cM_{i+1}\\in\\cC_{i+1}\\}$，并有典范同构 $\\cV_i^{\\vee\\circ}\\cong\\cV_{i+1}^\\circ}$。对 $\\Gm$ 取商得 $\\bar\\cV_i=[\\cV_i/\\Gm]$，$K_{E,i}\\in\\Dbc(\\bar\\cV_i^\\circ)$。",
          "notation": "$\\cV_i$, $\\cV_i^\\vee$, $\\cV_i^\\circ$, $\\cV_i^{\\vee\\circ}$, $K_{E,i}$"},
-        ["$K_{E,1}=(\\iota_0)_*(\\pi^{\\vee\\circ}_0)^*L_E$，其中 $L_E$ 在 $\\cC^d_0$ 上是 $\\sL^d_E$ 平移 $d-1$。",
-         "$K_{E,i+1}=(\\iota_i)_*(j_i^\\vee)^*\\Four_{\\cV_i/\\cC_i}\\bigl((j_i)_!K_{E,i}\\bigr)$，$i=1,\\dots,n-1$。",
-         "引理 5.2：$K_{E,i}$ 在 $\\cV_i^\\circ\\cap\\Fib'^{\\,i(i-1)(g-1)+d}_i(X)$ 上的限制等于 $M'^d_{i,E}(L_i)$；特别 $K_{E,n}$ 与 $\\Aut'_E$ 在该开集上一致。"],
-        ["$K_{E,i+1}=(\\iota_i)_*(j_i^\\vee)^*\\Four_{\\cV_i/\\cC_i}\\bigl((j_i)_!K_{E,i}\\bigr)$"],
+        ["$K_{E,i}\\in\\Dbc(\\bar\\cV_i^\\circ)$；$K_{E,1}=(\\iota_0)_*(\\bar\\pi^{\\vee\\circ}_0)^*L_E$，其中 $L_E$ 在 $\\cC^d_0$ 上是 $\\sL^d_E$ 平移 $d-1$。",
+         "$K_{E,i+1}=(\\iota_i)_*(j_i^\\vee)^*\\Four_{\\bar\\cV_i/\\cC_i}\\bigl((j_i)_!K_{E,i}\\bigr)$，$i=1,\\dots,n-1$。",
+         "引理 5.2：$K_{E,i}$ 在 $\\bar\\cV_i^\\circ\\cap\\Fib'^{\\,i(i-1)(g-1)+d}_i(X)$ 上的限制等于 $M'^d_{i,E}(L_i)$；特别 $K_{E,n}$ 与 $\\Aut'_E$ 在该开集上一致。"],
+        ["$K_{E,i+1}=(\\iota_i)_*(j_i^\\vee)^*\\Four_{\\bar\\cV_i/\\cC_i}\\bigl((j_i)_!K_{E,i}\\bigr)$"],
         [{"name": "引理 5.2", "kind": "引理",
-          "statement": "$K_{E,i}$ 在 $\\cV_i^\\circ\\cap\\Fib'^{\\,i(i-1)(g-1)+d}_i$ 上的限制为 $M'^d_{i,E}(L_i)$。",
+          "statement": "$K_{E,i}$ 在 $\\bar\\cV_i^\\circ\\cap\\Fib'^{\\,i(i-1)(g-1)+d}_i$ 上的限制为 $M'^d_{i,E}(L_i)$。",
           "proof": {"status": "cited", "steps": [], "gap_note": ""},
           "source": anchor("s06-fourier.tex", "lemma", 1, "引理 5.2")}],
         ["把图中的斜箭头（投影 $\\pi_i,\\pi^\\vee_i$）与水平箭头（开浸入 $j_i,j_i^\\vee$ 与同构 $\\iota_i$）混为一谈。",
@@ -419,8 +420,8 @@ def build(m):
         [ID["autp"], ID["vanish"], ID["unstable"]],
         [src(13, "5. 用 Fourier 变换构造（原文 p13）",
              "Pour tout système local E de rang n sur X on définit alors les complexes",
-             "FourVi /Ci : Dbc (Vi ) → Dbc (Vi ) est la transformation de Fourier homogène",
-             anchor("s06-fourier.tex", "lemma", 1, "引理 5.2"))],
+             "définie dans la section 0.",
+             line_anchor("s06-fourier.tex", "定义复形"))],
         [e1(13, "原文第 13 页给出 $K_{E,1}$ 与递推式，并陈述引理 5.2。"),
          vcheck("底本 TeX 源码（arXiv e-print）", TEX,
                 "Bourbaki2002.tex 中递推式的下标与 $[d-1]$ 平移与 PDF 一致。", "supports"),
@@ -476,7 +477,7 @@ def build(m):
         "如何从 $\\Fib'_n(X)$ 上的 $\\Aut'_E$ 下降到 $\\Fib_n(X)$ 上的 $\\Aut_E$？",
         {"text": "对 $K\\in\\Dbc$，$\\chi_K(s)=\\sum_i(-1)^i\\dim_\\C H^i(K_s)$。引理 7.1（Deligne, [Il] 推论 2.10）："
                  "$f:Y\\to Z$ 紧合，$K,K'$ 局部同构，则 $\\chi_{f_*K}=\\chi_{f_*K'}$。"
-                 "引理 7.2：$\\pi:P(\\cV)\\to\\cS$ 为射影丛、$K$ 不可约反常层，则 $K\\cong\\pi^*(L)[r-1]$ 当且仅当 "
+                 "引理 7.2：$\\pi:P(\\cV)\\to\\cS$ 为射影丛、$K$ 不可约反常层，则 存在 $S$ 上的（必然不可约）反常层 $L$，使 $K\\cong\\pi^*(L)[r-1]$，当且仅当 "
                  "$\\chi_K$ 沿 $\\pi$ 的纤维常值。",
          "notation": "$\\chi_K$, $\\tilde f:\\widetilde Y^d_n\\to\\Fib'^{\\,n(n-1)(g-1)+d}_n$, $N^d_{n,E}$, $\\Phi$"},
         ["命题 7.3（[B-G] 命题 1.2.2 的同类技术事实）：$\\tilde f:\\widetilde Y^d_n=[Y^d_n/\\Gm^n]\\to\\Fib'^{\\,n(n-1)(g-1)+d}_n$ 可表且紧合。",
@@ -488,7 +489,7 @@ def build(m):
           "proof": {"status": "cited", "steps": [], "gap_note": ""},
           "source": anchor("s08-descente.tex", "lemma", 0, "引理 7.1")},
          {"name": "引理 7.2", "kind": "引理",
-          "statement": "$K\\cong\\pi^*(L)[r-1]$ 当且仅当 $\\chi_K$ 沿 $\\pi$ 的纤维常值。",
+          "statement": "存在 $S$ 上的（必然不可约）反常层 $L$，使 $K\\cong\\pi^*(L)[r-1]$，当且仅当 $\\chi_K$ 沿 $\\pi$ 的纤维常值。",
           "proof": {"status": "sketch", "steps": [
               {"no": 1, "text": "用反常层的结构定理写 $K\\cong i_*j_{!*}E[\\dim Q]$。",
                "why": "不可约反常层由其支撑 $Q$ 与开集上的局部系统决定。"},
@@ -504,7 +505,7 @@ def build(m):
         [ID["mainthm"], ID["vanish"], ID["diag"]],
         [src(15, "7. 下降（原文 p15）",
              "Soit S un schéma, voire un champ algébrique, soit V → S un fibré",
-             "est constante le long des",
+             "constante le long des fibres de π.",
              anchor("s08-descente.tex", "lemma", 1, "引理 7.2"))],
         [e1(15, "原文第 15 页陈述引理 7.1、7.2 及它们的证明。"),
          vcheck("底本 TeX 源码（arXiv e-print）", TEX,
@@ -533,7 +534,7 @@ def build(m):
         "sources": [src(18, "参考文献（原文 p18）",
                        "J. BERNSTEIN, V. LUNTS – Equivariant Sheaves and Functors",
                        "Springer-verlag (1974).",
-                       line_anchor("s09-refs.tex", "[B-L]"))],
+                       "08_source_code/SY02-46_Laumon布尔巴基906Drinfeld-Langlands对应/源码/sections/s09-refs.tex:L11-L12（参考文献 [B-L]）")],
         "rights": "rewritten",
         "status": "reviewed",
         "verification": {"status": "checked", "checked_on": m.CHECKED, "checks": [
