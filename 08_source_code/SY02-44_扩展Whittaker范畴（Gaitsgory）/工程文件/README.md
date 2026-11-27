@@ -7,7 +7,7 @@ D. Gaitsgory, *Notes on Geometric Langlands: The Extended Whittaker Category*（
 | 路径 | 内容 |
 |---|---|
 | `工程文件/deliverable/SY02-44_Gaitsgory_扩展Whittaker范畴_中文译注.pdf` | 成品 PDF（24 页） |
-| `成品/` | 同上（副本） |
+| `成品/` | 同上（本地副本；仓库级 `.gitignore` 忽略 `成品/*.pdf`，随仓的是 `deliverable/`） |
 | `工程文件/BRIEF.md` | 工程简述、范围、验收标准 |
 | `工程文件/STYLE_GUIDE.md` | 语言与排版细则 |
 | `工程文件/README.md` | 本文件 |
