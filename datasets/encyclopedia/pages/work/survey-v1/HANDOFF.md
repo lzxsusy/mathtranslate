@@ -62,7 +62,7 @@ python check_survey.py ../../geometric-langlands.md
 - 未改 `index.jsonl` 与 `entries/geometry/geometric-langlands.json`：其摘要仍是「GL_n 已证、一般约化群仍是猜想」，与新页 §7.1 不一致；因改 entry 会牵动其单一来源（袁瑶 2020）口径，留给后续单独修订。
 - 页面仍 `status: draft`、`reviewed_by: []`：本次是 AI 独立校对，不冒充人工复核；建议人工复核后再升 `reviewed`。
 
-## 未做
+## 交付状态（2026-11-28 01:40）
 
-- 未 `git commit`、未推送（仓库里有其他会话的改动，本次只应提交上述交付物；是否提交由用户决定）。
+- 已 commit `ff43465f`，已推送 AtomGit / GitHub / Gitee 的 `main` 与 `master`。
 - 未做 PDF/HTML 渲染（仓库暂无 `{{entry:}}`/`{{card:}}` 的站点构建器；卡片导航以仓库内相对路径 JSON 为准）。
