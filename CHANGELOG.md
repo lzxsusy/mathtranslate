@@ -3,6 +3,26 @@
 > **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
 
 
+## 2026-11-27 · SY02-45 Scholze 布尔巴基 1252《几何 Langlands 的证明》中译
+
+- 新增工程 `08_source_code/SY02-45_Scholze布尔巴基1252几何Langlands的证明/`：Peter Scholze,
+  *Geometric Langlands [after Gaitsgory, Raskin, ...]*, Séminaire Bourbaki 78e année (2025–2026) n° 1252,
+  Mars 2026，56 页 12 节 + 参考文献。中译注本 **45 页**，xelatex 0 error。
+- 编号条目 **57 条**（注 32、定理 14、定义 3、猜想 2、推论 2、假设 1、问题 1、命题 1、例 1），
+  与 `工程文件/work/条目总表.tsv` 及 `check_sections.py` 双向对账；任务书所称「89 条」系按类型名出现次数粗估
+  （含行首交叉引用），已在 `资料卡/04-术语文献勘误.md` §⑤ 说明口径。
+- 术语 **123 条**开工前冻结（另 6 条 affinoid/perfectoid/diamond/prism/solid/isocrystal 本文未出现，单列）；
+  `工程文件/tools/check_terms.py` 覆盖率 123/123、异译黑名单 0 命中；香蕉空间增量 19 条追加到
+  `SY02-41/工程文件/work/术语外部核对_香蕉空间.md` 末尾（只记增量）。
+- 资料卡五件套：`00-速览`、`01-结果清单`、`02-论证地图`（12 步路线 + 四支柱 + 依赖图 + 给 12_sandbox 的接入建议）、
+  `03-条款索引`（57 条全覆盖）、`04-术语文献勘误`（冻结表 + 香蕉空间增量 + 56 条文献外核 + 2 处原文笔误 + 方法局限）。
+- 对齐卡 1 张：`datasets/leanstmt/cards/statements/sch1252-g01.json`（gap 卡，几何 Langlands 等价陈述），
+  Lean 形态 `datasets/leanstmt/lean/ShuyiFormal/Scholze1252/Gaps.lean`；`lint_cards.py cards --strict` 0 error。
+- 流程：8 名译手分包 → 每节 `check_sections.py` + `compile_section.py` → 整篇 xelatex 5 遍 → 独立审校
+  （`工程文件/reports/审校.md`）→ `check_terms.py` → 12 页人眼并排抽检（`工程文件/work/抽检记录.md`）。
+- 参考文献 56 条逐条 Crossref / arXiv 外核，卷期页无误；2 处检索未命中的（Drinfeld 1983、Fargues 2025）经人工复核确认原文正确。
+
+
 ## 2026-11-27 · 术语对照表与对齐声明（对外发布）
 
 - 新增 `01_corpus_zh/数语规范/术语对照_香蕉空间.tsv`（54 条）：英文 ↔ 本库译名 ↔ 香蕉空间译名，
@@ -1159,3 +1179,13 @@ v1 的框架（章节、定理体例、页锚、术语表）可用，但逐句�
 
 非版本化的迭代期：83 部译注本（10,303 页）陆续完成，工程源码、元数据、术语表、轨迹与会话逐步入库；
 无 tag、无 CHANGELOG，`MANIFEST` 与 README 数字存在漂移（本版已修）。
+
+### 同批 · SY02-45 审校整改（独立审校 2 严重 + 4 一般已清零）
+
+- 严重 ①：`\Ql` 宏漏上划线，32 处系数域误作 $\mathbb{Q}_\ell$ → 改 `源码/preamble.tex:134` 为
+  `\overline{\mathbb{Q}}_\ell`，逐处核对 32 个上下文均为 ℓ-进系数域，改后与 `s01` 既有 9 处写法统一。
+- 严重 ②：§1 p3→p4 同段被拆成两段 → 删 `s01-intro.tex` 的空行并把 `\srcpage{4}` 并入上一行，已用
+  `pdftotext` 复查编译稿第 3 页确认合段。
+- 一般 4 条（「局部常」漏「值」、quasitorsor 硬译、上同调/上同调层、6 处超 70 汉字长句）与建议 6 条
+  （`\e` 改斜体、定理 1.7 出处移入标题、语序、「深度（depth）的考量」、「既开又闭的子叠」、
+  「它对 $G$ 是非挠的素数」）全部采纳；`工程文件/reports/审校.md` §7 逐条记录整改与复查结果。
