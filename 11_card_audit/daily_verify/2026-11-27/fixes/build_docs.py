@@ -80,13 +80,17 @@ lead 复核 p.28 的 [WW15, Theorem 5.1] 段，并发现 `provenance_note` 仍�
         key="ggl09/deriv/descent-to-xi",
         set="ggl09", typ="deriv", slug="descent-to-xi",
         title="下降给出 x_i(S)：边界的「差」取反了",
-        severity="major", modes="逻辑方向反转",
+        severity="major", modes="逻辑方向反转 / 出处定位漂移",
         why="""原文说：S²×I 的**左（Neumann）与右（Dirichlet）边界之差**同调于环绕 w 的小 S²，且右边界上 x_i=0，
 所以 x_i(Neumann)=x_i(S²)。推导步骤 5 却写成「Neumann 边界与小 S² 之差」——这个差恰好同调于**右边界**，
 而右边界的 x_i=0，不可能「该差给出 x_i」。方向一取反，整步论证就断了。
-失效点在于把「A 与 B 之差 ≅ C」误读成「A 与 C 之差 ≅ B」；三个对象两两成链时，谁减谁决定了 nonzero 落在哪。""",
+失效点在于把「A 与 B 之差 ≅ C」误读成「A 与 C 之差 ≅ B」；三个对象两两成链时，谁减谁决定了 nonzero 落在哪。
+另外 `steps[4].locator` 原写「A p.16 eq (2.10)」，只覆盖该步开头（取固定时刻的曲面）；
+左/右边界与小 S² 的论证在 p.17，故本轮把 locator 一并扩为 p.16–17。""",
         disc="""当日核验第 6 张。子代理核对 arXiv:0905.4795v2 p.16–17 的相对同调论证时发现边界顺序与卡相反；
-lead 用 `ggl09.txt` 重读 p.16「the left and right boundaries … is homologous to a small two-sphere」确认。""",
+lead 用 `ggl09.txt` 重读 p.16「the left and right boundaries … is homologous to a small two-sphere」确认。
+本轮独立复核顺手核 `steps[4].locator`：它只写到 p.16（该步开头的固定时刻曲面），而左/右边界论证已跨到 p.17，
+故同批把 locator 扩为 p.16–17。""",
         ev=["`ggl09.pdf`/arXiv p.16：「the difference between the left and right boundaries of S² × I is homologous to a small two-sphere that links w」；p.16 另述右边界 Dirichlet 上 x_i=0。"],
         lean="形式化时用相对同调 `H_2(S²×I, ∂) ≅ H_1(S¹)` 或链群 `C_2(S²×I)/C_2(∂)`；边界条件进入相对链群，`x_i(right)=0` 应作为假设显式写出。",
     ),
@@ -179,7 +183,39 @@ p.72「Localization should enhance to a relative construction of the form」与 
             "p.71 §14.6 末：「up to the usual ∗- versus !-IndCoh convention」"],
         lean="形式化该等价时要区分 `IndCoh` 与 `QCoh`、∗ 与 ! 的拉回方向；这是卡 pitfalls 里已强调的约定。",
     ),
+    dict(
+        key="sy38/concept/tamagawa-number",
+        set="sy0238", typ="concept", slug="tamagawa-number",
+        title="玉河数：Weil 猜想的完成者写成了一个不存在的合作者",
+        severity="minor", modes="归因或作者错误",
+        why="""`key_points[1]` 想说明 τ(SL_n)=1 是 Weil 猜想的特例，却把「一般情形」的完成者写成「Lai–Künnemann」。
+标准史实是：Langlands（1966）证分裂情形，Rapoport（1976）与 Lai（1980）把证明改写到拟分裂情形，
+Kottwitz（1988, Annals 127）用 Arthur 迹公式完成数域上的一般情形；函数域情形后来由 Gaitsgory–Lurie（2019）解决。
+公开文献里没有「Lai–Künnemann」这条完成链：Künnemann 的公开著作目录（Regensburg）以 Arakelov 几何为主，
+未见 Tamagawa 数的工作。这是把两个人名拼成一个不存在的合作者的「归因幻觉」，属历史归属错误，
+不影响 τ 的定义与体积公式，故定 minor。""",
+        disc="""本轮独立复核第 8 张。首轮核验其实已在 `notes` 里写下「Lai–Künnemann 这一历史归属无法核实」，
+但因「本地一手源 p.7 只讲 τ 与体积公式、未给历史」而判 pass。本轮换路径：用 Lurie 的 AWS 课程大纲、
+2025 年 Pacific J. Math. 综述的引用链与 Kottwitz 1988 原文的归属交叉核对，三处都给
+「Langlands（分裂）→ Rapoport/Lai（拟分裂）→ Kottwitz（数域一般）」，没有 Lai–Künnemann，遂改判 issue。""",
+        ev=["`Anschütz 2020` p.7 只给 `τ(G)` 的定义与 `τ(SL_n)=1` 的体积推论，未给完成者；卡的「原文只引 [Col11, Appendix B] 与 [Lur, Lecture 1]」本身不假。",
+            "Lurie, *Tamagawa Numbers via Nonabelian Poincaré Duality*（AWS 课程大纲）：「When K is a number field, this conjecture was proven by Kottwitz (building on earlier work of Langlands and Lai).」（math.ias.edu/~lurie/282ynotes/syllabus.pdf）",
+            "Pacific J. Math. 338 (2025) 综述：「first proved for split groups over number fields by Langlands [1966] … rewritten … for quasisplit groups by Rapoport [1976] and Lai [1980] … Kottwitz [1988] proved Weil's conjecture over number fields.」（msp.org/pjm/2025/338-1/pjm-v338-n1-p06-p.pdf）",
+            "Kottwitz, *Tamagawa numbers*, Ann. of Math. 127 (1988), 629–646。"],
+        lean="τ(G) 是体积，不是定理陈述里的对象；若要形式化，陈述写成 `TamagawaNumber G = 1`（G 单连通半单），历史归属放 docstring，不要写进类型或假设。",
+    ),
 ]
+
+
+def fmt_field(field: list) -> str:
+    """['theorems', 0, 'source'] -> theorems[0].source"""
+    out = ""
+    for x in field:
+        if isinstance(x, int):
+            out += f"[{x}]"
+        else:
+            out += ("." if out else "") + str(x)
+    return out
 
 
 def build() -> None:
@@ -203,17 +239,17 @@ def build() -> None:
             "",
             f"# 案例 D27-{i:02d} · {c['title']}",
             "",
-            f"> **卡片**：`{e['id']}`  ",
-            f"> **路径**：`{e['path']}`  ",
-            f"> **判定**：{c['severity']}；确认者 lead（当日核验）  ",
-            f"> **失效模式**：{c['modes']}  ",
+            f"> **卡片**：`{e['id']}`<br>",
+            f"> **路径**：`{e['path']}`<br>",
+            f"> **判定**：{c['severity']}；确认者 lead（当日核验）<br>",
+            f"> **失效模式**：{c['modes']}<br>",
             f"> **施工日期**：2026-11-27",
             "",
             "## 1. 正误对比",
             "",
         ]
         for j, ch in enumerate(changes, 1):
-            field = "[" + ", ".join(repr(x) if isinstance(x, str) else str(x) for x in ch["field"]) + "]"
+            field = fmt_field(ch["field"])
             b = ch["before"] if ch["before"] is not None else "（整段存在）"
             a = ch["after"] if ch["after"] is not None else "（整段删除）"
             lines += [
@@ -275,7 +311,7 @@ def build() -> None:
         for e in index
     )
     (CASEBOOK / "README.md").write_text(
-        "# 2026-11-27 修卡案例集（11 例 / 12 条 issue / 23 处改动）\n\n"
+        f"# 2026-11-27 修卡案例集（{len(index)} 例 / 13 条 issue / {sum(e['fix_count'] for e in index)} 处改动）\n\n"
         "本目录是 `11_card_audit/daily_verify/2026-11-27/` 当日核验的**修卡归档**，独立于\n"
         "`11_card_audit/casebook/` 的 32 例（后者的 `index.json` 被 `check_casebook.py` 硬编码为 32 条，\n"
         "按既有约定不再追加，参见 `11_card_audit/glc_full/` 的先例）。\n\n"
@@ -285,7 +321,9 @@ def build() -> None:
         "## 与 11-26 批次的关系\n\n"
         "- `kw/concept/n4-sym-theory` 是**第二次修改**（11-26 曾把 source 从 `B p.6` 改为 `B p.7–11（…p.11）`；\n"
         "  本批按页脚修正为 p.10）。按 WORKFLOW §9 在此追加，不改 11-26 的历史 fix_log。\n"
-        "- 其余 10 张卡 11-26 均未改过。\n",
+        "- `sy38/concept/tamagawa-number` 首轮判 pass（`notes` 里已存疑但未定级），本轮独立复核改判 minor，\n"
+        "  属**复审新增**，不是首轮修卡遗漏。\n"
+        "- 其余 11 张卡 11-26 均未改过。\n",
         encoding="utf-8", newline="\n")
     print(f"wrote {len(index)} cases")
 

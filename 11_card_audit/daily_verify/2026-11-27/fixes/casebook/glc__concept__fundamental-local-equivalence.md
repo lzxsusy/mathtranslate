@@ -10,15 +10,15 @@ modes: 页覆盖不足
 
 # 案例 D27-11 · 基本局部等价：相对构造在 p.72
 
-> **卡片**：`glc/concept/fundamental-local-equivalence`  
-> **路径**：`datasets/glc/cards/concepts/fundamental-local-equivalence.json`  
-> **判定**：minor；确认者 lead（当日核验）  
-> **失效模式**：页覆盖不足  
+> **卡片**：`glc/concept/fundamental-local-equivalence`<br>
+> **路径**：`datasets/glc/cards/concepts/fundamental-local-equivalence.json`<br>
+> **判定**：minor；确认者 lead（当日核验）<br>
+> **失效模式**：页覆盖不足<br>
 > **施工日期**：2026-11-27
 
 ## 1. 正误对比
 
-### 1.1 字段 `['sources', 0, 'pages']`
+### 1.1 字段 `sources[0].pages`
 
 **错误版本（卡上原文）**
 
@@ -39,7 +39,7 @@ modes: 页覆盖不足
 
 改动理由：definition 末句的相对构造与 Op(X\{x})^unr 定义在印刷 p.72，pages 只有 [71]。
 
-### 1.2 字段 `['sources', 0, 'pdf_pages']`
+### 1.2 字段 `sources[0].pdf_pages`
 
 **错误版本（卡上原文）**
 

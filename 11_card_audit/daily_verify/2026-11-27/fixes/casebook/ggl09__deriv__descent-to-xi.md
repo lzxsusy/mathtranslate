@@ -5,20 +5,20 @@ set: ggl09
 group: daily-2026-11-27
 severity: major
 confirmed_by: lead（2026-11-27 当日核验）
-modes: 逻辑方向反转
+modes: 逻辑方向反转 / 出处定位漂移
 ---
 
 # 案例 D27-05 · 下降给出 x_i(S)：边界的「差」取反了
 
-> **卡片**：`ggl09/deriv/descent-to-xi`  
-> **路径**：`datasets/ggl09/cards/derivations/descent-to-xi.json`  
-> **判定**：major；确认者 lead（当日核验）  
-> **失效模式**：逻辑方向反转  
+> **卡片**：`ggl09/deriv/descent-to-xi`<br>
+> **路径**：`datasets/ggl09/cards/derivations/descent-to-xi.json`<br>
+> **判定**：major；确认者 lead（当日核验）<br>
+> **失效模式**：逻辑方向反转 / 出处定位漂移<br>
 > **施工日期**：2026-11-27
 
 ## 1. 正误对比
 
-### 1.1 字段 `['steps', 4, 'text']`
+### 1.1 字段 `steps[4].text`
 
 **错误版本（卡上原文）**
 
@@ -34,6 +34,22 @@ modes: 逻辑方向反转
 
 改动理由：原文 p.16–17 说差分的是「左(Neumann)与右(Dirichlet)边界」，该差同调于小 S²；卡写成「Neumann 与小 S² 之差」，而这个差正是 x_i=0 的右边界，方向反了。
 
+### 1.2 字段 `steps[4].locator`
+
+**错误版本（卡上原文）**
+
+```text
+A p.16 eq (2.10)
+```
+
+**正确版本（已替换）**
+
+```text
+A p.16–17 eq (2.10)
+```
+
+改动理由：该步后半（左/右边界、同调于小 S²）在 p.17；locator 只到 p.16，与已改写的 step text 不匹配。
+
 ## 2. 为什么会错
 
 > 这是从错误形态反推的失效模式，不是原始模型的私有思维链。
@@ -42,11 +58,15 @@ modes: 逻辑方向反转
 所以 x_i(Neumann)=x_i(S²)。推导步骤 5 却写成「Neumann 边界与小 S² 之差」——这个差恰好同调于**右边界**，
 而右边界的 x_i=0，不可能「该差给出 x_i」。方向一取反，整步论证就断了。
 失效点在于把「A 与 B 之差 ≅ C」误读成「A 与 C 之差 ≅ B」；三个对象两两成链时，谁减谁决定了 nonzero 落在哪。
+另外 `steps[4].locator` 原写「A p.16 eq (2.10)」，只覆盖该步开头（取固定时刻的曲面）；
+左/右边界与小 S² 的论证在 p.17，故本轮把 locator 一并扩为 p.16–17。
 
 ## 3. 怎么发现的
 
 当日核验第 6 张。子代理核对 arXiv:0905.4795v2 p.16–17 的相对同调论证时发现边界顺序与卡相反；
 lead 用 `ggl09.txt` 重读 p.16「the left and right boundaries … is homologous to a small two-sphere」确认。
+本轮独立复核顺手核 `steps[4].locator`：它只写到 p.16（该步开头的固定时刻曲面），而左/右边界论证已跨到 p.17，
+故同批把 locator 扩为 p.16–17。
 
 ## 4. 证据锚点
 

@@ -10,15 +10,15 @@ modes: 页覆盖不足 / 出处定位漂移
 
 # 案例 D27-08 · 三个动机：定义正文超出所引页码
 
-> **卡片**：`lbook04/concept/ch3-three-motives`  
-> **路径**：`datasets/lbook04/cards/concepts/ch3-three-motives.json`  
-> **判定**：minor；确认者 lead（当日核验）  
-> **失效模式**：页覆盖不足 / 出处定位漂移  
+> **卡片**：`lbook04/concept/ch3-three-motives`<br>
+> **路径**：`datasets/lbook04/cards/concepts/ch3-three-motives.json`<br>
+> **判定**：minor；确认者 lead（当日核验）<br>
+> **失效模式**：页覆盖不足 / 出处定位漂移<br>
 > **施工日期**：2026-11-27
 
 ## 1. 正误对比
 
-### 1.1 字段 `['sources', 0, 'pages']`
+### 1.1 字段 `sources[0].pages`
 
 **错误版本（卡上原文）**
 
@@ -40,7 +40,7 @@ modes: 页覆盖不足 / 出处定位漂移
 
 改动理由：definition 含 §2.3（从印刷 41 起、Example 2.1 在 42、G_k 在 43），pages 只到 40。
 
-### 1.2 字段 `['sources', 0, 'pdf_pages']`
+### 1.2 字段 `sources[0].pdf_pages`
 
 **错误版本（卡上原文）**
 

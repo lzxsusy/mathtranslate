@@ -10,15 +10,15 @@ modes: 出处定位漂移
 
 # 案例 D27-01 · 命题 3.12：Gysin 拉回定义的起始页
 
-> **卡片**：`siebert/correction/prop-3-12-lci`  
-> **路径**：`datasets/siebert/cards/corrections/prop-3-12-lci.json`  
-> **判定**：minor；确认者 lead（当日核验）  
-> **失效模式**：出处定位漂移  
+> **卡片**：`siebert/correction/prop-3-12-lci`<br>
+> **路径**：`datasets/siebert/cards/corrections/prop-3-12-lci.json`<br>
+> **判定**：minor；确认者 lead（当日核验）<br>
+> **失效模式**：出处定位漂移<br>
 > **施工日期**：2026-11-27
 
 ## 1. 正误对比
 
-### 1.1 字段 `['pitfalls', 1]`
+### 1.1 字段 `pitfalls[1]`
 
 **错误版本（卡上原文）**
 

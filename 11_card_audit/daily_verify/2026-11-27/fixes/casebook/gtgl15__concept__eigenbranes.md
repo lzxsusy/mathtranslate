@@ -10,15 +10,15 @@ modes: 定理 / 猜想层级混淆
 
 # 案例 D27-02 · 本征膜：把定义登记成了定理
 
-> **卡片**：`gtgl15/concept/eigenbranes`  
-> **路径**：`datasets/gtgl15/cards/concepts/eigenbranes.json`  
-> **判定**：minor；确认者 lead（当日核验）  
-> **失效模式**：定理 / 猜想层级混淆  
+> **卡片**：`gtgl15/concept/eigenbranes`<br>
+> **路径**：`datasets/gtgl15/cards/concepts/eigenbranes.json`<br>
+> **判定**：minor；确认者 lead（当日核验）<br>
+> **失效模式**：定理 / 猜想层级混淆<br>
 > **施工日期**：2026-11-27
 
 ## 1. 正误对比
 
-### 1.1 字段 `['theorems', 0]`
+### 1.1 字段 `theorems[0]`
 
 **错误版本（卡上原文）**
 

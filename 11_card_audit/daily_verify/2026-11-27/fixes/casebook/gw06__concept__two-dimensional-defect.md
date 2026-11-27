@@ -10,15 +10,15 @@ modes: 页覆盖不足 / 出处定位漂移
 
 # 案例 D27-10 · 二维缺陷：离散 α,η 的互换在下一页
 
-> **卡片**：`gw06/concept/two-dimensional-defect`  
-> **路径**：`datasets/gw06/cards/concepts/two-dimensional-defect.json`  
-> **判定**：minor；确认者 lead（当日核验）  
-> **失效模式**：页覆盖不足 / 出处定位漂移  
+> **卡片**：`gw06/concept/two-dimensional-defect`<br>
+> **路径**：`datasets/gw06/cards/concepts/two-dimensional-defect.json`<br>
+> **判定**：minor；确认者 lead（当日核验）<br>
+> **失效模式**：页覆盖不足 / 出处定位漂移<br>
 > **施工日期**：2026-11-27
 
 ## 1. 正误对比
 
-### 1.1 字段 `['sources', 0, 'pages']`
+### 1.1 字段 `sources[0].pages`
 
 **错误版本（卡上原文）**
 
@@ -40,7 +40,7 @@ modes: 页覆盖不足 / 出处定位漂移
 
 改动理由：α 与 η 在对偶下互换的句子在印刷 p.31（PDF 32），pages 少一页。
 
-### 1.2 字段 `['sources', 0, 'pdf_pages']`
+### 1.2 字段 `sources[0].pdf_pages`
 
 **错误版本（卡上原文）**
 
@@ -62,7 +62,7 @@ modes: 页覆盖不足 / 出处定位漂移
 
 改动理由：同上（本集 PDF = 印刷 + 1）。
 
-### 1.3 字段 `['sources', 0, 'page_note']`
+### 1.3 字段 `sources[0].page_note`
 
 **错误版本（卡上原文）**
 

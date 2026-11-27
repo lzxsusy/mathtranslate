@@ -10,15 +10,15 @@ modes: 适用范围遗漏 / 条件替换
 
 # 案例 D27-06 · GW 不变量的形变不变性：lci 被换成了「连通」
 
-> **卡片**：`siebert/concept/gromov-witten-invariant`  
-> **路径**：`datasets/siebert/cards/concepts/gromov-witten-invariant.json`  
-> **判定**：major；确认者 lead（当日核验）  
-> **失效模式**：适用范围遗漏 / 条件替换  
+> **卡片**：`siebert/concept/gromov-witten-invariant`<br>
+> **路径**：`datasets/siebert/cards/concepts/gromov-witten-invariant.json`<br>
+> **判定**：major；确认者 lead（当日核验）<br>
+> **失效模式**：适用范围遗漏 / 条件替换<br>
 > **施工日期**：2026-11-27
 
 ## 1. 正误对比
 
-### 1.1 字段 `['pitfalls', 4]`
+### 1.1 字段 `pitfalls[4]`
 
 **错误版本（卡上原文）**
 

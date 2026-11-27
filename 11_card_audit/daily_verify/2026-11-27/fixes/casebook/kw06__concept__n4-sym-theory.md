@@ -10,15 +10,15 @@ modes: 出处定位漂移
 
 # 案例 D27-03 · N=4 超杨–米尔斯：(2.14) 的页号（第二次修改）
 
-> **卡片**：`kw/concept/n4-sym-theory`  
-> **路径**：`datasets/kw06/cards/concepts/n4-sym-theory.json`  
-> **判定**：minor；确认者 lead（当日核验）  
-> **失效模式**：出处定位漂移  
+> **卡片**：`kw/concept/n4-sym-theory`<br>
+> **路径**：`datasets/kw06/cards/concepts/n4-sym-theory.json`<br>
+> **判定**：minor；确认者 lead（当日核验）<br>
+> **失效模式**：出处定位漂移<br>
 > **施工日期**：2026-11-27
 
 ## 1. 正误对比
 
-### 1.1 字段 `['theorems', 0, 'source']`
+### 1.1 字段 `theorems[0].source`
 
 **错误版本（卡上原文）**
 

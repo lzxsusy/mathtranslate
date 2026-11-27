@@ -10,15 +10,15 @@ modes: 出处定位漂移
 
 # 案例 D27-04 · 带收缩：定理页码整体后移两页
 
-> **卡片**：`functoriality/concept/strip-shrinking`  
-> **路径**：`datasets/functoriality/cards/concepts/strip-shrinking.json`  
-> **判定**：minor；确认者 lead（当日核验）  
-> **失效模式**：出处定位漂移  
+> **卡片**：`functoriality/concept/strip-shrinking`<br>
+> **路径**：`datasets/functoriality/cards/concepts/strip-shrinking.json`<br>
+> **判定**：minor；确认者 lead（当日核验）<br>
+> **失效模式**：出处定位漂移<br>
 > **施工日期**：2026-11-27
 
 ## 1. 正误对比
 
-### 1.1 字段 `['theorems', 0, 'source']`
+### 1.1 字段 `theorems[0].source`
 
 **错误版本（卡上原文）**
 
@@ -34,7 +34,7 @@ modes: 出处定位漂移
 
 改动理由：§3.5.2 与 eq (62) 在印刷/PDF p.27（页脚 27），p.25 是 §3.5 的开头（(58) 附近）。
 
-### 1.2 字段 `['theorems', 1, 'source']`
+### 1.2 字段 `theorems[1].source`
 
 **错误版本（卡上原文）**
 
@@ -50,7 +50,7 @@ modes: 出处定位漂移
 
 改动理由：[WW15, Theorem 5.1] 的推广段落在 p.28（页脚 28）。
 
-### 1.3 字段 `['provenance_note']`
+### 1.3 字段 `provenance_note`
 
 **错误版本（卡上原文）**
 

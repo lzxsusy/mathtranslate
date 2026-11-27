@@ -56,14 +56,29 @@ Python 统一用 `C:/Users/admin/.dsh/dsh-runtimes/dsh-primary-runtime/dependenc
 ## 五、验证
 
 - `python datasets/_audit/third_party_2026-11-26/tools/verify_final.py` →
-  `cards parsed: 1859, errors: 0`；`field errors: 5`，其中 1 条是本批有意修正 11-26 的 off-by-one（expected），
-  4 条是他批既有未提交改动（与本批无关）。
+  `cards parsed: 1859, errors: 0`；`field errors: 6`，其中 2 条在 kw06/n4（1 条是本批有意修正 11-26 的
+  off-by-one，1 条是该卡 `proof.gap_note` 的他人未提交细化），4 条是他批既有未提交改动（与本批无关）。
 - `git diff --check` rc=0；11 张卡 `json.load` 全通过。
 - `python 11_card_audit/tools/check_casebook.py`：既有 32 例未动，校验通过。
 
-## 六、提交
+## 六、第二轮独立复核（13:10–13:22）
 
-- `git add` 仅本批自有文件：11 张卡 JSON、9 个 md、`gw06/index.jsonl`、3 个生成器、
-  `11_card_audit/daily_verify/2026-11-27/fixes/` 全目录（含 `fix_log.json`、案例集、说明）。
-- commit 信息：`fix: 2026-11-27 核验 12 issue 修入卡片（11 卡 23 处）`
+1. 不信任首轮与 13:07 的修卡结果：20 张卡逐张回一手 PDF，重取页码与逐字引文；
+   25 处 after 全部复核，7 张首轮 pass 抽验（ggl08、dmod×2、functoriality mww、kshms×2、kw cohomology）。
+2. 发现并改判 1 条 minor：`sy38/concept/tamagawa-number` 把 Weil 猜想的完成者写成不存在的
+   「Lai–Künnemann」；证据链为 Langlands（分裂）→ Rapoport/Lai（拟分裂）→ Kottwitz 1988（数域一般）。
+3. 补强 1 处定位：`ggl09/deriv/descent-to-xi` `steps[4].locator` 由 `A p.16` 扩为 `A p.16–17`
+   （边界论证在 p.17），与首轮 major 同属第 5 步。
+4. 写 `apply_round2.py`（2 处，复用 apply_fixes 的断言/无损写盘）→ `fix_log.json` 共 12 卡 25 处。
+   新增 `round2/ROUND2.md`（20 卡矩阵）、`round2/records_round2.jsonl`（2 条）、`round2/check_round2.py`。
+5. 校验：`check_round2.py --source index`（暂存区快照）→ `OK: 12 cards, 25 changes, 2 round2 records`；
+   `verify_final.py` → `cards parsed: 1859, errors: 0`；`git diff --check` rc=0；`check_casebook.py` 32 例通过。
+6. 重建案例集：`build_docs.py` → 12 例（D27-01…D27-12）、`casebook/index.json`、`casebook/README.md`。
+
+## 七、提交
+
+- `git add` 仅本批自有文件：12 张卡 JSON、9 个 md、`gw06/index.jsonl`、3 个生成器、
+  `11_card_audit/daily_verify/2026-11-27/fixes/` 全目录（含 `fix_log.json`、两轮案例集、说明）、
+  `11_card_audit/daily_verify/2026-11-27/round2/` 全目录、`SUMMARY.md`。
+- commit 信息：`fix: 2026-11-27 核验 13 issue 修入卡片（12 卡 25 处）`
 - 推送 atomgit `master:main`，再 origin `master`。

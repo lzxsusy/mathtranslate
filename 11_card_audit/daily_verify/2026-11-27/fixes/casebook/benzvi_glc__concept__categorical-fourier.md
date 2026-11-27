@@ -10,15 +10,15 @@ modes: 出处无法定位 / 证据强度夸大
 
 # 案例 D27-09 · 范畴化 Fourier：被引 §2.1 里没有这条核公式
 
-> **卡片**：`bzg/concept/categorical-fourier`  
-> **路径**：`datasets/benzvi_glc/cards/concepts/categorical-fourier.json`  
-> **判定**：major；确认者 lead（当日核验）  
-> **失效模式**：出处无法定位 / 证据强度夸大  
+> **卡片**：`bzg/concept/categorical-fourier`<br>
+> **路径**：`datasets/benzvi_glc/cards/concepts/categorical-fourier.json`<br>
+> **判定**：major；确认者 lead（当日核验）<br>
+> **失效模式**：出处无法定位 / 证据强度夸大<br>
 > **施工日期**：2026-11-27
 
 ## 1. 正误对比
 
-### 1.1 字段 `['sources', 0, 'section']`
+### 1.1 字段 `sources[0].section`
 
 **错误版本（卡上原文）**
 
@@ -34,7 +34,7 @@ modes: 出处无法定位 / 证据强度夸大
 
 改动理由：§2.1（p.8）是「范畴 ≈ Hilbert 空间」的类比，没有 FM 核公式；categorical Fourier 只在 §1.3（p.6）作 general theme 出现。
 
-### 1.2 字段 `['sources', 0, 'pages']`
+### 1.2 字段 `sources[0].pages`
 
 **错误版本（卡上原文）**
 
@@ -54,7 +54,7 @@ modes: 出处无法定位 / 证据强度夸大
 
 改动理由：同上，locator 改到 p.6。
 
-### 1.3 字段 `['sources', 0, 'pdf_pages']`
+### 1.3 字段 `sources[0].pdf_pages`
 
 **错误版本（卡上原文）**
 
@@ -74,7 +74,7 @@ modes: 出处无法定位 / 证据强度夸大
 
 改动理由：p.6 为 PDF 第 6 页（偏移 0）。
 
-### 1.4 字段 `['sources', 0, 'anchor']`
+### 1.4 字段 `sources[0].anchor`
 
 **错误版本（卡上原文）**
 
@@ -90,7 +90,7 @@ arXiv:2605.23167 §1.3, p.6
 
 改动理由：同上。
 
-### 1.5 字段 `['sources', 0, 'page_note']`
+### 1.5 字段 `sources[0].page_note`
 
 **错误版本（卡上原文）**
 
@@ -106,7 +106,7 @@ arXiv:2605.23167 §1.3, p.6
 
 改动理由：让读者知道核公式不是原文逐字给的，避免把「出处」当成「逐字定义」。
 
-### 1.6 字段 `['verification', 'checks', 0, 'entry']`
+### 1.6 字段 `verification.checks[0].entry`
 
 **错误版本（卡上原文）**
 
@@ -122,7 +122,7 @@ Ben-Zvi 2026, §1.3
 
 改动理由：section 改 §1.3 后，verification 内同一出处的旧定位必须同步，否则读者仍被指到 §2.1。
 
-### 1.7 字段 `['verification', 'checks', 0, 'asserts']`
+### 1.7 字段 `verification.checks[0].asserts`
 
 **错误版本（卡上原文）**
 

@@ -10,15 +10,15 @@ modes: 内部不一致 / 证据归属错误
 
 # 案例 D27-07 · Langlands 谱：带扭时的极点位置
 
-> **卡片**：`lbook04/concept/ch9-langlands-spectral`  
-> **路径**：`datasets/lbook04/cards/concepts/ch9-langlands-spectral.json`  
-> **判定**：minor；确认者 lead（当日核验）  
-> **失效模式**：内部不一致 / 证据归属错误  
+> **卡片**：`lbook04/concept/ch9-langlands-spectral`<br>
+> **路径**：`datasets/lbook04/cards/concepts/ch9-langlands-spectral.json`<br>
+> **判定**：minor；确认者 lead（当日核验）<br>
+> **失效模式**：内部不一致 / 证据归属错误<br>
 > **施工日期**：2026-11-27
 
 ## 1. 正误对比
 
-### 1.1 字段 `['key_points', 2]`
+### 1.1 字段 `key_points[2]`
 
 **错误版本（卡上原文）**
 
