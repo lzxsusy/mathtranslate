@@ -3,6 +3,44 @@
 > **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
 
 
+## 2026-11-27 · SY02-48 Ben-Zvi《几何 Langlands》（UT Austin M390C 2021 春）课程讲义中译
+
+- 新增工程 `08_source_code/SY02-48_Ben-Zvi几何Langlands课程讲义/`：David Ben-Zvi 讲授、Arun Debray
+  live-TeX 记录，*M390C Notes: Geometric Langlands*，UT Austin 2021-01-19 至 2021-06-03，**31 讲 89 页**，
+  文稿生成于 2021-06-03（文本层干净，仅 1 幅嵌入图）。中译注本 **107 页**，xelatex 三遍 0 error /
+  0 Underfull / 11 处 Overfull（最大 15.1pt，约 5mm，均为中英混排行内公式，已登记为已知限制）。
+- 编号条目 **78 条**（例 42、注 17、定理 10、定义 8、引理 1），全部由 LaTeX 环境自动编号（`讲次.序号`），
+  与 `资料卡/03-条款索引.md`、`工程文件/work/条目总表.tsv` 三方对账一致；底本 8 处连字 `Deﬁnition`
+  造成的计数偏移已在译文中修正。31 讲逐页对译，页锚 `\srcpage` 与底本印刷页一一对应（印刷页 = PDF 页）。
+- 术语 **306 条**开工前冻结（新增 91 条，含 topological field theory 拓扑场论、defect 缺陷、
+  Pontrjagin/Cartier/Tannakian 对偶与重构、affine Grassmannian 仿射 Grassmann 簇、shtuka 不译等）；
+  表外词保留英文并写入各讲报告 §二，未自行造词。译注 **44 条**（术语 24、原文笔误 17、省略说明 3），
+  每讲 ≤ 6 条；原文口头插话与 `(TODO: …)` 自注照译保留。
+- 原文疑误 **20 余条**集中登记在 `资料卡/04-术语文献勘误.md`（照录原文、加译注、不臆改）：p28 的
+  `W^{un}`/`W^{ur,ab}` 混用、p31 的 `H^1(Σ;O)/H^1(Σ;Z)` 写法、p36 的 `2g+2` 与 `2g−2` 自相矛盾、
+  p68 的 `π_{≤1}X` 应为 `π_{≤1}M`、p79 的 `Varshovsky`、L31 的 `sinilar`、`p` 与 `ρ` 混用等。
+- 文献 **17 条**外核：13 条 arXiv 号全部可解析；两处出入——[Cam17] 实际题名 *Geometric class field theory
+  and Cartier duality*、作者为 Campbell 与 Andreas Hayash（底本作 Unramified、单作者）；[Lau91] 底本所标
+  `arXiv:alg-geom/9603004` 实为另一篇 *Transformation de Fourier generalisee*，与所引 ICM 1990 报告非同篇。
+  其余 4 条非 arXiv 条目（Kno94/Mac80/RV99/Wit82）出版信息一致。参考文献表已清除底本混入的页眉污染，
+  URL 全部改为 `\url{}`，Overfull 归零。
+- 资料卡五件套：`00-速览`（一句话「几何 Langlands = 二维 TFT 的谱分解」+ 三条主线 + 讨论班路线）、
+  `01-结果清单`（10 条定理 + 8 条定义，逐条带原文页码与论证强度）、`02-论证地图`（逻辑链、
+  四个技术支柱、按需读法）、`03-条款索引`（78 条，讲/编号/类型/原文页/首句）、
+  `04-术语文献勘误`（28 词冻结表 + 17 行文献外核 + 10 条原文笔误 + 91 条新增术语四类）。
+- 对齐卡 2 张 gap 卡：`datasets/leanstmt/cards/statements/bz21-g01.json`（几何 Satake，p71–76）与
+  `bz21-g02.json`（Gaitsgory 消灭定理，p79–80），Lean 形态 `lean/ShuyiFormal/BZGL/Gaps.lean`
+  （占位定义 11 个、两定理各含 `sorry`，`scope:"gap"` + `verification.status:"gap"`）；
+  `lint_cards.py cards --strict` → 47 卡 0 error 0 warning。Lean 实测因 mathlib 拉取被网络重置
+  （`curl 55` / `could not fetch … from promisor remote`）未能通过，卡内 checker 如实记「未运行 Lean」。
+- 流程：8 名译手按讲分包（L01–04 / 05–08 / 09–12 / 13–16 / 17–20 / 21–24 / 25–28 / 29–31）→
+  每讲 `工程文件/tools/check_sections.py` 31/31 OK（页锚序列、条目数、环境配对、禁用命令）→
+  整篇 xelatex 三遍 → 术语一致性抽查（统一「特征」系、「摩天层」；无「点层/滑轮/拓扑缺陷」）→
+  `python make_stats.py --write`、`tools/check_numbers.py`、`tools/build_norm.py --check` 全通过。
+- 已知限制：第 10 讲底本只有标题（p29，47 字符，无正文），译本只给节标题与说明，不补写；
+  第 25 讲底本标题为空，译本作「无标题的一讲」；讲义为课堂记录，若干定理只给陈述与路线，未逐行证明，
+  `01-结果清单` 已按「证明/陈述/假设」标注地位。
+
 ## 2026-11-27 · SY02-46 Laumon 布尔巴基 906《Drinfeld–Langlands 对应：FGV 的工作》中译
 
 - 新增工程 `08_source_code/SY02-46_Laumon布尔巴基906Drinfeld-Langlands对应/`：Gérard Laumon,

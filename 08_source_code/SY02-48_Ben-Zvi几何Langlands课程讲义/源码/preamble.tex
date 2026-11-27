@@ -1,0 +1,233 @@
+% preamble.tex —— 《几何 Langlands》课程讲义中译注本 全局导言
+% 编译：xelatex ×2（有索引时 xelatex → makeindex → xelatex ×2）
+\usepackage[a4paper,margin=2.6cm,footskip=1.2cm]{geometry}
+% 页锚放在页边：book 类默认 \marginparwidth=116pt，比 2.6cm 的页边距还宽，
+% marginnote 会被排到纸外；这里把它压到页边距以内（编译自检见 _check*.log 的 Overfull）。
+\setlength{\marginparwidth}{1.9cm}
+\setlength{\marginparsep}{2pt}
+\usepackage{ctex}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{mathrsfs,bbm}
+\usepackage{stmaryrd}% \llbracket \rrbracket（原 s02/s03/s05/s08 各自 providecommand）
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usetikzlibrary{arrows.meta,decorations.pathmorphing,calc}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{booktabs,array,multirow}
+\usepackage{graphicx}
+\usepackage{marginnote}
+\usepackage[unicode,bookmarksnumbered,bookmarksopen=true,hidelinks]{hyperref}
+% 三级标题（1.4.1 这类）要编号：book 类默认 secnumdepth=2
+\setcounter{secnumdepth}{3}
+\usepackage{imakeidx}
+\makeindex[intoc]
+
+% ---------- 译者体例开关：\showyizhufalse 可一键隐藏全部译注 ----------
+\newif\ifshowyizhu
+\showyizhutrue
+
+% ---------- 颜色 ----------
+\definecolor{yizhuGray}{gray}{0.30}
+\definecolor{srcBlue}{RGB}{20,70,140}
+
+% ---------- 译注：\yizhu{内容}{来源} ----------
+% 体例：以脚注形式排，楷体，来源用 [来源：…] 标注；无外部依据写 [译者按（无外部依据）]
+\newcommand{\yizhu}[2]{%
+  \ifshowyizhu
+    \footnote{\textcolor{yizhuGray}{\kaishu #1}\quad{\scriptsize\textcolor{srcBlue}{[来源：#2]}}}%
+  \fi}
+\newcommand{\yizhuw}[1]{%
+  \ifshowyizhu
+    \footnote{\textcolor{yizhuGray}{\kaishu #1}\quad{\scriptsize\textcolor{srcBlue}{[译者按（无外部依据）]}}}%
+  \fi}
+
+% ---------- 原文页码锚点：\srcpage{7} ----------
+% 1) 版式上用 marginnote（比 marginpar 稳：跨页段、定理环境、脚注附近都不易丢）；
+% 2) 同时把页码写进 <jobname>.pagemarks，任何不可见的情况都能事后核查（工具见 tools/check_pagemarks.py）。
+\newif\ifsrcmark
+\srcmarktrue
+\newwrite\srcpageout
+\immediate\openout\srcpageout=\jobname.pagemarks
+\newcommand{\srcpage}[1]{%
+  \ifsrcmark\immediate\write\srcpageout{#1}\fi
+  \phantomsection\label{srcpage:#1@\thesection}%
+  \marginnote{\raggedleft\scriptsize\textcolor{yizhuGray}{p.#1}}}
+% 无 margin 的精简版（用于窄页/表格内）：\pgref{N}
+\newcommand{\pgref}[1]{\textsuperscript{\scriptsize\textcolor{yizhuGray}{[p.#1]}}}
+% 页界落在句子中间时用这个：行内小号上标，保证不会被排版吞掉
+\newcommand{\srcpageinl}[1]{%
+  \ifsrcmark\immediate\write\srcpageout{#1}\fi
+  \phantomsection\label{srcpage:#1@\thesection}%
+  \textsuperscript{\tiny\textcolor{yizhuGray}{〔p.#1〕}}}
+
+
+% ---------- 编号：章用罗马数字，节/定理沿用原文「I.6.3」式编号 ----------
+% 本文是单篇综述：不用 chapter，节号从 1 起，与原文 1–9 一致
+% 页眉：book 类默认 \sectionmark 为空（它靠 chapter 设 running head），
+% 本文无 chapter，故自行设右页眉为「节号 节名」，\section* 处另加 \markright。
+\renewcommand{\sectionmark}[1]{\markright{\thesection\quad #1}}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+
+% ---------- 定理环境（编号保持「章.节.序」） ----------
+\theoremstyle{plain}
+\newtheorem{theorem}{定理}[section]
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{corollary}[theorem]{推论}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{定义}
+\newtheorem{example}[theorem]{例}
+\newtheorem{construction}[theorem]{构造}
+\newtheorem{question}[theorem]{问题}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{注}
+\newtheorem{conjecture}[theorem]{猜想}
+% 作者自造的弱化断言 “Hope”（Hope 2.3、3.15、6.6），译作「期望」，与定理同计数器
+\newtheorem{hope}[theorem]{期望}
+
+% ---------- 常用记号 ----------
+\newcommand{\FF}{\mathbb{F}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\PP}{\mathbb{P}}
+\renewcommand{\AA}{\mathbb{A}}% 覆盖 Å
+\newcommand{\GG}{\mathbb{G}}
+\newcommand{\mm}{\mathfrak{m}}
+\newcommand{\pp}{\mathfrak{p}}
+\newcommand{\oo}{\mathcal{O}}
+\newcommand{\Bun}{\mathrm{Bun}}
+\newcommand{\Spa}{\mathrm{Spa}}
+\newcommand{\SpaS}{\mathrm{Spa}}
+\newcommand{\Div}{\mathrm{Div}}
+\newcommand{\Gr}{\mathrm{Gr}}
+\newcommand{\Hck}{\mathit{Hecke}}
+\newcommand{\perf}{\mathrm{perf}}
+\newcommand{\Adic}{\mathrm{Adic}}
+\newcommand{\Crys}{\mathrm{Crys}}
+\newcommand{\Isoc}{\mathrm{Isoc}}
+\newcommand{\Vect}{\mathrm{Vect}}
+\newcommand{\LocSys}{\mathrm{LocSys}}
+\newcommand{\Rep}{\mathrm{Rep}}
+\newcommand{\QCoh}{\mathrm{QCoh}}
+\newcommand{\IndCoh}{\mathrm{IndCoh}}
+\newcommand{\Dmod}{D\text{-}\mathrm{mod}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+% 花体字母宏：\cA–\cZ 一次定义（译文中 \cE 等按需使用，避免逐字补漏）
+\makeatletter
+\@tfor\cletter:=ABCDEFGHIJKLMNOPQRSTUVWXYZ\do{%
+  \expandafter\edef\csname c\cletter\endcsname{\noexpand\mathcal{\cletter}}}
+\makeatother
+\newcommand{\wt}[1]{\widetilde{#1}}
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\ul}[1]{\underline{#1}}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\Tor}{Tor}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\coker}{coker}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Pic}{Pic}
+\DeclareMathOperator{\Lie}{Lie}
+\DeclareMathOperator{\Sym}{Sym}
+\DeclareMathOperator{\Ind}{Ind}
+\DeclareMathOperator{\Res}{Res}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\Weil}{Weil}
+\DeclareMathOperator{\Frob}{Frob}
+\DeclareMathOperator{\Sht}{Sht}
+\DeclareMathOperator{\Art}{Art}
+\DeclareMathOperator{\Proj}{Proj}
+\DeclareMathOperator{\Spf}{Spf}
+\DeclareMathOperator{\Isom}{Isom}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\HN}{HN}
+\DeclareMathOperator{\SpaO}{Spa}
+\DeclareMathOperator{\Perf}{Perf}
+
+
+% ========== SY02-48 追加宏（本讲义专用） ==========
+\usepackage{mathrsfs}
+\providecommand{\Fp}{\mathbb{F}_p}
+\providecommand{\Fq}{\mathbb{F}_q}
+\providecommand{\Fl}{\mathbb{F}_\ell}
+\providecommand{\Qp}{\mathbb{Q}_p}
+\providecommand{\Zp}{\mathbb{Z}_p}
+\providecommand{\Ql}{\overline{\mathbb{Q}}_\ell}
+\providecommand{\Zl}{\mathbb{Z}_\ell}
+\providecommand{\breveE}{\breve{E}}
+\providecommand{\Lam}{\Lambda}
+\providecommand{\BdR}{B_{\mathrm{dR}}}
+\providecommand{\Bcris}{B_{\mathrm{cris}}}
+\providecommand{\Bst}{B_{\mathrm{st}}}
+\providecommand{\BHT}{B_{\mathrm{HT}}}
+\providecommand{\Ainf}{A_{\mathrm{inf}}}
+\providecommand{\BunG}{\Bun_G}
+\providecommand{\Perf}{\mathrm{Perf}}
+\providecommand{\Fil}{\mathrm{Fil}}
+\providecommand{\trdeg}{\operatorname{trdeg}}
+\providecommand{\et}{\text{ét}}
+\providecommand{\Et}{\mathrm{\acute{E}t}}
+\providecommand{\diam}{{\diamondsuit}}
+\providecommand{\cB}{\mathcal{B}}
+\providecommand{\cC}{\mathcal{C}}
+\providecommand{\cN}{\mathcal{N}}
+\providecommand{\cP}{\mathcal{P}}
+\providecommand{\cQ}{\mathcal{Q}}
+\providecommand{\cS}{\mathcal{S}}
+\providecommand{\cT}{\mathcal{T}}
+\providecommand{\cU}{\mathcal{U}}
+\providecommand{\cV}{\mathcal{V}}
+\providecommand{\cW}{\mathcal{W}}
+\providecommand{\cE}{\mathcal{E}}
+\providecommand{\cK}{\mathcal{K}}
+\providecommand{\cI}{\mathcal{I}}
+\providecommand{\cJ}{\mathcal{J}}
+\providecommand{\cA}{\mathcal{A}}
+\providecommand{\Spd}{\mathrm{Spd}}
+\providecommand{\Sm}{\mathrm{Sm}}
+\providecommand{\Corr}{\mathrm{Corr}}
+\providecommand{\Sht}{\mathrm{Sht}}
+\providecommand{\BT}{\mathcal{BT}}
+% 「警告」环境：原文 Warning n.m. 与定理同类，共用计数器
+\theoremstyle{definition}
+\newtheorem{warning}[theorem]{警告}
+\newtheorem{notation}[theorem]{记号}
+\newtheorem{fact}[theorem]{事实}
+\newtheorem{exercise}[theorem]{练习}
+
+% ---- 常用算子（补充，provide 语义避免重复定义） ----
+\providecommand{\rank}{\operatorname{rank}}
+\providecommand{\Spa}{\operatorname{Spa}}
+\providecommand{\Isoc}{\operatorname{Isoc}}
+\providecommand{\Rep}{\operatorname{Rep}}
+\providecommand{\Perv}{\operatorname{Perv}}
+\providecommand{\Spd}{\operatorname{Spd}}
+% 底本用 99K 表示有理映射
+\providecommand{\dashto}{\dashrightarrow}
+
+% ---- 常用域符号（译手偶用单字母写法，统一 provide 出来） ----
+\providecommand{\Q}{\mathbb{Q}}
+\providecommand{\Z}{\mathbb{Z}}
+\providecommand{\C}{\mathbb{C}}
+\providecommand{\R}{\mathbb{R}}
+\providecommand{\F}{\mathbb{F}}
+\providecommand{\A}{\mathbb{A}}
+\providecommand{\G}{\mathbb{G}}
+\providecommand{\P}{\mathbb{P}}
