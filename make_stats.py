@@ -294,7 +294,8 @@ def dataset_stats():
                     lean["gap"] += 1
         for dp, dn, fn in os.walk(os.path.join(ldir, "lean")):
             for f in fn:
-                if f.endswith(".lean"):
+                # 只数陈述层源码（lean/ShuyiFormal/**）；lakefile.lean 是构建配置，不算陈述
+                if f.endswith(".lean") and "ShuyiFormal" in dp.replace("\\", "/"):
                     lean["lean_files"] += 1
                     txt = io.open(os.path.join(dp, f), encoding="utf-8").read()
                     lean["sorry"] += len(re.findall(r"(?<![\w'])sorry(?![\w'])", txt))

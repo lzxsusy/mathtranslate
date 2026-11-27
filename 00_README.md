@@ -22,6 +22,7 @@
 | `PLAYBOOK_02_AMS量子场与弦习题推理链_v1.md` | **任务规程**：AMS《量子场与弦》习题课——角色、L0–L5 提示阶梯、卡点冻结、C1–C8 归因、`exercise.jsonl` schema、每周 90 分钟时间盒 | 只用于习题课线；上游是 MEMORANDUM-01；网页版 `site/playbook-ams.html` |
 | `09_thinking/` | AI 思考链的筛选、审计与上传：L0 raw → L1 候选卡 → L2 人工批准链 → L3 审计报告；硬纪律 R1–R12 | 2026-11-20 新建；工具 `tools/thinking_audit.py`；只上传人批准的链，raw reasoning 不入库 |
 | `10_gmn_series/` | GMN 系列（Gaiotto–Moore–Neitzke：穿墙、BPS 态、WKB 谱网络、红外代数）的资料卡、阅读报告、术语与索引 | 2026-11-21 新建；译文源码在 `08_source_code/SY01-27_…`；GMW 两篇待地基文献齐备后启动 |
+| `12_sandbox/` | 数学沙盒：把前沿数学做成大模型可跑、编译器可判对错的免费环境 | 2026-11-27 新建；愿景/原则/路线图见 `12_sandbox/README.md` |
 | `ASSESSMENT_2026-11-20_产出作用.md` | 按“有没有用”审计 33 天产出：页数、可验证判断、成本-作用对照 | **历史快照**（数字保留当日口径，不再回改）；与 `ASSESSMENT_2026-11-20_AI消耗.md`、`04_playbook/15_形式化与自然语言对齐_2026-11.md` 配套；现行统计以 `_meta/stats.json` 为准 |
 
 ## 大体积资产：Release 附件
