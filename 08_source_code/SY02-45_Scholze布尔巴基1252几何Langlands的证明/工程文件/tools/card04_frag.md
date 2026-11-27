@@ -1,4 +1,136 @@
-<!-- AUTO: 术语表 -->
+## 二、术语冻结表（123 条，开工前冻结）
+
+依据代号：**L** = 本库已冻结（`01_corpus_zh/数语规范/TERMS.tsv` 或 SY02-41/SY02-26 的 glossary）；**A** = 权威通行（本库无专条，按社区通行中文，已对照香蕉空间）；**I** = 待 Lead 裁定（本文保留英文）。首现页 = 原文印刷页；本表由 `工程文件/work/glossary.tsv`（123 行）脚本生成，与 `check_terms.py` 的 123/123 覆盖率同源。
+
+| # | 英文 | 中文 | 依据 | 首现页 | 备注 |
+| --- | --- | --- | --- | --- | --- |
+| 1 | geometric Langlands | 几何 Langlands | L | 1 |  |
+| 2 | automorphic form | 自守形式 | L | 6 |  |
+| 3 | automorphic representation | 自守表示 | L | 3 |  |
+| 4 | function field | 函数域 | L | 1 |  |
+| 5 | number field | 数域 | L | 1 |  |
+| 6 | Langlands dual group | Langlands 对偶群 | L | 4 |  |
+| 7 | Borel subgroup | Borel 子群 | L | 9 |  |
+| 8 | maximal torus | 极大环面 | A | 4 |  |
+| 9 | reductive group | 约化群 | L | 8 |  |
+| 10 | split | 分裂 | L | 3 | 指 split reductive group |
+| 11 | simply connected | 单连通 | L | 3 |  |
+| 12 | unipotent radical | 单幂根 | A | 9 |  |
+| 13 | parabolic | 抛物 | L | 47 | 抛物子群 |
+| 14 | Levi subgroup | Levi 子群 | L | 3 |  |
+| 15 | cuspidal | 尖点 | L | 4 | 尖点形式 / 尖点部分 |
+| 16 | tempered | 缓增 | A | 19 |  |
+| 17 | Eisenstein series | Eisenstein 级数 | L | 1 |  |
+| 18 | constant term | 常数项 | A | 47 |  |
+| 19 | Whittaker coefficient | Whittaker 系数 | A | 1 |  |
+| 20 | Whittaker sheaf | Whittaker 层 | A | 17 |  |
+| 21 | Poincaré series | Poincaré 级数 | A | 9 |  |
+| 22 | Hecke operator | Hecke 算子 | L | 3 |  |
+| 23 | Hecke correspondence | Hecke 对应 | L | 8 |  |
+| 24 | Hecke eigensheaf | Hecke 特征层 | A | 51 |  |
+| 25 | Hecke-lisse | Hecke-lisse | A | 21 | 不译，作为术语保留 |
+| 26 | geometric Satake equivalence | 几何 Satake 等价 | L | 14 |  |
+| 27 | fusion product | 融合积 | A | 15 |  |
+| 28 | affine Grassmannian | 仿射 Grassmann 簇 | L | 14 |  |
+| 29 | loop group | 圈群 | A | 14 |  |
+| 30 | positive loop group | 正圈群 | A | 14 |  |
+| 31 | local Hecke stack | 局部 Hecke 叠 | A | 14 |  |
+| 32 | oper | oper | L | 49 | 不译；复数 opers |
+| 33 | Kac–Moody localization | Kac–Moody 局部化 | A | 1 |  |
+| 34 | critical level | 临界水平 | A | 51 |  |
+| 35 | spherical vector | 球向量 | A | 50 |  |
+| 36 | ind-coherent sheaves | 归纳凝聚层 | A | 17 | IndCoh 保留记号 |
+| 37 | coherent sheaf | 凝聚层 | L | 6 |  |
+| 38 | perfect complex | 完美复形 | L | 17 |  |
+| 39 | quasicoherent | 拟凝聚 | L | 6 | 记号 Dqc 保留 |
+| 40 | six-functor formalism | 六函子形式化 | A | 11 |  |
+| 41 | correspondence | 对应 | L | 8 |  |
+| 42 | perverse sheaf | 反常层 | L | 14 | 严禁「错致层」 |
+| 43 | constructible sheaf | 可构造层 | L | 10 |  |
+| 44 | lisse | lisse | A | 21 | 与 locally constant 同义，保留英文 |
+| 45 | local system | 局部系统 | L | 1 |  |
+| 46 | flat connection | 平坦联络 | L | 24 |  |
+| 47 | D-module | D-模 | L | 10 |  |
+| 48 | de Rham | de Rham | L | 12 | 不译 |
+| 49 | Betti | Betti | L | 12 | 不译 |
+| 50 | étale | étale | L | 6 | 不译 |
+| 51 | pro-étale | pro-étale | L | 29 | 不译 |
+| 52 | condensed | 凝聚态 | L | 29 |  |
+| 53 | shtuka | shtuka | L | 29 | 不译 |
+| 54 | leg | leg | L | 29 | 不译 |
+| 55 | nilpotent singular support | 幂零奇异支撑 | A | 12 |  |
+| 56 | singular support | 奇异支撑 | A | 12 |  |
+| 57 | microlocal | 微局部 | A | 12 |  |
+| 58 | microstalk | 微茎 | I | 52 |  |
+| 59 | cotangent bundle | 余切丛 | L | 21 |  |
+| 60 | Hitchin fibration | Hitchin 纤维化 | A | 21 |  |
+| 61 | Higgs bundle | Higgs 丛 | A | 21 |  |
+| 62 | moduli stack | 模叠 | A | 25 |  |
+| 63 | moduli space | 模空间 | L | 7 |  |
+| 64 | Artin stack | Artin 叠 | A | 12 |  |
+| 65 | quotient stack | 商叠 | A | 23 |  |
+| 66 | descent | 下降 | A | 12 |  |
+| 67 | sheafification | 层化 | A | 14 |  |
+| 68 | presentable | 可表现 | A | 11 |  |
+| 69 | stable (∞,1)-category | 稳定 (∞,1)-范畴 | A | 20 |  |
+| 70 | symmetric monoidal | 对称幺半 | A | 11 |  |
+| 71 | commutative algebra | 交换代数 | L | 13 |  |
+| 72 | kernel | 核 | A | 20 | 核范畴 / 核函子 |
+| 73 | adjoint | 伴随 | L | 20 |  |
+| 74 | dualizable | 可对偶 | A | 22 |  |
+| 75 | self-dual | 自对偶 | A | 20 |  |
+| 76 | trace of Frobenius | Frobenius 迹 | A | 1 |  |
+| 77 | Frobenius structure | Frobenius 结构 | A | 12 |  |
+| 78 | Weil descent datum | Weil 下降数据 | A | 39 |  |
+| 79 | Weil group | Weil 群 | A | 29 |  |
+| 80 | compactly generated | 紧生成 | A | 17 |  |
+| 81 | compact object | 紧对象 | A | 20 |  |
+| 82 | derived algebraic geometry | 导出代数几何 | A | 16 |  |
+| 83 | formal completion | 形式完备化 | A | 24 |  |
+| 84 | formal disc | 形式圆盘 | A | 43 |  |
+| 85 | punctured formal disc | 去心形式圆盘 | A | 30 |  |
+| 86 | quasitorsor | 拟挠子 | A | 24 |  |
+| 87 | torsor | 挠子 | A | 4 |  |
+| 88 | character variety | 特征簇 | A | 24 |  |
+| 89 | local complete intersection | 局部完全交 | A | 24 |  |
+| 90 | Witt vectors | Witt 向量 | A | 18 |  |
+| 91 | degeneration | 退化 | A | 18 |  |
+| 92 | specialization map | 特殊化映射 | A | 25 |  |
+| 93 | profinite | 投射有限 | A | 24 |  |
+| 94 | Cartier duality | Cartier 对偶 | A | 34 |  |
+| 95 | Fourier–Mukai | Fourier–Mukai | A | 35 | 不译 |
+| 96 | abelian variety | 阿贝尔簇 | L | 33 |  |
+| 97 | Jacobian | Jacobian | A | 33 | 不译 |
+| 98 | principally polarized | 主极化 | A | 33 |  |
+| 99 | universal vector extension | 通用向量扩张 | I | 35 |  |
+| 100 | Tannakian | Tannakian | A | 5 | 不译 |
+| 101 | coend | 余端 | A | 27 |  |
+| 102 | anima | anima | A | 7 | 不译 |
+| 103 | Gestalt | Gestalt | I | 26 | 不译，首现括注「格式塔」 |
+| 104 | transmutation | transmutation | I | 31 | 不译，待裁定 |
+| 105 | eventually coconnective | 最终余连通 | A | 42 |  |
+| 106 | connective | 连通 | A | 42 |  |
+| 107 | suave | suave | I | 21 | Heyer–Mann 术语，不译 |
+| 108 | prim | prim | I | 21 | Heyer–Mann 术语，不译 |
+| 109 | universally locally acyclic | 泛局部无环 | A | 21 |  |
+| 110 | cohomologically smooth | 上同调光滑 | A | 32 |  |
+| 111 | Artin–Schreier sheaf | Artin–Schreier 层 | A | 18 |  |
+| 112 | exponential D-module | 指数 D-模 | A | 18 |  |
+| 113 | wild Betti sheaves | 野 Betti 层 | I | 41 |  |
+| 114 | exponential motives | 指数动机 | A | 41 |  |
+| 115 | Hochschild homology | Hochschild 同调 | A | 38 |  |
+| 116 | cyclic Bar complex | 循环 Bar 复形 | A | 38 |  |
+| 117 | Morita theory | Morita 理论 | A | 38 |  |
+| 118 | p-adic field | p 进域 | L | 10 |  |
+| 119 | archimedean | 阿基米德 | A | 6 |  |
+| 120 | twistor-P1 | 扭量 P$^1$ | I | 6 |  |
+| 121 | Fargues–Fontaine curve | Fargues–Fontaine 曲线 | A | 10 |  |
+| 122 | automorphic-to-Galois | 自守到 Galois | I | 6 | 方向名 |
+| 123 | Galois-to-automorphic | Galois 到自守 | I | 6 | 方向名 |
+
+### 2.1 高风险释义（24 条，抽样精释）
+
+只挑在本文语境下最容易译偏的 24 条；其余 99 条按上表冻结。
 
 | 术语 | 原文 | 释义 | 定位 |
 |---|---|---|---|
@@ -27,7 +159,9 @@
 | 导出 Artin 叠 | derived Artin stack | $\LocSys_{\check G}$ 的函子性定义；Zhihao Zhu 2025 给出性态良好的版本 | §2 p15；§4 p25 |
 | 特征 $p$ | characteristic p | $p=\mathrm{char}(k)$ 须充分大且非 $G$ 的挠素数；此时只能得到开闭子叠 $\LocSys'$ | §1 p8；§2 p18 |
 
-<!-- AUTO: 文献表 -->
+## 三、参考文献外核
+
+56 条：OK 34、DIFF 2、无法核验 20。核验手段：arXiv API 按 id 取标题（21 条有 arXiv 号，20 条标题完全一致；`1811.07976` 因 API 返回 UTF-8 乱码只能人工确认标题存在）；Crossref `query.bibliographic` 取 DOI（18 条有 DOI，16 条直接命中）。逐条状态与定位见 `05-溯源表.tsv`（卡文件 = 04，条目 = 文献表）。
 
 | # | 文献 | 出处 | 标识 | 核验 | 备注 |
 |---|---|---|---|---|---|
@@ -44,7 +178,7 @@
 | 11 | Ben-Zvi 2026 | Current Events Bulletin of the AMS, 4–36 | — | 无法核验 | 2026 年卷，尚未见 DOI |
 | 12 | Ben-Zvi–Nadler 2013 | Duke Math. J. 162(9) 1587–1619 | DOI 10.1215/00127094-2266130 | OK | Crossref 核验 |
 | 13 | Ben-Zvi–Nadler 2018 | Proc. Sympos. Pure Math. 97.2, 3–41 | — | 无法核验 | 文集，未查 DOI |
-| 14 | Beraldo–Kazhdan–Schlank 2022 | 预印本 | arXiv:1801.00655v2 | OK | arXiv 标题核验；年份 DIFF（2018 初版） |
+| 14 | Beraldo–Kazhdan–Schlank 2022 | 预印本 | arXiv:1801.00655v2 | DIFF | arXiv 标题核验；年份 DIFF（2018 初版） |
 | 15 | Buzzard–Gee 2014 | LMS Lecture Note Ser. 414, 135–187 | — | 无法核验 | 文集，未查 DOI |
 | 16 | CCFGLRR 2024 | 预印本 | arXiv:2409.07051 | OK | arXiv 标题核验 |
 | 17 | Drinfeld 1983 | Amer. J. Math. 105(1) 85–114 | DOI 10.2307/2374382 | OK | Crossref 核验 |
@@ -59,7 +193,7 @@
 | 26 | Gaitsgory 2015 | Astérisque 370, 1–112 | — | 无法核验 | Astérisque 卷，未查 DOI |
 | 27 | Gaitsgory–Raskin 2025a | 预印本 | arXiv:2508.02237 | OK | arXiv 标题核验 |
 | 28 | Gaitsgory–Raskin 2025b | 预印本 | arXiv:2405.03599v3 | OK | arXiv 标题核验 |
-| 29 | Gaitsgory–Raskin 2026 | 预印本 | arXiv:2409.09856v3 | OK | arXiv 标题核验；年份 DIFF（2024 初版） |
+| 29 | Gaitsgory–Raskin 2026 | 预印本 | arXiv:2409.09856v3 | DIFF | arXiv 标题核验；年份 DIFF（2024 初版） |
 | 30 | Gaitsgory–Rozenblyum 2017 | AMS Math. Surveys and Monographs 221 | — | 无法核验 | 专著，未查 DOI |
 | 31 | Gallauer–Pepin Lehalleur 2022 | 预印本 | arXiv:2211.17247 | OK | arXiv 标题核验 |
 | 32 | Hamann–Hansen–Scholze 2024 | 预印本 | arXiv:2409.07363 | OK | arXiv 标题核验 |

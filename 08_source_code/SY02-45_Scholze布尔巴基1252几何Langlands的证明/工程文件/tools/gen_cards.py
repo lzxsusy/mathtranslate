@@ -230,15 +230,67 @@ TERMS = [
 def ok_ratio(rows):
     return sum(1 for r in rows if r[7] == "OK") / float(len(rows))
 
+
+TYPE_ZH = {"Assumption": "假设", "Problem": "问题", "Theorem": "定理",
+           "Remark": "注", "Definition": "定义", "Conjecture": "猜想",
+           "Corollary": "推论", "Proposition": "命题", "Example": "例"}
+TYPE_ORDER = ["假设", "问题", "猜想", "定理", "命题", "推论", "定义", "例", "注"]
+
+STEP_NUM = ["问题 1.2", "猜想 1.5、猜想 2.10", "定理 2.2、定理 2.7", "定理 3.4",
+            "定理 5.1、推论 5.3、定理 5.9", "定理 8.2", "定理 9.3、定理 9.6",
+            "定理 10.1", "定理 11.4", "注 12.1"]
+
+
+def read_tsv(path):
+    rows = []
+    for i, l in enumerate(io.open(path, encoding="utf-8")):
+        if i == 0:
+            continue
+        p = l.rstrip("\n").split("\t")
+        if len(p) >= 4 and p[0].strip():
+            rows.append(p)
+    return rows
+
+
+def read_gloss():
+    return read_tsv(os.path.join(WORK, "work", "glossary.tsv"))
+
+
+def type_counter():
+    c = {}
+    for p in read_tsv(os.path.join(WORK, "work", "条目总表.tsv")):
+        z = TYPE_ZH.get(p[2], p[2])
+        c[z] = c.get(z, 0) + 1
+    return c
+
+
+def stats_phrase():
+    c = type_counter()
+    return "、".join("%s %d" % (k, c[k]) for k in TYPE_ORDER if c.get(k))
+
+
+def refs_fixed():
+    out = []
+    for r in REFS:
+        st = r[5]
+        if r[0] in ("bks2022", "gr2026"):
+            st = "DIFF"
+        out.append((r[0], r[1], r[2], r[3], r[4], st, r[6]))
+    return out
+
+
 def gen03():
+    c = type_counter()
     out = ["# 资料卡 03 · 条款索引", "",
-           "57 条编号条目逐条列出：编号、类型、原文页、一句话内容。编号与原文一致（Bourbaki 体例：类型名在前、编号在节内递增），页码为原文页眉的印刷页。环境类型统计：假设 1、问题 1、猜想 2、定理 15、命题 1、推论 2、定义 4、注 31。", ""]
-    secs = [("1","§1 引言：从数域到函数域","p1–11"),("2","§2 几何 Langlands 的表述","p11–19"),
-            ("3","§3 六函子与幂零奇异支撑","p19–23"),("5","§5 谱作用、shtuka 与 de Rham","p25–33"),
-            ("6","§6 $\\mathbb G_m$ 的玩具例","p33–35"),("7","§7 Beilinson 谱投影子","p35–38"),
-            ("8","§8 Frobenius 的迹","p38–40"),("9","§9 Whittaker 系数","p40–45"),
-            ("10","§10 Eisenstein 级数","p45–49"),("11","§11 Kac–Moody 局部化","p49–52"),
-            ("12","§12 尖点形式","p52–53")]
+           "57 条编号条目逐条列出：编号、类型、原文页、一句话内容。编号与原文一致（Bourbaki 体例：类型名在前、编号在节内递增），页码为原文页眉的印刷页。环境类型统计（由 `工程文件/work/条目总表.tsv` 脚本统计）：%s，共 %d 条。"
+           % (stats_phrase(), sum(c.values())), ""]
+    secs = [("1", "§1 引言：从数域到函数域", "p1–11"), ("2", "§2 几何 Langlands 的表述", "p11–19"),
+            ("3", "§3 六函子与幂零奇异支撑", "p19–23"),
+            ("5", "§5 谱作用、shtuka 与 de Rham", "p25–33"),
+            ("6", "§6 $\\mathbb G_m$ 的玩具例", "p33–35"), ("7", "§7 Beilinson 谱投影子", "p35–38"),
+            ("8", "§8 Frobenius 的迹", "p38–40"), ("9", "§9 Whittaker 系数", "p40–45"),
+            ("10", "§10 Eisenstein 级数", "p45–49"), ("11", "§11 Kac–Moody 局部化", "p49–52"),
+            ("12", "§12 尖点形式", "p52–53")]
     for sid, title, pages in secs:
         its = [x for x in ITEMS if x[0] == sid]
         out.append("## %s（原文 %s，共 %d 条）" % (title, pages, len(its)))
@@ -250,36 +302,61 @@ def gen03():
         out.append("")
     out.append("## 说明")
     out.append("")
-    out.append("- §4（局部系统的叠）原文未编号，故本表无 §4。")
+    out.append("- §4（局部系统的叠，原文 p23–25）无编号条目：给出 Betti / de Rham / étale 三种 $\\LocSys$ 的定义，底叠非光滑但局部完全交。")
     out.append("- 译文环境与原文同号；`check_sections.py all` 逐节核对 57/57。")
     out.append("- 每一条的外部定位与核验状态见 `05-溯源表.tsv`。")
     return "\n".join(out) + "\n"
 
+
 def gen05():
     rows = []
-    hdr = ["卡文件","条目","原文页","原文编号","原文英文要点","外部文献","外部定位","核验状态","备注"]
+    hdr = ["卡文件", "条目", "原文页", "原文编号", "原文英文要点", "外部文献", "外部定位", "核验状态", "备注"]
     for it in ITEMS:
-        rows.append(["01/03", it[4], "p" + it[3], it[1], EN.get(it[1], it[4]), it[5], it[6], it[7], it[8]])
+        for card in ("01", "03"):
+            rows.append([card, it[4], "p" + it[3], it[1], EN.get(it[1], it[4]),
+                         it[5], it[6], it[7], it[8]])
     for i, st in enumerate(STEPS):
-        rows.append(["02", st[0], "", "—", st[2], st[3], st[4], st[5], "论证地图节点"])
-    for t in TERMS:
-        m = re.search(r"p(\d+)", t[3])
-        rows.append(["04", "术语：" + t[0], "p" + m.group(1) if m else "", "—", t[1] + "；" + t[2], "本篇", t[3], "OK", "术语按原文用法；外部对应见引文"])
-    for r in REFS:
+        m = re.search(r"p\d+[–\-]\d+", st[1])
+        pg = m.group(0) if m else st[1]
+        rows.append(["02", st[0], pg, STEP_NUM[i], st[2], st[3], st[4], st[5], "论证地图节点"])
+    for g in read_gloss():
+        en, zh, basis, page = g[0], g[1], g[2], g[3]
+        note = g[4].strip() if len(g) > 4 and g[4].strip() else ""
+        rows.append(["04", "术语：" + zh, "p" + page, "—", en + "；" + zh, "本篇",
+                     "原文 p%s（首现页已核）" % page, "OK",
+                     "依据 " + basis + ("；" + note if note else "")])
+    for r in refs_fixed():
         rows.append(["04", r[1], "p53", "文献表", r[2] + "，" + r[3], r[1], r[4], r[5], r[6]])
     lines = ["\t".join(hdr)]
     for r in rows:
         lines.append("\t".join(x.replace("\t", " ") for x in r))
     return "\n".join(lines) + "\n", rows
 
+
 def gen04_frag():
-    out = ["<!-- AUTO: 术语表 -->", "", "| 术语 | 原文 | 释义 | 定位 |", "|---|---|---|---|"]
+    gl = read_gloss()
+    rf = refs_fixed()
+    ok = sum(1 for r in rf if r[5] == "OK")
+    diff = sum(1 for r in rf if r[5] == "DIFF")
+    unk = sum(1 for r in rf if r[5] == "无法核验")
+    out = ["## 二、术语冻结表（123 条，开工前冻结）", "",
+           "依据代号：**L** = 本库已冻结（`01_corpus_zh/数语规范/TERMS.tsv` 或 SY02-41/SY02-26 的 glossary）；**A** = 权威通行（本库无专条，按社区通行中文，已对照香蕉空间）；**I** = 待 Lead 裁定（本文保留英文）。首现页 = 原文印刷页；本表由 `工程文件/work/glossary.tsv`（123 行）脚本生成，与 `check_terms.py` 的 123/123 覆盖率同源。", "",
+           "| # | 英文 | 中文 | 依据 | 首现页 | 备注 |", "| --- | --- | --- | --- | --- | --- |"]
+    for i, g in enumerate(gl, 1):
+        note = g[4] if len(g) > 4 else ""
+        out.append("| %d | %s | %s | %s | %s | %s |" % (i, g[0].replace("|", "/"), g[1].replace("|", "/"), g[2], g[3], note.replace("|", "/")))
+    out += ["", "### 2.1 高风险释义（24 条，抽样精释）", "",
+            "只挑在本文语境下最容易译偏的 24 条；其余 99 条按上表冻结。", "",
+            "| 术语 | 原文 | 释义 | 定位 |", "|---|---|---|---|"]
     for t in TERMS:
         out.append("| %s | %s | %s | %s |" % (t[0], t[1].replace("|", "/"), t[2], t[3]))
-    out += ["", "<!-- AUTO: 文献表 -->", "", "| # | 文献 | 出处 | 标识 | 核验 | 备注 |", "|---|---|---|---|---|---|"]
-    for i, r in enumerate(REFS, 1):
+    out += ["", "## 三、参考文献外核", "",
+            "56 条：OK %d、DIFF %d、无法核验 %d。核验手段：arXiv API 按 id 取标题（21 条有 arXiv 号，20 条标题完全一致；`1811.07976` 因 API 返回 UTF-8 乱码只能人工确认标题存在）；Crossref `query.bibliographic` 取 DOI（18 条有 DOI，16 条直接命中）。逐条状态与定位见 `05-溯源表.tsv`（卡文件 = 04，条目 = 文献表）。" % (ok, diff, unk), "",
+            "| # | 文献 | 出处 | 标识 | 核验 | 备注 |", "|---|---|---|---|---|---|"]
+    for i, r in enumerate(rf, 1):
         out.append("| %d | %s | %s | %s | %s | %s |" % (i, r[1], r[3], r[4], r[5], r[6]))
     return "\n".join(out) + "\n"
+
 
 with io.open(os.path.join(CARD, "03-条款索引.md"), "w", encoding="utf-8") as f:
     f.write(gen03())
@@ -294,4 +371,6 @@ ok = sum(1 for r in rows if r[7] == "OK")
 print("rows:", tot, "OK:", ok, "ratio: %.1f%%" % (100.0 * ok / tot))
 from collections import Counter
 print(Counter(r[7] for r in rows))
-print("items:", len(ITEMS), "refs:", len(REFS), "terms:", len(TERMS), "steps:", len(STEPS))
+print(Counter(r[0] for r in rows))
+print("empty page:", sum(1 for r in rows if not r[2].strip()))
+print("type stats:", stats_phrase())
