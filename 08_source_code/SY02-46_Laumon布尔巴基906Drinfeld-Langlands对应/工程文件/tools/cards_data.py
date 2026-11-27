@@ -84,9 +84,9 @@ def build(m):
         "Laumon 报告在哪种上同调理论中工作？这个选择带来什么方便与什么代价？",
         {"text": "取 (Betti) 三元组：$k=\\C$，$C$ 为特征 $0$ 的代数闭域；对 $\\C$ 上局部有限型代数叠 "
                  "$\\cS$，$\\Dbc(\\cS)$ 记相伴解析叠上具有有界可构造上同调的 $C$-向量空间层复形的导出范畴。"
-                 "当 $\\cS=[S/G]$ 时，它就是 Bernstein–Luntz 的 $D^b_{G(\\C)^{\\mathrm{an}}}(S(\\C)^{\\mathrm{an}})$。",
+                 "当 $\\cS=[S/G]$ 时，它就是 Bernstein–Lunts 的 $D^b_{G(\\C)^{\\mathrm{an}}}(S(\\C)^{\\mathrm{an}})$。",
          "notation": "$k=\\C$, $C$, $\\Dbc(\\cS)$, $\\Perv(\\cS)$"},
-        ["六函子 $f_*,f_!,f^*,f^!$ 齐备；中间反常 $t$-结构的心 $\\Perv$ 阿贝尔、Noether、Artin、自对偶（两者见原文 p3）。",
+        ["对可表态射，六函子 $f_*,f_!,f^*,f^!$ 齐备；中间反常 $t$-结构的心 $\\Perv$ 阿贝尔、Noether、Artin、自对偶（两者见原文 p3）。",
          "模空间一律按代数叠处理，采用 [L-M] 的叠语言。",
          "FGV 原文用 $\\ell$-进三元组，并为几何 Fourier 变换额外假设 $\\operatorname{char} k=p>0$；本篇指出这一限制并不必要。",
          "原文同时指出：Betti 情形下解析叠的一般理论尚待写出。"],
@@ -116,13 +116,13 @@ def build(m):
         "$\\Gm$-等变复形上的 Fourier 变换：由公式 (0.1) 定义，是导出范畴的等价、与对偶交换、"
         "关于反常 $t$-结构 $t$-正合；它是 §5 构造 $\\Aut'_E$ 的主要工具（还要配合 $j_!$、$(j^\\vee)^*$、$(\\iota_i)_*$ 与 $\\sL^d_E$）。",
         "齐次 Fourier 变换如何定义？它有哪些函子性质？",
-        {"text": "设 $\\pi:\\cV\\to\\cS$ 为秩 $r$ 的向量丛，$\\cV=[V/\\Gm]$，$\\cV^\\vee$ 为对偶丛。"
-                 "齐次 Fourier 变换 $\\Four_{\\cV/\\cS}:\\Dbc(\\cV)\\to\\Dbc(\\cV^\\vee)$ 由 (0.1) 定义；"
-                 "它是导出范畴的等价，逆变换为 $\\Four_{\\cV^\\vee/\\cS}$，与 Verdier 对偶交换，"
+        {"text": "设 $\\pi:\\cV\\to\\cS$ 为秩 $r$ 的向量丛，$\\overline{\\cV}=[\\cV/\\Gm]$ 为按数乘取商所得的叠，$\\overline{\\cV}{}^\\vee$ 为对偶丛。"
+                 "齐次 Fourier 变换 $\\Four_{\\cV/\\cS}:\\Dbc(\\overline{\\cV})\\to\\Dbc(\\overline{\\cV}{}^\\vee)$ 由 (0.1) 定义；"
+                 "它是导出范畴的等价，逆变换为 $\\Four_{\\overline{\\cV}^\\vee/\\cS}$，与 Verdier 对偶交换，"
                  "并且关于反常 $t$-结构 $t$-正合。",
          "notation": "$\\cV$, $\\cV^\\vee$, $r$, $\\Psi$, $\\mu:\\cV\\times_\\cS\\cV^\\vee\\to\\cA$"},
         ["$\\Psi=\\beta_*\\C$，其中 $\\beta:[\\Gm/\\Gm]=\\mathrm{pt}\\hookrightarrow\\cA=[\\A^1/\\Gm]$；$H^0(\\Psi)=\\C$，$H^1(\\Psi)=\\alpha_*\\C$。",
-         "$p,p^\\vee$ 不可表，$(p^\\vee)_!$ 不保持 $\\Dbc$；有界性须逐点验证（原文）。",
+         "$p,p^\\vee$ 不可表，$(p^\\vee)_!$ 不保持 $\\Dbc$；原文强调须验证有界性。",
          "$\\Gm$ 按数乘作用在 $\\cV$ 上，取商后 (0.1) 才是 $\\cS$ 上的公式。"],
         ["$\\Four_{\\cV/\\cS}(K)=(p^\\vee)_!\\,\\bigl(p^*K\\otimes\\mu^*\\Psi\\bigr)[r-1]$"],
         [],
@@ -152,7 +152,7 @@ def build(m):
         {"text": "$P(\\cV)$ 上的反常层 $L$ 称为 proper，若遗忘支撑的态射 $j_!L\\to j_*L$ 是同构；"
                  "此时 $j_!L\\cong j_*L$，且这个公共对象正是 $L$ 的中间延拓 $j_{!*}L$。判据 (0.3)：$L$ proper 当且仅当 "
                  "$(\\pi^\\circ)_!L=0$。Radon 变换定义为 $\\Rad_{P(\\cV)/\\cS}(L)=(q^\\vee)_!q^*L[r-1]$。",
-         "notation": "$P(\\cV)$, $j:V^\\circ\\hookrightarrow V$, $\\pi^\\circ$, $\\Rad$, $\\Four$"},
+         "notation": "$P(\\cV)$, $j:P(\\cV)\\hookrightarrow\\overline{\\cV}$, $\\pi^\\circ$, $\\Rad$, $\\Four$"},
         ["(0.4)：若 $L$ proper，则 $\\Four_{\\cV/\\cS}(j_!L)$ proper，且它在 $P(\\cV^\\vee)$ 上的限制等于 $\\Rad_{P(\\cV)/\\cS}(L)$。",
          "关联叠 $H\\subset P(\\cV^\\vee)\\times_\\cS P(\\cV)$ 是 Radon 变换的对应。",
          "proper 性刻画的是层的支撑不向无穷远处逃逸。"],
@@ -168,7 +168,7 @@ def build(m):
         [e1(4, "原文第 4 页给出定义 (0.2) 与判据 (0.3)、(0.4)。"),
          vcheck("底本 TeX 源码（arXiv e-print）", TEX,
                 "Bourbaki2002.tex 中 (0.2)(0.3)(0.4) 的陈述与 PDF 一致。", "supports"),
-         vcheck("本工程译稿 第 0 节", "repo:08_source_code/SY02-46_Laumon布尔巴基906Drinfeld-Langlands对应/源码/sections/s01-prelim.tex:L47-L70",
+         vcheck("本工程译稿 第 0 节", "repo:08_source_code/SY02-46_Laumon布尔巴基906Drinfeld-Langlands对应/源码/sections/s01-prelim.tex:L47-L65",
                 "中译保留「proper」不译，并在译注中说明它不是紧合性。", "supports")]))
 
     # 5 ------------------------------------------------------------------
@@ -212,12 +212,12 @@ def build(m):
              "Pour tout système local E de rang 1 sur X, il existe un unique",
              "AutE = E.",
              anchor("s02-classfield.tex", "theorem", 1, "定理 1.2"))],
-        [e1(5, "原文第 5 页陈述定理 1.1 与定理 1.2；经对称积的代数证明从第 5 页末延续到第 6 页。"),
+        [e1(5, "原文第 5 页陈述定理 1.1 与定理 1.2；代数证明自第 6 页（p6）起。"),
          vcheck("底本 TeX 源码（arXiv e-print）", TEX,
                 "Bourbaki2002.tex 的定理 1.2 与 (1.3) 与 PDF 一致。", "supports"),
          vcheck("底本 TeX 源码中的 (1.3)", TEX,
                 "源码含纤维公式 (1.3) 的完整排版，与 PDF 第 6 页公式一致。", "supports"),
-         vcheck("本工程译稿 第 1 节", "repo:08_source_code/SY02-46_Laumon布尔巴基906Drinfeld-Langlands对应/源码/sections/s02-classfield.tex:L29-L75",
+         vcheck("本工程译稿 第 1 节", "repo:08_source_code/SY02-46_Laumon布尔巴基906Drinfeld-Langlands对应/源码/sections/s02-classfield.tex:L29-L82",
                 "中译保留定理 1.1/1.2 的层级与原编号，(1.3) 逐字保留。", "supports")]))
 
     # 6 ------------------------------------------------------------------
