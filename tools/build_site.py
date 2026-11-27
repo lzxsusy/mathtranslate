@@ -27,6 +27,7 @@ import os
 import re
 import subprocess
 import sys
+import time
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -235,23 +236,68 @@ NAV = ('<nav class="meta"><a href="index.html">总览</a><a href="p/index.html">
        '<a href="terms.html">术语</a><a href="compliance.html">许可</a></nav>')
 
 
-def page(title, body, depth=0, extra_head=""):
+SITE_BASE = os.environ.get("SITE_BASE", "https://lzxsusy.github.io/mathtranslate").rstrip("/")
+SITE_NAME = "数译 · 中文数学译注文献库"
+SITE_DESC = ("数译（Shuyi）是面向中文数学的开源语料库：数学讲义与专著的中文译注本、"
+             "段落级中文语料、术语基与资料卡，以及自然语言与 Lean 4 的对齐。"
+             "自产层 CC BY 4.0；译文层不代原作者授权。")
+SITE_KEYWORDS = ("中文数学,数学译注,几何朗兰兹,镜像对称,辛几何,量子场论,"
+                 "Lean 4,mathlib,形式化,数据集,语料库,Chinese mathematics,"
+                 "geometric Langlands,formalization,dataset,corpus")
+
+
+def seo_head(title, path, desc, up=""):
+    """面向搜索引擎与 LLM 爬虫的 head：description/canonical/OG/JSON-LD/llms.txt。"""
+    url = SITE_BASE + "/" + str(path).lstrip("/")
+    ld = {"@context": "https://schema.org", "@type": "WebPage",
+          "name": title, "description": desc, "url": url, "inLanguage": "zh-CN",
+          "isPartOf": {"@type": "WebSite", "name": "数译 Shuyi", "url": SITE_BASE + "/"}}
+    return ('<meta name="description" content="%s">'
+            '<meta name="keywords" content="%s">'
+            '<meta name="author" content="数译 Shuyi contributors">'
+            '<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">'
+            '<link rel="canonical" href="%s">'
+            '<meta property="og:type" content="website">'
+            '<meta property="og:site_name" content="%s">'
+            '<meta property="og:title" content="%s">'
+            '<meta property="og:description" content="%s">'
+            '<meta property="og:url" content="%s">'
+            '<meta property="og:locale" content="zh_CN">'
+            '<meta name="twitter:card" content="summary">'
+            '<meta name="twitter:title" content="%s">'
+            '<meta name="twitter:description" content="%s">'
+            '<link rel="alternate" type="text/plain" href="%sllms.txt" title="llms.txt">'
+            '<link rel="alternate" type="text/plain" href="%sllms-full.txt" title="llms-full.txt">'
+            '<script type="application/ld+json">%s</script>'
+            ) % (esc(desc), SITE_KEYWORDS, url, esc(SITE_NAME), esc(title), esc(desc), url,
+                 esc(title), esc(desc), up, up, json.dumps(ld, ensure_ascii=False))
+
+
+def page(title, body, depth=0, extra_head="", path="index.html", desc=None):
     up = "../" * depth
     nav = NAV.replace('href="', 'href="%s' % up).replace('%s%s' % (up, up), up)
+    seo = seo_head(title, path, desc or SITE_DESC, up)
     return """<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{t} · 数译 mathtranslate</title>
-<link rel="stylesheet" href="{up}assets/style.css">{eh}</head><body>
+<link rel="stylesheet" href="{up}assets/style.css">{seo}{eh}</head><body>
 <div class="wrap"><header class="top"><div class="brand">
 <div class="logo">数</div><div><h1>数译 · 中文数学译注文献库</h1>
 <div class="sub">mathtranslate · {n_proj} 部译注工程 · {n_para} 段中文语料 · {n_card} 张资料卡</div></div>{nav}</div></header>
 {body}
 <footer>许可：自产层 CC BY 4.0；译文与语料是第三方底本的演绎作品，本库不代原作者授权、也不另设限制
 （检索、研究、教学、训练均可），权利人通知即撤 · 见 <a href="{up}compliance.html">许可与合规</a> 与仓内 LICENSE</footer>
-</div></body></html>""".format(t=esc(title), body=body, up=up, nav=nav, mj=MATHJAX, eh=extra_head,
+</div></body></html>""".format(t=esc(title), body=body, up=up, nav=nav, mj=MATHJAX, eh=extra_head, seo=seo,
                               n_proj=fmtn(stnum("projects.total", 113)),
                               n_para=fmtn(stnum("corpus.paragraphs", 49322)),
                               n_card=fmtn(stnum("datasets.cards_total", 1034)))
+
+
+def write_page(out, path, title, body, depth=0, desc=None, extra_head=""):
+    full = os.path.join(out, path)
+    os.makedirs(os.path.dirname(full) or out, exist_ok=True)
+    io.open(full, "w", encoding="utf-8", newline="\n").write(
+        page(title, body, depth=depth, desc=desc, extra_head=extra_head, path=path))
 
 
 def build():
@@ -365,7 +411,34 @@ def build():
     body = (body.replace("{n_para}", fmtn(total_paras))
                 .replace("{n_term}", fmtn(len(terms)))
                 .replace("{n_cand}", fmtn(sum(1 for t in terms if t.get("status") == "candidate"))))
-    io.open(os.path.join(out, "index.html"), "w", encoding="utf-8", newline="\n").write(page("总览", body))
+    ds_ld = {"@context": "https://schema.org", "@type": "Dataset",
+             "name": "数译 Shuyi · 中文数学译注语料与资料卡",
+             "alternateName": "Shuyi Chinese mathematical corpus",
+             "description": SITE_DESC,
+             "url": SITE_BASE + "/",
+             "sameAs": ["https://github.com/lzxsusy/mathtranslate",
+                        "https://atomgit.com/lzxSUSUY/mathtranslate"],
+             "inLanguage": "zh-CN",
+             "license": "https://creativecommons.org/licenses/by/4.0/",
+             "creator": {"@type": "Organization", "name": "数译 Shuyi contributors"},
+             "keywords": ["中文数学", "数学译注", "几何朗兰兹", "Lean 4", "mathlib",
+                          "形式化", "中文语料", "dataset", "geometric Langlands"],
+             "size": "%d 段中文语料 / %d 张资料卡 / %d 部译注工程" % (total_paras, len(cards), len(projs)),
+             "distribution": [
+                 {"@type": "DataDownload", "name": "zh_paragraphs.jsonl",
+                  "contentUrl": "https://github.com/lzxsusy/mathtranslate/raw/master/01_corpus_zh/zh_paragraphs.jsonl",
+                  "encodingFormat": "application/x-ndjson"},
+                 {"@type": "DataDownload", "name": "termbase.jsonl",
+                  "contentUrl": "https://github.com/lzxsusy/mathtranslate/raw/master/01_corpus_zh/termbase.jsonl",
+                  "encodingFormat": "application/x-ndjson"},
+                 {"@type": "DataDownload", "name": "cards (JSON)",
+                  "contentUrl": "https://github.com/lzxsusy/mathtranslate/tree/master/datasets",
+                  "encodingFormat": "application/json"}]}
+    ds_head = '<script type="application/ld+json">%s</script>' % json.dumps(ds_ld, ensure_ascii=False)
+    write_page(out, "index.html", "总览", body, desc=(
+        "数译（Shuyi）：%d 部数学文献的中文译注工程、%s 段段落级中文语料、%s 条术语、%s 张资料卡。"
+        "自产层 CC BY 4.0，面向检索、研究与训练。"
+        % (len(projs), fmtn(total_paras), fmtn(len(terms)), fmtn(len(cards)))), extra_head=ds_head)
 
     # ---------- 工程总表 ----------
     rows = []
@@ -392,8 +465,8 @@ def build():
 <script>const q=document.getElementById('q'),rows=[...document.querySelectorAll('.prow')];
 q.oninput=()=>{const v=q.value.toLowerCase();rows.forEach(r=>r.style.display=r.dataset.k.toLowerCase().includes(v)?'':'none')};</script>
 """ % (len(projs), n_src, "".join(rows)))
-    io.open(os.path.join(out, "p", "index.html"), "w", encoding="utf-8", newline="\n").write(
-        page("工程总表", pidx, depth=1))
+    write_page(out, "p/index.html", "工程总表", pidx, depth=1, desc=(
+        "%d 部数学文献的中文译注工程总表：底本、作者、源码、段落数与许可分级。" % len(projs)))
 
     # ---------- 单部详情 ----------
     for p in projs:
@@ -425,8 +498,9 @@ q.oninput=()=>{const v=q.value.toLowerCase();rows.forEach(r=>r.style.display=r.d
        esc(p["orig"]) or "（未登记，见元数据）", esc(p["author"]), esc(p["kind"]), esc(p["release"]),
        esc(p["risk"]), p["level"], esc(p["dir"]), esc(p["id"]), esc(p["id"]),
        "{:,}".format(p["paras"]), esc(p["dir"]))
-        io.open(os.path.join(out, "p", p["id"] + ".html"), "w", encoding="utf-8", newline="\n").write(
-            page("%s %s" % (p["id"], p["cn"]), rel, depth=1))
+        write_page(out, "p/%s.html" % p["id"], "%s %s" % (p["id"], p["cn"]), rel, depth=1, desc=(
+            "%s %s 的中文译注工程页：底本、作者、%s 段语料、LaTeX 源码与资料卡入口。"
+            % (p["cn"], p["orig"], fmtn(p["paras"]))))
 
     # ---------- 资料卡入口 ----------
     chunks = []
@@ -451,8 +525,8 @@ q.oninput=()=>{const v=q.value.toLowerCase();rows.forEach(r=>r.style.display=r.d
 <script>const q=document.getElementById('q'),items=[...document.querySelectorAll('.ccard')];
 q.oninput=()=>{const v=q.value.toLowerCase();items.forEach(r=>r.style.display=r.dataset.k.toLowerCase().includes(v)?'':'none')};</script>
 """ % (len(cards), "".join(chunks))
-    io.open(os.path.join(out, "cards", "index.html"), "w", encoding="utf-8", newline="\n").write(
-        page("资料卡", cidx, depth=1))
+    write_page(out, "cards/index.html", "资料卡", cidx, depth=1, desc=(
+        "%s 张中文数学资料卡：定义、定理、证明思路与出处页码；可按系列、类型、状态筛选。" % fmtn(len(cards))))
 
     # ---------- 语料 ----------
     crow = "".join(
@@ -469,7 +543,8 @@ q.oninput=()=>{const v=q.value.toLowerCase();items.forEach(r=>r.style.display=r.
 <p class="lead">全量：<code>01_corpus_zh/zh_paragraphs.jsonl</code>（{n_para} 行，字段表见 DATASHEET §3）。</p>
 """ % ("{:,}".format(total_paras), "{:,}".format(formulas), crow)
     cpage = cpage.replace("{n_uniq}", fmtn(stnum("corpus.unique", total_paras)))
-    io.open(os.path.join(out, "corpus.html"), "w", encoding="utf-8", newline="\n").write(page("语料", cpage))
+    write_page(out, "corpus.html", "语料", cpage, desc=(
+        "段落级中文数学语料样例：%s 段，含公式、环境类型与质量 flags。" % fmtn(total_paras)))
 
     # ---------- 术语 ----------
     trows = "".join(
@@ -487,7 +562,8 @@ q.oninput=()=>{const v=q.value.toLowerCase();items.forEach(r=>r.style.display=r.
 <script>const q=document.getElementById('q'),rows=[...document.querySelectorAll('.trow')];
 q.oninput=()=>{const v=q.value.toLowerCase();rows.forEach(r=>r.style.display=r.dataset.k.toLowerCase().includes(v)?'':'none')};</script>
 """ % ("{:,}".format(len(terms)), sum(1 for t in terms if t.get("status") == "candidate"), trows)
-    io.open(os.path.join(out, "terms.html"), "w", encoding="utf-8", newline="\n").write(page("术语基", tpage))
+    write_page(out, "terms.html", "术语基", tpage, desc=(
+        "中英日数学术语基 %s 条：外文、中文、语种、状态与来源工程。" % fmtn(len(terms))))
 
     # ---------- 许可 ----------
     comp = """<h2 class="sec">许可与合规口径</h2>
@@ -511,8 +587,130 @@ q.oninput=()=>{const v=q.value.toLowerCase();rows.forEach(r=>r.style.display=r.d
 <p class="lead">完整条款：仓内 <a href="../LICENSE">LICENSE</a>、<a href="../COMPLIANCE.md">COMPLIANCE.md</a>、
 <a href="compliance.html">DATASHEET.md</a>；机器检查：<code>python tools/check_compliance.py</code>。</p>
 """
-    io.open(os.path.join(out, "compliance.html"), "w", encoding="utf-8", newline="\n").write(
-        page("许可与合规", comp))
+    write_page(out, "compliance.html", "许可与合规", comp, desc=(
+        "数译的三层许可口径、五条红线与可训练范围（自产层 CC BY 4.0；译文层不代原作者授权）。"))
+
+    # ---------- 爬虫/大模型发现层：robots、sitemap、llms.txt ----------
+    pages_found = []
+    for dirpath, _dirs, fnames in os.walk(out):
+        for fn in fnames:
+            if fn.endswith(".html"):
+                rel = os.path.relpath(os.path.join(dirpath, fn), out).replace(os.sep, "/")
+                pages_found.append(rel)
+    pages_found.sort()
+    robots = """# 数译 Shuyi — 中文数学译注语料库
+# 检索、研究、教学与训练均可；原文 PDF/扫描件不入库。
+User-agent: *
+Allow: /
+
+# 主要大模型/搜索爬虫：明确允许（不设抓取限制）
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-Web
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: Googlebot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: CCBot
+Allow: /
+User-agent: Bytespider
+Allow: /
+User-agent: Amazonbot
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+User-agent: meta-externalagent
+Allow: /
+User-agent: cohere-ai
+Allow: /
+User-agent: YouBot
+Allow: /
+User-agent: Diffbot
+Allow: /
+
+# 机器可读入口
+# llms.txt: %s/llms.txt
+Sitemap: %s/sitemap.xml
+""" % (SITE_BASE, SITE_BASE)
+    io.open(os.path.join(out, "robots.txt"), "w", encoding="utf-8", newline="\n").write(robots)
+
+    today = time.strftime("%Y-%m-%d")
+    urls = "".join(
+        '<url><loc>%s/%s</loc><lastmod>%s</lastmod><changefreq>weekly</changefreq>'
+        '<priority>%s</priority></url>\n'
+        % (SITE_BASE, pth, today, "1.0" if pth in ("index.html", "cards/index.html", "corpus.html", "terms.html") else "0.7")
+        for pth in pages_found)
+    sitemap = ('<?xml version="1.0" encoding="UTF-8"?>\n'
+               '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n%s</urlset>\n' % urls)
+    io.open(os.path.join(out, "sitemap.xml"), "w", encoding="utf-8", newline="\n").write(sitemap)
+
+    n_card = len(cards)
+    n_term = len(terms)
+    llms = """# 数译 Shuyi
+
+> 数译（Shuyi）是面向中文数学的开源语料库：%d 部数学讲义与专著的中文译注工程、
+> %s 段段落级中文语料、%s 条中英日术语、%s 张资料卡，以及自然语言与 Lean 4 的对齐卡。
+> 自产层（元数据、术语、方法、脚本、文档）为 CC BY 4.0；译文层是第三方底本的演绎作品，
+> 本库不代原作者授权、也不另设限制（检索、研究、教学、训练、蒸馏均可）。原文 PDF/扫描件不入库。
+
+## 站点（可直接读，无需克隆）
+- [总览](%s/index.html): 规模、主线、语料与卡片样例、三条使用路径
+- [工程总表](%s/p/index.html): 全部译注工程（底本、作者、源码、段落数、许可分级）
+- [资料卡](%s/cards/index.html): 定义/定理/校正/例子/陈述/注记，按系列与类型筛选
+- [语料样例](%s/corpus.html): 段落级中文语料（带公式与环境类型）
+- [术语基](%s/terms.html): 外文 / 中文 / 语种 / 状态 / 来源工程
+- [许可与合规](%s/compliance.html): 三层许可、五条红线、可训练范围
+
+## 数据（仓库内 JSONL / JSON）
+- [zh_paragraphs.jsonl](https://github.com/lzxsusy/mathtranslate/raw/master/01_corpus_zh/zh_paragraphs.jsonl): 段落级中文语料，字段见 DATASHEET.md
+- [termbase.jsonl](https://github.com/lzxsusy/mathtranslate/raw/master/01_corpus_zh/termbase.jsonl): 术语基（含 candidate/confirmed）
+- [datasets/](https://github.com/lzxsusy/mathtranslate/tree/master/datasets): 资料卡与 Lean 对齐卡（每张卡一个 JSON）
+- [site/catalog.json](%s/catalog.json): 全部工程的机器可读目录
+- [站内全文入口](%s/llms-full.txt): 规模统计、schema 与引用方式
+
+## 引用
+- 仓库：https://github.com/lzxsusy/mathtranslate （Gitee/AtomGit 有镜像）
+- 引用元数据：CITATION.cff；数据集 DOI：见 .zenodo.json（归档后回填）
+""" % (len(projs), fmtn(total_paras), fmtn(n_term), fmtn(n_card),
+       SITE_BASE, SITE_BASE, SITE_BASE, SITE_BASE, SITE_BASE, SITE_BASE, SITE_BASE, SITE_BASE)
+    io.open(os.path.join(out, "llms.txt"), "w", encoding="utf-8", newline="\n").write(llms)
+
+    llms_full = """# 数译 Shuyi — llms-full
+
+## 规模（快照 %s）
+- 译注工程：%d（%d 部带 LaTeX 源码）
+- 中文语料：%s 段（含公式 %s 段）
+- 术语：%s 条（candidate 待裁决 %s 条）
+- 资料卡：%s 张（concept/derivation/correction/example/statement/remark）
+- 仓库跟踪文件：%s
+
+## 数据 schema
+- zh_paragraphs.jsonl：字段 pkg, para_id, env, tier, flags, text（去 LaTeX 命令、保留行内公式）；按 para_id 去重，按 flags 过滤 orphan_number/empty_ref。
+- termbase.jsonl：字段 source_term, lang, zh, status(confirmed|candidate), pkg, note。
+- datasets/<set>/cards/**/*.json：字段 id,type,track,title,aliases,summary,question,definition{text,notation},key_points,formulas,theorems{name,statement,proof{status,steps,gap_note},source},pitfalls,related,sources{book,section,pages,pdf_pages,anchor},rights,status。
+- leanstmt：中文陈述 ↔ Lean 4 对齐卡；lean/ 下有 lakefile.lean 与 lean-toolchain，`lake build` 可复现。
+
+## 许可
+- 自产层 CC BY 4.0；译文层：演绎作品，不代原作者授权、不另设限制；48 小时撤下机制。
+- 原文 PDF/扫描件/OCR 全文不入库。
+
+## 引用
+- CITATION.cff；仓库 https://github.com/lzxsusy/mathtranslate
+""" % (today, len(projs), n_src, fmtn(total_paras), fmtn(formulas), fmtn(n_term),
+       fmtn(sum(1 for t in terms if t.get("status") == "candidate")), fmtn(n_card),
+       fmtn(total_files))
+    io.open(os.path.join(out, "llms-full.txt"), "w", encoding="utf-8", newline="\n").write(llms_full)
 
     print("built: %d projects, %d cards, %d terms, %s files -> %s"
           % (len(projs), len(cards), len(terms), "{:,}".format(total_files), out))

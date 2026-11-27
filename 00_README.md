@@ -1,8 +1,14 @@
 # 数译 · 中文数学译注本语料与轨迹数据集
 
-本目录是 `数译`（mathtranslations）工程的对外数据包：**143 部**数学文献的中文译注本、它们的 LaTeX 工程源码、
+本目录是 `数译`（Shuyi / mathtranslations）工程的对外数据包：**147 部**数学文献的中文译注本、它们的 LaTeX 工程源码、
 段落级中文语料、术语与记号规范、资料卡、自然语言↔Lean 4 对齐卡，以及 AI 辅助翻译的过程轨迹与会话原始流。
 所有数字取自 `_meta/stats.json`（由 `python make_stats.py --write` 生成），定义与退役口径见 `_meta/口径.md`。
+
+> **给机器/爬虫的入口**：`llms.txt`（仓根）→ 先读什么、数据在哪；`site/llms.txt` / `site/llms-full.txt`（站点版、含 schema）；
+> 网页每页带 canonical/OG/JSON-LD（Dataset + WebPage），`site/robots.txt` 显式允许 GPTBot / ClaudeBot / PerplexityBot / CCBot 等，
+> `site/sitemap.xml` 列出全部页面。引用元数据见 `CITATION.cff`，归档 DOI 见 `.zenodo.json`。
+> 关键词：中文数学、数学译注、几何朗兰兹、镜像对称、辛几何、量子场论、Lean 4、mathlib、形式化、数据集。
+
 
 **本包的重心**：从「给出可读的译本」转到「**资料卡 + 自然语言与形式语言的对齐**」。
 规范层在 `01_corpus_zh/数语规范/`，卡片层在 `datasets/`，路线见 `04_playbook/15_形式化与自然语言对齐_2026-11.md`。
@@ -17,7 +23,7 @@
 | `06_sessions_raw/` | 全量会话语料（脱敏、zst 压缩） | **4 个分片 / 144.6 MB**（Release 附件），仓库只留抽取脚本与分片说明；消息条数与字符数属当日快照，重构后不再在文档里手写 |
 | `07_originals/` | 原文获取指引与书目信息（**不含原文 PDF**） | 本库不发布、不托管、不给原文直链；arXiv 原文请到 arXiv 按编号获取，图书请走出版社/图书馆 |
 | `08_source_code/` | **138 部**译注工程的 LaTeX 源码与工程文档 | 125 部带 `源码/*.tex`；13 部无源码（`SY01-18/01-19/02-08/02-11/03-02/03-16/03-17/03-18/03-21/05-19/05-20/05-21/05-22`） |
-| `datasets/` | 可训练数据集：**46 个集 / 1,777 张资料卡**——`leanstmt/`（40 条中文↔Lean 4 对齐卡）、`grassmann/` 90、`glc/` 154、`functoriality/` 83、`kshms/` 83、`gw06/` 75、`siebert/` 75、`seidel/` 70、`kw06/` 67、`dmod/` 61、`lbook04/` 56、`pathintegral/` 50、`geoq/` 48、`mloc/` 44、`bdh/` 43、`csw/` 40、`gtgl15/` 40、`sy0117/` 36、`cdm14/` 35、`hausel22/` 29、`gaits04/` 23、`ggl17/` 21、`ggl22/` 20、`ggl12/` 18、`ggl10/` 15、`ggl20/` 14、`ggl13/` 12、`ggl19/` 12、`ggl03/` 14、`ggl08/` 14、`ggl09/` 14、`ggl14/` 14、`ggl18/` 12、`ggl21/` 13、`ggl24/` 13、`ggl25/` 11，另有 `math/`、`parallel/`、`deepread/`、`highlights/`、`traces/`、`kg/`、`bench/` 等工艺集 | 规则见 `datasets/README.md`；权利分 `self / arxiv / book / rewritten` **四层**，`book` 派生只进 `datasets/_internal/`，永不发布 |
+| `datasets/` | 可训练数据集：**47 个集 / 1,858 张资料卡**（完整清单见 `_meta/stats.json` 的 `datasets.by_dataset`）——`leanstmt/`（40 条中文↔Lean 4 对齐卡）、`grassmann/` 90、`glc/` 154、`functoriality/` 83、`kshms/` 83、`gw06/` 75、`siebert/` 75、`seidel/` 70、`kw06/` 67、`dmod/` 61、`lbook04/` 56、`pathintegral/` 50、`geoq/` 48、`mloc/` 44、`bdh/` 43、`csw/` 40、`gtgl15/` 40、`sy0117/` 36、`cdm14/` 35、`hausel22/` 29、`gaits04/` 23、`ggl17/` 21、`ggl22/` 20、`ggl12/` 18、`ggl10/` 15、`ggl20/` 14、`ggl13/` 12、`ggl19/` 12、`ggl03/` 14、`ggl08/` 14、`ggl09/` 14、`ggl14/` 14、`ggl18/` 12、`ggl21/` 13、`ggl24/` 13、`ggl25/` 11，另有 `math/`、`parallel/`、`deepread/`、`highlights/`、`traces/`、`kg/`、`bench/` 等工艺集 | 规则见 `datasets/README.md`；权利分 `self / arxiv / book / rewritten` **四层**，`book` 派生只进 `datasets/_internal/`，永不发布 |
 | `MEMORANDUM_01_论证精读与语料生产.md` | **强制前置读本**：精读与语料生产的科学规程（七条铁律、七级证据、三席三轮协议、unit 八字段、八道闸门、十条红线） | 任何人/智能体开工前必须通读；与任务书冲突时以它为准；网页版 `site/memo.html` |
 | `PLAYBOOK_02_AMS量子场与弦习题推理链_v1.md` | **任务规程**：AMS《量子场与弦》习题课——角色、L0–L5 提示阶梯、卡点冻结、C1–C8 归因、`exercise.jsonl` schema、每周 90 分钟时间盒 | 只用于习题课线；上游是 MEMORANDUM-01；网页版 `site/playbook-ams.html` |
 | `09_thinking/` | AI 思考链的筛选、审计与上传：L0 raw → L1 候选卡 → L2 人工批准链 → L3 审计报告；硬纪律 R1–R12 | 2026-11-20 新建；工具 `tools/thinking_audit.py`；只上传人批准的链，raw reasoning 不入库 |
