@@ -1,0 +1,619 @@
+% !TEX program = xelatex
+% VLN-001 讲义笔记：Quantization by Branes and Geometric Langlands
+% 由 13_lecture_notes/VLN-001_witten2021_branes_gl 的语料整理；规范见 04_playbook/24_视频讲义提取与笔记规范_v1.md
+\documentclass[11pt,a4paper]{ctexart}
+\usepackage[margin=2.35cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage[hidelinks]{hyperref}
+
+\setlist{itemsep=0.15em,topsep=0.3em,leftmargin=1.5em}
+\linespread{1.12}
+
+% 讲义原文引用块：[t=hh:mm:ss]
+\newcommand{\slq}[2]{%
+  \begin{quote}\small\itshape #2\par
+  \raggedleft\normalfont\footnotesize\textcolor{gray}{[t=#1]}\end{quote}}
+% 整理者按
+\long\def\zm#1{\par\smallskip\noindent{\color{black!60}整理者按：#1}\par\smallskip}
+\newcommand{\Bcc}{\mathcal{B}_{\mathrm{cc}}}
+\newcommand{\Loc}{\mathcal{M}_H}
+\newcommand{\Bun}{\mathrm{Bun}_G}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\opb}{\overline{\mathrm{op}}}
+\newcommand{\Hom}{\operatorname{Hom}}
+
+\title{\bfseries 讲义笔记：Quantization by Branes and Geometric Langlands}
+\author{Edward Witten（IAS）\\[2pt]
+\small 整理：数译 · 视频讲义专栏 VLN-001}
+\date{报告日期 2021-02-03 \quad·\quad 笔记版本 2026-11-27（B 级：未做系统抽核）}
+
+\ctexset{section/format={\Large\bfseries\raggedright},subsection/format={\large\bfseries\raggedright}}
+\begin{document}
+\maketitle
+\vspace{-1.2em}
+\begin{center}\small\color{black!60}
+Mini-Conference on the Geometric Langlands Correspondence · 02:04:53
+\end{center}
+
+\section*{0\quad 元数据摘要}
+\addcontentsline{toc}{section}{0 元数据摘要}
+
+\begin{center}\small
+\begin{tabular}{@{}p{3.1cm}p{12.2cm}@{}}
+\toprule
+来源 & Bilibili \texttt{BV1b34y1Q7Ah}，分 P 4（该 P 直链 \texttt{?p=4}）\\
+语言 & 讲义英文；音轨英文（Q\&A 夹杂提问者口音）\\
+讲义规模 & 原 deck \textbf{228} 页；讲者实际翻到 \textbf{201} 页；逐条动画折叠后 \textbf{109} 个内容块\\
+提取 & 1 fps 抽帧（915 帧）→ 页面分割 → 视觉转录（逐张读图，公式转 LaTeX）→ Whisper small.en 转写 → 按时间轴合并\\
+权利 & 讲义原文与公式归讲者；本笔记的中文叙述、结构与时间轴为本仓自产（CC BY 4.0）；deck 页图像不入仓\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{导读}
+
+这场报告的目的不是重新证明几何 Langlands，而是\textbf{给 EFK 的一套算子代数找物理原型}。
+EFK（Etingof–Frenkel–Kazhdan，arXiv:1908.09677）在 $\mathcal{M}(G)$ 的 $\mathrm{L}^2$ 半密度上造了一族算子：
+Hitchin 哈密顿量的量子化版本、以及 Hecke 算子；他们证明了若干对偶定理，并留下若干猜想。
+问题在于：这些算子\textbf{为什么}是这些算子，谱\textbf{为什么}是那个谱。
+
+Witten 给的回答是：把 $\Loc$ 看成实辛流形（$\omega=\operatorname{Im}\Omega$），用他和 Gukov 的
+\textbf{量子化=边界条件}（brane quantization）方案，把 EFK 的 Hilbert 空间解释成 $A$-模型里的
+$\Hom(\mathcal{B},\Bcc)$；于是"电-磁对偶"自动给出"谱的对应"——EFK 猜的
+$\mathrm{L}^2(\mathcal{M}(G))$ 与 $\Hom(L_{\opb},L_{\op})$ 之间的等价，正是 $T$-对偶/镜像对称的一个实例。
+最后他把这套机制推到 Hecke 算子的特征值：$SL_2$ 情形下，特征值就是实 oper 上的一对截面配对
+$(\overline{j}(v),j(w))$，并且因为 $SL_2$ 的中心是 $\{\pm1\}$，还要带上一个 $\pm$。
+
+一句话：\textbf{EFK 的猜想 = 一次量子化的谱对应，而量子化在 $A$-模型里就是"挑一个 brane"。}
+
+\section{论证线（不读正文也能看全局）}
+
+\begin{enumerate}[label=\arabic*.]
+\item（00:01）几何 Langlands 的规范论版本：$\mathcal{N}=4$ 超对称规范论配合 $G\leftrightarrow G^\vee$ 的电-磁对偶，
+耦合常数 $\tau$ 与 $\tau^\vee$ 成反演关系。
+\item（00:04–00:15）边界条件构成范畴，线算子就是其上的函子；对偶把 $G$ 侧的 't Hooft 线算子（几何 Hecke）
+对到 $G^\vee$ 侧的 Wilson 线算子，二者的合成代数一致，这就是几何 Satake。
+\item（00:15–00:34）把上述一切翻译成镜像对称：$A$-模型在 $\Loc(G)$ 上 $\leftrightarrow$ $B$-模型在 $\Loc(G^\vee)$ 上；
+$A$ 侧有一个特殊 brane $\Bcc$，它的自同态把 $A$-branes 变成 $\Bun$ 上的 $\mathcal{D}$-模；
+$B$ 侧 $\Bcc$ 的对偶是 opers 的结构层（Beilinson–Drinfeld）。
+\item（00:35–00:51）区分形变量子化与量子化（$S^2$ 的例子），然后给出 Gukov–Witten 判据：
+$L$ 对 $\operatorname{Re}\Omega$ 是辛的 $\Rightarrow$ $\Hom(\mathcal{B},\Bcc)$ 是 $L$ 的量子化；
+要成为 Hilbert 空间还需反全纯对合 $\tau$，$\langle\psi,\chi\rangle=(\Theta_\tau\psi,\chi)$。
+\item（00:52–01:15）EFK 的 $\mathrm{L}^2(\mathcal{M}(G))$ 就是 $\Loc(G)\cong T^*\mathcal{M}(G)$ 的量子化；
+可观测量是 $\mathcal{A}\otimes\overline{\mathcal{A}}$（Hitchin 哈密顿量及其共轭）；
+对偶把它送到 $\Hom(L_{\opb},L_{\op})$，正定性 $\Leftrightarrow$ 交点是实 opers 且横截。
+\item（01:16–01:26）Hecke 算子 $T_R(p)$ 与量子化的 Hitchin 哈密顿量交换（线算子可以滑动）。
+\item（01:26–01:41）对偶预测 $T_R(p)$ 的特征值等于 $W_R(p)$ 在实 oper 上的值，即 $(\overline{j}(v),j(w))$；
+"角"数据 $v,w$ 在对偶两侧必须相同，EFK 已用代数几何公式验证；$SL_2$ 需带 $\pm$。
+\end{enumerate}
+
+\section{出发点：Kapustin–Witten 的规范论表述}
+
+几何 Langlands 在这里不是代数几何命题，而是一个四维场论的性质：取 $\mathcal{N}=4$ 超对称 Yang–Mills，
+规范群 $G$ 或 Langlands–GNO 对偶群 $G^\vee$。
+
+\slq{00:01:04}{The theory based on $G$ has a ``gauge coupling constant'' $e$ and topological angle $\theta$,
+which combine to a complex parameter
+\[
+\tau=\frac{\theta}{2\pi}+\frac{4\pi}{e^{2}} .
+\]
+There is an elementary symmetry $\tau\cong\tau+1$. \dots\ The claim of ``electric-magnetic duality''
+\dots\ is that the theories based on $G$ and on $G^{\vee}$ are equivalent under
+\[
+\tau^{\vee}=\frac{-1}{n_{\mathfrak{g}}\tau},
+\]
+$(n_{\mathfrak{g}}=1,2,\text{ or }3$ depending on $G$.)}
+
+\zm{$\tau$ 的归一化与 $n_{\mathfrak{g}}$ 是 Witten 的记号习惯（$n_{\mathfrak{g}}$ 是 $G$ 的"层级"因子，
+来自单连通性/中心），换文献时数值可能差一个因子。这句"$\tau\cong\tau+1$"下面还会用到：对偶与
+$\tau\mapsto\tau+1$ 一起生成 $SL_2(\mathbb{Z})$ 作用。}
+
+关键在于：这个对偶是\textbf{同一个场论的两种描述}，所以它作用在\textbf{一切}拓扑性质上——
+包括边界条件与线算子。这正是后面所有内容的来源。
+
+\section{边界条件、线算子与几何 Satake}
+
+\subsection{场论给流形配什么}
+
+\slq{00:04:50}{In general, quantum field theory in dimension $d$ associates a number to a $d$-manifold,
+a vector space (``the space of physical states'') to a $d-1$-manifold, and a category
+(``the category of boundary conditions'') to a $d-1$-manifold.}
+
+报告只考虑 $M=\Sigma\times C$（$C$ 是固定的复曲线），于是固定的 $C$ 给出一个\textbf{范畴} $\mathcal{C}$，
+其对象是 $\Sigma$ 的边界条件。两个边界条件 $\mathcal{B}_1,\mathcal{B}_2$ 之间：
+
+\slq{00:06:49}{$\Hom(\mathcal{B}_1,\mathcal{B}_2)$ is the vector space that the quantum field theory
+assigns to this picture. (Physicists usually don't use this terminology.)}
+
+\zm{"这个图"指 $\Sigma$ 的一条边界上放 $\mathcal{B}_1$、另一条上放 $\mathcal{B}_2$、中间是场论路径积分。
+物理学家一般说"在两个边界条件之间插入一个态"，数学家说 $\Hom$。这一步把图中的"线"变成代数里的"元素"。}
+
+于是立刻拿到代数结构：
+
+\slq{00:08:02}{With this definition, $\Hom(\mathcal{B},\mathcal{B})$ is an algebra for every $\mathcal{B}$,
+and moreover $\Hom(\mathcal{B},\mathcal{B}')$ is a left $\Hom(\mathcal{B}',\mathcal{B}')$ module, etc.}
+
+\subsection{线算子 = 函子}
+
+\slq{00:10:00}{In a quantum field theory defined on a manifold $M$, a line operator is some sort of
+modification of the definition of the theory along an embedded one-manifold $K\subset M$. The natural
+line operators at $\Psi=\infty$ are what physicists call ``Wilson operators'' \dots\ and the natural
+line operators at $\Psi=0$ are what physicists call ``'t Hooft operators.''}
+
+\zm{$\Psi$ 是 Kapustin–Witten 的"扭转参数"。$\Psi=\infty$ 与 $\Psi=0$ 对应两种不同的拓扑扭转（$A$ 与 $B$），
+所以同一个物理对象在两边的"自然"算子不同：Wilson 在 $\Psi=\infty$ 侧，'t Hooft 在 $\Psi=0$ 侧。}
+
+报告里对线算子给出的精确说法是\textbf{函子}而不是算子：
+
+\slq{00:10}{But for us, a line operator is a functor from the category of boundary conditions to itself.
+We can understand that statement from this picture: [图 a) 一条线算子 $T$ 沿边界 $\mathcal{B}$ 放置，得到新边界条件 $T\mathcal{B}$；
+b) 边界条件 $\mathcal{B},\mathcal{B}',\mathcal{B}''$ 串在一条 $T$ 上，说明 $T$ 如何作用于态射。]}
+
+\zm{这张图是整场报告的"语法核心"：$T$ 沿边界走 = 作用在对象；$T$ 跨过若干边界条件 = 作用在态射。
+后面"$T$ 与 $W$ 交换"、"$T$ 与 Hitchin 哈密顿量交换"，都是这张图的推论，不是独立计算。}
+
+\subsection{对偶两侧：$T(p)$ 与 $W(p)$，几何 Satake}
+
+\slq{00:15:35}{So the two dual categories $\mathcal{C}$ and $\mathcal{C}^{\vee}$ are equipped with dual
+families $T(p)$ and $W(p)$ of functors, parametrized by the choice of $p\in C$ \dots
+$T(p)$ corresponds to the usual Hecke functors of geometric Langlands, while $W(p)$ corresponds to
+its dual \dots\ The duality says that the algebra of compositions $T_R(p)T_{R'}(p)$ of Hecke operators
+at the same point is the same as the corresponding algebra of Wilson operators $W_R(p)W_{R'}(p)$,
+which (on elementary grounds) is the tensor algebra of representations of $G^{\vee}$:
+\[
+W_R(p)W_{R'}(p)=W_{R\otimes R'}(p),
+\]
+where $W_{R\otimes R'}(p)$ can be expanded as a sum of irreducibles.
+(This fact is known as the geometric Satake correspondence.)}
+
+\zm{这段值得单独记住：\textbf{几何 Satake 在这里不是被证明的，而是"电-磁对偶 + Wilson 算子的张量代数"的直接后果}。
+$W_R W_{R'}=W_{R\otimes R'}$ 在物理上"平凡"（把两个表示张起来做和乐），数学上却是 Satake 等价的核心。
+Witten 自己用 "on elementary grounds" 一句带过，报告的重量放在下一步。}
+
+\section{镜像对称的翻译与 canonical coisotropic brane}
+
+\subsection{几何 Langlands = 镜像对称}
+
+\slq{00:20}{Geometric Langlands duality can be understood for many purposes as a mirror symmetry
+between the $A$-model of $\Loc(G)$ and the $B$-model of $\Loc(G^{\vee})$.}
+
+\zm{$\Loc(G)$ 是 $G$-Higgs 丛的模空间，它同时是 $T^*\mathcal{M}(G)$ 的双有理模型（$\mathcal{M}(G)$ 是全纯 $G$-丛的模空间）。
+"$A$-模型在 $\Loc(G)$ 上"意味着取复辛形式 $\Omega$、把 $\operatorname{Im}\Omega$ 当实辛形式；
+"$\omega=\operatorname{Im}\Omega$"这个选取是后面所有正定性讨论的根据。}
+
+\subsection{$\Bcc$ 与形变量子化}
+
+\slq{00:29:01}{With this data one can construct a ``canonical coisotropic $A$-brane'' $\Bcc$, whose
+support is all of $Y$. It has the property that, roughly, $\Hom(\Bcc,\Bcc)$ is related to deformation
+quantization of the algebra of holomorphic functions on $Y$. More specifically, \dots\ if
+$Y=T^*W$ \dots\ then $\Hom(\Bcc,\Bcc)$ is the sheaf of holomorphic differential operators on $W$,
+acting on $K^{1/2}\to W$.}
+
+\zm{"支撑是全空间但可以带 $\mathcal{B}$-场曲率"——这正是 coisotropic 与 Lagrangian 的区别。
+$K^{1/2}$ 的出现是半密度，和 EFK 用 $\mathrm{L}^2$ 半密度是同一件事，后面会重合。}
+
+落到几何 Langlands：
+
+\slq{00:31:01}{In the case of geometric Langlands, we take $Y$ to be $\Loc(G)$ \dots\ birational to
+$T^*\mathcal{M}(G)$. So $\mathcal{A}=\Hom(\Bcc,\Bcc)$ is the sheaf of holomorphic differential operators
+on $\mathcal{M}(G)$. If $\mathcal{B}$ is any other brane, then $\Hom(\mathcal{B},\Bcc)$ is going to be a
+module for $\mathcal{A}$ \dots\ In other words, the category on the ``automorphic'' side \dots\ is a
+category of, roughly speaking, $\mathcal{D}$-modules on $\mathcal{M}(G)$.}
+
+\subsection{为什么要四维版本；$\Bcc$ 的对偶是 opers}
+
+\slq{00:32:23}{Mathematically, it is important to work with $\mathcal{D}$-modules on the stack $\Bun$,
+not on a finite-dimensional moduli space $\mathcal{M}(G)$. Physically, what that means is that it is
+important that a version of $\Bcc$ can be defined directly in four dimensions \dots\ (D.~Gaiotto and I
+found an improved version \dots\ ``Knot Invariants From Four-Dimensional Gauge Theory,'' 2010.) That also
+enabled us to answer a question that had been unclear and will be important later in this lecture:
+what is the dual of $\Bcc$? \dots\ its dual is the structure sheaf of the variety of opers, a very
+special Lagrangian submanifold $L_{\op}\subset\Loc(G^{\vee})$.}
+
+\zm{这是全场的枢纽句。注意三件事：(i) 数学上必须用 stack $\Bun$，物理上的对应物是"四维里直接定义的 $\Bcc$"；
+(ii) 对偶把 $A$-brane 送到 $B$-brane，所以 $\Bcc$ 的对偶是 $\Loc(G^\vee)$ 上的相干层；
+(iii) 具体是哪一层，Beilinson–Drinfeld 早已给出：opers 的结构层。Witten 明说
+"a gauge theory explanation of that fact was initially unclear, at least to me"。}
+
+\subsection{小结（讲者自己的五条）}
+
+\slq{00:34:21}{In summary the main ideas in the gauge theory/geometric Langlands correspondence are
+\begin{itemize}\setlength\itemsep{0pt}
+\item electric-magnetic duality $G\leftrightarrow G^{\vee}$ of supersymmetric gauge theory in four dimensions
+\item ``twisting'' to make a dual pair of topological field theories
+\item the dual theories have dual sets of line operators, with 't Hooft operators that are related to
+geometric Hecke transformations, and their dual Wilson operators
+\item on one side of the duality there is a distinguished brane $\Bcc$, establishing a map from
+$A$-branes to $\mathcal{D}$-modules on $\Bun$
+\item on the other side, one is studying $B$-branes on $\Loc(G^{\vee})$ in the complex structure in
+which it parametrizes flat bundles
+\end{itemize}}
+
+\section{从形变量子化到量子化：Gukov–Witten}
+
+\subsection{差别在哪：$S^2$ 的例子}
+
+\slq{00:35:15}{This story so far involves deformation quantization, not quantization. Let me pause to
+underline the difference, with the concrete example of a two-sphere $x^2+y^2+z^2=j^2$ viewed as a
+symplectic manifold with its usual rotation-invariant symplectic form ($\omega=\mathrm{d}x\,\mathrm{d}y/z$).
+In deformation quantization, we start with the commutative algebra of functions $\mathbb{C}[x,y,z]$ and
+we want to deform it to a noncommutative algebra. \dots\ In the present case, we can just write down the
+answer, which is given by the $\mathfrak{su}(2)$ Lie algebra
+\[
+[x,y]=-\mathrm{i}\hbar z,\qquad [y,z]=-\mathrm{i}\hbar x,\qquad [z,x]=-\mathrm{i}\hbar y .
+\]}
+
+\zm{这一段是整场报告的"概念分界线"。形变量子化只保证 $\{\ ,\ \}$ 的\textbf{一阶}对上；
+量子化还要求有一个\textbf{Hilbert 空间}、有内积、有正定性、有真正的谱。
+报告后半段的所有麻烦（$\tau$、$\Theta_\tau$、正定性、实 opers）都来自这个区别。}
+
+\subsection{Gukov–Witten 判据}
+
+\slq{00:40:44}{S.~Gukov and I (``Branes and Quantization,'' 2008) asked whether the $A$-model in this
+general setup can describe quantization, and not just deformation quantization. The answer is yes, under
+certain conditions. \dots\ we are discussing a complex symplectic manifold $Y$ \dots\ viewed as a real
+symplectic manifold with symplectic form $\omega=\operatorname{Im}\Omega$. Let us discuss Lagrangian
+$A$-branes, that is branes supported on a submanifold $L\subset Y$ that is Lagrangian for
+$\operatorname{Im}\Omega$.}
+
+\slq{00:42:34}{Gukov and I considered the opposite case of an $A$-brane $\mathcal{B}$ whose support $L$ is
+Lagrangian for $\operatorname{Im}\Omega$ -- as it must be -- but is \emph{symplectic} for
+$\operatorname{Re}\Omega$. We argued that in this case $\mathcal{H}=\Hom(\mathcal{B},\Bcc)$ represents a
+quantization of $L$ with symplectic structure $\operatorname{Re}\Omega$. \dots\ $\mathcal{H}$ is an
+$\mathcal{A}$-module which one can show has appropriate properties to be a quantization of $M$.}
+
+\zm{判据可以写成一句：\textbf{量子化 = 挑一个"只对 $\operatorname{Im}\Omega$ 是 Lagrangian"的 brane $\mathcal{B}$}，
+$\operatorname{Re}\Omega$ 在 $L$ 上仍是辛的，于是 $L$ 自己带了要量子化的辛结构，而 $\mathcal{H}=\Hom(\mathcal{B},\Bcc)$
+自动是 $L$ 上的量子化。注意这里把"$L$ 的对偶是 $M$"用上了：$M$ 是 $L$ 的复化里的实形式。}
+
+\subsection{什么时候是 Hilbert 空间：反全纯对合 $\tau$}
+
+\slq{00:44:57}{I have actually omitted so far a key point: what structure is needed so that
+$\mathcal{H}=\Hom(\mathcal{B},\Bcc)$ is a Hilbert space, not just a vector space? In general \dots\
+there is a nondegenerate bilinear (not hermitian) pairing
+\[
+\Hom(\mathcal{B}_1,\mathcal{B}_2)\otimes\Hom(\mathcal{B}_2,\mathcal{B}_1)\to\mathbb{C}.
+\]
+To get a hermitian inner product on $\Hom(\mathcal{B}_1,\mathcal{B}_2)$ is therefore the same as finding
+an antilinear map from $\Hom(\mathcal{B}_2,\mathcal{B}_1)$ to $\Hom(\mathcal{B}_1,\mathcal{B}_2)$.
+Gukov and I showed that there is such an antilinear map, which I will call $\Theta_\tau$, if there is an
+antiholomorphic map $\tau:Y\to Y$ with $M$ as a component of its fixed point set.}
+
+\slq{00:48:54}{Given $\tau$, the hermitian product on $\Hom(\mathcal{B}_1,\mathcal{B}_2)$ for any pair of
+$\tau$-invariant branes is defined by
+\[
+\langle\psi,\chi\rangle=(\Theta_\tau\psi,\chi)
+\]
+where $\Theta_\tau$ is the antilinear mapping that is defined using $\tau$, and $(\ ,\ )$ is the bilinear
+pairing of the $A$-model.}
+
+\zm{为什么 $\tau$ 是对的条件：若全纯函数在 $\mathcal{H}$ 上作用，而 $\mathcal{H}$ 是 Hilbert 空间，
+就必须能判定"哪些全纯函数是自伴的"。$\tau$ 把 $Y$ 的实点集 $M$ 固定住，于是"在 $M$ 上取实值"
+给出一个自然的自伴判定。这也是后面"实 opers"一词的来历。}
+
+\subsection{与几何量子化的比较}
+
+\slq{00:51:01}{A limitation of my paper with Gukov is that we did not understand very much about how to
+compare brane quantization to geometric quantization. \dots\ if $M$ has a polarization $\mathcal{P}$ in
+the sense of geometric quantization, and a complexification $Y$ that is suitable for quantization by
+branes, and if $\mathcal{P}$ analytically continues to what we call a holomorphic polarization of $Y$,
+then the two methods to quantize $M$ agree.}
+
+\zm{这是报告里唯一一处"两套量子化理论等价"的明确陈述，条件很强（极化要能解析延拓）。
+EFK 的 Hilbert 空间正是几何量子化那一侧，所以这句话是整场报告的技术前提：\textbf{它允许我们把
+EFK 的 $\mathrm{L}^2$ 换成 brane quantization 的 $\Hom(\mathcal{B},\Bcc)$，而不损失任何东西。}}
+
+\section{EFK 的 Hilbert 空间与 Hitchin 谱}
+
+\subsection{两边的对象}
+
+\slq{00:52:00}{They considered a Hilbert space $\mathcal{H}$ of $\mathrm{L}^2$ functions (or better,
+half-densities) on $\mathcal{M}(G)$ \dots\ They constructed operators on $\mathcal{H}$ that are related
+to the usual constructions of geometric Langlands, and found interesting duality theorems and
+conjectures concerning the action of these operators.}
+
+\slq{00:52:37}{In geometric quantization, one would understand the $\mathrm{L}^2$ functions on
+$\mathcal{M}(G)$ in terms of quantization of the cotangent bundle $T^*\mathcal{M}(G)\cong\Loc(G)$.
+In other words, the Hilbert space of EFK is what one gets if [one] takes the Higgs bundle moduli space
+$\Loc(G)$ with real symplectic structure $\omega=\operatorname{Im}\Omega$, and quantizes it via geometric
+quantization, using the fact that it is a cotangent bundle.}
+
+\zm{所以"EFK 的 $\mathcal{H}$"与"$\Loc(G)$ 的 brane 量子化"是同一个东西的两种描述。
+Witten 后面不再区分，直接写 $\mathcal{H}=\Hom(\mathcal{B},\widehat{\Bcc})$。}
+
+\subsection{可观测量：$\mathcal{A}\otimes\overline{\mathcal{A}}$}
+
+\slq{00:57:07}{The Higgs bundle moduli space has a Hitchin fibration $\pi:\Loc\to B$, where
+$B\simeq\mathbb{C}^n$ for some $n$. The linear functions on $B$ are Hitchin's commuting Hamiltonians.
+Classically the global holomorphic functions on $\Loc$ are just the pullbacks of functions on $B$,
+i.e.\ the algebra $\mathcal{A}_0$ of holomorphic functions on $\Loc$ is the algebra of polynomial
+functions of the Hitchin Hamiltonians.}
+
+\slq{00:57:46}{For brane quantization, we define the canonical coisotropic brane $\widehat{\Bcc}$ of
+$\widehat{Y}=Y_1\times Y_2$. It is just a product $\widehat{\Bcc}=\mathcal{B}_{\mathrm{cc},1}\times\mathcal{B}_{\mathrm{cc},2}$ of canonical
+coisotropic branes on the two factors. So the algebra that acts on the quantization of $Y$ is
+$\Hom(\widehat{\Bcc},\widehat{\Bcc})=\mathcal{A}\otimes\overline{\mathcal{A}}$.}
+
+\zm{$Y_1$ 与 $Y_2$ 是 $\Loc$ 的两种复结构（同一个实流形，全纯与反全纯），$\mathcal{A}$ 与 $\overline{\mathcal{A}}$
+是形变量子化后的全纯/反全纯函数代数。$\mathcal{A}\otimes\overline{\mathcal{A}}$ 里两类算子\textbf{平凡交换}——
+真正的信息在"它们的联合谱是什么"，而这只能靠对偶来算。}
+
+\subsection{对偶怎么作用：三个 brane 的对偶}
+
+\slq{01:01:23}{To apply duality to $\mathcal{H}=\Hom(\mathcal{B},\widehat{\Bcc})$ where
+$\widehat{\Bcc}=\mathcal{B}_{\mathrm{cc},1}\times\mathcal{B}_{\mathrm{cc},2}$, naively we need to understand the duals of the three branes involved
+\dots\ $\mathcal{B}_{\mathrm{cc},1}$ is the brane associated to deformation quantization of the ring of holomorphic functions,
+and \dots\ its dual is the structure sheaf of the variety of opers, $L_{\op}\subset\Loc(G^{\vee})$.
+\dots\ $\mathcal{B}_{\mathrm{cc},2}$ is the brane associated to deformation quantization of the ring of antiholomorphic
+functions. So its dual is the structure sheaf of $L_{\opb}$, the Lagrangian submanifold that parametrizes
+flat bundles whose antiholomorphic structure obeys the oper condition.}
+
+\zm{注意 $L_{\op}$ 与 $L_{\opb}$ 都在 $\Loc(G^\vee)$ 的\textbf{同一个}复结构里（用 $G^\vee_{\mathbb{C}}$ 的全纯结构），
+所以才能谈"交集"。讲者 01:07:03 专门解释了这一点：
+
+\slq{01:07:03}{A flat bundle has both a holomorphic structure and an antiholomorphic structure, both of
+which vary holomorphically. So in fact there is a holomorphic map
+$\Loc(G,C)\to\Bun(C)\times\Bun(\overline{C})$, where $\overline{C}$ is $C$ with opposite complex
+structure. A flat bundle $E$ (for $SL_2$, say) is an oper holomorphically if holomorphically it is a
+nontrivial extension
+\[
+0\to K^{1/2}\to E\to K^{-1/2}\to 0
+\]
+and it is an oper antiholomorphically if antiholomorphically it is a nontrivial extension
+\[
+0\to\overline{K}^{1/2}\to E\to\overline{K}^{-1/2}\to 0 .
+\]}
+}
+
+\subsection{对角 brane 与 unfolding trick}
+
+$\mathcal{B}$ 支撑在 $Y_1\times Y_2$ 的对角线上（"$\Loc$ 的两种复结构对齐"）。看起来很麻烦，
+但报告给出一个技巧绕开它：
+
+\slq{01:03}{There is an ``unfolding trick'' that shows we do not have to worry about dualizing the
+diagonal: \dots\ So we just dualize $\Bcc$ and $\widetilde{\Bcc}$ to get $L_{\op}$ and $L_{\opb}$.}
+
+\zm{unfolding 的图（01:05 的两张）把"沿对角线粘起来的带子"展平成"一整块矩形"，
+于是对角线 brane 的对偶就把 $\Hom$ 变成 $\Hom(L_{\opb},L_{\op})$。这张图是整场报告最"物理"的一步，
+也是代数几何那边不一定能直接看到的步骤。}
+
+\subsection{正定性 $\Leftrightarrow$ 实 opers}
+
+\slq{01:09:54}{By the method I explained before using an antiholomorphic involution $\tau$,
+$\Hom(\widetilde{\Bcc},\Bcc)$ carries a hermitian inner product, which we expect to be positive as it
+corresponds to the quantization of a cotangent bundle. The dual $\Hom(L_{\opb},L_{\op})$ likewise
+carries a nondegenerate inner product \dots\ However, for generic $B$-branes this inner product is not
+positive-definite. Conditions that make the hermitian form positive-definite were formulated by EFK,
+who showed that these conditions are satisfied for $GL_1$ (by a direct but surprisingly non-trivial
+computation) and for $SL_2$ (by a theorem of Faltings).}
+
+\slq{01:11:20}{Consider a point $x\in L_{\op}\cap L_{\opb}$, corresponding to a flat bundle $E$ that is an
+oper both holomorphically and antiholomorphically. The antiholomorphic involution $\tau^{\vee}$ \dots\
+maps $E$ to the complex conjugate flat bundle $\overline{E}$ \dots\ If $E$ is not isomorphic to
+$\overline{E}$, then they are both null vectors \dots\ But the duality predicts that it should be
+positive-definite, so we expect that, as conjectured by EFK and proved in some cases,
+$E$ is always isomorphic to $\overline{E}$. Thus \dots\ the flat $G_{\mathbb{C}}$ bundles that are opers
+both holomorphically and antiholomorphically are actually real.}
+
+\zm{这一段是全报告最漂亮的"物理逼出数学"：正定性 $\Rightarrow$ 交点必须成对出现且不能是零向量
+$\Rightarrow$ $E\cong\overline{E}$ $\Rightarrow$ 结构群可降到实形式。EFK 的猜想在这里变成一个逻辑必然，
+条件是"对偶成立 + 内积正定"。}
+
+\slq{01:12:45}{Assuming the intersection points are all real in that sense, $\Hom(L_{\opb},L_{\op})$
+is positive-definite if and only if all intersection points of $L_{\opb}$ and $L_{\op}$ are always
+transverse. \dots\ Bundles with this property are what EFK call \emph{real opers}.}
+
+\subsection{联合谱}
+
+\slq{01:14:41}{Thus assuming the duality is true and the hermitian form is positive-definite, the joint
+spectrum of $\mathcal{A}$ and $\overline{\mathcal{A}}$ corresponds to real opers. \dots\ according to
+Beilinson and Drinfeld, an element $x$ of $\mathcal{A}$ (1) is a holomorphic differential operator on
+$\Bun$ and (2) corresponds to a holomorphic function $f_x$ on $L_{\op}$. Similarly \dots\ an element
+$x'$ of $\overline{\mathcal{A}}$ \dots\ corresponds to a holomorphic function $f_{x'}$ on $L_{\opb}$.
+So an intersection point $p$ of $L_{\op}$ and $L_{\opb}$ determines a pair of eigenvalues of the
+differential operators $x,x'$, namely $f_x(p)$ and $f_{x'}(p)$. This is the proposal for the joint
+spectrum of Hitchin's quantized Hamiltonians.}
+
+\zm{这就是 EFK 那篇的"谱"定理在物理语言里的样子：\textbf{联合谱 = 实 opers 上的函数值}。
+数学上它等价于"$\mathcal{A}$ 是 $\Bun$ 上的全纯微分算子代数，且其在 $L_{\op}$ 上的特征值由 $p$ 给出"；
+物理上它只是"对偶把 $\mathcal{A}$ 变成 $L_{\op}$ 上的函数"。}
+
+\section{Hecke 算子的量子化与对偶预测}
+
+\subsection{交换性来自"线可以滑动"}
+
+\slq{01:22:43}{A similar argument shows that Hecke operators $T_R(p)$ commute with the quantized version
+of Hitchin's holomorphic (or antiholomorphic) Hamiltonians.}
+
+\zm{"similar argument" 指 01:21 那几页：两个线算子在不同点上可以互相滑过去（拓扑不变），
+所以对易。和 00:13 那句 "they commute, but a little less obviously"（同一点上不同表示）对照着读，
+能看出 Witten 反复用同一张图论证三件不同的事：$T$ 与 $T$ 交换、$T$ 与 $W$ 交换、$T$ 与 $H$ 交换。}
+
+\subsection{Wilson 算子在 $G^\vee$ 侧怎么变成函数}
+
+\slq{01:27:32}{Given a $G^{\vee}$ bundle $E$ with connection over $\Sigma\times C$, and a representation
+$R$ of $G^{\vee}$, we form the associated bundle $E_R=E\times_{G^{\vee}_{\mathbb{C}}}R$, which also comes
+with a connection. $W_R(\gamma)$, for a path $\gamma$ in $\Sigma\times C$, is defined by parallel transport
+of the connection on $E_R$ along $\gamma$. For the present application, we fix a point $p\in C$ and two
+points $a,b$ on the right and left boundaries of $\Sigma$, and a path in $\Sigma\times p$ from $a\times p$
+to $b\times p$ \dots\ parallel transport defines, for each connection, a linear transformation
+$W_R(p):E_{R,a\times p}\to E_{R,b\times p}$, or equivalently an element
+\[
+W_{R,p}\in\Hom(E_{R,a\times p}\otimes E_{R',b\times p},\mathbb{C}),
+\]
+where $R'$ is the dual representation to $R$.}
+
+\slq{01:29:48}{A quantum operator is going to come from something that is a complex valued function of
+connections. We do not have that yet \dots\ To get an operator, we need to supply elements
+$v\in E_{R,a\times p}$, $w\in E_{R',b\times p}$ and then $W_{R,p}(v\otimes w)$ is the function of
+connections whose quantization will be an operator.}
+
+\zm{这里的逻辑缺口是"$W_{R,p}$ 依赖边界上的纤维，而纤维不是数值"。补法是\textbf{用边界的几何挑出纤维里的向量}，
+即下面的 "corners"。}
+
+\subsection{Corners 与自旋结构无关性}
+
+\slq{01:30:44}{the boundary condition on the right boundary is that the $G^{\vee}$ bundle $E$, restricted
+to the right boundary, is an antiholomorphic oper. This means that there is a nonsplit exact sequence
+\[
+0\to\overline{K}^{1/2}\xrightarrow{\overline{j}}E_R\to\overline{K}^{-1/2}\to 0
+\]
+\dots\ So if we pick a vector $v\in\overline{K}_p^{1/2}$ (the fiber of $\overline{K}^{1/2}$ at $p$) then
+this gives a vector $\overline{j}(v)\in E_{R,a\times p}$.}
+
+\slq{01:31:28}{Similarly on the left boundary the boundary condition says that $E$ is a holomorphic oper,
+implying that there is a nonsplit exact sequence
+\[
+0\to K^{1/2}\xrightarrow{j}E_{R'}\to K^{-1/2}.
+\]
+So we pick $w\in K_p^{1/2}$ \dots\ In other words, the ``corners'' correspond to
+$v\in\overline{K}^{1/2}$ and $w\in K^{1/2}$. Once they are picked, we define
+\[
+\widehat{W}_{R,p}=W_{R,p}\bigl(\overline{j}(v)\otimes j(w)\bigr)
+\]
+and this is the complex-valued function of connections that we will interpret as a quantum operator.}
+
+\slq{01:32:20}{This step is trivial, because in the $B$-model \dots\ one can actually assume that the
+connection is pulled back from $C$. $\widehat{W}_{R,p}$ is just the natural dual pairing
+$(\ ,\ ):E_{R,p}\otimes E_{R',p}\to\mathbb{C}$, and therefore its value at a given real oper is simply
+\[
+(\overline{j}(v),j(w)).
+\]
+\dots\ it actually only depends on $v\otimes w\in K^{1/2}\otimes\overline{K}^{1/2}=|K|$, and thus in
+particular as observed by EFK there is no dependence on a choice of spin structure.}
+
+\subsection{对偶给出的预测}
+
+\slq{01:33:46}{The duality then predicts that also on the dual side, the definition of $\mathcal{T}(p)$
+as an operator requires ``corners'' $v,w\in\overline{K}_p^{1/2},K_p^{1/2}$. This is true, as shown by
+EFK using an algebro-geometric formula. The duality further predicts that the eigenvalues of the
+resulting operator are what we found on the $G^{\vee}$ side: they are
+\[
+(\overline{j}(v),j(w))
+\]
+for all the possible real opers. (As a result of a lecture by E.~Frenkel two hours ago, [I] learned of a
+slight refinement. Because $SL_2$ has a nontrivial center $\{\pm1\}$, parallel transport from left to
+right is uniquely determined only up to sign. Hence actually the eigenvalues are
+\[
+\pm(\overline{j}(v),j(w))
+\]
+with both signs occurring.)}
+
+\zm{这句"两小时前听了 Frenkel 的报告才知道要加 $\pm$"是现场感最强的一处：说明这条预测在当时仍在打磨。
+$\pm$ 的来源是中心 $Z(SL_2)=\{\pm1\}$ 使平行移动只在中心元意义下确定。}
+
+\section{讲者自己留下的问题}
+
+按报告里明确的措辞（"I don't know" / "we don't understand" / "unclear"）整理：
+
+\begin{enumerate}[label=\arabic*.]
+\item \textbf{正定性只在两个特例已知}（01:09:54）：$GL_1$ 靠直接计算，$SL_2$ 靠 Faltings 的定理；
+一般 $G$ 没有一般性论证。
+\item \textbf{实 opers 是否总落在分裂实形式上}（01:11:20）：Witten 原话 "I don't know if it is always
+the split real form."
+\item \textbf{交点横截性}（01:12:45）：把正定性化归为"$L_{\op}$ 与 $L_{\opb}$ 的交点总是横截"，
+但这本身是 EFK 的结果/猜想，报告未证。
+\item \textbf{与几何量子化的比较只在极化可解析延拓时成立}（00:51:01）：这是全报告的技术前提，不是定理。
+\item \textbf{$\Bcc$ 的对偶为什么是 opers}：数学上是 Beilinson–Drinfeld，物理上 "initially unclear, at least to me"（00:32:23）。
+\item \textbf{一般 Lagrangian brane 的对偶}：只有当 $L$ 来自 hyperholomorphic 的点（如 Hitchin 纤维）时才是复 Lagrangian；
+一般情况下 $L$ 只对 $\operatorname{Im}\Omega$ Lagrangian，那里的量子化行为报告未展开（00:40:44）。
+\end{enumerate}
+
+\section{术语与记号}
+
+\begin{center}\small
+\begin{tabular}{@{}p{4.6cm}p{10.6cm}@{}}
+\toprule
+记号 / 术语 & 含义（本笔记用法）\\
+\midrule
+$\mathcal{N}=4$ SYM & 四维 $\mathcal{N}=4$ 超对称 Yang–Mills，报告的全部物理起点\\
+$\tau,\ \tau^{\vee}$ & 复耦合 $\frac{\theta}{2\pi}+\frac{4\pi}{e^2}$ 与对偶群侧的对应量，$\tau^\vee=-1/(n_{\mathfrak{g}}\tau)$\\
+$\mathcal{C},\ \mathcal{C}^{\vee}$ & 固定 $C$ 后，$G$ 侧与 $G^{\vee}$ 侧的边界条件范畴\\
+$T(p),\ T_R(p)$ & 几何 Hecke 函子/算子（$G$ 侧，来自 't Hooft 线算子）\\
+$W(p),\ W_R(p)$ & Wilson 函子/算子（$G^{\vee}$ 侧），满足 $W_RW_{R'}=W_{R\otimes R'}$\\
+$\Loc(G)$ & $G$-Higgs 丛模空间，$\simeq T^*\mathcal{M}(G)$（双有理）\\
+$\Bcc$ & canonical coisotropic $A$-brane，支撑全空间，$\Hom(\Bcc,\Bcc)\sim$ 形变量子化\\
+$\widehat{\Bcc}$ & $Y_1\times Y_2$ 上的 $\mathcal{B}_{\mathrm{cc},1}\times\mathcal{B}_{\mathrm{cc},2}$，其自同态为 $\mathcal{A}\otimes\overline{\mathcal{A}}$\\
+$L_{\op},\ L_{\opb}$ & opers / 反全纯 opers 构成的（复）Lagrangian 子流形，位于 $\Loc(G^{\vee})$\\
+real oper & 既是全纯又是反全纯 oper 的平坦丛，且结构群可降到实形式\\
+$\tau$（对合） & $Y$ 的反全纯对合，不动点集含 $M$；用来造 $\Theta_\tau$\\
+$\Theta_\tau$ & 由 $\tau$ 定义的反线性映射，把双线性配对变成 Hermite 内积\\
+corners & 边界上用来挑出 $E_R$ 纤维里向量的数据 $v\in\overline{K}^{1/2}_p,\ w\in K^{1/2}_p$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{时间轴}
+
+\begin{center}\small
+\begin{tabular}{@{}llp{9.6cm}@{}}
+\toprule
+时间 & 块 & 内容\\
+\midrule
+00:00:30 & 3 & 与 Gaiotto 合作，目标是用 QFT 理解 EFK（arXiv:1908.09677）\\
+00:01:04 & 3 & $\tau$ 与电-磁对偶 $\tau^{\vee}=-1/(n_{\mathfrak{g}}\tau)$\\
+00:04:50 & 6 & 场论给 $d$-流形配数、给 $(d-1)$-流形配范畴\\
+00:06:49 & 7 & $\Hom(\mathcal{B}_1,\mathcal{B}_2)$ 的定义；自同态是代数\\
+00:10:00 & 9–12 & 线算子 = 边界条件范畴的自函子；Wilson vs 't Hooft\\
+00:15:35 & 14 & $T(p)/W(p)$ 与几何 Satake：$W_RW_{R'}=W_{R\otimes R'}$\\
+00:20:00 & 15 & 几何 Langlands = $\Loc(G)$ 的 $A$-模型与 $\Loc(G^{\vee})$ 的 $B$-模型的镜像对称\\
+00:29:01 & 17 & $\Bcc$ 的定义；$Y=T^*W$ 时 $\Hom(\Bcc,\Bcc)$ 是全纯微分算子\\
+00:31:01 & 19 & 取 $Y=\Loc(G)$，得到 $\Bun$ 上的 $\mathcal{D}$-模\\
+00:32:23 & 20 & $\Bcc$ 的对偶 = opers 的结构层（Beilinson–Drinfeld）\\
+00:34:21 & 21 & 小结五条\\
+00:35:15 & 21 & $S^2$ 例子：形变量子化 vs 量子化\\
+00:40:44 & 29 & Gukov–Witten 判据：$L$ 对 $\operatorname{Re}\Omega$ 辛 $\Rightarrow$ $\Hom(\mathcal{B},\Bcc)$ 是量子化\\
+00:44:57 & 31 & 需要 Hilbert 结构；反全纯对合 $\tau$ 与 $\Theta_\tau$\\
+00:48:54 & 35 & $\langle\psi,\chi\rangle=(\Theta_\tau\psi,\chi)$\\
+00:51:01 & 39 & 与几何量子化一致的条件（极化解析延拓）\\
+00:52:37 & 41 & EFK 的 $\mathrm{L}^2(\mathcal{M}(G))$ = 量子化 $\Loc(G)=T^*\mathcal{M}(G)$\\
+00:57:07 & 47 & Hitchin 纤维化与哈密顿量；可观测量 $\mathcal{A}\otimes\overline{\mathcal{A}}$\\
+01:01:23 & 52 & 三个 brane 的对偶：$\mathcal{B}_{\mathrm{cc},1}\mapsto L_{\op}$，$\mathcal{B}_{\mathrm{cc},2}\mapsto L_{\opb}$\\
+01:05:22 & 54 & unfolding trick，只对偶 $\Bcc$ 与 $\widetilde{\Bcc}$\\
+01:07:03 & 58 & 为什么两者在同一复结构里；oper 的扩张 $0\to K^{1/2}\to E\to K^{-1/2}\to 0$\\
+01:09:54 & 59 & 正定性；$GL_1$ 与 $SL_2$（Faltings）的特例\\
+01:11:20 & 60 & 正定性 $\Rightarrow$ $E\cong\overline{E}$ $\Rightarrow$ real opers\\
+01:14:41 & 62 & 联合谱 = real opers 上 $f_x(p),f_{x'}(p)$\\
+01:22:43 & 69 & Hecke 算子与量子化 Hitchin 哈密顿量交换\\
+01:27:32 & 75 & $W_R(p)$ 作为平行移动；$W_{R,p}\in\Hom(E_{R,a}\otimes E_{R',b},\mathbb{C})$\\
+01:30:44 & 77 & 右边界 = 反全纯 oper，$v\in\overline{K}^{1/2}_p$\\
+01:31:28 & 78 & 左边界 = 全纯 oper，$w\in K^{1/2}_p$；$\widehat{W}_{R,p}=W_{R,p}(\overline{j}(v)\otimes j(w))$\\
+01:32:20 & 79 & 只依赖 $v\otimes w\in|K|$，无自旋结构依赖；值为 $(\overline{j}(v),j(w))$\\
+01:33:46 & 80 & 对偶预测 Hecke 特征值；$SL_2$ 加 $\pm$（Frenkel 两小时前的报告）\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{方法与可信度（请先读这一段再引用）}
+
+\textbf{这份笔记是怎么来的。}源视频无字幕、无自动字幕；讲义页直接从画面转录（逐张读图、公式转 LaTeX），
+音轨用 faster-whisper small.en 分块转写并用术语表纠正。两层按时间轴合并，页与块的边界只依赖时间，
+不依赖页码（重跑时页码会在 201$\leftrightarrow$208 间漂移）。
+
+\textbf{哪些地方可能错。}按风险从高到低：
+\begin{enumerate}[label=\arabic*.]
+\item \textbf{公式的上下标}：转录时最易错的形态是"看起来对但差一个指标"。本笔记抽核了 18 处
+（$\tau^{\vee}$、$n_{\mathfrak{g}}$、$\Theta_\tau$、$\overline{K}^{1/2}$ 的指数、oper 扩张的方向、
+$W_{R,p}$ 的 $\Hom$ 参数），未发现错误，但\textbf{没有做系统抽核}，所以定为 B 级。
+\item \textbf{OCR 层面的小词}：例如 "if takes the Higgs bundle" （原文如此，疑为 "if one takes"），
+笔记中保留原样，不作静默修正。
+\item \textbf{口述转写的同音词}：已用术语表纠正（branes/brains、oper/au pair、Hitchin/Hitchen 等），
+但人名与冷僻词仍可能有误。
+\item \textbf{讲义跳页}：228 页中讲者只翻到 201 页，缺的 27 页没有任何信息，本笔记无法补。
+\end{enumerate}
+
+\textbf{怎么自己复核。}最省事的办法是看随附的 \texttt{source/*.jsonl}：每条都有 \texttt{t\_start} 与
+\texttt{frame}，回到视频对应时刻即可对照。发现问题请走仓库 issue，并在该份 \texttt{README.md} 的
+"复核"行里记录。
+
+\vfill
+\noindent\rule{\textwidth}{0.4pt}\\[2pt]
+{\footnotesize 本笔记遵循《视频讲义提取与笔记规范 v1.0》（\texttt{04\_playbook/24\_视频讲义提取与笔记规范\_v1.md}）。
+讲义原文与公式的内容权利归讲者 Edward Witten 及会议主办方；中文叙述、结构、时间轴为本仓自产，可按 CC BY 4.0 使用。
+如权利人要求，本目录整体撤下。}
+
+\end{document}
