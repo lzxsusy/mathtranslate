@@ -78,9 +78,9 @@ compiled_from:
 
 最后要分清「对应」这个词的三种强度，混用是这一行最常见的误读来源。
 
-- **弱形式（集合/双射）**：谱侧的对象与自守侧的「某种东西」之间存在自然双射，但不指定自守侧对象的结构。经典的类域论与 Drinfeld 的 $\operatorname{GL}(2)$ 工作大体处在这一层。
+- **弱形式（集合/双射）**：谱侧的对象与自守侧的「某种东西」之间存在自然双射，但不指定自守侧对象的结构。经典的类域论大体处在这一层；Drinfeld 的 $\operatorname{GL}(2)$ 工作已经构造出具体的特征层，属于下一层。
 - **中形式（Hecke 特征层）**：给每个谱侧对象 $E$ 配一个具体的层 $K_E$，并要求 $K_E$ 是 Hecke 算子的特征层（$H(K_E)\cong E\boxtimes K_E$）。这是本页第 5 节定理 2.2 的强度，也是 Laumon 906 与 FGV 的表述。
-- **强形式（等价）**：两侧的导出范畴整体等价，例如 $D(\operatorname{Bun}_G)\simeq\operatorname{IndCoh}_{\mathrm{Nilp}}(\operatorname{LocSys}_{{}^LG})$。这是 Scholze 1252 所述 Gaitsgory–Raskin 工作的强度，需要额外的「谱侧取 nilpotent 支撑」修正。
+- **强形式（等价）**：两侧的导出范畴整体等价，例如 $D(\operatorname{Bun}_G)\simeq\operatorname{IndCoh}_{\mathrm{Nilp}}(\operatorname{LocSys}_{{}^LG})$。这是 Scholze 1252 所述 Gaitsgory–Raskin 工作的强度（特征 $0$），需要额外的「谱侧取 nilpotent 支撑」修正；正特征的情形要再换 $\operatorname{LocSys}'$。
 
 三种强度不是同一条定理的不同说法，而是三个不同的定理；引用时必须说清在哪一层。
 
@@ -88,10 +88,10 @@ compiled_from:
 
 ### 1.1 三条约定：底域、系数域、上同调
 
-Laumon 把「三元组」作为整个报告的出发点：底域 $k$、系数域 $C$、以及一个 $C$-系数上同调理论。三种标准选择是 Betti（$k=\mathbb C$，经典拓扑下的可构造层）、de Rham（$\operatorname{char}k=0$，$C=k$，holonomic $D$-模）、$\ell$-进（$C=\bar{\mathbb Q}_\ell$，étale 层）。
+Laumon 把「三元组」作为整个报告的出发点：底域 $k$、系数域 $C$、以及一个 $C$-系数上同调理论。三种标准选择是 Betti（$k=\mathbb C$，经典拓扑下的可构造层）、de Rham（$\operatorname{char}k=0$，$C=k$，holonomic $D$-模）、$\ell$-进（$C=\mathbb Q_\ell$，étale 层；Laumon 原文如此）。
 
 > [!quote] Laumon 2002, p.2 — [arXiv:math/0207078v1, p.2](https://arxiv.org/pdf/math/0207078v1#page=2)
-> Dans le cas partout non ramifié qui fait l’objet de cet exposé, on espère établir une correspondance de Drinfeld-Langlands pour chaque triplet formé d’un corps de base k, d’un corps des coefficients C et d’une théorie cohomologique à coefficients dans C
+> Dans le cas partout non ramifié qui fait l’objet de cet exposé, on espère établir une correspondance de Drinfeld-Langlands pour chaque triplet formé d’un corps de base k, d’un corps des coefficients C et d’une théorie cohomologique à coefficients dans C …
 
 这三条不是装饰：同一条「对应」在不同设定里是不同难度的定理，公式的归一化也不同。本页以 Betti 设定为主（Laumon 906 全篇如此），$\ell$-进设定在讲到 FGV 原文时单独标出。两套设定的公式不能直接互换：FGV 的 Hecke 函子带半 Tate 扭 $\mathbb Q_\ell(\frac{n-1}{2})$，Betti 版没有这一项（详见 §2.3）。
 
@@ -153,7 +153,7 @@ $$H^1_n(K)=(\operatorname{supp}\times h_\to)_!\,h_\leftarrow^*(K)\otimes\mathbb 
 
 （FGV 原文 p4，式 (1.2)）。这与 Laumon 的 $H(K)$ 是同一个几何对象（都是 $x$ 处长度 $1$ 的摩天层、次数少 $1$），但公式差一个半 Tate 扭：$\ell$-进设定里有 $\mathbb Q_\ell(\frac{n-1}{2})$，Betti 设定里没有。合稿时按设定分别写，不可直接等同。
 
-局部模型（几何 Satake）不属于本节：它给出整体 Hecke 函子的输入，见 {{entry:geometry/geometric-satake}} 与 {{entry:geometry/affine-grassmannian}}。一句话区分：Satake 是局部的（球面 Hecke 代数与 $\operatorname{Rep}(\hat G)$ 的等价），本节的 $H$ 是整体的（$\operatorname{Bun}$ 上的对应）。
+局部模型（几何 Satake）不属于本节：它给出整体 Hecke 函子的输入，见 {{entry:geometry/geometric-satake}} 与 {{entry:geometry/affine-grassmannian}}。一句话区分：几何 Satake 是局部的——$\mathrm{DMod}(\mathrm{Gr}_G)^{L^+G}\simeq\operatorname{Rep}({}^LG)$ 的幺半等价（取 Grothendieck 群即经典 Satake 同构：球面 Hecke 代数 $\simeq$ $\operatorname{Rep}(\hat G)$ 的多项式表示环）；本节的 $H$ 是整体的（$\operatorname{Bun}$ 上的对应）。
 
 把 $H$ 与经典 Hecke 算子对照一下会更清楚：经典情形取双陪集 $G(\mathcal O)\backslash G(F_x)/G(\mathcal O)$，卷积作用在自守形式空间上；几何情形把双陪集换成 Hecke 叠、把卷积换成推拉，作用在层的导出范畴上。$H(K)$ 多出的 $X$ 因子，正对应经典情形里「在点 $x$ 处」这个信息；$S_2$-等变则对应「不同点的 Hecke 算子交换」这一事实在层层面的加强版。
 
@@ -169,7 +169,7 @@ Laumon 的定义（定义 2.1）：$E$ 是 $X$ 上秩 $n$ 的不可约局部系�
 
 $$H(K)\cong E\boxtimes K,$$
 
-使诱导同构 $(H\circ H)(K)\cong E\boxtimes E\boxtimes K$ 在开集 $(X\times X-\Delta_X)\times\operatorname{Fib}_n(X)$ 上的限制是 $S_2$-等变的（Laumon 中译 p7 = 原文 p7）。
+使诱导同构 $(H\circ H)(K)\cong E\boxtimes E\boxtimes K$ 在开集 $(X\times X-\Delta_X)\times\operatorname{Fib}_n(X)$ 上的限制是 $S_2$-等变的（Laumon 中译 p6 = 原文 p7；中译 PDF 第 6 页边注为 906--7）。
 
 满足此性质的 $K$ 就是 $E$ 的 Hecke 特征层；主定理断言 $\operatorname{Aut}_E$ 存在。名字里的「特征」来自函数情形：Hecke 算子作用在自守形式上有特征值，几何版本把「特征值」换成了「$E$ 的张量因子」。
 
@@ -232,7 +232,7 @@ $n=1$ 时对应是定理，不是猜想。它既是整个纲领的出发点，�
 
 - $n=2$ 由 Drinfeld 证明（[Dr 2]；另见 [Ga]）。
 - 一般 $n$：FGV 的原文把主陈述写成 **Conjecture 1.3**（FGV p4），并明确说「In this paper we reduce Conjecture 1.3 to the Vanishing Conjecture 2.3」（FGV p4）。也就是说，FGV 做的是**归约**：假定消没猜想，则主猜想成立。
-- 消没猜想本身：$k=\mathbb F_q$ 时由 Lafforgue 的结果推出（FGV §10）；一般特征 $p>0$ 由 Gaitsgory 证明（[Ga]）。
+- 消没猜想本身：$k=\mathbb F_q$ 时由 Lafforgue 的结果推出（FGV §10）；一般情形由 Gaitsgory 证明（[Ga]），但他自限系数：特征 $0$，或 $\mathbb F_\ell$ 且 $\ell>d$。
 - Laumon 906 把 FGV 的构造与 Gaitsgory 的消没合并，陈述为定理 2.2。所以正确的说法是「FGV + Gaitsgory」，而不是「FGV 证明了定理 2.2」。
 
 定理 2.2 的结论有两部分：存在性，以及「限制到每个连通分支 $\operatorname{Fib}_n^d(X)$ 上不可约」。后者正是第 3 节说的、FGV 宽定义所缺的那一块：宽定义只保证 $K\neq0$，不保证不可约，所以 FGV 必须回来补证。
@@ -247,7 +247,7 @@ $n=1$ 时对应是定理，不是猜想。它既是整个纲领的出发点，�
 
 ### 6.1 第一步：Laumon 层
 
-先在对称积上造层。$E^{(d)}$ 是 $X^{(d)}$ 上秩 $n^d$ 的局部系统（式 (1.3)），复形 $E^{(d)}[d]$（把 $E^{(d)}$ 放在次数 $-d$）是反常层，且是它到正则半单轨迹 $X^{(d)}_{\mathrm{rss}}$ 上限制的中间延拓（引理 3.1）。
+先在对称积上造层。$E^{(d)}$ 是可构造复形；它在正则半单轨迹 $X^{(d)}_{\mathrm{rss}}$ 上的限制才是秩 $n^d$ 的局部系统（式 (1.3) 给出的是该限制在 $D$ 处的纤维）。复形 $E^{(d)}[d]$（把 $E^{(d)}$ 放在次数 $-d$）是反常层，且是它到正则半单轨迹 $X^{(d)}_{\mathrm{rss}}$ 上限制的中间延拓（引理 3.1）。
 
 > [!quote] Laumon 2002, p.9 — [arXiv:math/0207078v1, p.9](https://arxiv.org/pdf/math/0207078v1#page=9)
 > Pour chaque entier d ≥ 0, le faisceau pervers LdE associé à un système local E sur X est le prolongement intermédiaire de LdE,rss à Cohd0 (X) tout entier.
@@ -288,7 +288,7 @@ $$K_{E,i+1}=(\iota_i)_*\,(j_i^\vee)^*\,\operatorname{Four}_{\mathcal V_i/\mathca
 
 消没定理在证明里只用在**一个**地方：证明 $K_{E,i}$ 是 proper 的（命题 6.3 说 $(j_i)_!K_{E,i}\to(j_i)_*K_{E,i}$ 是同构）。路线是：在 $\operatorname{Fib}_i\cap\mathcal C_i$ 上 $\mathcal V_i^\circ$ 是零截面的补集，由引理 (0.3)（$L$ proper $\Leftrightarrow(\bar\pi^\circ)_!L=0$）只需证 $(\bar\pi_i^\circ)_!K_{E,i}=0$；由引理 5.2 逐分支这等于 $M^d_{i,E}(\pi'_*L_i)$，再用定理 6.1 得零。
 
-proper 性的收益是：$K_{E,i}$ 的零延拓、$*$-延拓、中间延拓三者合一，于是可以「忘记」支撑继续下降；推论 6.4 由此得到 $\operatorname{Aut}'_E$ 在各分支上不可约。换句话说，消没定理买的不是「某个上同调为零」，而是「支撑可以忘掉」——这正是下降的前提。
+proper 性的收益是：$K_{E,i}$ 的零延拓、$*$-延拓、中间延拓三者合一，于是可以「忘记」支撑继续下降；推论 6.4 由此得到 $K_{E,n}$ 在各分支上不可约；由引理 5.2，$\operatorname{Aut}'_E$ 在相应开集上也同样。换句话说，消没定理买的不是「某个上同调为零」，而是「支撑可以忘掉」——这正是下降的前提。
 
 条件 $d>in(2g-2)$ 也值得看一眼：$i$ 是旗的级数，$n$ 是秩，$(2g-2)$ 是曲线的「复杂度」；$d$ 足够大时挠层「足够分散」，$\operatorname{Ext}^1$ 被迫消失，$\operatorname{Hom}$ 也消失，于是 $L$ 非常不稳定（引理 5.1）。$i=1$ 的情形就是 Deligne 的经典消没（注 6.2），一般 $i$ 由 Gaitsgory 补上。
 
@@ -329,7 +329,7 @@ $\mathcal N=4$ 理论的 Montonen–Olive 对偶断言：规范群 $G$ 与它的
 
 ### 8.2 扭化与紧化：Hitchin 模空间登场
 
-$\mathcal N=4$ 理论有三种拓扑扭化。KW 用的是 GL 扭化：它保留一半超对称，把理论变成四维拓扑场论；沿曲线 $C$ 紧化后，剩下的二维理论是目标为 Hitchin 模空间 $M_H(G,C)$ 的 $\sigma$-模型。扭化后的整族二维理论实际只依赖一个参数 $\Psi\in\mathbb{CP}^1$：$\Psi=\infty$ 时是复结构 $I$ 下的 B-模型，$\Psi=0$ 时是复结构 $K$ 下的 A-模型。四维的 $S$-对偶把 $\Psi$ 送到 $-1/(n_g\Psi)$，恰好交换这两个值，于是 $M_H(G,C)$ 与 $M_H({}^LG,C)$ 在复结构 $J$ 下互为镜像流形。
+$\mathcal N=4$ 理论有三种拓扑扭化。KW 用的是 GL 扭化：它保留一半超对称，把理论变成四维拓扑场论；沿曲线 $C$ 紧化后，剩下的二维理论是目标为 Hitchin 模空间 $M_H(G,C)$ 的 $\sigma$-模型。扭化后的整族二维理论实际只依赖一个参数 $\Psi\in\mathbb{CP}^1$：$\Psi=\infty$ 时是复结构 $J$ 下的 B-模型，$\Psi=0$ 时是复结构 $K$ 下的 A-模型。四维的 $S$-对偶把 $\Psi$ 送到 $-1/(n_g\Psi)$（$n_g$ 为 $S$-对偶的标度因子，非单边群时取 2 或 3），恰好交换这两个值，于是 $M_H(G,C)$ 与 $M_H({}^LG,C)$ 在复结构 $J$ 下互为镜像流形。
 
 ### 8.3 线算子、膜与特征性
 
@@ -343,7 +343,7 @@ $\mathcal N=4$ 理论有三种拓扑扭化。KW 用的是 GL 扭化：它保留�
 
 ### 8.4 落到 $\operatorname{Bun}_G$ 上
 
-磁特征膜本身还在 Hitchin 模空间上，不在 $\operatorname{Bun}_G$ 上。KW 用 c.c. 膜（$(A,B,A)$ 型）作桥梁：$M_H$ 上复结构 $K$ 的每个 A-膜自然给出 $M(G,C)$ 上的 D-模；c.c. 膜的开弦代数就是扭化微分算子层，$\Psi=h$ 时扭化为零，恰好是普通微分算子。$G=\mathrm{U}(1)$ 时这就是 $\operatorname{Jac}(C)$ 上的平坦 $\mathbb C^*$-联络，与第 4 节的几何类域论逐项对上。
+磁特征膜本身还在 Hitchin 模空间上，不在 $\operatorname{Bun}_G$ 上。KW 用 c.c. 膜（$(A,B,A)$ 型）作桥梁：$M_H$ 上复结构 $K$ 的每个 A-膜自然给出 $M(G,C)$ 上的 D-模；c.c. 膜的开弦代数就是扭化微分算子层，$\Psi=h$（$h$ 为 $G$ 的对偶 Coxeter 数）时扭化为零，恰好是普通微分算子。$G=\mathrm{U}(1)$ 时这就是 $\operatorname{Jac}(C)$ 上的平坦 $\mathbb C^*$-联络，与第 4 节的几何类域论逐项对上。
 
 ### 8.5 这条推导证明了什么
 
@@ -380,9 +380,9 @@ KW 自己划了两条边界（原文 p.5）：只处理**非分歧**情形；没
 
 ### 本页尚未做完的事
 
-- 正文 14 个 `{{entry:…}}` 链接指向的词条仍是 draft，逐字引文与锚点未补；
+- 正文 10 个 `{{entry:…}}` 链接指向的词条仍是 draft，逐字引文与锚点未补；
 - 定理转引（`{{transclude:…}}`）尚未接上词条锚点，现以引文块代替；
-- 第 7 节的「一般约化群 char 0」只给 Scholze 1252 的页码，未展开 Gaitsgory–Raskin 五篇的分工。
+- 第 7 节的「一般约化群 char 0」只给 Scholze 1252 的定理编号（定理 2.11、2.12），未展开 Gaitsgory–Raskin 五篇的分工。
 
 ## 10 常见误解
 
@@ -392,7 +392,7 @@ KW 自己划了两条边界（原文 p.5）：只处理**非分歧**情形；没
 
 **proper 反常层＝紧合态射？** 不是。proper 在这里是定义在 $\mathbb P(V)$ 上反常层的一个性质：遗忘支撑的态射 $j_!L\to j_*L$ 是同构。它与「紧合态射（morphisme propre）」只共享词根。译名因此保留英文 proper，避免与拓扑/代数几何的「紧合」混淆。
 
-**$E^{(d)}[d]$ 是把 $E^{(d)}$ 平移 $d$ 次？** 方向相反。这里是把可构造层 $E^{(d)}$ 放在次数 $-d$（复形只有这一项），记作 $E^{(d)}[d]$；它成为反常层，是 $E^{(d)}$ 到 $\operatorname{Coh}^d_0$ 的中间延拓。把「放低次数」读成「平移」是把复形与层两个范畴混为一谈。
+**$E^{(d)}[d]$ 是把 $E^{(d)}$ 平移 $d$ 次？** 方向相反。这里是把可构造层 $E^{(d)}$ 放在次数 $-d$（复形只有这一项），记作 $E^{(d)}[d]$；它成为反常层，是 $E^{(d)}$ 从 $X^{(d)}_{\mathrm{rss}}$ 到 $X^{(d)}$ 的中间延拓（引理 3.1）；到 $\operatorname{Coh}^d_0$ 的中间延拓是另一个层 $\mathcal L^d_E=\det^*E^{(d)}$（定义 3.2）。把「放低次数」读成「平移」是把复形与层两个范畴混为一谈。
 
 **Betti 版与 $\ell$-进版可以逐字互换？** 不能。FGV 的 Hecke 函子带半 Tate 扭 $\mathbb Q_\ell(\tfrac{n-1}{2})$，Laumon 的 Betti 版没有；两者的六函子约定、对偶、甚至「有界」的含义都不同。跨设定引用公式时，先确认当前设定。
 
