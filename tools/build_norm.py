@@ -247,23 +247,32 @@ def build_conflicts(terms: list[dict]) -> list[dict]:
                     }
                 )
             continue
-        ranked = sorted(
-            variants.items(),
-            key=lambda kv: (min(LEVEL_RANK.get(r["level"], 3) for r in kv[1]), -len(kv[1])),
-        )
+        # 排序：冻结表优先 > 等级高 > 用例多。
+        # 「冻结」是本库的显式裁决，必须压过别的工程在 A/B 级里留下的自用译名——
+        # 否则一个工程把 stack 译作「栈」并标 A（原文页码），就会把全库裁决「叠」挤下去。
+        def vkey(kv: tuple[str, list[dict]]) -> tuple[int, int, int]:
+            items = kv[1]
+            is_frozen = 0 if any(r.get("frozen") for r in items) else 1
+            return (is_frozen, min(LEVEL_RANK.get(r["level"], 3) for r in items), -len(items))
+
+        ranked = sorted(variants.items(), key=vkey)
         best_key, best_rows = ranked[0]
+        best_frozen = any(r.get("frozen") for r in best_rows)
         best_level = min(LEVEL_RANK.get(r["level"], 3) for r in best_rows)
         cands = " ｜ ".join(
-            f"{raw[k]}（{'/'.join(sorted({r['level'] for r in rs}))}，{len(rs)} 处）" for k, rs in ranked
+            f"{raw[k]}（{'冻结' if any(r.get('frozen') for r in rs) else ''}"
+            f"{'/'.join(sorted({r['level'] for r in rs}))}，{len(rs)} 处）"
+            for k, rs in ranked
         )
-        decidable = all(min(LEVEL_RANK.get(r["level"], 3) for r in rs) > best_level for k, rs in ranked[1:])
+        decidable = all(vkey((k, rs)) > vkey((best_key, best_rows)) for k, rs in ranked[1:])
+        why = "本库冻结" if best_frozen else "等级更高"
         rows.append(
             {
                 "类型": "一外多中",
                 "键": group[0]["foreign"],
                 "候选": cands,
                 "来源": "/".join(sorted({r["pkg"] for r in group})),
-                "建议": f"取「{raw[best_key]}」（等级更高）" if decidable else f"建议「{raw[best_key]}」，需仓主裁决",
+                "建议": f"取「{raw[best_key]}」（{why}）" if decidable else f"建议「{raw[best_key]}」，需仓主裁决",
                 "严重度": "高" if decidable else "中",
             }
         )

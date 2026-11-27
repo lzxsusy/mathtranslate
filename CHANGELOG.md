@@ -3,6 +3,15 @@
 > **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
 
 
+## 2026-11-27 术语清洁（全库）
+
+- 新增全库冻结表 `01_corpus_zh/terms_frozen_几何Langlands主干.tsv`（215 条，合并 SY02-26 的 207 条与 SY02-41 的 8 条，两工程冲突 0）。
+- 新增 `01_corpus_zh/数语规范/_清洁/{裁定表.tsv,变体映射.tsv,正文迁移表.tsv}`：本次裁定 40 余条（stack=叠、affine Grassmannian=仿射 Grassmann 簇、unipotent=幂幺、tame ramification=驯顺分歧、leg 不译等），并记录既有冻结依据。
+- `tools/build_norm.py`：一外多中的候选排序改为「冻结表优先 → 等级 → 用例数」，避免新工程用 A 级把全库裁决挤掉。
+- 新工具：`tools/term_migrate.py`（按映射表迁移译文，保护 `\yizhu`/`\footnote`、长词优先、跳过近期改动文件、支持 `re:` 正则规则）、`tools/term_clean.py`（termbase 体检与变体归一）、`tools/term_intake.py`（外部教材术语表投稿箱导入，出 B 级冻结表与差异报告）。
+- 正文迁移：`08_source_code` 284 个 `.tex`、1802 处（叠 842、局部系统 272、幂幺 236、摩天层 187、菱形 94、驯顺分歧 79、完满 73、固体 23 等），另 9 个工程 `glossary.tsv` 同步；SY02-42/43/44/45 等在写工程按 mtime 自动跳过。抽查 SY02-05 重编译 308 页、0 error。
+- 台账：`CF-2026-11-23-01`（stack 栈/叠）与 `CF-2026-11-23-02`（affine Grassmannian）关闭；冲突总数 91 → 138（新增主要来自并入 215 条冻结表与「等级不一致」噪声），**一外多中由 23 高 + 5 中降为 0**。
+
 ## SY02-43《一般线性群的局部 Langlands 对应》（Zijian Yao 哈佛 2017 秋讲义）中译注本 + 29 张资料卡 — 2026-11-27
 
 - **底本与译本**：Zijian Yao, *Notes on Local Langlands for GLn*，哈佛大学 2017 年秋学习讨论班讲义，作者自印、pdfTeX 排版（PDF 生成 2019-10-11），36 页，正文多处自述 work in progress。中译注本 **37 页**，xelatex 三遍 **0 error / 0 Overfull / 1 Underfull**。37 条编号结果（定理 10 + 引理 20 + 推论 6 + 命题 1）编号与底本逐条对齐；译注 5 条（橙色框）、本节重点 5 处（蓝色框）；原注 11 条全文译出置文末。
