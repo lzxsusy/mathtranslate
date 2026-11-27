@@ -3,6 +3,18 @@
 > **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
 
 
+## SY02-43《一般线性群的局部 Langlands 对应》（Zijian Yao 哈佛 2017 秋讲义）中译注本 + 29 张资料卡 — 2026-11-27
+
+- **底本与译本**：Zijian Yao, *Notes on Local Langlands for GLn*，哈佛大学 2017 年秋学习讨论班讲义，作者自印、pdfTeX 排版（PDF 生成 2019-10-11），36 页，正文多处自述 work in progress。中译注本 **37 页**，xelatex 三遍 **0 error / 0 Overfull / 1 Underfull**。37 条编号结果（定理 10 + 引理 20 + 推论 6 + 命题 1）编号与底本逐条对齐；译注 5 条（橙色框）、本节重点 5 处（蓝色框）；原注 11 条全文译出置文末。
+- **留白照录**：§3.3.2、§3.3.4、§3.4、§3.5.1、§3.6.1–3.6.2、§5、§6 底本只有标题或写明「to be added in second draft」，译本保留标题并标「底本此处未写」，不代拟正文。
+- **疑误 4 条**：p25 超尖点支撑求和起点应作 $j=0$（底本作 $j=1$）、p26 注 10 应写 $(\Art^{-1}\chi_1\oplus\Art^{-1}\chi_2,0)$、p21「local number field」应为 $p$ 进域、p13 注 2 与 p28 注 11 被页脚截断；正文照排，仅会误导处加 A 级译注。
+- **术语**：按用户要求先核香蕉空间（`bananaspace.org`）。该站由 Cloudflare 挡代理，改用浏览器读站内 API 逐词检索：50 个检索词**只有 8 个有专条**（局部域、导子、测度、深度、局部类域论、一般线性群、迹、特征标），**「超尖点」「容许表示」「Weil–Deligne」「惯性群」「驯惯性」「野惯性」全部零命中**——该站对 $p$ 进表示论覆盖极薄。有据者照用（惯性群、尖点表示、局部 Langlands 对应、Langlands 纲领、`L 函数` 空格写法），无据者沿本库冻结译名（超尖点、容许表示、非分歧、分歧的、新向量、L-参数）。逐条证据见 `工程文件/work/术语外部核对_香蕉空间.md`，与站内用词不一致的 4 处（`L 函数`/`L-函数`、惯性群/惯性子群、对应/纲领、佐竹/Satake）在 `资料卡/04-术语文献勘误.md` §五 说明理由。
+- **资料卡**：`datasets/yao17/` **29 张**（23 概念 + 6 推导），五轨 O（总览与主陈述）/A（Weil–Deligne 侧）/B（自守侧）/C（分类与不变量）/D（惯性 Langlands 与类型）；每卡锚底本印刷页（1–36，PDF 页 = 印刷页），`anchor` 形如 `A p.8`；含 `MAP.md`（骨架图与六张推导卡位置）、`index.jsonl`、`md/` 渲染版、`tools/` 与 `workflow/`。`lint_cards.py --strict` 与仓级 `card_spec_check.py --set yao17 --strict` 均 **0 error / 0 warn**。
+- **工程**：`源码/{main.tex,preamble.tex,macros.tex,sections/*.tex}`（front + §1–§4 正文 + §5–§6 标题 + 文献与原注）、`工程文件/{00_开工必读,BRIEF,STYLE_GUIDE}.md`、`work/{通读笔记.md,疑点清单.tsv（21 条，未解 0）,glossary.tsv（65 条）,术语外部核对_香蕉空间.md,原文/fulltext.txt}`、`资料卡/` 五件套。
+- **台账与说明文件**：`RELEASE_REGISTER.csv` 第 147 行（SY02-43）；`03_translations_meta/SY02-43/投稿信息.md`；`_meta/文献补遗.tsv` 新增 **LL-C08** 并在 `04_playbook/20_朗兰兹纲领文献补遗_2026-11.md` 表内标「入库」；`datasets/README.md` 加 `yao17/` 一行与目录树一行；`.gitignore` 为成品 PDF 加一条例外（底本为未出版自印讲义，台账登记「随仓公开」）。
+- **统计**：`make_stats.py --write` 后 **147** 部译注工程（133 部带完整 LaTeX 源码）、16,307 个跟踪文件 / 537.2 MB、2,778 个 `.tex`；`make_stats.py --check`、`tools/check_numbers.py`、`tools/check_compliance.py` 全通过（`build_norm.py --check` 未跑：该表是全仓跨工程统计，任何新增工程都会整体漂移，按 SY02-42 先例不回改）。
+- **说明**：本批实物（27 个 SY02-43 文件 + 73 个 yao17 文件 + 台账 4 处改动）在一次并行会话的 `git add -A` 中被一并卷入提交 `7ad52005`（标题为「feat(termbase)」），故在此补记，便于日后按条目检索。
+
 ## 12_sandbox 形式化立项 + leanstmt 可复现工程文件（车道 A1）— 2026-11-27
 
 - **立项**：`12_sandbox/docs/04_形式化立项_2026-11-27.md` —— 两条车道并行。**车道 A（地基）**：把 `datasets/leanstmt/` 做成「clone 后一条命令能跑」；**车道 B（定义库）**：从几何 Langlands 主干挑一条能走到底的链，把占位定义换成真定义。附节拍表（周一/三/六 19:00）、验收清单与五项止损（定义无底洞、陈述弱化、版本漂移、先建 API、语料膨胀挤占算力）。
