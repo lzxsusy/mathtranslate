@@ -32,7 +32,7 @@ Langlands 纲领猜测：整体域 $F$ 上约化群 $G$ 的自守表示，与 $F
 | 分支 | 自守侧 | 谱侧 | 本仓库入口 |
 |---|---|---|---|
 | 整体 Langlands（算术） | $G(\mathbb A_F)$ 的自守表示 | ${}^LG$ 的 Galois 表示 | {{entry:algebra/langlands-correspondence}} |
-| 几何 Langlands（函数域、曲线） | $\operatorname{Bun}_G(X)$ 上的反常层 | $X$ 上的 $\hat G$-局部系统 | [几何 Langlands 对应：从 Drinfeld 到 FGV](geometric-langlands.md) |
+| 几何 Langlands（函数域、曲线） | $\operatorname{Bun}_G(X)$ 上的反常层 | $X$ 上的 $\hat G$-局部系统 | [几何 Langlands 对应：从谱定理到五部曲](geometric-langlands.md) |
 | 局部 Langlands | 局部域上的表示 | Weil–Deligne 群的表示 | 待建 |
 
 ## 读法
