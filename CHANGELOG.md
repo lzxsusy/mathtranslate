@@ -3,6 +3,14 @@
 > **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
 
 
+## 12_sandbox 形式化立项 + leanstmt 可复现工程文件（车道 A1）— 2026-11-27
+
+- **立项**：`12_sandbox/docs/04_形式化立项_2026-11-27.md` —— 两条车道并行。**车道 A（地基）**：把 `datasets/leanstmt/` 做成「clone 后一条命令能跑」；**车道 B（定义库）**：从几何 Langlands 主干挑一条能走到底的链，把占位定义换成真定义。附节拍表（周一/三/六 19:00）、验收清单与五项止损（定义无底洞、陈述弱化、版本漂移、先建 API、语料膨胀挤占算力）。
+- **判断依据**：L0/L1 已经过剩（43 部译注 / 2267 页 / 1764 张资料卡 / 43 张对齐卡），瓶颈在 L2 定义库与工程，故形式化不排在翻译之后。
+- **车道 A1 完成**：`datasets/leanstmt/lean/{lakefile.lean,lean-toolchain,lake-manifest.json}` —— Lean 钉 `v4.36.0`，mathlib 钉 `d33c49ca43873d3746194325da62640cc893c9d9`（原 `shuyi/formal/lakefile.lean` 写 `@ "master"`，会漂），manifest 的 `inputRev` 同步为该 rev。A2 Dockerfile / A3 CI / A4 复现指南待做。
+- **基线实测**（`lean` 直跑 + `LEAN_PATH` 指向已编译 olean）：8 个 `.lean` 全部 exit=0、0 error、**22 处 sorry = 22 张 gap 卡**；`grep -rn ":= PUnit"` 命中 **21 处**占位（`Witten2008/Gaps.lean`、`ScholzeFF/Gaps.lean`、`GNO1977/Gaps.lean`）——这是车道 B 的第一张账单。记录在 `12_sandbox/docs/工作日志.md`。
+- **工具修正**：`make_stats.py` 的 Lean 计数只数 `lean/ShuyiFormal/**`，不再把 `lakefile.lean` 当陈述层源码。
+
 ## SY02-41《局部 Langlands 对应的几何化——Berkeley 讲义》中译注本 + 资料卡五件套 — 2026-11-27
 
 - **底本与译本**：Peter Scholze 讲授、Tony Feng 记录的 *Geometrization of the local Langlands correspondence*，UC Berkeley 课程（首讲 Oct 30、末讲 Feb 12，讲义只印月日，按周一/周五排课推断为 2020–2021 学年），自印 pdfTeX 1.40.17，2022-03-19 生成，148 页 / 27 讲 / 484 条编号条目。中译注本 **152 页**，xelatex 三遍 **0 error**，11 处 Overfull（均数个 pt）；24 幅手绘示意图全部 TikZ 重绘（`\figP{...}`，图内英文标签中文化），译注 30 条（A/B/I 分级），术语表 215 条。
