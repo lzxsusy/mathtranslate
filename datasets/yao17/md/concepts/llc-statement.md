@@ -1,0 +1,70 @@
+# 局部 Langlands 对应：定理 2.13 的五条性质
+
+> `yao17/concept/llc-statement` · 轨道 总览与主陈述 · 状态 dev
+
+> **先自测**：底本把局部 Langlands 对应陈述成什么？五条性质各自钉住了 rec_n 的哪一面？
+
+## 一句话
+
+rec_n 把 GL_n(K) 的不可约容许表示双射到 n 维 Frobenius 半单 Weil-Deligne 表示，由五条性质唯一刻画。
+
+## 定义
+
+存在唯一一族集合双射 $\rec_n$：$\GL_n(K)$ 的不可约容许表示的同构类 $\to$ $W_K$ 的 $n$ 维 Frobenius 半单 Weil–Deligne 表示的同构类，满足：(1) 对 $K^\times$ 的每个不可约拟特征标 $\chi$，$\rec_1(\chi)=\chi\circ\Art_K^{-1}$；(2) 对任意 $\pi_1,\pi_2$，$L(\pi_1\times\pi_2,s)=L(\rec_{n_1}(\pi_1)\otimes\rec_{n_2}(\pi_2),s)$，$\epsilon$ 因子同；(3) $\rec_n(\pi\chi)=\rec_n(\pi)\otimes\rec_1(\chi)$；(4) $\det\circ\rec_n(\pi)=\rec_1(\omega_\pi)$；(5) $\rec_n(\pi^\vee)=\rec_n(\pi)^\vee$。
+
+**记号**：$\Art_K\colon K^\times\xrightarrow{\sim}W_K^{\mathrm{ab}}$ 是局部类域论的同构；$\omega_\pi$ 是 $\pi$ 的中心特征标；$\pi^\vee$ 是反变对偶。
+
+## 要点（为什么需要它）
+
+1. 性质 (1) 把 $n=1$ 的情形钉死为局部类域论，整族 $\rec_n$ 由此才有确定的归一化；没有 (1) 就无法排除大量「差一个非分歧扭转」的候选。
+2. (2) 是唯一一条把自守侧的 Rankin–Selberg $L$/$\epsilon$ 因子与 Galois 侧的张量积因子绑在一起的公理，也是 Henniart 证明唯一性的主武器。
+3. (3)(4)(5) 分别固定扭转、行列式、对偶三条函子性，它们保证 $\rec_n$ 与表示论的标准操作交换；底本把它们和 (1)(2) 并列，是因为证明唯一性时这些全都要用。
+4. 两条守恒量由对应自动保持：导子 $c(\pi)=c(\rec_n(\pi))$（(2) 的副产品）与 Moy–Prasad 深度 $d(\pi)=d(\rec_n(\pi))$。
+5. 底本在此处尚未定义 $L$/$\epsilon$ 因子、平方可积、缓增、一般表示，也照实提醒了读者「虽然如此，仍值得先把 LLC 精确陈述出来」。
+
+## 核心公式
+
+$$
+$\rec_n\colon\{\pi\in\Repadm_{\GL_n(K)}\text{ 不可约}\}/\cong\;\xrightarrow{\ \sim\ }\{(\rho,N)\in\wd_K:\dim\rho=n,\ \text{Frobenius 半单}\}/\cong$$L(\pi_1\times\pi_2,s)=L(\rec_{n_1}(\pi_1)\otimes\rec_{n_2}(\pi_2),s),\qquad \epsilon(\pi_1\times\pi_2,s)=\epsilon(\rec_{n_1}(\pi_1)\otimes\rec_{n_2}(\pi_2),s)$$c(\pi)=c(\rec_n(\pi)),\qquad d(\pi)=d(\rec_n(\pi))$
+$$
+
+$$
+$L(\pi_1\times\pi_2,s)=L(\rec_{n_1}(\pi_1)\otimes\rec_{n_2}(\pi_2),s),\qquad \epsilon(\pi_1\times\pi_2,s)=\epsilon(\rec_{n_1}(\pi_1)\otimes\rec_{n_2}(\pi_2),s)$
+$$
+
+$$
+$c(\pi)=c(\rec_n(\pi)),\qquad d(\pi)=d(\rec_n(\pi))$
+$$
+
+## 定理与证明（或缺口）
+
+### 定理 2.13（局部 Langlands 对应）
+
+存在唯一一族双射 $\rec_n$（$n\ge 1$）从 $\GL_n(K)$ 的不可约容许表示的同构类到 $W_K$ 的 $n$ 维 Frobenius 半单 Weil–Deligne 表示的同构类，满足 (1)–(5)。
+
+> 证明状态：**cited**。底本只陈述不证明；证明归于 Harris–Taylor（$K/\mathbb Q_p$）与 Henniart，Scholze 的进路可绕开数值 LLC，底本未展开。
+
+出处：`A §2.3.1 p.21–p.22`
+
+### Henniart 的归约（底本 Remark）
+
+只需在超尖点表示上造出一族满足 (1)–(5) 的映射 $\rec_n$，则它自动是双射且唯一。
+
+> 证明状态：**sketch**。底本只给策略 (i)–(iv)：BZ 归约到超尖点；$\epsilon$ 因子归约到「存在」；Henniart 数值 LLC 由单射得满射；$L$ 因子性质证单射。四步均未写出细节。
+
+出处：`A §2.3.1 p.21–p.22`
+
+## 常见误解
+
+- 定理里要求的是 Frobenius 半单的 Weil–Deligne 表示，不是全体 Weil–Deligne 表示；$\wd_K$ 里带 $N\neq 0$ 的对象对应的是「非半单」的自守侧数据（见 Steinberg 与 $\Sp_m$）。
+- 性质 (2) 里的 $\pi_1\times\pi_2$ 是抛物诱导的（可能可约的）表示，$L$/$\epsilon$ 因子按 §3.6 对容许表示定义，不能读成不可约张量积。
+
+## 相关卡
+
+[定理 2.14：超尖点、本质平方可积、一般表示在对应下的像](../concepts/llc-finer-properties.md) · [定理 3.1：Bernstein–Zelevinsky 对 GL_n 容许表示的七条分类](../concepts/bz-classification.md) · [Weil–Deligne 表示的导子 c(ρ)、L 因子与 ε 因子](../concepts/wd-invariants.md) · [GL₂ 的四类表示如何对应到 Weil–Deligne 表示](../derivations/gl2-llc-cases.md) · [导子 c(π)、深度、JPPS 的 ε 公式与深度 0 对照图](../concepts/conductor-depth.md)
+
+## 出处（印刷页）
+
+- A p.21–22（A p.21）
+
+> 说明：定义与 (1)–(5) 逐条取自 p.21 定理 2.13；两条守恒量见同页 Remark，Henniart 策略见 p.21–p.22。摘要中「五条性质」的归属（哪条管哪一面）是我们的判断。

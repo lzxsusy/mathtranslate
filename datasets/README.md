@@ -57,6 +57,8 @@
 | `grassmann/` | 整本论文集资料卡（Newstead–Ellwood–Previato 编《Grassmannians, Moduli Spaces and Vector Bundles》，Clay Math. Proc. 14，AMS/Clay 2011，9 篇独立论文，中译本 170 页）：**90 张卡**（73 概念 + 17 例子），十轨 A（跨章基础）+ 1–9（九篇）；每卡带回 `chapters/chNN.tex:行号` 锚点与中译/英文 PDF 双页码，定理卡区分 complete / sketch（带 gap_note）/ reference | 一张可独立使用的卡（JSON，附渲染 Markdown） | 单卡 3,000 字 |
 | `lawrge24/` | 单篇研讨会笔记资料卡（Ben-Zvi–Sakellaridis–Venkatesh《Relative Langlands Duality》，LAWRGE 2024 NOTES，2024-12-03，73 页，15 讲，无 arXiv；与 SY02-15 中译注本 65 页同批）：**47 张卡**（41 概念 + 6 推导），六轨 O（总览）/A（TQFT 与算术–拓扑字典）/B（raviolo、Hecke、Satake）/C（球簇与对偶群）/D（Plancherel 与局部范畴化）/E（周期层、L-层与例子）；每卡锚原文 PDF 页，`quote` 逐字对 `工程文件/work/原文/chNN.txt` 校验；全部 `draft`；5 轨审计覆盖 45 卡/123 断言（supported 74/partial 35/unverifiable 9/conflict 5，5 条 conflict 已改卡），余 2 张推导卡为卡内推导（E3）（原文自述不完整、未校订，不作外部定理级宣称） | 一张可独立使用的卡（JSON） | 单卡 3,000 字 |
 
+| `yao17/` | 单篇讲义资料卡（Zijian Yao《Notes on Local Langlands for GLn》，哈佛 2017 秋学习讨论班讲义，自印，36 页；与 SY02-43 中译注本 37 页同批）：**29 张卡**（23 概念 + 6 推导），五轨 O（总览与主陈述）/A（Weil–Deligne 侧）/B（自守侧）/C（分类与不变量）/D（惯性 Langlands 与类型）；每卡带原文印刷页锚（1–36，底本 PDF 页 = 印刷页），`anchor` 形如 `A p.8`；底本 11 条编号脚注、§3.4 与 §3.5.1–§3.6.2 的留白、§5–§6 只有标题，均逐条入卡；全部 `dev` + `rewritten` | 一张可独立使用的卡（JSON，附渲染版 Markdown） | 单卡 3,000 字 |
+
 `bench/` 与训练集严格隔离：出题时不得使用 `parallel/`、`deepread/` 中已出现的同一段落。
 
 ## 2. 权利分层（写进每条记录）
@@ -93,6 +95,7 @@ datasets/
 ├── hausel22/                  # 单篇论文资料卡：Hausel ICM 2022《增强镜像对称》（概念/推导，六轨 A–E+O）
 ├── grassmann/                 # 整本论文集资料卡：Grassmannians, Moduli Spaces and Vector Bundles（9 篇，90 卡，十轨 A+1–9）
 ├── benzvi_glc/                # 单篇综述资料卡：Ben-Zvi《What is the Geometric Langlands Correspondence about?》（42 概念卡，六轨 O/A–E，source-only）
+├── yao17/                     # 单篇讲义资料卡：Yao《Notes on Local Langlands for GLn》（23 概念 + 6 推导，五轨 O/A–D）
 ├── math/<pkg>.<split>.jsonl   # 数学推理条目（主力）
 ├── parallel/<pkg>.<split>.jsonl
 ├── deepread/<pkg>.<split>.jsonl

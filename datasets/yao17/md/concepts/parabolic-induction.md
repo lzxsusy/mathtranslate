@@ -1,0 +1,62 @@
+# 抛物诱导、Jacquet 函子与模特征标 δ 的正规化
+
+> `yao17/concept/parabolic-induction` · 轨道 自守侧 · 状态 dev
+
+> **先自测**：为什么朴素抛物诱导与朴素 Jacquet 函子必须乘 δ^{1/2} 才叫「正规化」？δ 在 GL_2 的 Borel 上具体等于什么？
+
+## 一句话
+
+朴素 J~ 与 I~ 由 ψ_! 与 ind∘ψ* 给出且伴随；乘上模特征标 δ^{±1/2} 得到正规化的 J、I，保证幺正性不被破坏。
+
+## 定义
+
+对 $H<G$ 与 $\psi\colon G\to M=G/N$：$\Ind_H^G(W)=\{f\colon G\to W\ \text{一致局部常值},\ f(hx)=hf(x)\}$，$\ind$ 是其中「模 $H$ 紧支」的子函子；$\Res$ 是限制；$\psi_!V=V/[N-1]V$ 是 $N$-余不变量，配 $\psi_!\dashv\psi^\ast$，且 $\Res\dashv\Ind$、$\ind\dashv\Res$（引理 2.9）。朴素抛物诱导与 Jacquet：$\tilde I_P^G:=\ind_P^G\circ\phi^\ast$，$\tilde J_P^G:=\phi_!\circ\Res_P^G$。正规化：$J_P^G:=\delta^{-1/2}\tilde J_P^G$，$I_P^G:=\tilde I_P^G\cdot\delta^{1/2}$，其中 $\delta$ 是 $P$ 的模特征标，$(L_x)^\ast\mu^r_P=\delta(x)\mu^r_P$。
+
+**记号**：$P=P_{\underline n}$ 是标准抛物，$\underline n=(n_1,\dots,n_r)$ 是 $n$ 的有序分拆；$U_{\underline n}$ 是幂幺根、$L_{\underline n}$ 是 Levi；$I_P^G(W)=\{f:\ f(uhg)=\delta^{1/2}_n(h)\pi_L(h)f(g)\}$。
+
+## 要点（为什么需要它）
+
+1. 两条伴随是全部结构的骨架：$\Res\dashv\Ind$（Frobenius 互反，Cartier 称「对偶 Frobenius 互反」）与 $\psi_!\dashv\psi^\ast$，合起来得 $\tilde J\dashv\tilde I$；证明只用 Hom 的自然同构 $\Hom_L(\tilde J\sigma_G,\sigma_L)\cong\Hom_G(\sigma_G,\tilde I\sigma_L)$。
+2. δ 的定义来自「右 Haar 测度在左平移下怎么变」：对 $\GL_2$ 的标准 Borel，$d\mu^l=\frac{1}{|x|^2|z|}dx\,dy\,dz$、$d\mu^r=\frac{1}{|x||z|^2}dx\,dy\,dz$，算得 $\delta\begin{pmatrix}a&b\\&d\end{pmatrix}=|a\cdot d^{-1}|$。
+3. 一般地 $\delta_n(x)=|\det(\ad_{U_{\underline n}}(x))|$（$x\in L_{\underline n}$）：模特征标就是 Levi 在幂幺根上的行列式，这一步把 δ 变成可计算的对象。
+4. 正规化的意义：朴素 $\tilde J$、$\tilde I$ 不把幺正表示送到幺正表示，因为抛物子群一般非幺模；乘 $\delta^{\pm1/2}$ 后 $I$ 保留幺正性，这是「正规化」三个字的全部内容。
+5. 注记（2.2.4 末）：若 $\pi_1,\dots,\pi_r$ 不可约超尖点、$\pi_1\times\dots\times\pi_r:=I_{P_{\underline n}}(\pi_L)$，则它不可约当且仅当任两 $\pi_i\neq|\det|\cdot\pi_j$；$\GL_2$ 情形即 $\chi_1/\chi_2\neq|\cdot|^{\pm1}$。
+
+## 核心公式
+
+$$
+$\tilde I_P^G=\ind_P^G\circ\phi^\ast,\qquad \tilde J_P^G=\phi_!\circ\Res_P^G,\qquad \tilde J\dashv\tilde I$$J_P^G=\delta^{-1/2}\tilde J_P^G,\qquad I_P^G=\tilde I_P^G\cdot\delta^{1/2}$$\delta_{\underline n}(x)=|\det(\ad_{U_{\underline n}}(x))|,\qquad \delta\begin{pmatrix}a&b\\&d\end{pmatrix}=|a\,d^{-1}|\ (n=2)$
+$$
+
+$$
+$J_P^G=\delta^{-1/2}\tilde J_P^G,\qquad I_P^G=\tilde I_P^G\cdot\delta^{1/2}$
+$$
+
+$$
+$\delta_{\underline n}(x)=|\det(\ad_{U_{\underline n}}(x))|,\qquad \delta\begin{pmatrix}a&b\\&d\end{pmatrix}=|a\,d^{-1}|\ (n=2)$
+$$
+
+## 定理与证明（或缺口）
+
+### 引理 2.9（两条伴随）
+
+$\Res\dashv\Ind$；若 $H<G$ 开，则 $\ind\dashv\Res$；对 $\psi\colon G\to M=G/N$ 有 $\psi_!\dashv\psi^\ast$。
+
+> 证明状态：**cited**。底本只陈述，并提到与 $f_!,f^\ast,f_\ast$ 的类比（引 Ngo 的笔记）；伴随的具体构造未写。
+
+出处：`A §2.2.1 p.17`
+
+## 常见误解
+
+- δ 只依赖 $P$（以及 Levi 的选取），但 $\delta^{1/2}$ 需要取平方根：底本在复系数下取 $\delta^{1/2}=|\det|^{1/2}$ 型实值函数，换成一般系数域时这条要小心。
+- 朴素 $\tilde I$ 与正规化 $I$ 只差一个特征标扭转，所以「$\pi_1\times\dots\times\pi_r$」的记号在不同文献里可能指 $\tilde I$ 也可能指 $I$；底本明确用正规化的 $I$。
+
+## 相关卡
+
+[超尖点表示：J_P(π)=0 与矩阵系数的紧支性](../concepts/jacquet-supercuspidal.md) · [Zelevinsky 段 Δ(π,m)、linked/precedes 与 (∗) 条件](../concepts/zelevinsky-segment.md) · [光滑表示、容许表示与反变对偶](../concepts/smooth-admissible.md)
+
+## 出处（印刷页）
+
+- A p.16–19（A p.19）
+
+> 说明：Ind/ind/Res 与 $\psi_!$、朴素 $\tilde I/\tilde J$、δ 的 $\GL_2$ 计算与正规化定义取自 p.16–p.19；「正规化的意义」一段是我们的解释，底本只一句「不保持幺正性」。
