@@ -1,0 +1,66 @@
+# Deligne 的 $\mathbb{G}_m$ 几何类域论构造
+
+- id：`raskin_glc/concept/deligne-gl1-construction`
+- 类型：concept　轨道：A　状态：dev
+- 一句话：给秩 $1$ 局部系统 $\sigma$，先在 $\operatorname{Sym}^d X$ 上造 $\sigma^{(d)}$，再沿 Abel–Jacobi 映射的单连通纤维下降，得到 $\operatorname{Bun}_{\mathbb{G}_m}$ 上满足 Hecke 性质的 lisse 层 $\chi_\sigma$。
+
+**问题**：为什么只在 $L=\mathcal{O}(D)$ 上规定 Hecke 性质就足以确定整个 $\operatorname{Bun}_{\mathbb{G}_m}$ 上的层，以及为什么必须取 $d>2g-2$？
+
+## 定义
+
+设 $X/k$ 为光滑射影曲线，$g=g(X)$，$\sigma$ 为 $X$ 上秩 $1$ 局部系统。对 $d\ge 0$，令 $\mathrm{add}_d:X^d\to\operatorname{Sym}^d X$ 为商映射，定义 $\operatorname{Sym}^d X$ 上的秩 $1$ 局部系统 $\sigma^{(d)}:=(\mathrm{add}_{d,*}\sigma^{\boxtimes d})^{S_d}$。对 $d>2g-2$，Abel–Jacobi 映射 $\mathrm{AJ}_d:\operatorname{Sym}^d X\to\operatorname{Bun}^d_{\mathbb{G}_m}$ 的纤维同构于 $\mathbb{P}\Gamma(X,L)$，因而是单连通的；于是 $\sigma^{(d)}$ 沿 $\mathrm{AJ}_d$ 下降为 $\operatorname{Bun}^d_{\mathbb{G}_m}$ 上的 lisse 层。再用 Hecke 性质 $\chi_\sigma|_{L(x)}\cong\chi_\sigma|_L\otimes\sigma_x$ 把它延拓到所有次数。
+
+记号：$\operatorname{Bun}_{\mathbb{G}_m}\cong\operatorname{Jac}(X)\times\mathbb{Z}\times B\mathbb{G}_m$；$L(x):=L\otimes\mathcal{O}(x)$；$\sigma_x$ 为 $\sigma$ 在 $x$ 的纤维；$\mathcal{O}(D)$ 为除子 $D$ 对应的线丛。
+
+## 要点
+
+- $\operatorname{Bun}_{\mathbb{G}_m}$ 的分类由三部分给出：次数 $d\in\mathbb{Z}$、$\operatorname{Jac}(X)$ 中的次数 $0$ 部分、以及每根线丛的自同构 $\mathbb{G}_m$；因此只需在 $L=\mathcal{O}(D)$ 上规定 $\chi_\sigma$。
+- Hecke 性质逐点读出 $\chi_\sigma$ 在 $L$ 与 $L(x)$ 两处的纤维之差：$\chi_\sigma|_{L(x)}\cong\chi_\sigma|_L\otimes\sigma_x$。沿 $X$ 走一圈就把所有次数连起来，所以只需验证它与除子 $D$ 的选取无关。
+- $\mathrm{AJ}_d$ 在 $d>2g-2$ 时纤维为 $\mathbb{P}\Gamma(X,L)$：此时 $H^1(X,L)=0$，故 $\Gamma(X,L)$ 的维数为 $d+1-g$，射影化后维数 $d-g$；去掉原点的仿射空间单连通，射影化也单连通。
+- 下降的合法性来自纤维单连通：局部系统沿单连通纤维的拉回是常值的，故 $\sigma^{(d)}$ 在每根纤维上平凡，从而沿 $\mathrm{AJ}_d$ 下降。
+- 下降只给出每个 $\operatorname{Bun}^d_{\mathbb{G}_m}$ 上的层；Hecke 性质把这些层粘成整个 $\operatorname{Bun}_{\mathbb{G}_m}$ 上的 lisse 层。
+- 归一化 $\chi_\sigma|_{\mathcal{O}_X}\cong\underline{\e}$ 固定了整体常数，否则可乘以任意 $\e^\times$ 中的标量。
+
+## 公式
+
+$$ \chi_\sigma|_{L(x)}\cong\chi_\sigma|_L\otimes\sigma_x $$
+
+$$ \sigma^{(d)}=(\mathrm{add}_{d,*}\sigma^{\boxtimes d})^{S_d} $$
+
+$$ \chi_\sigma|_{\operatorname{Sym}^d X}\cong\sigma^{(d)} $$
+
+$$ \operatorname{Bun}_{\mathbb{G}_m}\cong\operatorname{Jac}(X)\times\mathbb{Z}\times B\mathbb{G}_m $$
+
+## 定理与证明状态
+
+### 构造 1.2.4（Deligne）
+
+设 $\sigma$ 为 $X$ 上秩 $1$ 局部系统。存在 $\operatorname{Bun}_{\mathbb{G}_m}$ 上的 lisse 层 $\chi_\sigma$，使得对每一点 $x\in X$ 与每根线丛 $L$ 有 $\chi_\sigma|_{L(x)}\cong\chi_\sigma|_L\otimes\sigma_x$，且 $\chi_\sigma|_{\mathcal{O}_X}\cong\underline{\e}$。
+
+- 证明状态：`sketch`
+- 说明：讲义只述构造梗概，未逐条验证下降的数据（等化与上循环）；完整论证见 Deligne, LNM 163 与 Feng 的几何类域论讲义。
+- 出处：§1.2，原文 p.3–4
+
+## 易错点
+
+- $\mathrm{AJ}_d$ 的纤维是射影空间 $\mathbb{P}\Gamma(X,L)$，不是 $\Gamma(X,L)\setminus\{0\}$；原文 p.4 写错了，若照抄会得到维数 $d+1-g$（多一维）且不单连通。
+- 条件 $d>2g-2$ 不能省：$d\le 2g-2$ 时 $H^1(X,L)\neq 0$，纤维不再是射影空间，单连通性也失效。
+- Hecke 性质是对所有 $x\in X$ 的局部条件；只在一点验证不够。
+- 归一化是 $\chi_\sigma|_{\mathcal{O}_X}\cong\underline{\e}$，其中 $\underline{\e}$ 是常值层，不是 $\mathcal{O}_X$ 本身。
+
+## 出处
+
+- Sam Raskin 讲授、Lin Chen 笔记《Notes for "Geometric Langlands for Projective Curves"》（2025-07-07/11，18 页），§1.2 交换几何类域论，pp. 3, 4；`源码/sections/s01-intro.tex:L122-L160（Construction 1.2.4）`
+  > Construction 1.2.4 (Deligne). ... The fiber of this map at L is Γ(X,L) ∖ 0. ... σ^(d) := add_{d,*}(σ ⊠ ... ⊠ σ)^{S_d}.
+
+## 相关卡
+
+- `raskin_glc/concept/hecke-eigensheaf`
+- `raskin_glc/correction/abel-jacobi-fiber`
+
+## 核验（partial，2026-11-27）
+
+- nLab / local system：`supports` — 线性局部系统是有限维局部常值层，且与平坦联络、$\pi_1$ 表示等价；这支持卡中「$\sigma$ 是秩 $1$ 局部系统」的用法。
+- nLab / geometric Langlands correspondence：`partial` — Abelian 情形是 Fourier–Mukai 型构造（Laumon 1985/1996，Rothstein 1996），与卡中「用 Abel–Jacobi 下降构造 $\chi_\sigma$」属同一类构造，但页面未逐条覆盖 $\operatorname{Sym}^d$ 下降。
+
+构造的整体正确性以原文与 Deligne LNM 163 为准；nLab 仅支撑术语与 Abelian 情形的构造类型。

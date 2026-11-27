@@ -41,13 +41,13 @@
 
 | 宏 | 出现工程数 | 不同含义数 | 含义变体 |
 |---|---|---|---|
-| `\R` | 87 | 6 | \ensuremath{\mathbb{R}} ｜ \mathbb{R} ｜ \mathbf R |
-| `\Hom` | 87 | 5 | Hom ｜ \mathop{\mathrm{Hom}} ｜ \operatorname{Hom} |
-| `\Z` | 86 | 4 | \ensuremath{\mathbb{Z}} ｜ \mathbb{Z} ｜ \mathbf Z |
-| `\C` | 84 | 4 | \ensuremath{\mathbb{C}} ｜ \mathbb{C} ｜ \mathbf C |
+| `\R` | 88 | 6 | \ensuremath{\mathbb{R}} ｜ \mathbb{R} ｜ \mathbf R |
+| `\Hom` | 88 | 5 | Hom ｜ \mathop{\mathrm{Hom}} ｜ \operatorname{Hom} |
+| `\Z` | 87 | 4 | \ensuremath{\mathbb{Z}} ｜ \mathbb{Z} ｜ \mathbf Z |
+| `\C` | 85 | 4 | \ensuremath{\mathbb{C}} ｜ \mathbb{C} ｜ \mathbf C |
 | `\Tr` | 80 | 7 | Tr ｜ \mathop{\mathrm{Tr}}\nolimits ｜ \mathsf{Tr} |
-| `\Aut` | 74 | 5 | Aut ｜ \operatorname{Aut} ｜ \operatorname{\text{Aut}} |
-| `\id` | 73 | 6 | \mathbf{1} ｜ \mathsf{Id} ｜ \operatorname{id} |
+| `\Aut` | 75 | 5 | Aut ｜ \operatorname{Aut} ｜ \operatorname{\text{Aut}} |
+| `\id` | 74 | 6 | \mathbf{1} ｜ \mathsf{Id} ｜ \operatorname{id} |
 | `\End` | 72 | 6 | End ｜ \operatorname{End} ｜ \operatorname{\text{End}} |
 
 完整清单见 `MACROS.tsv`。注意：`\R` 这类「同一含义的多种写法」已在判定时折算（`\Bbb`→`\mathbb`、`\operatorname{}`/`\text{}`/`{\rm }`→`\mathrm{}`），

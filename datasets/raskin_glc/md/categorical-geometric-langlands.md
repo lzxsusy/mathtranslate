@@ -1,0 +1,78 @@
+# 范畴化几何 Langlands
+
+- id：`raskin_glc/concept/categorical-geometric-langlands`
+- 类型：concept　轨道：E　状态：dev
+- 一句话：$\mathrm{LG}:\operatorname{DMod}(\operatorname{Bun}_G)\to\operatorname{IndCoh}_{\mathrm{Nilp}}(\operatorname{LS}_{\check G})$ 是等价；粗版 $\operatorname{QCoh}$ 陈述只在尖点子范畴成立，全局需 Arinkin–Gaitsgory 的幂零修正。
+
+**问题**：为什么粗版 $\mathrm{LG}_{\mathrm{coarse}}$ 不可能是等价？
+
+## 定义
+
+设 $\operatorname{LS}_{\check G}=\operatorname{LS}^{\mathrm{dR}}_{\check G}$ 为 de Rham $\check G$-局部系统的模叠。粗版函子 $\mathrm{LG}_{\mathrm{coarse}}:\operatorname{DMod}(\operatorname{Bun}_G)\to\operatorname{QCoh}(\operatorname{LS}_{\check G})$ 由「把常层送到零」之外的 Hecke 作用刻画。Arinkin–Gaitsgory 的修正把目标换成 $\operatorname{IndCoh}_{\mathrm{Nilp}}(\operatorname{LS}_{\check G})$：由所有抛物 $\check G_P$ 及其 Levi 商 $\check G_M$ 的 $\operatorname{Perf}(\operatorname{LS}_{\check G_M})\to\operatorname{Coh}(\operatorname{LS}_{\check G})$ 的像生成。定理 5.2.9 断言存在唯一函子 $\mathrm{LG}:\operatorname{DMod}(\operatorname{Bun}_G)\to\operatorname{IndCoh}_{\mathrm{Nilp}}(\operatorname{LS}_{\check G})$ 与 $\mathrm{LG}_{\mathrm{coarse}}$ 相容，且它是等价。
+
+记号：$\operatorname{DMod}$ 为 D-模范畴；$\operatorname{IndCoh}_{\mathrm{Nilp}}$ 为幂零奇异支撑的归纳凝聚层；$\operatorname{LS}^{\mathrm{dR}}_{\check G}$ 为 de Rham 局部系统模叠；$\operatorname{LS}^{\mathrm{irred}}_{\check G}\subset\operatorname{LS}_{\check G}$ 为不可约轨迹。
+
+## 要点
+
+- 粗版不可能是等价：对非交换 $G$，$\mathrm{LG}_{\mathrm{coarse}}$ 把常层送到零，而 $\operatorname{QCoh}(\operatorname{LS}_{\check G})$ 中零对象只有零；故它必有非平凡核。
+- 尖点版本（定理 5.2.5）是第一个正确陈述：$\mathrm{LG}_{\mathrm{coarse}}$ 诱导 $\operatorname{DMod}(\operatorname{Bun}_G)_{\mathrm{cusp}}\simeq\operatorname{QCoh}(\operatorname{LS}^{\mathrm{irred}}_{\check G})$。
+- 全局版本必须把 $\operatorname{QCoh}$ 换成 $\operatorname{IndCoh}_{\mathrm{Nilp}}$：$\operatorname{Perf}\subset\operatorname{Coh}$ 在 $\operatorname{LS}_{\check G}$ 有奇点时不相等，$\operatorname{QCoh}=\operatorname{Ind}(\operatorname{Perf})$ 会丢掉幂零方向的信息。
+- $\operatorname{Coh}_{\mathrm{Nilp}}$ 可由「所有抛物诱导的完美复形的像」生成，也可用凝聚层的奇异支撑内蕴定义（Remark 5.2.7）；两种定义给出同一子范畴。
+- 主定理 5.2.9 的证明用 de Rham 特殊性（如临界水平 Kac–Moody 局部化），并依赖 2024 年「具体」定理 4.3.2 的全部范畴断言；Betti 与 ℓ-进版本可经 Riemann–Hilbert 得到。
+
+## 公式
+
+$$ \mathrm{LG}:\operatorname{DMod}(\operatorname{Bun}_G)\to\operatorname{IndCoh}_{\mathrm{Nilp}}(\operatorname{LS}_{\check G}) $$
+
+$$ \operatorname{DMod}(\operatorname{Bun}_G)_{\mathrm{cusp}}\simeq\operatorname{QCoh}(\operatorname{LS}^{\mathrm{irred}}_{\check G}) $$
+
+$$ \operatorname{QCoh}(Y)\simeq\operatorname{Ind}(\operatorname{Perf}(Y)),\qquad\operatorname{IndCoh}(Y):=\operatorname{Ind}(\operatorname{Coh}(Y)) $$
+
+## 定理与证明状态
+
+### 定理 5.2.2 / 5.2.3（Lurie, Gaitsgory–Rozenblyum; Drinfeld–Gaitsgory）
+
+(5.2.2) $\operatorname{Loc}:\operatorname{Rep}(\check G)_{\mathrm{Ran}}\to\operatorname{QCoh}(\operatorname{LS}_{\check G})$ 有全忠实右伴随；(5.2.3) $\operatorname{Rep}(\check G)_{\mathrm{Ran}}$ 在 $\operatorname{DMod}(\operatorname{Bun}_G)$ 上的作用经 $\operatorname{Loc}$ 分解。
+
+- 证明状态：`cited`
+- 说明：引自 Lurie 与 Gaitsgory–Rozenblyum；讲义只引结论。
+- 出处：§5.2，原文 p.17
+
+### 主定理 5.2.5（尖点范畴化几何 Langlands）
+
+$\mathrm{LG}_{\mathrm{coarse}}$ 诱导 $\operatorname{DMod}(\operatorname{Bun}_G)_{\mathrm{cusp}}\simeq\operatorname{QCoh}(\operatorname{LS}^{\mathrm{irred}}_{\check G})$。
+
+- 证明状态：`cited`
+- 说明：2024 年证明的一部分；讲义只述结论。
+- 出处：§5.2，原文 p.17
+
+### 定理 5.2.8 与主定理 5.2.9
+
+存在唯一函子 $\mathrm{LG}:\operatorname{DMod}(\operatorname{Bun}_G)\to\operatorname{IndCoh}_{\mathrm{Nilp}}(\operatorname{LS}_{\check G})$，与 $\mathrm{LG}_{\mathrm{coarse}}$ 相容（经 $\Psi:\operatorname{IndCoh}_{\mathrm{Nilp}}\to\operatorname{QCoh}$），且 $\mathrm{LG}$ 是等价。
+
+- 证明状态：`cited`
+- 说明：2024–2025 年几何 Langlands 证明的最终形式；证明用 de Rham 特殊性与 Kac–Moody 局部化，讲义不展开。
+- 出处：§5.2，原文 p.18
+
+## 易错点
+
+- $\operatorname{QCoh}$ 与 $\operatorname{IndCoh}$ 不能混：$\operatorname{QCoh}=\operatorname{Ind}(\operatorname{Perf})$，$\operatorname{IndCoh}=\operatorname{Ind}(\operatorname{Coh})$；在奇点处 $\operatorname{Perf}\subsetneq\operatorname{Coh}$。
+- 粗版 $\mathrm{LG}_{\mathrm{coarse}}$ 在尖点子范畴上才是等价；全局必须加 Nilp 修正，否则常层会落到零。
+- $\operatorname{LS}^{\mathrm{irred}}_{\check G}$ 是不可约局部系统的轨迹，不是整个 $\operatorname{LS}_{\check G}$；把尖点版本误写成全局版本会丢掉可约 $\sigma$ 的贡献。
+- 主定理要求 char $k=0$ 且 de Rham 系数；Betti/ℓ-进版本需要额外的 Riemann–Hilbert 论证。
+
+## 出处
+
+- Sam Raskin 讲授、Lin Chen 笔记《Notes for "Geometric Langlands for Projective Curves"》（2025-07-07/11，18 页），§5.2 de Rham 范畴化，pp. 17, 18；`源码/sections/s05-whittaker.tex:L192-L320（Theorem 5.2.8 与 Main Theorem 5.2.9）`
+  > Main Theorem 5.2.9. ... LG is an equivalence.
+
+## 相关卡
+
+- `raskin_glc/concept/whittaker-coefficient`
+- `raskin_glc/concept/hecke-eigensheaf`
+
+## 核验（partial，2026-11-27）
+
+- nLab / geometric Langlands correspondence：`supports` — Idea 段明确写出粗版 $\mathcal{O}Mod(Loc_{{}^L G}(\Sigma))\simeq\mathcal{D}Mod(\operatorname{Bun}_G(\Sigma))$，并提到 Arinkin–Gaitsgory 的 Nilp 修正与 2025 年 Gaitsgory 等的证明；这直接支撑卡中「粗版需修正」的叙述。
+
+nLab 页面支持粗版与 Nilp 修正的存在；主定理的精确陈述以原文与 GLC 系列为准。

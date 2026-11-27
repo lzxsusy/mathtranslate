@@ -1,0 +1,82 @@
+# $\operatorname{coeff}_D$：把层变成向量空间的系数函子
+
+- id：`raskin_glc/concept/coefficient-functor`
+- 类型：concept　轨道：B　状态：dev
+- 一句话：在 $\operatorname{Bun}^{\Omega(-D)}_N$ 上取 $!$-拉回、与 $\exp$ 层做 $\otimes^!$、再取紧支集积分，得到向量空间 $\operatorname{coeff}_D(\mathcal{F})$；$D=0$ 对应模形式的常数项。
+
+**问题**：为什么 $D=0$ 的 $\operatorname{coeff}_0$ 对应模形式的常数项 $a_0$，而一般除子 $D$ 对应 $a_n$？
+
+## 定义
+
+对有效除子 $D=\sum_i n_i x_i$，令 $\operatorname{Bun}^{\Omega(-D)}_N:=\operatorname{Bun}_B\times_{\operatorname{Bun}_{\mathbb{G}_m}}\{\Omega(-D)\}$，它分类正合列 $0\to\Omega(-D)\to\mathcal{E}\to\mathcal{O}\to 0$。记 $p_{N,D}:\operatorname{Bun}^{\Omega(-D)}_N\to\operatorname{Bun}_G$，并令 $\varphi_D$ 为复合 $\operatorname{Bun}^{\Omega(-D)}_N\to H^1(X,\Omega(-D))\to H^1(X,\Omega)\cong\mathbb{A}^1$（Serre 对偶）。定义 $\operatorname{coeff}_D(\mathcal{F}):=\mathbb{C}\cdot(\operatorname{Bun}^{\Omega(-D)}_N,p_{N,D}^!\mathcal{F}\otimes^!\varphi_D^!\exp)$，其中 $\mathbb{C}\cdot$ 表示紧支集积分（取整体截面）。
+
+记号：$\Omega=\Omega^1_X$；$\Omega(-D):=\Omega\otimes\mathcal{O}(-D)$；$\exp$ 为 $\mathbb{A}^1$ 上的指数层（de Rham 情形 $(\mathcal{O},\nabla=d-dt)$）；$\otimes^!$ 为 $!$-张量积。
+
+## 要点
+
+- $\operatorname{Bun}^{\Omega(-D)}_N$ 比 $\operatorname{Bun}_B$ 多记录一条同构 $L\cong\Omega(-D)$，因此是 $\operatorname{Bun}_{\mathbb{G}_m}$ 上的纤维积；这使 $\varphi_D$ 成为到 $\mathbb{A}^1$ 的映射。
+- Serre 对偶给出 $H^1(X,\Omega(-D))\cong H^0(X,\mathcal{O}(D))^\vee$，故 $D=0$ 时 $\varphi_0$ 的目标是 $H^1(X,\Omega)\cong k$，这正是「常数项」的来源。
+- $D=\sum n_i x_i$ 时，$\operatorname{coeff}_D$ 只依赖 $D$ 作为除子，不依赖把 $D$ 写成点之和的方式；它把 $\operatorname{Bun}_G$ 上的层变成向量空间。
+- 对 $\mathcal{F}=\mathcal{F}_\sigma$，期望 $\operatorname{coeff}_D(\mathcal{F}_\sigma)\cong\bigotimes_i\operatorname{Sym}^{n_i}(\sigma_{x_i})$；这是 Goal 3.1.2 的 $D$-版本，也是模形式系数 $a_n$ 的层论类比。
+- 把 $D$ 变动得到函子 $\operatorname{coeff}_d:\operatorname{Shv}(\operatorname{Bun}_G)\to\operatorname{Shv}(\operatorname{Sym}^d X)$；在 $\mathcal{F}_\sigma$ 上它应等于 $\sigma^{(d)}$。
+
+## 公式
+
+$$ \operatorname{coeff}_D(\mathcal{F})=\mathbb{C}\cdot\left(\operatorname{Bun}^{\Omega(-D)}_N,\ p_{N,D}^!\mathcal{F}\otimes^!\varphi_D^!\exp\right) $$
+
+$$ \operatorname{Bun}^{\Omega(-D)}_N:=\operatorname{Bun}_B\times_{\operatorname{Bun}_{\mathbb{G}_m}}\{\Omega(-D)\} $$
+
+$$ \operatorname{coeff}_D(\mathcal{F}_\sigma)\cong\bigotimes_i\operatorname{Sym}^{n_i}(\sigma_{x_i}) $$
+
+$$ \operatorname{coeff}_d(\mathcal{F}_\sigma)\cong\sigma^{(d)} $$
+
+## 定理与证明状态
+
+### 定义 3.1.1（$\operatorname{coeff}_D$）
+
+对有效除子 $D$ 与 $\mathcal{F}\in\operatorname{Shv}(\operatorname{Bun}_G)$，$\operatorname{coeff}_D(\mathcal{F})$ 是上述紧支集积分得到的向量空间；它是 $\mathcal{F}$ 的「第 $D$ 个 Fourier 系数」。
+
+- 证明状态：`none`
+- 说明：定义，无需证明。
+- 出处：§3.1，原文 p.8
+
+### 目标 3.1.2
+
+对不可约 $\mathrm{SL}_2$ 局部系统 $\sigma$，存在尖点反常层 $\mathcal{F}_\sigma$，在每个连通分支上不可约，且对所有 $D=\sum n_i x_i$ 有 $\operatorname{coeff}_D(\mathcal{F}_\sigma)\cong\bigotimes_i\operatorname{Sym}^{n_i}(\sigma_{x_i})$。
+
+- 证明状态：`cited`
+- 说明：这是第三讲的「目标」，其存在性在 §3.3 由 Drinfeld–Laumon–FGV 定理给出；系数计算是 Hecke 特征性质的推论。
+- 出处：§3.1，原文 p.8
+
+### 命题 3.1.4
+
+若 $\mathcal{F}$ 为尖点反常层、在 $\operatorname{Bun}^{\mathrm{even}/\mathrm{odd}}$ 上不可约且支撑稠密，则 $\mathcal{F}$ 由 $\operatorname{coeff}_d(\mathcal{F})$ 与 $\operatorname{coeff}_{d+1}(\mathcal{F})$（任意 $d>N(g)$）唯一确定。
+
+- 证明状态：`sketch`
+- 说明：证明用 Fourier 变换与 $U_n$ 上的连通纤维；讲义只给梗概，并警告此断言仅对 $\mathrm{PGL}_2$ 特殊。
+- 出处：§3.1，原文 p.8–9
+
+## 易错点
+
+- 线丛是 $\Omega(-D)$ 而不是 $\mathcal{O}(-D)$：这里要用 Serre 对偶把 $H^1$ 变成 $H^0$ 的对偶，才能把 $\varphi_D$ 落到 $\mathbb{A}^1$。
+- $\mathbb{C}\cdot(\cdots)$ 是紧支集积分/整体截面的简写，不是「乘以常数层」；读公式时要按六函子理解。
+- $D$ 是有效除子，$n_i\ge 0$；$\operatorname{coeff}_D$ 对 $D$ 的写法不变，但 $\operatorname{Sym}^{n_i}$ 的次序按点排列。
+- $\operatorname{coeff}_D(\mathcal{F})$ 是向量空间，不是 $X$ 上的层；只有把 $D$ 变动时才得到 $\operatorname{Sym}^d X$ 上的层。
+
+## 出处
+
+- Sam Raskin 讲授、Lin Chen 笔记《Notes for "Geometric Langlands for Projective Curves"》（2025-07-07/11，18 页），§3.1 系数函子，pp. 8, 9；`源码/sections/s03-coeff.tex:L29-L75（Definition 3.1.1 与 Goal 3.1.2）`
+  > Definition 3.1.1. ... coeff_D(F) := C · (Bun^{Ω(−D)}_N, p^!_{N,D}(F) ⊗^! φ_D^! (exp)).
+
+## 相关卡
+
+- `raskin_glc/concept/cuspidal-sheaf`
+- `raskin_glc/concept/fourier-deligne-transform`
+- `raskin_glc/concept/whittaker-coefficient`
+- `raskin_glc/concept/pgl2-geometric-langlands`
+
+## 核验（partial，2026-11-27）
+
+- nLab / perverse sheaf：`partial` — 反常层框架支撑「$\mathcal{F}_\sigma$ 是尖点反常层」的表述；页面不涉及 $\operatorname{coeff}_D$ 的构造。
+
+系数函子的定义与 Goal 3.1.2 以原文为准；nLab 仅支撑层的类型。

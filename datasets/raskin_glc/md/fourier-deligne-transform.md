@@ -1,0 +1,70 @@
+# Fourier–Deligne 变换与 $\operatorname{coeff}_d$ 的改写
+
+- id：`raskin_glc/concept/fourier-deligne-transform`
+- 类型：concept　轨道：C　状态：dev
+- 一句话：在 $V\times V^\vee$ 上用 $\exp$ 核做「$!$-拉回—$!$-张量—推前」，得到 Fourier 变换；它把 $\operatorname{coeff}_d$ 改写成向量丛 $E_d^\vee$ 上的限制，从而把命题 3.1.4 化到零截面的消没。
+
+**问题**：为什么 Fourier 变换能把「$\operatorname{Bun}_B$ 上的 $!$-限制」换成「向量丛 $E_d^\vee$ 上的限制」，零截面又为什么对应常数项？
+
+## 定义
+
+设 $V$ 为有限维 $k$-向量空间，$V^\vee$ 为其对偶，$\mathrm{ev}:V\times V^\vee\to\mathbb{A}^1$ 为配对。对 $\mathcal{F}\in\operatorname{Shv}(V)$，定义 $\mathrm{Four}(\mathcal{F}):=\mathrm{pr}_{2,*}(\mathrm{pr}_1^!\mathcal{F}\otimes^!\mathrm{ev}^!\exp)$。同一公式对向量丛 $E\to S$ 与 $E^\vee\to S$ 逐纤维成立，给出 $\operatorname{Shv}(E)\to\operatorname{Shv}(E^\vee)$ 的等价（Fourier 反演）。
+
+记号：$\mathrm{pr}_1:E\times_S E^\vee\to E$，$\mathrm{pr}_2:E\times_S E^\vee\to E^\vee$；$\exp$ 为 $\mathbb{A}^1$ 上的指数层；$\otimes^!$ 为 $!$-张量积。
+
+## 要点
+
+- Fourier 变换是 $\operatorname{Shv}(V)$ 到 $\operatorname{Shv}(V^\vee)$ 的等价，逆变换由同一构造（交换 $V$ 与 $V^\vee$）给出；在 de Rham 与 ℓ-进情形都有对应版本，Betti 情形需用单值化替代。
+- 在 $\operatorname{Bun}_B$ 的改写中，取 $q_{-d}:\operatorname{Bun}^{-d}_B\to\operatorname{Bun}^{-d}_{\mathbb{G}_m}$。对 $d>0$ 有 $H^0(X,L)=0$，故 $q_{-d}$ 是向量丛 $E_d$，其纤维为 $H^1(X,L)$。
+- $E_d^\vee$ 的纤维为 $H^1(X,L)^\vee\cong H^0(X,L^\vee\otimes\Omega)$，故 $E_d^\vee$ 分类「截面 $s:L\to\Omega$」；$\operatorname{Sym}^{d+(2g-2)}X\to E_d^\vee\setminus\{0\}$ 把 $D$ 送到 $\Omega(-D)\to\Omega$。
+- 练习 3.2.2 断言 $\operatorname{coeff}_{d+(2g-2)}=\mathrm{restriction}\circ\mathrm{Four}\circ p_{-d}^!$：先在 $\operatorname{Bun}^{-d}_B$ 上 $!$-拉回，做 Fourier，再限制到 $E_d^\vee\setminus\{0\}$。
+- 零截面上的 $!$-限制对应 $\mathrm{CT}^{-d}_*$；尖点性正给出该限制为零，于是 $\mathrm{Four}(p_{-d}^!\mathcal{F})$ 由非零部分完全决定，再由 Fact 3.2.3/3.2.4 的「拉回全忠实」恢复 $p_{-d}^!\mathcal{F}$。
+
+## 公式
+
+$$ \mathrm{Four}(\mathcal{F})=\mathrm{pr}_{2,*}\left(\mathrm{pr}_1^!\mathcal{F}\otimes^!\mathrm{ev}^!\exp\right) $$
+
+$$ E_d^\vee\text{ 的纤维}=H^1(X,L)^\vee\cong H^0(X,L^\vee\otimes\Omega) $$
+
+$$ \operatorname{coeff}_{d+(2g-2)}=\mathrm{restriction}\circ\mathrm{Four}\circ p_{-d}^! $$
+
+## 定理与证明状态
+
+### 练习 3.2.2
+
+$\operatorname{coeff}_{d+(2g-2)}=\mathrm{restriction}\circ\mathrm{Four}\circ p_{-d}^!$，其中 restriction 指限制到 $E_d^\vee\setminus\{0\}\subset E_d^\vee$。
+
+- 证明状态：`none`
+- 说明：讲义留作练习；证明按定义展开 $\operatorname{coeff}$ 与 $\mathrm{Four}$，并用 $\operatorname{Sym}^{d+2g-2}X\to E_d^\vee$ 的识别。
+- 出处：§3.2，原文 p.9–10
+
+### Fact 3.2.3 / 3.2.4
+
+若 $f:E\to S$ 光滑且纤维连通（或空），则反常层沿 $f$ 的拉回全忠实；特别地，不可约、支撑稠密的层由其在 $E\setminus\{0\}$ 上的限制决定。
+
+- 证明状态：`cited`
+- 说明：引自 Beilinson–Drinfeld / Gaitsgory 的一般事实；讲义未证。
+- 出处：§3.2，原文 p.10
+
+## 易错点
+
+- Fourier 变换的核是 $\exp$，不是加性特征 $\psi$ 本身；在 de Rham 情形 $\exp=(\mathcal{O},\nabla=d-dt)$，在 ℓ-进情形要用 Artin–Schreier 构造。
+- $E_d$ 与 $E_d^\vee$ 不能混：$E_d$ 的纤维是 $H^1(X,L)$，$E_d^\vee$ 的纤维才是 $H^0(X,L^\vee\otimes\Omega)$；练习 3.2.2 的 restriction 落在 $E_d^\vee\setminus\{0\}$。
+- Betti 系数下没有 $\exp$ 层，Fourier 变换需换成别的技巧（讲义明确说「Betti 情形没有 $\exp$」）。
+- $\operatorname{coeff}_{d+2g-2}$ 的下标是 $d+2g-2$，不是 $d$；这是由 $\Omega$ 的次数 $2g-2$ 造成的平移。
+
+## 出处
+
+- Sam Raskin 讲授、Lin Chen 笔记《Notes for "Geometric Langlands for Projective Curves"》（2025-07-07/11，18 页），§3.2 Fourier(–Deligne) 变换，pp. 9, 10；`源码/sections/s03-coeff.tex:L110-L175（Four 定义与练习 3.2.2）`
+  > Four(F) := pr_{2,*}(pr_1^! F ⊗^! ev^! (exp)).
+
+## 相关卡
+
+- `raskin_glc/concept/coefficient-functor`
+- `raskin_glc/concept/pgl2-geometric-langlands`
+
+## 核验（source-only，2026-11-27）
+
+- 无外部逐条核验；见上方说明。
+
+未抓取到可直接引用的 nLab 条目逐字覆盖 $\exp$ 层的 $!$-Fourier 变换，故不写外部核验；构造以原文 §3.2 与 Beilinson–Drinfeld 的框架为准。
