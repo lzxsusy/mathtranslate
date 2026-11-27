@@ -1,0 +1,64 @@
+{
+  "id": "leanstmt/laumon906-g01",
+  "type": "statement",
+  "title": "缺口：GL(1) 的 Aut_E（定理 1.2）",
+  "track": "L02",
+  "source": {
+    "paper": "Laumon, Travaux de Frenkel, Gaitsgory et Vilonen sur la correspondance de Drinfeld–Langlands",
+    "arxiv": "arXiv:math/0207078v1",
+    "section": "1",
+    "pages": [
+      5,
+      5
+    ],
+    "anchor": "定理 1.2（Aut_E 的存在唯一性；原文 p5，页眉 906-5）"
+  },
+  "natural_language": {
+    "zh": "设 X 为光滑射影曲线、E 为 X 上秩 1 的局部系统。则存在唯一的（在原点刚性化的）Pic⁰(X) 上秩 1 局部系统 Aut，使沿 Abel–Jacobi 态射 φ 的拉回满足 φ*Aut = E。",
+    "en": "For every rank-1 local system E on X there is a unique (rigidified at the origin) rank-1 local system Aut on Pic⁰(X) with φ*Aut = E."
+  },
+  "lean": {
+    "file": "lean/ShuyiFormal/Laumon906/Gaps.lean",
+    "name": "Laumon906.Gaps.gl1_aut_e_shape",
+    "statement": " (X : Type) (E : RankOneLocalSystem X) :\n    ∃ Aut : RankOneLocalSystem (PicZero X),\n      RigidifiedAtOrigin Aut ∧ pullback (abelJacobi X) Aut = E ∧\n      ∀ Aut' : RankOneLocalSystem (PicZero X),\n        RigidifiedAtOrigin Aut' → pullback (abelJacobi X) Aut' = E → Aut' = Aut",
+    "imports": []
+  },
+  "dependencies": [],
+  "hypotheses": [
+    "X 在语句中是任意 Type，光滑射影曲线这一假设没有进语句（写在注释里）",
+    "RankOneLocalSystem / PicZero / abelJacobi / pullback / RigidifiedAtOrigin 都是 opaque 占位，不承载任何结构",
+    "「原点刚性化」只用占位谓词 RigidifiedAtOrigin 表示，其具体内容（原点处纤维的平凡化）没有定义"
+  ],
+  "scope": "gap",
+  "backtranslation": {
+    "zh": "对任意类型 X 和任意一个 X 上的占位「秩 1 局部系统」E，存在一个定义在占位对象 PicZero X 上的占位「秩 1 局部系统」Aut，使 Aut 在占位原点处满足占位谓词「刚性化」，并且沿占位映射 abelJacobi X 作占位拉回后恰好得到 E；而且这样的 Aut 唯一：任何 PicZero X 上的占位「秩 1 局部系统」Aut′，只要刚性化且拉回为 E，就必须等于 Aut。",
+    "method": "blind-backtranslation",
+    "reviewer": "subagent（未见本卡中文陈述，仅据 Lean 语句回译）"
+  },
+  "verification": {
+    "status": "gap",
+    "toolchain": "leanprover/lean4:v4.36.0",
+    "lean_version": "Lean 4.36.0 (x86_64-w64-windows-gnu)",
+    "mathlib_rev": "d33c49ca43873d3746194325da62640cc893c9d9",
+    "checked_at": "2026-11-27",
+    "checker": "未编译（gap 卡：占位签名，未经 lake env lean 运行）",
+    "sorry_count": 1
+  },
+  "gaps": [
+    {
+      "reason": "Mathlib 没有光滑射影曲线、Jacobian 簇 Pic⁰(X)、Abel–Jacobi 态射，也没有局部系统（局部常值层）的六函子形式化；定理所需的全部对象都缺失。",
+      "blocked_by": "mathlib 基础设施缺失（概形论中的 Picard 簇 / 六函子）"
+    },
+    {
+      "reason": "「在原点刚性化」需要 Pic⁰ 的原点与纤维函子，才能写成「Aut 在原点的纤维被平凡化」；当前只有占位谓词，唯一性条件因此没有被真正约束。",
+      "blocked_by": "缺少 Pic⁰ 的群结构与纤维函子的形式化"
+    },
+    {
+      "reason": "原文同一定理还断言 m*Aut_E ≅ Aut_E ⊠ Aut_E（m 为 Pic⁰ 的乘法）；本卡没有记录，需局部系统的外积与 Pic⁰ 的群结构，另建一卡。",
+      "blocked_by": "缺少外积 ⊠ 与群态射 m 的形式化"
+    }
+  ],
+  "notes": "缺口卡：只记录定理 1.2 的语句骨架「存在唯一刚性化 Aut，使 φ*Aut = E」。盲回译者独立指出 pullback 的占位签名原先漏了态射参数（已改为 (Y → Z) → LS Z → LS Y），这类错误正是盲回译要暴露的。未记录 (a) 定理的乘法结构 m*Aut ≅ Aut ⊠ Aut，(b) 定理 1.1（Abel–Jacobi）的几何内容——两者应各自单独建卡。",
+  "rights": "rewritten",
+  "status": "dev"
+}

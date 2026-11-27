@@ -94,6 +94,7 @@ def main() -> int:
             errors.append(f"{rel}: source.pages 区间反了：{pages}")
         arx = src.get("arxiv", "")
         if not (re.fullmatch(r"arXiv:\d{4}\.\d{4,5}v\d+", arx)
+                or re.fullmatch(r"arXiv:[a-z-]+(\.[A-Za-z-]+)?/\d{7}v\d+", arx)
                 or arx.startswith(("Nucl. Phys.", "Lecture notes"))):
             errors.append(f"{rel}: source.arxiv 形如 arXiv:1506.04293v3（非 arXiv 源以出版信息起头）")
         if len(card.get("title", "")) > 40:

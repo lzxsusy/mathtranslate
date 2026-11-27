@@ -3,6 +3,36 @@
 > **历史快照**（2026-11-21）：日志按日期如实保留，其中统计数字（工程数、段数、页数、体积）为当日口径，不再回改；引用请以 `_meta/stats.json` + `_meta/口径.md` 为准。
 
 
+## 2026-11-27 · SY02-46 Laumon 布尔巴基 906《Drinfeld–Langlands 对应：FGV 的工作》中译
+
+- 新增工程 `08_source_code/SY02-46_Laumon布尔巴基906Drinfeld-Langlands对应/`：Gérard Laumon,
+  *Travaux de Frenkel, Gaitsgory et Vilonen sur la correspondance de Drinfeld–Langlands*,
+  Séminaire Bourbaki 54e année (2001–2002) exposé n° 906, Juin 2002, 19 页；底本 arXiv:math/0207078v1
+  （法文 dvips 单行本，页眉 `906--NN`）。中译注本 **15 页**，xelatex 三遍 0 error / 0 Overfull / 0 Underfull。
+- 编号条目 **20 条**（定义 4、引理 8、定理 4、命题 2、推论 1、注 1）+ 编号公式 2 条（(0.1)、(1.3)），
+  逐条与 `资料卡/03-条款索引.md` 及 `check_sections.py` 对账；第 0 节照原文记作 $(0.n)$。
+- 术语 **146 条**开工前冻结；`工程文件/tools/check_terms.py` 覆盖率 142/142（4 条参考词条不强制），
+  异译黑名单 0 命中、禁用命令 0 命中；为核对 dvips 文本层的重音伪码，给该脚本补了 `\ell` 与
+  LaTeX 重音（`\'e`、`\"u`、`\c{c}`）的还原，避免「Euler–Poincaré 示性函数」「Plücker 关系」假阴性。
+- 译注 **8 条**（术语背景 4、原文笔误 4），每条注明依据等级；原文疑误 **12 条**登记在
+  `资料卡/04-术语文献勘误.md`（照录原文、不改正文）：`d>in(2g−2)`、`c(g,n)/c(n,g)`、
+  p11 的 `Fib'_i`、p13 引理 5.2 末句两处下标、p17 的 `Ỹ^d_n` 与 `Mod^d_i`，以及 5 条文献条目出入。
+- 资料卡五件套：`00-速览`、`01-结果清单`（按 §0–§7 逐条带页码）、`02-论证地图`（依赖图 + 三个「为什么」）、
+  `03-条款索引`（20 条 + 2 公式 + 译稿行号锚点）、`04-术语文献勘误`（40 术语 + 21 条文献外核 + 12 条原文疑误）。
+- 可抽取卡片集 `datasets/sy0246/`：13 张 concept + 1 张 correction；每张卡的 `sources.quote` 为法文逐字
+  （由 `工程文件/tools/make_cards.py` 从 `work/src/pNN.txt` 机械截取，`cards_data.py` 为唯一真源），
+  `verification.checks` 至少 3 条、含 E1（底本 PDF `#page=N` / TeX 源码）与 E2（FGV、Gaitsgory、Braverman–Gaitsgory 原文）；
+  `python tools/card_spec_check.py --set sy0246 --strict` → `cards=14 hard=0 warn=0`。
+- 对齐卡 1 张：`datasets/leanstmt/cards/statements/laumon906-g01.json`（定理 1.2 的 gap 卡），
+  Lean 形态 `datasets/leanstmt/lean/ShuyiFormal/Laumon906/Gaps.lean`；盲回译者独立指出占位 `pullback`
+  漏了态射参数，已修正并写入卡片 notes。`lint_cards.py` → 45 卡 0 error（为旧式 arXiv 号 `math/0207078v1`
+  扩展了 arxiv 字段校验）。
+- 流程：7 名译手分包（s00–s09）→ 每节 `check_sections.py` + `compile_section.py` → 整篇 xelatex 三遍 →
+  3 名独立审校逐句对读法文 TeX（`工程文件/reports/review-r1/r2/r3.md`，共 8 条问题，含 2 条 critical：
+  s06 基本图图注的投影对象、s08 纤维积下标）→ 全部修正并复编译 → `check_terms.py` → 10 页人眼并排抽检。
+- 参考文献 **21 条**逐条外核（arXiv / DOI / Numdam / zbMATH），15 条一致、6 条有出入（[B-L] 1974→1994、
+  [Lau 2] 的 arXiv 号、[Lau 3] 已刊、[L-M] 1999→2000、[Il] 题名、[B-D] 缺年份），出入只登记不改原文。
+
 ## 2026-11-27 · SY02-45 Scholze 布尔巴基 1252《几何 Langlands 的证明》中译
 
 - 新增工程 `08_source_code/SY02-45_Scholze布尔巴基1252几何Langlands的证明/`：Peter Scholze,
