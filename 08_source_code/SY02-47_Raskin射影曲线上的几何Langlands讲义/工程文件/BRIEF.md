@@ -12,7 +12,7 @@
 | 体例 | 讲义体：`1.1.` 起小节，条目用 `Definition / Construction / Remark / Proposition / Theorem / Corollary / Exercise / Question / Conjecture` 环境 |
 | 译本 | article 类（A4，11pt，xelatex + ctex），六个 section 文件：五讲 + 附录 |
 | 术语 | `工程文件/work/glossary.tsv`，开工前冻结；依据代号 A（权威）/ B（白名单）/ I（本库）/ L（本库冻结） |
-| 状态 | **v1.2 二轮审校后修订**（2026-11-27）：五讲全译、xelatex 三遍 0 error、24 页；译注 24 条；独立审校 S1–S8/G1–G12 与第二轮 9 条意见已处理；资料卡五件套与 13 张结构化卡已生成；四道闸门通过 |
+| 状态 | **v1.3 勘误详注与 18 卡**（2026-11-27）：五讲全译、xelatex 三遍 0 error、24 页；译注 24 条；独立审校 S1–S8/G1–G12 与第二轮 9 条意见已处理；资料卡五件套、`05-原文勘误详注.md`（10 页）与 18 张结构化卡已生成；五道闸门通过 |
 
 ## 1. 结构（讲 / 节 / 印刷页 / 文件）
 
@@ -63,7 +63,8 @@
 - [x] `工程文件/work/refs.tsv`、`工程文件/work/抽检记录.md`（12 页人眼抽检）
 - [ ] `工程文件/reports/审校.md`（独立子代理）
 - [x] `资料卡/00-速览.md` … `04-术语文献勘误.md`
-- [x] `datasets/raskin_glc/cards/` 13 张 JSON 卡，`card_spec_check.py --set raskin_glc --strict` hard=0
+- [x] `datasets/raskin_glc/cards/` 18 张 JSON 卡（含 7 张 correction），`card_spec_check.py --set raskin_glc --strict` hard=0
+- [x] `资料卡/05-原文勘误详注.md` 与 `成品/SY02-47_原文勘误详注.pdf`（10 页，原文/修正/推导/外部佐证）
 - [x] `03_translations_meta/SY02-47/投稿信息.md`、`RELEASE_REGISTER.csv` 一行
 - [ ] 仓库闸门：`make_stats.py --check`、`tools/check_numbers.py`、`tools/build_norm.py --check`
 - [ ] `conflict_report.py check --delivery` P0 = 0

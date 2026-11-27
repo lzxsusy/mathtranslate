@@ -2,9 +2,9 @@
 
 - id：`raskin_glc/correction/abel-jacobi-fiber`
 - 类型：correction　轨道：B　状态：dev
-- 一句话：原文说 $\mathrm{AJ}_d$ 在 $L$ 处的纤维是 $\Gamma(X,L)\setminus\{0\}$；正确者应为射影空间 $\mathbb{P}\Gamma(X,L)$。否则纤维维数多一维，且去掉原点的仿射空间不紧、讨论单连通性时结论不同。
+- 一句话：原文说 $\mathrm{AJ}_d$ 在 $L$ 处的纤维是 $\Gamma(X,L)\setminus\{0\}$；正确者应为射影空间 $\mathbb{P}\Gamma(X,L)$。前者比后者多一维；二者在 $d>2g-2$ 时都单连通，真正的区别是维数与「按除子而非按截面」的定义。
 
-**问题**：为什么差一个 $\mathbb{P}$ 会同时破坏维数公式与单连通性论证？
+**问题**：为什么多一个 $\mathbb{P}$ 会改变纤维的维数，却不改变单连通性？
 
 ## 位置
 
@@ -20,11 +20,11 @@
 
 ## 理由
 
-当 $d>2g-2$ 时 $H^1(X,L)=0$，故 $h^0(L)=d+1-g$。$\Gamma(X,L)\setminus\{0\}$ 的维数是 $d+1-g$，而 $\mathbb{P}\Gamma(X,L)$ 的维数是 $d-g$；后者才与 $\operatorname{Sym}^d X\to\operatorname{Jac}(X)$ 的纤维维数 $d-g$ 相符。此外 $\Gamma(X,L)\setminus\{0\}$ 是仿射空间去掉原点，不是紧的，也不是射影空间；讲义随后要用「纤维单连通」做下降，射影空间 $\mathbb{P}^{d-g}$ 单连通，而 $\mathbb{A}^{d+1-g}\setminus\{0\}$ 在 $d-g\ge 1$ 时同伦 $S^{2(d-g)-1}$，并不单连通。
+当 $d>2g-2$ 时 $H^1(X,L)=0$，故 $h^0(L)=d+1-g$。$\Gamma(X,L)\setminus\{0\}$ 的维数是 $d+1-g$，而 $\mathbb{P}\Gamma(X,L)$ 的维数是 $d-g$；后者才与 $\operatorname{Sym}^d X\to\operatorname{Jac}(X)$ 的纤维维数 $d-g$ 相符。容易误判的是单连通性：$\Gamma(X,L)\setminus\{0\}\simeq S^{2(d+1-g)-1}$，当 $d+1-g\ge2$ 时单连通；$\mathbb{P}^{d-g}$ 也单连通。所以单连通性不能区分二者，能区分的是维数（差一维）与纤维「记录除子而非记录截面」这一定义。
 
 ## 说明
 
-此笔误不影响构造 1.2.4 的最终结论（下降仍可沿射影化纤维进行），但正文的「纤维」与「单连通」两句话必须按 $\mathbb{P}\Gamma$ 理解；译文正文照录原文并加译注。
+此笔误不影响构造 1.2.4 的最终结论（下降仍可沿射影化纤维进行），但正文的「纤维」一句必须按 $\mathbb{P}\Gamma$ 理解；译文正文照录原文并加译注。
 
 ## 出处
 
@@ -35,8 +35,9 @@
 
 - `raskin_glc/concept/deligne-gl1-construction`
 
-## 核验（partial，2026-11-27）
+## 核验（partial，）
 
-- nLab / local system：`not_applicable` — 页面确认局部系统与平坦联络的对应，但不涉及 Abel–Jacobi 纤维的维数；本卡的更正依据是原文自身的维数计算与 $\mathbb{P}\Gamma$ 的标准事实。
+- T. Feng, Geometric class field theory（讲义） / §2, p.4：`supports` — Sym^d(X) -> Pic(X) 在 d>>0 时是 projective space bundle；纤维是射影空间，不是仿射锥。
+- Riemann-Roch（标准教材） / d>2g-2 时 h^0(L)=d+1-g：`supports` — 射影纤维维数 d-g；Gamma(L)\{0} 的维数 d+1-g，二者差一维。
 
 更正依据：$\dim\mathbb{P}\Gamma(X,L)=d-g$ 与 $\operatorname{Sym}^d X\to\operatorname{Jac}$ 的纤维维数一致；$\mathbb{P}^N$ 单连通。

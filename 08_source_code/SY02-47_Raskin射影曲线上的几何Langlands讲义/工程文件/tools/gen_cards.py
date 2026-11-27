@@ -20,6 +20,7 @@ sys.path.insert(0, str(HERE.parent))
 import cards_a  # noqa: E402
 import cards_b  # noqa: E402
 import cards_c  # noqa: E402
+import cards_d  # noqa: E402
 
 PLURAL = {
     "concept": "concepts",
@@ -33,7 +34,7 @@ PLURAL = {
 
 
 def all_cards():
-    cards = cards_a.CARDS + cards_b.CARDS + cards_c.CARDS
+    cards = cards_a.CARDS + cards_b.CARDS + cards_c.CARDS + cards_d.CARDS
     ids = [c["id"] for c in cards]
     if len(ids) != len(set(ids)):
         raise SystemExit("重复 id")
@@ -211,8 +212,8 @@ def main():
         "来源：Sam Raskin 讲授、Lin Chen 笔记《Notes for \"Geometric Langlands for Projective Curves\"》，",
         "2025-07-07/11，18 页；底本与译注本见 `08_source_code/SY02-47_Raskin射影曲线上的几何Langlands讲义/`。",
         "",
-        f"共 {len(cards)} 张卡。每张卡含原文页码、逐字引文、译注锚点与 nLab 核验记录；",
-        "`verification.status = source-only` 的卡没有外部逐条核验，只据原文与经典文献。",
+        f"共 {len(cards)} 张卡。每张卡含原文页码、逐字引文、译注锚点与核验记录；",
+        "`verification.status = partial` 的卡含逐条外部核验；`source-only` 的卡只据原文与经典文献。",
         "",
         "## 卡片",
         "",

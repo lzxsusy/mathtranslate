@@ -3,8 +3,8 @@
 来源：Sam Raskin 讲授、Lin Chen 笔记《Notes for "Geometric Langlands for Projective Curves"》，
 2025-07-07/11，18 页；底本与译注本见 `08_source_code/SY02-47_Raskin射影曲线上的几何Langlands讲义/`。
 
-共 13 张卡。每张卡含原文页码、逐字引文、译注锚点与 nLab 核验记录；
-`verification.status = source-only` 的卡没有外部逐条核验，只据原文与经典文献。
+共 18 张卡。每张卡含原文页码、逐字引文、译注锚点与核验记录；
+`verification.status = partial` 的卡含逐条外部核验；`source-only` 的卡只据原文与经典文献。
 
 ## 卡片
 
@@ -23,6 +23,11 @@
 | `raskin_glc/correction/abel-jacobi-fiber` | correction | Abel–Jacobi 纤维被写成 $\Gamma(X,L)\setminus\{0\}$ | 4 |
 | `raskin_glc/correction/perverse-lisse-swap` | correction | $\sigma^{(d)}$ 与 $\mathcal{F}_\sigma$ 的 perverse/lisse 性质被互换 | 9 |
 | `raskin_glc/remark/generic-rank-convention` | remark | 通用秩公式中的指数 $d_i$ | 15 |
+| `raskin_glc/correction/bh1-vs-bh0` | correction | 常数项证明中的 $BH^1$ 应为 $BH^0$ | 6 |
+| `raskin_glc/correction/b-vs-e-borel-sequence` | correction | Borel 正合列中的 $B$ 应为 $\cE$ | 6 |
+| `raskin_glc/correction/holonomic-vs-holomorphic` | correction | 「holonomic 模形式」应为「holomorphic 模形式」 | 7 |
+| `raskin_glc/correction/rep-g-vs-rep-gdual` | correction | $\Gd$-局部系统的函子定义误写 $\Rep(G)$ | 12 |
+| `raskin_glc/correction/vilonon-spelling` | correction | 作者名 Vilonen 被拼成 Vilonon | 16 |
 
 ## 校验
 
